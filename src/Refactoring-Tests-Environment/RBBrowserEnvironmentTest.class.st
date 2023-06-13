@@ -110,10 +110,9 @@ RBBrowserEnvironmentTest >> numberSelectorsFor: aBrowserEnvironment [
 
 { #category : #private }
 RBBrowserEnvironmentTest >> protocolsFor: aBrowserEnvironment [
+
 	aBrowserEnvironment classesAndSelectorsDo: [ :class :selector |
-		| protocol |
-		protocol := aBrowserEnvironment whichProtocolIncludes: selector in: class.
-		self assert: (aBrowserEnvironment includesProtocol: protocol in: class) ]
+		self assert: (aBrowserEnvironment includesProtocol: (class protocolOfSelector: selector) in: class) ]
 ]
 
 { #category : #running }

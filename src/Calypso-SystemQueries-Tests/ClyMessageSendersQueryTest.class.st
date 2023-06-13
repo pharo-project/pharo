@@ -6,11 +6,13 @@ Class {
 
 { #category : #'methods for tests' }
 ClyMessageSendersQueryTest class >> classSideSender1OfMessage1 [
+	<ignoreNotImplementedSelectors: #(clyReferencedMessage1)>
 	self clyReferencedMessage1
 ]
 
 { #category : #'methods for tests' }
 ClyMessageSendersQueryTest class >> classSideSender2OfMessage1 [
+	<ignoreNotImplementedSelectors: #(clyReferencedMessage1)>
 	self clyReferencedMessage1
 ]
 
@@ -29,11 +31,13 @@ ClyMessageSendersQueryTest >> referencedSelector [
 
 { #category : #'methods for tests' }
 ClyMessageSendersQueryTest >> sender1OfMessage1 [
+	<ignoreNotImplementedSelectors: #(clyReferencedMessage1)>
 	self clyReferencedMessage1
 ]
 
 { #category : #'methods for tests' }
 ClyMessageSendersQueryTest >> sender2OfMessage1 [
+	<ignoreNotImplementedSelectors: #(clyReferencedMessage1)>
 	self clyReferencedMessage1
 ]
 
@@ -44,6 +48,7 @@ ClyMessageSendersQueryTest >> senderOfIfTrue [
 
 { #category : #'methods for tests' }
 ClyMessageSendersQueryTest >> senderOfMessage2 [
+	<ignoreNotImplementedSelectors: #(message2)>
 	self message2
 ]
 

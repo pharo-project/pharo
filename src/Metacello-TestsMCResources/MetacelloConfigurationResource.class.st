@@ -1291,7 +1291,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFan [
 						source: self baseline50MethodSourceFan.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -1335,7 +1335,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFeaux [
 						source: self baseline40MethodSourceFeaux.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -1385,7 +1385,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFix [
 						source: self baseline61MethodSourceFix.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -1471,7 +1471,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFoo [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
@@ -1516,7 +1516,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFum [
 						source: self baseline40MethodSourceProjectFum.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -1570,7 +1570,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfMetacelloExampledkh1 [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -1627,7 +1627,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectConfigIssue283dkh1 
   monticelloRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -1673,7 +1673,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFee [
 						source: self baseline40MethodSourceProjectFee.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -1740,7 +1740,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFie [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
@@ -1785,7 +1785,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFoe [
 						source: self baseline40MethodSourceProjectFoe.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -1834,7 +1834,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFum [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
@@ -1879,7 +1879,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectInfinite [
 						source: self baseline40MethodSourceProjectInfinite.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -1938,7 +1938,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue115dkh1 [
 						source: (self class sourceCodeAt: #version10Issue115:) asString.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (versionInfo := MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -1995,7 +1995,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue115dkh2: ances
 						source: (self class sourceCodeAt: #version11Issue115:) asString.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (versionInfo := MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -2066,7 +2066,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh1 [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2124,7 +2124,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh2: ances
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2182,7 +2182,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh3: ances
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2240,7 +2240,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh4: ances
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2322,7 +2322,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh5: ances
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2440,7 +2440,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh6: ances
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2498,7 +2498,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh7: ances
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2561,7 +2561,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue125 [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2622,7 +2622,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue136dkh1 [
 						source: (self class sourceCodeAt: #version10Issue136:) asString.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (versionInfo := MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -2679,7 +2679,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue136dkh2: ances
 						source: (self class sourceCodeAt: #version11Issue136:) asString.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (versionInfo := MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -2767,7 +2767,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue154dkh1 [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2843,7 +2843,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue171dkh1 [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2899,7 +2899,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue171dkh2: ances
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (versionInfo := MCVersionInfo
                         name: reference name
@@ -2972,7 +2972,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue283dkh1 [
   monticelloRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -3041,7 +3041,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue283dkh2: ances
   monticelloRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (versionInfo := MCVersionInfo
             name: reference name
@@ -3087,7 +3087,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue95 [
 						source: self baseline40MethodSourceProjectIssue95.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -3131,7 +3131,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectLoop [
 						source: self baseline40MethodSourceProjectLoop.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -3419,7 +3419,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectToolBox [
     monticelloRepository
         basicStoreVersion:
             (MCVersion new
-                setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+                setPackage: (MCPackage new name: reference packageName)
                 info:
                     (MCVersionInfo
                         name: reference name
@@ -3488,7 +3488,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfSymbolic [
 						source: self version43SymbolicMethodSourceSymbolic.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -3527,7 +3527,7 @@ MetacelloConfigurationResource >> setUpIssue156BaselineOfGoo [
   monticelloRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (MCVersionInfo
             name: reference name
@@ -3582,7 +3582,7 @@ MetacelloConfigurationResource >> setUpIssue156ConfigurationOfGoo [
   monticelloRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (MCVersionInfo
             name: reference name
@@ -3640,7 +3640,7 @@ MetacelloConfigurationResource >> setUpIssue156ConfigurationOfProjectGoo [
   monticelloRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (MCVersionInfo
             name: reference name
@@ -3696,7 +3696,7 @@ MetacelloConfigurationResource >> setUpIssue156ConfigurationOfProjectSoo [
   monticelloRepository
     basicStoreVersion:
       (MCVersion new
-        setPackage: (MetacelloTestsMCPackage new name: reference packageName)
+        setPackage: (MCPackage new name: reference packageName)
         info:
           (MCVersionInfo
             name: reference name
@@ -3751,7 +3751,7 @@ MetacelloConfigurationResource >> setUpIssue77B [
 						source: self baseline10MethodSourceB.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -3801,7 +3801,7 @@ MetacelloConfigurationResource >> setUpIssue77C [
 						source: self baseline13MethodSourceC.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -3845,7 +3845,7 @@ MetacelloConfigurationResource >> setUpIssue77D [
 						source: self baseline10MethodSourceD.
 				}.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new

@@ -77,12 +77,6 @@ RBExpandReferencedPoolsTransformation >> movePoolVariables [
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]
 ]
 
-{ #category : #preconditions }
-RBExpandReferencedPoolsTransformation >> preconditions [
-
-	^ self emptyCondition
-]
-
 { #category : #transforming }
 RBExpandReferencedPoolsTransformation >> privateTransform [
 

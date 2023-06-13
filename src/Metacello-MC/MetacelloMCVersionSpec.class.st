@@ -95,7 +95,7 @@ MetacelloMCVersionSpec >> currentlyLoadedClassesInVersion [
         on: Error
         do: [ :ex | ex return: nil ].
       wc ~~ nil
-        ifTrue: [ classes addAll: (MetacelloPlatform current packageInfoFor: wc) classes ] ]
+        ifTrue: [ classes addAll: wc packageSet classes ] ]
     groupDo: [ :ignored |  ].
   ^ classes
 ]
