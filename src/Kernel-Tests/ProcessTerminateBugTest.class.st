@@ -18,7 +18,7 @@ ProcessTerminateBugTest >> testSchedulerTermination [
 	           sema signal.
 	           sema2 wait.
 	           "will be suspended here"
-	           gotHere := true "e.g., we must *never* get here" ] forkAt: Processor activeProcess priority.
+	           gotHere := true "e.g., we must *never* get here" ] forkAt: thisProcess priority.
 	sema wait. "until process gets scheduled"
 	process terminate.
 	sema2 signal.
@@ -154,7 +154,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS1 [
 		[
 			[
 				[ ] ensure: [
-					[Processor activeProcess suspend] ensure: [
+					[thisProcess suspend] ensure: [
 						x1 := true].
 					x2 := true]
 			] ensure: [
@@ -182,7 +182,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS2 [
 			[
 				[ ] ensure: [
 					[ ] ensure: [
-						Processor activeProcess suspend.
+						thisProcess suspend.
 						x1 := true].
 					x2 := true]
 			] ensure: [
@@ -225,7 +225,7 @@ ProcessTerminateBugTest >> testUnwindFromActiveProcess [
 	[
 	sema critical: [
 		self deny: sema isSignaled.
-		Processor activeProcess terminate ] ] forkAt: Processor userInterruptPriority.
+		thisProcess terminate ] ] forkAt: Processor userInterruptPriority.
 	self assert: sema isSignaled
 ]
 

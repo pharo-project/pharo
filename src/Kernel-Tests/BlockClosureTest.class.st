@@ -276,11 +276,11 @@ BlockClosureTest >> testOnForkErrorOnSeparateProcess [
 	| forkedProc sema |
 	sema := Semaphore new.
 	[ 1 / 0 ] on: Exception fork: [
-		forkedProc := Processor activeProcess.
+		forkedProc := thisProcess.
 		sema signal ].
 
 	sema wait.
-	self deny: forkedProc identicalTo: Processor activeProcess
+	self deny: forkedProc identicalTo: thisProcess
 ]
 
 { #category : #'tests - on-fork' }

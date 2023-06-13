@@ -39,7 +39,7 @@ BeaconSignal >> initialize [
 
 	super initialize.
 	timestamp := DateAndTime now.
-	processId := Processor activeProcess name.
+	processId := thisProcess name.
 	properties := Dictionary new
 ]
 

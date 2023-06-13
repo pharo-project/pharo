@@ -26,7 +26,7 @@ ProcessTest >> setUp [
 ProcessTest >> testActiveProcessFromProcesor [
 
 	| processFromProcessor activeProcess |
-	activeProcess := [ processFromProcessor := Processor activeProcess ] forkAt: Processor activePriority + 1.
+	activeProcess := [ processFromProcessor := thisProcess ] forkAt: Processor activePriority + 1.
 
 	self assert: processFromProcessor identicalTo: activeProcess
 ]
@@ -36,7 +36,7 @@ ProcessTest >> testActiveProcessFromProcesorShouldUseInstalledEffectiveProcess [
 
 	| processFromProcessor activeProcess effectiveProcess |
 	effectiveProcess := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
-	activeProcess := [ processFromProcessor := Processor activeProcess ] newProcess.
+	activeProcess := [ processFromProcessor := thisProcess ] newProcess.
 	activeProcess
 		priority: Processor activePriority + 1;
 		effectiveProcess: effectiveProcess;
@@ -58,7 +58,7 @@ ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 	[
 		[ val := false ] forkAt: highPriority + 1.
 		[ val := true ] forkAt: highPriority.
-		Processor activeProcess priority: highPriority.
+		thisProcess priority: highPriority.
 	]	forkAt: highPriority + 2.
 
 	self assert: val equals: Smalltalk vm processPreemptionYields
@@ -74,7 +74,7 @@ ProcessTest >> testChangingPriorityYieldsCurrentProcess [
 	[
 		[ val := 1 ] forkAt: highPriority + 1.
 
-		Processor activeProcess priority: highPriority.
+		thisProcess priority: highPriority.
 		val := 2
 	] forkAt: highPriority + 2.
 
@@ -105,7 +105,7 @@ ProcessTest >> testFork [
 ProcessTest >> testForkAtHigherPriority [
 	| hasBlockRun |
 	hasBlockRun := false.
-	[ hasBlockRun := true ] forkAt: Processor activeProcess priority + 1.
+	[ hasBlockRun := true ] forkAt: thisProcess priority + 1.
 
 	"Preempts current process"
 	self assert: hasBlockRun
@@ -117,7 +117,7 @@ ProcessTest >> testInjectingExceptionHandlerFromProcessItself [
 	DefaultExecutionEnvironment beActive.
 	error := Error new messageText: 'test error'.
 	interrupted := true.
-	process := [ Processor activeProcess
+	process := [ thisProcess
 		on: Error
 		do: [ :err | interceptedError := err ].
 	error signal.
@@ -259,7 +259,7 @@ ProcessTest >> testIsNotSuspendedWhenItIsActiveProcess [
 
 	| semaphore suspended |
 	semaphore := Semaphore new.
-	[ suspended := Processor activeProcess isSuspended. semaphore signal ] fork.
+	[ suspended := thisProcess isSuspended. semaphore signal ] fork.
 	semaphore wait.
 	self deny: suspended
 ]
@@ -379,7 +379,7 @@ ProcessTest >> testIsTerminatingForcedTermination [
 	[ terminationSemaphore
 		wait;
 		wait ]
-		ensure: [ terminator := Processor activeProcess.
+		ensure: [ terminator := thisProcess.
 			unwindChecks value.
 			unwound := true ] ] newProcess.
 	process priority: Processor activePriority - 1.
@@ -429,7 +429,7 @@ ProcessTest >> testIsTerminatingForcedTerminationWithoutRunning [
 	started := false.
 	process := [ started := true.
 	[ Semaphore new wait ]
-		ensure: [ terminator := Processor activeProcess.
+		ensure: [ terminator := thisProcess.
 			unwound := true ] ] newProcess.
 	"This will prevent the process from getting a chance to run.
 	Effectively the pc of suspendedContext will be equal to startpc."
@@ -466,7 +466,7 @@ ProcessTest >> testIsTerminatingNormalTermination [
 	started := false.
 	process := [ started := true.
 	[ sem wait ]
-		ensure: [ terminator := Processor activeProcess.
+		ensure: [ terminator := thisProcess.
 			unwound := true ] ] fork.
 	self deny: process isSuspended.
 	self deny: process isTerminating.
@@ -537,7 +537,7 @@ ProcessTest >> testNormalProcessCompletionWithLeftEffectiveProcess [
 
 	| effectiveProcess activeProcess |
 	effectiveProcess := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
-	activeProcess := [ Processor activeProcess suspend. ] forkAt: Processor activePriority + 1.
+	activeProcess := [ thisProcess suspend. ] forkAt: Processor activePriority + 1.
 	activeProcess effectiveProcess: effectiveProcess.
 
 	activeProcess resume.
@@ -552,7 +552,7 @@ ProcessTest >> testNormalProcessWithArgsCompletionWithLeftEffectiveProcess [
 
 	| effectiveProcess activeProcess |
 	effectiveProcess := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
-	activeProcess := [:arg | Processor activeProcess suspend. ] newProcessWith: #(1).
+	activeProcess := [:arg | thisProcess suspend. ] newProcessWith: #(1).
 	activeProcess
 		priority: Processor activePriority + 1;
 		resume.
@@ -640,7 +640,7 @@ ProcessTest >> testTerminateActive [
 	block1HasRun := block2HasRun := lastStatementEvaluated := false.
 	p1 := [
 		block1HasRun := true.
-		Processor activeProcess terminate.
+		thisProcess terminate.
 		lastStatementEvaluated := true ] fork.
 
 	p2 := [
@@ -715,7 +715,7 @@ ProcessTest >> testYield [
 
 	| lowerHasRun lowerPriority same1HasRun same2HasRun |
 	lowerHasRun := same1HasRun := same2HasRun := false.
-	lowerPriority := Processor activeProcess priority - 10 min: 10.
+	lowerPriority := thisProcess priority - 10 min: 10.
 	[ lowerHasRun := true ] forkAt: lowerPriority.
 	[ same1HasRun := true ] fork.
 	[ same2HasRun := true ] fork.

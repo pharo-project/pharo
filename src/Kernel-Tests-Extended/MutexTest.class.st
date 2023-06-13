@@ -126,10 +126,10 @@ MutexTest >> testTerminatingBlockedCriticalWhichWasSignalledButNotResumedYet [
 
 	self fork: [
 		mutex critical: [ semaphoreToHoldMutex wait.
-		firstCriticalExecuted := true ]] at: Processor activeProcess priority + 1.
+		firstCriticalExecuted := true ]] at: thisProcess priority + 1.
 	self waitLastProcessLock.
 	"for second critical we choose small priority. So it can't be resumed automatically by scheduler in our scenario."
-	processWaitingForMutex := self fork: [mutex critical: [ self error: 'should not happen' ]] at: Processor activeProcess priority - 1.
+	processWaitingForMutex := self fork: [mutex critical: [ self error: 'should not happen' ]] at: thisProcess priority - 1.
 	self waitLastProcessLock.
 	self deny: firstCriticalExecuted.
 	semaphoreToHoldMutex signal.

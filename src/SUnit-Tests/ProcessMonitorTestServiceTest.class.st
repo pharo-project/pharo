@@ -70,7 +70,7 @@ ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 
 	haltWasPassed := false.
 	halt := Halt new.
-	process := self fork: [ Processor activeProcess suspend. halt signal ].
+	process := self fork: [ thisProcess suspend. halt signal ].
 	testService handleNewProcess: process.
 
 	process on: Halt do: [ :actual |
@@ -173,7 +173,7 @@ ProcessMonitorTestServiceTest >> testDisableRunningProcessesCleanupWhenPassBackg
 ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassedAndMainProcessAlsoFails [
 
 	self fork: [ testService suspendBackgroundFailure: Error new.
-		Processor activeProcess suspend "To emulate process under debugger" ].
+		thisProcess suspend "To emulate process under debugger" ].
 
 	testService passBackgroundFailures.
 	testService recordTestFailure: Error new.
@@ -237,7 +237,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenThereWasM
 ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundFailureWasPassedButMainProcessCompletesSuccessfully [
 
 	self fork: [ testService suspendBackgroundFailure: Error new.
-		Processor activeProcess suspend "To emulate process under debugger" ].
+		thisProcess suspend "To emulate process under debugger" ].
 
 	testService passBackgroundFailures.
 
@@ -418,7 +418,7 @@ ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIs
 	self skip.
 	errorWasPassed := false.
 	error := Error new messageText: 'test error'.
-	process := self fork: [ Processor activeProcess suspend. error signal ].
+	process := self fork: [ thisProcess suspend. error signal ].
 
 	testService disableBackgroudFailuresSuspension.
 	self deny: testService shouldSuspendBackgroundFailures.
@@ -439,7 +439,7 @@ ProcessMonitorTestServiceTest >> testRecordMainTestProcessError [
 	testService handleException: error.
 
 	self
-		assert: (testService testFailures at: Processor activeProcess)
+		assert: (testService testFailures at: thisProcess)
 		equals: error
 ]
 
@@ -452,7 +452,7 @@ ProcessMonitorTestServiceTest >> testRecordMainTestProcessUnhandledError [
 	testService handleException: error.
 
 	self
-		assert: (testService testFailures at: Processor activeProcess)
+		assert: (testService testFailures at: thisProcess)
 		equals: error
 ]
 
@@ -490,7 +490,7 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenHaltIsSignaledInBa
 	| processWithHalt executed |
 	executed := false.
 	self fork: [ testService suspendBackgroundFailure: Error new. executed := true ].
-	processWithHalt := self fork: [ Processor activeProcess suspend. Halt new signal ].
+	processWithHalt := self fork: [ thisProcess suspend. Halt new signal ].
 
 	processWithHalt on: Halt do: [ :actual | ].
 	processWithHalt resume.

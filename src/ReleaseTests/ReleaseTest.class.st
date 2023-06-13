@@ -71,7 +71,7 @@ ReleaseTest >> knownProcesses [
 	"(self actualProcesses difference: self knownProcesses) do: [ :each | each suspend; terminate ]."
 
 	^ {
-		Processor activeProcess.
+		thisProcess.
 		Processor backgroundProcess.
 		WeakArray runningFinalizationProcess.
 		SmalltalkImage current lowSpaceWatcherProcess.
