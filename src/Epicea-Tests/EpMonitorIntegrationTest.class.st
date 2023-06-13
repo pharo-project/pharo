@@ -12,6 +12,12 @@ Class {
 	#category : #'Epicea-Tests-Integration'
 }
 
+{ #category : #asserting }
+EpMonitorIntegrationTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpMonitorIntegrationTest >> allLogEntriesWith: aClass [
 
