@@ -53,8 +53,8 @@ RBOrEnvironment >> includesClass: aClass [
 
 { #category : #testing }
 RBOrEnvironment >> includesProtocol: aProtocol in: aClass [
-	^ (environment includesProtocol: aProtocol in: aClass)
-		or: [ self orEnvironment includesProtocol: aProtocol in: aClass ]
+
+	^ (environment includesProtocol: aProtocol in: aClass) or: [ self orEnvironment includesProtocol: aProtocol in: aClass ]
 ]
 
 { #category : #testing }
