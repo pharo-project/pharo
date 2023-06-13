@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRemoveTemporaryVariableTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -64,7 +64,7 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 									temp := bar * bar.
 									Transcript show: temp printString; cr.
 									^temp * temp'
-					in: self changeMock name
+					in: self changeMockClass name
 					withProtocols: {#accessing})
 					transform.
 
@@ -72,12 +72,12 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 				model: transformation model
 				variable: 'temp'
 				inMethod: #foo
-				inClass: self changeMock name)
+				inClass: self changeMockClass name)
 				transform.
 
 	self assert: transformation model changes changes size equals: 2.
 
-	class := transformation model classNamed: self changeMock name.
+	class := transformation model classNamed: self changeMockClass name.
 	self assert: (class directlyDefinesMethod: #one).
 	self assert: (class parseTreeForSelector: #foo) temporaries size equals: 1
 ]

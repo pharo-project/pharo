@@ -2235,7 +2235,8 @@ Morph >> doesOwnRotation [
 { #category : #'event handling' }
 Morph >> doubleClick: evt [
 	"Handle a double-click event. This message is only sent to clients that request it by sending #waitForClicksOrDrag:event: to the initiating hand in their mouseDown: method. This default implementation does nothing."
-
+	"We should not double click if not on the same element"
+	(self containsPoint: evt position) ifFalse: [ ^self ].
 	^ self eventHandler ifNotNil:
 		[self eventHandler doubleClick: evt fromMorph: self]
 ]

@@ -239,7 +239,7 @@ ReleaseTest >> testNoEmptyPackages [
 	"Test that we have no empty packages left"
 
 	| violating |
-	violating := Smalltalk organization packages select: #isEmpty.
+	violating := self packageOrganizer packages select: #isEmpty.
 	self assertEmpty: violating
 ]
 
@@ -326,8 +326,7 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	ASTCache reset.
 	"No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
-		RBDummyRefactoryTestDataApp>>#tempVarOverridesInstVar.
-		RBRefactoryTestDataApp>>#tempVarOverridesInstVar.
+		RBClassDataForRefactoringTest>>#tempVarOverridesInstVar.
 		RBSmalllintTestObject>>#tempVarOverridesInstVar.
 		ReTempVarOverridesInstVarRuleTest>>#sampleMethod:}.
 
@@ -393,7 +392,7 @@ ReleaseTest >> testRPackageOrganizer [
 		description: 'There are multiple (' , RPackageOrganizer allInstances size asString , ') instances of RPackageOrganizer'.
 
 	self
-		assert: RPackageOrganizer allInstances first == Smalltalk organization
+		assert: RPackageOrganizer allInstances first == self packageOrganizer
 		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
 ]
 
@@ -505,7 +504,7 @@ ReleaseTest >> testUnknownProcesses [
 ReleaseTest >> testUnpackagedClasses [
 
 	| unpackagedClasses |
-	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (Smalltalk organization packageOf: each) packageName = RPackage defaultPackageName ].
+	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (self packageOrganizer packageOf: each) packageName = RPackage defaultPackageName ].
 	self assert: unpackagedClasses isEmpty description: (String streamContents: [ :s |
 			 s nextPutAll: 'Found the following unpackaged classes: '.
 			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])
@@ -515,7 +514,7 @@ ReleaseTest >> testUnpackagedClasses [
 ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 
 	| unpackagePackage |
-	unpackagePackage := Smalltalk organization packageNamed: RPackage defaultPackageName.
+	unpackagePackage := self packageOrganizer packageNamed: RPackage defaultPackageName.
 	"The unpackage package should not have any defined class or extended classes"
 	self assertEmpty: unpackagePackage classes
 ]

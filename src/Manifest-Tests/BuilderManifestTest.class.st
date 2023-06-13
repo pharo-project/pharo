@@ -37,6 +37,7 @@ BuilderManifestTest >> tearDown [
 { #category : #tests }
 BuilderManifestTest >> testAddAllFalsePositive [
 	| manifestBuilder array |
+	<ignoreNotImplementedSelectors: #(ruletestV0FalsePositive)>
 	array := {MFClassA . MFClassB}.
 	manifestBuilder := TheManifestBuilder of: MFClassA.
 	manifestBuilder installFalsePositiveOf: 'test' version: 0.
@@ -64,6 +65,7 @@ BuilderManifestTest >> testAddAllFalsePositive [
 { #category : #tests }
 BuilderManifestTest >> testAddAllToDo [
 	| manifestBuilder array |
+	<ignoreNotImplementedSelectors: #(ruletestV0TODO)>
 	array := {MFClassA . MFClassB}.
 	manifestBuilder := TheManifestBuilder of: MFClassA.
 	manifestBuilder installToDoOf: 'test' version: 0.
@@ -353,6 +355,7 @@ BuilderManifestTest >> testIsFalsePositive [
 { #category : #tests }
 BuilderManifestTest >> testResetFalsePositive [
 	| manifestBuilder array |
+	<ignoreNotImplementedSelectors: #(ruletestV0FalsePositive)>
 	array := {MFClassA . MFClassB}.
 	manifestBuilder := TheManifestBuilder of: MFClassA.
 	manifestBuilder installFalsePositiveOf: 'test' version: 0.
@@ -370,6 +373,7 @@ BuilderManifestTest >> testResetFalsePositive [
 { #category : #tests }
 BuilderManifestTest >> testResetToDo [
 	| manifestBuilder array |
+	<ignoreNotImplementedSelectors: #(ruletestV0TODO)>
 	array := {MFClassA . MFClassB}.
 	manifestBuilder := TheManifestBuilder of: MFClassA.
 	manifestBuilder installToDoOf: 'test' version: 0.

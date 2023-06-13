@@ -599,7 +599,7 @@ TestRunner >> findClassesForPackages: aCollection [
 		ifTrue: [ ^ self baseClass withAllSubclasses asSet ].
 	items := aCollection
 		flatCollect: [ :category |
-			((Smalltalk organization listAtCategoryNamed: category)
+			((self packageOrganizer listAtCategoryNamed: category)
 				collect: [ :each | Smalltalk globals at: each ])
 				select: [ :each | each includesBehavior: self baseClass ] ].
 	^ items asSet
@@ -613,7 +613,7 @@ TestRunner >> findPackages [
 		each category ifNotNil: [ :category |
 			visible add: category ] ].
 	^ Array streamContents: [ :stream |
-		Smalltalk organization categories do: [ :each |
+		self packageOrganizer categories do: [ :each |
 			((visible includes: each)
 					and: [ packagePattern isNil or: [ (packagePattern matchesIn: each) isNotEmpty]])
 				ifTrue: [ stream nextPut: each ] ] ]

@@ -20,12 +20,6 @@ Class {
 	#category : #'Refactoring-UI'
 }
 
-{ #category : #initialization }
-RBPushDownMethodInSomeClassesDriver class >> model: aRBNamespace scopes: refactoringScopes pushDown: methods [
-
-	^ self new model: aRBNamespace scopes: refactoringScopes pushDown: methods
-]
-
 { #category : #execution }
 RBPushDownMethodInSomeClassesDriver >> execute [
 

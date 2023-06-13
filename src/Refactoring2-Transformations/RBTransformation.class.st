@@ -55,12 +55,6 @@ RBTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
 
-{ #category : #testing }
-RBTransformation class >> isTransformation [
-
-	^ false
-]
-
 { #category : #converting }
 RBTransformation >> asRefactoring [
 
@@ -146,6 +140,12 @@ RBTransformation >> preconditionChecking [
 RBTransformation >> preconditionChecking: aBoolean [
 
 	preconditionChecking := aBoolean
+]
+
+{ #category : #preconditions }
+RBTransformation >> preconditions [
+
+	^ self emptyCondition
 ]
 
 { #category : #executing }

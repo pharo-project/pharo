@@ -31,35 +31,47 @@ RBTemporaryToInstanceVariableParametrizedTest >> constructor [
 { #category : #running }
 RBTemporaryToInstanceVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #'failure tests' }
-RBTemporaryToInstanceVariableParametrizedTest >> testHierarchyDefinesVarableNamedAsTemporary [
+RBTemporaryToInstanceVariableParametrizedTest >> testFailureHierarchyDefinesVarableNamedAsTemporary [
+
 	| class |
 	self addClassHierarchy.
 	class := model classNamed: #Foo.
-	self shouldWarn: (self createRefactoringWithArguments:
-		{ class . #someMethod . 'foo' })
+	self shouldWarn: (self createRefactoringWithArguments: {
+				 class.
+				 #someMethod.
+				 'foo' })
 ]
 
 { #category : #'failure tests' }
-RBTemporaryToInstanceVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ RBBasicLintRuleTestData . #checkClass: .'asdf' }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ RBBasicLintRuleTestData . #checkClass1: . 'aSmalllintContext' })
+RBTemporaryToInstanceVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 RBBasicLintRuleTestData.
+				 #checkClass:.
+				 'asdf' }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 RBBasicLintRuleTestData.
+				 #checkClass1:.
+				 'aSmalllintContext' })
 ]
 
 { #category : #'failure tests' }
-RBTemporaryToInstanceVariableParametrizedTest >> testRedefinedTemporary [
+RBTemporaryToInstanceVariableParametrizedTest >> testFailureRedefinedTemporary [
+
 	| class |
 	class := model classNamed: #Foo.
 	class
-		compile: 'someMethod | instVarName1 | instVarName1 := 4. ^instVarName1'
-		classified: #(#accessing).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ class . #someMethod . 'instVarName1' })
+		compile:
+		'someMethod | instVarName1 | instVarName1 := 4. ^instVarName1'
+		classified: #( #accessing ).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 class.
+				 #someMethod.
+				 'instVarName1' })
 ]
 
 { #category : #tests }

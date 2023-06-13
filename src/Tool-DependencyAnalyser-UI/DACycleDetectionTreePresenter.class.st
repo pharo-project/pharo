@@ -17,7 +17,7 @@ Class {
 { #category : #'instance creation' }
 DACycleDetectionTreePresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
-			(Smalltalk organization packages
+			(self packageOrganizer packages
 				select: [ :package | match match: package packageName asString ]
 				thenCollect: [ :package | package packageName ]) )
 ]
@@ -32,7 +32,7 @@ DACycleDetectionTreePresenter class >> onPackagesNamed: aCollection [
 { #category : #'instance creation' }
 DACycleDetectionTreePresenter class >> system [
 	^ self onPackagesNamed:
-		(Smalltalk organization packages collect: [ :package | package packageName asString ])
+		(self packageOrganizer packages collect: [ :package | package packageName asString ])
 ]
 
 { #category : #accessing }

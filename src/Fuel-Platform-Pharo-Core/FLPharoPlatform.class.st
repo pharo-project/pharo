@@ -60,11 +60,6 @@ FLPharoPlatform >> isPharo [
 	^ true
 ]
 
-{ #category : #testing }
-FLPharoPlatform >> isSpur [
-	^ true
-]
-
 { #category : #'tests-compilation' }
 FLPharoPlatform >> newAnonymousSubclassOf: aClass named: aString [
 	^ aClass newAnonymousSubclass

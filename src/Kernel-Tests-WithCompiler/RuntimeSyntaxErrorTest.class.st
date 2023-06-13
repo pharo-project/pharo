@@ -6,7 +6,7 @@ Class {
 
 { #category : #tests }
 RuntimeSyntaxErrorTest >> testFaultyInstalledMethod [
-
+	<ignoreNotImplementedSelectors: #(faultyMethodExample)>
 	| method |
 	method := self class compiler
 		          permitFaulty: true;

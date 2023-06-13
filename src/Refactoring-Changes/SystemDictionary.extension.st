@@ -4,8 +4,8 @@ Extension { #name : #SystemDictionary }
 SystemDictionary >> defineClass: aDefinition withController: aController [
 
 	^ (self class compiler
-		source: aDefinition;
-		requestor: aController;
-		logged: true;
-		evaluate) fluidInstall
+			source: aDefinition;
+			requestor: aController;
+			logged: true;
+			evaluate) fluidInstall
 ]

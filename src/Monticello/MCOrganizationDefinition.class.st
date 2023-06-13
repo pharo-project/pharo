@@ -147,5 +147,5 @@ MCOrganizationDefinition >> summary [
 { #category : #unloading }
 MCOrganizationDefinition >> unload [
 
-	categories do: [ :category | (Smalltalk organization isEmptyCategoryNamed: category) ifTrue: [ Smalltalk organization removeCategory: category ] ]
+	categories do: [ :category | (self packageOrganizer isEmptyCategoryNamed: category) ifTrue: [ self packageOrganizer removeCategory: category ] ]
 ]

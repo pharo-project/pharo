@@ -30,7 +30,7 @@ MetacelloAtomicMonticelloResource >> setUpDependency [
 	| reference |
 	reference := GoferVersionReference name: 'GoferUmbrella-dkh.4'.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -44,10 +44,10 @@ MetacelloAtomicMonticelloResource >> setUpDependency [
 				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol instVarNames: #() comment: '')))
 		dependencies: (Array 
 				with: (MCVersionDependency 
-						package: (MetacelloTestsMCPackage new name: 'GoferBarDependency') 
+						package: (MCPackage new name: 'GoferBarDependency') 
 						info: (monticelloRepository versionInfoFromVersionNamed: 'GoferBarDependency-lr.30')) 
 				with: (MCVersionDependency 
-						package: (MetacelloTestsMCPackage new name: 'GoferFooDependency') 
+						package: (MCPackage new name: 'GoferFooDependency') 
 						info: (monticelloRepository versionInfoFromVersionNamed: 'GoferFooDependency-lr.30'))))
 ]
 
@@ -60,7 +60,7 @@ MetacelloAtomicMonticelloResource >> setUpMonticelloRepository [
 		reference := assoc key.
 		superclassName := assoc value.
 		monticelloRepository basicStoreVersion: (MCVersion new
-			setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+			setPackage:  (MCPackage new name: reference packageName)
 			info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -82,7 +82,7 @@ MetacelloAtomicMonticelloResource >> setUpNewerDependency [
 	| reference |
 	reference := GoferVersionReference name: 'GoferUmbrella-lr.5'.
 	monticelloRepository basicStoreVersion: (MCVersion new
-		setPackage:  (MetacelloTestsMCPackage new name: reference packageName)
+		setPackage:  (MCPackage new name: reference packageName)
 		info: (MCVersionInfo
 				name: reference name
 				id: UUID new
@@ -96,10 +96,10 @@ MetacelloAtomicMonticelloResource >> setUpNewerDependency [
 				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol instVarNames: #() comment: '')))
 		dependencies: (Array 
 				with: (MCVersionDependency 
-						package: (MetacelloTestsMCPackage new name: 'GoferBarDependency') 
+						package: (MCPackage new name: 'GoferBarDependency') 
 						info: (monticelloRepository versionInfoFromVersionNamed: 'GoferBarDependency-lr.35')) 
 				with: (MCVersionDependency 
-						package: (MetacelloTestsMCPackage new name: 'GoferFooDependency') 
+						package: (MCPackage new name: 'GoferFooDependency') 
 						info: (monticelloRepository versionInfoFromVersionNamed: 'GoferFooDependency-lr.35'))))
 ]
 

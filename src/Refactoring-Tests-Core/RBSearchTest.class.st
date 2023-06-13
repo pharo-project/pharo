@@ -5,7 +5,7 @@ Class {
 		'classSearches',
 		'currentSelector'
 	],
-	#category : #'Refactoring-Tests-Core-Base'
+	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #accessing }

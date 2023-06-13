@@ -148,7 +148,11 @@ BitBlt class >> destForm: df sourceForm: sf halftoneForm: hf combinationRule: cr
 
 { #category : #'class initialization' }
 BitBlt class >> initialize [
-	self recreateColorMaps
+
+	self recreateColorMaps.
+
+	"Graphics-Primitives packages adds some caches to Color in order to speed up some things. Those caches needs to be invalidated at shut down so we register the class to the startup list."
+	SessionManager default registerGuiClassNamed: #Color
 ]
 
 { #category : #private }

@@ -135,3 +135,19 @@ RubEditingAreaTest >> testMouseMoveAfterDoubleClick [
 	self assert: area markBlock stringIndex equals: 9.
 	self assert: area pointBlock stringIndex equals: 17
 ]
+
+{ #category : #'tests - accessing selection' }
+RubEditingAreaTest >> testSelectAllWithDoubleClickAfterLastLine [
+	| text index buttons |
+	text := 'one
+two
+three
+four'.
+	area setTextWith: text.
+	index := text size + 20. "an index out of bounds of string"
+	buttons := MouseButtonEvent redButton.
+	position := 20@100.
+	area simulateClickWith: buttons position: position.
+	self sendDoubleClickAt: index withShift: false.
+	self assert: area selection equals: text.
+]

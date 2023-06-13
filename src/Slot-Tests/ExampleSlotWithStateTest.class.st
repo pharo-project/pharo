@@ -17,6 +17,7 @@ ExampleSlotWithStateTest >> testExampleClassSide [
 { #category : #tests }
 ExampleSlotWithStateTest >> testExampleSlotWithState [
 	| slot |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => ExampleSlotWithState.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).

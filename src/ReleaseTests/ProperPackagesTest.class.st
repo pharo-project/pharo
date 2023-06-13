@@ -20,7 +20,7 @@ ProperPackagesTest >> testPackageExtensionsStartsWithProperPackageName [
 	| condition badCases |
 	self flag: #CompileMethodProtocolMiration.
 	condition := [ :protocol | (protocol beginsWith: '*') and: [ protocol second isLowercase ] ].
-	badCases := CompiledMethod allInstances select: [ :method | method protocol isNotNil and: [ condition value: method protocol ] ].
+	badCases := CompiledMethod allInstances select: [ :method | method protocol isNotNil and: [ condition value: method protocolName ] ].
 
 	self assert: badCases isEmpty
 ]
@@ -30,7 +30,7 @@ ProperPackagesTest >> testProperClassTagCasing [
 
 	| violations |
 	violations := OrderedCollection new.
-	Smalltalk organization packages do: [ :package |
+	self packageOrganizer packages do: [ :package |
 		package classTags do: [ :classTag | classTag name first isLowercase ifTrue: [ violations add: package -> classTag ] ] ].
 	self assert: violations isEmpty description: 'Class Tags should be uppercase'
 ]

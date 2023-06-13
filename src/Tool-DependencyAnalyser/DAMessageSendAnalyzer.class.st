@@ -43,13 +43,13 @@ DAMessageSendAnalyzer >> implementedMessages [
 
 	^ (self packageStaticDependencies
 		   add: self packageName;
-		   yourself) flatCollect: [ :name | (Smalltalk organization packageNamed: name) selectors ]
+		   yourself) flatCollect: [ :name | (self packageOrganizer packageNamed: name) selectors ]
 ]
 
 { #category : #computing }
 DAMessageSendAnalyzer >> implementedMessagesWithManuallyResolvedDependencies [
 
-	^ (self manuallyResolvedDependencies flatCollect: [ :name | (Smalltalk organization packageNamed: name) selectors ] as: Set)
+	^ (self manuallyResolvedDependencies flatCollect: [ :name | (self packageOrganizer packageNamed: name) selectors ] as: Set)
 		  addAll: self implementedMessages;
 		  yourself
 ]
@@ -79,7 +79,7 @@ DAMessageSendAnalyzer >> missingMethods [
 DAMessageSendAnalyzer >> missingMethodsImplementedIn: aPackageName [
 
 	| rPackage |
-	rPackage := Smalltalk organization packageNamed: aPackageName ifAbsent: [
+	rPackage := self packageOrganizer packageNamed: aPackageName ifAbsent: [
 		            DAUnknownManuallyResolvedPackage signalOn: aPackageName.
 		            ^ self missingMethods ].
 

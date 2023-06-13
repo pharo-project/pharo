@@ -320,7 +320,8 @@ CompletionEngine >> openMenuForced: forced [
 
 	theMenu isClosed ifFalse: [ 
 		menuMorph := theMenu.
-		theMenu showDetail ]
+		NECPreferences showCompletionDetails ifTrue: [ 
+			theMenu showDetail ] ]
 ]
 
 { #category : #replacement }

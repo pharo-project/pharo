@@ -21,7 +21,7 @@ TraitMethodDescriptionTest >> testConflictMethodCreation [
 	"Generate conflicting methods between t1 and t2
 	and check the resulting method in Trait t5 (or c2).
 	Also test selectors like foo:x (without space) or selectors with CRs."
-
+		<ignoreNotImplementedSelectors: #(zork: m12 zork1:zork2: )>
 	"unary"
 
 	self t2 compile: 'm12 ^false'.

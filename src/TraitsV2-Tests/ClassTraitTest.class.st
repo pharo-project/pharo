@@ -8,7 +8,7 @@ Class {
 ClassTraitTest >> testChanges [
 	"Test the most important features to ensure that
 	general functionality of class traits are working."
-
+	<ignoreNotImplementedSelectors: #(m1ClassSide)>
 	| classTrait |
 	classTrait := self t1 classTrait.
 	self deny: (self t5 classSide includesSelector: #m1ClassSide).
@@ -30,7 +30,7 @@ ClassTraitTest >> testChanges [
 { #category : #tests }
 ClassTraitTest >> testConflictsAliasesAndExclusions [
 	"conflict"
-
+	<ignoreNotImplementedSelectors: #(m2ClassSideAlias1: m2ClassSideAlias2:)>
 	self t1 classTrait compile: 'm2ClassSide: x ^99' classified: 'mycategory'.
 	self assert: (self t1 classTrait includesLocalSelector: #m2ClassSide:).
 	self assert: (self t5 classTrait >> #m2ClassSide:) isConflict.
@@ -50,6 +50,7 @@ ClassTraitTest >> testConflictsAliasesAndExclusions [
 { #category : #tests }
 ClassTraitTest >> testInitialization [
 	| classTrait |
+	<ignoreNotImplementedSelectors: #(m2ClassSide:)>
 	classTrait := self t1 classTrait.
 	self assert: self t1 hasClassSide.
 	self assert: self t1 classTrait equals: classTrait.

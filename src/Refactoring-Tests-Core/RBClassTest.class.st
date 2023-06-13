@@ -7,7 +7,7 @@ Class {
 		'newClass',
 		'messageNodeClass'
 	],
-	#category : #'Refactoring-Tests-Core-Base'
+	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #running }

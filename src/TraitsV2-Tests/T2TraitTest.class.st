@@ -101,7 +101,7 @@ T2TraitTest >> testClassTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 { #category : #tests }
 T2TraitTest >> testClassTraits [
 	| t1 t2 aClass |
-
+	<ignoreNotImplementedSelectors: #(otherSelector otherSelector2 anAlias aSelector)>
 	t1 := self newTrait: #T1 with: #().
 	t2 := self newTrait: #T2 with: #().
 
@@ -166,6 +166,7 @@ T2TraitTest >> testEmptyCompositionManagesTEmpty [
 { #category : #tests }
 T2TraitTest >> testIndirectSequence [
 	| t1 t2 t3 c1 obj |
+	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2)>
 
 	t1 := self createT1.
 	t2 := self createT2.
@@ -323,6 +324,7 @@ T2TraitTest >> testSelectorsWithExplicitOriginNoTrait [
 { #category : #tests }
 T2TraitTest >> testSequence [
 	| t1 t2 c1 obj |
+	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2 )>
 
 	t1 := self createT1.
 	t2 := self createT2.

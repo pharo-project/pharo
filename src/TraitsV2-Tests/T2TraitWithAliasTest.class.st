@@ -22,7 +22,7 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsIncludedInClass [
 T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 
 	| t1 c1 obj |
-
+	<ignoreNotImplementedSelectors: #(m1 m2)>
 	t1 := self newTrait: #T1 with: #().
 	t1 compile: 'm1 ^ 1'.
 
