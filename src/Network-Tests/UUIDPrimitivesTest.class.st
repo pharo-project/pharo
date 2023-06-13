@@ -29,7 +29,7 @@ UUIDPrimitivesTest >> testComparison [
 UUIDPrimitivesTest >> testCreation [
 	| uuid |
 	uuid := UUID new.
-	self assert: uuid size equals: 16.
+	self assert: uuid uuidData size equals: 16.
 	self deny: uuid isNilUUID.
 	self assert: uuid asString size equals: 36
 ]
@@ -47,15 +47,16 @@ UUIDPrimitivesTest >> testCreationEquality [
 
 { #category : #tests }
 UUIDPrimitivesTest >> testCreationFromString [
+
 	| uuid string |
 	string := UUID nilUUID asString.
 	uuid := UUID fromString: string.
-	self assert: uuid size equals: 16.
+	self assert: uuid uuidData size equals: 16.
 	self assert: uuid equals: UUID nilUUID.
 	self assert: uuid isNilUUID.
 	self assert: uuid asString size equals: 36.
-	self assert: uuid asArray asSet size equals: 1.
-	self assert: (uuid asArray asSet asArray at: 1) equals: 0
+	self assert: uuid uuidData asArray asSet size equals: 1.
+	self assert: (uuid uuidData asArray asSet asArray at: 1) equals: 0
 ]
 
 { #category : #tests }
@@ -84,19 +85,20 @@ UUIDPrimitivesTest >> testCreationFromStringNotNil [
 	| uuid string |
 	string := UUID new asString.
 	uuid := UUID fromString: string.
-	self assert: uuid size equals: 16.
+	self assert: uuid uuidData size equals: 16.
 	self assert: uuid asString size equals: 36
 ]
 
 { #category : #tests }
 UUIDPrimitivesTest >> testCreationNil [
+
 	| uuid |
 	uuid := UUID nilUUID.
-	self assert: uuid size equals: 16.
+	self assert: uuid uuidData size equals: 16.
 	self assert: uuid isNilUUID.
 	self assert: uuid asString size equals: 36.
-	self assert: uuid asArray asSet size equals: 1.
-	self assert: (uuid asArray asSet asArray at: 1) equals: 0
+	self assert: uuid uuidData asArray asSet size equals: 1.
+	self assert: (uuid uuidData asArray asSet asArray at: 1) equals: 0
 ]
 
 { #category : #tests }
