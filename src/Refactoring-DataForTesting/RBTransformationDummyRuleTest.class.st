@@ -290,10 +290,6 @@ RBTransformationDummyRuleTest >> isEmpty [
 	^builder changes isEmpty
 ]
 
-{ #category : #'as yet unclassified' }
-RBTransformationDummyRuleTest >> newUnclassifiedMethod [
-]
-
 { #category : #rules }
 RBTransformationDummyRuleTest >> parseTreeRewriter [
 	^ RBParseTreeRewriter new
