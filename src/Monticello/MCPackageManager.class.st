@@ -92,20 +92,20 @@ MCPackageManager class >> classRenamed: anEvent [
 ]
 
 { #category : #accessing }
-MCPackageManager class >> ensureSystemPackageNamed: aPackageName [
-	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package."
+MCPackageManager class >> forPackage: aPackage [
 
-	self packageOrganizer packageNamedIgnoreCase: aPackageName ifAbsent: [ self packageOrganizer ensureExistAndRegisterPackageNamed: aPackageName ]
+	^ self forPackage: aPackage packageOrganizer: self packageOrganizer
 ]
 
 { #category : #accessing }
-MCPackageManager class >> forPackage: aPackage [
+MCPackageManager class >> forPackage: aPackage packageOrganizer: aPackageOrganizer [
 
 	^ self registry at: aPackage ifAbsent: [
 		  | mgr |
 		  mgr := self new initializeWithPackage: aPackage.
 		  self registry at: aPackage put: mgr.
-		  self ensureSystemPackageNamed: aPackage name.
+		  "When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package."
+		  aPackageOrganizer packageNamedIgnoreCase: aPackage name ifAbsent: [ aPackageOrganizer ensureExistAndRegisterPackageNamed: aPackage name ].
 		  self announcer announce: (MCWorkingCopyCreated workingCopy: mgr package: aPackage).
 		  mgr ]
 ]
