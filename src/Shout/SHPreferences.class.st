@@ -164,11 +164,8 @@ SHPreferences class >> setStyleTable: anArray [
 
 { #category : #settings }
 SHPreferences class >> setStyleTableNamed: aString [
-	self setStyleTable: (((Pragma allNamed: #styleTable: in: SHRBTextStyler class)
-		detect: [ :each | (each argumentAt: 1) = aString ])
-		method
-			valueWithReceiver: SHRBTextStyler class
-			arguments: #())
+
+	self setStyleTable: (SHRBTextStyler styleTableNamed: aString)
 ]
 
 { #category : #settings }
