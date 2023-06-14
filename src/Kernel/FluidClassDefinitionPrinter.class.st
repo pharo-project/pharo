@@ -293,8 +293,8 @@ FluidClassDefinitionPrinter >> metaclassDefinitionString [
 			ifNil: [ strm nextPutAll: 'ProtoObject ' ].
 		self lastTraitsOn: strm.
 		self class displayEmptySlots
-				ifTrue: [ self slotsOnLast: strm ]
-		  		ifFalse: [forClass slots ifNotEmpty: [ self slotsOnLast: strm ]]]
+				ifTrue: [ self lastSlotsOn: strm ]
+		  		ifFalse: [forClass slots ifNotEmpty: [ self lastSlotsOn: strm ]]]
 ]
 
 { #category : #'elementary operations' }
@@ -390,17 +390,8 @@ FluidClassDefinitionPrinter >> slotShiftOn: aStream [
 FluidClassDefinitionPrinter >> slotsOn: s [
 	"uses: can the last part of a definition so watch out for terminating ;"
 
-	self slotsOnLast: s.
+	self lastSlotsOn: s.
 	s nextPutAll: ';'
-]
-
-{ #category : #'elementary operations' }
-FluidClassDefinitionPrinter >> slotsOnLast: stream [
-	"print slots, but no ;"
-
-	stream crtab;
-	  nextPutAll: 'slots: '.
-	self slotDefinitionsOn: stream.
 ]
 
 { #category : #'expanded double dispatch API' }
