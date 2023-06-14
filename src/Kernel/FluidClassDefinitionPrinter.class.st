@@ -292,7 +292,9 @@ FluidClassDefinitionPrinter >> metaclassDefinitionString [
 									nextPutAll: forClass name ] ]
 			ifNil: [ strm nextPutAll: 'ProtoObject ' ].
 		self lastTraitsOn: strm.
-		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ] ]
+		self class displayEmptySlots
+				ifTrue: [ self slotsOn: strm ]
+		  		ifFalse: [forClass slots ifNotEmpty: [ self slotsOn: strm ]]]
 ]
 
 { #category : #'elementary operations' }
