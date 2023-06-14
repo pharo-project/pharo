@@ -68,9 +68,8 @@ EpNewStateVisitor >> visitLogCommentModification: anEvent [
 
 { #category : #visitor }
 EpNewStateVisitor >> visitMethodAddition: aMethodCreatedChange [
-	^ self
-		printProtocol: aMethodCreatedChange protocol
-		sourceCode: aMethodCreatedChange sourceCode
+
+	^ self printProtocol: aMethodCreatedChange protocol sourceCode: aMethodCreatedChange sourceCode
 ]
 
 { #category : #visitor }

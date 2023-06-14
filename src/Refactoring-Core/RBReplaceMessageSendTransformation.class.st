@@ -35,10 +35,10 @@ RBReplaceMessageSendTransformation class >> basicMenuItemString [
 	^ 'Replace senders'
 ]
 
-{ #category : #accessing }
-RBReplaceMessageSendTransformation class >> kind [
+{ #category : #displaying }
+RBReplaceMessageSendTransformation class >> isTransformation [ 
 
-	^ 'Transformation'
+	^ true
 ]
 
 { #category : #'instance creation' }
@@ -141,7 +141,7 @@ RBReplaceMessageSendTransformation >> preconditions [
 		               oldSelector numArgs < newSelector numArgs ifTrue: [
 			               oldSelector numArgs + self initializers size
 			               = newSelector numArgs ifFalse: [
-				               self refactoringFailure:
+				               self refactoringError:
 					               'You don''t have the necessary initializers to replace senders.' ] ].
 		               true ])
 	              & (RBCondition definesSelector: oldSelector in: class)

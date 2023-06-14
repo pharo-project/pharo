@@ -98,21 +98,22 @@ MCMethodDefinitionTest >> testLoadAndUnload [
 MCMethodDefinitionTest >> testMethodDefinitionWithEmptyProtocolIsClassifiedAsAsYetUnclassified [
 
 	| methodDef |
-	methodDef := (MCMethodDefinition
-			className: #Object
-			classIsMeta: false
-			selector: #name
-			category: '' 
-			timeStamp: nil
-			source: 'name
-	^ self printString').
-	self assert: methodDef protocol equals: #'as yet unclassified'.
+	methodDef := MCMethodDefinition
+		             className: #Object
+		             classIsMeta: false
+		             selector: #name
+		             category: ''
+		             timeStamp: nil
+		             source: 'name
+	^ self printString'.
+	self assert: methodDef protocol equals: Protocol unclassified
 ]
 
 { #category : #testing }
 MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
 
 	| definition mockClass mockClassInstance |
+	<ignoreNotImplementedSelectors: #(override)>
 	mockClass := self mockClass.
 	mockClassInstance := mockClass new.
 	mockClass compile: 'override ^ 2' classified: '*' , self extensionPackageName.
@@ -123,7 +124,7 @@ MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
 	self assert: mockClassInstance override equals: 4.
 	definition unload.
 	self assert: mockClassInstance override equals: 2.
-	self assert: (mockClass >> #override) protocol equals: '*' , self extensionPackageName
+	self assert: (mockClass >> #override) protocolName equals: '*' , self extensionPackageName
 ]
 
 { #category : #testing }
@@ -144,6 +145,7 @@ MCMethodDefinitionTest >> testRevertOldMethod [
 MCMethodDefinitionTest >> testRevertOverrideMethod [
 
 	| definition mockClass mockClassInstance |
+	<ignoreNotImplementedSelectors: #(override)>
 	mockClass := self mockClass.
 	mockClassInstance := mockClass new.
 	mockClass compile: 'override ^ 1' classified: 'mocks'.

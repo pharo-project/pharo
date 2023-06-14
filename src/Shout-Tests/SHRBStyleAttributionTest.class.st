@@ -42,11 +42,7 @@ SHRBStyleAttributionTest >> setUp [
 SHRBStyleAttributionTest >> style: aText [
 
 	| ast |
-	ast := self class compiler
-		       source: aText asString;
-		       noPattern: false;
-		       class: self class;
-		       parse.
+	ast := self class compiler parse: aText asString.
 	styler style: aText ast: ast.
 
 	^ ast
@@ -403,6 +399,30 @@ SHRBStyleAttributionTest >> testDefaultStyle [
 	self style: aText.
 
 	self assertStyleOf: aText at: 2 shouldBe: #default
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testDeprecatedClass [
+
+	| aText |
+	aText := 'm ^ SHRBDeprecatedClassMock' asText.
+	self style: aText.
+
+	5 to: 27 do: [ :index | self assert: ((aText attributesAt: index) includes: TextEmphasis struckOut) ]
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testDeprecatedGlobalVariable [
+
+	[
+	| aText |
+	Smalltalk globals at: #SHRBDeprecatedGlobalVariable put: self class.
+	(Smalltalk globals lookupVar: #SHRBDeprecatedGlobalVariable) isDeprecated: true.
+	aText := 'm ^ SHRBDeprecatedGlobalVariable' asText.
+	self style: aText.
+
+	5 to: 32 do: [ :index | self assert: ((aText attributesAt: index) includes: TextEmphasis struckOut) ] ] ensure: [
+		Smalltalk globals removeKey: #SHRBDeprecatedGlobalVariable ifAbsent: [ "Do nothing. The test just crashed really really early." ] ]
 ]
 
 { #category : #tests }
@@ -829,6 +849,20 @@ SHRBStyleAttributionTest >> testThisContextStyle [
 		between: 3
 		and: 12
 		shouldBe: #thisContext
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testThisProcessStyle [
+
+	| aText |
+	aText := 'm thisProcess senders' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 3
+		and: 12
+		shouldBe: #thisProcess
 ]
 
 { #category : #tests }

@@ -20,19 +20,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> constructor [
 { #category : #running }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
-]
-
-{ #category : #'failure tests' }
-RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testBadInitializationCode [
-	self shouldFail: (self createRefactoringWithArguments:
-		{'Foo1' . RBLintRuleTestData . true . 'foo:'})
-]
-
-{ #category : #'failure tests' }
-RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testBadInitializationCode1 [
-	self shouldFail: (self createRefactoringWithArguments:
-		{'Foo1' . RBLintRuleTestData . true . '''string'})
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
@@ -62,6 +50,42 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingInst
 		equals: (self parseMethod: 'name ^name ifNil: [name := nil]')
 ]
 
+{ #category : #'failure tests' }
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadInitializationCode [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'Foo1'.
+				 RBLintRuleTestData.
+				 true.
+				 'foo:' })
+]
+
+{ #category : #'failure tests' }
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadInitializationCode1 [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'Foo1'.
+				 RBLintRuleTestData.
+				 true.
+				 '''string' })
+]
+
+{ #category : #'failure tests' }
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureNonExistantName [
+
+	self
+		shouldFail: (self createRefactoringWithArguments: {
+						 #Foo.
+						 RBBasicLintRuleTestData.
+						 true.
+						 nil });
+		shouldFail: (self createRefactoringWithArguments: {
+						 'foo'.
+						 RBBasicLintRuleTestData.
+						 true.
+						 nil })
+]
+
 { #category : #tests }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewClassVariableAccessors [
 	| ref class |
@@ -85,14 +109,4 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewInstanceV
 	self denyEmpty: ref changes changes.
 	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 ^foo1 ifNil: [foo1 := 123]').
 	self assert: (class parseTreeForSelector: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
-]
-
-{ #category : #'failure tests' }
-RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNonExistantName [
-
-	self
-		shouldFail: (self createRefactoringWithArguments:
-			{ #Foo . RBBasicLintRuleTestData . true . nil });
-		shouldFail: (self createRefactoringWithArguments:
-			{'foo' . RBBasicLintRuleTestData . true . nil })
 ]

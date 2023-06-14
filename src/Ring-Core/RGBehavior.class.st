@@ -165,16 +165,9 @@ RGBehavior >> addLocalMethod: anRGMethod [
 ]
 
 { #category : #'accessing - backend' }
-RGBehavior >> addMethodTag: aSymbol [
-
-	self announceDefinitionChangeDuring: [
-		self backend forBehavior addMethodTag: aSymbol to: self. ]
-]
-
-{ #category : #'accessing - backend' }
 RGBehavior >> addProtocol: aSymbol [
 
-	self addMethodTag: aSymbol
+	self announceDefinitionChangeDuring: [ self backend forBehavior addMethodTag: aSymbol to: self ]
 ]
 
 { #category : #'managing container' }
@@ -435,9 +428,11 @@ RGBehavior >> ensureLocalMethodNamed: aSymbol [
 { #category : #'queries - tags' }
 RGBehavior >> ensureMethodTagNamed: aSymbol [
 
-	^ self tagsForMethods detect: [ :each | each asSymbol = aSymbol ] ifNone: [
-		self addMethodTag: aSymbol.
-		aSymbol ]
+	^ self tagsForMethods
+		  detect: [ :each | each asSymbol = aSymbol ]
+		  ifNone: [
+			  self addProtocol: aSymbol.
+			  aSymbol ]
 ]
 
 { #category : #'queries - protocols' }
@@ -662,11 +657,6 @@ RGBehavior >> lookupVar: aName [
 	^ self allSlots
 		  detect: [ :slot | slot name == aName ]
 		  ifNone: [ self bindingOf: aName ]
-]
-
-{ #category : #lookup }
-RGBehavior >> lookupVar: aName declare: aBoolean [
-	^ self lookupVar: aName
 ]
 
 { #category : #resolving }

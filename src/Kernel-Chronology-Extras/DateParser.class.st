@@ -56,7 +56,7 @@ DateParser >> createDate [
 
 { #category : #'private - parsing' }
 DateParser >> currentMillenium [
-	^ (Date current year / 100) asInteger * 100
+	^ (Date current year // 100) * 100
 ]
 
 { #category : #'private - parsing' }

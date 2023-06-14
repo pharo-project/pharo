@@ -3,7 +3,7 @@ Tests for Reflective method
 "
 Class {
 	#name : #ReflectivityControlTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'tag',
 		'link'
@@ -13,7 +13,7 @@ Class {
 
 { #category : #tagging }
 ReflectivityControlTest >> recordLevel [
-	tag := Processor activeProcess level
+	tag := thisProcess level
 ]
 
 { #category : #tagging }
@@ -34,9 +34,6 @@ ReflectivityControlTest >> tagExec: aTag [
 { #category : #running }
 ReflectivityControlTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
-	"Force a recompilation to remove leaking ReflectiveMethods"
-	"TODO fail the test if things are leaking"
-	ReflectivityExamples recompile.
 	super tearDown
 ]
 
@@ -850,7 +847,7 @@ ReflectivityControlTest >> testConditionMetaLevel [
 	link := MetaLink new
 		metaObject: self;
 		selector: #tagExec:;
-		condition: [ self assert: Processor activeProcess level identicalTo: 1.
+		condition: [ self assert: thisProcess level identicalTo: 1.
 			true ];
 		level: 0;
 		arguments: #(#node).

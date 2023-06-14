@@ -30,6 +30,7 @@ TraitTest >> createTrait [
 { #category : #tests }
 TraitTest >> testAddAndRemoveMethodsFromSubtraits [
 	| aC2 |
+	<ignoreNotImplementedSelectors: #(m51)>
 	aC2 := self c2 new.
 	self assert: aC2 m51.
 	self t5 removeSelector: #m51.
@@ -44,6 +45,7 @@ TraitTest >> testAddAndRemoveMethodsFromSubtraits [
 { #category : #tests }
 TraitTest >> testAddAndRemoveMethodsInClassOrTrait [
 	| aC2 |
+	<ignoreNotImplementedSelectors: #(m51)>
 	aC2 := self c2 new.
 	self assert: aC2 m51.
 	self c2 compile: 'm51 ^123'.
@@ -232,6 +234,8 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsThe
 
 	"C9 inherits from Object. C10 inherits from C9.  Each Ci uses the trait Ti."
 
+
+	<ignoreNotImplementedSelectors: #(m1 m2)>
 	self t10 compile: 'm1 ^self explicitRequirement'.
 	self t10 compile: 'm2 self explicitRequirement'.
 	self t9 compile: 'm1 ^2'.
@@ -397,7 +401,7 @@ TraitTest >> testTraitRemoval [
 			self assertEmpty: aClass localSelectors.
 			aClass removeFromComposition: aTrait.
 			self assertEmpty: aClass localSelectors.
-			self assertEmpty: aClass organization allMethodSelectors.
+			self assertEmpty: aClass selectors.
 			self deny: aClass hasTraitComposition.
 			self deny: (aTrait traitUsers includes: aClass) ]
 				ensure: [ aClass removeFromSystem: false.

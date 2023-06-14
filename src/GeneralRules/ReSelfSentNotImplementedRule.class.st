@@ -21,12 +21,16 @@ ReSelfSentNotImplementedRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReSelfSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	| problemSends |
+	| problemSends ignored |
 	aMethod methodClass isTrait ifTrue: [ ^ self ].
 	problemSends :=
-		(aMethod sendNodes select: [ :msgSend | msgSend isSelfSend  | msgSend isSuperSend ])
+		(aMethod sendNodes select: [ :msgSend | msgSend isSelfSend or: [ msgSend isSuperSend ] ])
 			reject: [:msgSend | aMethod methodClass canUnderstand: (msgSend selector)].
-
+	
+	"if we know that the selector does not exist, we ignore"
+	ignored := aMethod allIgnoredNotImplementedSelectors.
+	problemSends := problemSends reject: [:each | ignored includes: each selector].
+	
 	problemSends do: [ :msgSend |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString)]
 ]

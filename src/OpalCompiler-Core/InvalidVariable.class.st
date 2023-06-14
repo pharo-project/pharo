@@ -20,13 +20,6 @@ InvalidVariable >> isInvalidVariable [
 	^true
 ]
 
-{ #category : #'read/write usage' }
-InvalidVariable >> isUninitialized [
-	"Not really initialized, but need to silence warnings"
-
-	^ false
-]
-
 { #category : #testing }
 InvalidVariable >> isUsed [
 	"Not really used, but need to silence warnings"

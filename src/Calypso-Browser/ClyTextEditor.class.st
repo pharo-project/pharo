@@ -56,19 +56,28 @@ ClyTextEditor >> notify: aString at: anInteger in: aStream [
 	textArea flashColor: self theme dangerBackgroundColor
 ]
 
-{ #category : #operations }
+{ #category : #'do-its' }
 ClyTextEditor >> printIt [
 	"Treat the current text selection as an expression; evaluate it. Insert the
 	description of the result of evaluation after the selection and then make
 	this description the new text selection."
 
-	| printString |
-	self
-		evaluateSelectionAndDo: [ :result |
-			printString := [ result asScriptResultStringInCalypso ]
-				on: Error
-				do: [ '<error in printString: try ''Inspect it'' to debug>' ].
-			self afterSelectionInsertAndSelect: printString ]
+	| pointerArea |
+	self evaluateSelectionAndDo: [ :result |
+		| popoverPresenter |
+		pointerArea := textArea cursor boundsInWorld.
+
+		popoverPresenter := SpPopoverPresenter new presenter:
+			                    (SpCodePopoverPrintPresenter
+				                     newCode: self
+				                     object: result).
+		popoverPresenter relativeTo: (SpPresenter new
+				 layout: SpBoxLayout new;
+				 build;
+				 yourself).
+		popoverPresenter bePositionRight.
+		popoverPresenter popupPointingTo: pointerArea.
+		popoverPresenter takeKeyboardFocus ]
 ]
 
 { #category : #operations }

@@ -212,7 +212,7 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	newMethod := CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment).
+	newMethod := CompiledMethod newMethod: aMethod bytecode size + CompiledMethod trailerSize header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 

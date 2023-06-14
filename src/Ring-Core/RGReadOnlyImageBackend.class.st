@@ -314,13 +314,13 @@ RGReadOnlyImageBackend >> tagsForMethod: anRGMethod do: aBlock [
 	| realMethod |
 
 	realMethod := self realMethodFor: anRGMethod.
-	{ realMethod protocol } do: aBlock
+	{ realMethod protocolName } do: aBlock
 ]
 
 { #category : #method }
 RGReadOnlyImageBackend >> tagsForMethodsFor: anRGBehavior do: aBlock [
 
-	(self realBehaviorFor: anRGBehavior) protocols do: aBlock
+	(self realBehaviorFor: anRGBehavior) protocolNames do: aBlock
 ]
 
 { #category : #method }

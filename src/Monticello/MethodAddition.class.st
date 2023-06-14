@@ -48,7 +48,7 @@ MethodAddition >> createCompiledMethod [
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethodOrNil := myClass compiledMethodAt: selector ifAbsent: [ nil ].
-	priorCategoryOrNil := myClass organization protocolNameOfElement: selector
+	priorCategoryOrNil := myClass protocolOfSelector: selector
 ]
 
 { #category : #operations }
@@ -60,7 +60,7 @@ MethodAddition >> installMethod [
 { #category : #notifying }
 MethodAddition >> notifyObservers [
 	SystemAnnouncer uniqueInstance 
-		suspendAllWhile: [myClass organization classify: selector under: category].
+		suspendAllWhile: [myClass classify: selector under: category].
 	priorMethodOrNil 
 		ifNil: [ SystemAnnouncer uniqueInstance
 				methodAdded: compiledMethod
@@ -70,7 +70,7 @@ MethodAddition >> notifyObservers [
 						put: #Monticello ] ]
 		ifNotNil: [
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: priorCategoryOrNil.
-			priorCategoryOrNil = category ifFalse: [
+			priorCategoryOrNil name = category ifFalse: [
        			SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorCategoryOrNil ] ].
 	"The following code doesn't seem to do anything."
 	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide.

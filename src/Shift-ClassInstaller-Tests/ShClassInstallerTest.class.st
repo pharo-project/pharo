@@ -12,6 +12,12 @@ Class {
 }
 
 { #category : #'instance creation' }
+ShClassInstallerTest >> generatedClassesPackageName [
+
+	^ 'Shift-ClassInstallerTests-GeneratedPackage'
+]
+
+{ #category : #'instance creation' }
 ShClassInstallerTest >> newClass: className slots: slots [
 	^ self newClass: className superclass: Object slots: slots
 ]
@@ -30,59 +36,68 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 
 { #category : #'instance creation' }
 ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots metaclassSlots: metaclassSlots [
-	^ ShiftClassInstaller
-		make: [ :builder |
-			builder
-				name: className;
-				superclass: aSuperclass;
-				slots: slots;
-				classSlots: metaclassSlots;
-				sharedVariables: '';
-				sharedPools: '';
-				category: 'Shift-ClassInstaller-Tests' ]
+
+	^ ShiftClassInstaller make: [ :builder |
+		  builder
+			  name: className;
+			  superclass: aSuperclass;
+			  slots: slots;
+			  classSlots: metaclassSlots;
+			  sharedVariables: '';
+			  sharedPools: '';
+			  category: self generatedClassesPackageName ]
 ]
 
 { #category : #running }
 ShClassInstallerTest >> tearDown [
-	newClass ifNotNil: #removeFromSystem.
-	newClass2 ifNotNil: #removeFromSystem.
 
-	subClass ifNotNil: #removeFromSystem.
-	superClass ifNotNil: #removeFromSystem.
-	superClass2 ifNotNil: #removeFromSystem.
+	(self generatedClassesPackageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 
 	super tearDown
 ]
 
 { #category : #tests }
+ShClassInstallerTest >> testBuildingClassesWithSlotsClassifiesItsMethods [
+	"This is a regression test. 
+	What was happening before was that the slots were generating a method to initialize themselves and after that the old class organization was copied. The problem is that during the first class creation, this was reseting the protocol of the generated slot methods."
+
+	newClass := self newClass: #ShCITestClass slots: { (#anInstanceVariable => BooleanSlot) }.
+
+	self assertCollection: newClass selectors hasSameElements: { #initialize }.
+	self assert: (newClass protocolOfSelector: #initialize) isNotNil.
+
+	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
+
+	self assertCollection: newClass2 selectors hasSameElements: { #initialize }.
+	self assert: (newClass2 protocolOfSelector: #initialize) isNotNil
+]
+
+{ #category : #tests }
 ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
 
-	newClass := ShiftClassInstaller
-		make: [ :builder |
-			builder
-				name: #ShCITestSharedPool;
-				superclass: SharedPool;
-				sharedVariables: #(A B C);
-				category: 'Shift-ClassInstaller-Tests' ].
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #ShCITestSharedPool;
+			            superclass: SharedPool;
+			            sharedVariables: #( A B C );
+			            category: self generatedClassesPackageName ].
 
-	newClass2 := ShiftClassInstaller
-		make: [ :builder |
-			builder
-				name: #ShCITestClass;
-				sharedPools: 'ShCITestSharedPool';
-				category: 'Shift-ClassInstaller-Tests' ].
+	newClass2 := ShiftClassInstaller make: [ :builder |
+		             builder
+			             name: #ShCITestClass;
+			             sharedPools: 'ShCITestSharedPool';
+			             category: self generatedClassesPackageName ].
 
 	newClass2 compile: 'a ^A'.
 
 	self assert: ((newClass2 >> #a) literals at: 1) identicalTo: (newClass classVariableNamed: #A).
 
-	newClass := ShiftClassInstaller
-		make: [ :builder |
-			builder
-				name: #ShCITestSharedPool;
-				superclass: SharedPool;
-				sharedVariables: #(A B C D);
-				category: 'Shift-ClassInstaller-Tests' ].
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #ShCITestSharedPool;
+			            superclass: SharedPool;
+			            sharedVariables: #( A B C D );
+			            category: self generatedClassesPackageName ].
 
 	self assert: ((newClass2 >> #a) literals at: 1) identicalTo: (newClass classVariableNamed: #A)
 ]
@@ -153,17 +168,17 @@ ShClassInstallerTest >> testChangingSuperclassToOther [
 
 { #category : #tests }
 ShClassInstallerTest >> testClassWithComment [
-	newClass := ShiftClassInstaller
-		make: [ :builder |
-			builder
-				name: #SHClassWithComment;
-				superclass: Object;
-				slots: #();
-				sharedVariables: '';
-				sharedPools: '';
-				category: 'Shift-ClassInstaller-Tests';
-				comment: 'I have a comment';
-				commentStamp: 'anStamp' ].
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #SHClassWithComment;
+			            superclass: Object;
+			            slots: #(  );
+			            sharedVariables: '';
+			            sharedPools: '';
+			            category: self generatedClassesPackageName;
+			            comment: 'I have a comment';
+			            commentStamp: 'anStamp' ].
 
 	self assert: newClass comment equals: 'I have a comment'.
 	self assert: newClass commentStamp equals: 'anStamp'
@@ -196,13 +211,12 @@ ShClassInstallerTest >> testClassWithSlotHasInitializeMethodWithInitializeSlots 
 { #category : #tests }
 ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
 
-	newClass := ShiftClassInstaller
-		make: [ :builder |
-			builder
-				name: #ShCITestClass;
-				superclass: Object;
-				classSlots: {#aClassInstanceVariable => InstanceVariableSlot};
-				category: 'Shift-ClassInstaller-Tests' ].
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #ShCITestClass;
+			            superclass: Object;
+			            classSlots: { (#aClassInstanceVariable => InstanceVariableSlot) };
+			            category: self generatedClassesPackageName ].
 
 	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
 
@@ -281,13 +295,13 @@ ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 	newClass compile: 'aMethod ^ 42' classified: #'useful-message' notifying: nil.
 	newClass class compile: 'aClassMethod ^ 21' classified: #'useful-message' notifying: nil.
 
-	self assert: (newClass >> #aMethod) protocol equals: #'useful-message'.
-	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'.
+	self assert: (newClass >> #aMethod) protocolName equals: #'useful-message'.
+	self assert: (newClass class >> #aClassMethod) protocolName equals: #'useful-message'.
 
 	newClass := self newClass: #ShCITestClass superclass: subClass slots: #(aSlot).
 
-	self assert: (newClass >> #aMethod) protocol equals: #'useful-message'.
-	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'
+	self assert: (newClass >> #aMethod) protocolName equals: #'useful-message'.
+	self assert: (newClass class >> #aClassMethod) protocolName equals: #'useful-message'
 ]
 
 { #category : #tests }

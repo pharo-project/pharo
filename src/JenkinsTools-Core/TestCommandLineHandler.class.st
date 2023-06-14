@@ -62,17 +62,22 @@ TestCommandLineHandler >> addPackagesMatching: aString to: aSet [
 ]
 
 { #category : #accessing }
+TestCommandLineHandler >> addPackagesMatchingBlock: aBlock to: aSet [
+	"Ideally we should not sort the packages but the Pharo tests are currently breaking if the order is changed. We should try to find the origin of this problem, fix it and remove the sorting."
+
+	self packageOrganizer packageNames asSortedCollection do: [ :packageName | (aBlock value: packageName) ifTrue: [ aSet add: packageName ] ]
+]
+
+{ #category : #accessing }
 TestCommandLineHandler >> addPackagesMatchingGlob: aGlobString to: aSet [
-	RPackage organizer packageNames do: [ :packageName|
-		(aGlobString match: packageName)
-			ifTrue: [ aSet add: packageName ]]
+
+	self addPackagesMatchingBlock: [ :packageName | aGlobString match: packageName ] to: aSet
 ]
 
 { #category : #accessing }
 TestCommandLineHandler >> addPackagesMatchingRegex: aRegex to: aSet [
-	RPackage organizer packageNames do: [ :packageName|
-		(aRegex matches: packageName)
-			ifTrue: [ aSet add: packageName ]]
+
+	self addPackagesMatchingBlock: [ :packageName | aRegex matches: packageName ] to: aSet
 ]
 
 { #category : #private }

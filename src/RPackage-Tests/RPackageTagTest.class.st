@@ -125,7 +125,7 @@ RPackageTagTest >> testPromoteAsRPackageWithExtension [
 	self assert: packagePromoted notNil.
 	self assert: (packagePromoted classes includes: class).
 	self assert: (packagePromoted extensionMethods includes: classOther>>#bar).
-	self assert: (classOther>>#bar) protocol equals: '*Test1-TAG1'.
+	self assert: (classOther>>#bar) protocolName equals: '*Test1-TAG1'.
 	self deny: (packageOriginal classes includes: class).
 	self deny: (packageOriginal extensionMethods includes: classOther>>#bar)
 ]

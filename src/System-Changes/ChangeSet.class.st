@@ -511,8 +511,11 @@ ChangeSet >> addCoherency: className [
 ChangeSet >> adoptSelector: aSelector forClass: aClass [
 	"Adopt the given selector/class combination as a change in the receiver"
 
-	self noteNewMethod: (aClass compiledMethodAt: aSelector)
-			forClass: aClass selector: aSelector priorMethod: nil
+	self
+		noteNewMethod: (aClass compiledMethodAt: aSelector)
+		forClass: aClass
+		selector: aSelector
+		priorMethod: nil
 ]
 
 { #category : #'moving changes' }
@@ -657,16 +660,13 @@ ChangeSet >> changedMessageList [
 { #category : #'file in/out' }
 ChangeSet >> checkForSlips [
 	"Return a collection of method refs with possible debugging code in them."
+
 	| slips |
 	slips := OrderedCollection new.
-	self changedClasses do:
-		[:aClass |
-		(self methodChangesAtClass: aClass name) associationsDo:
-				[:mAssoc | | method | (#(remove addedThenRemoved) includes: mAssoc value) ifFalse:
-					[method := aClass compiledMethodAt: mAssoc key ifAbsent: [nil].
-					method ifNotNil:
-						[(self hasReportableSlip: method)
-							ifTrue: [ slips add: (aClass >> mAssoc key) ]]]]].
+	self changedClasses do: [ :aClass |
+		(self methodChangesAtClass: aClass name) associationsDo: [ :mAssoc |
+			(#( remove addedThenRemoved ) includes: mAssoc value) ifFalse: [
+				aClass compiledMethodAt: mAssoc key ifPresent: [ :method | (self hasReportableSlip: method) ifTrue: [ slips add: aClass >> mAssoc key ] ] ] ] ].
 	^ slips
 ]
 
@@ -943,7 +943,7 @@ ChangeSet >> fileOutPSFor: class on: stream [
 				cr ].
 	(classRecord includesChangeType: #reorganize)
 		ifFalse: [ ^ self ].
-	class fileOutOrganizationOn: stream.
+	class fileOutProtocolsOn: stream.
 	stream cr
 ]
 
@@ -1107,42 +1107,7 @@ ChangeSet >> methodRemoved: anEvent [
 		removeSelector: anEvent selector
 		class: anEvent methodClass
 		priorMethod: anEvent method
-		lastMethodInfo: {
-				anEvent method sourcePointer.
-				anEvent protocol }
-]
-
-{ #category : #testing }
-ChangeSet >> methodsWithoutClassifications [
-	"Return a collection representing methods in the receiver which have not been categorized"
-
-	| slips notClassified |
-
-	notClassified := {	Protocol unclassified. #all}.
-	slips := OrderedCollection new.
-	self changedClasses do:
-		[:aClass |
-		(self methodChangesAtClass: aClass name) associationsDo:
-				[:mAssoc | | aSelector | (aClass includesSelector:  (aSelector := mAssoc key)) ifTrue:
-						[(notClassified includes: (aClass organization protocolNameOfElement: aSelector))
-								ifTrue: [slips add: aClass name , ' ' , aSelector]]]].
-	^ slips
-]
-
-{ #category : #'moving changes' }
-ChangeSet >> methodsWithoutComments [
-	"Return a collection representing methods in the receiver which have no precode comments"
-
-	| slips |
-	slips := OrderedCollection new.
-	self changedClasses do:
-		[:aClass |
-		(self methodChangesAtClass: aClass name) associationsDo:
-				[:mAssoc | (#(remove addedThenRemoved) includes: mAssoc value) ifFalse:
-					[(aClass includesSelector:  mAssoc key) ifTrue:
-						[(aClass>>mAssoc key) hasComment
-								ifTrue: [slips add: aClass name , ' ' , mAssoc key]]]]].
-	^ slips
+		lastSourcePointer: anEvent method sourcePointer
 ]
 
 { #category : #accessing }
@@ -1342,14 +1307,11 @@ ChangeSet >> removePreamble [
 ]
 
 { #category : #'change logging' }
-ChangeSet >> removeSelector: selector class: class priorMethod: priorMethod lastMethodInfo: info [
-	"Include indication that a method has been forgotten.
-	info is a pair of the source code pointer and message category
-	for the method that was removed."
+ChangeSet >> removeSelector: selector class: class priorMethod: priorMethod lastSourcePointer: lastSourcePointer [
+	"Include indication that a method has been forgotten."
 
-	class wantsChangeSetLogging ifFalse: [^ self].
-	(self changeRecorderFor: class)
-		noteRemoveSelector: selector priorMethod: priorMethod lastMethodInfo: info
+	class wantsChangeSetLogging ifFalse: [ ^ self ].
+	(self changeRecorderFor: class) noteRemoveSelector: selector priorMethod: priorMethod lastSourcePointer: lastSourcePointer
 ]
 
 { #category : #'method changes' }

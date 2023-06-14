@@ -59,9 +59,9 @@ RBAddMethodRefactoring >> preconditions [
 		parseMethod: source
 		onError: [ :string :position |
 			^ RBCondition
-				withBlock: [ self refactoringFailure: 'The sources could not be parsed' ] ].
+				withBlock: [ self refactoringError: 'The sources could not be parsed' ] ].
 	selector := method selector.
-	selector ifNil: [ self refactoringFailure: 'Invalid source.' ].
+	selector ifNil: [ self refactoringError: 'Invalid source.' ].
 	^ (RBCondition canUnderstand: selector in: class) not
 ]
 

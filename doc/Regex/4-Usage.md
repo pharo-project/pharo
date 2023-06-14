@@ -164,7 +164,7 @@ subexpressions with these indices:
 4.	`c|d`
 
 After a successful match, the matcher can report what part of the
-original string matched what subexpression. It understandards these
+original string matched what subexpression. It understands these
 messages:
 
 `RxMatcher>>#subexpressionCount` answers the total number of subexpressions: the highest value that
@@ -243,5 +243,3 @@ internal error), `RxParser>>#matchErrorSignal` is raised
 `RxParser>>#regexErrorSignal` is the parent of all three.  Since any of
 the three signals can be raised within a call to `String>>#matchesRegex:`, it is
 handy if you want to catch them all.  For example:
-
-

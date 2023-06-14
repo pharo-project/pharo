@@ -44,12 +44,9 @@ TraitedMetaclass >> addSelector: selector withMethod: compiledMethod [
 { #category : #'accessing - method dictionary' }
 TraitedMetaclass >> addSelector: selector withRecompiledMethod: compiledMethod [
 
-	compiledMethod isFromTrait
-		ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
+	compiledMethod isFromTrait ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
 
-	self localMethodDict at: selector put: compiledMethod.
-	super addSelector: selector withRecompiledMethod: compiledMethod.
-	TraitChange addSelector: selector on: self
+	self addSelector: selector withMethod: compiledMethod
 ]
 
 { #category : #querying }
@@ -264,29 +261,27 @@ TraitedMetaclass >> rebuildMethodDictionary [
 
 	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
 	modified := modified | (removedSelectors isNotEmpty).
-	removedSelectors do: [ :aSelector | self methodDict removeKey: aSelector ].
-	removedSelectors do: [ :aSelector | self organization removeElement: aSelector ].
+	removedSelectors do: [ :aSelector |
+		self methodDict removeKey: aSelector.
+		self removeFromProtocols: aSelector  ].
 
 	^ modified
 ]
 
 { #category : #categories }
-TraitedMetaclass >> recategorizeSelector: selector from: oldProtocolName to: newProtocolName [
-
-	| original |
+TraitedMetaclass >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
-	original := self organization protocolNameOfElement: selector ifAbsent: [ ^ self ].
 
+	| originalProtocol |
 	"If it is nil is because it is a removal. It will removed when the method is removed."
-	newProtocolName ifNil: [ ^ self ].
+	newProtocol ifNil: [ ^ self ].
 
-	original = oldProtocolName ifTrue: [ self organization classify: selector under: newProtocolName ].
+	originalProtocol := (self protocolOfSelector: selector) ifNil: [ ^ self ].
+	originalProtocol name = oldProtocol name ifTrue: [ self classify: selector under: newProtocol name ].
 
-	(self traitComposition reverseAlias: selector) do: [ :e |
-		self recategorizeSelector: e from: oldProtocolName to: newProtocolName.
-		self notifyOfRecategorizedSelector: e from: oldProtocolName to: newProtocolName ].
-
-	self organization removeEmptyProtocols
+	(self traitComposition reverseAlias: selector) do: [ :selectorAlias |
+		self recategorizeSelector: selectorAlias from: oldProtocol to: newProtocol.
+		self notifyOfRecategorizedSelector: selectorAlias from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #recompilation }

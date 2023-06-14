@@ -1,6 +1,6 @@
 Class {
 	#name : #RBAddSubtreeTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -11,7 +11,7 @@ RBAddSubtreeTransformationTest >> testMethodDoesNotExist [
 		interval: (0 to: 1)
 		with: 'self printString'
 		from: #two
-		in: self changeMock name) transform.
+		in: self changeMockClass name) transform.
 
 	self assertEmpty: transformation model changes changes
 ]
@@ -23,7 +23,7 @@ RBAddSubtreeTransformationTest >> testParseFailure [
 		interval: (0 to: 1)
 		with: ':= 123'
 		from: #one
-		in: self changeMock name) transform.
+		in: self changeMockClass name) transform.
 
 	self assertEmpty: transformation model changes changes
 ]
@@ -54,12 +54,12 @@ RBAddSubtreeTransformationTest >> testTransform [
 		interval: (0 to: 1)
 		with: 'self printString'
 		from: #one
-		in: self changeMock name)
+		in: self changeMockClass name)
 		transform.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed: self changeMock name asSymbol.
+	class := transformation model classNamed: self changeMockClass name asSymbol.
 	self assert: (class directlyDefinesMethod: #one).
 	self assert: (class parseTreeForSelector: #one) body statements size equals: 2
 ]

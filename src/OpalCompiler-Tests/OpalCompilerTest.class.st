@@ -86,7 +86,7 @@ OpalCompilerTest >> testCompileSource [
 	"Compiled but uninstalled methods have a #source but no sourcePointer"
 	result := MockForCompilation compiler compile: source.
 	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
-	self deny: result trailer hasSourcePointer. "no sourcePointer"
+	self deny: result hasSourcePointer. "no sourcePointer"
 	self assert: (result propertyAt: #source) equals: source.
 	self assert: result sourceCodeOrNil equals: source.
 
@@ -94,7 +94,7 @@ OpalCompilerTest >> testCompileSource [
 	result := MockForCompilation compiler install: source.
 	self assert: result equals: MockForCompilation>>#tt.
 	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
-	self assert: result trailer hasSourcePointer. "no sourcePointer"
+	self assert: result hasSourcePointer. "no sourcePointer"
 	self assert: (result propertyAt: #source) equals: nil.
 	self assert: result sourceCodeOrNil equals: source.
 
@@ -102,7 +102,7 @@ OpalCompilerTest >> testCompileSource [
 	MockForCompilation compiler install: 'tt ^42'.
 	self deny: result equals: MockForCompilation>>#tt.
 	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
-	self assert: result trailer hasSourcePointer. "no sourcePointer"
+	self assert: result hasSourcePointer. "no sourcePointer"
 	self assert: (result propertyAt: #source) equals: nil.
 	self assert: result sourceCodeOrNil equals: source.
 	
@@ -158,6 +158,11 @@ OpalCompilerTest >> testEvaluateWithBindingsSelfSuperThisContext [
 	result := Smalltalk compiler
 		bindings: {(#thisContext -> 3)} asDictionary;
 		evaluate: '1+thisContext'.
+	self assert: result equals: 4.
+	
+	result := Smalltalk compiler
+		bindings: {(#thisProcess -> 3)} asDictionary;
+		evaluate: '1+thisProcess'.
 	self assert: result equals: 4
 ]
 

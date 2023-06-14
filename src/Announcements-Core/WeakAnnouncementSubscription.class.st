@@ -12,18 +12,15 @@ Class {
 	#name : #WeakAnnouncementSubscription,
 	#superclass : #AbstractAnnouncementSubscription,
 	#type : #weak,
-	#instVars : [ 'next' ],
+	#instVars : [
+		'next'
+	],
 	#category : #'Announcements-Core-Subscription'
 }
 
 { #category : #'instance creation' }
 WeakAnnouncementSubscription class >> new [
 	^ (self basicNew: 1) initialize
-]
-
-{ #category : #finalization }
-WeakAnnouncementSubscription >> finalizationRegistry [
-	^ FinalizationRegistry default
 ]
 
 { #category : #finalization }

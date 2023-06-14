@@ -8,7 +8,7 @@ Class {
 ClassTraitTest >> testChanges [
 	"Test the most important features to ensure that
 	general functionality of class traits are working."
-
+	<ignoreNotImplementedSelectors: #(m1ClassSide)>
 	| classTrait |
 	classTrait := self t1 classTrait.
 	self deny: (self t5 classSide includesSelector: #m1ClassSide).
@@ -19,18 +19,18 @@ ClassTraitTest >> testChanges [
 	self assert: (self c2 class methodDict includesKey: #m1ClassSide).
 	self c2 m1ClassSide.
 	self assert: self c2 m1ClassSide equals: 17. "category"
-	self assert: (self c2 class organization protocolNameOfElement: #m1ClassSide) equals: 'mycategory'. "conflicts"
+	self assert: (self c2 class protocolOfSelector: #m1ClassSide) name equals: 'mycategory'. "conflicts"
 	self t2 classSide compile: 'm1ClassSide' classified: 'mycategory'.
 	self assert: (self c2 class methodDict includesKey: #m1ClassSide).
 	self deny: (self c2 class includesLocalSelector: #m1ClassSide).
 	self should: [ self c2 m1ClassSide ] raise: Error. "conflict category"
-	self assert: (self c2 class organization protocolNameOfElement: #m1ClassSide) equals: #mycategory
+	self assert: (self c2 class protocolOfSelector: #m1ClassSide) name equals: #mycategory
 ]
 
 { #category : #tests }
 ClassTraitTest >> testConflictsAliasesAndExclusions [
 	"conflict"
-
+	<ignoreNotImplementedSelectors: #(m2ClassSideAlias1: m2ClassSideAlias2:)>
 	self t1 classTrait compile: 'm2ClassSide: x ^99' classified: 'mycategory'.
 	self assert: (self t1 classTrait includesLocalSelector: #m2ClassSide:).
 	self assert: (self t5 classTrait >> #m2ClassSide:) isConflict.
@@ -50,6 +50,7 @@ ClassTraitTest >> testConflictsAliasesAndExclusions [
 { #category : #tests }
 ClassTraitTest >> testInitialization [
 	| classTrait |
+	<ignoreNotImplementedSelectors: #(m2ClassSide:)>
 	classTrait := self t1 classTrait.
 	self assert: self t1 hasClassSide.
 	self assert: self t1 classTrait equals: classTrait.

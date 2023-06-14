@@ -45,14 +45,6 @@ RBCompositeTransformation >> initialize [
 	delegatesPreconditions := true
 ]
 
-{ #category : #preconditions }
-RBCompositeTransformation >> preconditions [
-	"it delegates the preconditionn checking to each sub-refactoring separately.
-	 additional preconditions are welcomed"
-
-	^ self emptyCondition
-]
-
 { #category : #accessing }
 RBCompositeTransformation >> previousTransformations [
 	^ previousTransformations ifNil: [ previousTransformations := OrderedCollection new ]

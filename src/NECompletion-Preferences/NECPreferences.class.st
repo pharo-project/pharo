@@ -14,13 +14,13 @@ Class {
 		'smartCharactersMapping',
 		'backgroundColor',
 		'expandPrefixes',
-		'captureNavigationKeys',
 		'useEnterToAccept',
 		'popupShowAutomatic',
 		'popupAutomaticDelay',
 		'popupShowWithShortcut',
 		'smartCharactersWithSingleSpace',
-		'smartCharactersWithDoubleSpace'
+		'smartCharactersWithDoubleSpace',
+		'showCompletionDetails'
 	],
 	#category : #'NECompletion-Preferences'
 }
@@ -51,16 +51,6 @@ NECPreferences class >> backgroundColor: aColor [
 ]
 
 { #category : #accessing }
-NECPreferences class >> captureNavigationKeys [
-	^ captureNavigationKeys
-]
-
-{ #category : #accessing }
-NECPreferences class >> captureNavigationKeys: aBoolean [
-	captureNavigationKeys := aBoolean
-]
-
-{ #category : #accessing }
 NECPreferences class >> caseSensitive [
 	^ caseSensitive
 ]
@@ -87,6 +77,12 @@ NECPreferences class >> defaultPopupShortcut [
 
 { #category : #defaults }
 NECPreferences class >> defaultPopupShowAutomatic [
+	^ true
+]
+
+{ #category : #defaults }
+NECPreferences class >> defaultShowCompletionDetails [
+
 	^ true
 ]
 
@@ -126,7 +122,6 @@ NECPreferences class >> initialize [
 	caseSensitive := true.
 	smartCharacters := true.
 	expandPrefixes := true.
-	captureNavigationKeys := true.
 	useEnterToAccept := self defaultUseEnterToAccept.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping
@@ -144,6 +139,7 @@ NECPreferences class >> initialize [
 	popupShowWithShortcut := self defaultPopupShortcut.
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
+	showCompletionDetails := self defaultShowCompletionDetails.
 	NECEntry spaceAfterCompletion: true
 ]
 
@@ -219,9 +215,10 @@ NECPreferences class >> settingsOn: aBuilder [
 					(aBuilder setting: #useEnterToAccept)
 						label: 'Use ENTER to accept a suggested completion';
 						default: self defaultUseEnterToAccept.
-					(aBuilder setting: #captureNavigationKeys)
-						default: true;
-						label: 'Use navigation keys for extended completion functionality'.
+					(aBuilder setting: #showCompletionDetails)
+						label: 'Show completion details';
+						description: 'Show detailed information about completion entries';
+						default: self defaultShowCompletionDetails.
 					(aBuilder setting: #caseSensitive)
 						label: 'Case Sensitive';
 						default: true;
@@ -253,6 +250,16 @@ NECPreferences class >> settingsOn: aBuilder [
 						default: self defaultSpaceAfterCompletion;
 						label: 'Put a space after completion'
 					 ]
+]
+
+{ #category : #accessing }
+NECPreferences class >> showCompletionDetails [
+	^ showCompletionDetails
+]
+
+{ #category : #accessing }
+NECPreferences class >> showCompletionDetails: aBoolean [
+	showCompletionDetails := aBoolean
 ]
 
 { #category : #accessing }

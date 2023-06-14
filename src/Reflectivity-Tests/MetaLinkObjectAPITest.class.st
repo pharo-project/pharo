@@ -1,6 +1,6 @@
 Class {
 	#name : #MetaLinkObjectAPITest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#instVars : [
 		'tag'
 	],
@@ -39,12 +39,6 @@ MetaLinkObjectAPITest >> tagExec: aTag [
 	tag add: aTag
 ]
 
-{ #category : #running }
-MetaLinkObjectAPITest >> tearDown [
-	MetaLink uninstallAll.
-	super tearDown
-]
-
 { #category : #'class api' }
 MetaLinkObjectAPITest >> testLinkClassToAST [
 	| link instance |
@@ -55,7 +49,9 @@ MetaLinkObjectAPITest >> testLinkClassToAST [
 	instance := ReflectivityExamples2 new.
 	instance exampleMethod.
 	self assert: tag size equals: 1.
-	self assert: tag first identicalTo: instance
+	self assert: tag first identicalTo: instance.
+	
+	link uninstall
 ]
 
 { #category : #'class api' }
@@ -70,7 +66,9 @@ MetaLinkObjectAPITest >> testLinkClassToClassVarNamed [
 	instance methodWithClassVarAccess.
 
 	self assert: tag size equals: 2.
-	self assert: (tag allSatisfy: [ :t | t == instance ])
+	self assert: (tag allSatisfy: [ :t | t == instance ]).
+
+	link uninstall
 ]
 
 { #category : #'class api' }
@@ -85,7 +83,9 @@ MetaLinkObjectAPITest >> testLinkClassToSlotNamed [
 	instance methodWithInstVarAccess.
 
 	self assert: tag size equals: 2.
-	self assert: (tag allSatisfy: [ :t | t == instance ])
+	self assert: (tag allSatisfy: [ :t | t == instance ]).
+
+	link uninstall
 ]
 
 { #category : #'class api' }
@@ -116,7 +116,9 @@ MetaLinkObjectAPITest >> testLinkClassToTempVarNamed [
 	instance methodWithTempVarAccess.
 
 	self assert: tag size equals: 4.
-	self assert: (tag allSatisfy: [ :t | t = 'ok' ])
+	self assert: (tag allSatisfy: [ :t | t = 'ok' ]).
+
+	link uninstall
 ]
 
 { #category : #'object - api' }

@@ -70,18 +70,18 @@ SlotClassVariableTest >> testSlotIsPersistedAfterRebuildOfClass [
 
 { #category : #tests }
 SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
+
 	| class1 |
-
 	class1 := self make: [ :builder |
-		builder
-			name: self aClassName;
-			superclass: Object ].
+		          builder
+			          name: self aClassName;
+			          superclass: Object ].
 
-	class1 addSlot: WriteOnceSlot new.
+	class1 addSlot: #foo => WriteOnceSlot new.
 
 	self assert: class1 slots size equals: 1.
 
-	self assert: ((class1 >> #initialize) hasLiteral: #initializeSlots:).
+	self assert: (class1 >> #initialize hasLiteral: #initializeSlots:).
 	"validate 'self class initializeSlots: self' is the first message sent"
 	self assert: (class1 >> #initialize) literals first equals: #class.
 	self assert: (class1 >> #initialize) literals second equals: #initializeSlots:

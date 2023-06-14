@@ -57,13 +57,13 @@ RBMoveVariableDefinitionToSmallestValidScopeTransformation >> checkParseTree [
 
 	blockNodes := OrderedCollection new.
 	node := self whichVariableNode: parseTree inInterval: interval name: name.
-	node ifNil: [ self refactoringFailure: 'Unable to locate node in parse tree' ].
+	node ifNil: [ self refactoringError: 'Unable to locate node in parse tree' ].
 	definingNode := node whoDefines: name.
-	definingNode ifNil: [ self refactoringFailure: 'Cannot locate variable definition' ].
+	definingNode ifNil: [ self refactoringError: 'Cannot locate variable definition' ].
 	definingNode isSequence
-		ifFalse: [ self refactoringFailure: 'Variable is an argument' ].
+		ifFalse: [ self refactoringError: 'Variable is an argument' ].
 	( self usesDirectly: definingNode )
-		ifTrue: [ self refactoringFailure: 'Variable already bound tightly as possible' ].
+		ifTrue: [ self refactoringError: 'Variable already bound tightly as possible' ].
 	( self checkNodes: ( self subblocksIn: definingNode ) )
 		ifFalse: [ self refactoringError: 'Variable is possibly read before written' ]
 ]
@@ -81,15 +81,15 @@ RBMoveVariableDefinitionToSmallestValidScopeTransformation >> preconditions [
 		& (RBCondition withBlock:
 					[| methodSource |
 					interval first <= interval last
-						ifFalse: [self refactoringFailure: 'You must select a variable name'].
+						ifFalse: [self refactoringError: 'You must select a variable name'].
 					methodSource := class sourceCodeFor: selector.
 					methodSource size >= interval last
-						ifFalse: [self refactoringFailure: 'Invalid range for variable'].
+						ifFalse: [self refactoringError: 'Invalid range for variable'].
 					name := methodSource copyFrom: interval first to: interval last.
 					(self checkInstanceVariableName: name in: class)
 						ifFalse:
 							[self
-								refactoringFailure: name , ' does not seem to be a valid variable name.'].
+								refactoringError: name , ' does not seem to be a valid variable name.'].
 					parseTree := class parseTreeForSelector: selector.
 					self checkParseTree.
 					true])

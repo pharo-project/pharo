@@ -31,6 +31,7 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 { #category : #tests }
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 
+	[
 	| c1 t1 |
 
 	t1 := self newTrait: #T1 with: #() uses: #() category: self packageName.
@@ -43,5 +44,6 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 
 	self assert: self packageName asPackage methods size equals: 2.
 	(c1 >> #msg) removeFromSystem.
-	self assert: self packageName asPackage methods size equals: 1
+	self assert: self packageName asPackage methods size equals: 1 ] ensure: [ 
+		(self packageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ]
 ]

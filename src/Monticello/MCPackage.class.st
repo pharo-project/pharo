@@ -27,7 +27,7 @@ MCPackage >> = other [
 { #category : #accessing }
 MCPackage >> correspondingRPackage [
 
-	^ RPackageOrganizer default packageNamed: self name asSymbol ifAbsent: [ nil ]
+	^ self packageOrganizer packageNamed: self name asSymbol ifAbsent: [ nil ]
 ]
 
 { #category : #printing }

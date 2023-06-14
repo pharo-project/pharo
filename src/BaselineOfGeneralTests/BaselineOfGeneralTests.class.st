@@ -61,6 +61,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Tool-FileList-Tests';
 			package: 'Tool-Finder-Tests';
 			package: 'Tool-Profilers-Tests';
+			package: 'Tool-ImageCleaner-Tests';
 			package: 'Tool-Workspace-Tests';
 			package: 'Tools-CodeNavigation-Tests';
 			package: 'Tools-Tests';

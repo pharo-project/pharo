@@ -61,56 +61,70 @@ RPackageMCSynchronisationTest >> addZCategory [
 { #category : #setup }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
-		|mCPackage|
-		Smalltalk removeClassNamed: 'NewClass'.
-		Smalltalk removeClassNamed: 'RPackageNewStubClass'.
-		Smalltalk removeClassNamed: 'RPackageOldStubClass'.
-		Smalltalk removeClassNamed: 'Foo'.
-		Smalltalk removeClassNamed: 'FooOther'.
-		Smalltalk removeClassNamed: 'NewTrait'.
-		Smalltalk removeClassNamed: 'ClassInYPackage'.
-		Smalltalk removeClassNamed: 'ClassInZPackage'.
-		Smalltalk organization removeCategory: 'Zork'.
-		Smalltalk organization removeCategory: 'XXXXX'.
-		Smalltalk organization removeCategory: 'XXXXX-YYYY'.
-		Smalltalk organization removeCategory: 'XXXX'.
-		Smalltalk organization removeCategory: 'YYYYY'.
-		Smalltalk organization removeCategory: 'ZZZZZ'.
-		Smalltalk organization removeCategory: 'FooPackage-Core'.
-		Smalltalk organization removeCategory: 'FooPackage-Other'.
-		Smalltalk organization removeCategory: 'FooPackage'.
-		Smalltalk organization removeCategory: 'OriginalCategory'.
-		Smalltalk organization removeCategory: 'NewCategoryName'.
-		Smalltalk organization removeCategory: 'Y'.
-		mCPackage := (self allManagers detect: [:each | each packageName = 'OriginalCategory'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'XXXXX'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'XXXX'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'YYYYY'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'YYYY'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'Yyyyy'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].	
-		mCPackage := (self allManagers detect: [:each | each packageName = 'YyYyY'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'Y'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'ZZZZZ'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].	
-		mCPackage := (self allManagers detect: [:each | each packageName = 'Zzzzz'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'FooPackage-Core'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'FooPackage-Other'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'FooPackage'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'Zork'] ifNone: [nil]) .
-		mCPackage ifNotNil: [mCPackage unregister].
-			
+	Smalltalk
+		removeClassNamed: 'NewClass';
+		removeClassNamed: 'RPackageNewStubClass';
+		removeClassNamed: 'RPackageOldStubClass';
+		removeClassNamed: 'Foo';
+		removeClassNamed: 'FooOther';
+		removeClassNamed: 'NewTrait';
+		removeClassNamed: 'ClassInYPackage';
+		removeClassNamed: 'ClassInZPackage'.
+	self packageOrganizer
+		removeCategory: 'Zork';
+		removeCategory: 'XXXXX';
+		removeCategory: 'XXXXX-YYYY';
+		removeCategory: 'XXXX';
+		removeCategory: 'YYYYY';
+		removeCategory: 'ZZZZZ';
+		removeCategory: 'FooPackage-Core';
+		removeCategory: 'FooPackage-Other';
+		removeCategory: 'FooPackage';
+		removeCategory: 'OriginalCategory';
+		removeCategory: 'NewCategoryName';
+		removeCategory: 'Y'.
+	self allManagers
+		detect: [ :each | each packageName = 'OriginalCategory' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'XXXXX' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'XXXX' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'YYYYY' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'YYYY' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'Yyyyy' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'YyYyY' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'Y' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'ZZZZZ' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'Zzzzz' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'FooPackage-Core' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'FooPackage-Other' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'FooPackage' ]
+		ifFound: [ :mCPackage | mCPackage unregister ].
+	self allManagers
+		detect: [ :each | each packageName = 'Zork' ]
+		ifFound: [ :mCPackage | mCPackage unregister ]
 ]
 
 { #category : #private }
@@ -208,12 +222,12 @@ RPackageMCSynchronisationTest >> tearDown [
 
 { #category : #tests }
 RPackageMCSynchronisationTest >> testCategoryMatching [
-	
-	self assert: (self organizer category: 'Compression-Archives' matches: 'Compression').
-	self deny: (self organizer category: 'Compression' matches: 'Compression-Archives').
-	self assert: (self organizer category: 'Compression' matches: 'Compression').
-	self assert: (self organizer category: 'Compression-Arh' matches: 'Compression').
-	self deny: (self organizer category: 'XXXX' matches: 'Compression-Archives').
+
+	self assert: ('Compression-Archives' isCategoryOf: 'Compression').
+	self deny: ('Compression' isCategoryOf: 'Compression-Archives').
+	self assert: ('Compression' isCategoryOf: 'Compression').
+	self assert: ('Compression-Arh' isCategoryOf: 'Compression').
+	self deny: ('XXXX' isCategoryOf: 'Compression-Archives')
 ]
 
 { #category : #tests }
@@ -235,18 +249,19 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 
 	| ann class firstPackage secondPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance weak when: MethodRepackaged do: [ :a | ann := a ].
-
-	self addXYCategory.
-	firstPackage := self organizer packageNamed: #XXXXX.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	SystemAnnouncer uniqueInstance
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
+	
+	self addXYCategory. 
+	firstPackage := self organizer  packageNamed: #XXXXX.
+	secondPackage := self organizer  packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
 	self assert: ann isNil.
 
-	class organization classify: #stubMethod under: '*yyyyy-suncategory'.
+	class classify: #stubMethod under: '*yyyyy-suncategory'.
 
 	self assert: ann isNil
 ]
@@ -256,18 +271,19 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 
 	| ann class firstPackage secondPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance weak when: MethodRepackaged do: [ :a | ann := a ].
-
-	self addXYCategory.
-	firstPackage := self organizer packageNamed: #XXXXX.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	SystemAnnouncer uniqueInstance
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
+	
+	self addXYCategory. 
+	firstPackage := self organizer  packageNamed: #XXXXX.
+	secondPackage := self organizer  packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic'.
 
 	self assert: ann isNil.
 
-	class organization classify: #stubMethod under: 'another classic one'.
+	class classify: #stubMethod under: 'another classic one'.
 
 	self assert: ann isNil
 ]
@@ -277,15 +293,16 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 
 	| ann class firstPackage secondPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance weak when: MethodRepackaged do: [ :a | ann := a ].
-
-	self addXYCategory.
-	firstPackage := self organizer packageNamed: #XXXXX.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	SystemAnnouncer uniqueInstance
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
+	
+	self addXYCategory. 
+	firstPackage := self organizer  packageNamed: #XXXXX.
+	secondPackage := self organizer  packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
 
-	class organization classify: #stubMethod under: '*yyyyy'.
+	class classify: #stubMethod under: '*yyyyy'.
 
 	self assert: ann notNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
@@ -293,7 +310,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	self assert: ann newPackage equals: secondPackage.
 	ann := nil.
 
-	class organization classify: #stubMethod under: '*yyyyy-suncategory'.
+	class classify: #stubMethod under: '*yyyyy-suncategory'.
 
 	self assert: ann isNil
 ]
@@ -303,17 +320,18 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 
 	| ann class firstPackage secondPackage thirdPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance weak when: MethodRepackaged do: [ :a | ann := a ].
-
-	self addXYZCategory.
-	firstPackage := self organizer packageNamed: #XXXXX.
+	SystemAnnouncer uniqueInstance
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
+	
+	self addXYZCategory. 
+	firstPackage := self organizer  packageNamed: #XXXXX.
 	secondPackage := self organizer packageNamed: #YYYYY.
 	thirdPackage := self organizer packageNamed: #ZZZZZ.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
-	class organization classify: #stubMethod under: '*zzzzz'.
+	class classify: #stubMethod under: '*zzzzz'.
 
 	self assert: ann notNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
@@ -326,15 +344,16 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 
 	| ann class firstPackage secondPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance weak when: MethodRepackaged do: [ :a | ann := a ].
-
-	self addXYCategory.
-	firstPackage := self organizer packageNamed: #XXXXX.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	SystemAnnouncer uniqueInstance
+		when: MethodRepackaged do: [ :a | ann := a ] for: self.
+	
+	self addXYCategory. 
+	firstPackage := self organizer  packageNamed: #XXXXX.
+	secondPackage := self organizer  packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
-	class organization classify: #stubMethod under: 'classic one'.
+	class classify: #stubMethod under: 'classic one'.
 
 	self assert: ann notNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.

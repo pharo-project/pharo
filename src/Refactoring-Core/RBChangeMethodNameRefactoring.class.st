@@ -29,6 +29,28 @@ RBChangeMethodNameRefactoring class >> isAbstract [
 	^ self == RBChangeMethodNameRefactoring
 ]
 
+{ #category : #support }
+RBChangeMethodNameRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
+	(self model allReferencesTo: aSymbol in: classes)
+		do:
+			[:method |
+			self
+				convertMethod: method selector
+				for: method modelClass
+				using: searchReplacer]
+]
+
+{ #category : #support }
+RBChangeMethodNameRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
+
+	(self model allReferencesTo: aSymbol)
+		reject: [ :rbMethod | "We reject methods from trait to not recompile them in the class and duplicate the code."
+			rbMethod method
+				ifNil: [ false ]
+				ifNotNil: #isFromTrait ]
+		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
+]
+
 { #category : #testing }
 RBChangeMethodNameRefactoring >> hasPermutedArguments [
 	oldSelector numArgs = newSelector numArgs ifFalse: [^true].
@@ -122,11 +144,11 @@ RBChangeMethodNameRefactoring >> renameImplementors [
 			| parseTree |
 
 			parseTree := each parseTreeForSelector: oldSelector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse source code.' ].
+			parseTree ifNil: [ self refactoringError: 'Could not parse source code.' ].
 			self implementorsCanBePrimitives
 				ifFalse: [ parseTree isPrimitive
 						ifTrue: [ self
-								refactoringFailure:
+								refactoringError:
 									( '<1p>''s implementation of #<2s> is a primitive' expandMacrosWith: each with: oldSelector )
 							]
 					].

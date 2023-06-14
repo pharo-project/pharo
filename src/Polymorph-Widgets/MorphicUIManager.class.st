@@ -314,7 +314,7 @@ MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 				setText: aText asString;
 				yourself.
 	aBlockOrNil ifNotNil: [
-		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text]].
+		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text] for: self].
 	window addMorph: pane frame: (0@0 corner: 1@1); openInWorld.
 	^ window
 ]

@@ -317,12 +317,6 @@ FLClassFactoryForTestCase >> nextCount [
 ]
 
 { #category : #accessing }
-FLClassFactoryForTestCase >> packageOrganizer [
-
-	^ Smalltalk organization
-]
-
-{ #category : #accessing }
 FLClassFactoryForTestCase >> registerBehavior: aBehavior [
 	(aBehavior isTrait
 		ifTrue: [ self createdTraits ]

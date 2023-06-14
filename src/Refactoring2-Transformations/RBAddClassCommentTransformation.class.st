@@ -44,13 +44,6 @@ RBAddClassCommentTransformation >> comment: aString in: aClassName [
 	comment := aString
 ]
 
-{ #category : #preconditions }
-RBAddClassCommentTransformation >> preconditions [
-	"no preconditions needed"
-
-	^ self emptyCondition
-]
-
 { #category : #executing }
 RBAddClassCommentTransformation >> privateTransform [
 

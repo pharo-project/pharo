@@ -43,7 +43,7 @@ Class {
 RBMergeInstanceVariableIntoAnother >> preconditions [
 	^ (RBCondition
 		withBlock: [ (variableName = newName)
-			ifTrue: [ self refactoringFailure: 'The variable merged must be different' ].
+			ifTrue: [ self refactoringError: 'The variable merged must be different' ].
 		true ])
 		& (RBCondition definesInstanceVariable: variableName in: class)
 			& (RBCondition definesInstanceVariable: newName in: class)

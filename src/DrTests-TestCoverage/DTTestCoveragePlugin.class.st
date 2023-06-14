@@ -43,7 +43,8 @@ DTTestCoveragePlugin >> defineData: aDTpluginConfiguration [
 	methods := aDTpluginConfiguration items flatCollect: [ :p |
 		           p methods reject: [ :meth |
 			           meth isTestMethod or: [meth methodClass isTestCase] ] ].
-	methods := methods reject: [ :meth | meth isSubclassResponsibility ].
+	methods := methods reject: [ :method | method isAbstract or: [ (method hasPragmaNamed: #ignoreForCoverage) ] ] .
+	
 	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [
 		               :p | p classes ]
 ]
@@ -91,7 +92,8 @@ DTTestCoveragePlugin >> runForConfiguration: aDTpluginConfiguration [
 DTTestCoveragePlugin >> runSuite: aTestSuite withResult: aResult [
 
 	aTestSuite when: TestAnnouncement do: [ :testAnnouncement |
-		self announceStatusChanged: ('Running test {1}.' format: { testAnnouncement test asString }) ].
+		self announceStatusChanged: ('Running test {1}.' format: { testAnnouncement test asString }) ]
+	for: self.
 	[ aTestSuite run: aResult ] ensure: [
 		aTestSuite unsubscribe: TestAnnouncement ]
 ]

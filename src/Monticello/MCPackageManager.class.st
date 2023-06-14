@@ -75,20 +75,13 @@ MCPackageManager class >> classMoved: anEvent [
 MCPackageManager class >> classRemoved: anEvent [
 	"Informs the registry who use to keep this class that its changed. Unlike #classModified:, class is not anymore in RPackages so it will not be found, that's why we look for system category instead if class is included or not"
 
-	"Note. Class protocols returns symbols and not Protocol instances!"
-	(RPackageOrganizer default
-		packageMatchingExtensionName: anEvent categoryName) ifNotNil: [ :package |
-			package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ].
-		
-	anEvent classAffected protocols, anEvent classAffected classSide protocols
-		do: [ :aProtocolName | 
-			(aProtocolName beginsWith: '*')
-				ifTrue:
-					[ (RPackageOrganizer default
-						packageMatchingExtensionName: aProtocolName allButFirst trimBoth)
-							ifNotNil: [ :package |
-								package mcWorkingCopy ifNotNil: [ :workingCopy |
-									workingCopy modified: true ] ] ] ]
+	(self packageOrganizer packageMatchingExtensionName: anEvent categoryName) ifNotNil: [ :package |
+		package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ].
+
+	anEvent classAffected protocolNames , anEvent classAffected classSide protocolNames do: [ :aProtocolName |
+		(aProtocolName beginsWith: '*') ifTrue: [
+			(self packageOrganizer packageMatchingExtensionName: aProtocolName allButFirst trimBoth) ifNotNil: [ :package |
+				package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ] ] ]
 ]
 
 { #category : #'system changes' }
@@ -100,13 +93,21 @@ MCPackageManager class >> classRenamed: anEvent [
 
 { #category : #accessing }
 MCPackageManager class >> forPackage: aPackage [
-	^ self registry 
-		at: aPackage 
-		ifAbsent: [|mgr|
-			mgr := self new initializeWithPackage: aPackage.
-			self registry at: aPackage put: mgr.
-			self announcer announce: (MCWorkingCopyCreated workingCopy: mgr package: aPackage).
-			mgr ]
+
+	^ self forPackage: aPackage packageOrganizer: self packageOrganizer
+]
+
+{ #category : #accessing }
+MCPackageManager class >> forPackage: aPackage packageOrganizer: aPackageOrganizer [
+
+	^ self registry at: aPackage ifAbsent: [
+		  | mgr |
+		  mgr := self new initializeWithPackage: aPackage.
+		  self registry at: aPackage put: mgr.
+		  "When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package."
+		  aPackageOrganizer packageNamedIgnoreCase: aPackage name ifAbsent: [ aPackageOrganizer ensureExistAndRegisterPackageNamed: aPackage name ].
+		  self announcer announce: (MCWorkingCopyCreated workingCopy: mgr package: aPackage).
+		  mgr ]
 ]
 
 { #category : #'class initialization' }
@@ -173,7 +174,7 @@ MCPackageManager class >> managersForClass: aClass do: aBlock [
 { #category : #'system changes' }
 MCPackageManager class >> managersForClass: aClass selector: aSelector do: aBlock [
 
-	^ self managersForClass: aClass category: (aClass organization protocolNameOfElement: aSelector) do: aBlock
+	^ self managersForClass: aClass category: (aClass protocolNameOfSelector: aSelector) do: aBlock
 ]
 
 { #category : #'system changes' }
@@ -211,8 +212,8 @@ MCPackageManager class >> methodMoved: anEvent [
 
 { #category : #'system changes' }
 MCPackageManager class >> methodRemoved: anEvent [
-	self managersForClass: anEvent methodClass category: anEvent protocol do:[:mgr| mgr modified: true].
 
+	self managersForClass: anEvent methodClass category: anEvent protocol name do: [ :mgr | mgr modified: true ]
 ]
 
 { #category : #'system changes' }
@@ -228,7 +229,7 @@ MCPackageManager class >> packageRenamed: anAnnouncement [
 { #category : #'event registration' }
 MCPackageManager class >> registerInterestOnSystemChangesOnAnnouncer: anAnnouncer [
 	anAnnouncer weak
-		when: RPackageRenamed send: #packageRenamed: to: self;
+		when: PackageRenamed send: #packageRenamed: to: self;
 		when: ClassAdded, ClassModifiedClassDefinition, ClassCommented , ClassParentRenamed send: #classModified: to: self;
 		when: ClassRenamed send:#classRenamed: to:self;
 		when: ClassRepackaged send: #classMoved: to: self;

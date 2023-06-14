@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
+{ #category : #testing }
+DisabledBreakpointIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 DisabledBreakpointIconStyler >> highlightColor [
 	^(Color darkGray alpha: 0.1)

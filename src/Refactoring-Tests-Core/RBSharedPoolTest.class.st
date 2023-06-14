@@ -8,7 +8,7 @@ Class {
 		'userOf',
 		'defineOf'
 	],
-	#category : #'Refactoring-Tests-Core-Base'
+	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #running }

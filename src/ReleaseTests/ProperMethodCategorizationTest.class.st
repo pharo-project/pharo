@@ -13,8 +13,8 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol
 	| violating |
 	violating := OrderedCollection new.
 	aClass allSubclassesDo: [:cls | cls methods do: [:method |
-			(method selector = selector and: [ method protocol ~= protocol ])
-				ifTrue: [ violating add: method -> method protocol ] ] ].
+			(method selector = selector and: [ method protocolName ~= protocol ])
+				ifTrue: [ violating add: method -> method protocolName ] ] ].
 	self
 		assert: violating isEmpty
 		description: ('Violations: {1}.
@@ -28,15 +28,15 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedInProtocols:
 
 	| violating |
 	violating := OrderedCollection new.
-	aClass allSubclassesDo: [:cls | cls methods do: [:method |
-			(method selector = selector
-				and: [ (protocols includes: method protocol) not ])
-					ifTrue: [ violating add: method -> method protocol ] ] ].
-	self
-		assert: violating isEmpty
-		description: ('Violations are: {1}.
-		Reason: {2} subclasses should have #{3} in protocols: {4}'
-			format: { self explanationFrom: violating . aClass asString. selector. protocols })
+	aClass allSubclassesDo: [ :cls |
+		cls methods do: [ :method |
+			(method selector = selector and: [ (protocols includes: method protocolName) not ]) ifTrue: [ violating add: method -> method protocolName ] ] ].
+	self assert: violating isEmpty description: ('Violations are: {1}.
+		Reason: {2} subclasses should have #{3} in protocols: {4}' format: {
+				 (self explanationFrom: violating).
+				 aClass asString.
+				 selector.
+				 protocols })
 ]
 
 { #category : #utilities }
@@ -58,7 +58,7 @@ ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationP
 ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassInitializationProtocol [
 	"The class side #initialize methods should be in method protocol 'class initialization'"
 
-	| violating classSideInitializeMethods todo |
+	| violating classSideInitializeMethods |
 	violating := OrderedCollection new.
 	classSideInitializeMethods := OrderedCollection new.
 
@@ -66,11 +66,7 @@ ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassI
 		cls methods do: [:method | 
 			(method selector = #initialize and: [ method isClassSide and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
 				ifTrue: [ classSideInitializeMethods add: method ]]].
-	violating := classSideInitializeMethods select: [:m | m protocol ~= #'class initialization' ].
-
-	todo := #(#LGitDiffHunk #TonelFileSystemUtils #MicHTTPResourceReference).
-
-	violating := violating reject: [ :each | todo includes: each methodClass instanceSide name  ].
+	violating := classSideInitializeMethods select: [:m | m protocolName ~= #'class initialization' ].
 
 	self assert: violating isEmpty description: 'Class side #initialize methods should be in "class initialization" method category:' , violating asString
 ]
@@ -131,7 +127,7 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 				instanceSideInitializeMethods add: method ] ] ].
 
 	"NSLnScale is an external project and is the last failure of this test."
-	violating := instanceSideInitializeMethods select: [ :m | m protocol ~= #initialization and: [ (m methodClass name = 'NSLnScale') not ] ].
+	violating := instanceSideInitializeMethods select: [ :m | m protocolName ~= #initialization and: [ (m methodClass name = 'NSLnScale') not ] ].
 
 	self assert: violating isEmpty description: 'Instance side #initialize methods should be in "initialization" method category:' , violating asString
 ]
@@ -143,8 +139,7 @@ ProperMethodCategorizationTest >> testNoEmptyProtocols [
 	| violations |
 	violations := Dictionary new.
 	ProtoObject withAllSubclasses do: [ :cls |
-		(cls organization protocols select: [ :protocol | protocol isEmpty ])
-			ifNotEmpty: [ :emptyProtocols | violations at: cls put: emptyProtocols ] ].
+		(cls protocols select: [ :protocol | protocol isEmpty ]) ifNotEmpty: [ :emptyProtocols | violations at: cls put: emptyProtocols ] ].
 
 	self assertEmpty: violations
 ]
@@ -156,8 +151,8 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 	| violations |
 	violations := OrderedCollection new.
 
-	Object allSubclasses do: [ :each |
-		each organization protocolNames do: [ :cat | ((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [ violations add: each -> cat ] ] ].
+	Object allSubclasses do: [ :subclass |
+		subclass protocolNames do: [ :protocolName | ((protocolName endsWith: ' ') or: [ protocolName endsWith: ' ' ]) ifTrue: [ violations add: subclass -> protocolName ] ] ].
 
 	self assert: violations isEmpty description: 'Found protocol names with leading or trailing spaces: ' , violations asString
 ]
@@ -166,16 +161,17 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
-	| violating validExceptions remaining|
-	violating := Smalltalk globals allBehaviors select: [ :class |
-		             class protocols includes: Protocol unclassified ].
+	| violating validExceptions remaining |
+	violating := Smalltalk globals allBehaviors select: [ :class | class protocolNames includes: Protocol unclassified ].
 
 
-	validExceptions := #(ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class' MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest 'RBTransformationRuleTestData1' RBDummyRefactoryTestDataApp StInspectorMockObjectSubclass StDebuggerCommand).
+	validExceptions := #( ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class'
+	                      MFClassA MFClassB RBSmalllintTestObject
+	                      'RBTransformationRuleTestData1' StInspectorMockObjectSubclass StDebuggerCommand ).
 
-	remaining := violating asOrderedCollection reject: [ :each  | validExceptions includes: each name].
+	remaining := violating asOrderedCollection reject: [ :each | validExceptions includes: each name ].
 
-	self assert: remaining isEmpty description: ('the following classes have uncategorized methods: ', remaining asString)
+	self assert: remaining isEmpty description: 'the following classes have uncategorized methods: ' , remaining asString
 ]
 
 { #category : #tests }
@@ -183,13 +179,10 @@ ProperMethodCategorizationTest >> testNoUtilsMethods [
 	"Check that we have no #'utils' protocols left, the protocol should be 'utilities' "
 
 	| violating |
-	violating := Smalltalk globals allBehaviors select: [ :class |
-		             class protocols includes: #'utils' ].
+	violating := Smalltalk globals allBehaviors select: [ :class | class protocolNames includes: #utils ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self 
-		assert: violating size <= 4
-		description: '#utils protocols left, the protocol should be ''utilities'': ' , violating asString
+	self assert: violating size <= 4 description: '#utils protocols left, the protocol should be ''utilities'': ' , violating asString
 ]
 
 { #category : #'tests - object' }

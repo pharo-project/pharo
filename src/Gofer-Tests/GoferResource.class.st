@@ -37,7 +37,7 @@ GoferResource >> setUpMonticelloRepository [
 		monticelloRepository basicStoreVersion: (MCVersion new
 			setPackage:  (packages
 				at: reference packageName
-				ifAbsentPut: [ MetacelloTestsMCPackage new name: reference packageName ])
+				ifAbsentPut: [ MCPackage new name: reference packageName ])
 			info: (MCVersionInfo
 				name: reference name
 				id: UUID new

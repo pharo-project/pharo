@@ -17,23 +17,18 @@ ProperPackagesTest >> testNoPackageNameEndsWithTest [
 ProperPackagesTest >> testPackageExtensionsStartsWithProperPackageName [
 	"Method categories that represent extensions should start with a * followed by a package name that starts with an uppercase letter - ensure that"
 
-	| condition badCases |
-	condition := [ :protocol |
-	             (protocol beginsWith: '*') and: [
-		             protocol second isLowercase ] ].
-	badCases := CompiledMethod allInstances select: [ :each |
-		         each protocol notNil and: [ condition value: each protocol ] ].
-
-	self assert: badCases isEmpty
+	self assertEmpty:
+		(SystemNavigation default allMethods select: [ :method | method protocol isExtensionProtocol and: [ method protocolName second isLowercase ] ])
 ]
 
 { #category : #tests }
 ProperPackagesTest >> testProperClassTagCasing [
-	|violations|
+
+	| violations |
 	violations := OrderedCollection new.
-	RPackageOrganizer default packages
-        do: [:package | package classTags do: [:classTag | classTag name first isLowercase ifTrue: [ violations add: (package -> classTag) ] ] ].
-	self assert:  violations isEmpty description: 'Class Tags should be uppercase'
+	self packageOrganizer packages do: [ :package |
+		package classTags do: [ :classTag | classTag name first isLowercase ifTrue: [ violations add: package -> classTag ] ] ].
+	self assert: violations isEmpty description: 'Class Tags should be uppercase'
 ]
 
 { #category : #'tests - manifest' }

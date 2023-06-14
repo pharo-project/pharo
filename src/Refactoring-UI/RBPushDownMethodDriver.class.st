@@ -40,7 +40,7 @@ RBPushDownMethodDriver >> execute [
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError
 		           do: [ :err |
-		           ^ RBRefactoringFailure signal: err messageText ] ]
+		           ^ RBRefactoringError signal: err messageText ] ]
 		           on: RBBreakingChangeChecksFailedWarning
 		           do: [ :err |
 			           RBRefactoringWarning signal: err messageText.

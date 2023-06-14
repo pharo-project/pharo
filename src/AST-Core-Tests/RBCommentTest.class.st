@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #tests }
+RBCommentTest >> testFoo [
+
+	true ifFalse: [ self assert: true ].
+]
+
+{ #category : #tests }
 RBCommentTest >> testIntersectsInterval [
 	| node |
 	node:= RBComment with: (RBCommentToken value: 'Some sample text' start: 5 stop: 21).

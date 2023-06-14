@@ -39,7 +39,7 @@ RBCreateCascadeRefactoring >> addStatementNode: aNode [
 		ifTrue: [ ^ statementNodes add: aNode ].
 	aNode isCascade
 		ifTrue: [ ^ statementNodes addAll: aNode messages ].
-	self refactoringFailure: aNode formattedCode , ' is not a valid message'
+	self refactoringError: aNode formattedCode , ' is not a valid message'
 ]
 
 { #category : #initialization }
@@ -92,9 +92,9 @@ RBCreateCascadeRefactoring >> findSequenceNode [
 
 	sequenceNode := self parserClass
 		parseExpression: self selectedSource
-		onError: [ :msg :pos | self refactoringFailure: 'Invalid source to rewrite' ].
+		onError: [ :msg :pos | self refactoringError: 'Invalid source to rewrite' ].
 	(sequenceNode isSequence and: [ sequenceNode statements size > 1 ])
-		ifFalse: [ self refactoringFailure: 'You must select two or more statements' ]
+		ifFalse: [ self refactoringError: 'You must select two or more statements' ]
 ]
 
 { #category : #preconditions }
@@ -118,9 +118,9 @@ RBCreateCascadeRefactoring >> parseTree [
 
 	parseTree
 		ifNil: [ parseTree := class parseTreeForSelector: selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ]
+			parseTree ifNil: [ self refactoringError: 'Could not parse sources' ]
 			].
-	^ parseTree
+	^ parseTree doSemanticAnalysis
 ]
 
 { #category : #preconditions }

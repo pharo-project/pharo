@@ -473,11 +473,7 @@ Behavior >> classAndMethodFor: aSymbol do: binaryBlock ifAbsent: absentBlock [
 	with the class that defines the selector and the associated method. Otherwise
 	absentBlock is evaluated."
 
-
-	self withAllSuperclassesDo: [:class | | method |
-		method := class compiledMethodAt: aSymbol ifAbsent: [nil].
-		method ifNotNil: [^ binaryBlock value: class value: method].
-	].
+	self withAllSuperclassesDo: [ :class | class compiledMethodAt: aSymbol ifPresent: [ :method | ^ binaryBlock value: class value: method ] ].
 	^ absentBlock value
 ]
 
@@ -578,27 +574,6 @@ Behavior >> deepCopy [
 Behavior >> definedVariables [
 	"return all the Variables defined"
 	^ self slots
-]
-
-{ #category : #dependencies }
-Behavior >> dependentClasses [
-	"Return the list of classes used myself"
-
-	"Morph dependentClasses"
-	| cll |
-	cll := Set new.
-	"A class depends on its superclass"
-	self superclass ifNotNil: [ cll add: self superclass ].
-
-	"We unify a class and its metaclass"
-	(self methods, self classSide methods)
-		do: [ :m | m literalsDo: [ :l |
-					"We also check if the method is not an extension"
-					(l isVariableBinding
-					and: [ l isGlobalClassNameBinding
-					and: [ m category notEmpty
-					and: [ m category first ~= $* ]]])  ifTrue: [ cll add: l value ] ] ] .
-	^ cll asArray
 ]
 
 { #category : #'accessing - instances and variables' }
@@ -761,6 +736,11 @@ Behavior >> hasAbstractMethods [
 
 	self methodsDo: [:each | each isAbstract ifTrue: [ ^true ]].
 	^false
+]
+
+{ #category : #binding }
+Behavior >> hasBindingOf: aString [
+	^ (self bindingOf: aString) notNil
 ]
 
 { #category : #'testing - method dictionary' }
@@ -1152,6 +1132,14 @@ Behavior >> lookupSelector: selector [
 	^ nil
 ]
 
+{ #category : #lookup }
+Behavior >> lookupVar: aName [
+	^ self classLayout
+		resolveSlot: aName asSymbol
+		ifFound: [:var | var]
+		ifNone: [self bindingOf: aName]
+]
+
 { #category : #accessing }
 Behavior >> methodDict [
        "The method dictionary of a class can be nil when we want to use the #cannotInterpret: hook. Indeed when a class dictionary is nil, the VM sends the message cannotInterpret: to the receiver but starting the look up in the superclass of the class whose method dictionary was nil.
@@ -1262,6 +1250,12 @@ Behavior >> originalName [
  	[obsName beginsWith: 'AnObsolete']
  		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
 	^obsName asSymbol
+]
+
+{ #category : #accessing }
+Behavior >> packageOrganizer [
+
+	^ self environment organization
 ]
 
 { #category : #copying }
@@ -1502,29 +1496,6 @@ Behavior >> sourceCodeTemplate [
 
 	| temporary variable names |
 	statements'
-]
-
-{ #category : #testing }
-Behavior >> sourceMatchesBytecodeAt: selector [
-	"Answers true if the source code at the selector compiles to the bytecode at the selector, and false
-	otherwise. Implemented to detect an error where Monticello did not recompile sources when the class
-	shape changed"
-
-	"This code was copied from #recompile:from:, with few changes. Several methods would benefit from a
-	method which turned a selector and class into a CompiledMethod, without  installing it into the
-	methodDictionary"
-
-	| method newMethod |
-
-	method := self compiledMethodAt: selector.
-	newMethod := self compiler
-			source: (self sourceCodeAt: selector);
-			class: self;
-			failBlock: [^ false];
-			compiledMethodTrailer: method trailer;
-			compile.   "Assume OK after proceed from SyntaxError"
-	selector == newMethod selector ifFalse: [self error: 'selector changed!!'].
-	^ newMethod = method
 ]
 
 { #category : #private }

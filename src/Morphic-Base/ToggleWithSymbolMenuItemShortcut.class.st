@@ -41,6 +41,12 @@ ToggleWithSymbolMenuItemShortcut class >> createSymbolTable [
 		"#Enter. 	Text string: (Character value: 16r23ce) asString attributes: attributes" }
 ]
 
+{ #category : #'class initialization' }
+ToggleWithSymbolMenuItemShortcut class >> initialize [
+
+	self deprecatedAliases: { #ToggleMenuItemShortcutWithSymbol }
+]
+
 { #category : #accessing }
 ToggleWithSymbolMenuItemShortcut class >> priority [
 	^ 0
@@ -63,22 +69,15 @@ ToggleWithSymbolMenuItemShortcut class >> symbolTableAt: anObject ifAbsent: aBlo
 
 { #category : #drawing }
 ToggleWithSymbolMenuItemShortcut >> drawOn: aCanvas [
-	| text paragraph keyBounds keyFont |
+	| text keyBounds keyFont |
 
 	text := self text.
 	keyFont := self class symbolFont.
 
 	keyBounds := self boundsForKeyText: text string font: keyFont.
-	paragraph := Paragraph new
-		compose: text
-			style: (TextStyle fontArray: { keyFont })
-			from: 1
-			in: (0@0 corner: keyBounds corner);
-		yourself.
-
-	aCanvas
-		paragraph: paragraph
-		bounds: keyBounds
+	aCanvas drawString: text
+		in: keyBounds
+		font: keyFont
 		color: self color
 ]
 

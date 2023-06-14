@@ -74,11 +74,6 @@ Trait class >> named: aSymbol package: aString [
 ]
 
 { #category : #'old pharo 8 syntax' }
-Trait class >> named: aSymbol trait: aCompositionOrArray [
-	^ self named: aSymbol trait: aCompositionOrArray package: 'Unclassified'
-]
-
-{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol uses: aCompositionOrArray [
 	^ self named: aSymbol uses: aCompositionOrArray package: 'Unclassified'
 ]
@@ -305,10 +300,11 @@ Trait >> isUsed [
 ]
 
 { #category : #'organization updating' }
-Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
+Trait >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
-	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
-	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ]
+
+	super notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol.
+	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #'accessing - method dictionary' }

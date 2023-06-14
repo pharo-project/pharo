@@ -52,13 +52,13 @@ RBCodeSnippetTest >> testCodeImporter [
 	| string importer class runBlock |
 	"Code importer meed a plain expression or use a custom format"
 	snippet source isAllSeparators ifTrue: [ ^ self skip ].
-	string := snippet isMethod
-		          ifTrue: [
+	string := snippet isScripting
+		          ifFalse: [
 			          class := ChunkImportTestCase new importAClass.
 			          '!{1} methodsFor: ''some protocol''!{2}' format: {
 					          class name asString.
 					          snippet source } ]
-		          ifFalse: [ snippet source ].
+		          ifTrue: [ snippet source ].
 
 	"Note: it might be possible that the snipped messes with the chuck format... to investigate"
 	importer := CodeImporter fromString: string.
@@ -69,7 +69,7 @@ RBCodeSnippetTest >> testCodeImporter [
 	"Importer should fail when faulty"
 	snippet isFaulty ifTrue: [
 		self should: [ importer evaluate ] raise: CodeError.
-		snippet isMethod ifTrue: [ class removeFromSystem ].
+		snippet isScripting ifFalse: [ class removeFromSystem ].
 		^ self ].
 
 	"When not faulty, it's more complicated..."
@@ -77,7 +77,7 @@ RBCodeSnippetTest >> testCodeImporter [
 	            | value |
 	            value := importer evaluate.
 
-	            snippet isMethod ifTrue: [
+	            snippet isScripting ifFalse: [
 		            | method phonyArgs |
 		            self assert: value isSymbol.
 		            "Need to call the method, the importer added it to `class`, so retrieve it"
@@ -119,7 +119,7 @@ RBCodeSnippetTest >> testMonticello [
 	self flag: 'Should be an extention method in Monticello-Test, but package dependency is garbage.'.
 
 	"Force non method to be inside a method"
-	snippet isMethod ifFalse: [
+	snippet isScripting ifTrue: [
 		snippet := snippet copy.
 		snippet source: 'foo ' , snippet source ].
 
@@ -144,7 +144,7 @@ RBCodeSnippetTest >> testMonticello [
 	self assert: MCMockClassE methods size equals: 1.
 
 	"forced methods cannot be executed, because no return (pharo language is weird)"
-	snippet isMethod ifTrue: [ self testExecute: MCMockClassE >> definition selector ].
+	snippet isScripting ifFalse: [ self testExecute: MCMockClassE >> definition selector ].
 
 	definition unload.
 	self assert: MCMockClassE methods size equals: 0
@@ -179,7 +179,7 @@ RBCodeSnippetTest >> testParse [
 		node start to: node stop do: [ :i | self assert: ((node nodeForOffset: i) isKindOf: RBProgramNode) ].
 		self assert: node printString isString.
 		self assert: node selfMessages isCollection.
-		self assert: node methodNode = ast equals: snippet isMethod.
+		self assert: node methodNode = ast equals: snippet isScripting not.
 		self assert: (node methodOrBlockNode isKindOf: RBProgramNode).
 	]
 ]

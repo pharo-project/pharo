@@ -33,7 +33,7 @@ RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTra
 					ifNil: [ RBRefactoring new
 						refactoringError: ('<1s> is referenced.' expandMacrosWith: variableName) ]
 					ifNotNil: [ RBRefactoring new
-						refactoringError: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName)
+						refactoringWarning: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName)
 						with: [ aTransformation openBrowserOn: (RBVariableEnvironment
 									referencesToClassVariable: variableName
 									in: aClass realClass) ] ] ] ].

@@ -16,11 +16,13 @@ will open a system browser with only the classes from package 'Kernel'. And all 
 Here is a list generated from the Refactoring class comments describing the refactorings available. 
 
 ### Class Refactorings
+
 This is the chapter of the refactoring help book about the class refactoring available in the System Browser.
+
 #### Rename
 I am a refactoring for renaming a class.
 
-My preconditions verify, that the old class exists (in  the current namespace) and that the new class name is valid and not yet used as a global variable name 
+My preconditions verify, that the old class exists (in the current namespace) and that the new class name is valid and not yet used as a global variable name 
 
 The refactoring transformation will replace the current class and its definition with the new class name. And update all references in all methods in this namespace, to use the new name. Even the definition for subclasses of the old class will be changed.
 
@@ -33,14 +35,16 @@ Example
 ```
 
 #### Remove
-I am a refactoring for removing classes. 
+
+I am a refactoring for removing classes.
 
 My precondition verifies that the class name exists in this namespace and the class has no references, resp. users, if this is used to remove a trait.
 
 If this class is "empty" (has no methods and no variables), any subclass is reparented to the superclass of this class. It is not allowed to remove non-empty classes when it has subclasses.
 
 #### Remove keeping subclasses
-I am a refactoring for removing classes but keeping subclasses in a safe way. 
+
+I am a refactoring for removing classes but keeping subclasses in a safe way.
 
 My precondition verifies that the class name exists in this namespace and the class has no references, resp. users, if this is used to remove a trait.
 
@@ -76,10 +80,12 @@ Adds a new class as a subclass of the selected class. It offers a check box list
 The name of the new class needs to be a valid class name, not yet used as any global identifier.
 
 #### Realize
+
 Complete the set of defined methods of this class, by generating a "self shouldBeImplemented" method for all abstract methods defined in its superclass hierarchy. Where an abstract method is a method sending "self subclassResponsibilty.
 Shows a warning if this class has abstract methods on its own.
 
 #### Split
+
 I am a refactoring for extracting a set of instance variables to a new class.
 
 You can choose which instance variables should be moved into the new class. The new class becomes an instvar of the original class and every reference to the moved variables is replaced by a accessor call.
@@ -95,9 +101,9 @@ Object subclass: #TextKlass
 	instanceVariableNames: 'text color font style'
 	classVariableNames: ''
 	package: 'TestKlasses'
-```	
+```
 
-We apply the Split Refactoring with this three variables and select a new class name TextAttributes used as variable new "textAttributes".
+We apply the Split Refactoring with these three variables and select a new class name TextAttributes used as variable new "textAttributes".
 The class definition will be changed to:
 
 ```st
@@ -106,12 +112,13 @@ Object subclass: #TextKlass
 	classVariableNames: ''
 	package: 'TestKlasses'
 ```
-	
+
 and every reference to the old vars color / font / style will be replaced by textAttributes color / textAttributes style / textAttributesFont
 
 ### Class and Instance Variable Refactorings
 
 #### Add Variable
+
 I am a refactoring for adding new instance variables.
 
 My precondition verifies that the variable name is valid, not yet used in the whole hierarchy and not a global name.
@@ -126,16 +133,17 @@ Shows a list of variables from the class or instance side. The selected variable
 
 #### Abstract
 
-Shows a list of variables from the class or instance side, creates an accessors for the variable and replaces all direct access to this variable by this accessors method.
+Shows a list of variables from the class or instance side, creates an accessor for the variable and replaces all direct access to this variable by this accessors method.
 (For this class and all of its subclasses.)
 There is no special handling for already existing accessors methods, their direct access is replaced too. And if an accessors method with the name of this variable already exists, the newly created method will get the same name with a counter suffix.
 
 #### Accessor
 
-Choose one instance / class variable to create accessors for. 
+Choose one instance / class variable to create accessors for.
 A getter and setter methods is generated, with the name of the chosen instance variable. If a method with this name already exists, it will create a new method with the same name and a counter suffix.
 
 #### Accessor with lazy initialization
+
 I am a refactoring for creating accessors with lazy initialization for variables.
 
 I am used by a couple of other refactorings creating new variables and accessors.
@@ -160,6 +168,7 @@ RBLintRuleTestData >> foo1
 RBLintRuleTestData >> foo1: anObject
 	foo1 := anObject
 ```
+
 #### Move to class
 
 Only for instance variables. A class search dialog lets you choose the target class to move the instance variable to.
@@ -176,9 +185,10 @@ A warning dialog appears if there are methods referring to this class (accessors
 No accessors method will be changed or generated.
 
 #### Merge variable
+
 I am a refactoring for merge an instance variable into another.
 
-I replace an instance variable by other, in all methods refering to this variable and rename the old accessors, then if the instance variable renamed is directly defined in class it is removed.
+I replace an instance variable by other, in all methods referring to this variable and rename the old accessors, then if the instance variable renamed is directly defined in class it is removed.
 
 My precondition verifies that the new variable is a defined instance variable in class.
 
@@ -215,6 +225,7 @@ Foo >> foo
 ### Method Refactorings
 
 #### Add parameter
+
 I am a refactoring operations for adding method arguments.
 
 You can modify the method name and add an additional keyword argument and the default value used by senders of the original method. Only one new argument can be added. But you can change the whole method name, as long as the number of argument matches.
@@ -228,11 +239,12 @@ This refactoring will
 - replace every sender of the prior method with the new one, using the specified default argument.
 
 #### Deprecate
+
 I am a refactoring for deprecate a method.
 
 My preconditions verify, that the old selector exists (in  the current namespace) and that the new selector is a valid selector.
 
-The refactoring transformation will add the call to the #deprecated:on:in: method 
+The refactoring transformation will add the call to the #deprecated:on:in: method
 
 ##### Example
 
@@ -268,6 +280,7 @@ RBRefactoryTestDataApp >> called: anObject on: aBlock
 ```
 
 #### Inline parameter
+
 I am a refactoring for removing and inlining method arguments.
 
 If all callers of a method with arguments, call that method with the same literal argument expression, you can remove that argument and inline the literal into that method.
@@ -307,11 +320,12 @@ method1
 ```
 
 #### Inline target sends
+
 I am a refactoring for inlining code of this method.
 
 The call to this method in all other methods of this class is replaced by its implementation. The method itself will be removed.
 
-For example, a method 
+For example, a method
 
 ```st
 foo
@@ -335,6 +349,7 @@ baz
 ```
 
 #### Move
+
 I am a refactoring for moving a method from the class to one of its instance variable objects.
 
 Moving a method moves it implementation to one or more classes and replaces the implementation in the original method by a delegation to one of the classes instance variable. 
@@ -352,7 +367,8 @@ For example, moving the method #isBlack from class Color to its instvar #rgb for
 Integer >> isBlack
 	 ^ self = 0
 ```
-and changes Colors implementation from: 
+
+and changes Colors implementation from:
 
 ```st
 Color >> isBlack
@@ -367,11 +383,13 @@ Color >> isBlack
 ```
 
 #### Move to class side / instance side
+
 Move a method from the class to the instance side, or vice versa. Pay attention this is not a refactoring because there is no update to the method moved.
 
 Only instance methods with no instance variable access or class methods with no class instance variable access can be moved.
 
 ##### Move to class side
+
 I'm a refactoring to move a method to class side.
 
 My preconditions verify that the method exists and belongs to instance side.
@@ -408,29 +426,35 @@ RBTransformationRuleTestData class >> rewriteUsing: searchReplacer
 ```
 
 #### Push up
-I am a refactoring for moving a method up to the superclass. 
 
-My precondition verify that this method does not refere to instance variables not accessible in the superclass. And this method does not sends a super message that is defined in the superclass.
+I am a refactoring for moving a method up to the superclass.
+
+My precondition verify that this method does not reference to instance variables not accessible in the superclass. And this method does not sends a super message that is defined in the superclass.
 If the method already exists and the superclass is abstract or not referenced anywhere, replace that implementation and push down the old method to all other existing subclasses.
 
 #### Push down
+
 I am a refactoring for moving a method down to all direct subclasses.
 
-My preconditions verify that this method isn't refered  as a super send in the subclass. And the class defining this method is abstract or not referenced anywhere.
+My preconditions verify that this method isn't referred as a super send in the subclass. And the class defining this method is abstract or not referenced anywhere.
 
 #### Remove Method
+
 I am a refactoring for removing a method.
 
 My preconditions verify that this method is not referenced anywhere.
+
 #### Remove parameter
+
 I am a refactoring for removing (unused) arguments.
 
-My preconditions verify that the argument to be removed is not referenced by the methods and that the new method name isn't alread used.
+My preconditions verify that the argument to be removed is not referenced by the methods and that the new method name isn't already used.
 Any sender of the prior selector will be changed to the new.
 
 If the method contains more than one argument, I request the user to choose one of the arguments.
 
 #### Remove all senders
+
 I am a refactoring to remove all possible senders from a method (you cannot remove those calls where the result of the method call is used or when the method name symbol is referenced).
 
 #### Example
@@ -460,7 +484,7 @@ RBRefactoryTestDataApp >> caller1
 			^anObject]
 ```
 
-After refactoring (notice that the call to printstring was removed):
+After refactoring (notice that the call to `printString` was removed):
 
 ```st
 RBRefactoryTestDataApp >> caller1
@@ -473,6 +497,7 @@ RBRefactoryTestDataApp >> caller1
 ```
 
 #### Rename method (all)
+
 I am a refactoring operation for renaming methods.
 
 The new method name has to have the same number of arguments, but the order of arguments can be changed.
@@ -492,6 +517,7 @@ There are two ways to rename a method, one of them is rename all senders of meth
 		to: #checkClass1:
 		permutation: (1 to: 1)) execute.
 ```
+
 And the other is rename the method only in specific packages:
 
 ```st
@@ -506,6 +532,7 @@ refactoring execute
 ```
 
 #### Replace by another
+
 I'm a refactoring operation for replace one method call by another one.
 
 The new method's name can have a different number of arguments than the original method, if it has more arguments a list of initializers will be needed for them.
@@ -523,61 +550,72 @@ All senders of this method are changed by the other.
 	permutation: (1 to: 1)
 	inAllClasses: true) execute
 ```
+
 ## Source Refactorings
 
 #### Create cascade
-I am  a refactoring used to generate cascades in source code.
+
+I am a refactoring used to generate cascades in source code.
 
 Two or more message sends to the same object are replaced by a cascaded message send. It expects a selection of the messages and the receiver variable.
 
 #### Extract method
+
 I am a refactoring for creating a method from a code fragment.
 
 You can select an interval of some code in a method and call this refactoring to create a new method implementing that code and replace the code by calling this method instead. 
 The new method needs to have as many arguments as the number of (temp)variables, the code refers to.
 
-The preconditions are quite complex. The code needs to be parseable valid code. 
+The preconditions are quite complex. The code needs to be parseable valid code.
+
 #### Extract method to component
-I am a refactoring for extracting code fragments to a new method. 
+
+I am a refactoring for extracting code fragments to a new method.
 
 Similar to `RBExtractMethodRefactoring`, but you can choose to which component (instance or agument variable) the new method is added. 
 As such, the new method arguments will include an additional argument for the sender.
-Based on the instance variable you chosed for this method I will guess the class where to add this method, but you can change this class or add more classes.
+Based on the instance variable you choose for this method I will guess the class where to add this method, but you can change this class or add more classes.
 
 #### Extract to temporary
+
 Add a new temporary variable for the value of the selected code. Every place in this method using the same piece of code is replaced by accessing this new temporary variable instead.
 As the code is now only evaluated once for initializing the variable value, this refactoring may modify the behavior if the code statements didn't evaluate to the same value on every call.
 
 My preconditions verify that the new temporary name is a valid name and isn't already used (neither a temporary, an instance variable or a class variable).
 
 #### Inline method
+
 I am a refactoring for replacing method calls by the method implementation.
 
 You can select a message send in a method and refactoring this message send to inline its code.
-Any temporary variable used in the original message send is added  into this method and renamed if there are already variables with this name.
+Any temporary variable used in the original message send is added into this method and renamed if there are already variables with this name.
 
 My preconditions verify that the inlined method is not a primitive call, the method does not have multiple returns. I'll show a warning if the method is overriden in subclasses.
 
 
 #### Inline method from component
+
 I am a refactoring for replacing method calls by the method implementation.
 
-Just like `RBInlineMethodRefactoring`,  I replace a message send by the implementation of that  message , but you can provide the component
-where this implementation is taken from or choose one if there are move than one implementors.
+Just like `RBInlineMethodRefactoring`, I replace a message send by the implementation of that  message , but you can provide the component
+where this implementation is taken from or choose one if there are more than one implementor.
 If the method implementation has some direct variable references, accessor for this variable are created (just as by the generate accessor refactoring).
 
 #### Inline temporary
+
 I am a refactoring to replace a temporary variable by code.
 
 All references to the temporary variable in this method are replaced by the value used to initialize the temporary variable. 
 The initialization and declaration of this variable will be removed. You need to select the variable and its initial assignment code to apply this refactoring.
 
 #### Move variable definition
+
 I am a refactoring for moving the definition of a variable to the block/scope where it is used.
 
 For a method temporary variable declared but not initialized in the method scope and only used within a block, the definition can be moved to the block using this variable.
 
 #### Rename temporary/parameter
+
 I am a refactoring for renaming temporary variables.
 This can be applied to method arguments as well.
 
@@ -586,6 +624,7 @@ The variable declaration and all references in this method are renamed.
 My precondition verifies that the new name is a valid variable name and not an existing instance or a class variable name
 
 #### Split cascade
+
 I am a refactoring splitting a cascade message send to multiple messages.
 
 You can select an interval containing a cascade expression. The refactoring will split this expression to two message sends to the receiver. 
@@ -595,6 +634,7 @@ My preconditions verify that the selector containing the cascaded message send i
 If the receiver of the cascade expression is a literal or the return value of another message send, I will add another temporary variable for the interim result.
 
 #### Move temporary to instvar
+
 I am a refactoring for changing a temporary variable to an instance variable.
 
 My preconditions verify that this variable is not yet used as an instance variable in this class.

@@ -126,7 +126,7 @@ EpHasImpactVisitor >> visitMethodChange: aChange [
 			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method |
-					method protocol ~= aChange methodAffectedProtocol or: [
+					method protocol name ~= aChange methodAffectedProtocol or: [
 					method sourceCode ~= aChange methodAffectedSourceCode ] ]
 				ifAbsent: [ true ] ].
 
@@ -153,7 +153,7 @@ EpHasImpactVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	self
 		behaviorNamed: aProtocolAddition behaviorAffectedName
-		ifPresent: [ :behavior | ^ (behavior organization hasProtocol: aProtocolAddition protocol) not ].
+		ifPresent: [ :behavior | ^ (behavior hasProtocol: aProtocolAddition protocol) not ].
 
 	^ true
 ]
@@ -165,9 +165,8 @@ EpHasImpactVisitor >> visitProtocolRemoval: aProtocolRemoved [
 	- there are methods in the protocol that are not trait methods"
 
 	self behaviorNamed: aProtocolRemoved behaviorAffectedName ifPresent: [ :behavior |
-		| selectors |
-		selectors := (behavior organization protocolNamed: aProtocolRemoved protocol ifAbsent: [ ^ false ]) methodSelectors.
-		(selectors allSatisfy: [ :each | (behavior compiledMethodAt: each) isFromTrait ]) ifTrue: [ ^ false ] ].
+		(behavior hasProtocol: aProtocolRemoved protocol) ifFalse: [ ^ false ].
+		((behavior methodsInProtocol: aProtocolRemoved protocol) allSatisfy: [ :method | method isFromTrait ]) ifTrue: [ ^ false ] ].
 
 	^ true
 ]

@@ -24,23 +24,23 @@ Class {
 }
 
 { #category : #api }
-RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocols: protocols [
+RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocols: aCollection [
 
 	^ self new
 		model: aRBModel;
 		sourceCode: aString
 		in: aClass
-		withProtocols: protocols;
+		withProtocols: aCollection;
 		yourself
 ]
 
 { #category : #api }
-RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols: protocols [
+RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols: aCollection [
 
 	^ self new
 		sourceCode: aString
 		in: aClass
-		withProtocols: protocols;
+		withProtocols: aCollection;
 		yourself
 ]
 

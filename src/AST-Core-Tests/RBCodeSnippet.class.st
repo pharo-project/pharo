@@ -4,7 +4,7 @@ Small pieces of source code used used to test various AST based tools.
 See `RBCodeSnippet allSnippets` for a various collection of instances.
 
 * source <String> the source code of the snippet
-* isMethod <Boolean> the source is for a full method (with pattern and maybe pragmas)
+* isScripting <Boolean> the source is for a script (without pattern or pragmas)
 * formatedCode <String> the expected reformated code
 * isParseFaulty <Boolean> is the parser expected to produce a faulty AST (only syntactic errors)
 * isFaulty <Boolean> is the compiler expected to produce a faulty AST (syntactic and semantic errors)
@@ -24,7 +24,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'source',
-		'isMethod',
+		'isScripting',
 		'isParseFaulty',
 		'isFaulty',
 		'isFaultyMinusUndeclared',
@@ -48,13 +48,244 @@ Class {
 RBCodeSnippet class >> allSnippets [
 
 	^ {
+		  self badAnnotations.
+		  self badComments.
 		  self badSimpleExpressions.
 		  self badExpressions.
 		  self badTokens.
 		  self badMethods.
+		  self badScanner.
 		  self badSemantic.
 		  self badPositions.
 		  self badVariableAndScopes } flattened
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badAnnotations [
+
+	<script: 'self styleWithError: self badAnnotations'>
+	| list |
+	list := {
+		        (self new
+			         source: '@';
+			         nodeAt: '0';
+			         styled: '<';
+			         isParseFaulty: false;
+			         notices: #( #( 1 1 1 'Unexpected token' ) )).
+		        (self new
+			         source: '@5';
+			         nodeAt: '23';
+			         styled: '<X';
+			         formattedCode: '@. 5';
+			         notices:
+				         #( #( 1 1 1 'Unexpected token' )
+				            #( 1 1 2 'End of statement expected' ) )).
+		        (self new
+			         source: 'a := @';
+			         nodeAt: '200001';
+			         styled: 'u    <';
+			         isParseFaulty: false;
+			         notices:
+				         #( #( 6 6 6 'Unexpected token' )
+				            #( 1 1 1 'Undeclared variable' ) )).
+		        (self new
+			         source: '^ @';
+			         nodeAt: '001';
+			         styled: '^ <';
+			         isParseFaulty: false;
+			         notices: #( #( 3 3 3 'Unexpected token' ) )).
+		        (self new
+			         source: '@foo';
+			         nodeAt: '1000';
+			         styled: '<<<<';
+			         formattedCode: '@ foo';
+			         isParseFaulty: false;
+			         notices: #( #( 1 4 1 'Unknown annotation' ) )).
+		        (self new
+			         source: '@foo:';
+			         nodeAt: '10000';
+			         styled: '<<<<<';
+			         formattedCode: '@ foo: ';
+			         notices: #( #( 6 5 6 'Variable or expression expected' )
+				            #( 1 5 1 'Unknown annotation' ) )).
+		        (self new
+			         source: '@foo:5';
+			         nodeAt: '100002';
+			         styled: '<<<<<n';
+			         formattedCode: '@ foo: 5';
+			         isParseFaulty: false;
+			         notices: #( #( 1 6 1 'Unknown annotation' ) )) }.
+
+	"Setup default values"
+	self new
+		group: #badAnnotations;
+		isScripting: true;
+		isFaulty: true;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badComments [
+	"EFFormater is not the best here :("
+
+	<script: 'self styleWithError: self badComments'>
+	| list |
+	list := {
+		        (self new
+			         source: '"" ';
+			         nodeAt: '22 ';
+			         styled: '"" ').
+		        (self new
+			         source: '"nothing" ';
+			         nodeAt: '222222222 ';
+			         styled: '""""""""" ').
+		        (self new
+			         source: '"com"1"ment"';
+			         nodeAt: '333330444444';
+			         styled: '"""""n""""""';
+			         formattedCode: '1';
+			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
+
+		        "Comments betwen all tokens"
+		        "Unfortunately, EFFormater loose a lot of comments :("
+		        (self new
+			         source: '"a" 1 "b". "c" 2 "d"';
+			         nodeAt: '555 106660077708 AAA';
+			         styled: '""" n """. """ n """';
+			         formattedCode: '1. "a" "b" "c" 2 "d"';
+			         value: 2). "a and b moved around. Formatter issue. FIXME?"
+		        (self new
+			         source: ' "z" foo "a" 1 "b". "c" ^ 2 "d" ';
+			         nodeAt: '0DDD00000EEE04377733888399A0CCC0';
+			         styled: ' """ ppp """ n """. """ ^ n """ ';
+			         formattedCode: 'foo "z" "a" 1. "b" "c" ^ 2 "d"';
+			         isScripting: false;
+			         value: 2). "z and b moved around. Formatter issue. FIXME?"
+		        (self new
+			         source: '"a" 1 "b" max: "c" 2 "d" + "e" 3 "f" abs "g"';
+			         nodeAt: '444 10555000000AAA076BBB666HHH6ECIIICCCC JJJ';
+			         styled: '""" n """ ssss """ n """ s """ n """ sss """';
+			         formattedCode: '1 max: 2 + 3 abs';
+			         value: 5).
+		        (self new
+			         source: '"a" ( "b" ( "c" 1 "d" ) "e" ) "f"';
+			         nodeAt: '777 00888000999000AAA000BBB00 CCC';
+			         styled: '""" 0 """ 1 """ n """ 1 """ 0 """';
+			         formattedCode: '1';
+			         value: 1).
+		        (self new
+			         source: ' "a" 1 "b" max: "c" 2 "d" ; "e" min: "f" 3 "g" ';
+			         nodeAt: ' HHH E1III111111AAA17CBBBCCCOOOCCCCCCMMMCJ NNN ';
+			         styled: ' """ n """ ssss """ n """ ; """ ssss """ n """ ';
+			         formattedCode: '1 max: 2; "e"min: 3';
+			         value: 1).
+		        (self new
+			         source: '"a" #( "b" 1 "c" two "d" ( "e" 3 "f" ) "g" ) "h"';
+			         nodeAt: 'DDD 000EEE090FFF0AAA0GGG0BBBBBBCBBBBBB0JJJ00 KKK';
+			         styled: '""" 00 """ n """ ### """ 1 """ n """ 1 """ 0 """';
+			         formattedCode: '#( 1 two #( 3 ) )';
+			         value: #( 1 #two #( 3 ) )).
+		        (self new
+			         source: '"a" [ "b" 1 "c" . "d" 2 "e" ] "f"';
+			         nodeAt: 'DDD 00EEE0548884449994A0CCC00 FFF';
+			         styled: '""" 0 """ n """ . """ n """ 0 """';
+			         formattedCode: '[ "a""b""f" 1. "c" "d" 2 "e" ]';
+			         value: 1).
+		        (self new
+			         source: '"a" [ "b" : "c" x "d" : "e" y "f" | "g" ] "h"';
+			         nodeAt: '888 00999000AAA030BBB000FFF0C0GGG000III00 JJJ';
+			         styled: '""" 0 """ : """ B """ : """ B """ | """ 0 """';
+			         formattedCode: '[ :x "a""b""c""d" :y "e""f" | "g""h" ]').
+		        (self new
+			         source: '"a" [ "b" | "c" x "d" y "e" | "f" ] "g"';
+			         nodeAt: 'FFF 00GGG044999464AAA4B0DDD000EEE00 HHH';
+			         styled: '""" 0 """ | """ T """ T """ | """ 0 """';
+			         formattedCode: '[ "a""b""g" | x "c" "d" y "e" | "f" ]';
+			         notices:
+				         #( #( 17 17 17 'Unused variable' )
+				            #( 23 23 23 'Unused variable' ) )).
+		        (self new
+			         source: '"a" #[ "b" 1 "c" 2 "d" ] "e"';
+			         nodeAt: '888 000999060AAA070BBB00 CCC';
+			         styled: '""" 00 """ n """ n """ 0 """';
+			         formattedCode: '#[ 1 2 ]';
+			         value: #[ 1 2 ]).
+		        (self new
+			         source: '"a" { "b" 1 "c" . "d" 2 "e" } "f"';
+			         nodeAt: 'CCC 00DDD040777000888090BBB00 EEE';
+			         styled: '""" 0 """ n """   """ n """ 0 """';
+			         formattedCode: '{ 1. 2 }';
+			         value: #( 1 2 )).
+		        (self new
+			         source: ' "a" | "b" x "c" | "d" x "e" := "f" 5 "g" ';
+			         nodeAt: ' 666 00777020888000III0F9HHH9999DDD9A EEE ';
+			         styled: ' """ | """ T """ | """ t """    """ n """ ';
+			         formattedCode: '| x "a" "b" "c" | "d" x := 5 "e" "f" "g"';
+			         value: 5).
+		        (self new
+			         source: ' "a" ^ "b" 5 "c" ';
+			         nodeAt: ' 555 0066601 777 ';
+			         styled: ' """ ^ """ n """ ';
+			         formattedCode: '^ 5';
+			         value: 5).
+		        (self new
+			         source: ' "a" foo: "b" x "c" bar: "d" y "e" ^ "f" x "g" ';
+			         nodeAt: '0777000000888030999000000III0A0JJJ0CCGGGCD0HHH0';
+			         styled: ' """ pppp """ A """ pppp """ A """ ^ """ a """ ';
+			         formattedCode: 'foo: x bar: y "d" "e" ^ x "f" "g"';
+			         isScripting: false;
+			         value: 1).
+		        (self new
+			         source: 'foo "a" < "b" bar "c" > "d" < "e" baz "f" > "g" ';
+			         nodeAt: '0000BBB08888888888888880EEE09999999999999990HHH0';
+			         styled: 'ppp """ < """ <<< """ < """ < """ <<< """ < """ ';
+			         formattedCode:
+				         'foo "a" "b" "c" "d" "e" "f" "g" <bar> <baz> ';
+			         isScripting: false).
+		        (self new
+			         source: 'foo "a" < "b" bar: "c" 1 "d" z: "e" 2 "f" > "g"';
+			         nodeAt: '0000CCC08888888888888889888888888888A8888880III';
+			         styled: 'ppp """ < """ <<<< """ n """ << """ n """ < """';
+			         formattedCode:
+				         'foo "a" "b" "c" "d" "e" "f" "g" <bar: 1 z: 2> ';
+			         isScripting: false).
+
+		        "Unfinished comments"
+		        (self new
+			         source: '"unfinished';
+			         nodeAt: '00000000000';
+			         styled: 'XXXXXXXXXXX';
+			         isFaulty: true;
+			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"also unfinished""';
+			         nodeAt: '000000000000000000';
+			         styled: 'XXXXXXXXXXXXXXXXXX';
+			         isFaulty: true;
+			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"';
+			         nodeAt: '0';
+			         styled: 'X';
+			         isFaulty: true;
+			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
+		        (self new
+			         source: '"""';
+			         nodeAt: '000';
+			         styled: 'XXX';
+			         isFaulty: true;
+			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )) }.
+
+
+	"Setup default values"
+	self new
+		group: #badComments;
+		isScripting: true;
+		isFaulty: false;
+		skip: #testSimpleFormattedCode;
+		"The simple one is too much broken"applyDefaultTo: list.
+	^ list
 ]
 
 { #category : #accessing }
@@ -75,6 +306,7 @@ RBCodeSnippet class >> badExpressions [
 			         source: '#( 1 + 2';
 			         nodeAt: '00010203';
 			         styled: 'XX n # n';
+			         formattedCode: '#( 1 #+ 2';
 			         notices: #( #( 1 8 9 ''')'' expected' ) )).
 		        (self new
 			         source: '[ 1 + 2';
@@ -206,10 +438,12 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '#(1]2}3)';
 			         nodeAt: '00123450';
-			         styled: '  n#n#n ';
+			         styled: '00n#n#n0';
 			         formattedCode: '#( 1 #'']'' 2 #''}'' 3 )';
 			         isFaulty: false;
-			         value: #( 1 #']' 2 #'}' 3 )). "`#(` can eat almost anything"
+			         value: #( 1 #']' 2 #'}' 3 );
+			         notices: #( #( 4 4 4 'Use a proper symbol literal' )
+				            #( 6 6 6 'Use a proper symbol literal' ) )). "`#(` can eat almost anything"
 		        (self new
 			         source: '#( 0 1r2 4 )';
 			         nodeAt: '000102330400';
@@ -217,6 +451,72 @@ RBCodeSnippet class >> badExpressions [
 			         formattedCode: '#( 0 1 r2 4 )';
 			         notices:
 				         #( #( 6 6 7 'an integer greater than 1 as valid radix expected' ) )). "Almost anything..."
+		        (self new
+			         source: '#( ( 0 1 2 ) )';
+			         nodeAt: '00011213141100';
+			         styled: '00 1 n n n 1 0';
+			         formattedCode: '#( #( 0 1 2 ) )';
+			         isFaulty: false;
+			         value: #( #( 0 1 2 ) )).
+		        (self new
+			         source: '#( #( 0 1 2 ) )';
+			         nodeAt: '000111213141100';
+			         styled: '00 11 n n n 1 0';
+			         isFaulty: false;
+			         value: #( #( 0 1 2 ) )).
+		        (self new
+			         source: '#( #( 0 1 2 )';
+			         nodeAt: '0001112131411';
+			         styled: 'XX 00 n n n 0';
+			         notices: #( #( 1 13 14 ''')'' expected' ) )).
+		        (self new
+			         source: '#( #( 0 1r2 3 ) )';
+			         nodeAt: '00011121344151100';
+			         styled: 'XX XX n XX# n X X';
+			         formattedCode: '#( #( 0 1 r2 3 ) )';
+			         notices:
+				         #( #( 9 9 10 'an integer greater than 1 as valid radix expected' ) )).
+		        (self new
+			         source: '#( #( 0 1r2 3 )';
+			         nodeAt: '000111213441511';
+			         styled: 'XX XX n XX# n X';
+			         formattedCode: '#( #( 0 1 r2 3 )';
+			         notices:
+				         #( #( 9 9 10 'an integer greater than 1 as valid radix expected' )
+				            #( 1 15 16 ''')'' expected' ) )).
+		        (self new
+			         source: '#( #[ 0 1 2 ] )';
+			         nodeAt: '000111213141100';
+			         styled: '00 00 n n n 0 0';
+			         isFaulty: false;
+			         value: #( #[ 0 1 2 ] )).
+		        (self new
+			         source: '#( #[ 0 1000 2 ] )';
+			         nodeAt: '000111213333141100';
+			         styled: 'XX XX n XXXX n X X';
+			         notices: #( #( 9 12 9 '8-bit integer expected' ) )).
+		        (self new
+			         source: '#( #[ 0 1 2 )';
+			         nodeAt: '0001112131415';
+			         styled: 'XX XX n n n X';
+			         notices: #( #( 13 13 13 '8-bit integer expected' )
+				            #( 4 13 14 ''']'' expected' )
+				            #( 1 13 14 ''')'' expected' ) )).
+		        (self new
+			         source: '#( #[ 0 1 2 ]';
+			         nodeAt: '0001112131411';
+			         styled: 'XX 00 n n n 0';
+			         notices: #( #( 1 13 14 ''')'' expected' ) )).
+		        (self new
+			         source: '[(#("a"("b"###("c"###["d"]#["e"]["f"]))))]';
+			         nodeAt: '0222FFF9999AAAAAAABBBBBBBBCCCCCCDAAAEA9220';
+			         styled: '0011"""2"""3333"""1111"""111"""1#"""#32100';
+			         formattedCode:
+				         '[ #( #( #( #[ ] #[ ] #''['' #'']'' ) ) ) "a" "b" "c" "d" "e" "f" ]';
+			         isFaulty: false;
+			         value: #( #( #( #[  ] #[  ] #'[' #']' ) ) );
+			         notices: #( #( 33 33 33 'Use a proper symbol literal' )
+				            #( 37 37 37 'Use a proper symbol literal' ) )). "dry [ and ] in lit array are symbols"
 		        (self new
 			         source: '#[ 1 ) 2 ]';
 			         nodeAt: '0001020300';
@@ -275,13 +575,13 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '#( )';
 			         nodeAt: '0000';
-			         styled: '    ';
+			         styled: '00 0';
 			         isFaulty: false;
 			         value: #(  )).
 		        (self new
 			         source: '#[ ]';
 			         nodeAt: '0000';
-			         styled: '    ';
+			         styled: '00 0';
 			         isFaulty: false;
 			         value: #[  ]).
 		        (self new
@@ -349,13 +649,13 @@ RBCodeSnippet class >> badExpressions [
 		        (self new
 			         source: '#(1)#(2)';
 			         nodeAt: '22324454';
-			         styled: '  n X n ';
+			         styled: '00n0X0n0';
 			         formattedCode: '#( 1 ). #( 2 )';
 			         notices: #( #( 1 4 5 'End of statement expected' ) )).
 		        (self new
 			         source: '#[1]#[2]';
 			         nodeAt: '22324454';
-			         styled: '  n X n ';
+			         styled: '00n0X0n0';
 			         formattedCode: '#[ 1 ]. #[ 2 ]';
 			         notices: #( #( 1 4 5 'End of statement expected' ) )).
 
@@ -514,9 +814,13 @@ RBCodeSnippet class >> badExpressions [
 				            #( 3 2 3 'Variable or expression expected' ) )). "keyword message with a missing receiver and argument"
 		        (self new
 			         source: 'a::';
-			         nodeAt: '000';
-			         styled: 'XXX';
-			         notices: #( #( 1 3 1 'Unexpected token' ) )). "just a bad token"
+			         nodeAt: '225';
+			         styled: 'XsX';
+			         formattedCode: ' a: . :';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 3 2 3 'Variable or expression expected' )
+				            #( 1 2 3 'End of statement expected' )
+				            #( 3 3 3 'Unexpected token' ) )). "same plus an unexpected :"
 		        (self new
 			         source: 'a:foo';
 			         nodeAt: '00222';
@@ -526,12 +830,11 @@ RBCodeSnippet class >> badExpressions [
 				            #( 3 5 3 'Undeclared variable' ) )). "keyword message with a missing receiver"
 		        (self new
 			         source: 'a::foo';
-			         nodeAt: '111222';
-			         styled: 'XXXuuu';
-			         formattedCode: 'a::. foo';
-			         notices:
-				         #( #( 1 3 1 'Unexpected token' )
-				            #( 4 6 4 'Undeclared variable' ) )).
+			         nodeAt: '002222';
+			         styled: 'XsXXXX';
+			         formattedCode: ' a: :foo';
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 3 6 3 'Unexpected block parameter' ) )).
 		        (self new
 			         source: ':a:foo';
 			         nodeAt: '122444';
@@ -782,7 +1085,7 @@ RBCodeSnippet class >> badExpressions [
 	"Setup default values"
 	self new
 		group: #badExpressions;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -830,7 +1133,7 @@ RBCodeSnippet class >> badMethods [
 		        (self new
 			         source: '#(foo bar)';
 			         nodeAt: '3344435553';
-			         styled: 'X ### ### ';
+			         styled: 'X0### ###0';
 			         formattedCode: ' . #( foo bar )';
 			         notices: #( #( 1 0 1 'Message pattern expected' ) )).
 
@@ -904,11 +1207,13 @@ RBCodeSnippet class >> badMethods [
 				            #( 11 10 11 'Name already defined' ) )).
 		        (self new
 			         source: 'foo:bar:';
-			         nodeAt: '33333333';
-			         styled: 'XXXXXXXX';
-			         formattedCode: ' . foo:bar:';
-			         notices: #( #( 1 0 1 'Message pattern expected' )
-				            #( 1 8 1 'Unexpected token' ) )). "`foo:bar:` is a single token, and is unexpected"
+			         nodeAt: '00000000';
+			         styled: 'ppppXppp';
+			         formattedCode: 'foo: bar: ';
+			         value: nil;
+			         notices: #( #( 5 4 5 'Variable name expected' )
+				            #( 9 8 9 'Variable name expected' )
+				            #( 9 8 9 'Name already defined' ) )). "same. `foo:bar:` is no more a single token"
 
 		        "Bad pragma message"
 		        (self new
@@ -1031,7 +1336,7 @@ RBCodeSnippet class >> badMethods [
 	"Setup default values"
 	self new
 		group: #badMethods;
-		isMethod: true;
+		isScripting: false;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -1050,14 +1355,14 @@ RBCodeSnippet class >> badPositions [
 			         nodeAt: '00000112221115553333411166777110';
 			         styled: ' ppp | TTT | ttt    n . ^ ttt . ';
 			         formattedCode: 'foo | tmp | tmp := 1. ^ tmp';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 1).
 		        (self new
 			         source: ' foo: arg bar: arr ^ arg + arr . ';
 			         nodeAt: '000000111000000222044666555777330';
 			         styled: ' pppp AAA pppp AAA ^ aaa s aaa . ';
 			         formattedCode: 'foo: arg bar: arr ^ arg + arr';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 3).
 		        (self new
 			         source: ' | tmp | tmp := 1 . ^ tmp . ';
@@ -1070,14 +1375,14 @@ RBCodeSnippet class >> badPositions [
 			         nodeAt: '000000111033BBB5555558887779AAAAAA220';
 			         styled: ' pppp AAA ^ aaa ssss aaa s n ; sss . ';
 			         formattedCode: 'foo: arg ^ arg min: arg + 2; abs';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 1).
 		        (self new
 			         source: ' foo: arg ^ ( ( ( ( arg ) ) + ( ( 1 ) ) ) ) . ';
 			         nodeAt: '0000001110334444555555555554446666666664444220';
 			         styled: ' pppp AAA ^ 0 1 2 3 aaa 3 2 s 2 3 n 3 2 1 0 . ';
 			         formattedCode: 'foo: arg ^ arg + 1';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 2).
 		        (self new
 			         source: ' ( [ :aaa : bbb | | ccc ddd | aaa . ] ) . ';
@@ -1092,7 +1397,155 @@ RBCodeSnippet class >> badPositions [
 	"Setup default values"
 	self new
 		group: #badPositions;
-		isMethod: false;
+		isScripting: true;
+		isFaulty: false;
+		applyDefaultTo: list.
+	^ list
+]
+
+{ #category : #accessing }
+RBCodeSnippet class >> badScanner [
+	"While simple, the Pharo syntax has some hacks and exceptions when dealing with the scanning of token.
+	Raw scanned lexical tokens are not always used as is and might be transformed or split according to specific grammatical rules."
+
+	<script: 'self styleWithError: self badScanner'>
+	| list |
+	list := {
+		        (self new
+			         source: '1 true false nil self super thisContext';
+			         nodeAt: '655555444444333322222111111000000000000';
+			         styled: 'n uuuu uuuuu uuu uuuu uuuuu uuuuuuuuuuu';
+			         messageNotUnderstood: #true). "Simili-keywords can be used as unary messages"
+		        (self new
+			         source:
+				         '1"A"true"B"false"C"nil"D"self"E"super"F"thisContext"G"';
+			         nodeAt:
+				         '9BBB888877777777666666555555544444444DDD00000000000EEE';
+			         styled:
+				         'n"""uuuu   uuuuu   uuu   uuuu"""uuuuu"""uuuuuuuuuuu"""';
+			         formattedCode: '1 true false nil self super thisContext';
+			         messageNotUnderstood: #true). "Check if comments are lost"
+
+		        "`-` appear in negative number and in binary operators"
+		        (self new
+			         source: '1-1 - 1abs-1 - 1max:-1';
+			         nodeAt: '546333877729111A0000BB';
+			         styled: 'nsn s nssssn s nssssnn';
+			         formattedCode: '1 - 1 - 1 abs - 1 - 1 max: -1';
+			         value: -1).
+		        (self new
+			         source: '1-1"A" - 1abs-1"B" - 1max:-1"C"';
+			         nodeAt: '546888333A9992BDDD111E0000FFHHH';
+			         styled: 'nsn""" s nssssn""" s nssssnn"""';
+			         formattedCode: '1 - 1 - 1 abs - 1 - 1 max: -1';
+			         value: -1). "Check if comments are lost"
+		        (self new
+			         source: '1*-1 + 1--1 + 1- -1';
+			         nodeAt: '54463337228111900AA';
+			         styled: 'nuun s nssn s ns nn';
+			         formattedCode: '1 *- 1 + 1 -- 1 + 1 - -1';
+			         messageNotUnderstood: #'*-'). "Note: long binary operators ending in `-` are not split into negative numbers"
+		        (self new
+			         source: '+1. -a. - 1. -"A"1';
+			         nodeAt: '1300460077900AEEEC';
+			         styled: 'Xn. Xu. X n. X"""n';
+			         formattedCode: ' + 1. - a. - 1. - 1 "A"';
+			         isFaulty: true;
+			         notices: #( #( 1 0 1 'Variable or expression expected' )
+				            #( 5 4 5 'Variable or expression expected' )
+				            #( 6 6 6 'Undeclared variable' )
+				            #( 9 8 9 'Variable or expression expected' )
+				            #( 14 13 14 'Variable or expression expected' ) )). "prefix - is limited to raw integer tokens"
+
+		        "Tokens in literal arrays are really weird."
+		        (self new
+			         source: '#(aa:bb:cc#aa:bb:cc#cc==#== =#=)';
+			         nodeAt: '00111111112222222223334455506770';
+			         styled: '00######################### ###0';
+			         formattedCode:
+				         '#( aa:bb:cc #''aa:bb:cc'' #cc #''=='' #''=='' #= #= )';
+			         value: #( #'aa:bb:cc' #'aa:bb:cc' #cc #'==' #'==' #= #= )). "Identifiers, keywords and binary operators are implicitely transformed into symbols. Note that formatting is inconsistent."
+		        (self new
+			         source: '#(aa:bb:"A"cc"B"#aa:bb:cc"C"#cc"D"++"E"#++"F")';
+			         nodeAt: '00777777DDD88EEE999999999FFFAAAGGGBBHHHCCCIII0';
+			         styled: '00######"""##"""#########"""###"""##"""###"""0';
+			         formattedCode:
+				         '#( aa:bb: cc #''aa:bb:cc'' #cc #''++'' #''++'' )';
+			         value: #( #aa:bb: #cc #'aa:bb:cc' #cc #'++' #'++' )). "Check if comments are lost"
+		        (self new
+			         source: '#(().:;[]{}^#a)';
+			         nodeAt: '001123456789AA0';
+			         styled: '0011##########0';
+			         formattedCode:
+				         '#( #( ) #''.'' #'':'' #'';'' #''['' #'']'' #''{'' #''}'' #''^'' #a )';
+			         value:
+				         #( #(  ) #'.' #':' #';' #'[' #']' #'{' #'}' #'^' #a );
+			         notices: #( #( 5 5 5 'Use a proper symbol literal' )
+				            #( 6 6 6 'Use a proper symbol literal' )
+				            #( 7 7 7 'Use a proper symbol literal' )
+				            #( 8 8 8 'Use a proper symbol literal' )
+				            #( 9 9 9 'Use a proper symbol literal' )
+				            #( 10 10 10 'Use a proper symbol literal' )
+				            #( 11 11 11 'Use a proper symbol literal' )
+				            #( 12 12 12 'Use a proper symbol literal' ) )). "Most special characters are transformed into single character symbols, including brackets!"
+		        (self new
+			         source: '#(("A")"B"."C":"D";"E"["F"]"G"{"H"}"I"^"J")';
+			         nodeAt: '00BBBBBLLLCMMMDNNNEOOOFPPPGQQQHRRRISSSJTTT0';
+			         styled: '001"""1"""#"""#"""#"""#"""#"""#"""#"""#"""0';
+			         formattedCode:
+				         '#( #( ) #''.'' #'':'' #'';'' #''['' #'']'' #''{'' #''}'' #''^'' )';
+			         value: #( #(  ) #'.' #':' #';' #'[' #']' #'{' #'}' #'^' );
+			         notices: #( #( 11 11 11 'Use a proper symbol literal' )
+				            #( 15 15 15 'Use a proper symbol literal' )
+				            #( 19 19 19 'Use a proper symbol literal' )
+				            #( 23 23 23 'Use a proper symbol literal' )
+				            #( 27 27 27 'Use a proper symbol literal' )
+				            #( 31 31 31 'Use a proper symbol literal' )
+				            #( 35 35 35 'Use a proper symbol literal' )
+				            #( 39 39 39 'Use a proper symbol literal' ) )). "Check if comments are lost"
+		        (self new
+			         source: '#(# ## #ab #10 #. 10)';
+			         nodeAt: '001022033304550670880';
+			         styled: 'XXXXXXX### XXn XX nnX';
+			         formattedCode: '#( # ## #ab # 10 # #''.'' 10 )';
+			         isFaulty: true;
+			         notices:
+				         #( #( 3 3 4 'Literal expected' )
+				            #( 5 6 7 'Literal expected' )
+				            #( 12 12 13 'Literal expected' )
+				            #( 16 16 17 'Literal expected' )
+				            #( 17 17 17 'Use a proper symbol literal' ) )). "Lonely # are errors"
+		        (self new
+			         source: '#(#"A"##"B")';
+			         nodeAt: '003555446660';
+			         styled: 'XXXX""XXX""X';
+			         formattedCode: '#( # ## )';
+			         isFaulty: true;
+			         notices:
+				         #( #( 3 3 4 'Literal expected' )
+				            #( 7 8 9 'Literal expected' ) )). "Check if comments are lost"
+		        (self new
+			         source: '#(:=aa:=:==bb:==#cc:==)';
+			         nodeAt: '00112223445666778888990';
+			         styled: '00####################0';
+			         formattedCode:
+				         '#( #'':='' aa: #= #'':='' #= bb: #''=='' #cc: #''=='' )';
+			         value: #( #':=' #aa: #= #':=' #= #bb: #'==' #cc: #'==' );
+			         notices: #( #( 3 4 3 'Use a proper symbol literal' )
+				            #( 9 10 9 'Use a proper symbol literal' ) )). "Assigments are split, creating symbols"
+		        (self new
+			         source: '#(:="A"aa:="B":=="C"cc:=="D")';
+			         nodeAt: '0055CCC6667DDD889EEEAAABBFFF0';
+			         styled: '00##"""####"""###"""#####"""0';
+			         formattedCode:
+				         '#( #'':='' aa: #= #'':='' #= cc: #''=='' )';
+			         value: #( #':=' #aa: #= #':=' #= #cc: #'==' );
+			         notices: #( #( 3 4 3 'Use a proper symbol literal' )
+				            #( 15 16 15 'Use a proper symbol literal' ) )) "Check if comments are lost" }.
+	"Setup default values"
+	self new
+		group: #badScanner;
+		isScripting: true;
 		isFaulty: false;
 		applyDefaultTo: list.
 	^ list
@@ -1148,7 +1601,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: a bar: a ^ a';
 			         nodeAt: '00000100000020445';
 			         styled: 'pppp A pppp A ^ a';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 1;
 			         notices: #( #( 13 13 13 'Name already defined' ) )).
 		        (self new
@@ -1170,7 +1623,7 @@ RBCodeSnippet class >> badSemantic [
 		        (self new
 			         source: '[ :a :a | a ]';
 			         nodeAt: '0001002000400';
-			         styled: '0 :B :b | b 0';
+			         styled: '0 :B :B | b 0';
 			         value: 1;
 			         notices: #( #( 7 7 7 'Name already defined' ) )).
 
@@ -1179,7 +1632,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: a ^ [ | a | a := 10. a ] value + a';
 			         nodeAt: '00000103366778777B9999AA77C66555555444D';
 			         styled: 'pppp A ^ 0 | T | t    nn. t 0 sssss s a';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 14 14 14 'Name already defined' ) )).
 		        (self new
@@ -1189,7 +1642,7 @@ RBCodeSnippet class >> badSemantic [
 				         '0000112111533334116699AABAAAECCCCDDAAF99888888777G';
 			         styled:
 				         'ppp | T | t    n. ^ 0 | T | t    nn. t 0 sssss s t';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 25 25 25 'Name already defined' ) )).
 		        (self new
@@ -1199,7 +1652,7 @@ RBCodeSnippet class >> badSemantic [
 				         '0000224455655597777855CCDDEDDDHFFFFGGDDICCBBBBBBAAAJ44333333';
 			         styled:
 				         'ppp ^ 0 | T | t    n. 1 | T | t    nn. t 1 sssss s t 0 sssss';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 27 27 27 'Name already defined' ) )).
 		        (self new
@@ -1209,21 +1662,21 @@ RBCodeSnippet class >> badSemantic [
 				         '000022444544499AABAAAECCCCDDAAF99888888777G4433333333H';
 			         styled:
 				         'ppp ^ 0 :B | 1 | T | t    nn. t 1 sssss s b 0 ssssss n';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 18 18 18 'Name already defined' ) )).
 		        (self new
 			         source: 'foo: a ^ [ :a | a ] value: 10 + a';
 			         nodeAt: '000001033555655585544444444AA999B';
 			         styled: 'pppp A ^ 0 :B | b 0 ssssss nn s a';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 13 13 13 'Name already defined' ) )).
 		        (self new
 			         source: 'foo | a | a := 1. ^ [ :a | a ] value: 10 + a';
 			         nodeAt: '000011211153333411668889888B8877777777DDCCCE';
 			         styled: 'ppp | T | t    n. ^ 0 :B | b 0 ssssss nn s t';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 24 24 24 'Name already defined' ) )).
 		        (self new
@@ -1233,14 +1686,14 @@ RBCodeSnippet class >> badSemantic [
 				         '0000224455655597777855BBBCBBBEBBAAAAAAAAGGFFFH44333333';
 			         styled:
 				         'ppp ^ 0 | T | t    n. 1 :B | b 1 ssssss nn s t 0 sssss';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 26 26 26 'Name already defined' ) )).
 		        (self new
 			         source: 'foo ^ [ :a | [ :a | a ] value: 10 + a ] value: 1';
 			         nodeAt: '00002244454448889888B8877777777DDCCCE4433333333F';
 			         styled: 'ppp ^ 0 :B | 1 :B | b 1 ssssss nn s b 0 ssssss n';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 11;
 			         notices: #( #( 17 17 17 'Name already defined' ) )). "phonyArgs"
 
@@ -1249,7 +1702,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: a a := 10. ^ a';
 			         nodeAt: '0000010533334422667';
 			         styled: 'pppp A XXXXXXX. ^ a';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         notices:
 				         #( #( 8 8 8 'Assignment to read-only variable' ) )).
@@ -1353,7 +1806,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: self ^ self + 1';
 			         nodeAt: '00000111103355554446';
 			         styled: 'pppp AAAA ^ aaaa s n';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         value: 2;
 			         notices: #( #( 6 9 6 'Reserved variable name' ) )).
@@ -1361,7 +1814,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: super ^ super + 1';
 			         nodeAt: '0000011111033555554446';
 			         styled: 'pppp AAAAA ^ aaaaa s n';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         value: 2;
 			         notices: #( #( 6 10 6 'Reserved variable name' ) )).
@@ -1369,7 +1822,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: thisContext ^ thisContext + 1';
 			         nodeAt: '0000011111111111033555555555554446';
 			         styled: 'pppp AAAAAAAAAAA ^ aaaaaaaaaaa s n';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         value: 2;
 			         notices: #( #( 6 16 6 'Reserved variable name' ) )).
@@ -1377,7 +1830,7 @@ RBCodeSnippet class >> badSemantic [
 			         source: 'foo: Object ^ Object + 1';
 			         nodeAt: '000001111110335555554446';
 			         styled: 'pppp AAAAAA ^ aaaaaa s n';
-			         isMethod: true;
+			         isScripting: false;
 			         value: 2;
 			         notices: #( #( 6 11 6 'Name already defined' ) )).
 		        (self new
@@ -1418,7 +1871,7 @@ RBCodeSnippet class >> badSemantic [
 				         '000022333443355336633773388339933AA33BB33CC33DDD33EEE33FFF33GGG33HHH33III33JJJ333LL33';
 			         styled:
 				         'ppp ^ 0 :BB :BB :BB :BB :BB :BB :BB :BB :BB :BBB :BBB :BBB :BBB :BBB :BBB :BBB | bb 0';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         notices: #( #( 7 85 7 'Too many arguments' ) )). "Too many arguments"
 		        (self new
@@ -1428,7 +1881,7 @@ RBCodeSnippet class >> badSemantic [
 				         '00001100000220000033000004400000550000066000007700000880000099000000AAA000000BBB000000CCC000000DDD000000EEE000000FFF000000GGG0IIJJ';
 			         styled:
 				         'ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA ppp AA pppp AAA pppp AAA pppp AAA pppp AAA pppp AAA pppp AAA pppp AAA ^ aa';
-			         isMethod: true;
+			         isScripting: false;
 			         isFaulty: true;
 			         notices: #( #( 1 130 1 'Too many arguments' ) )). "Too many arguments"
 		        (self new
@@ -1454,7 +1907,7 @@ RBCodeSnippet class >> badSemantic [
 	"Setup default values"
 	self new
 		group: #badSemantic;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: false;
 		isParseFaulty: false;
 		applyDefaultTo: list.
@@ -1726,10 +2179,11 @@ RBCodeSnippet class >> badSimpleExpressions [
 		        (self new
 			         source: '#(^1)';
 			         nodeAt: '00120';
-			         styled: '  #n ';
+			         styled: '00#n0';
 			         formattedCode: '#( #''^'' 1 )';
 			         isFaulty: false;
-			         value: #( #'^' 1 )). "Obviously..."
+			         value: #( #'^' 1 );
+			         notices: #( #( 3 3 3 'Use a proper symbol literal' ) )). "Obviously..."
 		        (self new
 			         source: '#[ ^ 1 ]';
 			         nodeAt: '00010200';
@@ -1782,7 +2236,7 @@ RBCodeSnippet class >> badSimpleExpressions [
 	"Setup default values"
 	self new
 		group: #badSimpleExpressions;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -1817,62 +2271,6 @@ RBCodeSnippet class >> badTokens [
 			         nodeAt: '';
 			         styled: '';
 			         isFaulty: false). "emptyness is ok"
-
-		        "Comments"
-		        "EFFormater is not the best here :("
-		        (self new
-			         source: '"" ';
-			         nodeAt: '22 ';
-			         styled: '"" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"nothing" ';
-			         nodeAt: '222222222 ';
-			         styled: '""""""""" ';
-			         isFaulty: false).
-		        (self new
-			         source: '"com"1"ment"';
-			         nodeAt: '333330444444';
-			         styled: '"""""n""""""';
-			         formattedCode: '1';
-			         isFaulty: false;
-			         value: 1). "The comments are in the AST, the formatter just do not know to show them because we format only the node and not the whole method body"
-		        (self new
-			         source: '"a" 1 "b". "c" 2 "d"';
-			         nodeAt: '555 106660077708 AAA';
-			         styled: '""" n """. """ n """';
-			         formattedCode: '1. "a" "b" "c" 2 "d"';
-			         isFaulty: false;
-			         value: 2). "a and b moved around. Formatter issue. FIXME?"
-		        (self new
-			         source: ' "z" foo "a" 1 "b". "c" ^ 2 "d" ';
-			         nodeAt: '0DDD00000EEE04377733888399A0CCC0';
-			         styled: ' """ ppp """ n """. """ ^ n """ ';
-			         formattedCode: 'foo "z" "a" 1. "b" "c" ^ 2 "d"';
-			         isMethod: true;
-			         isFaulty: false;
-			         value: 2). "z and b moved around. Formatter issue. FIXME?"
-		        (self new
-			         source: '"unfinished';
-			         nodeAt: '00000000000';
-			         styled: 'XXXXXXXXXXX';
-			         notices: #( #( 1 11 12 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"also unfinished""';
-			         nodeAt: '000000000000000000';
-			         styled: 'XXXXXXXXXXXXXXXXXX';
-			         notices: #( #( 1 18 19 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"';
-			         nodeAt: '0';
-			         styled: 'X';
-			         notices: #( #( 1 1 2 'Unmatched " in comment.' ) )).
-		        (self new
-			         source: '"""';
-			         nodeAt: '000';
-			         styled: 'XXX';
-			         notices: #( #( 1 3 4 'Unmatched " in comment.' ) )).
-
 
 		        "Bad string literal"
 		        "Note: the only cases are the missing closing quotes since everything inside is captured as is and there is no escape sequences or interpolation (yet?)"
@@ -2174,6 +2572,16 @@ RBCodeSnippet class >> badTokens [
 			         formattedCode: '#( Δ → ə )';
 			         notices: #( #( 4 4 4 'Unknown character' ) )). "This one is faulty because → is a parse error"
 		        (self new
+			         source: '#( ( Δ → ə ) )';
+			         nodeAt: '00011213141100';
+			         styled: 'XX X # X # X X';
+			         notices: #( #( 8 8 8 'Unknown character' ) )). "This one is faulty because → is a parse error"
+		        (self new
+			         source: '#( #( Δ → ə ) )';
+			         nodeAt: '000111213141100';
+			         styled: 'XX XX # X # X X';
+			         notices: #( #( 9 9 9 'Unknown character' ) )). "This one is faulty because → is a parse error"
+		        (self new
 			         source: '#→';
 			         nodeAt: '12';
 			         styled: 'XX';
@@ -2184,7 +2592,7 @@ RBCodeSnippet class >> badTokens [
 	"Setup default values"
 	self new
 		group: #badTokens;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -2291,7 +2699,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 		        (self new
 			         source: '[ :a :a :b | | a a b | a + a + b ]';
 			         nodeAt: '00010020030004454647444A999B888C00';
-			         styled: '0 :B :b :B | | T t T | t s t s t 0';
+			         styled: '0 :B :B :B | | T t T | t s t s t 0';
 			         isFaulty: false;
 			         value: 4;
 			         notices:
@@ -2309,8 +2717,8 @@ RBCodeSnippet class >> badVariableAndScopes [
 			         nodeAt:
 				         '00000100002000030555655755855599A9B9C999FEEEGDDDH55';
 			         styled:
-				         'pppp A pp A pp A 0 :B :b :B | | T t T | t s t s t 0';
-			         isMethod: true;
+				         'pppp A pp A pp A 0 :B :B :B | | T t T | t s t s t 0';
+			         isScripting: false;
 			         isFaulty: false;
 			         notices: #( #( 11 11 11 'Name already defined' )
 				            #( 21 21 21 'Name already defined' )
@@ -2341,7 +2749,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 				         '0000010000200003055555555555556676869666CBBBDAAAE';
 			         styled:
 				         'pppp A pp A pp A X            | t t t | t s t s t';
-			         isMethod: true;
+			         isScripting: false;
 			         notices: #( #( 11 11 11 'Name already defined' )
 				            #( 33 33 33 'Name already defined' )
 				            #( 33 33 33 'Unused variable' )
@@ -2354,7 +2762,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 	"Setup default values"
 	self new
 		group: #badVariableAndScopes;
-		isMethod: false;
+		isScripting: true;
 		isFaulty: true;
 		applyDefaultTo: list.
 	^ list
@@ -2442,12 +2850,13 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 
 	aCollection do: [ :each |
 		each default: self.
-		each isMethod ifNil: [ each isMethod: self isMethod ].
+		each isScripting ifNil: [ each isScripting: self isScripting ].
 		each isFaulty ifNil: [ each isFaulty: self isFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: self isParseFaulty ].
 		each isParseFaulty ifNil: [ each isParseFaulty: each isFaulty ].
 		each isFaultyMinusUndeclared ifNil: [ each isFaultyMinusUndeclared: each isFaulty ].
 		each formattedCode ifNil: [ each formattedCode: each source ].
+		self skippedTests ifNotNil: [ self skippedTests do: [ :name | each skip: name ] ]
 	]
 ]
 
@@ -2500,10 +2909,10 @@ RBCodeSnippet >> dumpDefinition [
 			  aStream
 				  nextPutAll: '; formattedCode: ';
 				  print: self formattedCode ].
-		  self isMethod = default isMethod ifFalse: [
+		  self isScripting = default isScripting ifFalse: [
 			  aStream
-				  nextPutAll: '; isMethod: ';
-				  print: self isMethod ].
+				  nextPutAll: '; isScripting: ';
+				  print: self isScripting ].
 		  self isFaulty = default isFaulty ifFalse: [
 			  aStream
 				  nextPutAll: '; isFaulty: ';
@@ -2528,10 +2937,13 @@ RBCodeSnippet >> dumpDefinition [
 				  nextPutAll: '; notices: ';
 				  print: self notices ].
 		  self skippedTests ifNotNil: [
+			  | defaultSkips |
+			  defaultSkips := default skippedTests ifNil: [ #(  ) ].
 			  self skippedTests do: [ :each |
-				  aStream
-					  nextPutAll: '; skip: ';
-					  print: each ] ].
+				  (defaultSkips includes: each) ifFalse: [
+					  aStream
+						  nextPutAll: '; skip: ';
+						  print: each ] ] ].
 		  aStream nextPut: $) ]
 ]
 
@@ -2665,18 +3077,6 @@ RBCodeSnippet >> isFaultyMinusUndeclared: anObject [
 ]
 
 { #category : #accessing }
-RBCodeSnippet >> isMethod [
-
-	^ isMethod
-]
-
-{ #category : #accessing }
-RBCodeSnippet >> isMethod: anObject [
-
-	isMethod := anObject
-]
-
-{ #category : #accessing }
 RBCodeSnippet >> isParseFaulty [
 
 	^ isParseFaulty
@@ -2686,6 +3086,18 @@ RBCodeSnippet >> isParseFaulty [
 RBCodeSnippet >> isParseFaulty: anObject [
 
 	isParseFaulty := anObject
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isScripting [
+
+	^ isScripting
+]
+
+{ #category : #accessing }
+RBCodeSnippet >> isScripting: anObject [
+
+	isScripting := anObject
 ]
 
 { #category : #accessing }
@@ -2743,17 +3155,18 @@ RBCodeSnippet >> numberOfCritiques: anObject [
 
 { #category : #parsing }
 RBCodeSnippet >> parse [
-	^ isMethod
-		ifTrue: [ RBParser parseFaultyMethod: self source ]
-		ifFalse: [ RBParser parseFaultyExpression: self source ]
+	^ isScripting
+		ifTrue: [ RBParser parseFaultyExpression: self source ]
+		ifFalse: [ RBParser parseFaultyMethod: self source ]
+
 ]
 
 { #category : #parsing }
 RBCodeSnippet >> parseOnError: aBlock [
 
-	^ [ isMethod
-			  ifTrue: [ RBParser parseMethod: self source ]
-			  ifFalse: [ RBParser parseExpression: self source ] ]
+	^ [ isScripting
+			  ifTrue: [ RBParser parseExpression: self source ]
+			  ifFalse: [ RBParser parseMethod: self source ] ]
 		  on: CodeError
 		  do: [ :e | aBlock value: e ]
 ]
@@ -2808,7 +3221,7 @@ RBCodeSnippet >> searchDefinition [
 RBCodeSnippet >> skip: aSymbol [
 
 	skippedTests ifNil: [ skippedTests := OrderedCollection new ].
-	skippedTests add: aSymbol
+	skippedTests addIfNotPresent: aSymbol
 ]
 
 { #category : #accessing }

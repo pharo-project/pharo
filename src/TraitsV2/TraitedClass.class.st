@@ -103,12 +103,9 @@ TraitedClass >> addSelector: selector withMethod: compiledMethod [
 TraitedClass >> addSelector: selector withRecompiledMethod: compiledMethod [
 	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
 
-	compiledMethod isFromTrait
-		ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
+	compiledMethod isFromTrait ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
 
-	self localMethodDict at: selector put: compiledMethod.
-	super addSelector: selector withRecompiledMethod: compiledMethod.
-	TraitChange addSelector: selector on: self
+	self addSelector: selector withMethod: compiledMethod
 ]
 
 { #category : #querying }
@@ -118,28 +115,24 @@ TraitedClass >> allTraits [
 
 { #category : #initialization }
 TraitedClass >> doRebuildMethodDictionary [
-	| selectors removedSelectors removeFromOrganization modified|
 
+	| selectors removedSelectors modified |
 	"During the creation of the class or after a change in the traitComposition, the whole method dictionary is calculated.
-	If I return true, my users should be updated"
-
-	"1. I recreate the local methodDict"
+	If I return true, my users should be updated""1. I recreate the local methodDict"
 	modified := false.
-	self methodDict valuesDo: [ :m | m traitSource ifNil: [ self localMethodDict at: m selector put: m ]].
+	self methodDict valuesDo: [ :m | m traitSource ifNil: [ self localMethodDict at: m selector put: m ] ].
 
 	"2. I filter the selectors from the trait composition, rejecting the ones that are locally defined.
 	And then I install the methods in myself. The trait composition only install the method if it is needed."
-	selectors := self traitComposition selectors reject: [ :e | (self localMethodDict includesKey: e) ].
-	selectors do: [ :e | modified := modified | (self traitComposition installSelector: e into: self replacing: false)].
+	selectors := self traitComposition selectors reject: [ :e | self localMethodDict includesKey: e ].
+	selectors do: [ :e | modified := modified | (self traitComposition installSelector: e into: self replacing: false) ].
 
 	"3. I handle the methods that I have and they are no more in the traitComposition."
-	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self localMethodDict includesKey: aSelector] ].
-	modified := modified | (removedSelectors isNotEmpty).
-	removedSelectors do: [ :aSelector | self methodDict removeKey: aSelector ].
-
-	"4. Finally, I remove these methods from my class organization"
-	removeFromOrganization := self organization allMethodSelectors reject: [:e | self methodDict includesKey: e ].
-	removeFromOrganization do: [ :aSelector | self organization removeElement: aSelector ].
+	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self localMethodDict includesKey: aSelector ] ].
+	modified := modified | removedSelectors isNotEmpty.
+	removedSelectors do: [ :aSelector |
+		self methodDict removeKey: aSelector.
+		self removeFromProtocols: aSelector ].
 
 	^ modified
 ]
@@ -254,22 +247,19 @@ TraitedClass >> rebuildMethodDictionary [
 ]
 
 { #category : #categories }
-TraitedClass >> recategorizeSelector: selector from: oldProtocolName to: newProtocolName [
-
-	| original |
+TraitedClass >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
-	original := self organization protocolNameOfElement: selector ifAbsent: [ ^ self ].
 
+	| originalProtocol |
 	"If it is nil is because it is a removal. It will removed when the method is removed."
-	newProtocolName ifNil: [ ^ self ].
+	newProtocol ifNil: [ ^ self ].
 
-	original = oldProtocolName ifTrue: [ self organization classify: selector under: newProtocolName ].
+	originalProtocol := (self protocolOfSelector: selector) ifNil: [ ^ self ].
+	originalProtocol name = oldProtocol name ifTrue: [ self classify: selector under: newProtocol name ].
 
-	(self traitComposition reverseAlias: selector) do: [ :e |
-		self recategorizeSelector: e from: oldProtocolName to: newProtocolName.
-		self notifyOfRecategorizedSelector: e from: oldProtocolName to: newProtocolName ].
-
-	self organization removeEmptyProtocols
+	(self traitComposition reverseAlias: selector) do: [ :selectorAlias |
+		self recategorizeSelector: selectorAlias from: oldProtocol to: newProtocol.
+		self notifyOfRecategorizedSelector: selectorAlias from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #recompilation }

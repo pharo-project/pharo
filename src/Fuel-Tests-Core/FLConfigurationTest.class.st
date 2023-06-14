@@ -357,6 +357,7 @@ FLConfigurationTest >> testStreamFinalizer [
 { #category : #'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFinalizerDefault [
 	| logClass log |
+	<ignoreNotImplementedSelectors: #(_log)>
 	logClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'log'.
 	self classFactory
 		silentlyCompile: 'initialize log := OrderedCollection new' in: logClass;

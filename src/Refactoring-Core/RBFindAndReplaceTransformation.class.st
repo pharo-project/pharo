@@ -3,29 +3,27 @@ I am a refactoring for find occurrences of a method in owner class and in the wh
 
 My precondition verifies that the method exists in specified class, and if occurrences are found in hierarchy this method should not overwritten in hierarchy.
 
-Example script
-----------------
+### Example script
+
 
 ```
 (RBFindAndReplaceRefactoring 
-find: #methodWithArg:andArg: 
-of: MyClassA 
-inWholeHierarchy: true) execute.
+	find: #methodWithArg:andArg: 
+	of: MyClassA 
+	inWholeHierarchy: true) execute.
 ```
+
 Before refactoring:
+
 ```
-Object subclass: #MyClassA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	category: 'Testing'
+Object << #MyClassA
+	package: 'Testing'
 
 MyClassA >> methodWithArg: anArg1 andArg: anArg2
 	^ (anArg1 > anArg2) not	
 
-MyClassA subclass: #MyClassB
-	instanceVariableNames: ''
-	classVariableNames: ''
-	category: 'Testing'
+MyClassA << #MyClassB
+	package: 'Testing'
 	
 MyClassB >> someMethod
 	^  3
@@ -54,13 +52,25 @@ Class {
 	#category : #'Refactoring-Core-Transformation-Simple'
 }
 
+{ #category : #displaying }
+RBFindAndReplaceTransformation class >> basicMenuItemString [
+
+	^ 'Find and Replace'
+]
+
 { #category : #'instance creation' }
 RBFindAndReplaceTransformation class >> find: aMethod of: aClass inWholeHierarchy: aBoolean [
+
 	^ self new
 		find: aMethod
 		of: aClass
 		inWholeHierarchy: aBoolean;
 		yourself
+]
+
+{ #category : #'instance creation' }
+RBFindAndReplaceTransformation class >> isTransformation [ 
+	^ true
 ]
 
 { #category : #'instance creation' }
@@ -111,6 +121,7 @@ RBFindAndReplaceTransformation >> extractMethodRefactoring [
 
 { #category : #initialization }
 RBFindAndReplaceTransformation >> find: aSelector of: aClass inWholeHierarchy: aBoolean [
+
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	replacesAllHierarchy := aBoolean

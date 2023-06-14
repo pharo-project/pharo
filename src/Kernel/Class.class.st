@@ -18,7 +18,8 @@ Class {
 		'classPool',
 		'sharedPools',
 		'environment',
-		'category'
+		'category',
+		'commentSourcePointer'
 	],
 	#category : #'Kernel-Classes'
 }
@@ -313,6 +314,22 @@ Class >> classBuilder [
 		^ self classInstaller new builder
 ]
 
+{ #category : #'accessing - comment' }
+Class >> classComment: aString [
+	self
+		deprecated: 'use comment:'
+		transformWith: '`@rcv classComment: `@arg' -> '`@rcv comment: `@arg'.
+	self comment: aString
+]
+
+{ #category : #'accessing - comment' }
+Class >> classComment: aString stamp: aStamp [
+		self
+		deprecated: 'Use #comment:stamp: instead.'
+		transformWith: '`@rcv classComment: `@arg1 classComment: aString stamp: aStamp `@arg2' -> '`@rcv comment: `@arg1 stamp: `@arg2'.
+	^self comment: aString stamp: aStamp
+]
+
 { #category : #'subclass creation' }
 Class >> classInstaller [
 	"Answer the class responsible of creating subclasses of myself in the system."
@@ -406,6 +423,81 @@ Class >> classVariablesNeedFullDefinition [
 	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
+{ #category : #'accessing - comment' }
+Class >> comment [
+    ^ self commentSourcePointer
+		  ifNil: [ '' ]
+		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
+]
+
+{ #category : #'accessing - comment' }
+Class >> comment: aString [
+	"Set the receiver's comment to be the argument, aStringOrText."
+	^ self comment: aString stamp: '<historical>'
+]
+
+{ #category : #'accessing - comment' }
+Class >> comment: aString stamp: aStamp [
+	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
+
+	| pointer header oldComment oldStamp preamble |
+	oldComment := self comment.
+	oldStamp := self commentStamp.
+
+	aString string = oldComment string ifTrue: [ ^ self ].
+
+	pointer := self commentSourcePointer ifNil: [0].
+
+
+	preamble := String streamContents: [ :file |
+		file cr; nextPut: $!.
+		header := String streamContents: [:strm |
+			strm
+				nextPutAll: self name;
+				nextPutAll: ' commentStamp: '.
+			aStamp storeOn: strm.
+			strm nextPutAll: ' prior: '; nextPutAll: pointer printString ].
+		file nextChunkPut: header; cr ].
+
+	SourceFiles
+		writeSource: aString
+		preamble: preamble
+		onSuccess: [ :newSourcePointer |
+			self commentSourcePointer: newSourcePointer]
+		onFail: [ "ignore" ].
+
+	SystemAnnouncer uniqueInstance
+		class: self
+		oldComment: oldComment
+		newComment: aString
+		oldStamp: oldStamp
+		newStamp: aStamp
+]
+
+{ #category : #'accessing - comment' }
+Class >> commentSourcePointer [
+	^ commentSourcePointer
+]
+
+{ #category : #'accessing - comment' }
+Class >> commentSourcePointer: anObject [
+	commentSourcePointer := anObject
+]
+
+{ #category : #'accessing - comment' }
+Class >> commentStamp [
+
+	^ self commentSourcePointer
+		  ifNil: [ '' ]
+		  ifNotNil: [:sourcePointer | SourceFiles commentTimeStampAt: sourcePointer ]
+]
+
+{ #category : #'accessing - comment' }
+Class >> commentStamp: changeStamp [
+	"update the changeStamp"
+	self comment: self comment stamp: changeStamp
+]
+
 { #category : #'accessing - class hierarchy' }
 Class >> commonSuperclassWith: aClass [
 	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"
@@ -425,19 +517,16 @@ Class >> compileAllFrom: oldClass [
 Class >> copyForAnnouncement [
 	"Answer a copy of the receiver to be used in the announcement of changes.
 	You should not use this class for anything else, it is invalid."
+
 	| newClass |
-
-
 	newClass := self class copy new
-		basicSuperclass: superclass;
-		methodDict: self methodDict copy;
-		setFormat: format;
-		setName: name;
-		organization: self organization copy;
-		classPool: classPool copy;
-		sharedPools: sharedPools copy.
-	self class instSize+1 to: self class instSize do:
-		[:offset | newClass instVarAt: offset put: (self instVarAt: offset)].
+		            basicSuperclass: superclass;
+		            methodDict: self methodDict copy;
+		            setFormat: format;
+		            setName: name;
+		            classPool: classPool copy;
+		            sharedPools: sharedPools copy.
+	self class instSize + 1 to: self class instSize do: [ :offset | newClass instVarAt: offset put: (self instVarAt: offset) ].
 	newClass classLayout: (layout copy host: newClass).
 	^ newClass
 ]
@@ -618,6 +707,12 @@ Class >> hasClassVariable: aGlobal [
 	^ self classVariables identityIncludes: aGlobal
 ]
 
+{ #category : #'accessing - comment' }
+Class >> hasComment [
+	"Return whether this class truly has a comment other than the default"
+	^ self commentSourcePointer isNotNil
+]
+
 { #category : #testing }
 Class >> hasMethods [
 	"Answer a Boolean according to whether any methods are defined for the
@@ -764,14 +859,17 @@ Class >> newSubclass [
 	i := 1.
 	[ className := (self name , i printString) asSymbol.
 	self environment includesKey: className ] whileTrue: [ i := i + 1 ].
-	^ self
-		subclass: className
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: 'Unclassified'
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: className;
+				category: 'Unclassified';
+				environment: self environment ]
 
 	"Point newSubclass new"
+	
+
 ]
 
 { #category : #initialization }
@@ -870,21 +968,24 @@ Class >> removeFromSystem: logged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing  instances will refer to an obsolete version of the receiver.
 	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
 	Tell class to deactivate and unload itself-- two separate events in the module system"
+
 	| myCategory |
 	self release.
 	self unload.
 
-	self superclass ifNotNil:
-		["If we have no superclass there's nothing to be remembered"
-		self superclass addObsoleteSubclass: self].
+	self superclass ifNotNil: [ "If we have no superclass there's nothing to be remembered" self superclass addObsoleteSubclass: self ].
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed
 	if this class is loaded again. We do not check if references exist as it is too slow"
 	Undeclared declare: self name asSymbol from: Smalltalk globals.
 	myCategory := self category.
 	self environment forgetClass: self logged: logged.
+
+	"In case the class has deprecated aliases we need to remove them from the system dictionary.
+	We deal also with a special case that is the case a class of the same name than the alias is installed in the image after the alias. In that case we do not remove it. It's the reason we check if the global of the alias is the same as self."
+	self deprecatedAliases do: [ :alias | self environment at: alias ifPresent: [ :class | class = self ifTrue: [ self environment removeKey: alias ] ] ].
 	self obsolete.
-	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory]
+	logged ifTrue: [ SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory ]
 ]
 
 { #category : #initialization }
@@ -1027,56 +1128,71 @@ Class >> sharing: poolString [
 
 { #category : #'subclass creation' }
 Class >> subclass: t [
-	^ self
-		subclass: t
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: 'Unclassified'
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: t;
+				category: 'Unclassified';
+				environment: self environment ]
+
+	
 ]
 
 { #category : #'subclass creation' }
 Class >> subclass: t instanceVariableNames: ins [
-	^ self
-		subclass: t
-		instanceVariableNames: ins
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: 'Unclassified'
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: t;
+				slots: ins asSlotCollection;
+				category: 'Unclassified';
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - deprecated' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategorySymbol [
 	"Added to allow for a simplified subclass creation experience. "
 
-	^ self
-		subclass: aSubclassSymbol
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: aCategorySymbol
+		^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self; 
+				name: aSubclassSymbol;
+				sharedVariablesFromString: classVarNames;
+				slots: instVarNameList asSlotCollection;
+				category: 'Unclassified';
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aPackageSymbol [
 	"Added to allow for a simplified subclass creation experience. "
 
-	^ self
-		subclass: aSubclassSymbol
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: aPackageSymbol
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self;
+				name: aSubclassSymbol;
+				slots: instVarNameList asSlotCollection;
+				sharedVariablesFromString: classVarNames;
+				category: aPackageSymbol;
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - deprecated' }
 Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	^ self
-		subclass: t
-		instanceVariableNames: f
-		classVariableNames: d
-		poolDictionaries: s
-		package: cat
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self;
+				name: t;
+				slots: f asSlotCollection;
+				sharedVariablesFromString: d;
+				sharedPools: s;
+				category: cat;
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation' }
