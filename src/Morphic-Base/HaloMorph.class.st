@@ -43,7 +43,7 @@ HaloMorph class >> classicHaloSpecifications [
 		---------				------		-----------		-------------------------------		---------------"
 	(addMenuHandle:		left			top				(red)							none)
 	(addDismissHandle:		leftCenter	top				(red		muchLighter)			#haloDismissIcon)
-	(addGrabHandle:			center		top				(black)							none)
+	(addGrabHandle:			center		top				(gray)							none)
 	(addDragHandle:			rightCenter	top				(brown)							none)
 	(addDupHandle:			right		top				(green)							none)
 	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		none)
@@ -55,7 +55,7 @@ HaloMorph class >> classicHaloSpecifications [
 
 	(addRecolorHandle:		right		bottomCenter	(magenta darker)				none)
 
-	(addRotateHandle:		left			bottom			(blue)							none))
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							none))
 ]
 
 { #category : #'halo theme' }
@@ -88,7 +88,7 @@ HaloMorph class >> customHaloSpecifications [
 	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSizeIcon)
 	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyleIcon)
 	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)				#haloFontEmphIcon)
-	(addRotateHandle:		left			bottom			(blue)							#haloRotIcon)
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
 
 	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebugIcon) )
 
@@ -99,7 +99,7 @@ HaloMorph class >> customHaloSpecifications [
 
 	(addTileHandle:			left			bottomCenter	(lightBrown)					#haloTileIcon)
 	(addViewHandle:			left			center			(cyan)							#haloViewIcon)
-	(addGrabHandle:			center		top				(black)							#haloGrabIcon)
+	(addGrabHandle:			center		top				(gray)							#haloGrabIcon)
 	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
 	(addDupHandle:			right		top				(green)							#haloDupIcon)
 	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon)
@@ -166,9 +166,9 @@ HaloMorph class >> iconicHaloSpecifications [
 	(addCollapseHandle:		left			topCenter		(tan)							#haloCollapseIcon)
 	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebugIcon)
 	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismissIcon)
-	(addRotateHandle:		left			bottom			(blue)							#haloRotIcon)
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
 	(addMenuHandle:		leftCenter	top				(red)							#haloMenuIcon)
-	(addGrabHandle:			center		top				(black)							#haloGrabIcon)
+	(addGrabHandle:			center		top				(gray)							#haloGrabIcon)
 	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
 	(addDupHandle:			right		top				(green)							#haloDupIcon)
 	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon)
@@ -215,9 +215,9 @@ HaloMorph class >> simpleFullHaloSpecifications [
 		---------				------		-----------		-------------------------------		---------------"
 	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebugIcon)
 	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismissIcon)
-	(addRotateHandle:		left			bottom			(blue)							#haloRotIcon)
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
 	(addMenuHandle:		leftCenter	top				(red)							#haloMenuIcon)
-	(addGrabHandle:			center		top				(black)							#halograbIcon)
+	(addGrabHandle:			center		top				(gray)							#halograbIcon)
 	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
 	(addDupHandle:			right		top				(green)							#haloDupIcon)
 	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon')
