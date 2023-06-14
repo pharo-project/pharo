@@ -32,7 +32,7 @@ RBRemoveInstanceVariableRefactoring >> preconditions [
 				errorBlock:
 						[ self openBrowserOn: ( RBBrowserEnvironment new instVarRefsTo: variableName in: class realClass ) ]
 			].
-	^ ( RBCondition definesInstanceVariable: variableName asString in: class ) & references not
+	^ ( RBCondition directlyDefinesInstanceVariable: variableName asString in: class ) & references not
 ]
 
 { #category : #transforming }
