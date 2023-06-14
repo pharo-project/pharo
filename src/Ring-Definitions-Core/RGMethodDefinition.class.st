@@ -539,9 +539,9 @@ RGMethodDefinition >> printOn: aStream [
 RGMethodDefinition >> protocol [
 
 	self isActive
-		ifTrue: [ ^ self compiledMethod ifNil: [ protocol ] ifNotNil: [ self compiledMethod protocol ]].
+		ifTrue: [ ^ self compiledMethod ifNil: [ protocol ] ifNotNil: [ self compiledMethod protocolName ]].
 	self isHistorical
-		ifTrue: [ ^ self protocolAtPointer ifNil: [ self compiledMethod ifNil: [ protocol ] ifNotNil:[ :cm | cm protocol ] ] ].
+		ifTrue: [ ^ self protocolAtPointer ifNil: [ self compiledMethod ifNil: [ protocol ] ifNotNil:[ :cm | cm protocolName ] ] ].
 	^ protocol
 ]
 

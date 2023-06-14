@@ -388,8 +388,7 @@ CompiledMethod >> isClassSide [
 { #category : #testing }
 CompiledMethod >> isClassified [
 
-	self flag: #CompileMethodProtocolMiration.
-	^ self protocolName ~= Protocol unclassified
+	^ self protocol isUnclassifiedProtocol not
 ]
 
 { #category : #testing }
@@ -784,7 +783,7 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 CompiledMethod >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
 
-	^ self category
+	^ self methodClass protocolOfSelector: self selector
 ]
 
 { #category : #accessing }

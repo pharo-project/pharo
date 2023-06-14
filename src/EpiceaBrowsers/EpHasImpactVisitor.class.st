@@ -126,7 +126,7 @@ EpHasImpactVisitor >> visitMethodChange: aChange [
 			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method |
-					method protocol ~= aChange methodAffectedProtocol or: [
+					method protocol name ~= aChange methodAffectedProtocol or: [
 					method sourceCode ~= aChange methodAffectedSourceCode ] ]
 				ifAbsent: [ true ] ].
 
