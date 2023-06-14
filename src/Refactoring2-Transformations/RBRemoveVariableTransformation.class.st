@@ -1,13 +1,16 @@
 "
-Removes a variable from a class. It does not remove direct accesses to this variable in the class.
+Removes a variable from a class. It does not remove it if there is a direct access to this variable in the class.
 
 Usage:
+
+```
 transformation := (RBRemoveVariableTransformation 
 	variable: 'isClassVariable'
 	class: #RBVariableTransformation
 	classVariable: false)
 	transform. 
 (ChangesBrowser changes: transformation model changes changes) open
+```
 
 Preconditions:
 - the class exists
@@ -39,8 +42,9 @@ RBRemoveVariableTransformation >> preconditionsForClassVariable [
 
 { #category : #preconditions }
 RBRemoveVariableTransformation >> preconditionsForInstanceVariable [
-
-	^ (RBCondition definesInstanceVariable: variableName asString in: class)
+	"For now only remove an instance variable that is locally defined in a class."
+	
+	^ (RBCondition directlyDefinesInstanceVariable: variableName asString in: class)
 		& (RBCondition doesNotAccessInstanceVariable: variableName inHierarchyOf: class showIn: self)
 ]
 

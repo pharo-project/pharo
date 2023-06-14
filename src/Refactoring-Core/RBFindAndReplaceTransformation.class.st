@@ -103,7 +103,7 @@ RBFindAndReplaceTransformation >> extract: occurrence of: rbMethod [
 	[|refactoring |
 	refactoring := self extractMethodRefactoring.
 	refactoring model: self model.
-	refactoring 	extract: occurrence key from: rbMethod selector in: rbMethod modelClass.
+	refactoring extract: occurrence key from: rbMethod selector in: rbMethod modelClass.
 	refactoring setOption: #existingSelector toUse:  [ :ref |
 			ref parameters: (self argumentsOf: occurrence value).
 			selector].
