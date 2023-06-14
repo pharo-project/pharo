@@ -416,8 +416,8 @@ SHRBTextStyler class >> styleTable: anArray [
 
 { #category : #styles }
 SHRBTextStyler class >> styleTableNamed: aString [
-		
-	^ (Pragma allNamed: #styleTable: in: self)
+
+	^ (Pragma allNamed: #styleTable: in: self class)
 		detect: [ :each | (each argumentAt: 1) = aString ]
 		ifFound: [ :each | self perform: each methodSelector ]
 		ifNone: [ nil ]
