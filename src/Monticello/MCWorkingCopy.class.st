@@ -79,12 +79,11 @@ MCWorkingCopy class >> initialize [
 
 { #category : #'event registration' }
 MCWorkingCopy class >> registerForNotifications [
-	"self registerForNotifications"
+
 	<systemEventRegistration>
-	
 	MCPackageManager announcer: nil.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	self registerInterestOnSystemChangesOnAnnouncer: SystemAnnouncer uniqueInstance.
+	self registerInterestOnSystemChangesOnAnnouncer: SystemAnnouncer uniqueInstance
 ]
 
 { #category : #operations }

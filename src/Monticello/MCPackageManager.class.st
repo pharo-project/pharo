@@ -217,6 +217,12 @@ MCPackageManager class >> methodRemoved: anEvent [
 ]
 
 { #category : #'system changes' }
+MCPackageManager class >> packageAdded: anAnnouncement [
+
+	self forPackage: (MCPackage named: anAnnouncement package name) packageOrganizer: anAnnouncement package organizer
+]
+
+{ #category : #'system changes' }
 MCPackageManager class >> packageRenamed: anAnnouncement [
 	self allManagers 
 		detect: [ :each | each packageName = anAnnouncement newName ]
@@ -229,6 +235,7 @@ MCPackageManager class >> packageRenamed: anAnnouncement [
 { #category : #'event registration' }
 MCPackageManager class >> registerInterestOnSystemChangesOnAnnouncer: anAnnouncer [
 	anAnnouncer weak
+		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
 		when: ClassAdded, ClassModifiedClassDefinition, ClassCommented , ClassParentRenamed send: #classModified: to: self;
 		when: ClassRenamed send:#classRenamed: to:self;
