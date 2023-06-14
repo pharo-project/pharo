@@ -36,6 +36,11 @@ AbstractObjectsAsMethod >> pragmas [
 	^#()
 ]
 
+{ #category : #accessing }
+AbstractObjectsAsMethod >> protocol [
+	^ self origin protocolOfSelector: self
+]
+
 { #category : #compatibility }
 AbstractObjectsAsMethod >> selector: aSymbol [
 ]
