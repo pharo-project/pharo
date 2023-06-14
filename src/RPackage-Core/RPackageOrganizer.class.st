@@ -108,7 +108,6 @@ Class {
 		'packages',
 		'classExtendingPackagesMapping',
 		'debuggingName',
-		'packageNames',
 		'environment',
 		'categoryMap'
 	],
@@ -197,13 +196,6 @@ RPackageOrganizer >> addMethod: method [
 	rPackage addMethod: method
 ]
 
-{ #category : #'package - names-cache' }
-RPackageOrganizer >> addPackageNameToCache: aPackageName [
-
-	"If the cache was reset (cache is nil) we don't need to add it since it will be rebuild later."
-	packageNames ifNotNil: [ :names | names add: aPackageName ]
-]
-
 { #category : #'system integration' }
 RPackageOrganizer >> announcer [
 	^SystemAnnouncer uniqueInstance private
@@ -228,10 +220,7 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 		do: [ :behavior |
 			behavior extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior protocol: protocol ].
 			behavior classSide extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior classSide protocol: protocol ] ]
-		displayingProgress: 'Importing extensions'.
-
-	"I reset the cache of names"
-	packageNames := nil
+		displayingProgress: 'Importing extensions'
 ]
 
 { #category : #'private - registration' }
@@ -247,8 +236,6 @@ RPackageOrganizer >> basicRegisterPackage: aPackage [
 	self class environment at: #MCWorkingCopy ifPresent: [ :wc |
 		wc forPackage: ((self class environment at: #MCPackage) named: aPackage name)].
 
-	self addPackageNameToCache: aPackage name asSymbol.
-
 	^ aPackage
 ]
 
@@ -257,16 +244,11 @@ RPackageOrganizer >> basicUnregisterPackageNamed: aPackageName [
 	"Unregister the specified package from the list of registered packages. Raise the RPackageUnregistered announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
 	| package |
-	package := packages removeKey: aPackageName ifAbsent: [
-		           self reportExtraRemovalOf: aPackageName.
-		           nil ].
+	package := packages removeKey: aPackageName ifAbsent: [ ^ self reportExtraRemovalOf: aPackageName ].
 
-
-	package ifNotNil: [ "unregister also mc package"
-		self flag: #hack. "for decoupling MC"
-		self class environment at: #MCWorkingCopy ifPresent: [ package mcPackage ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ] ] ].
-
-	self removePackageNameFromCache: aPackageName
+	"unregister also mc package"
+	self flag: #hack. "for decoupling MC"
+	self class environment at: #MCWorkingCopy ifPresent: [ package mcPackage ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ] ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -726,7 +708,7 @@ RPackageOrganizer >> packageNamedIgnoreCase: aSymbol ifAbsent: aBlock [
 { #category : #'package - names-cache' }
 RPackageOrganizer >> packageNames [
 
-	^ packageNames ifNil: [ packageNames := packages keys asSortedCollection ]
+	^ packages keys
 ]
 
 { #category : #'package - names-cache' }
@@ -924,13 +906,6 @@ RPackageOrganizer >> removeEmptyPackages [
 			emptyPackages do: [ :emptyPackage | categoryMap removeKey: emptyPackage ] ]
 ]
 
-{ #category : #'package - names-cache' }
-RPackageOrganizer >> removePackageNameFromCache: aPackageName [
-
-	packageNames ifNil: [ ^ self ].
-	packageNames remove: aPackageName ifAbsent: [  ]
-]
-
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> removeSystemCategory: category [
 	"remove all the classes and traits associated with the category"
@@ -961,10 +936,6 @@ RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 
 	| classesAndProtocolsToRename |
 	rPackage name: newName.
-
-	"we update the organizer"
-	self removePackageNameFromCache: oldName.
-	self addPackageNameToCache: newName.
 
 	packages at: newName put: rPackage.
 	packages removeKey: oldName ifAbsent: [ self reportBogusBehaviorOf: #systemCategoryRenamedActionFrom: ].
