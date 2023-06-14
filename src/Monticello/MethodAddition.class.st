@@ -48,7 +48,7 @@ MethodAddition >> createCompiledMethod [
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethodOrNil := myClass compiledMethodAt: selector ifAbsent: [ nil ].
-	priorCategoryOrNil := myClass protocolOfSelector: selector
+	priorCategoryOrNil := priorMethodOrNil ifNotNil: [ :method | method protocol ]
 ]
 
 { #category : #operations }

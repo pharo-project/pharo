@@ -31,16 +31,16 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	| priorMethod priorOrigin oldProtocol newProtocol |
 	self compiledMethodAt: selector ifPresent: [ :method |
 		priorMethod := method.
-		priorOrigin := method origin ].
+		priorOrigin := method origin.
+		oldProtocol := method protocol ].
 
-	oldProtocol := self protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
 		self classify: selector under: ((protocol isString
 				  ifTrue: [ protocol ]
 				  ifFalse: [ protocol name ]) = Protocol unclassified
 				 ifTrue: [ oldProtocol ]
 				 ifFalse: [ protocol ]) ].
-	newProtocol := self protocolOfSelector: selector.
+	newProtocol := compiledMethod protocol.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
 
@@ -87,17 +87,17 @@ ClassDescription >> addProtocol: aProtocol [
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
-	| priorMethodOrNil oldProtocol |
-	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
-	oldProtocol := self protocolOfSelector: selector.
+	| priorMethod oldProtocol |
+	priorMethod := self compiledMethodAt: selector ifAbsent: [ nil ].
+	oldProtocol := priorMethod ifNotNil: [ :method | method protocol ].
 
 	"If there is no old protocol, then we want to ensure the method is at least in Protocol unclassified to not have protocolless methods."
 	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self classify: selector under: nil ] ].
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
-	priorMethodOrNil
+	priorMethod
 		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
+		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -963,7 +963,7 @@ ClassDescription >> removeSelector: selector [
 	| priorMethod priorProtocol origin |
 	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := priorMethod origin.
-	priorProtocol := self protocolOfSelector: selector.
+	priorProtocol := priorMethod protocol.
 	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
