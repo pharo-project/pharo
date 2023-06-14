@@ -634,20 +634,6 @@ RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inMetaclassNa
 ]
 
 { #category : #'system integration' }
-RPackageOrganizer >> packageExactlyMatchingExtensionName: anExtensionName [
-	"only look for a package for which the name match 'anExtensionName', making no difference about case. Return nil if no package is found"
-
-	| extension |
-	extension := anExtensionName asSymbol.
-
-	packages keysDo: [:aSymbol |
-		(aSymbol sameAs: extension)
-			ifTrue: [ ^ self packageNamed: aSymbol ]].
-
-	^ nil
-]
-
-{ #category : #'system integration' }
 RPackageOrganizer >> packageForProtocol: aProtocolName inClass: aClass [
 	"According aProtocolName is an extension protocol, will look for a matching package. If no matching package is found ,  return nil. If aProtocolName is not an extension protocol, return the parent package of aClass"
 
@@ -665,8 +651,7 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 	| tmpPackageName |
 
 	"we first look if their is a package matching exactly the name specified"
-	(self packageExactlyMatchingExtensionName: anExtensionName)
-		ifNotNil: [ :package | ^ package ].
+	(self packageNamedIgnoreCase: anExtensionName ifAbsent: [ nil ]) ifNotNil: [ :package | ^ package ].
 
 	"if no package was found, we try to find one matching the begining of the name specified"
 	tmpPackageName := ''.
@@ -816,12 +801,7 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodModified send: #systemMethodModifiedActionFrom: to: self;
 		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self;
-		when: MethodRemoved send: #systemMethodRemovedActionFrom: to: self.
-
-	self flag: #hack. "for decoupling MC"
-	self class environment
-		at: #MCWorkingCopy
-		ifPresent: [ anAnnouncer weak when: (self class environment at: #MCWorkingCopyCreated) send: #updateAfterNewMCPackageRegistred: to: self ]
+		when: MethodRemoved send: #systemMethodRemovedActionFrom: to: self
 ]
 
 { #category : #'system integration' }
