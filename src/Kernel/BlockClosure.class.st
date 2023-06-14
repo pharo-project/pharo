@@ -44,6 +44,11 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
+{ #category : #'method finder' }
+BlockClosure class >> approvedSelectorsForMethodFinder [
+	^#(value)
+]
+
 { #category : #testing }
 BlockClosure class >> isAbstract [
 

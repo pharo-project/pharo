@@ -38,7 +38,8 @@ MethodFinder >> possibleSolutionsForInput: inputCollection [
 				allSelectorsToTestInMethodFinderWithArity: inputCollection size - 1)
 				collect:
 					[ :method | MethodFinderSend
-									receiver: receiver deepCopy
+									"Workaround for blocks, they do not implement deepCopy for now"
+									receiver: ((receiver class == CompiledBlock) ifTrue: [ receiver deepCopy ] ifFalse: [ receiver ])
 									selector: method
 									withArguments: args deepCopy ].
 			sends addAll: foundPermutationSends ].
