@@ -53,7 +53,7 @@ RPackageMethodsSynchronisationTest >> testModifyMethodByMovingFromClassicCategor
 	class classify: #stubMethod under: 'new category'.
 
 	"this we check"
-	self assert: (class >> #stubMethod) category equals: 'new category'.
+	self assert: (class >> #stubMethod) protocolName equals: 'new category'.
 	self assert: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (firstPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: firstPackage
