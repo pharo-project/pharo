@@ -213,12 +213,6 @@ CompiledMethod >> cachePragmas [
 	self pragmas do: [ :pragma | pragma class addToCache: pragma ]
 ]
 
-{ #category : #'accessing - backward compatible' }
-CompiledMethod >> category [
-
-	^ self protocolName
-]
-
 { #category : #accessing }
 CompiledMethod >> classBinding [
 	"answer the association to the class that I am installed in, or nil if none."

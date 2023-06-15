@@ -191,7 +191,6 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 ]
 
 { #category : #plugins }
-
 OpalCompiler >> addParsePlugin: aClass [
 	self compilationContext addParseASTTransformationPlugin: aClass
 ]

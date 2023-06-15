@@ -37,7 +37,7 @@ CompiledMethod >> asHistoricalRingDefinition [
 
 	self sourcePointer isZero
 		ifTrue: [ "this should not happen but sometimes the system looks corrupted"
-			ring protocol: self category;
+			ring protocol: self protocolName;
 				sourceCode: self sourceCode;
 				stamp: self timeStamp ]
 		ifFalse: [
@@ -56,7 +56,7 @@ CompiledMethod >> asPassiveRingDefinition [
 		 	name: self selector;
 			parentName: self methodClass name;
 			isMetaSide: self methodClass isMeta;
-			protocol: self category;
+			protocol: self protocolName;
 			sourceCode: self sourceCode;
 			stamp: self timeStamp;
 			asPassive
