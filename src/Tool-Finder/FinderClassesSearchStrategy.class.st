@@ -47,10 +47,7 @@ FinderClassesSearchStrategy >> findSelectedClassIn: path [
 { #category : #accessing }
 FinderClassesSearchStrategy >> findSelectedMethodIn: path [
 
-	^ path
-		  at: 2
-		  ifPresent: [ :node | node item ]
-		  ifAbsent: [ nil ]
+	^ (path at: 2 ifAbsent: [ nil ]) ifNotNil: [ :node | node item ]
 ]
 
 { #category : #testing }
