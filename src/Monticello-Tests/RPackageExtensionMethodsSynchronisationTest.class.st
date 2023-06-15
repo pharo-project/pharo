@@ -137,7 +137,7 @@ RPackageExtensionMethodsSynchronisationTest >> testModifyMethodByChangingCode [
 	class compile: 'stubMethod ^22222222222'.
 
 	"nothing should change"
-	self assert: (class >> #stubMethod) category equals: 'classic category'.
+	self assert: (class >> #stubMethod) protocolName equals: 'classic category'.
 	self assert: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (firstPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: firstPackage

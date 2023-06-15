@@ -4,7 +4,7 @@ I am a refactoring for moving the definition of a variable to the block/scope wh
 For a method temporary variable declared but not initialized in the method scope and only used within a block, the definition can be moved to the block using this variable.
 "
 Class {
-	#name : #RBMoveVariableDefinitionToSmallestValidScopeTransformation,
+	#name : #RBMoveVariableDefinitionToSmallestValidScopeRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'selector',
@@ -14,11 +14,11 @@ Class {
 		'blockNodes',
 		'definingNode'
 	],
-	#category : #'Refactoring-Core-Transformation-Unused'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation class >> bindTight: anInterval in: aClass selector: aSelector [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring class >> bindTight: anInterval in: aClass selector: aSelector [
 	^ self new
 		class: aClass
 		selector: aSelector
@@ -26,7 +26,7 @@ RBMoveVariableDefinitionToSmallestValidScopeTransformation class >> bindTight: a
 ]
 
 { #category : #'instance creation' }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation class >> model: aRBSmalltalk bindTight: anInterval in: aClass selector: aSelector [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring class >> model: aRBSmalltalk bindTight: anInterval in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
 		class: aClass
@@ -36,7 +36,7 @@ RBMoveVariableDefinitionToSmallestValidScopeTransformation class >> model: aRBSm
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation >> checkNodes: sequenceNodes [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkNodes: sequenceNodes [
 	(sequenceNodes
 		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each])
 		ifTrue: [^false].
@@ -51,7 +51,7 @@ RBMoveVariableDefinitionToSmallestValidScopeTransformation >> checkNodes: sequen
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation >> checkParseTree [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkParseTree [
 
 	| node |
 
@@ -69,14 +69,14 @@ RBMoveVariableDefinitionToSmallestValidScopeTransformation >> checkParseTree [
 ]
 
 { #category : #initialization }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation >> class: aClass selector: aSelector interval: anInterval [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> class: aClass selector: aSelector interval: anInterval [
 	interval := anInterval.
 	class := self classObjectFor: aClass.
 	selector := aSelector
 ]
 
 { #category : #preconditions }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation >> preconditions [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> preconditions [
 	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition withBlock:
 					[| methodSource |
@@ -96,7 +96,7 @@ RBMoveVariableDefinitionToSmallestValidScopeTransformation >> preconditions [
 ]
 
 { #category : #printing }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation >> storeOn: aStream [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' bindTight: '.
@@ -110,7 +110,7 @@ RBMoveVariableDefinitionToSmallestValidScopeTransformation >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation >> subblocksIn: aParseTree [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> subblocksIn: aParseTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
 	searcher
@@ -125,14 +125,14 @@ RBMoveVariableDefinitionToSmallestValidScopeTransformation >> subblocksIn: aPars
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation >> transform [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> transform [
 	definingNode removeTemporaryNamed: name.
 	blockNodes do: [:each | each body addTemporaryNamed: name].
 	class compileTree: parseTree
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionToSmallestValidScopeTransformation >> usesDirectly: aParseTree [
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> usesDirectly: aParseTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
 	searcher
