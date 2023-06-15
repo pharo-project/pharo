@@ -8,7 +8,7 @@ The method #makeAScreenshot handles the menu option to make screen shots.
 Class {
 	#name : #Screenshot,
 	#superclass : #Object,
-	#category : #'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects-Utilities'
 }
 
 { #category : #'world menu items' }
