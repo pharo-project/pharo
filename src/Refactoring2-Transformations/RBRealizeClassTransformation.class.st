@@ -37,7 +37,7 @@ RBRealizeClassTransformation class >> model: aRBModel className: aName [
 
 { #category : #preconditions }
 RBRealizeClassTransformation >> preconditions [
-	^ (RBCondition isValidClassName: className)
+	^ (RBCondition isClassNamed: className definedIn: model)
 ]
 
 { #category : #executing }
