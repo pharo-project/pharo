@@ -11,7 +11,7 @@ Class {
 		'toClasses',
 		'ignore'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : #'Refactoring2-Transformations-To be removed'
 }
 
 { #category : #'instance creation' }
