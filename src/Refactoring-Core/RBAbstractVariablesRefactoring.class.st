@@ -138,8 +138,10 @@ RBAbstractVariablesRefactoring >> classVariableNames [
 	^ (nonMetaClass allClassVariableNames collect: [ :each | each asString ]) asSet
 ]
 
-{ #category : #transforming }
+{ #category : #'for driver' }
 RBAbstractVariablesRefactoring >> computeVariablesToAbstract [
+	"should probably be moved to a driver"
+	
 	| searcher |
 	instVarReaders := Set new.
 	instVarWriters := Set new.
@@ -176,7 +178,7 @@ RBAbstractVariablesRefactoring >> preconditions [
 	^ self emptyCondition
 ]
 
-{ #category : #transforming }
+{ #category : #'for driver' }
 RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
@@ -188,7 +190,7 @@ RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 		ifTrue: [classVarWriters add: varName]
 ]
 
-{ #category : #transforming }
+{ #category : #'for driver' }
 RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
@@ -200,8 +202,9 @@ RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 		ifTrue: [classVarReaders add: varName]
 ]
 
-{ #category : #transforming }
+{ #category : #'for driver' }
 RBAbstractVariablesRefactoring >> removeDefinedClassVariables [
+
 	| selectionBlock nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
 	selectionBlock :=
