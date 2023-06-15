@@ -76,7 +76,7 @@ MonticelloBootstrap >> createWorkingCopies [
 
 	(RPackageOrganizer default packageNames copyWithout: RPackage defaultPackageName) asSortedCollection do: [ :packageName |
 		SystemNotification signal: 'Creating Snapshot of: ' , packageName.
-		(MCWorkingCopy forPackage: (MCPackage named: packageName)) snapshot ]
+		(MCWorkingCopy ensureForPackageNamed: packageName) snapshot ]
 ]
 
 { #category : #accessing }

@@ -46,12 +46,6 @@ MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
 	^ anArray collect: [:dict | self infoFromDictionary: dict cache: cacheDictionary]
 ]
 
-{ #category : #querying }
-MCWorkingCopy class >> hasPackageNamed: aName [
-
-	^ self allManagers anySatisfy: [ :each | each packageName = aName ]
-]
-
 { #category : #private }
 MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 	| id |

@@ -92,6 +92,20 @@ MCPackageManager class >> classRenamed: anEvent [
 ]
 
 { #category : #accessing }
+MCPackageManager class >> ensureForPackageNamed: aPackageName [
+
+	^ self ensureForPackageNamed: aPackageName packageOrganizer: self packageOrganizer
+]
+
+{ #category : #accessing }
+MCPackageManager class >> ensureForPackageNamed: aPackageName packageOrganizer: aPackageOrganizer [
+
+	^ (self hasPackageNamed: aPackageName)
+		  ifTrue: [ self ofPackageNamed: aPackageName ]
+		  ifFalse: [ self registerPackage: (MCPackage named: aPackageName) packageOrganizer: aPackageOrganizer ]
+]
+
+{ #category : #accessing }
 MCPackageManager class >> forPackage: aPackage [
 
 	^ self forPackage: aPackage packageOrganizer: self packageOrganizer
@@ -100,14 +114,13 @@ MCPackageManager class >> forPackage: aPackage [
 { #category : #accessing }
 MCPackageManager class >> forPackage: aPackage packageOrganizer: aPackageOrganizer [
 
-	^ self registry at: aPackage ifAbsent: [
-		  | mgr |
-		  mgr := self new initializeWithPackage: aPackage.
-		  self registry at: aPackage put: mgr.
-		  "When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package."
-		  aPackageOrganizer packageNamedIgnoreCase: aPackage name ifAbsent: [ aPackageOrganizer ensureExistAndRegisterPackageNamed: aPackage name ].
-		  self announcer announce: (MCWorkingCopyCreated workingCopy: mgr package: aPackage).
-		  mgr ]
+	^ self registry at: aPackage ifAbsent: [ self registerPackage: aPackage packageOrganizer: aPackageOrganizer ]
+]
+
+{ #category : #querying }
+MCPackageManager class >> hasPackageNamed: aName [
+
+	^ self allManagers anySatisfy: [ :each | each packageName = aName ]
 ]
 
 { #category : #'class initialization' }
@@ -120,35 +133,30 @@ MCPackageManager class >> initialize [
 { #category : #'system changes' }
 MCPackageManager class >> managersForCategory: aSystemCategory do: aBlock [
 	"Got to be careful here - we might get method categories where capitalization is problematic."
+
 	| cat foundOne index |
 	foundOne := false.
-	cat := aSystemCategory ifNil: [ ^nil ]. "yes this happens; for example in eToy projects"
+	cat := aSystemCategory ifNil: [ ^ nil ]. "yes this happens; for example in eToy projects"
 	"first ask PackageInfos, their package name might not match the category"
-	self
-		bestMatchingManagerForCategory: aSystemCategory
-		do: [ :mgr |
-			aBlock value: mgr.
-			foundOne := true ].
+	self bestMatchingManagerForCategory: aSystemCategory do: [ :mgr |
+		aBlock value: mgr.
+		foundOne := true ].
 
-   foundOne ifTrue: [ ^self ].
-	[  "Loop over categories until we found a matching one"
-		self registry keys detect: [ :aPackage | aPackage name sameAs: cat ]
-			ifFound: [:aPackage | | mgr | 
-				mgr := self registry at: aPackage.
-				aBlock value: mgr. 
-				foundOne := true. 
-				false] 
-			ifNone: [ 
-				index := cat lastIndexOf: $-.
-				index > 0]
-	] whileTrue: [
-		"Step up to next level package"
-		cat := cat copyFrom: 1 to: index-1 ].
-	
-	foundOne ifFalse: [
-		"Create a new (but only top-level)"
-		aBlock value: (MCWorkingCopy forPackage: (MCPackage named: aSystemCategory capitalized)).
-	].
+	foundOne ifTrue: [ ^ self ].
+	[ "Loop over categories until we found a matching one"
+	self registry keys
+		detect: [ :aPackage | aPackage name sameAs: cat ]
+		ifFound: [ :aPackage |
+			| mgr |
+			mgr := self registry at: aPackage.
+			aBlock value: mgr.
+			foundOne := true.
+			false ]
+		ifNone: [
+			index := cat lastIndexOf: $-.
+			index > 0 ] ] whileTrue: [ "Step up to next level package" cat := cat copyFrom: 1 to: index - 1 ].
+
+	foundOne ifFalse: [ "Create a new (but only top-level)" aBlock value: (MCWorkingCopy ensureForPackageNamed: aSystemCategory capitalized) ]
 ]
 
 { #category : #'system changes' }
@@ -245,6 +253,18 @@ MCPackageManager class >> registerInterestOnSystemChangesOnAnnouncer: anAnnounce
 		when: MethodAdded, MethodModified, MethodRecategorized send: #methodModified: to: self;
 		when: MethodRepackaged send: #methodMoved: to: self;
 		when: MethodRemoved send: #methodRemoved: to: self.
+]
+
+{ #category : #accessing }
+MCPackageManager class >> registerPackage: aPackage packageOrganizer: aPackageOrganizer [
+
+	| workingCopy |
+	workingCopy := self new initializeWithPackage: aPackage.
+	self registry at: aPackage put: workingCopy.
+	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package."
+	aPackageOrganizer packageNamedIgnoreCase: aPackage name ifAbsent: [ aPackageOrganizer ensureExistAndRegisterPackageNamed: aPackage name ].
+	self announcer announce: (MCWorkingCopyCreated workingCopy: workingCopy package: aPackage).
+	^ workingCopy
 ]
 
 { #category : #accessing }
