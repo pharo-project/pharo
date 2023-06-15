@@ -27,6 +27,9 @@ Class {
 		'package',
 		'modified'
 	],
+	#classVars : [
+		'PrivateAnnouncer'
+	],
 	#classInstVars : [
 		'registry'
 	],
