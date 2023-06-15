@@ -1,5 +1,8 @@
 "
 MCWorkingCopy represents one version of a package in memory. It provides support for ancestry access, required packages and the repositories in which the package is managed.
+It can know if a package is dirty or not.
+
+The class side manages registered package managers.
 
 Instance Variables:
 	versionInfo	<MCAncestry>
@@ -7,18 +10,33 @@ Instance Variables:
 	counter	<Number>
 	repositoryGroup	<MCRepositoryGroup>
 	requiredPackages	<Collection>
+	package	<MCPackage>
+	modified	<Boolean>
+
+Class Instance Variables:
+	registry	<Dictionary>
 "
 Class {
 	#name : #MCWorkingCopy,
-	#superclass : #MCPackageManager,
+	#superclass : #Model,
 	#instVars : [
 		'ancestry',
 		'counter',
 		'repositoryGroup',
-		'requiredPackages'
+		'requiredPackages',
+		'package',
+		'modified'
+	],
+	#classInstVars : [
+		'registry'
 	],
 	#category : #'Monticello-Versioning'
 }
+
+{ #category : #accessing }
+MCWorkingCopy class >> allManagers [
+	^ self registry values
+]
 
 { #category : #private }
 MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
@@ -47,6 +65,107 @@ MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
 ]
 
 { #category : #private }
+MCWorkingCopy class >> announcer [
+	^PrivateAnnouncer ifNil: [ SystemAnnouncer uniqueInstance  ]
+]
+
+{ #category : #private }
+MCWorkingCopy class >> announcer: anAnnouncer [
+	PrivateAnnouncer := anAnnouncer
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> bestMatchingManagerForCategory: aSystemCategory do: aBlock [
+	| bestMatches bestMatchingManagerAndPackage |
+	bestMatches := OrderedCollection new.
+	self registry do: [ :mgr |
+		| candidatePackages bestMatchingPackage |
+		candidatePackages := mgr packageSet packages select: [ :package |
+			package name asUppercase beginsWith: aSystemCategory asUppercase ].
+		bestMatchingPackage := candidatePackages detectMin: [ :package |
+			package name size ].
+		bestMatchingPackage ifNotNil: [
+			bestMatches add: mgr -> bestMatchingPackage ] ].
+	bestMatchingManagerAndPackage := bestMatches detectMin: [ :managerAndPackage |
+			managerAndPackage value name size ].
+	bestMatchingManagerAndPackage ifNotNil: [ :managerAndPackage |
+		aBlock value: managerAndPackage key ]
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> classModified: anEvent [
+	self 
+		managersForClass: anEvent classAffected 
+		do:[ :mgr | mgr modified: true ].
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> classMoved: anEvent [
+	self managersForPackage: anEvent oldPackage do: [ :mgr | mgr modified: true ].
+	self managersForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ].
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> classRemoved: anEvent [
+	"Informs the registry who use to keep this class that its changed. Unlike #classModified:, class is not anymore in RPackages so it will not be found, that's why we look for system category instead if class is included or not"
+
+	(self packageOrganizer packageMatchingExtensionName: anEvent categoryName) ifNotNil: [ :package |
+		package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ].
+
+	anEvent classAffected protocolNames , anEvent classAffected classSide protocolNames do: [ :aProtocolName |
+		(aProtocolName beginsWith: '*') ifTrue: [
+			(self packageOrganizer packageMatchingExtensionName: aProtocolName allButFirst trimBoth) ifNotNil: [ :package |
+				package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ] ] ]
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> classRenamed: anEvent [
+	self classModified: anEvent.
+	anEvent classAffected extendingPackages
+		do: [ :pkg | self managersForPackage: pkg do: [ :mgr | mgr modified: true ] ]
+]
+
+{ #category : #accessing }
+MCWorkingCopy class >> ensureForPackage: aPackage [
+
+	^ self registry at: aPackage ifAbsent: [ self registerPackage: aPackage packageOrganizer: self packageOrganizer ]
+]
+
+{ #category : #accessing }
+MCWorkingCopy class >> ensureForPackageNamed: aPackageName [
+
+	^ self ensureForPackageNamed: aPackageName packageOrganizer: self packageOrganizer
+]
+
+{ #category : #accessing }
+MCWorkingCopy class >> ensureForPackageNamed: aPackageName packageOrganizer: aPackageOrganizer [
+
+	^ (self hasPackageNamed: aPackageName)
+		  ifTrue: [ self forPackageNamed: aPackageName ]
+		  ifFalse: [ self registerPackage: (MCPackage named: aPackageName) packageOrganizer: aPackageOrganizer ]
+]
+
+{ #category : #accessing }
+MCWorkingCopy class >> forPackage: aPackage [
+
+	^ self registry at: aPackage ifAbsent: [ NotFound signalFor: aPackage in: self ]
+]
+
+{ #category : #accessing }
+MCWorkingCopy class >> forPackageNamed: aPackageName [
+
+	^ self registry values
+		  detect: [ :workingCopy | workingCopy packageName = aPackageName ]
+		  ifNone: [ NotFound signalFor: aPackageName in: self ]
+]
+
+{ #category : #querying }
+MCWorkingCopy class >> hasPackageNamed: aName [
+
+	^ self allManagers anySatisfy: [ :each | each packageName = aName ]
+]
+
+{ #category : #private }
 MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 	| id |
 	id := (aDictionary at: #id) asString.
@@ -69,14 +188,154 @@ MCWorkingCopy class >> initialize [
 	self registerForNotifications
 ]
 
+{ #category : #'system changes' }
+MCWorkingCopy class >> managersForCategory: aSystemCategory do: aBlock [
+	"Got to be careful here - we might get method categories where capitalization is problematic."
+
+	| cat foundOne index |
+	foundOne := false.
+	cat := aSystemCategory ifNil: [ ^ nil ]. "yes this happens; for example in eToy projects"
+	"first ask PackageInfos, their package name might not match the category"
+	self bestMatchingManagerForCategory: aSystemCategory do: [ :mgr |
+		aBlock value: mgr.
+		foundOne := true ].
+
+	foundOne ifTrue: [ ^ self ].
+	[ "Loop over categories until we found a matching one"
+	self registry keys
+		detect: [ :aPackage | aPackage name sameAs: cat ]
+		ifFound: [ :aPackage |
+			| mgr |
+			mgr := self registry at: aPackage.
+			aBlock value: mgr.
+			foundOne := true.
+			false ]
+		ifNone: [
+			index := cat lastIndexOf: $-.
+			index > 0 ] ] whileTrue: [ "Step up to next level package" cat := cat copyFrom: 1 to: index - 1 ].
+
+	foundOne ifFalse: [ "Create a new (but only top-level)" aBlock value: (MCWorkingCopy ensureForPackageNamed: aSystemCategory capitalized) ]
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> managersForClass: aClass category: methodCategory do: aBlock [
+	(methodCategory isEmptyOrNil or:[methodCategory first ~= $*]) ifTrue:[
+		"Not an extension method"
+		^self managersForClass: aClass do: aBlock.
+	].
+	self managersForCategory: methodCategory allButFirst do: aBlock.
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> managersForClass: aClass do: aBlock [
+
+	| rPackage |
+	rPackage := aClass package.
+
+	self registry do: [:mgr |
+		(mgr packageSet packages includes: rPackage)
+			ifTrue: [aBlock value: mgr]]
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> managersForClass: aClass selector: aSelector do: aBlock [
+
+	^ self managersForClass: aClass category: (aClass protocolNameOfSelector: aSelector) do: aBlock
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> managersForPackage: aPackage do: aBlock [
+	self registry do: [:mgr | 
+		(mgr packageSet includesSystemCategory: aPackage name) ifTrue: [
+			aBlock value: mgr.
+		]
+	].
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> methodModified: anEvent [
+
+	"If the method has just been loaded by monticello itself, do not mark it as dirty"
+	anEvent propertyAt: #eventSource ifPresent: [ :source |
+		source == self class package name
+			ifTrue: [ ^ self ]].
+
+   "trait methods aren't handled here"
+	anEvent isProvidedByATrait
+		ifTrue: [ ^ self ].
+		
+	^ self
+		managersForClass: anEvent methodClass
+		selector: anEvent selector
+		do: [ :mgr | mgr modified: true ]
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> methodMoved: anEvent [
+	self managersForPackage: anEvent oldPackage do: [ :mgr | mgr modified: true ].
+	self managersForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ].
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> methodRemoved: anEvent [
+
+	self managersForClass: anEvent methodClass category: anEvent protocol name do: [ :mgr | mgr modified: true ]
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> packageRenamed: anAnnouncement [
+	self allManagers 
+		detect: [ :each | each packageName = anAnnouncement newName ]
+		ifFound: [ :newPackage | newPackage modified: true ].
+	(self allManagers 
+		detect: [ :each | each packageName = anAnnouncement oldName ])
+		unload.
+]
+
 { #category : #'event registration' }
 MCWorkingCopy class >> registerForNotifications [
 	"self registerForNotifications"
 	<systemEventRegistration>
 	
-	MCPackageManager announcer: nil.
+	self announcer: nil.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	self registerInterestOnSystemChangesOnAnnouncer: SystemAnnouncer uniqueInstance.
+]
+
+{ #category : #'event registration' }
+MCWorkingCopy class >> registerInterestOnSystemChangesOnAnnouncer: anAnnouncer [
+	anAnnouncer weak
+		when: PackageRenamed send: #packageRenamed: to: self;
+		when: ClassAdded, ClassModifiedClassDefinition, ClassCommented , ClassParentRenamed send: #classModified: to: self;
+		when: ClassRenamed send:#classRenamed: to:self;
+		when: ClassRepackaged send: #classMoved: to: self;
+		when: ClassRemoved send: #classRemoved: to: self;
+		when: MethodAdded, MethodModified, MethodRecategorized send: #methodModified: to: self;
+		when: MethodRepackaged send: #methodMoved: to: self;
+		when: MethodRemoved send: #methodRemoved: to: self.
+]
+
+{ #category : #private }
+MCWorkingCopy class >> registerPackage: aPackage packageOrganizer: aPackageOrganizer [
+
+	| workingCopy |
+	workingCopy := self new initializeWithPackage: aPackage.
+	self registry at: aPackage put: workingCopy.
+	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package.
+	But we still check that the package does not exist because the working copy creation might be caused by the creation of the system package and we do not want to end up in a loop."
+	aPackageOrganizer packageNamedIgnoreCase: aPackage name ifAbsent: [ aPackageOrganizer ensureExistAndRegisterPackageNamed: aPackage name ].
+	self announcer announce: (MCWorkingCopyCreated workingCopy: workingCopy package: aPackage).
+	^ workingCopy
+]
+
+{ #category : #accessing }
+MCWorkingCopy class >> registry [
+	^ registry ifNil: [registry := Dictionary new]
+]
+
+{ #category : #'event registration' }
+MCWorkingCopy class >> unregisterForNotifications [
+	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #operations }
@@ -100,6 +359,11 @@ MCWorkingCopy >> ancestors [
 { #category : #accessing }
 MCWorkingCopy >> ancestry [
 	^ ancestry
+]
+
+{ #category : #private }
+MCWorkingCopy >> announcer [
+	^self class announcer
 ]
 
 { #category : #operations }
@@ -202,13 +466,15 @@ MCWorkingCopy >> description [
 
 { #category : #printing }
 MCWorkingCopy >> displayStringOn: stream [
-	ancestry ancestors isEmpty 
-		ifTrue: [ 
-			super displayStringOn: stream. stream nextPutAll: ' (unsaved)' ]
-		ifFalse: [ 
-			ancestry ancestors first displayStringOn: stream.
+
+	ancestry ancestors
+		ifEmpty: [
+			stream
+				nextPutAll: self package name;
+				nextPutAll: ' (unsaved)' ]
+		ifNotEmpty: [ :ancestors |
+			ancestors first displayStringOn: stream.
 			self needsSaving ifTrue: [ stream nextPutAll: ' (modified)' ] ]
-		
 ]
 
 { #category : #private }
@@ -229,7 +495,14 @@ MCWorkingCopy >> findSnapshotWithVersionInfo: aVersionInfo [
 { #category : #initialization }
 MCWorkingCopy >> initialize [
 	super initialize.
+	modified := false.
 	ancestry := MCWorkingAncestry new
+]
+
+{ #category : #initialization }
+MCWorkingCopy >> initializeWithPackage: aPackage [
+	package := aPackage.
+	self initialize.
 ]
 
 { #category : #accessing }
@@ -287,6 +560,24 @@ MCWorkingCopy >> merged: aVersion [
 	ancestry addAncestor: aVersion info.
 	aVersion dependencies do: [:ea | self requirePackage: ea package].
 	self changed
+]
+
+{ #category : #accessing }
+MCWorkingCopy >> modified [
+	^ modified
+]
+
+{ #category : #accessing }
+MCWorkingCopy >> modified: aBoolean [
+	modified = aBoolean
+		ifTrue: [ ^ self ].
+	modified := aBoolean.
+	self changed: #modified.
+	modified
+		ifFalse: [ 
+			ChangesLog default logChange: '"' , self packageName , '"' ].
+	self announcer announce: (MCPackageModified package: self package)
+	
 ]
 
 { #category : #accessing }
@@ -378,6 +669,28 @@ aVersion info name,
 ') and (',
 ancestry ancestorString, ').
 Proceeding with this merge may cause spurious conflicts.'
+]
+
+{ #category : #accessing }
+MCWorkingCopy >> package [
+	^ package
+]
+
+{ #category : #accessing }
+MCWorkingCopy >> packageName [
+	^ package name
+]
+
+{ #category : #accessing }
+MCWorkingCopy >> packageNameWithStar [
+	^ modified
+		ifTrue: ['* ', self packageName]
+		ifFalse: [self packageName]
+]
+
+{ #category : #accessing }
+MCWorkingCopy >> packageSet [
+	^ package packageSet
 ]
 
 { #category : #private }
@@ -520,6 +833,15 @@ MCWorkingCopy >> unload [
 	postUnloadAction value.
 	
 
+]
+
+{ #category : #operations }
+MCWorkingCopy >> unregister [
+	self class registry 
+		removeKey: package
+		ifAbsent: [ ^ self ].
+	self class changed: (Array with: #unregistered with: package).
+	self announcer announce: (MCWorkingCopyDeleted workingCopy: self package: package)
 ]
 
 { #category : #accessing }
