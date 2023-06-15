@@ -79,7 +79,7 @@ MCWorkingCopyManagementTest >> testManagersForCategoryDo [
 		Renraku-Help
 
 		and a method extension with the protocol '*renraku'.
-		MCPackageManager>>methodModified: should only mark 'Renraku' as modified,
+		MCWorkingCopy>>methodModified: should only mark 'Renraku' as modified,
 		not 'Renraku-Help'"
 
 	| managers |
