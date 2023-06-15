@@ -48,10 +48,8 @@ MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
 
 { #category : #querying }
 MCWorkingCopy class >> hasPackageNamed: aName [
-	" self hasPackageNamed: 'ConfigurationOfFuel' "
 
-	^ MCWorkingCopy allManagers
-		anySatisfy: [ :each | each packageName = aName ]
+	^ self allManagers anySatisfy: [ :each | each packageName = aName ]
 ]
 
 { #category : #private }

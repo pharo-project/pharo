@@ -216,6 +216,14 @@ MCPackageManager class >> methodRemoved: anEvent [
 	self managersForClass: anEvent methodClass category: anEvent protocol name do: [ :mgr | mgr modified: true ]
 ]
 
+{ #category : #accessing }
+MCPackageManager class >> ofPackageNamed: aPackageName [
+
+	^ self registry values
+		  detect: [ :workingCopy | workingCopy packageName = aPackageName ]
+		  ifNone: [ NotFound signalFor: aPackageName in: self ]
+]
+
 { #category : #'system changes' }
 MCPackageManager class >> packageRenamed: anAnnouncement [
 	self allManagers 

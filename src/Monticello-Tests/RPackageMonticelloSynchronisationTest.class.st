@@ -23,7 +23,7 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExist
 	testingEnvironment organization addCategory: 'Zork'.
 	tmpPackage := self organizer packageNamed: #Zork.
 	MCWorkingCopy forPackage: (MCPackage new name: #Zork) packageOrganizer: self organizer.
-	self assert: tmpPackage equals: (self organizer packageNamed: #Zork)
+	self assert: tmpPackage identicalTo: (self organizer packageNamed: #Zork)
 ]
 
 { #category : #'tests - operations on MCPackages' }
