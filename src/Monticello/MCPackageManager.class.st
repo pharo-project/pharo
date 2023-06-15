@@ -92,6 +92,12 @@ MCPackageManager class >> classRenamed: anEvent [
 ]
 
 { #category : #accessing }
+MCPackageManager class >> ensureForPackage: aPackage [
+
+	^ self registry at: aPackage ifAbsent: [ self registerPackage: aPackage packageOrganizer: self packageOrganizer ]
+]
+
+{ #category : #accessing }
 MCPackageManager class >> ensureForPackageNamed: aPackageName [
 
 	^ self ensureForPackageNamed: aPackageName packageOrganizer: self packageOrganizer
@@ -101,20 +107,22 @@ MCPackageManager class >> ensureForPackageNamed: aPackageName [
 MCPackageManager class >> ensureForPackageNamed: aPackageName packageOrganizer: aPackageOrganizer [
 
 	^ (self hasPackageNamed: aPackageName)
-		  ifTrue: [ self ofPackageNamed: aPackageName ]
+		  ifTrue: [ self forPackageNamed: aPackageName ]
 		  ifFalse: [ self registerPackage: (MCPackage named: aPackageName) packageOrganizer: aPackageOrganizer ]
 ]
 
 { #category : #accessing }
 MCPackageManager class >> forPackage: aPackage [
 
-	^ self forPackage: aPackage packageOrganizer: self packageOrganizer
+	^ self registry at: aPackage ifAbsent: [ NotFound signalFor: aPackage in: self ]
 ]
 
 { #category : #accessing }
-MCPackageManager class >> forPackage: aPackage packageOrganizer: aPackageOrganizer [
+MCPackageManager class >> forPackageNamed: aPackageName [
 
-	^ self registry at: aPackage ifAbsent: [ self registerPackage: aPackage packageOrganizer: aPackageOrganizer ]
+	^ self registry values
+		  detect: [ :workingCopy | workingCopy packageName = aPackageName ]
+		  ifNone: [ NotFound signalFor: aPackageName in: self ]
 ]
 
 { #category : #querying }
@@ -224,14 +232,6 @@ MCPackageManager class >> methodRemoved: anEvent [
 	self managersForClass: anEvent methodClass category: anEvent protocol name do: [ :mgr | mgr modified: true ]
 ]
 
-{ #category : #accessing }
-MCPackageManager class >> ofPackageNamed: aPackageName [
-
-	^ self registry values
-		  detect: [ :workingCopy | workingCopy packageName = aPackageName ]
-		  ifNone: [ NotFound signalFor: aPackageName in: self ]
-]
-
 { #category : #'system changes' }
 MCPackageManager class >> packageRenamed: anAnnouncement [
 	self allManagers 
@@ -255,13 +255,14 @@ MCPackageManager class >> registerInterestOnSystemChangesOnAnnouncer: anAnnounce
 		when: MethodRemoved send: #methodRemoved: to: self.
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 MCPackageManager class >> registerPackage: aPackage packageOrganizer: aPackageOrganizer [
 
 	| workingCopy |
 	workingCopy := self new initializeWithPackage: aPackage.
 	self registry at: aPackage put: workingCopy.
-	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package."
+	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package.
+	But we still check that the package does not exist because the working copy creation might be caused by the creation of the system package and we do not want to end up in a loop."
 	aPackageOrganizer packageNamedIgnoreCase: aPackage name ifAbsent: [ aPackageOrganizer ensureExistAndRegisterPackageNamed: aPackage name ].
 	self announcer announce: (MCWorkingCopyCreated workingCopy: workingCopy package: aPackage).
 	^ workingCopy

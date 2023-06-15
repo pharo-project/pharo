@@ -120,7 +120,7 @@ MCWorkingCopyBrowser >> addMetacelloConfiguration [
 		RPackageOrganizer default registerPackageNamed: name.
 
 		"Select the package"
-		workingCopy := MCWorkingCopy ofPackageNamed: name.
+		workingCopy := MCWorkingCopy forPackageNamed: name.
 		repository ifNotNil: [ workingCopy repositoryGroup addRepository: repository ].
 		workingCopyWrapper := nil.
 		workingCopy modified: true.
@@ -213,7 +213,7 @@ MCWorkingCopyBrowser >> addWorkingCopy [
 	name := UIManager default request: 'Name of package:'.
 	name isEmptyOrNil ifFalse: [
 		RPackageOrganizer default registerPackageNamed: name.
-		workingCopy := MCWorkingCopy ofPackageNamed: name.
+		workingCopy := MCWorkingCopy forPackageNamed: name.
 		workingCopyWrapper := MCDependentsWrapper with: workingCopy model: self.
 		self repositorySelection: 0 ].
 

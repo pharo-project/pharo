@@ -13,15 +13,17 @@ Class {
 
 { #category : #running }
 MCPackageManagerTest >> setUp [
+
 	super setUp.
-	package1 := (RPackage named: #A, UUID new asString36) register.
-	package2 := (RPackage named: package1 name, #'-SubPart') register.
-	mcPackage1 := MCPackage named: package1 name.
-	mcPackage2 := MCPackage named: package2 name.
-	"register MC packages"
+	package1 := self packageOrganizer createPackageNamed: #A , UUID new asString36.
+	package2 := self packageOrganizer createPackageNamed: package1 name , #'-SubPart'.
+	mcPackage1 := package1 mcPackage.
+	mcPackage2 := package2 mcPackage.
+
+	"We automatically register working copies in MCWorkingCopy, but since we test MCPackageManager here, we need to explicitly register it here"
 	MCPackageManager
-		forPackage: mcPackage1;
-		forPackage: mcPackage2
+		ensureForPackage: mcPackage1;
+		ensureForPackage: mcPackage2
 ]
 
 { #category : #running }

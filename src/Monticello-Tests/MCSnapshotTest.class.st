@@ -32,7 +32,7 @@ MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 			classTraitComposition: t1 classTrait + t2 classTrait - #m1;
 			package: 'Monticello-Snapshot-Mock' ].
 
-	^ (MCWorkingCopy ofPackageNamed: 'Monticello-Snapshot-Mock') snapshot
+	^ (MCWorkingCopy forPackageNamed: 'Monticello-Snapshot-Mock') snapshot
 ]
 
 { #category : #running }
@@ -61,7 +61,7 @@ MCSnapshotTest >> createSnapshotWithTraitWithClassSideTraits [
 			      package: 'Monticello-Snapshot-Mock';
 			      beTrait ].
 
-	^ (MCWorkingCopy ofPackageNamed: 'Monticello-Snapshot-Mock') snapshot
+	^ (MCWorkingCopy forPackageNamed: 'Monticello-Snapshot-Mock') snapshot
 ]
 
 { #category : #utilities }

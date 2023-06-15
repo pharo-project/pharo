@@ -34,7 +34,7 @@ RPackageRenameTest >> tearDown [
 	self class environment at: #TestClass2 ifPresent: [ :class | class removeFromSystem ].
 	self class environment at: #TestClass3 ifPresent: [ :class | class removeFromSystem ].
 
-	packageNamesToClean do: [ :aPackageName | (MCWorkingCopy hasPackageNamed: aPackageName) ifTrue: [ (MCWorkingCopy ofPackageNamed: aPackageName) unload ] ].
+	packageNamesToClean do: [ :aPackageName | (MCWorkingCopy hasPackageNamed: aPackageName) ifTrue: [ (MCWorkingCopy forPackageNamed: aPackageName) unload ] ].
 
 	super tearDown
 ]
@@ -47,7 +47,7 @@ RPackageRenameTest >> testRenamePackage [
 	self cleanWorkingCopiesInTearDown: #( 'TestRename' ).
 
 	package := self packageOrganizer registerPackageNamed: 'Test1'.
-	workingCopy := MCWorkingCopy ofPackageNamed: 'Test1'.
+	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class := (Object << #TestClass package: 'Test1-TAG') install.
 
 	self assert: (package includesClass: class).
@@ -64,7 +64,7 @@ RPackageRenameTest >> testRenamePackage [
 	self deny: (self packageOrganizer includesCategory: #Test1).
 	self deny: (MCWorkingCopy hasPackageNamed: #Test1).
 
-	workingCopy := MCWorkingCopy ofPackageNamed: 'TestRename'.
+	workingCopy := MCWorkingCopy forPackageNamed: 'TestRename'.
 	self assert: workingCopy modified
 ]
 
@@ -76,7 +76,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 	self cleanWorkingCopiesInTearDown: #( 'Test1-Core' ).
 
 	package := self packageOrganizer registerPackageNamed: 'Test1'.
-	workingCopy := MCWorkingCopy ofPackageNamed: 'Test1'.
+	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class1 := (Object << #TestClass1 package: 'Test1-Core') install.
 	class2 := (Object << #TestClass2 package: 'Test1-Util') install.
 
@@ -90,7 +90,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 	self assert: ((package classTagNamed: #Core ifAbsent: [ nil ]) includesClass: class1).
 	self assert: ((package classTagNamed: #Util ifAbsent: [ nil ]) includesClass: class2).
 
-	workingCopy := MCWorkingCopy ofPackageNamed: 'Test1-Core'.
+	workingCopy := MCWorkingCopy forPackageNamed: 'Test1-Core'.
 	self assert: workingCopy modified
 ]
 
@@ -102,7 +102,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	self cleanWorkingCopiesInTearDown: #( 'Test1-Core' ).
 
 	package := self packageOrganizer registerPackageNamed: 'Test1'.
-	workingCopy := MCWorkingCopy ofPackageNamed: 'Test1'.
+	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class1 := (Object << #TestClass1 package: 'Test1-Core') install.
 	class2 := (Object << #TestClass2 package: 'Test1-Util') install.
 	class3 := (Object << #TestClass3 package: 'Test1') install.
@@ -117,7 +117,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	self assert: (package classTagForClass: class2) name equals: #Util.
 	self assert: (package classTagForClass: class3) name equals: #'Test1-Core'.
 
-	workingCopy := MCWorkingCopy ofPackageNamed: 'Test1-Core'.
+	workingCopy := MCWorkingCopy forPackageNamed: 'Test1-Core'.
 	self assert: workingCopy modified
 ]
 
@@ -129,7 +129,7 @@ RPackageRenameTest >> testRenamePackageUppercase [
 	"preparation: creation of a pkg and its associated mcworkingcopy"
 	[
 	package := self packageOrganizer registerPackageNamed: 'Test1'.
-	oldWorkingCopy := MCWorkingCopy ofPackageNamed: 'Test1'.
+	oldWorkingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	self assert: (self packageOrganizer includesPackageNamed: #Test1).
 	self assert: (MCWorkingCopy hasPackageNamed: #Test1) isNotNil.
 
@@ -155,12 +155,12 @@ RPackageRenameTest >> testRenamePackageWithExtensions [
 
 	| package workingCopy class extendedPackage extendedPackageWorkingCopy extension |
 	package := self packageOrganizer registerPackageNamed: 'OriginalPackage'.
-	workingCopy := MCWorkingCopy ofPackageNamed: 'OriginalPackage'.
+	workingCopy := MCWorkingCopy forPackageNamed: 'OriginalPackage'.
 
 	class := (Object << #TestClass package: 'OriginalPackage-TAG') install.
 
 	extendedPackage := self packageOrganizer registerPackageNamed: 'ExtendedPackage'.
-	extendedPackageWorkingCopy := MCWorkingCopy ofPackageNamed: 'ExtendedPackage'.
+	extendedPackageWorkingCopy := MCWorkingCopy forPackageNamed: 'ExtendedPackage'.
 
 	self cleanWorkingCopiesInTearDown: #( ExtendedPackage RenamedPackage OriginalPackage ).
 
@@ -189,12 +189,12 @@ RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 
 	| package workingCopy class extendedPackage extendedPackageWorkingCopy extension |
 	package := self packageOrganizer registerPackageNamed: 'OriginalPackage'.
-	workingCopy := MCWorkingCopy ofPackageNamed: 'OriginalPackage'.
+	workingCopy := MCWorkingCopy forPackageNamed: 'OriginalPackage'.
 
 	class := (Object << #TestClass package: 'OriginalPackage-TAG') install.
 
 	extendedPackage := self packageOrganizer registerPackageNamed: 'ExtendedPackage'.
-	extendedPackageWorkingCopy := MCWorkingCopy ofPackageNamed: 'ExtendedPackage'.
+	extendedPackageWorkingCopy := MCWorkingCopy forPackageNamed: 'ExtendedPackage'.
 
 	self cleanWorkingCopiesInTearDown: #( ExtendedPackage RenamedPackage OriginalPackage ).
 
@@ -226,7 +226,7 @@ RPackageRenameTest >> testUnregisterPackage [
 
 	| package workingCopy class |
 	package := self packageOrganizer registerPackageNamed: 'Test1'.
-	workingCopy := MCWorkingCopy ofPackageNamed: 'Test1'.
+	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class := (Object << #TestClass package: 'Test1-TAG') install.
 	self assert: (package includesClass: class).
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.

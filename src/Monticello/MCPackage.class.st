@@ -113,5 +113,5 @@ MCPackage >> unload [
 { #category : #'working copies' }
 MCPackage >> workingCopy [
 
-	^ MCWorkingCopy forPackage: self
+	^ MCWorkingCopy ensureForPackage: self
 ]
