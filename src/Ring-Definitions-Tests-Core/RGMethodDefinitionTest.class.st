@@ -251,16 +251,17 @@ RGMethodDefinitionTest >> testExistingMethodWithClass [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testExistingMethodWithPointer [
+
 	| newMethod |
 	newMethod := (OrderedCollection >> #size) asActiveRingDefinition.
 
 	self assert: newMethod parent isNil.
 	self assert: newMethod parentName identicalTo: #OrderedCollection.
-	self assert: newMethod sourcePointer notNil.
-	self assert: newMethod sourceCode notNil.
-	self assert: newMethod protocol notNil.
-	self assert: newMethod stamp notNil.
-	self assert: newMethod isExtension not
+	self assert: newMethod sourcePointer isNotNil.
+	self assert: newMethod sourceCode isNotNil.
+	self assert: newMethod protocol isNotNil.
+	self assert: newMethod stamp isNotNil.
+	self deny: newMethod isExtension
 ]
 
 { #category : #testing }

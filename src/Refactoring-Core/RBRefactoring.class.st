@@ -132,7 +132,7 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 
 { #category : #transforming }
 RBRefactoring >> execute [
-
+	"Check precondition, execute the transformation that produces changes and finally execute the changes"
 	self primitiveExecute.
 	self performChanges
 ]
@@ -167,6 +167,7 @@ RBRefactoring >> performChanges [
 
 { #category : #transforming }
 RBRefactoring >> performCompositeRefactoring: aRefactoring [
+	"Execute the argument but passing the receiver options to that refactoring"
 	aRefactoring copyOptionsFrom: self options.
 	aRefactoring primitiveExecute
 ]
@@ -180,6 +181,7 @@ RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [
 
 { #category : #private }
 RBRefactoring >> primitiveExecute [
+	
 	self checkPreconditions.
 	self transform
 ]

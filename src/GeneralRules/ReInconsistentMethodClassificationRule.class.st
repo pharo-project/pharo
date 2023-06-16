@@ -25,23 +25,23 @@ ReInconsistentMethodClassificationRule class >> uniqueIdentifierName [
 ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiqueBlock [
 
 	| ownerProtocol |
-	self flag: #CompileMethodProtocolMiration.
-	ownerProtocol := aMethod protocolName ifNil: [ ^ self ].
-	((#( 'as yet unclassified' 'deprecation' ) includes: ownerProtocol) or: [ ownerProtocol first = $* ]) ifTrue: [ ^ self ].
+	ownerProtocol := aMethod protocol ifNil: [ ^ self ].
+
+	(ownerProtocol isUnclassifiedProtocol or: [ ownerProtocol isExtensionProtocol ]) ifTrue: [ ^ self ].
 
 	aMethod methodClass superclass ifNotNil: [ :superclass |
 		(superclass lookupSelector: aMethod selector) ifNotNil: [ :superMethod |
 			| superProtocol |
-			superProtocol := superMethod protocolName ifNil: [ ^ self ].
-			(superProtocol isNil or: [ superProtocol == #'as yet unclassified' or: [ superProtocol first = $* ] ]) ifFalse: [
-				ownerProtocol ~= superProtocol ifTrue: [ aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol) ] ] ] ]
+			superProtocol := superMethod protocol ifNil: [ ^ self ].
+			(superProtocol isUnclassifiedProtocol or: [ superProtocol isExtensionProtocol ]) ifTrue: [ ^ self ].
+			ownerProtocol name ~= superProtocol name ifTrue: [
+				aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol name) ] ] ]
 ]
 
 { #category : #helpers }
 ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
 
 	| protocolInSuperclass |
-	self flag: #CompileMethodProtocolMiration.
 	protocolInSuperclass := (aMethod methodClass superclass lookupSelector: aMethod selector) protocolName.
 
 	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:

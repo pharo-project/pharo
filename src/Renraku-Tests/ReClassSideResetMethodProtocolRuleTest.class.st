@@ -40,7 +40,7 @@ ReClassSideResetMethodProtocolRuleTest >> testAutomatedFix [
 	refactoring := critiques first refactoring transform.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
-	self assert: method protocol equals: #'class initialization'
+	self assert: method protocolName equals: #'class initialization'
 ]
 
 { #category : #running }

@@ -11,8 +11,6 @@ Class {
 		'SharedVar'
 	],
 	#classInstVars : [
-		'SharedVarPlus',
-		'instVarPlus',
 		'classInstVar'
 	],
 	#category : #'Refactoring-Tests-Changes'
@@ -29,6 +27,13 @@ RBRefactoringChangeMock >> accessAll [
 	instVar := 0. 
 	SharedVar := 0.
 	^ instVar + SharedVar 
+]
+
+{ #category : #initialization }
+RBRefactoringChangeMock >> initialize [
+
+	<ignoreUnusedVariables: #( #instVar )>
+	super initialize
 ]
 
 { #category : #accessing }

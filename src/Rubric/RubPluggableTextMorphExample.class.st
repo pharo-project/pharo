@@ -19,10 +19,10 @@ Class {
 { #category : #'source code area' }
 RubPluggableTextMorphExample >> accept: source notifying: aController [
 
-	| p result |
+	| protocol result |
 	self selectedClass ifNil: [ ^ self ].
-	p := (self selectedClass >> self selector) protocol ifNil: [ Protocol unclassified ].
-	result := self selectedClass compile: source classified: p notifying: aController.
+	protocol := (self selectedClass >> self selector) protocol ifNil: [ Protocol unclassified ].
+	result := self selectedClass compile: source classified: protocol notifying: aController.
 	result ifNotNil: [ self changed: #clearUserEdits ].
 	^ result
 ]

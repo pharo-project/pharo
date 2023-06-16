@@ -691,10 +691,7 @@ RPackage >> extensionSelectorsForClass: aClass [
 { #category : #'class tags' }
 RPackage >> extensionsForTag: aRPackageTag [
 
-	^ self extensionMethods select: [ :extensionMethod |
-		  | protocolName |
-		  protocolName := extensionMethod protocol allButFirst.
-		  protocolName isCategoryOf: aRPackageTag categoryName ]
+	^ self extensionMethods select: [ :extensionMethod | extensionMethod protocolName allButFirst isCategoryOf: aRPackageTag categoryName ]
 ]
 
 { #category : #properties }
@@ -1350,7 +1347,7 @@ RPackage >> removeSelector: aSelector ofMetaclassName: aClassName [
 RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 
 	| protocols |
-	protocols := self extensionMethods collect: [ :method | method origin protocolNamed: method protocol ] as: Set.
+	protocols := self extensionMethods collect: [ :method | method protocol ] as: Set.
 
 	protocols do: [ :protocol | protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ]
 ]

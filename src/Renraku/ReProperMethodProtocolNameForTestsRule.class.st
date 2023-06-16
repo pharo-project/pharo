@@ -17,5 +17,5 @@ ReProperMethodProtocolNameForTestsRule class >> protocolIdiom [
 ReProperMethodProtocolNameForTestsRule >> basicCheck: aMethod [
 	"We only check for SUnit test methods"
 
-	^ aMethod isTestMethod and: [ self class badMethodProtocolNames includes: aMethod protocol ]
+	^ aMethod isTestMethod and: [ self class badMethodProtocolNames includes: aMethod protocolName ]
 ]

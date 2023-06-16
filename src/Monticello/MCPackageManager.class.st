@@ -92,48 +92,72 @@ MCPackageManager class >> classRenamed: anEvent [
 ]
 
 { #category : #accessing }
+MCPackageManager class >> ensureForPackage: aPackage [
+
+	^ self registry at: aPackage ifAbsent: [ self registerPackage: aPackage packageOrganizer: self packageOrganizer ]
+]
+
+{ #category : #accessing }
+MCPackageManager class >> ensureForPackageNamed: aPackageName [
+
+	^ self ensureForPackageNamed: aPackageName packageOrganizer: self packageOrganizer
+]
+
+{ #category : #accessing }
+MCPackageManager class >> ensureForPackageNamed: aPackageName packageOrganizer: aPackageOrganizer [
+
+	^ (self hasPackageNamed: aPackageName)
+		  ifTrue: [ self forPackageNamed: aPackageName ]
+		  ifFalse: [ self registerPackage: (MCPackage named: aPackageName) packageOrganizer: aPackageOrganizer ]
+]
+
+{ #category : #accessing }
 MCPackageManager class >> forPackage: aPackage [
-	^ self registry 
-		at: aPackage 
-		ifAbsent: [|mgr|
-			mgr := self new initializeWithPackage: aPackage.
-			self registry at: aPackage put: mgr.
-			self announcer announce: (MCWorkingCopyCreated workingCopy: mgr package: aPackage).
-			mgr ]
+
+	^ self registry at: aPackage ifAbsent: [ NotFound signalFor: aPackage in: self ]
+]
+
+{ #category : #accessing }
+MCPackageManager class >> forPackageNamed: aPackageName [
+
+	^ self registry values
+		  detect: [ :workingCopy | workingCopy packageName = aPackageName ]
+		  ifNone: [ NotFound signalFor: aPackageName in: self ]
+]
+
+{ #category : #querying }
+MCPackageManager class >> hasPackageNamed: aName [
+
+	^ self allManagers anySatisfy: [ :each | each packageName = aName ]
 ]
 
 { #category : #'system changes' }
 MCPackageManager class >> managersForCategory: aSystemCategory do: aBlock [
 	"Got to be careful here - we might get method categories where capitalization is problematic."
+
 	| cat foundOne index |
 	foundOne := false.
-	cat := aSystemCategory ifNil: [ ^nil ]. "yes this happens; for example in eToy projects"
+	cat := aSystemCategory ifNil: [ ^ nil ]. "yes this happens; for example in eToy projects"
 	"first ask PackageInfos, their package name might not match the category"
-	self
-		bestMatchingManagerForCategory: aSystemCategory
-		do: [ :mgr |
-			aBlock value: mgr.
-			foundOne := true ].
+	self bestMatchingManagerForCategory: aSystemCategory do: [ :mgr |
+		aBlock value: mgr.
+		foundOne := true ].
 
-   foundOne ifTrue: [ ^self ].
-	[  "Loop over categories until we found a matching one"
-		self registry keys detect: [ :aPackage | aPackage name sameAs: cat ]
-			ifFound: [:aPackage | | mgr | 
-				mgr := self registry at: aPackage.
-				aBlock value: mgr. 
-				foundOne := true. 
-				false] 
-			ifNone: [ 
-				index := cat lastIndexOf: $-.
-				index > 0]
-	] whileTrue: [
-		"Step up to next level package"
-		cat := cat copyFrom: 1 to: index-1 ].
-	
-	foundOne ifFalse: [
-		"Create a new (but only top-level)"
-		aBlock value: (MCWorkingCopy forPackage: (MCPackage named: aSystemCategory capitalized)).
-	].
+	foundOne ifTrue: [ ^ self ].
+	[ "Loop over categories until we found a matching one"
+	self registry keys
+		detect: [ :aPackage | aPackage name sameAs: cat ]
+		ifFound: [ :aPackage |
+			| mgr |
+			mgr := self registry at: aPackage.
+			aBlock value: mgr.
+			foundOne := true.
+			false ]
+		ifNone: [
+			index := cat lastIndexOf: $-.
+			index > 0 ] ] whileTrue: [ "Step up to next level package" cat := cat copyFrom: 1 to: index - 1 ].
+
+	foundOne ifFalse: [ "Create a new (but only top-level)" aBlock value: (MCWorkingCopy ensureForPackageNamed: aSystemCategory capitalized) ]
 ]
 
 { #category : #'system changes' }
@@ -222,6 +246,19 @@ MCPackageManager class >> registerInterestOnSystemChangesOnAnnouncer: anAnnounce
 		when: MethodAdded, MethodModified, MethodRecategorized send: #methodModified: to: self;
 		when: MethodRepackaged send: #methodMoved: to: self;
 		when: MethodRemoved send: #methodRemoved: to: self.
+]
+
+{ #category : #private }
+MCPackageManager class >> registerPackage: aPackage packageOrganizer: aPackageOrganizer [
+
+	| workingCopy |
+	workingCopy := self new initializeWithPackage: aPackage.
+	self registry at: aPackage put: workingCopy.
+	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package.
+	But we still check that the package does not exist because the working copy creation might be caused by the creation of the system package and we do not want to end up in a loop."
+	aPackageOrganizer packageNamedIgnoreCase: aPackage name ifAbsent: [ aPackageOrganizer ensureExistAndRegisterPackageNamed: aPackage name ].
+	self announcer announce: (MCWorkingCopyCreated workingCopy: workingCopy package: aPackage).
+	^ workingCopy
 ]
 
 { #category : #accessing }

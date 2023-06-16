@@ -275,6 +275,20 @@ SHRBTextStyler class >> initialTextAttributesForStyleTable: aStyleTable [
 	^ d
 ]
 
+{ #category : #styles }
+SHRBTextStyler class >> newAttributesForStyleTable: aStyleTable [
+	
+	^ self initialTextAttributesForStyleTable: aStyleTable
+]
+
+{ #category : #styles }
+SHRBTextStyler class >> newAttributesForStyleTableNamed: aString [
+	| table |
+	
+	table := self styleTableNamed: aString.
+	^ self newAttributesForStyleTable: (table ifNil: [ self styleTable ])
+]
+
 { #category : #initialization }
 SHRBTextStyler class >> resetTextAttributesCaches [
 
@@ -398,6 +412,15 @@ SHRBTextStyler class >> styleTable: anArray [
 
 	styleTable := anArray.
 	self resetTextAttributesCaches
+]
+
+{ #category : #styles }
+SHRBTextStyler class >> styleTableNamed: aString [
+
+	^ (Pragma allNamed: #styleTable: in: self class)
+		detect: [ :each | (each argumentAt: 1) = aString ]
+		ifFound: [ :each | self perform: each methodSelector ]
+		ifNone: [ nil ]
 ]
 
 { #category : #styles }
