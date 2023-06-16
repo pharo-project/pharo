@@ -68,7 +68,12 @@ CDClassDefinitionParser >> handleTraitDefinitionFromNode: aNode [
 { #category : #testing }
 CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."
-	^ aRBMessageNode receiver isMessage not
+	^ (aRBMessageNode isSequence 
+		"when defining a subclass of nil, we have two sends"
+		and: [aRBMessageNode statements size = 2
+		and: [aRBMessageNode statements second isMessage
+		and: [aRBMessageNode statements second selector == #superclass: ]]]) or: [
+	aRBMessageNode receiver isMessage not]
 ]
 
 { #category : #parsing }
@@ -125,4 +130,14 @@ CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 		with: aRBMessageNode arguments
 		do: [ :selectorPart :argument |
 			self parseSelectorPart: selectorPart withArgument: argument ]
+]
+
+{ #category : #visiting }
+CDClassDefinitionParser >> visitSequenceNode: aRBSequenceNode [
+	"we end up here when parsing the definition of a class with nil superclass, e.g., ProtoObject"
+	self visitMessageNode: aRBSequenceNode statements first.
+	classDefinition superclassName: nil.
+	classDefinition classNameNode
+		originalNode: aRBSequenceNode statements second arguments first;
+		className: nil
 ]
