@@ -44,8 +44,8 @@ SycTagMethodCommand >> execute [
 	methods do: [ :aMethod |
 		| oldTags |
 		oldTags := aMethod tags.
-		aMethod tagWith: targetTag asSymbol.
-		oldTags do: [:old | aMethod untagFrom: old ]]
+		aMethod protocol: targetTag.
+		oldTags do: [ :old | aMethod untagFrom: old ] ]
 ]
 
 { #category : #execution }
