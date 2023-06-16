@@ -52,16 +52,25 @@ RBReplaceSubtreeTransformation >> preconditions [
 				withBlock: [ | tree |
 					tree := self parserClass
 						parseExpression: oldSourceCode
-						onError:	[ :string :pos | self refactoringError: 'Invalid source to extract - ' , string ].
+						onError:
+							[ :string :pos | self refactoringError: 'Invalid source to extract - ' , string ].
 					tree
-						ifNil: [ self refactoringError: 'Invalid source to extract - ' , oldSourceCode ].
+						ifNil: [ self
+								refactoringError: 'Invalid source to extract - ' , oldSourceCode ].
 					(tree isSequence and: [ tree statements isEmpty ])
 						ifTrue: [ self refactoringError: 'Selected code to extract is empty' ].
 					tree := ((self definingClass parseTreeForSelector: selector)
 						extractSubtreeWith: oldSourceCode)
-						ifNil: [ self refactoringError: 'Could not extract code from method ' , selector ].
+						ifNil: [ self
+								refactoringError: 'Could not extract code from method ' , selector ].
 					true ])
-		
+		&
+			(RBCondition
+				withBlock: [ self parserClass
+						parseExpression: newSourceCode
+						onError:
+							[ :string :pos | self refactoringError: 'Invalid source to add - ' , string ].
+					true ])
 ]
 
 { #category : #executing }
