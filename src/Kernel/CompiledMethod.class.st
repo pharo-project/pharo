@@ -213,9 +213,10 @@ CompiledMethod >> cachePragmas [
 	self pragmas do: [ :pragma | pragma class addToCache: pragma ]
 ]
 
-{ #category : #'accessing - backward compatible' }
+{ #category : #deprecated }
 CompiledMethod >> category [
 
+	self deprecated: 'Use #protocolName instead.' transformWith: '`@rcv category' -> '`@rcv protocolName'.
 	^ self protocolName
 ]
 
