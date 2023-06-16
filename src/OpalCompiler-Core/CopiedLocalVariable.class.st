@@ -17,7 +17,9 @@ CopiedLocalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 
 { #category : #queries }
 CopiedLocalVariable >> definingNode [
-	^originalVar definingNode
+	^ scope node temporaries
+		detect: [ :each | each variable == self ]
+		ifNone: [ nil ]
 ]
 
 { #category : #accessing }
