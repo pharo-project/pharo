@@ -26,7 +26,7 @@ LegacyClassDefinitionPrinter >> classDefinitionString [
 	| aStream |
 	aStream := (String new: 800) writeStream.
 	forClass superclass
-		ifNil: [aStream nextPutAll: 'ProtoObject']
+		ifNil: [aStream nextPutAll: 'nil']
 		ifNotNil: [aStream nextPutAll: forClass superclass name].
 	aStream nextPutAll: forClass kindOfSubclass;
 			store: forClass name.
@@ -41,12 +41,6 @@ LegacyClassDefinitionPrinter >> classDefinitionString [
 			store: forClass sharedPoolsString.
 	aStream cr; tab; nextPutAll: 'category: ';
 			store: forClass category asString.
-
-	forClass superclass ifNil: [
-		aStream nextPutAll: '.'; cr.
-		aStream nextPutAll: forClass name.
-		aStream space; nextPutAll: 'superclass: nil'. ].
-
 	^ aStream contents
 ]
 

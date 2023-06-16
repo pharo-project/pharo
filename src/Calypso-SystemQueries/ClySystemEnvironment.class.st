@@ -265,6 +265,8 @@ ClySystemEnvironment >> initialize [
 ClySystemEnvironment >> isClassDefinition: newClassDefinitionString [
 	| defTokens |
 	defTokens := newClassDefinitionString findTokens: Character separators.
+	"first case is creating a class with nil as superclass"
+	defTokens first = 'nil' ifTrue: [ ^true ].
 	^ (self class environment classNamed: defTokens first) isNotNil
 ]
 

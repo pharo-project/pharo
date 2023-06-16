@@ -19,7 +19,7 @@ OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
 	stream := (String new: 800) writeStream.
 	forClass superclass
 		ifNotNil: [ stream nextPutAll: forClass superclass name ]
-		ifNil: [ stream nextPutAll: 'ProtoObject' ].
+		ifNil: [ stream nextPutAll: 'nil' ].
 	stream
 		nextPutAll: forClass kindOfSubclass;
 		store: forClass name.
@@ -28,14 +28,6 @@ OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
 	self classVariablesOn: stream.
 	self poolOn: stream.
 	self packageOn: stream.
-	forClass superclass ifNil: [
-		stream
-			nextPutAll: '.';
-			cr.
-		stream nextPutAll: forClass name.
-		stream
-			space;
-			nextPutAll: 'superclass: nil' ].
 	^ stream contents
 ]
 

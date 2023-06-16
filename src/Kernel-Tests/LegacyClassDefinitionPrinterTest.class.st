@@ -101,12 +101,11 @@ LegacyClassDefinitionPrinterTest >> testProtoObject [
 
 	self
 		assert: (self forClass: ProtoObject)
-		equals: 'ProtoObject subclass: #ProtoObject
+		equals: 'nil subclass: #ProtoObject
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	poolDictionaries: ''''
-	category: ''Kernel-Objects''.
-ProtoObject superclass: nil'
+	category: ''Kernel-Objects'''
 ]
 
 { #category : #'tests - metaclasses' }

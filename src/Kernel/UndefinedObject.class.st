@@ -211,19 +211,25 @@ UndefinedObject >> storeOn: aStream [
 ]
 
 { #category : #'class hierarchy' }
-UndefinedObject >> subclass: nameOfClass
-	instanceVariableNames: instVarNameList
-	classVariableNames: classVarNames
-	poolDictionaries: poolDictnames
-	category: category [
-	"Calling this method is now considered an accident.  If you really want to create a class with a nil superclass, then create the class and then set the superclass using #superclass:"
-	Warning signal: ('Attempt to create ', nameOfClass, ' as a subclass of nil.  Possibly a class is being loaded before its superclass.').
-	^ Object
+UndefinedObject >> subclass: nameOfClass instanceVariableNames: instVarNameList classVariableNames: classVarNames package: packageName [
+	
+	"Retained for backward compatibility. With fluid class defintions, we never use this"
+	| subClass |
+	subClass := ProtoObject
 		subclass: nameOfClass
 		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
-		poolDictionaries: poolDictnames
-		category: category
+		poolDictionaries: ''
+		package: packageName.
+	subClass superclass: nil.
+	^ subClass.
+]
+
+{ #category : #'class hierarchy' }
+UndefinedObject >> subclass: nameOfClass instanceVariableNames: instVarNameList classVariableNames: classVarNames poolDictionaries: poolDictnames category: packageName [
+	
+	"Retained for backward compatibility. With fluid class defintions, we never use this"
+	^ self subclass: nameOfClass instanceVariableNames: instVarNameList classVariableNames: classVarNames package: packageName
 ]
 
 { #category : #'class hierarchy' }

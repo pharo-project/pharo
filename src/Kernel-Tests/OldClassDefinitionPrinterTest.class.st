@@ -104,11 +104,10 @@ OldClassDefinitionPrinterTest >> testPoint [
 { #category : #'tests - classes' }
 OldClassDefinitionPrinterTest >> testProtoObject [
 
-	self assert: (self forClass: ProtoObject) equals: 'ProtoObject subclass: #ProtoObject
+	self assert: (self forClass: ProtoObject) equals: 'nil subclass: #ProtoObject
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	package: ''Kernel-Objects''.
-ProtoObject superclass: nil'
+	package: ''Kernel-Objects'''
 ]
 
 { #category : #'tests - metaclasses' }
