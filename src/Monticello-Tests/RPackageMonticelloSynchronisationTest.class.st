@@ -11,7 +11,7 @@ Class {
 RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
 	"test that when we create a MCPackage, a corresponding package is created"
 
-	MCWorkingCopy forPackage: (MCPackage new name: #Zork) packageOrganizer: self organizer.
+	MCWorkingCopy ensureForPackageNamed: #Zork packageOrganizer: self organizer.
 	self assert: (self organizer includesPackageNamed: #Zork)
 ]
 
@@ -22,15 +22,15 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExist
 	| tmpPackage |
 	testingEnvironment organization addCategory: 'Zork'.
 	tmpPackage := self organizer packageNamed: #Zork.
-	MCWorkingCopy forPackage: (MCPackage new name: #Zork) packageOrganizer: self organizer.
-	self assert: tmpPackage equals: (self organizer packageNamed: #Zork)
+	MCWorkingCopy ensureForPackageNamed: #Zork packageOrganizer: self organizer.
+	self assert: tmpPackage identicalTo: (self organizer packageNamed: #Zork)
 ]
 
 { #category : #'tests - operations on MCPackages' }
 RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 	"test that when we remove a MC Package, the corresponding RPackage is removed from the organizer"
 
-	MCWorkingCopy forPackage: (MCPackage new name: 'XXXXX') packageOrganizer: self organizer.
+	MCWorkingCopy ensureForPackageNamed: 'XXXXX' packageOrganizer: self organizer.
 	(self allManagers detect: [ :each | each packageName = 'XXXXX' ]) unload.
 
 	self deny: (self organizer includesPackageNamed: #XXXXX)
@@ -40,7 +40,7 @@ RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 RPackageMonticelloSynchronisationTest >> testUnregisterMCPackageKeepsRPackage [
 	"test that when we remove a MC Package, the corresponding RPackage is removed from the organizer"
 
-	MCWorkingCopy forPackage: (MCPackage new name: 'XXXXX') packageOrganizer: self organizer.
+	MCWorkingCopy ensureForPackageNamed: 'XXXXX' packageOrganizer: self organizer.
 	(self allManagers detect: [ :each | each packageName = 'XXXXX' ]) unregister.
 
 	self assert: (self organizer includesPackageNamed: #XXXXX)

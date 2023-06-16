@@ -75,7 +75,7 @@ MCWorkingCopyTest >> setUp [
 	super setUp.
 	repositoryGroup := MCRepositoryGroup new.
 	repositoryGroup disableCache.
-	workingCopy := MCWorkingCopy forPackage: self mockPackage.
+	workingCopy := MCWorkingCopy ensureForPackage: self mockPackage.
 	versions := Dictionary new.
 	versions2 := Dictionary new.
 	repos1 := MCDictionaryRepository new dictionary: versions.
