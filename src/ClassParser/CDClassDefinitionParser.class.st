@@ -136,8 +136,8 @@ CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 CDClassDefinitionParser >> visitSequenceNode: aRBSequenceNode [
 	"we end up here when parsing the definition of a class with nil superclass, e.g., ProtoObject"
 	self visitMessageNode: aRBSequenceNode statements first.
-	classDefinition superclassName: nil.
-	classDefinition classNameNode
+	classDefinition superclassName: 'nil'.
+	classDefinition superclassNameNode
 		originalNode: aRBSequenceNode statements second arguments first;
-		className: nil
+		className: 'nil'
 ]
