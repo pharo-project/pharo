@@ -11,7 +11,7 @@ Class {
 		'toClasses',
 		'ignore'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : #'Refactoring2-Transformations-To be removed'
 }
 
 { #category : #'instance creation' }
@@ -127,7 +127,7 @@ RBAbstractVariablesTransformation >> classVariableNames [
 	^ (nonMetaClass allClassVariableNames collect: [ :each | each asString ]) asSet
 ]
 
-{ #category : #executing }
+{ #category : #'for driver' }
 RBAbstractVariablesTransformation >> computeVariablesToAbstract [
 	| searcher |
 	instVarReaders := Set new.
@@ -170,7 +170,7 @@ RBAbstractVariablesTransformation >> privateTransform [
 	self abstractClassVariables
 ]
 
-{ #category : #executing }
+{ #category : #'for driver' }
 RBAbstractVariablesTransformation >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
@@ -182,7 +182,7 @@ RBAbstractVariablesTransformation >> processAssignmentNode: aNode [
 		ifTrue: [classVarWriters add: varName]
 ]
 
-{ #category : #executing }
+{ #category : #'for driver' }
 RBAbstractVariablesTransformation >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
@@ -194,7 +194,7 @@ RBAbstractVariablesTransformation >> processReferenceNode: aNode [
 		ifTrue: [classVarReaders add: varName]
 ]
 
-{ #category : #executing }
+{ #category : #'for driver' }
 RBAbstractVariablesTransformation >> removeDefinedClassVariables [
 	| selectionBlock nonMetaClass |
 	nonMetaClass := fromClass instanceSide.

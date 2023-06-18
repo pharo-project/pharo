@@ -37,16 +37,7 @@ RBRealizeClassTransformation class >> model: aRBModel className: aName [
 
 { #category : #preconditions }
 RBRealizeClassTransformation >> preconditions [
-	^ RBCondition
-		withBlock: [
-			(self theClass withAllSubclasses
-				detect: [ :each |
-					(each whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty
-						or: [ (each classSide whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty ] ]
-				ifNone: [ nil ]) ifNotNil:
-				[ self refactoringWarning:
-				self theClass printString ,
-					' is abstract or has abstract subclasses. Do you want to proceed?']. true ]
+	^ (RBCondition isClassNamed: className definedIn: model)
 ]
 
 { #category : #executing }
@@ -70,17 +61,23 @@ RBRealizeClassTransformation >> theClass [
 ]
 
 { #category : #accessing }
-RBRealizeClassTransformation >> transform: targetClass [
-	| aClass method parseTree  |
-	targetClass allSelectors do: [ :selector |
-		aClass := targetClass whoDefinesMethod: selector.
-		(aClass notNil and: [ aClass ~= targetClass ]) ifTrue: [
-			method := aClass methodFor: selector.
+RBRealizeClassTransformation >> transform: aClass [
+	"Transform all the subclassResponsibilities (inherited or not) methods of the class in the class."
+	
+	| definingClass method parseTree  |
+	"get all the methods even the ones of the superclasses"
+	
+	aClass allSelectors do: [ :selector |
+		definingClass := aClass whoDefinesMethod: selector.
+		(definingClass notNil and: [ definingClass ~= aClass ]) ifTrue: [
+			method := definingClass methodFor: selector.
 			(method notNil and: [ method refersToSymbol: #subclassResponsibility ]) ifTrue: [
 				parseTree := method parseTree.
 				parseTree body
 					temporaries: OrderedCollection new;
 					statements: OrderedCollection new;
 					addNode: (RBMessageNode receiver: RBVariableNode selfNode selector: #shouldBeImplemented).
-				targetClass compile: parseTree newSource withAttributesFrom: method ] ] ]
+				"Note that we compile in the class (a subclass compared to superclass having abstract methods) 
+				so we are doing a kind of copy-down but transforming a self subclassResp into shouldBe"
+				aClass compile: parseTree newSource withAttributesFrom: method ] ] ]
 ]
