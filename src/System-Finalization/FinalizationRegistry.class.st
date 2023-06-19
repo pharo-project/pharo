@@ -47,9 +47,9 @@ Class {
 	#name : #FinalizationRegistry,
 	#superclass : #Object,
 	#instVars : [
-		'ephemeronCollection',
 		'semaphore',
-		'errorHandler'
+		'errorHandler',
+		'ephemeronListHead'
 	],
 	#classVars : [
 		'Default'
@@ -82,9 +82,11 @@ FinalizationRegistry >> add: anObject executor: finalizer [
 { #category : #adding }
 FinalizationRegistry >> add: anObject finalizer: finalizer [
 
-	self protected: [ 
-		ephemeronCollection add:
-			(FinalizationRegistryEntry key: anObject value: finalizer container: self) ].
+	self protected: [ | newEntry |
+		newEntry := FinalizationRegistryEntry key: anObject value: finalizer container: self.
+		ephemeronListHead ifNotNil: [
+			ephemeronListHead chainNext: newEntry].
+	].
 	^ anObject
 ]
 
@@ -119,14 +121,17 @@ FinalizationRegistry >> handleErrorsDuring: aBlock [
 { #category : #testing }
 FinalizationRegistry >> includes: anObject [
 
-    ^ ephemeronCollection anySatisfy: [ :entry | entry key == anObject ]
+    ^ false
 ]
 
 { #category : #initialization }
 FinalizationRegistry >> initialize [
 
 	super initialize.
-	ephemeronCollection := IdentitySet new.
+
+	"We have a head with an empty entry, this is to keep the linked list only"
+	ephemeronListHead := FinalizationRegistryEntry new.
+
 	semaphore := Semaphore forMutualExclusion.
 	errorHandler := self.
 ]
@@ -134,13 +139,13 @@ FinalizationRegistry >> initialize [
 { #category : #testing }
 FinalizationRegistry >> isEmpty [
 	
-	^ ephemeronCollection isEmpty
+	^ ephemeronListHead next isNil
 ]
 
 { #category : #adding }
 FinalizationRegistry >> keys [
 
-	^ ephemeronCollection collect: [ :e | e key ]
+	^ #()
 ]
 
 { #category : #copying }
@@ -148,7 +153,7 @@ FinalizationRegistry >> postCopy [
 	"should we prohibit any attempts to copy receiver?"
 	self protected: [
 		semaphore := Semaphore forMutualExclusion.
-		ephemeronCollection := ephemeronCollection copy
+		ephemeronListHead := ephemeronListHead copy
 	]
 ]
 
@@ -164,17 +169,19 @@ FinalizationRegistry >> protected: aBlock [
 { #category : #adding }
 FinalizationRegistry >> remove: anEphemeron ifAbsent: aBlock [
 
-	^ self protected: [ ephemeronCollection remove: anEphemeron ifAbsent: aBlock ]
+	(anEphemeron isKindOf: FinalizationRegistryEntry) ifFalse: [ ^ aBlock value ].
+	^ self removeEphemeron: anEphemeron
 ]
 
 { #category : #adding }
 FinalizationRegistry >> removeEphemeron: anEphemeron [
 
-	self protected: [ ephemeronCollection remove: anEphemeron ]
+	self protected: [ 
+		anEphemeron removeFromChain ]
 ]
 
 { #category : #accessing }
 FinalizationRegistry >> size [
 
-	^ ephemeronCollection size
+	^ 0
 ]

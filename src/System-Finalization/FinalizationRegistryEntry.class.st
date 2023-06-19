@@ -32,7 +32,9 @@ Class {
 	#superclass : #Association,
 	#type : #ephemeron,
 	#instVars : [
-		'container'
+		'container',
+		'next',
+		'previous'
 	],
 	#category : #'System-Finalization-Registry'
 }
@@ -45,6 +47,28 @@ FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 		value: value;
 		container: aContainer;
 		yourself
+]
+
+{ #category : #accessing }
+FinalizationRegistryEntry >> chainNext: aNode [
+	"Insert a node in the middle of myself and my next node.
+	Assume the argument has no next or previous"
+	| currentNext |
+	currentNext := next.
+	next := aNode.
+	aNode ifNil: [ ^ self ].
+
+	aNode next: currentNext.
+	currentNext ifNotNil: [
+		currentNext previous: aNode ].
+
+	aNode previous: self
+]
+
+{ #category : #accessing }
+FinalizationRegistryEntry >> container [
+
+	^ container
 ]
 
 { #category : #accessing }
@@ -61,4 +85,35 @@ FinalizationRegistryEntry >> mourn [
 	Ask the container to finalize myself"
 
 	container finalizeEphemeron: self
+]
+
+{ #category : #accessing }
+FinalizationRegistryEntry >> next [
+
+	^ next
+]
+
+{ #category : #accessing }
+FinalizationRegistryEntry >> next: anObject [
+
+	next := anObject
+]
+
+{ #category : #accessing }
+FinalizationRegistryEntry >> previous [
+
+	^ previous
+]
+
+{ #category : #accessing }
+FinalizationRegistryEntry >> previous: anObject [
+
+	previous := anObject
+]
+
+{ #category : #accessing }
+FinalizationRegistryEntry >> removeFromChain [
+
+	previous ifNil: [ ^ self ].
+	previous chainNext: next
 ]
