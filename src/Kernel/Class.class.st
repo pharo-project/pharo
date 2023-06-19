@@ -890,12 +890,7 @@ Class >> newSubclass [
 			builder
 				superclass: self; 
 				name: className;
-				category: 'Unclassified';
 				environment: self environment ]
-
-	"Point newSubclass new"
-	
-
 ]
 
 { #category : #initialization }
@@ -1159,7 +1154,6 @@ Class >> subclass: t [
 			builder
 				superclass: self; 
 				name: t;
-				category: 'Unclassified';
 				environment: self environment ]
 
 	
@@ -1173,7 +1167,6 @@ Class >> subclass: t instanceVariableNames: ins [
 				superclass: self; 
 				name: t;
 				slots: ins asSlotCollection;
-				category: 'Unclassified';
 				environment: self environment ]
 ]
 
@@ -1188,7 +1181,6 @@ Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classV
 				name: aSubclassSymbol;
 				sharedVariablesFromString: classVarNames;
 				slots: instVarNameList asSlotCollection;
-				category: 'Unclassified';
 				environment: self environment ]
 ]
 
