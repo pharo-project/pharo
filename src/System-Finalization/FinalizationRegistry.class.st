@@ -121,7 +121,7 @@ FinalizationRegistry >> handleErrorsDuring: aBlock [
 { #category : #testing }
 FinalizationRegistry >> includes: anObject [
 
-    ^ false
+    ^ ephemeronListHead includes: anObject
 ]
 
 { #category : #initialization }
@@ -138,7 +138,7 @@ FinalizationRegistry >> initialize [
 
 { #category : #testing }
 FinalizationRegistry >> isEmpty [
-	
+		
 	^ ephemeronListHead next isNil
 ]
 
@@ -183,5 +183,5 @@ FinalizationRegistry >> removeEphemeron: anEphemeron [
 { #category : #accessing }
 FinalizationRegistry >> size [
 
-	^ 0
+	^ ephemeronListHead size - 1 "The head does not count"
 ]

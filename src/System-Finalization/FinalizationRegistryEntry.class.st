@@ -21,6 +21,10 @@ When an ephemeron's key is hold strongly just by the ephemeron itself, the Ephem
 
 On the image side, the finalization process will send the message #mourn to an Ephemeron.  #mourn will #finalize the Ephemeron's key, and remove the Ephemeron from it's container to allow its collection during a subsequent garbage collection.
 
+# Implementation details
+
+I am implemented as a double linked list, to make removals O(1)
+
 !! More Documentation
 
 You can read the associated paper to understand better the semantics of ephemerons:
@@ -66,6 +70,12 @@ FinalizationRegistryEntry >> chainNext: aNode [
 ]
 
 { #category : #accessing }
+FinalizationRegistryEntry >> check [
+
+	^ self next previous == self and: [ self previous next == self ]
+]
+
+{ #category : #accessing }
 FinalizationRegistryEntry >> container [
 
 	^ container
@@ -75,6 +85,14 @@ FinalizationRegistryEntry >> container [
 FinalizationRegistryEntry >> container: anEphemeronContainer [
 
 	container := anEphemeronContainer
+]
+
+{ #category : #testing }
+FinalizationRegistryEntry >> includes: anObject [
+
+	key = anObject ifTrue: [ ^ true ].
+	next ifNil: [ ^ false ].
+	^ next includes: anObject
 ]
 
 { #category : #mourning }
@@ -116,4 +134,11 @@ FinalizationRegistryEntry >> removeFromChain [
 
 	previous ifNil: [ ^ self ].
 	previous chainNext: next
+]
+
+{ #category : #accessing }
+FinalizationRegistryEntry >> size [
+
+	next ifNil: [ ^ 1 ].
+	^ 1 + next size
 ]
