@@ -25,8 +25,6 @@ SycMethodRepackagingCommand >> moveMethod: aMethod toPackage: aPackage [
 	existingPackage := aMethod package.
 	existingPackage == aPackage ifTrue: [ ^ self ].
 
-	aMethod isExtension ifTrue: [ aMethod untagFrom: ('*' , existingPackage name) asSymbol ].
-
 	willBeExtension := aPackage ~~ aMethod origin package.
 	aPackage addMethod: aMethod.
 	willBeExtension

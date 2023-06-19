@@ -780,19 +780,19 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 		[propertiesOrSelector propertyKeysAndValuesDo: aBlock]
 ]
 
-{ #category : #accessing }
+{ #category : #protocols }
 CompiledMethod >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
 
 	^ self methodClass protocolOfSelector: self selector
 ]
 
-{ #category : #accessing }
+{ #category : #protocols }
 CompiledMethod >> protocol: aProtocol [
 	^ self methodClass classify: self selector under: aProtocol
 ]
 
-{ #category : #accessing }
+{ #category : #protocols }
 CompiledMethod >> protocolName [
 	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
 
@@ -996,14 +996,10 @@ CompiledMethod >> trailer [
 	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
-{ #category : #'accessing - tags' }
-CompiledMethod >> untagFrom: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	This method should remove given tag from it. All other tags should not be changed.
-	But now we could implemented tags with protocols which allow only tag for method.
-	And to remove tag from method we must change it protocol to Protocol unclassified"
-	self protocolName = aSymbol ifTrue: [
-		self protocol: Protocol unclassified]
+{ #category : #protocols }
+CompiledMethod >> unclassify [
+
+	self protocol: Protocol unclassified
 ]
 
 { #category : #testing }
