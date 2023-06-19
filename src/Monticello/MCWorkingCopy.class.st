@@ -288,7 +288,7 @@ MCWorkingCopy class >> methodRemoved: anEvent [
 { #category : #'system changes' }
 MCWorkingCopy class >> packageAdded: anAnnouncement [
 
-	self ensureForPackageNamed:: anAnnouncement package name packageOrganizer: anAnnouncement package organizer
+	self ensureForPackageNamed: anAnnouncement package name packageOrganizer: anAnnouncement package organizer
 ]
 
 { #category : #'system changes' }
