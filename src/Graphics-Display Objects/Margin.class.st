@@ -21,7 +21,7 @@ Class {
 		'left',
 		'top'
 	],
-	#category : #'Kernel-BasicObjects'
+	#category : #'Graphics-Display Objects-Utilities'
 }
 
 { #category : #'instance creation' }

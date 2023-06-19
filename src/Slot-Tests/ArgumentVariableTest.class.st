@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #tests }
-ArgumentVariableTest >> testDeclaringNode [
+ArgumentVariableTest >> testDefiningNode [
 	| method declaringNode declaringNodeViaVariable|
 
 	method := OrderedCollection >> #do:.

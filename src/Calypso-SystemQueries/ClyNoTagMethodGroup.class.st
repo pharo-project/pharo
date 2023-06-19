@@ -29,7 +29,7 @@ ClyNoTagMethodGroup class >> withMethodsFrom: aMethodQuery [
 ]
 
 { #category : #operations }
-ClyNoTagMethodGroup >> renameMethodTagTo: newTag [
+ClyNoTagMethodGroup >> renameMethodTagTo: newProtocolName [
 
-	self methods do: [ :each | each tagWith: newTag]
+	self methods do: [ :method | method protocol: newProtocolName ]
 ]

@@ -8,17 +8,20 @@ Class {
 }
 
 { #category : #tests }
-TemporaryVariableTest >> testDeclaringNode [
-	| method declaringNode declaringNodeViaVariable|
-	method := self class >> #testTemporaryVariablesMethod.
-	declaringNode := method ast body temporaries first.
-	declaringNodeViaVariable := method assignmentNodes first variable variable definingNode.
-	self assert: declaringNodeViaVariable equals: declaringNode.
+TemporaryVariableTest >> testDefiningNode [
+	"test for normal temps, copied and tempvector"
+	| ast tempsNodes tempDefintions  tempUses |
+	ast := self class compiler parse: 'myMethod: arg
+ 	 | test testCopied testTempVector|
+ 	 test := 2.
+  	 test.
+  	 [ testCopied. testTempVector := 1 ].
+    ^test'.
+	tempsNodes := ast allChildren select: [ :each | each isTempVariable ].
+	tempDefintions := tempsNodes select:  [ :each | each isDefinition ].
+	tempUses := tempsNodes reject:  [ :each | each isDefinition ].
+	tempUses do: [ :use | self assert: (tempDefintions includes: use variable definingNode)].
 
-	method := OrderedCollection >> #do:.
-	declaringNode := method ast arguments first.
-	declaringNodeViaVariable := method ast variableReadNodes third variable definingNode.
-	self assert: declaringNodeViaVariable equals: declaringNode
 ]
 
 { #category : #tests }

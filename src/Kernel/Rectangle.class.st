@@ -235,12 +235,6 @@ Rectangle >> areasOutside: aRectangle [
 			[ aStream nextPut: (aRectangle corner x @ yOrigin corner: corner x @ yCorner) ] ]
 ]
 
-{ #category : #converting }
-Rectangle >> asMargin [
-
-	^ Margin fromRectangle: self
-]
-
 { #category : #'rectangle functions' }
 Rectangle >> bordersOn: her along: herSide [
 	((herSide = #right and: [self left = her right])

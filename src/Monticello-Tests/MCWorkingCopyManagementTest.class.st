@@ -1,5 +1,5 @@
 Class {
-	#name : #MCPackageManagerTest,
+	#name : #MCWorkingCopyManagementTest,
 	#superclass : #MCTestCase,
 	#instVars : [
 		'package2',
@@ -12,33 +12,30 @@ Class {
 }
 
 { #category : #running }
-MCPackageManagerTest >> setUp [
+MCWorkingCopyManagementTest >> setUp [
+
 	super setUp.
-	package1 := (RPackage named: #A, UUID new asString36) register.
-	package2 := (RPackage named: package1 name, #'-SubPart') register.
-	mcPackage1 := MCPackage named: package1 name.
-	mcPackage2 := MCPackage named: package2 name.
-	"register MC packages"
-	MCPackageManager
-		forPackage: mcPackage1;
-		forPackage: mcPackage2
+	package1 := self packageOrganizer createPackageNamed: #A , UUID new asString36.
+	package2 := self packageOrganizer createPackageNamed: package1 name , #'-SubPart'.
+	mcPackage1 := package1 mcPackage.
+	mcPackage2 := package2 mcPackage
 ]
 
 { #category : #running }
-MCPackageManagerTest >> tearDown [
-	
+MCWorkingCopyManagementTest >> tearDown [
+
 	classToRemove ifNotNil: [ classToRemove removeFromSystem ].
-	
+
 	package1 unregister.
 	package2 unregister.
-	MCPackageManager registry
-		removeKey: mcPackage1 ifAbsent: [ ];
-		removeKey: mcPackage2 ifAbsent: [ ].
-	super tearDown	
+	MCWorkingCopy registry
+		removeKey: mcPackage1 ifAbsent: [  ];
+		removeKey: mcPackage2 ifAbsent: [  ].
+	super tearDown
 ]
 
 { #category : #tests }
-MCPackageManagerTest >> testClassAdded [
+MCWorkingCopyManagementTest >> testClassAdded [
 
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified not.
@@ -55,7 +52,7 @@ MCPackageManagerTest >> testClassAdded [
 ]
 
 { #category : #tests }
-MCPackageManagerTest >> testClassRemoved [
+MCWorkingCopyManagementTest >> testClassRemoved [
 	
 	classToRemove := self class classInstaller make: [ :aBuilder | 
 			aBuilder 
@@ -76,27 +73,27 @@ MCPackageManagerTest >> testClassRemoved [
 ]
 
 { #category : #tests }
-MCPackageManagerTest >> testManagersForCategoryDo [
+MCWorkingCopyManagementTest >> testManagersForCategoryDo [
 	"Consider the following package structure:
 		Renraku
 		Renraku-Help
 
 		and a method extension with the protocol '*renraku'.
-		MCPackageManager>>methodModified: should only mark 'Renraku' as modified,
+		MCWorkingCopy>>methodModified: should only mark 'Renraku' as modified,
 		not 'Renraku-Help'"
 
 	| managers |
-	self assert: (MCPackageManager registry includesKey: mcPackage1).
-	self assert: (MCPackageManager registry includesKey: mcPackage2).
+	self assert: (MCWorkingCopy registry includesKey: mcPackage1).
+	self assert: (MCWorkingCopy registry includesKey: mcPackage2).
 
 	managers := OrderedCollection new.
-	MCPackageManager managersForCategory: mcPackage1 name do: [ :manager | managers add: manager ].
+	MCWorkingCopy managersForCategory: mcPackage1 name do: [ :manager | managers add: manager ].
 
 	self assert: managers size equals: 1.
 	self assert: managers first package identicalTo: mcPackage1.
 
 	managers := OrderedCollection new.
-	MCPackageManager managersForCategory: mcPackage2 name do: [ :manager | managers add: manager ].
+	MCWorkingCopy managersForCategory: mcPackage2 name do: [ :manager | managers add: manager ].
 
 	self assert: managers size equals: 1.
 	self assert: managers first package identicalTo: mcPackage2

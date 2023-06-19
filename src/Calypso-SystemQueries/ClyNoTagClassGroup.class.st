@@ -41,5 +41,5 @@ ClyNoTagClassGroup >> importClass: aClass [
 { #category : #operations }
 ClyNoTagClassGroup >> renameClassTagTo: newTag [
 
-	self classes do: [ :each | each tagWith: newTag]
+	self classes do: [ :class | class tagWith: newTag ]
 ]

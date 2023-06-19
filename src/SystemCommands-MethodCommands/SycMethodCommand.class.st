@@ -64,5 +64,6 @@ SycMethodCommand >> prepareFullExecutionInContext: aToolContext [
 
 { #category : #categories }
 SycMethodCommand >> tagMethod: aMethod [
-	aMethod tagWith: (self newTagFor: aMethod) asSymbol
+
+	aMethod protocol: (self newTagFor: aMethod)
 ]

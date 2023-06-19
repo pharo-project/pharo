@@ -5,7 +5,7 @@ and a rb model creation. This RB model will be will only in the setup and the se
 Class {
 	#name : #RBStaticModelCreationTest,
 	#superclass : #RBAbstractEnvTestCase,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #tests }
