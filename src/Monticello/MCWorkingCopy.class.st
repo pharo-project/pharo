@@ -287,12 +287,14 @@ MCWorkingCopy class >> methodRemoved: anEvent [
 
 { #category : #'system changes' }
 MCWorkingCopy class >> packageRenamed: anAnnouncement [
-	self allManagers 
+
+	| repositoryGroup |
+	repositoryGroup := (self forPackageNamed: anAnnouncement oldName) repositoryGroup.
+	self allManagers
 		detect: [ :each | each packageName = anAnnouncement newName ]
 		ifFound: [ :newPackage | newPackage modified: true ].
-	(self allManagers 
-		detect: [ :each | each packageName = anAnnouncement oldName ])
-		unload.
+	(self allManagers detect: [ :each | each packageName = anAnnouncement oldName ]) unload.
+	anAnnouncement package mcWorkingCopy repositoryGroup: repositoryGroup
 ]
 
 { #category : #'event registration' }
