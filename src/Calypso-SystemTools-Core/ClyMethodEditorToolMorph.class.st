@@ -20,14 +20,14 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	extendingPackage:		<RPackage>
-	methodTags:		<Array of<Symbol>>
+	methodProtocol:		<Symbol> represents the name of the method protocol
 "
 Class {
 	#name : #ClyMethodEditorToolMorph,
 	#superclass : #ClyTextEditorToolMorph,
 	#instVars : [
 		'ast',
-		'methodTags',
+		'methodProtocol',
 		'extendingPackage',
 		'targetClasses'
 	],
@@ -106,8 +106,9 @@ ClyMethodEditorToolMorph >> extendingPackage [
 
 { #category : #accessing }
 ClyMethodEditorToolMorph >> extendingPackage: aPackage [
+
 	extendingPackage := aPackage.
-	methodTags := #()
+	methodProtocol := nil
 ]
 
 { #category : #building }
@@ -138,13 +139,6 @@ ClyMethodEditorToolMorph >> formatTextIfNeeded [
 ]
 
 { #category : #initialization }
-ClyMethodEditorToolMorph >> initialize [
-	super initialize.
-
-	methodTags := #()
-]
-
-{ #category : #initialization }
 ClyMethodEditorToolMorph >> initializeAST [
 	"subclasses might get it from the method"
 	^ self currentEditedAST
@@ -167,13 +161,15 @@ ClyMethodEditorToolMorph >> methodClass [
 ]
 
 { #category : #accessing }
-ClyMethodEditorToolMorph >> methodTags [
-	^methodTags
+ClyMethodEditorToolMorph >> methodProtocol [
+
+	^ methodProtocol
 ]
 
 { #category : #accessing }
-ClyMethodEditorToolMorph >> methodTags: tagsArray [
-	methodTags := tagsArray.
+ClyMethodEditorToolMorph >> methodProtocol: protocolName [
+
+	methodProtocol := protocolName.
 	extendingPackage := nil
 ]
 
@@ -228,8 +224,7 @@ ClyMethodEditorToolMorph >> tagAndPackageEditingMethod: aMethod [
 { #category : #operations }
 ClyMethodEditorToolMorph >> tagEditingMethod: aMethod [
 
-	self applyChangesBy: [ "In the end we only have at max 1 protocol but for now this class hold a collection. This should be updated in the future."
-		methodTags do: [ :protocolName | aMethod protocol: protocolName ] ]
+	self applyChangesBy: [ aMethod protocol: methodProtocol ]
 ]
 
 { #category : #accessing }

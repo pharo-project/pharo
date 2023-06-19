@@ -45,14 +45,11 @@ ClyMethodTagsEditorMorph >> build [
 { #category : #operations }
 ClyMethodTagsEditorMorph >> printMethodTags [
 
-	^', ' join: ownerTool methodTags
+	^ ownerTool methodProtocol
 ]
 
 { #category : #operations }
-ClyMethodTagsEditorMorph >> setNewMethodTags: tagsString [
+ClyMethodTagsEditorMorph >> setNewMethodTags: protocolName [
 
-	| tags |
-	tags := (',' split: tagsString) collect: #trimBoth as: Array.
-
-	ownerTool methodTags: (tags reject: #isEmpty)
+	ownerTool methodProtocol: protocolName trimBoth
 ]

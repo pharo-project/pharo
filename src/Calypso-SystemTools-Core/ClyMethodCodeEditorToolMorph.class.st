@@ -254,10 +254,11 @@ ClyMethodCodeEditorToolMorph >> methodClass [
 ]
 
 { #category : #accessing }
-ClyMethodCodeEditorToolMorph >> methodTags: tagsArray [
-	super methodTags: tagsArray.
+ClyMethodCodeEditorToolMorph >> methodProtocol: protocolName [
 
-	self hasUnacceptedEdits ifFalse: [ self tagEditingMethod: editingMethod]
+	super methodProtocol: protocolName.
+
+	self hasUnacceptedEdits ifFalse: [ self tagEditingMethod: editingMethod ]
 ]
 
 { #category : #testing }
@@ -380,6 +381,6 @@ ClyMethodCodeEditorToolMorph >> update [
 { #category : #updating }
 ClyMethodCodeEditorToolMorph >> updateMethodTagsAndPackage [
 
-	methodTags := editingMethod tags reject: [ :each | each beginsWith: '*' ].
-	extendingPackage := editingMethod isExtension ifTrue: [ editingMethod package ] ifFalse: [ nil ]
+	self methodProtocol: editingMethod protocolName.
+	editingMethod isExtension ifTrue: [ extendingPackage := editingMethod package ]
 ]
