@@ -198,7 +198,7 @@ ExternalChangesBrowser >> compareToCurrent: aMethodDeclaration [
 	sourceString := (class >> aMethodDeclaration methodSelector) sourceCode.
 
 	self
-		openComparisonFrom: aMethodDeclaration contents
+		openPolymorphComparisonFrom: aMethodDeclaration contents
 		to: sourceString
 		belongingTo: class
 		from: aMethodDeclaration
@@ -268,48 +268,15 @@ ExternalChangesBrowser >> initializeWindow: aWindow [
 ]
 
 { #category : #private }
-ExternalChangesBrowser >> openComparisonFrom: targetMethodSource
-					to: originalMethodSource
-					belongingTo: aClass
-					from: aChange
-					labeled: aLabel
-					inWindowLabeled: aWindowLabel [
-
-	| diffBuilder difference  |
-
-	PSMCPatchMorph usedByDefault
-		ifTrue: [ ^ self openPolymorphComparisonFrom: originalMethodSource
-					to: targetMethodSource
-					belongingTo: aClass
-					from: aChange
-					labeled: aLabel
-					inWindowLabeled: aWindowLabel   ].
-
-	diffBuilder :=  TextDiffBuilder
-			from: originalMethodSource
-			to: targetMethodSource.
-
-	difference := diffBuilder buildDisplayPatch.
-
-	UIManager default edit: difference label: aLabel
-]
-
-{ #category : #private }
-ExternalChangesBrowser >> openPolymorphComparisonFrom: targetMethodSource
-					to: originalMethodSource
-					belongingTo: aClass
-					from: aChange
-					labeled: aLabel
-					inWindowLabeled: aWindowLabel [
+ExternalChangesBrowser >> openPolymorphComparisonFrom: targetMethodSource to: originalMethodSource belongingTo: aClass from: aChange labeled: aLabel inWindowLabeled: aWindowLabel [
 
 	| diffMorph |
-
 	diffMorph := DiffChangeMorph
-		from: targetMethodSource
-		label: aChange stamp
-		to: originalMethodSource
-		label: (aClass compiledMethodAt: aChange methodSelector) timeStamp
-		contextClass: aClass.
+		             from: targetMethodSource
+		             label: aChange stamp
+		             to: originalMethodSource
+		             label: (aClass compiledMethodAt: aChange methodSelector) timeStamp
+		             contextClass: aClass.
 
 	diffMorph openInWindowLabeled: aWindowLabel
 ]

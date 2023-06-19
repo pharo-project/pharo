@@ -1,6 +1,6 @@
 Extension { #name : #CommandLineUIManager }
 
-{ #category : #'*Monticello' }
+{ #category : #'*Monticello-GUI-Diff' }
 CommandLineUIManager >> merge: merger informing: aString [
 	"Check for conflicts, if there are none, just continue. 
 	 Merger will accept all conflicts"
