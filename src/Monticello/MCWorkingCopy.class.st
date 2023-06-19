@@ -296,10 +296,15 @@ MCWorkingCopy class >> packageRenamed: anAnnouncement [
 
 	| repositoryGroup |
 	repositoryGroup := (self forPackageNamed: anAnnouncement oldName) repositoryGroup.
+
+	"Let's make sure we have a working copy for this new package"
+	self packageAdded: anAnnouncement.
+
 	self allManagers
 		detect: [ :each | each packageName = anAnnouncement newName ]
 		ifFound: [ :newPackage | newPackage modified: true ].
 	(self allManagers detect: [ :each | each packageName = anAnnouncement oldName ]) unload.
+
 	anAnnouncement package mcWorkingCopy repositoryGroup: repositoryGroup
 ]
 
