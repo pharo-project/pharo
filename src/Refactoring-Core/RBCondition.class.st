@@ -280,6 +280,21 @@ RBCondition class >> isClass: anObject [
 		errorString: anObject printString , ' is <1?:not >a behavior'
 ]
 
+{ #category : #testing }
+RBCondition class >> isClass: aRBClass definedIn: aRBNamespace [ 
+	^ self isClassNamed: aRBClass name definedIn: aRBNamespace 
+]
+
+{ #category : #'instance creation' }
+RBCondition class >> isClassNamed: className definedIn: aModel [
+
+	^ self new 
+		block: [ | aClassOrTrait |
+				aClassOrTrait := aModel classNamed: className asSymbol.
+				aClassOrTrait isNotNil ]
+		errorString: [ className , ' is <1?:not > defined' ]
+]
+
 { #category : #'instance creation' }
 RBCondition class >> isEmptyClass: anObject [
 
@@ -338,7 +353,7 @@ RBCondition class >> isSymbol: aString [
 RBCondition class >> isValidClassName: aString [
 
 	^ self new
-		  block: [ self validClassName: aString ]
+		  block: [ self checkClassVarName: aString in: self ]
 		  errorString: aString , ' is <1?:not >a valid class name'
 ]
 
@@ -419,13 +434,6 @@ RBCondition class >> subclassesOf: aClass referToSelector: aSelector [
 		  errorString:
 			  '<1?:no:a> subclass of ' , aClass printString , ' refers to '
 			  , aSelector printString
-]
-
-{ #category : #utilities }
-RBCondition class >> validClassName: aString [
-	"Class names and class variable names have the same restrictions"
-
-	^self checkClassVarName: aString in: self
 ]
 
 { #category : #'instance creation' }

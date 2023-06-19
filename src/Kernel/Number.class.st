@@ -193,11 +193,6 @@ Number >> asInteger [
 ]
 
 { #category : #converting }
-Number >> asMargin [
-	^ Margin fromNumber: self
-]
-
-{ #category : #converting }
 Number >> asNumber [
 	^ self
 ]
