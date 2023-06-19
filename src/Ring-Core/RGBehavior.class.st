@@ -982,8 +982,7 @@ RGBehavior >> removeMethodTag: aSymbol [
 
 	self backend forPackage removeMethodTag: aSymbol from: self.
 
-	self localMethodsDo: [ :method |
-		method untagFrom: aSymbol ]
+	self localMethodsDo: [ :method | method protocol = aSymbol ifTrue: [ method unclassify ] ]
 ]
 
 { #category : #'accessing - backend' }
