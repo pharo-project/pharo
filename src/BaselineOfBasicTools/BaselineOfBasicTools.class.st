@@ -104,7 +104,6 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 	
 	Smalltalk tools register: TestRunner as: #testRunner.
-	Smalltalk tools register: MCWorkingCopyBrowser as: #monticelloBrowser.
 	
 	RBRefactoryChangeManager nuke.
 	Smalltalk garbageCollect.
