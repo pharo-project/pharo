@@ -214,7 +214,7 @@ PharoChangesCondenser >> writeMethodSource: aMethod [
 		strm
 			nextPutAll: aMethod methodClass name;
 			nextPutAll: ' methodsFor: ';
-			store: aMethod category asString;
+			store: aMethod protocolName asString;
 			nextPutAll: ' stamp: ';
 			store: aMethod timeStamp ].
 

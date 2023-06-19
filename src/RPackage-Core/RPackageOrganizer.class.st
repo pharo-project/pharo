@@ -912,7 +912,7 @@ RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 
 	"we also rename all the extension protocols in the system with the new name"
 	classesAndProtocolsToRename := rPackage extensionMethods asIdentitySet.
-	classesAndProtocolsToRename do: [ :method | method methodClass renameProtocol: method category as: '*' , newName ]
+	classesAndProtocolsToRename do: [ :method | method methodClass renameProtocol: method protocol as: '*' , newName ]
 ]
 
 { #category : #private }

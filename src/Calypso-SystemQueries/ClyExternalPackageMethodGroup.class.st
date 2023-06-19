@@ -32,10 +32,11 @@ ClyExternalPackageMethodGroup class >> withMethodsFrom: aClassScope packagedIn: 
 
 { #category : #operations }
 ClyExternalPackageMethodGroup >> importMethod: aMethod [
+
 	super importMethod: aMethod.
 
 	self package addMethod: aMethod.
-	aMethod tagWith: ('*', self package name) asSymbol
+	aMethod protocol: '*' , self package name
 ]
 
 { #category : #accessing }

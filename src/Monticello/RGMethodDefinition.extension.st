@@ -23,17 +23,17 @@ RGMethodDefinition >> asMCMethodDefinition [
 RGMethodDefinition >> asMCMethodDefinitionFromActiveDefinition [
 	"Creates a MCMethodDefinition from a source file assuming the current method isActive."
 
-	| compiledMethod methodClass|
+	| compiledMethod methodClass |
 	compiledMethod := self compiledMethod.
 	methodClass := compiledMethod methodClass.
-	
-   ^ MCMethodDefinition
-		className: methodClass instanceSide name
- 	   	classIsMeta: methodClass isMeta
-		selector: compiledMethod selector
-		category: compiledMethod category
-		timeStamp: compiledMethod timeStamp
-		source: compiledMethod sourceCode
+
+	^ MCMethodDefinition
+		  className: methodClass instanceSide name
+		  classIsMeta: methodClass isMeta
+		  selector: compiledMethod selector
+		  category: compiledMethod protocolName
+		  timeStamp: compiledMethod timeStamp
+		  source: compiledMethod sourceCode
 ]
 
 { #category : #'*Monticello' }

@@ -30,9 +30,10 @@ ClyTaggedMethodGroup >> convertToMethodTag: aTagName [
 
 { #category : #operations }
 ClyTaggedMethodGroup >> importMethod: aMethod [
+
 	super importMethod: aMethod.
 
-	aMethod tagWith: self tag
+	aMethod protocol: self tag
 ]
 
 { #category : #operations }
@@ -49,7 +50,7 @@ ClyTaggedMethodGroup >> renameMethodTagTo: newTag [
 
 	self methods do: [ :method |
 		method
-			tagWith: newTag;
+			protocol: newTag;
 			untagFrom: self tag ].
 
 	methodQuery scope classesDo: [ :class |

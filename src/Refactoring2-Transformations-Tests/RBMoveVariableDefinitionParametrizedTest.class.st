@@ -7,7 +7,7 @@ Class {
 { #category : #'building suites' }
 RBMoveVariableDefinitionParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMoveVariableDefinitionToSmallestValidScopeTransformation };
+		addCase: { #rbClass -> RBMoveVariableDefinitionToSmallestValidScopeRefactoring };
 		yourself
 ]
 
