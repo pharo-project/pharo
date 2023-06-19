@@ -22,16 +22,6 @@ MCRepository class >> fillInTheBlankConfigure: aTemplateString [
 ]
 
 { #category : #'*MonticelloGUI' }
-MCRepository >> morphicOpen [
-	self morphicOpen: nil
-]
-
-{ #category : #'*MonticelloGUI' }
-MCRepository >> morphicOpen: aWorkingCopy [
-	self subclassResponsibility 
-]
-
-{ #category : #'*MonticelloGUI' }
 MCRepository >> openAndEditTemplateCopy [
 	^ self class fillInTheBlankConfigure: (self asCreationTemplate ifNil: [^nil])
 ]
