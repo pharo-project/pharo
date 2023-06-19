@@ -22,8 +22,7 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 	self sharedVariables: (aCDClassDefinitionNode sharedVariables collect: [ :e | e asClassVariable]).
 
 	aCDClassDefinitionNode packageName
-		ifNotNil: [ :cat | package := cat ]
-		ifNil: [ package := 'Unclassified' ].
+		ifNotNil: [ :cat | package := cat ].
 	self category: package.
 
 	self layoutDefinition sharedPools: (aCDClassDefinitionNode sharedPools collect: [ :e | e name ]).
