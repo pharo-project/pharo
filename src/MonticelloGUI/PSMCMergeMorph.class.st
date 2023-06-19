@@ -9,7 +9,7 @@ Class {
 		'codeMorph',
 		'merged'
 	],
-	#category : #'Tool-Diff-Morphs'
+	#category : #MonticelloGUI
 }
 
 { #category : #'instance creation' }

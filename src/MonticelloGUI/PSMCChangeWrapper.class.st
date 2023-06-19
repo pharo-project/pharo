@@ -4,7 +4,7 @@ Abstract superclass for changes wrapper (for patch tree)
 Class {
 	#name : #PSMCChangeWrapper,
 	#superclass : #ListItemWrapper,
-	#category : #'Tool-Diff-Wrapper'
+	#category : #MonticelloGUI
 }
 
 { #category : #accessing }

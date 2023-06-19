@@ -4,7 +4,7 @@ Wrapper for patch operations
 Class {
 	#name : #PSMCPatchOperationWrapper,
 	#superclass : #PSMCChangeWrapper,
-	#category : #'Tool-Diff-Wrapper'
+	#category : #MonticelloGUI
 }
 
 { #category : #converting }

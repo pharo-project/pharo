@@ -41,6 +41,14 @@ MCPatchBrowser >> defaultLabel [
 	^ 'Patch Browser'
 ]
 
+{ #category : #diff }
+MCPatchBrowser >> diffSelection [
+	"Open a diff browser on the selection."
+
+	selection ifNotNil:
+		[selection diff]
+]
+
 { #category : #actions }
 MCPatchBrowser >> installSelection [
 	| loader |
@@ -64,6 +72,20 @@ MCPatchBrowser >> items [
 { #category : #accessing }
 MCPatchBrowser >> list [
 	^ self items collect: [:ea | ea summary]
+]
+
+{ #category : #diff }
+MCPatchBrowser >> methodListMenu: aMenu [
+
+	selection
+		ifNotNil: [
+			aMenu addList: #(
+				('Install'	 installSelection)
+				('Diff'	diffSelection)
+				('Revert'	 revertSelection)
+				-)].
+	super methodListMenu: aMenu.
+	^ aMenu
 ]
 
 { #category : #accessing }
