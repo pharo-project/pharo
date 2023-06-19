@@ -1,6 +1,6 @@
 Extension { #name : #MCOrganizationDefinition }
 
-{ #category : #'*Tool-Diff' }
+{ #category : #'*Monticello-GUI-Diff' }
 MCOrganizationDefinition >> patchWrapper [
 	"Answer a wrapper for a patch tree for the receiver."
 

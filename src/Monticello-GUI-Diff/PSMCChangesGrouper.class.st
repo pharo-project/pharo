@@ -11,7 +11,7 @@ Class {
 		'currentOperation',
 		'classChanges'
 	],
-	#category : #'Tool-Diff-Utilities'
+	#category : #'Monticello-GUI-Diff'
 }
 
 { #category : #'helper methods' }
