@@ -68,12 +68,12 @@ ClassDescription >> addInstVarNamed: aString [
 { #category : #protocols }
 ClassDescription >> addProtocol: aProtocol [
 
-	| oldProtocols protocol |
-	
-	(self hasProtocol: aProtocol) ifTrue: [
-		^ self protocolNamed: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ]) ].
+	| oldProtocols protocol protocolName |
+	protocolName := aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ].
 
-	protocol := aProtocol isString ifTrue: [ Protocol named: aProtocol ] ifFalse: [ aProtocol ].
+	(self hasProtocol: aProtocol) ifTrue: [ ^ self protocolNamed: protocolName ].
+
+	protocol := Protocol named: protocolName.
 
 	oldProtocols := self protocolNames copy.
 
@@ -424,9 +424,7 @@ ClassDescription >> dependentClasses [
 	"We unify a class and its metaclass"
 	self methods , self classSide methods do: [ :method |
 		method literalsDo: [ :literal | "We also check if the method is not an extension"
-			self flag: #CompileMethodProtocolMiration.
-			(literal isVariableBinding and: [ literal isGlobalClassNameBinding and: [ method protocolName isNotEmpty and: [ method protocolName first ~= $* ] ] ])
-				ifTrue: [ classes add: literal value ] ] ].
+			(literal isVariableBinding and: [ literal isGlobalClassNameBinding and: [ method isExtension not ] ]) ifTrue: [ classes add: literal value ] ] ].
 
 	^ classes asArray
 ]
@@ -471,15 +469,11 @@ ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
 	If my parameter is a name, I'll return a protocol associated with it. A new one if needed.
-	If my parameter is a Protocol, I'll ensure that it comes from me, else I'll throw an error."
+	If my parameter is a Protocol, I'll return it if it comes from me or I'll create one of the same name."
 
 	aProtocol ifNil: [ ^ self ensureProtocol: Protocol unclassified ].
 
-	aProtocol isString ifFalse: [
-		(self protocols includes: aProtocol)
-			ifTrue: [ ^ aProtocol ]
-			ifFalse: [ self error: 'I received a real protocol but this one is not part of me.' ] ].
-	^ self protocolNamed: aProtocol ifAbsent: [ self addProtocol: aProtocol ]
+	^ self addProtocol: aProtocol
 ]
 
 { #category : #private }
@@ -951,7 +945,7 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 	| protocol oldProtocolNames |
 	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
 
-	protocol := aProtocol isString ifTrue: [ self protocolNamed: aProtocol ] ifFalse: [ aProtocol ].
+	protocol := self ensureProtocol: aProtocol.
 
 	protocol isEmpty ifFalse: [ ^ self ].
 
@@ -994,26 +988,11 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
 	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
 		oldProtocol := self ensureProtocol: anOldProtocol.
+		newProtocol := self ensureProtocol: aNewProtocol.
 
-		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
-	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
-		(self hasProtocol: aNewProtocol)
-			ifTrue: [
-				newProtocol := self ensureProtocol: aNewProtocol.
+		oldProtocol = newProtocol ifTrue: [ ^ self ].
 
-				oldProtocol = newProtocol ifTrue: [ ^ self ].
-
-				newProtocol addAllMethodsFrom: oldProtocol ]
-			ifFalse: [ "Ideally the code in the #ifTrue: should be executed all the time and the #ifFalse: should be removed."
-				| newProtocolName |
-				newProtocolName := aNewProtocol isString
-					                   ifTrue: [ aNewProtocol ]
-					                   ifFalse: [ aNewProtocol name ].
-				oldProtocol name = newProtocolName ifTrue: [ ^ self ].
-				newProtocol := oldProtocol copy
-					               name: newProtocolName;
-					               yourself.
-				protocols := protocols copyWith: newProtocol ].
+		newProtocol addAllMethodsFrom: oldProtocol.
 		oldProtocol resetMethodSelectors.
 		self removeProtocolIfEmpty: oldProtocol ].
 

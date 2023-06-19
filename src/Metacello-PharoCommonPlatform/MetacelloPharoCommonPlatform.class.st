@@ -221,13 +221,6 @@ MetacelloPharoCommonPlatform >> newVersionForWorkingCopy: aWorkingCopy [
 	^aWorkingCopy newVersionIn: aWorkingCopy repositoryGroup
 ]
 
-{ #category : #'repository creation' }
-MetacelloPharoCommonPlatform >> packageInfoFor: aMCWorkingCopy [
-  "MCPackageManager>>packageInfo is deprecated in Pharo2.0"
-
-  ^ aMCWorkingCopy packageSet
-]
-
 { #category : #'file system' }
 MetacelloPharoCommonPlatform >> parentDirectoryOf: aFileHandler [
 	"Get the parent directory of this file."
@@ -264,9 +257,7 @@ MetacelloPharoCommonPlatform >> string: aString includesSubstring: aSubstring [
 { #category : #system }
 MetacelloPharoCommonPlatform >> suspendSystemUpdateEventsDuring: aBlock [
 	"Wraps call to the system evetn manager to tell it that we want to suspend events during execution of aBlock"
-	"From Pharo2, we cannot suspend system events since missing events brak the image (rpackage at least should be notified."
-	"SystemAnnouncer uniqueInstance suspendAllWhile: aBlock"
-	^ aBlock value
+	SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
 ]
 
 { #category : #'file system' }

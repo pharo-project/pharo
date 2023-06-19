@@ -66,8 +66,8 @@ RBAndEnvironment >> includesClass: aClass [
 
 { #category : #testing }
 RBAndEnvironment >> includesProtocol: aProtocol in: aClass [
-	^ (environment includesProtocol: aProtocol in: aClass)
-		and: [ self andedEnvironment includesProtocol: aProtocol in: aClass ]
+
+	^ (environment includesProtocol: aProtocol in: aClass) and: [ self andedEnvironment includesProtocol: aProtocol in: aClass ]
 ]
 
 { #category : #testing }

@@ -261,7 +261,7 @@
 	SmalltalkImage current fixObsoleteReferences.
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 	UIManager default progressBarEnabled: true.
-	MCPackageManager allSubInstancesDo: [ :p | p unregister ].
+	MCWorkingCopy allSubInstancesDo: [ :p | p unregister ].
 	SystemAnnouncer uniqueInstance unsubscribe: MCWorkingCopy.
 	delete := #('Ring-Deprecated-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Deprecated-Core-Kernel' 'Ring-Deprecated-Core-Containers' 'RingChunkImporter' 'Compression' 'Monticello' 'Ring-Deprecated-Monticello').
 	delete

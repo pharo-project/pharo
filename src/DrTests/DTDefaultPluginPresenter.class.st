@@ -245,14 +245,15 @@ DTDefaultPluginPresenter >> resultSelected [
 
 { #category : #api }
 DTDefaultPluginPresenter >> resultTree: aResultGroup [
-	| roots |
 
+	| roots |
 	aResultGroup ifNil: [ ^ self ].
 	roots := aResultGroup subResults.
 	resultsList roots: roots.
 	roots withIndexDo: [ :each :index |
 		each shouldStartExpanded ifTrue: [
-			each name crTrace.
+			"here there was a each name crTrace. 
+			It does not look like the good way to provide feedback in the transcript"
 			resultsList expandPath: { index } ] ]
 ]
 

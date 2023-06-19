@@ -214,6 +214,7 @@ SUnitExtensionsTest >> testNoExceptionInShouldRaiseWithExceptionDo [
 
 { #category : #tests }
 SUnitExtensionsTest >> testNoExceptionWithMatchingString [
+	<ignoreNotImplementedSelectors: #(messageNotUnderstoodByObject)>
 	self
 		shouldnt: [ Object messageNotUnderstoodByObject ]
 		raise: MessageNotUnderstood
@@ -223,6 +224,7 @@ SUnitExtensionsTest >> testNoExceptionWithMatchingString [
 
 { #category : #tests }
 SUnitExtensionsTest >> testNoExceptionWithNoMatchingString [
+	<ignoreNotImplementedSelectors: #(messageNotUnderstoodByObject)>
 	self
 		shouldnt: [ Object messageNotUnderstoodByObject ]
 		raise: MessageNotUnderstood

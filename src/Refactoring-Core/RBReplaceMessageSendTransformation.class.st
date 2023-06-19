@@ -35,10 +35,10 @@ RBReplaceMessageSendTransformation class >> basicMenuItemString [
 	^ 'Replace senders'
 ]
 
-{ #category : #accessing }
-RBReplaceMessageSendTransformation class >> kind [
+{ #category : #displaying }
+RBReplaceMessageSendTransformation class >> isTransformation [ 
 
-	^ 'Transformation'
+	^ true
 ]
 
 { #category : #'instance creation' }

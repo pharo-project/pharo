@@ -21,7 +21,8 @@ ReUnclassifiedMethodsRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReUnclassifiedMethodsRule >> basicCheck: aMethod [
-	^ aMethod protocol = Protocol unclassified
+
+	^ aMethod isClassified not
 ]
 
 { #category : #accessing }

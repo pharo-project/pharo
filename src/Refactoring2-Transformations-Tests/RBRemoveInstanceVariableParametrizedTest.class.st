@@ -12,43 +12,83 @@ RBRemoveInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
-RBRemoveInstanceVariableParametrizedTest >> testModelRemoveInstanceVariable [
-	| class |
-	model defineClass: 'nil << #Object
-		slots: {#foo1};
-		package: #''Refactory-Test data'''.
+{ #category : #'failure tests' }
+RBRemoveInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
-	class := model classNamed: #Object.
-	self assert: (class definesInstanceVariable: 'foo1').
-
-	self executeRefactoring: (self createRefactoringWithModel: model
-		andArguments: {'foo1' . class name asSymbol }).
-
-	self deny: (class definesInstanceVariable: 'foo1')
+	self shouldFail:
+		(self createRefactoringWithArguments:
+			 { 'name1'. #RBLintRuleTestData })
 ]
 
 { #category : #'failure tests' }
-RBRemoveInstanceVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ 'name1' . #RBLintRuleTestData })
-]
+RBRemoveInstanceVariableParametrizedTest >> testFailureReferencedVariable [
 
-{ #category : #'failure tests' }
-RBRemoveInstanceVariableParametrizedTest >> testReferencedVariable [
-	self shouldWarn: (self createRefactoringWithArguments:
-		{ 'name' . #RBLintRuleTestData })
+	self shouldWarn:
+		(self createRefactoringWithArguments:
+			 { 'name'. #RBLintRuleTestData })
 ]
 
 { #category : #tests }
-RBRemoveInstanceVariableParametrizedTest >> testRemoveInstVar [
+RBRemoveInstanceVariableParametrizedTest >> testRemoveLocallyDefinedInstanceVariable [
+
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:
-		{'foo1' . #RBLintRuleTestData}.
+	refactoring := self createRefactoringWithArguments: {#foo1 . #RBLintRuleTestData}.
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self assert: (class definesInstanceVariable: 'foo1').
+	self assert: (class definesInstanceVariable: #foo1).
 
 	self executeRefactoring: refactoring.
 
-	self deny: (class definesInstanceVariable: 'foo1')
+	self deny: (class definesInstanceVariable: #foo1)
+]
+
+{ #category : #tests }
+RBRemoveInstanceVariableParametrizedTest >> testRemoveNonLocalInstanceVariableProducesAnError [
+	
+	| subclass subsubclass refactoring |
+	
+	model defineClass: 'Object << #ObjectSubclass
+		slots: {#foo1};
+		package: #''Refactory-Test data'''.
+	model defineClass: 'ObjectSubclass << #ObjectSubsubclass
+		package: #''Refactory-Test data'''.
+
+	subclass := model classNamed: #ObjectSubclass.
+	subsubclass := model classNamed: #ObjectSubsubclass.
+	
+	self assert: (subclass definesInstanceVariable: #foo1).
+	self assert: (subclass directlyDefinesInstanceVariable: #foo1).
+
+	self assert: (subsubclass definesInstanceVariable: #foo1).
+	self deny: (subsubclass directlyDefinesInstanceVariable: #foo1).
+
+	refactoring := (self createRefactoringWithModel: model andArguments: { #foo1 . #ObjectSubsubclass }).
+
+	self deny: refactoring preconditions check.
+	self 
+		should: [self executeRefactoring: refactoring] 
+		raise: refactoring refactoringErrorClass.
+
+	self deny: (subsubclass directlyDefinesInstanceVariable: #foo1).
+	self assert: (subsubclass definesInstanceVariable: #foo1).
+	self assert: (subclass definesInstanceVariable: #foo1)
+]
+
+{ #category : #tests }
+RBRemoveInstanceVariableParametrizedTest >> testVerifyPreconditionWhenRemoveLocallyDefinedInstanceVariable [
+
+	| class refactoring |
+	model defineClass: 'Object << #ObjectSubclass
+		slots: {#foo1};
+		package: #''Refactory-Test data'''.
+
+	class := model classNamed: #ObjectSubclass.
+	self assert: (class definesInstanceVariable: #foo1).
+	self assert: (class directlyDefinesInstanceVariable: #foo1).
+
+	refactoring := (self createRefactoringWithModel: model andArguments: { #foo1 . #ObjectSubclass }).
+	self assert: refactoring preconditions check.
+	
+	self executeRefactoring: refactoring.
+
+	self deny: (class definesInstanceVariable: #foo1)
 ]

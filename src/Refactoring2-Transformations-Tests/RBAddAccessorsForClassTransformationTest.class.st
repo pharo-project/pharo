@@ -1,6 +1,6 @@
 Class {
 	#name : #RBAddAccessorsForClassTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -23,11 +23,11 @@ RBAddAccessorsForClassTransformationTest >> testRefactoring [
 RBAddAccessorsForClassTransformationTest >> testTransform [
 
 	| transformation class |
-	transformation := (RBAddAccessorsForClassTransformation className: self changeMock name) transform.
+	transformation := (RBAddAccessorsForClassTransformation className: self changeMockClass name) transform.
 
 	self assert: transformation model changes changes size equals: 2.
 
-	class := transformation model classNamed: self changeMock name asSymbol.
+	class := transformation model classNamed: self changeMockClass name asSymbol.
 	self assert: (class parseTreeForSelector: #instVar)
 		  equals: (self parseMethod: 'instVar ^instVar').
 	self assert: (class parseTreeForSelector: #instVar:)

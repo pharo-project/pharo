@@ -17,7 +17,7 @@ RBAddMethodParametrizedTest class >> testParameters [
 { #category : #running }
 RBAddMethodParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
@@ -35,19 +35,47 @@ RBAddMethodParametrizedTest >> testAddMethod [
 ]
 
 { #category : #'failure tests' }
-RBAddMethodParametrizedTest >> testBadMethod [
+RBAddMethodParametrizedTest >> testFailureBadMethod [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'asdf ^super ^printString'.
+				 RBBasicLintRuleTestData.
+				 #( #accessing ) })
+]
+
+{ #category : #'failure tests' }
+RBAddMethodParametrizedTest >> testFailureExistingSelector [
 	self shouldFail: (self createRefactoringWithArguments:
-		{ 'asdf ^super ^printString' .
+		{'printString ^super printString' .
 		RBBasicLintRuleTestData .
 		#(#accessing )})
 ]
 
 { #category : #'failure tests' }
-RBAddMethodParametrizedTest >> testExistingSelector [
-	self shouldFail: (self createRefactoringWithArguments:
-		{'printString ^super printString' .
-		RBBasicLintRuleTestData .
-		#(#accessing )})
+RBAddMethodParametrizedTest >> testFailureModelExistingSelector [
+
+	self
+		shouldFail: (self createRefactoringWithModel: model andArguments: {
+						 'classVarName1 ^super printString'.
+						 (model classNamed: #Bar).
+						 #( #accessing ) });
+		shouldFail: (self createRefactoringWithModel: model andArguments: {
+						 'printString ^super printString'.
+						 (model classNamed: #Bar).
+						 { #accessing } })
+]
+
+{ #category : #'failure tests' }
+RBAddMethodParametrizedTest >> testFailureModelInheritedSelector [
+
+	| refactoring |
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               'printString ^super printString'.
+				               (model classNamed: #Bar).
+				               #( #accessing ) }.
+	self shouldFail: refactoring
 ]
 
 { #category : #tests }
@@ -61,26 +89,4 @@ RBAddMethodParametrizedTest >> testModelAddMethod [
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeForSelector: #printString1)
 		  equals: (self parseMethod: 'printString1 ^super printString')
-]
-
-{ #category : #'failure tests' }
-RBAddMethodParametrizedTest >> testModelExistingSelector [
-	self shouldFail: ( self createRefactoringWithModel: model
-			andArguments:
-				{'classVarName1 ^super printString' .
-				(model classNamed: #Bar) .
-				#(#accessing) });
-		  shouldFail: (self createRefactoringWithModel: model
-			andArguments:
-				{'printString ^super printString' .
-				(model classNamed: #Bar) .
-				{#accessing}})
-]
-
-{ #category : #'failure tests' }
-RBAddMethodParametrizedTest >> testModelInheritedSelector [
-	| refactoring |
-	refactoring := self createRefactoringWithModel: model andArguments:
-				{ 'printString ^super printString' . (model classNamed: #Bar) . #(#accessing) }.
-	self shouldFail: refactoring
 ]

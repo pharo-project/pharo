@@ -7,7 +7,7 @@ Class {
 { #category : #'building suites' }
 RBMoveVariableDefinitionParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMoveVariableDefinitionToSmallestValidScopeTransformation };
+		addCase: { #rbClass -> RBMoveVariableDefinitionToSmallestValidScopeRefactoring };
 		yourself
 ]
 
@@ -17,19 +17,48 @@ RBMoveVariableDefinitionParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBMoveVariableDefinitionParametrizedTest >> testInvalidSelector [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (21 to: 24) . RBRefactoryTestDataApp . #caller3 })
+RBMoveVariableDefinitionParametrizedTest >> testFailureInvalidSelector [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (21 to: 24).
+				 RBClassDataForRefactoringTest.
+				 #caller3 })
+]
+
+{ #category : #'failure tests' }
+RBMoveVariableDefinitionParametrizedTest >> testFailureNoMoveDefinition [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (21 to: 24).
+				 RBClassDataForRefactoringTest.
+				 #noMoveDefinition })
+]
+
+{ #category : #'failure tests' }
+RBMoveVariableDefinitionParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (1 to: 10).
+				 RBLintRuleTestData.
+				 #name1 }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (44 to: 54).
+				 RBLintRuleTestData.
+				 #displayName }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (16 to: 25).
+				 RBLintRuleTestData.
+				 #displayName })
 ]
 
 { #category : #tests }
 RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (19 to: 22) . RBRefactoryTestDataApp . #moveDefinition }.
+		{ (19 to: 22) . RBClassDataForRefactoringTest . #moveDefinition }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #moveDefinition) equals: (self parseMethod: 'moveDefinition
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #moveDefinition) equals: (self parseMethod: 'moveDefinition
 								^(self collect:
 										[:each |
 										| temp |
@@ -46,9 +75,9 @@ RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 RBMoveVariableDefinitionParametrizedTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (47 to: 57) . RBRefactoryTestDataApp . #referencesConditionFor: }.
+		{ (47 to: 57) . RBClassDataForRefactoringTest . #referencesConditionFor: }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass
 								| environment  |
 								^(RBCondition withBlock:
 										[| association |association := Smalltalk globals associationAt: aClass name
@@ -59,20 +88,4 @@ RBMoveVariableDefinitionParametrizedTest >> testMoveDefinitionIntoBlockThatIsARe
 									errorMacro: aClass , '' is referenced.<n>Browse references?'';
 									errorBlock: [environment openEditor];
 									yourself')
-]
-
-{ #category : #'failure tests' }
-RBMoveVariableDefinitionParametrizedTest >> testNoMoveDefinition [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (21 to: 24) . RBRefactoryTestDataApp . #noMoveDefinition })
-]
-
-{ #category : #'failure tests' }
-RBMoveVariableDefinitionParametrizedTest >> testNonExistantName [
-	self shouldFail:
-		(self createRefactoringWithArguments: { (1 to: 10) . RBLintRuleTestData . #name1 }).
-	self shouldFail:
-		(self createRefactoringWithArguments: { (44 to: 54) . RBLintRuleTestData . #displayName }).
-	self shouldFail:
-		(self createRefactoringWithArguments: { (16 to: 25) . RBLintRuleTestData . #displayName })
 ]

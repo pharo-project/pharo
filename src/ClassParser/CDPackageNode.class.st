@@ -10,12 +10,6 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
-{ #category : #visitor }
-CDPackageNode >> acceptVisitor: aProgramNodeVisitor [
-
-	aProgramNodeVisitor visitPackage: self
-]
-
 { #category : #accessing }
 CDPackageNode >> packageName [
 	^ packageName

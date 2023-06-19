@@ -199,7 +199,7 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 	self assert: (packageDemoted classes includes: class).
 	self assert: ((packageDemoted classTagNamed: 'TAG1') classes includes: class).
 	self assert: (packageDemoted extensionMethods includes: classOther>>#bar).
-	self assert: ((classOther>>#bar) protocol) equals: '*Test1-TAG1'.
+	self assert: ((classOther>>#bar) protocolName) equals: '*Test1-TAG1'.
 	self assert: (packageDemoted classes	includesAll: {class. classOther})
 ]
 
@@ -259,7 +259,7 @@ RPackageTest >> testMcWorkingCopy [
 
 	| rPackage |
 	rPackage := self organizer registerPackageNamed: #Test1.
-	self assert: rPackage mcWorkingCopy equals: (MCWorkingCopy forPackage: (MCPackage new name: #Test1))
+	self assert: rPackage mcWorkingCopy identicalTo: (MCWorkingCopy forPackageNamed: #Test1)
 ]
 
 { #category : #'tests - properties' }

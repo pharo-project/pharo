@@ -97,12 +97,12 @@ RBAbstractTransformation >> changes [
 	^ self model changes
 ]
 
-{ #category : #'defining conditions' }
+{ #category : #'condition definitions' }
 RBAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 	^RBCondition checkInstanceVariableName: aName in: aClass
 ]
 
-{ #category : #'defining conditions' }
+{ #category : #'condition definitions' }
 RBAbstractTransformation >> checkMethodName: aName in: aClass [
 	^RBCondition checkMethodName: aName in: aClass
 ]
@@ -125,7 +125,7 @@ RBAbstractTransformation >> defaultEnvironment [
 	^ RBBrowserEnvironment new
 ]
 
-{ #category : #'defining conditions' }
+{ #category : #'condition definitions' }
 RBAbstractTransformation >> emptyCondition [
 	^ RBCondition empty
 ]
@@ -145,7 +145,7 @@ RBAbstractTransformation >> newModel [
 			yourself
 ]
 
-{ #category : #executing }
+{ #category : #'To be removed' }
 RBAbstractTransformation >> openBrowserOn: anEnvironment [
 
 	^ (self options at: #openBrowser)
@@ -226,6 +226,12 @@ RBAbstractTransformation >> refactoringError: aString [
 	^ RBRefactoringError signal: aString
 ]
 
+{ #category : #accessing }
+RBAbstractTransformation >> refactoringErrorClass [
+
+	^ RBRefactoringError 
+]
+
 { #category : #exceptions }
 RBAbstractTransformation >> refactoringWarning: aString [
 	^ RBRefactoringWarning signal: aString
@@ -293,5 +299,7 @@ RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
 
 { #category : #transforming }
 RBAbstractTransformation >> transform [
+	"Do the actual operations."
+	
 	self subclassResponsibility
 ]

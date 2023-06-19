@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRealizeClassParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #'building suites' }
@@ -11,19 +11,19 @@ RBRealizeClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
-RBRealizeClassParametrizedTest >> constructor [
-	^ #model:className:
-]
-
 { #category : #builder }
-RBRealizeClassParametrizedTest >> createAbstractClass [
+RBRealizeClassParametrizedTest >> addSomeAbstractMethods [
 	(model classNamed: #RBFooLintRuleTestData)
 		compile: 'bar ^ self subclassResponsibility'
 		classified: #(#accessing).
 	(model classNamed: #RBFooLintRuleTestData) classSide
 		compile: 'foo ^ self subclassResponsibility'
 		classified: #(#accessing)
+]
+
+{ #category : #accessing }
+RBRealizeClassParametrizedTest >> constructor [
+	^ #model:className:
 ]
 
 { #category : #tests }
@@ -38,7 +38,7 @@ RBRealizeClassParametrizedTest >> testClassWithoutChanges [
 RBRealizeClassParametrizedTest >> testRealizeAbstractClass [
 	| class |
 	class := model classNamed: #RBFooLintRuleTestData.
-	self createAbstractClass.
+	self addSomeAbstractMethods.
 	self proceedThroughWarning: [
 		self executeRefactoring:
 			(self createRefactoringWithArguments:  { model . #RBFooLintRuleTestData}) ].

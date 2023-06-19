@@ -45,6 +45,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> tearDown [
 
 { #category : #tests }
 T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
+		<ignoreNotImplementedSelectors: #(isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest)>
 	| t1 c1 |
 	t1 := self createT1.
 	c1 := self newClass: #C1 with: '' asSlotCollection uses: t1.
@@ -55,6 +56,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
 
 { #category : #tests }
 T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
+	<ignoreNotImplementedSelectors: #(isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest)>
 	| t1 t2 superclass subclass |
 	t1 := self createT1.
 	t2 := self createT2.

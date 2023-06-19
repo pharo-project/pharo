@@ -204,7 +204,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	newMethod setSourcePointer: aCompiledMethod sourcePointer.
 
-	aClass classify: aSelector under: aCompiledMethod protocol.
+	aClass classify: aSelector under: aCompiledMethod protocolName.
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
@@ -370,7 +370,7 @@ TaAbstractComposition >> protocolForMethod: method [
 	This is useful when the method is aliased or the method came from different traits or it is a conflicting protocol.
 	The basic implementation returns the protocol of the method"
 
-	^ method protocol
+	^ method protocolName
 ]
 
 { #category : #querying }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'numberOfAnnouncements'
 	],
-	#category : #'Kernel-Tests-Protocols'
+	#category : #'Kernel-Tests-Classes'
 }
 
 { #category : #running }
@@ -186,9 +186,6 @@ ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceClassReorganizedOnce [
 
 { #category : #tests }
 ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceNewProtocol [
-
-	self skip. "This hihglight the problem of https://github.com/pharo-project/pharo/pull/13494
-	But we still need to work on this to fix this test."
 
 	class classify: #king under: #demon.
 

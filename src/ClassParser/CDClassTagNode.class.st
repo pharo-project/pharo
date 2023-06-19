@@ -26,12 +26,6 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
-{ #category : #visitor }
-CDClassTagNode >> acceptVisitor: aProgramNodeVisitor [
-
-	aProgramNodeVisitor visitTag: self
-]
-
 { #category : #accessing }
 CDClassTagNode >> name [
 	^ name

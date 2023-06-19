@@ -213,9 +213,10 @@ CompiledMethod >> cachePragmas [
 	self pragmas do: [ :pragma | pragma class addToCache: pragma ]
 ]
 
-{ #category : #'accessing - backward compatible' }
+{ #category : #deprecated }
 CompiledMethod >> category [
 
+	self deprecated: 'Use #protocolName instead.' transformWith: '`@rcv category' -> '`@rcv protocolName'.
 	^ self protocolName
 ]
 
@@ -388,8 +389,7 @@ CompiledMethod >> isClassSide [
 { #category : #testing }
 CompiledMethod >> isClassified [
 
-	self flag: #CompileMethodProtocolMiration.
-	^ self protocolName ~= Protocol unclassified
+	^ self protocol isUnclassifiedProtocol not
 ]
 
 { #category : #testing }
@@ -784,7 +784,7 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 CompiledMethod >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
 
-	^ self category
+	^ self methodClass protocolOfSelector: self selector
 ]
 
 { #category : #accessing }
@@ -971,17 +971,6 @@ CompiledMethod >> storeOn: aStream [
 		aStream store: (self literalAt: index)].
 	noneYet ifFalse: [aStream nextPutAll: '; yourself'].
 	aStream nextPut: $)
-]
-
-{ #category : #'accessing - tags' }
-CompiledMethod >> tagWith: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	This method should apply new tag. All existing tags should not be changed.
-	But now we could only implemented tags with protocols.
-	So tagging method with tag removes all existing tags and add new one.
-	It should not be problem with single tag scenario which are now defined by single protocol"
-
-	self protocol: aSymbol
 ]
 
 { #category : #'accessing - tags' }

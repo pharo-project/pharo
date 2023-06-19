@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 T2TraitWithConflictsTest >> testAddingSameDependencyIsNotConflict [
 	| t1 t2 c1 |
-
+	<ignoreNotImplementedSelectors: #(m1)>
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	t2 := self newTrait: #T2 with: #() uses: {t1}.
 
@@ -24,7 +24,7 @@ T2TraitWithConflictsTest >> testAddingSameDependencyIsNotConflict [
 { #category : #tests }
 T2TraitWithConflictsTest >> testComplexDependencyIsNotConflict [
 	| t1 t2 c1 t3 t4 t5 t6|
-
+	<ignoreNotImplementedSelectors: #(m1)>
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	t2 := self newTrait: #T2 with: #() uses: {t1}.
 	t3 := self newTrait: #T3 with: #() uses: {t1}.
@@ -57,6 +57,7 @@ T2TraitWithConflictsTest >> testDiamonProblemIsNotConflict [
 { #category : #tests }
 T2TraitWithConflictsTest >> testDifferentMethodsAreConflict [
 	| t1 t2 c1 |
+	<ignoreNotImplementedSelectors: #(m1)>
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	t2 := self newTrait: #T2 with: #() uses: {}.
 
@@ -86,6 +87,7 @@ T2TraitWithConflictsTest >> testNonConflictingTraitsAreNotConflict [
 { #category : #tests }
 T2TraitWithConflictsTest >> testSameSourceButDifferentMethodsAreConflict [
 	| t1 t2 c1 |
+	<ignoreNotImplementedSelectors: #(m1)>
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	t2 := self newTrait: #T2 with: #() uses: {}.
 

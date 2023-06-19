@@ -1,6 +1,6 @@
 Class {
 	#name : #RBReplaceSubtreeTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -16,7 +16,7 @@ RBReplaceSubtreeTransformationTest >> testEmptyCode [
 ]
 
 { #category : #tests }
-RBReplaceSubtreeTransformationTest >> testExtractFailure [
+RBReplaceSubtreeTransformationTest >> testFailureExtract [
 
 	self shouldFail: (RBReplaceSubtreeTransformation
 							replace: ':= aSelector'
@@ -75,12 +75,12 @@ RBReplaceSubtreeTransformationTest >> testTransform [
 							replace: '^ 1'
 							to: '^ 123'
 							inMethod: #one
-							inClass: self changeMock name)
+							inClass: self changeMockClass name)
 							transform.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed: self changeMock name asSymbol.
+	class := transformation model classNamed: self changeMockClass name asSymbol.
 	self assert: (class directlyDefinesMethod: #one).
 	self assert: (class parseTreeForSelector: #one) body statements size equals: 1.
 	self assert: (class parseTreeForSelector: #one) body statements first isReturn.

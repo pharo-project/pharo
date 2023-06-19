@@ -17,7 +17,7 @@ RBAddInstanceVariableParametrizedTest class >> testParameters [
 { #category : #running }
 RBAddInstanceVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
@@ -52,33 +52,35 @@ RBAddInstanceVariableParametrizedTest >> testAddToModel [
 ]
 
 { #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testAlreadyExistingName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ 'class' . #RBTransformationRuleTestData}).
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{'name'. #RBTransformationRuleTestData})
+RBAddInstanceVariableParametrizedTest >> testFailureAlreadyExistingName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'class'. #RBTransformationRuleTestData }).
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'name'. #RBTransformationRuleTestData })
 ]
 
 { #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testModelAlreadyExistingName [
-	self shouldFail: ( self createRefactoringWithModel: model
-		andArguments: {'instVarName1' . #Bar })
+RBAddInstanceVariableParametrizedTest >> testFailureModelAlreadyExistingName [
+
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: { 'instVarName1'. #Bar })
 ]
 
 { #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testModelMetaclassAlreadyExistingName [
+RBAddInstanceVariableParametrizedTest >> testFailureModelMetaclassAlreadyExistingName [
 
-	(model metaclassNamed: #Foo)
-		addInstanceVariable: 'instVarName1'.
+	(model metaclassNamed: #Foo) addInstanceVariable: 'instVarName1'.
 
-	self shouldFail: ( self createRefactoringWithModel: model
-		andArguments: {'instVarName1' . #Bar })
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: { 'instVarName1'. #Bar })
 ]
 
 { #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testNewExistingName [
+RBAddInstanceVariableParametrizedTest >> testFailureNewExistingName [
+
 	| refactoring |
 	model := RBNamespace new.
 	model name: 'Add instance variable'.
@@ -86,14 +88,16 @@ RBAddInstanceVariableParametrizedTest >> testNewExistingName [
 		slots: { #asdf };
 		package: #''Refactory-Test data'''.
 
-	refactoring := self createRefactoringWithModel: model
-		andArguments: {'asdf' . #FOOBAR }.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: { 'asdf'. #FOOBAR }.
 
 	self shouldFail: refactoring
 ]
 
 { #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testNewHierarchyExistingName [
+RBAddInstanceVariableParametrizedTest >> testFailureNewHierarchyExistingName [
+
 	| refactoring |
 	model := RBNamespace new.
 	model name: 'Add instance variable'.
@@ -103,10 +107,12 @@ RBAddInstanceVariableParametrizedTest >> testNewHierarchyExistingName [
 		slots: { #asdf };
 		package: #''Refactory-Test data'''.
 
-	model defineClass: 'FOOBAR << #BARFOO package: ''Refactory-Test data'''.
+	model defineClass:
+		'FOOBAR << #BARFOO package: ''Refactory-Test data'''.
 
-	refactoring := self createRefactoringWithModel: model
-		andArguments: { 'asdf' . #BARFOO }.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: { 'asdf'. #BARFOO }.
 
 	self shouldFail: refactoring
 ]

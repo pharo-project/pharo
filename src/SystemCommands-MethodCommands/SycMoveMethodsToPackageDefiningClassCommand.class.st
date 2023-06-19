@@ -31,10 +31,10 @@ SycMoveMethodsToPackageDefiningClassCommand >> defaultMenuItemName [
 SycMoveMethodsToPackageDefiningClassCommand >> execute [
 
 	| classPackage |
-	methods do: [ :each |
-		classPackage := each origin package.
-		self moveMethod: each toPackage: classPackage.
-		each tagWith: targetTagName]
+	methods do: [ :method |
+		classPackage := method origin package.
+		self moveMethod: method toPackage: classPackage.
+		method protocol: targetTagName ]
 ]
 
 { #category : #execution }

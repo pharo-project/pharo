@@ -1,7 +1,7 @@
 Class {
 	#name : #RBConditionTest,
 	#superclass : #TestCase,
-	#category : #'Refactoring-Tests-Core-Base'
+	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #tests }
@@ -93,4 +93,41 @@ RBConditionTest >> testCheckValidMethodName [
 	self assert: (RBCondition checkMethodName: #foo).
 
 	self assert: (RBCondition checkMethodName: #+)
+]
+
+{ #category : #tests }
+RBConditionTest >> testIsClassDefinedInModel [
+
+	| aModel aClass |
+	aModel := RBNamespace new. 
+	aModel defineClass: 'Object << #FOOBAR
+				slots: { #asdf };
+				package: #''Refactory-Test data'''.
+	aClass := aModel classNamed: #FOOBAR.
+	self assert: (RBCondition isClass: aClass definedIn: aModel ) check
+	
+]
+
+{ #category : #tests }
+RBConditionTest >> testIsClassNamedDefinedIn [
+
+	| aModel |
+	aModel := RBNamespace new. 
+	aModel defineClass: 'Object << #FOOBAR
+				slots: { #asdf };
+				package: #''Refactory-Test data'''.
+	self assert: (RBCondition isClassNamed: #FOOBAR definedIn: aModel ) check
+	
+]
+
+{ #category : #tests }
+RBConditionTest >> testIsClassNamedDefinedInNot [
+
+	| aModel |
+	aModel := RBNamespace new. 
+	aModel defineClass: 'Object << #FOOBAR
+				slots: { #asdf };
+				package: #''Refactory-Test data'''.
+	self deny: (RBCondition isClassNamed: #FOOBAR2 definedIn: aModel ) check
+	
 ]

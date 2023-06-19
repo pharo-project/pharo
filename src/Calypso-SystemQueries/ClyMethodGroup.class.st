@@ -115,9 +115,9 @@ ClyMethodGroup >> asAsyncQueryGroup [
 ]
 
 { #category : #operations }
-ClyMethodGroup >> convertToMethodTag: aTagName [
+ClyMethodGroup >> convertToMethodTag: protocolName [
 
-	self methods do: [ :each | each tagWith: aTagName ]
+	self methods do: [ :method | method protocol: protocolName ]
 ]
 
 { #category : #decoration }

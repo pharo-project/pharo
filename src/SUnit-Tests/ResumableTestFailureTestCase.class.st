@@ -17,6 +17,7 @@ ResumableTestFailureTestCase class >> lastStoredRun [
 
 { #category : #'test data' }
 ResumableTestFailureTestCase >> errorTest [
+	<ignoreNotImplementedSelectors: #(zork)>
 	1 zork
 ]
 

@@ -18,15 +18,60 @@ RBInlineMethodParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testBadInterval [
+RBInlineMethodParametrizedTest >> testFailureBadInterval [
 	self shouldFail:
-		(self createRefactoringWithArguments: { (13 to: 23) . #testMethod . RBRefactoryTestDataApp }).
+		(self createRefactoringWithArguments: { (13 to: 23) . #testMethod . RBClassDataForRefactoringTest }).
 	self shouldFail:
-		(self createRefactoringWithArguments: { (14 to: 17) . #testMethod . RBRefactoryTestDataApp }).
+		(self createRefactoringWithArguments: { (14 to: 17) . #testMethod . RBClassDataForRefactoringTest }).
 	self shouldFail:
-		(self createRefactoringWithArguments: { (24 to: 30) . #testMethod . RBRefactoryTestDataApp }).
+		(self createRefactoringWithArguments: { (24 to: 30) . #testMethod . RBClassDataForRefactoringTest }).
 	self shouldFail:
-		(self createRefactoringWithArguments: { (1 to: 30) . #testMethod . RBRefactoryTestDataApp })
+		(self createRefactoringWithArguments: { (1 to: 30) . #testMethod . RBClassDataForRefactoringTest })
+]
+
+{ #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailureInlineMethodForSuperSendThatAlsoSendsSuper [
+
+	| refactoring |
+	model := self rbModelForInliningMethodTest.
+	refactoring := self createRefactoringWithArguments: {
+			               (102 to: 131).
+			               #executeNotifying:.
+			               #RBRenameInstanceVariableChange }.
+	self shouldFail: refactoring
+]
+
+{ #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailureNonExistantSelector [
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (14 to: 17) . #checkClass1: . RBClassDataForRefactoringTest })
+]
+
+{ #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailureOverriden [
+
+	self shouldWarn: (self createRefactoringWithArguments: {
+				 (15 to: 26).
+				 #failedRules.
+				 RBLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailurePrimitive [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (14 to: 23).
+				 #testMethod.
+				 RBClassDataForRefactoringTest })
+]
+
+{ #category : #'failure tests' }
+RBInlineMethodParametrizedTest >> testFailureReturn [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (418 to: 485).
+				 #utilityMethods.
+				 RBBasicLintRuleTestData class })
 ]
 
 { #category : #tests }
@@ -81,12 +126,12 @@ RBInlineMethodParametrizedTest >> testInlineMethod [
 RBInlineMethodParametrizedTest >> testInlineMethod1 [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (39 to: 84) . #caller . RBRefactoryTestDataApp }.
+		{ (39 to: 84) . #caller . RBClassDataForRefactoringTest }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #caller) equals: (self parseMethod: 'caller
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #caller) equals: (self parseMethod: 'caller
 									| anObject anObject1 |
 									anObject := 5.
 									anObject1 := anObject + 1.
@@ -99,14 +144,14 @@ RBInlineMethodParametrizedTest >> testInlineMethod1 [
 { #category : #tests }
 RBInlineMethodParametrizedTest >> testInlineMethod2 [
 	| refactoring methodName |
-	methodName := ('caller', '1') asSymbol.
+	methodName := #caller1.
 	refactoring := self createRefactoringWithArguments:
-		{ (40 to: 120) .  methodName . RBRefactoryTestDataApp }.
+		{ (40 to: 120) .  methodName . RBClassDataForRefactoringTest }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: methodName) equals: (self parseMethod: 'caller1
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: methodName) equals: (self parseMethod: 'caller1
 								| anObject each1 anObject1 |
 								anObject := 5.
 								anObject1 := anObject + 1.
@@ -120,14 +165,14 @@ RBInlineMethodParametrizedTest >> testInlineMethod2 [
 { #category : #tests }
 RBInlineMethodParametrizedTest >> testInlineMethod3 [
 	| refactoring methodName |
-	methodName := ('caller', '2') asSymbol.
+	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments:
-		{ (58 to: 73) . methodName . RBRefactoryTestDataApp }.
+		{ (58 to: 73) . methodName . RBClassDataForRefactoringTest }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: methodName) equals: (self parseMethod: 'caller2
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: methodName) equals: (self parseMethod: 'caller2
 								^(1 to: 10) inject: 1 into: [:sum :each | sum * ((1 to: 10) inject: each into: [:sum1 :each1 | sum1 + each1])]	')
 ]
 
@@ -135,12 +180,12 @@ RBInlineMethodParametrizedTest >> testInlineMethod3 [
 RBInlineMethodParametrizedTest >> testInlineMethod4 [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (31 to: 112) . #inlineJunk . RBRefactoryTestDataApp }.
+		{ (31 to: 112) . #inlineJunk . RBClassDataForRefactoringTest }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineJunk) equals: (self parseMethod: 'inlineJunk
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineJunk) equals: (self parseMethod: 'inlineJunk
 										| asdf bar1 baz1 asdf1 |
 										bar1 :=
 												[:each |
@@ -162,17 +207,17 @@ RBInlineMethodParametrizedTest >> testInlineMethod5 [
 	| refactoring |
 
 	refactoring := self createRefactoringWithArguments:
-		{ (53 to: 64) . #inlineLast . RBRefactoryTestDataApp }.
+		{ (53 to: 64) . #inlineLast . RBClassDataForRefactoringTest }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineLast) equals: (self parseMethod: 'inlineLast
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineLast) equals: (self parseMethod: 'inlineLast
 									5 = 3 ifTrue: [^self caller] ifFalse: [^	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]]')
 ]
 
 { #category : #tests }
 RBInlineMethodParametrizedTest >> testInlineMethodForSuperSend [
 	| refactoring |
-	model := self inlineMethodTestData.
+	model := self rbModelForInliningMethodTest.
 	(model classNamed: #RBRenameVariableChange)
 		removeMethod: #executeNotifying:.
 	refactoring := self createRefactoringWithModel: model andArguments:
@@ -194,24 +239,15 @@ RBInlineMethodParametrizedTest >> testInlineMethodForSuperSend [
 									^undo')
 ]
 
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testInlineMethodForSuperSendThatAlsoSendsSuper [
-	| refactoring |
-	model := self inlineMethodTestData.
-	refactoring := self createRefactoringWithArguments:
-		{ (102 to: 131) . #executeNotifying: . #RBRenameInstanceVariableChange }.
-	self shouldFail: refactoring
-]
-
 { #category : #tests }
 RBInlineMethodParametrizedTest >> testInlineRecursiveCascadedMethod [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (33 to: 62) . #inlineMethod . RBRefactoryTestDataApp }.
+		{ (33 to: 62) . #inlineMethod . RBClassDataForRefactoringTest }.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineMethod) equals: (self parseMethod: 'inlineMethod
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineMethod) equals: (self parseMethod: 'inlineMethod
 									| temp temp1 |
 									self foo.
 									temp1 := self foo; inlineMethod; bar.
@@ -229,28 +265,4 @@ RBInlineMethodParametrizedTest >> testModelInlineRecursiveMethod [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	self assert: (class parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo self bar. self bar. self foo. self bar. self bar')
-]
-
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testNonExistantSelector [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (14 to: 17) . #checkClass1: . RBRefactoryTestDataApp })
-]
-
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testOverriden [
-	self shouldWarn: (self createRefactoringWithArguments:
-		{ (15 to: 26) . #failedRules . RBLintRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testPrimitive [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (14 to: 23) . #testMethod . RBRefactoryTestDataApp })
-]
-
-{ #category : #'failure tests' }
-RBInlineMethodParametrizedTest >> testReturn [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (418 to: 485) . #utilityMethods . RBBasicLintRuleTestData class })
 ]

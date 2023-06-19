@@ -93,28 +93,6 @@ RBRefactoring >> classObjectFor: anObject [
 ]
 
 { #category : #support }
-RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
-	(self model allReferencesTo: aSymbol in: classes)
-		do:
-			[:method |
-			self
-				convertMethod: method selector
-				for: method modelClass
-				using: searchReplacer]
-]
-
-{ #category : #support }
-RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
-
-	(self model allReferencesTo: aSymbol)
-		reject: [ :rbMethod | "We reject methods from trait to not recompile them in the class and duplicate the code."
-			rbMethod method
-				ifNil: [ false ]
-				ifNotNil: #isFromTrait ]
-		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
-]
-
-{ #category : #support }
 RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 	self model allReferencesToClass: aRBClass
 		do:
@@ -154,7 +132,7 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 
 { #category : #transforming }
 RBRefactoring >> execute [
-
+	"Check precondition, execute the transformation that produces changes and finally execute the changes"
 	self primitiveExecute.
 	self performChanges
 ]
@@ -175,7 +153,7 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 	^aBlock on: self class preconditionSignal
 		do:
 			[:ex |
-			errorBlock value.
+			errorBlock cull: ex.
 			ex return: nil]
 ]
 
@@ -189,6 +167,7 @@ RBRefactoring >> performChanges [
 
 { #category : #transforming }
 RBRefactoring >> performCompositeRefactoring: aRefactoring [
+	"Execute the argument but passing the receiver options to that refactoring"
 	aRefactoring copyOptionsFrom: self options.
 	aRefactoring primitiveExecute
 ]
@@ -202,6 +181,7 @@ RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [
 
 { #category : #private }
 RBRefactoring >> primitiveExecute [
+	
 	self checkPreconditions.
 	self transform
 ]

@@ -57,7 +57,7 @@ ReProperMethodProtocolNameRule class >> use: valid insteadOf: arrayOfInvalid [
 ReProperMethodProtocolNameRule >> basicCheck: aMethod [
 
 	| protocol |
-	protocol := aMethod protocol.
+	protocol := aMethod protocolName.
 	self methodProtocolName: protocol.
 	^ self class badMethodProtocolNames includes: protocol
 ]

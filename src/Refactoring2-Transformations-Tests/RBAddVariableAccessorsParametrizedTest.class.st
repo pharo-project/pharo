@@ -15,7 +15,7 @@ RBAddVariableAccessorsParametrizedTest class >> testParameters [
 { #category : #running }
 RBAddVariableAccessorsParametrizedTest >> setUp [
 	super setUp.
-	model := self abstractVariableTestData
+	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
@@ -40,6 +40,22 @@ RBAddVariableAccessorsParametrizedTest >> testExistingInstanceVariableAccessors 
 	self executeRefactoring: refactoring asRefactoring.
 
 	self assertEmpty: refactoring changes changes
+]
+
+{ #category : #'failure tests' }
+RBAddVariableAccessorsParametrizedTest >> testFailureNonExistantClassVariable [
+
+	self shouldFail:
+		(rbClass classVariable: 'Foo' class: #RBBasicLintRuleTestData)
+			asRefactoring
+]
+
+{ #category : #'failure tests' }
+RBAddVariableAccessorsParametrizedTest >> testFailureNonExistantInstanceVariable [
+
+	self shouldFail:
+		(rbClass instanceVariable: 'foo' class: #RBBasicLintRuleTestData)
+			asRefactoring
 ]
 
 { #category : #tests }
@@ -70,20 +86,4 @@ RBAddVariableAccessorsParametrizedTest >> testNewInstanceVariableAccessors [
 	self denyEmpty: refactoring changes changes.
 	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 ^foo1').
 	self assert: (class parseTreeForSelector: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
-]
-
-{ #category : #'failure tests' }
-RBAddVariableAccessorsParametrizedTest >> testNonExistantClassVariable [
-
-	self shouldFail: (rbClass
-		classVariable: 'Foo'
-		class: #RBBasicLintRuleTestData) asRefactoring
-]
-
-{ #category : #'failure tests' }
-RBAddVariableAccessorsParametrizedTest >> testNonExistantInstanceVariable [
-
-	self shouldFail: (rbClass
-		instanceVariable: 'foo'
-		class: #RBBasicLintRuleTestData) asRefactoring
 ]

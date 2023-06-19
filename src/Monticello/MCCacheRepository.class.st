@@ -155,6 +155,16 @@ MCCacheRepository >> storeVersion: aVersion [
 	^ super storeVersion: aVersion.
 ]
 
+{ #category : #utilities }
+MCCacheRepository >> useDirectory: aFolder during: aBlock [
+
+	| oldDirectory |
+	oldDirectory := self directory.
+	[
+	self directory: aFolder.
+	aBlock value ] ensure: [ self directory: oldDirectory ]
+]
+
 { #category : #accessing }
 MCCacheRepository >> versionInfoForFileNamed: aString [
 	^ self infoCache 
