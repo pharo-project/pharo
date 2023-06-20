@@ -45,7 +45,7 @@ Trait class >> configureBuilder: builder withName: aName traitComposition: aTrai
 		sharedVariables: '';
 		sharedPools: '';
 		category: aPackageName;
-		traitComposition: aTraitCompositionOrCollection asTraitComposition;
+		traitComposition: aTraitCompositionOrCollection;
 		classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition
 ]
 

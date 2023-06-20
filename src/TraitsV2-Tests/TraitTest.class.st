@@ -9,7 +9,7 @@ TraitTest >> createClassUsing: aTrait [
 
 	^ self class classInstaller make: [ :aBuilder |
 		aBuilder name: #AClassForTests;
-			traitComposition: aTrait asTraitComposition;
+			traitComposition: aTrait;
 			package: 'AAA' ]
 ]
 

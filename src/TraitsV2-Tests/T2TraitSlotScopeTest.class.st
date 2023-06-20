@@ -210,7 +210,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPoo
 	c1 := self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: #C1;
-			traitComposition: t1 asTraitComposition;
+			traitComposition: t1;
 			sharedPools: 'X1';
 			package: 'TraitsV2-Tests-TestClasses' ].
 

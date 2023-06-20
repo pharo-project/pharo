@@ -81,9 +81,9 @@ FLPharoPlatform >> newSubclassOf: aClass named: className uses: aTraitCompositio
 			environment: anEnvironment;
 			name: className;
 			superclass: aClass;
-			traitComposition: aTraitComposition asTraitComposition;
+			traitComposition: aTraitComposition;
 			classTraitComposition: aTraitComposition asTraitComposition classComposition;
-			slots: ivNamesString asSlotCollection;
+			slotsFromString: ivNamesString;
 			sharedVariablesFromString: classVarsString;
 			sharedPools: poolNamesString;
 			package: packageName ]
@@ -95,8 +95,8 @@ FLPharoPlatform >> newTraitNamed: aString uses: aTraitComposition instanceVariab
 		aBuilder
 			environment: anEnvironment;
 			name: aString;
-			slots: iVarString asSlotCollection;
-			traitComposition: aTraitComposition asTraitComposition;
+			slotsFromString: iVarString;
+			traitComposition: aTraitComposition;
 			package: packageName;
 			beTrait ]
 ]

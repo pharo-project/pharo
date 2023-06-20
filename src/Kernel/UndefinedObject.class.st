@@ -220,7 +220,7 @@ UndefinedObject >> subclass: nameOfClass instanceVariableNames: instVarNameList 
 		  builder
 			  superclass: nil;
 			  name: nameOfClass;
-			  slots: instVarNameList asSlotCollection;
+			  slotsFromString: instVarNameList;
 			  sharedVariablesFromString: classVarNames;
 			  sharedPools: poolDictnames;
 			  category: category;

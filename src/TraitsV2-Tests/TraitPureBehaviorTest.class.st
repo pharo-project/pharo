@@ -180,7 +180,7 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: #T;
-			traitComposition: self t1 asTraitComposition;
+			traitComposition: self t1;
 			package: self class category;
 			beTrait ].
 
@@ -258,7 +258,7 @@ TraitPureBehaviorTest >> testPropagationWhenTraitCompositionModifications [
 	self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: #T2;
-			traitComposition: self t3 asTraitComposition;
+			traitComposition: self t3;
 			package: self class category;
 			beTrait ].
 
