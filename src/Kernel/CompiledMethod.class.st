@@ -973,18 +973,6 @@ CompiledMethod >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'accessing - tags' }
-CompiledMethod >> tags [
-	"Any method could be tagged with multiple symbols for user purpose.
-	For now we only define API to manage them implemented on top of method protocols.
-	Protocol unclassified means that method is not tagged by anything"
-	| protocol |
-	protocol := self protocolName.
-	protocol ifNil: [ ^#() ].
-	protocol = Protocol unclassified ifTrue: [ ^#() ].
-	^{protocol}
-]
-
 { #category : #'source code management' }
 CompiledMethod >> tempNames [
 	"on the level of the compiled method, tempNames includes argument names"
