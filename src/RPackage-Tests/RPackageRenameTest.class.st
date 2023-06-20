@@ -34,7 +34,9 @@ RPackageRenameTest >> tearDown [
 	self class environment at: #TestClass2 ifPresent: [ :class | class removeFromSystem ].
 	self class environment at: #TestClass3 ifPresent: [ :class | class removeFromSystem ].
 
-	packageNamesToClean do: [ :aPackageName | (MCWorkingCopy hasPackageNamed: aPackageName) ifTrue: [ (MCWorkingCopy forPackageNamed: aPackageName) unload ] ].
+	packageNamesToClean do: [ :aPackageName |
+		(MCWorkingCopy hasPackageNamed: aPackageName) ifTrue: [ (MCWorkingCopy forPackageNamed: aPackageName) unload ].
+		(aPackageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ].
 
 	super tearDown
 ]

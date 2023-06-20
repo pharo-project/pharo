@@ -286,28 +286,41 @@ MCWorkingCopy class >> methodRemoved: anEvent [
 ]
 
 { #category : #'system changes' }
+MCWorkingCopy class >> packageAdded: anAnnouncement [
+
+	self ensureForPackageNamed: anAnnouncement package name packageOrganizer: anAnnouncement package organizer
+]
+
+{ #category : #'system changes' }
 MCWorkingCopy class >> packageRenamed: anAnnouncement [
-	self allManagers 
+
+	| repositoryGroup |
+	repositoryGroup := (self forPackageNamed: anAnnouncement oldName) repositoryGroup.
+
+	"Let's make sure we have a working copy for this new package"
+	self packageAdded: anAnnouncement.
+
+	self allManagers
 		detect: [ :each | each packageName = anAnnouncement newName ]
 		ifFound: [ :newPackage | newPackage modified: true ].
-	(self allManagers 
-		detect: [ :each | each packageName = anAnnouncement oldName ])
-		unload.
+	(self allManagers detect: [ :each | each packageName = anAnnouncement oldName ]) unload.
+
+	anAnnouncement package mcWorkingCopy repositoryGroup: repositoryGroup
 ]
 
 { #category : #'event registration' }
 MCWorkingCopy class >> registerForNotifications [
-	"self registerForNotifications"
+
 	<systemEventRegistration>
-	
 	self announcer: nil.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	self registerInterestOnSystemChangesOnAnnouncer: SystemAnnouncer uniqueInstance.
+	self registerInterestOnSystemChangesOnAnnouncer: SystemAnnouncer uniqueInstance
 ]
 
 { #category : #'event registration' }
 MCWorkingCopy class >> registerInterestOnSystemChangesOnAnnouncer: anAnnouncer [
 	anAnnouncer weak
+		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
 		when: ClassAdded, ClassModifiedClassDefinition, ClassCommented , ClassParentRenamed send: #classModified: to: self;
 		when: ClassRenamed send:#classRenamed: to:self;
