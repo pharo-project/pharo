@@ -1,9 +1,9 @@
 "
-I model thisContext keyword
+I model thisContext
 "
 Class {
 	#name : #ThisContextVariable,
-	#superclass : #ReservedVariable,
+	#superclass : #PseudoVariable,
 	#category : #'Kernel-Variables'
 }
 

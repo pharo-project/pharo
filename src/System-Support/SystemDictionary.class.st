@@ -218,7 +218,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 	"Use the cached class and non-class names for better performance."
 
 	| name searchBlock |
-	(self reservedVariables hasBindingThatBeginsWith: aString) ifTrue: [
+	(self pseudoVariables hasBindingThatBeginsWith: aString) ifTrue: [
 		^ true ].
 	searchBlock := [ :element |
 	               (element beginsWith: aString)
@@ -257,7 +257,7 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 { #category : #'accessing - variable lookup' }
 SystemDictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
-	^self reservedVariables at: name ifAbsent: [self bindingOf: name]
+	^self pseudoVariables at: name ifAbsent: [self bindingOf: name]
 ]
 
 { #category : #'accessing - system attributes' }
@@ -332,6 +332,14 @@ SystemDictionary >> poolUsers [
 SystemDictionary >> printElementsOn: aStream [
 
 	aStream nextPutAll: '(lots of globals)'
+]
+
+{ #category : #'accessing - variable lookup' }
+SystemDictionary >> pseudoVariables [
+	"We cache the variables for speed"
+
+	^ reservedVariables ifNil: [
+		  reservedVariables := PseudoVariable lookupDictionary ]
 ]
 
 { #category : #'accessing - classes and traits' }
@@ -410,14 +418,6 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 			, ' does not exist.'.
 		^ self ].
 	oldClass rename: newName
-]
-
-{ #category : #'accessing - variable lookup' }
-SystemDictionary >> reservedVariables [
-	"We cache the variables for speed"
-
-	^ reservedVariables ifNil: [
-		  reservedVariables := ReservedVariable lookupDictionary ]
 ]
 
 { #category : #'accessing - variable lookup' }

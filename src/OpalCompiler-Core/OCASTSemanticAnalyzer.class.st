@@ -135,7 +135,7 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
 
-	var isReservedVariable
+	var isPseudoVariable
 		ifTrue: [ self error: 'Reserved variable name' forNode: aNode ]
 		ifFalse: [ aNode addWarning: 'Name already defined' ]
 ]
@@ -144,12 +144,6 @@ OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
 OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
 	variableNode addError: 'Assignment to read-only variable'
-]
-
-{ #category : #'error handling' }
-OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
-
-	variableNode addError: 'Assigment to reserved variable'
 ]
 
 { #category : #accessing }

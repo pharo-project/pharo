@@ -791,7 +791,7 @@ RBProgramNode >> isPragmaError [
 ]
 
 { #category : #testing }
-RBProgramNode >> isReservedVariable [
+RBProgramNode >> isPseudoVariable [
 	^false
 ]
 

@@ -184,6 +184,12 @@ Variable >> isPoolVariable [
 ]
 
 { #category : #testing }
+Variable >> isPseudoVariable [
+	"thisContext, super, self are reserved variables (true, false and nil are literals)"
+	^false
+]
+
+{ #category : #testing }
 Variable >> isReadIn: aCompiledCode [
 	^aCompiledCode ast readNodes
 		 anySatisfy: [ :node | node binding == self ]
@@ -192,12 +198,6 @@ Variable >> isReadIn: aCompiledCode [
 { #category : #testing }
 Variable >> isReferenced [
 	^ self usingMethods isNotEmpty
-]
-
-{ #category : #testing }
-Variable >> isReservedVariable [
-	"thisContext, super, self are reserved variables (true, false and nil are literals)"
-	^false
 ]
 
 { #category : #testing }
