@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'contents'
 	],
-	#category : #'Tool-Diff-Wrapper'
+	#category : #'Monticello-GUI-Diff'
 }
 
 { #category : #accessing }

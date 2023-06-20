@@ -228,14 +228,8 @@ ClyMethodEditorToolMorph >> tagAndPackageEditingMethod: aMethod [
 { #category : #operations }
 ClyMethodEditorToolMorph >> tagEditingMethod: aMethod [
 
-	| existingTags removedTags newTags |
-	self applyChangesBy: [
-		existingTags := aMethod tags reject: [ :each | each beginsWith: '*' ].
-		removedTags := existingTags reject: [ :each | methodTags includes: each ].
-		newTags := methodTags reject: [ :each | existingTags includes: each ].
-
-		newTags do: [ :protocolName | aMethod protocol: protocolName ].
-		removedTags do: [ :protocolName | aMethod untagFrom: protocolName ] ]
+	self applyChangesBy: [ "In the end we only have at max 1 protocol but for now this class hold a collection. This should be updated in the future."
+		methodTags do: [ :protocolName | aMethod protocol: protocolName ] ]
 ]
 
 { #category : #accessing }

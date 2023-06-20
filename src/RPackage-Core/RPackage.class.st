@@ -1376,30 +1376,23 @@ RPackage >> renameTagsPrefixedWith: oldName to: newName [
 RPackage >> renameTo: aSymbol [
 	"Rename a package with a different name, provided as a symbol"
 
-	| oldName newName oldCategoryNames repositoryGroup |
+	| oldName newName oldCategoryNames |
 	oldName := self name.
 	newName := aSymbol asSymbol.
-	repositoryGroup := self mcPackage workingCopy repositoryGroup.
 	self organizer validatePackageDoesNotExist: aSymbol.
-	oldCategoryNames := (self classTags collect: [:each | each categoryName] as: Set)
-		add: self name;
-		difference: {newName}.
+	oldCategoryNames := (self classTags collect: [ :each | each categoryName ] as: Set)
+		                    add: self name;
+		                    difference: { newName }.
 	self name: aSymbol.
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ self definedClasses
-				do:
-					[ :each | each category: newName , (each category allButFirst: oldName size) ].
-			oldCategoryNames
-				do: [ :each | self organizer removeCategory: each ] ].
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		self definedClasses do: [ :each | each category: newName , (each category allButFirst: oldName size) ].
+		oldCategoryNames do: [ :each | self organizer removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
 	self organizer
 		basicUnregisterPackageNamed: oldName;
 		basicRegisterPackage: self.
-	self mcPackage workingCopy repositoryGroup: repositoryGroup.
-	SystemAnnouncer uniqueInstance
-		announce:
-			(PackageRenamed to: self oldName: oldName newName: newName)
+	SystemAnnouncer uniqueInstance announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
 { #category : #private }

@@ -4,7 +4,7 @@ Display Monticello merge patchs
 Class {
 	#name : #PSMCMergePatchMorph,
 	#superclass : #PSMCPatchMorph,
-	#category : #'Tool-Diff-Morphs'
+	#category : #'Monticello-GUI-Diff'
 }
 
 { #category : #accessing }

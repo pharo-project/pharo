@@ -155,7 +155,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-FileList' #'Tool-Profilers'
 	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups')
 ]
 

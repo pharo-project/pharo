@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'UsedByDefault'
 	],
-	#category : #'Tool-Diff-Morphs'
+	#category : #'Monticello-GUI-Diff'
 }
 
 { #category : #settings }
