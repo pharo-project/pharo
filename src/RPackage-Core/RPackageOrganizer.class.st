@@ -233,12 +233,7 @@ RPackageOrganizer >> basicRegisterPackage: aPackage [
 RPackageOrganizer >> basicUnregisterPackageNamed: aPackageName [
 	"Unregister the specified package from the list of registered packages. Raise the RPackageUnregistered announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
-	| package |
-	package := packages removeKey: aPackageName ifAbsent: [ ^ self reportExtraRemovalOf: aPackageName ].
-
-	"unregister also mc package"
-	self flag: #hack. "for decoupling MC"
-	self class environment at: #MCWorkingCopy ifPresent: [ package mcPackage ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ] ]
+	^ packages removeKey: aPackageName ifAbsent: [ self reportExtraRemovalOf: aPackageName ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -976,7 +971,7 @@ RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
 	categoryNameSymbol := categoryName asSymbol.
 	self flag: #hack. "for decoupling MC"
 	managers := (self respondsTo: #allManagers)
-		            ifTrue: [ self perform: #allManagers ]
+		            ifTrue: [ self allManagers ]
 		            ifFalse: [ #(  ) ].
 	"Reverse the test. First check that this is the root category of a RPackage. If yes, unregister the RPackage and the corresponding MCWorkingCopy."
 	rPackage := packages at: categoryNameSymbol ifAbsent: [ ^ self ].
