@@ -34,7 +34,7 @@ Class >> setTraitComposition: aTraitComposition [
 			builder
 				fillFor: self;
 				traitComposition: aTraitComposition;
-				classTraitComposition: aTraitComposition classComposition]
+				classTraitComposition: aTraitComposition asTraitComposition classComposition ]
 ]
 
 { #category : #'*TraitsV2' }
