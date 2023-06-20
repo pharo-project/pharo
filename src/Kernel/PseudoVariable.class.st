@@ -1,8 +1,8 @@
 "
-I model self, thisContext and super
+I model self, super, thisContext, and thisProcess
 "
 Class {
-	#name : #ReservedVariable,
+	#name : #PseudoVariable,
 	#superclass : #Variable,
 	#instVars : [
 		'environment'
@@ -11,18 +11,18 @@ Class {
 }
 
 { #category : #accessing }
-ReservedVariable class >> instance [
+PseudoVariable class >> instance [
 	self deprecated: 'use new to get a new instance or #lookupVar: for the shared instance'.
 	^self new.
 ]
 
 { #category : #testing }
-ReservedVariable class >> isAbstract [
-	^self = ReservedVariable
+PseudoVariable class >> isAbstract [
+	^self = PseudoVariable
 ]
 
 { #category : #compiler }
-ReservedVariable class >> lookupDictionary [
+PseudoVariable class >> lookupDictionary [
 	"create a loopup table name -> instance for Semantic Analysis"
 
 	^ (self subclasses collect: [ :class |
@@ -32,69 +32,69 @@ ReservedVariable class >> lookupDictionary [
 ]
 
 { #category : #accessing }
-ReservedVariable class >> variableName [
+PseudoVariable class >> variableName [
 	^self subclassResponsibility
 ]
 
 { #category : #converting }
-ReservedVariable >> asDoItVariableFrom: aContext [
+PseudoVariable >> asDoItVariableFrom: aContext [
 	^ DoItVariable fromContext: aContext variable: self
 ]
 
 { #category : #converting }
-ReservedVariable >> asString [
+PseudoVariable >> asString [
 
 	^ self name
 ]
 
 { #category : #'code generation' }
-ReservedVariable >> emitStore: methodBuilder [
+PseudoVariable >> emitStore: methodBuilder [
 
 	self shouldNotImplement
 ]
 
 { #category : #initialization }
-ReservedVariable >> initialize [
+PseudoVariable >> initialize [
 	environment := Smalltalk globals.
 	name := self class variableName
 ]
 
 { #category : #testing }
-ReservedVariable >> isReservedVariable [
+PseudoVariable >> isPseudoVariable [
 	^true
 ]
 
 { #category : #testing }
-ReservedVariable >> isWritable [
+PseudoVariable >> isWritable [
 	^ false
 ]
 
 { #category : #accessing }
-ReservedVariable >> name: aSymbol [
+PseudoVariable >> name: aSymbol [
 	"names of ReservedVariables are fixed and can not be changed"
 	self shouldNotImplement
 ]
 
 { #category : #printing }
-ReservedVariable >> printOn: stream [
+PseudoVariable >> printOn: stream [
 
 	stream nextPutAll: self name
 ]
 
 { #category : #accessing }
-ReservedVariable >> scope [
+PseudoVariable >> scope [
 	^ environment
 ]
 
 { #category : #queries }
-ReservedVariable >> usingMethods [
+PseudoVariable >> usingMethods [
 	"first call is very slow as it creates all ASTs"
 	^environment allMethods select: [ : method |
 		method ast variableNodes anySatisfy: [ :varNode | varNode variable == self]]
 ]
 
 { #category : #debugging }
-ReservedVariable >> write: aValue inContext: aContext [
+PseudoVariable >> write: aValue inContext: aContext [
 
 	self error: name, ' is reserved word and cant be modified'
 ]

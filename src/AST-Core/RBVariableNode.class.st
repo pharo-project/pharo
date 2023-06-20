@@ -163,13 +163,13 @@ RBVariableNode >> isLocalVariable [
 ]
 
 { #category : #testing }
-RBVariableNode >> isRead [
-	^ self isWrite not and: [ self isUsed ]
+RBVariableNode >> isPseudoVariable [
+	^ variable isPseudoVariable
 ]
 
 { #category : #testing }
-RBVariableNode >> isReservedVariable [
-	^ variable isReservedVariable
+RBVariableNode >> isRead [
+	^ self isWrite not and: [ self isUsed ]
 ]
 
 { #category : #testing }

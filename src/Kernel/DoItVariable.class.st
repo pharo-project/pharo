@@ -135,8 +135,8 @@ DoItVariable >> isLocalVariable [
 ]
 
 { #category : #testing }
-DoItVariable >> isReservedVariable [
-	^actualVariable isReservedVariable
+DoItVariable >> isPseudoVariable [
+	^actualVariable isPseudoVariable
 ]
 
 { #category : #testing }
