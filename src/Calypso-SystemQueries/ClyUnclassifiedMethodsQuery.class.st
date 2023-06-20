@@ -10,17 +10,17 @@ Class {
 { #category : #printing }
 ClyUnclassifiedMethodsQuery >> description [
 
-	^'unclassified methods'
+	^ 'unclassified methods'
 ]
 
 { #category : #testing }
 ClyUnclassifiedMethodsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
-	^aSystemAnnouncement affectsMethods
-		and: [ scope includesMethodsAffectedBy: aSystemAnnouncement]
+	^ aSystemAnnouncement affectsMethods and: [ scope includesMethodsAffectedBy: aSystemAnnouncement ]
 ]
 
 { #category : #testing }
 ClyUnclassifiedMethodsQuery >> selectsMethod: aMethod [
-	^aMethod tags isEmpty
+
+	^ aMethod isClassified not
 ]
