@@ -1,6 +1,6 @@
 Extension { #name : #MCPatchBrowser }
 
-{ #category : #'*Tool-Diff' }
+{ #category : #'*Monticello-GUI-Diff' }
 MCPatchBrowser >> diffSelection [
 	"Open a diff browser on the selection."
 
@@ -8,7 +8,7 @@ MCPatchBrowser >> diffSelection [
 		[selection diff]
 ]
 
-{ #category : #'*Tool-Diff' }
+{ #category : #'*Monticello-GUI-Diff' }
 MCPatchBrowser >> methodListMenu: aMenu [
 
 	selection

@@ -1,6 +1,6 @@
 Extension { #name : #MCWorkingCopyBrowser }
 
-{ #category : #'*Tool-Diff' }
+{ #category : #'*Monticello-GUI-Diff' }
 MCWorkingCopyBrowser >> viewChanges [
 	"View the changes made in the working copy."
 
@@ -25,7 +25,7 @@ MCWorkingCopyBrowser >> viewChanges [
 					to: ('Modified {1}' translated format: {workingCopy description})]]
 ]
 
-{ #category : #'*Tool-Diff' }
+{ #category : #'*Monticello-GUI-Diff' }
 MCWorkingCopyBrowser >> viewChanges: patch from: fromDescription to: toDescription [
 	"Open a browser on the given patch."
 
