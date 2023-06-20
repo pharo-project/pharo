@@ -363,7 +363,7 @@ ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: a
 			            name: aClass name;
 			            superclass: aSuperclass;
 			            traitComposition: aTraitComposition;
-			            slots: ivNamesString asSlotCollection;
+			            slotsFromString: ivNamesString;
 			            sharedVariablesFromString: classVarsString;
 			            sharedPools: poolNamesString;
 			            package: aPackageName asSymbol ].

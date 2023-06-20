@@ -52,9 +52,8 @@ ClassFactoryWithOrganization >> newClassNamed: aString subclassOf: aClass instan
 			            superclass: aClass;
 			            name: aString;
 			            layoutClass: aClass classLayout class;
-			            slots: ivNamesString asSlotCollection;
+			            slotsFromString: ivNamesString;
 			            sharedVariablesFromString: classVarsString;
-			            sharedPools: '';
 			            category: category asSymbol;
 			            environment: self organization environment ].
 	self createdClasses add: newClass.
@@ -81,9 +80,8 @@ ClassFactoryWithOrganization >> newSubclassOf: aClass instanceVariableNames: ivN
 			            superclass: aClass;
 			            name: self newClassName;
 			            layoutClass: aClass classLayout class;
-			            slots: ivNamesString asSlotCollection;
+			            slotsFromString: ivNamesString;
 			            sharedVariablesFromString: classVarsString;
-			            sharedPools: '';
 			            category: category asSymbol;
 			            environment: self organization environment ].
 	self createdClasses add: newClass.
