@@ -244,8 +244,8 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 		            aBuilder
 			            name: self newClassName;
 			            superclass: aClass;
-			            traitComposition: aTraitComposition asTraitComposition;
-			            slots: ivNamesString asSlotCollection;
+			            traitComposition: aTraitComposition;
+			            slotsFromString: ivNamesString;
 			            sharedVariablesFromString: classVarsString;
 			            sharedPools: poolNamesString;
 			            package: (self packageName , '-' , category) asSymbol ].
@@ -298,7 +298,7 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag
 	newTrait := self class classInstaller make: [ :aBuilder |
 		            aBuilder
 			            name: aTraitName;
-			            traitComposition: aTraitComposition asTraitComposition;
+			            traitComposition: aTraitComposition;
 			            package: (self packageName , '-' , aTag) asSymbol;
 			            beTrait ].
 
@@ -362,7 +362,7 @@ ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: a
 		            aBuilder
 			            name: aClass name;
 			            superclass: aSuperclass;
-			            traitComposition: aTraitComposition asTraitComposition;
+			            traitComposition: aTraitComposition;
 			            slots: ivNamesString asSlotCollection;
 			            sharedVariablesFromString: classVarsString;
 			            sharedPools: poolNamesString;

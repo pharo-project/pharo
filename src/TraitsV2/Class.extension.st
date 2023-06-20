@@ -33,8 +33,8 @@ Class >> setTraitComposition: aTraitComposition [
 		update: self to: [ :builder |
 			builder
 				fillFor: self;
-				traitComposition: aTraitComposition asTraitComposition;
-				classTraitComposition: aTraitComposition asTraitComposition classComposition]
+				traitComposition: aTraitComposition;
+				classTraitComposition: aTraitComposition asTraitComposition classComposition ]
 ]
 
 { #category : #'*TraitsV2' }
@@ -136,7 +136,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				layoutClass: aLayout;
 				sharedVariables: someClassVariables;
 				sharedPools: somePoolDictionaries;
-				traitComposition: aTraitComposition asTraitComposition;
+				traitComposition: aTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
 				category: aCategory ]
 ]
@@ -153,7 +153,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				layoutClass: aLayout;
 				sharedVariables: someClassVariables;
 				sharedPools: somePoolDictionaries;
-				traitComposition: aTraitComposition asTraitComposition;
+				traitComposition: aTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
 				category: aCategory ]
 ]
@@ -170,7 +170,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				layoutClass: aLayout;
 				sharedVariablesFromString: someClassVariablesNames;
 				sharedPools: somePoolDictionaries;
-				traitComposition: aTraitComposition asTraitComposition;
+				traitComposition: aTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
 				category: aCategory ]
 ]
@@ -187,7 +187,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				layoutClass: aLayout;
 				sharedVariablesFromString: someClassVariablesNames;
 				sharedPools: somePoolDictionaries;
-				traitComposition: aTraitComposition asTraitComposition;
+				traitComposition: aTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
 				category: aCategory ]
 ]

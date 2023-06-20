@@ -529,7 +529,7 @@ ClassTest >> testSubclassInstanceVariableNames [
 	cls := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: #SubclassExample;
-			slots: 'x y' asSlotCollection].
+			slotsFromString: 'x y'].
 
 	self assert: (testEnvironment includesKey: #SubclassExample).
 
