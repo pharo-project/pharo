@@ -43,7 +43,7 @@ RGMethodTest >> testImplicitEnvironment [
 	self assert: (def parent hasResolved: #tagsForMethods).
 	self assert: def parent tagsForMethods isEmpty.
 	self assert: def parent protocols size equals: 1.
-	self assert: def parent protocols anyOne equals: 'as yet unclassified'.
+	self assert: def parent protocols anyOne equals: Protocol unclassified.
 
 	self assert: (def isRingResolved).
 

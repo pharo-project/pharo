@@ -133,11 +133,11 @@ TRGBehaviorTest >> testBehaviorWithUnategorizedMethod [
 
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 	newBehavior cleanProtocols.
 
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 
 	newBehavior cleanLocalMethods.
 	self assert: (newBehavior protocols isEmpty)
@@ -160,10 +160,10 @@ TRGBehaviorTest >> testBehaviorWithUnategorizedMethods [
 	newBehavior addLocalMethod: method2.
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 	newBehavior cleanProtocols.
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 	newBehavior cleanLocalMethods.
 	self assert: newBehavior protocols isEmpty
 ]

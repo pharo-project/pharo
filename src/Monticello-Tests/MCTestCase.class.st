@@ -132,13 +132,14 @@ MCTestCase >> mockMessageString [
 
 { #category : #mocks }
 MCTestCase >> mockMethod: aSymbol class: className source: sourceString meta: aBoolean [
+
 	^ MCMethodDefinition
-		className: className
-		classIsMeta: aBoolean
-		selector:  aSymbol
-		category: 'as yet unclassified'
-		timeStamp: ''
-		source: sourceString
+		  className: className
+		  classIsMeta: aBoolean
+		  selector: aSymbol
+		  category: Protocol unclassified
+		  timeStamp: ''
+		  source: sourceString
 ]
 
 { #category : #mocks }
