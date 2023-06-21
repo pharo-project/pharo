@@ -9,7 +9,8 @@ Class {
 
 { #category : #accessing }
 ClyNoTagMethodGroup class >> groupName [
-	^'as yet unclassified'
+
+	^ Protocol unclassified
 ]
 
 { #category : #testing }

@@ -195,7 +195,8 @@ MethodClassifier class >> shouldAlwaysClassify: anObject [
 
 { #category : #classification }
 MethodClassifier class >> suggestProtocolFor: aMethod [
-	^ (self new suggestProtocolFor: aMethod) ifNil: [ 'as yet unclassified' ]
+
+	^ (self new suggestProtocolFor: aMethod) ifNil: [ Protocol unclassified ]
 ]
 
 { #category : #classification }
