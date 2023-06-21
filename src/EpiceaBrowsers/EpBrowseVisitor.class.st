@@ -49,3 +49,9 @@ EpBrowseVisitor >> visitMethodChange: aChange [
 						'Cannot find ', behavior asString, '>>', aChange methodAffectedSelector.
 					behavior browse ] ]
 ]
+
+{ #category : #visitor }
+EpBrowseVisitor >> visitPackageChange: aChange [
+
+	(self packageOrganizer packageNamed: aChange affectedPackageName ifAbsent: [ ^ self inform: 'Package ' , aChange affectedPackageName , ' not found.' ]) browse
+]

@@ -54,6 +54,12 @@ EpMorphVisitor >> displayOperation: aString [
 ]
 
 { #category : #private }
+EpMorphVisitor >> displayPackage: aPackageName [
+
+	^ (self displayOperation: 'Package') , (self displayString: aPackageName asString)
+]
+
+{ #category : #private }
 EpMorphVisitor >> displayString: aString [
 
 	^ { aString asMorph }
@@ -193,7 +199,7 @@ EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 { #category : #visitor }
 EpMorphVisitor >> visitPackageAddition: aPackageAddition [
 
-	^ self displayCategory: aPackageAddition affectedPackageName
+	^ self displayPackage: aPackageAddition affectedPackageName
 ]
 
 { #category : #visitor }

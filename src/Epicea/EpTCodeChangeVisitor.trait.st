@@ -94,7 +94,12 @@ EpTCodeChangeVisitor >> visitMethodRemoval: aChange [
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitPackageAddition: aPackageAddition [
 
-	^ self visitCategoryChange: aPackageAddition
+	^ self visitPackageChange: aPackageAddition
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageChange: aChange [
+	^ self visitCodeChange: aChange
 ]
 
 { #category : #visitor }

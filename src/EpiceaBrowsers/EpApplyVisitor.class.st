@@ -115,6 +115,7 @@ EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 { #category : #visitor }
 EpApplyVisitor >> visitPackageAddition: aPackageAddition [
 
+	self flag: #epicea "Why is this empty?!"
 ]
 
 { #category : #visitor }

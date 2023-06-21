@@ -33,8 +33,8 @@ EpApplyPreviewer >> environment: anObject [
 
 { #category : #private }
 EpApplyPreviewer >> includesCategory: aString [
-
-	^ self environment organization includesCategory: aString
+	self flag: #epicea. "We should kill the category usage."
+	^ self packageOrganizer includesCategory: aString
 ]
 
 { #category : #visitor }
@@ -194,7 +194,7 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 { #category : #visitor }
 EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
 
-	^ (self includesCategory: aPackageAddition affectedPackageName)
+	^ (self packageOrganizer includesPackageNamed: aPackageAddition affectedPackageName)
 		  ifTrue: [ #(  ) ]
 		  ifFalse: [ { aPackageAddition } ]
 ]
