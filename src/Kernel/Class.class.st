@@ -282,7 +282,7 @@ Class >> category [
 	(latter is much more expensive)"
 
 	| result |
-	self basicCategory ifNotNil: [ :symbol | ((self environment organization listAtCategoryNamed: symbol) includes: self name) ifTrue: [ ^ symbol ] ].
+	self basicCategory ifNotNil: [ :symbol | ((self packageOrganizer listAtCategoryNamed: symbol) includes: self name) ifTrue: [ ^ symbol ] ].
 	result := (self environment organization categoryOfBehavior: self)
 		          ifNil: [ #Unclassified ]
 		          ifNotNil: [ :value | value ].
@@ -301,7 +301,7 @@ Class >> category: aString [
 	aString isString
 		ifTrue: [
 			self basicCategory: aString asSymbol.
-			self environment organization classify: self name under: self basicCategory ]
+			self packageOrganizer classify: self name under: self basicCategory ]
 		ifFalse: [self errorCategoryName].
 	SystemAnnouncer uniqueInstance
 		class: self recategorizedFrom: oldCategory to: self basicCategory

@@ -37,12 +37,6 @@ EpTCodeChangeVisitor >> visitCategoryChange: aChange [
 ]
 
 { #category : #visitor }
-EpTCodeChangeVisitor >> visitCategoryRegistration: aChange [
-
-	^ self visitCategoryChange: aChange
-]
-
-{ #category : #visitor }
 EpTCodeChangeVisitor >> visitCategoryRemoval: aChange [
 	^ self visitCategoryChange: aChange
 ]
@@ -95,6 +89,17 @@ EpTCodeChangeVisitor >> visitMethodModification: aChange [
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitMethodRemoval: aChange [
 	^ self visitMethodChange: aChange
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ self visitPackageChange: aPackageAddition
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageChange: aChange [
+	^ self visitCodeChange: aChange
 ]
 
 { #category : #visitor }

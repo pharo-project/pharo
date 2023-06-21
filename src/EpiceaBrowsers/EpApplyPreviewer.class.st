@@ -33,8 +33,8 @@ EpApplyPreviewer >> environment: anObject [
 
 { #category : #private }
 EpApplyPreviewer >> includesCategory: aString [
-
-	^ self environment organization includesCategory: aString
+	self flag: #epicea. "We should kill the category usage."
+	^ self packageOrganizer includesCategory: aString
 ]
 
 { #category : #visitor }
@@ -92,14 +92,6 @@ EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 
 { #category : #visitor }
 EpApplyPreviewer >> visitCategoryAddition: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ #() ]
-			ifFalse: [ { aChange } ]
-]
-
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryRegistration: aChange [
 
 	^ (self includesCategory: aChange categoryName)
 			ifTrue: [ #() ]
@@ -197,6 +189,14 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 				ifAbsent: [ #() ] ].
 
 	^ #() "No impact if container does not exist"
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
+
+	^ (self packageOrganizer includesPackageNamed: aPackageAddition affectedPackageName)
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ { aPackageAddition } ]
 ]
 
 { #category : #visitor }

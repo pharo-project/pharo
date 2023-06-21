@@ -75,21 +75,18 @@ EpMonitor class >> newWithLog: aLog [
 
 { #category : #'class initialization' }
 EpMonitor class >> reset [
-	"
-	self reset
-	"
 
-	self hasCurrent ifTrue: [
-		self current disable.
-		self current: nil ]
+	<script>
+	self hasCurrent ifFalse: [ ^ self ].
+
+	self current disable.
+	self current: nil
 ]
 
 { #category : #initialization }
 EpMonitor class >> restart [
-	"
-	self restart
-	"
 
+	<script>
 	self reset.
 	self current enable
 ]
@@ -238,12 +235,6 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 EpMonitor >> categoryAdded: aCategoryAdded [
 
 	self addEvent: (EpCategoryAddition named: aCategoryAdded categoryName)
-]
-
-{ #category : #'announcement handling' }
-EpMonitor >> categoryRegistered: aCategoryAdded [
-
-	self addEvent: (EpCategoryRegistration named: aCategoryAdded package name)
 ]
 
 { #category : #'announcement handling' }
@@ -464,6 +455,12 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 ]
 
 { #category : #'announcement handling' }
+EpMonitor >> packageAdded: packageAdded [
+
+	self addEvent: (EpPackageAddition named: packageAdded package name)
+]
+
+{ #category : #'announcement handling' }
 EpMonitor >> packageRenamed: aCategoryRenamed [
 
 	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldName newName: aCategoryRenamed newName)
@@ -524,7 +521,7 @@ EpMonitor >> subscribeToSystemAnnouncer [
 	{	CategoryAdded -> #categoryAdded:.
 		CategoryRemoved -> #categoryRemoved:.
 		CategoryRenamed -> #categoryRenamed:.
-		PackageAdded -> #categoryRegistered:.
+		PackageAdded -> #packageAdded:.
 		PackageRenamed -> #packageRenamed:.
 		ClassAdded-> #behaviorAdded:.
 		ClassRemoved->#behaviorRemoved:.
