@@ -39,17 +39,9 @@ EpInverseVisitor >> visitBehaviorNameChange: aChange [
 ]
 
 { #category : #visitor }
-EpInverseVisitor >> visitCategoryAddition: aChange [
-
-	^ EpCategoryRemoval
-			named: aChange categoryName
-			packageName: aChange affectedPackageName
-]
-
-{ #category : #visitor }
 EpInverseVisitor >> visitCategoryRemoval: aChange [
 
-	^ EpCategoryAddition
+	^ EpPackageTagAddition
 			named: aChange categoryName
 			packageName: aChange affectedPackageName
 ]
@@ -109,6 +101,14 @@ EpInverseVisitor >> visitPackageAddition: aPackageAddition [
 
 	self flag: #epicea. "The inverse of an addition is an addition?!"
 	^ EpPackageAddition named: aPackageAddition affectedPackageName
+]
+
+{ #category : #visitor }
+EpInverseVisitor >> visitPackageTagAddition: aChange [
+
+	^ EpCategoryRemoval
+			named: aChange categoryName
+			packageName: aChange affectedPackageName
 ]
 
 { #category : #visitor }

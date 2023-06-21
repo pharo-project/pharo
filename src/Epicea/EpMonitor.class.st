@@ -463,7 +463,7 @@ EpMonitor >> packageRenamed: aCategoryRenamed [
 { #category : #'announcement handling' }
 EpMonitor >> packageTagAdded: packageTagAdded [
 
-	self addEvent: (EpCategoryAddition named: packageTagAdded tag categoryName)
+	self addEvent: (EpPackageTagAddition named: packageTagAdded tag categoryName)
 ]
 
 { #category : #'announcement handling' }

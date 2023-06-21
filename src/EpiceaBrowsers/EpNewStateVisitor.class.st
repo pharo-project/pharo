@@ -26,12 +26,6 @@ EpNewStateVisitor >> visitBehaviorNameChange: aClassRenameChange [
 ]
 
 { #category : #visitor }
-EpNewStateVisitor >> visitCategoryAddition: aClassCategoryCreatedChange [
-
-	^ aClassCategoryCreatedChange categoryName
-]
-
-{ #category : #visitor }
 EpNewStateVisitor >> visitCategoryRename: aClassCategoryRenamedChange [
 
 	^ aClassCategoryRenamedChange newCategoryName
@@ -78,6 +72,12 @@ EpNewStateVisitor >> visitMethodModification: aMethodModification [
 EpNewStateVisitor >> visitPackageAddition: aPackageAddition [
 
 	^ aPackageAddition affectedPackageName
+]
+
+{ #category : #visitor }
+EpNewStateVisitor >> visitPackageTagAddition: aClassCategoryCreatedChange [
+
+	^ aClassCategoryCreatedChange categoryName
 ]
 
 { #category : #visitor }

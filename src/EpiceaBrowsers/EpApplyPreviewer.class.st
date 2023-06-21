@@ -91,14 +91,6 @@ EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 ]
 
 { #category : #visitor }
-EpApplyPreviewer >> visitCategoryAddition: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ #() ]
-			ifFalse: [ { aChange } ]
-]
-
-{ #category : #visitor }
 EpApplyPreviewer >> visitCategoryRemoval: aChange [
 
 	^ (self includesCategory: aChange categoryName)
@@ -197,6 +189,14 @@ EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
 	^ (self packageOrganizer includesPackageNamed: aPackageAddition affectedPackageName)
 		  ifTrue: [ #(  ) ]
 		  ifFalse: [ { aPackageAddition } ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageTagAddition: aChange [
+
+	^ (self includesCategory: aChange categoryName)
+			ifTrue: [ #() ]
+			ifFalse: [ { aChange } ]
 ]
 
 { #category : #visitor }

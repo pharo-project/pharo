@@ -2,13 +2,13 @@
 I represent the creation of a category in a package.
 "
 Class {
-	#name : #EpCategoryAddition,
+	#name : #EpPackageTagAddition,
 	#superclass : #EpCategoryChange,
 	#category : #'Epicea-Model'
 }
 
 { #category : #visitor }
-EpCategoryAddition >> accept: aVisitor [
+EpPackageTagAddition >> accept: aVisitor [
 
-	^ aVisitor visitCategoryAddition: self
+	^ aVisitor visitPackageTagAddition: self
 ]

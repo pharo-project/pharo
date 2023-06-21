@@ -27,11 +27,6 @@ EpTCodeChangeVisitor >> visitBehaviorNameChange: aChange [
 ]
 
 { #category : #visitor }
-EpTCodeChangeVisitor >> visitCategoryAddition: aChange [
-	^ self visitCategoryChange: aChange
-]
-
-{ #category : #visitor }
 EpTCodeChangeVisitor >> visitCategoryChange: aChange [
 	^ self visitCodeChange: aChange
 ]
@@ -100,6 +95,11 @@ EpTCodeChangeVisitor >> visitPackageAddition: aPackageAddition [
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitPackageChange: aChange [
 	^ self visitCodeChange: aChange
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageTagAddition: aChange [
+	^ self visitCategoryChange: aChange
 ]
 
 { #category : #visitor }
