@@ -238,12 +238,6 @@ EpMonitor >> categoryAdded: aCategoryAdded [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> categoryRegistered: aCategoryAdded [
-
-	self addEvent: (EpPackageAddition named: aCategoryAdded package name)
-]
-
-{ #category : #'announcement handling' }
 EpMonitor >> categoryRemoved: aPackageCategoryRemoved [
 
 	self addEvent: (EpCategoryRemoval named: aPackageCategoryRemoved categoryName)
@@ -461,6 +455,12 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 ]
 
 { #category : #'announcement handling' }
+EpMonitor >> packageAdded: packageAdded [
+
+	self addEvent: (EpPackageAddition named: packageAdded package name)
+]
+
+{ #category : #'announcement handling' }
 EpMonitor >> packageRenamed: aCategoryRenamed [
 
 	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldName newName: aCategoryRenamed newName)
@@ -521,7 +521,7 @@ EpMonitor >> subscribeToSystemAnnouncer [
 	{	CategoryAdded -> #categoryAdded:.
 		CategoryRemoved -> #categoryRemoved:.
 		CategoryRenamed -> #categoryRenamed:.
-		PackageAdded -> #categoryRegistered:.
+		PackageAdded -> #packageAdded:.
 		PackageRenamed -> #packageRenamed:.
 		ClassAdded-> #behaviorAdded:.
 		ClassRemoved->#behaviorRemoved:.
