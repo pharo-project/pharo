@@ -185,7 +185,7 @@ Variable >> isPoolVariable [
 
 { #category : #testing }
 Variable >> isPseudoVariable [
-	"thisContext, super, self are reserved variables (true, false and nil are literals)"
+	"thisContext, super, self, thisProcess are reserved variables (true, false and nil are literals)"
 	^false
 ]
 
@@ -198,6 +198,15 @@ Variable >> isReadIn: aCompiledCode [
 { #category : #testing }
 Variable >> isReferenced [
 	^ self usingMethods isNotEmpty
+]
+
+{ #category : #testing }
+Variable >> isReservedVariable [
+	self
+		deprecated: 'Please use #isPseudoVariable instead'
+		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
+
+	^ self isPseudoVariable
 ]
 
 { #category : #testing }
