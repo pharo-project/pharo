@@ -112,9 +112,9 @@ EpApplyPreviewerTest >> testBehaviorNameChange [
 { #category : #tests }
 EpApplyPreviewerTest >> testCategoryAdditionWithCategoryRemoved [
 
-	self class environment organization addCategory: classFactory defaultCategory.
+	self packageOrganizer addCategory: classFactory defaultCategory.
 	self setHeadAsInputEntry.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
 
 	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpCategoryAddition.
@@ -125,11 +125,11 @@ EpApplyPreviewerTest >> testCategoryAdditionWithCategoryRemoved [
 { #category : #tests }
 EpApplyPreviewerTest >> testCategoryRemovalWithCategoryAdded [
 
-	self class environment organization addCategory: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self packageOrganizer addCategory: classFactory defaultCategory.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
-	self class environment organization addCategory: classFactory defaultCategory.
+	self packageOrganizer addCategory: classFactory defaultCategory.
 
 	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpCategoryRemoval.
@@ -141,7 +141,7 @@ EpApplyPreviewerTest >> testCategoryRemovalWithCategoryAdded [
 EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
 
 	| organization aCategory anotherCategory |
-	organization := self class environment organization.
+	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
 	anotherCategory := aCategory, '2'.
 	organization addCategory: aCategory.
@@ -446,7 +446,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 { #category : #tests }
 EpApplyPreviewerTest >> testRedundantCategoryAddition [
 
-	self class environment organization addCategory: classFactory defaultCategory.
+	self packageOrganizer addCategory: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -455,8 +455,8 @@ EpApplyPreviewerTest >> testRedundantCategoryAddition [
 { #category : #tests }
 EpApplyPreviewerTest >> testRedundantCategoryRemoval [
 
-	self class environment organization addCategory: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self packageOrganizer addCategory: classFactory defaultCategory.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -466,7 +466,7 @@ EpApplyPreviewerTest >> testRedundantCategoryRemoval [
 EpApplyPreviewerTest >> testRedundantCategoryRenameWithAbsentCategory [
 
 	| organization aCategory anotherCategory |
-	organization := self class environment organization.
+	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
 	anotherCategory := aCategory, '2'.
 	organization addCategory: aCategory.
