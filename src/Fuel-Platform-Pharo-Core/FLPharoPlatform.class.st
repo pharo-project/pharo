@@ -82,7 +82,6 @@ FLPharoPlatform >> newSubclassOf: aClass named: className uses: aTraitCompositio
 			name: className;
 			superclass: aClass;
 			traitComposition: aTraitComposition;
-			classTraitComposition: aTraitComposition asTraitComposition classComposition;
 			slotsFromString: ivNamesString;
 			sharedVariablesFromString: classVarsString;
 			sharedPools: poolNamesString;

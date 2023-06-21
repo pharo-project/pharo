@@ -108,7 +108,7 @@ TraitTest >> testErrorClassCreation [
 		aSubclass := self class classInstaller make: [ :aClassBuilder |
 			aClassBuilder
 				name: #AClass2;
-				traitComposition: trait asTraitComposition;
+				traitComposition: trait;
 				superclass: aClass;
 				package: tmpCategory ].
 
