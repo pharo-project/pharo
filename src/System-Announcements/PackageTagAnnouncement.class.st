@@ -5,7 +5,6 @@ Class {
 	#name : #PackageTagAnnouncement,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'package',
 		'tag'
 	],
 	#category : #'System-Announcements-System-Packages'
@@ -34,12 +33,14 @@ PackageTagAnnouncement class >> to: aPackageTag [
 
 { #category : #testing }
 PackageTagAnnouncement >> affectsPackage: aPackage [
-	^package == aPackage
+
+	^ self package == aPackage
 ]
 
 { #category : #testing }
 PackageTagAnnouncement >> affectsPackages [
-	^true
+
+	^ true
 ]
 
 { #category : #accessing }
@@ -49,13 +50,9 @@ PackageTagAnnouncement >> package [
 ]
 
 { #category : #accessing }
-PackageTagAnnouncement >> package: anObject [
-	package := anObject
-]
-
-{ #category : #accessing }
 PackageTagAnnouncement >> packagesAffected [
-	^{self package}
+
+	^ { self package }
 ]
 
 { #category : #accessing }
@@ -64,6 +61,6 @@ PackageTagAnnouncement >> tag [
 ]
 
 { #category : #accessing }
-PackageTagAnnouncement >> tag: anObject [
-	tag := anObject
+PackageTagAnnouncement >> tag: aPackageTag [
+	tag := aPackageTag
 ]
