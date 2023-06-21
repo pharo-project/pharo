@@ -762,8 +762,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	anAnnouncer unsubscribe: self.
 
 	anAnnouncer weak
-		when: CategoryRemoved send: #systemCategoryRemovedActionFrom: to: self;
-		when: CategoryRenamed send: #systemCategoryRenamedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ClassRemoved send: #systemClassRemovedActionFrom: to: self;
@@ -849,14 +847,25 @@ RPackageOrganizer >> removeCategory: category [
 	"Remove the category named, cat. Create an error notificiation if the
 	category has any elements in it."
 
+	| package categoryName |
+	categoryName := category asSymbol.
 	categoryMap
-		at: category
-		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'Cannot remove non-empty category ' , category , '. Present classes: ' , classes printString ] ]
+		at: categoryName
+		ifPresent: [ :classes |
+		classes ifNotEmpty: [ ^ self error: 'Cannot remove non-empty category ' , categoryName , '. Present classes: ' , classes printString ] ]
 		ifAbsent: [ ^ self ].
 
-	categoryMap removeKey: category.
+	categoryMap removeKey: categoryName.
 
-	SystemAnnouncer uniqueInstance classCategoryRemoved: category
+	"When a system category is removed, we may: remove a tag, or remove a rpackage. If we remove a RPackage, unregister the linked MCWorkingCopy. If it is a tag, do nothing? (from what I know of RPackage, the tag should already have disappeared because it would have been empty)."
+	package := packages at: categoryName ifAbsent: [ ^ self ].
+
+	"Consider that a package with extension selectors or tags is not empty and shouldn't be removed."
+	(package extensionSelectors isNotEmpty or: [ (package classTags reject: [ :tag | tag name = categoryName ]) isNotEmpty ]) ifTrue: [ ^ self ].
+	categoryName = RPackage defaultPackageName ifTrue: [ ^ self ]. "We want to keep this default package."
+	self unregisterPackage: package.
+
+	SystemAnnouncer uniqueInstance classCategoryRemoved: categoryName
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -888,16 +897,24 @@ RPackageOrganizer >> removeSystemCategory: category [
 RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 	"Rename a category. No action if new name already exists, or if old name does not exist."
 
-	categoryMap at: newCatString ifPresent: [ "new name exists, so no action" ^ self ].
+	| package oldName newName |
+	oldName := oldCatString asSymbol.
+	newName := newCatString asSymbol.
+	categoryMap at: newName ifPresent: [ "new name exists, so no action" ^ self ].
 
 	categoryMap
-		at: oldCatString
+		at: oldName
 		ifPresent: [ :classes |
-			categoryMap at: newCatString put: classes.
-			categoryMap removeKey: oldCatString ]
+			categoryMap at: newName put: classes.
+			categoryMap removeKey: oldName ]
 		ifAbsent: [ "old name not found, so no action" ^ self ].
 
-	SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldCatString to: newCatString
+	package := (self packageMatchingExtensionName: oldName) ifNil: [ (self packageClass named: newName) register ].
+	package name = oldName ifTrue: [ self renamePackage: package from: oldName to: newName ].
+
+	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ].
+
+	SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldName to: newName
 ]
 
 { #category : #'system integration' }
@@ -907,7 +924,7 @@ RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 	rPackage name: newName.
 
 	packages at: newName put: rPackage.
-	packages removeKey: oldName ifAbsent: [ self reportBogusBehaviorOf: #systemCategoryRenamedActionFrom: ].
+	packages removeKey: oldName ifAbsent: [ self reportBogusBehaviorOf: #renamePackage:from:to: ].
 
 	"we also rename all the extension protocols in the system with the new name"
 	classesAndProtocolsToRename := rPackage extensionMethods asIdentitySet.
@@ -954,40 +971,6 @@ RPackageOrganizer >> superclassOrder: category [
 	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
 	classes := behaviors select: [ :each | each isBehavior ].
 	^ Class superclassOrder: classes
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
-	"When a system category is removed, we may: remove a tag, or remove a rpackage. If we remove a RPackage, unregister the linked MCWorkingCopy. If it is a tag, do nothing? (from what I know of RPackage, the tag should already have disappeared because it would have been empty)."
-
-	| rPackage categoryName |
-	categoryName := ann categoryName asSymbol.
-
-	rPackage := packages at: categoryName ifAbsent: [ ^ self ].
-
-	"Consider that a rPackage with extension selectors or tags is not empty and shouldn't be removed."
-	(rPackage extensionSelectors isNotEmpty or: [ (rPackage classTags reject: [ :tag | tag name = categoryName ]) isNotEmpty ]) ifTrue: [ ^ self ].
-	categoryName = RPackage defaultPackageName ifTrue: [ ^ self ]. "We want to keep this default package."
-	self unregisterPackage: rPackage
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemCategoryRenamedActionFrom: ann [
-	| rPackage oldName newName |
-
-	oldName := ann oldCategoryName asSymbol.
-	newName := ann newCategoryName asSymbol.
-	rPackage := self packageMatchingExtensionName: ann oldCategoryName.
-	rPackage ifNil: [ rPackage := (self packageClass named: newName) register ].
-	rPackage name = ann oldCategoryName ifTrue: [
-		self
-			renamePackage: rPackage
-			from: oldName
-			to: newName ].
-
-	rPackage
-		classTagNamed: oldName
-		ifPresent: [ :tag | tag basicRenameTo: newName ]
 ]
 
 { #category : #'system integration' }
