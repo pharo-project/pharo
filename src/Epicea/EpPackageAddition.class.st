@@ -1,5 +1,5 @@
 "
-I represent the registration of a package.
+I represent a package creation in the system.
 "
 Class {
 	#name : #EpPackageAddition,
