@@ -99,14 +99,6 @@ EpApplyPreviewer >> visitCategoryAddition: aChange [
 ]
 
 { #category : #visitor }
-EpApplyPreviewer >> visitCategoryRegistration: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ #() ]
-			ifFalse: [ { aChange } ]
-]
-
-{ #category : #visitor }
 EpApplyPreviewer >> visitCategoryRemoval: aChange [
 
 	^ (self includesCategory: aChange categoryName)
@@ -197,6 +189,14 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 				ifAbsent: [ #() ] ].
 
 	^ #() "No impact if container does not exist"
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
+
+	^ (self includesCategory: aPackageAddition affectedPackageName)
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ { aPackageAddition } ]
 ]
 
 { #category : #visitor }

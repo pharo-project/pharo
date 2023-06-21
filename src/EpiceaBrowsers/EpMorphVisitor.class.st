@@ -110,12 +110,6 @@ EpMorphVisitor >> visitCategoryAddition: aCategoryChange [
 ]
 
 { #category : #visitor }
-EpMorphVisitor >> visitCategoryRegistration: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
-]
-
-{ #category : #visitor }
 EpMorphVisitor >> visitCategoryRemoval: aCategoryChange [
 
 	^ self displayCategory: aCategoryChange categoryName
@@ -194,6 +188,12 @@ EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 
 	^	(self displayOperation: 'MC load'),
 		(self displayString: aMonticelloVersionLoaded versionNames asCommaStringAnd)
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ self displayCategory: aPackageAddition affectedPackageName
 ]
 
 { #category : #visitor }

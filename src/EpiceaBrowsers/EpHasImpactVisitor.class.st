@@ -84,12 +84,6 @@ EpHasImpactVisitor >> visitCategoryAddition: aChange [
 ]
 
 { #category : #visitor }
-EpHasImpactVisitor >> visitCategoryRegistration: aChange [
-
-	^ (environment organization includesCategory: aChange categoryName) not
-]
-
-{ #category : #visitor }
 EpHasImpactVisitor >> visitCategoryRemoval: aChange [
 
 	^ environment organization includesCategory: aChange categoryName
@@ -146,6 +140,12 @@ EpHasImpactVisitor >> visitMethodRemoval: aChange [
 				ifAbsent: [ false ] ].
 
 	^ false "No impact if container does not exist"
+]
+
+{ #category : #visitor }
+EpHasImpactVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ (environment organization includesCategory: aPackageAddition affectedPackageName) not
 ]
 
 { #category : #visitor }

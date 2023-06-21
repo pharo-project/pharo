@@ -240,7 +240,7 @@ EpMonitor >> categoryAdded: aCategoryAdded [
 { #category : #'announcement handling' }
 EpMonitor >> categoryRegistered: aCategoryAdded [
 
-	self addEvent: (EpCategoryRegistration named: aCategoryAdded package name)
+	self addEvent: (EpPackageAddition named: aCategoryAdded package name)
 ]
 
 { #category : #'announcement handling' }

@@ -53,12 +53,6 @@ EpIconVisitor >> visitCategoryAddition: aCategoryChange [
 ]
 
 { #category : #visitor }
-EpIconVisitor >> visitCategoryRegistration: aCategoryChange [
-
-	^ self additionIcon
-]
-
-{ #category : #visitor }
 EpIconVisitor >> visitCategoryRemoval: aCategoryChange [
 	^ self removalIcon
 ]
@@ -121,6 +115,12 @@ EpIconVisitor >> visitMonticelloVersionSave: aChange [
 { #category : #visitor }
 EpIconVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 	^ self iconNamed: #package
+]
+
+{ #category : #visitor }
+EpIconVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ self additionIcon
 ]
 
 { #category : #visitor }
