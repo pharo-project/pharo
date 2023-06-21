@@ -156,24 +156,6 @@ SystemAnnouncer >> classRepackaged: aClass from: aPackage to: anotherPackage [
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> classTagAdded: tagName inPackage: aPackage [
-
-	self announce: (ClassTagAdded in: aPackage tag: tagName)
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> classTagRemoved: tagName fromPackage: aPackage [
-
-	self announce: (ClassTagRemoved in: aPackage tag: tagName)
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> classTagRenamed: tagName inPackage: aPackage to: newTagName [
-
-	self announce: (ClassTagRenamed in: aPackage tag: tagName to: newTagName)
-]
-
-{ #category : #triggering }
 SystemAnnouncer >> evaluated: textOrStream [
 	^ self evaluated: textOrStream context: nil
 ]
