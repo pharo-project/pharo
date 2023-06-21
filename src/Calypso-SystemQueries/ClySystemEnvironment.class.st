@@ -135,15 +135,7 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 		 (self confirmToOverrideExistingClassNamed: newClassName) not ])
 		ifTrue: [ ^ nil ].
 
-	(self isFluidDefinition: newClassDefinitionString)
-		ifTrue: [
-			ClassDefinitionPrinter showFluidClassDefinition: true.
-			^ self
-				  defineNewClassFrom: newClassDefinitionString
-				  notifying: aController
-				  startingFrom: oldClass ]
-		ifFalse: [
-			(self isTraitDefinition: newClassDefinitionString)
+		(self isTraitDefinition: newClassDefinitionString)
 				ifTrue: [
 					^ self
 						  defineTrait: newClassDefinitionString
@@ -156,7 +148,7 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 							  defineNewClassFrom: newClassDefinitionString
 							  notifying: aController
 							  startingFrom: oldClass ]
-						ifFalse: [ ^ nil ] ] ]
+						ifFalse: [ ^ nil ] ]
 ]
 
 { #category : #'class management' }
@@ -200,8 +192,8 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 		            failBlock: [ ^ nil ];
 		            logged: true;
 		            evaluate.
-	"mild ugly hack for fluid classes (and traits)"
-	(newClass isKindOf: FluidClassBuilder) ifTrue: [ newClass := newClass install ].
+	"mild ugly hack for fluid classes"
+	(newClass isKindOf: FluidClassBuilder) ifTrue: [ newClass := newClass fluidInstall ].
 
 	^ newClass isBehavior
 		  ifTrue: [ newClass ]
