@@ -75,21 +75,18 @@ EpMonitor class >> newWithLog: aLog [
 
 { #category : #'class initialization' }
 EpMonitor class >> reset [
-	"
-	self reset
-	"
 
-	self hasCurrent ifTrue: [
-		self current disable.
-		self current: nil ]
+	<script>
+	self hasCurrent ifFalse: [ ^ self ].
+
+	self current disable.
+	self current: nil
 ]
 
 { #category : #initialization }
 EpMonitor class >> restart [
-	"
-	self restart
-	"
 
+	<script>
 	self reset.
 	self current enable
 ]
