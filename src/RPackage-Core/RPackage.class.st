@@ -212,20 +212,16 @@ RPackage >> addClassDefinitionName: aClassName toClassTag: aSymbol [
 { #category : #'class tags' }
 RPackage >> addClassTag: aSymbol [
 	"Add the class tag from the receiver, if already added do nothing."
-	| tagName newTag |
 
+	| tagName newTag |
 	"strip package name if needed"
 	tagName := self toTagName: aSymbol.
 
-	^ self
-		classTagNamed: tagName
-		ifAbsent: [
-			self class organizer
-				validateCanBeAddedPackage: self
-				tagName: tagName.
-			newTag := self basicAddClassTag: tagName.
-			SystemAnnouncer uniqueInstance classTagAdded: tagName inPackage: self.
-			^newTag]
+	^ self classTagNamed: tagName ifAbsent: [
+		  self class organizer validateCanBeAddedPackage: self tagName: tagName.
+		  newTag := self basicAddClassTag: tagName.
+		  SystemAnnouncer announce: (PackageTagAdded to: newTag).
+		  ^ newTag ]
 ]
 
 { #category : #'add method - compiled method' }
@@ -339,10 +335,10 @@ RPackage >> basicRemoveSelector: aSelector ofMetaclassName: aClassName [
 
 { #category : #'class tags' }
 RPackage >> basicRemoveTag: tag [
-	classTags remove: tag ifAbsent: [].
 
-	SystemAnnouncer uniqueInstance
-		classTagRemoved: tag name fromPackage: self
+	classTags remove: tag ifAbsent: [  ].
+
+	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
 { #category : #slices }
