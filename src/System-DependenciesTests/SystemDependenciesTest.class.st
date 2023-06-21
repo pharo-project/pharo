@@ -73,9 +73,9 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 SystemDependenciesTest >> knownCompilerDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #'Transcript-Core' and brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill this dependencies in the future because the kernel group should not depend on that."
 
-	^ #( #'FileSystem-Core' #Monticello #'Transcript-Core' )
+	^ #( #'FileSystem-Core' #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
@@ -91,9 +91,9 @@ SystemDependenciesTest >> knownDisplayDependencies [
 SystemDependenciesTest >> knownFileSystemDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #'Transcript-Core' are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill this dependencies in the future because the kernel group should not depend on that."
 
-	^ #( #Monticello #'Transcript-Core' )
+	^ #( #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
@@ -108,9 +108,9 @@ SystemDependenciesTest >> knownIDEDependencies [
 SystemDependenciesTest >> knownKernelDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #'Transcript-Core' #Jobs are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+	"Note: #'Transcript-Core' #Jobs are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
 
-	^ #( #'FileSystem-Core' #Monticello #'Transcript-Core' #Jobs )
+	^ #( #'FileSystem-Core' #'Transcript-Core' #Jobs )
 ]
 
 { #category : #'known dependencies' }
@@ -172,9 +172,9 @@ SystemDependenciesTest >> knownSUnitDependencies [
 SystemDependenciesTest >> knownSUnitKernelDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #''Transcript-Core'' are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill this dependencies in the future because the kernel group should not depend on that."
 
-	^ #( #Monticello #'Transcript-Core' #'FileSystem-Core' )
+	^ #( #'Transcript-Core' #'FileSystem-Core' )
 ]
 
 { #category : #'known dependencies' }

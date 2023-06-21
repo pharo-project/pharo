@@ -11,5 +11,5 @@ Class {
 ManifestRPackageCore class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#Jobs #'Transcript-Core' #'Announcements-Core' #Monticello)
+	^ #( #Jobs #'Transcript-Core' #'Announcements-Core' )
 ]
