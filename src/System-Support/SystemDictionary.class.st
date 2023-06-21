@@ -26,7 +26,7 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
-		'reservedVariables'
+		'pseudoVariables'
 	],
 	#category : #'System-Support-Utilities'
 }
@@ -338,8 +338,8 @@ SystemDictionary >> printElementsOn: aStream [
 SystemDictionary >> pseudoVariables [
 	"We cache the variables for speed"
 
-	^ reservedVariables ifNil: [
-		  reservedVariables := PseudoVariable lookupDictionary ]
+	^ pseudoVariables ifNil: [
+		  pseudoVariables := PseudoVariable lookupDictionary ]
 ]
 
 { #category : #'accessing - classes and traits' }
@@ -421,10 +421,10 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 ]
 
 { #category : #'accessing - variable lookup' }
-SystemDictionary >> resetReservedVariables [
-	"Lazy init in the accessor, resetting it will take new subclasses on ReservedVariable into account"
+SystemDictionary >> resetPseudoVariables [
+	"Lazy init in the accessor, resetting it will take new subclasses on PseudoVariable into account"
 
-	^ reservedVariables := nil
+	^ pseudoVariables := nil
 ]
 
 { #category : #'accessing - class and trait names' }

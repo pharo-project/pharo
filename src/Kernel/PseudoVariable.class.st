@@ -10,6 +10,12 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #'class initialization' }
+PseudoVariable class >> initialize [
+
+	self deprecatedAliases: { #ReservedVariable }
+]
+
 { #category : #accessing }
 PseudoVariable class >> instance [
 	self deprecated: 'use new to get a new instance or #lookupVar: for the shared instance'.
@@ -96,5 +102,5 @@ PseudoVariable >> usingMethods [
 { #category : #debugging }
 PseudoVariable >> write: aValue inContext: aContext [
 
-	self error: name, ' is reserved word and cant be modified'
+	self error: name, ' is a read-only variable and cant be modified'
 ]
