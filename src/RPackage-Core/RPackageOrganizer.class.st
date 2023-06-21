@@ -173,9 +173,14 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 RPackageOrganizer >> addCategory: catString [
 	"Add a new category named catString"
 
-	categoryMap at: catString asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
+	| package categoryName |
+	categoryName := catString asSymbol.
+	categoryMap at: categoryName ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
 
-	SystemAnnouncer uniqueInstance classCategoryAdded: catString
+	package := (self packageMatchingExtensionName: categoryName) ifNil: [ self registerPackage: (self packageClass named: categoryName) ].
+	package addClassTag: categoryName.
+
+	SystemAnnouncer uniqueInstance classCategoryAdded: categoryName
 ]
 
 { #category : #private }
@@ -757,7 +762,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	anAnnouncer unsubscribe: self.
 
 	anAnnouncer weak
-		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: CategoryRemoved send: #systemCategoryRemovedActionFrom: to: self;
 		when: CategoryRenamed send: #systemCategoryRenamedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
@@ -950,16 +954,6 @@ RPackageOrganizer >> superclassOrder: category [
 	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
 	classes := behaviors select: [ :each | each isBehavior ].
 	^ Class superclassOrder: classes
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
-	| package |
-
-	package := self packageMatchingExtensionName: ann categoryName asString.
-	package ifNil: [
-		package := self registerPackage: (self packageClass named: ann categoryName asSymbol) ].
-	package addClassTag: ann categoryName asSymbol
 ]
 
 { #category : #'system integration' }
