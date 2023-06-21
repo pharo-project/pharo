@@ -63,17 +63,6 @@ ClyMethodEditorToolMorph >> buildTextMorph [
 	self formatTextIfNeeded
 ]
 
-{ #category : #'events handling' }
-ClyMethodEditorToolMorph >> changesAreAboutApply [
-	| tagsEditor |
-	super changesAreAboutApply.
-
-	tagsEditor := statusBar findDeeplyA: ClyMethodTagsEditorMorph.
-	tagsEditor ifNil: [ ^self ].
-
-	tagsEditor acceptTags
-]
-
 { #category : #operations }
 ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 
