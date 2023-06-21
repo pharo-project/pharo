@@ -32,11 +32,6 @@ EpTCodeChangeVisitor >> visitCategoryChange: aChange [
 ]
 
 { #category : #visitor }
-EpTCodeChangeVisitor >> visitCategoryRemoval: aChange [
-	^ self visitCategoryChange: aChange
-]
-
-{ #category : #visitor }
 EpTCodeChangeVisitor >> visitCategoryRename: aChange [
 	^ self visitCategoryChange: aChange
 ]
@@ -99,6 +94,11 @@ EpTCodeChangeVisitor >> visitPackageChange: aChange [
 
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitPackageTagAddition: aChange [
+	^ self visitCategoryChange: aChange
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageTagRemoval: aChange [
 	^ self visitCategoryChange: aChange
 ]
 

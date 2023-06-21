@@ -78,12 +78,6 @@ EpHasImpactVisitor >> visitBehaviorNameChange: aChange [
 ]
 
 { #category : #visitor }
-EpHasImpactVisitor >> visitCategoryRemoval: aChange [
-
-	^ environment organization includesCategory: aChange categoryName
-]
-
-{ #category : #visitor }
 EpHasImpactVisitor >> visitCategoryRename: aChange [
 
 	^ environment organization includesCategory: aChange oldCategoryName
@@ -146,6 +140,12 @@ EpHasImpactVisitor >> visitPackageAddition: aPackageAddition [
 EpHasImpactVisitor >> visitPackageTagAddition: aChange [
 
 	^ (environment organization includesCategory: aChange categoryName) not
+]
+
+{ #category : #visitor }
+EpHasImpactVisitor >> visitPackageTagRemoval: aChange [
+
+	^ environment organization includesCategory: aChange categoryName
 ]
 
 { #category : #visitor }

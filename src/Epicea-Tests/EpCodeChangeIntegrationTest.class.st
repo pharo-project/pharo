@@ -54,12 +54,12 @@ EpCodeChangeIntegrationTest >> testCategoryAddition [
 EpCodeChangeIntegrationTest >> testCategoryRemoval [
 
 	self packageOrganizer addCategory: self categoryNameForTesting.
-	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 0.
+	self assert: (self countLogEventsWith: EpPackageTagRemoval) equals: 0.
 
 	self packageOrganizer removeCategory: self categoryNameForTesting.
-	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 1.
+	self assert: (self countLogEventsWith: EpPackageTagRemoval) equals: 1.
 	self
-		assert: (self allLogEventsWith: EpCategoryRemoval) first affectedPackageName
+		assert: (self allLogEventsWith: EpPackageTagRemoval) first affectedPackageName
 		equals: self categoryNameForTesting
 ]
 

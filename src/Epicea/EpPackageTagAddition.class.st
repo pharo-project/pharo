@@ -1,5 +1,5 @@
 "
-I represent the creation of a category in a package.
+I represent the creation of a package tag
 "
 Class {
 	#name : #EpPackageTagAddition,

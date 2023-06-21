@@ -110,12 +110,6 @@ EpMorphVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 ]
 
 { #category : #visitor }
-EpMorphVisitor >> visitCategoryRemoval: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
-]
-
-{ #category : #visitor }
 EpMorphVisitor >> visitCategoryRename: aCategoryChange [
 
 	^	(self displayOperation: 'Rename tag'),
@@ -198,6 +192,12 @@ EpMorphVisitor >> visitPackageAddition: aPackageAddition [
 
 { #category : #visitor }
 EpMorphVisitor >> visitPackageTagAddition: aCategoryChange [
+
+	^ self displayCategory: aCategoryChange categoryName
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageTagRemoval: aCategoryChange [
 
 	^ self displayCategory: aCategoryChange categoryName
 ]
