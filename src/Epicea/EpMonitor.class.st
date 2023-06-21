@@ -232,12 +232,6 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> categoryAdded: aCategoryAdded [
-
-	self addEvent: (EpCategoryAddition named: aCategoryAdded categoryName)
-]
-
-{ #category : #'announcement handling' }
 EpMonitor >> categoryRemoved: aPackageCategoryRemoved [
 
 	self addEvent: (EpCategoryRemoval named: aPackageCategoryRemoved categoryName)
@@ -467,6 +461,12 @@ EpMonitor >> packageRenamed: aCategoryRenamed [
 ]
 
 { #category : #'announcement handling' }
+EpMonitor >> packageTagAdded: packageTagAdded [
+
+	self addEvent: (EpCategoryAddition named: packageTagAdded tag categoryName)
+]
+
+{ #category : #'announcement handling' }
 EpMonitor >> protocolAdded: aProtocolAdded [
 
 	self addEvent: (EpProtocolAddition behavior: aProtocolAdded classAffected protocol: aProtocolAdded protocol name)
@@ -518,11 +518,12 @@ EpMonitor >> subscribeToJobAnnouncer [
 { #category : #private }
 EpMonitor >> subscribeToSystemAnnouncer [
 
-	{	CategoryAdded -> #categoryAdded:.
+	{	
 		CategoryRemoved -> #categoryRemoved:.
 		CategoryRenamed -> #categoryRenamed:.
 		PackageAdded -> #packageAdded:.
 		PackageRenamed -> #packageRenamed:.
+		PackageTagAdded -> #packageTagAdded:.
 		ClassAdded-> #behaviorAdded:.
 		ClassRemoved->#behaviorRemoved:.
 		MethodAdded -> #methodAdded:.
