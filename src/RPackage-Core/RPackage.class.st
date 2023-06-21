@@ -220,7 +220,7 @@ RPackage >> addClassTag: aSymbol [
 	^ self classTagNamed: tagName ifAbsent: [
 		  self class organizer validateCanBeAddedPackage: self tagName: tagName.
 		  newTag := self basicAddClassTag: tagName.
-		  SystemAnnouncer announce: (PackageTagAdded in: self tag: tagName).
+		  SystemAnnouncer announce: (PackageTagAdded to: newTag).
 		  ^ newTag ]
 ]
 
@@ -338,7 +338,7 @@ RPackage >> basicRemoveTag: tag [
 
 	classTags remove: tag ifAbsent: [  ].
 
-	SystemAnnouncer announce: (PackageTagRemoved in: self tag: tag name)
+	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
 { #category : #slices }

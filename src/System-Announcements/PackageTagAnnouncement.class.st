@@ -24,6 +24,14 @@ PackageTagAnnouncement class >> initialize [
 	self deprecatedAliases: { 'ClassTagAnnouncement' }
 ]
 
+{ #category : #'instance creation' }
+PackageTagAnnouncement class >> to: aPackageTag [
+
+	^ self new
+		  tag: aPackageTag;
+		  yourself
+]
+
 { #category : #testing }
 PackageTagAnnouncement >> affectsPackage: aPackage [
 	^package == aPackage
@@ -36,7 +44,8 @@ PackageTagAnnouncement >> affectsPackages [
 
 { #category : #accessing }
 PackageTagAnnouncement >> package [
-	^ package
+
+	^ self tag package
 ]
 
 { #category : #accessing }

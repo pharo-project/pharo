@@ -231,7 +231,7 @@ RPackageTag >> renameTo: newTagName [
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self classes do: [ :each | each category: categoryName ].
 		self class environment organization renameCategory: oldName toBe: categoryName ].
-	SystemAnnouncer announce: (PackageTagRenamed in: self package tag: tagName to: newTagName)
+	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldName newName: newTagName)
 ]
 
 { #category : #accessing }

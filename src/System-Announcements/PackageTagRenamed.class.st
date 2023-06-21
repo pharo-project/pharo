@@ -5,22 +5,25 @@ Class {
 	#name : #PackageTagRenamed,
 	#superclass : #PackageTagAnnouncement,
 	#instVars : [
+		'oldName',
 		'newName'
 	],
 	#category : #'System-Announcements-System-Packages'
 }
 
-{ #category : #'instance creation' }
-PackageTagRenamed class >> in: aPackage tag: aSymbol to: newTagName [
-
-	^(self in: aPackage tag: aSymbol)
-		newName: newTagName
-]
-
 { #category : #'class initialization' }
 PackageTagRenamed class >> initialize [
 
 	self deprecatedAliases: { 'ClassTagRenamed' }
+]
+
+{ #category : #'instance creation' }
+PackageTagRenamed class >> to: aPackageTag oldName: aSymbol newName: anotherSymbol [
+
+	^ (self to: aPackageTag)
+		  oldName: aSymbol;
+		  newName: anotherSymbol;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -31,4 +34,16 @@ PackageTagRenamed >> newName [
 { #category : #accessing }
 PackageTagRenamed >> newName: anObject [
 	newName := anObject
+]
+
+{ #category : #accessing }
+PackageTagRenamed >> oldName [
+
+	^ oldName
+]
+
+{ #category : #accessing }
+PackageTagRenamed >> oldName: anObject [
+
+	oldName := anObject
 ]

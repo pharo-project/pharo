@@ -21,9 +21,9 @@ PackageRenamed class >> initialize [
 PackageRenamed class >> to: aPackage oldName: aSymbol newName: anotherSymbol [
 
 	^ (self to: aPackage)
-		oldName: aSymbol;
-		newName: anotherSymbol;
-		yourself
+		  oldName: aSymbol;
+		  newName: anotherSymbol;
+		  yourself
 ]
 
 { #category : #testing }
