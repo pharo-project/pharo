@@ -1339,33 +1339,66 @@ Class >> usesPoolVarNamed: aString [
 Class >> variableByteSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames category: cat [
 	"Added to allow for a simplified subclass creation experience. "
 
-	^ self
-		variableByteSubclass: className
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		package: cat
+	| oldClassOrNil actualLayoutClass |
+	oldClassOrNil := self environment at: className ifAbsent: [ nil ].
+	actualLayoutClass := (oldClassOrNil notNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
+		ifTrue: [ CompiledMethodLayout ]
+		ifFalse: [ ByteLayout ].
+
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self;
+				name: className;
+				layoutClass: actualLayoutClass;
+				slotsFromString: instVarNameList;
+				sharedVariablesFromString: classVarNames;
+				category: cat;
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - variableByte' }
-Class >> variableByteSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames package: cat [
+Class >> variableByteSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
 	"Added to allow for a simplified subclass creation experience. "
 
-	^ self
-		variableByteSubclass: className
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: cat
+	| oldClassOrNil actualLayoutClass |
+	oldClassOrNil := self environment at: className ifAbsent: [ nil ].
+	actualLayoutClass := (oldClassOrNil notNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
+		ifTrue: [ CompiledMethodLayout ]
+		ifFalse: [ ByteLayout ].
+
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self;
+				name: className;
+				layoutClass: actualLayoutClass;
+				slotsFromString: instVarNameList;
+				sharedVariablesFromString: classVarNames;
+				category: cat;
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - deprecated' }
 Class >> variableByteSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	^ self
-		variableByteSubclass: t
-		instanceVariableNames: f
-		classVariableNames: d
-		poolDictionaries: s
-		package: cat
+
+	| oldClassOrNil actualLayoutClass |
+	oldClassOrNil := self environment at: t ifAbsent: [ nil ].
+	actualLayoutClass := (oldClassOrNil notNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
+		ifTrue: [ CompiledMethodLayout ]
+		ifFalse: [ ByteLayout ].
+
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				superclass: self;
+				name: t;
+				layoutClass: actualLayoutClass;
+				slotsFromString: f;
+				sharedVariablesFromString: d;
+				sharedPools: s;
+				category: cat;
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - variableByte' }
