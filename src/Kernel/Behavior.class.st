@@ -1563,11 +1563,7 @@ Behavior >> superclass: aClass [
 			].	"If the class is not nil it should update the class hierarchy correctly, using the classs builder"
 	^ self classInstaller
 		update: self
-		to: [ :builder |
-			builder
-				fillFor: self;
-				superclass: aClass
-			]
+		to: [ :builder | builder superclass: aClass ]
 ]
 
 { #category : #initialization }
