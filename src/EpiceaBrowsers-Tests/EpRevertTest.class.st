@@ -64,7 +64,8 @@ EpRevertTest >> testCategoryAdditionWithCategoryRemoved [
 	| organization aCategory |
 	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
 
 	self assert: (organization includesCategory: aCategory).
@@ -78,7 +79,8 @@ EpRevertTest >> testCategoryRemovalWithCategoryAdded [
 	| organization aCategory |
 	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	organization removeCategory: aCategory.
 	self setHeadAsInputEntry.
 
@@ -94,7 +96,7 @@ EpRevertTest >> testCategoryRename [
 	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
 	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 
