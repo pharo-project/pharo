@@ -48,8 +48,9 @@ ShiftClassInstaller class >> make: aBlock [
 { #category : #building }
 ShiftClassInstaller class >> update: oldClass to: aBlock [
 	^ self new
+		fillFor: oldClass;
 		oldClass: oldClass;
-		make:aBlock
+		make: aBlock
 ]
 
 { #category : #validating }
@@ -102,6 +103,11 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	oldObject setIsReadOnlyObject: false.
 
 	^ newObject
+]
+
+{ #category : #building }
+ShiftClassInstaller >> fillFor: aClassOrTrait [
+	builder fillFor: aClassOrTrait
 ]
 
 { #category : #building }
