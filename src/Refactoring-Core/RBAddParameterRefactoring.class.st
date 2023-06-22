@@ -141,17 +141,6 @@ RBAddParameterRefactoring >> newSelectorString [
 	^stream contents
 ]
 
-{ #category : #private }
-RBAddParameterRefactoring >> parseTreeRewriter [
-	| rewriteRule oldString newString |
-	rewriteRule := self parseTreeRewriterClass new.
-	oldString := self buildSelectorString: oldSelector.
-	newString := self newSelectorString.
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
-	^rewriteRule
-]
-
 { #category : #action }
 RBAddParameterRefactoring >> renameArgumentsIn: parseTree [
 	| newArgNames |
