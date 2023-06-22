@@ -97,12 +97,20 @@ RBChangeMethodNameRefactoring >> newSelectorString [
 { #category : #private }
 RBChangeMethodNameRefactoring >> parseTreeRewriter [
 	| rewriteRule oldString newString |
-	rewriteRule := self parseTreeRewriterClass new.
+	
 	oldString := self buildSelectorString: oldSelector.
 	newString := self newSelectorString.
+	
+	rewriteRule := self parseTreeRewriterInstance.
 	rewriteRule replace: '``@object ' , oldString
 		with: '``@object ' , newString.
 	^rewriteRule
+]
+
+{ #category : #parsing }
+RBChangeMethodNameRefactoring >> parseTreeRewriterInstance [
+
+	^ self parseTreeRewriterClass new
 ]
 
 { #category : #preconditions }

@@ -84,18 +84,15 @@ RBRenameMethodRefactoring >> myConditions [
 				, ' doesn''t have the correct number of arguments.'
 ]
 
-{ #category : #transforming }
-RBRenameMethodRefactoring >> parseTreeRewriter [
-	| rewriteRule oldString newString |
-	oldString := self buildSelectorString: oldSelector.
-	newString := self buildSelectorString: newSelector
-				withPermuteMap: permutation.
-	rewriteRule := self hasPermutedArguments
-				ifTrue: [self parseTreeRewriterClass new]
-				ifFalse: [self parseTreeRewriterClass replaceLiteral: oldSelector with: newSelector].
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
-	^rewriteRule
+{ #category : #parsing }
+RBRenameMethodRefactoring >> parseTreeRewriterInstance [
+
+	^ self hasPermutedArguments
+		  ifTrue: [ self parseTreeRewriterClass new ]
+		  ifFalse: [
+			  self parseTreeRewriterClass
+				  replaceLiteral: oldSelector
+				  with: newSelector ]
 ]
 
 { #category : #preconditions }
