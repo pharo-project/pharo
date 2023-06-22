@@ -275,10 +275,10 @@ EpCodeChangeIntegrationTest >> testPackageAddition [
 
 	self assert: (self countLogEventsWith: EpPackageAddition) equals: 0.
 
-	self packageOrganizer createPackageNamed: self categoryNameForTesting.
+	self packageOrganizer createPackageNamed: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageAddition) equals: 1.
-	self assert: (self allLogEventsWith: EpPackageAddition) first affectedPackageName equals: self categoryNameForTesting
+	self assert: (self allLogEventsWith: EpPackageAddition) first affectedPackageName equals: self packageNameForTesting
 ]
 
 { #category : #tests }
