@@ -351,6 +351,12 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 			  package ]
 ]
 
+{ #category : #registration }
+RPackageOrganizer >> ensureTagNamed: aName inPackageNamed: aPackageName [
+
+	^ (self ensureExistAndRegisterPackageNamed: aPackageName) addClassTag: aName
+]
+
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> environment [
 	 ^ environment ifNil: [ environment := Smalltalk globals]
@@ -444,6 +450,14 @@ RPackageOrganizer >> hasRegistered [
 								detect: [:each | each anySatisfy: [:anAction | anAction receiver = RPackage organizer]] ifNone: [nil].
 	self flag: #cyril.
 	^ (actionSequence isNil not) and: [(MCWorkingCopy myDependents includes: self)]"
+]
+
+{ #category : #testing }
+RPackageOrganizer >> hasTagNamed: aTagName inPackageNamed: aPackageName [
+
+	| package |
+	package := self packageNamed: aPackageName ifAbsent: [ ^ false ].
+	^ package includesClassTagNamed: aTagName
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }

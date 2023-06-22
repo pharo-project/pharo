@@ -59,19 +59,20 @@ EpApplyPreviewerTest >> outputEvents [
 EpApplyPreviewerTest >> testBehaviorCategoryChange [
 
 	| aClass aCategory anotherCategory |
+	self flag: #categoryLeftover. "Next line should not be here when the Class Builder will know how to manage well the packages and tags."
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	aClass := classFactory newClass.
 	aCategory := aClass category.
-	anotherCategory := aCategory, '2'.
+	anotherCategory := aCategory , '2'.
 	aClass category: anotherCategory.
 	self setHeadAsInputEntry.
 
 	aClass category: aCategory.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpBehaviorCategoryChange.
 		self assert: output oldCategory equals: aCategory.
-		self assert: output newCategory equals: anotherCategory.
-		]
+		self assert: output newCategory equals: anotherCategory ]
 ]
 
 { #category : #tests }

@@ -6,7 +6,8 @@ Class {
 	#superclass : #EpCodeChange,
 	#instVars : [
 		'classCategoryName',
-		'affectedPackageName'
+		'affectedPackageName',
+		'tagName'
 	],
 	#category : #'Epicea-Model'
 }
@@ -22,6 +23,15 @@ EpCategoryChange class >> named: aName packageName: aPackageName [
 
 	^ self new
 		  classCategoryName: aName;
+		  affectedPackageName: aPackageName;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+EpCategoryChange class >> packageName: aPackageName tagName: aTagName [
+
+	^ self new
+		  tagName: aTagName;
 		  affectedPackageName: aPackageName;
 		  yourself
 ]
@@ -46,7 +56,7 @@ EpCategoryChange >> affectedPackageName: anObject [
 { #category : #accessing }
 EpCategoryChange >> categoryName [
 
-	^ classCategoryName
+	^ classCategoryName ifNil: [ self affectedPackageName , '-' , self tagName ]
 ]
 
 { #category : #accessing }
@@ -66,4 +76,16 @@ EpCategoryChange >> doesOverride: aCodeChange [
 EpCategoryChange >> isEpCategoryChange [
 
 	^ true
+]
+
+{ #category : #accessing }
+EpCategoryChange >> tagName [
+
+	^ tagName
+]
+
+{ #category : #accessing }
+EpCategoryChange >> tagName: anObject [
+
+	tagName := anObject
 ]

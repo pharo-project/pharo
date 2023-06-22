@@ -469,8 +469,7 @@ EpMonitor >> packageRenamed: aCategoryRenamed [
 { #category : #'announcement handling' }
 EpMonitor >> packageTagAdded: packageTagAdded [
 
-	self flag: #epicea. "Do not use this categoryName"
-	self addEvent: (EpPackageTagAddition named: packageTagAdded tag categoryName)
+	self addEvent: (EpPackageTagAddition packageName: packageTagAdded package name tagName: packageTagAdded tag name)
 ]
 
 { #category : #'announcement handling' }
