@@ -76,16 +76,6 @@ ThreadSafeTranscript >> clear [
 	self critical: [
 		deferredClear := true.
 		deferredEndEntry := false.
-		stream reset ]
-]
-
-{ #category : #streaming }
-ThreadSafeTranscript >> clearEverything [
-	"identical to #clear but installs a new stream instead of starting it at the beginning"
-
-	self critical: [
-		deferredClear := true.
-		deferredEndEntry := false.
 		stream := String new writeStream ]
 ]
 
