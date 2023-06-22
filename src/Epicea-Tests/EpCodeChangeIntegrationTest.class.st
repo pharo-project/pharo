@@ -282,6 +282,19 @@ EpCodeChangeIntegrationTest >> testPackageAddition [
 ]
 
 { #category : #tests }
+EpCodeChangeIntegrationTest >> testPackageRemoval [
+
+	self packageOrganizer createPackageNamed: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 0.
+
+	self packageOrganizer unregisterPackageNamed: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 1.
+	self assert: (self allLogEventsWith: EpPackageRemoval) first affectedPackageName equals: self packageNameForTesting
+]
+
+{ #category : #tests }
 EpCodeChangeIntegrationTest >> testProtocolAddition [
 
 	aClass := classFactory newClass.
