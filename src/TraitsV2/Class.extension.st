@@ -33,11 +33,8 @@ Class >> immediateSubclass: aName uses: aTraitComposition instanceVariableNames:
 Class >> setTraitComposition: aTraitComposition [
 
 	^ self classInstaller
-		update: self to: [ :builder |
-			builder
-				fillFor: self;
-				traitComposition: aTraitComposition;
-				classTraitComposition: aTraitComposition asTraitComposition classComposition ]
+		  update: self
+		  to: [ :builder | builder traitComposition: aTraitComposition ]
 ]
 
 { #category : #'*TraitsV2' }
