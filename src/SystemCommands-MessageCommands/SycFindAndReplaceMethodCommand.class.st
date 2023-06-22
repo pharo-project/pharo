@@ -31,9 +31,16 @@ SycFindAndReplaceMethodCommand >> createRefactoring [
 		inWholeHierarchy: self searchInTheWholeHierarchy
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 SycFindAndReplaceMethodCommand >> defaultMenuItemName [
-	^'Find and replace'
+
+	^ self refactoringClass menuItemString
+]
+
+{ #category : #'factory method' }
+SycFindAndReplaceMethodCommand >> refactoringClass [
+
+	^ RBFindAndReplaceTransformation
 ]
 
 { #category : #execution }
