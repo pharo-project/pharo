@@ -88,13 +88,18 @@ RBChangeMethodNameRefactoring >> newSelector [
 	^newSelector
 ]
 
+{ #category : #'instance creation' }
+RBChangeMethodNameRefactoring >> newSelectorString [ 
+	^ self buildSelectorString: newSelector
+				withPermuteMap: permutation
+]
+
 { #category : #private }
 RBChangeMethodNameRefactoring >> parseTreeRewriter [
 	| rewriteRule oldString newString |
 	rewriteRule := self parseTreeRewriterClass new.
 	oldString := self buildSelectorString: oldSelector.
-	newString := self buildSelectorString: newSelector
-				withPermuteMap: permutation.
+	newString := self newSelectorString.
 	rewriteRule replace: '``@object ' , oldString
 		with: '``@object ' , newString.
 	^rewriteRule
