@@ -184,40 +184,6 @@ OCCompilerTest >> testNoShadowing [
 		^nil ]
 ]
 
-{ #category : #'tests - shadowing' }
-OCCompilerTest >> testReservedNameAsBlockArgumentShadowing [
-	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
-		do: [ :each |
-			self initializeErrorMessage.
-			[ :exit |
-			OpalCompiler new
-				source: 'temp ^ [ :' , each , ' | ^ ' , each , ' ]';
-				class: MockForCompilation;
-				requestor: self;
-				failBlock: [ exit value ];
-				compile.
-			self fail ] valueWithExit.
-			self assert: (errorMessage = 'Variable name expected ->' or: [ errorMessage = 'Reserved variable name ->' ]).
-			self assert: errorLocation equals: 11 ]
-]
-
-{ #category : #'tests - shadowing' }
-OCCompilerTest >> testReservedNameAsMethodArgumentShadowing [
-	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
-		do: [ :each |
-			self initializeErrorMessage.
-			[ :exit |
-			OpalCompiler new
-				source: 'temp: ' , each , ' ^ ' , each;
-				class: MockForCompilation;
-				requestor: self;
-				failBlock: [ exit value ];
-				compile.
-			self fail ] valueWithExit.
-			self assert: (errorMessage = 'Variable name expected ->' or: [ errorMessage = 'Reserved variable name ->' ]).
-			self assert: errorLocation equals: 7 ]
-]
-
 { #category : #literals }
 OCCompilerTest >> testScaledDecimalLiterals [
 	"Equal ScaledDecimal with different scales should use different slots

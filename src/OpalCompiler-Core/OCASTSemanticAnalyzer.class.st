@@ -135,9 +135,7 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
 
-	var isPseudoVariable
-		ifTrue: [ self error: 'Reserved variable name' forNode: aNode ]
-		ifFalse: [ aNode addWarning: 'Name already defined' ]
+	aNode addWarning: 'Name already defined'
 ]
 
 { #category : #'error handling' }
