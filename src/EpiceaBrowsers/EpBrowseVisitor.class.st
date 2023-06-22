@@ -53,5 +53,5 @@ EpBrowseVisitor >> visitMethodChange: aChange [
 { #category : #visitor }
 EpBrowseVisitor >> visitPackageChange: aChange [
 
-	(self packageOrganizer packageNamed: aChange affectedPackageName ifAbsent: [ ^ self inform: 'Package ' , aChange affectedPackageName , ' not found.' ]) browse
+	(self packageOrganizer packageNamed: aChange packageName ifAbsent: [ ^ self inform: 'Package ' , aChange packageName , ' not found.' ]) browse
 ]

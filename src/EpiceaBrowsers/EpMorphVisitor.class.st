@@ -199,7 +199,7 @@ EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 { #category : #visitor }
 EpMorphVisitor >> visitPackageAddition: aPackageAddition [
 
-	^ self displayPackage: aPackageAddition affectedPackageName
+	^ self displayPackage: aPackageAddition packageName
 ]
 
 { #category : #visitor }
