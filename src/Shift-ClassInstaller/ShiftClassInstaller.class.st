@@ -105,7 +105,7 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	^ newObject
 ]
 
-{ #category : #building }
+{ #category : #initialization }
 ShiftClassInstaller >> fillFor: aClassOrTrait [
 	builder fillFor: aClassOrTrait
 ]
@@ -216,7 +216,7 @@ ShiftClassInstaller >> make: aBlock [
 	^self make
 ]
 
-{ #category : #'to sort' }
+{ #category : #initialization }
 ShiftClassInstaller >> makeWithBuilder: aBuilder [
 
 	builder := aBuilder.
