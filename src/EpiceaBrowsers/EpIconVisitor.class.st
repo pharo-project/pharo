@@ -124,6 +124,12 @@ EpIconVisitor >> visitPackageAddition: aPackageAddition [
 ]
 
 { #category : #visitor }
+EpIconVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self removalIcon
+]
+
+{ #category : #visitor }
 EpIconVisitor >> visitProtocolAddition: aProtocolChange [
 	^ self additionIcon
 ]

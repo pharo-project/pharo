@@ -119,6 +119,12 @@ EpApplyVisitor >> visitPackageAddition: aPackageAddition [
 ]
 
 { #category : #visitor }
+EpApplyVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	self packageOrganizer unregisterPackageNamed: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
 EpApplyVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	self behaviorNamed: aProtocolAddition behaviorAffectedName ifPresent: [ :behavior | behavior addProtocol: aProtocolAddition protocol ]

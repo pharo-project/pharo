@@ -81,6 +81,12 @@ EpNewStateVisitor >> visitPackageAddition: aPackageAddition [
 ]
 
 { #category : #visitor }
+EpNewStateVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ aPackageRemoval packageName
+]
+
+{ #category : #visitor }
 EpNewStateVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	^ aProtocolAddition protocol

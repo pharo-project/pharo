@@ -103,6 +103,12 @@ EpTCodeChangeVisitor >> visitPackageChange: aChange [
 ]
 
 { #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self visitPackageChange: aPackageRemoval
+]
+
+{ #category : #visitor }
 EpTCodeChangeVisitor >> visitProtocolAddition: aProtocolAddition [
 	^ self visitProtocolChange: aProtocolAddition
 ]

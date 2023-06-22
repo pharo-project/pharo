@@ -149,6 +149,12 @@ EpHasImpactVisitor >> visitPackageAddition: aPackageAddition [
 ]
 
 { #category : #visitor }
+EpHasImpactVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self packageOrganizer includesPackageNamed: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
 EpHasImpactVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	self
