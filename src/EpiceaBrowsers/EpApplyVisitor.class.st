@@ -115,7 +115,7 @@ EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 { #category : #visitor }
 EpApplyVisitor >> visitPackageAddition: aPackageAddition [
 
-	self packageOrganizer ensureExistAndRegisterPackageNamed: aPackageAddition packageName
+	self packageOrganizer registerPackageNamed: aPackageAddition packageName
 ]
 
 { #category : #visitor }
