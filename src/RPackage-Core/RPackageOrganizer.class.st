@@ -351,6 +351,12 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 			  package ]
 ]
 
+{ #category : #registration }
+RPackageOrganizer >> ensureTagNamed: aTagName inPackageNamed: aPackageName [
+
+	^ (self registerPackageNamed: aPackageName) addClassTag: aTagName
+]
+
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> environment [
 	 ^ environment ifNil: [ environment := Smalltalk globals]

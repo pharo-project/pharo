@@ -36,7 +36,8 @@ EpApplyTest >> testCategoryAdditionWithCategoryRemoved [
 
 	| aCategory |
 	aCategory := classFactory defaultCategory.
-	self packageOrganizer addCategory: aCategory.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
 	self packageOrganizer removeCategory: aCategory.
 
@@ -51,7 +52,8 @@ EpApplyTest >> testCategoryRemovalWithCategoryAdded [
 
 	| aCategory |
 	aCategory := classFactory defaultCategory.
-	self packageOrganizer addCategory: aCategory.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self packageOrganizer removeCategory: aCategory.
 	self setHeadAsInputEntry.
 	self packageOrganizer addCategory: aCategory.
@@ -68,7 +70,8 @@ EpApplyTest >> testCategoryRename [
 	| aCategory anotherCategory |
 	aCategory := classFactory defaultCategory.
 	anotherCategory := aCategory , '2'.
-	self packageOrganizer addCategory: aCategory.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self packageOrganizer renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 	self packageOrganizer renameCategory: anotherCategory toBe: aCategory. "Rollback"
@@ -89,7 +92,8 @@ EpApplyTest >> testCategoryRenameWithClass [
 	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
 	anotherCategory := aCategory , '2'.
-	organization addCategory: aCategory.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 
 	aClass := classFactory newClass.
 	aClass category: aCategory.
