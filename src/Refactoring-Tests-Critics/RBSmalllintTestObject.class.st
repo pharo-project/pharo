@@ -559,6 +559,7 @@ RBSmalllintTestObject >> uncommonMessageSend [
 
 { #category : #methods }
 RBSmalllintTestObject >> uncommonMessageSend2 [
+	<ignoreNotImplementedSelectors: #(Object)>
 	|a|
 	a:=3
 	Object new.

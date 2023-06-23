@@ -258,19 +258,13 @@ Class >> usesTraitLocally: aTrait [
 { #category : #'*TraitsV2' }
 Class >> variableByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategory [
 
-	| oldClassOrNil actualLayoutClass |
-	oldClassOrNil := self environment at: className ifAbsent: [ nil ].
-	actualLayoutClass := (oldClassOrNil notNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
-		ifTrue: [ CompiledMethodLayout ]
-		ifFalse: [ ByteLayout ].
-
 	^ self classInstaller
 		make: [ :builder |
 			builder
 				name: className;
 				superclass: self;
 				slotsFromString: instVarNameList;
-				layoutClass: actualLayoutClass;
+				layoutClass: (self checkForCompiledMethodLayout: className);
 				sharedVariablesFromString: classVarNames;
 				traitComposition: aTraitCompositionOrArray;
 				category: aCategory ]
@@ -279,19 +273,13 @@ Class >> variableByteSubclass: className uses: aTraitCompositionOrArray instance
 { #category : #'*TraitsV2' }
 Class >> variableByteSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
 
-	| oldClassOrNil actualLayoutClass |
-	oldClassOrNil := self environment at: aName ifAbsent: [ nil ].
-	actualLayoutClass := (oldClassOrNil notNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
-		ifTrue: [ CompiledMethodLayout ]
-		ifFalse: [ ByteLayout ].
-
 	^ self classInstaller
 		make: [ :builder |
 			builder
 				name: aName;
 				superclass: self;
 				slotsFromString: someInstanceVariableNames;
-				layoutClass: actualLayoutClass;
+				layoutClass: (self checkForCompiledMethodLayout: aName);
 				sharedVariablesFromString: someClassVariableNames;
 				sharedPools: someSharedPoolNames;
 				traitComposition: aTraitComposition;
