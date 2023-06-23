@@ -354,7 +354,7 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 { #category : #registration }
 RPackageOrganizer >> ensureTagNamed: aTagName inPackageNamed: aPackageName [
 
-	^ (self ensureExistAndRegisterPackageNamed: aPackageName) addClassTag: aTagName
+	^ (self registerPackageNamed: aPackageName) addClassTag: aTagName
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
