@@ -338,9 +338,7 @@ Metaclass >> slots: slotCollection [
 	theClass := self instanceSide.
 
 	theClass := theClass classInstaller update: theClass to: [ :builder |
-		builder
-			fillFor: theClass;
-			classSlots: slotCollection ].
+		builder classSlots: slotCollection ].
 	^ theClass classSide
 ]
 
