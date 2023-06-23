@@ -120,19 +120,6 @@ RBReplaceMessageSendTransformation >> newSelectorString [
 	^stream contents
 ]
 
-{ #category : #transforming }
-RBReplaceMessageSendTransformation >> parseTreeRewriter [
-
-	| rewriteRule oldString newString |
-	rewriteRule := self parseTreeRewriterClass new.
-	oldString := self buildSelectorString: oldSelector.
-	newString := self newSelectorString.
-	rewriteRule
-		replace: '``@object ' , oldString
-		with: '``@object ' , newString.
-	^ rewriteRule
-]
-
 { #category : #preconditions }
 RBReplaceMessageSendTransformation >> preconditions [
 
