@@ -194,7 +194,7 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 { #category : #visitor }
 EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
 
-	^ (self packageOrganizer includesPackageNamed: aPackageAddition affectedPackageName)
+	^ (self packageOrganizer includesPackageNamed: aPackageAddition packageName)
 		  ifTrue: [ #(  ) ]
 		  ifFalse: [ { aPackageAddition } ]
 ]

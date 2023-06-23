@@ -77,7 +77,7 @@ EpNewStateVisitor >> visitMethodModification: aMethodModification [
 { #category : #visitor }
 EpNewStateVisitor >> visitPackageAddition: aPackageAddition [
 
-	^ aPackageAddition affectedPackageName
+	^ aPackageAddition packageName
 ]
 
 { #category : #visitor }

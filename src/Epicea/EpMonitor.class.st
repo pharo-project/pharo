@@ -457,7 +457,7 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 { #category : #'announcement handling' }
 EpMonitor >> packageAdded: packageAdded [
 
-	self addEvent: (EpPackageAddition named: packageAdded package name)
+	self addEvent: (EpPackageAddition packageName: packageAdded package name)
 ]
 
 { #category : #'announcement handling' }
