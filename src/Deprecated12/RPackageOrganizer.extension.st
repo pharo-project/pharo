@@ -1,6 +1,13 @@
 Extension { #name : #RPackageOrganizer }
 
 { #category : #'*Deprecated12' }
+RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
+
+	self deprecated: 'Use #registerPackageNamed: instead.' transformWith: '`@rcv  ensureExistAndRegisterPackageNamed: `@arg' -> '`@rcv registerPackageNamed: `@arg'.
+	^ self registerPackageNamed: aSymbol
+]
+
+{ #category : #'*Deprecated12' }
 RPackageOrganizer >> packageExactlyMatchingExtensionName: anExtensionName [
 	"only look for a package for which the name match 'anExtensionName', making no difference about case. Return nil if no package is found"
 

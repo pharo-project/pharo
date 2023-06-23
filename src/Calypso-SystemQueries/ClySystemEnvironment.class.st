@@ -200,11 +200,6 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 		  ifFalse: [ nil ]
 ]
 
-{ #category : #'package management' }
-ClySystemEnvironment >> ensureExistAndRegisterPackageNamed: packageName [
-	^packageOrganizer ensureExistAndRegisterPackageNamed: packageName
-]
-
 { #category : #accessing }
 ClySystemEnvironment >> environment [
 	^ RBBrowserEnvironment new
@@ -370,6 +365,11 @@ ClySystemEnvironment >> projectManager: anObject [
 { #category : #accessing }
 ClySystemEnvironment >> projects [
 	^projectManager projects
+]
+
+{ #category : #'package management' }
+ClySystemEnvironment >> registerPackageNamed: packageName [
+	^packageOrganizer registerPackageNamed: packageName
 ]
 
 { #category : #'package management' }

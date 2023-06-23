@@ -334,21 +334,7 @@ RPackageOrganizer >> debuggingName: aString [
 
 { #category : #initialization }
 RPackageOrganizer >> defineUnpackagedClassesPackage [
-	^ self ensureExistAndRegisterPackageNamed: self packageClass defaultPackageName
-]
-
-{ #category : #'private - registration' }
-RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
-	"A new package is now available and declared in the receiver."
-
-	^ (self includesPackageNamed: aSymbol)
-		  ifFalse: [ self basicRegisterPackage: (RPackage named: aSymbol) ]
-		  ifTrue: [
-			  | package |
-			  package := self packageNamed: aSymbol.
-			  package extendedClasses do: [ :extendedClass | self registerExtendingPackage: package forClass: extendedClass ].
-			  package definedClasses do: [ :definedClass | self registerPackage: package forClass: definedClass ].
-			  package ]
+	^ self registerPackageNamed: self packageClass defaultPackageName
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -1150,7 +1136,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		                      ifTrue: [ self packageForProtocol: newProtocol inClass: method methodClass ]
 		                      ifFalse: [
 			                      (newProtocol beginsWith: '*')
-				                      ifTrue: [ self ensureExistAndRegisterPackageNamed: newProtocol allButFirst capitalized ]
+				                      ifTrue: [ self registerPackageNamed: newProtocol allButFirst capitalized ]
 				                      ifFalse: [ method methodClass package ] ].
 
 	methodPackage := (self hasPackageForProtocol: oldProtocol)
