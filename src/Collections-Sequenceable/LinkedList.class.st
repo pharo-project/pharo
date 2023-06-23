@@ -400,6 +400,35 @@ LinkedList >> postCopy [
 ]
 
 { #category : #enumerating }
+LinkedList >> rechain: aBlock [
+	"Enumerates through the LinkedList replacing each link by the chain of links returned by the block or removing the link if nil is returned. Returning the same link preserves it, but returning any other link of the list WILL result in an infinite loop."
+
+	| aLink lastLinkKnown firstLinkKnown outputLink |
+	aLink := firstLink.
+	firstLinkKnown := nil.
+	lastLinkKnown := nil.
+	[ aLink == nil ] whileFalse: [
+		(aBlock value: aLink) ifNotNil: [ :output |
+			
+			outputLink := output asLink.
+			firstLinkKnown
+				ifNil: [ firstLinkKnown := outputLink ]
+				ifNotNil: [ lastLinkKnown nextLink: outputLink ].
+
+			"If the returned link is the same as the original, do not consider it as a chain. Otherwise add the entire chain"
+			outputLink == aLink ifFalse: [
+				[ outputLink nextLink ] whileNotNil: [
+					outputLink := outputLink nextLink ] ].
+
+			lastLinkKnown := outputLink ].
+		"Get the next link, then make sure that lastLinkKnown is actually the end of the list."
+		aLink := aLink nextLink.
+		lastLinkKnown ifNotNil: [ lastLinkKnown nextLink: nil ] ].
+	firstLink := firstLinkKnown.
+	lastLink := lastLinkKnown
+]
+
+{ #category : #enumerating }
 LinkedList >> reject: rejectBlock [
 	"Optimized version of SequenceableCollection>>#reject:"
 
