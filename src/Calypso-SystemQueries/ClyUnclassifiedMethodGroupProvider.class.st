@@ -10,7 +10,7 @@ Class {
 { #category : #'building groups' }
 ClyUnclassifiedMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
 
-	^ClyNoTagMethodGroup withMethodsFrom: aMethodQuery
+	^ClyUnclassifiedMethodGroup withMethodsFrom: aMethodQuery
 ]
 
 { #category : #'building groups' }

@@ -1,0 +1,30 @@
+"
+I am group of unclassified methods
+"
+Class {
+	#name : #ClyUnclassifiedMethodGroup,
+	#superclass : #ClyMethodGroup,
+	#category : #'Calypso-SystemQueries-Domain'
+}
+
+{ #category : #accessing }
+ClyUnclassifiedMethodGroup class >> groupName [
+
+	^ Protocol unclassified
+]
+
+{ #category : #testing }
+ClyUnclassifiedMethodGroup class >> isBasedOnMethodProtocol [
+	^true
+]
+
+{ #category : #accessing }
+ClyUnclassifiedMethodGroup class >> priority [
+	^8
+]
+
+{ #category : #'instance creation' }
+ClyUnclassifiedMethodGroup class >> withMethodsFrom: aMethodQuery [
+
+	^self named: self groupName on: aMethodQuery
+]

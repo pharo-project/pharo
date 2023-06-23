@@ -41,7 +41,7 @@ ClyFullBrowserContext >> isMethodTagSelected [
 
 	self isMethodGroupSelected ifFalse: [ ^false ].
 
-	^self selectedMethodGroupClass isBasedOnMethodTag
+	^self selectedMethodGroupClass isBasedOnMethodProtocol
 ]
 
 { #category : #'selection-projects' }
