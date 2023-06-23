@@ -816,9 +816,8 @@ RPackageOrganizer >> registerPackage: aPackage forClassName: aClassNameSymbol [
 
 { #category : #registration }
 RPackageOrganizer >> registerPackageNamed: aString [
-	^ self
-		packageNamed: aString asSymbol
-		ifAbsent: [ (self packageClass named: aString asSymbol) register ]
+
+	^ self packageNamed: aString asSymbol ifAbsent: [ self registerPackage: (self packageClass named: aString organizer: self) ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }

@@ -76,7 +76,8 @@ Class {
 		'metaclassExtensionSelectors',
 		'classes',
 		'name',
-		'classTags'
+		'classTags',
+		'organizer'
 	],
 	#classVars : [
 		'PackageGlobalOrganizer',
@@ -112,6 +113,14 @@ RPackage class >> named: aString [
 
 	^ self new
 		  name: aString;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+RPackage class >> named: aString organizer: aPackageOrganizer [
+
+	^ (self named: aString)
+		  organizer: aPackageOrganizer;
 		  yourself
 ]
 
@@ -1033,7 +1042,15 @@ RPackage >> orderedClasses [
 
 { #category : #private }
 RPackage >> organizer [
-	^ self class organizer
+
+	self flag: #package.
+	^ organizer ifNil: [ self class organizer ]
+]
+
+{ #category : #accessing }
+RPackage >> organizer: anObject [
+
+	organizer := anObject
 ]
 
 { #category : #accessing }
