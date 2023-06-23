@@ -203,6 +203,12 @@ EpMorphVisitor >> visitPackageAddition: aPackageAddition [
 ]
 
 { #category : #visitor }
+EpMorphVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self displayPackage: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
 EpMorphVisitor >> visitProtocolAddition: aProtocolChange [
 
 	^ self displayClass: aProtocolChange behaviorAffectedName protocol: aProtocolChange protocol

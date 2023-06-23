@@ -107,8 +107,13 @@ EpInverseVisitor >> visitMethodRemoval: aChange [
 { #category : #visitor }
 EpInverseVisitor >> visitPackageAddition: aPackageAddition [
 
-	self flag: #epicea. "The inverse of an addition is an addition?!"
-	^ EpPackageAddition packageName: aPackageAddition affectedPackageName
+	^ EpPackageRemoval packageName: aPackageAddition packageName
+]
+
+{ #category : #visitor }
+EpInverseVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ EpPackageAddition packageName: aPackageRemoval packageName
 ]
 
 { #category : #visitor }

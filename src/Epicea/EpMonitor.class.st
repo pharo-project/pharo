@@ -461,6 +461,12 @@ EpMonitor >> packageAdded: packageAdded [
 ]
 
 { #category : #'announcement handling' }
+EpMonitor >> packageRemoved: packageRemoved [
+
+	self addEvent: (EpPackageRemoval packageName: packageRemoved package name)
+]
+
+{ #category : #'announcement handling' }
 EpMonitor >> packageRenamed: aCategoryRenamed [
 
 	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldName newName: aCategoryRenamed newName)
@@ -523,6 +529,7 @@ EpMonitor >> subscribeToSystemAnnouncer [
 		CategoryRenamed -> #categoryRenamed:.
 		PackageAdded -> #packageAdded:.
 		PackageRenamed -> #packageRenamed:.
+		PackageRemoved -> #packageRemoved:.
 		ClassAdded-> #behaviorAdded:.
 		ClassRemoved->#behaviorRemoved:.
 		MethodAdded -> #methodAdded:.

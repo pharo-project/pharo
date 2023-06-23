@@ -353,6 +353,22 @@ EpApplyTest >> testPackageAddition [
 ]
 
 { #category : #tests }
+EpApplyTest >> testPackageRemoval [
+
+	[
+	self packageOrganizer createPackageNamed: classFactory packageName.
+	self packageOrganizer unregisterPackageNamed: classFactory packageName.
+	self setHeadAsInputEntry.
+	self packageOrganizer createPackageNamed: classFactory packageName.
+
+	self assert: inputEntry content class equals: EpPackageRemoval.
+	self assert: (self packageOrganizer includesPackageNamed: classFactory packageName).
+	self applyInputEntry.
+	self deny: (self packageOrganizer includesPackageNamed: classFactory packageName) ] ensure: [
+		self packageOrganizer unregisterPackageNamed: classFactory packageName ]
+]
+
+{ #category : #tests }
 EpApplyTest >> testProtocolAddition [
 
 	| aClass |
