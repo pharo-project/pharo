@@ -28,13 +28,6 @@ MCDirectoryRepository class >> description [
 	^ 'directory'
 ]
 
-{ #category : #'instance creation' }
-MCDirectoryRepository class >> morphicConfigure [
-	^ (UIManager default chooseDirectoryFrom: self defaultDirectoryName asFileReference) ifNotNil:
-		[:directory |
-		self new directory: directory]
-]
-
 { #category : #accessing }
 MCDirectoryRepository >> allFileNamesForVersionNamed: aString [
 	"avoid slow default implementation and directly check for existing files"
