@@ -337,9 +337,13 @@ RPackageOrganizer >> defineUnpackagedClassesPackage [
 	^ self ensureExistAndRegisterPackageNamed: self packageClass defaultPackageName
 ]
 
-{ #category : #'private - registration' }
+{ #category : #'private - deprecated' }
 RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
-	"A new package is now available and declared in the receiver."
+	"DO NOT USE ME!!!
+	
+	Use #registerPackageNamed: instead.
+	
+	I am bad because I do not update the SystemOrganizer and I do not announce the new packages. I am still here only because I am still needed in the bootstrap. But please do not use me."
 
 	^ (self includesPackageNamed: aSymbol)
 		  ifFalse: [ self basicRegisterPackage: (RPackage named: aSymbol) ]
