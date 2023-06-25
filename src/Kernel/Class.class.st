@@ -87,24 +87,6 @@ Class class >> superclassOrder: classes [
     ^all
 ]
 
-{ #category : #'instance creation' }
-Class class >> template: aSystemCategoryName [
-	"Answer an expression that can be edited and evaluated in order to define a new class."
-
-	^ self templateForSubclassOf: Object name category: aSystemCategoryName
-]
-
-{ #category : #'instance creation' }
-Class class >> templateForSubclassOf: priorClassName category: systemCategoryName [
-	"Answer an expression that can be edited and evaluated in order to define a new class, given that the class previously looked at was as given"
-
-	^priorClassName asString, ' subclass: #NameOfSubclass
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	poolDictionaries: ''''
-	package: ''' , systemCategoryName asString , ''''
-]
-
 { #category : #'class variables' }
 Class >> addClassVarNamed: aString [
 	"Add the argument, aString, as a class variable of the receiver.
