@@ -16,8 +16,7 @@ Class {
 	#instVars : [
 		'methodToDeprecate',
 		'methodToReplaceDeprecatedMethod',
-		'refactoring',
-		'scopes'
+		'refactoring'
 	],
 	#category : #'Refactoring-UI'
 }
@@ -64,11 +63,8 @@ RBDeprecateMethodDriver >> execute [
 			                   RBRefactoringWarning signal: err messageText.
 			                   "If user answers no, error is being propagated."
 			                   err resume ].
-
-	(StRefactoringPreviewPresenter
-		 changes: compositeChange
-		 inEnvironment: model
-		 scopes: scopes) open
+	self openPreviewWithChanges: compositeChange
+	
 ]
 
 { #category : #'ui - requests' }

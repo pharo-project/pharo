@@ -16,8 +16,7 @@ Class {
 	#instVars : [
 		'class',
 		'methods',
-		'superclass',
-		'scopes'
+		'superclass'
 	],
 	#category : #'Refactoring-UI'
 }
@@ -52,10 +51,7 @@ RBPushUpMethodDriver >> execute [
 			           RBRefactoringWarning signal: err messageText.
 			           "If user answers no, error is being propagated."
 			           err resume ].
-	(StRefactoringPreviewPresenter
-		 changes: changes
-		 inEnvironment: model
-		 scopes: scopes) open
+	self openPreviewWithChanges: changes
 ]
 
 { #category : #initialization }
