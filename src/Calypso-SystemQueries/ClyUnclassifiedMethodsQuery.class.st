@@ -21,6 +21,7 @@ ClyUnclassifiedMethodsQuery >> isResult: aQueryResult affectedBy: aSystemAnnounc
 
 { #category : #testing }
 ClyUnclassifiedMethodsQuery >> selectsMethod: aMethod [
+	"The protocol can be nil if the method was removed from the system"
 
-	^ aMethod isClassified not
+	^ aMethod protocol isNotNil and: [ aMethod isClassified not ]
 ]

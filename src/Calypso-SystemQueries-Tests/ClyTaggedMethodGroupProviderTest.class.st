@@ -20,7 +20,7 @@ ClyTaggedMethodGroupProviderTest >> testCreateGroupsForEveryMethodTag [
 
 	self buildGroupsFor: ClySubclassN1OfClass1FromP1Mock.
 
-	groups := builtGroups select: [ :each | each isKindOf: ClyTaggedMethodGroup ].
+	groups := builtGroups select: [ :each | each isKindOf: ClyMethodsInProtocolGroup ].
 	self
 		assert: (groups collect: #tag as: Set)
 		equals: ClySubclassN1OfClass1FromP1Mock tagsForMethods asSet.
