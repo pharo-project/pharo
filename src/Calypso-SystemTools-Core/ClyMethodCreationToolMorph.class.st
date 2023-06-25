@@ -131,7 +131,7 @@ ClyMethodCreationToolMorph >> setUpModelFromContext [
 	context isMethodGroupSelected ifFalse: [ ^ self ].
 	selectedGroup := context lastSelectedMethodGroup.
 	(selectedGroup isKindOf: ClyExternalPackageMethodGroup) ifTrue: [ ^ extendingPackage := selectedGroup package ].
-	(selectedGroup isKindOf: ClyMethodsInProtocolGroup) ifTrue: [ ^ methodProtocol := selectedGroup tag ]
+	(selectedGroup isKindOf: ClyMethodsInProtocolGroup) ifTrue: [ ^ methodProtocol := selectedGroup protocol ]
 ]
 
 { #category : #initialization }
