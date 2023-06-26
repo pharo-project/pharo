@@ -56,7 +56,7 @@ EpApplyTest >> testCategoryRemovalWithCategoryAdded [
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self packageOrganizer removeCategory: aCategory.
 	self setHeadAsInputEntry.
-	self packageOrganizer addCategory: aCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpCategoryRemoval.
 	self assert: (self packageOrganizer includesCategory: aCategory).
