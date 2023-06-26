@@ -128,12 +128,11 @@ EpApplyPreviewerTest >> testCategoryRemovalWithCategoryAdded [
 	self packageOrganizer removeCategory: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
-	self packageOrganizer addCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpCategoryRemoval.
-		self assert: output categoryName equals: classFactory defaultCategory.
-		]
+		self assert: output categoryName equals: classFactory defaultCategory ]
 ]
 
 { #category : #tests }

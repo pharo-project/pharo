@@ -227,7 +227,7 @@ RPackage >> addClassTag: aSymbol [
 	tagName := self toTagName: aSymbol.
 
 	^ self classTagNamed: tagName ifAbsent: [
-		  self class organizer validateCanBeAddedPackage: self tagName: tagName.
+		  self organizer validateCanBeAddedPackage: self tagName: tagName.
 		  newTag := self basicAddClassTag: tagName.
 		  SystemAnnouncer announce: (PackageTagAdded to: newTag).
 		  ^ newTag ]
