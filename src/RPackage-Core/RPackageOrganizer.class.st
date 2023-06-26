@@ -975,15 +975,13 @@ RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
 	"When a system category is removed, we may: remove a tag, or remove a rpackage. If we remove a RPackage, unregister the linked MCWorkingCopy. If it is a tag, do nothing? (from what I know of RPackage, the tag should already have disappeared because it would have been empty)."
 
-	| rPackage categoryName |
+	| categoryName |
 	categoryName := ann categoryName asSymbol.
 
-	rPackage := packages at: categoryName ifAbsent: [ ^ self ].
-
-	"Consider that a rPackage with extension selectors or tags is not empty and shouldn't be removed."
-	(rPackage extensionSelectors isNotEmpty or: [ (rPackage classTags reject: [ :tag | tag name = categoryName ]) isNotEmpty ]) ifTrue: [ ^ self ].
-	categoryName = RPackage defaultPackageName ifTrue: [ ^ self ]. "We want to keep this default package."
-	self unregisterPackage: rPackage
+	(self packageMatchingExtensionName: categoryName) ifNotNil: [ :rPackage |
+		rPackage name = categoryName
+			ifTrue: [ self unregisterPackage: rPackage ]
+			ifFalse: [ rPackage classTagNamed: (categoryName withoutPrefix: rPackage name , '-') ifPresent: [ :tag | rPackage removeClassTag: tag name ] ] ]
 ]
 
 { #category : #'system integration' }
