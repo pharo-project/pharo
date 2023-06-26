@@ -129,6 +129,18 @@ OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 ]
 
 { #category : #'tests - shadowing' }
+OCCompilerTest >> testInBlockArgumentPseudoVariableShadowing [
+	self initializeErrorMessage.
+	text := 'temp [:thisProcess | ]'.
+
+	self compile.
+
+	self assert: errorMessage equals: nil.
+	self assert: errorLocation equals: nil.
+	self assert: errorSource equals: nil
+]
+
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockTempArgumentShadowing [
 
 	self initializeErrorMessage.
@@ -182,6 +194,19 @@ OCCompilerTest >> testNoShadowing [
 	self compileWithFailBlock: [
 		self fail.
 		^nil ]
+]
+
+{ #category : #'tests - shadowing' }
+OCCompilerTest >> testPseudoVariableShadowing [
+
+	self initializeErrorMessage.
+	text := 'var1 |thisContext| ^thisContext'.
+
+	self compile.
+
+	self assert: errorMessage equals: nil.
+	self assert: errorLocation equals: nil.
+	self assert: errorSource equals: nil
 ]
 
 { #category : #literals }
