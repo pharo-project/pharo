@@ -22,13 +22,15 @@ FLTraitCluster >> materializeInstanceWith: aDecoder [
 
 { #category : #'serialize/materialize' }
 FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
-	| category name environment format layout instanceVariableNames |
+	| category name environment format layout instanceVariableNames comment stamp |
 	category := aDecoder nextEncodedReference.
 	name := aDecoder nextEncodedReference.
 	environment := aDecoder nextEncodedReference.
 	format := aDecoder nextEncodedReference.
 	layout := self materializeLayoutWith: aDecoder.
 	instanceVariableNames := aDecoder nextEncodedString substrings: ' '.
+	comment := aDecoder nextEncodedString.
+	stamp := aDecoder nextEncodedString.
 	
 	aTrait 
 		initialize;
@@ -42,7 +44,11 @@ FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
 		installLayout: layout
 		withFormat: format
 		variableNames: instanceVariableNames
-		into: aTrait
+		into: aTrait.
+		
+	aTrait
+		comment: comment
+		stamp: stamp
 ]
 
 { #category : #analyzing }
@@ -79,5 +85,8 @@ FLTraitCluster >> serializePostInstance: aTrait with: anEncoder [
 				serializeLayout: aTrait classLayout
 				with: anEncoder ]
 		ifFalse: [ anEncoder encodeReferenceTo: nil ].
-	anEncoder encodeString: aTrait instanceVariablesString
+	anEncoder
+		encodeString: aTrait instanceVariablesString;
+		encodeString: aTrait comment;
+		encodeString: aTrait commentStamp
 ]

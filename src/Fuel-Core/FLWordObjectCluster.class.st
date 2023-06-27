@@ -23,16 +23,15 @@ Class {
 
 { #category : #'serialize/materialize' }
 FLWordObjectCluster >> materializeInstanceWith: aDecoder [
-
 	| inst wideSize |
 	wideSize := aDecoder nextEncodedUint32.
 	inst := theClass basicNew: wideSize.
 
 	aDecoder nextEncodedWordsInto: inst.
 
-	^ aDecoder isBigEndian = FLPlatform current isBigEndian asBit
-		  ifTrue: [ inst ]
-		  ifFalse: [ self swapBytesOf: inst ]
+	^ aDecoder isBigEndian = EndianDetector isBigEndian asBit
+	  ifTrue: [ inst ]
+	  ifFalse: [ self swapBytesOf: inst ]
 ]
 
 { #category : #'serialize/materialize' }
