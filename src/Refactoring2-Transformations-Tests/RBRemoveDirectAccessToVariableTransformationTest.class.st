@@ -16,17 +16,20 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 
 	| refactoring class |
 	refactoring := (RBRemoveDirectAccessToVariableTransformation
-						classVariable: 'UndoSize'
-						class: #RBRefactoryChangeManager)
-						asRefactoring transform.
+		                classVariable: 'UndoSize'
+		                class: #RBRefactoryChangeManager) transform.
 
 	self assert: refactoring model changes changes size equals: 2.
 
-	class := (refactoring model classNamed: #RBRefactoryChangeManager) classSide.
-	self assert: (class parseTreeForSelector: #initialize)
-			equals: (self parseMethod: 'initialize self nuke. self undoSize: 20').
-	self assert: (class instanceSide parseTreeForSelector: #addUndo:)
-			equals: (self parseMethod: 'addUndo: aRefactoringChange
+	class := (refactoring model classNamed: #RBRefactoryChangeManager)
+		         classSide.
+	self
+		assert: (class parseTreeForSelector: #initialize)
+		equals:
+		(self parseMethod: 'initialize self nuke. self undoSize: 20').
+	self
+		assert: (class instanceSide parseTreeForSelector: #addUndo:)
+		equals: (self parseMethod: 'addUndo: aRefactoringChange
 				undo push: aRefactoringChange.
 				undo size > self class undoSize
 					ifTrue: [ undo removeFirst ].
@@ -38,14 +41,12 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 
 	self
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation
-						model: model
-						instanceVariable: 'instVarName1'
-						class: #Bar)
-						asRefactoring;
+				 model: model
+				 instanceVariable: 'instVarName1'
+				 class: #Bar);
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation
-						classVariable: 'Foo1'
-						class: #RBFooLintRuleTestData)
-						asRefactoring
+				 classVariable: 'Foo1'
+				 class: #RBFooLintRuleTestData)
 ]
 
 { #category : #tests }
@@ -53,14 +54,12 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccesso
 
 	self
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation
-						model: model
-						instanceVariable: 'instVarName1'
-						class: #Foo)
-						asRefactoring;
+				 model: model
+				 instanceVariable: 'instVarName1'
+				 class: #Foo);
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation
-						classVariable: 'RecursiveSelfRule'
-						class: #RBTransformationRuleTestData)
-						asRefactoring
+				 classVariable: 'RecursiveSelfRule'
+				 class: #RBTransformationRuleTestData)
 ]
 
 { #category : #tests }
@@ -68,14 +67,14 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 
 	| class |
 	(RBRemoveDirectAccessToVariableTransformation
-		model: model
-		instanceVariable: 'instVarName2'
-		class: #Foo)
-		asRefactoring transform.
+		 model: model
+		 instanceVariable: 'instVarName2'
+		 class: #Foo) transform.
 
 	class := model classNamed: #Foo.
-	self assert: (class parseTreeForSelector: #foo)
-			equals: (self parseMethod: 'foo ^ self instVarName2: 3')
+	self
+		assert: (class parseTreeForSelector: #foo)
+		equals: (self parseMethod: 'foo ^ self instVarName2: 3')
 ]
 
 { #category : #tests }
@@ -83,20 +82,21 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBRemoveDirectAccessToVariableTransformation
-						instanceVariable: 'environment'
-						class: #RBNamespace)
-						asRefactoring transform.
+		                instanceVariable: 'environment'
+		                class: #RBNamespace) transform.
 
 	self assert: refactoring model changes changes size equals: 4.
 
 	class := refactoring model classNamed: #RBNamespace.
-	self assert: (class parseTreeForSelector: #includesGlobal:)
+	self
+		assert: (class parseTreeForSelector: #includesGlobal:)
 		equals: (self parseMethod: 'includesGlobal: aSymbol
 			(self hasRemoved: aSymbol) ifTrue: [^false].
 			(self includesClassNamed: aSymbol) ifTrue: [^true].
 			self environment at: aSymbol ifAbsent: [^false].
 			^ true').
-	self assert: (class parseTreeForSelector: #initialize)
+	self
+		assert: (class parseTreeForSelector: #initialize)
 		equals: (self parseMethod: 'initialize
 	super initialize.
 	changes := changeFactory compositeRefactoryChange onSystemDictionary: self environment.

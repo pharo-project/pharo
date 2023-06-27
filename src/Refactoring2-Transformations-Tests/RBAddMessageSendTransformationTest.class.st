@@ -23,30 +23,27 @@ RBAddMessageSendTransformationTest >> methodBefore [
 RBAddMessageSendTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddMessageSendTransformation
-							messageSend: 'variable byteAt: 1'
-							inMethod: #methodBefore
-							inClass: #RBMessageSendTransformationTest)
-							asRefactoring
+			 messageSend: 'variable byteAt: 1'
+			 inMethod: #methodBefore
+			 inClass: #RBMessageSendTransformationTest)
 ]
 
 { #category : #tests }
 RBAddMessageSendTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddMessageSendTransformation
-							messageSend: 'variable byteAt: 1'
-							inMethod: #method
-							inClass: #RBAddMessageSendTransformationTest)
-							asRefactoring
+			 messageSend: 'variable byteAt: 1'
+			 inMethod: #method
+			 inClass: #RBAddMessageSendTransformationTest)
 ]
 
 { #category : #tests }
 RBAddMessageSendTransformationTest >> testReceiverDoesNotExist [
 
 	self shouldFail: (RBAddMessageSendTransformation
-							messageSend: 'variable2 byteAt: 1'
-							inMethod: #methodBefore
-							inClass: #RBAddMessageSendTransformationTest)
-							asRefactoring
+			 messageSend: 'variable2 byteAt: 1'
+			 inMethod: #methodBefore
+			 inClass: #RBAddMessageSendTransformationTest)
 ]
 
 { #category : #tests }
@@ -54,16 +51,18 @@ RBAddMessageSendTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddMessageSendTransformation
-						messageSend: 'variable byteAt: 1'
-						inMethod: #methodBefore
-						inClass: #RBAddMessageSendTransformationTest)
-						asRefactoring transform.
+		                messageSend: 'variable byteAt: 1'
+		                inMethod: #methodBefore
+		                inClass: #RBAddMessageSendTransformationTest)
+		               transform.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed: #RBAddMessageSendTransformationTest.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	class := refactoring model classNamed:
+		         #RBAddMessageSendTransformationTest.
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }

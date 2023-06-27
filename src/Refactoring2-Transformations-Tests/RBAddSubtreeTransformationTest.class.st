@@ -33,17 +33,15 @@ RBAddSubtreeTransformationTest >> testRefactoring [
 
 	self
 		shouldFail: (RBAddSubtreeTransformation
-							interval: (0 to: 1)
-							with: ':= 123'
-							from: #selector:from:
-							in: #RBRemoveMethodTransformation)
-							asRefactoring;
+				 interval: (0 to: 1)
+				 with: ':= 123'
+				 from: #selector:from:
+				 in: #RBRemoveMethodTransformation);
 		shouldFail: (RBAddSubtreeTransformation
-							interval: (0 to: 1)
-							with: '^ selector'
-							from: #selector:for:
-							in: #RBRemoveMethodTransformation)
-							asRefactoring
+				 interval: (0 to: 1)
+				 with: '^ selector'
+				 from: #selector:for:
+				 in: #RBRemoveMethodTransformation)
 ]
 
 { #category : #tests }

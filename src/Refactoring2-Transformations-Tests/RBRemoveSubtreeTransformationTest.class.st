@@ -36,16 +36,19 @@ RBRemoveSubtreeTransformationTest >> testRefactoring [
 
 	| transformation class |
 	transformation := (RBRemoveSubtreeTransformation
-							code: 'selector := aSelector'
-							from: #selector:from:
-							in: #RBRemoveMethodTransformation)
-							asRefactoring transform.
+		                   code: 'selector := aSelector'
+		                   from: #selector:from:
+		                   in: #RBRemoveMethodTransformation) transform.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed: #RBRemoveMethodTransformation.
+	class := transformation model classNamed:
+		         #RBRemoveMethodTransformation.
 	self assert: (class directlyDefinesMethod: #selector:from:).
-	self assert: (class parseTreeForSelector: #selector:from:) body statements size equals: 1
+	self
+		assert:
+		(class parseTreeForSelector: #selector:from:) body statements size
+		equals: 1
 ]
 
 { #category : #tests }

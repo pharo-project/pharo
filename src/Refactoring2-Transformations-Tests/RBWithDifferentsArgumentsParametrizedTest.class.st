@@ -9,17 +9,20 @@ Class {
 
 { #category : #builder }
 RBWithDifferentsArgumentsParametrizedTest >> createRefactoringWithArguments: aParameterCollection [
-	^ (rbClass
-		perform: constructor
-		withArguments: (self selectIndex: index of: aParameterCollection)) asRefactoring
+
+	^ rbClass
+		  perform: constructor
+		  withArguments: (self selectIndex: index of: aParameterCollection)
 ]
 
 { #category : #builder }
 RBWithDifferentsArgumentsParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
-	^ (rbClass
-		perform: #model: , constructor
-		withArguments: {rbNamespace},
-			(self selectIndex: index of: aParameterCollection)) asRefactoring
+
+	^ rbClass
+		  perform: #model: , constructor
+		  withArguments:
+		  { rbNamespace }
+		  , (self selectIndex: index of: aParameterCollection)
 ]
 
 { #category : #accessing }

@@ -36,6 +36,5 @@ RBDriver >> openPreviewWithChanges: changes [
 	
 	(StRefactoringPreviewPresenter
 		 changes: changes
-		 inEnvironment: model
 		 scopes: scopes) open
 ]
