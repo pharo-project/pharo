@@ -23,36 +23,40 @@ RBAddReturnStatementTransformationTest >> methodBefore [
 RBAddReturnStatementTransformationTest >> testAccessIsNotDefined [
 
 	self shouldFail: (RBAddReturnStatementTransformation
-			 return: '^ variable2'
-			 inMethod: #methodBefore
-			 inClass: #RBAddReturnStatementTransformationTest)
+							return: '^ variable2'
+							inMethod: #methodBefore
+							inClass: #RBAddReturnStatementTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
 RBAddReturnStatementTransformationTest >> testAlreadyDefinesReturn [
 
 	self shouldFail: (RBAddReturnStatementTransformation
-			 return: '^ variable'
-			 inMethod: #methodAfter
-			 inClass: #RBAddReturnStatementTransformationTest)
+							return: '^ variable'
+							inMethod: #methodAfter
+							inClass: #RBAddReturnStatementTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
 RBAddReturnStatementTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddReturnStatementTransformation
-			 return: '^ variable'
-			 inMethod: #methodBefore
-			 inClass: #RBReturnStatementTransformationTest)
+							return: '^ variable'
+							inMethod: #methodBefore
+							inClass: #RBReturnStatementTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
 RBAddReturnStatementTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddReturnStatementTransformation
-			 return: '^ variable'
-			 inMethod: #method
-			 inClass: #RBAddReturnStatementTransformationTest)
+							return: '^ variable'
+							inMethod: #method
+							inClass: #RBAddReturnStatementTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -60,18 +64,16 @@ RBAddReturnStatementTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddReturnStatementTransformation
-		                return: '^ variable'
-		                inMethod: #methodBefore
-		                inClass: #RBAddReturnStatementTransformationTest)
-		               transform.
+						return: '^ variable'
+						inMethod: #methodBefore
+						inClass: #RBAddReturnStatementTransformationTest)
+						asRefactoring transform.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed:
-		         #RBAddReturnStatementTransformationTest.
-	self
-		assert: (class parseTreeForSelector: #methodBefore) body
-		equals: (class parseTreeForSelector: #methodAfter) body
+	class := refactoring model classNamed: #RBAddReturnStatementTransformationTest.
+	self assert: (class parseTreeForSelector: #methodBefore) body
+			equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }

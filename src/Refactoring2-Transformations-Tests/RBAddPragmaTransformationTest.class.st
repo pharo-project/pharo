@@ -23,27 +23,30 @@ RBAddPragmaTransformationTest >> methodBefore [
 RBAddPragmaTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddPragmaTransformation
-			 pragma: '<pragmaForTesting: 56>'
-			 inMethod: #methodBefore
-			 inClass: #RBPragmaTransformationTest)
+							pragma: '<pragmaForTesting: 56>'
+							inMethod: #methodBefore
+							inClass: #RBPragmaTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
 RBAddPragmaTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddPragmaTransformation
-			 pragma: '<pragmaForTesting: 56>'
-			 inMethod: #method
-			 inClass: #RBAddPragmaTransformationTest)
+							pragma: '<pragmaForTesting: 56>'
+							inMethod: #method
+							inClass: #RBAddPragmaTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
 RBAddPragmaTransformationTest >> testPragmaAlreadyExists [
 
 	self shouldFail: (RBAddPragmaTransformation
-			 pragma: '<pragmaForTesting: 56>'
-			 inMethod: #methodAfter
-			 inClass: #RBAddPragmaTransformationTest)
+							pragma: '<pragmaForTesting: 56>'
+							inMethod: #methodAfter
+							inClass: #RBAddPragmaTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -51,16 +54,16 @@ RBAddPragmaTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddPragmaTransformation
-		                pragma: '<pragmaForTesting: 56>'
-		                inMethod: #methodBefore
-		                inClass: #RBAddPragmaTransformationTest) transform.
+						pragma: '<pragmaForTesting: 56>'
+						inMethod: #methodBefore
+						inClass: #RBAddPragmaTransformationTest)
+						asRefactoring transform.
 
 	self assert: refactoring model changes changes size equals: 1.
 
 	class := refactoring model classNamed: #RBAddPragmaTransformationTest.
-	self
-		assert: (class parseTreeForSelector: #methodBefore) body
-		equals: (class parseTreeForSelector: #methodAfter) body
+	self assert: (class parseTreeForSelector: #methodBefore) body
+			equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }
