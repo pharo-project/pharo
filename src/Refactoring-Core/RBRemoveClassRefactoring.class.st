@@ -73,7 +73,7 @@ RBRemoveClassRefactoring >> preconditionHasNoReferences: aClass [
 	env := self environmentWithReferencesTo: aClass.
 	^ (RBCondition withBlock: [ (env classNames copyWithoutAll: classNames) isEmpty ])
 			errorMacro: aClass , ' is referenced.<n>Browse references?';
-			errorBlock: [ self openBrowserOn: (env) ];
+			errorBlock: [ self openBrowserOn: env ];
 			yourself
 ]
 

@@ -262,7 +262,7 @@ RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 				   ifNone: [ nil ]) notNil ]
 		  errorString: aClass printString
 			  , ' or subclass <1?:does not >reference<1?s:> instance variable '
-			  , aString
+			  , '#', aString
 ]
 
 { #category : #'instance creation' }

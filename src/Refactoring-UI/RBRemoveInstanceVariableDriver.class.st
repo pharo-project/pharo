@@ -11,31 +11,50 @@ Class {
 { #category : #execution }
 RBRemoveInstanceVariableDriver >> execute [
 
-	| changes refactoring |
+	|  refactoring |
 	refactoring := self refactoring.
-	changes := [
-	           [ self halt. refactoring generateChanges ]
+	[
+		[ 
+			| changes |
+			changes := refactoring generateChanges.
+			self openPreviewWithChanges: changes ]
 		           on: RBApplicabilityChecksFailedError
 		           do: [ :err |
-		           ^ RBRefactoringError signal: err messageText ] ]
+		           		^ RBRefactoringError signal: err messageText ] ]
 		           on: RBBreakingChangeChecksFailedWarning
 		           do: [ :err |
-			
-								self halt.
-			           RBRefactoringWarning 
-									signal: err messageText 
-									with: [ self halt. self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring) ].
-			           "If user answers no, error is being propagated."
-			           err resume ].
-	self openPreviewWithChanges: changes
+								| dialog |
+								dialog := SpConfirmDialog 
+									 new
+										title: 'Methods still accessing variables';
+										label: 'Do you want to browse them?';
+										acceptLabel: 'Sure!';
+										cancelLabel: 'No, forget it';
+										openModal.
+								dialog 
+									ifTrue: [ self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring)].  err return ].
+	
 ]
 
 { #category : #execution }
 RBRemoveInstanceVariableDriver >> furtherActionFor: aReport [
+	
+	"Smalltalk tools messageList
+		new
+		  messages: (self halt);
+		  title: 'jlklkjljlkjkl';
+		  open."
+	
+	"for now use the report to see and not the driver state. To be reevaluated later."
+	"use system navigation to avoid to duplicate logic. 
+	Now it could be packaged in the report object.
+	Note that the report holds an environment and that we also have scopes so the message
+	list should be passed the scope when the widget will be able to handle it."
+	SystemNavigation default 
+			browseAllAccessesTo: aReport refactoring variableName  
+			from: aReport refactoring refactoredClass realClass
 
-	^ (aReport refactoring options at: #openBrowser)
-			value: aReport refactoring 
-			value: aReport environment
+
 ]
 
 { #category : #resources }
@@ -51,19 +70,4 @@ RBRemoveInstanceVariableDriver >> scopes: refactoringScopes variable: aVariable 
 	scopes := refactoringScopes.
 	variables := {aVariable}.
 	class := aClass
-]
-
-{ #category : #resources }
-RBRemoveInstanceVariableDriver >> selectVariables [
-
-	| classes |
-	classes := class withAllSubclasses 
-					removeAllSuchThat: [ :each |
-		           { Object . ProtoObject . Class . Behavior. Metaclass . ClassDescription} includes: each ].
-	
-	variables := StVariablesSelectionPresenter
-		label: 'Select one instance variable (for now) to remove'
-		withItems: class instVarNames
-		selecting: variables asOrderedCollection
-		
 ]

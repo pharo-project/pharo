@@ -24,7 +24,6 @@ SycRemoveVariable2Command >> defaultMenuItemName [
 { #category : #execution }
 SycRemoveVariable2Command >> execute [
 
-	self halt.
 	(RBRemoveInstanceVariableDriver 
 		new
 			scopes: toolContext refactoringScopes
@@ -41,9 +40,8 @@ SycRemoveVariable2Command >> isComplexRefactoring [
 
 { #category : #execution }
 SycRemoveVariable2Command >> prepareFullExecutionInContext: aToolContext [
-	| noUsers |
+
 	super prepareFullExecutionInContext: aToolContext.
 
-	noUsers := aToolContext confirmUnusedVariables: variables.
-	noUsers ifFalse: [CmdCommandAborted signal]
+
 ]

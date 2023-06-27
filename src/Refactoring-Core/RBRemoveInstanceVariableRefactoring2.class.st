@@ -29,11 +29,10 @@ RBRemoveInstanceVariableRefactoring2 >> breakingChangeConditions [
 
 { #category : #preconditions }
 RBRemoveInstanceVariableRefactoring2 >> generateChanges [
-	self halt.
+	
 	self applicabilityConditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityConditions errorString ].
-	self halt.
 	self breakingChangeConditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
@@ -46,6 +45,11 @@ RBRemoveInstanceVariableRefactoring2 >> generateChanges [
 RBRemoveInstanceVariableRefactoring2 >> preconditions [
 
 	^ self applicabilityConditions & self breakingChangeConditions 
+]
+
+{ #category : #accessing }
+RBRemoveInstanceVariableRefactoring2 >> refactoredClass [
+	^ class
 ]
 
 { #category : #transforming }

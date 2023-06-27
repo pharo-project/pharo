@@ -21,13 +21,9 @@ RBInstanceVariableStillReferenced >> refactoring [
 
 { #category : #accessing }
 RBInstanceVariableStillReferenced >> refactoring: aRefactoring [
-	self halt.
+
 	refactoring := aRefactoring.
-	environment := RBBrowserEnvironment new instVarRefsTo: aRefactoring ariable first in: aRefactoring aClassName
-]
-
-{ #category : #accessing }
-RBInstanceVariableStillReferenced >> variable: aVariable inClassName: aClassName [
-
-	environment := RBBrowserEnvironment new instVarRefsTo: aVariable first in: aClassName
+	environment := RBBrowserEnvironment new 
+		instVarRefsTo: aRefactoring variableName 
+		in: aRefactoring refactoredClass realClass
 ]

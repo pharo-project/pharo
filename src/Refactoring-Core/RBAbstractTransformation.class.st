@@ -87,11 +87,6 @@ RBAbstractTransformation class >> refactoringOptions [
 ]
 
 { #category : #accessing }
-RBAbstractTransformation class >> setDefaultOption: aSymbol to: aBlock [
-	self refactoringOptions at: aSymbol put: aBlock
-]
-
-{ #category : #accessing }
 RBAbstractTransformation >> changes [
 
 	^ self model changes
