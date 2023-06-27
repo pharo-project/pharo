@@ -8,19 +8,15 @@ Class {
 RBAddAccessorsForClassTransformationTest >> testRefactoring [
 
 	| refactoring class |
-	refactoring := (RBAddAccessorsForClassTransformation className:
-		                #RBVariableTransformation) transform.
+	refactoring := (RBAddAccessorsForClassTransformation className: #RBVariableTransformation) asRefactoring transform.
 
 	self assert: refactoring model changes changes size equals: 4.
 
 	class := refactoring model classNamed: #RBVariableTransformation.
-	self
-		assert: (class parseTreeForSelector: #variableName)
-		equals: (self parseMethod: 'variableName ^variableName').
-	self
-		assert: (class parseTreeForSelector: #variableName:)
-		equals:
-		(self parseMethod: 'variableName: anObject variableName := anObject')
+	self assert: (class parseTreeForSelector: #variableName)
+		  equals: (self parseMethod: 'variableName ^variableName').
+	self assert: (class parseTreeForSelector: #variableName:)
+		  equals: (self parseMethod: 'variableName: anObject variableName := anObject')
 ]
 
 { #category : #tests }

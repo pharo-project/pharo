@@ -23,20 +23,22 @@ RBAddAssignmentTransformationTest >> methodBefore [
 RBAddAssignmentTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
-			 variable: 'variable'
-			 value: '1 asString'
-			 inMethod: #methodBefore
-			 inClass: #RBAssignmentTransformationTest)
+							variable: 'variable'
+							value: '1 asString'
+							inMethod: #methodBefore
+							inClass: #RBAssignmentTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
 RBAddAssignmentTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
-			 variable: 'variable'
-			 value: '1 asString'
-			 inMethod: #method
-			 inClass: #RBAddAssignmentTransformationTest)
+							variable: 'variable'
+							value: '1 asString'
+							inMethod: #method
+							inClass: #RBAddAssignmentTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -44,26 +46,18 @@ RBAddAssignmentTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddAssignmentTransformation
-		                variable: 'variable'
-		                value: '1 asString'
-		                inMethod: #methodBefore
-		                inClass: #RBAddAssignmentTransformationTest)
-		               transform.
+						variable: 'variable'
+						value: '1 asString'
+						inMethod: #methodBefore
+						inClass: #RBAddAssignmentTransformationTest)
+						asRefactoring transform.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed:
-		         #RBAddAssignmentTransformationTest.
+	class := refactoring model classNamed: #RBAddAssignmentTransformationTest.
 	self assert: (class directlyDefinesMethod: #methodBefore).
-	self
-		assert:
-		(class parseTreeForSelector: #methodBefore) body statements size
-		equals: 2.
-	self
-		assert:
-			(class parseTreeForSelector: #methodBefore) body statements last
-				value sourceCode
-		equals: '1 asString'
+	self assert: (class parseTreeForSelector: #methodBefore) body statements size equals: 2.
+	self assert: (class parseTreeForSelector: #methodBefore) body statements last value sourceCode equals: '1 asString'
 ]
 
 { #category : #tests }
@@ -88,8 +82,9 @@ RBAddAssignmentTransformationTest >> testTransform [
 RBAddAssignmentTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
-			 variable: 'variable1'
-			 value: '1 asString'
-			 inMethod: #methodBefore
-			 inClass: #RBAddAssignmentTransformationTest)
+							variable: 'variable1'
+							value: '1 asString'
+							inMethod: #methodBefore
+							inClass: #RBAddAssignmentTransformationTest)
+							asRefactoring
 ]

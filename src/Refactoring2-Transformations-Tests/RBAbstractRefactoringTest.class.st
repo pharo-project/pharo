@@ -13,18 +13,14 @@ RBAbstractRefactoringTest >> constructor [
 
 { #category : #helpers }
 RBAbstractRefactoringTest >> createRefactoringWithArguments: aParameterCollection [
-
-	^ rbClass
-		  perform: self constructor
-		  withArguments: aParameterCollection
+	^ (rbClass perform: self constructor
+			withArguments: aParameterCollection) asRefactoring
 ]
 
 { #category : #helpers }
 RBAbstractRefactoringTest >> createRefactoringWithModel: aRBNamespace andArguments: aParameterCollection [
-
-	^ rbClass
-		  perform: #model: , self constructor
-		  withArguments: { aRBNamespace } , aParameterCollection
+	^ (rbClass perform: #model: , self constructor
+			withArguments: {aRBNamespace} , aParameterCollection) asRefactoring
 ]
 
 { #category : #parsing }
