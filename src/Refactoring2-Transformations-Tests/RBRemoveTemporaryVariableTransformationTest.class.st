@@ -8,18 +8,20 @@ Class {
 RBRemoveTemporaryVariableTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation
-			 variable: 'temp'
-			 inMethod: #foo
-			 inClass: #RBTemporaryVariableTransformationTest)
+							variable: 'temp'
+							inMethod: #foo
+							inClass: #RBTemporaryVariableTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
 RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation
-			 variable: 'temp'
-			 inMethod: #foofoo
-			 inClass: #RBRemoveTemporaryVariableTransformationTest)
+							variable: 'temp'
+							inMethod: #foofoo
+							inClass: #RBRemoveTemporaryVariableTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -27,31 +29,28 @@ RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddMethodTransformation
-		                sourceCode: 'foo
+						sourceCode: 'foo
 										| temp bar |
 										bar := 5.
 										temp := bar * bar.
 										Transcript show: temp printString; cr.
 										^temp * temp'
-		                in: #RBRemoveTemporaryVariableTransformationTest
-		                withProtocols: { #accessing }) transform.
+						in: #RBRemoveTemporaryVariableTransformationTest
+						withProtocols: {#accessing})
+						asRefactoring transform.
 
 	refactoring := (RBRemoveTemporaryVariableTransformation
-		                model: refactoring model
-		                variable: 'temp'
-		                inMethod: #foo
-		                inClass:
-		                #RBRemoveTemporaryVariableTransformationTest)
-		               transform.
+						model: refactoring model
+						variable: 'temp'
+						inMethod: #foo
+						inClass: #RBRemoveTemporaryVariableTransformationTest)
+						asRefactoring transform.
 
 	self assert: refactoring model changes changes size equals: 2.
 
-	class := refactoring model classNamed:
-		         #RBRemoveTemporaryVariableTransformationTest.
+	class := refactoring model classNamed: #RBRemoveTemporaryVariableTransformationTest.
 	self assert: (class directlyDefinesMethod: #foo).
-	self
-		assert: (class parseTreeForSelector: #foo) temporaries size
-		equals: 1
+	self assert: (class parseTreeForSelector: #foo) temporaries size equals: 1
 ]
 
 { #category : #tests }
@@ -87,7 +86,8 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 RBRemoveTemporaryVariableTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation
-			 variable: 'temp123'
-			 inMethod: #foo
-			 inClass: #RBRemoveTemporaryVariableTransformationTest)
+							variable: 'temp123'
+							inMethod: #foo
+							inClass: #RBRemoveTemporaryVariableTransformationTest)
+							asRefactoring
 ]

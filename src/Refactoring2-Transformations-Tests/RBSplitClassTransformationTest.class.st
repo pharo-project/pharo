@@ -8,20 +8,22 @@ Class {
 RBSplitClassTransformationTest >> testClassVariable [
 
 	self shouldFail: (RBSplitClassTransformation
-			 class: #RBDummyLintRuleTest
-			 instanceVariables: #( Foo1 )
-			 newClassName: #RBDummyLintRuleTest123
-			 referenceVariableName: #receiver)
+							class:  #RBDummyLintRuleTest
+							instanceVariables: #(Foo1)
+							newClassName: #RBDummyLintRuleTest123
+							referenceVariableName: #receiver)
+							asRefactoring
 ]
 
 { #category : #tests }
 RBSplitClassTransformationTest >> testNonExistantName [
 
 	self shouldFail: (RBSplitClassTransformation
-			 class: #RBDummyLintRuleTest
-			 instanceVariables: #( name1 )
-			 newClassName: #RBDummyLintRuleTest123
-			 referenceVariableName: #newName)
+							class: #RBDummyLintRuleTest
+							instanceVariables: #(name1)
+							newClassName: #RBDummyLintRuleTest123
+							referenceVariableName: #newName)
+							asRefactoring
 ]
 
 { #category : #tests }

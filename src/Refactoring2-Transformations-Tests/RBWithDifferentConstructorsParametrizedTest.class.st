@@ -15,14 +15,14 @@ RBWithDifferentConstructorsParametrizedTest >> constructor: anObject [
 
 { #category : #builder }
 RBWithDifferentConstructorsParametrizedTest >> createRefactoringWithArguments: aParameterCollection [
-
-	^ rbClass perform: constructor withArguments: aParameterCollection
+	^ (rbClass
+		perform: constructor
+		withArguments: aParameterCollection) asRefactoring
 ]
 
 { #category : #builder }
 RBWithDifferentConstructorsParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
-
-	^ rbClass
-		  perform: #model: , constructor
-		  withArguments: { rbNamespace } , aParameterCollection
+	^ (rbClass
+		perform: #model: , constructor
+		withArguments: {rbNamespace}, aParameterCollection) asRefactoring
 ]

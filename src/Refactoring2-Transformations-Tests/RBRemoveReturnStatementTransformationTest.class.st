@@ -23,18 +23,20 @@ RBRemoveReturnStatementTransformationTest >> methodBefore [
 RBRemoveReturnStatementTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
-			 return: '^ variable'
-			 inMethod: #methodBefore
-			 inClass: #RBReturnStatementTransformationTest)
+							return: '^ variable'
+							inMethod: #methodBefore
+							inClass: #RBReturnStatementTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
-			 return: '^ variable'
-			 inMethod: #method
-			 inClass: #RBRemoveReturnStatementTransformationTest)
+							return: '^ variable'
+							inMethod: #method
+							inClass: #RBRemoveReturnStatementTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
@@ -42,27 +44,26 @@ RBRemoveReturnStatementTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBRemoveReturnStatementTransformation
-		                return: '^ variable'
-		                inMethod: #methodBefore
-		                inClass: #RBRemoveReturnStatementTransformationTest)
-		               transform.
+						return: '^ variable'
+						inMethod: #methodBefore
+						inClass: #RBRemoveReturnStatementTransformationTest)
+						asRefactoring transform.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed:
-		         #RBRemoveReturnStatementTransformationTest.
-	self
-		assert: (class parseTreeForSelector: #methodBefore) body
-		equals: (class parseTreeForSelector: #methodAfter) body
+	class := refactoring model classNamed: #RBRemoveReturnStatementTransformationTest.
+	self assert: (class parseTreeForSelector: #methodBefore) body
+			equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testReturnDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
-			 return: '^ variable'
-			 inMethod: #methodAfter
-			 inClass: #RBRemoveReturnStatementTransformationTest)
+							return: '^ variable'
+							inMethod: #methodAfter
+							inClass: #RBRemoveReturnStatementTransformationTest)
+							asRefactoring
 ]
 
 { #category : #tests }
