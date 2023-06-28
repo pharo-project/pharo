@@ -90,6 +90,11 @@ SycMessageDescription >> describesSelector: someSelector withArguments: someArgu
 	^selector = someSelector & (argumentNames = someArgumentNames)
 ]
 
+{ #category : #'hacked methods' }
+SycMessageDescription >> directlyDefinesMethod: aSymbol [
+	^ selector == aSymbol
+]
+
 { #category : #accessing }
 SycMessageDescription >> methodClass [
 
