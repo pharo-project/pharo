@@ -279,7 +279,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 		
 	"Initialize Fuel"
 	FLLargeIdentityHashedCollection initialize.
-	FLPlatform reset.
 
 	Stdio stdout nextPutAll: 'starting...'; lf.
 
