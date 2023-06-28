@@ -95,12 +95,6 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	^ var
 ]
 
-{ #category : #errors }
-OCASTSemanticAnalyzer >> error: aMessage forNode: aNode [
-
-	aNode addError: aMessage
-]
-
 { #category : #accessing }
 OCASTSemanticAnalyzer >> invalidVariables [
 	^ invalidVariables ifNil: [ invalidVariables := Dictionary new ]
@@ -135,9 +129,7 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
 
-	var isPseudoVariable
-		ifTrue: [ self error: 'Reserved variable name' forNode: aNode ]
-		ifFalse: [ aNode addWarning: 'Name already defined' ]
+	aNode addWarning: 'Name already defined'
 ]
 
 { #category : #'error handling' }
@@ -190,9 +182,9 @@ OCASTSemanticAnalyzer >> visitAnnotationMarkNode: aRBAnnotationValueNode [
 	(aRBAnnotationValueNode parent isNotNil and: [
 		 aRBAnnotationValueNode parent isMessage ]) ifTrue: [
 		aRBAnnotationValueNode isHandled ifFalse: [
-			self error: 'Unknown annotation' forNode: aRBAnnotationValueNode parent ].
+			aRBAnnotationValueNode parent addError:  'Unknown annotation' ].
 		^ self ].
-	self error: 'Unexpected token' forNode: aRBAnnotationValueNode
+	aRBAnnotationValueNode addError: 'Unexpected token'
 ]
 
 { #category : #visiting }
@@ -206,7 +198,7 @@ OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
-	aBlockNode arguments size >15 ifTrue: [self error: 'Too many arguments' forNode: aBlockNode ].
+	aBlockNode arguments size >15 ifTrue: [ aBlockNode addError: 'Too many arguments' ].
 
 	blockCounter := self blockCounter + 1.
 
@@ -252,7 +244,7 @@ OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
-	aMethodNode arguments size > 15 ifTrue: [ self error: 'Too many arguments' forNode: aMethodNode ].
+	aMethodNode arguments size > 15 ifTrue: [ aMethodNode addError:  'Too many arguments' ].
 
 	scope := OCMethodScope new outerScope: self outerScope.
 	aMethodNode scope: scope.  scope node: aMethodNode.

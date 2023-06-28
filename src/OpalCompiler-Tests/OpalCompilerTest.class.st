@@ -239,3 +239,12 @@ OpalCompilerTest >> testInstallRequestor [
 	self assert: method isNil.
 	self assert: requestor notifyList first first equals: 'Unknown character ->'
 ]
+
+{ #category : #tests }
+OpalCompilerTest >> testShadowPseudoVariable [
+	"We can shadw PseudoVariables (here thisContext) and it works"
+	| result |
+	result := Smalltalk compiler
+       evaluate: '| thisContext | thisContext := 42. ^thisContext'.
+	self assert: result equals: 42
+]

@@ -553,21 +553,16 @@ RPackage >> definesOrExtendsClass: aClass [
 
 { #category : #converting }
 RPackage >> demoteToTagInPackageNamed: aString [
-	| newRPackage |
 
+	| newPackage |
 	aString = self name ifTrue: [ ^ self ].
 
 	self unregister.
-	newRPackage := self class organizer
-		packageNamed: aString
-		ifAbsent:  [ (self class named: aString) register ].
-	newRPackage importPackage: self.
+	newPackage := self class organizer packageNamed: aString ifAbsent: [ (self class named: aString organizer: self organizer) register ].
+	newPackage importPackage: self.
 
-	newRPackage classes do: [ :each |
-		SystemAnnouncer uniqueInstance
-			classRepackaged: each
-			from: self
-			to: newRPackage ]
+	newPackage classes do: [ :each | SystemAnnouncer uniqueInstance classRepackaged: each from: self to: newPackage ].
+	^ newPackage
 ]
 
 { #category : #properties }
@@ -741,11 +736,11 @@ RPackage >> importClass: aClass inTag: aTag [
 
 { #category : #private }
 RPackage >> importPackage: anRPackage [
-	anRPackage definedClasses
-		do: [ :className | self importClass: className ].
+
+	anRPackage definedClasses do: [ :className | self importClass: className ].
 	"new rpackage inherits the extentions"
-	classExtensionSelectors :=  classExtensionSelectors, (anRPackage classExtensionSelectors).
-	metaclassExtensionSelectors := metaclassExtensionSelectors, (anRPackage metaclassExtensionSelectors)
+	classExtensionSelectors := classExtensionSelectors , anRPackage classExtensionSelectors.
+	metaclassExtensionSelectors := metaclassExtensionSelectors , anRPackage metaclassExtensionSelectors
 ]
 
 { #category : #private }
