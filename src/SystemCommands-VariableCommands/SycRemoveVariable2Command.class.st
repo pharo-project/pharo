@@ -18,7 +18,7 @@ SycRemoveVariable2Command >> defaultMenuIconName [
 
 { #category : #accessing }
 SycRemoveVariable2Command >> defaultMenuItemName [
-	^'Remove2'
+	^'Remove'
 ]
 
 { #category : #execution }
