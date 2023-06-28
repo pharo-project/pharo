@@ -8,29 +8,26 @@ Class {
 RBMoveClassTransformationTest >> testBadCategoryName [
 
 	self shouldFail: (RBMoveClassTransformation
-			 move: self class name
-			 to: #'Refactoring2-Transformations-Test')
+							move: self class name
+							to: #'Refactoring2-Transformations-Test')
+							asRefactoring
 ]
 
 { #category : #tests }
 RBMoveClassTransformationTest >> testRefactoring [
 
 	| transformation class |
-	self
-		assert: self class category
-		equals: #'Refactoring2-Transformations-Tests-Test'.
+	self assert: self class category equals: #'Refactoring2-Transformations-Tests-Test'.
 
 	transformation := (RBMoveClassTransformation
-		                   move: self class name
-		                   to: #'Refactoring2-Transformations-Utilities')
-		                  transform.
+							move: self class name
+							to: #'Refactoring2-Transformations-Utilities')
+							asRefactoring transform.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self class name.
-	self
-		assert: class category
-		equals: #'Refactoring2-Transformations-Utilities'
+	self assert: class category equals: #'Refactoring2-Transformations-Utilities'
 ]
 
 { #category : #tests }
