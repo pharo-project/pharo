@@ -43,7 +43,6 @@ RBMoveMethodsToClassSideDriver >> checkBreakingChanges [
 	| checks |
 	checks := self refactorings collect: [ :each |
 		          each breakingChangeConditions check ].
-
 	^ checks reduce: [ :a :b | a & b ]
 ]
 

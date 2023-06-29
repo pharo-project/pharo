@@ -1,19 +1,19 @@
 Class {
-	#name : #RBRemoveInstanceVariableParametrizedTest,
+	#name : #RBRemoveInstanceVariable2ParametrizedTest,
 	#superclass : #RBWithDifferentConstructorsParametrizedTest,
 	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
-RBRemoveInstanceVariableParametrizedTest class >> testParameters [
+RBRemoveInstanceVariable2ParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRemoveInstanceVariableRefactoring .
+		addCase: { #rbClass -> RBRemoveInstanceVariableRefactoring2 .
 					  #constructor -> #variable:class: };
 		yourself
 ]
 
 { #category : #'failure tests' }
-RBRemoveInstanceVariableParametrizedTest >> testFailureNonExistantName [
+RBRemoveInstanceVariable2ParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail:
 		(self createRefactoringWithArguments:
@@ -21,15 +21,13 @@ RBRemoveInstanceVariableParametrizedTest >> testFailureNonExistantName [
 ]
 
 { #category : #'failure tests' }
-RBRemoveInstanceVariableParametrizedTest >> testFailureReferencedVariable [
+RBRemoveInstanceVariable2ParametrizedTest >> testFailureReferencedVariable [
 
-	self shouldWarn:
-		(self createRefactoringWithArguments:
-			 { 'name'. #RBLintRuleTestData })
+	self shouldFail: (self createRefactoringWithArguments:  { 'name'. #RBLintRuleTestData })
 ]
 
 { #category : #tests }
-RBRemoveInstanceVariableParametrizedTest >> testRemoveLocallyDefinedInstanceVariable [
+RBRemoveInstanceVariable2ParametrizedTest >> testRemoveLocallyDefinedInstanceVariable [
 
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments: {#foo1 . #RBLintRuleTestData}.
@@ -42,7 +40,7 @@ RBRemoveInstanceVariableParametrizedTest >> testRemoveLocallyDefinedInstanceVari
 ]
 
 { #category : #tests }
-RBRemoveInstanceVariableParametrizedTest >> testRemoveNonLocalInstanceVariableProducesAnError [
+RBRemoveInstanceVariable2ParametrizedTest >> testRemoveNonLocalInstanceVariableProducesAnError [
 	
 	| subclass subsubclass refactoring |
 	
@@ -74,7 +72,7 @@ RBRemoveInstanceVariableParametrizedTest >> testRemoveNonLocalInstanceVariablePr
 ]
 
 { #category : #tests }
-RBRemoveInstanceVariableParametrizedTest >> testVerifyPreconditionWhenRemoveLocallyDefinedInstanceVariable [
+RBRemoveInstanceVariable2ParametrizedTest >> testVerifyPreconditionWhenRemoveLocallyDefinedInstanceVariable [
 
 	| class refactoring |
 	model defineClass: 'Object << #ObjectSubclass
