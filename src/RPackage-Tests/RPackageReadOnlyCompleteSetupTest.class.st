@@ -185,9 +185,9 @@ RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackageFromOrganizer [
 
 	| method |
 	method := (testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1.
-	self assert: (method packageFromOrganizer: self packageClass organizer) equals: p1.
+	self assert: (method packageFromOrganizer: RPackage organizer) equals: p1.
 	method := (testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1.
-	self assert: (method packageFromOrganizer: self packageClass organizer) equals: p1
+	self assert: (method packageFromOrganizer: RPackage  organizer) equals: p1
 ]
 
 { #category : #'tests - situation' }
