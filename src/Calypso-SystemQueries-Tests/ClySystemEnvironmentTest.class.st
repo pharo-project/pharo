@@ -13,7 +13,34 @@ Class {
 { #category : #running }
 ClySystemEnvironmentTest >> setUp [
 	super setUp.
-	dummySystemEnvironment := ClySystemEnvironment new
+	dummySystemEnvironment := ClySystemEnvironment new globals: Smalltalk globals.
+]
+
+{ #category : #tests }
+ClySystemEnvironmentTest >> testCreateClass [
+	| newClassDefinitionString |
+	
+	newClassDefinitionString := 'Object << #ClySystemEnvironmentClassForTest
+	slots: {  };
+	package: ''Calypso-SystemQueries-Tests'''.
+	dummySystemEnvironment 
+		compileANewClassFrom: newClassDefinitionString notifying: nil startingFrom: nil.
+	
+	self assert: (Smalltalk globals hasClassNamed: #ClySystemEnvironmentClassForTest).
+	Smalltalk globals removeClassNamed: #ClySystemEnvironmentClassForTest
+]
+
+{ #category : #tests }
+ClySystemEnvironmentTest >> testCreateTrait [
+	| newTraitDefinitionString |
+	
+	newTraitDefinitionString := 'Trait << #ClySystemEnvironmentTraitForTest
+	package: ''Calypso-SystemQueries-Tests'''.
+	dummySystemEnvironment 
+		compileANewClassFrom: newTraitDefinitionString notifying: nil startingFrom: nil.
+	
+	self assert: (Smalltalk globals hasClassOrTraitNamed: #ClySystemEnvironmentTraitForTest).
+	Smalltalk globals removeClassNamed: #ClySystemEnvironmentTraitForTest.
 ]
 
 { #category : #tests }
