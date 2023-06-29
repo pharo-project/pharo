@@ -32,7 +32,7 @@ SycRenameMessageCommand >> createRefactoring [
 	^ (RBRenameMethodRefactoring
 		model: model
 		renameMethod: originalMessage selector
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
+		in:  originalMessage 
 		to: newSignature selector
 		permutation: newSignature permutation)
 			renameMap: newSignature renameMap

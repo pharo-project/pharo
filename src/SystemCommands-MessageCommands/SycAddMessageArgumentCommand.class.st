@@ -43,7 +43,7 @@ SycAddMessageArgumentCommand >> createRefactoring [
 	^(RBAddParameterRefactoring
 		model: model
 		addParameterToMethod: originalMessage selector
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
+		in: originalMessage
 		newSelector: newSelector selector
 		permutation: newSelector permutation
 		newArgs: newSelector newArgs)

@@ -50,7 +50,7 @@ SycRemoveMessageArgumentCommand >> createRefactoring [
 	^(RBRemoveParameterRefactoring
 		model: model
 		removeParameter: argumentName
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
+		in: originalMessage
 		selector: originalMessage selector)
 		newSelector: self resultMessageSelector
 ]
