@@ -305,7 +305,7 @@ ChangeSet class >> newChangeSet: newName [
 	| newSet |
 	newName ifNil: [ ^ nil ].
 	(self named: newName) ifNotNil: [
-		self inform: 'Sorry that name is already used'.
+		self error: 'Sorry name "', newName , '" is already used'.
 		^ nil ].
 	newSet := self newNamed: newName.
 	AllChangeSets add: newSet.
