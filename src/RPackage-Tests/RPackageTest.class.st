@@ -56,12 +56,12 @@ RPackageTest >> testAddClass [
 RPackageTest >> testAddClassFromTag [
 	| package1 package2 class |
 
-	package1 := (self packageClass named: #Test1) register.
+	package1 := (RPackage named: #Test1) register.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
 
 	self assert: (package1 includesClass: class).
 
-	package2 := (self packageClass named: #Test2) register.
+	package2 := (RPackage named: #Test2) register.
 
 	package2 addClass: class.
 
@@ -296,7 +296,7 @@ RPackageTest >> testPropertyAtPut [
 RPackageTest >> testRenameToMakesMCDirty [
 	| package |
 
-	package := (self packageClass named: #'Test1') register.
+	package := (RPackage named: #'Test1') register.
 	self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
 
 	package renameTo: 'Test2'

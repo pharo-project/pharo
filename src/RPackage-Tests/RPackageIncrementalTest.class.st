@@ -62,7 +62,7 @@ RPackageIncrementalTest >> tearDown [
 							ifNone: [nil].
 		mCPackage ifNotNil: [mCPackage unregister].
 		each extendedClasses do: [ :extendedClass|
-			self packageClass organizer
+			RPackage organizer
 		 		unregisterExtendingPackage: each forClass: extendedClass.]].
 	"all ***extending*** classes the packages are also unregistered from PackageOrganizer"
 	(createdClasses reject: [:c| c isObsolete]) do: [:cls|
@@ -711,18 +711,18 @@ RPackageIncrementalTest >> testPrivateClassRegisterUnregister [
 		"ugly but necessary to test registerClass: independantly from addClassDefinition:"
 		"No event should be raised."
 	p registerClass: a1.
-	self assert: (self packageClass organizer packageOf: a1) equals: p.
+	self assert: (RPackage organizer packageOf: a1) equals: p.
 	p definedClassNames remove: #A1InPackageP1.
 	p unregisterClass: a1.
-	self assert: (self packageClass organizer packageOf: a1) isDefault.
+	self assert: (RPackage organizer packageOf: a1) isDefault.
 
 	p definedClassNames add: #A1InPackageP1.
 		"ugly but necessary to test registerClass: independant from addClassDefinition:"
 	p registerClassName: a1 name.
-	self assert: (self packageClass organizer packageOf: a1) equals: p.
+	self assert: (RPackage organizer packageOf: a1) equals: p.
 	p definedClassNames remove: #A1InPackageP1.
 	p unregisterClassName: a1 name.
-	self assert: (self packageClass organizer packageOf: a1) isDefault
+	self assert: (RPackage organizer packageOf: a1) isDefault
 ]
 
 { #category : #'tests - class addition removal' }
