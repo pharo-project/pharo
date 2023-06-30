@@ -61,9 +61,7 @@ FLTraitCluster >> referencesOf: aTrait do: aBlock [
 		value: aTrait category;
 		value: aTrait name;
 		value: aTrait format;
-		value: (FLPlatform current hasStatefulTraits
-			ifTrue: [ aTrait classLayout class ]
-			ifFalse: [ nil ])
+		value: aTrait classLayout class
 ]
 
 { #category : #'serialize/materialize' }
@@ -79,12 +77,9 @@ FLTraitCluster >> serializePostInstance: aTrait with: anEncoder [
 		encodeReferenceTo: aTrait name;
 		encodeReferenceTo: aTrait basicEnvironment;
 		encodeReferenceTo: aTrait format.
-	FLPlatform current hasStatefulTraits
-		ifTrue: [
-			self
-				serializeLayout: aTrait classLayout
-				with: anEncoder ]
-		ifFalse: [ anEncoder encodeReferenceTo: nil ].
+	self
+		serializeLayout: aTrait classLayout
+		with: anEncoder.
 	anEncoder
 		encodeString: aTrait instanceVariablesString;
 		encodeString: aTrait comment;
