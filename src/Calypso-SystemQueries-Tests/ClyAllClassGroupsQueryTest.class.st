@@ -35,6 +35,6 @@ ClyAllClassGroupsQueryTest >> testFromSinglePackage [
 
 	self assert: (resultItems collect: #class as: Set) equals: { ClyNoTagClassGroup. ClyTaggedClassGroup. ClyClassGroup} asSet.
 	self
-		assert: (resultItems select:[:each | each class = ClyTaggedClassGroup] thenCollect: #tag) asSet
+		assert: (resultItems select:[:each | each class = ClyTaggedClassGroup] thenCollect: [:group | group tag]) asSet
 		equals: ClyClass7WithTag1FromP5Mock package tagsForClasses asSet
 ]
