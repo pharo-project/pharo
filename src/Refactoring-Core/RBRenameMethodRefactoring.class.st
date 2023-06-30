@@ -146,6 +146,11 @@ RBRenameMethodRefactoring >> preconditions [
 	^ self newNameDoesNotRequireRefactoringPreconditions | super preconditions
 ]
 
+{ #category : #accessing }
+RBRenameMethodRefactoring >> refactoredClass [
+	^ class
+]
+
 { #category : #printing }
 RBRenameMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.

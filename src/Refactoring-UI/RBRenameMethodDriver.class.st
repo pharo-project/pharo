@@ -33,7 +33,7 @@ RBRenameMethodDriver >> canRenameArgs [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'To be removed' }
 RBRenameMethodDriver >> command: aCommand andPostAction: aClosure [ 
 	command := aCommand. "may be not needed"
 	postAction := aClosure
@@ -57,7 +57,13 @@ RBRenameMethodDriver >> execute [
 			on: RBApplicabilityChecksFailedError
 			do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
 			on: RBBreakingChangeChecksFailedWarning
-			do: [ :err | self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring).  err return ]
+			do: [ :err | self furtherActionFor: (RBOverrideMethod new refactoring: refactoring).  err return ]
+]
+
+{ #category : #initialize }
+RBRenameMethodDriver >> furtherActionFor: aReport [
+
+	aReport execute.
 ]
 
 { #category : #initialize }
@@ -68,7 +74,7 @@ RBRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 	class := aClass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'To be removed' }
 RBRenameMethodDriver >> newMessage [
 
 	^ newMessage
@@ -82,7 +88,7 @@ RBRenameMethodDriver >> refactoring [
 	^ RBRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'To be removed' }
 RBRenameMethodDriver >> requestNewMessage [
 
 	| methodName dialog  |
