@@ -497,11 +497,19 @@ Symbol >> isUnary [
 
 { #category : #sorting }
 Symbol >> keywordsStrict [
-	"Returns the keywords of the provided selector. Does not assume that the reciever is keyword-based."
+	"Returns the keywords of the provided selector. If the receiver is not keyword-based, an empty array is returned."
+
+	"#foo: keywordsStrict >>> #('foo:')"
+
+	"#foo:bar: keywordsStrict >>> #('foo:' 'bar:')"
+
+	"#foo keywordsStrict >>> #()"
+
+	"#+ keywordsStrict >>> #()"
 
 	^ self isKeyword
 		  ifTrue: [ self keywords ]
-		  ifFalse: [ #() ]
+		  ifFalse: [ #(  ) ]
 ]
 
 { #category : #comparing }
