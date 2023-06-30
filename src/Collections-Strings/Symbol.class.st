@@ -495,6 +495,15 @@ Symbol >> isUnary [
 	^ self precedence = 1
 ]
 
+{ #category : #sorting }
+Symbol >> keywordsStrict [
+	"Returns the keywords of the provided selector. Does not assume that the reciever is keyword-based."
+
+	^ self isKeyword
+		  ifTrue: [ self keywords ]
+		  ifFalse: [ #() ]
+]
+
 { #category : #comparing }
 Symbol >> literalEqual: other [
 

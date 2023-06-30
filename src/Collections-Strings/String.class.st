@@ -2085,7 +2085,7 @@ String >> join: aCollection [
 
 { #category : #converting }
 String >> keywords [
-	"Assumes the reciever is a valid keyword based selector (@reciever isKeyword > true). Returns the keywords of the provided selector"
+	"Returns the keywords of the provided selector. Assumes the reciever is a valid keyword based selector (@reciever isKeyword > true). Prefer using Symbol>>#keywordsStrict if you're not sure if the reciever is keyword-based."
 
 	"#foo: keywords >>> #('foo:')"
 
