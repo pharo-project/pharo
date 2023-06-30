@@ -35,7 +35,7 @@ RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes push
 RBPushUpMethodDriver >> execute [
 
 	| changes |
-	refactoring := self refactoring.
+	self refactoring.
 	changes := [
 	           [
 	           [ refactoring generateChanges ]
