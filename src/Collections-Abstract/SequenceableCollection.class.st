@@ -1839,6 +1839,58 @@ SequenceableCollection >> polynomialEval: thisX [
 	^ sum
 ]
 
+{ #category : #enumerating }
+SequenceableCollection >> productWithSize: aSize subSize: sSize in: anArray do: aBlock [
+
+ 	aSize < sSize ifTrue: [ ^ self error: 'sSize cannot exceed array size' ].
+ 	sSize < 1 ifTrue: [ ^ self error: 'sizes must be positive' ].
+ 	sSize = 1
+ 		ifTrue: [
+ 			self do: [ :each |
+ 				aBlock value: (anArray
+ 						 at: aSize - sSize + 1 put: each;
+ 						 yourself) ] ]
+ 		ifFalse: [
+ 			self do: [ :each |
+ 				self
+ 					productWithSize: aSize
+ 					subSize: sSize - 1
+ 					in: anArray
+ 					do: [ :eachArray |
+ 						aBlock value: (eachArray
+ 								 at: aSize - sSize + 1 put: each;
+ 								 yourself) ] ] ]
+]
+
+{ #category : #enumerating }
+SequenceableCollection >> productsDo: aBlock [
+	" Iterate over all receiver's possible combinations of its size, including repetitions."
+
+	self productsOfSize: self size do: aBlock
+]
+
+{ #category : #enumerating }
+SequenceableCollection >> productsOfSize: aSize [
+	"Answer a <Collection> with all the possible combinations of aSize numbers including repetitions."
+   | result |
+
+   result := OrderedCollection new: aSize.
+   self 
+		productsOfSize: aSize
+		do: [ : each | result add: (each joinUsing: self class empty) ].
+	^ result
+]
+
+{ #category : #enumerating }
+SequenceableCollection >> productsOfSize: aSize do: aBlock [
+ 	"See comment in #enumerationsOfSize: "
+
+   | anArray |
+
+   anArray := Array new: aSize.
+   self productWithSize: aSize subSize: aSize in: anArray do: [ : each | aBlock value: each ]
+]
+
 { #category : #streaming }
 SequenceableCollection >> putOn: aStream [
 	"Write the receiver onto aStream by iterating over its elements.
