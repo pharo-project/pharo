@@ -46,9 +46,9 @@ ReflectiveMethod >> compileAST [
 ]
 
 { #category : #evaluation }
-ReflectiveMethod >> compileAndInstallCompiledMethod [
+ReflectiveMethod >> compileAndInstallCompiledMethod: installing [
 	self wrapperNeeded ifTrue: [ self generatePrimitiveWrapper ].
-	self recompileAST.
+	self recompileAST: installing.
 	self installCompiledMethod
 ]
 
@@ -77,7 +77,7 @@ ReflectiveMethod >> decreaseLinkCount [
 { #category : #invalidate }
 ReflectiveMethod >> destroyTwin [
 	(ast hasProperty: #wrapperMethod) ifTrue: [  ast :=  compiledMethod parseTree].
-	self recompileAST.
+	self recompileAST: false.
 	self installCompiledMethod.
 	compiledMethod reflectiveMethod: nil.
 	SystemAnnouncer uniqueInstance unsubscribe: self
@@ -139,7 +139,7 @@ ReflectiveMethod >> installCompiledMethod [
 ReflectiveMethod >> installLink: aMetaLink [
 	self increaseLinkCount.
 	(self ast hasOption: #optionCompileOnLinkInstallation for: aMetaLink)
-		ifTrue: [ self compileAndInstallCompiledMethod ]
+		ifTrue: [ self compileAndInstallCompiledMethod: true ]
 ]
 
 { #category : #invalidate }
@@ -208,10 +208,14 @@ ReflectiveMethod >> printOn: aStream [
 ]
 
 { #category : #evaluation }
-ReflectiveMethod >> recompileAST [
+ReflectiveMethod >> recompileAST: installing [
 
 	compiledMethod := self compileAST.
-	ast compiledMethod: compiledMethod.
+	installing
+		ifTrue: [ "Keeps the (instrumented) AST"
+			ast compiledMethod: compiledMethod ]
+		ifFalse: [ "Keeps the (cleaned) AST" 
+			ast := compiledMethod ast ].
 	compiledMethod reflectiveMethod: self
 ]
 
@@ -222,8 +226,9 @@ ReflectiveMethod >> reflectiveMethod [
 
 { #category : #invalidate }
 ReflectiveMethod >> removeLink: aMetaLink [
+
 	(aMetaLink optionCompileOnLinkInstallation or: [ compiledMethod isRealPrimitive ])
-		ifTrue: [ self compileAndInstallCompiledMethod ]
+		ifTrue: [ self compileAndInstallCompiledMethod: false ]
 		ifFalse: [ compiledMethod invalidate ].
 	self decreaseLinkCount.
 	self linkCount = 0 ifTrue: [ self destroyTwin ]
@@ -233,7 +238,7 @@ ReflectiveMethod >> removeLink: aMetaLink [
 ReflectiveMethod >> run: aSelector with: anArray in: aReceiver [
 	"we install the old one as the compiler might need it"
 	self installCompiledMethod.
-	self compileAndInstallCompiledMethod.
+	self compileAndInstallCompiledMethod: true.
 	^aReceiver rFwithArgs: anArray executeMethod: compiledMethod
 ]
 

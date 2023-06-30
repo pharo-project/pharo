@@ -41,7 +41,7 @@ CompiledMethod >> installLink: aMetaLink [
 	self reflectiveMethod ifNil: [ self createTwin ].
 	self reflectiveMethod increaseLinkCount.
 	(aMetaLink optionCompileOnLinkInstallation or: [ self isRealPrimitive ])
-		ifTrue: [ self reflectiveMethod compileAndInstallCompiledMethod ]
+		ifTrue: [ self reflectiveMethod compileAndInstallCompiledMethod: true ]
 		ifFalse: [ self invalidate ]
 ]
 
@@ -63,7 +63,7 @@ CompiledMethod >> invalidate [
 	reflectiveMethod := self reflectiveMethod.
 	reflectiveMethod ifNil: [^self "do nothing"].
 	(self isRealPrimitive or: (reflectiveMethod ast metaLinkOptionsFromClassAndMethod includes: #optionCompileOnLinkInstallation))
-					ifTrue: [reflectiveMethod compileAndInstallCompiledMethod ]
+					ifTrue: [reflectiveMethod compileAndInstallCompiledMethod: false ]
 					ifFalse: [reflectiveMethod installReflectiveMethod]
 ]
 

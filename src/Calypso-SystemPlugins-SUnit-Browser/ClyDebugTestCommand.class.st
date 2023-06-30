@@ -33,10 +33,12 @@ ClyDebugTestCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyDebugTestCommand >> runTest: testSelector of: testClass [
 
-	| breakpoint |
+	| breakpoint node |
+	node := (testClass lookupSelector: testSelector) ast.
 	breakpoint := Breakpoint new
-		              node: (testClass lookupSelector: testSelector) ast;
+		              node: node;
 		              install.
+
 	[ super runTest: testSelector of: testClass ] ensure: [
 		[ breakpoint remove ]
 			on: NotFound
