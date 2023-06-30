@@ -2090,6 +2090,10 @@ String >> keywords [
 	"#foo: keywords >>> #('foo:')"
 
 	"#foo:bar: keywords >>> #('foo:' 'bar:')"
+	
+	"#foo keywords >>> #('foo')" "Invalid input/output !"
+	
+	"#+ keywords >>> #('+')" "Invalid input/output !"
 
 	| keywords |
 	keywords := Array streamContents: [ :kwds |
