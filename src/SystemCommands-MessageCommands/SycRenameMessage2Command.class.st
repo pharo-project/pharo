@@ -21,11 +21,10 @@ SycRenameMessage2Command >> canRemoveArgs [
 SycRenameMessage2Command >> createRefactoring [
 
 	^ RBRenameMethodDriver new
+			scopes: refactoringScopes
 			model: model
-			renameMethodSignature: originalMessage 
-			in:  refactoredClass 
-
-		
+		  renameMethodSignature: originalMessage
+		  in: refactoredClass
 ]
 
 { #category : #accessing }

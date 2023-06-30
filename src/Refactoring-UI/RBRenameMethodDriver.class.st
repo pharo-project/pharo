@@ -35,22 +35,19 @@ RBRenameMethodDriver >> execute [
 
 	refactoring := self refactoring.
 	[
-		[ 
-			| changes newMessage |
-			newMessage := self requestNewMessage.
-			refactoring newSelector: newMessage selector.
-			refactoring renameMap: newMessage renameMap.
-			changes := refactoring generateChanges.
-			self openPreviewWithChanges: changes 
-					]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err |
-		           		^ RBRefactoringError signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err |
-								"what do we do here?"
-								 err return ].
-	
+	[
+	| changes newMessage |
+	newMessage := self requestNewMessage.
+	refactoring newSelector: newMessage selector.
+	refactoring permutation: newMessage permutation.
+	refactoring renameMap: newMessage renameMap.
+	refactoring newNameDoesNotRequireRefactoringPreconditions check.
+	changes := refactoring generateChanges.
+	self openPreviewWithChanges: changes ]
+		on: RBApplicabilityChecksFailedError
+		do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
+		on: RBBreakingChangeChecksFailedWarning
+		do: [ :err | ^ RBRefactoringWarning signal: err messageText ]
 ]
 
 { #category : #initialize }
@@ -84,11 +81,15 @@ RBRenameMethodDriver >> requestNewMessage [
 		          canAddArgs: self canAddArgs
 		          canEditName: self canEditName.
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	
-	"We can revisit this logic later to delegate it to the refactoring."
-	
-	originalMessage selector = methodName selector
-	& (originalMessage argumentNames = methodName arguments) ifTrue: [
-		CmdCommandAborted signal ].
 	^ methodName
+]
+
+{ #category : #initialize }
+RBRenameMethodDriver >> scopes: refactoringScope model: aModel renameMethodSignature: aMessage in: aClass [
+
+	scopes := refactoringScope.
+	model := aModel.
+	originalMessage := aMessage.
+	"while we could think that the class is not needed, it is because a rename should not override existing methods."
+	class := aClass
 ]

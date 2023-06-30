@@ -16,7 +16,8 @@ Class {
 	#instVars : [
 		'class',
 		'methods',
-		'superclass'
+		'superclass',
+		'refactoring'
 	],
 	#category : #'Refactoring-UI-Drivers'
 }
@@ -33,7 +34,7 @@ RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes push
 { #category : #execution }
 RBPushUpMethodDriver >> execute [
 
-	| changes refactoring |
+	| changes |
 	refactoring := self refactoring.
 	changes := [
 	           [
@@ -68,7 +69,7 @@ RBPushUpMethodDriver >> refactoring [
 	"I'm gathering user input and creating refactoring instance"
 
 	self selectMethodsAndSuperclass.
-	^ RBPullUpMethodRefactoring
+	refactoring := RBPullUpMethodRefactoring
 		  model: model
 		  pullUp: (methods collect: [ :each | each selector ])
 		  from: methods first origin

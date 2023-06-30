@@ -135,6 +135,12 @@ RBChangeMethodNameRefactoring >> parseTreeRewriterInstance [
 	^ self parseTreeRewriterClass new
 ]
 
+{ #category : #accessing }
+RBChangeMethodNameRefactoring >> permutation: anObject [
+
+	permutation := anObject
+]
+
 { #category : #preconditions }
 RBChangeMethodNameRefactoring >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."

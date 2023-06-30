@@ -58,6 +58,36 @@ RBRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 		permutation: aMap
 ]
 
+{ #category : #preconditions }
+RBRenameMethodRefactoring >> applicabilityConditions [
+
+	^ self newNameDoesNotRequireRefactoringPreconditions not & (RBCondition
+		   withBlock: [ oldSelector numArgs = newSelector numArgs ]
+		   errorString: newSelector printString
+			   , ' doesn''t have the correct number of arguments.')
+]
+
+{ #category : #preconditions }
+RBRenameMethodRefactoring >> breakingChangeConditions [
+
+	^ self doesNotOverrideExistingMethodPrecondition 
+]
+
+{ #category : #actions }
+RBRenameMethodRefactoring >> generateChanges [
+
+	
+	self applicabilityConditions check ifFalse: [
+		^ RBApplicabilityChecksFailedError signal:
+			  self applicabilityConditions errorString ].
+	self breakingChangeConditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangeConditions errorString ].
+
+	self transform.
+	^ self changes
+]
+
 { #category : #testing }
 RBRenameMethodRefactoring >> hasPermutedArguments [
 
@@ -84,6 +114,20 @@ RBRenameMethodRefactoring >> myConditions [
 				, ' doesn''t have the correct number of arguments.'
 ]
 
+{ #category : #preconditions }
+RBRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
+	"this could be part of skippingRefactoringPrecondition meaning that there is no need to execute it."
+	
+	^ (RBCondition
+		   withBlock: [ newSelector = oldSelector ]
+		   errorString:
+		   'The selector name has <1?not:> changed <1?:to #' , newSelector
+		   , '>') & (RBCondition
+		   withBlock: [
+		   permutation asArray ~= (1 to: oldSelector numArgs) asArray ]
+		   errorString: 'The arguments are <1?:not >permuted')
+]
+
 { #category : #parsing }
 RBRenameMethodRefactoring >> parseTreeRewriterInstance [
 
@@ -97,14 +141,8 @@ RBRenameMethodRefactoring >> parseTreeRewriterInstance [
 
 { #category : #preconditions }
 RBRenameMethodRefactoring >> preconditions [
-	| newCondition |
-	newCondition := (RBCondition
-							withBlock: [ newSelector = oldSelector ]
-							errorString: 'The selector name has <1?not:> changed <1?:to #', newSelector, '>')
-						& (RBCondition
-							withBlock: [permutation asArray ~= (1 to: oldSelector numArgs) asArray]
-							errorString: 'The arguments are <1?:not >permuted').
-	^newCondition | super preconditions
+
+	^ self newNameDoesNotRequireRefactoringPreconditions | super preconditions
 ]
 
 { #category : #printing }
