@@ -3,16 +3,16 @@ Class {
 	#superclass : #RBDriver,
 	#instVars : [
 		'class',
-		'variables'
+		'variables',
+		'refactoring'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #execution }
 RBRemoveInstanceVariableDriver >> execute [
 
-	|  refactoring |
-	refactoring := self refactoring.
+	self refactoring.
 	[
 		[ 
 			| changes |
@@ -60,7 +60,7 @@ RBRemoveInstanceVariableDriver >> furtherActionFor: aReport [
 { #category : #resources }
 RBRemoveInstanceVariableDriver >> refactoring [
 
-	^ RBRemoveInstanceVariableRefactoring2 
+	refactoring := RBRemoveInstanceVariableRefactoring2 
 		  model: model remove: variables first from: class
 ]
 

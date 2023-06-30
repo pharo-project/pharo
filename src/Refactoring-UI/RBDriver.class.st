@@ -16,7 +16,7 @@ Class {
 		'model',
 		'scopes'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #testing }

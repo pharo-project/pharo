@@ -139,7 +139,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 RBRemoveMethodRefactoring >> preconditions [
 
 	^ (selectors
-		   inject: self emptyCondition
+		   inject: self trueCondition
 		   into: [ :cond :each |
 		   cond & (RBCondition definesSelector: each in: class) ])
 	  & (RBCondition withBlock: [

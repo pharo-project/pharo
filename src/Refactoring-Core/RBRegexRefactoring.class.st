@@ -80,7 +80,7 @@ RBRegexRefactoring >> initialize [
 { #category : #preconditions }
 RBRegexRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #searching }

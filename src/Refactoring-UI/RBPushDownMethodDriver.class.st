@@ -18,7 +18,7 @@ Class {
 		'methods',
 		'class'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #initialization }

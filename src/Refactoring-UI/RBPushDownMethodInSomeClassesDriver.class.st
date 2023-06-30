@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'classes'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #execution }

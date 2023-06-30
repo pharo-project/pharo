@@ -65,7 +65,7 @@ RBRemoveAllSendersRefactoring >> messagePattern [
 
 { #category : #preconditions }
 RBRemoveAllSendersRefactoring >> preconditions [
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #removing }

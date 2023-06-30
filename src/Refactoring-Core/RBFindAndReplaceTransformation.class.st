@@ -221,10 +221,10 @@ RBFindAndReplaceTransformation >> preconditions [
 	rbMethod := class methodFor: selector.
 	condition := (RBCondition definesSelector: selector in: class)
 	             & (replacesAllHierarchy
-			              ifFalse: [ self emptyCondition ]
+			              ifFalse: [ self trueCondition ]
 			              ifTrue: [
 				              class allSubclasses
-					              inject: self emptyCondition
+					              inject: self trueCondition
 					              into: [ :cond :aClass |
 						              cond
 						              &

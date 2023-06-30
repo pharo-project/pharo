@@ -49,7 +49,7 @@ RBRemoveHierarchyMethodTransformation >> deleteSelectors [
 { #category : #preconditions }
 RBRemoveHierarchyMethodTransformation >> preconditions [
 
-	^ selectors inject: self emptyCondition into: [ :cond :aSelector |
+	^ selectors inject: self trueCondition into: [ :cond :aSelector |
 		  cond & (RBCondition definesSelector: aSelector in: class) ]
 ]
 
