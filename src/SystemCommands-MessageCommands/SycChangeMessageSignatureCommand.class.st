@@ -21,7 +21,8 @@ Class {
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'originalMessage',
-		'refactoringScopes'
+		'refactoringScopes',
+		'refactoredClass'
 	],
 	#category : #'SystemCommands-MessageCommands'
 }
@@ -98,8 +99,14 @@ SycChangeMessageSignatureCommand >> originalMessage: anObject [
 SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self setUpModelFromContext: aToolContext.
+	refactoredClass := aToolContext lastSelectedClass.
 	refactoringScopes := aToolContext refactoringScopes.
 	originalMessage := aToolContext lastSelectedMessage
+]
+
+{ #category : #accessing }
+SycChangeMessageSignatureCommand >> refactoredClass: aClass [ 
+	refactoredClass := aClass
 ]
 
 { #category : #requesting }

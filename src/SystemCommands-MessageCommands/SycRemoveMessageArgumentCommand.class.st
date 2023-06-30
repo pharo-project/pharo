@@ -46,11 +46,11 @@ SycRemoveMessageArgumentCommand >> computeArgumentName [
 
 { #category : #execution }
 SycRemoveMessageArgumentCommand >> createRefactoring [
-
+	
 	^(RBRemoveParameterRefactoring
 		model: model
 		removeParameter: argumentName
-		in: originalMessage
+		in: refactoredClass
 		selector: originalMessage selector)
 		newSelector: self resultMessageSelector
 ]
@@ -93,8 +93,14 @@ SycRemoveMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 
 	(originalMessage argumentNames includes: argumentName)
 		ifTrue: [ ^ self ].
+	
 	self informArgumentError.
 	self abort
+]
+
+{ #category : #accessing }
+SycRemoveMessageArgumentCommand >> refactoredClass: aClass [ 
+	refactoredClass := aClass
 ]
 
 { #category : #execution }
