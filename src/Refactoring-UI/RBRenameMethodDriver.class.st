@@ -5,7 +5,8 @@ Class {
 		'class',
 		'selector',
 		'originalMessage',
-		'refactoring'
+		'refactoring',
+		'newMessage'
 	],
 	#category : #'Refactoring-UI-Drivers'
 }
@@ -36,7 +37,7 @@ RBRenameMethodDriver >> execute [
 	refactoring := self refactoring.
 	[
 	[
-	| changes newMessage |
+	| changes |
 	newMessage := self requestNewMessage.
 	refactoring newSelector: newMessage selector.
 	refactoring permutation: newMessage permutation.
@@ -56,6 +57,12 @@ RBRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 	originalMessage := aMessage.
 	"while we could think that the class is not needed, it is because a rename should not override existing methods."
 	class := aClass
+]
+
+{ #category : #'as yet unclassified' }
+RBRenameMethodDriver >> newMessage [
+
+	^ newMessage
 ]
 
 { #category : #execution }

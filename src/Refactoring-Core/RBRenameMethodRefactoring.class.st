@@ -117,7 +117,8 @@ RBRenameMethodRefactoring >> myConditions [
 { #category : #preconditions }
 RBRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
 	"this could be part of skippingRefactoringPrecondition meaning that there is no need to execute it."
-	
+
+
 	^ (RBCondition
 		   withBlock: [ newSelector = oldSelector ]
 		   errorString:

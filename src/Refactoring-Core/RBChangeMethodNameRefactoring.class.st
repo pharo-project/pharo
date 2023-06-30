@@ -147,12 +147,10 @@ RBChangeMethodNameRefactoring >> preconditions [
 
 	| conditions |
 	conditions := self myConditions
-				& (RBCondition definesSelector: oldSelector in: class)
-				& self isValidMethodNamePrecondition.
-				
-	conditions & self doesNotOverrideExistingMethodPrecondition
+	              & (RBCondition definesSelector: oldSelector in: class)
+	              & self isValidMethodNamePrecondition.
 
-	
+	^ conditions & self doesNotOverrideExistingMethodPrecondition
 ]
 
 { #category : #transforming }

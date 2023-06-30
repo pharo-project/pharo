@@ -2,10 +2,21 @@ Class {
 	#name : #SycRenameMessage2Command,
 	#superclass : #SycChangeMessageSignatureCommand,
 	#instVars : [
-		'newSignature'
+		'newSignature',
+		'driver'
 	],
 	#category : #'SystemCommands-MessageCommands'
 }
+
+{ #category : #execution }
+SycRenameMessage2Command >> applyResultInContext: aToolContext [
+	"I have problem to understand how to plug the call to the driver in the cmd architecture
+	in a way that I can come back here only once the refactoring is applied."
+	"to be checked"
+	"aToolContext
+		showMessage: originalMessage
+		renamedTo: driver newMessage"
+]
 
 { #category : #requesting }
 SycRenameMessage2Command >> canAddArgs [
@@ -19,12 +30,13 @@ SycRenameMessage2Command >> canRemoveArgs [
 
 { #category : #execution }
 SycRenameMessage2Command >> createRefactoring [
-
-	^ RBRenameMethodDriver new
-			scopes: refactoringScopes
-			model: model
+	driver 
+		:=  RBRenameMethodDriver new
+		  scopes: refactoringScopes
+		  model: model
 		  renameMethodSignature: originalMessage
-		  in: refactoredClass
+		  in: refactoredClass.
+	^ driver
 ]
 
 { #category : #accessing }
