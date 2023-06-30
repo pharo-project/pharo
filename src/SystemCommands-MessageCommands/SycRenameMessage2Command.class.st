@@ -3,7 +3,8 @@ Class {
 	#superclass : #SycChangeMessageSignatureCommand,
 	#instVars : [
 		'newSignature',
-		'driver'
+		'driver',
+		'toolContext'
 	],
 	#category : #'SystemCommands-MessageCommands'
 }
@@ -12,7 +13,9 @@ Class {
 SycRenameMessage2Command >> applyResultInContext: aToolContext [
 	"I have problem to understand how to plug the call to the driver in the cmd architecture
 	in a way that I can come back here only once the refactoring is applied."
+
 	"to be checked"
+
 	"aToolContext
 		showMessage: originalMessage
 		renamedTo: driver newMessage"
@@ -28,17 +31,6 @@ SycRenameMessage2Command >> canRemoveArgs [
 	^ false
 ]
 
-{ #category : #execution }
-SycRenameMessage2Command >> createRefactoring [
-	driver 
-		:=  RBRenameMethodDriver new
-		  scopes: refactoringScopes
-		  model: model
-		  renameMethodSignature: originalMessage
-		  in: refactoredClass.
-	^ driver
-]
-
 { #category : #accessing }
 SycRenameMessage2Command >> defaultMenuIconName [
 	^#edit
@@ -47,6 +39,19 @@ SycRenameMessage2Command >> defaultMenuIconName [
 { #category : #accessing }
 SycRenameMessage2Command >> defaultMenuItemName [
 	^'Rename2'
+]
+
+{ #category : #execution }
+SycRenameMessage2Command >> execute [
+
+	driver := RBRenameMethodDriver new
+		          scopes: refactoringScopes
+		          model: model
+		          renameMethodSignature: originalMessage
+		          in: refactoredClass.
+	driver command: self andPostAction: [ toolContext showMessage: originalMessage renamedTo: driver newMessage ].
+	driver execute.
+	
 ]
 
 { #category : #execution }
@@ -63,6 +68,13 @@ SycRenameMessage2Command >> newSignature [
 { #category : #accessing }
 SycRenameMessage2Command >> newSignature: anObject [
 	newSignature := anObject
+]
+
+{ #category : #execution }
+SycRenameMessage2Command >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+	toolContext := aToolContext
 ]
 
 { #category : #execution }

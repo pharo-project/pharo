@@ -259,7 +259,7 @@ StMethodNameEditorPresenter >> getParametersOrder [
 { #category : #'to be pushed to presenter' }
 StMethodNameEditorPresenter >> inform: aString [
 
-	SpInformDialog new
+	self application newDialog
 		title: aString ;
 		acceptLabel: 'Got it !';
 		openDialog
@@ -425,7 +425,7 @@ StMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 { #category : #'to be pushed to presenter' }
 StMethodNameEditorPresenter >> request: aString initialAnswer: initialAnswer [
 
-	^ SpRequestDialog new
+	^ 	self application newRequest
 		title: aString;
 		text: initialAnswer;
 		acceptLabel: 'Accept';

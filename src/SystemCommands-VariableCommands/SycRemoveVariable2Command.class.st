@@ -37,11 +37,3 @@ SycRemoveVariable2Command >> isComplexRefactoring [
 
 	^false
 ]
-
-{ #category : #execution }
-SycRemoveVariable2Command >> prepareFullExecutionInContext: aToolContext [
-
-	super prepareFullExecutionInContext: aToolContext.
-
-
-]

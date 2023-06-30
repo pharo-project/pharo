@@ -6,7 +6,9 @@ Class {
 		'selector',
 		'originalMessage',
 		'refactoring',
-		'newMessage'
+		'newMessage',
+		'command',
+		'postAction'
 	],
 	#category : #'Refactoring-UI-Drivers'
 }
@@ -31,24 +33,31 @@ RBRenameMethodDriver >> canRenameArgs [
 	^ true
 ]
 
+{ #category : #'as yet unclassified' }
+RBRenameMethodDriver >> command: aCommand andPostAction: aClosure [ 
+	command := aCommand. "may be not needed"
+	postAction := aClosure
+]
+
 { #category : #execution }
 RBRenameMethodDriver >> execute [
 
 	refactoring := self refactoring.
 	[
-	[
-	| changes |
-	newMessage := self requestNewMessage.
-	refactoring newSelector: newMessage selector.
-	refactoring permutation: newMessage permutation.
-	refactoring renameMap: newMessage renameMap.
-	refactoring newNameDoesNotRequireRefactoringPreconditions check.
-	changes := refactoring generateChanges.
-	self openPreviewWithChanges: changes ]
-		on: RBApplicabilityChecksFailedError
-		do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
-		on: RBBreakingChangeChecksFailedWarning
-		do: [ :err | ^ RBRefactoringWarning signal: err messageText ]
+		[
+		| changes |
+		newMessage := self requestNewMessage.
+		refactoring newSelector: newMessage selector.
+		refactoring permutation: newMessage permutation.
+		refactoring renameMap: newMessage renameMap.
+		refactoring newNameDoesNotRequireRefactoringPreconditions check.
+		changes := refactoring generateChanges.
+		self openPreviewWithChanges: changes
+		"arg postAction value." ]
+			on: RBApplicabilityChecksFailedError
+			do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
+			on: RBBreakingChangeChecksFailedWarning
+			do: [ :err | self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring).  err return ]
 ]
 
 { #category : #initialize }
