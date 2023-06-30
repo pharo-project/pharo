@@ -110,12 +110,12 @@ RBRenameMethodRefactoring >> preconditions [
 { #category : #printing }
 RBRenameMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
-	self class storeOn: aStream.
+	aStream nextPutAll: self class name.
 	aStream
 		nextPutAll: ' renameMethod: #';
 		nextPutAll: oldSelector;
 		nextPutAll: ' in: '.
-	class storeOn: aStream.
+	aStream nextPutAll: class name.	
 	aStream
 		nextPutAll: ' to: #';
 		nextPutAll: newSelector;

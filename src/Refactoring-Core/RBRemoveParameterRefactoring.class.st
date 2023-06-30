@@ -110,13 +110,14 @@ RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aS
 
 { #category : #printing }
 RBRemoveParameterRefactoring >> storeOn: aStream [
+
 	aStream nextPut: $(.
-	self class storeOn: aStream.
+	aStream nextPutAll: self class name.
 	aStream
 		nextPutAll: ' removeParameter: ''';
 		nextPutAll: argument;
 		nextPutAll: ''' in: '.
-	class storeOn: aStream.
+	aStream nextPutAll: class name.
 	aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector.
