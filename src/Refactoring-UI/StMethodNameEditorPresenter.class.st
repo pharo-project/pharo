@@ -63,7 +63,6 @@ StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRe
 
 { #category : #specs }
 StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 canEditName: aBoolean4 [
-
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 
 	| temp |
@@ -73,7 +72,7 @@ StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRe
 	temp canRemoveArgs: aBoolean2.
 	temp canAddArgs: aBoolean3.
 	temp canEditName: aBoolean4.
-	^ temp openBlockedDialog
+	^ temp openModal
 ]
 
 { #category : #action }
@@ -326,7 +325,7 @@ StMethodNameEditorPresenter >> invalidArgNames: aSet [
 	invalidArgNames := aSet
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 StMethodNameEditorPresenter >> newArgName [
 	| baseString index newString |
 	newString := baseString := 'anObject'.

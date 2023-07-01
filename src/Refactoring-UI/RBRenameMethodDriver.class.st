@@ -3,7 +3,6 @@ Class {
 	#superclass : #RBDriver,
 	#instVars : [
 		'class',
-		'selector',
 		'originalMessage',
 		'refactoring',
 		'newMessage',
