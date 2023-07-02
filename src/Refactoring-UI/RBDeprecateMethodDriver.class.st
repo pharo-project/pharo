@@ -31,7 +31,7 @@ RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCo
 RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollection [
 
 	selectorToDeprecate := aSelector.
-	useInsteadSelector := self selectorToReplaceDeprecatedSelector.
+	self selectorToReplaceDeprecatedSelector.
 	scopes := aCollection.
 	model := self refactoringScopeOn: scopes first.
 
@@ -73,11 +73,22 @@ RBDeprecateMethodDriver >> refactoringScopeOn: aScope [
 
 { #category : #'ui - requests' }
 RBDeprecateMethodDriver >> selectorToReplaceDeprecatedSelector [
+	"UIManager default
+		                      request:
+			                      'Method to replace ' , selectorToDeprecate
+			                      ,
+			                      '. The new selectors cannot be an empty string or same as the old selector.'
+		                      initialAnswer: selectorToDeprecate
+		                      title: 'New selector'"
 
-	useInsteadSelector := UIManager default
-		               request: 'Method to replace ' , selectorToDeprecate
-			               ,
-			               '. The new selectors cannot be an empty string or same as the old selector.'
-		               initialAnswer: selectorToDeprecate
-		               title: 'New selector'.
+	useInsteadSelector := SpRequestDialog new
+		                      title:
+			                      'Selector to replace ' , selectorToDeprecate;
+		                      label:
+			                      'The new selectors cannot be an empty string or same as the old selector.';
+		                      text: selectorToDeprecate;
+		                      acceptLabel: 'Accept';
+		                      cancelLabel: 'Cancel';
+		                      openModal.
+	"we should check that the selector is valid here!!!"
 ]
