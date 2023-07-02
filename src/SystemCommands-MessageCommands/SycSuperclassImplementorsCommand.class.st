@@ -18,14 +18,14 @@ SycSuperclassImplementorsCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 SycSuperclassImplementorsCommand >> defaultMenuItemName [
-	^'Superclass implementors'
+	^'Hierarchical implementors'
 ]
 
 { #category : #execution }
 SycSuperclassImplementorsCommand >> execute [
 
 	| sup |
-	sup := refactoredClass allSuperclasses 
+	sup := refactoredClass withAllSuperclasses 
 		detect: [ :cl | cl includesSelector: originalMessage selector ] 
 		ifNone: [ ^ self ].
 	Smalltalk tools messageList browse: { sup >> originalMessage selector }
