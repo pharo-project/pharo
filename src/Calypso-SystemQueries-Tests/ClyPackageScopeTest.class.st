@@ -34,7 +34,7 @@ ClyPackageScopeTest >> testClassGroupEnumeration [
 		assert:
 			(result
 				select: [ :each | each class = ClyTaggedClassGroup ]
-				thenCollect: #tag) sorted asArray
+				thenCollect: [:group | group tag]) sorted asArray
 		equals: ClyClass7WithTag1FromP5Mock package tagsForClasses sorted asArray
 ]
 
