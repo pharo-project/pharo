@@ -18,7 +18,7 @@ Class {
 		'methodToReplaceDeprecatedMethod',
 		'refactoring'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #'instance creation' }

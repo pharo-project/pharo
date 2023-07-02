@@ -3,16 +3,16 @@ Class {
 	#superclass : #RBDriver,
 	#instVars : [
 		'class',
-		'variables'
+		'variables',
+		'refactoring'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #execution }
 RBRemoveInstanceVariableDriver >> execute [
 
-	|  refactoring |
-	refactoring := self refactoring.
+	self refactoring.
 	[
 		[ 
 			| changes |
@@ -50,9 +50,7 @@ RBRemoveInstanceVariableDriver >> furtherActionFor: aReport [
 	Now it could be packaged in the report object.
 	Note that the report holds an environment and that we also have scopes so the message
 	list should be passed the scope when the widget will be able to handle it."
-	SystemNavigation default 
-			browseAllAccessesTo: aReport refactoring variableName  
-			from: aReport refactoring refactoredClass realClass
+	aReport execute.
 
 
 ]
@@ -60,7 +58,7 @@ RBRemoveInstanceVariableDriver >> furtherActionFor: aReport [
 { #category : #resources }
 RBRemoveInstanceVariableDriver >> refactoring [
 
-	^ RBRemoveInstanceVariableRefactoring2 
+	refactoring := RBRemoveInstanceVariableRefactoring2 
 		  model: model remove: variables first from: class
 ]
 

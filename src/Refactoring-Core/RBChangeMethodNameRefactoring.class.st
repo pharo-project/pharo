@@ -51,6 +51,16 @@ RBChangeMethodNameRefactoring >> convertAllReferencesTo: aSymbol using: searchRe
 		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
 ]
 
+{ #category : #preconditions }
+RBChangeMethodNameRefactoring >> doesNotOverrideExistingMethodPrecondition [
+	"Check that the new selector is not already defined in superclasses"
+	
+	^ self implementors
+		inject: RBCondition true 
+		into: [ :condition :each |
+			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ]
+]
+
 { #category : #testing }
 RBChangeMethodNameRefactoring >> hasPermutedArguments [
 	oldSelector numArgs = newSelector numArgs ifFalse: [^true].
@@ -71,6 +81,13 @@ RBChangeMethodNameRefactoring >> implementorsCanBePrimitives [
 	^false
 ]
 
+{ #category : #preconditions }
+RBChangeMethodNameRefactoring >> isValidMethodNamePrecondition [
+	^ (RBCondition isValidMethodName: newSelector for: class)
+
+	
+]
+
 { #category : #private }
 RBChangeMethodNameRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	| oldArgs |
@@ -85,10 +102,15 @@ RBChangeMethodNameRefactoring >> myConditions [
 
 { #category : #accessing }
 RBChangeMethodNameRefactoring >> newSelector [
-	^newSelector
+	^ newSelector
 ]
 
-{ #category : #'instance creation' }
+{ #category : #accessing }
+RBChangeMethodNameRefactoring >> newSelector: aSymbol [
+	newSelector := aSymbol
+]
+
+{ #category : #accessing }
 RBChangeMethodNameRefactoring >> newSelectorString [ 
 	^ self buildSelectorString: newSelector
 				withPermuteMap: permutation
@@ -113,20 +135,22 @@ RBChangeMethodNameRefactoring >> parseTreeRewriterInstance [
 	^ self parseTreeRewriterClass new
 ]
 
+{ #category : #accessing }
+RBChangeMethodNameRefactoring >> permutation: anObject [
+
+	permutation := anObject
+]
+
 { #category : #preconditions }
 RBChangeMethodNameRefactoring >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
 	| conditions |
 	conditions := self myConditions
-				& (RBCondition definesSelector: oldSelector in: class)
-				& (RBCondition isValidMethodName: newSelector for: class).
+	              & (RBCondition definesSelector: oldSelector in: class)
+	              & self isValidMethodNamePrecondition.
 
-	conditions := self implementors
-		inject: conditions into: [ :condition :each |
-			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ].
-
-	^conditions
+	^ conditions & self doesNotOverrideExistingMethodPrecondition
 ]
 
 { #category : #transforming }
@@ -186,10 +210,19 @@ RBChangeMethodNameRefactoring >> renameMessageSendsIn: classes [
 ]
 
 { #category : #initialization }
-RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [
+RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass [
+	"Watch out this is for partial configuration of the refactoring"
+
 	oldSelector := aSelector asSymbol.
-	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
+	
+]
+
+{ #category : #initialization }
+RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [
+	
+	self renameMethod: aSelector asSymbol in: aClass.
+	newSelector := newSel asSymbol.
 	permutation := aMap
 ]
 

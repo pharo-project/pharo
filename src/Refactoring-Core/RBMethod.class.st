@@ -42,6 +42,11 @@ RBMethod class >> for: aRBClass source: aString selector: aSelector [
 ]
 
 { #category : #accessing }
+RBMethod >> argumentNames [
+	^ self ast argumentNames
+]
+
+{ #category : #accessing }
 RBMethod >> ast [
 	^ self parseTree
 ]

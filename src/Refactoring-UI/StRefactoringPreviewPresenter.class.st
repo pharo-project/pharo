@@ -20,7 +20,7 @@ Class {
 		'buttonOk',
 		'buttonCancel'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-UI'
 }
 
 { #category : #'instance creation' }

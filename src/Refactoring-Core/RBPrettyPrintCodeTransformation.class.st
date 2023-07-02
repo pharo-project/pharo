@@ -12,7 +12,7 @@ Class {
 { #category : #preconditions }
 RBPrettyPrintCodeTransformation >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #transforming }

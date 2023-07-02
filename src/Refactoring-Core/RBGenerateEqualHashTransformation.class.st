@@ -151,7 +151,7 @@ RBGenerateEqualHashTransformation >> preconditions [
 	"Checks that the class actually defines all the variables that will be part of the hash."
 
 	^ variables
-		  inject: self emptyCondition
+		  inject: self trueCondition
 		  into: [ :condition :variable |
 			  condition
 			  &

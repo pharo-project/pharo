@@ -16,9 +16,10 @@ Class {
 	#superclass : #RBDriver,
 	#instVars : [
 		'methods',
-		'class'
+		'class',
+		'refactoring'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #initialization }
@@ -30,11 +31,11 @@ RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pu
 { #category : #execution }
 RBPushDownMethodDriver >> execute [
 
-	| changes refactoring |
+	| changes |
 	methods := self selectMethods.
 	methods ifNil: [ ^ self ].
 
-	refactoring := self refactoring.
+	self refactoring.
 	changes := [
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError
@@ -60,7 +61,7 @@ RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown
 { #category : #resources }
 RBPushDownMethodDriver >> refactoring [
 
-	^ RBPushDownMethodRefactoring
+	refactoring :=  RBPushDownMethodRefactoring
 		  model: model
 		  pushDown: (methods collect: [ :each | each selector ])
 		  from: class

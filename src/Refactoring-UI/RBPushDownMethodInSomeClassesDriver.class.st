@@ -17,19 +17,19 @@ Class {
 	#instVars : [
 		'classes'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #execution }
 RBPushDownMethodInSomeClassesDriver >> execute [
 
-	| changes refactoring |
+	| changes  |
 	methods := self selectMethods.
 	methods ifNil: [ ^ self ].
 	classes := self selectClasses.
 	classes ifNil: [ ^ self ].
 	
-	refactoring := self refactoring.
+	self refactoring.
 	changes := [
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError
@@ -46,7 +46,7 @@ RBPushDownMethodInSomeClassesDriver >> execute [
 { #category : #resources }
 RBPushDownMethodInSomeClassesDriver >> refactoring [
 
-	^ RBPushDownMethodRefactoring
+	refactoring :=  RBPushDownMethodRefactoring
 		model: model
 		pushDown: (methods collect: [ :each | each selector ])
 		from: class

@@ -145,7 +145,7 @@ RBTransformation >> preconditionChecking: aBoolean [
 { #category : #preconditions }
 RBTransformation >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #executing }

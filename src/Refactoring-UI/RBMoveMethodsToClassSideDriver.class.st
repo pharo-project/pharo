@@ -19,7 +19,7 @@ Class {
 		'refactorings',
 		'methods'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #'instance creation' }

@@ -93,7 +93,7 @@ RBRemoveClassRefactoring >> preconditionIsNotMetaclass: aClass [
 { #category : #preconditions }
 RBRemoveClassRefactoring >> preconditions [
 
-	^ classNames inject: self emptyCondition into: [ :sum :each |
+	^ classNames inject: self trueCondition into: [ :sum :each |
 		  | aClassOrTrait |
 		  aClassOrTrait := self model classNamed: each asSymbol.
 		  aClassOrTrait ifNil: [
