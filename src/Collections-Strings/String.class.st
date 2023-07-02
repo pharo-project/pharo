@@ -2085,25 +2085,30 @@ String >> join: aCollection [
 
 { #category : #converting }
 String >> keywords [
-	"Answer an array of the keywords that compose the receiver."
+	"Returns the keywords of the provided selector. Assumes the reciever is a valid keyword based selector (@reciever isKeyword > true). Prefer using Symbol>>#keywordsStrict if you're not sure if the reciever is keyword-based."
+
+	"#foo: keywords >>> #('foo:')"
+
+	"#foo:bar: keywords >>> #('foo:' 'bar:')"
+	
+	"#foo keywords >>> #('foo')" "Invalid input/output !"
+	
+	"#+ keywords >>> #('+')" "Invalid input/output !"
+
 	| keywords |
-	keywords := Array streamContents:
-		[:kwds | | char kwd | kwd := (String new: 16) writeStream.
-		1 to: self size do:
-			[:i |
-			kwd nextPut: (char := self at: i).
-			char = $: ifTrue:
-					[kwds nextPut: kwd contents.
-					kwd reset]].
-		(kwd position = 0) ifFalse: [kwds nextPut: kwd contents]].
-	(keywords size >= 1 and: [(keywords at: 1) = ':']) ifTrue:
-		["Has an initial keyword, as in #:if:then:else:"
-		keywords := keywords allButFirst].
-	(keywords size >= 2 and: [(keywords at: keywords size - 1) = ':']) ifTrue:
-		["Has a final keyword, as in #nextPut::andCR"
-		keywords := keywords copyReplaceFrom: keywords size - 1
-								to: keywords size with: {':' , keywords last}].
+	keywords := Array streamContents: [ :kwds |
+		            | kwd |
+		            kwd := (String new: 16) writeStream.
+
+		            self do: [ :char |
+			            kwd nextPut: char.
+			            char = $: ifTrue: [
+				            kwds nextPut: kwd contents.
+				            kwd reset ] ].
+
+		            kwd position = 0 ifFalse: [ kwds nextPut: kwd contents ] ].
 	^ keywords
+	
 ]
 
 { #category : #testing }

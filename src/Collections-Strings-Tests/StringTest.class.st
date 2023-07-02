@@ -1462,6 +1462,14 @@ StringTest >> testIsWideString [
 ]
 
 { #category : #tests }
+StringTest >> testKeywords [
+
+	self assert: (#foo: keywords) equals: #('foo:').
+	self assert: (#foo:bar: keywords) equals: #('foo:' 'bar:').
+	
+]
+
+{ #category : #tests }
 StringTest >> testLastSpacePosition [
 
 	self assert: 'fred the bear' lastSpacePosition equals: 9.
