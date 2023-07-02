@@ -85,7 +85,7 @@ ReAbstractCritique >> actions [
 			action: [ :crit |
 				| changesBrowser |
 
-				changesBrowser := (ChangesBrowser changes: { crit change })
+				changesBrowser := (StChangesBrowserPresenter changes: { crit change })
 					extent: 500@400;
 					asModalWindow;
 					yourself.
