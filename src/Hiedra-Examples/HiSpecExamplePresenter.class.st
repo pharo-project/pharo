@@ -2,7 +2,7 @@
 I am an example of use of Hiedra in the Spec library (with Morph as backend).
 "
 Class {
-	#name : #HiSpecExample,
+	#name : #HiSpecExamplePresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'hiedraColumnController',
@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : #examples }
-HiSpecExample class >> example60RandomCommits [
+HiSpecExamplePresenter class >> example60RandomCommits [
 	^ self openExample: #randomlyGenerated
 ]
 
 { #category : #examples }
-HiSpecExample class >> openExample: selector [
+HiSpecExamplePresenter class >> openExample: selector [
 
 	| commits |
 	commits := HiExampleCommit perform: selector.
@@ -34,13 +34,13 @@ HiSpecExample class >> openExample: selector [
 ]
 
 { #category : #windows }
-HiSpecExample >> close [
+HiSpecExamplePresenter >> close [
 
 	self window close
 ]
 
 { #category : #accessing }
-HiSpecExample >> commits: commits [
+HiSpecExamplePresenter >> commits: commits [
 
 	table items: commits.
 
@@ -57,7 +57,7 @@ HiSpecExample >> commits: commits [
 ]
 
 { #category : #layout }
-HiSpecExample >> defaultLayout [
+HiSpecExamplePresenter >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #table;
 		add: #actionBar expand: false;
@@ -65,13 +65,13 @@ HiSpecExample >> defaultLayout [
 ]
 
 { #category : #initialization }
-HiSpecExample >> forceRefreshHiedra [
+HiSpecExamplePresenter >> forceRefreshHiedra [
 	hiedraColumnController reset.
 	table withAdapterDo: #refreshList
 ]
 
 { #category : #initialization }
-HiSpecExample >> initializeActionBar [
+HiSpecExamplePresenter >> initializeActionBar [
 
 	| refreshButton inspectButton |
 	refreshButton := self newButton
@@ -92,13 +92,13 @@ HiSpecExample >> initializeActionBar [
 ]
 
 { #category : #initialization }
-HiSpecExample >> initializePresenters [
+HiSpecExamplePresenter >> initializePresenters [
 	self initializeTable.
 	self initializeActionBar
 ]
 
 { #category : #initialization }
-HiSpecExample >> initializeTable [
+HiSpecExamplePresenter >> initializeTable [
 	table := self newTable.
 
 	"Configure hiedra controller"
