@@ -115,7 +115,7 @@ TestRunner >> browseClass [
 	targetClasses := classesSelected asArray.
 	targetClasses ifEmpty: [ ^ self ].
 	targetClasses size > 1
-		ifTrue: [ (UIManager default
+		ifTrue: [ (self 
 				confirm: 'Do you want to open all ' , targetClasses size printString , ' classes?')
 				ifTrue: [ targetClasses do: #browse ].
 			^ self ].
@@ -398,7 +398,7 @@ TestRunner >> collectCoverageFor: methods [
 
 	notExecuted := coverage uncoveredMethods.
 	notExecuted isEmpty
-		ifTrue:  [ UIManager default inform: 'Congratulations. Your tests cover all code under analysis.' ]
+		ifTrue:  [ self inform: 'Congratulations. Your tests cover all code under analysis.' ]
 		ifFalse: [
 			Smalltalk tools messageList
 				browse: notExecuted
@@ -833,7 +833,7 @@ TestRunner >> runCoverage [
 		to: methods.
 	self excludeClassesNotUnderTestFrom: methods.
 	methods isEmpty ifTrue:
-		[ ^ UIManager default inform: 'No methods found for coverage analysis.' ].
+		[ ^ self inform: 'No methods found for coverage analysis.' ].
 	self collectCoverageFor: methods
 ]
 
