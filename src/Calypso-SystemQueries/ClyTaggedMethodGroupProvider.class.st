@@ -18,7 +18,7 @@ ClyTaggedMethodGroupProvider >> buildGroupsFrom: aClassScope [
 	aClassScope classesDo: [ :eachClass |
 		eachClass tagsForAllMethods do: [ :eachTag |
 			groups at: eachTag ifAbsentPut: [
-				ClyTaggedMethodGroup withMethodsFrom: aClassScope taggedBy: eachTag ] ] ].
+				ClyMethodsInProtocolGroup withMethodsFrom: aClassScope inProtocol: eachTag ] ] ].
 
 	^ groups values
 ]

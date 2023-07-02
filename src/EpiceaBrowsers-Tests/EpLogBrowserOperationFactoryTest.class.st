@@ -30,5 +30,6 @@ EpLogBrowserOperationFactoryTest >> tearDown [
 
 	self flag: #categories. "This tear down should not be needed but it currently is."
 	self packageOrganizer unregisterPackageNamed: classFactory packageName.
+	self packageOrganizer unregisterPackageNamed: classFactory defaultCategory.
 	super tearDown
 ]

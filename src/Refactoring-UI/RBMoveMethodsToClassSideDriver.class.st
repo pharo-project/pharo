@@ -19,7 +19,7 @@ Class {
 		'refactorings',
 		'methods'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #'instance creation' }
@@ -43,7 +43,6 @@ RBMoveMethodsToClassSideDriver >> checkBreakingChanges [
 	| checks |
 	checks := self refactorings collect: [ :each |
 		          each breakingChangeConditions check ].
-
 	^ checks reduce: [ :a :b | a & b ]
 ]
 

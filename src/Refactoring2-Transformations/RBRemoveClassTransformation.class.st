@@ -117,7 +117,7 @@ RBRemoveClassTransformation >> preconditionIsNotMetaclass: aClass [
 { #category : #preconditions }
 RBRemoveClassTransformation >> preconditions [
 
-	^ className inject: RBCondition empty into: [ :cond :aClass |
+	^ className inject: RBCondition true into: [ :cond :aClass |
 		| aClassOrTrait |
 		aClassOrTrait := self model classNamed: className asSymbol.
 		aClassOrTrait ifNil: [ self

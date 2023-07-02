@@ -31,6 +31,11 @@ RBVariableRefactoring class >> variable: aVarName class: aClass [
 		variable: aVarName class: aClass
 ]
 
+{ #category : #initialization }
+RBVariableRefactoring >> refactoredClassName [
+	^ class name
+]
+
 { #category : #printing }
 RBVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
@@ -43,7 +48,13 @@ RBVariableRefactoring >> storeOn: aStream [
 ]
 
 { #category : #initialization }
-RBVariableRefactoring >> variable: aVarName class: aClass [
-	class := self classObjectFor: aClass.
+RBVariableRefactoring >> variable: aVarName class: aClassName [
+	class := self classObjectFor: aClassName.
 	variableName := aVarName
+]
+
+{ #category : #accessing }
+RBVariableRefactoring >> variableName [
+
+	^ variableName
 ]

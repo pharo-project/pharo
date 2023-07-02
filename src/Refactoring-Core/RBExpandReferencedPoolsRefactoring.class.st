@@ -89,7 +89,7 @@ RBExpandReferencedPoolsRefactoring >> movePoolVariables [
 { #category : #preconditions }
 RBExpandReferencedPoolsRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #transforming }

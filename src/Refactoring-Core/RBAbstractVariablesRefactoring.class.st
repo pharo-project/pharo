@@ -175,7 +175,7 @@ RBAbstractVariablesRefactoring >> parseTree [
 { #category : #preconditions }
 RBAbstractVariablesRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #'for driver' }

@@ -1,14 +1,10 @@
 "
-Specific version of compiled code for method's.
+Specific version of compiled code for methods. They encode only the method's bytecodes and literals, blocks have each a CompiledBlock.
 
-CompiledMethod instances can be in two forms:
-- up until Pharo 6, they encode both the method and the inner closures bytecodes and literals.
-- since Pharo 6, they encode only the method's bytecodes and literals.
+In addition the execution mechanics, a compiled method has two extra literals. The last literal is the class in which the method is installed. The last but one literal is either the method's selector or an AdditionalMethodState instance. AdditionalMethodState instances are used to encode pragmas and properties.
 
-In addition the execution mechanics, a compiled method have two extra optional literals. The last literal, optional if there are no super sends, is the class in which the method is installed. The last but one literal is either the method's selector or an AdditionalMethodState instance. AdditionalMethodState instances are used to encode additional state to a method, as for example the pragmas.
-
-The bytecode encodes the trailer at the end, in most cases it has 4 bytes encoding the sourcer pointer (see CompiledMethodTrailer).
-Thus endPC of a compiled method is not the size of the bytecode, but the size minus the length of the trailer.
+The bytecode encodes the trailer at the end, see #trailerSize for the current size used.
+Thus endPC of a compiled method is not the size of the bytecode, but the size minus the fixed length of the trailer.
 
 "
 Class {

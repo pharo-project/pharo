@@ -1,7 +1,7 @@
 Class {
 	#name : #StSelectClassAndMethodsPresenter,
 	#superclass : #StAbstractSelectionPresenter,
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-UI'
 }
 
 { #category : #examples }

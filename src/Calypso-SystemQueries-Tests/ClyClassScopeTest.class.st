@@ -81,10 +81,10 @@ ClyClassScopeTest >> testMethodGroupsEnumeration [
 
 	self
 		assert: (result collect: #class as: Set)
-		equals: {ClyAllMethodGroup. ClyTaggedMethodGroup} asSet.
+		equals: {ClyAllMethodGroup. ClyMethodsInProtocolGroup} asSet.
 	self
 		assert: (result
-				select: [ :each | each class = ClyTaggedMethodGroup ]
+				select: [ :each | each class = ClyMethodsInProtocolGroup ]
 				thenCollect: #tag) sorted asArray
 		equals: ClyClass1FromP1Mock tagsForMethods sorted asArray
 ]

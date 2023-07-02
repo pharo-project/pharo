@@ -44,11 +44,6 @@ RPackageWithDoTest >> organizerAnnouncer [
 ]
 
 { #category : #tests }
-RPackageWithDoTest >> packageClass [
-	^ RPackage
-]
-
-{ #category : #tests }
 RPackageWithDoTest >> packageOrganizerClass [
 	^ RPackageOrganizer
 ]
@@ -107,7 +102,7 @@ RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefault [
 	current := self packageOrganizer.
 	empty := self packageOrganizerClass basicNew initialize.
 	empty debuggingName: 'empty from PackageWithDoTest'.
-	self packageClass withOrganizer: empty do: [
+	RPackage withOrganizer: empty do: [
 		self
 			assert: (self organizerAnnouncer hasSubscriber: empty)
 			description: 'During #withOrganizer:do:, the system announcer should have the organizer as parameter in its subscriber.'.
@@ -129,7 +124,7 @@ RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefaultEvenIfHalt [
 	current := self packageOrganizer.
 	empty := self packageOrganizerClass basicNew initialize.
 	[
-	self packageClass withOrganizer: empty do: [
+	RPackage withOrganizer: empty do: [
 		self
 			assert: (self organizerAnnouncer hasSubscriber: empty)
 			description: 'During #withOrganizer:do:, the system announcer should have the organizer as parameter in its subscriber.'.

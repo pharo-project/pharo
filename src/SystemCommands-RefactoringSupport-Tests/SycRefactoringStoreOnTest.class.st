@@ -11,15 +11,16 @@ SycRefactoringStoreOnTest >> testRemoveMessageArgumentCommandIsProperlyStoreOn [
 	refactorings := SycRemoveMessageArgumentCommand new
 		originalMessage: (MockTreeTableItem >> #title:) ast;
 		argumentName: 'anObject';
+		refactoredClass: MockTreeTableItem;
 		asRefactorings.
 
 	self
-		assert: (String streamContents: [ :s | refactorings storeOn: s ])
-		equals: '((Array new: 1) at: 1 put: (RBRemoveParameterRefactoring removeParameter: ''anObject'' in: MockTreeTableItem selector: #title:); yourself)'
+		assert: (String streamContents: [ :s | refactorings first  storeOn: s ])
+		equals: '(RBRemoveParameterRefactoring removeParameter: ''anObject'' in: MockTreeTableItem selector: #title:)'
 ]
 
 { #category : #tests }
-SycRefactoringStoreOnTest >> testSSycRenameMessageCommandIsProperlyStoreOn [
+SycRefactoringStoreOnTest >> testSSycRenameMessageCommandIsProperlyStoreOn2 [
 
 	| refactorings node |
 
@@ -28,6 +29,7 @@ SycRefactoringStoreOnTest >> testSSycRenameMessageCommandIsProperlyStoreOn [
 	refactorings := SycRenameMessageCommand new
 		originalMessage: (SycMessageDescription ofMessageNode: node);
 		newSignature: (RBMethodName selector: #title: arguments: #('anObject')) ;
+		refactoredClass: MockTreeTableItem;
 		asRefactorings.
 
 	self
@@ -46,6 +48,7 @@ SycRefactoringStoreOnTest >> testSycAddMessageArgumentCommandIsProperlyStoreOn [
 		permutation: #(1 -1).
 	refactorings := SycAddMessageArgumentCommand new
 		originalMessage: (SycMessageDescription ofMessageNode: node);
+		refactoredClass: MockTreeTableItem;
 		newSelector: newSelector;
 		asRefactorings.
 

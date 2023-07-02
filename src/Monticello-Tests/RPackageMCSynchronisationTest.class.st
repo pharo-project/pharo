@@ -191,7 +191,7 @@ RPackageMCSynchronisationTest >> runCase [
 	[
 	self initializeAnnouncers.
 
-	^ self packageClass withOrganizer: self setupOrganizer do: [
+	^ RPackage withOrganizer: self setupOrganizer do: [
 		  self resources do: [ :each | each availableFor: self ].
 		  self setUp.
 		  self performTest ] ] ensure: [
@@ -205,7 +205,7 @@ RPackageMCSynchronisationTest >> setUp [
 	super setUp.
 	
 	emptyOrganizer := self organizer debuggingName: 'MCSynchronisation Package Organizer'; yourself.
-	emptyOrganizer registerPackage: (self packageClass named: 'as yet unclassified').
+	emptyOrganizer registerPackage: (RPackage named: 'as yet unclassified').
 
 	Author fullName 
 		ifNil: [ Author fullName: 'Tester' ].

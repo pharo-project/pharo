@@ -43,7 +43,7 @@ ClyConvertMethodGroupToTagCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyConvertMethodGroupToTagCommand >> execute [
 
-	methodGroups do: [ :each | each convertToMethodTag: tagName]
+	methodGroups do: [ :each | each categorizeMethodsIn: tagName]
 ]
 
 { #category : #execution }

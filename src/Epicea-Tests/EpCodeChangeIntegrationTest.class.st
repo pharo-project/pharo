@@ -10,13 +10,19 @@ Class {
 { #category : #tests }
 EpCodeChangeIntegrationTest >> categoryNameForTesting [
 
-	^ (self packageNameForTesting , '-WeirdCategoryName') asSymbol
+	^ (self packageNameForTesting , '-' , self packageTagNameForTesting) asSymbol
 ]
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> packageNameForTesting [
 
 	^ #'EpiceaTestingWith-A-Really-WeirdPackageName'
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> packageTagNameForTesting [
+
+	^ 'WeirdCategoryName'
 ]
 
 { #category : #running }
@@ -42,25 +48,22 @@ EpCodeChangeIntegrationTest >> testCategoryAddition [
 
 	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 0.
 
-	self packageOrganizer addCategory: self categoryNameForTesting.
+	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 1.
-	self
-		assert: (self allLogEventsWith: EpCategoryAddition) first affectedPackageName
-		equals: self categoryNameForTesting
+	self assert: (self allLogEventsWith: EpCategoryAddition) first categoryName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testCategoryRemoval [
 
-	self packageOrganizer addCategory: self categoryNameForTesting.
+	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 0.
 
 	self packageOrganizer removeCategory: self categoryNameForTesting.
+
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 1.
-	self
-		assert: (self allLogEventsWith: EpCategoryRemoval) first affectedPackageName
-		equals: self categoryNameForTesting
+	self assert: (self allLogEventsWith: EpCategoryRemoval) first categoryName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }

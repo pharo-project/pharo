@@ -55,7 +55,7 @@ ClyMethodGroup class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugi
 ]
 
 { #category : #testing }
-ClyMethodGroup class >> isBasedOnMethodTag [
+ClyMethodGroup class >> isBasedOnMethodProtocol [
 	^false
 ]
 
@@ -115,7 +115,7 @@ ClyMethodGroup >> asAsyncQueryGroup [
 ]
 
 { #category : #operations }
-ClyMethodGroup >> convertToMethodTag: protocolName [
+ClyMethodGroup >> categorizeMethodsIn: protocolName [
 
 	self methods do: [ :method | method protocol: protocolName ]
 ]

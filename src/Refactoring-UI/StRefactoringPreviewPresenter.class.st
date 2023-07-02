@@ -20,14 +20,14 @@ Class {
 		'buttonOk',
 		'buttonCancel'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-UI'
 }
 
 { #category : #'instance creation' }
-StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes [
+StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scopes: scopes [
 
 	^ self new
-		  changesFrom: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes;
+		  changesFrom: aCompositeRefactoring scopes: scopes;
 		  yourself
 ]
 
@@ -61,7 +61,7 @@ StRefactoringPreviewPresenter >> buildDiffFor: aChange [
 ]
 
 { #category : #initialization }
-StRefactoringPreviewPresenter >> changesFrom: aCompositeChange inEnvironment: anEnvironment scopes: aCollection [
+StRefactoringPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollection [
 
 	changes := aCompositeChange whatToDisplayIn: self.
 	scopes := aCollection.

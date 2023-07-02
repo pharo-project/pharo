@@ -96,6 +96,23 @@ RBConditionTest >> testCheckValidMethodName [
 ]
 
 { #category : #tests }
+RBConditionTest >> testInvalidArgumentsForSelector [
+
+	| aModel aClass |
+	aModel := RBNamespace new. 
+	aModel defineClass: 'Object << #FOOBAR
+				slots: { #asdf };
+				package: #''Refactory-Test data'''.
+	aClass := aModel classNamed: #FOOBAR.
+	aClass compile: 'eiffel: tower ^ self ' classified: 'dummy'.
+	
+	self 
+		assert: (RBCondition invalidArgumentNamesForSelector: #eiffel: in: aModel) asArray
+		equals: #(#asdf #tower).
+	
+]
+
+{ #category : #tests }
 RBConditionTest >> testIsClassDefinedInModel [
 
 	| aModel aClass |
@@ -130,4 +147,11 @@ RBConditionTest >> testIsClassNamedDefinedInNot [
 				package: #''Refactory-Test data'''.
 	self deny: (RBCondition isClassNamed: #FOOBAR2 definedIn: aModel ) check
 	
+]
+
+{ #category : #tests }
+RBConditionTest >> testTrue [
+	
+	self assert: RBCondition true check.
+	self deny: RBCondition true not check.
 ]

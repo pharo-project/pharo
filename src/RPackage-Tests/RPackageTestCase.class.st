@@ -57,7 +57,7 @@ RPackageTestCase >> createNewPackageNamed: aName [
 
 	| pack |
 	self removePackage: aName.
-	pack := self packageClass named: aName.
+	pack := RPackage named: aName.
 	createdPackages add: pack.
 	^ pack
 ]
@@ -100,13 +100,7 @@ RPackageTestCase >> namesOfMockTestPackages [
 { #category : #accessing }
 RPackageTestCase >> organizer [
 	"This method will access the organizer that will temporarily swapped using the withOrganizer:do: method"
-	^ self packageClass organizer
-]
-
-{ #category : #accessing }
-RPackageTestCase >> packageClass [
-	"returns the system class that represents Packages"
-	^ RPackage
+	^ RPackage organizer
 ]
 
 { #category : #accessing }
@@ -117,14 +111,14 @@ RPackageTestCase >> packageOrganizerClass [
 
 { #category : #utilities }
 RPackageTestCase >> removePackage: aName [
-	self packageClass organizer basicUnregisterPackageNamed: aName
+	RPackage organizer basicUnregisterPackageNamed: aName
 ]
 
 { #category : #running }
 RPackageTestCase >> runCase [
 
 	[
-	^ self packageClass withOrganizer: self setupOrganizer do: [
+	^ RPackage withOrganizer: self setupOrganizer do: [
 		  self resources do: [ :each | each availableFor: self ].
 		  self setUp.
 		  self performTest ] ] ensure: [

@@ -1,7 +1,7 @@
-Extension { #name : #ClyTaggedMethodGroup }
+Extension { #name : #ClyMethodsInProtocolGroup }
 
 { #category : #'*Calypso-SystemTools-Core' }
-ClyTaggedMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
+ClyMethodsInProtocolGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	| myName |
 	super decorateTableCell: anItemCellMorph of: groupItem.
 	myName := name asLowercase.
