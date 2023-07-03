@@ -79,6 +79,20 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 	^ (self parseTree allDefinedVariables includes: aString)
 ]
 
+{ #category : #refactoring }
+RBMoveMethodToClassSideRefactoring >> generateChanges [
+	
+	self applicabilityConditions check ifFalse: [
+		^ RBApplicabilityChecksFailedError signal:
+			  self applicabilityConditions errorString ].
+	self breakingChangeConditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangeConditions errorString ].
+
+	self transform.
+	^ self changes
+]
+
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 	| sender |

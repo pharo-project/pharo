@@ -13,9 +13,9 @@ Class {
 }
 
 { #category : #accessing }
-RPackageTestCase >> allManagers [
+RPackageTestCase >> allWorkingCopies [
 
-	^ MCWorkingCopy allManagers
+	^ MCWorkingCopy allWorkingCopies
 ]
 
 { #category : #utilities }

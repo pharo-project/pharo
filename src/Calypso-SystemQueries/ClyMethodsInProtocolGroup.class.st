@@ -20,7 +20,7 @@ ClyMethodsInProtocolGroup class >> isEditableGroup [
 { #category : #'instance creation' }
 ClyMethodsInProtocolGroup class >> withMethodsFrom: aClassScope inProtocol: protocolName [
 
-	^ self named: protocolName on: (ClyTaggedMethodsQuery by: protocolName from: aClassScope)
+	^ self named: protocolName on: (ClyMethodsInProtocolQuery by: protocolName from: aClassScope)
 ]
 
 { #category : #operations }
@@ -41,5 +41,6 @@ ClyMethodsInProtocolGroup >> importMethod: aMethod [
 
 { #category : #accessing }
 ClyMethodsInProtocolGroup >> protocol [
-	^ methodQuery tag
+
+	^ methodQuery protocol
 ]

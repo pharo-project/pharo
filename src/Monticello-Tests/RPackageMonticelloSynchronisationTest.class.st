@@ -31,7 +31,7 @@ RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 	"test that when we remove a MC Package, the corresponding RPackage is removed from the organizer"
 
 	MCWorkingCopy ensureForPackageNamed: 'XXXXX' packageOrganizer: self organizer.
-	(self allManagers detect: [ :each | each packageName = 'XXXXX' ]) unload.
+	(self allWorkingCopies detect: [ :each | each packageName = 'XXXXX' ]) unload.
 
 	self deny: (self organizer includesPackageNamed: #XXXXX)
 ]
@@ -41,7 +41,7 @@ RPackageMonticelloSynchronisationTest >> testUnregisterMCPackageKeepsRPackage [
 	"test that when we remove a MC Package, the corresponding RPackage is removed from the organizer"
 
 	MCWorkingCopy ensureForPackageNamed: 'XXXXX' packageOrganizer: self organizer.
-	(self allManagers detect: [ :each | each packageName = 'XXXXX' ]) unregister.
+	(self allWorkingCopies detect: [ :each | each packageName = 'XXXXX' ]) unregister.
 
 	self assert: (self organizer includesPackageNamed: #XXXXX)
 ]

@@ -46,7 +46,7 @@ RBPushDownMethodDriver >> execute [
 			           RBRefactoringWarning signal: err messageText.
 			           "If user answers no, error is being propagated."
 			           err resume ].
-	self openPreviewWithChanges: changes
+	self openPreviewWithChanges: { changes }
 ]
 
 { #category : #initialization }

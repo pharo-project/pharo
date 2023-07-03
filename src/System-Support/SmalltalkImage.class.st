@@ -689,7 +689,7 @@ SmalltalkImage >> fullNameForImageNamed: aString [
 
 { #category : #'memory space' }
 SmalltalkImage >> garbageCollect [
-	"Primitive. Reclaims all garbage and answers the number of bytes of available space."
+	"Primitive. Reclaims all garbage and answers the size of the largest free chunk in old space."
 	Object flushDependents.
 	^self primitiveGarbageCollect
 ]
@@ -1382,7 +1382,7 @@ SmalltalkImage >> primSignalAtBytesLeft: numBytes [
 
 { #category : #'memory space' }
 SmalltalkImage >> primitiveGarbageCollect [
-	"Primitive. Reclaims all garbage and answers the size of the largest free chunk in old space.."
+	"Primitive. Reclaims all garbage and answers the size of the largest free chunk in old space."
 
 	<primitive: 130>
 	^self primitiveFailed
