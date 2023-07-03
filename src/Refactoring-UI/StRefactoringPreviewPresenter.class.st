@@ -68,7 +68,8 @@ StRefactoringPreviewPresenter >> buildDiffFor: aChange [
 { #category : #initialization }
 StRefactoringPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollection [
 
-	changes := aCompositeChange whatToDisplayIn: self.
+	changes := aCompositeChange collect: [ :each | each whatToDisplayIn: self].
+	changes := changes flattened.
 	scopes := aCollection.
 	self updateScopeList.
 	self updateChanges.
