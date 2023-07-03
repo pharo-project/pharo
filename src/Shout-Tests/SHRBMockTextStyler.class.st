@@ -4,6 +4,9 @@ I am a styler for tests that will add instances of SHRBTextFlagAttributes to the
 Class {
 	#name : #SHRBMockTextStyler,
 	#superclass : #SHRBTextStyler,
+	#instVars : [
+		'declared'
+	],
 	#classVars : [
 		'PatternStyleDictionary'
 	],
@@ -103,4 +106,30 @@ SHRBMockTextStyler class >> patternStyleTable [
 SHRBMockTextStyler >> attributesFor: aSymbol [
 
 	^ { (SHRBTextFlagAttribute named: aSymbol) }
+]
+
+{ #category : #accessing }
+SHRBMockTextStyler >> declared [
+
+	^ declared
+]
+
+{ #category : #accessing }
+SHRBMockTextStyler >> declared: anObject [
+
+	declared := anObject
+]
+
+{ #category : #visiting }
+SHRBMockTextStyler >> formatIncompleteSelector: aSymbol [
+
+	(declared includes: aSymbol) ifTrue: [ ^ nil ].
+	^ (declared anySatisfy: [ :each | each beginsWith: aSymbol ]) ifTrue: [ #incompleteSelector ] ifFalse: [ #undefinedSelector ]
+]
+
+{ #category : #initialization }
+SHRBMockTextStyler >> initialize [
+
+	super initialize.
+	declared := OrderedCollection new
 ]
