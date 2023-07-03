@@ -14,9 +14,9 @@ Class {
 	#name : #RBDeprecateMethodDriver,
 	#superclass : #RBDriver,
 	#instVars : [
-		'methodToDeprecate',
-		'methodToReplaceDeprecatedMethod',
-		'refactoring'
+		'refactoring',
+		'useInsteadSelector',
+		'selectorToDeprecate'
 	],
 	#category : #'Refactoring-UI-Drivers'
 }
@@ -30,8 +30,8 @@ RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCo
 { #category : #initialization }
 RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollection [
 
-	methodToDeprecate := aSelector.
-	methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
+	selectorToDeprecate := aSelector.
+	self selectorToReplaceDeprecatedSelector.
 	scopes := aCollection.
 	model := self refactoringScopeOn: scopes first.
 
@@ -39,7 +39,7 @@ RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollec
 		               model: model
 		               deprecateMethod: aSelector
 		               in: aClass
-		               using: methodToReplaceDeprecatedMethod
+		               using: useInsteadSelector
 ]
 
 { #category : #execution }
@@ -51,10 +51,9 @@ RBDeprecateMethodDriver >> execute [
 	                   [ refactoring generateChanges ]
 		                   on: RBInputValidationFailedError
 		                   do: [ :err |
-			                   methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
-			                   refactoring newSelector:
-				                   methodToReplaceDeprecatedMethod.
-									err resume ] ]
+			                   self selectorToReplaceDeprecatedSelector.
+			                   refactoring newSelector: useInsteadSelector.
+			                   err resume ] ]
 		                   on: RBApplicabilityChecksFailedError
 		                   do: [ :err |
 		                   ^ RBRefactoringError signal: err messageText ] ]
@@ -64,22 +63,32 @@ RBDeprecateMethodDriver >> execute [
 			                   "If user answers no, error is being propagated."
 			                   err resume ].
 	self openPreviewWithChanges: compositeChange
-	
-]
-
-{ #category : #'ui - requests' }
-RBDeprecateMethodDriver >> getMethodThatWillReplaceDeprecatedMethod [
-
-	| newSelector |
-	newSelector := UIManager default
-		               request: 'Method to replace ' , methodToDeprecate , '. The new selectors cannot be an empty string or same as the old selector.'
-		               initialAnswer: methodToDeprecate
-		               title: 'New selector'.
-	^ newSelector
 ]
 
 { #category : #utilities }
 RBDeprecateMethodDriver >> refactoringScopeOn: aScope [
 
 	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
+]
+
+{ #category : #'ui - requests' }
+RBDeprecateMethodDriver >> selectorToReplaceDeprecatedSelector [
+	"UIManager default
+		                      request:
+			                      'Method to replace ' , selectorToDeprecate
+			                      ,
+			                      '. The new selectors cannot be an empty string or same as the old selector.'
+		                      initialAnswer: selectorToDeprecate
+		                      title: 'New selector'"
+
+	useInsteadSelector := SpRequestDialog new
+		                      title:
+			                      'Selector to replace ' , selectorToDeprecate;
+		                      label:
+			                      'The new selectors cannot be an empty string or same as the old selector.';
+		                      text: selectorToDeprecate;
+		                      acceptLabel: 'Accept';
+		                      cancelLabel: 'Cancel';
+		                      openModal.
+	"we should check that the selector is valid here!!!"
 ]

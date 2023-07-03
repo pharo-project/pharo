@@ -38,9 +38,14 @@ StRefactoringPreviewPresenter class >> title [
 
 { #category : #action }
 StRefactoringPreviewPresenter >> accept [
-
+	
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
-		UIManager default inform: 'No changes to apply.'.
+		"UIManager default inform: 'No changes to apply.'."
+		self application newInform 
+				title: 'No changes to apply.';
+				acceptLabel: 'Close this!';
+				openDialog.
+		
 		self closeWindow ].
 	[
 	selectedChanges do: [ :change |

@@ -6,5 +6,5 @@ Class {
 
 { #category : #tests }
 HiSpecExampleTest class >> classWithExamplesToTest [
-	^ HiSpecExample
+	^ HiSpecExamplePresenter
 ]

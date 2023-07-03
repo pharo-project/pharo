@@ -16,15 +16,18 @@ ClyTaggedMethodGroupProviderTest >> groupProviderClass [
 
 { #category : #tests }
 ClyTaggedMethodGroupProviderTest >> testCreateGroupsForEveryMethodTag [
-	| groups query |
 
+	| groups query |
 	self buildGroupsFor: ClySubclassN1OfClass1FromP1Mock.
 
-	groups := builtGroups select: [ :each | each isKindOf: ClyMethodsInProtocolGroup ].
+	groups := builtGroups select: [ :each |
+		          each isKindOf: ClyMethodsInProtocolGroup ].
 	self
-		assert: (groups collect: #tag as: Set)
+		assert: (groups collect: [ :group | group protocol ] as: Set)
 		equals: ClySubclassN1OfClass1FromP1Mock tagsForMethods asSet.
 	query := groups first methodQuery.
 	self assert: query class equals: ClyTaggedMethodsQuery.
-	self assert: query scope equals: (ClyClassScope of: ClySubclassN1OfClass1FromP1Mock)
+	self
+		assert: query scope
+		equals: (ClyClassScope of: ClySubclassN1OfClass1FromP1Mock)
 ]
