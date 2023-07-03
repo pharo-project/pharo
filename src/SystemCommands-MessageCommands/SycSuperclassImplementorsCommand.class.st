@@ -1,9 +1,6 @@
 Class {
 	#name : #SycSuperclassImplementorsCommand,
 	#superclass : #SycChangeMessageSignatureCommand,
-	#instVars : [
-		'newSignature'
-	],
 	#category : #'SystemCommands-MessageCommands'
 }
 
