@@ -38,6 +38,13 @@ Class {
 
 { #category : #accessing }
 MCWorkingCopy class >> allManagers [
+	"Do not use. This will be deprecated."
+
+	^ self allWorkingCopies
+]
+
+{ #category : #accessing }
+MCWorkingCopy class >> allWorkingCopies [
 	^ self registry values
 ]
 
