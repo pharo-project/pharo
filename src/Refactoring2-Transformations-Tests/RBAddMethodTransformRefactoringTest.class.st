@@ -4,6 +4,14 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
+{ #category : #'building suites' }
+RBAddMethodTransformRefactoringTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBAddMethodTransformRefactoring .
+					  #constructor -> #addMethod:toClass:inProtocols: };
+		yourself
+]
+
 { #category : #running }
 RBAddMethodTransformRefactoringTest >> setUp [
 	super setUp.
