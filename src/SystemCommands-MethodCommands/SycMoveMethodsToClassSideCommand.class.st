@@ -4,6 +4,9 @@ I am a command to move method to the class side of defining class
 Class {
 	#name : #SycMoveMethodsToClassSideCommand,
 	#superclass : #SycMethodCommand,
+	#instVars : [
+		'refactoringScopes'
+	],
 	#category : #'SystemCommands-MethodCommands'
 }
 
@@ -26,5 +29,12 @@ SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
 { #category : #execution }
 SycMoveMethodsToClassSideCommand >> execute [
 
-	(RBMoveMethodsToClassSideDriver model: model methods: methods) execute
+	(RBMoveMethodsToClassSideDriver model: model scopes: refactoringScopes methods: methods) execute
+]
+
+{ #category : #execution }
+SycMoveMethodsToClassSideCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+	refactoringScopes := aToolContext refactoringScopes
 ]

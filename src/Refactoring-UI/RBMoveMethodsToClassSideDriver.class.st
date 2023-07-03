@@ -23,9 +23,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBMoveMethodsToClassSideDriver class >> model: aNamespace methods: aCollectionOfMethods [
+RBMoveMethodsToClassSideDriver class >> model: aNamespace scopes: scopesList methods: aCollectionOfMethods [
 
-	^ self new model: aNamespace methods: aCollectionOfMethods
+	^ self new model: aNamespace scopes: scopesList methods: aCollectionOfMethods
 ]
 
 { #category : #preconditions }
@@ -92,9 +92,16 @@ RBMoveMethodsToClassSideDriver >> generateRefactorings [
 ]
 
 { #category : #initialization }
-RBMoveMethodsToClassSideDriver >> model: aNamespace methods: aCollection [
+RBMoveMethodsToClassSideDriver >> model: aNamespace scopes: scopesList methods: aCollection [
+
 	model := aNamespace.
-	methods := aCollection
+	scopes := scopesList.
+	methods := aCollection.
+	refactorings := methods collect: [ :m |
+		                RBMoveMethodToClassSideRefactoring
+			                model: model
+			                method: m
+			                class: m origin ]
 ]
 
 { #category : #error }
