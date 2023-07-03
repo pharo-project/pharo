@@ -45,7 +45,7 @@ ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	tagsString := ', ' join: (methodGroups collect: [:each | each name]).
 	(methodGroups anySatisfy: [ :each | each methodsSize > 0])
 		ifTrue: [
-			confirmed := UIManager default
+			confirmed := self
 					confirm: 'Are you sure you want to remove methods tagged with ', tagsString, '?'.
 			confirmed ifFalse: [CmdCommandAborted signal]]
 ]
