@@ -63,12 +63,14 @@ RBAddMethodTransformRefactoring >> method [
 RBAddMethodTransformRefactoring >> preconditions [
 
 	method := self parserClass
-		parseMethod: source
-		onError: [ :string :position |
-			^ RBCondition
-				withBlock: [ self refactoringError: 'The sources could not be parsed' ] ].
-	method selector ifNil: [ ^ RBCondition withBlock: [ self refactoringError: 'Invalid source.' ] ].
-	^ self emptyCondition 
+		          parseMethod: source
+		          onError: [ :string :position |
+			          ^ RBCondition withBlock: [
+				            self refactoringError:
+					            'The sources could not be parsed' ] ].
+	method selector ifNil: [
+		^ RBCondition withBlock: [ self refactoringError: 'Invalid source.' ] ].
+	^ self trueCondition
 ]
 
 { #category : #accessing }
