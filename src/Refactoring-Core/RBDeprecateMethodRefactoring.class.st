@@ -115,8 +115,7 @@ RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass [
 RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: newSel [
 
 	self deprecateMethod: aSelector in: aClass.
-	oldSelector := aSelector asSymbol.
-	class := self classObjectFor: aClass
+	newSelector := newSel
 ]
 
 { #category : #execution }
