@@ -1,7 +1,7 @@
-Extension { #name : #ChangesBrowser }
+Extension { #name : #StChangesBrowserPresenter }
 
 { #category : #'*Epicea-Triggering' }
-ChangesBrowser >> asEpiceaEvent [
+StChangesBrowserPresenter >> asEpiceaEvent [
 
 	self flag: #pharoTodo. "This is a workaround for a problem found by RewriteTool"
 	(self changes allSatisfy: [ :each | each respondsTo: #asEpiceaEvent ])
@@ -13,7 +13,7 @@ ChangesBrowser >> asEpiceaEvent [
 ]
 
 { #category : #'*Epicea-Triggering' }
-ChangesBrowser >> isEpiceaInterestingJobOwner [
+StChangesBrowserPresenter >> isEpiceaInterestingJobOwner [
 
 	^ true
 ]

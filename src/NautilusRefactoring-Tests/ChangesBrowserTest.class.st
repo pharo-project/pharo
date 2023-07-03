@@ -13,7 +13,7 @@ Class {
 { #category : #running }
 ChangesBrowserTest >> setUp [
 	super setUp.
-	browser := ChangesBrowser new
+	browser := StChangesBrowserPresenter new
 ]
 
 { #category : #tests }

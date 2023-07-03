@@ -371,6 +371,15 @@ SymbolTest >> testIsSelectorSymbol [
 	self assert: #assert:equals: isSelectorSymbol
 ]
 
+{ #category : #tests }
+SymbolTest >> testKeywordsStrict [
+
+	self assert: #foo: keywordsStrict equals: #( 'foo:' ).
+	self assert: #foo:bar: keywordsStrict equals: #( 'foo:' 'bar:' ).
+	self assert: #foo keywordsStrict equals: #(  ).
+	self assert: #+ keywordsStrict equals: #(  )
+]
+
 { #category : #requirements }
 SymbolTest >> testNew [
 
