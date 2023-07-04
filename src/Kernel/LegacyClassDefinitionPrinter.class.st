@@ -124,7 +124,7 @@ LegacyClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString named:
 	^ String streamContents: [ :s |
 		  s
 			  nextPutAll: 'Trait named: ';
-			  nextPutAll: aTraitName;
+			  print: aTraitName asSymbol;
 			  nextPutAll: ' uses: {}
 	 package: '''.
 		  s
