@@ -84,13 +84,23 @@ OldPharoClassDefinitionPrinter >> classDefinitionString [
 ]
 
 { #category : #template }
-OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString forClass: aClassName [
+OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString named: aClassName [
 
 	^ String streamContents: [ :s |
-			s nextPutAll: 'Object subclass: '. aClassName asSymbol printOn: s. s crtab.
-			s nextPutAll: 'instanceVariableNames: '''' '; crtab.
-			s nextPutAll: 'classVariableNames: '''''; crtab.
-			s nextPutAll: 'package: ''', aString, '''' ]
+		  s 
+			nextPutAll: 'Object subclass: ';
+		  	print: aClassName asSymbol; 
+		  	crtab.
+		  s
+			  nextPutAll: 'instanceVariableNames: '''' ';
+			  crtab.
+		  s
+			  nextPutAll: 'classVariableNames: ''''';
+			  crtab.
+		  s
+			  nextPutAll: 'package: ''';
+			  nextPutAll: aString;
+			  nextPutAll: '''' ]
 ]
 
 { #category : #'low-level elements' }
@@ -191,13 +201,17 @@ OldPharoClassDefinitionPrinter >> traitDefinitionString [
 ]
 
 { #category : #template }
-OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
+OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString named: aTraitName [
 
 	^ String streamContents: [ :s |
-			s nextPutAll: 'Trait named: #TMyTraits
-	 uses: {}
+		  s
+			  nextPutAll: 'Trait named: ';
+			  print: aTraitName asSymbol;
+			  nextPutAll: ' uses: {}
 	 package: '''.
-			s nextPutAll: aString; nextPut: $' ]
+		  s
+			  nextPutAll: aString;
+			  nextPut: $' ]
 ]
 
 { #category : #'public API' }

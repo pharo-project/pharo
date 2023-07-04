@@ -66,29 +66,39 @@ OCCodeReparator >> declareTempAndPaste: name [
 ]
 
 { #category : #correcting }
-OCCodeReparator >> defineClass: className [
+OCCodeReparator >> defineClass: classSymbol [
 	"Prompts the user to define a new class."
 
-	| classSymbol systemCategory classDefinition classBinding result |
-	classSymbol := className asSymbol.
-	systemCategory := node methodNode methodClass category
-		ifNil: [ 'Unknown' ].
-	classDefinition := ClassDefinitionPrinter new classDefinitionTemplateInPackage: systemCategory forClass: classSymbol.
-	classDefinition := UIManager default
-		multiLineRequest: 'Edit class definition:'
-		initialAnswer: classDefinition
+	| systemCategory classDefinition |
+	systemCategory := node methodNode methodClass category ifNil: [ 'Unknown' ].
+	classDefinition := ClassDefinitionPrinter new
+		                   classDefinitionTemplateInPackage: systemCategory
+		                   named: classSymbol.
+	^ self
+		  defineClassOrTrait: classSymbol
+		  definitionString: classDefinition
+]
+
+{ #category : #correcting }
+OCCodeReparator >> defineClassOrTrait: aSymbol definitionString: aString [
+	"Prompts the user to define a new class oe trait."
+
+	| classBinding result definitionString |
+	definitionString := UIManager default
+		multiLineRequest: 'Edit definition:'
+		initialAnswer: aString
 		answerHeight: 200.
-	(classDefinition isNil or: [ classDefinition isEmpty ])
+	aString isEmptyOrNil
 		ifTrue: [ ^ Abort signal ].
 	result := self class compiler
-		source: classDefinition;
+		source: aString;
 		logged: true;
 		evaluate.
 	"Because some class definition syntax the (fuild one) does not evaluate to a
 	class but a class builder, we must call `fluidInstall`.
 	(that is a noop on real classes)."
 	result fluidInstall.
-	classBinding := node owningScope lookupVar: className.
+	classBinding := node owningScope lookupVar: aSymbol.
 	"make sure to recompile all methods referencing this class"
 	classBinding usingMethods do: [:method | method recompile].
 	^classBinding
@@ -100,23 +110,14 @@ OCCodeReparator >> defineTrait: traitName [
 
 	| traitSymbol systemCategory traitDefinition |
 	traitSymbol := traitName asSymbol.
-	systemCategory := node methodNode methodClass category
-		ifNil: [ 'Unknown' ].
-	traitDefinition := 'Trait named: #' , traitSymbol , '
-		uses:{}
-		package: ''' , systemCategory , ''''.
-	traitDefinition := UIManager default
-		multiLineRequest: 'Edit trait definition:'
-		initialAnswer: traitDefinition
-		answerHeight: 150.
-	(traitDefinition isNil or: [ traitDefinition isEmpty ])
-		ifTrue: [ ^ Abort signal ].
-	self class compiler
-		source: traitDefinition;
-		logged: true;
-		evaluate.
-	^ (node owningScope lookupVar: traitSymbol)
-		ifNil: [self error: 'should be not happen']
+	
+	systemCategory := node methodNode methodClass category ifNil: [ 'Unknown' ].
+	traitDefinition := ClassDefinitionPrinter new
+		                   traitDefinitionTemplateInPackage: systemCategory
+		                   named: traitSymbol.
+	^ self
+		  defineClassOrTrait: traitSymbol
+		  definitionString: traitDefinition
 ]
 
 { #category : #accessing }
@@ -159,7 +160,7 @@ OCCodeReparator >> openMenu [
 			labels add: 'Define new class'.
 			actions
 				add: [
-					[ self defineClass: name ]
+					[ self defineClass: name asSymbol ]
 						on: Abort
 						do: [ self openMenu ] ].
 			labels add: 'Declare new global'.
@@ -170,7 +171,7 @@ OCCodeReparator >> openMenu [
 			labels add: 'Define new trait'.
 			actions
 				add: [
-					[ self defineTrait: name ]
+					[ self defineTrait: name asSymbol ]
 						on: Abort
 						do: [ self openMenu ] ] ].
 	lines add: labels size.
