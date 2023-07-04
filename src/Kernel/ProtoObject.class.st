@@ -69,7 +69,7 @@ ProtoObject >> cannotInterpret: aMessage [
 
 "If this is the result of encountering a swap-out stub, then simulating the lookup in Smalltalk should suffice to install the class properly, and the message may be resent."
 
-	(self class lookupSelector: aMessage selector) ifNotNil:
+	((Behavior classOf: self) lookupSelector: aMessage selector) ifNotNil:
 		["Simulated lookup succeeded -- resend the message."
 		^ aMessage sentTo: self].
 
