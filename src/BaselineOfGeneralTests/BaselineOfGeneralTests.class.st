@@ -18,7 +18,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Monticello-Tests';	"required by MonticelloMocks"
 			package: 'System-Installers-Tests' ;
 			package: 'MonticelloMocks';
-			package: 'Fuel-Tests-Core';
+			package: 'Fuel-Core-Tests';
 			package: 'FormCanvas-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';

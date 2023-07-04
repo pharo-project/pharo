@@ -56,11 +56,10 @@ FLVariablesMapping >> initializeMaterializingFrom: aDecoder [
 		theClass
 			instVarIndexFor: name
 			ifAbsent: [ nil ] ].
-	
+
 	"Don't allocate unnecessary space for the dictionary if we don't need it."
-	FLPlatform current hasStatefulTraits ifFalse: [ ^ self ].
 	(mapping includes: nil) ifFalse: [ ^ self ].
-	
+
 	possibleTraitVariables := Dictionary new
 ]
 
@@ -105,24 +104,23 @@ FLVariablesMapping >> map: sourceName to: destinationName [
 ]
 
 { #category : #'serialize/materialize' }
-FLVariablesMapping >> materializeReferencesOf: anObject with: aDecoder [ 
-	mapping withIndexDo: [ :varIndex :index | 
-			| reference |
-			reference := aDecoder nextEncodedReference.
-			varIndex
-				ifNotNil: [
-					anObject 
-						instVarAt: varIndex
-						put: reference ]
-				ifNil: [
-					FLPlatform current hasStatefulTraits ifTrue: [
-						"Since the variables from traits will only become known
-						after the references have been fully materialized we
-						don't yet know whether this variable is to be ignored
-						or might be needed later"
-						possibleTraitVariables
-							at: (notIgnoredVariables at: index)
-							put: reference ] ] ]
+FLVariablesMapping >> materializeReferencesOf: anObject with: aDecoder [
+	mapping withIndexDo: [ :varIndex :index |
+		| reference |
+		reference := aDecoder nextEncodedReference.
+		varIndex
+			ifNotNil: [
+				anObject
+					instVarAt: varIndex
+					put: reference ]
+			ifNil: [
+				"Since the variables from traits will only become known
+				after the references have been fully materialized we
+				don't yet know whether this variable is to be ignored
+				or might be needed later"
+				possibleTraitVariables
+					at: (notIgnoredVariables at: index)
+					put: reference ] ]
 ]
 
 { #category : #'serialize/materialize' }
@@ -133,10 +131,10 @@ FLVariablesMapping >> materializeTraitVariablesWith: anObject [
 	fully loaded first.
 	
 	See FLBehaviorCluster>>installLayout:withFormat:variableNames:into:
-	and Behavior>>fuelRecomputeSlotScopeWithTraits."
-	FLPlatform current hasStatefulTraits ifFalse: [ ^ self ].
+	and ClassDescription>>fuelRecomputeSlotScopeWithTraits."
+
 	possibleTraitVariables ifNil: [ ^ self ].
-	
+
 	anObject class traitComposition slots do: [ :slot |
 		| index |
 		index := anObject class instVarIndexFor: slot name.
