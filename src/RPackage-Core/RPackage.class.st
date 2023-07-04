@@ -136,11 +136,6 @@ RPackage class >> organizer: aPackageOrganizer [
 	PackageGlobalOrganizer := aPackageOrganizer
 ]
 
-{ #category : #'class initialization' }
-RPackage class >> packageOrganizerClass [
-	^ RPackageOrganizer
-]
-
 { #category : #'protected only for tests' }
 RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
 	"Perform an action locally to aNewOrganizer. Does not impact any other organizers."
