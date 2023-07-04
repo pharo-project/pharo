@@ -58,6 +58,16 @@ RBDeprecateMethodRefactoring class >> deprecateMethod: aSelector in: aClass usin
 ]
 
 { #category : #'intance creation' }
+RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSelector in: aClass [
+	"partial initialized refactoring"
+	
+	^ self new
+		  model: aRBSmalltalk;
+		  deprecateMethod: aSelector in: aClass;
+		  yourself
+]
+
+{ #category : #'intance creation' }
 RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSelector in: aClass using: newSelector [
 	^ self new
 		model: aRBSmalltalk;
@@ -94,16 +104,24 @@ RBDeprecateMethodRefactoring >> callDeprecationMethod [
 ]
 
 { #category : #initialization }
-RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: newSel [
+RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass [
+	"partial initialization"
+	
 	oldSelector := aSelector asSymbol.
-	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass
+]
+
+{ #category : #initialization }
+RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: newSel [
+
+	self deprecateMethod: aSelector in: aClass.
+	newSelector := newSel
 ]
 
 { #category : #execution }
 RBDeprecateMethodRefactoring >> generateChanges [
 
-	[ self inputValidation check ] whileFalse: [
+	self inputValidation check  ifFalse: [
 		RBInputValidationFailedError signal:
 			self inputValidation errorString ].
 	self applicabilityConditions check ifFalse: [

@@ -70,7 +70,7 @@ RPackageOrganizerTest >> setUp [
 	super setUp.
 	createdClasses := OrderedCollection new.
 	createdPackages := OrderedCollection new.
-	packageOrganizer := self packageOrganizerClass basicNew initialize.
+	packageOrganizer := RPackageOrganizer new.
 	packageOrganizer debuggingName: 'For PackageOrganizerTest'.
 	previousAuthor := Author fullName ifNil: [Author fullName: 'RPackage'].
 

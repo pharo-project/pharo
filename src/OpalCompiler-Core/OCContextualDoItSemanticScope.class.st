@@ -86,11 +86,6 @@ OCContextualDoItSemanticScope >> receiver [
 ]
 
 { #category : #accessing }
-OCContextualDoItSemanticScope >> targetClass [
-	^targetContext compiledCode methodClass
-]
-
-{ #category : #accessing }
 OCContextualDoItSemanticScope >> targetContext [
 
 	^ targetContext

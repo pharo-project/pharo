@@ -712,9 +712,10 @@ SHRBTextStyler >> classOrMetaClass: aBehavior [
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
+SHRBTextStyler >> formatIncompleteSelector: aSymbol [
 
-	^ (self class formatIncompleteIdentifiers and: [ (Symbol selectorThatStartsCaseSensitive: aMessageNode selector asString skipping: nil) isNotNil ])
+	aSymbol isSelectorSymbol ifTrue: [ ^ nil ].
+	^ (self class formatIncompleteIdentifiers and: [ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil ])
 		  ifTrue: [ #incompleteSelector ]
 		  ifFalse: [ #undefinedSelector ]
 ]
@@ -1074,12 +1075,10 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
 
-	| style link styleName |
+	| style link |
 	
-	styleName := aMessageNode isAnnotation ifTrue: [ #pragma ] ifFalse: [ #selector ].
-	style := aMessageNode selector isSelectorSymbol
-		         ifTrue: [ styleName ]
-		         ifFalse: [ self formatIncompleteSelector: aMessageNode ].
+	style := (self formatIncompleteSelector: aMessageNode selector) ifNil: [
+		aMessageNode isAnnotation ifTrue: [ #pragma ] ifFalse: [ #selector ] ].
 
 	link := TextMethodLink sourceNode: aMessageNode.
 

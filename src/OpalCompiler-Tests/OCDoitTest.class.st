@@ -56,6 +56,22 @@ OCDoitTest >> testDoItContextReadIvar [
 ]
 
 { #category : #tests }
+OCDoitTest >> testDoItContextReadIvarSubclass [
+
+	| ctx value method |
+	"Cet a method compiled for a base class"
+	method := Object compiler compile: 'foo ^thisContext'.
+	ctx := self executeMethod: method.
+
+	ivarForTesting := #someValue.
+	value := ctx compiler evaluate: 'ivarForTesting'.
+	self assert: value equals: #someValue.
+
+	value := ctx compiler evaluate: 'ivarForTesting := #someOtherValue'.
+	ivarForTesting := #someOtherValue
+]
+
+{ #category : #tests }
 OCDoitTest >> testDoItContextReadTemp [
 	| tempForTesting value |
 	"we can read this temp from a doit when executing against thisContext"

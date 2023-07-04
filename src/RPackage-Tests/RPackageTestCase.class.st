@@ -103,12 +103,6 @@ RPackageTestCase >> organizer [
 	^ RPackage organizer
 ]
 
-{ #category : #accessing }
-RPackageTestCase >> packageOrganizerClass [
-	"returns the package organizer class"
-	^ RPackageOrganizer
-]
-
 { #category : #utilities }
 RPackageTestCase >> removePackage: aName [
 	RPackage organizer basicUnregisterPackageNamed: aName
@@ -136,5 +130,8 @@ RPackageTestCase >> setUp [
 
 { #category : #accessing }
 RPackageTestCase >> setupOrganizer [
-	^ self packageOrganizerClass basicNew initialize; debuggingName: 'Organizer for RPackageTest'; yourself
+
+	^ RPackageOrganizer new
+		  debuggingName: 'Organizer for RPackageTest';
+		  yourself
 ]

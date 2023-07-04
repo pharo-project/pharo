@@ -24,13 +24,15 @@ FLClassCluster >> materializeInstanceWith: aDecoder [
 { #category : #'serialize/materialize' }
 FLClassCluster >> materializePostInstance: aClass with: aDecoder [
 
-	| superclass category name format instanceVariableNames layout |
+	| superclass category name format instanceVariableNames layout comment stamp |
 	superclass := aDecoder nextEncodedReference.
 	category := aDecoder nextEncodedReference.
 	name := aDecoder nextEncodedReference.
 	format := aDecoder nextEncodedReference.
 	layout := self materializeLayoutWith: aDecoder.
 	instanceVariableNames := aDecoder nextEncodedString substrings: ' '.
+	comment := aDecoder nextEncodedString.
+	stamp := aDecoder nextEncodedString.
 
 	aClass 
 		basicSuperclass: superclass;
@@ -41,7 +43,11 @@ FLClassCluster >> materializePostInstance: aClass with: aDecoder [
 		installLayout: layout
 		withFormat: format
 		variableNames: instanceVariableNames
-		into: aClass
+		into: aClass.
+	
+	aClass 
+		comment: comment
+		stamp: stamp
 ]
 
 { #category : #'serialize/materialize' }
@@ -89,13 +95,18 @@ FLClassCluster >> serializePostInstance: aClass with: anEncoder [
 
 	anEncoder encodeReferenceTo: aClass superclass.
 	"Do not use #basicCategory because since it may be lazily computed it may happen that it is still in nil. "
-	anEncoder encodeReferenceTo: aClass category.
-	anEncoder encodeReferenceTo: aClass getName.
-	anEncoder encodeReferenceTo: aClass format.	
+	anEncoder
+		encodeReferenceTo: aClass category;
+		encodeReferenceTo: aClass getName;
+		encodeReferenceTo: aClass format.	
 	self
 		serializeLayout: aClass classLayout
 		with: anEncoder.
-	anEncoder encodeString: aClass instanceVariablesString.
+	anEncoder
+		encodeString: aClass instanceVariablesString;
+		encodeString: aClass comment;
+		encodeString: aClass commentStamp.
+		
 	self flag: #todo. "The array of variable names represents a circularity problem between clusters: if we encode the reference to such array, then the cluster for arrays should be before of Class cluster. But this would disable us to serialize an array of internal classes."
 ]
 

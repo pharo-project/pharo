@@ -35,6 +35,7 @@ SHRBStyleAttributionTest >> setUp [
 
 	super setUp.
 	styler := SHRBMockTextStyler new.
+	styler declared: #( #/ #setUp #style: testKeywordStyle ).
 	oldSetting := SHRBMockTextStyler instVarNamed: #formatIncompleteIdentifiers
 ]
 

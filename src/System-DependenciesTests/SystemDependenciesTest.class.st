@@ -265,10 +265,6 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		{ BaselineOfFuel name }, (BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ BaselineOfFuelPlatform name.
-			'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames ).
 
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies
@@ -380,7 +376,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 		(self packagesOfGroupNamed: 'default' on: BaselineOfThreadedFFI ).
 	packages := packages ,  #('TaskIt').
 	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
-	packages := packages , {BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
 	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'CritiqueBrowser' on: BaselineOfNewTools ).
 
 	dependencies := self externalDependendiesOf: packages.
@@ -480,9 +475,6 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		BaselineOfThreadedFFI corePackageNames ).
 
@@ -539,9 +531,6 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 
@@ -599,9 +588,6 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames )).
 
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies
