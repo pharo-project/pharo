@@ -84,7 +84,7 @@ OldPharoClassDefinitionPrinter >> classDefinitionString [
 ]
 
 { #category : #template }
-OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString forClass: aClassName [
+OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString named: aClassName [
 
 	^ String streamContents: [ :s |
 			s nextPutAll: 'Object subclass: '. aClassName asSymbol printOn: s. s crtab.
@@ -191,11 +191,12 @@ OldPharoClassDefinitionPrinter >> traitDefinitionString [
 ]
 
 { #category : #template }
-OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
+OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString named: aTraitName [
 
 	^ String streamContents: [ :s |
-			s nextPutAll: 'Trait named: #TMyTraits
-	 uses: {}
+			s nextPutAll: 'Trait named: ';
+				nextPutAll: aTraitName;
+				nextPutAll: ' uses: {}
 	 package: '''.
 			s nextPutAll: aString; nextPut: $' ]
 ]

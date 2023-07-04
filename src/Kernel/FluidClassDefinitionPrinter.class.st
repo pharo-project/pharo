@@ -63,7 +63,7 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 ]
 
 { #category : #printing }
-FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName forClass: aClassName [
+FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName named: aClassName [
 
 		^ String streamContents: [ :s |
 						s nextPutAll: 'Object << '. aClassName asSymbol printOn: s. s crtab.
@@ -432,13 +432,12 @@ FluidClassDefinitionPrinter >> traitDefinitionString [
 			self packageOn: strm ]
 ]
 
-{ #category : #printing }
-FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName [
+{ #category : #template }
+FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName named: aTraitName [
 
 	^ String streamContents: [ :s |
 		  s
-			  nextPutAll: 'Trait << #TMyTrait';
-			  crtab.
+			  nextPutAll: 'Trait << '. aTraitName asSymbol printOn: s. s crtab.
 		  s
 			  nextPutAll: 'traits: {};';
 			  crtab.

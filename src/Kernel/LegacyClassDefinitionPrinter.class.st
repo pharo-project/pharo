@@ -51,7 +51,7 @@ LegacyClassDefinitionPrinter >> classDefinitionString [
 ]
 
 { #category : #template }
-LegacyClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString forClass: aClassName [
+LegacyClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString named: aClassName [
 
 	^ String streamContents: [ :s |
 			s nextPutAll: 'Object subclass: '. aClassName asSymbol printOn: s. s crtab.
@@ -104,6 +104,17 @@ LegacyClassDefinitionPrinter >> traitDefinitionString [
 			nextPutAll: ' package: ';
 			nextPutAll: forClass category asString printString
 	]
+]
+
+{ #category : #template }
+LegacyClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString named: aTraitName [
+
+	^ String streamContents: [ :s |
+			s nextPutAll: 'Trait named: ';
+				nextPutAll: aTraitName;
+				nextPutAll: ' uses: {}
+	 package: '''.
+			s nextPutAll: aString; nextPut: $' ]
 ]
 
 { #category : #'public API' }
