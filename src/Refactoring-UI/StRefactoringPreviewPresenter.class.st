@@ -104,30 +104,34 @@ StRefactoringPreviewPresenter >> connectPresenters [
 
 { #category : #layout }
 StRefactoringPreviewPresenter >> defaultLayout [
-
-	| scopesLayout actionsLayout |
+	| scopesLayout |
+	
 	scopesLayout := SpBoxLayout newLeftToRight
-		                add: scopeLabel
-		                withConstraints:
-			                [ :constraints | constraints width: 60 ] yourself;
-		                add: scopeDropList;
-		                yourself.
-	actionsLayout := SpBoxLayout newLeftToRight
-		                 spacing: 5;
-		                 addLast: buttonOk expand: false fill: true;
-		                 addLast: buttonCancel expand: false fill: true;
-		                 yourself.
-
+		vAlignCenter;
+		spacing: 5;
+		add: scopeLabel expand: false;
+		add: scopeDropList;
+		yourself.
+	
 	^ SpBoxLayout newTopToBottom
-		  add: (SpBoxLayout newTopToBottom
-				   add: scopesLayout
-				   withConstraints:
-					   [ :constraints | constraints height: 30 ] yourself;
-				   add: table;
-				   add: diffPresenter;
-				   yourself);
-		  add: actionsLayout expand: false;
-		  yourself
+		spacing: 5;
+		add: scopesLayout expand: false;
+		add: table;
+		add: diffPresenter;
+		yourself
+]
+
+{ #category : #initialization }
+StRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+	"Used to initialize the model in the case of the use into a dialog window.
+	 Override this to set buttons other than the default (Ok, Cancel)."
+	
+	aDialogWindowPresenter
+		addButton: 'Ok' do: [ :presenter | 
+			self accept.
+			presenter close ];
+		addButton: 'Cancel' do: [ :presenter | 
+			presenter close ]	
 ]
 
 { #category : #initialization }

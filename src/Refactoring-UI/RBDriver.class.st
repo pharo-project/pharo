@@ -34,7 +34,7 @@ RBDriver >> execute [
 { #category : #execution }
 RBDriver >> openPreviewWithChanges: changes [
 	
-	(StRefactoringPreviewPresenter
+	^ (StRefactoringPreviewPresenter
 		 changes: changes
-		 scopes: scopes) open
+		 scopes: scopes) openModal
 ]
