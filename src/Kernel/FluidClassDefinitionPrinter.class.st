@@ -62,18 +62,18 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 		  self packageOn: s ]
 ]
 
-{ #category : #printing }
+{ #category : #template }
 FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName named: aClassName [
 
 		^ String streamContents: [ :s |
-						s nextPutAll: 'Object << '. aClassName asSymbol printOn: s. s crtab.
+						s nextPutAll: 'Object << '; print: aClassName asSymbol; crtab.
 						s nextPutAll: 'layout: FixedLayout;'; crtab.
 						s nextPutAll: 'traits: {};'; crtab.
 						s nextPutAll: 'slots: {};'; crtab.
 						s nextPutAll: 'sharedVariables: {};'; crtab.
 						s nextPutAll: 'sharedPools: {};'; crtab.
 						s nextPutAll: 'tag: '''' ;';crtab.
-						s nextPutAll: 'package: ''', aPackageName, '''' ]
+						s nextPutAll: 'package: '''; nextPutAll: aPackageName; nextPutAll: '''' ]
 ]
 
 { #category : #'elementary operations' }
@@ -437,7 +437,9 @@ FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName na
 
 	^ String streamContents: [ :s |
 		  s
-			  nextPutAll: 'Trait << '. aTraitName asSymbol printOn: s. s crtab.
+			  nextPutAll: 'Trait << ';
+			  print: aTraitName asSymbol;
+			  crtab.
 		  s
 			  nextPutAll: 'traits: {};';
 			  crtab.

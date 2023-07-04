@@ -186,7 +186,7 @@ ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
 	^ self classDefinitionTemplateInPackage: aPackageName named: #MyClass
 ]
 
-{ #category : #printing }
+{ #category : #template }
 ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName named: aClassName [
 	^ self subclassResponsibility
 ]
