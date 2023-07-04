@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #'reflective operations' }
+TestSpecialSelector >> cannotInterpret: aMessage [
+
+	^ #cannotInterpret: -> aMessage
+]
+
+{ #category : #'reflective operations' }
 TestSpecialSelector >> doesNotUnderstand: aMessage [
 
 	^ #doesNotUnderstand: -> aMessage
