@@ -13,6 +13,11 @@ Class {
 	#category : #'Zinc-Character-Encoding-Core'
 }
 
+{ #category : #configuration }
+ZnCharacterReadStream >> binary [
+ encoder := ZnNullEncoder new.
+]
+
 { #category : #accessing }
 ZnCharacterReadStream >> collectionSpecies [
 	^ String
