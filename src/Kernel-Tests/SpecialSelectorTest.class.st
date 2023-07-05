@@ -54,15 +54,16 @@ SpecialSelectorTest >> testCannotInterpret [
 
 { #category : #tests }
 SpecialSelectorTest >> testCannotInterpretProtoObject [
-	"Test the implementation of ProtoObject>>cannotInterpret:
-	Is currenlty broken and goes in an infinite recursion of Context>>nextHandlerContext"
 
 	| class object |
 	"Create a new anonymous subclass of ProtoObject with a nil methodDict"
 	class := Behavior new.
 	class basicSuperclass: ProtoObject.
 	class methodDict: nil.
-	object := class new.
+
+	"Do not call new, or suffer cannotInterpret initialize"
+	object := class basicNew.
+
 	"Any message send to `object` should callback cannotInterpret: and raise an error"
 	self should: [ object max: 42 ] raise: Error
 ]
