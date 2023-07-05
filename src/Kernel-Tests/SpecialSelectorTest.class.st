@@ -8,6 +8,31 @@ Class {
 }
 
 { #category : #tests }
+SpecialSelectorTest >> testAttemptToAssignWithIndex [
+
+	| object |
+	object := TestSpecialSelector new.
+	"Set the ivar before we are forbideen to assign.
+	We will mutate it instead of (attempt) to assign it."
+	object lastHook: nil->nil.
+
+	object value: 1.
+	self assert: object value equals: 1.
+	self assert: object lastHook equals: nil->nil.
+	
+	object setIsReadOnlyObject: true.
+	object value: 20.
+	self assert: object value equals: 1.
+	self assert: object lastHook key equals: #attemptToAssign:withIndex:.
+	self assert: object lastHook value first equals: 20.
+	self assert: object lastHook value second equals: 1. "ivar index of value"
+
+	object setIsReadOnlyObject: false.
+	object value: 3.
+	self assert: object value equals: 3.
+]
+
+{ #category : #tests }
 SpecialSelectorTest >> testCannotInterpret [
 	"Unfortunately, cannotInterpret: is currently broken.
 	The result of `cannotInterpret:` seems to be used as a receiver for the original message AGAIN.

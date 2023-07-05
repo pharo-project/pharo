@@ -11,6 +11,18 @@ Class {
 	#category : #'Kernel-Tests-Special'
 }
 
+{ #category : #'write barrier' }
+TestSpecialSelector >> attemptToAssign: aValue withIndex: anIndex [
+
+	"Mutate lastHook because we cannot assign a new one in self"
+	lastHook key: #attemptToAssign:withIndex:.
+	lastHook value: {
+			aValue.
+			anIndex }
+
+	"The return value seems ingored by the VM"
+]
+
 { #category : #'reflective operations' }
 TestSpecialSelector >> cannotInterpret: aMessage [
 
@@ -31,6 +43,12 @@ TestSpecialSelector >> foo: anObject [
 TestSpecialSelector >> lastHook [
 
 	^ lastHook
+]
+
+{ #category : #accessing }
+TestSpecialSelector >> lastHook: anObject [
+
+	lastHook := anObject
 ]
 
 { #category : #'block support' }
