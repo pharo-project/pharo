@@ -41,6 +41,23 @@ SpecialSelectorTest >> testAttemptToAssignWithIndex [
 ]
 
 { #category : #tests }
+SpecialSelectorTest >> testAttemptToAssignWithIndexObject [
+
+	| object |
+	object := Association new.
+
+	object value: 1.
+	self assert: object value equals: 1.
+
+	object setIsReadOnlyObject: true.
+	self should: [ object value: 20 ] raise: ModificationForbidden.
+
+	object setIsReadOnlyObject: false.
+	object value: 3.
+	self assert: object value equals: 3
+]
+
+{ #category : #tests }
 SpecialSelectorTest >> testCannotInterpret [
 
 	| class object result |
@@ -144,6 +161,14 @@ SpecialSelectorTest >> testMessageNotUnderstoodPerform [
 ]
 
 { #category : #tests }
+SpecialSelectorTest >> testMessageNotUnderstoodProtoObject [
+
+	| object |
+	object := Object new.
+	self should: [ object max: 42 ] raise: MessageNotUnderstood
+]
+
+{ #category : #tests }
 SpecialSelectorTest >> testMustBeBoolean [
 	"The returned value of `mustBeBoolean` seems unused by the VM. Weird"
 
@@ -161,6 +186,20 @@ SpecialSelectorTest >> testMustBeBoolean [
 	value := object or: [ object ].
 	self assert: value equals: true.
 	self assert: object lastHook key equals: #mustBeBoolean
+]
+
+{ #category : #tests }
+SpecialSelectorTest >> testMustBeBooleanProtoObject [
+
+	| object |
+	object := Object new.
+
+	self
+		should: [
+			object
+				ifTrue: [ 1 ]
+				ifFalse: [ 2 ] ]
+		raise: NonBooleanReceiver
 ]
 
 { #category : #tests }
