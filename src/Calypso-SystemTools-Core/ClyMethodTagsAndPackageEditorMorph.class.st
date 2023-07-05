@@ -124,9 +124,7 @@ ClyMethodTagsAndPackageEditorMorph >> ownerTool: anObject [
 { #category : #printing }
 ClyMethodTagsAndPackageEditorMorph >> printMethodTags [
 
-	^ownerTool methodTags
-		ifEmpty: [ 'as yet unclassified' asText makeAllColor: Color red ]
-		ifNotEmpty: [ :tags | tags joinUsing: ', ' ]
+	^ ownerTool methodProtocol ifNil: [ Protocol unclassified asText makeAllColor: Color red ]
 ]
 
 { #category : #printing }
@@ -158,19 +156,18 @@ ClyMethodTagsAndPackageEditorMorph >> requestPackage [
 ClyMethodTagsAndPackageEditorMorph >> requestTag [
 
 	| selectedTag existingTag |
-	existingTag := ownerTool methodTags
-		ifEmpty: [ '' ] ifNotEmpty: [ :tags | tags anyOne ].
+	existingTag := ownerTool methodProtocol ifNil: [ '' ].
 
-	selectedTag := self ownerTool context
-		requestSingleMethodTag: 'New protocol name' suggesting: existingTag.
-	selectedTag = existingTag ifTrue: [ ^CmdCommandAborted signal ].
+	selectedTag := self ownerTool context requestSingleMethodTag: 'New protocol name' suggesting: existingTag.
+	selectedTag = existingTag ifTrue: [ ^ CmdCommandAborted signal ].
 
-	ownerTool methodTags: { selectedTag asSymbol }
+	ownerTool methodProtocol: selectedTag
 ]
 
 { #category : #operations }
 ClyMethodTagsAndPackageEditorMorph >> resetTagsAndPackage [
-	ownerTool methodTags: #().
+
+	ownerTool methodProtocol: nil.
 	self update
 ]
 

@@ -38,6 +38,13 @@ Class {
 
 { #category : #accessing }
 MCWorkingCopy class >> allManagers [
+	"Do not use. This will be deprecated."
+
+	^ self allWorkingCopies
+]
+
+{ #category : #accessing }
+MCWorkingCopy class >> allWorkingCopies [
 	^ self registry values
 ]
 
@@ -286,36 +293,54 @@ MCWorkingCopy class >> methodRemoved: anEvent [
 ]
 
 { #category : #'system changes' }
+MCWorkingCopy class >> packageAdded: anAnnouncement [
+
+	^ self ensureForPackageNamed: anAnnouncement package name packageOrganizer: anAnnouncement package organizer
+]
+
+{ #category : #'system changes' }
+MCWorkingCopy class >> packageRemoved: anAnnouncement [
+
+	anAnnouncement package mcWorkingCopy ifNotNil: [ :wc | wc unregister ]
+]
+
+{ #category : #'system changes' }
 MCWorkingCopy class >> packageRenamed: anAnnouncement [
-	self allManagers 
-		detect: [ :each | each packageName = anAnnouncement newName ]
-		ifFound: [ :newPackage | newPackage modified: true ].
-	(self allManagers 
-		detect: [ :each | each packageName = anAnnouncement oldName ])
-		unload.
+
+	| oldWorkingCopy |
+	oldWorkingCopy := self forPackageNamed: anAnnouncement oldName.
+
+	"Let's make sure we have a working copy for this new package and unregister the old one."
+	(self packageAdded: anAnnouncement)
+		modified: true;
+		repositoryGroup: oldWorkingCopy repositoryGroup.
+
+	oldWorkingCopy unload
 ]
 
 { #category : #'event registration' }
 MCWorkingCopy class >> registerForNotifications [
-	"self registerForNotifications"
+
 	<systemEventRegistration>
-	
 	self announcer: nil.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	self registerInterestOnSystemChangesOnAnnouncer: SystemAnnouncer uniqueInstance.
+	self registerInterestOnSystemChangesOnAnnouncer: SystemAnnouncer uniqueInstance
 ]
 
 { #category : #'event registration' }
 MCWorkingCopy class >> registerInterestOnSystemChangesOnAnnouncer: anAnnouncer [
+
 	anAnnouncer weak
+		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
-		when: ClassAdded, ClassModifiedClassDefinition, ClassCommented , ClassParentRenamed send: #classModified: to: self;
-		when: ClassRenamed send:#classRenamed: to:self;
+		when: PackageRemoved send: #packageRemoved: to: self;
+		when: ClassAdded , ClassModifiedClassDefinition , ClassCommented , ClassParentRenamed send: #classModified: to: self;
+		when: ClassRenamed send: #classRenamed: to: self;
 		when: ClassRepackaged send: #classMoved: to: self;
 		when: ClassRemoved send: #classRemoved: to: self;
-		when: MethodAdded, MethodModified, MethodRecategorized send: #methodModified: to: self;
+		when: MethodAdded , MethodModified , MethodRecategorized send: #methodModified: to: self;
 		when: MethodRepackaged send: #methodMoved: to: self;
-		when: MethodRemoved send: #methodRemoved: to: self.
+		when: MethodRemoved send: #methodRemoved: to: self
 ]
 
 { #category : #private }

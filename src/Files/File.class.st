@@ -677,7 +677,6 @@ File class >> getPosition: id [
 { #category : #'class initialization' }
 File class >> initialize [
 
-	SessionManager default registerSystemClassNamed: self name.
 	self reset
 ]
 

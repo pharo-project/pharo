@@ -62,6 +62,12 @@ EpEvent >> isEpMethodChange [
 ]
 
 { #category : #testing }
+EpEvent >> isEpPackageChange [
+
+	^ false
+]
+
+{ #category : #testing }
 EpEvent >> isEpProtocolChange [
 
 	^ false

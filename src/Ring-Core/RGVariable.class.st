@@ -64,8 +64,8 @@ RGVariable >> isPoolVariable [
 ]
 
 { #category : #testing }
-RGVariable >> isReservedVariable [
-	"Ring2 does not model self, super, thisContext"
+RGVariable >> isPseudoVariable [
+	"Ring2 does not model self, super, thisContext, thisProcess"
 	^false
 ]
 

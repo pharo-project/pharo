@@ -85,7 +85,7 @@ RBSplitClassRefactoring >> abstractReferenceTo: each [
 		aClass whichSelectorsReferToInstanceVariable: each ]
 		using: replacer.
 	self performCompositeRefactoring:
-		(RBRemoveInstanceVariableRefactoring remove: each from: class)
+		(RBRemoveInstanceVariableRefactoring2 remove: each from: class)
 ]
 
 { #category : #transforming }

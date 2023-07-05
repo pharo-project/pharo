@@ -76,7 +76,8 @@ Class {
 		'metaclassExtensionSelectors',
 		'classes',
 		'name',
-		'classTags'
+		'classTags',
+		'organizer'
 	],
 	#classVars : [
 		'PackageGlobalOrganizer',
@@ -115,6 +116,14 @@ RPackage class >> named: aString [
 		  yourself
 ]
 
+{ #category : #'instance creation' }
+RPackage class >> named: aString organizer: aPackageOrganizer [
+
+	^ (self named: aString)
+		  organizer: aPackageOrganizer;
+		  yourself
+]
+
 { #category : #'protected only for tests' }
 RPackage class >> organizer [
 
@@ -125,11 +134,6 @@ RPackage class >> organizer [
 RPackage class >> organizer: aPackageOrganizer [
 
 	PackageGlobalOrganizer := aPackageOrganizer
-]
-
-{ #category : #'class initialization' }
-RPackage class >> packageOrganizerClass [
-	^ RPackageOrganizer
 ]
 
 { #category : #'protected only for tests' }
@@ -212,20 +216,16 @@ RPackage >> addClassDefinitionName: aClassName toClassTag: aSymbol [
 { #category : #'class tags' }
 RPackage >> addClassTag: aSymbol [
 	"Add the class tag from the receiver, if already added do nothing."
-	| tagName newTag |
 
+	| tagName newTag |
 	"strip package name if needed"
 	tagName := self toTagName: aSymbol.
 
-	^ self
-		classTagNamed: tagName
-		ifAbsent: [
-			self class organizer
-				validateCanBeAddedPackage: self
-				tagName: tagName.
-			newTag := self basicAddClassTag: tagName.
-			SystemAnnouncer uniqueInstance classTagAdded: tagName inPackage: self.
-			^newTag]
+	^ self classTagNamed: tagName ifAbsent: [
+		  self organizer validateCanBeAddedPackage: self tagName: tagName.
+		  newTag := self basicAddClassTag: tagName.
+		  SystemAnnouncer announce: (PackageTagAdded to: newTag).
+		  ^ newTag ]
 ]
 
 { #category : #'add method - compiled method' }
@@ -339,10 +339,10 @@ RPackage >> basicRemoveSelector: aSelector ofMetaclassName: aClassName [
 
 { #category : #'class tags' }
 RPackage >> basicRemoveTag: tag [
-	classTags remove: tag ifAbsent: [].
 
-	SystemAnnouncer uniqueInstance
-		classTagRemoved: tag name fromPackage: self
+	classTags remove: tag ifAbsent: [  ].
+
+	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
 { #category : #slices }
@@ -548,21 +548,16 @@ RPackage >> definesOrExtendsClass: aClass [
 
 { #category : #converting }
 RPackage >> demoteToTagInPackageNamed: aString [
-	| newRPackage |
 
+	| newPackage |
 	aString = self name ifTrue: [ ^ self ].
 
 	self unregister.
-	newRPackage := self class organizer
-		packageNamed: aString
-		ifAbsent:  [ (self class named: aString) register ].
-	newRPackage importPackage: self.
+	newPackage := self class organizer packageNamed: aString ifAbsent: [ (self class named: aString organizer: self organizer) register ].
+	newPackage importPackage: self.
 
-	newRPackage classes do: [ :each |
-		SystemAnnouncer uniqueInstance
-			classRepackaged: each
-			from: self
-			to: newRPackage ]
+	newPackage classes do: [ :each | SystemAnnouncer uniqueInstance classRepackaged: each from: self to: newPackage ].
+	^ newPackage
 ]
 
 { #category : #properties }
@@ -736,11 +731,11 @@ RPackage >> importClass: aClass inTag: aTag [
 
 { #category : #private }
 RPackage >> importPackage: anRPackage [
-	anRPackage definedClasses
-		do: [ :className | self importClass: className ].
+
+	anRPackage definedClasses do: [ :className | self importClass: className ].
 	"new rpackage inherits the extentions"
-	classExtensionSelectors :=  classExtensionSelectors, (anRPackage classExtensionSelectors).
-	metaclassExtensionSelectors := metaclassExtensionSelectors, (anRPackage metaclassExtensionSelectors)
+	classExtensionSelectors := classExtensionSelectors , anRPackage classExtensionSelectors.
+	metaclassExtensionSelectors := metaclassExtensionSelectors , anRPackage metaclassExtensionSelectors
 ]
 
 { #category : #private }
@@ -1037,7 +1032,15 @@ RPackage >> orderedClasses [
 
 { #category : #private }
 RPackage >> organizer [
-	^ self class organizer
+
+	self flag: #package.
+	^ organizer ifNil: [ self class organizer ]
+]
+
+{ #category : #accessing }
+RPackage >> organizer: anObject [
+
+	organizer := anObject
 ]
 
 { #category : #accessing }
@@ -1376,30 +1379,23 @@ RPackage >> renameTagsPrefixedWith: oldName to: newName [
 RPackage >> renameTo: aSymbol [
 	"Rename a package with a different name, provided as a symbol"
 
-	| oldName newName oldCategoryNames repositoryGroup |
+	| oldName newName oldCategoryNames |
 	oldName := self name.
 	newName := aSymbol asSymbol.
-	repositoryGroup := self mcPackage workingCopy repositoryGroup.
 	self organizer validatePackageDoesNotExist: aSymbol.
-	oldCategoryNames := (self classTags collect: [:each | each categoryName] as: Set)
-		add: self name;
-		difference: {newName}.
+	oldCategoryNames := (self classTags collect: [ :each | each categoryName ] as: Set)
+		                    add: self name;
+		                    difference: { newName }.
 	self name: aSymbol.
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ self definedClasses
-				do:
-					[ :each | each category: newName , (each category allButFirst: oldName size) ].
-			oldCategoryNames
-				do: [ :each | self organizer removeCategory: each ] ].
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		self definedClasses do: [ :each | each category: newName , (each category allButFirst: oldName size) ].
+		oldCategoryNames do: [ :each | self organizer removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
 	self organizer
 		basicUnregisterPackageNamed: oldName;
 		basicRegisterPackage: self.
-	self mcPackage workingCopy repositoryGroup: repositoryGroup.
-	SystemAnnouncer uniqueInstance
-		announce:
-			(PackageRenamed to: self oldName: oldName newName: newName)
+	SystemAnnouncer uniqueInstance announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
 { #category : #private }

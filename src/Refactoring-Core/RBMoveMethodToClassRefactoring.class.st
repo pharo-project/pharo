@@ -36,6 +36,7 @@ RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 
 { #category : #transforming }
 RBMoveMethodToClassRefactoring >> classModelOf: aClass [
+
 	| classModel |
 	classModel := aClass isMeta
 		ifTrue: [ RBClassModelFactory rbMetaclass named: aClass name ]

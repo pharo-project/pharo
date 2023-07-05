@@ -219,6 +219,7 @@ RPackageTag >> removeFromPackage [
 
 { #category : #accessing }
 RPackageTag >> renameTo: newTagName [
+
 	| oldName categoryName tagName |
 	tagName := self name.
 	oldName := self toCategoryName: tagName.
@@ -229,28 +230,21 @@ RPackageTag >> renameTo: newTagName [
 	self basicRenameTo: newTagName.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self classes do: [ :each | each category: categoryName ].
-		self class environment organization
-			renameCategory: oldName
-			toBe: categoryName].
-	SystemAnnouncer uniqueInstance
-		classTagRenamed: tagName
-		inPackage: self package
-		to: newTagName
+		self packageOrganizer renameCategory: oldName toBe: categoryName ].
+	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldName newName: newTagName)
 ]
 
 { #category : #accessing }
 RPackageTag >> renameTo: aString category: categoryName [
-	| oldName |
 
+	| oldName |
 	oldName := self toCategoryName: self name.
 	oldName = categoryName ifTrue: [ ^ self ].
 
 	self basicRenameTo: aString.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self classes do: [ :each | each category: categoryName ].
-		self class environment organization
-			renameCategory: oldName
-			toBe: categoryName. ]
+		self packageOrganizer renameCategory: oldName toBe: categoryName ]
 ]
 
 { #category : #private }

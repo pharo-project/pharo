@@ -83,48 +83,11 @@ RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 		removeCategory: 'OriginalCategory';
 		removeCategory: 'NewCategoryName';
 		removeCategory: 'Y'.
-	self allManagers
-		detect: [ :each | each packageName = 'OriginalCategory' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'XXXXX' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'XXXX' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'YYYYY' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'YYYY' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'Yyyyy' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'YyYyY' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'Y' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'ZZZZZ' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'Zzzzz' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'FooPackage-Core' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'FooPackage-Other' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'FooPackage' ]
-		ifFound: [ :mCPackage | mCPackage unregister ].
-	self allManagers
-		detect: [ :each | each packageName = 'Zork' ]
-		ifFound: [ :mCPackage | mCPackage unregister ]
+	#( 'OriginalCategory' 'XXXXX' 'XXXX' 'YYYYY' 'YYYY' 'Yyyyy' 'YyYyY' 'Y' 'ZZZZZ' 'Zzzzz' 'FooPackage-Core' 'FooPackage-Other' 'FooPackage' 'Zork' ) do: [
+		:packageName |
+		self allWorkingCopies
+			detect: [ :each | each packageName = packageName ]
+			ifFound: [ :mCPackage | mCPackage unregister ] ]
 ]
 
 { #category : #private }
@@ -191,7 +154,7 @@ RPackageMCSynchronisationTest >> runCase [
 	[
 	self initializeAnnouncers.
 
-	^ self packageClass withOrganizer: self setupOrganizer do: [
+	^ RPackage withOrganizer: self setupOrganizer do: [
 		  self resources do: [ :each | each availableFor: self ].
 		  self setUp.
 		  self performTest ] ] ensure: [
@@ -205,7 +168,7 @@ RPackageMCSynchronisationTest >> setUp [
 	super setUp.
 	
 	emptyOrganizer := self organizer debuggingName: 'MCSynchronisation Package Organizer'; yourself.
-	emptyOrganizer registerPackage: (self packageClass named: 'as yet unclassified').
+	emptyOrganizer registerPackage: (RPackage named: 'as yet unclassified').
 
 	Author fullName 
 		ifNil: [ Author fullName: 'Tester' ].

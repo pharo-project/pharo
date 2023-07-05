@@ -64,7 +64,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 	"ideally this list should be empty"
 
 	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
-	     #'Refactoring-Critics' #'Refactoring2-Transformations'
+	     #'Refactoring-Critics' #'Refactoring2-Transformations' #'Commander-Core' #'SystemCommands-RefactoringSupport' 
 	     #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests'
 	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets' )
 ]
@@ -73,9 +73,9 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 SystemDependenciesTest >> knownCompilerDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #'Transcript-Core' and brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill this dependencies in the future because the kernel group should not depend on that."
 
-	^ #( #'FileSystem-Core' #Monticello #'Transcript-Core' )
+	^ #( #'FileSystem-Core' #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
@@ -91,9 +91,9 @@ SystemDependenciesTest >> knownDisplayDependencies [
 SystemDependenciesTest >> knownFileSystemDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #'Transcript-Core' are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill this dependencies in the future because the kernel group should not depend on that."
 
-	^ #( #Monticello #'Transcript-Core' )
+	^ #( #'Transcript-Core' )
 ]
 
 { #category : #'known dependencies' }
@@ -108,9 +108,9 @@ SystemDependenciesTest >> knownIDEDependencies [
 SystemDependenciesTest >> knownKernelDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #'Transcript-Core' #Jobs are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+	"Note: #'Transcript-Core' #Jobs are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
 
-	^ #( #'FileSystem-Core' #Monticello #'Transcript-Core' #Jobs )
+	^ #( #'FileSystem-Core' #'Transcript-Core' #Jobs )
 ]
 
 { #category : #'known dependencies' }
@@ -155,7 +155,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-FileList' #'Tool-Profilers'
 	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups')
 ]
 
@@ -172,9 +172,9 @@ SystemDependenciesTest >> knownSUnitDependencies [
 SystemDependenciesTest >> knownSUnitKernelDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #''Transcript-Core'' are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
+	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill this dependencies in the future because the kernel group should not depend on that."
 
-	^ #( #Monticello #'Transcript-Core' #'FileSystem-Core' )
+	^ #( #'Transcript-Core' #'FileSystem-Core' )
 ]
 
 { #category : #'known dependencies' }
@@ -265,10 +265,6 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		{ BaselineOfFuel name }, (BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ BaselineOfFuelPlatform name.
-			'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames ).
 
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies
@@ -380,7 +376,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 		(self packagesOfGroupNamed: 'default' on: BaselineOfThreadedFFI ).
 	packages := packages ,  #('TaskIt').
 	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
-	packages := packages , {BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
 	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'CritiqueBrowser' on: BaselineOfNewTools ).
 
 	dependencies := self externalDependendiesOf: packages.
@@ -480,9 +475,6 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		BaselineOfThreadedFFI corePackageNames ).
 
@@ -539,9 +531,6 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 
@@ -599,9 +588,6 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames )).
 
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies

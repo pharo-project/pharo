@@ -17,9 +17,9 @@ Class {
 		'class',
 		'methods',
 		'superclass',
-		'scopes'
+		'refactoring'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #initialization }
@@ -34,8 +34,8 @@ RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes push
 { #category : #execution }
 RBPushUpMethodDriver >> execute [
 
-	| changes refactoring |
-	refactoring := self refactoring.
+	| changes |
+	self refactoring.
 	changes := [
 	           [
 	           [ refactoring generateChanges ]
@@ -52,10 +52,7 @@ RBPushUpMethodDriver >> execute [
 			           RBRefactoringWarning signal: err messageText.
 			           "If user answers no, error is being propagated."
 			           err resume ].
-	(StRefactoringPreviewPresenter
-		 changes: changes
-		 inEnvironment: model
-		 scopes: scopes) open
+	self openPreviewWithChanges: { changes }
 ]
 
 { #category : #initialization }
@@ -72,7 +69,7 @@ RBPushUpMethodDriver >> refactoring [
 	"I'm gathering user input and creating refactoring instance"
 
 	self selectMethodsAndSuperclass.
-	^ RBPullUpMethodRefactoring
+	refactoring := RBPullUpMethodRefactoring
 		  model: model
 		  pullUp: (methods collect: [ :each | each selector ])
 		  from: methods first origin

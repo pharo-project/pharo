@@ -51,7 +51,7 @@ RPackageOrganizerTest >> packageOrganizer [
 { #category : #'tests - extending' }
 RPackageOrganizerTest >> pointRectangleInGraphElement [
 	| p |
-	p := self packageClass named: #GraphElement.
+	p := RPackage named: #GraphElement.
 	p addClassDefinition: Point.
 	p addMethod: Point>>#x.
 	p addMethod: Point>>#rotateBy:about:.
@@ -70,7 +70,7 @@ RPackageOrganizerTest >> setUp [
 	super setUp.
 	createdClasses := OrderedCollection new.
 	createdPackages := OrderedCollection new.
-	packageOrganizer := self packageOrganizerClass basicNew initialize.
+	packageOrganizer := RPackageOrganizer new.
 	packageOrganizer debuggingName: 'For PackageOrganizerTest'.
 	previousAuthor := Author fullName ifNil: [Author fullName: 'RPackage'].
 
@@ -81,7 +81,7 @@ RPackageOrganizerTest >> setUp [
 { #category : #'tests - extending' }
 RPackageOrganizerTest >> stringCharacterInCollPackage [
 	| p |
-	p := self packageClass named: #CollPackage.
+	p := RPackage named: #CollPackage.
 	p addClassDefinition: String.
 	p addClassDefinition: Character.
 	p addMethod: String>>#indexOf:.
@@ -97,13 +97,8 @@ RPackageOrganizerTest >> tearDown [
 
 	Author fullName: previousAuthor.
 
-	(createdClasses reject: [:c| c isObsolete])
-		do: [:cls|
-				"(self packageClass organizer includesClass: cls)
-					ifTrue: [self packageOrganizer unregisterClass: cls.]."
-				cls removeFromSystem ].
-	"createdPackages do:
-		[:each | self packageOrganizer unregisterPackage: each]"
+	(createdClasses reject: [ :c | c isObsolete ]) do: [ :cls | cls removeFromSystem ].
+
 	super tearDown
 ]
 
@@ -154,7 +149,7 @@ RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 RPackageOrganizerTest >> testEmpty [
 
 	self assert: self packageOrganizer packageNames size equals: 1.
-	self assert: (self packageOrganizer packageNames includes: self packageClass defaultPackageName)
+	self assert: (self packageOrganizer packageNames includes: RPackage defaultPackageName)
 ]
 
 { #category : #tests }
@@ -281,7 +276,7 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 	package1 := self createNewPackageNamed: 'P1'.
 	package1 register.
 
-	package2 := self packageClass named: 'P1'.
+	package2 := RPackage named: 'P1'.
 	self
 		should: [ package2 register ]
 		raise: Error

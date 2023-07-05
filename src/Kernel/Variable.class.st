@@ -184,6 +184,12 @@ Variable >> isPoolVariable [
 ]
 
 { #category : #testing }
+Variable >> isPseudoVariable [
+	"thisContext, super, self, thisProcess are reserved variables (true, false and nil are literals)"
+	^false
+]
+
+{ #category : #testing }
 Variable >> isReadIn: aCompiledCode [
 	^aCompiledCode ast readNodes
 		 anySatisfy: [ :node | node binding == self ]
@@ -196,8 +202,11 @@ Variable >> isReferenced [
 
 { #category : #testing }
 Variable >> isReservedVariable [
-	"thisContext, super, self are reserved variables (true, false and nil are literals)"
-	^false
+	self
+		deprecated: 'Please use #isPseudoVariable instead'
+		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
+
+	^ self isPseudoVariable
 ]
 
 { #category : #testing }

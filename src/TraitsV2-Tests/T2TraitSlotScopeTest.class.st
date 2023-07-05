@@ -210,7 +210,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPoo
 	c1 := self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: #C1;
-			traitComposition: t1 asTraitComposition;
+			traitComposition: t1;
 			sharedPools: 'X1';
 			package: 'TraitsV2-Tests-TestClasses' ].
 
@@ -231,13 +231,15 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedvar
 		with: #(otherSlot)
 		uses: t2.
 
-	c1 := Object
-		subclass: #C1
-		uses: t1
-		slots: #(aSlot)
-		classVariables: #(ClassVar)
-		poolDictionaries: ''
-		category: 'TraitsV2-Tests-TestClasses'.
+	c1 := self class classInstaller make: [ :builder |
+		  builder
+			  name: #C1;
+			  superclass: Object;
+			  slots: #(aSlot);
+			  sharedVariables: #(ClassVar);
+			  traitComposition: t1;
+			  category: 'TraitsV2-Tests-TestClasses' ].
+	createdClasses add: c1.
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope

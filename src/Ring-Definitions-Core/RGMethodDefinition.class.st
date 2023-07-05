@@ -113,13 +113,6 @@ RGMethodDefinition class >> realClass: aClass selector: aString [
 	^(aClass>>aString asSymbol) asActiveRingDefinition
 ]
 
-{ #category : #categories }
-RGMethodDefinition class >> unclassifiedProtocolName [
-	"Return the string labeling the unclassified protocol."
-
-	^ 'as yet unclassified'
-]
-
 { #category : #comparing }
 RGMethodDefinition >> <= aRGMethodDefinition [
 	"Sort method definitions according to: 1. class name - 2. class comment - 3. method selector - 4. timestamp"

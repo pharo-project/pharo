@@ -26,6 +26,6 @@ RPackageOrganizerSystemTest >> testThatExistingPackageNamesDoesNotContainIllegal
 
 	illegalCharacters := #( $\ $/ $: $* $? $" $< $> $| ).
 
-	self class environment organization categories do: [ :aPackageName |
+	self packageOrganizer categories do: [ :aPackageName |
 		self deny: (aPackageName includesAnyOf: illegalCharacters) ]
 ]

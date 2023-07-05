@@ -52,31 +52,23 @@ RPackageIncrementalTest >> setUp [
 RPackageIncrementalTest >> tearDown [
 
 	| logging |
-	createdPackages  do: [:each | self removePackage: each name].
+	createdPackages do: [ :each | self removePackage: each name ].
 	"just remove package from package organizer dictionary"
 
-	createdPackages  do: [:each |
-		|mCPackage|
-		mCPackage := self allManagers
-							detect: [:mcPackage | mcPackage packageName = each packageName asString]
-							ifNone: [nil].
-		mCPackage ifNotNil: [mCPackage unregister].
-		each extendedClasses do: [ :extendedClass|
-			self packageClass organizer
-		 		unregisterExtendingPackage: each forClass: extendedClass.]].
+	createdPackages do: [ :each |
+		self allWorkingCopies
+			detect: [ :mcPackage | mcPackage packageName = each packageName asString ]
+			ifFound: [ :mcPackage | mcPackage unregister ].
+		each extendedClasses do: [ :extendedClass | RPackage organizer unregisterExtendingPackage: each forClass: extendedClass ] ].
 	"all ***extending*** classes the packages are also unregistered from PackageOrganizer"
-	(createdClasses reject: [:c| c isObsolete]) do: [:cls|
-		"(RPackage organizer includesPackageBackPointerForClass: cls)
+	(createdClasses reject: [ :c | c isObsolete ]) do: [ :cls | "(RPackage organizer includesPackageBackPointerForClass: cls)
 			ifTrue: [cls package unregisterClass: cls.].
 		when RPackageOrganizer was not looking at system event we had to do the commented actions"
 		logging := false.
-		cls removeFromSystem: logging.
+		cls removeFromSystem: logging
 		"not logging so no event are raised"
-		"but this also means that the consistency cannot be ensured by internal system announcer too."
-		].
-	createdCategories do: [:each |
-		self packageOrganizer removeCategory: each.
-		 ].
+		"but this also means that the consistency cannot be ensured by internal system announcer too." ].
+	createdCategories do: [ :each | self packageOrganizer removeCategory: each ].
 	super tearDown
 ]
 
@@ -711,18 +703,18 @@ RPackageIncrementalTest >> testPrivateClassRegisterUnregister [
 		"ugly but necessary to test registerClass: independantly from addClassDefinition:"
 		"No event should be raised."
 	p registerClass: a1.
-	self assert: (self packageClass organizer packageOf: a1) equals: p.
+	self assert: (RPackage organizer packageOf: a1) equals: p.
 	p definedClassNames remove: #A1InPackageP1.
 	p unregisterClass: a1.
-	self assert: (self packageClass organizer packageOf: a1) isDefault.
+	self assert: (RPackage organizer packageOf: a1) isDefault.
 
 	p definedClassNames add: #A1InPackageP1.
 		"ugly but necessary to test registerClass: independant from addClassDefinition:"
 	p registerClassName: a1 name.
-	self assert: (self packageClass organizer packageOf: a1) equals: p.
+	self assert: (RPackage organizer packageOf: a1) equals: p.
 	p definedClassNames remove: #A1InPackageP1.
 	p unregisterClassName: a1 name.
-	self assert: (self packageClass organizer packageOf: a1) isDefault
+	self assert: (RPackage organizer packageOf: a1) isDefault
 ]
 
 { #category : #'tests - class addition removal' }

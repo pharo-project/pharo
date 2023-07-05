@@ -52,7 +52,7 @@ ClyRenameMethodTagCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyRenameMethodTagCommand >> execute [
 
-	methodGroup renameMethodTagTo: newName
+	methodGroup categorizeMethodsIn: newName
 ]
 
 { #category : #accessing }

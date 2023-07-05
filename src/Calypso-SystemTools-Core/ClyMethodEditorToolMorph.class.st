@@ -20,14 +20,14 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	extendingPackage:		<RPackage>
-	methodTags:		<Array of<Symbol>>
+	methodProtocol:		<Symbol> represents the name of the method protocol
 "
 Class {
 	#name : #ClyMethodEditorToolMorph,
 	#superclass : #ClyTextEditorToolMorph,
 	#instVars : [
 		'ast',
-		'methodTags',
+		'methodProtocol',
 		'extendingPackage',
 		'targetClasses'
 	],
@@ -63,17 +63,6 @@ ClyMethodEditorToolMorph >> buildTextMorph [
 	self formatTextIfNeeded
 ]
 
-{ #category : #'events handling' }
-ClyMethodEditorToolMorph >> changesAreAboutApply [
-	| tagsEditor |
-	super changesAreAboutApply.
-
-	tagsEditor := statusBar findDeeplyA: ClyMethodTagsEditorMorph.
-	tagsEditor ifNil: [ ^self ].
-
-	tagsEditor acceptTags
-]
-
 { #category : #operations }
 ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 
@@ -106,8 +95,9 @@ ClyMethodEditorToolMorph >> extendingPackage [
 
 { #category : #accessing }
 ClyMethodEditorToolMorph >> extendingPackage: aPackage [
+
 	extendingPackage := aPackage.
-	methodTags := #()
+	methodProtocol := nil
 ]
 
 { #category : #building }
@@ -138,13 +128,6 @@ ClyMethodEditorToolMorph >> formatTextIfNeeded [
 ]
 
 { #category : #initialization }
-ClyMethodEditorToolMorph >> initialize [
-	super initialize.
-
-	methodTags := #()
-]
-
-{ #category : #initialization }
 ClyMethodEditorToolMorph >> initializeAST [
 	"subclasses might get it from the method"
 	^ self currentEditedAST
@@ -167,13 +150,15 @@ ClyMethodEditorToolMorph >> methodClass [
 ]
 
 { #category : #accessing }
-ClyMethodEditorToolMorph >> methodTags [
-	^methodTags
+ClyMethodEditorToolMorph >> methodProtocol [
+
+	^ methodProtocol
 ]
 
 { #category : #accessing }
-ClyMethodEditorToolMorph >> methodTags: tagsArray [
-	methodTags := tagsArray.
+ClyMethodEditorToolMorph >> methodProtocol: protocolName [
+
+	methodProtocol := protocolName.
 	extendingPackage := nil
 ]
 
@@ -228,14 +213,7 @@ ClyMethodEditorToolMorph >> tagAndPackageEditingMethod: aMethod [
 { #category : #operations }
 ClyMethodEditorToolMorph >> tagEditingMethod: aMethod [
 
-	| existingTags removedTags newTags |
-	self applyChangesBy: [
-		existingTags := aMethod tags reject: [ :each | each beginsWith: '*' ].
-		removedTags := existingTags reject: [ :each | methodTags includes: each ].
-		newTags := methodTags reject: [ :each | existingTags includes: each ].
-
-		newTags do: [ :protocolName | aMethod protocol: protocolName ].
-		removedTags do: [ :protocolName | aMethod untagFrom: protocolName ] ]
+	self applyChangesBy: [ aMethod protocol: methodProtocol ]
 ]
 
 { #category : #accessing }

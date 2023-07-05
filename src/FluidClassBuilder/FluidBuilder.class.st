@@ -112,7 +112,7 @@ FluidBuilder >> fillShiftClassBuilder [
 		name: nameToBuild.
 
 	shiftClassBuilder slots: slotsToBuild.
-	shiftClassBuilder traitComposition: uses asTraitComposition.
+	shiftClassBuilder traitComposition: uses.
 
 	(tagToBuild isNil or: [ tagToBuild isEmpty ])
 		ifTrue: [ shiftClassBuilder category: packageName ]

@@ -74,18 +74,19 @@ ClyClassScopeTest >> testInstVarsEnumerationWhenThereAreNoVariables [
 
 { #category : #tests }
 ClyClassScopeTest >> testMethodGroupsEnumeration [
+
 	environment addPlugin: ClyDefaultSystemEnvironmentPlugin new.
 	scope := ClyClassScope of: ClyClass1FromP1Mock in: environment.
 
 	scope methodGroupsDo: [ :each | result add: each ].
 
-	self
-		assert: (result collect: #class as: Set)
-		equals: {ClyAllMethodGroup. ClyTaggedMethodGroup} asSet.
+	self assert: (result collect: #class as: Set) equals: {
+			ClyAllMethodGroup.
+			ClyMethodsInProtocolGroup } asSet.
 	self
 		assert: (result
-				select: [ :each | each class = ClyTaggedMethodGroup ]
-				thenCollect: #tag) sorted asArray
+				 select: [ :each | each class = ClyMethodsInProtocolGroup ]
+				 thenCollect: [ :group | group protocol ]) sorted asArray
 		equals: ClyClass1FromP1Mock tagsForMethods sorted asArray
 ]
 

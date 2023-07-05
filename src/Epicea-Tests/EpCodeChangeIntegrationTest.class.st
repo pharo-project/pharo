@@ -10,13 +10,26 @@ Class {
 { #category : #tests }
 EpCodeChangeIntegrationTest >> categoryNameForTesting [
 
-	^ #'EpiceaTestingWith-A-Really-WeirdCategoryName'
+	^ (self packageNameForTesting , '-' , self packageTagNameForTesting) asSymbol
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> packageNameForTesting [
+
+	^ #'EpiceaTestingWith-A-Really-WeirdPackageName'
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> packageTagNameForTesting [
+
+	^ 'WeirdCategoryName'
 ]
 
 { #category : #running }
 EpCodeChangeIntegrationTest >> tearDown [
 
-	self class environment organization removeCategory: self categoryNameForTesting.
+	self packageOrganizer removeCategory: self categoryNameForTesting.
+	(self packageNameForTesting asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	super tearDown
 ]
 
@@ -35,25 +48,22 @@ EpCodeChangeIntegrationTest >> testCategoryAddition [
 
 	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 0.
 
-	self class environment organization addCategory: self categoryNameForTesting.
+	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 1.
-	self
-		assert: (self allLogEventsWith: EpCategoryAddition) first affectedPackageName
-		equals: self categoryNameForTesting
+	self assert: (self allLogEventsWith: EpCategoryAddition) first categoryName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testCategoryRemoval [
 
-	self class environment organization addCategory: self categoryNameForTesting.
+	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 0.
 
-	self class environment organization removeCategory: self categoryNameForTesting.
+	self packageOrganizer removeCategory: self categoryNameForTesting.
+
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 1.
-	self
-		assert: (self allLogEventsWith: EpCategoryRemoval) first affectedPackageName
-		equals: self categoryNameForTesting
+	self assert: (self allLogEventsWith: EpCategoryRemoval) first categoryName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }
@@ -261,6 +271,30 @@ EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 	aClass compile: 'fortyTwo ^42'.
 
 	self assert: monitor log head identicalTo: headBeforeRecompiling
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> testPackageAddition [
+
+	self assert: (self countLogEventsWith: EpPackageAddition) equals: 0.
+
+	self packageOrganizer createPackageNamed: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageAddition) equals: 1.
+	self assert: (self allLogEventsWith: EpPackageAddition) first affectedPackageName equals: self packageNameForTesting
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> testPackageRemoval [
+
+	self packageOrganizer createPackageNamed: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 0.
+
+	self packageOrganizer unregisterPackageNamed: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 1.
+	self assert: (self allLogEventsWith: EpPackageRemoval) first affectedPackageName equals: self packageNameForTesting
 ]
 
 { #category : #tests }

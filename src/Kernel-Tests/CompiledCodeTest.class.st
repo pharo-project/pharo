@@ -56,6 +56,20 @@ CompiledCodeTest >> testBlockReturnSpecial [
 	self deny: [ ^ Object ] compiledBlock isReturnSpecial
 ]
 
+{ #category : #'tests - flag' }
+CompiledCodeTest >> testClearFlag [
+	| method |
+	
+	method := self class >> #methodReturnOne.
+	
+	method clearFlag.
+	self deny: method flag.
+	method setFlag.
+	self assert: method flag.
+	method clearFlag.
+	self deny: method flag.
+]
+
 { #category : #'tests - scanning' }
 CompiledCodeTest >> testEquivalentTo [
 
@@ -79,6 +93,19 @@ CompiledCodeTest >> testEquivalentTo [
 	origin := aClass >> #m1.
 	aClass compile: 'm1 <pragma: 2> ^ self'.
 	self deny: (origin equivalentTo: aClass >> #m1)
+]
+
+{ #category : #'tests - flag' }
+CompiledCodeTest >> testFlag [
+	| method |
+	
+	method := self class >> #methodReturnOne.
+	self deny: method flag.
+	method setFlag.
+	self assert: method flag.
+	method clearFlag.
+	self deny: method flag.
+
 ]
 
 { #category : #'tests - literals' }
@@ -442,6 +469,23 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaSelector
 
 	self assert: (self compiledMethod1
 				refersToLiteral: #pragma1:foo:)
+]
+
+{ #category : #'tests - flag' }
+CompiledCodeTest >> testSetFlag [
+	| method |
+	method := self class >> #methodReturnOne.
+	
+	self deny: method flag.
+	method setFlag.
+	self assert: method flag.
+	"we can set it twice"
+	method setFlag.
+	self assert: method flag.
+	"we can execute the method"
+	self assert: self methodReturnOne equals: 1.
+	method clearFlag.
+	self deny: method flag.
 ]
 
 { #category : #'tests - debugging support' }

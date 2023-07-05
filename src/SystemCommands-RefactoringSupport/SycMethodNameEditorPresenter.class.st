@@ -3,12 +3,13 @@ I am an UI used to rename methods.
 
 HOW TO RUN
 
-SycMethodNameEditor
+```
+SycMethodNameEditorPresenter
 		openOn:
 			(RBMethodName
 				selector: (UseOnlyForTest >> #bug:) selector
 				arguments: ((UseOnlyForTest >> #bug:) ast arguments collect: #name))
-				
+```				
 
 My jobs is to:
 	- display a preview of your future method name or '(invalid)' when the name is incorrect  (with a LabelPresenter previewResult an instance variable)

@@ -93,7 +93,7 @@ RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 { #category : #preconditions }
 RBExtractMethodAndOccurrences >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #asserting }

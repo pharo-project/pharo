@@ -207,10 +207,8 @@ RBCondition class >> doesNotAccessInstanceVariable: variableName inHierarchyOf: 
 { #category : #'instance creation' }
 RBCondition class >> empty [
 	"Returns an empty condition"
-
-	^self new
-		block: [true]
-		errorString: 'Empty'
+	self deprecated: 'Use RBCondition true instead' transformWith: '`@rec empty' -> '`@ true'.
+	^ self true
 ]
 
 { #category : #'instance creation' }
@@ -262,7 +260,21 @@ RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 				   ifNone: [ nil ]) notNil ]
 		  errorString: aClass printString
 			  , ' or subclass <1?:does not >reference<1?s:> instance variable '
-			  , aString
+			  , '#', aString
+]
+
+{ #category : #utilities }
+RBCondition class >> invalidArgumentNamesForSelector: aSymbol in: aModel [
+	"Return the list of elements that when added as argument to a selector would break it e.g., an argument cannot have the same name as a instance variables or the same name as an already existing argument."
+	
+	| invalidArgNames |
+	invalidArgNames := Set new.
+	(aModel allImplementorsOf: aSymbol) do: [ :e | 
+		invalidArgNames 
+			addAll: e instanceVariableNames;
+			addAll: (e methodFor: aSymbol) argumentNames.
+		 ].
+	^ invalidArgNames
 ]
 
 { #category : #'instance creation' }
@@ -434,6 +446,15 @@ RBCondition class >> subclassesOf: aClass referToSelector: aSelector [
 		  errorString:
 			  '<1?:no:a> subclass of ' , aClass printString , ' refers to '
 			  , aSelector printString
+]
+
+{ #category : #'instance creation' }
+RBCondition class >> true [
+	"Returns a true condition. It is useful when chaining condition. It acts as neutral element of the operation such AND."
+
+	^self new
+		block: [true]
+		errorString: 'Empty'
 ]
 
 { #category : #'instance creation' }

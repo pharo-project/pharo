@@ -7,20 +7,22 @@ The current format of a CompiledCode is as follows:
 	header (4 bytes)
 	literals (4 bytes each)
 	bytecodes  (variable)
-	trailer (variable)
+	trailer (0 for blocks, see #trailerSize for methods)
 
 The header describes the compiled code. It's a small integer with the following format: 
 
 sign bit 	1 bit: 	if set, the method is encoded in the SecondaryBytecodeSet, else in the PrimaryBytecodeSet (See class variables) 
-(index 0)	15 bits:	number of literals
+(index 0)		15 bits:	number of literals
 (index 16)	1 bit:	requires counters (in the sista JIT, methods marked this way cannot trip)
 (index 17)	1 bit:	whether a large frame size is needed
 (index 18)	6 bits:	number of temporary variables
 (index 24)	4 bits:	number of arguments to the method
 (index 28)	1 bit:	has primitive
-(index 29)	1 bit:	flag bit, ignored by the VM
+(index 29)	1 bit:	user flag bit, ignored by the VM
 
-The trailer encodes how to fetch the method's sources. See CompiledMethodTrailer.
+For the user flag bit, use #clearFlag, #flag, #setFlag. Take care: do not change it for methods currently being executed, the prefered way is to do it as part of compilation (e.g. using a compiler plugin).
+
+The trailer encodes a sourcePointer to fetch the method's sources.
 "
 Class {
 	#name : #CompiledCode,
@@ -191,7 +193,7 @@ CompiledCode >> bytecodes [
 CompiledCode >> clearFlag [
 	"Clear the user-level flag bit"
 
-	self objectAt: 1 put: (self header bitAnd: (1 << 29) bitInvert)
+	self objectAt: 1 put: (self header bitAt: 29 put: 0)
 ]
 
 { #category : #accessing }
@@ -244,7 +246,7 @@ CompiledCode >> equivalentTo: aCompiledMethod [
 CompiledCode >> flag [
 	"Answer the user-level flag bit"
 
-	^((self header bitShift: -29) bitAnd: 1) = 1
+	^(self header bitAt: 29) = 1
 ]
 
 { #category : #enumerating }
@@ -869,6 +871,13 @@ CompiledCode >> sendsSelector: aSymbol [
 CompiledCode >> sendsToSuper [
 	self localSendsToSuper ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsToSuper ]
+]
+
+{ #category : #accessing }
+CompiledCode >> setFlag [
+	"set the user-level flag bit"
+
+	self objectAt: 1 put: (self header bitAt: 29 put: 1)
 ]
 
 { #category : #initialization }

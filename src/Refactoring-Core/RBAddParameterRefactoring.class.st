@@ -141,17 +141,6 @@ RBAddParameterRefactoring >> newSelectorString [
 	^stream contents
 ]
 
-{ #category : #private }
-RBAddParameterRefactoring >> parseTreeRewriter [
-	| rewriteRule oldString newString |
-	rewriteRule := self parseTreeRewriterClass new.
-	oldString := self buildSelectorString: oldSelector.
-	newString := self newSelectorString.
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
-	^rewriteRule
-]
-
 { #category : #action }
 RBAddParameterRefactoring >> renameArgumentsIn: parseTree [
 	| newArgNames |
@@ -205,12 +194,12 @@ RBAddParameterRefactoring >> senders [
 { #category : #printing }
 RBAddParameterRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
-	self class storeOn: aStream.
+	aStream nextPutAll: self class name.
 	aStream
 		nextPutAll: ' addParameterToMethod: #';
 		nextPutAll: oldSelector;
 		nextPutAll: ' in: '.
-	class storeOn: aStream.
+	aStream nextPutAll: class name.
 	aStream
 		nextPutAll: ' newSelector: #';
 		nextPutAll: newSelector;

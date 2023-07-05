@@ -496,6 +496,11 @@ ShiftClassBuilder >> slots: aCollection [
 ]
 
 { #category : #accessing }
+ShiftClassBuilder >> slotsFromString: aString [
+	self slots: aString asSlotCollection
+]
+
+{ #category : #accessing }
 ShiftClassBuilder >> superclass [
 	^ superclass ifNil: [ superclassName ifNotNil: [buildEnvironment classNamed: (self superclassName) ]]
 ]

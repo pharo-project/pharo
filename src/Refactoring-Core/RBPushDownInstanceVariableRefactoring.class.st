@@ -13,7 +13,6 @@ Class {
 RBPushDownInstanceVariableRefactoring >> preconditions [
 
 	| references |
-
 	references := RBCondition referencesInstanceVariable: variableName in: class.
 	class realClass
 		ifNil: [ references errorMacro: ( '<1s> is referenced.' expandMacrosWith: variableName ) ]

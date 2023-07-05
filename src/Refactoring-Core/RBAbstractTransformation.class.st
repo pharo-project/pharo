@@ -87,11 +87,6 @@ RBAbstractTransformation class >> refactoringOptions [
 ]
 
 { #category : #accessing }
-RBAbstractTransformation class >> setDefaultOption: aSymbol to: aBlock [
-	self refactoringOptions at: aSymbol put: aBlock
-]
-
-{ #category : #accessing }
 RBAbstractTransformation >> changes [
 
 	^ self model changes
@@ -127,7 +122,8 @@ RBAbstractTransformation >> defaultEnvironment [
 
 { #category : #'condition definitions' }
 RBAbstractTransformation >> emptyCondition [
-	^ RBCondition empty
+	self deprecated: 'Use trueCondition' transformWith: '`@rec emptyCondition' -> '`@rec trueCondition'. 
+	^ RBCondition true
 ]
 
 { #category : #accessing }
@@ -302,4 +298,9 @@ RBAbstractTransformation >> transform [
 	"Do the actual operations."
 	
 	self subclassResponsibility
+]
+
+{ #category : #'condition definitions' }
+RBAbstractTransformation >> trueCondition [
+	^ RBCondition true
 ]

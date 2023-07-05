@@ -14,12 +14,11 @@ Class {
 	#name : #RBDeprecateMethodDriver,
 	#superclass : #RBDriver,
 	#instVars : [
-		'methodToDeprecate',
-		'methodToReplaceDeprecatedMethod',
 		'refactoring',
-		'scopes'
+		'useInsteadSelector',
+		'selectorToDeprecate'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #'instance creation' }
@@ -31,16 +30,15 @@ RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCo
 { #category : #initialization }
 RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollection [
 
-	methodToDeprecate := aSelector.
-	methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
 	scopes := aCollection.
 	model := self refactoringScopeOn: scopes first.
 
 	refactoring := RBDeprecateMethodRefactoring
 		               model: model
 		               deprecateMethod: aSelector
-		               in: aClass
-		               using: methodToReplaceDeprecatedMethod
+		               in: aClass.
+	selectorToDeprecate := aSelector.
+	self selectorToReplaceDeprecatedSelector.
 ]
 
 { #category : #execution }
@@ -49,13 +47,23 @@ RBDeprecateMethodDriver >> execute [
 	| compositeChange |
 	compositeChange := [
 	                   [
-	                   [ refactoring generateChanges ]
+	                   [ 
+							[ | isValid |
+							"the user pressed cancel"
+							useInsteadSelector ifNil: [ ^ self ].
+							refactoring newSelector: useInsteadSelector.
+							isValid := refactoring inputValidation check.
+							isValid ifFalse: [ self selectorToReplaceDeprecatedSelector ].
+							isValid ] whileFalse.
+							
+							refactoring generateChanges 
+							]
 		                   on: RBInputValidationFailedError
 		                   do: [ :err |
-			                   methodToReplaceDeprecatedMethod := self getMethodThatWillReplaceDeprecatedMethod.
-			                   refactoring newSelector:
-				                   methodToReplaceDeprecatedMethod.
-									err resume ] ]
+									"normally this should not be needed"
+			                   self selectorToReplaceDeprecatedSelector.
+			                   refactoring newSelector: useInsteadSelector.
+			                   err resume ] ]
 		                   on: RBApplicabilityChecksFailedError
 		                   do: [ :err |
 		                   ^ RBRefactoringError signal: err messageText ] ]
@@ -64,26 +72,33 @@ RBDeprecateMethodDriver >> execute [
 			                   RBRefactoringWarning signal: err messageText.
 			                   "If user answers no, error is being propagated."
 			                   err resume ].
-
-	(StRefactoringPreviewPresenter
-		 changes: compositeChange
-		 inEnvironment: model
-		 scopes: scopes) open
-]
-
-{ #category : #'ui - requests' }
-RBDeprecateMethodDriver >> getMethodThatWillReplaceDeprecatedMethod [
-
-	| newSelector |
-	newSelector := UIManager default
-		               request: 'Method to replace ' , methodToDeprecate , '. The new selectors cannot be an empty string or same as the old selector.'
-		               initialAnswer: methodToDeprecate
-		               title: 'New selector'.
-	^ newSelector
+	self openPreviewWithChanges: compositeChange
 ]
 
 { #category : #utilities }
 RBDeprecateMethodDriver >> refactoringScopeOn: aScope [
 
 	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
+]
+
+{ #category : #'ui - requests' }
+RBDeprecateMethodDriver >> selectorToReplaceDeprecatedSelector [
+	"UIManager default
+		                      request:
+			                      'Method to replace ' , selectorToDeprecate
+			                      ,
+			                      '. The new selectors cannot be an empty string or same as the old selector.'
+		                      initialAnswer: selectorToDeprecate
+		                      title: 'New selector'"
+
+	useInsteadSelector := SpRequestDialog new
+		                      title:
+			                      'Selector to replace ' , selectorToDeprecate;
+		                      label:
+			                      'The new selectors cannot be an empty string or same as the old selector.';
+		                      text: selectorToDeprecate;
+		                      acceptLabel: 'Accept';
+		                      cancelLabel: 'Cancel';
+		                      openModal.
+	"we should check that the selector is valid here!!!"
 ]

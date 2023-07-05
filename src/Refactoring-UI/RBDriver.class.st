@@ -7,22 +7,16 @@ I am a driver object responsible for invoking refactorings. I am responsible for
 - checking braking changes and warning user if they exist
 - and finally, invoking refactoring
 
-You can execute me by first creating an instance of one of my subclasses with supplying the browser context:
-
-```
-RBMoveMethodToClassSide withContext: context
-```
-
-then you can send the `execute` message that will execute the refactoring.
 
 "
 Class {
 	#name : #RBDriver,
 	#superclass : #Object,
 	#instVars : [
-		'model'
+		'model',
+		'scopes'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #testing }
@@ -35,4 +29,12 @@ RBDriver class >> isAbstract [
 RBDriver >> execute [
 
 	self subclassResponsibility
+]
+
+{ #category : #execution }
+RBDriver >> openPreviewWithChanges: changes [
+	
+	^ (StRefactoringPreviewPresenter
+		 changes: changes
+		 scopes: scopes) openModal
 ]

@@ -112,48 +112,47 @@ EpApplyPreviewerTest >> testBehaviorNameChange [
 { #category : #tests }
 EpApplyPreviewerTest >> testCategoryAdditionWithCategoryRemoved [
 
-	self class environment organization addCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpCategoryAddition.
-		self assert: output categoryName equals: classFactory defaultCategory.
-		]
+		self assert: output categoryName equals: classFactory defaultCategory ]
 ]
 
 { #category : #tests }
 EpApplyPreviewerTest >> testCategoryRemovalWithCategoryAdded [
 
-	self class environment organization addCategory: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
-	self class environment organization addCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpCategoryRemoval.
-		self assert: output categoryName equals: classFactory defaultCategory.
-		]
+		self assert: output categoryName equals: classFactory defaultCategory ]
 ]
 
 { #category : #tests }
 EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
 
 	| organization aCategory anotherCategory |
-	organization := self class environment organization.
+	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
+	anotherCategory := aCategory , '2'.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpCategoryRename.
 		self assert: output oldCategoryName equals: aCategory.
-		self assert: output newCategoryName equals: anotherCategory.
-		]
+		self assert: output newCategoryName equals: anotherCategory ]
 ]
 
 { #category : #tests }
@@ -446,7 +445,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 { #category : #tests }
 EpApplyPreviewerTest >> testRedundantCategoryAddition [
 
-	self class environment organization addCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -455,8 +454,8 @@ EpApplyPreviewerTest >> testRedundantCategoryAddition [
 { #category : #tests }
 EpApplyPreviewerTest >> testRedundantCategoryRemoval [
 
-	self class environment organization addCategory: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -466,10 +465,11 @@ EpApplyPreviewerTest >> testRedundantCategoryRemoval [
 EpApplyPreviewerTest >> testRedundantCategoryRenameWithAbsentCategory [
 
 	| organization aCategory anotherCategory |
-	organization := self class environment organization.
+	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
+	anotherCategory := aCategory , '2'.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 

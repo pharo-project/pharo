@@ -16,10 +16,10 @@ Class {
 	#superclass : #RBDriver,
 	#instVars : [
 		'methods',
-		'scopes',
-		'class'
+		'class',
+		'refactoring'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #initialization }
@@ -31,11 +31,11 @@ RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pu
 { #category : #execution }
 RBPushDownMethodDriver >> execute [
 
-	| changes refactoring |
+	| changes |
 	methods := self selectMethods.
 	methods ifNil: [ ^ self ].
 
-	refactoring := self refactoring.
+	self refactoring.
 	changes := [
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError
@@ -46,10 +46,7 @@ RBPushDownMethodDriver >> execute [
 			           RBRefactoringWarning signal: err messageText.
 			           "If user answers no, error is being propagated."
 			           err resume ].
-	(StRefactoringPreviewPresenter
-		 changes: changes
-		 inEnvironment: model
-		 scopes: scopes) open
+	self openPreviewWithChanges: { changes }
 ]
 
 { #category : #initialization }
@@ -64,7 +61,7 @@ RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown
 { #category : #resources }
 RBPushDownMethodDriver >> refactoring [
 
-	^ RBPushDownMethodRefactoring
+	refactoring :=  RBPushDownMethodRefactoring
 		  model: model
 		  pushDown: (methods collect: [ :each | each selector ])
 		  from: class

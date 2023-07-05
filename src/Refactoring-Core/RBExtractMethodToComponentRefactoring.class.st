@@ -90,7 +90,7 @@ RBExtractMethodToComponentRefactoring >> moveMethod [
 { #category : #preconditions }
 RBExtractMethodToComponentRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #printing }
