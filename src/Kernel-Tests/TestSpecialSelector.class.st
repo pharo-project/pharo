@@ -33,6 +33,12 @@ TestSpecialSelector >> lastHook [
 	^ lastHook
 ]
 
+{ #category : #'block support' }
+TestSpecialSelector >> mustBeBoolean [
+	lastHook := #mustBeBoolean -> nil.
+	^ value
+]
+
 { #category : #accessing }
 TestSpecialSelector >> value [
 

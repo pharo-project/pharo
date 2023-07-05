@@ -55,6 +55,26 @@ SpecialSelectorTest >> testMessageNotUnderstood [
 ]
 
 { #category : #tests }
+SpecialSelectorTest >> testMustBeBoolean [
+	"The returned value of `mustBeBoolean` seems unused by the VM. Weird"
+
+	| object value |
+	object := TestSpecialSelector new.
+
+	object value: true.
+	value := object
+		         ifTrue: [ 1 ]
+		         ifFalse: [ 2 ].
+	self assert: value equals: 1.
+	self assert: object lastHook key equals: #mustBeBoolean.
+
+	object value: false.
+	value := object or: [ object ].
+	self assert: value equals: true.
+	self assert: object lastHook key equals: #mustBeBoolean
+]
+
+{ #category : #tests }
 SpecialSelectorTest >> testRunWithIn [
 
 	| selector method object result |
