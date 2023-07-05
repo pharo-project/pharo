@@ -13,6 +13,27 @@ ObjectTest >> classToBeTested [
 	^ Object
 ]
 
+{ #category : #'tests - reflecting' }
+ObjectTest >> testAdoptInstance [
+
+	| point |
+	self assert: Point format equals: Association format. "non-indexable with 2 ivars"
+
+	point := 10 @ 20.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	Association adoptInstance: point.
+	self assert: point class equals: Association.
+	self assert: point printString equals: '10->20'.
+
+	Point adoptInstance: point.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	self should: [ Object adoptInstance: point ] raise: PrimitiveFailed
+]
+
 { #category : #tests }
 ObjectTest >> testAs [
 	| coll1 coll2 |
@@ -262,6 +283,27 @@ ObjectTest >> testInstVarNamedPut [
 	self assert: (obj instVarNamed: 'variable') equals: 1.
 	self shouldnt: [ obj instVarNamed: 'variable' put: 1 ] raise: InstanceVariableNotFound.
 	self should: [ obj instVarNamed: 'timoleon' put: 1 ] raise: InstanceVariableNotFound
+]
+
+{ #category : #'tests - reflecting' }
+ObjectTest >> testPrimitiveChangeClassTo [
+
+	| point |
+	self assert: Point format equals: Association format. "non-indexable with 2 ivars"
+
+	point := 10 @ 20.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	point primitiveChangeClassTo: Association new.
+	self assert: point class equals: Association.
+	self assert: point printString equals: '10->20'.
+
+	point primitiveChangeClassTo: Point new.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	self should: [ point primitiveChangeClassTo: Object new ] raise: PrimitiveFailed
 ]
 
 { #category : #'tests - printing' }
