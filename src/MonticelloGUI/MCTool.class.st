@@ -40,12 +40,6 @@ MCTool >> accept [
 	" do nothing by default"
 ]
 
-{ #category : #utilities }
-MCTool >> allManagers [
-
-	^ MCWorkingCopy allManagers 
-]
-
 { #category : #'morphic ui' }
 MCTool >> answer: anObject [
 	modalValue := anObject.

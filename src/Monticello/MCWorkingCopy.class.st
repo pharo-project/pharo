@@ -37,13 +37,6 @@ Class {
 }
 
 { #category : #accessing }
-MCWorkingCopy class >> allManagers [
-	"Do not use. This will be deprecated."
-
-	^ self allWorkingCopies
-]
-
-{ #category : #accessing }
 MCWorkingCopy class >> allWorkingCopies [
 	^ self registry values
 ]
@@ -172,7 +165,7 @@ MCWorkingCopy class >> forPackageNamed: aPackageName [
 { #category : #querying }
 MCWorkingCopy class >> hasPackageNamed: aName [
 
-	^ self allManagers anySatisfy: [ :each | each packageName = aName ]
+	^ self allWorkingCopies anySatisfy: [ :each | each packageName = aName ]
 ]
 
 { #category : #private }
