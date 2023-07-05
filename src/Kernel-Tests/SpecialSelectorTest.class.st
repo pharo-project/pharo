@@ -70,6 +70,24 @@ SpecialSelectorTest >> testCannotInterpretProtoObject [
 ]
 
 { #category : #tests }
+SpecialSelectorTest >> testCannotInterpretProtoObjectGotOne [
+
+	| class object result |
+	"Create a new anonymous subclass of ProtoObject with a nil methodDict"
+	class := Behavior new.
+	class basicSuperclass: ProtoObject.
+	class methodDict: nil.
+
+	"Do not call new, or suffer cannotInterpret initialize"
+	object := class basicNew.
+
+	"ProtoObject>>cannotInterpret: will find ProtoObject>>class"
+	result := object class.
+
+	self assert: result equals: class
+]
+
+{ #category : #tests }
 SpecialSelectorTest >> testMessageNotUnderstood [
 
 	| object result |
