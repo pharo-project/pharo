@@ -170,21 +170,65 @@ SpecialSelectorTest >> testMessageNotUnderstoodProtoObject [
 
 { #category : #tests }
 SpecialSelectorTest >> testMustBeBoolean [
-	"The returned value of `mustBeBoolean` seems unused by the VM. Weird"
+	"The returned value of `mustBeBoolean` is unused by the VM.
+	 When proceeding, the next instruction seems compiler dependent."
 
 	| object value |
 	object := TestSpecialSelector new.
-
-	object value: true.
 	value := object
 		         ifTrue: [ 1 ]
-		         ifFalse: [ 2 ].
+		         ifFalse: [ 10 ].
 	self assert: value equals: 1.
 	self assert: object lastHook key equals: #mustBeBoolean.
 
-	object value: false.
-	value := object or: [ object ].
+	object := TestSpecialSelector new.
+	value := object
+		         ifFalse: [ 2 ]
+		         ifTrue: [ 20 ].
+	self assert: value equals: 2.
+	self assert: object lastHook key equals: #mustBeBoolean.
+
+	object := TestSpecialSelector new.
+	value := object ifTrue: [ 3 ].
+	self assert: value equals: 3.
+	self assert: object lastHook key equals: #mustBeBoolean.
+
+	object := TestSpecialSelector new.
+	value := object ifFalse: [ 4 ].
+	self assert: value equals: nil.
+	self assert: object lastHook key equals: #mustBeBoolean.
+
+	object := TestSpecialSelector new.
+	value := object and: [ 5 ].
+	self assert: value equals: 5.
+	self assert: object lastHook key equals: #mustBeBoolean.
+
+	object := TestSpecialSelector new.
+	value := true and: [ object ].
+	self assert: value equals: object.
+	self assert: object lastHook isNil.
+
+	object := TestSpecialSelector new.
+	value := object or: [ 6 ].
 	self assert: value equals: true.
+	self assert: object lastHook key equals: #mustBeBoolean.
+
+	object := TestSpecialSelector new.
+	value := nil.
+	[ :break |
+	[ object ] whileTrue: [
+		value := 7.
+		break value ] ] valueWithExit.
+	self assert: value equals: 7.
+	self assert: object lastHook key equals: #mustBeBoolean.
+
+	object := TestSpecialSelector new.
+	value := nil.
+	[ :break |
+	[ object ] whileFalse: [
+		value := 8.
+		break value ] ] valueWithExit.
+	self assert: value equals: 8.
 	self assert: object lastHook key equals: #mustBeBoolean
 ]
 
