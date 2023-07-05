@@ -13,7 +13,6 @@ SpecialSelectorTest >> testCannotInterpret [
 	The result of `cannotInterpret:` seems to be used as a receiver for the original message AGAIN.
 	This is likely a VM bug :("
 
-	<expectedFailure>
 	| class object result |
 	"Create a new anonymous subclass of TestSpecialSelector with a nil methodDict"
 	class := Behavior new.
@@ -34,7 +33,6 @@ SpecialSelectorTest >> testCannotInterpretProtoObject [
 	Is currenlty broken and goes in an infinite recursion of Context>>nextHandlerContext"
 
 	| class object |
-	self skip.
 	"Create a new anonymous subclass of ProtoObject with a nil methodDict"
 	class := Behavior new.
 	class basicSuperclass: ProtoObject.
