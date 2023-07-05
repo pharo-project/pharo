@@ -4,6 +4,10 @@ Test class that implement some special selectors used by the VM for callbacks
 Class {
 	#name : #TestSpecialSelector,
 	#superclass : #Object,
+	#instVars : [
+		'value',
+		'lastHook'
+	],
 	#category : #'Kernel-Tests-Special'
 }
 
@@ -21,4 +25,22 @@ TestSpecialSelector >> doesNotUnderstand: aMessage [
 
 { #category : #'dummy methods' }
 TestSpecialSelector >> foo: anObject [
+]
+
+{ #category : #accessing }
+TestSpecialSelector >> lastHook [
+
+	^ lastHook
+]
+
+{ #category : #accessing }
+TestSpecialSelector >> value [
+
+	^ value
+]
+
+{ #category : #accessing }
+TestSpecialSelector >> value: anObject [
+
+	value := anObject
 ]
