@@ -98,7 +98,7 @@ ObjectTest >> testBeRecursivelyWritableObject [
 	self assert: array second first equals: 2
 ]
 
-{ #category : #tests }
+{ #category : #'tests - reflecting' }
 ObjectTest >> testBecome [
 	"this test should that all the variables pointing to an object are pointing now to another one, and all
       object pointing to the other are pointing to the object"
@@ -114,7 +114,7 @@ ObjectTest >> testBecome [
 	self assert: pt1 equals: 100 @ 100
 ]
 
-{ #category : #tests }
+{ #category : #'tests - reflecting' }
 ObjectTest >> testBecomeForward [
 	"this test should that all the variables pointing to an object are pointing now to another one.
 	Not that this inverse is not true. This kind of become is called oneWayBecome in VW"
