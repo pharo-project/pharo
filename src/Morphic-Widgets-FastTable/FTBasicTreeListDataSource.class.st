@@ -109,32 +109,6 @@ FTBasicTreeListDataSource class >> exampleSomeClassesSubclassesTree [
 ]
 
 { #category : #examples }
-FTBasicTreeListDataSource class >> exampleStateTree [
-
-	| ds ft |
-
-	ds := FTBasicTreeListDataSource new .
-
-	ds	roots: { #self -> ds } ;
-		children: [ :item | item value gtInspectorVariableValuePairs ];
-		sortChildrenBy: [ :a :b | a key asString <= b key asString ];
-		display: [ :item :cell | cell
-			addMorphBack: (self iconNamed: item value systemIconName) asMorph;
-			addMorphBack: (item key printString asMorph emphasis: 1; yourself);
-			addMorphBack: (Morph new color: Color transparent; height: 1; width: 10; yourself);
-			addMorphBack: (item value printString) asMorph ];
-		yourself.
-
-	ds expand: 3.
-
-	ft := FTTableMorph new
-		extent: 600@500;
-		dataSource: ds.
-
-	ft openInWindow position: 20@10
-]
-
-{ #category : #examples }
 FTBasicTreeListDataSource class >> exampleWorldSubmorphTree [
 
 	| ds ft |
