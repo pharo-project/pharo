@@ -271,6 +271,26 @@ RPackageOrganizerTest >> testFullUnregistration [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testHasPackage [
+
+	| organizer packageFromOtherOrganizer name package |
+	name := 'TestPackageNameForPackageOrganizer'.
+	organizer := RPackageOrganizer new.
+	packageFromOtherOrganizer := RPackageOrganizer new createPackageNamed: name.
+	self deny: (organizer hasPackage: name).
+	self deny: (organizer hasPackage: packageFromOtherOrganizer).
+
+	package := organizer createPackageNamed: name.
+
+	self assert: (organizer hasPackage: name).
+	self assert: (organizer hasPackage: package).
+
+	self skip.
+	self flag: #package. "In the future this next assertion should probably work in order to be able to have multiple PackageOrganizer but for now it does not work."
+	self deny: (organizer hasPackage: packageFromOtherOrganizer)
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 	| package1 package2 |
