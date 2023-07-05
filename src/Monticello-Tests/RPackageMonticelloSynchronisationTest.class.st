@@ -12,7 +12,7 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
 	"test that when we create a MCPackage, a corresponding package is created"
 
 	MCWorkingCopy ensureForPackageNamed: #Zork packageOrganizer: self organizer.
-	self assert: (self organizer includesPackageNamed: #Zork)
+	self assert: (self organizer hasPackage: #Zork)
 ]
 
 { #category : #'tests - operations on MCPackages' }
@@ -33,7 +33,7 @@ RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 	MCWorkingCopy ensureForPackageNamed: 'XXXXX' packageOrganizer: self organizer.
 	(self allWorkingCopies detect: [ :each | each packageName = 'XXXXX' ]) unload.
 
-	self deny: (self organizer includesPackageNamed: #XXXXX)
+	self deny: (self organizer hasPackage: #XXXXX)
 ]
 
 { #category : #'tests - operations on MCPackages' }
@@ -43,5 +43,5 @@ RPackageMonticelloSynchronisationTest >> testUnregisterMCPackageKeepsRPackage [
 	MCWorkingCopy ensureForPackageNamed: 'XXXXX' packageOrganizer: self organizer.
 	(self allWorkingCopies detect: [ :each | each packageName = 'XXXXX' ]) unregister.
 
-	self assert: (self organizer includesPackageNamed: #XXXXX)
+	self assert: (self organizer hasPackage: #XXXXX)
 ]

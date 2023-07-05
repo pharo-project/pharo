@@ -120,7 +120,7 @@ RPackageTest >> testDemoteToRPackageNamed [
 
 	package1 demoteToTagInPackageNamed: 'Test1'.
 
-	self deny: (RPackage organizer includesPackage: package1).
+	self deny: (RPackage organizer hasPackage: package1).
 	package2 := RPackage organizer packageNamed: 'Test1'.
 	self assert: package2 notNil.
 	self assert: (package2 classes includes: class).
@@ -138,7 +138,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 
 	package1 demoteToTagInPackageNamed: 'Test1'.
 
-	self deny: (RPackage organizer includesPackage: package1).
+	self deny: (RPackage organizer hasPackage: package1).
 	package2 := RPackage organizer packageNamed: 'Test1'.
 	self assert: package2 notNil.
 	self assert: package2 equals: packageExisting.
@@ -169,7 +169,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage1 [
 
 	package1 demoteToTagInPackageNamed: 'Test1'.
 
-	self deny: (RPackage organizer includesPackage: package1).
+	self deny: (RPackage organizer hasPackage: package1).
 	package2 := RPackage organizer packageNamed: 'Test1'.
 	self assert: package2 notNil.
 	self assert: (package2 classes includes: class).
@@ -186,7 +186,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage2 [
 
 	package1 demoteToTagInPackageNamed: 'Test1-TAG1'.
 
-	self deny: (RPackage organizer includesPackage: package1).
+	self deny: (RPackage organizer hasPackage: package1).
 	package2 := RPackage organizer packageNamed: 'Test1-TAG1'.
 	self assert: package2 notNil.
 	self assert: (package2 classes includes: class).
@@ -206,7 +206,7 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 
 	packageOriginal demoteToTagInPackageNamed: 'Test1'.
 
-	self deny: (RPackage organizer includesPackage: packageOriginal).
+	self deny: (RPackage organizer hasPackage: packageOriginal).
 	packageDemoted := RPackage organizer packageNamed: 'Test1'.
 	self assert: packageDemoted notNil.
 	self assert: (packageDemoted classes includes: class).

@@ -132,7 +132,7 @@ RPackageRenameTest >> testRenamePackageUppercase [
 	[
 	package := self packageOrganizer registerPackageNamed: 'Test1'.
 	oldWorkingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	self assert: (self packageOrganizer includesPackageNamed: #Test1).
+	self assert: (self packageOrganizer hasPackage: #Test1).
 	self assert: (MCWorkingCopy hasPackageNamed: #Test1) isNotNil.
 
 	"renaming"
@@ -143,12 +143,12 @@ RPackageRenameTest >> testRenamePackageUppercase [
 	self assert: 'TEST1' asPackage isNotNil.
 	self deny: 'TEST1' asPackage mcWorkingCopy equals: oldWorkingCopy.
 	self assert: 'TEST1' asPackage mcWorkingCopy isNotNil.
-	self assert: (self packageOrganizer includesPackageNamed: #TEST1).
+	self assert: (self packageOrganizer hasPackage: #TEST1).
 	self assert: (MCWorkingCopy hasPackageNamed: #TEST1) isNotNil ] ensure: [ "cleaning"
 		'TEST1' asPackage removeFromSystem.
-		self deny: (self packageOrganizer includesPackageNamed: #TEST1).
+		self deny: (self packageOrganizer hasPackage: #TEST1).
 		self deny: (MCWorkingCopy hasPackageNamed: #TEST1).
-		self deny: (self packageOrganizer includesPackageNamed: #Test1).
+		self deny: (self packageOrganizer hasPackage: #Test1).
 		self deny: (MCWorkingCopy hasPackageNamed: #Test1) ]
 ]
 
@@ -237,6 +237,6 @@ RPackageRenameTest >> testUnregisterPackage [
 
 	package unregister.
 
-	self deny: (self packageOrganizer includesPackageNamed: #Test1).
+	self deny: (self packageOrganizer hasPackage: #Test1).
 	self deny: (MCWorkingCopy hasPackageNamed: #Test1)
 ]

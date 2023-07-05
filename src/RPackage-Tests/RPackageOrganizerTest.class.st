@@ -128,7 +128,7 @@ RPackageOrganizerTest >> testCreateNewPackageWithConflictRaisesConflictException
 RPackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
 
 	packageOrganizer createPackageNamed: 'P1'.
-	self assert: (packageOrganizer includesPackageNamed: 'P1')
+	self assert: (packageOrganizer hasPackage: 'P1')
 ]
 
 { #category : #tests }
@@ -154,6 +154,7 @@ RPackageOrganizerTest >> testEmpty [
 
 { #category : #tests }
 RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
+
 	| p1 p2 c1 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -164,9 +165,9 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 	c1 := self createNewClassNamed: #C1 inPackage: p2.
 
 	c1 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*p1-something'.
-	packageOrganizer addMethod: (c1 >> #methodPackagedInP1).
+	packageOrganizer addMethod: c1 >> #methodPackagedInP1.
 
-	self deny: (packageOrganizer includesPackageNamed: #'p1-something').
+	self deny: (packageOrganizer hasPackage: #'p1-something').
 	self assert: (p1 extendedClasses includes: c1)
 ]
 
@@ -312,6 +313,7 @@ RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
+
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -320,10 +322,8 @@ RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
 	self packageOrganizer registerPackage: p1.
 	self packageOrganizer registerPackage: p2.
 	self packageOrganizer registerPackage: p3.
-	self assert: self packageOrganizer packageNames size equals: 4.
-	self assert: (self packageOrganizer includesPackage: p1).
-	self assert: (self packageOrganizer includesPackageNamed: p1 name).
-	{p1 . p2 . p3} do: [:each | self assert:  (self packageOrganizer packageNames includes: each name)]
+	self assert: self packageOrganizer packageNames size equals: 4. "We also have the default package."
+	{ p1 . p2 . p3 } do: [ :package | self assert: (self packageOrganizer packageNames includes: package name) ]
 ]
 
 { #category : #tests }
