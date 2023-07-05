@@ -18,3 +18,7 @@ TestSpecialSelector >> doesNotUnderstand: aMessage [
 
 	^ #doesNotUnderstand: -> aMessage
 ]
+
+{ #category : #'dummy methods' }
+TestSpecialSelector >> foo: anObject [
+]

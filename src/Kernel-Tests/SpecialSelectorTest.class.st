@@ -53,3 +53,22 @@ SpecialSelectorTest >> testMessageNotUnderstood [
 	self assert: result value arguments equals: #( 42 ).
 	self assert: result value lookupClass equals: TestSpecialSelector
 ]
+
+{ #category : #tests }
+SpecialSelectorTest >> testRunWithIn [
+
+	| selector method object result |
+	selector := #hookedMethod:.
+	method := TestSpecialMethodObject new.
+	method selector: #hookedMethod:.
+	method realMethod: TestSpecialSelector>>#foo:.
+	TestSpecialSelector addSelector: selector withMethod: method.
+	object := TestSpecialSelector new.
+	result := object hookedMethod: 42.
+	TestSpecialSelector removeSelector: selector.
+
+	self assert: result key equals: #run:with:in:.
+	self assert: result value first equals: selector.
+	self assert: result value second equals: #( 42 ).
+	self assert: result value third equals: object
+]
