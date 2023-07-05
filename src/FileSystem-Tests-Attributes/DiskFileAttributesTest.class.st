@@ -223,46 +223,54 @@ DiskFileAttributesTest >> testNLink [
 DiskFileAttributesTest >> testPermissions [
 
 	| fileReference oldPermissions newPermissions |
-
-	fileReference := (FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt')) resolve.
+	fileReference := (FileLocator temp
+	                  /
+	                  ('FileAttributesTests-' , UUID new asString
+	                   , '.txt')) resolve.
 
 	fileReference createFile.
 	[
-		oldPermissions := self tempFileEntry permissions.
-		newPermissions := FileSystemPermission posixPermissions: 8r007.
-		"Check that the existing permissions don't happen to match the test permissions"
-		self assert: oldPermissions ~= newPermissions.
+	oldPermissions := self tempFileEntry permissions.
+	newPermissions := FileSystemPermission posixPermissions: 8r007.
+	"Check that the existing permissions don't happen to match the test permissions"
+	self assert: oldPermissions ~= newPermissions.
 
-		"Setting permissions aren't supported on Windows"
-		OSPlatform current isWindows ifTrue: [
-			self should: [ fileReference permissions: newPermissions ] raise: Error ]
+	"Setting permissions aren't supported on Windows"
+	OSPlatform current isWindows
+		ifTrue: [
+			self
+				should: [ fileReference permissions: newPermissions ]
+				raise: Error ]
 		ifFalse: [
 			fileReference permissions: newPermissions.
-			self assert: fileReference permissions equals: newPermissions ].
-	] ensure: [ fileReference delete ]
+			self assert: fileReference permissions equals: newPermissions ] ]
+		ensure: [ fileReference delete ]
 ]
 
 { #category : #tests }
 DiskFileAttributesTest >> testSymlinkUidGid [
 
 	| fileReference oldUid oldGid |
-
-	fileReference := FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt').
+	fileReference := FileLocator temp
+	                 /
+	                 ('FileAttributesTests-' , UUID new asString , '.txt').
 	fileReference createFile.
 	[
-		oldUid := fileReference uid.
-		oldGid := fileReference gid.
+	oldUid := fileReference uid.
+	oldGid := fileReference gid.
 
-		"Setting ownership isn't supported on Windows"
-		OSPlatform current isWindows ifTrue: [
-			self should: [ fileReference symlinkUid: nil gid: nil ] raise: Error ]
-		ifFalse: [
-			"Since we can't reliably determine new test ids, call the method without changing values.
+	"Setting ownership isn't supported on Windows"
+	OSPlatform current isWindows
+		ifTrue: [
+			self
+				should: [ fileReference symlinkUid: nil gid: nil ]
+				raise: Error ]
+		ifFalse: [ "Since we can't reliably determine new test ids, call the method without changing values.
 			This will at least test that the primitive can be called and doesn't do something unexpected."
 			fileReference symlinkUid: nil gid: nil.
 			self assert: fileReference uid equals: oldUid.
-			self assert: fileReference gid equals: oldGid ].
-	] ensure: [ fileReference delete ]
+			self assert: fileReference gid equals: oldGid ] ] ensure: [
+		fileReference delete ]
 ]
 
 { #category : #tests }
@@ -293,21 +301,22 @@ DiskFileAttributesTest >> testToPlatformPath [
 DiskFileAttributesTest >> testUidGid [
 
 	| fileReference oldUid oldGid |
-
-	fileReference := FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt').
+	fileReference := FileLocator temp
+	                 /
+	                 ('FileAttributesTests-' , UUID new asString , '.txt').
 	fileReference createFile.
 	[
-		oldUid := fileReference uid.
-		oldGid := fileReference gid.
+	oldUid := fileReference uid.
+	oldGid := fileReference gid.
 
-		"Setting ownership isn't supported on Windows"
-		OSPlatform current isWindows ifTrue: [
-			self should: [ fileReference uid: nil gid: nil ] raise: Error ]
-		ifFalse: [
-			"Since we can't reliably determine new test ids, call the method without changing values.
+	"Setting ownership isn't supported on Windows"
+	OSPlatform current isWindows
+		ifTrue: [
+		self should: [ fileReference uid: nil gid: nil ] raise: Error ]
+		ifFalse: [ "Since we can't reliably determine new test ids, call the method without changing values.
 			This will at least test that the primitive can be called and doesn't do something unexpected."
 			fileReference uid: nil gid: nil.
 			self assert: fileReference uid equals: oldUid.
-			self assert: fileReference gid equals: oldGid ].
-	] ensure: [ fileReference delete ]
+			self assert: fileReference gid equals: oldGid ] ] ensure: [
+		fileReference delete ]
 ]

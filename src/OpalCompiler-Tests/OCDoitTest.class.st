@@ -59,7 +59,7 @@ OCDoitTest >> testDoItContextReadIvar [
 OCDoitTest >> testDoItContextReadIvarSubclass [
 
 	| ctx value method |
-	"Cet a method compiled for a base class"
+	"Get a method compiled for a base class"
 	method := Object compiler compile: 'foo ^thisContext'.
 	ctx := self executeMethod: method.
 
@@ -68,7 +68,7 @@ OCDoitTest >> testDoItContextReadIvarSubclass [
 	self assert: value equals: #someValue.
 
 	value := ctx compiler evaluate: 'ivarForTesting := #someOtherValue'.
-	ivarForTesting := #someOtherValue
+	self assert: ivarForTesting equals: #someOtherValue
 ]
 
 { #category : #tests }

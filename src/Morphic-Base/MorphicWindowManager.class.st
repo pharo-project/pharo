@@ -194,13 +194,6 @@ MorphicWindowManager >> saveAllRoot [
 	rootSave := windows collect: [ :m | m window ]
 ]
 
-{ #category : #startup }
-MorphicWindowManager >> startupOpenWithAttributes [
-
-	1 to: allAttributes size do: [ :a | 
-	(windows at: a) openWithAttributes: (allAttributes at: a) ]
-]
-
 { #category : #'startup - shutdown' }
 MorphicWindowManager >> startupRoot [
 	

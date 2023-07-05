@@ -18,7 +18,7 @@ FileDialogWindowTest >> dialogOnMemFs [
 { #category : #'tests - helper' }
 FileDialogWindowTest >> randomTestPathName [
 
-	^ 'FileDialogWindowTest-' , UUIDGenerator next asString
+	^ 'FileDialogWindowTest-' , UUID new asString
 ]
 
 { #category : #running }
