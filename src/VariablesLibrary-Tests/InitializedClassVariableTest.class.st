@@ -7,6 +7,7 @@ Class {
 { #category : #tests }
 InitializedClassVariableTest >> testInitializedClassVariableCompiled [
 	| classVar |
+	<ignoreNotImplementedSelectors: #(ClassVar ClassVar:)>
 	classVar := #ClassVar => InitializedClassVariable default: 5.
 	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
 
