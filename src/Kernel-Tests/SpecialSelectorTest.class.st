@@ -7,6 +7,14 @@ Class {
 	#category : #'Kernel-Tests-Special'
 }
 
+{ #category : #'reflective operations' }
+SpecialSelectorTest >> object: anObject perform: aSymbol withArguments: anArray [
+	"Helper similar to `Object>>#perform:withArguments:` but that does not send a message to the receiver (because our receiver are quite unreliables)"
+
+	<primitive: 84 error: ec>
+	^ #bad -> ec
+]
+
 { #category : #tests }
 SpecialSelectorTest >> testAttemptToAssignWithIndex [
 
@@ -54,6 +62,28 @@ SpecialSelectorTest >> testCannotInterpret [
 ]
 
 { #category : #tests }
+SpecialSelectorTest >> testCannotInterpretPerform [
+	"Try to catch `cannotInterpret:` trough a primitive message send"
+
+	| class object result |
+	"Create a new anonymous subclass of TestSpecialSelector with a nil methodDict"
+	class := Behavior new.
+	class basicSuperclass: TestSpecialSelector.
+	class methodDict: nil.
+
+	"Do not call new, or suffer cannotInterpret initialize"
+	object := class basicNew.
+
+	"Any message send to `object` should callback cannotInterpret:"
+	result := self object: object perform: #min: withArguments: #( 42 ).
+
+	self assert: result key equals: #cannotInterpret:.
+	self assert: result value selector equals: #min:.
+	self assert: result value arguments equals: #( 42 ).
+	self assert: result value lookupClass equals: class
+]
+
+{ #category : #tests }
 SpecialSelectorTest >> testCannotInterpretProtoObject [
 
 	| class object |
@@ -93,6 +123,20 @@ SpecialSelectorTest >> testMessageNotUnderstood [
 	| object result |
 	object := TestSpecialSelector new.
 	result := object max: 42.
+	self assert: result key equals: #doesNotUnderstand:.
+	self assert: result value selector equals: #max:.
+	self assert: result value arguments equals: #( 42 ).
+	self assert: result value lookupClass equals: TestSpecialSelector
+]
+
+{ #category : #tests }
+SpecialSelectorTest >> testMessageNotUnderstoodPerform [
+
+	| object result |
+	object := TestSpecialSelector new.
+
+	result := object perform: #max: with: 42.
+
 	self assert: result key equals: #doesNotUnderstand:.
 	self assert: result value selector equals: #max:.
 	self assert: result value arguments equals: #( 42 ).
