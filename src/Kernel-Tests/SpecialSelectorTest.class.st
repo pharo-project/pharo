@@ -34,22 +34,23 @@ SpecialSelectorTest >> testAttemptToAssignWithIndex [
 
 { #category : #tests }
 SpecialSelectorTest >> testCannotInterpret [
-	"Unfortunately, cannotInterpret: is currently broken.
-	The result of `cannotInterpret:` seems to be used as a receiver for the original message AGAIN.
-	This is likely a VM bug :("
 
 	| class object result |
 	"Create a new anonymous subclass of TestSpecialSelector with a nil methodDict"
 	class := Behavior new.
 	class basicSuperclass: TestSpecialSelector.
 	class methodDict: nil.
-	object := class new.
+
+	"Do not call new, or suffer cannotInterpret initialize"
+	object := class basicNew.
+
 	"Any message send to `object` should callback cannotInterpret:"
 	result := object max: 42.
+
 	self assert: result key equals: #cannotInterpret:.
 	self assert: result value selector equals: #max:.
 	self assert: result value arguments equals: #( 42 ).
-	self assert: result value lookupClass equals: TestSpecialSelector
+	self assert: result value lookupClass equals: class
 ]
 
 { #category : #tests }
