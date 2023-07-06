@@ -2,10 +2,10 @@ Extension { #name : #BlockClosure }
 
 { #category : #'*Instrumentation' }
 BlockClosure >> insEnsure: aBlock [
-	"Evaluate a termination block after evaluating the receiver, regardless of
-	 whether the receiver's evaluation completes.  N.B.  This method is *not*
-	 implemented as a primitive.  Primitive 198 always fails.  The VM uses prim
-	 198 in a context's method as the mark for an ensure:/ifCurtailed: activation."
+	"I am a re-implementation of the method BlockClosure>>#ensure: and I have the same code
+	except for the <noInstrumentation> pragma. I re-implement this method because when
+	instrumenting I need to use the BlockClosure>>#ensure: method but if one instruments the
+	method BlockClosure>>#ensure: I will enter to an endless loop."
 
 	<noInstrumentation>
 	<primitive: 198>
