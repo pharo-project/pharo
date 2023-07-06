@@ -450,10 +450,24 @@ RPackageOrganizer >> includesCategory: aString [
 		  ifNotNil: [ :categories | categories includes: aString ]
 ]
 
+{ #category : #deprecated }
+RPackageOrganizer >> includesPackage: aPackage [
+
+	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.
+	^ self hasPackage: aPackage
+]
+
 { #category : #'private - testing' }
 RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 
 	^ classPackageMapping includesKey: aClass instanceSide name asSymbol
+]
+
+{ #category : #deprecated }
+RPackageOrganizer >> includesPackageNamed: aSymbol [
+	
+	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackageNamed: `@arg' -> '`@rcv hasPackage: `@arg'.
+	^ self hasPackage: aSymbol
 ]
 
 { #category : #initialization }
