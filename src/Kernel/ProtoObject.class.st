@@ -73,7 +73,7 @@ ProtoObject >> cannotInterpret: aMessage [
 
 	((Behavior classOf: self) lookupSelector: aMessage selector) ifNotNil:
 		[ :method | "Simulated lookup succeeded. Evaluate the method!"
-		^ method valueWithReceiver: self arguments: aMessage arguments ].
+			^ method valueWithReceiver: self arguments: aMessage arguments ].
 
 	"Could not recover by simulated lookup -- it's an error"
 	Error signal: 'MethodDictionary fault'.
