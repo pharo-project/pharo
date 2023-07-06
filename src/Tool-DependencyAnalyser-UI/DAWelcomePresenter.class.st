@@ -59,7 +59,9 @@ DAWelcomePresenter >> initializePresenters [
 { #category : #initialization }
 DAWelcomePresenter >> initializeWindow: aWindowPresenter [
 
-	aWindowPresenter title: 'Package Dependencies Browser'
+	aWindowPresenter
+		title: 'Package Dependencies Browser';
+		initialExtent: self initialExtent
 ]
 
 { #category : #action }
