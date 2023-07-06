@@ -82,6 +82,12 @@ DAAddPackagePresenter >> initializePresenters [
 ]
 
 { #category : #initialization }
+DAAddPackagePresenter >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter title: 'Choose packages to add'
+]
+
+{ #category : #initialization }
 DAAddPackagePresenter >> selectedItemsFromPackageList [
 	^ packageList chosenItems
 ]
@@ -90,9 +96,4 @@ DAAddPackagePresenter >> selectedItemsFromPackageList [
 DAAddPackagePresenter >> systemPackages [
 
 	^ (self packageOrganizer packages collect: [ :package | package packageName asString ]) asSortedCollection
-]
-
-{ #category : #protocol }
-DAAddPackagePresenter >> title [
-	^ 'Choose packages to add'
 ]

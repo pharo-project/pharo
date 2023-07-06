@@ -26,6 +26,13 @@ DAPackageDependenciesPresenter class >> system [
 ]
 
 { #category : #initialization }
+DAPackageDependenciesPresenter >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter
+		title: 'Dependecy Analyser '
+]
+
+{ #category : #initialization }
 DAPackageDependenciesPresenter >> initializeWithRelationGraph: aRelationGraph [
 	self model: (DAReverseTreePresenter onRelationGraph: aRelationGraph).
 	"self buildandAddAllMorph "

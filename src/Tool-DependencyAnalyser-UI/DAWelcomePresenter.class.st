@@ -57,10 +57,9 @@ DAWelcomePresenter >> initializePresenters [
 ]
 
 { #category : #initialization }
-DAWelcomePresenter >> initializeWindow: 	aWindowPresenter [
-	aWindowPresenter
-		title: self title;
-		initialExtent: self initialExtent
+DAWelcomePresenter >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter title: 'Package Dependencies Browser'
 ]
 
 { #category : #action }
@@ -77,9 +76,4 @@ DAWelcomePresenter >> selectedPackageNames [
 { #category : #accessing }
 DAWelcomePresenter >> selectedPackages [
 	^ choosePresenter chosenItems
-]
-
-{ #category : #accessing }
-DAWelcomePresenter >> title [
-	^ 'Package Dependencies Browser'
 ]

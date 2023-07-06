@@ -59,6 +59,12 @@ DAReverseTreePresenter >> initializePresenters [
 	self buildRoots
 ]
 
+{ #category : #initialization }
+DAReverseTreePresenter >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter title: 'Package Dependencies Reverse Analysis'
+]
+
 { #category : #private }
 DAReverseTreePresenter >> nodesFor: anItemList [
 	^ anItemList collect:
@@ -86,11 +92,6 @@ DAReverseTreePresenter >> relationGraph [
 { #category : #initialization }
 DAReverseTreePresenter >> setModelBeforeInitialization: aRelationGraph [
 	relationGraph := aRelationGraph
-]
-
-{ #category : #accessing }
-DAReverseTreePresenter >> title [
-	^ 'Package Dependencies Reverse Analysis'
 ]
 
 { #category : #private }

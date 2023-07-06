@@ -134,6 +134,12 @@ DACycleDetectionTreePresenter >> initializePresenters [
 ]
 
 { #category : #initialization }
+DACycleDetectionTreePresenter >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter title: 'Cycles analysis'
+]
+
+{ #category : #initialization }
 DACycleDetectionTreePresenter >> initializeWithPackageName: aCollection [
 
 	self analysis:  (DAPackageCycleDetector onPackagesNamed: aCollection) runAlgorithm.
@@ -152,9 +158,4 @@ DACycleDetectionTreePresenter >> refresh [
 { #category : #accessing }
 DACycleDetectionTreePresenter >> reversedRoots [
 	self tree roots: (self tree roots reversed)
-]
-
-{ #category : #protocol }
-DACycleDetectionTreePresenter >> title [
-	^ 'Cycles analysis'
 ]

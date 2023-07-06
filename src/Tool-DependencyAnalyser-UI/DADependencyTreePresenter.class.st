@@ -256,6 +256,12 @@ DADependencyTreePresenter >> initializePresenters [
 	self initializeButtons
 ]
 
+{ #category : #initialization }
+DADependencyTreePresenter >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter title: 'Dependencies analysis'
+]
+
 { #category : #accessing }
 DADependencyTreePresenter >> initializeWithRPackageSet: aCollection [
 	self relationGraph: (DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: each ]))
@@ -347,11 +353,6 @@ DADependencyTreePresenter >> seenPackagesName [
 { #category : #accessing }
 DADependencyTreePresenter >> sizeOfRoots [
 	^ self treeRoots size
-]
-
-{ #category : #protocol }
-DADependencyTreePresenter >> title [
-	^ 'Dependencies analysis'
 ]
 
 { #category : #accessing }
