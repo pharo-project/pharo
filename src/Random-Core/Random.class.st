@@ -105,10 +105,15 @@ Random >> initialize [
 ]
 
 { #category : #accessing }
+Random >> maxValue [
+	^16r7FFFFFFF
+]
+
+{ #category : #accessing }
 Random >> next [
 	"Answer a random Float in the interval [0 to 1)."
 
-	^ self privateNextValue
+	^ (self privateNextValue / (self maxValue + 1) ) asFloat 
 ]
 
 { #category : #accessing }
@@ -118,7 +123,7 @@ Random >> next: anInteger [
 
 { #category : #accessing }
 Random >> next: anInteger into: anArray [
-	1 to: anInteger do: [:index | anArray at: index put: self privateNextValue].
+	1 to: anInteger do: [:index | anArray at: index put: self next].
 	^ anArray
 ]
 
@@ -133,10 +138,11 @@ Random >> nextInteger: anInteger [
 	"Answer a random integer in the interval [1, anInteger].
 	Handle large numbers too (for cryptography)."
 
-	anInteger strictlyPositive ifFalse: [ self error: 'Range must be positive' ].
-	anInteger asFloat isInfinite "are we outside the range of float? - use fraction"
-		ifTrue: [^(self privateNextValue asFraction * anInteger) truncated + 1].
-	^ (self privateNextValue * anInteger) truncated + 1
+	anInteger strictlyPositive ifFalse: [
+		self error: 'Range must be positive' ].
+
+	^ (self privateNextValue / (self maxValue + 1) * anInteger) truncated
+	  + 1
 ]
 
 { #category : #accessing }
@@ -149,8 +155,7 @@ Random >> nextIntegerBetween: lowerBound and: higherBound [
 Random >> privateNextValue [
 	"Answer a random Float in the interval [0 to 1)."
 
-	^ ((seed := self class primitiveRandomNumber: state) / 16r7FFFFFFF)
-		  asFloat
+	^ self class primitiveRandomNumber: state
 ]
 
 { #category : #private }
