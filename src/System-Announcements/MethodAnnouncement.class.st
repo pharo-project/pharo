@@ -43,8 +43,9 @@ MethodAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #testing }
-MethodAnnouncement >> affectsMethodsTaggedWith: tagName [
-	^method isTaggedWith: tagName asSymbol
+MethodAnnouncement >> affectsMethodsInProtocol: protocol [
+
+	^ method protocolName == protocol
 ]
 
 { #category : #testing }

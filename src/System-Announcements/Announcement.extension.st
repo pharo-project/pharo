@@ -51,8 +51,9 @@ Announcement >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #'*System-Announcements' }
-Announcement >> affectsMethodsTaggedWith: tagName [
-	^false
+Announcement >> affectsMethodsInProtocol: protocol [
+
+	^ false
 ]
 
 { #category : #'*System-Announcements' }

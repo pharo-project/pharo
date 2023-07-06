@@ -45,8 +45,9 @@ ClassRemoved >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #testing }
-ClassRemoved >> affectsMethodsTaggedWith: tagName [
-	^classRemoved tagsForMethods includes: tagName
+ClassRemoved >> affectsMethodsInProtocol: protocol [
+
+	^ classRemoved protocolNames includes: protocol
 ]
 
 { #category : #accessing }
