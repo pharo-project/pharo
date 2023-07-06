@@ -52,11 +52,22 @@ RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector in
 { #category : #preconditions }
 RBMethodProtocolTransformation >> applicabilityConditions [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		& (RBCondition definesSelector: selector in: self definingClass)
-		& (RBCondition withBlock: [ protocol isNotNil ] errorString: ('Protocol of <1s> should not be nil' expandMacrosWith: className ))
+	^ self classExist
+	  & (RBCondition definesSelector: selector in: self definingClass)
+	  & (RBCondition
+			   withBlock: [ protocol isNotNil ]
+			   errorString:
+			   ('Protocol of <1s> should not be nil' expandMacrosWith:
+				    className))
+]
+
+{ #category : #preconditions }
+RBMethodProtocolTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
 { #category : #preconditions }

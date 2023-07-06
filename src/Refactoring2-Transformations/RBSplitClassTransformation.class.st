@@ -103,19 +103,24 @@ RBSplitClassTransformation >> addInstanceVariables [
 ]
 
 { #category : #preconditions }
-RBSplitClassTransformation >> applicabilityConditions [ 
+RBSplitClassTransformation >> applicabilityConditions [
 
 	class := self definingClass.
 
 	"check whether instVar exist"
-	^(RBCondition isValidClassName: newClassName)
-		& (RBCondition isGlobal: newClassName in: self model) not
-		& (RBCondition isValidInstanceVariableName: referenceVariableName for: class)
-		& (RBCondition hierarchyOf: class definesVariable: referenceVariableName)
-				not
-		& (RBCondition isGlobal: referenceVariableName in: self model) not
-		& (RBCondition definesTemporaryVariable: referenceVariableName in: class)
-				not
+	^ (RBCondition isValidClassName: newClassName) & self isNotGlobal
+	  & (RBCondition
+			   isValidInstanceVariableName: referenceVariableName
+			   for: class)
+	  &
+		  (RBCondition
+			   hierarchyOf: class
+			   definesVariable: referenceVariableName) not
+	  & (RBCondition isGlobal: referenceVariableName in: self model) not
+	  &
+		  (RBCondition
+			   definesTemporaryVariable: referenceVariableName
+			   in: class) not
 ]
 
 { #category : #executing }
@@ -162,6 +167,12 @@ RBSplitClassTransformation >> createReference [
 RBSplitClassTransformation >> definingClass [
 
 	^ self model classObjectFor: class
+]
+
+{ #category : #preconditions }
+RBSplitClassTransformation >> isNotGlobal [
+
+	^ (RBCondition isGlobal: newClassName in: self model) not
 ]
 
 { #category : #preconditions }

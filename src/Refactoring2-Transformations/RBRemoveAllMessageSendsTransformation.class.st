@@ -55,39 +55,28 @@ RBRemoveAllMessageSendsTransformation class >> model: aRBModel messageSend: aMes
 { #category : #preconditions }
 RBRemoveAllMessageSendsTransformation >> applicabilityConditions [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
 	  & (RBCondition
-			withBlock: [ self definingClass canUnderstand: selector ]
-			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
-			withBlock: [
-				(self definingMethod
-					allChildren select: [:each | each isMessage] )
-					anySatisfy: [ :messageNode | messageNode selector = message asSymbol ] ]
-			errorString: ('Method named <1s> does not implement this message send <2s>'
-				expandMacrosWith: selector with: message)) 
-		
+			   withBlock: [
+				   (self definingMethod allChildren select: [ :each |
+					    each isMessage ]) anySatisfy: [ :messageNode |
+					   messageNode selector = message asSymbol ] ]
+			   errorString:
+				   ('Method named <1s> does not implement this message send <2s>'
+					    expandMacrosWith: selector
+					    with: message))
 ]
 
 { #category : #preconditions }
-RBRemoveAllMessageSendsTransformation >> applicatibilityConditions [
+RBRemoveAllMessageSendsTransformation >> classExist [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-	  & (RBCondition
-			withBlock: [ self definingClass canUnderstand: selector ]
-			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
-			withBlock: [
-				(self definingMethod
-					allChildren select: [:each | each isMessage] )
-					anySatisfy: [ :messageNode | messageNode selector = message asSymbol ] ]
-			errorString: ('Method named <1s> does not implement this message send <2s>'
-				expandMacrosWith: selector with: message)) 
-		
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
 { #category : #api }

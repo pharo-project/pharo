@@ -42,15 +42,17 @@ RBAddProtocolTransformation class >> protocol: aString inClass: aClassName [
 ]
 
 { #category : #preconditions }
-RBAddProtocolTransformation >> applicabilityConditions [ 
-	
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'Class named ', className, ' does not exist' )
-	  & ( RBCondition withBlock: [ (( model environment
-			protocolsFor: self definingClass realClass )
-			includes: protocol ) not ]
-			errorString: 'Protocol named ', protocol, ' already exists' )
+RBAddProtocolTransformation >> applicabilityConditions [
+
+	^ self classExist & self protocolExist
+]
+
+{ #category : #preconditions }
+RBAddProtocolTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString: 'Class named ' , className , ' does not exist'
 ]
 
 { #category : #preconditions }
@@ -70,6 +72,16 @@ RBAddProtocolTransformation >> protocol: aString inClass: aClassName [
 
 	self className: aClassName.
 	protocol := aString
+]
+
+{ #category : #preconditions }
+RBAddProtocolTransformation >> protocolExist [
+
+	^ RBCondition
+		  withBlock: [
+			  ((model environment protocolsFor: self definingClass realClass)
+				   includes: protocol) not ]
+		  errorString: 'Protocol named ' , protocol , ' already exists'
 ]
 
 { #category : #printing }

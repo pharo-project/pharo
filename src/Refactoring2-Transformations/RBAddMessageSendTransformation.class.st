@@ -51,24 +51,29 @@ RBAddMessageSendTransformation class >> model: aRBModel messageSend: aString inM
 { #category : #preconditions }
 RBAddMessageSendTransformation >> applicabilityConditions [
 
-	^ (RBCondition
-		withBlock: [ self definingClass isNotNil ]
-		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		&
-			(RBCondition
-				withBlock: [ self definingClass canUnderstand: selector ]
-				errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		&
-			(RBCondition
-				withBlock: [ | messageNode |
-					messageNode := self parserClass parseExpression: message.
-					messageNode allVariables
-						allSatisfy: [ :e |
-							(self definingMethod hasArgumentNamed: e name)
-								or: [ self definingMethod hasTemporaryNamed: e name ] ] ]
-				errorString:
-					('Some variables in this message send are not defined in method named <1s>.'
-						expandMacrosWith: selector))
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [
+				   | messageNode |
+				   messageNode := self parserClass parseExpression: message.
+				   messageNode allVariables allSatisfy: [ :e |
+					   (self definingMethod hasArgumentNamed: e name) or: [
+						   self definingMethod hasTemporaryNamed: e name ] ] ]
+			   errorString:
+				   ('Some variables in this message send are not defined in method named <1s>.'
+					    expandMacrosWith: selector))
+]
+
+{ #category : #preconditions }
+RBAddMessageSendTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
 { #category : #api }

@@ -73,22 +73,39 @@ RBInsertNewClassTransformation >> addClass: aName superclass: superclassName sub
 ]
 
 { #category : #preconditions }
-RBInsertNewClassTransformation >> applicabilityConditions [ 
+RBInsertNewClassTransformation >> applicabilityConditions [
 	"Superclass and subclasses shouldn't be metaclasses.
 	Each subclass should be immediate subclass of superclass."
 
 	| cond |
-	cond := ((RBCondition isMetaclass:  (self model classObjectFor: superclass)) errorMacro: 'Superclass must not be a metaclass') not.
+	cond := ((RBCondition isMetaclass:
+		          (self model classObjectFor: superclass)) errorMacro:
+		         'Superclass must not be a metaclass') not.
 	cond := subclasses inject: cond into: [ :sub :each |
-		        sub  
-					& ((RBCondition isMetaclass: (self model classObjectFor: each)) errorMacro: 'Subclass must <1?not :>be a metaclass') not
-					& (RBCondition isImmediateSubclass: (self model classObjectFor: each)
+		        sub
+		        &
+			        ((RBCondition isMetaclass:
+				          (self model classObjectFor: each)) errorMacro:
+				         'Subclass must <1?not :>be a metaclass') not
+		        & (RBCondition
+				         isImmediateSubclass: (self model classObjectFor: each)
 				         of: (self model classObjectFor: superclass)) ].
-	^ cond & (RBCondition isValidClassName: className)
-	  & (RBCondition isGlobal: className in: self model) not
+	^ cond & self isValidClassName & self isNotGlobal
 	  & (RBCondition isSymbol: category)
 	  & ((RBCondition withBlock: [ category isNotEmpty ]) errorMacro:
 			   'Invalid category name')
+]
+
+{ #category : #preconditions }
+RBInsertNewClassTransformation >> isNotGlobal [
+
+	^ (RBCondition isGlobal: className in: self model) not
+]
+
+{ #category : #preconditions }
+RBInsertNewClassTransformation >> isValidClassName [
+
+	^ RBCondition isValidClassName: className
 ]
 
 { #category : #preconditions }

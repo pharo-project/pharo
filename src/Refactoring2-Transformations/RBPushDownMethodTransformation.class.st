@@ -76,7 +76,7 @@ RBPushDownMethodTransformation >> classes: aCollection [
 { #category : #preconditions }
 RBPushDownMethodTransformation >> preconditions [
 
-	^ self applicatibilityConditions 
+	^ self applicabilityConditions 
 ]
 
 { #category : #transforming }

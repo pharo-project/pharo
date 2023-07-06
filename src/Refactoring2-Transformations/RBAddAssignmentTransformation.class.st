@@ -54,18 +54,29 @@ RBAddAssignmentTransformation class >> variable: aVariableName value: anExpressi
 { #category : #preconditions }
 RBAddAssignmentTransformation >> applicabilityConditions [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
 	  & (RBCondition
-			withBlock: [ self definingClass canUnderstand: selector ]
-			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
-			withBlock: [ (self definingMethod allChildren
-				select: [:each | each isVariable] thenCollect: [:each | each name])
-				anySatisfy: [ :e | e asString = variableName ] ]
-			errorString: ('Method named <1s> does not have a variable named <2s>'
-				expandMacrosWith: selector with: variableName))
+			   withBlock: [
+				   (self definingMethod allChildren
+					    select: [ :each | each isVariable ]
+					    thenCollect: [ :each | each name ]) anySatisfy: [ :e |
+					   e asString = variableName ] ]
+			   errorString:
+				   ('Method named <1s> does not have a variable named <2s>'
+					    expandMacrosWith: selector
+					    with: variableName))
+]
+
+{ #category : #preconditions }
+RBAddAssignmentTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
 { #category : #preconditions }
