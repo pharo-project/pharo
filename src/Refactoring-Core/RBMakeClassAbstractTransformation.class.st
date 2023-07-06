@@ -52,10 +52,11 @@ RBMakeClassAbstractTransformation >> skippingPreconditions [
 
 { #category : #transforming }
 RBMakeClassAbstractTransformation >> transform [
-	(RBAddMethodTransformation
-		                   sourceCode: 'isAbstract
+
+	(RBAddMethodTransformRefactoring
+		 addMethod: 'isAbstract
 
 	^ self == ' , targetClass asString
-		                   in: targetClass classSide
-		                   withProtocols: #( #testing )) execute
+		 toClass: targetClass classSide
+		 inProtocols: #( #testing )) execute
 ]
