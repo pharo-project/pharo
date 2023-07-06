@@ -64,6 +64,12 @@ DADependencyTreePresenter class >> onPackagesNamed: aCollection [
 	^ self onPackages: (aCollection collect: [ :each | RPackageSet named: each ])
 ]
 
+{ #category : #specs }
+DADependencyTreePresenter class >> title [
+
+	^ 'Dependencies analysis'
+]
+
 { #category : #protocol }
 DADependencyTreePresenter >> actionOnAddPackage [
 	buttonAddPackage action: [ (DAAddPackagePresenter
@@ -254,12 +260,6 @@ DADependencyTreePresenter >> initializePresenters [
 		placeholder: 'Enter a package name';
 		entryCompletion: self packagesEntryCompletion.
 	self initializeButtons
-]
-
-{ #category : #initialization }
-DADependencyTreePresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter title: 'Dependencies analysis'
 ]
 
 { #category : #accessing }

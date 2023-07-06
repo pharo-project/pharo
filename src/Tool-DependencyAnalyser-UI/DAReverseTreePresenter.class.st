@@ -18,6 +18,12 @@ DAReverseTreePresenter class >> onRelationGraph: aRelationGraph [
 	^ self on: aRelationGraph
 ]
 
+{ #category : #specs }
+DAReverseTreePresenter class >> title [
+
+	^ 'Package Dependencies Reverse Analysis'
+]
+
 { #category : #private }
 DAReverseTreePresenter >> buildRoots [
 	| collectionOfWrapper |
@@ -57,12 +63,6 @@ DAReverseTreePresenter >> initializePresenters [
 
 	packageLabel := self newLabel label: 'Analysis of packages'.
 	self buildRoots
-]
-
-{ #category : #initialization }
-DAReverseTreePresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter title: 'Package Dependencies Reverse Analysis'
 ]
 
 { #category : #private }

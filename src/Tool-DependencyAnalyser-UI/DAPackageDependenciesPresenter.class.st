@@ -25,11 +25,10 @@ DAPackageDependenciesPresenter class >> system [
 	^ (self onPackagesNamed: self systemPackages) open
 ]
 
-{ #category : #initialization }
-DAPackageDependenciesPresenter >> initializeWindow: aWindowPresenter [
+{ #category : #specs }
+DAPackageDependenciesPresenter class >> title [
 
-	aWindowPresenter
-		title: 'Dependecy Analyser '
+	^ 'Dependecy Analyser'
 ]
 
 { #category : #initialization }

@@ -13,6 +13,12 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
+{ #category : #specs }
+DAAddPackagePresenter class >> title [
+
+	^ 'Choose packages to add'
+]
+
 { #category : #protocol }
 DAAddPackagePresenter >> actionOnAddPackage [
 	| relationGraph packagesToAdd |
@@ -79,12 +85,6 @@ DAAddPackagePresenter >> initializePresenters [
 		yourself.
 
 	packageList := SpChooserPresenter new
-]
-
-{ #category : #initialization }
-DAAddPackagePresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter title: 'Choose packages to add'
 ]
 
 { #category : #initialization }

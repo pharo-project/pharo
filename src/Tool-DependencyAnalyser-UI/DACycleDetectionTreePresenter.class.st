@@ -35,6 +35,12 @@ DACycleDetectionTreePresenter class >> system [
 		(self packageOrganizer packages collect: [ :package | package packageName asString ])
 ]
 
+{ #category : #specs }
+DACycleDetectionTreePresenter class >> title [
+
+	^ 'Cycles analysis'
+]
+
 { #category : #accessing }
 DACycleDetectionTreePresenter >> analysis [
 	^ analysis
@@ -131,12 +137,6 @@ DACycleDetectionTreePresenter >> initializePresenters [
 			action: [ self reversedRoots  ].
 
 	self layout: self defaultLayout
-]
-
-{ #category : #initialization }
-DACycleDetectionTreePresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter title: 'Cycles analysis'
 ]
 
 { #category : #initialization }
