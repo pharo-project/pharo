@@ -25,11 +25,8 @@ Class {
 	#name : #Random,
 	#superclass : #Object,
 	#instVars : [
-		'seed',
-		'a',
-		'm',
-		'q',
-		'r'
+		'state',
+		'seed'
 	],
 	#category : #'Random-Core-Base'
 }
@@ -73,6 +70,29 @@ more; go get coffee.
 						stream space ] ])
 ]
 
+{ #category : #private }
+Random class >> primitiveRandomNumber: stateArray [
+	"Answer a random Float in the interval [0 to 1)."
+
+	<primitive: 231>
+	| count returnValue |
+	returnValue := stateArray at: 1.
+
+	count := returnValue >> 59.
+
+	stateArray
+		at: 1
+		put:
+			(returnValue * 6364136223846793005 + 1442695040888963407 bitAnd:
+				 16rFFFFFFFFFFFFFFFF).
+
+	returnValue := returnValue >> 18 bitXor: returnValue.
+
+	returnValue := returnValue >> 27 bitAnd: 16rFFFFFFFF.
+	^ (returnValue >> count bitOr:
+		   returnValue << (count negated bitAnd: 31)) bitAnd: 16r7FFFFFFF
+]
+
 { #category : #'instance creation' }
 Random class >> seed: anInteger [
 	^self new seed: anInteger
@@ -80,11 +100,8 @@ Random class >> seed: anInteger [
 
 { #category : #initialization }
 Random >> initialize [
+	state := DoubleWordArray new: 1.
 	self useClockBasedSeed.
-	a := 16r000041A7 asFloat.    " magic constant =      16807 = 7^5"
-	m := 16r7FFFFFFF asFloat.    " magic constant = 2147483647 = 2^31 - 1"
-	q := (m quo: a) asFloat.
-	r  := (m \\ a) asFloat
 ]
 
 { #category : #accessing }
@@ -129,25 +146,11 @@ Random >> nextIntegerBetween: lowerBound and: higherBound [
 ]
 
 { #category : #private }
-Random >> privateNextSeed [
-	"This method generates random instances of Integer 	in the interval
-	0 to 16r7FFFFFFF. This method does NOT update the seed; repeated sends
-	answer the same value. The algorithm is described in detail in [1]"
-
-	| lo hi aLoRHi |
-	hi := (seed quo: q) asFloat.
-	lo := seed - (hi * q).  " = seed rem: q"
-	aLoRHi := (a * lo) - (r * hi).
-	^(aLoRHi > 0.0)
-		ifTrue:  [aLoRHi]
-		ifFalse: [aLoRHi + m]
-]
-
-{ #category : #private }
 Random >> privateNextValue [
 	"Answer a random Float in the interval [0 to 1)."
 
-	^ (seed := self privateNextSeed) / m
+	^ ((seed := self class primitiveRandomNumber: state) / 16r7FFFFFFF)
+		  asFloat
 ]
 
 { #category : #private }
@@ -161,21 +164,31 @@ Random >> seed [
 { #category : #initialization }
 Random >> seed: aNumber [
 	"Refer #privateNextSeed and [1], seed should be positive and less than m"
-	| newSeed |
-	newSeed := aNumber.
-	[ newSeed > 0 ] whileFalse:
-		[ newSeed := newSeed + m ].
-	[ newSeed < m ] whileFalse:
-		[ newSeed := newSeed - m ].
-	seed := newSeed
+	seed := aNumber.
+	self setStateFromSeed.
+]
+
+{ #category : #initialization }
+Random >> setStateFromSeed [
+
+	state at: 1 put: seed + 1442695040888963407.
+	self class primitiveRandomNumber: state
+]
+
+{ #category : #accessing }
+Random >> state [
+
+	^ state
 ]
 
 { #category : #initialization }
 Random >> useClockBasedSeed [
 	"Set a reasonable Park-Miller starting seed [1] based on the ms clock."
 
-	[ seed := (Time millisecondClockValue bitAnd: 16r3FFFFFFF) bitXor: self hash.
-	seed = 0 ] whileTrue: [ "Try again if ever get a seed = 0" ]
+	[ seed := (Time millisecondClockValue bitAnd: 16rFFFFFFFFFFFFFFFF) bitXor: self hash.
+	seed = 0 ] whileTrue: [ "Try again if ever get a seed = 0" ].
+
+	self setStateFromSeed
 ]
 
 { #category : #initialization }
@@ -187,6 +200,7 @@ Random >> useUnixRandomGeneratorSeed [
 	^ [ (File named: '/dev/random') readStreamDo: [ :in |
 			[ seed := (in next: 4) asInteger.
 			seed isZero ] whileTrue. "Try again if we ever get a zero value"
+			self setStateFromSeed.
 			true ] ]
 		on: Error
 		do: [ false ]
