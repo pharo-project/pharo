@@ -454,7 +454,7 @@ RBCondition class >> true [
 
 	^self new
 		block: [true]
-		errorString: 'Empty'
+		errorString: 'true'
 ]
 
 { #category : #'instance creation' }
