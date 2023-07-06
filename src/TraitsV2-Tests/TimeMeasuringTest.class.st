@@ -67,8 +67,8 @@ TimeMeasuringTest >> setToDebug [
 
 { #category : #utilities }
 TimeMeasuringTest >> versionInfoForWorkingCopiesThat: wcPredicate [
-	^(MCWorkingCopy allManagers select: wcPredicate) inject: ''
-		into: [:s :e | s , e description]
+
+	^ (MCWorkingCopy allWorkingCopies select: wcPredicate) inject: '' into: [ :s :e | s , e description ]
 ]
 
 { #category : #accessing }

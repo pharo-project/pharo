@@ -72,11 +72,8 @@ GoferUnload >> unregisterPackageSet: aWorkingCopy [
 GoferUnload >> unregisterRepositories: aWorkingCopy [
 
 	aWorkingCopy repositoryGroup repositories allButFirst do: [ :repository |
-		MCWorkingCopy allManagers do: [ :copy |
-			(copy repositoryGroup includes: repository)
-				ifTrue: [ ^ self ] ].
-		MCRepositoryGroup default
-			removeRepository: repository ]
+		MCWorkingCopy allWorkingCopies do: [ :copy | (copy repositoryGroup includes: repository) ifTrue: [ ^ self ] ].
+		MCRepositoryGroup default removeRepository: repository ]
 ]
 
 { #category : #unregistering }
