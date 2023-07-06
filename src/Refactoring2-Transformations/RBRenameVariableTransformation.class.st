@@ -91,7 +91,7 @@ RBRenameVariableTransformation class >> renameInstanceVarible: aVariableName to:
 ]
 
 { #category : #preconditions }
-RBRenameVariableTransformation >> preconditions [
+RBRenameVariableTransformation >> applicabilityConditions [ 
 
 	class := self model classObjectFor: className.
 
@@ -103,6 +103,12 @@ RBRenameVariableTransformation >> preconditions [
 					& (RBCondition definesInstanceVariable: variableName in: class) ])
 		& (RBCondition hierarchyOf: class definesVariable: newVariableName) not
 		& (RBCondition isGlobal: newVariableName in: self model) not
+]
+
+{ #category : #preconditions }
+RBRenameVariableTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

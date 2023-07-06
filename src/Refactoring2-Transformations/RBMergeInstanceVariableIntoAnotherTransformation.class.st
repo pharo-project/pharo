@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBMergeInstanceVariableIntoAnotherTransformation >> preconditions [
+RBMergeInstanceVariableIntoAnotherTransformation >> applicabilityConditions [ 
 
 	class := self model classObjectFor: className.
 
@@ -20,6 +20,12 @@ RBMergeInstanceVariableIntoAnotherTransformation >> preconditions [
 		ifFalse: [ (RBCondition definesInstanceVariable: newVariableName in: class)
 					& (RBCondition definesInstanceVariable: variableName in: class) ])
 		& (RBCondition isGlobal: newVariableName in: self model) not
+]
+
+{ #category : #preconditions }
+RBMergeInstanceVariableIntoAnotherTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

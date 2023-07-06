@@ -48,7 +48,7 @@ RBRemoveReturnStatementTransformation class >> return: anExpression inMethod: aS
 ]
 
 { #category : #preconditions }
-RBRemoveReturnStatementTransformation >> preconditions [
+RBRemoveReturnStatementTransformation >> applicabilityConditions [ 
 
 	^ (RBCondition
 			withBlock: [ self definingClass isNotNil ]
@@ -59,6 +59,12 @@ RBRemoveReturnStatementTransformation >> preconditions [
 		& (RBCondition
 			withBlock: [ self definingMethod lastIsReturn ]
 			errorString: ('Method named <1s> does not have a return statement' expandMacrosWith: selector))
+]
+
+{ #category : #preconditions }
+RBRemoveReturnStatementTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

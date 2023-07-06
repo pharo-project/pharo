@@ -161,6 +161,7 @@ RBAbstractVariablesTransformation >> parseTree [
 
 { #category : #executing }
 RBAbstractVariablesTransformation >> privateTransform [
+	self flag: #popUp.
 	self hasVariablesToAbstract
 		ifTrue:
 			[self

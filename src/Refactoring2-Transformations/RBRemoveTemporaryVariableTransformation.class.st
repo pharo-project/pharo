@@ -47,7 +47,7 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 ]
 
 { #category : #preconditions }
-RBRemoveTemporaryVariableTransformation >> preconditions [
+RBRemoveTemporaryVariableTransformation >> applicabilityConditions [
 
 	^ ( RBCondition
 			withBlock: [ self definingClass isNotNil ]
@@ -59,6 +59,12 @@ RBRemoveTemporaryVariableTransformation >> preconditions [
 		& ( RBCondition
 			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
 			errorString: 'Variable named ', variableName, ' cannot be removed because it is an argument in this method' )
+]
+
+{ #category : #preconditions }
+RBRemoveTemporaryVariableTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

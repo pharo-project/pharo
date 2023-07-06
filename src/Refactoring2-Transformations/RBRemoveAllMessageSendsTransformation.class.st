@@ -52,16 +52,8 @@ RBRemoveAllMessageSendsTransformation class >> model: aRBModel messageSend: aMes
 		yourself
 ]
 
-{ #category : #api }
-RBRemoveAllMessageSendsTransformation >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
-
-	self className: aClassName.
-	selector := aSelector.
-	message := aMessageSend
-]
-
 { #category : #preconditions }
-RBRemoveAllMessageSendsTransformation >> preconditions [
+RBRemoveAllMessageSendsTransformation >> applicabilityConditions [
 
 	^ (RBCondition
 			withBlock: [ self definingClass isNotNil ]
@@ -77,6 +69,39 @@ RBRemoveAllMessageSendsTransformation >> preconditions [
 			errorString: ('Method named <1s> does not implement this message send <2s>'
 				expandMacrosWith: selector with: message)) 
 		
+]
+
+{ #category : #preconditions }
+RBRemoveAllMessageSendsTransformation >> applicatibilityConditions [
+
+	^ (RBCondition
+			withBlock: [ self definingClass isNotNil ]
+			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
+	  & (RBCondition
+			withBlock: [ self definingClass canUnderstand: selector ]
+			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			withBlock: [
+				(self definingMethod
+					allChildren select: [:each | each isMessage] )
+					anySatisfy: [ :messageNode | messageNode selector = message asSymbol ] ]
+			errorString: ('Method named <1s> does not implement this message send <2s>'
+				expandMacrosWith: selector with: message)) 
+		
+]
+
+{ #category : #api }
+RBRemoveAllMessageSendsTransformation >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
+
+	self className: aClassName.
+	selector := aSelector.
+	message := aMessageSend
+]
+
+{ #category : #preconditions }
+RBRemoveAllMessageSendsTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

@@ -40,17 +40,10 @@ RBRenameClassTransformation class >> rename: aClassName to: aNewClassName [
 		newClassName: aNewClassName
 ]
 
-{ #category : #api }
-RBRenameClassTransformation >> className: aClassName newClassName: aNewClassName [
-
-	self className: aClassName asSymbol.
-	newClassName := aNewClassName asSymbol
-]
-
 { #category : #preconditions }
-RBRenameClassTransformation >> preconditions [
-	^ (RBCondition
-		withBlock: [ self definingClass notNil and: [ self definingClass isMeta not ] ])
+RBRenameClassTransformation >> applicabilityConditions [ 
+
+	^ (RBCondition withBlock: [ self definingClass notNil and: [ self definingClass isMeta not ] ])
 		& (RBCondition isValidClassName: newClassName)
 		& (RBCondition isGlobal: newClassName in: self model) not
 		&
@@ -81,6 +74,19 @@ RBRenameClassTransformation >> preconditions [
 		|
 			(RBCondition
 				withBlock: [ self refactoringError: newClassName , ' is not a valid class name' ])
+]
+
+{ #category : #api }
+RBRenameClassTransformation >> className: aClassName newClassName: aNewClassName [
+
+	self className: aClassName asSymbol.
+	newClassName := aNewClassName asSymbol
+]
+
+{ #category : #preconditions }
+RBRenameClassTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

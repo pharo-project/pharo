@@ -45,6 +45,17 @@ RBRenameTemporaryVariableTransformation class >> rename: oldName to: newName in:
 		to: newName
 ]
 
+{ #category : #preconditions }
+RBRenameTemporaryVariableTransformation >> applicabilityConditions [ 
+	"check whether variable exists?
+	 test instance variables as well"
+
+	^ (RBCondition isValidInstanceVariableName: newVariableName for: self definingClass)
+		& (RBCondition definesSelector: selector in: self definingClass)
+		& (RBCondition definesInstanceVariable: newVariableName in: self definingClass) not
+		& (RBCondition definesClassVariable: newVariableName in: self definingClass) not
+]
+
 { #category : #private }
 RBRenameTemporaryVariableTransformation >> checkExistingVariable: variableNode [
 
@@ -83,10 +94,7 @@ RBRenameTemporaryVariableTransformation >> preconditions [
 	"check whether variable exists?
 	 test instance variables as well"
 
-	^ (RBCondition isValidInstanceVariableName: newVariableName for: self definingClass)
-		& (RBCondition definesSelector: selector in: self definingClass)
-		& (RBCondition definesInstanceVariable: newVariableName in: self definingClass) not
-		& (RBCondition definesClassVariable: newVariableName in: self definingClass) not
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

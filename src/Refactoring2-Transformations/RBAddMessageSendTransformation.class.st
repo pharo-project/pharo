@@ -48,16 +48,9 @@ RBAddMessageSendTransformation class >> model: aRBModel messageSend: aString inM
 		yourself
 ]
 
-{ #category : #api }
-RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
-
-	self className: aClassName.
-	selector := aSelector.
-	message := aMessageSend
-]
-
 { #category : #preconditions }
-RBAddMessageSendTransformation >> preconditions [
+RBAddMessageSendTransformation >> applicabilityConditions [
+
 	^ (RBCondition
 		withBlock: [ self definingClass isNotNil ]
 		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
@@ -76,6 +69,20 @@ RBAddMessageSendTransformation >> preconditions [
 				errorString:
 					('Some variables in this message send are not defined in method named <1s>.'
 						expandMacrosWith: selector))
+]
+
+{ #category : #api }
+RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
+
+	self className: aClassName.
+	selector := aSelector.
+	message := aMessageSend
+]
+
+{ #category : #preconditions }
+RBAddMessageSendTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

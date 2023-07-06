@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBAddVariableTransformation >> preconditions [
+RBAddVariableTransformation >> applicabilityConditions [ 
 
 	class := self definingClass.
 
@@ -32,6 +32,12 @@ RBAddVariableTransformation >> preconditions [
 					& (RBCondition isValidInstanceVariableName: variableName for: class) ])
 		& (RBCondition hierarchyOf: class definesVariable: variableName asString) not
 		& (RBCondition isGlobal: variableName in: self model) not
+]
+
+{ #category : #preconditions }
+RBAddVariableTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

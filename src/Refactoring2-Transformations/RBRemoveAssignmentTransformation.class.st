@@ -51,7 +51,7 @@ RBRemoveAssignmentTransformation class >> variable: aVariableName value: anExpre
 ]
 
 { #category : #preconditions }
-RBRemoveAssignmentTransformation >> preconditions [
+RBRemoveAssignmentTransformation >> applicabilityConditions [ 
 
 	^ (RBCondition
 			withBlock: [ self definingClass isNotNil ]
@@ -67,10 +67,16 @@ RBRemoveAssignmentTransformation >> preconditions [
 				expandMacrosWith: selector with: variableName))
 		& (RBCondition
 			withBlock: [ (self definingMethod allChildren
-				select: #isAssignment thenCollect: #variable)
-				anySatisfy: [ :e | e name asString = variableName ] ]
+									select: [ :each | each isAssignment ] 
+									thenCollect: [:var | var variable]) anySatisfy: [ :e | e name asString = variableName ] ]
 			errorString: ('Method named <1s> does not have an assignment for variable named <2s>'
 				expandMacrosWith: selector with: variableName))
+]
+
+{ #category : #preconditions }
+RBRemoveAssignmentTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

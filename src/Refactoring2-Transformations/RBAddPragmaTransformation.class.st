@@ -45,16 +45,8 @@ RBAddPragmaTransformation class >> pragma: aString inMethod: aSelector inClass: 
 		yourself
 ]
 
-{ #category : #api }
-RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClassName [
-
-	self className: aClassName.
-	selector := aSelector.
-	pragma := aString
-]
-
 { #category : #preconditions }
-RBAddPragmaTransformation >> preconditions [
+RBAddPragmaTransformation >> applicabilityConditions [ 
 	^ (RBCondition
 		withBlock: [ self definingClass isNotNil ]
 		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
@@ -72,6 +64,20 @@ RBAddPragmaTransformation >> preconditions [
 					('Method named <1s> already has a pragma named <2s>'
 						expandMacrosWith: selector
 						with: (self parserClass parsePragma: pragma) selector))
+]
+
+{ #category : #api }
+RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClassName [
+
+	self className: aClassName.
+	selector := aSelector.
+	pragma := aString
+]
+
+{ #category : #preconditions }
+RBAddPragmaTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

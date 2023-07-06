@@ -28,6 +28,15 @@ RBRenameMethodTransformation class >> renameMethod: aSelector in: aClass to: new
 ]
 
 { #category : #accessing }
+RBRenameMethodTransformation >> applicabilityConditions [ 
+
+	^ super applicabilityConditions & RBCondition 
+			withBlock: [oldSelector numArgs = newSelector numArgs]
+			errorString: newSelector printString
+				, ' doesn''t have the correct number of arguments.'
+]
+
+{ #category : #accessing }
 RBRenameMethodTransformation >> hasPermutedArguments [
 
 	^ hasPermutedArguments

@@ -52,7 +52,7 @@ RBAddAssignmentTransformation class >> variable: aVariableName value: anExpressi
 ]
 
 { #category : #preconditions }
-RBAddAssignmentTransformation >> preconditions [
+RBAddAssignmentTransformation >> applicabilityConditions [
 
 	^ (RBCondition
 			withBlock: [ self definingClass isNotNil ]
@@ -62,10 +62,16 @@ RBAddAssignmentTransformation >> preconditions [
 			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
 	  & (RBCondition
 			withBlock: [ (self definingMethod allChildren
-				select: #isVariable thenCollect: #name)
+				select: [:each | each isVariable] thenCollect: [:each | each name])
 				anySatisfy: [ :e | e asString = variableName ] ]
 			errorString: ('Method named <1s> does not have a variable named <2s>'
 				expandMacrosWith: selector with: variableName))
+]
+
+{ #category : #preconditions }
+RBAddAssignmentTransformation >> preconditions [
+
+	^ self applicabilityConditions
 ]
 
 { #category : #executing }

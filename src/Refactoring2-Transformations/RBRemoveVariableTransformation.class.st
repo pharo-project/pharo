@@ -23,13 +23,19 @@ Class {
 }
 
 { #category : #preconditions }
-RBRemoveVariableTransformation >> preconditions [
+RBRemoveVariableTransformation >> applicabilityConditions [ 
 
 	class := self definingClass instanceSide.
 
 	^ isClassVariable
 		ifTrue: [ self preconditionsForClassVariable ]
 		ifFalse: [ self preconditionsForInstanceVariable ]
+]
+
+{ #category : #preconditions }
+RBRemoveVariableTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #preconditions }

@@ -59,7 +59,7 @@ RBAddTemporaryVariableTransformation class >> variable: aString inMethod: aSelec
 ]
 
 { #category : #preconditions }
-RBAddTemporaryVariableTransformation >> preconditions [
+RBAddTemporaryVariableTransformation >> applicabilityConditions [
 
 	^ ( RBCondition
 			withBlock: [ self definingClass isNotNil ]
@@ -71,6 +71,12 @@ RBAddTemporaryVariableTransformation >> preconditions [
 		& ( RBCondition
 			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
 			errorString: 'Method named ', selector, ' already defines an argument named ', variableName )
+]
+
+{ #category : #preconditions }
+RBAddTemporaryVariableTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }
