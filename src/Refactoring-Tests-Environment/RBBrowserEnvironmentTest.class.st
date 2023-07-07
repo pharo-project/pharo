@@ -307,7 +307,7 @@ RBBrowserEnvironmentTest >> testNotEnvironment [
 	self assertEmpty: (notPrintStringEnvironment referencesTo: #printString).
 	self assert: (notPrintStringEnvironment not includesClass: RBBrowserEnvironmentTest).
 	self assert: (notPrintStringEnvironment not includesSelector: #testNotEnvironment in: RBBrowserEnvironmentTest).
-	self assert: (notKernelEnvironment includesPackage: 'Kernel' asPackage) not.
+	self deny: (notKernelEnvironment hasPackage: 'Kernel').
 	self assertEmpty: (notKernelEnvironment & kernelEnvironment) packages
 ]
 
