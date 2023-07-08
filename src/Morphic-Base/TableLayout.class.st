@@ -477,7 +477,7 @@ TableLayout >> layout: aMorph in: box [
 { #category : #layout }
 TableLayout >> layoutLeftToRight: aMorph in: newBounds [
 	"An optimized left-to-right list layout"
-	| inset extent block posX posY centering extraPerCell amount minX minY maxX maxY n width extra last cell size height sum vFill first |
+	| inset extent block posX posY centering extraPerCell amount minX minY maxX maxY n width extra last cell size height sum vFill first submorphs |
 	size := properties minCellSize asPoint. minX := size x. minY := size y.
 	size := properties maxCellSize asPoint. maxX := size x. maxY := size y.
 	inset := properties cellInset asPoint x.
@@ -511,9 +511,13 @@ TableLayout >> layoutLeftToRight: aMorph in: newBounds [
 			sizeY > height ifTrue:[height := sizeY].
 		].
 	].
-	properties reverseTableCells
-		ifTrue:[aMorph submorphsReverseDo: block]
-		ifFalse:[aMorph submorphsDo: block].
+
+	submorphs := aMorph submorphs.
+	properties reverseTableCells ifTrue:[ submorphs := submorphs reversed ].
+	submorphs do: [ :each |
+		each visible 
+			ifTrue: [ block value: each ]
+			ifFalse: [ each privateBounds: (each bounds topLeft extent: 0@0) ] ].
 
 	n > 1 ifTrue:[width := width + (n-1 * inset)].
 
@@ -571,7 +575,7 @@ TableLayout >> layoutLeftToRight: aMorph in: newBounds [
 { #category : #nil }
 TableLayout >> layoutTopToBottom: aMorph in: newBounds [
 	"An optimized top-to-bottom list layout"
-	| inset extent block posX posY centering extraPerCell amount minX minY maxX maxY n height extra last cell size width sum vFill first |
+	| inset extent block posX posY centering extraPerCell amount minX minY maxX maxY n height extra last cell size width sum vFill first submorphs |
 	size := properties minCellSize asPoint. minX := size x. minY := size y.
 	size := properties maxCellSize asPoint. maxX := size x. maxY := size y.
 	inset := properties cellInset asPoint y.
@@ -605,9 +609,13 @@ TableLayout >> layoutTopToBottom: aMorph in: newBounds [
 			sizeX > width ifTrue:[width := sizeX].
 		].
 	].
-	properties reverseTableCells
-		ifTrue:[aMorph submorphsReverseDo: block]
-		ifFalse:[aMorph submorphsDo: block].
+
+	submorphs := aMorph submorphs.
+	properties reverseTableCells ifTrue:[ submorphs := submorphs reversed ].
+	submorphs do: [ :each |
+		each visible 
+			ifTrue: [ block value: each ]
+			ifFalse: [ each privateBounds: (each bounds topLeft extent: 0@0) ] ].
 
 	n > 1 ifTrue:[height := height + (n-1 * inset)].
 
