@@ -58,7 +58,6 @@ RBRemoveParameterTransformation >> getNewSelector [
 RBRemoveParameterTransformation >> hasReferencesToTemporaryIn: each [
 
 	| tree |
-
 	tree := each parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
@@ -86,8 +85,8 @@ RBRemoveParameterTransformation >> myConditions [
 
 { #category : #private }
 RBRemoveParameterTransformation >> preconditions [ 
-	
-	^ super preconditions & self localPreconditions 
+	"It looks like the localPreconditions is doing a side effect!!! argh! "
+	^  self localPreconditions & super preconditions
 ]
 
 { #category : #private }
