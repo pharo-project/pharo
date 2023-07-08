@@ -138,42 +138,47 @@ RBCondition class >> definesSelector: aSelector in: aClass orIsSimilarTo: rbMeth
 
 { #category : #'instance creation' }
 RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [
+
 	| condition |
 	condition := self new.
 	condition
-		block:
-			[| method |
+		block: [
+			| method |
 			method := self
-						methodDefiningTemporary: aString
-						in: aClass
-						ignore: [:class :aSelector | class includesClass: subclass].
-			method notNil
-				ifTrue:
-					[condition errorMacro: method printString , ' defines variable ' , aString].
-			method notNil]
-		errorString: aClass printString
-				, ' <1?:does not >define<1?s:> temporary variable ' , aString.
-	^condition
+				          methodDefiningTemporary: aString
+				          in: aClass
+				          ignore: [ :class :aSelector |
+				          class includesClass: subclass ].
+			method ifNotNil: [
+				condition errorMacro:
+					method printString , ' defines variable ' , aString ].
+			method notNil ]
+		errorString:
+			aClass printString
+			, ' <1?:does not >define<1?s:> temporary variable ' , aString.
+	^ condition
 ]
 
 { #category : #'instance creation' }
 RBCondition class >> definesTemporaryVariable: aString in: aClass [
+
 	| condition |
 	condition := self new.
 	condition
-		block:
-			[| method |
+		block: [
+			| method |
 			method := self
-						methodDefiningTemporary: aString
-						in: aClass
-						ignore: [:class :selector | false].
-			method notNil
-				ifTrue:
-					[condition errorMacro: method printString , ' defines variable ' , aString].
-			method notNil]
-		errorString: aClass printString
-				, ' <1?:does not >define<1?s:> temporary variable ' , aString.
-	^condition
+				          methodDefiningTemporary: aString
+				          in: aClass
+				          ignore: [ :class :selector | false ].
+			method ifNotNil: [
+				condition errorMacro:
+					method printString , ' defines variable ' , aString ].
+			method notNil ]
+		errorString:
+			aClass printString
+			, ' <1?:does not >define<1?s:> temporary variable ' , aString.
+	^ condition
 ]
 
 { #category : #'instance creation' }
@@ -397,21 +402,19 @@ RBCondition class >> isValidMethodName: aString for: aClass [
 
 { #category : #utilities }
 RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock [
+
 	| searcher method |
 	searcher := RBParseTreeSearcher new.
-	method := nil.	"Shut-up the warning"
-	searcher matches: aString do: [:aNode :answer | ^method].
-	aClass withAllSubclasses do:
-			[:class |
-			class selectors do:
-					[:each |
-					(aBlock value: class value: each)
-						ifFalse:
-							[| parseTree |
-							method := class methodFor: each.
-							parseTree := class parseTreeForSelector: each.
-							parseTree notNil ifTrue: [searcher executeTree: parseTree]]]].
-	^nil
+	method := nil. "Shut-up the warning"
+	searcher matches: aString do: [ :aNode :answer | ^ method ].
+	aClass withAllSubclasses do: [ :class |
+		class selectors do: [ :each |
+			(aBlock value: class value: each) ifFalse: [
+				| parseTree |
+				method := class methodFor: each.
+				parseTree := class parseTreeForSelector: each.
+				parseTree ifNotNil: [ searcher executeTree: parseTree ] ] ] ].
+	^ nil
 ]
 
 { #category : #'instance creation' }
