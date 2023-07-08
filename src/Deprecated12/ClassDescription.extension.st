@@ -178,6 +178,13 @@ ClassDescription >> listAtCategoryNamed: aName [
 ]
 
 { #category : #'*Deprecated12' }
+ClassDescription >> methodsTaggedWith: aSymbol [
+
+	self deprecated: 'Use methodsInProtocol: instead.' transformWith: '`@rcv methodsTaggedWith: `@arg' -> '`@rcv methodsInProtocol: `@arg'.
+	^ self methodsInProtocol: aSymbol
+]
+
+{ #category : #'*Deprecated12' }
 ClassDescription >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization
 	of the messages of the receiver."
@@ -260,6 +267,13 @@ ClassDescription >> subject [
 
 	self deprecated: 'ClassOrganization was inlined and we do not need an organized class anymore.' transformWith: '`@rcv subject' -> '`@rcv'.
 	^ self
+]
+
+{ #category : #'*Deprecated12' }
+ClassDescription >> tagsForMethods [
+
+	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv tagsForMethods' -> '`@rcv protocolNames'.
+	^ self protocolNames
 ]
 
 { #category : #'*Deprecated12' }
