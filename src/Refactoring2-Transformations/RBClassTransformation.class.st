@@ -14,7 +14,7 @@ Class {
 
 { #category : #accessing }
 RBClassTransformation >> className [
-
+	self flag: #popUp.
 	^ className ifNil: [
 		self uiManager
 			chooseOrRequestFrom: (self environment allClasses collect: [:each | each name])

@@ -35,6 +35,16 @@ RBExtractToTemporaryTransformation class >> model: aRBNamespace extract: anInter
 		yourself
 ]
 
+{ #category : #preconditions }
+RBExtractToTemporaryTransformation >> applicabilityConditions [ 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
+			& (RBCondition withBlock:
+						[self verifySelectedInterval.
+						self checkVariableName.
+						true])
+]
+
 { #category : #executing }
 RBExtractToTemporaryTransformation >> buildTransformations [
 
@@ -113,12 +123,8 @@ RBExtractToTemporaryTransformation >> parseTree [
 
 { #category : #preconditions }
 RBExtractToTemporaryTransformation >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
-			& (RBCondition withBlock:
-						[self verifySelectedInterval.
-						self checkVariableName.
-						true])
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #accessing }

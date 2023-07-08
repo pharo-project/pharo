@@ -48,17 +48,32 @@ RBRemoveReturnStatementTransformation class >> return: anExpression inMethod: aS
 ]
 
 { #category : #preconditions }
+RBRemoveReturnStatementTransformation >> applicabilityConditions [
+
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [ self definingMethod lastIsReturn ]
+			   errorString:
+				   ('Method named <1s> does not have a return statement'
+					    expandMacrosWith: selector))
+]
+
+{ #category : #preconditions }
+RBRemoveReturnStatementTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
+{ #category : #preconditions }
 RBRemoveReturnStatementTransformation >> preconditions [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		& (RBCondition
-			withBlock: [ self definingClass canUnderstand: selector ]
-			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		& (RBCondition
-			withBlock: [ self definingMethod lastIsReturn ]
-			errorString: ('Method named <1s> does not have a return statement' expandMacrosWith: selector))
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

@@ -48,6 +48,27 @@ RBMoveTemporaryVariableDefinitionTransformation class >> variable: aString inMet
 		yourself
 ]
 
+{ #category : #preconditions }
+RBMoveTemporaryVariableDefinitionTransformation >> applicabilityConditions [ 
+
+	^ ( RBCondition
+			withBlock: [ self definingClass isNotNil ]
+			errorString: 'No such class or trait named ', class asString)
+		& ( RBCondition definesSelector: selector in: self definingClass)
+		& ( RBCondition
+			withBlock: [ self definingMethod allTemporaryVariables includes: variableName ]
+			errorString: 'Method named ', selector, ' does not define a temporary variable named ', variableName )
+		& ( RBCondition
+			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
+			errorString: 'Variable named ', variableName, ' cannot be removed because it is an argument in this method' )
+		& ( RBCondition
+			withBlock: [ (self checkBlocksIn: self definingBlock) not ]
+			errorString: 'Variable named ', variableName, ' is already bound tightly as possible.')
+		& ( RBCondition
+			withBlock: [ self checkLocationsIn: (self checkAllBlocksIn: self definingBlock) ]
+			errorString: 'Variable named ', variableName, ' is used in an outside block.')
+]
+
 { #category : #converting }
 RBMoveTemporaryVariableDefinitionTransformation >> asRefactoring [
 
@@ -152,22 +173,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 { #category : #preconditions }
 RBMoveTemporaryVariableDefinitionTransformation >> preconditions [
 
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'No such class or trait named ', class asString)
-		& ( RBCondition definesSelector: selector in: self definingClass)
-		& ( RBCondition
-			withBlock: [ self definingMethod allTemporaryVariables includes: variableName ]
-			errorString: 'Method named ', selector, ' does not define a temporary variable named ', variableName )
-		& ( RBCondition
-			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
-			errorString: 'Variable named ', variableName, ' cannot be removed because it is an argument in this method' )
-		& ( RBCondition
-			withBlock: [ (self checkBlocksIn: self definingBlock) not ]
-			errorString: 'Variable named ', variableName, ' is already bound tightly as possible.')
-		& ( RBCondition
-			withBlock: [ self checkLocationsIn: (self checkAllBlocksIn: self definingBlock) ]
-			errorString: 'Variable named ', variableName, ' is used in an outside block.')
+	^ self applicabilityConditions 
 ]
 
 { #category : #printing }
