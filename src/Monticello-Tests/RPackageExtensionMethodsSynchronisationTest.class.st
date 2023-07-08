@@ -63,7 +63,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 	
 	self deny: (class package includesDefinedSelector: #newMethod ofClass: class).
 	
-	self assert: (self organizer includesPackageNamed: #SomethingDifferentNothingToDoWithWhatWeHave).
+	self assert: (self organizer hasPackage: #SomethingDifferentNothingToDoWithWhatWeHave).
 ]
 
 { #category : #testing }
@@ -81,7 +81,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 	
 	self deny: (class package includesDefinedSelector: #newMethod ofClass: class).
 	
-	self assert: (self organizer includesPackageNamed: #SomethingDifferentNothingToDoWithWhatWeHave).
+	self assert: (self organizer hasPackage: #SomethingDifferentNothingToDoWithWhatWeHave).
 	self assert: ((class >> #newMethod) packageFromOrganizer: self organizer ) equals: (self organizer packageNamed: #SomethingDifferentNothingToDoWithWhatWeHave).
 ]
 

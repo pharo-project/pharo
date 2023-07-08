@@ -441,7 +441,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByAddingExtensionProtoc
 	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
 	class addProtocol: '*yyyyy'.
 
-	self assert: (self organizer includesPackageNamed: #Yyyyy)
+	self assert: (self organizer hasPackage: #Yyyyy)
 ]
 
 { #category : #'tests - operations on protocols' }

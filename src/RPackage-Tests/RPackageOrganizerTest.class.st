@@ -128,7 +128,7 @@ RPackageOrganizerTest >> testCreateNewPackageWithConflictRaisesConflictException
 RPackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
 
 	packageOrganizer createPackageNamed: 'P1'.
-	self assert: (packageOrganizer includesPackageNamed: 'P1')
+	self assert: (packageOrganizer hasPackage: 'P1')
 ]
 
 { #category : #tests }
@@ -166,7 +166,7 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 	c1 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*p1-something'.
 	packageOrganizer addMethod: (c1 >> #methodPackagedInP1).
 
-	self deny: (packageOrganizer includesPackageNamed: #'p1-something').
+	self deny: (packageOrganizer hasPackage: #'p1-something').
 	self assert: (p1 extendedClasses includes: c1)
 ]
 
@@ -270,6 +270,26 @@ RPackageOrganizerTest >> testFullUnregistration [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testHasPackage [
+
+	| organizer packageFromOtherOrganizer name package |
+	name := 'TestPackageNameForPackageOrganizer'.
+	organizer := RPackageOrganizer new.
+	packageFromOtherOrganizer := RPackageOrganizer new createPackageNamed: name.
+	self deny: (organizer hasPackage: name).
+	self deny: (organizer hasPackage: packageFromOtherOrganizer).
+
+	package := organizer createPackageNamed: name.
+
+	self assert: (organizer hasPackage: name).
+	self assert: (organizer hasPackage: package).
+
+	self skip.
+	self flag: #package. "In the future this next assertion should probably work in order to be able to have multiple PackageOrganizer but for now it does not work."
+	self deny: (organizer hasPackage: packageFromOtherOrganizer)
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 	| package1 package2 |
@@ -320,10 +340,8 @@ RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
 	self packageOrganizer registerPackage: p1.
 	self packageOrganizer registerPackage: p2.
 	self packageOrganizer registerPackage: p3.
-	self assert: self packageOrganizer packageNames size equals: 4.
-	self assert: (self packageOrganizer includesPackage: p1).
-	self assert: (self packageOrganizer includesPackageNamed: p1 name).
-	{p1 . p2 . p3} do: [:each | self assert:  (self packageOrganizer packageNames includes: each name)]
+	self assert: self packageOrganizer packageNames size equals: 4. "We also have the default package."
+	{ p1 . p2 . p3 } do: [:each | self assert:  (self packageOrganizer packageNames includes: each name)]
 ]
 
 { #category : #tests }

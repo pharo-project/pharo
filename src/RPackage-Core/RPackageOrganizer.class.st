@@ -337,7 +337,7 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	
 	I am bad because I do not update the SystemOrganizer and I do not announce the new packages. I am still here only because I am still needed in the bootstrap. But please do not use me."
 
-	^ (self includesPackageNamed: aSymbol)
+	^ (self hasPackage: aSymbol)
 		  ifFalse: [ self basicRegisterPackage: (RPackage named: aSymbol organizer: self) ]
 		  ifTrue: [
 			  | package |
@@ -398,13 +398,21 @@ RPackageOrganizer >> globalPackageOf: aClass [
 		ifNone: [ classPackage ]
 ]
 
+{ #category : #testing }
+RPackageOrganizer >> hasPackage: aPackage [
+	"Takes a package or a package name as parameter and return true if I include this package."
+
+	^ packages includesKey: (aPackage isString
+			   ifTrue: [ aPackage ]
+			   ifFalse: [ aPackage name ]) asSymbol
+]
+
 { #category : #'system integration' }
 RPackageOrganizer >> hasPackageExactlyMatchingExtensionName: anExtensionName [
 	| extension |
 	extension := anExtensionName asSymbol.
 	"fast version"
-	(self includesPackageNamed: extension)
-		ifTrue: [  ^ true ].
+	(self hasPackage: extension) ifTrue: [  ^ true ].
 
 	"slow version ignoring case"
 	packages keysDo: [ :aSymbol |
@@ -1269,6 +1277,5 @@ RPackageOrganizer >> validateCanBeAddedPackageName: packageName tagName: tagName
 { #category : #registration }
 RPackageOrganizer >> validatePackageDoesNotExist: aPackageName [
 
-	(self includesPackageNamed: aPackageName)
-		ifTrue: [ self signalPackageExists: aPackageName ]
+	(self hasPackage: aPackageName) ifTrue: [ self signalPackageExists: aPackageName ]
 ]
