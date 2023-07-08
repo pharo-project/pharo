@@ -26,6 +26,7 @@ Class {
 { #category : #'variable accessing' }
 RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTransformation [
 
+	self flag: #popUp.
 	^ RBCondition withBlock: [ | block |
 		block := 	[ :each |
 			(each whichSelectorsReferToClassVariable: variableName)
@@ -46,6 +47,7 @@ RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTra
 RBCondition class >> accessesInstanceVariable: variableName in: aClass showIn: aTransformation [
 
 	| references |
+	self flag: #popUp.
 	references := RBCondition referencesInstanceVariable: variableName in: aClass.
 	aClass realClass
 		ifNil: [ references errorMacro: ('<1s> is referenced.' expandMacrosWith: variableName) ]
@@ -194,6 +196,7 @@ RBCondition class >> directlyDefinesInstanceVariable: aString in: aClass [
 RBCondition class >> doesNotAccessInstanceVariable: variableName inHierarchyOf: aClass showIn: aTransformation [
 
 	| references |
+	self flag: #popUp.
 	references := RBCondition hierarchyOf: aClass referencesInstanceVariable: variableName.
 	aClass realClass
 		ifNil: [ references errorMacro: ('<1s> is referenced.' expandMacrosWith: variableName) ]
