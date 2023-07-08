@@ -30,10 +30,11 @@ RBRenameMethodTransformation class >> renameMethod: aSelector in: aClass to: new
 { #category : #accessing }
 RBRenameMethodTransformation >> applicabilityConditions [ 
 
-	^ super applicabilityConditions & RBCondition 
+	^ super applicabilityConditions & 
+		(RBCondition 
 			withBlock: [oldSelector numArgs = newSelector numArgs]
 			errorString: newSelector printString
-				, ' doesn''t have the correct number of arguments.'
+				, ' doesn''t have the correct number of arguments.')
 ]
 
 { #category : #accessing }
@@ -56,10 +57,8 @@ RBRenameMethodTransformation >> modifyImplementorParseTree: parseTree in: aClass
 ]
 
 { #category : #accessing }
-RBRenameMethodTransformation >> myConditions [
-	^RBCondition withBlock: [oldSelector numArgs = newSelector numArgs]
-		errorString: newSelector printString
-				, ' doesn''t have the correct number of arguments.'
+RBRenameMethodTransformation >> myConditions [ 
+	^ RBCondition true
 ]
 
 { #category : #accessing }

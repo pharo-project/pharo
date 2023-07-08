@@ -245,14 +245,8 @@ RBPullUpMethodTransformation >> copyDownMethods [
 ]
 
 { #category : #preconditions }
-RBPullUpMethodTransformation >> interactionConditions [ 
-
-	^ self requestSuperClass
-]
-
-{ #category : #preconditions }
 RBPullUpMethodTransformation >> preconditions [
-	^ self interactionConditions & self applicabilityConditions 
+	^ self applicabilityConditions 
 	
 ]
 
@@ -282,9 +276,9 @@ RBPullUpMethodTransformation >> pullUp: selectorCollection from: aClass [
 
 { #category : #api }
 RBPullUpMethodTransformation >> pullUp: selectorCollection from: aClass to: aSuperClass [
-	self setOption: #superClass toUse: [ :ref | ].
+
 	class := self model classObjectFor: aClass.
-	targetSuperclass := self model classObjectFor: aSuperClass .
+	targetSuperclass := self model classObjectFor: aSuperClass.
 	selectors := selectorCollection.
 	removeDuplicates := false
 ]
@@ -338,11 +332,6 @@ RBPullUpMethodTransformation >> removePulledUpMethods [
 			model: self model
 			selector: symbol
 			from: class ]
-]
-
-{ #category : #preconditions }
-RBPullUpMethodTransformation >> requestSuperClass [
-	^ (self options at: #superClass) value: self
 ]
 
 { #category : #printing }
