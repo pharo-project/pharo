@@ -26,6 +26,7 @@ Class {
 { #category : #'variable accessing' }
 RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTransformation [
 
+	self flag: #popUp.
 	^ RBCondition withBlock: [ | block |
 		block := 	[ :each |
 			(each whichSelectorsReferToClassVariable: variableName)
@@ -46,6 +47,7 @@ RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTra
 RBCondition class >> accessesInstanceVariable: variableName in: aClass showIn: aTransformation [
 
 	| references |
+	self flag: #popUp.
 	references := RBCondition referencesInstanceVariable: variableName in: aClass.
 	aClass realClass
 		ifNil: [ references errorMacro: ('<1s> is referenced.' expandMacrosWith: variableName) ]
@@ -136,42 +138,47 @@ RBCondition class >> definesSelector: aSelector in: aClass orIsSimilarTo: rbMeth
 
 { #category : #'instance creation' }
 RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [
+
 	| condition |
 	condition := self new.
 	condition
-		block:
-			[| method |
+		block: [
+			| method |
 			method := self
-						methodDefiningTemporary: aString
-						in: aClass
-						ignore: [:class :aSelector | class includesClass: subclass].
-			method notNil
-				ifTrue:
-					[condition errorMacro: method printString , ' defines variable ' , aString].
-			method notNil]
-		errorString: aClass printString
-				, ' <1?:does not >define<1?s:> temporary variable ' , aString.
-	^condition
+				          methodDefiningTemporary: aString
+				          in: aClass
+				          ignore: [ :class :aSelector |
+				          class includesClass: subclass ].
+			method ifNotNil: [
+				condition errorMacro:
+					method printString , ' defines variable ' , aString ].
+			method notNil ]
+		errorString:
+			aClass printString
+			, ' <1?:does not >define<1?s:> temporary variable ' , aString.
+	^ condition
 ]
 
 { #category : #'instance creation' }
 RBCondition class >> definesTemporaryVariable: aString in: aClass [
+
 	| condition |
 	condition := self new.
 	condition
-		block:
-			[| method |
+		block: [
+			| method |
 			method := self
-						methodDefiningTemporary: aString
-						in: aClass
-						ignore: [:class :selector | false].
-			method notNil
-				ifTrue:
-					[condition errorMacro: method printString , ' defines variable ' , aString].
-			method notNil]
-		errorString: aClass printString
-				, ' <1?:does not >define<1?s:> temporary variable ' , aString.
-	^condition
+				          methodDefiningTemporary: aString
+				          in: aClass
+				          ignore: [ :class :selector | false ].
+			method ifNotNil: [
+				condition errorMacro:
+					method printString , ' defines variable ' , aString ].
+			method notNil ]
+		errorString:
+			aClass printString
+			, ' <1?:does not >define<1?s:> temporary variable ' , aString.
+	^ condition
 ]
 
 { #category : #'instance creation' }
@@ -194,6 +201,7 @@ RBCondition class >> directlyDefinesInstanceVariable: aString in: aClass [
 RBCondition class >> doesNotAccessInstanceVariable: variableName inHierarchyOf: aClass showIn: aTransformation [
 
 	| references |
+	self flag: #popUp.
 	references := RBCondition hierarchyOf: aClass referencesInstanceVariable: variableName.
 	aClass realClass
 		ifNil: [ references errorMacro: ('<1s> is referenced.' expandMacrosWith: variableName) ]
@@ -253,14 +261,11 @@ RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 
 	^ self new
 		  block: [
-			  (aClass withAllSubclasses
-				   detect: [ :each |
-					   (each whichSelectorsReferToInstanceVariable: aString)
-						   isNotEmpty ]
-				   ifNone: [ nil ]) notNil ]
+			  aClass withAllSubclasses anySatisfy: [ :each |
+				  (each whichSelectorsReferToInstanceVariable: aString) isNotEmpty ] ]
 		  errorString: aClass printString
 			  , ' or subclass <1?:does not >reference<1?s:> instance variable '
-			  , '#', aString
+			  , '#' , aString
 ]
 
 { #category : #utilities }
@@ -397,21 +402,19 @@ RBCondition class >> isValidMethodName: aString for: aClass [
 
 { #category : #utilities }
 RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock [
+
 	| searcher method |
 	searcher := RBParseTreeSearcher new.
-	method := nil.	"Shut-up the warning"
-	searcher matches: aString do: [:aNode :answer | ^method].
-	aClass withAllSubclasses do:
-			[:class |
-			class selectors do:
-					[:each |
-					(aBlock value: class value: each)
-						ifFalse:
-							[| parseTree |
-							method := class methodFor: each.
-							parseTree := class parseTreeForSelector: each.
-							parseTree notNil ifTrue: [searcher executeTree: parseTree]]]].
-	^nil
+	method := nil. "Shut-up the warning"
+	searcher matches: aString do: [ :aNode :answer | ^ method ].
+	aClass withAllSubclasses do: [ :class |
+		class selectors do: [ :each |
+			(aBlock value: class value: each) ifFalse: [
+				| parseTree |
+				method := class methodFor: each.
+				parseTree := class parseTreeForSelector: each.
+				parseTree ifNotNil: [ searcher executeTree: parseTree ] ] ] ].
+	^ nil
 ]
 
 { #category : #'instance creation' }
@@ -434,15 +437,11 @@ RBCondition class >> subclassesOf: aClass referToSelector: aSelector [
 
 	^ self new
 		  block: [
-			  (aClass subclasses
-				   detect: [ :each |
-					   (each selectors
-						    detect: [ :sel |
-							    | tree |
-							    tree := each parseTreeForSelector: sel.
-							    tree notNil and: [ tree superMessages includes: aSelector ] ]
-						    ifNone: [ nil ]) notNil ]
-				   ifNone: [ nil ]) notNil ]
+			  aClass subclasses anySatisfy: [ :each |
+				  each selectors anySatisfy: [ :sel |
+					  | tree |
+					  tree := each parseTreeForSelector: sel.
+					  tree notNil and: [ tree superMessages includes: aSelector ] ] ] ]
 		  errorString:
 			  '<1?:no:a> subclass of ' , aClass printString , ' refers to '
 			  , aSelector printString
