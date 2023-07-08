@@ -101,19 +101,27 @@ RBTemporaryToInstanceVariableTransformation class >> model: aRBSmalltalk class: 
 ]
 
 { #category : #preconditions }
-RBTemporaryToInstanceVariableTransformation >> applicabilityConditions [ 
+RBTemporaryToInstanceVariableTransformation >> applicabilityConditions [
 
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition definesInstanceVariable: temporaryVariableName asString in: class) not
-		& (RBCondition withBlock: [
-			(class allSubclasses anySatisfy:
-				[ :cls | cls definesInstanceVariable: temporaryVariableName asString ])
-			ifTrue: [ self refactoringWarning:
-				('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?' expandMacrosWith: class name) ].
-			true ])
-			& (RBCondition withBlock:
-						[self checkForValidTemporaryVariable.
-						true])
+	^ (RBCondition definesSelector: selector in: class) & (RBCondition
+		   definesInstanceVariable: temporaryVariableName asString
+		   in: class) not
+	  & (RBCondition withBlock: [
+			   self checkForValidTemporaryVariable.
+			   true ])
+]
+
+{ #category : #preconditions }
+RBTemporaryToInstanceVariableTransformation >> breakingChangeConditions [
+
+	^ RBCondition withBlock: [
+		  (class allSubclasses anySatisfy: [ :cls |
+			   cls definesInstanceVariable: temporaryVariableName asString ])
+			  ifTrue: [
+				  self refactoringWarning:
+					  ('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?'
+						   expandMacrosWith: class name) ].
+		  true ]
 ]
 
 { #category : #preconditions }
@@ -145,7 +153,7 @@ RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector
 { #category : #preconditions }
 RBTemporaryToInstanceVariableTransformation >> preconditions [
 
-	^ self applicabilityConditions 
+	^ self applicabilityConditions & self breakingChangeConditions
 ]
 
 { #category : #executing }
