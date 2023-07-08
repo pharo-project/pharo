@@ -41,10 +41,24 @@ RBAddParameterTransformation >> addParameterToMethod: aSelector in: aClass newSe
 ]
 
 { #category : #adding }
+RBAddParameterTransformation >> applicabilityConditions [ 
+	
+	^ super applicabilityConditions & 
+		 RBCondition withBlock:
+			[ oldSelector numArgs < newSelector numArgs
+				ifFalse:
+					[ self refactoringError: newSelector printString,
+					' doesn''t have the proper number of arguments.'].
+			self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg value1 ].
+			true]
+]
+
+{ #category : #adding }
 RBAddParameterTransformation >> canReferenceVariable: aString in: aClass [
-	(aClass definesVariable: aString) ifTrue: [^true].
-	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
-	^(self poolVariableNamesFor: aClass) includes: aString
+
+	(aClass definesVariable: aString) ifTrue: [ ^ true ].
+	(self model includesGlobal: aString asSymbol) ifTrue: [ ^ true ].
+	^ (self poolVariableNamesFor: aClass) includes: aString
 ]
 
 { #category : #adding }
@@ -65,16 +79,13 @@ RBAddParameterTransformation >> checkSendersAccessTo: name [
 RBAddParameterTransformation >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
-
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var'
 		do: [ :aNode :answer |
 			| name |
-
 			name := aNode name.
-			( aNode whoDefines: name ) ifNil: [ self checkSendersAccessTo: name ]
-			].
+			(aNode whoDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
 	searcher executeTree: aParseTree
 ]
 
@@ -96,13 +107,7 @@ RBAddParameterTransformation >> modifyImplementorParseTree: parseTree in: aClass
 
 { #category : #adding }
 RBAddParameterTransformation >> myConditions [
-	^RBCondition withBlock:
-		[oldSelector numArgs < newSelector numArgs
-			ifFalse:
-				[self refactoringError: newSelector printString,
-				' doesn''t have the proper number of arguments.'].
-		self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg value1 ].
-		true]
+	^ self applicabilityConditions
 ]
 
 { #category : #adding }

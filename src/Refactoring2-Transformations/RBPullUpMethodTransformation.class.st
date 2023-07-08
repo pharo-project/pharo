@@ -35,6 +35,20 @@ RBPullUpMethodTransformation class >> pullUp: selectorCollection from: aClass to
 	^ self new pullUp: selectorCollection from: aClass to: aSuperClass
 ]
 
+{ #category : #preconditions }
+RBPullUpMethodTransformation >> applicabilityConditions [ 
+
+	^ (selectors 
+			inject: (RBCondition hasSuperclass: class)
+			into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
+					& (RBCondition withBlock:
+							[self checkInstVars.
+							self checkClassVars.
+							self checkSuperclass.
+							self checkSuperMessages.
+							true])
+]
+
 { #category : #converting }
 RBPullUpMethodTransformation >> asRefactoring [
 
@@ -231,16 +245,15 @@ RBPullUpMethodTransformation >> copyDownMethods [
 ]
 
 { #category : #preconditions }
+RBPullUpMethodTransformation >> interactionConditions [ 
+
+	^ self requestSuperClass
+]
+
+{ #category : #preconditions }
 RBPullUpMethodTransformation >> preconditions [
-	self requestSuperClass.
-	^(selectors inject: (RBCondition hasSuperclass: class)
-		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
-			& (RBCondition withBlock:
-						[self checkInstVars.
-						self checkClassVars.
-						self checkSuperclass.
-						self checkSuperMessages.
-						true])
+	^ self interactionConditions & self applicabilityConditions 
+	
 ]
 
 { #category : #executing }

@@ -45,6 +45,34 @@ RBAddPragmaTransformation class >> pragma: aString inMethod: aSelector inClass: 
 		yourself
 ]
 
+{ #category : #preconditions }
+RBAddPragmaTransformation >> applicabilityConditions [
+
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [
+				   | pragmaNode |
+				   pragmaNode := self parserClass parsePragma: pragma.
+				   self definingMethod pragmas noneSatisfy: [ :e |
+					   e selector = pragmaNode selector ] ]
+			   errorString:
+				   ('Method named <1s> already has a pragma named <2s>'
+					    expandMacrosWith: selector
+					    with: (self parserClass parsePragma: pragma) selector))
+]
+
+{ #category : #preconditions }
+RBAddPragmaTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
 { #category : #api }
 RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClassName [
 
@@ -55,23 +83,8 @@ RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClass
 
 { #category : #preconditions }
 RBAddPragmaTransformation >> preconditions [
-	^ (RBCondition
-		withBlock: [ self definingClass isNotNil ]
-		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		&
-			(RBCondition
-				withBlock: [ self definingClass canUnderstand: selector ]
-				errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		&
-			(RBCondition
-				withBlock: [ | pragmaNode |
-					pragmaNode := self parserClass parsePragma: pragma.
-					self definingMethod pragmas
-						noneSatisfy: [ :e | e selector = pragmaNode selector ] ]
-				errorString:
-					('Method named <1s> already has a pragma named <2s>'
-						expandMacrosWith: selector
-						with: (self parserClass parsePragma: pragma) selector))
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

@@ -47,18 +47,35 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 ]
 
 { #category : #preconditions }
+RBRemoveTemporaryVariableTransformation >> applicabilityConditions [
+
+	^ self classExist
+	  & (RBCondition definesSelector: selector in: self definingClass)
+	  & (RBCondition
+			   withBlock: [
+			   self definingMethod allTemporaryVariables includes: variableName ]
+			   errorString: 'Method named ' , selector
+				   , ' does not define a temporary variable named ' , variableName)
+	  & (RBCondition
+			   withBlock: [
+				   (self definingMethod allArgumentVariables includes:
+					    variableName) not ]
+			   errorString: 'Variable named ' , variableName
+				   , ' cannot be removed because it is an argument in this method')
+]
+
+{ #category : #preconditions }
+RBRemoveTemporaryVariableTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString: 'No such class or trait named ' , className asString
+]
+
+{ #category : #preconditions }
 RBRemoveTemporaryVariableTransformation >> preconditions [
 
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'No such class or trait named ', className asString)
-		& ( RBCondition definesSelector: selector in: self definingClass)
-		& ( RBCondition
-			withBlock: [ self definingMethod allTemporaryVariables includes: variableName ]
-			errorString: 'Method named ', selector, ' does not define a temporary variable named ', variableName )
-		& ( RBCondition
-			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
-			errorString: 'Variable named ', variableName, ' cannot be removed because it is an argument in this method' )
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

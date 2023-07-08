@@ -54,6 +54,13 @@ RBRemoveMethodTransformation class >> selectors: aCollection from: aClassName [
 ]
 
 { #category : #preconditions }
+RBRemoveMethodTransformation >> applicabilityConditions [
+
+	^ (RBCondition definesSelector: selector in: self definingClass)
+		& (RBCondition withBlock: [ self checkSuperMethods. true ])
+]
+
+{ #category : #preconditions }
 RBRemoveMethodTransformation >> checkBrowseAllOccurrences: anCollectionOfOccurrences [
 
 	| methods callers |
@@ -152,8 +159,7 @@ RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 { #category : #preconditions }
 RBRemoveMethodTransformation >> preconditions [
 
-	^ (RBCondition definesSelector: selector in: self definingClass)
-		& (RBCondition withBlock: [ self checkSuperMethods. true ])
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

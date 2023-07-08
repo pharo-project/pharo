@@ -44,16 +44,9 @@ RBRemoveSubtreeTransformation class >> model: aRBModel code: aString from: aSele
 		yourself
 ]
 
-{ #category : #api }
-RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
-
-	self className: aClassName.
-	selector := aSelector.
-	sourceCode := aString
-]
-
 { #category : #preconditions }
-RBRemoveSubtreeTransformation >> preconditions [
+RBRemoveSubtreeTransformation >> applicabilityConditions [ 
+
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&
 			(RBCondition
@@ -71,6 +64,20 @@ RBRemoveSubtreeTransformation >> preconditions [
 						ifNil: [ self
 								refactoringError: 'Could not extract code from method ' , selector ].
 					true ])
+]
+
+{ #category : #api }
+RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
+
+	self className: aClassName.
+	selector := aSelector.
+	sourceCode := aString
+]
+
+{ #category : #preconditions }
+RBRemoveSubtreeTransformation >> preconditions [
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }
