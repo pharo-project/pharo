@@ -39,12 +39,11 @@ ClyOverriddenSuperclassesChanged >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #testing }
-ClyOverriddenSuperclassesChanged >> affectsMethodsTaggedWith: tagName [
+ClyOverriddenSuperclassesChanged >> affectsMethodsInProtocol: protocol [
 
-	overridingSubclass allSuperclassesDo: [:each |
-		(each tagsForMethods includes: tagName) ifTrue: [ ^true ] ].
+	overridingSubclass allSuperclassesDo: [ :superclass | (superclass protocolNames includes: protocol) ifTrue: [ ^ true ] ].
 
-	^false
+	^ false
 ]
 
 { #category : #accessing }

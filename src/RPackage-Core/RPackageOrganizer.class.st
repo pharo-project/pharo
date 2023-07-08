@@ -771,13 +771,11 @@ RPackageOrganizer >> registerInterestToSystemAnnouncement [
 RPackageOrganizer >> registerPackage: aPackage [
 	"A new package is now available and declared in the receiver. "
 
-	self validateCanBeAddedPackage: aPackage.
+	self validateCanBeAddedPackageName: aPackage name tagName: nil.
 
 	self basicRegisterPackage: aPackage.
-	aPackage extendedClasses
-		do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass].
-	aPackage definedClasses
-		do: [ :definedClass | self registerPackage: aPackage forClass: definedClass].
+	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
+	aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
 
 	SystemAnnouncer announce: (PackageAdded to: aPackage).
 
@@ -1261,37 +1259,20 @@ RPackageOrganizer >> unregisterPackageNamed: symbol [
 ]
 
 { #category : #private }
-RPackageOrganizer >> validateCanBeAddedPackage: aPackage [
-	self validateCanBeAddedPackageName: aPackage name tagName: nil
-]
-
-{ #category : #private }
-RPackageOrganizer >> validateCanBeAddedPackage: aPackage tagName: aSymbol [
-	aPackage name = aSymbol
-		ifTrue: [ ^ self ].
-	self
-		validateCanBeAddedPackageName: aPackage name , '-' , aSymbol
-		tagName: nil
-]
-
-{ #category : #private }
 RPackageOrganizer >> validateCanBeAddedPackageName: packageName tagName: tagName [
+
 	| package |
+	package := self packageNamed: packageName ifAbsent: [
+		           (packageName includes: $-) ifFalse: [ ^ self ].
 
-	package := self
-		packageNamed: packageName
-		ifAbsent: [
-			(packageName includes: $-) ifFalse: [ ^ self ].
+		           ^ self validateCanBeAddedPackageName: (packageName copyUpToLast: $-) tagName: (packageName copyAfterLast: $-) , (tagName
+				              ifNotNil: [ '-' , tagName ]
+				              ifNil: [ '' ]) ].
 
-			^ self
-				validateCanBeAddedPackageName: (packageName copyUpToLast: $-)
-				tagName: ((packageName copyAfterLast: $-), (tagName
-					ifNotNil: [ '-', tagName ]
-					ifNil: [ '' ] )) ].
-
-	(tagName isEmptyOrNil or: [ package includesClassTagNamed: tagName ])
-		ifTrue: [
-			RPackageConflictError signal: ('Package/Tag can not be added because it conflicts with package {1} tag {2}' format: { packageName. tagName })  ]
+	(tagName isEmptyOrNil or: [ package includesClassTagNamed: tagName ]) ifTrue: [
+		RPackageConflictError signal: ('Package/Tag can not be added because it conflicts with package {1} tag {2}' format: {
+					 packageName.
+					 tagName }) ]
 ]
 
 { #category : #registration }

@@ -40,8 +40,9 @@ ClassRepackaged >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #testing }
-ClassRepackaged >> affectsMethodsTaggedWith: tagName [
-	^classRepackaged tagsForMethods includes: tagName
+ClassRepackaged >> affectsMethodsInProtocol: protocol [
+
+	^ classRepackaged protocolNames includes: protocol
 ]
 
 { #category : #accessing }
