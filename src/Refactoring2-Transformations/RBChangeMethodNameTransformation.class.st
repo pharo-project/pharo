@@ -14,7 +14,7 @@ Class {
 { #category : #preconditions }
 RBChangeMethodNameTransformation >> applicabilityConditions [
 		
-	^ self myConditions & (RBCondition definesSelector: oldSelector in: class)
+	^ (RBCondition definesSelector: oldSelector in: class)
 				& (RBCondition isValidMethodName: newSelector for: class).
 
 ]
@@ -79,11 +79,6 @@ RBChangeMethodNameTransformation >> modifyImplementorParseTree: parseTree in: aC
 	| oldArgs |
 	oldArgs := parseTree arguments.
 	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
-]
-
-{ #category : #support }
-RBChangeMethodNameTransformation >> myConditions [
-	"^self subclassResponsibility"
 ]
 
 { #category : #support }

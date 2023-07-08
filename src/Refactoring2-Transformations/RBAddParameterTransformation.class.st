@@ -106,12 +106,6 @@ RBAddParameterTransformation >> modifyImplementorParseTree: parseTree in: aClass
 ]
 
 { #category : #adding }
-RBAddParameterTransformation >> myConditions [ 
-
-	^ RBCondition true
-]
-
-{ #category : #adding }
 RBAddParameterTransformation >> newArgs [
 	^ newArgs ifNil: [ newArgs := { } ]
 ]

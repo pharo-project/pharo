@@ -57,11 +57,6 @@ RBRenameMethodTransformation >> modifyImplementorParseTree: parseTree in: aClass
 ]
 
 { #category : #accessing }
-RBRenameMethodTransformation >> myConditions [ 
-	^ RBCondition true
-]
-
-{ #category : #accessing }
 RBRenameMethodTransformation >> parseTreeRewriter [
 	| rewriteRule oldString newString |
 	oldString := self buildSelectorString: oldSelector.

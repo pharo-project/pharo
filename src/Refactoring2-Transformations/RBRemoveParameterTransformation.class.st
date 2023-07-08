@@ -78,12 +78,6 @@ RBRemoveParameterTransformation >> localPreconditions [
 ]
 
 { #category : #private }
-RBRemoveParameterTransformation >> myConditions [
-
-	^ RBCondition true
-]
-
-{ #category : #private }
 RBRemoveParameterTransformation >> preconditions [ 
 	"It looks like the localPreconditions is doing a side effect!!! argh! "
 	^  self localPreconditions & super preconditions
