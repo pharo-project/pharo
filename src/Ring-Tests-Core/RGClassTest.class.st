@@ -291,16 +291,16 @@ RGClassTest >> testTagsForMethods [
 
 	class := RGClass unnamed.
 
-	self assert: class tagsForMethods isEmpty.
+	self assertEmpty: class tagsForMethods.
 	self assert: (class hasUnresolved: #tagsForMethods).
 
 	method1 := class ensureLocalMethodNamed: #method1.
 	method2 := class ensureLocalMethodNamed: #method2.
 
-	self assert: class tagsForMethods isEmpty.
+	self assertEmpty: class tagsForMethods.
 	self assert: (class hasResolved: #tagsForMethods).
 
-	self assert: (class methodsTaggedWith: #tag1) isEmpty.
+	self assertEmpty: (class methodsTaggedWith: #tag1).
 
 	method1 tagWith: #tag1.
 	self assert: method1 tags equals: #(#tag1).
@@ -330,9 +330,9 @@ RGClassTest >> testTagsForMethods [
 	class removeLocalMethod: method2.
 	self assert: class tagsForMethods sorted equals: #(#tag1 #tag2 #tag3).
 
-	self assert: (class methodsTaggedWith: #tag1) isEmpty.
-	self assert: (class methodsTaggedWith: #tag2) isEmpty.
-	self assert: (class methodsTaggedWith: #tag3) isEmpty
+	self assertEmpty: (class methodsTaggedWith: #tag1).
+	self assertEmpty: (class methodsTaggedWith: #tag2).
+	self assertEmpty: (class methodsTaggedWith: #tag3)
 ]
 
 { #category : #tests }

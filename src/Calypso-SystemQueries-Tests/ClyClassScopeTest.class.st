@@ -80,14 +80,14 @@ ClyClassScopeTest >> testMethodGroupsEnumeration [
 
 	scope methodGroupsDo: [ :each | result add: each ].
 
-	self assert: (result collect: #class as: Set) equals: {
+	self assertCollection: (result collect: #class) hasSameElements: {
 			ClyAllMethodGroup.
-			ClyMethodsInProtocolGroup } asSet.
+			ClyMethodsInProtocolGroup }.
 	self
-		assert: (result
+		assertCollection: (result
 				 select: [ :each | each class = ClyMethodsInProtocolGroup ]
-				 thenCollect: [ :group | group protocol ]) sorted asArray
-		equals: ClyClass1FromP1Mock tagsForMethods sorted asArray
+				 thenCollect: [ :group | group protocol ])
+		hasSameElements: ClyClass1FromP1Mock protocolNames
 ]
 
 { #category : #tests }

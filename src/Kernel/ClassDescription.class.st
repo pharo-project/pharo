@@ -649,13 +649,6 @@ ClassDescription >> isInstanceSide [
 ]
 
 { #category : #testing }
-ClassDescription >> isLocalMethodsProtocol: aProtocol [
-	aProtocol methodSelectors ifEmpty: [ ^ true ].
-
-	^ aProtocol methodSelectors anySatisfy: [ :each | self isLocalSelector: each ]
-]
-
-{ #category : #testing }
 ClassDescription >> isLocalSelector: aSelector [
 
 	^ self methodDict includesKey: aSelector
@@ -696,16 +689,6 @@ ClassDescription >> localSlots [
 ClassDescription >> methodsInProtocol: protocol [
 
 	^ (self selectorsInProtocol: protocol) collect: [ :selector | self compiledMethodAt: selector ]
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> methodsTaggedWith: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	And class contains all method tags which used or not used yet by methods.
-	This method select all methods marked by given tag.
-	Tags are not inherited from traits. So we only select local methods"
-
-	^self localMethods select: [ :each | each isTaggedWith: aSymbol ]
 ]
 
 { #category : #slots }
@@ -1182,20 +1165,6 @@ ClassDescription >> tags [
 	packageTag isRoot ifTrue: [ ^ #(  ) ].
 
 	^ { packageTag name }
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> tagsForMethods [
-	"Any method could be tagged with multiple symbols for user purpose.
-	And class contains all method tags which used or not used yet by methods.
-	For now we could only implemented it on top of Protocol.
-	It supposed to not include any method tags inherited from Traits
-	which is opposite to current Protocol implementation.
-	And extension protocol is not treated as tag"
-	| allProtocols |
-	allProtocols := self protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
-
-	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy' }
