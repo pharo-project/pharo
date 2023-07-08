@@ -44,13 +44,13 @@ RBAddParameterTransformation >> addParameterToMethod: aSelector in: aClass newSe
 RBAddParameterTransformation >> applicabilityConditions [ 
 	
 	^ super applicabilityConditions & 
-		 RBCondition withBlock:
+		 (RBCondition withBlock:
 			[ oldSelector numArgs < newSelector numArgs
 				ifFalse:
 					[ self refactoringError: newSelector printString,
 					' doesn''t have the proper number of arguments.'].
 			self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg value1 ].
-			true]
+			true])
 ]
 
 { #category : #adding }
@@ -106,8 +106,9 @@ RBAddParameterTransformation >> modifyImplementorParseTree: parseTree in: aClass
 ]
 
 { #category : #adding }
-RBAddParameterTransformation >> myConditions [
-	^ self applicabilityConditions
+RBAddParameterTransformation >> myConditions [ 
+
+	^ RBCondition true
 ]
 
 { #category : #adding }
