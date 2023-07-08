@@ -256,14 +256,11 @@ RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 
 	^ self new
 		  block: [
-			  (aClass withAllSubclasses
-				   detect: [ :each |
-					   (each whichSelectorsReferToInstanceVariable: aString)
-						   isNotEmpty ]
-				   ifNone: [ nil ]) notNil ]
+			  aClass withAllSubclasses anySatisfy: [ :each |
+				  (each whichSelectorsReferToInstanceVariable: aString) isNotEmpty ] ]
 		  errorString: aClass printString
 			  , ' or subclass <1?:does not >reference<1?s:> instance variable '
-			  , '#', aString
+			  , '#' , aString
 ]
 
 { #category : #utilities }
@@ -437,15 +434,11 @@ RBCondition class >> subclassesOf: aClass referToSelector: aSelector [
 
 	^ self new
 		  block: [
-			  (aClass subclasses
-				   detect: [ :each |
-					   (each selectors
-						    detect: [ :sel |
-							    | tree |
-							    tree := each parseTreeForSelector: sel.
-							    tree notNil and: [ tree superMessages includes: aSelector ] ]
-						    ifNone: [ nil ]) notNil ]
-				   ifNone: [ nil ]) notNil ]
+			  aClass subclasses anySatisfy: [ :each |
+				  each selectors anySatisfy: [ :sel |
+					  | tree |
+					  tree := each parseTreeForSelector: sel.
+					  tree notNil and: [ tree superMessages includes: aSelector ] ] ] ]
 		  errorString:
 			  '<1?:no:a> subclass of ' , aClass printString , ' refers to '
 			  , aSelector printString
