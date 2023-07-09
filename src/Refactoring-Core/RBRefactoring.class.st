@@ -175,13 +175,6 @@ RBRefactoring >> performChanges [
 		addUndoPointer: RBRefactoryChangeManager nextCounter
 ]
 
-{ #category : #transforming }
-RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [
-	[ aRefactoring copyOptionsFrom: self options.
-	aRefactoring primitiveExecute ]
-	on: RBRefactoringWarning do: [ :ex | ex resume ]
-]
-
 { #category : #private }
 RBRefactoring >> primitiveExecute [
 	
