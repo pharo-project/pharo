@@ -90,8 +90,8 @@ RBCopyClassRefactoring >> copyMethods [
 RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	rbClass1 selectors do: [ :symbol | | rbMethod |
 		rbMethod := rbClass1 methodFor: symbol.
-		self performCompositeRefactoringThroughWarning:
-			(RBAddMethodRefactoring
+		self performCompositeRefactoring:
+			(RBAddMethodTransformRefactoring 
 				model: self model
 				addMethod: rbMethod source
 				toClass: rbClass2
