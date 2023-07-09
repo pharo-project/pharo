@@ -78,5 +78,9 @@ RBMoveMethodToClassRefactoring >> transform [
 	originalProtocol := method protocolName.
 	oldClass removeMethod: method selector.
 	newClass addMethod: rbMethod.
-	newClass compile: rbMethod source classified: {originalProtocol}
+	self generateCompositeChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: rbMethod source
+			toClass: newClass
+			inProtocols: originalProtocol)
 ]

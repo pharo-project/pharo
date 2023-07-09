@@ -90,7 +90,11 @@ RBGeneratePrintOnTransformation >> transform [
 					(self parserClass
 						parseExpression:
 							('aStream nextPutAll: '' <1s>: ''; print: <1s>' expandMacrosWith: each)) ].
-	self theClass compile: method formattedCode classified: #(printing)
+	self generateCompositeChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: method formattedCode
+			toClass: self theClass
+			inProtocols: #printing)
 ]
 
 { #category : #accessing }

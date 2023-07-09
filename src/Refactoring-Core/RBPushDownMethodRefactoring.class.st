@@ -95,7 +95,11 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 	self generateCompositeChangesFor: refactoring.
 	self allClasses do: [ :each |
 		(each directlyDefinesMethod: aSelector) ifFalse: [
-			each compile: code classified: protocols ] ]
+			self generateCompositeChangesFor:
+				(RBAddMethodTransformRefactoring
+					addMethod: code
+					toClass: each
+					inProtocols: protocols) ] ]
 ]
 
 { #category : #initialization }

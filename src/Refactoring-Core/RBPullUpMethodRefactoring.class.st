@@ -234,7 +234,11 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 				fromClass: superclassDefiner
 				toClasses: subclasses.
 	self generateCompositeChangesFor: refactoring.
-	subclasses do: [:each | each compile: oldSource classified: oldProtocol]
+	subclasses do: [:each | 	self generateCompositeChangesFor:
+										(RBAddMethodTransformRefactoring
+											addMethod: oldSource
+											toClass: each
+											inProtocols: oldProtocol)]
 ]
 
 { #category : #transforming }
@@ -274,8 +278,11 @@ RBPullUpMethodRefactoring >> pullUp: aSelector [
 				fromClass: class
 				toClasses: (Array with: targetSuperclass).
 	self generateCompositeChangesFor: refactoring.
-	targetSuperclass compile: source
-		classified: (class protocolsFor: aSelector)
+	self generateCompositeChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: source
+			toClass: targetSuperclass 
+			inProtocols: (class protocolsFor: aSelector))
 ]
 
 { #category : #initialization }

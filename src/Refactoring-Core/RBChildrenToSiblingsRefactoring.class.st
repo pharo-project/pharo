@@ -93,7 +93,11 @@ RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in
 		ifTrue: [ ^ self ].
 	source := self subclassResponsibilityFor: aSelector in: aClass.
 	source ifNil: [ ^ self ].
-	aClass superclass compile: source classified: ( aClass protocolsFor: aSelector )
+	self generateCompositeChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: source
+			toClass: aClass superclass
+			inProtocols: (aClass protocolsFor: aSelector))
 ]
 
 { #category : #initialization }
@@ -178,7 +182,11 @@ RBChildrenToSiblingsRefactoring >> pushUp: aSelector in: aClass [
 
 	source := aClass sourceCodeFor: aSelector.
 	source
-		ifNotNil: [ aClass superclass compile: source classified: ( aClass protocolsFor: aSelector ) ]
+		ifNotNil: [ 	self generateCompositeChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: source
+			toClass: aClass superclass
+			inProtocols: (aClass protocolsFor: aSelector)) ]
 ]
 
 { #category : #'private - methods' }

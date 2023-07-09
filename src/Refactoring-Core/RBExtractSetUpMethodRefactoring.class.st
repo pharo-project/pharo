@@ -130,7 +130,11 @@ RBExtractSetUpMethodRefactoring >> transform [
 	existingSelector ifNil: [
 		self renameAllParameters.
 		extractedParseTree body addNodeFirst: (RBParser parseExpression: 'super setUp').
-		class compile: extractedParseTree newSource classified: #running ].
+		self generateCompositeChangesFor:
+			(RBAddMethodTransformRefactoring
+				addMethod: extractedParseTree newSource
+				toClass: class
+				inProtocols: #running)].
 	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
 	class compileTree: modifiedParseTree
 ]

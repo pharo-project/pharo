@@ -17,5 +17,9 @@ RBProtocolRegexTransformation >> transform [
 		class selectors do: [ :selector |
 			(class realClass protocolNameOfSelector: selector) asString ifNotNil: [ :original |
 				replacement := self execute: original.
-				replacement = original ifFalse: [ class compile: (class sourceCodeFor: selector) classified: replacement ] ] ] ]
+				replacement = original ifFalse: [ self generateCompositeChangesFor:
+																(RBAddMethodTransformRefactoring
+																	addMethod: (class sourceCodeFor: selector)
+																	toClass: class
+																	inProtocols: replacement)] ] ] ]
 ]

@@ -31,5 +31,9 @@ RBPrettyPrintCodeTransformation >> transform [
 											(source ~= formatted
 												and: [ (self parserClass parseMethod: formatted) = tree ])
 												ifTrue:
-													[ class compile: formatted classified: (class protocolsFor: selector) ] ] ] ] ] ]
+													[ 	self generateCompositeChangesFor:
+															(RBAddMethodTransformRefactoring
+																addMethod: formatted
+																toClass: class
+																inProtocols: (class protocolsFor: selector)) ] ] ] ] ] ]
 ]
