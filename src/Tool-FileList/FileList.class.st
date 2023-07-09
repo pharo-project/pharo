@@ -1030,13 +1030,13 @@ FileList >> okayAndCancelServices [
 
 { #category : #'own services' }
 FileList >> openImageInWindow [
-	"Handle five file formats: GIF, JPG, PNG, Form stoteOn: (run coded), and
-	BMP. Fail if file format is not recognized."
-	| image |
-	self reference streamWritable: false do: [ :stream|
-		image := Form fromBinaryStream: stream].
+	"Handle five file formats: GIF, JPG, PNG, Form stoteOn: (run coded), and BMP. 
+	Fail if file format is not recognized."
 
-	(ImageMorph withForm: image) openInWorld
+	| image |
+	image := self reference binaryReadStreamDo: [ :stream |
+		         Form fromBinaryStream: stream ].
+	(ImageMorph withForm: image) openInWindow
 ]
 
 { #category : #initialization }
@@ -1147,37 +1147,37 @@ FileList >> readContentsBrief: brevityFlag [
 
 { #category : #private }
 FileList >> readContentsHex: brevity [
-	"retrieve the contents from the external file unless it is too long.
-	  Don't create a file here.  Check if exists."
+	"Retrieve the contents from the external file unless it is too long.
+	Don't create a file here.  Check if exists."
 
-	| size data hexData s |
-	self reference binaryReadStreamDo: [ :f |
-		f ifNil: [ ^ 'For some reason, this file cannot be read' translated ].
-		(size := f size) > 5000 & brevity
-			ifTrue: [
-				data := f next: 10000.
-				brevityState := #briefHex ]
-			ifFalse: [
-				data := f upToEnd.
-				brevityState := #fullHex ].
-
-		s := (String new: data size * 4) writeStream.
-		0 to: data size - 1 by: 16 do: [ :loc |
-			s
-				nextPutAll: loc printStringHex;
-				space;
-				nextPut: $(;
-				print: loc;
-				nextPut: $);
-				space;
-				tab.
-			loc + 1 to: (loc + 16 min: data size) do: [ :i |
-				s
-					nextPutAll: (data at: i) printStringHex;
-					space ].
-			s cr ].
-		hexData := s contents ].
-
+	| size data hexData stream |
+	size := 0.
+	hexData := self reference binaryReadStreamDo: [ :f |
+		           f ifNil: [
+			           ^ 'For some reason, this file cannot be read' translated ].
+		           data := (size := f size) > 5000 & brevity
+			                   ifTrue: [
+				                   brevityState := #briefHex.
+				                   f next: 10000 ]
+			                   ifFalse: [
+				                   brevityState := #fullHex.
+				                   f upToEnd ].
+		           stream := (String new: data size * 4) writeStream.
+		           0 to: data size - 1 by: 16 do: [ :loc |
+			           stream
+				           nextPutAll: loc printStringHex;
+				           space;
+				           nextPut: $(;
+				           print: loc;
+				           nextPut: $);
+				           space;
+				           tab.
+			           loc + 1 to: (loc + 16 min: data size) do: [ :i |
+				           stream
+					           nextPutAll: (data at: i) printStringHex;
+					           space ].
+			           stream cr ].
+		           stream contents ].
 	^ contents := size > 5000 & brevity
 		              ifTrue: [
 			              '{1}
@@ -1640,8 +1640,10 @@ FileList >> viewContents [
 	"View the contents of my selected file in a new text window"
 
 	| aString |
-	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
-	UIManager default edit: aString label: 'Contents from ' , self reference basename
+	aString := self reference readStreamDo: [ :stream | stream upToEnd ].
+	UIManager default
+		edit: aString
+		label: 'Contents from ' , self reference basename
 ]
 
 { #category : #'own services' }
@@ -1649,7 +1651,7 @@ FileList >> viewContentsInWorkspace [
 	"View the contents of my selected file in a new workspace"
 
 	| aString |
-	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
+	aString := self reference readStreamDo: [ :stream | stream upToEnd ].
 	Smalltalk tools workspace openContents: aString
 ]
 
