@@ -1151,15 +1151,14 @@ FileList >> readContentsHex: brevity [
 	  Don't create a file here.  Check if exists."
 
 	| size data hexData s |
-	self reference readStreamEncoded: ZnNullEncoder new do: [ :f |
+	self reference binaryReadStreamDo: [ :f |
 		f ifNil: [ ^ 'For some reason, this file cannot be read' translated ].
 		(size := f size) > 5000 & brevity
 			ifTrue: [
 				data := f next: 10000.
-				f close.
 				brevityState := #briefHex ]
 			ifFalse: [
-				data := f contents.
+				data := f upToEnd.
 				brevityState := #fullHex ].
 
 		s := (String new: data size * 4) writeStream.
