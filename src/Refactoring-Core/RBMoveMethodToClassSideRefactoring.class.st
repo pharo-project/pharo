@@ -160,7 +160,7 @@ RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
 	references do: [ :e |
 		| replacer accessorsRefactoring |
 		accessorsRefactoring := self accessorsFor: e.
-		self performCompositeRefactoring: accessorsRefactoring.
+		self generateCompositeChangesFor: accessorsRefactoring.
 		replacer := self parseTreeRewriterClass
 			            variable: e
 			            getter: accessorsRefactoring getterMethodName

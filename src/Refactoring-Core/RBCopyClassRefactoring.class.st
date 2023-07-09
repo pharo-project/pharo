@@ -63,7 +63,7 @@ RBCopyClassRefactoring >> category: aSymbol [
 
 { #category : #transforming }
 RBCopyClassRefactoring >> copyClass [
-	self performCompositeRefactoring: (RBInsertNewClassRefactoring
+	self generateCompositeChangesFor: (RBInsertNewClassRefactoring
 		model: self model
 		addClass: className
 		superclass: aClass superclass
@@ -90,7 +90,7 @@ RBCopyClassRefactoring >> copyMethods [
 RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	rbClass1 selectors do: [ :symbol | | rbMethod |
 		rbMethod := rbClass1 methodFor: symbol.
-		self performCompositeRefactoring:
+		self generateCompositeChangesFor:
 			(RBAddMethodTransformRefactoring 
 				model: self model
 				addMethod: rbMethod source
@@ -102,13 +102,13 @@ RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 { #category : #transforming }
 RBCopyClassRefactoring >> copyVariables [
 	aClass instanceVariableNames do: [ :varName |
-		self performCompositeRefactoring: (RBAddInstanceVariableRefactoring
+		self generateCompositeChangesFor: (RBAddInstanceVariableRefactoring
 		model: self model
 		variable: varName
 		class: className) ].
 
 	aClass classVariableNames do: [ :varName |
-		self performCompositeRefactoring: (RBAddClassVariableRefactoring
+		self generateCompositeChangesFor: (RBAddClassVariableRefactoring
 		model: self model
 		variable: varName
 		class: className) ]

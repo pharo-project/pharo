@@ -92,7 +92,7 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 		               forMethod: (class parseTreeForSelector: aSelector)
 		               fromClass: class
 		               toClasses: self allClasses.
-	self performCompositeRefactoring: refactoring.
+	self generateCompositeChangesFor: refactoring.
 	self allClasses do: [ :each |
 		(each directlyDefinesMethod: aSelector) ifFalse: [
 			each compile: code classified: protocols ] ]

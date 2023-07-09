@@ -56,7 +56,7 @@ RBChildrenToSiblingsRefactoring >> abstractSuperclass [
 
 { #category : #transforming }
 RBChildrenToSiblingsRefactoring >> addSuperclass [
-	self performCompositeRefactoring: (RBInsertNewClassRefactoring
+	self generateCompositeChangesFor: (RBInsertNewClassRefactoring
 				model: self model
 				addClass: className
 				superclass: parent superclass
@@ -125,7 +125,7 @@ RBChildrenToSiblingsRefactoring >> pullUpClassInstanceVariables [
 	newSuperclass := self abstractSuperclass classSide.
 	parent classSide instanceVariableNames do:
 		[ :each |
-		self performCompositeRefactoring: (RBPullUpInstanceVariableRefactoring
+		self generateCompositeChangesFor: (RBPullUpInstanceVariableRefactoring
 				model: self model
 				variable: each
 				class: newSuperclass) ]
@@ -137,7 +137,7 @@ RBChildrenToSiblingsRefactoring >> pullUpClassVariables [
 	newSuperclass := self abstractSuperclass.
 	parent classVariableNames do:
 			[:each |
-			self performCompositeRefactoring: (RBPullUpClassVariableRefactoring
+			self generateCompositeChangesFor: (RBPullUpClassVariableRefactoring
 						model: self model
 						variable: each
 						class: newSuperclass)]
@@ -149,7 +149,7 @@ RBChildrenToSiblingsRefactoring >> pullUpInstanceVariables [
 	newSuperclass := self abstractSuperclass.
 	parent instanceVariableNames do:
 			[:each |
-			self performCompositeRefactoring: (RBPullUpInstanceVariableRefactoring
+			self generateCompositeChangesFor: (RBPullUpInstanceVariableRefactoring
 						model: self model
 						variable: each
 						class: newSuperclass)]
