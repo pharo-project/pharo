@@ -357,6 +357,21 @@ PBImageBuilder50 >> createInitialObjects [
 	self checkpoint: 'created_initial_objects'
 ]
 
+{ #category : #'method-compiling' }
+PBImageBuilder50 >> createNewMethod: aMethodDefinition [
+	"	| ownerClass |
+""	ownerClass := self behaviorFrom: aMethodDefinition methodClass instanceSide."
+
+	"	aMethodDefinition methodClass isMeta ifTrue: [ ownerClass := ownerClass classSide ].
+"
+
+	| method timeToCompile |
+	timeToCompile := [ method := self objectSpace crossCompiler compile: aMethodDefinition sourceCode forClass: aMethodDefinition methodClass inEnvironment: self ]
+		                 timeToRun.
+	self statistics addCompilationTime: timeToCompile.
+	^ method
+]
+
 { #category : #running }
 PBImageBuilder50 >> createNil [
 
@@ -651,8 +666,7 @@ PBImageBuilder50 >> installExtensionMethodsOf: aPackageDefinition prefixed: aPre
 		:index | 
 		| compiledMethod behaviorMirror methodClass logMessage |
 		methodClass := methodDefinition methodClass.
-		compiledMethod := self methodBuilder createNewMethod:
-			                  methodDefinition.
+		compiledMethod := self createNewMethod: methodDefinition.
 		behaviorMirror := bootstrapEnvironment at:
 			                  methodClass instanceSide name.
 		methodClass isMeta ifTrue: [ 
@@ -711,21 +725,19 @@ PBImageBuilder50 >> installMethodsInBehaviorDefinition: behaviorDefinition prefi
 	behaviorMirror := bootstrapEnvironment at: behaviorDefinition name.
 	self
 		installMethodsInBehaviorMapping: behaviorDefinition
-		using: self methodBuilder
 		onMirror: behaviorMirror
 		prefixed: aPrefix.
 	self
 		installMethodsInBehaviorMapping: behaviorDefinition classSide
-		using: self methodBuilder
 		onMirror: behaviorMirror basicClass
 		prefixed: aPrefix.
 ]
 
 { #category : #running }
-PBImageBuilder50 >> installMethodsInBehaviorMapping: aBehaviorMapping using: aMethodBuilder onMirror: mirror prefixed: aPrefix [
+PBImageBuilder50 >> installMethodsInBehaviorMapping: aBehaviorMapping onMirror: mirror prefixed: aPrefix [
 
 	| newMethods theClass |
-	newMethods := (aMethodBuilder methodsFromDefinition: aBehaviorMapping) 
+	newMethods := (self methodsFromDefinition: aBehaviorMapping) 
 		              sorted: [ :a :b | a selector < b selector ].
 	theClass := (self classNamed: aBehaviorMapping instanceSide name)
 		            mirror.
@@ -763,9 +775,11 @@ PBImageBuilder50 >> metaclassForClassMirror: anEPClassMirror [
 	^ EPRemoteMetaClass on: anEPClassMirror environment: self
 ]
 
-{ #category : #accessing }
-PBImageBuilder50 >> methodBuilder [
-	^ PBMethodCompiler new builder: self; yourself.	
+{ #category : #'method-compiling' }
+PBImageBuilder50 >> methodsFromDefinition: aBehaviorDefinition [
+	"Get all the methods we consider we want from the current environment and return a copy, binded to the new class"
+
+	^ aBehaviorDefinition localMethods collect: [ :m | self createNewMethod: m ]
 ]
 
 { #category : #accessing }
