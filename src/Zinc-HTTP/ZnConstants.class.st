@@ -41,7 +41,7 @@ ZnConstants class >> frameworkLicense [
 
 { #category : #accessing }
 ZnConstants class >> frameworkMCVersion [
-	MCWorkingCopy managersForClass: self class do: [ :each | ^ each ancestors first name ]
+	MCWorkingCopy workingCopiesForClass: self class do: [ :workingCopy | ^ workingCopy ancestors first name ]
 ]
 
 { #category : #accessing }

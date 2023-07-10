@@ -53,11 +53,11 @@ MetacelloMCProject >> fetchProject: aLoaderPolicy [
 	mcLoader loaderPolicy: aLoaderPolicy.
 	mcLoader doingLoads: [ 
 		MCWorkingCopy
-			managersForClass: self configuration class
-			do: [:mgr | | pkg |
+			workingCopiesForClass: self configuration class
+			do: [:workingCopy | | pkg |
 				pkg := self packageSpec.
-				mgr repositoryGroup repositories do: [:repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
-				pkg name: mgr packageName.
+				workingCopy repositoryGroup repositories do: [:repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
+				pkg name: workingCopy packageName.
 				pkg fetchUsing: mcLoader.
 				^true ]].
 	^true
@@ -118,15 +118,15 @@ MetacelloMCProject >> projectForScriptEngine: aMetacelloScriptEngine uncondition
 { #category : #'development support' }
 MetacelloMCProject >> projectPackage [
   MCWorkingCopy
-    managersForClass: self configuration class
-    do: [ :mgr | 
+    workingCopiesForClass: self configuration class
+    do: [ :workingCopy | 
       | pkgSpec repo |
       pkgSpec := self packageSpec
-        name: mgr packageName;
+        name: workingCopy packageName;
         yourself.
-      mgr ancestors notEmpty
-        ifTrue: [ pkgSpec file: mgr ancestors first name ].
-      repo := mgr repositoryGroup repositories
+      workingCopy ancestors notEmpty
+        ifTrue: [ pkgSpec file: workingCopy ancestors first name ].
+      repo := workingCopy repositoryGroup repositories
         detect: [ :each | each ~~ MetacelloPlatform current defaultPackageCache ]
         ifNone: [ 
           MetacelloNotification signal: ('Using cache repository for ' , self label , ' project package').
@@ -211,12 +211,12 @@ MetacelloMCProject >> updateProject: aLoaderPolicy [
 	mcLoader
 		doingLoads: [ 
 			MCWorkingCopy
-				managersForClass: self configuration class
-				do: [ :mgr | 
+				workingCopiesForClass: self configuration class
+				do: [ :workingCopy | 
 					| pkg ar |
 					pkg := self packageSpec.
-					mgr repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
-					ar := mgr metacelloPackageNameWithBranch.
+					workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
+					ar := workingCopy metacelloPackageNameWithBranch.
 					pkg name: (ar at: 1).
 					(ar at: 2) notEmpty
 						ifTrue: [ pkg file: (ar at: 2) ].
