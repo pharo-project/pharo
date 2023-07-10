@@ -38,10 +38,16 @@ SystemAnnouncer class >> reset [
 { #category : #initialization }
 SystemAnnouncer class >> restoreAllNotifications [
 
-	"self restoreAllNotifications"
+	<script>
+	Stdio stdout
+		nextPutAll: 'Reseting announcer.';
+		lf.
 
 	self reset.
 	(Pragma allNamed: #systemEventRegistration) do: [ :pragma |
+		Stdio stdout
+			nextPutAll: 'Registering: ' , pragma method printString;
+			lf.
 		pragma methodClass instanceSide perform: pragma methodSelector ]
 ]
 
