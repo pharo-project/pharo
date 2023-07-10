@@ -454,7 +454,7 @@ RPackageOrganizer >> includesCategory: aString [
 { #category : #testing }
 RPackageOrganizer >> includesPackage: aPackage [
 	"Answer whether the receiver get a package as registered."
-	^ self includesPackageNamed: aPackage name
+	^ self hasPackage: aPackage name
 ]
 
 { #category : #'private - testing' }
@@ -465,8 +465,9 @@ RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 
 { #category : #testing }
 RPackageOrganizer >> includesPackageNamed: aSymbol [
-	"Answer whether the receiver get a package named aSymbol as registered."
-	^ packages includesKey:  aSymbol asSymbol
+
+	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackageNamed: `@arg' -> '`@rcv hasPackage: `@arg'.
+	^ self hasPackage: aSymbol
 ]
 
 { #category : #initialization }

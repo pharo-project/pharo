@@ -194,7 +194,7 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 { #category : #visitor }
 EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
 
-	^ (self packageOrganizer includesPackageNamed: aPackageAddition packageName)
+	^ (self packageOrganizer hasPackage: aPackageAddition packageName)
 		  ifTrue: [ {  } ]
 		  ifFalse: [ { aPackageAddition } ]
 ]
@@ -202,7 +202,7 @@ EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
 { #category : #visitor }
 EpApplyPreviewer >> visitPackageRemoval: aPackageRemoval [
 
-	^ (self packageOrganizer includesPackageNamed: aPackageRemoval packageName)
+	^ (self packageOrganizer hasPackage: aPackageRemoval packageName)
 		  ifTrue: [ { aPackageRemoval } ]
 		  ifFalse: [ {  } ]
 ]

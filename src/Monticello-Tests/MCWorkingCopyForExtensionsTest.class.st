@@ -33,7 +33,7 @@ MCWorkingCopyForExtensionsTest >> testAddingExtensionMethodNotMatchingPackage [
 
 	aClass compile: 'testingMethod ^ 42 ' classified: '*atestpackage-something-else'.
 
-	self deny: (self packageOrganizer includesPackageNamed: 'Atestpackage-something-else').
+	self deny: (self packageOrganizer hasPackage: 'Atestpackage-something-else').
 	self assert: ('ATestPackage' asPackage extendedClasses includes: aClass).
 
 	MCWorkingCopy registry at: (MCPackage named: 'atestpackage-something-else') ifPresent: [ self fail ]
