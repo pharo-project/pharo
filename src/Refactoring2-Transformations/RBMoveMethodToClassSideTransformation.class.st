@@ -38,6 +38,17 @@ RBMoveMethodToClassSideTransformation >> addMethod: rbMethod to: aClass toProtoc
 ]
 
 { #category : #refactoring }
+RBMoveMethodToClassSideTransformation >> applicabilityConditions [
+	^ (RBCondition
+			definesSelector: method selector
+			in: class classSide) not
+		& (RBCondition withBlock: [ class isMeta not ])
+		
+	
+
+]
+
+{ #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> checkVariableNamed: aString [
 	(class whoDefinesInstanceVariable: aString) ifNotNil:
 			[^ true].
@@ -87,10 +98,7 @@ RBMoveMethodToClassSideTransformation >> parseTree [
 
 { #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> preconditions [
-	^(RBCondition
-		definesSelector: method selector
-		in: class classSide) not
-		& (RBCondition withBlock: [ class isMeta not ])
+	^ self applicabilityConditions 
 ]
 
 { #category : #refactoring }

@@ -20,14 +20,9 @@ ClyMethodsInProtocolGroupProviderTest >> testCreateGroupsForEveryProtocol [
 	| groups query |
 	self buildGroupsFor: ClySubclassN1OfClass1FromP1Mock.
 
-	groups := builtGroups select: [ :each |
-		          each isKindOf: ClyMethodsInProtocolGroup ].
-	self
-		assert: (groups collect: [ :group | group protocol ] as: Set)
-		equals: ClySubclassN1OfClass1FromP1Mock tagsForMethods asSet.
+	groups := builtGroups select: [ :each | each isKindOf: ClyMethodsInProtocolGroup ].
+	self assertCollection: (groups collect: [ :group | group protocol ]) hasSameElements: ClySubclassN1OfClass1FromP1Mock protocolNames.
 	query := groups first methodQuery.
 	self assert: query class equals: ClyMethodsInProtocolQuery.
-	self
-		assert: query scope
-		equals: (ClyClassScope of: ClySubclassN1OfClass1FromP1Mock)
+	self assert: query scope equals: (ClyClassScope of: ClySubclassN1OfClass1FromP1Mock)
 ]

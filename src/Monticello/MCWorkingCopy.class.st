@@ -78,24 +78,6 @@ MCWorkingCopy class >> announcer: anAnnouncer [
 ]
 
 { #category : #'system changes' }
-MCWorkingCopy class >> bestMatchingManagerForCategory: aSystemCategory do: aBlock [
-	| bestMatches bestMatchingManagerAndPackage |
-	bestMatches := OrderedCollection new.
-	self registry do: [ :mgr |
-		| candidatePackages bestMatchingPackage |
-		candidatePackages := mgr packageSet packages select: [ :package |
-			package name asUppercase beginsWith: aSystemCategory asUppercase ].
-		bestMatchingPackage := candidatePackages detectMin: [ :package |
-			package name size ].
-		bestMatchingPackage ifNotNil: [
-			bestMatches add: mgr -> bestMatchingPackage ] ].
-	bestMatchingManagerAndPackage := bestMatches detectMin: [ :managerAndPackage |
-			managerAndPackage value name size ].
-	bestMatchingManagerAndPackage ifNotNil: [ :managerAndPackage |
-		aBlock value: managerAndPackage key ]
-]
-
-{ #category : #'system changes' }
 MCWorkingCopy class >> classModified: anEvent [
 	self 
 		managersForClass: anEvent classAffected 
@@ -196,28 +178,28 @@ MCWorkingCopy class >> managersForCategory: aSystemCategory do: aBlock [
 	"Got to be careful here - we might get method categories where capitalization is problematic."
 
 	| cat foundOne index |
-	foundOne := false.
-	cat := aSystemCategory ifNil: [ ^ nil ]. "yes this happens; for example in eToy projects"
-	"first ask PackageInfos, their package name might not match the category"
-	self bestMatchingManagerForCategory: aSystemCategory do: [ :mgr |
-		aBlock value: mgr.
-		foundOne := true ].
+	aSystemCategory ifNil: [ ^ nil ]. "yes this happens; for example when we remove a method and there is not protocol associated anymore."
 
-	foundOne ifTrue: [ ^ self ].
+	"We first check if a working copy associated to a package in the system matches the name."
+	(self registry select: [ :workingCopy | workingCopy systemPackage isNotNil and: [ workingCopy packageName sameAs: aSystemCategory ] ]) ifNotEmpty: [
+		:matchingCopies | ^ aBlock value: (matchingCopies detectMin: [ :workingCopy | workingCopy packageName size ]) ].
+
+	foundOne := false.
+	cat := aSystemCategory.
 	[ "Loop over categories until we found a matching one"
 	self registry keys
 		detect: [ :aPackage | aPackage name sameAs: cat ]
 		ifFound: [ :aPackage |
-			| mgr |
-			mgr := self registry at: aPackage.
-			aBlock value: mgr.
+			| workingCopy |
+			workingCopy := self registry at: aPackage.
+			aBlock value: workingCopy.
 			foundOne := true.
 			false ]
 		ifNone: [
 			index := cat lastIndexOf: $-.
 			index > 0 ] ] whileTrue: [ "Step up to next level package" cat := cat copyFrom: 1 to: index - 1 ].
 
-	foundOne ifFalse: [ "Create a new (but only top-level)" aBlock value: (MCWorkingCopy ensureForPackageNamed: aSystemCategory capitalized) ]
+	foundOne ifFalse: [ "Create a new (but only top-level)" aBlock value: (self ensureForPackageNamed: aSystemCategory capitalized) ]
 ]
 
 { #category : #'system changes' }
@@ -807,6 +789,12 @@ MCWorkingCopy >> snapshot [
 ]
 
 { #category : #accessing }
+MCWorkingCopy >> systemPackage [
+
+	^ self package correspondingRPackage
+]
+
+{ #category : #accessing }
 MCWorkingCopy >> theCachedRepository [
 
 	^ MCCacheRepository uniqueInstance.
@@ -844,8 +832,8 @@ MCWorkingCopy >> unload [
 	| postUnloadAction |
 	
 	postUnloadAction := [].
-	self package correspondingRPackage ifNotNil: [ :anRPackage |
-		anRPackage packageManifestOrNil ifNotNil: [ :manifest |
+	self systemPackage ifNotNil: [ :aPackage |
+		aPackage packageManifestOrNil ifNotNil: [ :manifest |
 			postUnloadAction := manifest postUnloadAction.
 			manifest preUnload ]].
 	MCPackageLoader unloadPackage: self package.		

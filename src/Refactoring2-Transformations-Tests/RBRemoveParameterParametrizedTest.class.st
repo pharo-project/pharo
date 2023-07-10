@@ -7,8 +7,9 @@ Class {
 { #category : #tests }
 RBRemoveParameterParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
+			addCase: { #rbClass -> RBRemoveParameterTransformation};
 		addCase: { #rbClass -> RBRemoveParameterRefactoring };
-		addCase: { #rbClass -> RBRemoveParameterTransformation};
+	
 		yourself
 ]
 
@@ -68,10 +69,16 @@ RBRemoveParameterParametrizedTest >> testRemoveParameter [
 	refactoring := self createRefactoringWithArguments:
 		{ 'anArg' . RBClassDataForRefactoringTest . ('rename' , 'ThisMethod:') asSymbol }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
-	self assert: (class parseTreeForSelector: #renameThisMethod) equals: (self parseMethod: 'renameThisMethod
+	
+	self 
+		assert: (class parseTreeForSelector: #renameThisMethod) 
+		equals: (self parseMethod: 'renameThisMethod
 								^self').
-	self assert: (class parseTreeForSelector: #callMethod) equals: (self parseMethod: 'callMethod
+	self 
+		assert: (class parseTreeForSelector: #callMethod) 
+		equals: (self parseMethod: 'callMethod
 								^(self renameThisMethod)').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)
 ]

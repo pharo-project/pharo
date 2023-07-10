@@ -60,5 +60,8 @@ RBPackageRefactoring >> packageName: anObject [
 { #category : #preconditions }
 RBPackageRefactoring >> preconditions [
 
-	^ RBCondition withBlock: [ self packageOrganizer hasPackage: packageName ]
+	^ RBCondition
+		  withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+			  self packageOrganizer hasPackage: packageName ]
+		  errorString: 'The package ' , packageName , ' does not exists in the system'
 ]
