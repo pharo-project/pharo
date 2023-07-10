@@ -312,7 +312,10 @@ MCWorkingCopy class >> workingCopiesForExtensionProtocol: extensionName do: aBlo
 MCWorkingCopy class >> workingCopiesForPackage: aPackage do: aBlock [
 
 	self registry
-		select: [ :workingCopy | workingCopy systemPackage includesSystemCategory: aPackage name ]
+		select: [ :workingCopy |
+			workingCopy systemPackage
+				ifNil: [ false ]
+				ifNotNil: [ :package | package includesSystemCategory: aPackage name ] ]
 		thenDo: aBlock
 ]
 
