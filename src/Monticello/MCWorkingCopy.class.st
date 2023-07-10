@@ -297,15 +297,19 @@ MCWorkingCopy class >> packageRenamed: anAnnouncement [
 MCWorkingCopy class >> registerForNotifications [
 
 	<systemEventRegistration>
-	self announcer: nil.
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	self registerInterestOnSystemChangesOnAnnouncer: SystemAnnouncer uniqueInstance
+	self
+		announcer: nil;
+		unregisterForNotifications;
+		registerInterestOnSystemChanges
 ]
 
 { #category : #'event registration' }
-MCWorkingCopy class >> registerInterestOnSystemChangesOnAnnouncer: anAnnouncer [
+MCWorkingCopy class >> registerInterestOnSystemChanges [
 
-	anAnnouncer weak
+	Stdio stdout
+		nextPutAll: 'Registering working copy';
+		lf.
+	SystemAnnouncer uniqueInstance weak
 		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
 		when: PackageRemoved send: #packageRemoved: to: self;
@@ -338,6 +342,10 @@ MCWorkingCopy class >> registry [
 
 { #category : #'event registration' }
 MCWorkingCopy class >> unregisterForNotifications [
+
+	Stdio stdout
+		nextPutAll: 'Unregistering working copy';
+		lf.
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
