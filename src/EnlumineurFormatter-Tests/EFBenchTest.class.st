@@ -22,15 +22,6 @@ EFBenchTest >> basicMethod2 [
 	1 to: 10 do: [:i | Transcript show:i ; cr ;cr]
 ]
 
-{ #category : #tests }
-EFBenchTest >> basicMethod3 [
-	"a method with many similar expressions."
-	| x y |
-	x to: y do: [:i | Transcript show:i ; cr ;cr].
-	x to: y do: [:i | Transcript show:i ; cr ;cr].
-	x to: y do: [:i | Transcript show:i ; cr: x ; cr: x ].
-]
-
 { #category : #resources }
 EFBenchTest >> longNestedMethod [
 
