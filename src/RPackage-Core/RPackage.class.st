@@ -222,7 +222,9 @@ RPackage >> addClassTag: aSymbol [
 	tagName := self toTagName: aSymbol.
 
 	^ self classTagNamed: tagName ifAbsent: [
-		  self organizer validateCanBeAddedPackage: self tagName: tagName.
+		  self name = tagName ifFalse: [
+			  self flag: #package. "We are giving nil as first tag name because currently there is a bug that we cannot have a package that has the same name as a package and tag. So we first want to ensure we do not have a package of the same name. When this limitation will be removed in the future we should directly give the package name and the tag name without going through the nil."
+			  self organizer validateCanBeAddedPackageName: self name , '-' , tagName tagName: nil ].
 		  newTag := self basicAddClassTag: tagName.
 		  SystemAnnouncer announce: (PackageTagAdded to: newTag).
 		  ^ newTag ]

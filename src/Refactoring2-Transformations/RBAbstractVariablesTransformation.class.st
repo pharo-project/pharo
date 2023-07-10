@@ -105,11 +105,11 @@ RBAbstractVariablesTransformation >> abstractInstanceVariables [
 
 { #category : #executing }
 RBAbstractVariablesTransformation >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
+
 	| poolTransformation |
 	tree := aBRProgramNode.
 	fromClass := self model classObjectFor: fromBehavior.
-	toClasses := behaviorCollection
-				collect: [:each | self model classObjectFor: each].
+	toClasses := behaviorCollection collect: [ :each | self model classObjectFor: each ].
 	ignore := aVariableName.
 	poolTransformation := (RBExpandReferencedPoolsTransformation
 				model: self model
@@ -161,6 +161,7 @@ RBAbstractVariablesTransformation >> parseTree [
 
 { #category : #executing }
 RBAbstractVariablesTransformation >> privateTransform [
+	self flag: #popUp.
 	self hasVariablesToAbstract
 		ifTrue:
 			[self

@@ -528,13 +528,6 @@ CompiledMethod >> isSubclassResponsibility: marker [
 	^ marker == self class subclassResponsibilityMarker
 ]
 
-{ #category : #testing }
-CompiledMethod >> isTaggedWith: aSymbol [
-	"Not methods tags implemented by protocols. Look #tags comment"
-
-	^ self protocolName == aSymbol
-]
-
 { #category : #'source code management' }
 CompiledMethod >> linesOfCode [
 	"An approximate measure of lines of code.

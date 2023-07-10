@@ -23,6 +23,16 @@ Class {
 	#category : #'Refactoring2-Transformations-Model'
 }
 
+{ #category : #preconditions }
+RBAddVariableAccessorTransformation >> applicabilityConditions [ 
+
+	class := self model classObjectFor: className.
+
+	^ isClassVariable
+		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
+		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+]
+
 { #category : #private }
 RBAddVariableAccessorTransformation >> createGetterAccessor [
 
@@ -65,11 +75,7 @@ RBAddVariableAccessorTransformation >> getterMethod [
 { #category : #preconditions }
 RBAddVariableAccessorTransformation >> preconditions [
 
-	class := self model classObjectFor: className.
-
-	^ isClassVariable
-		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
-		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

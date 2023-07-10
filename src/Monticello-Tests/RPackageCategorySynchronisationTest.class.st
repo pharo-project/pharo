@@ -14,7 +14,7 @@ RPackageCategorySynchronisationTest >> testAddCategoryCreatesPackage [
 	self flag: #pharoTodo. "To be removed when Categories are kicked out"
 	
 	self addXCategory.
-	self assert: (self organizer includesPackageNamed: #XXXXX)
+	self assert: (self organizer hasPackage: #XXXXX)
 ]
 
 { #category : #'tests - operations on categories' }
@@ -79,7 +79,7 @@ RPackageCategorySynchronisationTest >> testRenameCategoryUpdateTheOrganizer [
 	xPackage := self organizer packageNamed: #XXXXX.
 	self packageOrganizer renameCategory: 'XXXXX' toBe: 'YYYYY'.
 	self assert: (self organizer packageNamed: 'YYYYY' asSymbol) equals: xPackage.
-	self deny: (self organizer includesPackageNamed: #XXXXX)
+	self deny: (self organizer hasPackage: #XXXXX)
 ]
 
 { #category : #'tests - operations on categories' }
@@ -89,7 +89,7 @@ RPackageCategorySynchronisationTest >> testRenameUnknownCategoryCreatesNewRPacka
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self addXCategory.
 		].
-	self deny: (self organizer includesPackageNamed: #XXXXX).
+	self deny: (self organizer hasPackage: #XXXXX).
 	self packageOrganizer renameCategory: 'XXXXX' toBe: 'YYYYY'.
-	self assert: (self organizer includesPackageNamed: #YYYYY).
+	self assert: (self organizer hasPackage: #YYYYY).
 ]

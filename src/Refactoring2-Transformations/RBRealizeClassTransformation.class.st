@@ -36,8 +36,13 @@ RBRealizeClassTransformation class >> model: aRBModel className: aName [
 ]
 
 { #category : #preconditions }
-RBRealizeClassTransformation >> preconditions [
+RBRealizeClassTransformation >> applicabilityConditions [ 
 	^ (RBCondition isClassNamed: className definedIn: model)
+]
+
+{ #category : #preconditions }
+RBRealizeClassTransformation >> preconditions [
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

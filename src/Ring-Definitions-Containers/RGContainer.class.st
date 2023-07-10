@@ -8,23 +8,24 @@ Class {
 }
 
 { #category : #'image package loading' }
-RGContainer class >> allManagers [
+RGContainer class >> allWorkingCopies [
 
-	^ Smalltalk globals at: #MCWorkingCopy
-		ifPresent: [:mcwc | mcwc allManagers ]
-		ifAbsent: [OrderedCollection new ]
+	^ Smalltalk globals
+		  at: #MCWorkingCopy
+		  ifPresent: [ :class | class allWorkingCopies ]
+		  ifAbsent: [ OrderedCollection new ]
 ]
 
 { #category : #'image package loading' }
 RGContainer class >> packageKeys [
 
-	^ self allManagers collect: [ :pck | pck package name asSymbol -> ('*', pck package name asLowercase) ]
+	^ self allWorkingCopies collect: [ :pck | pck package name asSymbol -> ('*' , pck package name asLowercase) ]
 ]
 
 { #category : #'image package loading' }
 RGContainer class >> packageNames [
 
-	^ self allManagers collect: [ :pck | pck package name asSymbol ]
+	^ self allWorkingCopies collect: [ :pck | pck package name asSymbol ]
 ]
 
 { #category : #'image package loading' }
@@ -370,9 +371,9 @@ RGContainer >> loadPackagesFromImage [
 
 	| rgPackage rgPackageKeys |
 	rgPackageKeys := OrderedCollection new.
-	self class allManagers do: [ :pck |
+	self class allWorkingCopies do: [ :pck |
 		rgPackage := RGPackageDefinition named: pck package name asSymbol.
-		rgPackageKeys add: (rgPackage name -> ('*', rgPackage name asLowercase)).
+		rgPackageKeys add: rgPackage name -> ('*' , rgPackage name asLowercase).
 		self addPackage: rgPackage ].
 	^ rgPackageKeys
 ]

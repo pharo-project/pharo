@@ -337,7 +337,7 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	
 	I am bad because I do not update the SystemOrganizer and I do not announce the new packages. I am still here only because I am still needed in the bootstrap. But please do not use me."
 
-	^ (self includesPackageNamed: aSymbol)
+	^ (self hasPackage: aSymbol)
 		  ifFalse: [ self basicRegisterPackage: (RPackage named: aSymbol organizer: self) ]
 		  ifTrue: [
 			  | package |
@@ -398,13 +398,21 @@ RPackageOrganizer >> globalPackageOf: aClass [
 		ifNone: [ classPackage ]
 ]
 
+{ #category : #testing }
+RPackageOrganizer >> hasPackage: aPackage [
+	"Takes a package or a package name as parameter and return true if I include this package."
+
+	^ packages includesKey: (aPackage isString
+			   ifTrue: [ aPackage ]
+			   ifFalse: [ aPackage name ]) asSymbol
+]
+
 { #category : #'system integration' }
 RPackageOrganizer >> hasPackageExactlyMatchingExtensionName: anExtensionName [
 	| extension |
 	extension := anExtensionName asSymbol.
 	"fast version"
-	(self includesPackageNamed: extension)
-		ifTrue: [  ^ true ].
+	(self hasPackage: extension) ifTrue: [  ^ true ].
 
 	"slow version ignoring case"
 	packages keysDo: [ :aSymbol |
@@ -432,20 +440,6 @@ RPackageOrganizer >> hasPackageMatchingExtensionName: anExtensionName [
 		(anExtensionName beginsWith: aSymbol asString, '-' caseSensitive: false)
 			ifTrue: [ ^ true]].
 	^ false
-]
-
-{ #category : #testing }
-RPackageOrganizer >> hasRegistered [
-	"return true if this package organizer has already registered interest to system events and Monticello changes "
-
-	^ self announcer hasSubscriber: self
-
-	"|actionSequence|
-	self announcer subscriptions ifNil: [^ true].
-	actionSequence := self announcer subscriptions values
-								detect: [:each | each anySatisfy: [:anAction | anAction receiver = RPackage organizer]] ifNone: [nil].
-	self flag: #cyril.
-	^ (actionSequence isNil not) and: [(MCWorkingCopy myDependents includes: self)]"
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -776,13 +770,11 @@ RPackageOrganizer >> registerInterestToSystemAnnouncement [
 RPackageOrganizer >> registerPackage: aPackage [
 	"A new package is now available and declared in the receiver. "
 
-	self validateCanBeAddedPackage: aPackage.
+	self validateCanBeAddedPackageName: aPackage name tagName: nil.
 
 	self basicRegisterPackage: aPackage.
-	aPackage extendedClasses
-		do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass].
-	aPackage definedClasses
-		do: [ :definedClass | self registerPackage: aPackage forClass: definedClass].
+	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
+	aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
 
 	SystemAnnouncer announce: (PackageAdded to: aPackage).
 
@@ -1266,42 +1258,24 @@ RPackageOrganizer >> unregisterPackageNamed: symbol [
 ]
 
 { #category : #private }
-RPackageOrganizer >> validateCanBeAddedPackage: aPackage [
-	self validateCanBeAddedPackageName: aPackage name tagName: nil
-]
-
-{ #category : #private }
-RPackageOrganizer >> validateCanBeAddedPackage: aPackage tagName: aSymbol [
-	aPackage name = aSymbol
-		ifTrue: [ ^ self ].
-	self
-		validateCanBeAddedPackageName: aPackage name , '-' , aSymbol
-		tagName: nil
-]
-
-{ #category : #private }
 RPackageOrganizer >> validateCanBeAddedPackageName: packageName tagName: tagName [
+
 	| package |
+	package := self packageNamed: packageName ifAbsent: [
+		           (packageName includes: $-) ifFalse: [ ^ self ].
 
-	package := self
-		packageNamed: packageName
-		ifAbsent: [
-			(packageName includes: $-) ifFalse: [ ^ self ].
+		           ^ self validateCanBeAddedPackageName: (packageName copyUpToLast: $-) tagName: (packageName copyAfterLast: $-) , (tagName
+				              ifNotNil: [ '-' , tagName ]
+				              ifNil: [ '' ]) ].
 
-			^ self
-				validateCanBeAddedPackageName: (packageName copyUpToLast: $-)
-				tagName: ((packageName copyAfterLast: $-), (tagName
-					ifNotNil: [ '-', tagName ]
-					ifNil: [ '' ] )) ].
-
-	(tagName isEmptyOrNil or: [ package includesClassTagNamed: tagName ])
-		ifTrue: [
-			RPackageConflictError signal: ('Package/Tag can not be added because it conflicts with package {1} tag {2}' format: { packageName. tagName })  ]
+	(tagName isEmptyOrNil or: [ package includesClassTagNamed: tagName ]) ifTrue: [
+		RPackageConflictError signal: ('Package/Tag can not be added because it conflicts with package {1} tag {2}' format: {
+					 packageName.
+					 tagName }) ]
 ]
 
 { #category : #registration }
 RPackageOrganizer >> validatePackageDoesNotExist: aPackageName [
 
-	(self includesPackageNamed: aPackageName)
-		ifTrue: [ self signalPackageExists: aPackageName ]
+	(self hasPackage: aPackageName) ifTrue: [ self signalPackageExists: aPackageName ]
 ]

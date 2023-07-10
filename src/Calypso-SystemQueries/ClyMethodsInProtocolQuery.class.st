@@ -63,7 +63,7 @@ ClyMethodsInProtocolQuery >> hash [
 { #category : #'system changes' }
 ClyMethodsInProtocolQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
-	^ (aSystemAnnouncement affectsMethodsTaggedWith: protocol) and: [ scope includesMethodsAffectedBy: aSystemAnnouncement ]
+	^ (aSystemAnnouncement affectsMethodsInProtocol: protocol) and: [ scope includesMethodsAffectedBy: aSystemAnnouncement ]
 ]
 
 { #category : #printing }

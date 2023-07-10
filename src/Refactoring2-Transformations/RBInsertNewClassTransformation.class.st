@@ -73,7 +73,7 @@ RBInsertNewClassTransformation >> addClass: aName superclass: superclassName sub
 ]
 
 { #category : #preconditions }
-RBInsertNewClassTransformation >> preconditions [
+RBInsertNewClassTransformation >> applicabilityConditions [
 	"Superclass and subclasses shouldn't be metaclasses.
 	Each subclass should be immediate subclass of superclass."
 
@@ -90,11 +90,30 @@ RBInsertNewClassTransformation >> preconditions [
 		        & (RBCondition
 				         isImmediateSubclass: (self model classObjectFor: each)
 				         of: (self model classObjectFor: superclass)) ].
-	^ cond & (RBCondition isValidClassName: className)
-	  & (RBCondition isGlobal: className in: self model) not
+	^ cond & self isValidClassName & self isNotGlobal
 	  & (RBCondition isSymbol: category)
 	  & ((RBCondition withBlock: [ category isNotEmpty ]) errorMacro:
 			   'Invalid category name')
+]
+
+{ #category : #preconditions }
+RBInsertNewClassTransformation >> isNotGlobal [
+
+	^ (RBCondition isGlobal: className in: self model) not
+]
+
+{ #category : #preconditions }
+RBInsertNewClassTransformation >> isValidClassName [
+
+	^ RBCondition isValidClassName: className
+]
+
+{ #category : #preconditions }
+RBInsertNewClassTransformation >> preconditions [
+	"Superclass and subclasses shouldn't be metaclasses.
+	Each subclass should be immediate subclass of superclass."
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }
