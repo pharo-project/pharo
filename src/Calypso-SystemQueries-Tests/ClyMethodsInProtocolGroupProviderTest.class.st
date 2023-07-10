@@ -11,7 +11,7 @@ ClyMethodsInProtocolGroupProviderTest >> classSampleWhichHasGroup [
 
 { #category : #running }
 ClyMethodsInProtocolGroupProviderTest >> groupProviderClass [
-	^ClyTaggedMethodGroupProvider
+	^ClyMethodsInProtocolGroupProvider
 ]
 
 { #category : #tests }
