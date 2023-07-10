@@ -13,9 +13,9 @@ PBMethodCompiler >> buildPackagesList [
 	| classes |
 	classes := builder behaviorDefinitions.
 	^((Smalltalk at: #MCWorkingCopy ifAbsent: [ ^#() ] )
-		allManagers
-			select: [ :m | classes anySatisfy: [ :c | m packageInfo includesClassNamed: c name ] ]
-			thenCollect: [ :m | m packageInfo packageName asUppercase ]) asSet asOrderedCollection.
+		allWorkingCopies
+			select: [ :wc | classes anySatisfy: [ :c | wc packageInfo includesClassNamed: c name ] ]
+			thenCollect: [ :wc | wc packageInfo packageName asUppercase ]) asSet asOrderedCollection.
 ]
 
 { #category : #accessing }
