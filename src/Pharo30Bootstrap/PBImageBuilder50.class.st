@@ -359,11 +359,6 @@ PBImageBuilder50 >> createInitialObjects [
 
 { #category : #'method-compiling' }
 PBImageBuilder50 >> createNewMethod: aMethodDefinition [
-	"	| ownerClass |
-""	ownerClass := self behaviorFrom: aMethodDefinition methodClass instanceSide."
-
-	"	aMethodDefinition methodClass isMeta ifTrue: [ ownerClass := ownerClass classSide ].
-"
 
 	| method timeToCompile |
 	timeToCompile := [ method := self objectSpace crossCompiler compile: aMethodDefinition sourceCode forClass: aMethodDefinition methodClass inEnvironment: self ]
