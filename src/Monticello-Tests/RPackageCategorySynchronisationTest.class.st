@@ -10,9 +10,9 @@ Class {
 { #category : #'tests - operations on categories' }
 RPackageCategorySynchronisationTest >> testAddCategoryCreatesPackage [
 	"test that when we add a category that does not yet correspond to an existing package, a new package is created"
-		
+
 	self flag: #pharoTodo. "To be removed when Categories are kicked out"
-	
+
 	self addXCategory.
 	self assert: (self organizer hasPackage: #XXXXX)
 ]
@@ -85,11 +85,9 @@ RPackageCategorySynchronisationTest >> testRenameCategoryUpdateTheOrganizer [
 { #category : #'tests - operations on categories' }
 RPackageCategorySynchronisationTest >> testRenameUnknownCategoryCreatesNewRPackage [
 	"test that when we rename a category that is not registered in RPackage , it does not raise errors and simply create a new package. We need this behaviour as for now, create a new category with the class browser does not emit the corrects events, and therefore RPackage can not be directly updated"
-	
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self addXCategory.
-		].
+
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ self addXCategory ].
 	self deny: (self organizer hasPackage: #XXXXX).
 	self packageOrganizer renameCategory: 'XXXXX' toBe: 'YYYYY'.
-	self assert: (self organizer hasPackage: #YYYYY).
+	self assert: (self organizer hasPackage: #YYYYY)
 ]

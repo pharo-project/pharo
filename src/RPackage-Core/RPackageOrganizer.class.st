@@ -416,15 +416,14 @@ RPackageOrganizer >> hasPackage: aPackage [
 
 { #category : #'system integration' }
 RPackageOrganizer >> hasPackageExactlyMatchingExtensionName: anExtensionName [
+
 	| extension |
 	extension := anExtensionName asSymbol.
 	"fast version"
-	(self hasPackage: extension) ifTrue: [  ^ true ].
+	(self hasPackage: extension) ifTrue: [ ^ true ].
 
 	"slow version ignoring case"
-	packages keysDo: [ :aSymbol |
-		(aSymbol sameAs: extension)
-			ifTrue: [ ^ true]].
+	packages keysDo: [ :aSymbol | (aSymbol sameAs: extension) ifTrue: [ ^ true ] ].
 	^ false
 ]
 
@@ -458,10 +457,11 @@ RPackageOrganizer >> includesCategory: aString [
 		  ifNotNil: [ :categories | categories includes: aString ]
 ]
 
-{ #category : #testing }
+{ #category : #deprecated }
 RPackageOrganizer >> includesPackage: aPackage [
-	"Answer whether the receiver get a package as registered."
-	^ self hasPackage: aPackage name
+
+	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.
+	^ self hasPackage: aPackage
 ]
 
 { #category : #'private - testing' }
@@ -470,7 +470,7 @@ RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 	^ classPackageMapping includesKey: aClass instanceSide name asSymbol
 ]
 
-{ #category : #testing }
+{ #category : #deprecated }
 RPackageOrganizer >> includesPackageNamed: aSymbol [
 
 	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackageNamed: `@arg' -> '`@rcv hasPackage: `@arg'.

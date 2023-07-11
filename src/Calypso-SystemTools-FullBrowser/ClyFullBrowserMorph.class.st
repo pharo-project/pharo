@@ -371,7 +371,7 @@ ClyFullBrowserMorph >> isPackagePartOfSelection: aPackage [
 	(self isPackageSelected: aPackage) ifTrue: [ ^true ].
 
 	^self projectSelection actualObjects
-		anySatisfy: [ :each | each includesPackage: aPackage ]
+		anySatisfy: [ :project | project includesPackage: aPackage ]
 ]
 
 { #category : #testing }
