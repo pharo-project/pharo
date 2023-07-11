@@ -31,11 +31,6 @@ Announcement >> affectsMethod: aMethod [
 ]
 
 { #category : #'*System-Announcements' }
-Announcement >> affectsMethodTagIn: aClass [
-	^false
-]
-
-{ #category : #'*System-Announcements' }
 Announcement >> affectsMethods [
 	^false
 ]
@@ -64,6 +59,12 @@ Announcement >> affectsPackage: aPackage [
 { #category : #'*System-Announcements' }
 Announcement >> affectsPackages [
 	^false
+]
+
+{ #category : #'*System-Announcements' }
+Announcement >> affectsProtocolsIn: aClass [
+
+	^ false
 ]
 
 { #category : #'*System-Announcements' }

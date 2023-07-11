@@ -304,12 +304,9 @@ RPackageOrganizer >> classifyAll: aCollection under: categoryName [
 { #category : #registration }
 RPackageOrganizer >> createPackageNamed: aString [
 
-	| instance |
 	self validatePackageDoesNotExist: aString.
 
-	instance := RPackage named: aString organizer: self.
-	self registerPackage: instance.
-	^ instance
+	^ self ensurePackage: aString
 ]
 
 { #category : #'private - testing' }
@@ -360,7 +357,7 @@ RPackageOrganizer >> ensurePackage: aPackage [
 { #category : #registration }
 RPackageOrganizer >> ensureTagNamed: aTagName inPackageNamed: aPackageName [
 
-	^ (self registerPackageNamed: aPackageName) addClassTag: aTagName
+	^ (self ensurePackage: aPackageName) addClassTag: aTagName
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -419,15 +416,14 @@ RPackageOrganizer >> hasPackage: aPackage [
 
 { #category : #'system integration' }
 RPackageOrganizer >> hasPackageExactlyMatchingExtensionName: anExtensionName [
+
 	| extension |
 	extension := anExtensionName asSymbol.
 	"fast version"
-	(self hasPackage: extension) ifTrue: [  ^ true ].
+	(self hasPackage: extension) ifTrue: [ ^ true ].
 
 	"slow version ignoring case"
-	packages keysDo: [ :aSymbol |
-		(aSymbol sameAs: extension)
-			ifTrue: [ ^ true]].
+	packages keysDo: [ :aSymbol | (aSymbol sameAs: extension) ifTrue: [ ^ true ] ].
 	^ false
 ]
 
@@ -461,10 +457,11 @@ RPackageOrganizer >> includesCategory: aString [
 		  ifNotNil: [ :categories | categories includes: aString ]
 ]
 
-{ #category : #testing }
+{ #category : #deprecated }
 RPackageOrganizer >> includesPackage: aPackage [
-	"Answer whether the receiver get a package as registered."
-	^ self hasPackage: aPackage name
+
+	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.
+	^ self hasPackage: aPackage
 ]
 
 { #category : #'private - testing' }
@@ -473,7 +470,7 @@ RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 	^ classPackageMapping includesKey: aClass instanceSide name asSymbol
 ]
 
-{ #category : #testing }
+{ #category : #deprecated }
 RPackageOrganizer >> includesPackageNamed: aSymbol [
 
 	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackageNamed: `@arg' -> '`@rcv hasPackage: `@arg'.
@@ -809,12 +806,6 @@ RPackageOrganizer >> registerPackage: aPackage forClassName: aClassNameSymbol [
 	^classPackageMapping at: aClassNameSymbol put: aPackage
 ]
 
-{ #category : #registration }
-RPackageOrganizer >> registerPackageNamed: aString [
-
-	^ self packageNamed: aString asSymbol ifAbsent: [ self registerPackage: (RPackage named: aString organizer: self) ]
-]
-
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> removeBehavior: behavior [
 	"Remove the behavior from all categories. I can take a Behavior or a Behavior name as argument."
@@ -880,14 +871,11 @@ RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 
 	categoryMap at: newCatString ifPresent: [ "new name exists, so no action" ^ self ].
 
-	categoryMap
-		at: oldCatString
-		ifPresent: [ :classes |
-			categoryMap at: newCatString put: classes.
-			categoryMap removeKey: oldCatString ]
-		ifAbsent: [ "old name not found, so no action" ^ self ].
-
-	SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldCatString to: newCatString
+	categoryMap at: oldCatString ifPresent: [ :classes |
+		categoryMap
+			at: newCatString put: classes;
+			removeKey: oldCatString.
+		SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldCatString to: newCatString ]
 ]
 
 { #category : #'system integration' }

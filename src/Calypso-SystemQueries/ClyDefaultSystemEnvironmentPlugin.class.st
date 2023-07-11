@@ -31,7 +31,7 @@ ClyDefaultSystemEnvironmentPlugin >> collectClassGroupProviders [
 { #category : #'method groups' }
 ClyDefaultSystemEnvironmentPlugin >> collectMethodGroupProviders [
 
-	^{ClyInheritedMethodGroupProvider. ClyTaggedMethodGroupProvider. ClyUnclassifiedMethodGroupProvider. ClyExtendedMethodGroupProvider}
+	^{ClyInheritedMethodGroupProvider. ClyMethodsInProtocolGroupProvider. ClyUnclassifiedMethodGroupProvider. ClyExtendedMethodGroupProvider}
 		collect: [ :each | each new ]
 ]
 

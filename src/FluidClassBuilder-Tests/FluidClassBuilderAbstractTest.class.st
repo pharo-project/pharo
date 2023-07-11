@@ -19,7 +19,7 @@ FluidClassBuilderAbstractTest >> categoryHack [
 	This is due to the category mess in RPackage and it will not be fixed until the category mess is cleaned. Until then, to make sure the tests are in a right state, we register the package without the tag before creating the class to ensure the tag is not added as part of the package name.
 	This is ugly but it is currently hard to do better."
 
-	self packageOrganizer registerPackageNamed: self packageNameForTest
+	self packageOrganizer ensurePackage: self packageNameForTest
 ]
 
 { #category : #accessing }
