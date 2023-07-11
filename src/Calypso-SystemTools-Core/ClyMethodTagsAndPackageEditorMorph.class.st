@@ -158,7 +158,7 @@ ClyMethodTagsAndPackageEditorMorph >> requestTag [
 	| selectedTag existingTag |
 	existingTag := ownerTool methodProtocol ifNil: [ '' ].
 
-	selectedTag := self ownerTool context requestSingleMethodTag: 'New protocol name' suggesting: existingTag.
+	selectedTag := self ownerTool context requestProtocol: 'New protocol name' suggesting: existingTag.
 	selectedTag = existingTag ifTrue: [ ^ CmdCommandAborted signal ].
 
 	ownerTool methodProtocol: selectedTag

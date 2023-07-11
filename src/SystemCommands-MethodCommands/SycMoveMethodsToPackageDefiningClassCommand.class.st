@@ -41,7 +41,7 @@ SycMoveMethodsToPackageDefiningClassCommand >> execute [
 SycMoveMethodsToPackageDefiningClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
-	targetTagName := aToolContext requestSingleMethodTag: 'Choose protocol for methods'
+	targetTagName := aToolContext requestProtocol: 'Choose protocol for methods'
 ]
 
 { #category : #accessing }

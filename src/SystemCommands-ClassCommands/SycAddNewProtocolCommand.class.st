@@ -45,7 +45,7 @@ SycAddNewProtocolCommand >> execute [
 SycAddNewProtocolCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
-	protocol := aToolContext requestSingleMethodTag: 'New protocol name'.
+	protocol := aToolContext requestProtocol: 'New protocol name'.
 
 	targetClass := self requestClassInContext: aToolContext.
 	targetClass := aToolContext currentMetaLevelOf: targetClass

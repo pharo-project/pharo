@@ -51,7 +51,7 @@ ClyConvertMethodGroupToProtocolCommand >> execute [
 ClyConvertMethodGroupToProtocolCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
-	protocol := aToolContext requestSingleMethodTag: 'New protocol name'
+	protocol := aToolContext requestProtocol: 'New protocol name'
 ]
 
 { #category : #accessing }

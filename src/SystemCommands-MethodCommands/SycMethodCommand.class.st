@@ -45,8 +45,8 @@ SycMethodCommand >> methods: anObject [
 
 { #category : #categories }
 SycMethodCommand >> newTagFor: aMethod [
-	^ self asCommandActivator context requestSingleMethodTag: 'New protocol name for: ', aMethod name
-		 suggesting: (MethodClassifier suggestProtocolFor: aMethod)
+
+	^ self asCommandActivator context requestProtocol: 'New protocol name for: ' , aMethod name suggesting: (MethodClassifier suggestProtocolFor: aMethod)
 ]
 
 { #category : #'activation - drag and drop' }
