@@ -20,7 +20,7 @@ SlotDeprecation >> messageText [
 				nextPutAll: 'The instance variable ';
 				nextPutAll: context receiver name;
 				nextPutAll: ' accessed in ';
-				nextPutAll: context sender method name;
+				nextPutAll: context sender homeMethod name;
 				nextPutAll: ' has been deprecated. ';
 				nextPutAll: self explanationString ]
 ]
