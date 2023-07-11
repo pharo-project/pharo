@@ -42,6 +42,32 @@ TFProcessLocalWorker class >> initialize [
 ]
 
 { #category : #accessing }
+TFProcessLocalWorker class >> use: aWorker during: aBlock [
+	| oldWorker |
+	
+	oldWorker := self worker.
+	self worker: aWorker.
+	^ aBlock ensure: [ 
+		self worker: oldWorker ]
+]
+
+{ #category : #accessing }
+TFProcessLocalWorker class >> useMainThreadDuring: aBlock [ 
+
+	^ self 
+		use: TFMainThreadRunner uniqueInstance
+		during: aBlock
+]
+
+{ #category : #accessing }
+TFProcessLocalWorker class >> useSameThreadDuring: aBlock [ 
+
+	^ self 
+		use: TFSameThreadRunner uniqueInstance
+		during: aBlock
+]
+
+{ #category : #accessing }
 TFProcessLocalWorker class >> worker [
 
 	^ worker value

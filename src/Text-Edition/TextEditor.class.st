@@ -2394,14 +2394,6 @@ TextEditor >> processKeyStroke: aKeyboardEvent [
 	^self handleKeystrokeAction: [self dispatchOn: aKeyboardEvent]
 ]
 
-{ #category : #'nonediting/nontyping keys' }
-TextEditor >> raiseContextMenu: aKeyboardEvent [
-
-	(morph respondsTo: #editView)
-		ifTrue: [ ^ morph editView yellowButtonActivity: morph activeHand lastEvent shiftPressed].
-	^ true
-]
-
 { #category : #'current selection' }
 TextEditor >> recomputeInterval [
 	"The same characters are selected but their coordinates may have changed."

@@ -348,6 +348,16 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 ]
 
 { #category : #registration }
+RPackageOrganizer >> ensurePackage: aPackage [
+
+	^ aPackage isString
+		  ifTrue: [ self packageNamed: aPackage ifAbsent: [ self registerPackage: (RPackage named: aPackage organizer: self) ] ]
+		  ifFalse: [
+			  (self hasPackage: aPackage) ifFalse: [ self registerPackage: aPackage ].
+			  aPackage ]
+]
+
+{ #category : #registration }
 RPackageOrganizer >> ensureTagNamed: aTagName inPackageNamed: aPackageName [
 
 	^ (self registerPackageNamed: aPackageName) addClassTag: aTagName
@@ -402,9 +412,9 @@ RPackageOrganizer >> globalPackageOf: aClass [
 RPackageOrganizer >> hasPackage: aPackage [
 	"Takes a package or a package name as parameter and return true if I include this package."
 
-	^ packages includesKey: (aPackage isString
-			   ifTrue: [ aPackage ]
-			   ifFalse: [ aPackage name ]) asSymbol
+	^ aPackage isString
+		  ifTrue: [ packages includesKey: aPackage asSymbol ]
+		  ifFalse: [ self packages includes: aPackage ]
 ]
 
 { #category : #'system integration' }
@@ -454,7 +464,7 @@ RPackageOrganizer >> includesCategory: aString [
 { #category : #testing }
 RPackageOrganizer >> includesPackage: aPackage [
 	"Answer whether the receiver get a package as registered."
-	^ self includesPackageNamed: aPackage name
+	^ self hasPackage: aPackage name
 ]
 
 { #category : #'private - testing' }
@@ -465,8 +475,9 @@ RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 
 { #category : #testing }
 RPackageOrganizer >> includesPackageNamed: aSymbol [
-	"Answer whether the receiver get a package named aSymbol as registered."
-	^ packages includesKey:  aSymbol asSymbol
+
+	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackageNamed: `@arg' -> '`@rcv hasPackage: `@arg'.
+	^ self hasPackage: aSymbol
 ]
 
 { #category : #initialization }
@@ -646,10 +657,9 @@ RPackageOrganizer >> packageNamed: aSymbol [
 ]
 
 { #category : #accessing }
-RPackageOrganizer >> packageNamed: aSymbol  ifAbsent: errorBlock [
-	^ packages
-		at: aSymbol asSymbol
-		ifAbsent: errorBlock
+RPackageOrganizer >> packageNamed: aSymbol ifAbsent: errorBlock [
+
+	^ packages at: aSymbol asSymbol ifAbsent: errorBlock
 ]
 
 { #category : #private }
