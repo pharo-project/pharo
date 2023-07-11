@@ -54,9 +54,8 @@ TestCommandLineHandler >> addPackagesMatching: aString to: aSet [
 
 	(aString includes: $*) ifTrue: [ ^ self addPackagesMatchingGlob: aString to: aSet ].
 
-	"exact match, and just those who actually have classes inside (to avoid 
-	 super-package duplications)"
-	((self packageOrganizer hasPackage: aString) and: [ (self packageOrganizer packageNamed: aString) definedClasses notEmpty ]) ifTrue: [ aSet add: aString ]
+	"exact match, and just those who actually have classes inside (to avoid super-package duplications)"
+	((self packageOrganizer hasPackage: aString) and: [ (self packageOrganizer packageNamed: aString) definedClasses isNotEmpty ]) ifTrue: [ aSet add: aString ]
 ]
 
 { #category : #accessing }

@@ -19,58 +19,6 @@ Class {
 }
 
 { #category : #examples }
-FTBasicTreeListDataSource class >> exampleBasicInspect: anObject [
-	<sampleInstance>
-
-	| ds ft |
-
-	ds := FTBasicTreeListDataSource new .
-
-	ds	root: #ROOT->anObject;
-		children: [ :item | item value gtInspectorVariableValuePairs ];
-		sortChildrenBy: [ :a :b | a key asString <= b key asString ];
-		display: [ :item :cell | cell addMorphBack: item printString asMorph ];
-		yourself.
-
-	ft := FTTableMorph new
-		extent: 600@500;
-		dataSource: ds.
-
-	ft openInWindow position: 20@10.
-
-	^ds
-]
-
-{ #category : #examples }
-FTBasicTreeListDataSource class >> exampleInspect: anObject [
-	<sampleInstance>
-
-	| ds ft |
-
-	ds := FTBasicTreeListDataSource new .
-
-	ds	root: #ROOT->anObject;
-		children: [ :item | item value gtInspectorVariableValuePairs ];
-		sortChildrenBy: [ :a :b | a key asString <= b key asString ];
-		display: [ :item :cell | cell
-			addMorphBack: (self iconNamed: item value systemIconName) asMorph;
-			addMorphBack: (item key asStringMorph emphasis: 1; yourself);
-			addMorphBack: (Morph new color: Color transparent; height: 1; width: 10; yourself);
-			addMorphBack: item value asStringMorph ];
-		yourself.
-
-	ds expand: 1.
-
-	ft := FTTableMorph new
-		extent: 800@500;
-		dataSource: ds.
-
-	ft openInWindow position: 20@10.
-
-	^ds
-]
-
-{ #category : #examples }
 FTBasicTreeListDataSource class >> exampleProtoObjectClassTree [
 
 	| ds ft |

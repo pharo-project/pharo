@@ -37,18 +37,6 @@ DACycleDetectionPresenter >> initializeCycleDetectionTreeModelWith: aCollection 
 ]
 
 { #category : #'initialization - filter' }
-DACycleDetectionPresenter >> initializeWithFilter: aCollection [
-	self initializeCycleDetectionTreeModelWith: aCollection.
-	self buildandAddAllMorph
-]
-
-{ #category : #'initialization - union' }
-DACycleDetectionPresenter >> initializeWithPackageNames: aCollection [
-	self model: (DACycleDetectionTreePresenter onPackagesNamed: aCollection).
-	self buildandAddAllMorph
-]
-
-{ #category : #'initialization - filter' }
 DACycleDetectionPresenter >> initializeWithSystemCycles [
 	self model: DACycleDetectionTreePresenter system
 ]
