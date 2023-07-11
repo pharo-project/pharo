@@ -22,5 +22,5 @@ ClyResetMethodTagForEditorCommand >> execute [
 
 	| tagEditor |
 	tagEditor := methodEditor tagsAndPackageEditor.
-	tagEditor resetTagsAndPackage
+	tagEditor resetProtocolAndPackage
 ]

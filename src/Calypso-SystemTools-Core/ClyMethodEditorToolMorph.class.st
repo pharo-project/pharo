@@ -111,7 +111,7 @@ ClyMethodEditorToolMorph >> fillStatusBar [
 	statusBar addCommandItem: (ClyTextLineNumbersSwitchMorph of: textMorph).
 	statusBar addCommandItem: (ClyFormatAsReadSwitchMorph of: textMorph).
 
-	statusBar addCommandItem: (ClyMethodTagsAndPackageEditorMorph for: self)
+	statusBar addCommandItem: (ClyProtocolAndPackageEditorMorph for: self)
 ]
 
 { #category : #operations }
@@ -218,7 +218,7 @@ ClyMethodEditorToolMorph >> tagEditingMethod: aMethod [
 
 { #category : #accessing }
 ClyMethodEditorToolMorph >> tagsAndPackageEditor [
-	^(statusBar findDeeplyA: ClyMethodTagsAndPackageEditorMorph) ifNil: [ CmdCommandAborted signal ]
+	^(statusBar findDeeplyA: ClyProtocolAndPackageEditorMorph) ifNil: [ CmdCommandAborted signal ]
 ]
 
 { #category : #'events handling' }

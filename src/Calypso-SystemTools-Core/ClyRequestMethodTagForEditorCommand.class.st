@@ -27,7 +27,7 @@ ClyRequestMethodTagForEditorCommand >> defaultMenuItemName [
 ClyRequestMethodTagForEditorCommand >> execute [
 	| tagEditor |
 	tagEditor := methodEditor tagsAndPackageEditor.
-	tagEditor requestChangeBy: [ tagEditor requestTag]
+	tagEditor requestChangeBy: [ tagEditor requestProtocol]
 ]
 
 { #category : #execution }
