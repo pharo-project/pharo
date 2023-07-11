@@ -78,7 +78,7 @@ RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 				[self
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
 	modifiedParseTree body removeTemporaryNamed: varName.
-	self performCompositeRefactoring: (RBTemporaryToInstanceVariableRefactoring
+	self generateCompositeChangesFor: (RBTemporaryToInstanceVariableRefactoring
 		model: self model
 		class: class
 		selector: selector
@@ -130,7 +130,11 @@ RBExtractSetUpMethodRefactoring >> transform [
 	existingSelector ifNil: [
 		self renameAllParameters.
 		extractedParseTree body addNodeFirst: (RBParser parseExpression: 'super setUp').
-		class compile: extractedParseTree newSource classified: #running ].
+		self generateCompositeChangesFor:
+			(RBAddMethodTransformRefactoring
+				addMethod: extractedParseTree newSource
+				toClass: class
+				inProtocols: #running)].
 	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
 	class compileTree: modifiedParseTree
 ]

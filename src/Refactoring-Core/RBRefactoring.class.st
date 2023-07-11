@@ -138,6 +138,16 @@ RBRefactoring >> execute [
 ]
 
 { #category : #transforming }
+RBRefactoring >> generateCompositeChangesFor: aRefactoring [
+	"I will generate changes and save them in the model, BUT I will not apply them!
+	Use me when a refactorings is composed of multiple other refactorings"
+
+	"Execute the argument but passing the receiver options to that refactoring"
+	aRefactoring copyOptionsFrom: self options.
+	aRefactoring primitiveExecute
+]
+
+{ #category : #transforming }
 RBRefactoring >> model [
 
 	^ model
@@ -163,20 +173,6 @@ RBRefactoring >> performChanges [
 	RBRefactoryChangeManager instance
 		performChange: self changes;
 		addUndoPointer: RBRefactoryChangeManager nextCounter
-]
-
-{ #category : #transforming }
-RBRefactoring >> performCompositeRefactoring: aRefactoring [
-	"Execute the argument but passing the receiver options to that refactoring"
-	aRefactoring copyOptionsFrom: self options.
-	aRefactoring primitiveExecute
-]
-
-{ #category : #transforming }
-RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [
-	[ aRefactoring copyOptionsFrom: self options.
-	aRefactoring primitiveExecute ]
-	on: RBRefactoringWarning do: [ :ex | ex resume ]
 ]
 
 { #category : #private }

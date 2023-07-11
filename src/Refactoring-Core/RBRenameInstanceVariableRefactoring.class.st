@@ -140,7 +140,11 @@ RBRenameInstanceVariableRefactoring >> renameAccessorsReferences [
 	senders
 		do: [ :each |
 			(each selector = newName or: [ each selector asString = (newName asString , ':') ])
-				ifFalse: [ (model classNamed: class name) compile: each source classified: each protocols ] ]
+				ifFalse: [ self generateCompositeChangesFor:
+								(RBAddMethodTransformRefactoring
+									addMethod: each source
+									toClass: (model classNamed: class name)
+									inProtocols: each protocols) ] ]
 ]
 
 { #category : #transforming }
