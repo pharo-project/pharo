@@ -21,9 +21,9 @@ ProtocolAnnouncement class >> in: aClass protocol: aProtocol [
 ]
 
 { #category : #testing }
-ProtocolAnnouncement >> affectsMethodTagIn: aClass [
+ProtocolAnnouncement >> affectsProtocolsIn: aClass [
 
-	^self classAffected == aClass
+	^ self classAffected == aClass
 ]
 
 { #category : #accessing }
