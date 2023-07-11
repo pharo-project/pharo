@@ -1,7 +1,7 @@
-Extension { #name : #SycAddNewMethodTagCommand }
+Extension { #name : #SycAddNewProtocolCommand }
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
-SycAddNewMethodTagCommand class >> fullBrowserMenuActivation [
+SycAddNewProtocolCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserMethodGroupContext
