@@ -114,7 +114,7 @@ MCVersionLoader >> depAgeIsOk: aDependency [
 
 { #category : #private }
 MCVersionLoader >> ensurePackage: mcPackage [ 
-	RPackageOrganizer default registerPackageNamed: mcPackage name 
+	self packageOrganizer ensurePackage: mcPackage name 
 		
 ]
 

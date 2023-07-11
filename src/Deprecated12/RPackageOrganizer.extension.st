@@ -9,3 +9,10 @@ RPackageOrganizer >> packageExactlyMatchingExtensionName: anExtensionName [
 		transformWith: '`@rcv packageExactlyMatchingExtensionName: `@arg' -> '`@rcv packageNamedIgnoreCase: `@arg ifAbsent: [ nil ]'.
 	^ self packageNamedIgnoreCase: anExtensionName ifAbsent: [ nil ]
 ]
+
+{ #category : #'*Deprecated12' }
+RPackageOrganizer >> registerPackageNamed: aString [
+
+	self deprecated: 'Use #ensurePackage: instead.' transformWith: '`@rcv registerPackageNamed: `@arg' -> '`@rcv ensurePackage: `@arg'.
+	^ self ensurePackage: aString
+]

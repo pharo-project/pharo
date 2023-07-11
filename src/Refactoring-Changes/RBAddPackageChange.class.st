@@ -34,7 +34,7 @@ RBAddPackageChange >> primitiveExecute [
 { #category : #printing }
 RBAddPackageChange >> printOn: aStream [
 	aStream
-		nextPutAll: 'RPackageOrganizer default ';
+		nextPutAll: 'self packageOrganizer ';
 		nextPutAll: #createPackageNamed:;
 		nextPutAll: packageName;
 		nextPut: $!
