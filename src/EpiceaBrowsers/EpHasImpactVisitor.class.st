@@ -145,13 +145,13 @@ EpHasImpactVisitor >> visitMethodRemoval: aChange [
 { #category : #visitor }
 EpHasImpactVisitor >> visitPackageAddition: aPackageAddition [
 
-	^ (self packageOrganizer includesPackageNamed: aPackageAddition packageName) not
+	^ (self packageOrganizer hasPackage: aPackageAddition packageName) not
 ]
 
 { #category : #visitor }
 EpHasImpactVisitor >> visitPackageRemoval: aPackageRemoval [
 
-	^ self packageOrganizer includesPackageNamed: aPackageRemoval packageName
+	^ self packageOrganizer hasPackage: aPackageRemoval packageName
 ]
 
 { #category : #visitor }
