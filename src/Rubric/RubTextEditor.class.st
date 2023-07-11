@@ -1829,12 +1829,6 @@ RubTextEditor >> previousWord: position [
 	^ index
 ]
 
-{ #category : #'nonediting/nontyping keys' }
-RubTextEditor >> raiseContextMenu: aKeyboardEvent [
-
-	^ textArea yellowButtonActivity: textArea activeHand lastEvent shiftPressed
-]
-
 { #category : #'accessing - selection' }
 RubTextEditor >> recomputeSelection [
 	"The same characters are selected but their coordinates may have changed.

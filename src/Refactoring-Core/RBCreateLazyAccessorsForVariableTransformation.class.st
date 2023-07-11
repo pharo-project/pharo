@@ -103,13 +103,14 @@ RBCreateLazyAccessorsForVariableTransformation >> defaultValue: aString [
 { #category : #transforming }
 RBCreateLazyAccessorsForVariableTransformation >> defineGetterMethod [
 
-	(RBAddMethodTransformRefactoring
-		 addMethod: ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
-				  expandMacrosWith: self selector
-				  with: variableName
-				  with: self defaultValue)
-		 toClass: self definingClass
-		 inProtocols: #( #accessing )) execute.
+	self generateCompositeChangesFor:
+		(RBAddMethodTransformRefactoring
+			 addMethod: ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
+					  expandMacrosWith: self selector
+					  with: variableName
+					  with: self defaultValue)
+			 toClass: self definingClass
+			 inProtocols: #( #accessing )).
 
 	^ selector
 ]

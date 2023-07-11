@@ -284,8 +284,6 @@ RPackageOrganizerTest >> testHasPackage [
 	self assert: (organizer hasPackage: name).
 	self assert: (organizer hasPackage: package).
 
-	self skip.
-	self flag: #package. "In the future this next assertion should probably work in order to be able to have multiple PackageOrganizer but for now it does not work."
 	self deny: (organizer hasPackage: packageFromOtherOrganizer)
 ]
 

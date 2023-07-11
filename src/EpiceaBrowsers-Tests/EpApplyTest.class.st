@@ -350,9 +350,9 @@ EpApplyTest >> testPackageAddition [
 	self packageOrganizer unregisterPackageNamed: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpPackageAddition.
-	self deny: (self packageOrganizer includesPackageNamed: classFactory packageName).
+	self deny: (self packageOrganizer hasPackage: classFactory packageName).
 	self applyInputEntry.
-	self assert: (self packageOrganizer includesPackageNamed: classFactory packageName) ] ensure: [
+	self assert: (self packageOrganizer hasPackage: classFactory packageName) ] ensure: [
 		self packageOrganizer unregisterPackageNamed: classFactory packageName ]
 ]
 
@@ -366,9 +366,9 @@ EpApplyTest >> testPackageRemoval [
 	self packageOrganizer createPackageNamed: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpPackageRemoval.
-	self assert: (self packageOrganizer includesPackageNamed: classFactory packageName).
+	self assert: (self packageOrganizer hasPackage: classFactory packageName).
 	self applyInputEntry.
-	self deny: (self packageOrganizer includesPackageNamed: classFactory packageName) ] ensure: [
+	self deny: (self packageOrganizer hasPackage: classFactory packageName) ] ensure: [
 		self packageOrganizer unregisterPackageNamed: classFactory packageName ]
 ]
 

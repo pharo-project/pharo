@@ -218,16 +218,6 @@ RBAbstractTransformation >> preconditions [
 	self subclassResponsibility
 ]
 
-{ #category : #preconditions }
-RBAbstractTransformation >> protocolExist [
-
-	^ RBCondition
-		  withBlock: [
-			  ((model environment protocolsFor: self definingClass realClass)
-				   includes: protocol) not ]
-		  errorString: 'Protocol named ' , protocol , ' already exists'
-]
-
 { #category : #exceptions }
 RBAbstractTransformation >> refactoringConfirmWarning: aString [
 	| ret |

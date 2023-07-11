@@ -439,7 +439,8 @@ RBNamespace >> includesGlobal: aSymbol [
 
 { #category : #testing }
 RBNamespace >> includesPackageNamed: aSymbol [
-	^(self packageNamed: aSymbol) notNil
+
+	^ (self packageNamed: aSymbol) isNotNil
 ]
 
 { #category : #initialization }

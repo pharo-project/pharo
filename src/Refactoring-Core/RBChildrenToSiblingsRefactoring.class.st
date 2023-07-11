@@ -56,7 +56,7 @@ RBChildrenToSiblingsRefactoring >> abstractSuperclass [
 
 { #category : #transforming }
 RBChildrenToSiblingsRefactoring >> addSuperclass [
-	self performCompositeRefactoring: (RBInsertNewClassRefactoring
+	self generateCompositeChangesFor: (RBInsertNewClassRefactoring
 				model: self model
 				addClass: className
 				superclass: parent superclass
@@ -93,7 +93,11 @@ RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in
 		ifTrue: [ ^ self ].
 	source := self subclassResponsibilityFor: aSelector in: aClass.
 	source ifNil: [ ^ self ].
-	aClass superclass compile: source classified: ( aClass protocolsFor: aSelector )
+	self generateCompositeChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: source
+			toClass: aClass superclass
+			inProtocols: (aClass protocolsFor: aSelector))
 ]
 
 { #category : #initialization }
@@ -125,7 +129,7 @@ RBChildrenToSiblingsRefactoring >> pullUpClassInstanceVariables [
 	newSuperclass := self abstractSuperclass classSide.
 	parent classSide instanceVariableNames do:
 		[ :each |
-		self performCompositeRefactoring: (RBPullUpInstanceVariableRefactoring
+		self generateCompositeChangesFor: (RBPullUpInstanceVariableRefactoring
 				model: self model
 				variable: each
 				class: newSuperclass) ]
@@ -137,7 +141,7 @@ RBChildrenToSiblingsRefactoring >> pullUpClassVariables [
 	newSuperclass := self abstractSuperclass.
 	parent classVariableNames do:
 			[:each |
-			self performCompositeRefactoring: (RBPullUpClassVariableRefactoring
+			self generateCompositeChangesFor: (RBPullUpClassVariableRefactoring
 						model: self model
 						variable: each
 						class: newSuperclass)]
@@ -149,7 +153,7 @@ RBChildrenToSiblingsRefactoring >> pullUpInstanceVariables [
 	newSuperclass := self abstractSuperclass.
 	parent instanceVariableNames do:
 			[:each |
-			self performCompositeRefactoring: (RBPullUpInstanceVariableRefactoring
+			self generateCompositeChangesFor: (RBPullUpInstanceVariableRefactoring
 						model: self model
 						variable: each
 						class: newSuperclass)]
@@ -178,7 +182,11 @@ RBChildrenToSiblingsRefactoring >> pushUp: aSelector in: aClass [
 
 	source := aClass sourceCodeFor: aSelector.
 	source
-		ifNotNil: [ aClass superclass compile: source classified: ( aClass protocolsFor: aSelector ) ]
+		ifNotNil: [ 	self generateCompositeChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: source
+			toClass: aClass superclass
+			inProtocols: (aClass protocolsFor: aSelector)) ]
 ]
 
 { #category : #'private - methods' }

@@ -86,7 +86,7 @@ RBCopyPackageRefactoring >> copyAllClasses [
 	^ self classes collect: [ :symbol |
 		| copyClassName |
 		copyClassName := (self classMappings at: symbol) asSymbol.
-		self performCompositeRefactoring:
+		self generateCompositeChangesFor:
 			(RBCopyClassRefactoring
 				model: self model
 				copyClass: symbol
