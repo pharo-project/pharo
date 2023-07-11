@@ -70,6 +70,33 @@ ClassDescriptionTest >> testCompileClassified [
 ]
 
 { #category : #'tests - compilation' }
+ClassDescriptionTest >> testCompileClassifiedWithNil [
+
+	| class method |
+	class := self createTestClass.
+
+	"During the first compilation if the protocol is nil we put it in Protocol unclassified."
+	class compile: 'foo ^3' classified: nil.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self deny: method isClassified.
+
+	class compile: 'foo ^3' classified: #protocol.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocolName equals: #protocol.
+
+	"If we give a nil protocol, we just keep the actual one."
+	class compile: 'foo ^3' classified: nil.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocolName equals: #protocol
+]
+
+{ #category : #'tests - compilation' }
 ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
 
 	| class method protocol |
@@ -81,6 +108,32 @@ ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
 
 	self assert: method sourceCode equals: 'foo ^3'.
 	self assert: method protocol identicalTo: protocol
+]
+
+{ #category : #'tests - compilation' }
+ClassDescriptionTest >> testCompileClassifiedWithUnclassified [
+
+	| class method |
+	class := self createTestClass.
+
+	class compile: 'foo ^3' classified: Protocol unclassified.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self deny: method isClassified.
+
+	class compile: 'foo ^3' classified: #protocol.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocolName equals: #protocol.
+
+	"Protocol unclassified should work as any other protocol for the classification."
+	class compile: 'foo ^3' classified: Protocol unclassified.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self deny: method isClassified
 ]
 
 { #category : #'tests - slots' }
