@@ -170,8 +170,7 @@ MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 MCWorkingCopy class >> initialize [
 
 	registry ifNotNil: [ registry rehash ].
-	self registerForNotifications.
-	SessionManager default registerSystemClassNamed: self name
+	self registerForNotifications
 ]
 
 { #category : #'system changes' }
@@ -307,9 +306,6 @@ MCWorkingCopy class >> registerForNotifications [
 { #category : #'event registration' }
 MCWorkingCopy class >> registerInterestOnSystemChanges [
 
-	Stdio stdout
-		nextPutAll: 'Registering working copy';
-		lf.
 	SystemAnnouncer uniqueInstance weak
 		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
@@ -320,11 +316,7 @@ MCWorkingCopy class >> registerInterestOnSystemChanges [
 		when: ClassRemoved send: #classRemoved: to: self;
 		when: MethodAdded , MethodModified , MethodRecategorized send: #methodModified: to: self;
 		when: MethodRepackaged send: #methodMoved: to: self;
-		when: MethodRemoved send: #methodRemoved: to: self.
-
-	Stdio stdout
-		nextPutAll: 'Has subscriber? ' , (SystemAnnouncer uniqueInstance hasSubscriber: self) asString;
-		lf
+		when: MethodRemoved send: #methodRemoved: to: self
 ]
 
 { #category : #private }
@@ -345,22 +337,9 @@ MCWorkingCopy class >> registry [
 	^ registry ifNil: [registry := Dictionary new]
 ]
 
-{ #category : #'class initialization' }
-MCWorkingCopy class >> startUp [
-
-	Stdio stdout
-		nextPutAll: 'Has subscriber? ' , (SystemAnnouncer uniqueInstance hasSubscriber: self) asString;
-		lf
-]
-
 { #category : #'event registration' }
 MCWorkingCopy class >> unregisterForNotifications [
 
-	Stdio stdout
-		nextPutAll: 'Unregistering working copy';
-		lf;
-		nextPutAll: 'Has subscriber? ' , (SystemAnnouncer uniqueInstance hasSubscriber: self) asString;
-		lf.
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
