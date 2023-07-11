@@ -952,7 +952,7 @@ RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 	| package |
 	package := (self packageMatchingExtensionName: ann categoryName asString) ifNil: [
 		           self registerPackage: (RPackage named: ann categoryName asSymbol organizer: self) ].
-	package addClassTag: ann categoryName asSymbol
+	package name = ann categoryName ifFalse: [ package addClassTag: ann categoryName asSymbol ]
 ]
 
 { #category : #'system integration' }
