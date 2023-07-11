@@ -25,7 +25,7 @@ SycTagMethodCommand class >> for: methods tag: aString [
 { #category : #execution }
 SycTagMethodCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
-	aToolContext showMethodTag: targetTag
+	aToolContext showProtocol: targetTag
 ]
 
 { #category : #accessing }

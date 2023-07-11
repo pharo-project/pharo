@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-ClyMethodsInProtocolGroup class >> isBasedOnMethodProtocol [
+ClyMethodsInProtocolGroup class >> isBasedOnProtocol [
 	^true
 ]
 

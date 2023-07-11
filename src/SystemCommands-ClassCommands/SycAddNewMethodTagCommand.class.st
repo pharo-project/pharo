@@ -20,7 +20,7 @@ Class {
 { #category : #execution }
 SycAddNewMethodTagCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
-	aToolContext showMethodTag: tagName
+	aToolContext showProtocol: tagName
 ]
 
 { #category : #accessing }
