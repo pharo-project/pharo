@@ -64,6 +64,12 @@ DADependencyTreePresenter class >> onPackagesNamed: aCollection [
 	^ self onPackages: (aCollection collect: [ :each | RPackageSet named: each ])
 ]
 
+{ #category : #specs }
+DADependencyTreePresenter class >> title [
+
+	^ 'Dependencies analysis'
+]
+
 { #category : #protocol }
 DADependencyTreePresenter >> actionOnAddPackage [
 	buttonAddPackage action: [ (DAAddPackagePresenter
@@ -347,11 +353,6 @@ DADependencyTreePresenter >> seenPackagesName [
 { #category : #accessing }
 DADependencyTreePresenter >> sizeOfRoots [
 	^ self treeRoots size
-]
-
-{ #category : #protocol }
-DADependencyTreePresenter >> title [
-	^ 'Dependencies analysis'
 ]
 
 { #category : #accessing }

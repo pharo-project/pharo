@@ -18,6 +18,12 @@ DAReverseTreePresenter class >> onRelationGraph: aRelationGraph [
 	^ self on: aRelationGraph
 ]
 
+{ #category : #specs }
+DAReverseTreePresenter class >> title [
+
+	^ 'Package Dependencies Reverse Analysis'
+]
+
 { #category : #private }
 DAReverseTreePresenter >> buildRoots [
 	| collectionOfWrapper |
@@ -86,11 +92,6 @@ DAReverseTreePresenter >> relationGraph [
 { #category : #initialization }
 DAReverseTreePresenter >> setModelBeforeInitialization: aRelationGraph [
 	relationGraph := aRelationGraph
-]
-
-{ #category : #accessing }
-DAReverseTreePresenter >> title [
-	^ 'Package Dependencies Reverse Analysis'
 ]
 
 { #category : #private }

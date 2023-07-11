@@ -25,6 +25,12 @@ DAPackageDependenciesPresenter class >> system [
 	^ (self onPackagesNamed: self systemPackages) open
 ]
 
+{ #category : #specs }
+DAPackageDependenciesPresenter class >> title [
+
+	^ 'Dependecy Analyser'
+]
+
 { #category : #initialization }
 DAPackageDependenciesPresenter >> initializeWithRelationGraph: aRelationGraph [
 	self model: (DAReverseTreePresenter onRelationGraph: aRelationGraph).
