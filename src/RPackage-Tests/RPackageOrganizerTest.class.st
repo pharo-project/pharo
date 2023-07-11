@@ -275,11 +275,11 @@ RPackageOrganizerTest >> testHasPackage [
 	| organizer packageFromOtherOrganizer name package |
 	name := 'TestPackageNameForPackageOrganizer'.
 	organizer := RPackageOrganizer new.
-	packageFromOtherOrganizer := RPackageOrganizer new createPackageNamed: name.
+	packageFromOtherOrganizer := RPackageOrganizer new ensurePackage: name.
 	self deny: (organizer hasPackage: name).
 	self deny: (organizer hasPackage: packageFromOtherOrganizer).
 
-	package := organizer createPackageNamed: name.
+	package := organizer ensurePackage: name.
 
 	self assert: (organizer hasPackage: name).
 	self assert: (organizer hasPackage: package).

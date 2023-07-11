@@ -23,8 +23,8 @@ MCWorkingCopyForExtensionsTest >> tearDown [
 MCWorkingCopyForExtensionsTest >> testAddingExtensionMethodNotMatchingPackage [
 
 	| aClass |
-	self packageOrganizer createPackageNamed: 'ATestPackage'.
-	self packageOrganizer createPackageNamed: 'AnotherTestPackage'.
+	self packageOrganizer ensurePackage: 'ATestPackage'.
+	self packageOrganizer ensurePackage: 'AnotherTestPackage'.
 
 	aClass := self class classInstaller make: [ :aBuilder |
 		          aBuilder

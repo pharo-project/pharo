@@ -48,7 +48,7 @@ RPackageRenameTest >> testRenamePackage [
 	| package workingCopy class |
 	self cleanWorkingCopiesInTearDown: #( 'TestRename' ).
 
-	package := self packageOrganizer registerPackageNamed: 'Test1'.
+	package := self packageOrganizer ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class := (Object << #TestClass package: 'Test1-TAG') install.
 
@@ -77,7 +77,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 	| package workingCopy class1 class2 |
 	self cleanWorkingCopiesInTearDown: #( 'Test1-Core' ).
 
-	package := self packageOrganizer registerPackageNamed: 'Test1'.
+	package := self packageOrganizer ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class1 := (Object << #TestClass1 package: 'Test1-Core') install.
 	class2 := (Object << #TestClass2 package: 'Test1-Util') install.
@@ -103,7 +103,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	| package workingCopy class1 class2 class3 |
 	self cleanWorkingCopiesInTearDown: #( 'Test1-Core' ).
 
-	package := self packageOrganizer registerPackageNamed: 'Test1'.
+	package := self packageOrganizer ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class1 := (Object << #TestClass1 package: 'Test1-Core') install.
 	class2 := (Object << #TestClass2 package: 'Test1-Util') install.
@@ -130,7 +130,7 @@ RPackageRenameTest >> testRenamePackageUppercase [
 	| package pkg oldWorkingCopy |
 	"preparation: creation of a pkg and its associated mcworkingcopy"
 	[
-	package := self packageOrganizer registerPackageNamed: 'Test1'.
+	package := self packageOrganizer ensurePackage: 'Test1'.
 	oldWorkingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	self assert: (self packageOrganizer hasPackage: #Test1).
 	self assert: (MCWorkingCopy hasPackageNamed: #Test1) isNotNil.
@@ -155,14 +155,12 @@ RPackageRenameTest >> testRenamePackageUppercase [
 { #category : #tests }
 RPackageRenameTest >> testRenamePackageWithExtensions [
 
-	| package workingCopy class extendedPackage extendedPackageWorkingCopy extension |
-	package := self packageOrganizer registerPackageNamed: 'OriginalPackage'.
-	workingCopy := MCWorkingCopy forPackageNamed: 'OriginalPackage'.
+	| package class extendedPackage extension |
+	package := self packageOrganizer ensurePackage: 'OriginalPackage'.
 
 	class := (Object << #TestClass package: 'OriginalPackage-TAG') install.
 
-	extendedPackage := self packageOrganizer registerPackageNamed: 'ExtendedPackage'.
-	extendedPackageWorkingCopy := MCWorkingCopy forPackageNamed: 'ExtendedPackage'.
+	extendedPackage := self packageOrganizer ensurePackage: 'ExtendedPackage'.
 
 	self cleanWorkingCopiesInTearDown: #( ExtendedPackage RenamedPackage OriginalPackage ).
 
@@ -189,14 +187,12 @@ RPackageRenameTest >> testRenamePackageWithExtensions [
 { #category : #tests }
 RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 
-	| package workingCopy class extendedPackage extendedPackageWorkingCopy extension |
-	package := self packageOrganizer registerPackageNamed: 'OriginalPackage'.
-	workingCopy := MCWorkingCopy forPackageNamed: 'OriginalPackage'.
+	| package class extendedPackage extension |
+	package := self packageOrganizer ensurePackage: 'OriginalPackage'.
 
 	class := (Object << #TestClass package: 'OriginalPackage-TAG') install.
 
-	extendedPackage := self packageOrganizer registerPackageNamed: 'ExtendedPackage'.
-	extendedPackageWorkingCopy := MCWorkingCopy forPackageNamed: 'ExtendedPackage'.
+	extendedPackage := self packageOrganizer ensurePackage: 'ExtendedPackage'.
 
 	self cleanWorkingCopiesInTearDown: #( ExtendedPackage RenamedPackage OriginalPackage ).
 
@@ -227,7 +223,7 @@ RPackageRenameTest >> testUnregisterPackage [
 	"Test that we do unregister the package as expected."
 
 	| package workingCopy class |
-	package := self packageOrganizer registerPackageNamed: 'Test1'.
+	package := self packageOrganizer ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class := (Object << #TestClass package: 'Test1-TAG') install.
 	self assert: (package includesClass: class).

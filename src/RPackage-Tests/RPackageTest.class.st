@@ -263,7 +263,7 @@ RPackageTest >> testIsTestPackage [
 RPackageTest >> testMcPackage [
 
 	| rPackage |
-	rPackage := self organizer registerPackageNamed: #Test1.
+	rPackage := self organizer ensurePackage: #Test1.
 	self assert: rPackage mcPackage equals: (MCPackage new name: #Test1)
 ]
 
@@ -271,7 +271,7 @@ RPackageTest >> testMcPackage [
 RPackageTest >> testMcWorkingCopy [
 
 	| rPackage |
-	rPackage := self organizer registerPackageNamed: #Test1.
+	rPackage := self organizer ensurePackage: #Test1.
 	self assert: rPackage mcWorkingCopy identicalTo: (MCWorkingCopy forPackageNamed: #Test1)
 ]
 
