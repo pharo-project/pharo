@@ -1,8 +1,8 @@
 "
-I am a command to request method tag from the user which should be used to tag editing method
+I am a command to request a protocol from the user which should be used to reclassify a method
 "
 Class {
-	#name : #ClyRequestMethodTagForEditorCommand,
+	#name : #ClyRequestProtocolForEditorCommand,
 	#superclass : #ClyMethodEditorCommand,
 	#instVars : [
 		'menuItemName'
@@ -11,27 +11,27 @@ Class {
 }
 
 { #category : #activation }
-ClyRequestMethodTagForEditorCommand class >> methodEditorShorcutActivation [
+ClyRequestProtocolForEditorCommand class >> methodEditorShorcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $e meta, $t meta for: ClyTextEditorContext
 ]
 
 { #category : #accessing }
-ClyRequestMethodTagForEditorCommand >> defaultMenuItemName [
+ClyRequestProtocolForEditorCommand >> defaultMenuItemName [
 
 	^ menuItemName
 ]
 
 { #category : #execution }
-ClyRequestMethodTagForEditorCommand >> execute [
+ClyRequestProtocolForEditorCommand >> execute [
 	| tagEditor |
 	tagEditor := methodEditor tagsAndPackageEditor.
 	tagEditor requestChangeBy: [ tagEditor requestProtocol]
 ]
 
 { #category : #execution }
-ClyRequestMethodTagForEditorCommand >> readParametersFromContext: aToolContext [
+ClyRequestProtocolForEditorCommand >> readParametersFromContext: aToolContext [
 
 	menuItemName := aToolContext tool hasUnacceptedEdits
 		ifTrue: [ 'Classify currently editing method' ]
