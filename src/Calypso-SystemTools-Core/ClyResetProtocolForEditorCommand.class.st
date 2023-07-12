@@ -20,5 +20,5 @@ ClyResetProtocolForEditorCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyResetProtocolForEditorCommand >> execute [
 
-	methodEditor tagsAndPackageEditor resetProtocolAndPackage
+	methodEditor protocolAndPackageEditor resetProtocolAndPackage
 ]

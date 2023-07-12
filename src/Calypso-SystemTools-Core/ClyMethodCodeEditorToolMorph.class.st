@@ -34,17 +34,18 @@ ClyMethodCodeEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContex
 
 { #category : #operations }
 ClyMethodCodeEditorToolMorph >> applyChanges [
+
 	| selector methodClass currentMethod |
-	methodClass := self chooseClassForNewMethodIfNone: [^false].
+	methodClass := self chooseClassForNewMethodIfNone: [ ^ false ].
 	selector := methodClass compile: self pendingText asString classified: editingMethod protocol notifying: textMorph.
-	selector ifNil: [^false ].
+	selector ifNil: [ ^ false ].
 	currentMethod := methodClass >> selector.
 	self setMethodProtocol: currentMethod.
-	self tagAndPackageEditingMethod: currentMethod.
+	self protocolAndPackageEditingMethod: currentMethod.
 	self switchToMethod: currentMethod.
 	"update the AST to the just compiled method. This clears breakpoints. To be improved"
 	ast := self initializeAST.
-	^true
+	^ true
 ]
 
 { #category : #building }
@@ -258,7 +259,7 @@ ClyMethodCodeEditorToolMorph >> methodProtocol: protocolName [
 
 	super methodProtocol: protocolName.
 
-	self hasUnacceptedEdits ifFalse: [ self tagEditingMethod: editingMethod ]
+	self hasUnacceptedEdits ifFalse: [ self editProtocolOf: editingMethod ]
 ]
 
 { #category : #testing }
