@@ -31,10 +31,15 @@ RBBlockNode >> irInstruction [
 
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isClean [
-	"a block is clean if it has no escaping vars, has no non local return and its children are clean"
+	"a block is clean if..."
+	"it or any embedded blocks do not need self"
+	self isAccessingSelf ifTrue: [ ^ false ].
+	"it or any embedded blocks do not need the outer context to return"
+	self hasNonLocalReturn ifTrue: [ ^ false ].
+	"there are no escaping vars accessed from the outer"
 	self scope hasEscapingVars ifTrue: [ ^ false ].
-	self hasBlockReturn ifTrue: [ ^ false ].
-	^ super isClean
+	^true
+
 ]
 
 { #category : #'*OpalCompiler-Core' }
