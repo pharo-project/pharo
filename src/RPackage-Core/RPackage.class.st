@@ -1463,7 +1463,8 @@ RPackage >> toTagName: aSymbol [
 
 { #category : #register }
 RPackage >> unregister [
-	self organizer unregisterPackage: self
+
+	self organizer removePackage: self
 ]
 
 { #category : #'private - register' }

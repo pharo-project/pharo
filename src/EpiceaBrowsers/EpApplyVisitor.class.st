@@ -121,7 +121,7 @@ EpApplyVisitor >> visitPackageAddition: aPackageAddition [
 { #category : #visitor }
 EpApplyVisitor >> visitPackageRemoval: aPackageRemoval [
 
-	self packageOrganizer unregisterPackageNamed: aPackageRemoval packageName
+	self packageOrganizer removePackage: aPackageRemoval packageName
 ]
 
 { #category : #visitor }

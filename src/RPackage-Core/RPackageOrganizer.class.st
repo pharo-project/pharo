@@ -968,10 +968,10 @@ RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
 	| categoryName |
 	categoryName := ann categoryName asSymbol.
 
-	(self packageMatchingExtensionName: categoryName) ifNotNil: [ :rPackage |
-		rPackage name = categoryName
-			ifTrue: [ self unregisterPackage: rPackage ]
-			ifFalse: [ rPackage classTagNamed: (categoryName withoutPrefix: rPackage name , '-') ifPresent: [ :tag | rPackage removeClassTag: tag name ] ] ]
+	(self packageMatchingExtensionName: categoryName) ifNotNil: [ :package |
+		package name = categoryName
+			ifTrue: [ self removePackage: package ]
+			ifFalse: [ package classTagNamed: (categoryName withoutPrefix: package name , '-') ifPresent: [ :tag | package removeClassTag: tag name ] ] ]
 ]
 
 { #category : #'system integration' }
@@ -1229,12 +1229,6 @@ RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #registration }
-RPackageOrganizer >> unregisterPackage: aPackage [
-
-	self removePackage: aPackage
-]
-
 { #category : #'private - registration' }
 RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	"unregister the back pointer mapping from classes to packages."
@@ -1252,12 +1246,6 @@ RPackageOrganizer >> unregisterPackage: aPackage forClassName: aClassName [
 		ifTrue:
 			[self error: aPackage name , ' still includes the class ' , aClassName asSymbol].
 	^classPackageMapping removeKey: aClassName asSymbol ifAbsent: [self reportBogusBehaviorOf: #unregisterPackage:forClassName:  ]
-]
-
-{ #category : #registration }
-RPackageOrganizer >> unregisterPackageNamed: symbol [
-
-	self removePackage: symbol
 ]
 
 { #category : #private }
