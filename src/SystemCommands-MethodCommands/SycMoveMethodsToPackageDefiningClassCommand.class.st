@@ -6,9 +6,6 @@ I am used to convert extension method to normal one
 Class {
 	#name : #SycMoveMethodsToPackageDefiningClassCommand,
 	#superclass : #SycMethodRepackagingCommand,
-	#instVars : [
-		'targetTagName'
-	],
 	#category : #'SystemCommands-MethodCommands'
 }
 
@@ -30,26 +27,7 @@ SycMoveMethodsToPackageDefiningClassCommand >> defaultMenuItemName [
 { #category : #execution }
 SycMoveMethodsToPackageDefiningClassCommand >> execute [
 
-	| classPackage |
-	methods do: [ :method |
-		classPackage := method origin package.
-		self moveMethod: method toPackage: classPackage.
-		method protocol: targetTagName ]
-]
-
-{ #category : #execution }
-SycMoveMethodsToPackageDefiningClassCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-
-	targetTagName := aToolContext requestSingleMethodTag: 'Choose protocol for methods'
-]
-
-{ #category : #accessing }
-SycMoveMethodsToPackageDefiningClassCommand >> targetTagName [
-	^ targetTagName
-]
-
-{ #category : #accessing }
-SycMoveMethodsToPackageDefiningClassCommand >> targetTagName: anObject [
-	targetTagName := anObject
+	methods
+		select: [ :method | method isExtensionMethod ]
+		thenDo: [ :method | self tagMethod: method ]
 ]

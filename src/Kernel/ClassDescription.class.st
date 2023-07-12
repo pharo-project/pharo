@@ -34,7 +34,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorOrigin := method origin ].
 
 	oldProtocol := self protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ self classify: selector under: protocol ].
+	SystemAnnouncer uniqueInstance prevent: MethodRecategorized , ClassReorganized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
