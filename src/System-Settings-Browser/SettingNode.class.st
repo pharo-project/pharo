@@ -81,11 +81,6 @@ SettingNode >> description [
 	^ self settingDeclaration description
 ]
 
-{ #category : #menu }
-SettingNode >> exploreItem [
-	self settingDeclaration inspect
-]
-
 { #category : #accessing }
 SettingNode >> helpText [
 	^ self item description ifEmpty: [ nil ]
@@ -148,8 +143,6 @@ SettingNode >> keyDown: anEvent from: aTreeMorph [
 		ifTrue: [self menuBrowse. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
 ]
 
