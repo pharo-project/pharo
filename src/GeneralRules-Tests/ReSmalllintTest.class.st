@@ -220,11 +220,6 @@ ReSmalllintTest >> testAddRemoveDependents [
 ]
 
 { #category : #tests }
-ReSmalllintTest >> testAnySatisfy [
-	self ruleFor: self currentSelector
-]
-
-{ #category : #tests }
 ReSmalllintTest >> testAsOrderedCollectionNotNeeded [
 	self ruleFor: self currentSelector
 ]
