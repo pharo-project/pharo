@@ -34,12 +34,14 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorOrigin := method origin ].
 
 	oldProtocol := self protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
-		self classify: selector under: ((protocol isString
-				  ifTrue: [ protocol ]
-				  ifFalse: [ protocol name ]) = Protocol unclassified
-				 ifTrue: [ oldProtocol ]
-				 ifFalse: [ protocol ]) ].
+	SystemAnnouncer uniqueInstance
+		prevent: MethodRecategorized , ClassReorganized
+		during: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
+			self classify: selector under: ((protocol isString
+					  ifTrue: [ protocol ]
+					  ifFalse: [ protocol name ]) = Protocol unclassified
+					 ifTrue: [ oldProtocol ]
+					 ifFalse: [ protocol ]) ].
 	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.

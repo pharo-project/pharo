@@ -50,6 +50,19 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncement2 [
 	self assert: numberOfAnnouncements equals: 2
 ]
 
+{ #category : #'tests - adding' }
+ProtocolAnnouncementsTest >> testAddProtocolAnnouncementDuringCompilation [
+
+	self when: ProtocolAdded do: [ :ann |
+		self assert: ann protocol name equals: #titan.
+		self assert: ann classReorganized name equals: self classNameForTests ].
+
+	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
+
+	class compile: 'king ^1' classified: #titan.
+	self assert: numberOfAnnouncements equals: 2
+]
+
 { #category : #tests }
 ProtocolAnnouncementsTest >> testClassifyUnderAnnounceNewProtocol [
 
@@ -126,6 +139,22 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement4 [
 	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
 
 	class removeProtocol: #titan.
+
+	self assert: numberOfAnnouncements equals: 2
+]
+
+{ #category : #'tests - removing' }
+ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncementDuringCompilation [
+
+	class compile: 'king ^1' classified: #titan.
+
+	self when: ProtocolRemoved do: [ :ann |
+		self assert: ann protocol name equals: #titan.
+		self assert: ann classReorganized name equals: self classNameForTests ].
+
+	self when: ClassReorganized do: [ :ann | self assert: ann classReorganized name equals: self classNameForTests ].
+
+	class compile: 'king ^1' classified: #demon.
 
 	self assert: numberOfAnnouncements equals: 2
 ]
