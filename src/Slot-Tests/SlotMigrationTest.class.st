@@ -186,6 +186,19 @@ SlotMigrationTest >> testChangingFormatKeepsMethod [
 ]
 
 { #category : #tests }
+SlotMigrationTest >> testMigrateSlotWithInitialize [
+ 	"We create a class without slots, instantiate, then add a lot that wants to intialize the instance"
+ 	aClass := self makeWithLayout: FixedLayout andSlots: { }.
+
+ 	instance := aClass new.
+ 	self makeWithLayout: FixedLayout andSlots: {  #aSlot => InitializedSlot default: 5.  }.
+ 	self assert: ((aClass slotNamed: #aSlot) read: instance) equals: 5.
+
+
+ 	aClass classLayout checkIntegrity
+]
+
+{ #category : #tests }
 SlotMigrationTest >> testMigrateTestSlot [
 	"We create a class with a Test slot, so its  value is shared between instances"
 	| instance2 |
