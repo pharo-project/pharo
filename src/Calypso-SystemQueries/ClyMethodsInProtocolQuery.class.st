@@ -50,7 +50,7 @@ ClyMethodsInProtocolQuery >> = anObject [
 { #category : #printing }
 ClyMethodsInProtocolQuery >> description [
 
-	^ 'methods tagged with ' , protocol
+	^ 'methods in protocol ' , protocol
 ]
 
 { #category : #comparing }

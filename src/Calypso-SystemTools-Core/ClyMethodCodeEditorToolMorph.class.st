@@ -105,7 +105,7 @@ ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
 
 { #category : #operations }
 ClyMethodCodeEditorToolMorph >> cancelChanges [
-	self updateMethodTagsAndPackage.
+	self updateProtocolAndPackage.
 
 	super cancelChanges
 ]
@@ -343,7 +343,7 @@ ClyMethodCodeEditorToolMorph >> setUpModelFromContext [
 ClyMethodCodeEditorToolMorph >> setUpParametersFromModel [
 	super setUpParametersFromModel.
 
-	self updateMethodTagsAndPackage
+	self updateProtocolAndPackage
 ]
 
 { #category : #initialization }
@@ -380,7 +380,7 @@ ClyMethodCodeEditorToolMorph >> update [
 ]
 
 { #category : #updating }
-ClyMethodCodeEditorToolMorph >> updateMethodTagsAndPackage [
+ClyMethodCodeEditorToolMorph >> updateProtocolAndPackage [
 
 	self methodProtocol: editingMethod protocolName.
 	editingMethod isExtension ifTrue: [ extendingPackage := editingMethod package ]

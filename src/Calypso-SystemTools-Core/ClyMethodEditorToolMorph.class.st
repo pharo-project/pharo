@@ -193,9 +193,9 @@ ClyMethodEditorToolMorph >> packageEditingMethod: aMethod [
 { #category : #operations }
 ClyMethodEditorToolMorph >> protocolAndPackageEditingMethod: aMethod [
 	self editProtocolOf: aMethod.
-	"Tagging should be performed before package movement
+	"Classification should be performed before package movement
 	because extending package is still based on protocol begining with star.
-	So it should override manual tagging"
+	So it should override manual classification"
 	self packageEditingMethod: aMethod
 ]
 
