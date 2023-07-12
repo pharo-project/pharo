@@ -1248,19 +1248,17 @@ RPackage >> removeClassesMatchingTag: aTag [
 { #category : #removing }
 RPackage >> removeFromSystem [
 
-	| extendedClasses categories |
+	| categories |
 	categories := (self classTags collect: [ :each | each categoryName ] as: Set)
 		              add: self name;
 		              yourself.
-	extendedClasses := self extendedClasses.
 
 	self definedClasses do: #removeFromSystem.
 	self extensionMethods do: #removeFromSystem.
 
-	extendedClasses do: [ :class | class removeProtocolIfEmpty: ('*' , name) asSymbol ].
 	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
 	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
-	categories do: [ :cat | self organizer removeCategory: cat ].
+	categories do: [ :category | self organizer removeCategory: category ].
 	self unregister
 ]
 
