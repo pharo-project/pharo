@@ -182,7 +182,7 @@ RPackageOrganizer >> addMethod: method [
 	protocol := method protocolName.
 	rPackage := (self hasPackageForProtocol: protocol)
 		            ifTrue: [ self packageForProtocol: protocol inClass: method methodClass ]
-		            ifFalse: [ self registerPackage: (RPackage named: (protocol copyWithout: $*) organizer: self) ].
+		            ifFalse: [ self ensurePackage: (protocol copyWithout: $*) ].
 
 	rPackage addMethod: method
 ]
@@ -938,8 +938,7 @@ RPackageOrganizer >> superclassOrder: category [
 RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 
 	| package |
-	package := (self packageMatchingExtensionName: ann categoryName asString) ifNil: [
-		           self registerPackage: (RPackage named: ann categoryName asSymbol organizer: self) ].
+	package := (self packageMatchingExtensionName: ann categoryName) ifNil: [ self ensurePackage: ann categoryName ].
 	package name = ann categoryName ifFalse: [ package addClassTag: ann categoryName asSymbol ]
 ]
 
@@ -976,13 +975,12 @@ RPackageOrganizer >> systemCategoryRenamedActionFrom: ann [
 
 { #category : #'system integration' }
 RPackageOrganizer >> systemClassAddedActionFrom: ann [
-	| class package categoryNameSymbol |
 
+	| class package categoryNameSymbol |
 	class := ann classAffected.
 
 	categoryNameSymbol := class category.
-	package := (self packageMatchingExtensionName: categoryNameSymbol)
-		ifNil: [ self registerPackage: (RPackage named: categoryNameSymbol organizer: self) ].
+	package := (self packageMatchingExtensionName: categoryNameSymbol) ifNil: [ self ensurePackage: categoryNameSymbol ].
 
 	package importClass: class
 ]
@@ -997,7 +995,7 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 	oldPackageName := announcement oldCategory.
 	newPackageName = oldPackageName ifTrue: [ ^ self ].
 	oldPackage := self packageMatchingExtensionName: oldPackageName includingClass: class.
-	newPackage := (self packageMatchingExtensionName: newPackageName) ifNil: [ self registerPackage: (RPackage named: newPackageName organizer: self) ].
+	newPackage := (self packageMatchingExtensionName: newPackageName) ifNil: [ self ensurePackage: newPackageName ].
 
 	newPackageTag := newPackage addClassTag: newPackageName.
 
