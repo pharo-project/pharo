@@ -14,7 +14,6 @@ Class {
 		'externals',
 		'aaLevel',
 		'edgeTransform',
-		'colorTransform',
 		'deferred',
 		'postFlushNeeded'
 	],
@@ -290,16 +289,6 @@ BalloonEngine >> clipRect [
 { #category : #accessing }
 BalloonEngine >> clipRect: aRect [
 	clipRect := aRect truncated
-]
-
-{ #category : #accessing }
-BalloonEngine >> colorTransform [
-	^colorTransform
-]
-
-{ #category : #accessing }
-BalloonEngine >> colorTransform: aColorTransform [
-	colorTransform := aColorTransform
 ]
 
 { #category : #copying }
@@ -630,12 +619,6 @@ BalloonEngine >> primSetClipRect: rect [
 ]
 
 { #category : #'primitives - access' }
-BalloonEngine >> primSetColorTransform: transform [
-	<primitive: 'primitiveSetColorTransform' module: 'B2DPlugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'primitives - access' }
 BalloonEngine >> primSetDepth: depth [
 	<primitive: 'primitiveSetDepth' module: 'B2DPlugin'>
 	^self primitiveFailed
@@ -723,21 +706,20 @@ BalloonEngine >> registerFill: fill1 and: fill2 [
 BalloonEngine >> registerFills: fills [
 
 	| fillIndexList index fillIndex |
-	((colorTransform notNil and:[colorTransform isAlphaTransform]) or:[
-		fills anySatisfy: [:any| any notNil and:[any isTranslucent]]])
-			ifTrue:[	self flush.
-					self reset.
-					postFlushNeeded := true].
+	(fills anySatisfy: [ :any | any notNil and: [ any isTranslucent ] ]) ifTrue: [
+		self flush.
+		self reset.
+		postFlushNeeded := true ].
 	fillIndexList := WordArray new: fills size.
 	index := 1.
-	[index <= fills size] whileTrue:[
+	[ index <= fills size ] whileTrue: [
 		fillIndex := self registerFill: (fills at: index).
 		fillIndex == nil
-			ifTrue:[index := 1] "Need to start over"
-			ifFalse:[fillIndexList at: index put: fillIndex.
-					index := index+1]
-	].
-	^fillIndexList
+			ifTrue: [ "Need to start over" index := 1 ]
+			ifFalse: [
+				fillIndexList at: index put: fillIndex.
+				index := index + 1 ] ].
+	^ fillIndexList
 ]
 
 { #category : #initialize }
@@ -756,7 +738,6 @@ BalloonEngine >> reset [
 	self primSetOffset: destOffset.
 	self primSetClipRect: clipRect.
 	self primSetEdgeTransform: edgeTransform.
-	self primSetColorTransform: colorTransform.
 	forms := #()
 ]
 
@@ -764,7 +745,6 @@ BalloonEngine >> reset [
 BalloonEngine >> resetIfNeeded [
 	workBuffer ifNil:[self reset].
 	self primSetEdgeTransform: edgeTransform.
-	self primSetColorTransform: colorTransform.
 	self primSetDepth: self primGetDepth + 1.
 	postFlushNeeded := false
 ]

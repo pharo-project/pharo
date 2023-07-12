@@ -65,7 +65,6 @@ AthensBalloonEngine >> fastReset [
 
 	self primSetEdgeTransform: edgeTransform.
 	self primSetClipRect: clipRect.
-	self primSetColorTransform: colorTransform.
 	self primSetDepth: self primGetDepth + 1.
 
 	postFlushNeeded := false.
@@ -221,8 +220,7 @@ AthensBalloonEngine >> reset [
 		primSetAALevel: 4;
 		primSetOffset: 0@0;
 		primSetClipRect: clipRect;
-		primSetEdgeTransform: edgeTransform;
-		primSetColorTransform: colorTransform.
+		primSetEdgeTransform: edgeTransform.
 
 	forms := #()
 ]
