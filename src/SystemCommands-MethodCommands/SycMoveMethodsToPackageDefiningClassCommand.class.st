@@ -29,5 +29,5 @@ SycMoveMethodsToPackageDefiningClassCommand >> execute [
 
 	methods
 		select: [ :method | method isExtensionMethod ]
-		thenDo: [ :method | self tagMethod: method ]
+		thenDo: [ :method | self classifyMethod: method ]
 ]
