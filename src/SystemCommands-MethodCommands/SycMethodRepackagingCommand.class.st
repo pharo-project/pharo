@@ -18,16 +18,14 @@ SycMethodRepackagingCommand class >> isAbstract [
 	^self = SycMethodRepackagingCommand
 ]
 
-{ #category : #execution }
-SycMethodRepackagingCommand >> moveMethod: aMethod toPackage: aPackage [
+{ #category : #categories }
+SycMethodRepackagingCommand >> classifyMethod: aMethod [
 
-	| existingPackage willBeExtension |
-	existingPackage := aMethod package.
-	existingPackage == aPackage ifTrue: [ ^ self ].
+	aMethod protocol: (self newProtocolFor: aMethod)
+]
 
-	willBeExtension := aPackage ~~ aMethod origin package.
-	aPackage addMethod: aMethod.
-	willBeExtension
-		ifTrue: [ aMethod protocol: '*' , aPackage name ]
-		ifFalse: [ self tagMethod: aMethod ]
+{ #category : #categories }
+SycMethodRepackagingCommand >> newProtocolFor: aMethod [
+
+	^ self asCommandActivator context requestProtocol: 'New protocol name for: ' , aMethod name suggesting: (MethodClassifier suggestProtocolFor: aMethod)
 ]

@@ -49,7 +49,7 @@ ClyMethodCreationToolMorph >> applyChanges [
 	newMethod := selectedClass >> selector.
 	MethodClassifier classify: newMethod fallbackProtocol: methodProtocol.
 	methodProtocol := newMethod protocolName.
-	self tagAndPackageEditingMethod: newMethod.
+	self protocolAndPackageEditingMethod: newMethod.
 
 	self removeFromBrowser.
 	browser tabManager desiredSelection: {ClyMethodCodeEditorToolMorph}.

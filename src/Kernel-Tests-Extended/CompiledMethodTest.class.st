@@ -247,8 +247,9 @@ CompiledMethodTest >> shouldNotImplementMethod [
 
 { #category : #running }
 CompiledMethodTest >> tearDown [
-	RPackage organizer unregisterPackageNamed: self categoryNameForTemporaryClasses.
-	class ifNotNil: [ class removeFromSystem].
+
+	self packageOrganizer removePackage: self categoryNameForTemporaryClasses.
+	class ifNotNil: [ class removeFromSystem ].
 	super tearDown
 ]
 

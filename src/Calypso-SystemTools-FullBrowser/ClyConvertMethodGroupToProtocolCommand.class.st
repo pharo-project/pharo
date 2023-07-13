@@ -18,7 +18,7 @@ Class {
 
 { #category : #testing }
 ClyConvertMethodGroupToProtocolCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMethodTagSelected not
+	^aToolContext isProtocolSelected not
 ]
 
 { #category : #activation }
@@ -32,7 +32,7 @@ ClyConvertMethodGroupToProtocolCommand class >> fullBrowserContextMenuActivation
 ClyConvertMethodGroupToProtocolCommand >> applyResultInContext: aToolContext [
 
 	super applyResultInContext: aToolContext.
-	aToolContext showMethodTag: protocol
+	aToolContext showProtocol: protocol
 ]
 
 { #category : #accessing }
@@ -51,7 +51,7 @@ ClyConvertMethodGroupToProtocolCommand >> execute [
 ClyConvertMethodGroupToProtocolCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
-	protocol := aToolContext requestSingleMethodTag: 'New protocol name'
+	protocol := aToolContext requestProtocol: 'New protocol name'
 ]
 
 { #category : #accessing }

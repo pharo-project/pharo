@@ -16,9 +16,9 @@ ClyMethodsInProtocolGroupProvider >> buildGroupsFrom: aClassScope [
 	groups := IdentityDictionary new.
 
 	aClassScope classesDo: [ :eachClass |
-		eachClass protocolsForAllMethods do: [ :eachTag |
-			groups at: eachTag ifAbsentPut: [
-				ClyMethodsInProtocolGroup withMethodsFrom: aClassScope inProtocol: eachTag ] ] ].
+		eachClass protocolsForAllMethods do: [ :protocol |
+			groups at: protocol ifAbsentPut: [
+				ClyMethodsInProtocolGroup withMethodsFrom: aClassScope inProtocol: protocol ] ] ].
 
 	^ groups values
 ]

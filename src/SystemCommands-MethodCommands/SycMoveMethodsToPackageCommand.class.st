@@ -41,6 +41,20 @@ SycMoveMethodsToPackageCommand >> execute [
 		each origin removeEmptyProtocols ]
 ]
 
+{ #category : #execution }
+SycMoveMethodsToPackageCommand >> moveMethod: aMethod toPackage: aPackage [
+
+	| existingPackage willBeExtension |
+	existingPackage := aMethod package.
+	existingPackage == aPackage ifTrue: [ ^ self ].
+
+	willBeExtension := aPackage ~~ aMethod origin package.
+	aPackage addMethod: aMethod.
+	willBeExtension
+		ifTrue: [ aMethod protocol: '*' , aPackage name ]
+		ifFalse: [ self classifyMethod: aMethod ]
+]
+
 { #category : #accessing }
 SycMoveMethodsToPackageCommand >> package [
 	^ package

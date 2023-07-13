@@ -164,14 +164,16 @@ RPackageMCSynchronisationTest >> runCase [
 ]
 
 { #category : #running }
-RPackageMCSynchronisationTest >> setUp [ 
-	super setUp.
-	
-	emptyOrganizer := self organizer debuggingName: 'MCSynchronisation Package Organizer'; yourself.
-	emptyOrganizer registerPackage: (RPackage named: 'as yet unclassified').
+RPackageMCSynchronisationTest >> setUp [
 
-	Author fullName 
-		ifNil: [ Author fullName: 'Tester' ].
+	super setUp.
+
+	emptyOrganizer := self organizer
+		                  debuggingName: 'MCSynchronisation Package Organizer';
+		                  yourself.
+	emptyOrganizer ensurePackage: 'as yet unclassified'.
+
+	Author fullName ifNil: [ Author fullName: 'Tester' ]
 ]
 
 { #category : #running }

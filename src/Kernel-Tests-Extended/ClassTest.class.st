@@ -69,9 +69,11 @@ ClassTest >> setUp [
 
 { #category : #running }
 ClassTest >> tearDown [
+
 	self deleteClass.
-	{self unclassifiedCategory. self categoryNameForTemporaryClasses} do: [:category|
-			RPackage organizer unregisterPackageNamed: category].
+	{
+		self unclassifiedCategory.
+		self categoryNameForTemporaryClasses } do: [ :category | self packageOrganizer removePackage: category ].
 	super tearDown
 ]
 
