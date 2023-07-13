@@ -6,8 +6,7 @@ Class {
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'createdClasses',
-		'createdPackages',
-		'createdCategories'
+		'createdPackages'
 	],
 	#category : #'RPackage-Tests'
 }
@@ -34,12 +33,12 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 
 	| cls |
 	cls := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: aName;
-			package: cat ].
+		       aClassBuilder
+			       name: aName;
+			       package: cat ].
 
 	createdClasses add: cls.
-	createdCategories add: cat.
+	createdPackages add: cls package.
 	^ cls
 ]
 
@@ -72,13 +71,13 @@ RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 
 	| cls |
 	cls := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: aName;
-			package:  cat;
-			beTrait ].
+		       aBuilder
+			       name: aName;
+			       package: cat;
+			       beTrait ].
 
 	createdClasses add: cls.
-	createdCategories add: cat.
+	createdPackages add: cls package.
 	^ cls
 ]
 
@@ -122,10 +121,10 @@ RPackageTestCase >> runCase [
 
 { #category : #running }
 RPackageTestCase >> setUp [
+
 	super setUp.
-	createdClasses := OrderedCollection new.
-	createdPackages := OrderedCollection new.
-	createdCategories := Set new
+	createdClasses := Set new.
+	createdPackages := Set new
 ]
 
 { #category : #accessing }

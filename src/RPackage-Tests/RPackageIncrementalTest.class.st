@@ -61,7 +61,6 @@ RPackageIncrementalTest >> tearDown [
 			ifFound: [ :mcPackage | mcPackage unregister ].
 		each extendedClasses do: [ :extendedClass | RPackage organizer unregisterExtendingPackage: each forClass: extendedClass ] ].
 	"all ***extending*** classes the packages are also unregistered from PackageOrganizer"
-	createdCategories do: [ :each | self packageOrganizer removeCategory: each ].
 	super tearDown
 ]
 
