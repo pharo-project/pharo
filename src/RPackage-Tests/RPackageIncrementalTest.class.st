@@ -713,7 +713,7 @@ RPackageIncrementalTest >> testPrivateClassRegisterUnregister [
 	p registerClassName: a1 name.
 	self assert: (RPackage organizer packageOf: a1) equals: p.
 	p definedClassNames remove: #A1InPackageP1.
-	p unregisterClassName: a1 name.
+	p unregisterClass: a1.
 	self assert: (RPackage organizer packageOf: a1) isDefault
 ]
 
