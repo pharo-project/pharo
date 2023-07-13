@@ -197,6 +197,12 @@ UndefinedObject >> removeSubclass: aClass [
 	"Ignored -- necessary to support disjoint class hierarchies"
 ]
 
+{ #category : #pinning }
+UndefinedObject >> setPinnedInMemory: aBoolean [
+
+	self error: 'nil cannot be pinned.'
+]
+
 { #category : #copying }
 UndefinedObject >> shallowCopy [
 	"Only one instance of UndefinedObject should ever be made, so answer
