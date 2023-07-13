@@ -141,11 +141,6 @@ SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName inCa
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> classReorganized: aClass [
-	self announce: (ClassReorganized class: aClass)
-]
-
-{ #category : #triggering }
 SystemAnnouncer >> classRepackaged: aClass from: aPackage to: anotherPackage [
 	self announce: (ClassRepackaged
 						classRepackaged: aClass

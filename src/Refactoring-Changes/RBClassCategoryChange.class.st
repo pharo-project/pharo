@@ -54,9 +54,7 @@ RBClassCategoryChange >> displayCategoryName [
 { #category : #private }
 RBClassCategoryChange >> primitiveExecute [
 
-	self changeClass category: category.
-	SystemAnnouncer uniqueInstance
-		classReorganized: self changeClass
+	self changeClass category: category
 ]
 
 { #category : #printing }
