@@ -102,33 +102,6 @@ RPackageMCSynchronisationTest >> createMethodNamed: methodName inClassSideOfClas
 	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
 ]
 
-{ #category : #private }
-RPackageMCSynchronisationTest >> createNewClassNamed: aName [
-	
-	| cls |
-
-	cls := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
-			name: aName;
-			package: 'RPackageTest' ].
-
-	^ cls
-]
-
-{ #category : #private }
-RPackageMCSynchronisationTest >> createNewTraitNamed: aName inCategory: aCategoryName [
-	
-	| trait |
-
-	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder 
-			name: aName;
-			package: aCategoryName;
-			beTrait ].								
-			
-	^ trait
-]
-
 { #category : #accessing }
 RPackageMCSynchronisationTest >> emptyOrganizer [ 
 
