@@ -856,6 +856,24 @@ RPackageOrganizer >> removeEmptyPackages [
 			emptyPackages do: [ :emptyPackage | categoryMap removeKey: emptyPackage ] ]
 ]
 
+{ #category : #registration }
+RPackageOrganizer >> removePackage: aPackage [
+
+	| package |
+	(self hasPackage: aPackage) ifFalse: [ ^ self ].
+
+	package := aPackage isString
+		           ifTrue: [ self packageNamed: aPackage ]
+		           ifFalse: [ aPackage ].
+
+	self basicUnregisterPackageNamed: package name.
+	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
+	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
+	SystemAnnouncer announce: (PackageRemoved to: package).
+
+	^ package
+]
+
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> removeSystemCategory: category [
 	"remove all the classes and traits associated with the category"
@@ -949,10 +967,10 @@ RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
 	| categoryName |
 	categoryName := ann categoryName asSymbol.
 
-	(self packageMatchingExtensionName: categoryName) ifNotNil: [ :rPackage |
-		rPackage name = categoryName
-			ifTrue: [ self unregisterPackage: rPackage ]
-			ifFalse: [ rPackage classTagNamed: (categoryName withoutPrefix: rPackage name , '-') ifPresent: [ :tag | rPackage removeClassTag: tag name ] ] ]
+	(self packageMatchingExtensionName: categoryName) ifNotNil: [ :package |
+		package name = categoryName
+			ifTrue: [ self removePackage: package ]
+			ifFalse: [ package classTagNamed: (categoryName withoutPrefix: package name , '-') ifPresent: [ :tag | package removeClassTag: tag name ] ] ]
 ]
 
 { #category : #'system integration' }
@@ -1209,20 +1227,6 @@ RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #registration }
-RPackageOrganizer >> unregisterPackage: aPackage [
-	"Unregister the specified package from the list of registered packages. Raise the announcement RPackageUnregistered."
-
-	self basicUnregisterPackageNamed: aPackage name.
-	aPackage extendedClasses
-		do: [ :extendedClass | self unregisterExtendingPackage: aPackage forClass: extendedClass].
-	aPackage definedClasses
-		do: [ :definedClass | self unregisterPackage: aPackage forClass: definedClass].
-	SystemAnnouncer announce: (PackageRemoved to: aPackage).
-
-	^ aPackage
-]
-
 { #category : #'private - registration' }
 RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	"unregister the back pointer mapping from classes to packages."
@@ -1240,17 +1244,6 @@ RPackageOrganizer >> unregisterPackage: aPackage forClassName: aClassName [
 		ifTrue:
 			[self error: aPackage name , ' still includes the class ' , aClassName asSymbol].
 	^classPackageMapping removeKey: aClassName asSymbol ifAbsent: [self reportBogusBehaviorOf: #unregisterPackage:forClassName:  ]
-]
-
-{ #category : #registration }
-RPackageOrganizer >> unregisterPackageNamed: symbol [
-	"Unregister the specified package from the list of registered packages. Raise the announcement RPackageUnregistered."
-
-	| aPackage |
-	aPackage := packages at: symbol asSymbol ifAbsent: [ nil].
-	aPackage
-		ifNotNil: [self unregisterPackage: aPackage].
-	^ aPackage
 ]
 
 { #category : #private }

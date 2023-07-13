@@ -58,8 +58,7 @@ GoferUnload >> unregister: aWorkingCopy [
 { #category : #unregistering }
 GoferUnload >> unregisterPackageInfo: aWorkingCopy [
 
-	RPackageOrganizer default
-		unregisterPackageNamed: aWorkingCopy packageName
+	self packageOrganizer removePackage: aWorkingCopy packageName
 ]
 
 { #category : #unregistering }

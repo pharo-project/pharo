@@ -345,31 +345,29 @@ EpApplyTest >> testMethodRemovalWithMethodAdded [
 EpApplyTest >> testPackageAddition [
 
 	[
-	self packageOrganizer createPackageNamed: classFactory packageName.
+	self packageOrganizer ensurePackage: classFactory packageName.
 	self setHeadAsInputEntry.
-	self packageOrganizer unregisterPackageNamed: classFactory packageName.
+	self packageOrganizer removePackage: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpPackageAddition.
 	self deny: (self packageOrganizer hasPackage: classFactory packageName).
 	self applyInputEntry.
-	self assert: (self packageOrganizer hasPackage: classFactory packageName) ] ensure: [
-		self packageOrganizer unregisterPackageNamed: classFactory packageName ]
+	self assert: (self packageOrganizer hasPackage: classFactory packageName) ] ensure: [ self packageOrganizer removePackage: classFactory packageName ]
 ]
 
 { #category : #tests }
 EpApplyTest >> testPackageRemoval [
 
 	[
-	self packageOrganizer createPackageNamed: classFactory packageName.
-	self packageOrganizer unregisterPackageNamed: classFactory packageName.
+	self packageOrganizer ensurePackage: classFactory packageName.
+	self packageOrganizer removePackage: classFactory packageName.
 	self setHeadAsInputEntry.
-	self packageOrganizer createPackageNamed: classFactory packageName.
+	self packageOrganizer ensurePackage: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpPackageRemoval.
 	self assert: (self packageOrganizer hasPackage: classFactory packageName).
 	self applyInputEntry.
-	self deny: (self packageOrganizer hasPackage: classFactory packageName) ] ensure: [
-		self packageOrganizer unregisterPackageNamed: classFactory packageName ]
+	self deny: (self packageOrganizer hasPackage: classFactory packageName) ] ensure: [ self packageOrganizer removePackage: classFactory packageName ]
 ]
 
 { #category : #tests }
