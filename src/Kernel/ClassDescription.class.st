@@ -35,7 +35,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	oldProtocol := self protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance
-		prevent: MethodRecategorized , ClassReorganized
+		prevent: MethodRecategorized
 		during: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
 			self classify: selector under: ((protocol isString
 					  ifTrue: [ protocol ]
@@ -78,7 +78,6 @@ ClassDescription >> addProtocol: aProtocol [
 	protocols := protocols copyWith: protocol.
 
 	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
-	SystemAnnouncer announce: (ClassReorganized class: self).
 	^ protocol
 ]
 
@@ -930,8 +929,7 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames.
 	protocols := protocols copyWithout: protocol.
-	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol).
-	SystemAnnouncer announce: (ClassReorganized class: self)
+	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol)
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -964,8 +962,6 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
 
-	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
-	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
 		oldProtocol := self ensureProtocol: anOldProtocol.
 		newProtocol := self ensureProtocol: aNewProtocol.
 
@@ -973,10 +969,7 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 		newProtocol addAllMethodsFrom: oldProtocol.
 		oldProtocol resetMethodSelectors.
-		self removeProtocolIfEmpty: oldProtocol ].
-
-	"Announce the changes in the system"
-	SystemAnnouncer announce: (ClassReorganized class: self).
+		self removeProtocolIfEmpty: oldProtocol.
 
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
 	newProtocol methodSelectors do: [ :each | self notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]

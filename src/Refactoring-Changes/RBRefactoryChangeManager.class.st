@@ -155,12 +155,12 @@ RBRefactoryChangeManager >> connectToChanges [
 			ClassModifiedClassDefinition,
 			ClassRemoved,
 			ClassRenamed,
-			ClassReorganized,
 			MethodAdded,
 			MethodModified,
 			MethodRemoved,
 			ProtocolAdded,
-			ProtocolRemoved
+			ProtocolRemoved,
+			ProtocolRenamed
 		send: #update:
 		to: self
 ]

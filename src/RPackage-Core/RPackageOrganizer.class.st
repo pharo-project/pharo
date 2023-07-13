@@ -758,7 +758,7 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ClassRemoved send: #systemClassRemovedActionFrom: to: self;
 		when: ClassRenamed send: #systemClassRenamedActionFrom: to: self;
-		when: ClassReorganized send: #systemClassReorganizedActionFrom: to: self;
+		when: ProtocolAdded, ProtocolRemoved, ProtocolRenamed send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodModified send: #systemMethodModifiedActionFrom: to: self;
 		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self;

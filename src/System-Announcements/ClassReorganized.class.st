@@ -21,6 +21,13 @@ ClassReorganized class >> class: aClass [
 			yourself
 ]
 
+{ #category : #testing }
+ClassReorganized class >> isDeprecated [
+	"ClassReorganized was an announcement that was a duplication of the ProtocolAdded, ProtocolRemoved and ProtocolRenamed announcements. You can use those announcements instead."
+
+	^ true
+]
+
 { #category : #accessing }
 ClassReorganized >> classAffected [
 	^self classReorganized
