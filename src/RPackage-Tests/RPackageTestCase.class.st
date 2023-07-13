@@ -135,3 +135,11 @@ RPackageTestCase >> setupOrganizer [
 		  debuggingName: 'Organizer for RPackageTest';
 		  yourself
 ]
+
+{ #category : #running }
+RPackageTestCase >> tearDown [
+
+	createdClasses do: [ :cls | cls removeFromSystem ].
+
+	super tearDown
+]

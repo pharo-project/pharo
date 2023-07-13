@@ -68,20 +68,11 @@ RPackageOrganizerTest >> quadrangleClass [
 RPackageOrganizerTest >> setUp [
 
 	super setUp.
-	createdClasses := OrderedCollection new.
 	packageOrganizer := RPackageOrganizer new.
 	packageOrganizer debuggingName: 'For PackageOrganizerTest'.
 
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'
-]
-
-{ #category : #running }
-RPackageOrganizerTest >> tearDown [
-
-	createdClasses do: [ :cls | cls removeFromSystem ].
-
-	super tearDown
 ]
 
 { #category : #tests }
