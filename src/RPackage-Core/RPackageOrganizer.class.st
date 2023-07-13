@@ -1035,26 +1035,26 @@ RPackageOrganizer >> systemClassRemovedActionFrom: ann [
 RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 	"When a class is renamed, we update its package as well as the organizer"
 
-	| newName oldName class rPackage extendingRPackages packageName |
+	| newName oldName class package extendingPackages packageName |
 	class := ann classAffected.
 	packageName := ann category.
 	oldName := ann oldName.
 	newName := ann newName.
-	rPackage := self packageOfClassNamed: oldName.
-	extendingRPackages := self extendingPackagesOfClassNamed: oldName.
+	package := self packageOfClassNamed: oldName.
+	extendingPackages := self extendingPackagesOfClassNamed: oldName.
 
-	rPackage updateDefinedClassNamed: oldName withNewName: newName.
+	package updateDefinedClassNamed: oldName withNewName: newName.
 	"we have to update all RPackages extending this class"
-	extendingRPackages do: [:aRPackage |
+	extendingPackages do: [:aRPackage |
 		aRPackage updateExtensionForClassNamed: oldName withNewName: newName].
 
 	"we have to update the RPackageOrganizer.
 	update the 'classPackageDictionary' to replace the key with the new class name"
-	self unregisterPackage: rPackage forClassName: oldName.
-	self registerPackage: rPackage forClassName: newName.
+	self unregisterPackage: package forClass: oldName.
+	self registerPackage: package forClassName: newName.
 
 	"update the 'classExtendingPackagesMapping' to replace the key with the new class name"
-	extendingRPackages do: [:aRPackage |
+	extendingPackages do: [:aRPackage |
 		self unregisterExtendingPackage: aRPackage forClassName: oldName.
 		self registerExtendingPackage:  aRPackage forClassName: newName
 		].
@@ -1231,19 +1231,12 @@ RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	"unregister the back pointer mapping from classes to packages."
 
-	^classPackageMapping
-		removeKey: aClass instanceSide name
-		ifAbsent: [ self reportExtraRemovalOf: aClass name ]
-]
+	| className |
+	className := (aClass isString
+		              ifTrue: [ aClass ]
+		              ifFalse: [ aClass instanceSide name ]) asSymbol.
 
-{ #category : #'private - registration' }
-RPackageOrganizer >> unregisterPackage: aPackage forClassName: aClassName [
-	"Unregister the package back pointer for a given class. The class should not belong to the package anymore before removing the back pointer."
-
-	(aPackage includesClassNamed: aClassName asSymbol)
-		ifTrue:
-			[self error: aPackage name , ' still includes the class ' , aClassName asSymbol].
-	^classPackageMapping removeKey: aClassName asSymbol ifAbsent: [self reportBogusBehaviorOf: #unregisterPackage:forClassName:  ]
+	^ classPackageMapping removeKey: className ifAbsent: [ self error: aPackage name , ' still includes the class ' , className ]
 ]
 
 { #category : #private }

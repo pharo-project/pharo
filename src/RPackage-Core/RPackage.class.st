@@ -1156,18 +1156,17 @@ RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 RPackage >> removeClassDefinitionName: aClassName [
 	"remove the class definition from the package but not its method"
 
-	| removed aClassNameSymbol |
-	('* class' match: aClassName) ifTrue: [^ self error: 'no metaclass name'].
+	| aClassNameSymbol |
+	(aClassName endsWith: ' class') ifTrue: [ ^ self error: 'no metaclass name' ].
 	aClassNameSymbol := aClassName asSymbol.
 	"clean up class tags"
-	classTags do: [ :tag| tag removeClassNamed: aClassName ].
-	(classTags select: #isEmpty)
-		do: [ :eachTag | self basicRemoveTag: eachTag ].
+	classTags do: [ :tag |
+		tag removeClassNamed: aClassName.
+		tag isEmpty ifTrue: [ self basicRemoveTag: tag ] ].
 	"remove the class definition"
-	removed := classes remove: aClassNameSymbol ifAbsent: [nil].
-	removed ifNotNil: [
+	(classes remove: aClassNameSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed |
 		self definedMethodsShouldBecomeExtensionWhenRemovingClass: aClassName.
-		self unregisterClassName: aClassNameSymbol ]
+		self unregisterClass: aClassNameSymbol ]
 ]
 
 { #category : #'class tags' }
@@ -1187,20 +1186,14 @@ RPackage >> removeClassDefinitionNamed: aClassNameSymbol [
 
 	This method removes the class definition from the receiver and its organizer"
 
-	| removed |
-	removed := classes remove: aClassNameSymbol ifAbsent: [nil].
-	removed ifNotNil: [ self unregisterClassName: aClassNameSymbol.]
+	(classes remove: aClassNameSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed | self unregisterClass: removed ]
 ]
 
 { #category : #private }
 RPackage >> removeClassDefinitionWithoutCheckingMethods: aClass [
 	"Same than 'removeClassDefinition', excepts that it does not make any check to set defined methods as extensions"
 
-	| removed aClassName|
-	aClassName := aClass instanceSide name.
-	removed := classes remove: aClassName ifAbsent: [nil].
-	removed ifNotNil: [
-		self unregisterClass: aClass.]
+	self removeClassDefinitionNamed: aClass instanceSide name asSymbol
 ]
 
 { #category : #removing }
@@ -1460,14 +1453,8 @@ RPackage >> unregister [
 { #category : #'private - register' }
 RPackage >> unregisterClass: aClass [
 	"Private method that declares the mapping between a class and its package."
-	self organizer
-		unregisterPackage: self forClass: aClass
-]
 
-{ #category : #'private - register' }
-RPackage >> unregisterClassName: aClassNameSymbol [
-	"Private method that declares the mapping between a class and its package."
-	self organizer unregisterPackage: self forClassName: aClassNameSymbol
+	self organizer unregisterPackage: self forClass: aClass
 ]
 
 { #category : #updating }
