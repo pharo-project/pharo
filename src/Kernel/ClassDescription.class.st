@@ -269,7 +269,7 @@ ClassDescription >> classify: selector under: aProtocol [
 
 	oldProtocol ifNotNil: [
 		oldProtocol removeMethodSelector: selector.
-		self removeProtocolIfEmpty: oldProtocol ] ].
+		self removeProtocolIfEmpty: oldProtocol ].
 
 	newProtocol addMethodSelector: selector.
 
