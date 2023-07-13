@@ -1000,7 +1000,6 @@ Class >> removeFromSystem: logged [
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
 	We deal also with a special case that is the case a class of the same name than the alias is installed in the image after the alias. In that case we do not remove it. It's the reason we check if the global of the alias is the same as self."
 	self deprecatedAliases do: [ :alias | self environment at: alias ifPresent: [ :class | class = self ifTrue: [ self environment removeKey: alias ] ] ].
-	self package organizer fullyRemoveClassNamed: self name.
 	self obsolete.
 	logged ifTrue: [ SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory ]
 ]
