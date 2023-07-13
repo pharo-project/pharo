@@ -181,7 +181,12 @@ RPackage >> addClass: aClass [
 RPackage >> addClassDefinition: aClass [
 	"Add only the class definition of aClass, as a class defined by the receiver. The term classdefinition denotes the fact that we do not treat its methods. aClass methods are not added to the package. aClass can be either a class or a metaclass"
 
-	self addClassDefinitionName: aClass instanceSide name
+	| aClassName |
+	aClassName := aClass instanceSide name asSymbol.
+	(classes includes: aClassName) ifTrue: [ ^ self ].
+	classes add: aClassName.
+	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName.
+	self registerClassName: aClassName
 ]
 
 { #category : #'class tags' }
@@ -189,21 +194,6 @@ RPackage >> addClassDefinition: aClass toClassTag: aSymbol [
 	"Tags the class aClass with the tag aSymbol"
 
 	self addClassDefinitionName: aClass name toClassTag: aSymbol
-]
-
-{ #category : #'add class' }
-RPackage >> addClassDefinitionName: aClassName [
-	"aClassName should only be a class (and not a metaclass name)"
-
-	| aClassNameSymbol |
-	('* class' match: aClassName)
-		ifTrue: [ ^ self error: 'no metaclass name' ].
-	aClassNameSymbol := aClassName asSymbol.
-	(classes includes: aClassNameSymbol)
-		ifTrue: [ ^ self ].
-	classes add: aClassNameSymbol.
-	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassNameSymbol.
-	self registerClassName: aClassNameSymbol
 ]
 
 { #category : #'class tags' }
