@@ -259,24 +259,17 @@ ClassDescription >> classVariablesString [
 { #category : #protocols }
 ClassDescription >> classify: selector under: aProtocol [
 
-	| oldProtocol newProtocol announceReorganization |
+	| oldProtocol newProtocol |
 	oldProtocol := self protocolOfSelector: selector.
 
 	"In case the method is already classified and we say to classify it under nil, we do not update the protocol."
 	(aProtocol isNil and: [ oldProtocol isNotNil ]) ifTrue: [ ^ self ].
 
-	announceReorganization := (self hasProtocol: aProtocol) not.
+	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
 
-	"It is possible that we raised two ClassReorganized if the protocol does not exist and if the method to classify was alone in its old protocol. We want to avoid raising too many announcements so we just raise it once if needed."
-	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [ "If old and new protocols are the same, we skip the classification."
-		(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
-
-		oldProtocol ifNotNil: [
-			oldProtocol removeMethodSelector: selector.
-			oldProtocol isEmpty ifTrue: [ announceReorganization := true ].
-			self removeProtocolIfEmpty: oldProtocol ] ].
-
-	announceReorganization ifTrue: [ SystemAnnouncer uniqueInstance classReorganized: self ].
+	oldProtocol ifNotNil: [
+		oldProtocol removeMethodSelector: selector.
+		self removeProtocolIfEmpty: oldProtocol ] ].
 
 	newProtocol addMethodSelector: selector.
 
