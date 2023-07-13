@@ -11,13 +11,26 @@ Class {
 	#category : #'System-Announcements-System-Protocols'
 }
 
-{ #category : #'class initialization' }
-ProtocolAnnouncement class >> in: aClass protocol: aProtocol [
+{ #category : #'instance creation' }
+ProtocolAnnouncement class >> class: aClass [
 
 	^ self new
 		  classReorganized: aClass;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+ProtocolAnnouncement class >> in: aClass protocol: aProtocol [
+
+	^ (self class: aClass)
 		  protocol: aProtocol;
 		  yourself
+]
+
+{ #category : #'class initialization' }
+ProtocolAnnouncement class >> initialize [
+
+	self deprecatedAliases: { #ClassReorganized }
 ]
 
 { #category : #testing }
@@ -28,7 +41,8 @@ ProtocolAnnouncement >> affectsProtocolsIn: aClass [
 
 { #category : #accessing }
 ProtocolAnnouncement >> classAffected [
-	^self classReorganized
+
+	^ self classReorganized
 ]
 
 { #category : #accessing }

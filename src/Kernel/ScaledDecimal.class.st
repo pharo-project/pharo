@@ -84,14 +84,14 @@ ScaledDecimal >> >= aNumber [
 ScaledDecimal >> adaptToFraction: rcvr andSend: selector [
 	"If I am involved in arithmetic with a Fraction, convert it to a ScaledDecimal."
 
-	^(rcvr asScaledDecimal: scale) perform: selector with: self
+	^(rcvr asScaledDecimal: 0) perform: selector with: self
 ]
 
 { #category : #converting }
 ScaledDecimal >> adaptToInteger: rcvr andSend: selector [
 	"If I am involved in arithmetic with an Integer, convert it to a ScaledDecimal."
 
-	^(rcvr asScaledDecimal: scale) perform: selector with: self
+	^(rcvr asScaledDecimal: 0) perform: selector with: self
 ]
 
 { #category : #converting }

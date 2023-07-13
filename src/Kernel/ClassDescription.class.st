@@ -44,11 +44,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			self
-				notifyRepackage: selector
-				method: compiledMethod
-				oldProtocol: oldProtocol
-				newProtocol: newProtocol.
+			self notifyRepackage: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol.
 
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
@@ -75,7 +71,6 @@ ClassDescription >> addProtocol: aProtocol [
 	protocols := protocols copyWith: protocol.
 
 	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
-	SystemAnnouncer uniqueInstance classReorganized: self.
 	^ protocol
 ]
 
@@ -769,7 +764,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 ]
 
 { #category : #private }
-ClassDescription >> notifyRepackage: selector method: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol [
+ClassDescription >> notifyRepackage: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol [
 
 	| oldPackage newPackage |
 	newProtocol = oldProtocol ifTrue: [ ^ self ].
@@ -939,8 +934,7 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames.
 	protocols := protocols copyWithout: protocol.
-	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol).
-	SystemAnnouncer uniqueInstance classReorganized: self
+	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol)
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -973,8 +967,6 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
 
-	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
-	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
 		oldProtocol := self ensureProtocol: anOldProtocol.
 		newProtocol := self ensureProtocol: aNewProtocol.
 
@@ -982,10 +974,7 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 		newProtocol addAllMethodsFrom: oldProtocol.
 		oldProtocol resetMethodSelectors.
-		self removeProtocolIfEmpty: oldProtocol ].
-
-	"Announce the changes in the system"
-	SystemAnnouncer uniqueInstance classReorganized: self.
+		self removeProtocolIfEmpty: oldProtocol.
 
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
 	newProtocol methodSelectors do: [ :each | self notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]

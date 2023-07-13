@@ -102,7 +102,7 @@ StRefactoringPreviewPresenter >> connectPresenters [
 		selection selectedItem ifNotNil: [
 			self buildDiffFor: selection selectedItem ] ].
 
-	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateActiveScope; updateChanges ].
+	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateActiveScope; updateChanges; updateTablePresenter ].
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ]
