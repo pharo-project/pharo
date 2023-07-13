@@ -68,8 +68,9 @@ RPackageOrganizerTest >> quadrangleClass [
 RPackageOrganizerTest >> setUp [
 
 	super setUp.
-	packageOrganizer := RPackageOrganizer new.
-	packageOrganizer debuggingName: 'For PackageOrganizerTest'.
+	packageOrganizer := RPackageOrganizer new
+		                    debuggingName: 'For PackageOrganizerTest';
+		                    yourself.
 
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'

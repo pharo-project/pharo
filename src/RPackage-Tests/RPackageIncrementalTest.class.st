@@ -51,7 +51,6 @@ RPackageIncrementalTest >> setUp [
 { #category : #running }
 RPackageIncrementalTest >> tearDown [
 
-	createdClasses do: [ :cls | cls removeFromSystem ].
 	createdPackages do: [ :each | self removePackage: each name ].
 	"just remove package from package organizer dictionary"
 
