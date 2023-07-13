@@ -386,9 +386,9 @@ RPackageOrganizer >> extendingPackagesOfClassNamed: aName [
 RPackageOrganizer >> fullyRemoveClassNamed: className [
 	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
 
-	| rPackage |
-	rPackage := (self packageOfClassNamed: className) ifNil: [ ^ self ].
-	rPackage removeClassNamed: className.
+	| package |
+	package := (self packageOfClassNamed: className) ifNil: [ ^ self ].
+	package removeClassNamed: className.
 	(self extendingPackagesOfClassNamed: className) do: [ :each | each removeAllMethodsFromClassNamed: className ]
 ]
 
@@ -756,7 +756,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: CategoryRenamed send: #systemCategoryRenamedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
-		when: ClassRemoved send: #systemClassRemovedActionFrom: to: self;
 		when: ClassRenamed send: #systemClassRenamedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
@@ -1018,17 +1017,6 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 	newPackageTag := newPackage addClassTag: newPackageName.
 
 	newPackage moveClass: class fromPackage: oldPackage toTag: newPackageTag
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemClassRemovedActionFrom: ann [
-	"A class has been removed, we should update the package adequately."
-
-	| class className |
-	class := ann classRemoved.
-	className  := class originalName.
-
-	self fullyRemoveClassNamed: className
 ]
 
 { #category : #'system integration' }
