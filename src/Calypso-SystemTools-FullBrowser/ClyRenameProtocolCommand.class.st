@@ -1,7 +1,7 @@
 "
-I am a command to rename method tag (protocol).
+I am a command to rename method protocol.
 
-My method group should be either ClyTaggedMethodGroup or ClyNoTagMethodGroup.
+My method group should be either ClyMethodsInProtocolGroup or ClyUnclassifiedMethodGroup.
  
 Internal Representation and Key Implementation Points.
 
@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 	newName:		<String>
 "
 Class {
-	#name : #ClyRenameMethodTagCommand,
+	#name : #ClyRenameProtocolCommand,
 	#superclass : #CmdCommand,
 	#instVars : [
 		'methodGroup',
@@ -20,67 +20,67 @@ Class {
 }
 
 { #category : #testing }
-ClyRenameMethodTagCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMethodTagSelected
+ClyRenameProtocolCommand class >> canBeExecutedInContext: aToolContext [
+	^aToolContext isProtocolSelected
 ]
 
 { #category : #activation }
-ClyRenameMethodTagCommand class >> fullBrowserMenuActivation [
+ClyRenameProtocolCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : #activation }
-ClyRenameMethodTagCommand class >> fullBrowserShortcutActivation [
+ClyRenameProtocolCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation renamingFor: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : #execution }
-ClyRenameMethodTagCommand >> applyResultInContext: aToolContext [
+ClyRenameProtocolCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
-	aToolContext showMethodTag: newName
+	aToolContext showProtocol: newName
 ]
 
 { #category : #accessing }
-ClyRenameMethodTagCommand >> defaultMenuItemName [
+ClyRenameProtocolCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
 { #category : #execution }
-ClyRenameMethodTagCommand >> execute [
+ClyRenameProtocolCommand >> execute [
 
 	methodGroup categorizeMethodsIn: newName
 ]
 
 { #category : #accessing }
-ClyRenameMethodTagCommand >> methodGroup [
+ClyRenameProtocolCommand >> methodGroup [
 	^ methodGroup
 ]
 
 { #category : #accessing }
-ClyRenameMethodTagCommand >> methodGroup: anObject [
+ClyRenameProtocolCommand >> methodGroup: anObject [
 	methodGroup := anObject
 ]
 
 { #category : #accessing }
-ClyRenameMethodTagCommand >> newName [
+ClyRenameProtocolCommand >> newName [
 	^ newName
 ]
 
 { #category : #accessing }
-ClyRenameMethodTagCommand >> newName: anObject [
+ClyRenameProtocolCommand >> newName: anObject [
 	newName := anObject
 ]
 
 { #category : #execution }
-ClyRenameMethodTagCommand >> prepareFullExecutionInContext: aToolContext [
+ClyRenameProtocolCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
 
 	methodGroup := aToolContext lastSelectedMethodGroup.
-	newName := aToolContext
-		requestSingleMethodTag: 'New name of protocol' suggesting: methodGroup name.
+	newName := aToolContext requestProtocol: 'New name of protocol' suggesting: methodGroup name.
 	newName = methodGroup name ifTrue: [ CmdCommandAborted signal ]
 ]

@@ -1,10 +1,10 @@
 "
-I am status bar tool for method editors to select method tags or extending package for the editing method.
+I am status bar tool for method editors to select a protocol or extending package for the editing method.
 
-While system only support tags when method is not extension I do not show both elements.
+While system only support protocol when method is not extension I do not show both elements.
 So I provide checkbox for extension status.
 When it is active I should extending package in the label.
-When it is not active I show method tag (protocol) in the label.
+When it is not active I show the protocol in the label.
 
 When user toggle checkbox I request either package or protocol depending on requested mode of method.
  
@@ -17,7 +17,7 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyMethodTagsAndPackageEditorMorph,
+	#name : #ClyProtocolAndPackageEditorMorph,
 	#superclass : #ClyStatusBarItemMorph,
 	#instVars : [
 		'extensionCheckbox',
@@ -29,7 +29,7 @@ Class {
 }
 
 { #category : #building }
-ClyMethodTagsAndPackageEditorMorph >> build [
+ClyProtocolAndPackageEditorMorph >> build [
 	self buildResetButton.
 	self addMorphBack: resetButton.
 
@@ -46,7 +46,7 @@ ClyMethodTagsAndPackageEditorMorph >> build [
 ]
 
 { #category : #building }
-ClyMethodTagsAndPackageEditorMorph >> buildEditButton [
+ClyProtocolAndPackageEditorMorph >> buildEditButton [
 	editButton := IconicButtonMorph new
 		target: self;
 		actionSelector: #openEditor;
@@ -57,7 +57,7 @@ ClyMethodTagsAndPackageEditorMorph >> buildEditButton [
 ]
 
 { #category : #building }
-ClyMethodTagsAndPackageEditorMorph >> buildExtensionCheckBoxButton [
+ClyProtocolAndPackageEditorMorph >> buildExtensionCheckBoxButton [
 	extensionCheckbox := self theme
 		newCheckboxIn: self
 		for: self
@@ -73,18 +73,18 @@ ClyMethodTagsAndPackageEditorMorph >> buildExtensionCheckBoxButton [
 ]
 
 { #category : #building }
-ClyMethodTagsAndPackageEditorMorph >> buildLabel [
+ClyProtocolAndPackageEditorMorph >> buildLabel [
 
-	label := self theme newLabelIn: self label: self printMethodTagsOrPackage.
+	label := self theme newLabelIn: self label: self printProtocolOrPackage.
 	label on: #click send: #openEditor to: self
 ]
 
 { #category : #building }
-ClyMethodTagsAndPackageEditorMorph >> buildResetButton [
+ClyProtocolAndPackageEditorMorph >> buildResetButton [
 
 	resetButton := IconicButtonMorph new
 		target: self;
-		actionSelector: #resetTagsAndPackage;
+		actionSelector: #resetProtocolAndPackage;
 		arguments: #();
 		labelGraphic: (self iconNamed: #glamorousClose);
 		color: Color transparent;
@@ -94,49 +94,49 @@ ClyMethodTagsAndPackageEditorMorph >> buildResetButton [
 ]
 
 { #category : #initialization }
-ClyMethodTagsAndPackageEditorMorph >> initialize [
+ClyProtocolAndPackageEditorMorph >> initialize [
 	super initialize.
 	self cellInset: 2@2
 ]
 
 { #category : #testing }
-ClyMethodTagsAndPackageEditorMorph >> isExtensionActive [
+ClyProtocolAndPackageEditorMorph >> isExtensionActive [
 
 	^ownerTool extendingPackage notNil
 ]
 
 { #category : #operations }
-ClyMethodTagsAndPackageEditorMorph >> openEditor [
+ClyProtocolAndPackageEditorMorph >> openEditor [
 
 	self requestChangeBy: [
 		self isExtensionActive
 			ifTrue: [ self requestPackage]
-			ifFalse: [ self requestTag ]
+			ifFalse: [ self requestProtocol ]
 	]
 ]
 
 { #category : #accessing }
-ClyMethodTagsAndPackageEditorMorph >> ownerTool: anObject [
+ClyProtocolAndPackageEditorMorph >> ownerTool: anObject [
 
 	super ownerTool: anObject
 ]
 
 { #category : #printing }
-ClyMethodTagsAndPackageEditorMorph >> printMethodTags [
+ClyProtocolAndPackageEditorMorph >> printProtocol [
 
 	^ ownerTool methodProtocol ifNil: [ Protocol unclassified asText makeAllColor: Color red ]
 ]
 
 { #category : #printing }
-ClyMethodTagsAndPackageEditorMorph >> printMethodTagsOrPackage [
+ClyProtocolAndPackageEditorMorph >> printProtocolOrPackage [
 
 	^self isExtensionActive
 		ifTrue: [ ownerTool extendingPackage name]
-		ifFalse: [ self printMethodTags ]
+		ifFalse: [ self printProtocol ]
 ]
 
 { #category : #operations }
-ClyMethodTagsAndPackageEditorMorph >> requestChangeBy: aBlock [
+ClyProtocolAndPackageEditorMorph >> requestChangeBy: aBlock [
 
 	aBlock on: CmdCommandAborted do: [ :err ].
 
@@ -144,7 +144,7 @@ ClyMethodTagsAndPackageEditorMorph >> requestChangeBy: aBlock [
 ]
 
 { #category : #operations }
-ClyMethodTagsAndPackageEditorMorph >> requestPackage [
+ClyProtocolAndPackageEditorMorph >> requestPackage [
 
 	| extendingPackage |
 	extendingPackage := ownerTool context requestSinglePackage: 'Choose package for method'.
@@ -153,38 +153,38 @@ ClyMethodTagsAndPackageEditorMorph >> requestPackage [
 ]
 
 { #category : #operations }
-ClyMethodTagsAndPackageEditorMorph >> requestTag [
+ClyProtocolAndPackageEditorMorph >> requestProtocol [
 
-	| selectedTag existingTag |
-	existingTag := ownerTool methodProtocol ifNil: [ '' ].
+	| newProtocol priorProtocol |
+	priorProtocol := ownerTool methodProtocol ifNil: [ '' ].
 
-	selectedTag := self ownerTool context requestSingleMethodTag: 'New protocol name' suggesting: existingTag.
-	selectedTag = existingTag ifTrue: [ ^ CmdCommandAborted signal ].
+	newProtocol := self ownerTool context requestProtocol: 'New protocol name' suggesting: priorProtocol.
+	newProtocol = priorProtocol ifTrue: [ ^ CmdCommandAborted signal ].
 
-	ownerTool methodProtocol: selectedTag
+	ownerTool methodProtocol: newProtocol
 ]
 
 { #category : #operations }
-ClyMethodTagsAndPackageEditorMorph >> resetTagsAndPackage [
+ClyProtocolAndPackageEditorMorph >> resetProtocolAndPackage [
 
 	ownerTool methodProtocol: nil.
 	self update
 ]
 
 { #category : #operations }
-ClyMethodTagsAndPackageEditorMorph >> toggleExtension [
+ClyProtocolAndPackageEditorMorph >> toggleExtension [
 
 	self requestChangeBy: [
 		self isExtensionActive
-			ifTrue: [ self requestTag ]
+			ifTrue: [ self requestProtocol ]
 			ifFalse: [ self requestPackage]
 	]
 ]
 
 { #category : #building }
-ClyMethodTagsAndPackageEditorMorph >> update [
+ClyProtocolAndPackageEditorMorph >> update [
 	label color: label defaultColor.
-	label contents: self printMethodTagsOrPackage.
+	label contents: self printProtocolOrPackage.
 	self isExtensionActive
 		ifTrue: [ editButton helpText: 'Choose package for method']
 		ifFalse: [ editButton helpText: 'Classify method']

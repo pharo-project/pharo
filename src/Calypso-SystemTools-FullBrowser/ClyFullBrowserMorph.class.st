@@ -612,14 +612,6 @@ ClyFullBrowserMorph >> selectClass: aClass [
 ]
 
 { #category : #navigation }
-ClyFullBrowserMorph >> selectClass: aClass atMethodTag: tagName [
-
-	self changeStateBy: [
-		self selectClass: aClass.
-		self methodGroupSelection selectItemsWhere: [ :each | each name = tagName ]]
-]
-
-{ #category : #navigation }
 ClyFullBrowserMorph >> selectCurrentExtensionMethodGroup [
 
 	self classSelection isEmpty ifTrue: [ ^self ].

@@ -83,6 +83,12 @@ ClyMethodEditorToolMorph >> currentEditedAST [
 		  parse
 ]
 
+{ #category : #operations }
+ClyMethodEditorToolMorph >> editProtocolOf: aMethod [
+
+	self applyChangesBy: [ aMethod protocol: methodProtocol ]
+]
+
 { #category : #accessing }
 ClyMethodEditorToolMorph >> editingClass [
 	^self methodClass
@@ -111,7 +117,7 @@ ClyMethodEditorToolMorph >> fillStatusBar [
 	statusBar addCommandItem: (ClyTextLineNumbersSwitchMorph of: textMorph).
 	statusBar addCommandItem: (ClyFormatAsReadSwitchMorph of: textMorph).
 
-	statusBar addCommandItem: (ClyMethodTagsAndPackageEditorMorph for: self)
+	statusBar addCommandItem: (ClyProtocolAndPackageEditorMorph for: self)
 ]
 
 { #category : #operations }
@@ -174,14 +180,28 @@ ClyMethodEditorToolMorph >> modifiesExtension [
 ClyMethodEditorToolMorph >> packageEditingMethod: aMethod [
 
 	self applyChangesBy: [
-		(extendingPackage notNil and: [aMethod package ~~ extendingPackage]) ifTrue: [
+		(extendingPackage isNotNil and: [aMethod package ~~ extendingPackage]) ifTrue: [
 			^(SycMoveMethodsToPackageCommand for: {aMethod} to: extendingPackage)
 				execute].
 
 		(extendingPackage isNil and: [ aMethod isExtension ]) ifTrue: [
-			(SycMoveMethodsToPackageDefiningClassCommand for: {aMethod})
+			(SycMoveMethodsToTheDefiningClassCommand for: {aMethod})
 				execute]
 	]
+]
+
+{ #category : #operations }
+ClyMethodEditorToolMorph >> protocolAndPackageEditingMethod: aMethod [
+	self editProtocolOf: aMethod.
+	"Classification should be performed before package movement
+	because extending package is still based on protocol begining with star.
+	So it should override manual classification"
+	self packageEditingMethod: aMethod
+]
+
+{ #category : #accessing }
+ClyMethodEditorToolMorph >> protocolAndPackageEditor [
+	^(statusBar findDeeplyA: ClyProtocolAndPackageEditorMorph) ifNil: [ CmdCommandAborted signal ]
 ]
 
 { #category : #'rubric interaction model' }
@@ -199,26 +219,6 @@ ClyMethodEditorToolMorph >> setUpParametersFromModel [
 { #category : #initialization }
 ClyMethodEditorToolMorph >> setUpTargetClasses [
 	self subclassResponsibility
-]
-
-{ #category : #operations }
-ClyMethodEditorToolMorph >> tagAndPackageEditingMethod: aMethod [
-	self tagEditingMethod: aMethod.
-	"Tagging should be performed before package movement
-	because extending package is still based on protocol begining with star.
-	So it should override manual tagging"
-	self packageEditingMethod: aMethod
-]
-
-{ #category : #operations }
-ClyMethodEditorToolMorph >> tagEditingMethod: aMethod [
-
-	self applyChangesBy: [ aMethod protocol: methodProtocol ]
-]
-
-{ #category : #accessing }
-ClyMethodEditorToolMorph >> tagsAndPackageEditor [
-	^(statusBar findDeeplyA: ClyMethodTagsAndPackageEditorMorph) ifNil: [ CmdCommandAborted signal ]
 ]
 
 { #category : #'events handling' }

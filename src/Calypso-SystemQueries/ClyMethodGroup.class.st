@@ -55,7 +55,7 @@ ClyMethodGroup class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugi
 ]
 
 { #category : #testing }
-ClyMethodGroup class >> isBasedOnMethodProtocol [
+ClyMethodGroup class >> isBasedOnProtocol [
 	^false
 ]
 

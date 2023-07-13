@@ -14,7 +14,7 @@ ClyUnclassifiedMethodGroup class >> groupName [
 ]
 
 { #category : #testing }
-ClyUnclassifiedMethodGroup class >> isBasedOnMethodProtocol [
+ClyUnclassifiedMethodGroup class >> isBasedOnProtocol [
 	^true
 ]
 

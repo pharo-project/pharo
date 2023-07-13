@@ -1,7 +1,7 @@
-Extension { #name : #SycTagMethodCommand }
+Extension { #name : #SycClassifyMethodCommand }
 
 { #category : #'*Calypso-SystemTools-Core' }
-SycTagMethodCommand class >> methodMenuActivation [
+SycClassifyMethodCommand class >> methodMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemFor: ClyMethod asCalypsoItemContext
