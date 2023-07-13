@@ -9,8 +9,7 @@ Class {
 	#name : #RPackageOrganizerTest,
 	#superclass : #RPackageTestCase,
 	#instVars : [
-		'packageOrganizer',
-		'previousAuthor'
+		'packageOrganizer'
 	],
 	#category : #'RPackage-Tests'
 }
@@ -67,12 +66,11 @@ RPackageOrganizerTest >> quadrangleClass [
 
 { #category : #running }
 RPackageOrganizerTest >> setUp [
+
 	super setUp.
 	createdClasses := OrderedCollection new.
-	createdPackages := OrderedCollection new.
 	packageOrganizer := RPackageOrganizer new.
 	packageOrganizer debuggingName: 'For PackageOrganizerTest'.
-	previousAuthor := Author fullName ifNil: [Author fullName: 'RPackage'].
 
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'
@@ -95,9 +93,7 @@ RPackageOrganizerTest >> stringCharacterInCollPackage [
 { #category : #running }
 RPackageOrganizerTest >> tearDown [
 
-	Author fullName: previousAuthor.
-
-	(createdClasses reject: [ :c | c isObsolete ]) do: [ :cls | cls removeFromSystem ].
+	createdClasses do: [ :cls | cls removeFromSystem ].
 
 	super tearDown
 ]
