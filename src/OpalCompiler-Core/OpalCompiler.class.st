@@ -554,7 +554,6 @@ OpalCompiler >> install [
 	method := self compile ifNil: [ ^ nil ].
 	priorMethod := class compiledMethodAt: method selector ifAbsent: [  ].
 
-	protocol := class ensureProtocol: protocol.
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
 	logSource := self logged ifNil: [ class acceptsLoggingOfCompilation ].
 
@@ -565,7 +564,7 @@ OpalCompiler >> install [
 		method
 			putSource: source
 			class: class
-			protocol: (class protocolOfSelector: method selector) "This should just be `method protocol` when it will return a real protocol and not a name."
+			protocol: method protocol
 			withStamp: changeStamp
 			priorMethod: priorMethod ].
 

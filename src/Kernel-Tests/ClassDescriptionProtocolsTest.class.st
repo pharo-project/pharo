@@ -134,12 +134,12 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithNil [
 	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified . #human }.
 	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz ).
 	
-	"Now let's test the behavior if we already have a protocol.
-	The behavior should change to not change the protocol but this test will ensure that the change is intentional and not a regression."
+	"In case we classify under nil while the method already has a protocol, we do not want to update the protocol."
 	class classify: #luz under: nil.
 
-	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified }.
-	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king #luz ).
+	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified . #human }.
+	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king ).
+	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz )
 ]
 
 { #category : #tests }

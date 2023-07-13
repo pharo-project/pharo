@@ -34,14 +34,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorOrigin := method origin ].
 
 	oldProtocol := self protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance
-		prevent: MethodRecategorized
-		during: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
-			self classify: selector under: ((protocol isString
-					  ifTrue: [ protocol ]
-					  ifFalse: [ protocol name ]) = Protocol unclassified
-					 ifTrue: [ oldProtocol ]
-					 ifFalse: [ protocol ]) ].
+	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
@@ -267,7 +260,12 @@ ClassDescription >> classVariablesString [
 ClassDescription >> classify: selector under: aProtocol [
 
 	| oldProtocol newProtocol |
-	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
+	oldProtocol := self protocolOfSelector: selector.
+
+	"In case the method is already classified and we say to classify it under nil, we do not update the protocol."
+	(aProtocol isNil and: [ oldProtocol isNotNil ]) ifTrue: [ ^ self ].
+
+	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
 
 	oldProtocol ifNotNil: [
 		oldProtocol removeMethodSelector: selector.
@@ -327,7 +325,7 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 ClassDescription >> compile: sourceCode notifying: requestor [
 	"Refer to the comment in Behavior|compile:notifying:."
 
-	^ self compile: sourceCode classified: Protocol unclassified notifying: requestor
+	^ self compile: sourceCode classified: nil notifying: requestor
 ]
 
 { #category : #compiling }
