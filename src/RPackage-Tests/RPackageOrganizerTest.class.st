@@ -9,8 +9,7 @@ Class {
 	#name : #RPackageOrganizerTest,
 	#superclass : #RPackageTestCase,
 	#instVars : [
-		'packageOrganizer',
-		'previousAuthor'
+		'packageOrganizer'
 	],
 	#category : #'RPackage-Tests'
 }
@@ -50,14 +49,14 @@ RPackageOrganizerTest >> packageOrganizer [
 
 { #category : #'tests - extending' }
 RPackageOrganizerTest >> pointRectangleInGraphElement [
-	| p |
-	p := RPackage named: #GraphElement.
-	p addClassDefinition: Point.
-	p addMethod: Point>>#x.
-	p addMethod: Point>>#rotateBy:about:.
-	p addClassDefinition: Rectangle.
-	p addMethod: self quadrangleClass >>#intersect:.
-	^ p
+
+	^ (RPackage named: #GraphElement)
+		  addClassDefinition: Point;
+		  addMethod: Point >> #x;
+		  addMethod: Point >> #rotateBy:about:;
+		  addClassDefinition: Rectangle;
+		  addMethod: self quadrangleClass >> #intersect:;
+		  yourself
 ]
 
 { #category : #utilities }
@@ -67,39 +66,14 @@ RPackageOrganizerTest >> quadrangleClass [
 
 { #category : #running }
 RPackageOrganizerTest >> setUp [
+
 	super setUp.
-	createdClasses := OrderedCollection new.
-	createdPackages := OrderedCollection new.
-	packageOrganizer := RPackageOrganizer new.
-	packageOrganizer debuggingName: 'For PackageOrganizerTest'.
-	previousAuthor := Author fullName ifNil: [Author fullName: 'RPackage'].
+	packageOrganizer := RPackageOrganizer new
+		                    debuggingName: 'For PackageOrganizerTest';
+		                    yourself.
 
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'
-]
-
-{ #category : #'tests - extending' }
-RPackageOrganizerTest >> stringCharacterInCollPackage [
-	| p |
-	p := RPackage named: #CollPackage.
-	p addClassDefinition: String.
-	p addClassDefinition: Character.
-	p addMethod: String>>#indexOf:.
-	p addMethod: String>>#isAllDigits.
-	p addMethod: String class>>#cr.
-	p addMethod: Character>>#asInteger.
-	p addMethod: Text>>#allBold.
-	^ p
-]
-
-{ #category : #running }
-RPackageOrganizerTest >> tearDown [
-
-	Author fullName: previousAuthor.
-
-	(createdClasses reject: [ :c | c isObsolete ]) do: [ :cls | cls removeFromSystem ].
-
-	super tearDown
 ]
 
 { #category : #tests }
