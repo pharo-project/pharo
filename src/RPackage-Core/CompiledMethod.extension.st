@@ -6,14 +6,6 @@ CompiledMethod >> isDefinedInPackage: anRPackage [
 ]
 
 { #category : #'*RPackage-Core' }
-CompiledMethod >> isExtension [
-
-	^ self protocol
-		  ifNil: [ false ]
-		  ifNotNil: [ :protocol | protocol isExtensionProtocol ]
-]
-
-{ #category : #'*RPackage-Core' }
 CompiledMethod >> isExtensionInPackage: anRPackage [
 	^ anRPackage includesExtensionSelector: self selector ofClass: self methodClass
 ]

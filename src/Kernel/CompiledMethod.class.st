@@ -437,6 +437,14 @@ CompiledMethod >> isExplicitlyRequired: marker [
 ]
 
 { #category : #testing }
+CompiledMethod >> isExtension [
+
+	^ self protocol
+		  ifNil: [ false ]
+		  ifNotNil: [ :protocol | protocol isExtensionProtocol ]
+]
+
+{ #category : #testing }
 CompiledMethod >> isExtensionMethod [
 
 	^ self protocol isExtensionProtocol
