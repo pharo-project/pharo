@@ -7,7 +7,10 @@ CompiledMethod >> isDefinedInPackage: anRPackage [
 
 { #category : #'*RPackage-Core' }
 CompiledMethod >> isExtension [
-	^ self origin package ~= self package
+
+	^ self protocol
+		  ifNil: [ false ]
+		  ifNotNil: [ :protocol | protocol isExtensionProtocol ]
 ]
 
 { #category : #'*RPackage-Core' }
