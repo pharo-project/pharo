@@ -30,6 +30,6 @@ SycMoveMethodsToTheDefiningClassCommand >> defaultMenuItemName [
 SycMoveMethodsToTheDefiningClassCommand >> execute [
 
 	methods
-		select: [ :method | method isExtensionMethod ]
+		select: [ :method | method isExtension ]
 		thenDo: [ :method | self classifyMethod: method ]
 ]

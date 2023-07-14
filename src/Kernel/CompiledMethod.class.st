@@ -445,12 +445,6 @@ CompiledMethod >> isExtension [
 ]
 
 { #category : #testing }
-CompiledMethod >> isExtensionMethod [
-
-	^ self protocol isExtensionProtocol
-]
-
-{ #category : #testing }
 CompiledMethod >> isFaulty [
  	"check if this method was compiled from syntactically wrong code"
 	| ast |
