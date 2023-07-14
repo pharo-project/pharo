@@ -320,13 +320,12 @@ MouseClickState >> handleEvent: evt from: aHand [
 			"timed out after mouseUp - signal timeout and pass the event"
 			aHand resetClickState.
 			self doubleClickTimeout. "***"
-			^true].
+			^ true].
 		localEvt isMouseDown ifTrue:["double click"
 			clickState := #secondClickDown.
-			"We should not double click if not on the same element"
-			(clickClient containsPoint: localEvt position) ifTrue: [
-				self doubleClick.
-				^false] ] ].
+			self doubleClick.
+			^ false ]
+			].
 
 	clickState == #secondClickDown ifTrue: [
 		isDragSecond ifTrue: ["drag start"
