@@ -438,6 +438,15 @@ CompiledMethod >> isExplicitlyRequired: marker [
 
 { #category : #testing }
 CompiledMethod >> isExtension [
+	"I return true if a method is an extension method. Which means that the methods is not packaged in the package of the class containing the method, but in another package.
+	
+	Note: In the future we want to go away from the usage of protocols to define an extension method. But in the meantime it is the fastest way to know if a method is an extension.
+	
+	In the future we should check if the package of the method is the package of the class containing the method. If it is the case, the method is not an extension. Keep also in mind that a package that is nil for the method means that it is not an extension but a method that is uninstalled.
+	Before we can use packages, we'll need to speedup the methods CompiledMethod>>#package and ClassDescription>>#package which are quite slow currently because of the state of RPackage."
+
+	"(self >> #isExtension) isExtension >>> false"
+	"(self >> #traitSource) isExtension >>> true"
 
 	^ self protocol
 		  ifNil: [ false ]
