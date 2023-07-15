@@ -21,7 +21,7 @@ AnnouncementSet >> , anAnnouncementClass [
 
 { #category : #exclusion }
 AnnouncementSet >> - anotherAnnouncement [
-	"Create an announcement set containig the receiver
+	"Create an announcement set containing the receiver
 	and anotherAnnouncement as an exclusion."
 
 	^ AnnouncementSetWithExclusions new
