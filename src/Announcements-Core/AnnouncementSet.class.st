@@ -15,12 +15,13 @@ Class {
 
 { #category : #copying }
 AnnouncementSet >> , anAnnouncementClass [
+
 	self add: anAnnouncementClass
 ]
 
 { #category : #exclusion }
 AnnouncementSet >> - anotherAnnouncement [
-	"Create an announcement set containnig the receiver
+	"Create an announcement set containig the receiver
 	and anotherAnnouncement as an exclusion."
 
 	^ AnnouncementSetWithExclusions new
@@ -32,5 +33,6 @@ AnnouncementSet >> - anotherAnnouncement [
 { #category : #testing }
 AnnouncementSet >> handlesAnnouncement: anAnnouncement [
 	"If any of the set handles the announcements, subscribers should receive it."
+
 	^ self anySatisfy: [ :each | each handlesAnnouncement: anAnnouncement ]
 ]
