@@ -291,7 +291,7 @@ MethodClassifier >> protocolByOtherImplementors: aMethod [
 
 	aMethod implementors ifEmpty: [ ^ self ] ifNotEmpty: [ :implementor |
 		implementor
-			do: [ :method | (method isExtensionMethod or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ]
+			do: [ :method | (method isExtension or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ]
 			without: aMethod ].
 
 	protocolBag ifEmpty: [ ^ self ].
