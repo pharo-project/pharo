@@ -92,10 +92,10 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 		               forMethod: (class parseTreeForSelector: aSelector)
 		               fromClass: class
 		               toClasses: self allClasses.
-	self generateCompositeChangesFor: refactoring.
+	self generateChangesFor: refactoring.
 	self allClasses do: [ :each |
 		(each directlyDefinesMethod: aSelector) ifFalse: [
-			self generateCompositeChangesFor:
+			self generateChangesFor:
 				(RBAddMethodTransformRefactoring
 					addMethod: code
 					toClass: each

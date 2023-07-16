@@ -138,7 +138,7 @@ RBRefactoring >> execute [
 ]
 
 { #category : #transforming }
-RBRefactoring >> generateCompositeChangesFor: aRefactoring [
+RBRefactoring >> generateChangesFor: aRefactoring [
 	"I will generate changes and save them in the model, BUT I will not apply them!
 	Use me when a refactorings is composed of multiple other refactorings"
 

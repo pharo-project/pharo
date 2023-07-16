@@ -118,7 +118,7 @@ RBGenerateEqualHashTransformation >> compileEqual [
 	method
 		addNode: statement;
 		addReturn.
-	self generateCompositeChangesFor:
+	self generateChangesFor:
 		(RBAddMethodTransformRefactoring
 			addMethod: method formattedCode
 			toClass: self theClass
@@ -147,7 +147,7 @@ RBGenerateEqualHashTransformation >> compileHash [
 	method
 		addNode: statement;
 		addReturn.
-	self generateCompositeChangesFor:
+	self generateChangesFor:
 		(RBAddMethodTransformRefactoring
 			addMethod: method formattedCode
 			toClass: self theClass

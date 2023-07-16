@@ -39,7 +39,7 @@ RBSourceRegexTransformation >> transform [
 								ifNotNil: [ protocols := class protocolsFor: selector.
 									( self parseSelector: replacement ) = selector
 										ifFalse: [ class removeMethod: selector ].
-										self generateCompositeChangesFor:
+										self generateChangesFor:
 											(RBAddMethodTransformRefactoring
 												addMethod: replacement
 												toClass: class

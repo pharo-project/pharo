@@ -31,7 +31,7 @@ RBPrettyPrintCodeTransformation >> transform [
 											(source ~= formatted
 												and: [ (self parserClass parseMethod: formatted) = tree ])
 												ifTrue:
-													[ 	self generateCompositeChangesFor:
+													[ 	self generateChangesFor:
 															(RBAddMethodTransformRefactoring
 																addMethod: formatted
 																toClass: class

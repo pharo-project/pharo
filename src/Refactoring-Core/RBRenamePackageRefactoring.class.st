@@ -69,7 +69,7 @@ RBRenamePackageRefactoring >> renameManifestClass [
 		model: self model
 		rename: manifest name
 		to: (self manifestClassNameFor: newName).
-	self generateCompositeChangesFor: refactoring]
+	self generateChangesFor: refactoring]
 ]
 
 { #category : #transforming }
