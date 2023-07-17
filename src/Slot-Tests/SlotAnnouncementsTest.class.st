@@ -167,9 +167,9 @@ SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified
 ]
 
 { #category : #'tests - integration' }
-SlotAnnouncementsTest >> testClassAddedToNewCategoryShouldAnnounceCategoryAdded [
+SlotAnnouncementsTest >> testClassAddedToNewPackageShouldAnnouncePackageAdded [
 
-	self subscribeOn: CategoryAdded.
+	self subscribeOn: PackageAdded.
 
 	self deny: (self packageOrganizer hasPackage: self slotTestPackageName).
 
@@ -198,12 +198,12 @@ SlotAnnouncementsTest >> testClassRecategorizationShouldAnnounceClassModified [
 	self subscribeOn: ClassRecategorized.
 
 	aClass := self make: [ :builder | builder package: self slotTestPackageName ].
-	anotherClass := self make: [ :builder | builder package: self anotherCategory ].
+	anotherClass := self make: [ :builder | builder package: self slotTestPackageName , '2' ].
 
 	self assert: self collectedAnnouncements size equals: 1.
 	announcement := self collectedAnnouncements first.
 	self assert: announcement oldCategory equals: self slotTestPackageName.
-	self assert: announcement newCategory equals: self anotherCategory.
+	self assert: announcement newCategory equals: self slotTestPackageName , '2'.
 	self assert: announcement classRecategorized identicalTo: anotherClass
 ]
 

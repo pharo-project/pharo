@@ -15,11 +15,6 @@ SlotClassBuilderTest >> aClassName [
 ]
 
 { #category : #'helpers-names' }
-SlotClassBuilderTest >> anotherCategory [
-	^ 'SlotTestsTmp-Another'
-]
-
-{ #category : #'helpers-names' }
 SlotClassBuilderTest >> anotherClassName [
 	^ #SlotTestsClassB
 ]
