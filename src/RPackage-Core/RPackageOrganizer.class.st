@@ -256,13 +256,6 @@ RPackageOrganizer >> categoryOfBehavior: behavior [
 	^ nil
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categoryOfElement: behaviorName [
-
-	self deprecated: 'Use #categoryOfBehavior: instead' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv categoryOfBehavior: `@arg'.
-	^ self categoryOfBehavior: behaviorName
-]
-
 { #category : #'private - registration' }
 RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
 
@@ -457,24 +450,10 @@ RPackageOrganizer >> includesCategory: aString [
 		  ifNotNil: [ :categories | categories includes: aString ]
 ]
 
-{ #category : #deprecated }
-RPackageOrganizer >> includesPackage: aPackage [
-
-	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.
-	^ self hasPackage: aPackage
-]
-
 { #category : #'private - testing' }
 RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 
 	^ classPackageMapping includesKey: aClass instanceSide name asSymbol
-]
-
-{ #category : #deprecated }
-RPackageOrganizer >> includesPackageNamed: aSymbol [
-
-	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackageNamed: `@arg' -> '`@rcv hasPackage: `@arg'.
-	^ self hasPackage: aSymbol
 ]
 
 { #category : #initialization }
@@ -840,20 +819,12 @@ RPackageOrganizer >> removeCategory: category [
 	SystemAnnouncer uniqueInstance classCategoryRemoved: category
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeElement: behaviorName [
+{ #category : #cleanup }
+RPackageOrganizer >> removeEmptyPackagesAndTags [
+	"Remove empty packages and tags."
 
-	self deprecated: 'Use #removeBehavior: instead' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv removeBehavior: `@arg'.
-	^ self removeBehavior: behaviorName
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeEmptyPackages [
-	"Remove empty packages."
-
-	(categoryMap select: [ :classes | classes isEmpty ]) keys
-		ifNotEmpty: [ :emptyPackages |
-			emptyPackages do: [ :emptyPackage | categoryMap removeKey: emptyPackage ] ]
+	self packages do: [ :package | package removeEmptyTags ].
+	(self packages select: [ :package | package isEmpty ]) do: [ :emptyPackage | self removePackage: emptyPackage ]
 ]
 
 { #category : #registration }

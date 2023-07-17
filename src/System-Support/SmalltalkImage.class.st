@@ -1526,7 +1526,7 @@ SmalltalkImage >> removeEmptyMessageCategories [
 
 	self garbageCollect.
 	SystemNavigation default allBehaviorsDo: [ :class | class removeEmptyProtocols ].
-	self packageOrganizer removeEmptyPackages
+	self packageOrganizer removeEmptyPackagesAndTags
 ]
 
 { #category : #shrinking }
