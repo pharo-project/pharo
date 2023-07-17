@@ -60,14 +60,13 @@ SlotClassBuilderTest >> layoutClassesWithSlots [
 SlotClassBuilderTest >> make: anUnaryBlock [
 	"I build a class for testing, providing basic default values, but eventually customized by the received unary block."
 
-	^Smalltalk classInstaller make: [:builder|
-		builder
-			superclass: Object;
-			name: self aClassName;
-			layoutClass: FixedLayout;
-			category: self aCategory.
-		anUnaryBlock value: builder
-		]
+	^ Smalltalk classInstaller make: [ :builder |
+		  builder
+			  superclass: Object;
+			  name: self aClassName;
+			  layoutClass: FixedLayout;
+			  package: self aCategory.
+		  anUnaryBlock value: builder ]
 ]
 
 { #category : #'helpers-building' }
@@ -93,10 +92,11 @@ SlotClassBuilderTest >> tearDown [
 	"We remove the classes that could have been created during test run"
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		{ self aClassName. self anotherClassName. self yetAnotherClassName. self yetYetAnotherClassName } do: [ :each |
-			testingEnvironment
-				at: each
-				ifPresent: [ :class | class removeFromSystem ]]].
+		{
+			self aClassName.
+			self anotherClassName.
+			self yetAnotherClassName.
+			self yetYetAnotherClassName } do: [ :each | testingEnvironment at: each ifPresent: [ :class | class removeFromSystem ] ] ].
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 
@@ -104,11 +104,9 @@ SlotClassBuilderTest >> tearDown [
 		cleanUpTrait: TOne;
 		cleanUpTrait: TTwo.
 
+	self flag: #package. "This category line should be removed be it's not yet possible."
 	self packageOrganizer removeCategory: self aCategory.
-	(RPackageOrganizer default
-		packageNamed: self aCategory
-		ifAbsent: [ ^ self ])
-		unregister.
+	self packageOrganizer removePackage: self aCategory.
 
 	super tearDown
 ]
