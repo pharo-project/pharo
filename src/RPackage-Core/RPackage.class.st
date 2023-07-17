@@ -324,6 +324,9 @@ RPackage >> basicRemoveTag: tag [
 
 	classTags remove: tag ifAbsent: [  ].
 
+	self flag: #package. "This next line should be removed in the future with the system organizer."
+	self organizer removeCategory: tag categoryName.
+
 	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
@@ -1221,17 +1224,9 @@ RPackage >> removeClassesMatchingTag: aTag [
 { #category : #removing }
 RPackage >> removeFromSystem [
 
-	| categories |
-	categories := (self classTags collect: [ :each | each categoryName ] as: Set)
-		              add: self name;
-		              yourself.
-
 	self definedClasses do: #removeFromSystem.
 	self extensionMethods do: #removeFromSystem.
 
-	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
-	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
-	categories do: [ :category | self organizer removeCategory: category ].
 	self unregister
 ]
 
