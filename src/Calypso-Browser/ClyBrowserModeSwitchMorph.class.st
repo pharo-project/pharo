@@ -53,7 +53,7 @@ ClyBrowserModeSwitchMorph >> isModeActive [
 	^activator isCommandAppliedToBrowser
 ]
 
-{ #category : #controling }
+{ #category : #controlling }
 ClyBrowserModeSwitchMorph >> toggleMode: aBool [
 
 	self executeCommand
