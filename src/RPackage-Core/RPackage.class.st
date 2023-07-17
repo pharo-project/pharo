@@ -1218,6 +1218,12 @@ RPackage >> removeClassesMatchingTag: aTag [
 	aTag classes do: [ :class | self removeClassDefinition: class ]
 ]
 
+{ #category : #'class tags' }
+RPackage >> removeEmptyTags [
+
+	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeClassTag: emptyTag name ]
+]
+
 { #category : #removing }
 RPackage >> removeFromSystem [
 
