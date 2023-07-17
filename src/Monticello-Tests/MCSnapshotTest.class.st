@@ -11,7 +11,7 @@ Class {
 MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 
 	| t1 t2 |
-	RPackageOrganizer default registerPackageNamed: 'Monticello-Snapshot-Mock'.
+	self packageOrganizer ensurePackage: 'Monticello-Snapshot-Mock'.
 
 	t1 := self class classInstaller make: [ :aBuilder |
 		      aBuilder
@@ -39,7 +39,7 @@ MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 MCSnapshotTest >> createSnapshotWithTraitWithClassSideTraits [
 
 	| t1 t2 t3 |
-	RPackageOrganizer default registerPackageNamed: 'Monticello-Snapshot-Mock'.
+	self packageOrganizer ensurePackage: 'Monticello-Snapshot-Mock'.
 
 	t1 := self class classInstaller make: [ :aBuilder |
 		      aBuilder

@@ -371,7 +371,7 @@ ClyFullBrowserMorph >> isPackagePartOfSelection: aPackage [
 	(self isPackageSelected: aPackage) ifTrue: [ ^true ].
 
 	^self projectSelection actualObjects
-		anySatisfy: [ :each | each includesPackage: aPackage ]
+		anySatisfy: [ :project | project includesPackage: aPackage ]
 ]
 
 { #category : #testing }
@@ -609,14 +609,6 @@ ClyFullBrowserMorph >> selectClass: aClass [
 		self showsFullClassHierarchy ifTrue: [ self switchToFullClassHierarchyOf: aClass ].
 		self classSelection selectItemsWith: { aClass instanceSide }
 	]
-]
-
-{ #category : #navigation }
-ClyFullBrowserMorph >> selectClass: aClass atMethodTag: tagName [
-
-	self changeStateBy: [
-		self selectClass: aClass.
-		self methodGroupSelection selectItemsWhere: [ :each | each name = tagName ]]
 ]
 
 { #category : #navigation }

@@ -68,7 +68,8 @@ RBExpandReferencedPoolsTransformation >> hasPoolsToMove [
 RBExpandReferencedPoolsTransformation >> movePool: aSymbol toClass: aClass [
 	| nonMetaClass |
 	nonMetaClass := aClass instanceSide.
-	(nonMetaClass definesPoolDictionary: aSymbol) ifFalse: [ nonMetaClass addPoolDictionary: aSymbol ]
+	(nonMetaClass definesPoolDictionary: aSymbol) 
+		ifFalse: [ nonMetaClass addPoolDictionary: aSymbol ]
 ]
 
 { #category : #executing }
@@ -81,6 +82,7 @@ RBExpandReferencedPoolsTransformation >> movePoolVariables [
 RBExpandReferencedPoolsTransformation >> privateTransform [
 
 	self computePoolsToMove.
+	self flag: #popUp.
 	self hasPoolsToMove
 		ifTrue:
 			[self

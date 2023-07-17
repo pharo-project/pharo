@@ -56,11 +56,6 @@ TallyModel >> data [
 ]
 
 { #category : #actions }
-TallyModel >> exploreItem [
-	self item inspect
-]
-
-{ #category : #actions }
 TallyModel >> inspectItem [
 	self inspect
 ]
@@ -73,8 +68,6 @@ TallyModel >> keyDown: anEvent from: aTreeMorph [
 		ifTrue: [self browseItem. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
 ]
 
@@ -97,11 +90,7 @@ TallyModel >> menu: menu shifted: b [
 	(menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem) icon: (self iconNamed: #glamorousInspect).
-	(menu
-		add: 'Explore (I)'
-		target: self
-		selector: #exploreItem) icon: (self iconNamed: #smallFind)
+		selector: #inspectItem) icon: (self iconNamed: #glamorousInspect)
 ]
 
 { #category : #accessing }

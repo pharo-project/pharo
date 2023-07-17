@@ -102,33 +102,6 @@ RPackageMCSynchronisationTest >> createMethodNamed: methodName inClassSideOfClas
 	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
 ]
 
-{ #category : #private }
-RPackageMCSynchronisationTest >> createNewClassNamed: aName [
-	
-	| cls |
-
-	cls := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
-			name: aName;
-			package: 'RPackageTest' ].
-
-	^ cls
-]
-
-{ #category : #private }
-RPackageMCSynchronisationTest >> createNewTraitNamed: aName inCategory: aCategoryName [
-	
-	| trait |
-
-	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder 
-			name: aName;
-			package: aCategoryName;
-			beTrait ].								
-			
-	^ trait
-]
-
 { #category : #accessing }
 RPackageMCSynchronisationTest >> emptyOrganizer [ 
 
@@ -164,14 +137,16 @@ RPackageMCSynchronisationTest >> runCase [
 ]
 
 { #category : #running }
-RPackageMCSynchronisationTest >> setUp [ 
-	super setUp.
-	
-	emptyOrganizer := self organizer debuggingName: 'MCSynchronisation Package Organizer'; yourself.
-	emptyOrganizer registerPackage: (RPackage named: 'as yet unclassified').
+RPackageMCSynchronisationTest >> setUp [
 
-	Author fullName 
-		ifNil: [ Author fullName: 'Tester' ].
+	super setUp.
+
+	emptyOrganizer := self organizer
+		                  debuggingName: 'MCSynchronisation Package Organizer';
+		                  yourself.
+	emptyOrganizer ensurePackage: 'as yet unclassified'.
+
+	Author fullName ifNil: [ Author fullName: 'Tester' ]
 ]
 
 { #category : #running }

@@ -49,6 +49,15 @@ RBAddVariableAccessorWithLazyInitializationTransformation class >> variable: aVa
 ]
 
 { #category : #preconditions }
+RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityConditions [ 
+
+	^ super applicabilityConditions &
+	(RBCondition withBlock: [
+		self verifyInitializationExpressionOf: self defaultValue.
+		true ])
+]
+
+{ #category : #preconditions }
 RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
@@ -110,10 +119,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [
 
 { #category : #preconditions }
 RBAddVariableAccessorWithLazyInitializationTransformation >> preconditions [
-	^ super preconditions &
-	(RBCondition withBlock: [
-		self verifyInitializationExpressionOf: self defaultValue.
-		true ])
+	^ self applicabilityConditions 
 ]
 
 { #category : #printing }

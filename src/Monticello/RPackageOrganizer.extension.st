@@ -4,5 +4,5 @@ Extension { #name : #RPackageOrganizer }
 RPackageOrganizer >> isDefinedAsPackageOrSubPackageInMC: aSymbol [
 	"a category has been added. "
 
-	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :manager | manager packageName isCategoryOf: aSymbol ]
+	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :workingCopy | workingCopy packageName isCategoryOf: aSymbol ]
 ]

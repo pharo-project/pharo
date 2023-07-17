@@ -45,9 +45,10 @@ ClyTestCaseRan >> affectsMethodsDefinedInPackage: aPackage [
 	^testCase package == aPackage or: [ aPackage extendsClass: testCase ]
 ]
 
-{ #category : #'event processing' }
-ClyTestCaseRan >> affectsMethodsTaggedWith: tagName [
-	^testCase tagsForMethods includes: tagName
+{ #category : #testing }
+ClyTestCaseRan >> affectsMethodsInProtocol: protocol [
+
+	^ testCase protocolNames includes: protocol
 ]
 
 { #category : #'event processing' }

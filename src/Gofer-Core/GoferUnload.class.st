@@ -58,8 +58,7 @@ GoferUnload >> unregister: aWorkingCopy [
 { #category : #unregistering }
 GoferUnload >> unregisterPackageInfo: aWorkingCopy [
 
-	RPackageOrganizer default
-		unregisterPackageNamed: aWorkingCopy packageName
+	self packageOrganizer removePackage: aWorkingCopy packageName
 ]
 
 { #category : #unregistering }
@@ -72,11 +71,8 @@ GoferUnload >> unregisterPackageSet: aWorkingCopy [
 GoferUnload >> unregisterRepositories: aWorkingCopy [
 
 	aWorkingCopy repositoryGroup repositories allButFirst do: [ :repository |
-		MCWorkingCopy allManagers do: [ :copy |
-			(copy repositoryGroup includes: repository)
-				ifTrue: [ ^ self ] ].
-		MCRepositoryGroup default
-			removeRepository: repository ]
+		MCWorkingCopy allWorkingCopies do: [ :copy | (copy repositoryGroup includes: repository) ifTrue: [ ^ self ] ].
+		MCRepositoryGroup default removeRepository: repository ]
 ]
 
 { #category : #unregistering }

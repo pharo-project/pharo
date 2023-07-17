@@ -32,6 +32,12 @@ RBMoveMethodToClassTransformation class >> model: aRBSmalltalk method: aMethod c
 ]
 
 { #category : #transforming }
+RBMoveMethodToClassTransformation >> applicabilityConditions [
+
+	^ (RBCondition definesSelector: method selector in: class) not
+]
+
+{ #category : #transforming }
 RBMoveMethodToClassTransformation >> classModelOf: aClass [
 	| classModel |
 	classModel := aClass isMeta
@@ -49,7 +55,7 @@ RBMoveMethodToClassTransformation >> method: aMethod class: aClass [
 
 { #category : #transforming }
 RBMoveMethodToClassTransformation >> preconditions [
-	^(RBCondition definesSelector: method selector in: class) not
+	^ self applicabilityConditions 
 ]
 
 { #category : #transforming }

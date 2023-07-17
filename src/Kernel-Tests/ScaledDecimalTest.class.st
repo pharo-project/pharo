@@ -232,7 +232,22 @@ ScaledDecimalTest >> testLiteral [
 ScaledDecimalTest >> testMultiplicationDoesNotLoosePrecision [
 	"Check that not only the largest scale is considered but the sum of the two scales. See issue #8668"
 
-	self assert: 1.003s3 * 1.006s4 equals: 1.0090180s7
+	self assert: 1.003s3 * 1.006s4 equals: 1.0090180s7.
+	self assert: (1.003s3 * 1.006s4) scale equals: 7.
+]
+
+{ #category : #tests }
+ScaledDecimalTest >> testMultiplicationWithNonScaledDecimalDoesNotGainPrecision [
+	"Check that integer/fraction does not contribute to the resulting scale, regardless of argument order.
+	The behavior previously differed depending on argument ordering. See issue #14238"
+
+	self assert: (1.003s3 * 2) scale equals: 3.
+	self assert: (2 * 1.003s3) scale equals: 3.
+	self assert: (2.05s * (1 / 2)) scale equals: 2.
+	self assert: (1 / 2 * 2.05s) scale equals: 2.
+	"We don't try to compute the needed precision for the fraction, just use that from the ScaledDecimal"
+	self assert: (2.05s * (1 / 8)) scale equals: 2.
+	self assert: (1 / 8 * 2.05s) scale equals: 2
 ]
 
 { #category : #tests }

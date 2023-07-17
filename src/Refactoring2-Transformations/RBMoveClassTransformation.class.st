@@ -42,6 +42,24 @@ RBMoveClassTransformation class >> move: aClassName to: aCategoryName [
 		yourself
 ]
 
+{ #category : #preconditions }
+RBMoveClassTransformation >> applicabilityConditions [
+
+	^ self classExist & (RBCondition
+		   withBlock: [
+		   self model environment categories includes: category ]
+		   errorString: 'Category named ' , category , ' does not exist')
+]
+
+{ #category : #preconditions }
+RBMoveClassTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
 { #category : #api }
 RBMoveClassTransformation >> move: aClassName to: aCategoryName [
 
@@ -52,12 +70,7 @@ RBMoveClassTransformation >> move: aClassName to: aCategoryName [
 { #category : #preconditions }
 RBMoveClassTransformation >> preconditions [
 
-	^ ( RBCondition
-		withBlock: [ self definingClass isNotNil ]
-		errorString: 'Class named ', className, ' does not exist' ) &
-	   ( RBCondition
-		withBlock: [ self model environment categories includes: category ]
-		errorString: 'Category named ', category, ' does not exist' )
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

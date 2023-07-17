@@ -359,7 +359,7 @@ ClySystemEnvironment >> registerProjectManager: aPackageManager [
 { #category : #'package management' }
 ClySystemEnvironment >> removePackage: aPackage [
 
-	packageOrganizer unregisterPackage: aPackage
+	packageOrganizer removePackage: aPackage
 ]
 
 { #category : #subscription }

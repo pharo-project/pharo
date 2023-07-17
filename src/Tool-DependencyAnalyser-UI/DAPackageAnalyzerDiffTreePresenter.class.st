@@ -18,6 +18,12 @@ DAPackageAnalyzerDiffTreePresenter class >> newWith: oldRelationGraph on: newRel
 		yourself
 ]
 
+{ #category : #specs }
+DAPackageAnalyzerDiffTreePresenter class >> title [
+
+	^ 'Package Dependencies Analysis Diff'
+]
+
 { #category : #initialization }
 DAPackageAnalyzerDiffTreePresenter >> buildRoots [
 	self treeDiff roots: packageRelationGraphDiff packagesDiffToDisplay.
@@ -51,11 +57,6 @@ DAPackageAnalyzerDiffTreePresenter >> initializeWith: oldRelationGraph on: newRe
 	packageRelationGraphDiff make.
 
 	self buildRoots
-]
-
-{ #category : #protocol }
-DAPackageAnalyzerDiffTreePresenter >> title [
-	^ 'Package Dependencies Analysis Diff'
 ]
 
 { #category : #accessing }

@@ -38,11 +38,9 @@ SystemAnnouncer class >> reset [
 { #category : #initialization }
 SystemAnnouncer class >> restoreAllNotifications [
 
-	"self restoreAllNotifications"
-
+	<script>
 	self reset.
-	(Pragma allNamed: #systemEventRegistration) do: [ :pragma |
-		pragma methodClass instanceSide perform: pragma methodSelector ]
+	(Pragma allNamed: #systemEventRegistration) do: [ :pragma | pragma methodClass instanceSide perform: pragma methodSelector ]
 ]
 
 { #category : #'instance creation' }
@@ -140,11 +138,6 @@ SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName inCa
 				category: aCategoryName
 				oldName: oldClassName
 				newName: newClassName)
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> classReorganized: aClass [
-	self announce: (ClassReorganized class: aClass)
 ]
 
 { #category : #triggering }

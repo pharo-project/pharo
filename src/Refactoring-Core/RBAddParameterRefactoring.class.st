@@ -71,16 +71,13 @@ RBAddParameterRefactoring >> checkSendersAccessTo: name [
 RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
-
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var'
 		do: [ :aNode :answer |
 			| name |
-
 			name := aNode name.
-			( aNode whoDefines: name ) ifNil: [ self checkSendersAccessTo: name ]
-			].
+			(aNode whoDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
 	searcher executeTree: aParseTree
 ]
 

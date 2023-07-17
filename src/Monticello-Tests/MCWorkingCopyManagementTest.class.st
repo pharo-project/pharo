@@ -73,7 +73,7 @@ MCWorkingCopyManagementTest >> testClassRemoved [
 ]
 
 { #category : #tests }
-MCWorkingCopyManagementTest >> testManagersForCategoryDo [
+MCWorkingCopyManagementTest >> testWorkingCopiesForExtensionProtocolDo [
 	"Consider the following package structure:
 		Renraku
 		Renraku-Help
@@ -82,19 +82,19 @@ MCWorkingCopyManagementTest >> testManagersForCategoryDo [
 		MCWorkingCopy>>methodModified: should only mark 'Renraku' as modified,
 		not 'Renraku-Help'"
 
-	| managers |
+	| workingCopies |
 	self assert: (MCWorkingCopy registry includesKey: mcPackage1).
 	self assert: (MCWorkingCopy registry includesKey: mcPackage2).
 
-	managers := OrderedCollection new.
-	MCWorkingCopy managersForCategory: mcPackage1 name do: [ :manager | managers add: manager ].
+	workingCopies := OrderedCollection new.
+	MCWorkingCopy workingCopiesForExtensionProtocol: mcPackage1 name do: [ :workingCopy | workingCopies add: workingCopy ].
 
-	self assert: managers size equals: 1.
-	self assert: managers first package identicalTo: mcPackage1.
+	self assert: workingCopies size equals: 1.
+	self assert: workingCopies first package identicalTo: mcPackage1.
 
-	managers := OrderedCollection new.
-	MCWorkingCopy managersForCategory: mcPackage2 name do: [ :manager | managers add: manager ].
+	workingCopies := OrderedCollection new.
+	MCWorkingCopy workingCopiesForExtensionProtocol: mcPackage2 name do: [ :workingCopy | workingCopies add: workingCopy ].
 
-	self assert: managers size equals: 1.
-	self assert: managers first package identicalTo: mcPackage2
+	self assert: workingCopies size equals: 1.
+	self assert: workingCopies first package identicalTo: mcPackage2
 ]

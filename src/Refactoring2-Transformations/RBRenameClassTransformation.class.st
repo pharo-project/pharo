@@ -40,6 +40,41 @@ RBRenameClassTransformation class >> rename: aClassName to: aNewClassName [
 		newClassName: aNewClassName
 ]
 
+{ #category : #preconditions }
+RBRenameClassTransformation >> applicabilityConditions [
+
+	^ (RBCondition withBlock: [
+		   self definingClass notNil and: [ self definingClass isMeta not ] ])
+	  & self isValidClassName & self isNotGlobal
+	  & (RBCondition withBlock: [
+			   | replacer |
+			   replacer := (self parseTreeRewriterClass
+				                replaceLiteral: className
+				                with: newClassName)
+				               replace: className with: newClassName;
+				               replaceArgument: newClassName
+				               withValueFrom: [ :aNode |
+					               self refactoringError:
+							               newClassName
+							               , ' already exists within the reference scope' ];
+				               yourself.
+			   self model
+				   allReferencesToClass: self definingClass
+				   do: [ :method |
+					   (method modelClass hierarchyDefinesVariable: newClassName)
+						   ifTrue: [
+							   self refactoringError:
+								   newClassName , ' is already defined in hierarchy of '
+								   , method modelClass printString ].
+					   self
+						   convertMethod: method selector
+						   for: method modelClass
+						   using: replacer ].
+			   true ]) | (RBCondition withBlock: [
+		   self refactoringError:
+			   newClassName , ' is not a valid class name' ])
+]
+
 { #category : #api }
 RBRenameClassTransformation >> className: aClassName newClassName: aNewClassName [
 
@@ -48,39 +83,21 @@ RBRenameClassTransformation >> className: aClassName newClassName: aNewClassName
 ]
 
 { #category : #preconditions }
+RBRenameClassTransformation >> isNotGlobal [
+
+	^ (RBCondition isGlobal: newClassName in: self model) not
+]
+
+{ #category : #preconditions }
+RBRenameClassTransformation >> isValidClassName [
+
+	^ RBCondition isValidClassName: newClassName
+]
+
+{ #category : #preconditions }
 RBRenameClassTransformation >> preconditions [
-	^ (RBCondition
-		withBlock: [ self definingClass notNil and: [ self definingClass isMeta not ] ])
-		& (RBCondition isValidClassName: newClassName)
-		& (RBCondition isGlobal: newClassName in: self model) not
-		&
-			(RBCondition
-				withBlock: [ | replacer |
-					replacer := (self parseTreeRewriterClass
-						replaceLiteral: className
-						with: newClassName)
-						replace: className with: newClassName;
-						replaceArgument: newClassName
-							withValueFrom: [ :aNode |
-							self
-								refactoringError: newClassName , ' already exists within the reference scope' ];
-						yourself.
-					self model
-						allReferencesToClass: self definingClass
-						do: [ :method |
-							(method modelClass hierarchyDefinesVariable: newClassName)
-								ifTrue: [ self
-										refactoringError:
-											newClassName , ' is already defined in hierarchy of '
-												, method modelClass printString ].
-							self
-								convertMethod: method selector
-								for: method modelClass
-								using: replacer ].
-					true ])
-		|
-			(RBCondition
-				withBlock: [ self refactoringError: newClassName , ' is not a valid class name' ])
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

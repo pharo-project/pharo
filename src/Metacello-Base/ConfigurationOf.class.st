@@ -230,11 +230,10 @@ ConfigurationOf class >> unloadMetacello [
 
 	<apiDocumentation>
 	| gofer |
-	gofer := (Smalltalk at: #Gofer) new.
-	MCWorkingCopy allManagers do: [:wc |
-		((wc packageName beginsWith: 'Metacello') or: [ wc packageName beginsWith: 'OB-Metacello' ])
-			ifTrue: [ gofer package: wc packageName ]].
-	gofer unload.
+	gofer := Gofer new.
+	MCWorkingCopy allWorkingCopies do: [ :wc |
+		((wc packageName beginsWith: 'Metacello') or: [ wc packageName beginsWith: 'OB-Metacello' ]) ifTrue: [ gofer package: wc packageName ] ].
+	gofer unload
 ]
 
 { #category : #accessing }

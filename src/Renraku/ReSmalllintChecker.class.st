@@ -62,8 +62,7 @@ ReSmalllintChecker >> checkMethodsForClass: aClass [
 { #category : #private }
 ReSmalllintChecker >> checkPackage: aPackage [
 
-	(environment includesPackage: aPackage) ifTrue: [
-		self getCritiquesAbout: aPackage by: packageRules ]
+	(environment includesPackage: aPackage) ifTrue: [ self getCritiquesAbout: aPackage by: packageRules ]
 ]
 
 { #category : #manifest }

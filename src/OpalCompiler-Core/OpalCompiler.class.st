@@ -547,25 +547,26 @@ OpalCompiler >> generateMethod [
 OpalCompiler >> install [
 	"Compile and install a method in a class"
 
-	| class method logSource |
+	| class method logSource priorMethod |
 	class := self semanticScope targetClass.
 	self assert: class isNotNil.
 
-	method := self compile.
-	method ifNil: [ ^ method ].
+	method := self compile ifNil: [ ^ nil ].
+	priorMethod := class compiledMethodAt: method selector ifAbsent: [  ].
 
-	protocol := class ensureProtocol: protocol.
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
 	logSource := self logged ifNil: [ class acceptsLoggingOfCompilation ].
 
-	logSource ifTrue: [
-		class
-			logMethodSource: source
-			forMethod: method
-			inProtocol: protocol
-			withStamp: changeStamp ].
-
 	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
+
+	logSource ifTrue: [
+		"For the log we do not use `protocol` because in case it is nil, we keep the current classification or we classify under uncategorize in the method is not present in a protocol yet. So we ask to the method its protocol after classifying it."
+		method
+			putSource: source
+			class: class
+			protocol: method protocol
+			withStamp: changeStamp
+			priorMethod: priorMethod ].
 
 	class instanceSide noteCompilationOf: method meta: class isClassSide.
 

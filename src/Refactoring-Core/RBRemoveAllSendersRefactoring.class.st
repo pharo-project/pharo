@@ -70,7 +70,7 @@ RBRemoveAllSendersRefactoring >> preconditions [
 
 { #category : #removing }
 RBRemoveAllSendersRefactoring >> removeMethod: aMethod of: node [
-	self performCompositeRefactoring: (RBRemoveSenderRefactoring
+	self generateCompositeChangesFor: (RBRemoveSenderRefactoring
 		model: self model
 		remove: node sourceInterval
 		inMethod: aMethod selector

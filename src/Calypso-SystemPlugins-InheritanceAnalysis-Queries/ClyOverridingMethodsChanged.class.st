@@ -39,7 +39,7 @@ ClyOverridingMethodsChanged >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #testing }
-ClyOverridingMethodsChanged >> affectsMethodsTaggedWith: tagName [
+ClyOverridingMethodsChanged >> affectsMethodsInProtocol: protocol [
 
 	^announcerPlugin isMethodOverridden: method
 ]

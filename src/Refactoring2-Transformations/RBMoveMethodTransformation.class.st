@@ -329,7 +329,7 @@ RBMoveMethodTransformation >> needsToReplaceSelfReferences [
 
 { #category : #transforming }
 RBMoveMethodTransformation >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
+	^ (RBCondition definesSelector: selector in: class)
 		& (RBCondition withBlock:
 					[self buildParseTree.
 					self checkForPrimitiveMethod.

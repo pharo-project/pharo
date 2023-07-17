@@ -291,7 +291,7 @@ EpCodeChangeIntegrationTest >> testPackageRemoval [
 
 	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 0.
 
-	self packageOrganizer unregisterPackageNamed: self packageNameForTesting.
+	self packageOrganizer removePackage: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 1.
 	self assert: (self allLogEventsWith: EpPackageRemoval) first affectedPackageName equals: self packageNameForTesting

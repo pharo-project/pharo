@@ -9,8 +9,7 @@ Class {
 	#name : #RPackageOrganizerTest,
 	#superclass : #RPackageTestCase,
 	#instVars : [
-		'packageOrganizer',
-		'previousAuthor'
+		'packageOrganizer'
 	],
 	#category : #'RPackage-Tests'
 }
@@ -50,14 +49,14 @@ RPackageOrganizerTest >> packageOrganizer [
 
 { #category : #'tests - extending' }
 RPackageOrganizerTest >> pointRectangleInGraphElement [
-	| p |
-	p := RPackage named: #GraphElement.
-	p addClassDefinition: Point.
-	p addMethod: Point>>#x.
-	p addMethod: Point>>#rotateBy:about:.
-	p addClassDefinition: Rectangle.
-	p addMethod: self quadrangleClass >>#intersect:.
-	^ p
+
+	^ (RPackage named: #GraphElement)
+		  addClassDefinition: Point;
+		  addMethod: Point >> #x;
+		  addMethod: Point >> #rotateBy:about:;
+		  addClassDefinition: Rectangle;
+		  addMethod: self quadrangleClass >> #intersect:;
+		  yourself
 ]
 
 { #category : #utilities }
@@ -67,39 +66,14 @@ RPackageOrganizerTest >> quadrangleClass [
 
 { #category : #running }
 RPackageOrganizerTest >> setUp [
+
 	super setUp.
-	createdClasses := OrderedCollection new.
-	createdPackages := OrderedCollection new.
-	packageOrganizer := RPackageOrganizer new.
-	packageOrganizer debuggingName: 'For PackageOrganizerTest'.
-	previousAuthor := Author fullName ifNil: [Author fullName: 'RPackage'].
+	packageOrganizer := RPackageOrganizer new
+		                    debuggingName: 'For PackageOrganizerTest';
+		                    yourself.
 
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'
-]
-
-{ #category : #'tests - extending' }
-RPackageOrganizerTest >> stringCharacterInCollPackage [
-	| p |
-	p := RPackage named: #CollPackage.
-	p addClassDefinition: String.
-	p addClassDefinition: Character.
-	p addMethod: String>>#indexOf:.
-	p addMethod: String>>#isAllDigits.
-	p addMethod: String class>>#cr.
-	p addMethod: Character>>#asInteger.
-	p addMethod: Text>>#allBold.
-	^ p
-]
-
-{ #category : #running }
-RPackageOrganizerTest >> tearDown [
-
-	Author fullName: previousAuthor.
-
-	(createdClasses reject: [ :c | c isObsolete ]) do: [ :cls | cls removeFromSystem ].
-
-	super tearDown
 ]
 
 { #category : #tests }
@@ -128,7 +102,7 @@ RPackageOrganizerTest >> testCreateNewPackageWithConflictRaisesConflictException
 RPackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
 
 	packageOrganizer createPackageNamed: 'P1'.
-	self assert: (packageOrganizer includesPackageNamed: 'P1')
+	self assert: (packageOrganizer hasPackage: 'P1')
 ]
 
 { #category : #tests }
@@ -154,6 +128,7 @@ RPackageOrganizerTest >> testEmpty [
 
 { #category : #tests }
 RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
+
 	| p1 p2 c1 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -164,9 +139,9 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 	c1 := self createNewClassNamed: #C1 inPackage: p2.
 
 	c1 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*p1-something'.
-	packageOrganizer addMethod: (c1 >> #methodPackagedInP1).
+	packageOrganizer addMethod: c1 >> #methodPackagedInP1.
 
-	self deny: (packageOrganizer includesPackageNamed: #'p1-something').
+	self deny: (packageOrganizer hasPackage: #'p1-something').
 	self assert: (p1 extendedClasses includes: c1)
 ]
 
@@ -220,53 +195,21 @@ RPackageOrganizerTest >> testFullRegistration [
 ]
 
 { #category : #tests }
-RPackageOrganizerTest >> testFullUnregistration [
+RPackageOrganizerTest >> testHasPackage [
 
-	| p1 p2 p3 a1 a2 b1 b2 a3 |
-	"taken from setup of RPackageReadOnlyCompleteSetup"
+	| organizer packageFromOtherOrganizer name package |
+	name := 'TestPackageNameForPackageOrganizer'.
+	organizer := RPackageOrganizer new.
+	packageFromOtherOrganizer := RPackageOrganizer new ensurePackage: name.
+	self deny: (organizer hasPackage: name).
+	self deny: (organizer hasPackage: packageFromOtherOrganizer).
 
-	p1 := self createNewPackageNamed: self p1Name.
-	p2 := self createNewPackageNamed: self p2Name.
-	p3 := self createNewPackageNamed: self p3Name.
+	package := organizer ensurePackage: name.
 
-	a1 :=  self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
-	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
-	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
-	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
-	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
+	self assert: (organizer hasPackage: name).
+	self assert: (organizer hasPackage: package).
 
-	a1 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a1>>#methodDefinedInP1).
-	a1 compileSilently: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
-	p1 addMethod: (a1>>#anotherMethodDefinedInP1).
-
-	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
-
-	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addMethod: (a2>>#methodDefinedInP2).
-
-	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: (a2>>#methodDefinedInP3).
-
-	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
-	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3).
-
-
-	self packageOrganizer registerPackage: p1.
-	self packageOrganizer registerPackage: p2.
-	self packageOrganizer registerPackage: p3.
-
-	self packageOrganizer unregisterPackage: p1.
-	self packageOrganizer unregisterPackage: p2.
-	self packageOrganizer unregisterPackage: p3.
-
-
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: a1).
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: a2).
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: b1).
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: b2).
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: a3)
+	self deny: (organizer hasPackage: packageFromOtherOrganizer)
 ]
 
 { #category : #tests }
@@ -312,6 +255,7 @@ RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
+
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -320,10 +264,8 @@ RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
 	self packageOrganizer registerPackage: p1.
 	self packageOrganizer registerPackage: p2.
 	self packageOrganizer registerPackage: p3.
-	self assert: self packageOrganizer packageNames size equals: 4.
-	self assert: (self packageOrganizer includesPackage: p1).
-	self assert: (self packageOrganizer includesPackageNamed: p1 name).
-	{p1 . p2 . p3} do: [:each | self assert:  (self packageOrganizer packageNames includes: each name)]
+	self assert: self packageOrganizer packageNames size equals: 4. "We also have the default package."
+	{ p1 . p2 . p3 } do: [ :package | self assert: (self packageOrganizer packageNames includes: package name) ]
 ]
 
 { #category : #tests }
@@ -365,6 +307,54 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	self packageOrganizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
 	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
+]
+
+{ #category : #tests }
+RPackageOrganizerTest >> testRemovePackage [
+
+	| p1 p2 p3 a1 a2 b1 b2 a3 |
+	"taken from setup of RPackageReadOnlyCompleteSetup"
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
+	p3 := self createNewPackageNamed: self p3Name.
+
+	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
+	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
+	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
+	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
+	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
+
+	a1 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
+	p1 addMethod: a1 >> #methodDefinedInP1.
+	a1 compileSilently: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
+	p1 addMethod: a1 >> #anotherMethodDefinedInP1.
+
+	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
+	p1 addMethod: a2 >> #methodDefinedInP1.
+
+	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
+	p2 addMethod: a2 >> #methodDefinedInP2.
+
+	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
+	p3 addMethod: a2 >> #methodDefinedInP3.
+
+	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
+	p3 addMethod: a2 class >> #classSideMethodDefinedInP3.
+
+
+	self packageOrganizer registerPackage: p1.
+	self packageOrganizer registerPackage: p2.
+	self packageOrganizer registerPackage: p3.
+
+	self packageOrganizer removePackage: p1.
+	self packageOrganizer removePackage: p2.
+	self packageOrganizer removePackage: p3.
+
+	self deny: (self packageOrganizer includesPackageBackPointerForClass: a1).
+	self deny: (self packageOrganizer includesPackageBackPointerForClass: a2).
+	self deny: (self packageOrganizer includesPackageBackPointerForClass: b1).
+	self deny: (self packageOrganizer includesPackageBackPointerForClass: b2).
+	self deny: (self packageOrganizer includesPackageBackPointerForClass: a3)
 ]
 
 { #category : #tests }

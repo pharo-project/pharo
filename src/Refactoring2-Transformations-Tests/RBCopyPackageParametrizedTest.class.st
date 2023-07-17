@@ -33,9 +33,7 @@ RBCopyPackageParametrizedTest >> constructor [
 { #category : #accessing }
 RBCopyPackageParametrizedTest >> createPackageNamed: packageName withClasses: aCollection [
 
-	[ RPackageOrganizer default createPackageNamed: packageName ]
-	on: RPackageConflictError
-	do: [ ].
+	self packageOrganizer ensurePackage: packageName.
 
 	aCollection do: [ : className |
 		| refactoring |

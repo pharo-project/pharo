@@ -54,6 +54,11 @@ RBSwapMethodRefactoring >> swapMethod: aSelector in: aClass [
 
 { #category : #transforming }
 RBSwapMethodRefactoring >> transform [
-	target compile: (class sourceCodeFor: selector) classified: (class protocolsFor: selector).
+
+	self generateCompositeChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: (class sourceCodeFor: selector)
+			toClass: target
+			inProtocols: (class protocolsFor: selector)).
 	class removeMethod: selector
 ]

@@ -28,12 +28,23 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> tearDown [
 ]
 
 { #category : #tests }
-RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingPackage [
+RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingCategory [
 
 	self packageOrganizer addCategory: self packageName.
 
 	self assert: (self packageOrganizer packageNames includes: self packageName).
 	self assert: (self packageOrganizer includesCategory: self packageName)
+]
+
+{ #category : #tests }
+RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingCategoryWithoutDashDoesNotCreateTag [
+	"Regression test because creating a category without dash was creating a tag of the same name which is wrong."
+
+	self packageOrganizer addCategory: self packageName.
+
+	self assert: (self packageOrganizer packageNames includes: self packageName).
+	self assert: (self packageOrganizer includesCategory: self packageName).
+	self assertEmpty: (self packageOrganizer packageNamed: self packageName) classTags
 ]
 
 { #category : #tests }

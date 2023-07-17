@@ -47,11 +47,13 @@ WeakAnnouncementSubscription >> makeStrong [
 
 { #category : #converting }
 WeakAnnouncementSubscription >> makeWeak [
+
 	^ self
 ]
 
 { #category : #accessing }
 WeakAnnouncementSubscription >> next [
+
 	^ next
 ]
 

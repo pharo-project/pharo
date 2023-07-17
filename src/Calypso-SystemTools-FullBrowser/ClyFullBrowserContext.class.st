@@ -36,14 +36,6 @@ ClyFullBrowserContext >> isMethodGroupSelected [
 	^self selectedMethodGroupItems notEmpty
 ]
 
-{ #category : #'selection-method groups' }
-ClyFullBrowserContext >> isMethodTagSelected [
-
-	self isMethodGroupSelected ifFalse: [ ^false ].
-
-	^self selectedMethodGroupClass isBasedOnMethodProtocol
-]
-
 { #category : #'selection-projects' }
 ClyFullBrowserContext >> isProjectChildSelected [
 	^self selectedProjectChildItems notEmpty
@@ -52,6 +44,14 @@ ClyFullBrowserContext >> isProjectChildSelected [
 { #category : #'selection-projects' }
 ClyFullBrowserContext >> isProjectSelected [
 	^self selectedProjectItems notEmpty
+]
+
+{ #category : #'selection-method groups' }
+ClyFullBrowserContext >> isProtocolSelected [
+
+	self isMethodGroupSelected ifFalse: [ ^false ].
+
+	^self selectedMethodGroupClass isBasedOnProtocol
 ]
 
 { #category : #'selection-method groups' }
@@ -160,11 +160,6 @@ ClyFullBrowserContext >> selectedProjects [
 ]
 
 { #category : #'tool controlling' }
-ClyFullBrowserContext >> showMethodTag: tagName [
-	tool selectMethodGroupNamed: tagName
-]
-
-{ #category : #'tool controlling' }
 ClyFullBrowserContext >> showPackage: aPackage [
 	tool selectPackage: aPackage
 ]
@@ -172,6 +167,11 @@ ClyFullBrowserContext >> showPackage: aPackage [
 { #category : #'tool controlling' }
 ClyFullBrowserContext >> showPackage: aPackage atClassTag: tagName [
 	tool selectPackage: aPackage atClassTag: tagName
+]
+
+{ #category : #'tool controlling' }
+ClyFullBrowserContext >> showProtocol: protocolName [
+	tool selectMethodGroupNamed: protocolName
 ]
 
 { #category : #'tool controlling' }

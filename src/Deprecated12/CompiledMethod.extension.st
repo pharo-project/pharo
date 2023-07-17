@@ -1,6 +1,14 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*Deprecated12' }
+CompiledMethod >> isTaggedWith: aSymbol [
+
+	self deprecated: 'You should compare the protocol instead of using this method.' transformWith: '`@rcv isTaggedWith: `@arg' -> '`@rcv protocolName == `@arg'.
+
+	^ self protocolName == aSymbol
+]
+
+{ #category : #'*Deprecated12' }
 CompiledMethod >> tagWith: aSymbol [
 
 	self deprecated: 'Use #protocol: instead.' transformWith: '`@rcv tagWith: `@arg' -> '`@rcv protocol: `@arg'.

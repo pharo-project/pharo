@@ -102,6 +102,15 @@ RBAbstractTransformation >> checkMethodName: aName in: aClass [
 	^RBCondition checkMethodName: aName in: aClass
 ]
 
+{ #category : #preconditions }
+RBAbstractTransformation >> classExist [
+
+	| className |
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString: 'Class named ' , className , ' does not exist' 
+]
+
 { #category : #private }
 RBAbstractTransformation >> convertMethod: selector for: aClass using: searchReplacer [
 	"Convert the parse tree for selector using the searchReplacer. If a
@@ -135,10 +144,11 @@ RBAbstractTransformation >> model: aRBNamespace [
 { #category : #initialize }
 RBAbstractTransformation >> newModel [
 
-	^ (RBNamespace
+	model := (RBNamespace
 			onEnvironment: self defaultEnvironment)
 			name: self printString;
-			yourself
+			yourself.
+	^ model
 ]
 
 { #category : #'To be removed' }

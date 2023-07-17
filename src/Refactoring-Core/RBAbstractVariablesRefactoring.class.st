@@ -51,7 +51,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
 		               variable: aString
 		               class: nonMetaClass
 		               classVariable: true.
-	self performCompositeRefactoring: refactoring.
+	self generateCompositeChangesFor: refactoring.
 	rewriter := self parseTreeRewriter.
 	fromClass isMeta
 		ifTrue: [
@@ -91,7 +91,7 @@ RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [
 		               variable: aString
 		               class: fromClass
 		               classVariable: false.
-	self performCompositeRefactoring: refactoring.
+	self generateCompositeChangesFor: refactoring.
 	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: aString , ' := ``@object'
@@ -127,7 +127,7 @@ RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: from
 				forMethod: tree
 				fromClass: fromClass
 				toClasses: toClasses.
-	self performCompositeRefactoring: poolRefactoring.
+	self generateCompositeChangesFor: poolRefactoring.
 	self computeVariablesToAbstract
 ]
 
