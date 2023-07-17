@@ -10,11 +10,6 @@ Class {
 }
 
 { #category : #'helpers-names' }
-SlotClassBuilderTest >> aCategory [
-	^ 'SlotTestsTmp'
-]
-
-{ #category : #'helpers-names' }
 SlotClassBuilderTest >> aClassName [
 	^ #SlotTestsClassA
 ]
@@ -65,7 +60,7 @@ SlotClassBuilderTest >> make: anUnaryBlock [
 			  superclass: Object;
 			  name: self aClassName;
 			  layoutClass: FixedLayout;
-			  package: self aCategory.
+			  package: self slotTestPackageName.
 		  anUnaryBlock value: builder ]
 ]
 
@@ -87,6 +82,11 @@ SlotClassBuilderTest >> makeWithLayout: aClassLayout andSlots: someSlots [
 		]
 ]
 
+{ #category : #'helpers-names' }
+SlotClassBuilderTest >> slotTestPackageName [
+	^ 'SlotTestsTmp'
+]
+
 { #category : #running }
 SlotClassBuilderTest >> tearDown [
 	"We remove the classes that could have been created during test run"
@@ -104,9 +104,7 @@ SlotClassBuilderTest >> tearDown [
 		cleanUpTrait: TOne;
 		cleanUpTrait: TTwo.
 
-	self flag: #package. "This category line should be removed be it's not yet possible."
-	self packageOrganizer removeCategory: self aCategory.
-	self packageOrganizer removePackage: self aCategory.
+	self packageOrganizer removePackage: self slotTestPackageName.
 
 	super tearDown
 ]

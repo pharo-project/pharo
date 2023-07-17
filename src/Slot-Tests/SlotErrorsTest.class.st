@@ -218,7 +218,7 @@ SlotErrorsTest >> testUndeclareSlotFixWhenSlotIsLoaded [
 		aClassBuilder
 			name: self anotherClassName;
 			superclass: PropertySlot;
-			package: self aCategory ].
+			package: self slotTestPackageName ].
 
 	self assert: (slot read: instance) equals: nil.
 
