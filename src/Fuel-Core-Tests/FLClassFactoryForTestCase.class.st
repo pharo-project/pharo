@@ -47,7 +47,6 @@ FLClassFactoryForTestCase >> cleanUp [
 	createdTraitNames := self createdTraitNames.
 	self deleteClasses.
 	self deleteTraits.
-	self cleanUpSystemOrganization.
 	self deletePackage.
 	self cleanUpChangeSetForClassNames: createdClassNames.
 	self cleanUpChangeSetForClassNames: createdTraitNames
@@ -63,19 +62,6 @@ FLClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
 			changeSet 
 				removeClassChanges: name;
 				removeClassChanges: name, ' class']]
-]
-
-{ #category : #'private-cleaning' }
-FLClassFactoryForTestCase >> cleanUpSystemOrganization [
-	"This method is necessary because we create classes in a non-default environment. The
-	SystemOrganization is global and ClassFactoryForTestCase interacts with it to clean out
-	categories."
-
-	| categories |
-	categories := Smalltalk organization categoriesMatching: self defaultPackageName , '-*'.
-	categories do: [ :category |
-		(Smalltalk organization listAtCategoryNamed: category) do: [ :behaviorName |
-			Smalltalk organization removeBehavior: behaviorName ] ]
 ]
 
 { #category : #accessing }
@@ -154,7 +140,8 @@ FLClassFactoryForTestCase >> deleteClasses [
 
 { #category : #'private-cleaning' }
 FLClassFactoryForTestCase >> deletePackage [
-	Smalltalk organization removeCategoriesMatching: self defaultPackageName , '-*'
+
+	self packageOrganizer removePackage: self defaultPackageName
 ]
 
 { #category : #'private-cleaning' }
