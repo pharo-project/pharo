@@ -82,6 +82,21 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingPackage [
 ]
 
 { #category : #tests }
+RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingPackage2 [
+	"Regression test because removing a RPackage from the system was not removing the category in SystemOrganizer."
+
+	self packageOrganizer addCategory: self packageName.
+
+	self assert: (self packageOrganizer packageNames includes: self packageName).
+	self assert: (self packageOrganizer includesCategory: self packageName).
+
+	self packageOrganizer removePackage: self packageName.
+
+	self deny: (self packageOrganizer packageNames includes: self packageName).
+	self deny: (self packageOrganizer includesCategory: self packageName)
+]
+
+{ #category : #tests }
 RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingPackageWithTags [
 	"Regression test because removing a RPackage from the system was not removing the category in SystemOrganizer."
 

@@ -869,6 +869,9 @@ RPackageOrganizer >> removePackage: aPackage [
 	self basicUnregisterPackageNamed: package name.
 	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
 	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
+
+	self flag: #package. "The next line should be removed with the system organizer later."
+	self removeCategory: package name.
 	SystemAnnouncer announce: (PackageRemoved to: package).
 
 	^ package
