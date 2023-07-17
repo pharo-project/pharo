@@ -80,8 +80,7 @@ Class {
 		'organizer'
 	],
 	#classVars : [
-		'PackageGlobalOrganizer',
-		'Properties'
+		'PackageGlobalOrganizer'
 	],
 	#category : #'RPackage-Core-Base'
 }
@@ -94,18 +93,7 @@ RPackage class >> defaultPackageName [
 { #category : #'class initialization' }
 RPackage class >> initialize [
 	"Ensure the organizer will be the RPackageOrganizer default"
-	self organizer: nil.
-	Properties
-		ifNil: [ self initializeProperties ]
-		ifNotNil: [ | newDict |
-			newDict := WeakIdentityKeyDictionary newFrom: Properties.
-			newDict rehash.
-			Properties := newDict ]
-]
-
-{ #category : #'class initialization' }
-RPackage class >> initializeProperties [
-	Properties := WeakIdentityKeyDictionary new
+	self organizer: nil
 ]
 
 { #category : #'instance creation' }
