@@ -866,6 +866,9 @@ RPackageOrganizer >> removePackage: aPackage [
 		           ifTrue: [ self packageNamed: aPackage ]
 		           ifFalse: [ aPackage ].
 
+	"In the system we have one default package and we do not want to remove this one."
+	package isDefault ifTrue: [ ^ self ].
+
 	self basicUnregisterPackageNamed: package name.
 	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
 	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
