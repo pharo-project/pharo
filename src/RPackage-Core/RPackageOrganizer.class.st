@@ -752,7 +752,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 
 	anAnnouncer weak
 		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
-		when: CategoryRemoved send: #systemCategoryRemovedActionFrom: to: self;
 		when: CategoryRenamed send: #systemCategoryRenamedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
@@ -826,9 +825,12 @@ RPackageOrganizer >> removeCategoriesMatching: matchString [
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeCategory: category [
+RPackageOrganizer >> removeCategory: aCategory [
 	"Remove the category named, cat. Create an error notificiation if the
 	category has any elements in it."
+
+	| category |
+	category := aCategory asSymbol.
 
 	categoryMap
 		at: category
@@ -836,6 +838,12 @@ RPackageOrganizer >> removeCategory: category [
 		ifAbsent: [ ^ self ].
 
 	categoryMap removeKey: category.
+
+	"Now that we managed the SystemOrganizer, let's update the package organizer."
+	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
+		package name = category
+			ifTrue: [ self removePackage: package ]
+			ifFalse: [ package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | package removeClassTag: tag name ] ] ].
 
 	SystemAnnouncer uniqueInstance classCategoryRemoved: category
 ]
@@ -958,19 +966,6 @@ RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 	| package |
 	package := (self packageMatchingExtensionName: ann categoryName) ifNil: [ self ensurePackage: ann categoryName ].
 	package name = ann categoryName ifFalse: [ package addClassTag: ann categoryName asSymbol ]
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
-	"When a system category is removed, we may: remove a tag, or remove a rpackage. If we remove a RPackage, unregister the linked MCWorkingCopy. If it is a tag, do nothing? (from what I know of RPackage, the tag should already have disappeared because it would have been empty)."
-
-	| categoryName |
-	categoryName := ann categoryName asSymbol.
-
-	(self packageMatchingExtensionName: categoryName) ifNotNil: [ :package |
-		package name = categoryName
-			ifTrue: [ self removePackage: package ]
-			ifFalse: [ package classTagNamed: (categoryName withoutPrefix: package name , '-') ifPresent: [ :tag | package removeClassTag: tag name ] ] ]
 ]
 
 { #category : #'system integration' }
