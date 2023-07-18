@@ -96,7 +96,7 @@ Object >> removeActionsForEvent: anEventSelector [
 { #category : #'*System-Object Events' }
 Object >> removeActionsSatisfying: aBlock [
 
-	self actionMap keysDo:
+	self actionMap copy keysDo:
 		[:eachEventSelector |
 			self
    				removeActionsSatisfying: aBlock
@@ -118,12 +118,8 @@ forEvent: anEventSelector [
 { #category : #'*System-Object Events' }
 Object >> removeActionsWithReceiver: anObject [
 
-	self actionMap copy keysDo:
-		[:eachEventSelector |
-			self
-   				removeActionsSatisfying: [:anAction | anAction receiver == anObject]
-				forEvent: eachEventSelector
-		]
+	self removeActionsSatisfying: [ :anAction |
+		anAction receiver == anObject ]
 ]
 
 { #category : #'*System-Object Events' }
