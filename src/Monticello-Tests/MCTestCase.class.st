@@ -52,10 +52,8 @@ MCTestCase >> assertVersionInfo: actual matches: expected [
 
 { #category : #compiling }
 MCTestCase >> change: aSelector toReturn: anObject [
-	self 
-		compileClass: self mockClassA 
-		source: aSelector, ' ^ ', anObject printString 
-		category: 'numeric'
+
+	self mockClassA compileSilently: aSelector , ' ^ ' , anObject printString classified: 'numeric'
 ]
 
 { #category : #mocks }
@@ -66,11 +64,6 @@ MCTestCase >> commentForClass: name [
 { #category : #mocks }
 MCTestCase >> commentStampForClass: name [
 	^ 'tester-', name,  ' 1/1/2000 00:00'
-]
-
-{ #category : #compiling }
-MCTestCase >> compileClass: aClass source: source category: category [
-	aClass compileSilently: source classified: category
 ]
 
 { #category : #mocks }
@@ -117,6 +110,13 @@ MCTestCase >> mockEmptyPackage [
 
 { #category : #mocks }
 MCTestCase >> mockExtensionMethodCategory [
+
+	self deprecated: 'Use mockExtensionProtocol instead.' transformWith: '`@rcv mockExtensionMethodCategory' -> '`@rcv mockExtensionProtocol'.
+	^ self mockExtensionProtocol
+]
+
+{ #category : #mocks }
+MCTestCase >> mockExtensionProtocol [
 	^ '*MonticelloMocks'
 ]
 
@@ -140,11 +140,6 @@ MCTestCase >> mockMethod: aSymbol class: className source: sourceString meta: aB
 		  category: Protocol unclassified
 		  timeStamp: ''
 		  source: sourceString
-]
-
-{ #category : #mocks }
-MCTestCase >> mockOverrideMethodCategory [
-	^ self mockExtensionMethodCategory, '-override'
 ]
 
 { #category : #mocks }
