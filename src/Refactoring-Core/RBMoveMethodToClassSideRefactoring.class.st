@@ -54,7 +54,7 @@ RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol: protocol [
 	aClass addMethod: rbMethod.
-	self generateCompositeChangesFor:
+	self generateChangesFor:
 		(RBAddMethodTransformRefactoring
 			addMethod: rbMethod source
 			toClass: aClass
@@ -164,7 +164,7 @@ RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
 	references do: [ :e |
 		| replacer accessorsRefactoring |
 		accessorsRefactoring := self accessorsFor: e.
-		self generateCompositeChangesFor: accessorsRefactoring.
+		self generateChangesFor: accessorsRefactoring.
 		replacer := self parseTreeRewriterClass
 			            variable: e
 			            getter: accessorsRefactoring getterMethodName

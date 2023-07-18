@@ -36,7 +36,7 @@ RBClassRegexRefactoring >> copyFrom: aSourceClass to: aTargetClass [
 		aSourceClass sharedPoolNames
 			do: [ :each | aTargetClass addPoolDictionary: each ] ].
 	aSourceClass selectors do: [ :each |
-		self generateCompositeChangesFor:
+		self generateChangesFor:
 			(RBAddMethodTransformRefactoring
 				addMethod: (aSourceClass sourceCodeFor: each)
 				toClass: aTargetClass

@@ -55,7 +55,7 @@ RBSwapMethodRefactoring >> swapMethod: aSelector in: aClass [
 { #category : #transforming }
 RBSwapMethodRefactoring >> transform [
 
-	self generateCompositeChangesFor:
+	self generateChangesFor:
 		(RBAddMethodTransformRefactoring
 			addMethod: (class sourceCodeFor: selector)
 			toClass: target

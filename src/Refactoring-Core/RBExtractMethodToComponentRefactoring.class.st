@@ -58,7 +58,7 @@ RBExtractMethodToComponentRefactoring >> extractMethod [
 			methodName
 				selector: extractedMethodSelector;
 				yourself].
-	self generateCompositeChangesFor: refactoring
+	self generateChangesFor: refactoring
 ]
 
 { #category : #transforming }
@@ -69,7 +69,7 @@ RBExtractMethodToComponentRefactoring >> inlineForwarder [
 				sendersOf: extractedMethodSelector
 				in: class.
 	refactoring setOption: #inlineExpression toUse: [:ref :string | true].
-	self generateCompositeChangesFor: refactoring
+	self generateChangesFor: refactoring
 ]
 
 { #category : #transforming }
@@ -84,7 +84,7 @@ RBExtractMethodToComponentRefactoring >> moveMethod [
 		selector: extractedMethodSelector
 		class: class
 		variable: variable.
-	self generateCompositeChangesFor: refactoring
+	self generateChangesFor: refactoring
 ]
 
 { #category : #preconditions }
