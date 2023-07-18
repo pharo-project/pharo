@@ -316,7 +316,8 @@ RPackageOrganizer >> debuggingName: aString [
 
 { #category : #initialization }
 RPackageOrganizer >> defineUnpackagedClassesPackage [
-	^ self ensureExistAndRegisterPackageNamed: RPackage defaultPackageName
+
+	^ self ensurePackage: RPackage defaultPackageName
 ]
 
 { #category : #'private - deprecated' }
