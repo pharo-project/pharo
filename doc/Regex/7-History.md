@@ -82,7 +82,7 @@ For example, '\w+' is now a valid expression matching any word.
 
 For example, the following patterns are equivalent:
 
-	'[[:alnum:]_]+' '\w+'  '[\w]+' '[a-zA-Z0-9_]+' *** underscore only since 1.3 ***
+	'[[:alnum:]_]+' '\w+' '[\w]+' '[a-zA-Z0-9_]+' *** underscore only since 1.3 ***
 
 4. Some non-printable characters can be represented in regular expressions using a common backslash notation:
 
@@ -95,7 +95,7 @@ For example, the following patterns are equivalent:
 5. A dot is correctly interpreted as 'any character but a newline'
 instead of 'anything but whitespace'.
 
-6. Case-insensitive matching.  The easiest access to it are new messages that CharacterArray understands: #asRegexIgnoringCase, #matchesRegexIgnoringCase:, #prefixMatchesRegexIgnoringCase:.
+6. Case-insensitive matching. The easiest access to it are new messages that CharacterArray understands: #asRegexIgnoringCase, #matchesRegexIgnoringCase:, #prefixMatchesRegexIgnoringCase:.
 
 7. The matcher (an instance of RxMatcher, the result of `String>>asRegex`) now provides a collection-like interface to matches in a particular string or on a particular stream, as well as substitution protocol. The interface includes the following messages:
 
@@ -115,13 +115,13 @@ instead of 'anything but whitespace'.
 
 Examples:
 
-```
+```st
 	'\w+' asRegex matchesIn: 'now is the time'
 ```
 
 returns an OrderedCollection containing four strings: 'now', 'is', 'the', and 'time'.
 
-```
+```st
 	'\<t\w+' asRegexIgnoringCase
 		copy: 'now is the Time'
 		translatingMatchesUsing: [:match | match asUppercase]
@@ -131,7 +131,7 @@ returns `'now is THE TIME'` (the regular expression matches words beginning with
 
 ## Acknowledgements
 
-Since the first release of the matcher, thanks to the input from several fellow Smalltalkers, I became convinced a native Smalltalk regular expression matcher was worth the effort to keep it alive. For the contributions, suggestions, and bug reports that made this release possible, I want to thank: Felix Hack, Peter Hatch, Alan Knight, Eliot Miranda, Thomas Muhr,  Robb Shecter, David N. Smith, Francis Wolinski, and anyone whom I haven't yet met or heard from, but who agrees this has not been a complete waste of time.
+Since the first release of the matcher, thanks to the input from several fellow Smalltalkers, I became convinced a native Smalltalk regular expression matcher was worth the effort to keep it alive. For the contributions, suggestions, and bug reports that made this release possible, I want to thank: Felix Hack, Peter Hatch, Alan Knight, Eliot Miranda, Thomas Muhr, Robb Shecter, David N. Smith, Francis Wolinski, and anyone whom I haven't yet met or heard from, but who agrees this has not been a complete waste of time.
 
 --Vassili Bykov
 October 3, 1999!
