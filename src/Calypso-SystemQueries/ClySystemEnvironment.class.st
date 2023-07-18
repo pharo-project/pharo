@@ -179,8 +179,9 @@ ClySystemEnvironment >> defaultClassCompiler [
 ]
 
 { #category : #'package management' }
-ClySystemEnvironment >> ensureExistAndRegisterPackageNamed: packageName [
-	^packageOrganizer ensureExistAndRegisterPackageNamed: packageName
+ClySystemEnvironment >> ensurePackage: packageName [
+
+	^ packageOrganizer ensurePackage: packageName
 ]
 
 { #category : #accessing }

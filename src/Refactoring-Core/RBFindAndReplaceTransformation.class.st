@@ -107,7 +107,7 @@ RBFindAndReplaceTransformation >> extract: occurrence of: rbMethod [
 	refactoring setOption: #existingSelector toUse:  [ :ref |
 			ref parameters: (self argumentsOf: occurrence value).
 			selector].
-	self generateCompositeChangesFor: refactoring ] on: Exception do: [ :e | e ]
+	self generateChangesFor: refactoring ] on: Exception do: [ :e | e ]
 ]
 
 { #category : #accessing }
