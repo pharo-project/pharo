@@ -25,13 +25,12 @@ UndefinedClassTest >> compile [
 
 { #category : #utilities }
 UndefinedClassTest >> createClassFromDefinitionString: aString [
-	<script: 'self new compile'>
 
+	<script: 'self new compile'>
 	^ ShiftClassInstaller make: [ :builder |
-		builder
-			useUndefinedClass;
-			buildEnvironment: ShSmalltalkGlobalsEnvironment new;
-			buildFromAST: (CDClassDefinitionParser parse: aString) ]
+		  builder
+			  useUndefinedClass;
+			  buildFromAST: (CDClassDefinitionParser parse: aString) ]
 ]
 
 { #category : #asserting }
@@ -110,7 +109,7 @@ UndefinedClassTest >> testCreateUndefinedClassShouldCreateNewClassThatIsUndefine
 	UndefinedClass createUndefinedClassNamed: #Foo package: self packageNameForTest.
 
 	self assertClassExist: #Foo.
-	self assert: [ (ShSmalltalkGlobalsEnvironment new classNamed: #Foo) isUndefined ]
+	self assert: [ (self class environment at: #Foo) isUndefined ]
 ]
 
 { #category : #tests }
@@ -139,9 +138,9 @@ UndefinedClassTest >> testRemoveUndefinedClassShouldRemoveIt [
 	UndefinedClass createUndefinedClassNamed: #Foo package: self packageNameForTest.
 
 	self assertClassExist: #Foo.
-	self assert: [ (ShSmalltalkGlobalsEnvironment new classNamed: #Foo) isUndefined ].
+	self assert: [ (self class environment at: #Foo) isUndefined ].
 
-	(ShSmalltalkGlobalsEnvironment new classNamed: #Foo) removeFromSystem.
+	(self class environment at: #Foo) removeFromSystem.
 
 	self assertClassDoesNotExist: #Foo
 ]

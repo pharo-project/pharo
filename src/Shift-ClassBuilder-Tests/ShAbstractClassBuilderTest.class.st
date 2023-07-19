@@ -31,9 +31,9 @@ ShAbstractClassBuilderTest >> doValidateMethods: selectors on: class [
 
 { #category : #running }
 ShAbstractClassBuilderTest >> setUp [
+
 	super setUp.
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new
+	builder := ShiftClassBuilder new
 ]
 
 { #category : #validation }
