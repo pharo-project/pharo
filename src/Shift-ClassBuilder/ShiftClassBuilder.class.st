@@ -285,6 +285,26 @@ ShiftClassBuilder >> doesNotUnderstand: aMessage [
 		ifFalse:[ ^ extensibleProperties at: variable]
 ]
 
+{ #category : #accessing }
+ShiftClassBuilder >> environment [
+
+	self
+		deprecated:
+		'Use #buildEnvironment or #installingEnvironment instead. The build environment is the environment containing the classes used by the building system such as the layouts. The installing environment is the environment in which the class will be installed.'
+		transformWith: '`@rcv environment' -> '`@rcv buildEnvironment'.
+	^ self buildEnvironment
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> environment: anObject [
+
+	self
+		deprecated:
+		'Use #buildEnvironment: or #installingEnvironment: instead. The build environment is the environment containing the classes used by the building system such as the layouts. The installing environment is the environment in which the class will be installed.'
+		transformWith: '`@rcv environment: `@arg' -> '`@rcv buildEnvironment: `@arg'.
+	^ self buildEnvironment: anObject
+]
+
 { #category : #initialization }
 ShiftClassBuilder >> fillFor: aClass [
 
