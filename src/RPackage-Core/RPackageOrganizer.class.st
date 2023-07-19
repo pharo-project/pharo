@@ -866,24 +866,27 @@ RPackageOrganizer >> removeSystemCategory: category [
 RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 	"Rename a category. No action if new name already exists, or if old name does not exist."
 
-	| oldName newName |
+	| oldName newName package announceChange |
 	oldName := oldCatString asSymbol.
 	newName := newCatString asSymbol.
+	announceChange := false.
 
 	categoryMap at: newName ifPresent: [ "new name exists, so no action" ^ self ].
 
 	categoryMap at: oldName ifPresent: [ :classes |
-		| package |
 		categoryMap
 			at: newName put: classes;
 			removeKey: oldName.
+		announceChange := true ].
 
-		package := (self packageMatchingExtensionName: oldName) ifNil: [ self ensurePackage: newName ].
-		package name = oldName ifTrue: [ self renamePackage: package from: oldName to: newName ].
+	"We do it in all cases because we have a few cases where a category was not created but a package was. It's bugs but since categories will vanish there is no reason to care too much."
+	package := (self packageMatchingExtensionName: oldName) ifNil: [ self ensurePackage: newName ].
+	package name = oldName ifTrue: [ self renamePackage: package from: oldName to: newName ].
 
-		package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ].
+	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ].
 
-		SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldName to: newName ]
+	"I prefer to announce the category rename after updating the packages in case a listener to this announcement manipulates packages."
+	announceChange ifTrue: [ SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldName to: newName ]
 ]
 
 { #category : #'system integration' }
