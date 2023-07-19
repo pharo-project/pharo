@@ -1,9 +1,9 @@
 # Implementation notes
 
-Version:        1.1
-Released:       October 1999
-Mail to:        Vassili Bykov <vassili@parcplace.com>, <v_bykov@yahoo.com>
-Flames to:      /dev/null
+Version:			1.1
+Released:		October 1999
+Mail to:			Vassili Bykov <vassili@parcplace.com>, <v_bykov@yahoo.com>
+Flames to:		/dev/null
 
 ## What To Look At First
 - `String>>#matchesRegex:` in 90% of cases this method is all you need to access the package.

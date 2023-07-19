@@ -6,15 +6,17 @@ The preceding section covered the syntax of regular expressions. It used the sim
 
 A `String` also understands these messages:
 
+```text
 	prefixMatchesRegex: regexString
 	matchesRegexIgnoringCase: regexString
 	prefixMatchesRegexIgnoringCase: regexString
+```
 
 `String>>#prefixMatchesRegex:` is just like `String>>#matchesRegex:`, except that the whole receiver is not expected to match the regular expression passed as the argument; matching just a prefix of it is enough. For example:
 
 ```st
-	'abcde' matchesRegex: '(a|b)+'.         "false"
-	'abcde' prefixMatchesRegex: '(a|b)+'.   "true"
+	'abcde' matchesRegex: '(a|b)+'.		"false"
+	'abcde' prefixMatchesRegex: '(a|b)+'.	"true"
 ```
 
 The last two messages are case-insensitive versions of matching.
@@ -65,14 +67,14 @@ If you repeatedly match several strings against the same regular expression usin
 
 You can create a matcher using one of the following methods:
 
-- using `RxMatcher>>#forString:ignoreCase:` message, with the regular expression string and a Boolean indicating whether the case is ignored as arguments.
+- using `RxMatcher class>>#forString:ignoreCase:` message, with the regular expression string and a Boolean indicating whether the case is ignored as arguments.
 - Sending #forString: message. It is equivalent to `<aString forString: regexString ignoreCase: false>`.
 
 A more convenient way is using one of the two matcher-created messages understood by String.
 
-- `String>>#asRegex` is equivalent to `RxMatcher>>#forString:`
+- `String>>#asRegex` is equivalent to `RxMatcher class>>#forString:`
 
-- `String>>#asRegexIgnoringCase` is equivalent to `RxMatcher>>#forString:ignoreCase:`.
+- `String>>#asRegexIgnoringCase` is equivalent to `RxMatcher class>>#forString:ignoreCase:`.
 
 Here are four examples of creating a matcher:
 
@@ -88,7 +90,7 @@ Here are four examples of creating a matcher:
 The matcher understands these messages (all of them return true to indicate successful match or search, and false otherwise):
 
 - `RxMatcher>>#matches:`: True if the whole target string (aString) matches.
-- `Rxmatcher>>#matchesPrefix:`: True if some prefix of the string (not necessarily the whole string) matches.
+- `RxMatcher>>#matchesPrefix:`: True if some prefix of the string (not necessarily the whole string) matches.
 - `RxMatcher>>#search:`: Search the string for the first occurrence of a matching substring. (Note that the first two methods only try matching from the very beginning of the string). Using the above example with a matcher for `a+`, this method would answer success given a string `baaa`, while the previous two would fail.
 - `RxMatcher>>#matchesStream:`, `RxMatcher>>#matchesStreamPrefix:`, and `RxMatcher>>#searchStream:`: Respective analogs of the first three methods, taking input from a stream instead of a string. The stream must be positionable and peekable.
 
@@ -135,6 +137,7 @@ This facility provides a convenient way of extracting parts of the input strings
 The enumeration and replacement protocols exposed in `String`
 are actually implemented by the matcher. The following messages are understood:
 
+```text
 	matchesIn: aString
 	matchesIn: aString do: aBlock
 	matchesIn: aString collect: aBlock
@@ -147,6 +150,7 @@ are actually implemented by the matcher. The following messages are understood:
 	matchesOnStream: aStream collect: aBlock
 	copy: sourceStream to: targetStream replacingMatchesWith: replacementString
 	copy: sourceStream to: targetStream translatingMatchesWith: aBlock
+```
 
 Note that in those methods that take a block, the block may refer to the `RxMatcher` itself, e.g. to collect information about the position where the match occurred, or the subexpressions of the match. An example can be seen in `RxMatcher>>#matchingRangesIn:`
 
