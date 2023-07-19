@@ -147,7 +147,8 @@ ShiftClassBuilder >> changes [
 
 { #category : #accessing }
 ShiftClassBuilder >> classNamed: aName [
-	^ self buildEnvironment classNamed:aName
+
+	^ self buildEnvironment at: aName ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
@@ -516,7 +517,8 @@ ShiftClassBuilder >> slotsFromString: aString [
 
 { #category : #accessing }
 ShiftClassBuilder >> superclass [
-	^ superclass ifNil: [ superclassName ifNotNil: [buildEnvironment classNamed: (self superclassName) ]]
+
+	^ superclass ifNil: [ superclassName ifNotNil: [ buildEnvironment at: self superclassName ifAbsent: [ nil ] ] ]
 ]
 
 { #category : #accessing }
@@ -542,9 +544,10 @@ ShiftClassBuilder >> superclassResolver: asuperclassResolver [
 
 { #category : #building }
 ShiftClassBuilder >> tryToFillOldClass [
-	oldClass ifNotNil: [ ^self ].
-	name ifNil: [ ^self ].
-	self oldClass: (self buildEnvironment classNamed: self name)
+
+	oldClass ifNotNil: [ ^ self ].
+	name ifNil: [ ^ self ].
+	self oldClass: (self buildEnvironment at: self name ifAbsent: [ nil ])
 ]
 
 { #category : #building }

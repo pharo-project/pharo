@@ -12,20 +12,27 @@ Class {
 }
 
 { #category : #accessing }
-ShSmalltalkGlobalsEnvironment >> bindingAt: aString [
+ShSmalltalkGlobalsEnvironment >> at: aName ifAbsent: aBlock [
+
+	^ environment at: aName ifAbsent: aBlock
+]
+
+{ #category : #installation }
+ShSmalltalkGlobalsEnvironment >> at: aString put: aClass [
+
+	environment at: aString put: aClass
+]
+
+{ #category : #accessing }
+ShSmalltalkGlobalsEnvironment >> bindingOf: aString [
 
 	^ environment bindingOf: aString
 ]
 
 { #category : #accessing }
 ShSmalltalkGlobalsEnvironment >> classNamed: aName [
+	1halt.
 	^ environment at: aName asSymbol ifAbsent: [ nil ]
-]
-
-{ #category : #accessing }
-ShSmalltalkGlobalsEnvironment >> classNamed: aString ifAbsent: aBlockClosure [
-
-	^ environment at: aString ifAbsent: aBlockClosure
 ]
 
 { #category : #accessing }
@@ -51,7 +58,7 @@ ShSmalltalkGlobalsEnvironment >> initialize [
 
 { #category : #installation }
 ShSmalltalkGlobalsEnvironment >> installClass: aClass withName: aString [
-
+1halt.
 	environment at: aString put: aClass
 ]
 
