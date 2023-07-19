@@ -291,7 +291,7 @@ ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclassMetaclass [
 ShClassInstallerTest >> testInstallInSpecificEnvironment [
 
 	| newEnvironment |
-	newEnvironment := SystemDictionary new.
+	newEnvironment := self class environment class new.
 	newClass := ShiftClassInstaller make: [ :builder |
 		            builder
 			            installingEnvironment: newEnvironment;
