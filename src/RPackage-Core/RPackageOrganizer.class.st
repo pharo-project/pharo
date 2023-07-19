@@ -1100,9 +1100,13 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	method origin = ann methodClass ifFalse: [ ^ self ].
 	(self packageOfClassNamed: ann methodClass instanceSide name) ifNil: [ ^ self ].
 
-	newProtocol := ann newProtocol ifNotNil: [ :protocol | protocol name ] ifNil: [ ^ self ].
+	newProtocol := ann newProtocol
+		               ifNotNil: [ :protocol | protocol name ]
+		               ifNil: [ ^ self ].
 
-	oldProtocol := ann oldProtocol ifNotNil: [ :protocol | protocol name ] ifNil: [ '' ].
+	oldProtocol := ann oldProtocol
+		               ifNotNil: [ :protocol | protocol name ]
+		               ifNil: [ '' ].
 
 	methodPackage := method packageFromOrganizer: self.
 	newProtocol asLowercase = oldProtocol asLowercase ifTrue: [ ^ self ].
@@ -1111,7 +1115,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		                      ifTrue: [ self packageForProtocol: newProtocol inClass: method methodClass ]
 		                      ifFalse: [
 			                      (newProtocol beginsWith: '*')
-				                      ifTrue: [ self ensureExistAndRegisterPackageNamed: newProtocol allButFirst capitalized ]
+				                      ifTrue: [ self ensurePackage: newProtocol allButFirst capitalized ]
 				                      ifFalse: [ method methodClass package ] ].
 
 	methodPackage := (self hasPackageForProtocol: oldProtocol)
