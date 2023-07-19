@@ -122,9 +122,9 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 
 { #category : #initialization }
 ShiftClassInstaller >> initialize [
+
 	super initialize.
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new
+	builder := ShiftClassBuilder new
 ]
 
 { #category : #building }

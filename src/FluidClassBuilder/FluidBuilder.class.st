@@ -106,20 +106,18 @@ FluidBuilder >> fillInstanceSideFromClass: aClass [
 { #category : #building }
 FluidBuilder >> fillShiftClassBuilder [
 
-	shiftClassBuilder := ShiftClassBuilder new.
-	shiftClassBuilder
-		buildEnvironment: ShSmalltalkGlobalsEnvironment new;
-		name: nameToBuild.
-
-	shiftClassBuilder slots: slotsToBuild.
-	shiftClassBuilder traitComposition: uses.
+	shiftClassBuilder := ShiftClassBuilder new
+		                     name: nameToBuild;
+		                     slots: slotsToBuild;
+		                     traitComposition: uses;
+		                     yourself.
 
 	(tagToBuild isNil or: [ tagToBuild isEmpty ])
 		ifTrue: [ shiftClassBuilder category: packageName ]
-		ifFalse: [ tagToBuild isEmpty
-						ifFalse: [ shiftClassBuilder category: packageName, '-', tagToBuild asString ]
-						ifTrue: [ shiftClassBuilder category: packageName ]
-		].
+		ifFalse: [
+		tagToBuild
+			ifEmpty: [ shiftClassBuilder category: packageName ]
+			ifNotEmpty: [ shiftClassBuilder category: packageName , '-' , tagToBuild asString ] ].
 
 	shiftClassBuilder classSlots: classSlotsToBuild.
 	shiftClassBuilder classTraitComposition: classTraitsToBuild

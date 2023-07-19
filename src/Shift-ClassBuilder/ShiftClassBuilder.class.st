@@ -296,6 +296,7 @@ ShiftClassBuilder >> environment: anEnvironment [
 
 { #category : #initialization }
 ShiftClassBuilder >> fillFor: aClass [
+
 	self
 		superclass: aClass superclass;
 		name: aClass getName;
@@ -305,7 +306,7 @@ ShiftClassBuilder >> fillFor: aClass [
 		sharedVariablesFromString: aClass classVariablesString;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
-		environment: aClass environment;
+		installingEnvironment: aClass environment;
 		oldClass: aClass.
 
 	self builderEnhancer fillBuilder: self from: aClass
@@ -318,6 +319,7 @@ ShiftClassBuilder >> hasToMigrateInstances [
 
 { #category : #initialization }
 ShiftClassBuilder >> initialize [
+
 	super initialize.
 
 	self useStrictSuperclass.
@@ -332,7 +334,9 @@ ShiftClassBuilder >> initialize [
 	changes := Set new.
 
 	category := 'Unclassified'.
-	inRemake := false
+	inRemake := false.
+
+	buildEnvironment := self class environment
 ]
 
 { #category : #building }

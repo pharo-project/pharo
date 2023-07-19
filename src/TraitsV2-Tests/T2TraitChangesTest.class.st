@@ -12,7 +12,6 @@ T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 	t1 := self newTrait: #T1 with: {}.
 
 	builder := ShiftClassBuilder new
-		buildEnvironment: ShSmalltalkGlobalsEnvironment new;
 		name: #T1;
 		category: 'TraitsV2-Tests-TestClasses';
 		traitComposition: TEmpty;
@@ -32,17 +31,14 @@ T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 
 	| t1 builder |
+	t1 := self newTrait: #T1 with: {  }.
 
-	t1 := self newTrait: #T1 with: {}.
-
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new.
-
-	builder
-		name: #T1;
-		category: 'TraitsV2-Tests-TestClasses';
-		traitComposition: TEmpty;
-		beTrait.
+	builder := ShiftClassBuilder new
+		           name: #T1;
+		           category: 'TraitsV2-Tests-TestClasses';
+		           traitComposition: TEmpty;
+		           beTrait;
+		           yourself.
 
 	builder oldClass: t1.
 
@@ -60,13 +56,11 @@ T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 T2TraitChangesTest >> testconfigureBuilderWithNameTraitCompositionInstanceVariableNamesPackageName [
 
 	| builder |
-
 	builder := ShiftClassBuilder new
-	 	buildEnvironment: ShSmalltalkGlobalsEnvironment new;
-		name: #T1;
-		beTrait;
-		slotsFromString: 'a b';
-		category: 'TraitsV2-Tests-TestClasses'.
+		           name: #T1;
+		           beTrait;
+		           slotsFromString: 'a b';
+		           category: 'TraitsV2-Tests-TestClasses'.
 
 	self assert: builder slots size equals: 2.
 	self assert: builder slots first name equals: 'a'.

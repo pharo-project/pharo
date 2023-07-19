@@ -293,9 +293,7 @@ ShClassInstallerTest >> testInstallInSpecificEnvironment [
 	| newEnvironment |
 	newEnvironment := SystemDictionary new.
 	newClass := ShiftClassInstaller new
-		            installingEnvironment: (ShSmalltalkGlobalsEnvironment new
-				             environment: newEnvironment;
-				             yourself);
+		            installingEnvironment: newEnvironment;
 		            make: [ :builder |
 			            builder
 				            name: #SHClassForTest;
