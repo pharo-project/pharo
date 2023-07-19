@@ -304,8 +304,10 @@ ShClassInstallerTest >> testInstallInSpecificEnvironment [
 
 	self class environment at: #SHClassForTest ifPresent: [ self fail: 'The default environment should not have the class installed.' ].
 	newEnvironment at: #SHClassForTest ifAbsent: [ self fail: 'The default environment should not have the class installed.' ].
-	
-	self skip. 
+
+	self assert: newClass environment identicalTo: newEnvironment.
+
+	self skip.
 	self flag: #package. "ShiftClassInstaller>>#recategorize:to: is using the old SystemOrganizer system to classify classes, but this does not add the classes to the instance of RPackageOrganizer but to the default package organizer of the image instead. Until we can fix this, we cannot have the next assertions working. They are clearly a bug but it'll be hard to fix this bug in short term........ :("
 	self deny: (self packageOrganizer hasPackage: self generatedClassesPackageName).
 	self assert: (newEnvironment organization hasPackage: self generatedClassesPackageName)

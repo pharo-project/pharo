@@ -14,6 +14,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'buildEnvironment',
+		'installingEnvironment',
 		'superclassName',
 		'name',
 		'layoutDefinition',
@@ -224,7 +225,7 @@ ShiftClassBuilder >> createClass [
 		withLayoutType: self layoutDefinition layoutClass
 		slots: self layoutDefinition slots.
 
-	newClass environment: self buildEnvironment environment.
+	newClass environment: self installingEnvironment environment.
 
 	self builderEnhancer classCreated: self
 ]
@@ -339,6 +340,19 @@ ShiftClassBuilder >> installSlotsAndVariables [
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
 	newClass class classLayout slots do: [ :each | each installingIn: newClass class ].
 	newClass classVariables do: [ :each | each installingIn: newClass ]
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> installingEnvironment [
+	"The build environment is used to find the classes used during the building of a class such as the layouts, and the installing environment is the environment in which the class should be installed."
+
+	^ installingEnvironment ifNil: [ self buildEnvironment ]
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> installingEnvironment: anObject [
+
+	installingEnvironment := anObject
 ]
 
 { #category : #accessing }

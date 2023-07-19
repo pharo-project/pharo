@@ -23,8 +23,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'oldClass',
-		'builder',
-		'installingEnvironment'
+		'builder'
 	],
 	#category : #'Shift-ClassInstaller-Base'
 }
@@ -155,13 +154,13 @@ ShiftClassInstaller >> installSubclassInSuperclass: newClass [
 { #category : #building }
 ShiftClassInstaller >> installingEnvironment [
 
-	^ installingEnvironment ifNil: [ builder buildEnvironment ]
+	^ builder installingEnvironment
 ]
 
 { #category : #building }
 ShiftClassInstaller >> installingEnvironment: anEnvironment [
 
-	installingEnvironment := anEnvironment
+	builder installingEnvironment: anEnvironment
 ]
 
 { #category : #building }
