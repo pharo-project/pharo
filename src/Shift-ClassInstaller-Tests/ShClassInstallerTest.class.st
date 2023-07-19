@@ -292,13 +292,12 @@ ShClassInstallerTest >> testInstallInSpecificEnvironment [
 
 	| newEnvironment |
 	newEnvironment := SystemDictionary new.
-	newClass := ShiftClassInstaller new
-		            installingEnvironment: newEnvironment;
-		            make: [ :builder |
-			            builder
-				            name: #SHClassForTest;
-				            superclass: Object;
-				            category: self generatedClassesPackageName ].
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            installingEnvironment: newEnvironment;
+			            name: #SHClassForTest;
+			            superclass: Object;
+			            category: self generatedClassesPackageName ].
 
 	self class environment at: #SHClassForTest ifPresent: [ self fail: 'The default environment should not have the class installed.' ].
 	newEnvironment at: #SHClassForTest ifAbsent: [ self fail: 'The default environment should not have the class installed.' ].
