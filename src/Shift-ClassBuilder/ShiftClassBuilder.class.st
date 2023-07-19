@@ -217,6 +217,7 @@ ShiftClassBuilder >> copyProtocols [
 
 { #category : #installing }
 ShiftClassBuilder >> createClass [
+
 	newClass := newMetaclass new.
 	newClass setName: self name.
 
@@ -226,7 +227,7 @@ ShiftClassBuilder >> createClass [
 		withLayoutType: self layoutDefinition layoutClass
 		slots: self layoutDefinition slots.
 
-	newClass environment: self installingEnvironment environment.
+	newClass environment: self installingEnvironment.
 
 	self builderEnhancer classCreated: self
 ]
@@ -282,16 +283,6 @@ ShiftClassBuilder >> doesNotUnderstand: aMessage [
 	setter
 		ifTrue:[ extensibleProperties at: variable put: aMessage argument]
 		ifFalse:[ ^ extensibleProperties at: variable]
-]
-
-{ #category : #accessing }
-ShiftClassBuilder >> environment [
-	^ buildEnvironment environment
-]
-
-{ #category : #accessing }
-ShiftClassBuilder >> environment: anEnvironment [
-	^ buildEnvironment environment: anEnvironment
 ]
 
 { #category : #initialization }
@@ -522,7 +513,7 @@ ShiftClassBuilder >> slotsFromString: aString [
 { #category : #accessing }
 ShiftClassBuilder >> superclass [
 
-	^ superclass ifNil: [ superclassName ifNotNil: [ buildEnvironment at: self superclassName ifAbsent: [ nil ] ] ]
+	^ superclass ifNil: [ superclassName ifNotNil: [ self classNamed: self superclassName ] ]
 ]
 
 { #category : #accessing }
@@ -551,7 +542,7 @@ ShiftClassBuilder >> tryToFillOldClass [
 
 	oldClass ifNotNil: [ ^ self ].
 	name ifNil: [ ^ self ].
-	self oldClass: (self buildEnvironment at: self name ifAbsent: [ nil ])
+	self oldClass: (self classNamed: self name)
 ]
 
 { #category : #building }
