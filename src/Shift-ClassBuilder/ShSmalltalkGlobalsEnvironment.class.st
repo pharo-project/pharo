@@ -30,12 +30,6 @@ ShSmalltalkGlobalsEnvironment >> bindingOf: aString [
 ]
 
 { #category : #accessing }
-ShSmalltalkGlobalsEnvironment >> classNamed: aName [
-	1halt.
-	^ environment at: aName asSymbol ifAbsent: [ nil ]
-]
-
-{ #category : #accessing }
 ShSmalltalkGlobalsEnvironment >> environment [
 	^ environment
 ]
@@ -54,12 +48,6 @@ ShSmalltalkGlobalsEnvironment >> hasClassNamed: aName [
 ShSmalltalkGlobalsEnvironment >> initialize [
 	super initialize.
 	self environment: Smalltalk globals
-]
-
-{ #category : #installation }
-ShSmalltalkGlobalsEnvironment >> installClass: aClass withName: aString [
-1halt.
-	environment at: aString put: aClass
 ]
 
 { #category : #accessing }
