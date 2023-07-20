@@ -11,9 +11,7 @@ Class {
 		'myClass',
 		'selector',
 		'compiledMethod',
-		'priorMethod',
-		'protocolName',
-		'priorProtocol'
+		'protocolName'
 	],
 	#category : #'Monticello-Loading'
 }
@@ -24,10 +22,7 @@ MethodAddition >> compile [
      This method should not normally be used, because the whole point of MethodAddition is to let
 	you first create a compiled method and then install the method later."
 
-	self
-		createCompiledMethod;
-		installMethod;
-		notifyObservers.
+	self installMethod.
 	^ selector
 ]
 
@@ -42,46 +37,31 @@ MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2
 ]
 
 { #category : #operations }
-MethodAddition >> createCompiledMethod [
-	"CyrilFerlicot: Why do we need to explicitly write to the source? Why do we call the compiler?
-	
-	Can't we just call #compile:classfied: here?"
-	compiledMethod := myClass compiler permitUndeclared: true; compile: text asString.
-	selector := compiledMethod selector.
-	self writeSourceToLog.
-	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
-	priorProtocol := myClass protocolOfSelector: selector
-]
-
-{ #category : #operations }
 MethodAddition >> installMethod [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod ]
-]
 
-{ #category : #notifying }
-MethodAddition >> notifyObservers [
-	SystemAnnouncer uniqueInstance 
-		suspendAllWhile: [myClass classify: selector under: protocolName].
-	priorMethod 
-		ifNil: [ SystemAnnouncer uniqueInstance
-				methodAdded: compiledMethod
-				configuredWith: [ :event | 
-					event
-						propertyAt: #eventSource
-						put: #Monticello ] ]
+	| priorMethod priorProtocol |
+	compiledMethod := myClass compiler
+		                  permitUndeclared: true;
+		                  compile: text asString.
+
+	selector := compiledMethod selector.
+
+	self writeSourceToLog.
+
+	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
+	priorProtocol := myClass protocolOfSelector: selector.
+
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		myClass addSelector: selector withMethod: compiledMethod.
+		myClass classify: selector under: protocolName ].
+
+	priorMethod
+		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod configuredWith: [ :event | event propertyAt: #eventSource put: #Monticello ] ]
 		ifNotNil: [
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
-			priorProtocol name = protocolName ifFalse: [
-       			SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
+			priorProtocol name = protocolName ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
 	"The following code doesn't seem to do anything."
-	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide.
-
-]
-
-{ #category : #accessing }
-MethodAddition >> priorProtocol [
-	^ priorProtocol
+	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
 ]
 
 { #category : #operations }
