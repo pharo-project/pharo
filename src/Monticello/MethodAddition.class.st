@@ -35,9 +35,10 @@ MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2
 MethodAddition >> installMethod [
 
 	^ (myClass compiler
+		   source: text asString;
 		   permitUndeclared: true;
 		   protocol: protocolName;
 		   changeStamp: changeStamp;
-		   logSource: logSource;
-		   compile: text asString) selector
+		   logged: logSource;
+		   install) selector
 ]
