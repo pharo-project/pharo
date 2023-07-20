@@ -320,24 +320,6 @@ RPackageOrganizer >> defineUnpackagedClassesPackage [
 	^ self ensurePackage: RPackage defaultPackageName
 ]
 
-{ #category : #'private - deprecated' }
-RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
-	"DO NOT USE ME!!!
-	
-	Use #registerPackageNamed: instead.
-	
-	I am bad because I do not update the SystemOrganizer and I do not announce the new packages. I am still here only because I am still needed in the bootstrap. But please do not use me."
-
-	^ (self hasPackage: aSymbol)
-		  ifFalse: [ self basicRegisterPackage: (RPackage named: aSymbol organizer: self) ]
-		  ifTrue: [
-			  | package |
-			  package := self packageNamed: aSymbol.
-			  package extendedClasses do: [ :extendedClass | self registerExtendingPackage: package forClass: extendedClass ].
-			  package definedClasses do: [ :definedClass | self registerPackage: package forClass: definedClass ].
-			  package ]
-]
-
 { #category : #registration }
 RPackageOrganizer >> ensurePackage: aPackage [
 
