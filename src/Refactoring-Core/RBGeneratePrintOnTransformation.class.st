@@ -90,7 +90,7 @@ RBGeneratePrintOnTransformation >> transform [
 					(self parserClass
 						parseExpression:
 							('aStream nextPutAll: '' <1s>: ''; print: <1s>' expandMacrosWith: each)) ].
-	self generateCompositeChangesFor:
+	self generateChangesFor:
 		(RBAddMethodTransformRefactoring
 			addMethod: method formattedCode
 			toClass: self theClass

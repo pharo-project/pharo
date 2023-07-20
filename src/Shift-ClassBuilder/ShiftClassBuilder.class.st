@@ -14,6 +14,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'buildEnvironment',
+		'installingEnvironment',
 		'superclassName',
 		'name',
 		'layoutDefinition',
@@ -146,7 +147,8 @@ ShiftClassBuilder >> changes [
 
 { #category : #accessing }
 ShiftClassBuilder >> classNamed: aName [
-	^ self buildEnvironment classNamed:aName
+
+	^ self buildEnvironment at: aName ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
@@ -215,6 +217,7 @@ ShiftClassBuilder >> copyProtocols [
 
 { #category : #installing }
 ShiftClassBuilder >> createClass [
+
 	newClass := newMetaclass new.
 	newClass setName: self name.
 
@@ -224,7 +227,7 @@ ShiftClassBuilder >> createClass [
 		withLayoutType: self layoutDefinition layoutClass
 		slots: self layoutDefinition slots.
 
-	newClass environment: self buildEnvironment environment.
+	newClass environment: self installingEnvironment.
 
 	self builderEnhancer classCreated: self
 ]
@@ -284,16 +287,19 @@ ShiftClassBuilder >> doesNotUnderstand: aMessage [
 
 { #category : #accessing }
 ShiftClassBuilder >> environment [
-	^ buildEnvironment environment
+
+	^ self buildEnvironment
 ]
 
 { #category : #accessing }
-ShiftClassBuilder >> environment: anEnvironment [
-	^ buildEnvironment environment: anEnvironment
+ShiftClassBuilder >> environment: anObject [
+
+	^ self buildEnvironment: anObject
 ]
 
 { #category : #initialization }
 ShiftClassBuilder >> fillFor: aClass [
+
 	self
 		superclass: aClass superclass;
 		name: aClass getName;
@@ -303,7 +309,7 @@ ShiftClassBuilder >> fillFor: aClass [
 		sharedVariablesFromString: aClass classVariablesString;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
-		environment: aClass environment;
+		installingEnvironment: aClass environment;
 		oldClass: aClass.
 
 	self builderEnhancer fillBuilder: self from: aClass
@@ -316,6 +322,7 @@ ShiftClassBuilder >> hasToMigrateInstances [
 
 { #category : #initialization }
 ShiftClassBuilder >> initialize [
+
 	super initialize.
 
 	self useStrictSuperclass.
@@ -330,7 +337,9 @@ ShiftClassBuilder >> initialize [
 	changes := Set new.
 
 	category := 'Unclassified'.
-	inRemake := false
+	inRemake := false.
+
+	buildEnvironment := self class environment
 ]
 
 { #category : #building }
@@ -339,6 +348,19 @@ ShiftClassBuilder >> installSlotsAndVariables [
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
 	newClass class classLayout slots do: [ :each | each installingIn: newClass class ].
 	newClass classVariables do: [ :each | each installingIn: newClass ]
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> installingEnvironment [
+	"The build environment is used to find the classes used during the building of a class such as the layouts, and the installing environment is the environment in which the class should be installed."
+
+	^ installingEnvironment ifNil: [ self buildEnvironment ]
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> installingEnvironment: anObject [
+
+	installingEnvironment := anObject
 ]
 
 { #category : #accessing }
@@ -502,7 +524,8 @@ ShiftClassBuilder >> slotsFromString: aString [
 
 { #category : #accessing }
 ShiftClassBuilder >> superclass [
-	^ superclass ifNil: [ superclassName ifNotNil: [buildEnvironment classNamed: (self superclassName) ]]
+
+	^ superclass ifNil: [ superclassName ifNotNil: [ self classNamed: self superclassName ] ]
 ]
 
 { #category : #accessing }
@@ -528,9 +551,10 @@ ShiftClassBuilder >> superclassResolver: asuperclassResolver [
 
 { #category : #building }
 ShiftClassBuilder >> tryToFillOldClass [
-	oldClass ifNotNil: [ ^self ].
-	name ifNil: [ ^self ].
-	self oldClass: (self buildEnvironment classNamed: self name)
+
+	oldClass ifNotNil: [ ^ self ].
+	name ifNil: [ ^ self ].
+	self oldClass: (self classNamed: self name)
 ]
 
 { #category : #building }

@@ -310,6 +310,53 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
+
+	| organizer package1 package2 package3 package4 class tag1 tag2 |
+	"This one will contain a class"
+	package1 := (self createNewPackageNamed: #Test1) register.
+	"This one will contain an extension method"
+	package2 := (self createNewPackageNamed: #Test2) register.
+	"This one will contain a tag with a class and an empty tag"
+	package3 := (self createNewPackageNamed: #Test3) register.
+	"This one will be empty"
+	package4 := (self createNewPackageNamed: #Test4) register.
+
+	tag1 := package3 addClassTag: #Tag1.
+	tag2 := package3 addClassTag: #Tag2.
+
+	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
+	class compile: 'extension ^ 1' classified: '*Test2'.
+	
+	class := self createNewClassNamed: 'TestClass2' inCategory: 'Test3-Tag1'.
+
+	self flag: #package. "Use the organizer provided by the tests later."
+	organizer := package1 organizer.
+
+	self assert: (organizer hasPackage: package1).
+	self deny: package1 isEmpty.
+	self assert: (organizer hasPackage: package2).
+	self deny: package2 isEmpty.
+	self assert: (organizer hasPackage: package3).
+	self deny: package3 isEmpty.
+	self deny: tag1 isEmpty.
+	self assert: tag2 isEmpty.
+	self assert: (package3 includesClassTagNamed: #Tag1).
+	self assert: (package3 includesClassTagNamed: #Tag2).
+	self assert: (organizer hasPackage: package4).
+	self assert: package4 isEmpty.
+
+	organizer removeEmptyPackagesAndTags.
+
+	self assert: (organizer hasPackage: package1).
+	self assert: (organizer hasPackage: package2).
+	self assert: (organizer hasPackage: package3).
+	self assert: (package3 includesClassTagNamed: #Tag1).
+	self deny: (package3 includesClassTagNamed: #Tag2).
+	self deny: (organizer hasPackage: package4)
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testRemovePackage [
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |

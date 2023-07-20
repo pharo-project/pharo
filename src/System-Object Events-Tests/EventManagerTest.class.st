@@ -209,6 +209,35 @@ EventManagerTest >> testRemoveActionsWithReceiver [
 	self assert: ((eventSource hasActionsWithReceiver: self) not)
 ]
 
+{ #category : #'running - remove actions' }
+EventManagerTest >> testRemoveManyActionsSatisfying [
+	"See issue #14317--removing many actions wwould sometimes fail due to modification-under-iteration."
+
+	1 to: 10 do: [ :i |
+		eventSource
+			when: (#event , i printString) asSymbol
+			send: (#message , i printString) asSymbol
+			to: self ].
+	self assert: (eventSource hasActionsWithReceiver: self).
+	"Real code should use #removeActionsWithReceiver:, but this is a convenient condition to use here."
+	eventSource removeActionsSatisfying: [ :each | each receiver == self ].
+	self deny: (eventSource hasActionsWithReceiver: self)
+]
+
+{ #category : #'running - remove actions' }
+EventManagerTest >> testRemoveManyActionsWithReceiver [
+	"See issue #14317--removing many actions wwould sometimes fail due to modification-under-iteration."
+
+	1 to: 10 do: [ :i |
+		eventSource
+			when: (#event , i printString) asSymbol
+			send: (#message , i printString) asSymbol
+			to: self ].
+	self assert: (eventSource hasActionsWithReceiver: self).
+	eventSource removeActionsWithReceiver: self.
+	self deny: (eventSource hasActionsWithReceiver: self)
+]
+
 { #category : #'running - dependent value' }
 EventManagerTest >> testReturnValueWithManyListeners [
 

@@ -182,7 +182,7 @@ RBDeprecateMethodRefactoring >> transform [
 	node := self parserClass parseExpression: self callDeprecationMethod.
 	parseTree body addNodeFirst: node.
 
-	self generateCompositeChangesFor:
+	self generateChangesFor:
 		(RBAddMethodTransformRefactoring
 			 addMethod: parseTree newSource
 			 toClass: class

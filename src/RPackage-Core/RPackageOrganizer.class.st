@@ -256,13 +256,6 @@ RPackageOrganizer >> categoryOfBehavior: behavior [
 	^ nil
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categoryOfElement: behaviorName [
-
-	self deprecated: 'Use #categoryOfBehavior: instead' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv categoryOfBehavior: `@arg'.
-	^ self categoryOfBehavior: behaviorName
-]
-
 { #category : #'private - registration' }
 RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
 
@@ -323,7 +316,8 @@ RPackageOrganizer >> debuggingName: aString [
 
 { #category : #initialization }
 RPackageOrganizer >> defineUnpackagedClassesPackage [
-	^ self ensureExistAndRegisterPackageNamed: RPackage defaultPackageName
+
+	^ self ensurePackage: RPackage defaultPackageName
 ]
 
 { #category : #'private - deprecated' }
@@ -457,24 +451,10 @@ RPackageOrganizer >> includesCategory: aString [
 		  ifNotNil: [ :categories | categories includes: aString ]
 ]
 
-{ #category : #deprecated }
-RPackageOrganizer >> includesPackage: aPackage [
-
-	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.
-	^ self hasPackage: aPackage
-]
-
 { #category : #'private - testing' }
 RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 
 	^ classPackageMapping includesKey: aClass instanceSide name asSymbol
-]
-
-{ #category : #deprecated }
-RPackageOrganizer >> includesPackageNamed: aSymbol [
-
-	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackageNamed: `@arg' -> '`@rcv hasPackage: `@arg'.
-	^ self hasPackage: aSymbol
 ]
 
 { #category : #initialization }
@@ -752,7 +732,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 
 	anAnnouncer weak
 		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
-		when: CategoryRemoved send: #systemCategoryRemovedActionFrom: to: self;
 		when: CategoryRenamed send: #systemCategoryRenamedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
@@ -826,9 +805,12 @@ RPackageOrganizer >> removeCategoriesMatching: matchString [
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeCategory: category [
+RPackageOrganizer >> removeCategory: aCategory [
 	"Remove the category named, cat. Create an error notificiation if the
 	category has any elements in it."
+
+	| category |
+	category := aCategory asSymbol.
 
 	categoryMap
 		at: category
@@ -837,23 +819,21 @@ RPackageOrganizer >> removeCategory: category [
 
 	categoryMap removeKey: category.
 
+	"Now that we managed the SystemOrganizer, let's update the package organizer."
+	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
+		package name = category
+			ifTrue: [ self removePackage: package ]
+			ifFalse: [ package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | package removeClassTag: tag name ] ] ].
+
 	SystemAnnouncer uniqueInstance classCategoryRemoved: category
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeElement: behaviorName [
+{ #category : #cleanup }
+RPackageOrganizer >> removeEmptyPackagesAndTags [
+	"Remove empty packages and tags."
 
-	self deprecated: 'Use #removeBehavior: instead' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv removeBehavior: `@arg'.
-	^ self removeBehavior: behaviorName
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeEmptyPackages [
-	"Remove empty packages."
-
-	(categoryMap select: [ :classes | classes isEmpty ]) keys
-		ifNotEmpty: [ :emptyPackages |
-			emptyPackages do: [ :emptyPackage | categoryMap removeKey: emptyPackage ] ]
+	self packages do: [ :package | package removeEmptyTags ].
+	(self packages select: [ :package | package isEmpty ]) do: [ :emptyPackage | self removePackage: emptyPackage ]
 ]
 
 { #category : #registration }
@@ -964,19 +944,6 @@ RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 	| package |
 	package := (self packageMatchingExtensionName: ann categoryName) ifNil: [ self ensurePackage: ann categoryName ].
 	package name = ann categoryName ifFalse: [ package addClassTag: ann categoryName asSymbol ]
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemCategoryRemovedActionFrom: ann [
-	"When a system category is removed, we may: remove a tag, or remove a rpackage. If we remove a RPackage, unregister the linked MCWorkingCopy. If it is a tag, do nothing? (from what I know of RPackage, the tag should already have disappeared because it would have been empty)."
-
-	| categoryName |
-	categoryName := ann categoryName asSymbol.
-
-	(self packageMatchingExtensionName: categoryName) ifNotNil: [ :package |
-		package name = categoryName
-			ifTrue: [ self removePackage: package ]
-			ifFalse: [ package classTagNamed: (categoryName withoutPrefix: package name , '-') ifPresent: [ :tag | package removeClassTag: tag name ] ] ]
 ]
 
 { #category : #'system integration' }
@@ -1139,9 +1106,13 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	method origin = ann methodClass ifFalse: [ ^ self ].
 	(self packageOfClassNamed: ann methodClass instanceSide name) ifNil: [ ^ self ].
 
-	newProtocol := ann newProtocol ifNotNil: [ :protocol | protocol name ] ifNil: [ ^ self ].
+	newProtocol := ann newProtocol
+		               ifNotNil: [ :protocol | protocol name ]
+		               ifNil: [ ^ self ].
 
-	oldProtocol := ann oldProtocol ifNotNil: [ :protocol | protocol name ] ifNil: [ '' ].
+	oldProtocol := ann oldProtocol
+		               ifNotNil: [ :protocol | protocol name ]
+		               ifNil: [ '' ].
 
 	methodPackage := method packageFromOrganizer: self.
 	newProtocol asLowercase = oldProtocol asLowercase ifTrue: [ ^ self ].
@@ -1150,7 +1121,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		                      ifTrue: [ self packageForProtocol: newProtocol inClass: method methodClass ]
 		                      ifFalse: [
 			                      (newProtocol beginsWith: '*')
-				                      ifTrue: [ self ensureExistAndRegisterPackageNamed: newProtocol allButFirst capitalized ]
+				                      ifTrue: [ self ensurePackage: newProtocol allButFirst capitalized ]
 				                      ifFalse: [ method methodClass package ] ].
 
 	methodPackage := (self hasPackageForProtocol: oldProtocol)

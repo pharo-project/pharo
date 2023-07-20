@@ -60,7 +60,7 @@ RBMoveMethodRefactoring class >> selector: aSymbol class: aClass variable: aVari
 
 { #category : #transforming }
 RBMoveMethodRefactoring >> abstractVariables [
-	self generateCompositeChangesFor: self abstractVariablesRefactoring.
+	self generateChangesFor: self abstractVariablesRefactoring.
 	parseTree := self abstractVariablesRefactoring parseTree
 ]
 

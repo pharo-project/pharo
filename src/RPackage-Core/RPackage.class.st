@@ -881,8 +881,9 @@ RPackage >> isDeprecated [
 
 { #category : #testing }
 RPackage >> isEmpty [
-	self name = self class defaultPackageName ifTrue: [ ^false ].
-	^self classes isEmpty and: [ self extensionSelectors isEmpty]
+
+	self name = self class defaultPackageName ifTrue: [ ^ false ].
+	^ self classes isEmpty and: [ self extensionSelectors isEmpty ]
 ]
 
 { #category : #'system compatibility' }
@@ -1219,6 +1220,12 @@ RPackage >> removeClassTagsForClassNamed: aString [
 RPackage >> removeClassesMatchingTag: aTag [
 
 	aTag classes do: [ :class | self removeClassDefinition: class ]
+]
+
+{ #category : #'class tags' }
+RPackage >> removeEmptyTags [
+
+	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeClassTag: emptyTag name ]
 ]
 
 { #category : #removing }
