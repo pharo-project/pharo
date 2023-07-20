@@ -19,12 +19,12 @@ Class {
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addXCategory [
-	testingEnvironment organization addCategory: 'XXXXX'.
+	self organizer addCategory: 'XXXXX'.
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addXMatchCategory [
-	testingEnvironment organization addCategory: 'XXXXX-YYYY'.
+	self organizer addCategory: 'XXXXX-YYYY'.
 ]
 
 { #category : #utilities }
@@ -47,14 +47,14 @@ RPackageMCSynchronisationTest >> addXYZCategory [
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addYCategory [
 
-	testingEnvironment organization addCategory: 'YYYYY'.
+	self organizer addCategory: 'YYYYY'.
 			
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addZCategory [
 
-	testingEnvironment organization addCategory: 'ZZZZZ'.
+	self organizer addCategory: 'ZZZZZ'.
 			
 ]
 
@@ -70,7 +70,7 @@ RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 		removeClassNamed: 'NewTrait';
 		removeClassNamed: 'ClassInYPackage';
 		removeClassNamed: 'ClassInZPackage'.
-	self packageOrganizer
+	self organizer
 		removeCategory: 'Zork';
 		removeCategory: 'XXXXX';
 		removeCategory: 'XXXXX-YYYY';

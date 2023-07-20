@@ -46,7 +46,7 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 
 	| cls |
-	cls := self createNewClassNamed: aName.
+	cls := self createNewClassNamed: aName inCategory: p name.
 	p addClassDefinition: cls.
 	^ cls
 ]

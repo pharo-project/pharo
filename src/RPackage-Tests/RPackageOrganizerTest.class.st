@@ -8,9 +8,6 @@ Therefore the new created PackageOrganizer is not registered to listen to event.
 Class {
 	#name : #RPackageOrganizerTest,
 	#superclass : #RPackageTestCase,
-	#instVars : [
-		'packageOrganizer'
-	],
 	#category : #'RPackage-Tests'
 }
 
@@ -41,12 +38,6 @@ RPackageOrganizerTest >> p3Name [
 	^ 'RPackageTestP3'
 ]
 
-{ #category : #utilities }
-RPackageOrganizerTest >> packageOrganizer [
-
-	^ packageOrganizer
-]
-
 { #category : #'tests - extending' }
 RPackageOrganizerTest >> pointRectangleInGraphElement [
 
@@ -64,45 +55,33 @@ RPackageOrganizerTest >> quadrangleClass [
 	^ self class environment at: #QuadrangleForTesting
 ]
 
-{ #category : #running }
-RPackageOrganizerTest >> setUp [
-
-	super setUp.
-	packageOrganizer := RPackageOrganizer new
-		                    debuggingName: 'For PackageOrganizerTest';
-		                    yourself.
-
-	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
-	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'
-]
-
 { #category : #tests }
 RPackageOrganizerTest >> testAccessingPackage [
 
 	| p1 |
 	p1 := self createNewPackageNamed: 'P1'.
-	self packageOrganizer registerPackage: p1.
+	self organizer registerPackage: p1.
 	p1 addClassDefinition: Point.
 	p1 addMethod: Point>>#x.
 	p1 addMethod: Point class>>#x:y:.
-	self assert: (self packageOrganizer packageNamed: #P1) equals: p1.
-	self should: [(self packageOrganizer packageNamed: #P22)] raise: Error
+	self assert: (self organizer packageNamed: #P1) equals: p1.
+	self should: [(self organizer packageNamed: #P22)] raise: Error
 ]
 
 { #category : #tests }
 RPackageOrganizerTest >> testCreateNewPackageWithConflictRaisesConflictException [
 
-	packageOrganizer createPackageNamed: 'P1'.
+	self organizer createPackageNamed: 'P1'.
 	self
-		should: [ packageOrganizer createPackageNamed: 'P1' ]
+		should: [ self organizer createPackageNamed: 'P1' ]
 		raise: RPackageConflictError
 ]
 
 { #category : #tests }
 RPackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
 
-	packageOrganizer createPackageNamed: 'P1'.
-	self assert: (packageOrganizer hasPackage: 'P1')
+	self organizer createPackageNamed: 'P1'.
+	self assert: (self organizer hasPackage: 'P1')
 ]
 
 { #category : #tests }
@@ -110,20 +89,18 @@ RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
 	| p1 |
 	p1 := self createNewPackageNamed: 'P1'.
-	self packageOrganizer registerPackage: p1.
-	p1 addClassDefinition: Point.
-	p1 addMethod: Point>>#x.
-	p1 addMethod: Point class>>#x:y:.
-	self assert: self packageOrganizer packageNames size equals: 2.
-	self assert: self packageOrganizer packages size equals: 2.
-	self assert: (self packageOrganizer packageNamed: #P1) definedClasses size equals: 1
+	self organizer registerPackage: p1.
+	self createNewClassNamed: #MyPoint inPackage: p1.
+	self assert: self organizer packageNames size equals: 2.
+	self assert: self organizer packages size equals: 2.
+	self assert: (self organizer packageNamed: #P1) definedClasses size equals: 1
 ]
 
 { #category : #tests }
 RPackageOrganizerTest >> testEmpty [
 
-	self assert: self packageOrganizer packageNames size equals: 1.
-	self assert: (self packageOrganizer packageNames includes: RPackage defaultPackageName)
+	self assert: self organizer packageNames size equals: 1.
+	self assert: (self organizer packageNames includes: RPackage defaultPackageName)
 ]
 
 { #category : #tests }
@@ -133,15 +110,15 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
 
-	self packageOrganizer basicRegisterPackage: p1.
-	self packageOrganizer basicRegisterPackage: p2.
+	self organizer basicRegisterPackage: p1.
+	self organizer basicRegisterPackage: p2.
 
 	c1 := self createNewClassNamed: #C1 inPackage: p2.
 
 	c1 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*p1-something'.
-	packageOrganizer addMethod: c1 >> #methodPackagedInP1.
+	self organizer addMethod: c1 >> #methodPackagedInP1.
 
-	self deny: (packageOrganizer hasPackage: #'p1-something').
+	self deny: (self organizer hasPackage: #'p1-something').
 	self assert: (p1 extendedClasses includes: c1)
 ]
 
@@ -154,6 +131,10 @@ RPackageOrganizerTest >> testFullRegistration [
 	p1 := self createNewPackageNamed: self p1Name.
 	p2 := self createNewPackageNamed: self p2Name.
 	p3 := self createNewPackageNamed: self p3Name.
+	
+	p1 register.
+	p2 register.
+	p3 register.
 
 	a1 :=  self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
@@ -177,11 +158,6 @@ RPackageOrganizerTest >> testFullRegistration [
 
 	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
 	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3).
-
-
-	self packageOrganizer registerPackage: p1.
-	self packageOrganizer registerPackage: p2.
-	self packageOrganizer registerPackage: p3.
 
 	self deny: (p2 includesClass: b1).
 	self assert: (p2 includesClass: b2).
@@ -261,11 +237,11 @@ RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
 	p2 := self createNewPackageNamed: 'P2'.
 	p3 := self createNewPackageNamed: 'P3'.
 
-	self packageOrganizer registerPackage: p1.
-	self packageOrganizer registerPackage: p2.
-	self packageOrganizer registerPackage: p3.
-	self assert: self packageOrganizer packageNames size equals: 4. "We also have the default package."
-	{ p1 . p2 . p3 } do: [ :package | self assert: (self packageOrganizer packageNames includes: package name) ]
+	self organizer registerPackage: p1.
+	self organizer registerPackage: p2.
+	self organizer registerPackage: p3.
+	self assert: self organizer packageNames size equals: 4. "We also have the default package."
+	{ p1 . p2 . p3 } do: [ :package | self assert: (self organizer packageNames includes: package name) ]
 ]
 
 { #category : #tests }
@@ -275,13 +251,13 @@ RPackageOrganizerTest >> testRegisteredIsThere [
 	p2 := self createNewPackageNamed: 'P2'.
 	p3 := self createNewPackageNamed: 'P3'.
 
-	self packageOrganizer basicRegisterPackage: p1.
-	self packageOrganizer basicRegisterPackage: p2.
-	self packageOrganizer basicRegisterPackage: p3.
-	self assert: self packageOrganizer packageNames size equals: 4.
+	self organizer basicRegisterPackage: p1.
+	self organizer basicRegisterPackage: p2.
+	self organizer basicRegisterPackage: p3.
+	self assert: self organizer packageNames size equals: 4.
 
 	{p1 . p2 . p3} do: [:each |
-		self assert:  (self packageOrganizer packageNames includes: each name)]
+		self assert:  (self organizer packageNames includes: each name)]
 ]
 
 { #category : #tests }
@@ -291,22 +267,25 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	p2 := self createNewPackageNamed: 'P2'.
 	p3 := self createNewPackageNamed: 'P3'.
 
-	self packageOrganizer basicRegisterPackage: p1.
-	self packageOrganizer basicRegisterPackage: p2.
-	self packageOrganizer basicRegisterPackage: p3.
-	self assert: self packageOrganizer packageNames size equals: 4.
-	self packageOrganizer basicUnregisterPackageNamed: p3 name.
-	self assert: self packageOrganizer packageNames size equals: 3
+	self organizer basicRegisterPackage: p1.
+	self organizer basicRegisterPackage: p2.
+	self organizer basicRegisterPackage: p3.
+	self assert: self organizer packageNames size equals: 4.
+	self organizer basicUnregisterPackageNamed: p3 name.
+	self assert: self organizer packageNames size equals: 3
 ]
 
 { #category : #'tests - extending' }
 RPackageOrganizerTest >> testRegistrationExtendingPackages [
+
 	| p |
-	self assertEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
+	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
+	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'.
+	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
 	p := self pointRectangleInGraphElement.
-	self packageOrganizer registerExtendingPackage: p forClass: self quadrangleClass.
-	self denyEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
+	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
+	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
+	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
 ]
 
 { #category : #tests }
@@ -365,6 +344,10 @@ RPackageOrganizerTest >> testRemovePackage [
 	p2 := self createNewPackageNamed: self p2Name.
 	p3 := self createNewPackageNamed: self p3Name.
 
+	p1 register.
+	p2 register.
+	p3 register.
+
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
 	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
@@ -388,20 +371,15 @@ RPackageOrganizerTest >> testRemovePackage [
 	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
 	p3 addMethod: a2 class >> #classSideMethodDefinedInP3.
 
+	self organizer removePackage: p1.
+	self organizer removePackage: p2.
+	self organizer removePackage: p3.
 
-	self packageOrganizer registerPackage: p1.
-	self packageOrganizer registerPackage: p2.
-	self packageOrganizer registerPackage: p3.
-
-	self packageOrganizer removePackage: p1.
-	self packageOrganizer removePackage: p2.
-	self packageOrganizer removePackage: p3.
-
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: a1).
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: a2).
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: b1).
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: b2).
-	self deny: (self packageOrganizer includesPackageBackPointerForClass: a3)
+	self deny: (self organizer includesPackageBackPointerForClass: a1).
+	self deny: (self organizer includesPackageBackPointerForClass: a2).
+	self deny: (self organizer includesPackageBackPointerForClass: b1).
+	self deny: (self organizer includesPackageBackPointerForClass: b2).
+	self deny: (self organizer includesPackageBackPointerForClass: a3)
 ]
 
 { #category : #tests }
@@ -409,13 +387,13 @@ RPackageOrganizerTest >> testTestPackageNames [
 
 	| packages |
 	packages := self createMockTestPackages.
-	packages do: [:aPackage | self packageOrganizer registerPackage: aPackage].
+	packages do: [:aPackage | self organizer registerPackage: aPackage].
 
 	"Only 2 mock package names are test packages:  'MockPackage-Tests' 'MockPackage-Tests-Package'"
-	self assert: self packageOrganizer testPackageNames size equals: 2.
+	self assert: self organizer testPackageNames size equals: 2.
 
 	"Names of test packages are symbols."
-	self assert: (self packageOrganizer testPackageNames allSatisfy: #isSymbol) equals: true
+	self assert: (self organizer testPackageNames allSatisfy: #isSymbol) equals: true
 ]
 
 { #category : #tests }
@@ -423,13 +401,13 @@ RPackageOrganizerTest >> testTestPackages [
 
 	| packages |
 	packages := self createMockTestPackages.
-	packages do: [:aPackage | self packageOrganizer registerPackage: aPackage].
+	packages do: [:aPackage | self organizer registerPackage: aPackage].
 
 	"Only 2 mock packages are test packages:  'MockPackage-Tests' 'MockPackage-Tests-Package'."
-	self assert: self packageOrganizer testPackages size equals: 2.
+	self assert: self organizer testPackages size equals: 2.
 
 	"all items from resulting collection are test packages."
-	self assert: (self packageOrganizer testPackages allSatisfy: #isTestPackage) equals: true
+	self assert: (self organizer testPackages allSatisfy: #isTestPackage) equals: true
 ]
 
 { #category : #tests }
@@ -439,23 +417,26 @@ RPackageOrganizerTest >> testUnregisterBasedOnNames [
 	p2 := self createNewPackageNamed: 'P2'.
 	p3 := self createNewPackageNamed: 'P3'.
 
-	self packageOrganizer basicRegisterPackage: p1.
-	self packageOrganizer basicRegisterPackage: p2.
-	self packageOrganizer basicRegisterPackage: p3.
-	self assert: self packageOrganizer packageNames size equals: 4.
+	self organizer basicRegisterPackage: p1.
+	self organizer basicRegisterPackage: p2.
+	self organizer basicRegisterPackage: p3.
+	self assert: self organizer packageNames size equals: 4.
 
 	{p1 . p2 . p3} do: [:each |
-		(self packageOrganizer basicUnregisterPackageNamed: each name).
-		self deny:  (self packageOrganizer packageNames includes: each name)]
+		(self organizer basicUnregisterPackageNamed: each name).
+		self deny:  (self organizer packageNames includes: each name)]
 ]
 
 { #category : #'tests - extending' }
 RPackageOrganizerTest >> testUnregistrationExtendingPackages [
+
 	| p |
+	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
+	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'.
 	p := self pointRectangleInGraphElement.
-	self packageOrganizer registerExtendingPackage: p forClass: self quadrangleClass.
-	self denyEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
-	self packageOrganizer unregisterExtendingPackage: p forClass: self quadrangleClass.
-	self assertEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass)
+	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
+	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
+	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
+	self organizer unregisterExtendingPackage: p forClass: self quadrangleClass.
+	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass)
 ]
