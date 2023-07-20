@@ -93,7 +93,6 @@ MCPackageLoader >> basicLoadDefinitions [
 	errorDefinitions do: [ :each | each addMethodAdditionTo: methodAdditions ] displayingProgress: 'Reloading erroneous definitions...'.
 	
 	methodAdditions do: [ :each | each installMethod ].
-	methodAdditions do: [ :each | each notifyObservers ].
 	additions       do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'.
 	
 ]
