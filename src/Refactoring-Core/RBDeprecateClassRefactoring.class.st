@@ -38,7 +38,7 @@ RBDeprecateClassRefactoring class >> model: aRBSmalltalk deprecate: aClass in: a
 { #category : #adding }
 RBDeprecateClassRefactoring >> addMethod: source to: aClass in: aProtocol [
 
-	self generateCompositeChangesFor: 
+	self generateChangesFor: 
 		(RBAddMethodTransformRefactoring 
 			addMethod: source
 			toClass: aClass

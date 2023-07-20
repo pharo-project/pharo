@@ -17,19 +17,21 @@ Class {
 
 { #category : #'add/remove' }
 SubscriptionRegistry >> add: subscription [
+
 	^ self protected: [
-		subscriptions add: subscription  ]
+		subscriptions add: subscription ]
 ]
 
 { #category : #announcing }
 SubscriptionRegistry >> deliver: anAnnouncement [
-	|  interestedSubscriptions |
+
+	| interestedSubscriptions |
 	"using a copy, so subscribers can unsubscribe from announcer "
 
 	subscriptions ifEmpty: [ ^ self ].
 	self protected: [
 		interestedSubscriptions := self subscriptionsHandling: anAnnouncement ].
-	interestedSubscriptions ifEmpty: [ ^self ].
+	interestedSubscriptions ifEmpty: [ ^ self ].
 
 	anAnnouncement prepareForDelivery.
 	self deliver: anAnnouncement to: interestedSubscriptions
@@ -37,6 +39,7 @@ SubscriptionRegistry >> deliver: anAnnouncement [
 
 { #category : #private }
 SubscriptionRegistry >> deliver: anAnnouncement to: subs [
+
 	^ self deliver: anAnnouncement to: subs startingAt: 1
 ]
 
@@ -54,6 +57,7 @@ SubscriptionRegistry >> deliver: anAnnouncement to: subs startingAt: startIndex 
 { #category : #testing }
 SubscriptionRegistry >> handleSubscriberClass: eventClass [
 	"Return true if the receiver has a callback subscripbed for the event class"
+
 	^ subscriptions anySatisfy: [ :sub |
 		(sub subscriber class == eventClass) or:
 			[ sub subscriber class includesBehavior: eventClass ] ]
@@ -61,22 +65,27 @@ SubscriptionRegistry >> handleSubscriberClass: eventClass [
 
 { #category : #initialization }
 SubscriptionRegistry >> initialize [
+
+	super initialize.
 	monitor := Semaphore forMutualExclusion.
 	self reset
 ]
 
 { #category : #accessing }
 SubscriptionRegistry >> numberOfSubscriptions [
+
 	^ subscriptions size
 ]
 
 { #category : #private }
 SubscriptionRegistry >> protected: aBlock [
+
 	^ monitor critical: [ aBlock value ]
 ]
 
 { #category : #'add/remove' }
 SubscriptionRegistry >> remove: subscription [
+
 	^ self protected: [
 		subscriptions remove: subscription ifAbsent: nil ]
 ]
@@ -108,12 +117,14 @@ SubscriptionRegistry >> reset [
 
 { #category : #accessing }
 SubscriptionRegistry >> subscriptions [
+
 	^ subscriptions
 ]
 
 { #category : #accessing }
 SubscriptionRegistry >> subscriptionsForClass: subscriberClass [
 	"Return the list of subscription for a given class"
+
 	^ Array streamContents: [ :s|
 			subscriptions do: [:each|
 				(each subscriber class == subscriberClass
@@ -123,6 +134,7 @@ SubscriptionRegistry >> subscriptionsForClass: subscriberClass [
 
 { #category : #accessing }
 SubscriptionRegistry >> subscriptionsHandling: anAnnouncement [
+
 	^ Array streamContents: [ :s|
 			subscriptions do: [:each|
 				(each handlesAnnouncement: anAnnouncement)

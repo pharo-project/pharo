@@ -23,8 +23,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'oldClass',
-		'builder',
-		'installingEnvironment'
+		'builder'
 	],
 	#category : #'Shift-ClassInstaller-Base'
 }
@@ -123,24 +122,21 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 
 { #category : #initialization }
 ShiftClassInstaller >> initialize [
+
 	super initialize.
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new
+	builder := ShiftClassBuilder new
 ]
 
 { #category : #building }
 ShiftClassInstaller >> installInEnvironment: newClass [
-
 	"I only install if there is a name / non anonymous"
+
 	builder name ifNil: [ ^ self ].
 
 	"I only install in the environment if there is not oldClass installed."
-	(self installingEnvironment hasClassNamed: builder name) ifFalse:[
-		self installingEnvironment installClass: newClass withName: builder name ].
+	(self installingEnvironment hasClassNamed: builder name) ifFalse: [ self installingEnvironment at: builder name put: newClass ].
 
-	self
-		updateBindings: (self installingEnvironment bindingAt: builder name)
-		of: newClass
+	self updateBindings: (self installingEnvironment bindingOf: builder name) of: newClass
 ]
 
 { #category : #building }
@@ -155,19 +151,19 @@ ShiftClassInstaller >> installSubclassInSuperclass: newClass [
 { #category : #building }
 ShiftClassInstaller >> installingEnvironment [
 
-	^ installingEnvironment ifNil: [ builder buildEnvironment ]
+	^ builder installingEnvironment
 ]
 
 { #category : #building }
 ShiftClassInstaller >> installingEnvironment: anEnvironment [
 
-	installingEnvironment := anEnvironment
+	builder installingEnvironment: anEnvironment
 ]
 
 { #category : #building }
 ShiftClassInstaller >> lookupOldClass [
-	oldClass
-		ifNil: [ oldClass := self installingEnvironment classNamed: builder name ifAbsent: [ nil ] ]
+
+	oldClass ifNil: [ oldClass := self installingEnvironment at: builder name ifAbsent: [ nil ] ]
 ]
 
 { #category : #building }

@@ -51,7 +51,7 @@ RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 
 { #category : #transforming }
 RBAbstractInstanceVariableRefactoring >> createAccessors [
-	self generateCompositeChangesFor: self accessorsRefactoring
+	self generateChangesFor: self accessorsRefactoring
 ]
 
 { #category : #preconditions }

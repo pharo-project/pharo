@@ -6,11 +6,6 @@ CompiledMethod >> isDefinedInPackage: anRPackage [
 ]
 
 { #category : #'*RPackage-Core' }
-CompiledMethod >> isExtension [
-	^ self origin package ~= self package
-]
-
-{ #category : #'*RPackage-Core' }
 CompiledMethod >> isExtensionInPackage: anRPackage [
 	^ anRPackage includesExtensionSelector: self selector ofClass: self methodClass
 ]

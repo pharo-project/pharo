@@ -119,7 +119,7 @@ RBCreateAccessorsForVariableTransformation >> createSetterAccessor [
 { #category : #transforming }
 RBCreateAccessorsForVariableTransformation >> defineGetterMethod [
 
-	self generateCompositeChangesFor: 
+	self generateChangesFor: 
 		(RBAddMethodTransformRefactoring
 			 addMethod: ('<1s><r><r><t>^ <2s>'
 					  expandMacrosWith: self selector
@@ -141,7 +141,7 @@ RBCreateAccessorsForVariableTransformation >> defineSetterMethod [
 						safeMethodNameFor: definingClass
 						basedOn: variableName asString , ':'.
 						
-	self generateCompositeChangesFor: 
+	self generateChangesFor: 
 		(RBAddMethodTransformRefactoring
 		 	 addMethod: (string expandMacrosWith: selector with: variableName)
 			 toClass: definingClass

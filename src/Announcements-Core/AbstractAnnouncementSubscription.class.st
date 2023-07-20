@@ -47,12 +47,13 @@ AbstractAnnouncementSubscription >> announcer [
 
 { #category : #accessing }
 AbstractAnnouncementSubscription >> announcer: anAnnouncer [
+
 	announcer := anAnnouncer
 ]
 
 { #category : #announcing }
 AbstractAnnouncementSubscription >> deliver: anAnnouncement [
-	" deliver an announcement to receiver. In case of failure, it will be handled in separate process"
+	"Deliver an announcement to receiver. In case of failure, it will be handled in separate process"
 
 	(self handlesAnnouncement: anAnnouncement) ifTrue: [
 		[ action cull: anAnnouncement cull: announcer ]
@@ -68,11 +69,13 @@ AbstractAnnouncementSubscription >> handlesAnnouncement: anAnnouncement [
 
 { #category : #converting }
 AbstractAnnouncementSubscription >> makeStrong [
+
 	^ self subclassResponsibility
 ]
 
 { #category : #converting }
 AbstractAnnouncementSubscription >> makeWeak [
+
 	^ self subclassResponsibility
 ]
 
@@ -89,19 +92,22 @@ AbstractAnnouncementSubscription >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #converting }
+{ #category : #accessing }
 AbstractAnnouncementSubscription >> subscriber [
+
 	^ self subclassResponsibility
 ]
 
-{ #category : #converting }
-AbstractAnnouncementSubscription >> subscriber: aSubscriber [ 
+{ #category : #accessing }
+AbstractAnnouncementSubscription >> subscriber: aSubscriber [
+
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 AbstractAnnouncementSubscription >> valuable: aValuable [
 	"Used when subscriber should be extracted from valuable object"
+
 	self action:  aValuable.
 	self subscriber: aValuable receiver
 ]

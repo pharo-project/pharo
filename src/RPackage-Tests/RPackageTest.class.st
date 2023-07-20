@@ -293,6 +293,30 @@ RPackageTest >> testPropertyAtPut [
 ]
 
 { #category : #tests }
+RPackageTest >> testRemoveEmptyTags [
+
+	| package class tag1 tag2 |
+	package := (self createNewPackageNamed: #Test1) register.
+
+	tag1 := package addClassTag: #Tag1.
+	tag2 := package addClassTag: #Tag2.
+
+	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-Tag1'.
+
+	self assert: (tag1 includesClass: class).
+	self deny: tag1 isEmpty.
+	self assert: tag2 isEmpty.
+
+	self assert: (package includesClassTagNamed: #Tag1).
+	self assert: (package includesClassTagNamed: #Tag2).
+
+	package removeEmptyTags.
+
+	self assert: (package includesClassTagNamed: #Tag1).
+	self deny: (package includesClassTagNamed: #Tag2)
+]
+
+{ #category : #tests }
 RPackageTest >> testRenameToMakesMCDirty [
 	| package |
 

@@ -38,27 +38,31 @@ AnnouncementDeliveryCondition class >> for: anAnnouncementClass where: aBlock [
 
 { #category : #accessing }
 AnnouncementDeliveryCondition >> announcementClass [
+
 	^ announcementClass
 ]
 
 { #category : #accessing }
 AnnouncementDeliveryCondition >> announcementClass: anObject [
+
 	announcementClass := anObject
 ]
 
 { #category : #accessing }
 AnnouncementDeliveryCondition >> conditionBlock [
+
 	^ conditionBlock
 ]
 
 { #category : #accessing }
 AnnouncementDeliveryCondition >> conditionBlock: anObject [
+
 	conditionBlock := anObject
 ]
 
 { #category : #testing }
 AnnouncementDeliveryCondition >> handlesAnnouncement: anAnnouncement [
 
-	^(announcementClass handlesAnnouncement: anAnnouncement)
+	^ (announcementClass handlesAnnouncement: anAnnouncement)
 		and: [conditionBlock value: anAnnouncement ]
 ]

@@ -29,7 +29,7 @@ RBRemoveHierarchyMethodRefactoring class >> removeMethods: selectorCollection fr
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> delete: selector in: aClass [
 	 (aClass realClass includesSelector: selector) ifTrue: [
-		 [self generateCompositeChangesFor: (RBRemoveMethodRefactoring
+		 [self generateChangesFor: (RBRemoveMethodRefactoring
 									model: self model
 									removeMethods: { selector }
 									from: aClass) ]

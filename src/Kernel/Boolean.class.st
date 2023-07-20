@@ -188,6 +188,12 @@ Boolean >> or: alternativeBlock [
 	self subclassResponsibility
 ]
 
+{ #category : #pinning }
+Boolean >> setPinnedInMemory: aBoolean [
+
+	self error: self printString , ' cannot be pinned.'
+]
+
 { #category : #copying }
 Boolean >> shallowCopy [
 	"Receiver has two concrete subclasses, True and False.

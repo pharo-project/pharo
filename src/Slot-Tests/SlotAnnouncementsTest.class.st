@@ -38,7 +38,7 @@ SlotAnnouncementsTest >> createClassWithLayout: aLayoutClass traitComposition: a
 			name: self aClassName;
 			layoutClass: aLayoutClass;
 			traitComposition: aTraitComposition asTraitComposition;
-			package: self aCategory ]
+			package: self slotTestPackageName ]
 ]
 
 { #category : #'tests - integration' }
@@ -167,15 +167,15 @@ SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified
 ]
 
 { #category : #'tests - integration' }
-SlotAnnouncementsTest >> testClassAddedToNewCategoryShouldAnnounceCategoryAdded [
+SlotAnnouncementsTest >> testClassAddedToNewPackageShouldAnnouncePackageAdded [
 
-	self subscribeOn: CategoryAdded.
+	self subscribeOn: PackageAdded.
 
-	self deny: (self packageOrganizer includesCategory: self aCategory).
+	self deny: (self packageOrganizer hasPackage: self slotTestPackageName).
 
 	self createClass.
 
-	self assert: (self packageOrganizer includesCategory: self aCategory).
+	self assert: (self packageOrganizer hasPackage: self slotTestPackageName).
 
 	self assert: self collectedAnnouncements size equals: 1
 ]
@@ -194,15 +194,16 @@ SlotAnnouncementsTest >> testClassCreationShouldAnnounceClassAdded [
 
 { #category : #tests }
 SlotAnnouncementsTest >> testClassRecategorizationShouldAnnounceClassModified [
+
 	self subscribeOn: ClassRecategorized.
 
-	aClass := self make: [ :builder | builder category: self aCategory ].
-	anotherClass := self make: [ :builder | builder category: self anotherCategory ].
+	aClass := self make: [ :builder | builder package: self slotTestPackageName ].
+	anotherClass := self make: [ :builder | builder package: self slotTestPackageName , '2' ].
 
 	self assert: self collectedAnnouncements size equals: 1.
 	announcement := self collectedAnnouncements first.
-	self assert: announcement oldCategory equals: self aCategory.
-	self assert: announcement newCategory equals: self anotherCategory.
+	self assert: announcement oldCategory equals: self slotTestPackageName.
+	self assert: announcement newCategory equals: self slotTestPackageName , '2'.
 	self assert: announcement classRecategorized identicalTo: anotherClass
 ]
 

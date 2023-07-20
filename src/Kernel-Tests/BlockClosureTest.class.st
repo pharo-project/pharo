@@ -186,9 +186,18 @@ BlockClosureTest >> testIsClean [
 	self assert: [:a :b| | s | s := a + b. s even] isClean. "accesses only local variables"
 	self deny: [^nil] isClean. "closes over home (^-return)"
 	self deny: [self] isClean. "closes over the receiver"
+	self deny: [ aBlock ] isClean. "accesses ivar"
 	self deny: [super testIsClean] isClean. "closes over the receiver"
 	self deny: [contextOfaBlock] isClean. "closes over the receiver (to access the inst var contextOfaBlockContext)"
 	self deny: [local] isClean. "closes over local variable of outer context"
+	
+	"an inner non-clean block does not mean that the outer block is not clean"
+	self assert: [ :x | x do: [ x + 1 ] ] isClean.
+	"but if we access self or return, it is"
+	self deny: [ :x | x do: [ ^x] ] isClean.
+	self deny: [ :x | x do: [ self] ] isClean.
+	self deny: [ :x | x do: [ super testIsClean ] ] isClean.
+	self deny: [ :x | x do: [ aBlock] ] isClean
 ]
 
 { #category : #tests }

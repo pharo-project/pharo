@@ -257,7 +257,7 @@ MCWorkingCopy class >> registerPackage: aPackage packageOrganizer: aPackageOrgan
 	self registry at: aPackage put: workingCopy.
 	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package.
 	But we still check that the package does not exist because the working copy creation might be caused by the creation of the system package and we do not want to end up in a loop."
-	aPackageOrganizer packageNamedIgnoreCase: aPackage name ifAbsent: [ aPackageOrganizer ensureExistAndRegisterPackageNamed: aPackage name ].
+	aPackageOrganizer packageNamedIgnoreCase: aPackage name ifAbsent: [ aPackageOrganizer ensurePackage: aPackage name ].
 	self announcer announce: (MCWorkingCopyCreated workingCopy: workingCopy package: aPackage).
 	^ workingCopy
 ]

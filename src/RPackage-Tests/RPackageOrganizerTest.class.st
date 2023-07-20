@@ -9,8 +9,7 @@ Class {
 	#name : #RPackageOrganizerTest,
 	#superclass : #RPackageTestCase,
 	#instVars : [
-		'packageOrganizer',
-		'previousAuthor'
+		'packageOrganizer'
 	],
 	#category : #'RPackage-Tests'
 }
@@ -50,14 +49,14 @@ RPackageOrganizerTest >> packageOrganizer [
 
 { #category : #'tests - extending' }
 RPackageOrganizerTest >> pointRectangleInGraphElement [
-	| p |
-	p := RPackage named: #GraphElement.
-	p addClassDefinition: Point.
-	p addMethod: Point>>#x.
-	p addMethod: Point>>#rotateBy:about:.
-	p addClassDefinition: Rectangle.
-	p addMethod: self quadrangleClass >>#intersect:.
-	^ p
+
+	^ (RPackage named: #GraphElement)
+		  addClassDefinition: Point;
+		  addMethod: Point >> #x;
+		  addMethod: Point >> #rotateBy:about:;
+		  addClassDefinition: Rectangle;
+		  addMethod: self quadrangleClass >> #intersect:;
+		  yourself
 ]
 
 { #category : #utilities }
@@ -67,39 +66,14 @@ RPackageOrganizerTest >> quadrangleClass [
 
 { #category : #running }
 RPackageOrganizerTest >> setUp [
+
 	super setUp.
-	createdClasses := OrderedCollection new.
-	createdPackages := OrderedCollection new.
-	packageOrganizer := RPackageOrganizer new.
-	packageOrganizer debuggingName: 'For PackageOrganizerTest'.
-	previousAuthor := Author fullName ifNil: [Author fullName: 'RPackage'].
+	packageOrganizer := RPackageOrganizer new
+		                    debuggingName: 'For PackageOrganizerTest';
+		                    yourself.
 
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'
-]
-
-{ #category : #'tests - extending' }
-RPackageOrganizerTest >> stringCharacterInCollPackage [
-	| p |
-	p := RPackage named: #CollPackage.
-	p addClassDefinition: String.
-	p addClassDefinition: Character.
-	p addMethod: String>>#indexOf:.
-	p addMethod: String>>#isAllDigits.
-	p addMethod: String class>>#cr.
-	p addMethod: Character>>#asInteger.
-	p addMethod: Text>>#allBold.
-	^ p
-]
-
-{ #category : #running }
-RPackageOrganizerTest >> tearDown [
-
-	Author fullName: previousAuthor.
-
-	(createdClasses reject: [ :c | c isObsolete ]) do: [ :cls | cls removeFromSystem ].
-
-	super tearDown
 ]
 
 { #category : #tests }
@@ -333,6 +307,53 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	self packageOrganizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
 	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
+]
+
+{ #category : #tests }
+RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
+
+	| organizer package1 package2 package3 package4 class tag1 tag2 |
+	"This one will contain a class"
+	package1 := (self createNewPackageNamed: #Test1) register.
+	"This one will contain an extension method"
+	package2 := (self createNewPackageNamed: #Test2) register.
+	"This one will contain a tag with a class and an empty tag"
+	package3 := (self createNewPackageNamed: #Test3) register.
+	"This one will be empty"
+	package4 := (self createNewPackageNamed: #Test4) register.
+
+	tag1 := package3 addClassTag: #Tag1.
+	tag2 := package3 addClassTag: #Tag2.
+
+	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
+	class compile: 'extension ^ 1' classified: '*Test2'.
+	
+	class := self createNewClassNamed: 'TestClass2' inCategory: 'Test3-Tag1'.
+
+	self flag: #package. "Use the organizer provided by the tests later."
+	organizer := package1 organizer.
+
+	self assert: (organizer hasPackage: package1).
+	self deny: package1 isEmpty.
+	self assert: (organizer hasPackage: package2).
+	self deny: package2 isEmpty.
+	self assert: (organizer hasPackage: package3).
+	self deny: package3 isEmpty.
+	self deny: tag1 isEmpty.
+	self assert: tag2 isEmpty.
+	self assert: (package3 includesClassTagNamed: #Tag1).
+	self assert: (package3 includesClassTagNamed: #Tag2).
+	self assert: (organizer hasPackage: package4).
+	self assert: package4 isEmpty.
+
+	organizer removeEmptyPackagesAndTags.
+
+	self assert: (organizer hasPackage: package1).
+	self assert: (organizer hasPackage: package2).
+	self assert: (organizer hasPackage: package3).
+	self assert: (package3 includesClassTagNamed: #Tag1).
+	self deny: (package3 includesClassTagNamed: #Tag2).
+	self deny: (organizer hasPackage: package4)
 ]
 
 { #category : #tests }
