@@ -732,7 +732,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 
 	anAnnouncer weak
 		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
-		when: CategoryRenamed send: #systemCategoryRenamedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ClassRemoved send: #systemClassRemovedActionFrom: to: self;
@@ -867,13 +866,27 @@ RPackageOrganizer >> removeSystemCategory: category [
 RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 	"Rename a category. No action if new name already exists, or if old name does not exist."
 
-	categoryMap at: newCatString ifPresent: [ "new name exists, so no action" ^ self ].
+	| oldName newName package announceChange |
+	oldName := oldCatString asSymbol.
+	newName := newCatString asSymbol.
+	announceChange := false.
 
-	categoryMap at: oldCatString ifPresent: [ :classes |
+	categoryMap at: newName ifPresent: [ "new name exists, so no action" ^ self ].
+
+	categoryMap at: oldName ifPresent: [ :classes |
 		categoryMap
-			at: newCatString put: classes;
-			removeKey: oldCatString.
-		SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldCatString to: newCatString ]
+			at: newName put: classes;
+			removeKey: oldName.
+		announceChange := true ].
+
+	"We do it in all cases because we have a few cases where a category was not created but a package was. It's bugs but since categories will vanish there is no reason to care too much."
+	package := (self packageMatchingExtensionName: oldName) ifNil: [ self ensurePackage: newName ].
+	package name = oldName ifTrue: [ self renamePackage: package from: oldName to: newName ].
+
+	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ].
+
+	"I prefer to announce the category rename after updating the packages in case a listener to this announcement manipulates packages."
+	announceChange ifTrue: [ SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldName to: newName ]
 ]
 
 { #category : #'system integration' }
@@ -938,24 +951,6 @@ RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 	| package |
 	package := (self packageMatchingExtensionName: ann categoryName) ifNil: [ self ensurePackage: ann categoryName ].
 	package name = ann categoryName ifFalse: [ package addClassTag: ann categoryName asSymbol ]
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemCategoryRenamedActionFrom: ann [
-	| package oldName newName |
-
-	oldName := ann oldCategoryName asSymbol.
-	newName := ann newCategoryName asSymbol.
-	package := (self packageMatchingExtensionName: ann oldCategoryName) ifNil: [ (RPackage named: newName organizer: self) register ].
-	package name = ann oldCategoryName ifTrue: [
-		self
-			renamePackage: package
-			from: oldName
-			to: newName ].
-
-	package
-		classTagNamed: oldName
-		ifPresent: [ :tag | tag basicRenameTo: newName ]
 ]
 
 { #category : #'system integration' }
