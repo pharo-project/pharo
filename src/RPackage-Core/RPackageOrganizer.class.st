@@ -199,19 +199,14 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 		do: [ :packageName | packages at: packageName asSymbol put: (RPackage named: packageName organizer: self) ]
 		displayingProgress: 'Importing monticello packages'.
 
-	Smalltalk allClassesAndTraits do: [ :behavior | self initializeFor: behavior ] displayingProgress: 'Importing behaviors'.
-
 	Smalltalk allClassesAndTraits
 		do: [ :behavior |
-			self initializeMethodsFor: behavior.
-			self initializeMethodsFor: behavior classSide ]
-		displayingProgress: 'Importing methods'.
-
-	Smalltalk allClassesAndTraits
-		do: [ :behavior |
-			behavior extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior protocol: protocol ].
-			behavior classSide extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior classSide protocol: protocol ] ]
-		displayingProgress: 'Importing extensions'
+			| package |
+			package := (self packageMatchingExtensionName: behavior category) ifNil: [ "It should not happen.
+		 But actually could happen that one class is in a SystemCategory and not in a MC"
+				           self ensurePackage: behavior category ].
+			package importClass: behavior ]
+		displayingProgress: 'Importing behaviors'
 ]
 
 { #category : #'private - registration' }
@@ -465,22 +460,6 @@ RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 	self registerExtendingPackage: package forClass: aBehavior.
 	nonTraitMethods
 		do: [ :eachSelector | package addMethod: aBehavior >> eachSelector ]
-]
-
-{ #category : #'initialization - data' }
-RPackageOrganizer >> initializeFor: aBehavior [
-	| package |
-
-	package := self packageMatchingExtensionName: aBehavior category.
-	package ifNil: [
-		"It should not happen.
-		 But actually could happen that one class is in a SystemCategory and not in a MC"
-		package := self basicRegisterPackage: (RPackage named: aBehavior category organizer: self) ].
-	package addClassDefinition: aBehavior.
-	package
-		addClassDefinition: aBehavior
-		toClassTag: aBehavior category asSymbol.
-	self registerPackage: package forClass: aBehavior
 ]
 
 { #category : #'initialization - data' }
