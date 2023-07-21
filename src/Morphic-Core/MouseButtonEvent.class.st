@@ -11,6 +11,21 @@ Class {
 }
 
 { #category : #accessing }
+MouseButtonEvent >> asPseudoDoubleClickEvent [
+
+	| pseudoEvent secondEvent |
+	pseudoEvent := MouseButtonPseudoDoubleClickEvent new copyFrom: self.
+	secondEvent := self copy.
+	secondEvent
+		setType: self type
+		position: self hand cursorPoint
+		buttons: self buttons
+		hand: self hand.
+	pseudoEvent secondEvent: secondEvent.
+	^ pseudoEvent
+]
+
+{ #category : #accessing }
 MouseButtonEvent >> blueButtonChanged [
 	"Answer true if the blue mouse button has changed. This is the third mouse button or cmd+click on the Mac."
 
