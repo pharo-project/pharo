@@ -206,7 +206,13 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 		 But actually could happen that one class is in a SystemCategory and not in a MC"
 				           self ensurePackage: behavior category ].
 			package importClass: behavior ]
-		displayingProgress: 'Importing behaviors'
+		displayingProgress: 'Importing behaviors'.
+
+	Smalltalk allClassesAndTraits
+		do: [ :behavior |
+			behavior extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior protocol: protocol ].
+			behavior classSide extensionProtocols do: [ :protocol | self initializeExtensionsFor: behavior classSide protocol: protocol ] ]
+		displayingProgress: 'Importing extensions'
 ]
 
 { #category : #'private - registration' }
