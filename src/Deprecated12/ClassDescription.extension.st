@@ -270,10 +270,42 @@ ClassDescription >> subject [
 ]
 
 { #category : #'*Deprecated12' }
+ClassDescription >> tagWith: aSymbol [
+
+	self deprecated: 'Use #packageTag: instead.' transformWith: '`@rcv tagWith: `@arg' -> '`@rcv packageTag: `@arg'.
+	^ self packageTag: aSymbol
+]
+
+{ #category : #'*Deprecated12' }
+ClassDescription >> tags [
+
+	self deprecated: 'Since a class can have only one tag, it is easier to just call the method #packageTag.'.
+	^ self packageTagName
+		  ifNil: [ {  } ]
+		  ifNotNil: [ :tag | { tag } ]
+]
+
+{ #category : #'*Deprecated12' }
 ClassDescription >> tagsForMethods [
 
 	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv tagsForMethods' -> '`@rcv protocolNames'.
 	^ self protocolNames
+]
+
+{ #category : #'*Deprecated12' }
+ClassDescription >> untagFrom: aSymbol [
+
+	| package packageTag |
+	self deprecated: 'A class can have only one package tag so it is easier to use #removePackageTag.'.
+	"Any class or trait could be tagged by multiple symbols for user purpose.
+	For now we could only model single tag with RPackageTag"
+	package := self package.
+	packageTag := package classTagForClass: self.
+	packageTag ifNil: [ ^ #(  ) ].
+	packageTag isRoot ifTrue: [ ^ #(  ) ].
+	packageTag name = aSymbol ifFalse: [ ^ self ].
+	packageTag removeClass: self.
+	package addClass: self
 ]
 
 { #category : #'*Deprecated12' }

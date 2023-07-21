@@ -340,7 +340,7 @@ TheManifestBuilder >> createManifestNamed: packageName [
 			package: packageName ].
 
 	manifestClass
-		tagWith: self class manifestTag;
+		packageTag: self class manifestTag;
 		comment: self class manifestClassComment.
 	^ manifestClass
 ]

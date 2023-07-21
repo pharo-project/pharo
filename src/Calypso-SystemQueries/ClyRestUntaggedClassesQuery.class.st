@@ -41,5 +41,6 @@ ClyRestUntaggedClassesQuery >> description [
 
 { #category : #testing }
 ClyRestUntaggedClassesQuery >> selectsClass: aClass [
-	^aClass tags isEmpty
+
+	^ aClass packageTag isNil
 ]
