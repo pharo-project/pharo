@@ -1130,17 +1130,6 @@ ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: sl
 		layout: newLayout
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> tagWith: aSymbol [
-	| package packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
-
-	package := self package.
-	packageTag := package addClassTag: aSymbol.
-	packageTag addClass: self
-]
-
 { #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theMetaClass [
 	"This method is deprecated so consider to migrate."
@@ -1161,20 +1150,6 @@ ClassDescription >> theNonMetaClass [
 ClassDescription >> uncategorizedSelectors [
 
 	^ self selectorsInProtocol: Protocol unclassified
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> untagFrom: aSymbol [
-	| package packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
-	package := self package.
-	packageTag := package classTagForClass: self.
-	packageTag ifNil: [ ^#() ].
-	packageTag isRoot ifTrue: [ ^#() ].
-	packageTag name = aSymbol ifFalse: [ ^self ].
-	packageTag removeClass: self.
-	package addClass: self
 ]
 
 { #category : #'pool variable' }
