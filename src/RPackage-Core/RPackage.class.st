@@ -686,9 +686,7 @@ RPackage >> importClass: aClass [
 
 	self basicImportClass: aClass.
 	self basicImportClass: aClass classSide.
-	self
-		addClassDefinition:  aClass
-		toClassTag: (self toTagName: aClass category)
+	self addClassDefinition: aClass toClassTag: aClass category
 ]
 
 { #category : #private }
