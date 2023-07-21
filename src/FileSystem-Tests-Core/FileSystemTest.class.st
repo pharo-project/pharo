@@ -224,6 +224,23 @@ FileSystemTest >> testCopyDestExists [
 ]
 
 { #category : #tests }
+FileSystemTest >> testCopyFileLocator [
+	| fromFile toFile |
+	fromFile := FileSystem memory root / 'foo.txt'.
+	fromFile writeStreamDo: [ :aStream | aStream nextPutAll: 'hello' ].
+
+	toFile := FileLocator temp / 'example' / 'bar.txt'.
+	toFile ensureDelete.
+	toFile parent ensureCreateDirectory.
+
+	fromFile copyTo: toFile.
+
+	self assert: toFile contents equals: 'hello'.
+
+	toFile parent ensureDeleteAll
+]
+
+{ #category : #tests }
 FileSystemTest >> testCopySourceDoesntExist [
 	self
 		should: [filesystem copy: 'plonk' to: 'griffle']
