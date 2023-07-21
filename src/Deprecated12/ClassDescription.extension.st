@@ -270,6 +270,15 @@ ClassDescription >> subject [
 ]
 
 { #category : #'*Deprecated12' }
+ClassDescription >> tags [
+
+	self deprecated: 'Since a class can have only one tag, it is easier to just call the method #packageTag.'.
+	^ self packageTagName
+		  ifNil: [ {  } ]
+		  ifNotNil: [ :tag | { tag } ]
+]
+
+{ #category : #'*Deprecated12' }
 ClassDescription >> tagsForMethods [
 
 	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv tagsForMethods' -> '`@rcv protocolNames'.

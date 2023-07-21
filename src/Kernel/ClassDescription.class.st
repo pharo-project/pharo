@@ -1141,19 +1141,6 @@ ClassDescription >> tagWith: aSymbol [
 	packageTag addClass: self
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> tags [
-
-	| packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we only define API to manage them on top of RPackageTag"
-	packageTag := self package classTagForClass: self.
-	packageTag ifNil: [ ^ #(  ) ].
-	packageTag isRoot ifTrue: [ ^ #(  ) ].
-
-	^ { packageTag name }
-]
-
 { #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theMetaClass [
 	"This method is deprecated so consider to migrate."
