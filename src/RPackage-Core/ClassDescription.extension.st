@@ -48,15 +48,19 @@ ClassDescription >> packageFromOrganizer: anOrganizer [
 
 { #category : #'*RPackage-Core' }
 ClassDescription >> packageTag [
+	"Package tags are sub categories of packages to have a better organization of the packages. I return my package tag or nil if the class is uncategorized."
 
 	| packageTag |
-	"Any class or trait could be tagged by a symbol for user purpose.
-	For now we only define API to manage them on top of RPackageTag"
-	packageTag := self package classTagForClass: self.
-	packageTag ifNil: [ ^ nil ].
+	packageTag := (self package classTagForClass: self) ifNil: [ ^ nil ].
 	packageTag isRoot ifTrue: [ ^ nil ].
+	^ packageTag
+]
 
-	^ packageTag name
+{ #category : #'*RPackage-Core' }
+ClassDescription >> packageTagName [
+	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag or nil if the class is uncategorized."
+
+	^ self packageTag ifNotNil: [ :tag | tag name ]
 ]
 
 { #category : #'*RPackage-Core' }

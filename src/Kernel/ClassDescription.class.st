@@ -657,7 +657,7 @@ ClassDescription >> isMeta [
 { #category : #testing }
 ClassDescription >> isTaggedWith: aSymbol [
 
-	^ self packageTag
+	^ self packageTagName
 		  ifNil: [ false ]
 		  ifNotNil: [ :tag | tag = aSymbol ]
 ]
