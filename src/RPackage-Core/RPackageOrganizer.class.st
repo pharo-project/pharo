@@ -175,16 +175,16 @@ RPackageOrganizer >> addMethod: method [
 	"we have to register the method in the parent RPackage of the class.
 	to do that, we first have to look if the method is an extension from an external package:"
 
-	| rPackage protocol |
+	| package protocol |
 	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
 	method methodClass package name = RPackage defaultPackageName ifTrue: [ ^ self ].
 
 	protocol := method protocolName.
-	rPackage := (self hasPackageForProtocol: protocol)
+	package := (self hasPackageForProtocol: protocol)
 		            ifTrue: [ self packageForProtocol: protocol inClass: method methodClass ]
 		            ifFalse: [ self ensurePackage: (protocol copyWithout: $*) ].
 
-	rPackage addMethod: method
+	package addMethod: method
 ]
 
 { #category : #'system integration' }
@@ -455,16 +455,14 @@ RPackageOrganizer >> initialize [
 
 { #category : #'initialization - data' }
 RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
-	| package protocolName nonTraitMethods |
 
-	protocolName := (aProtocol name allButFirst) trimBoth.
+	| package protocolName nonTraitMethods |
+	protocolName := aProtocol name allButFirst trimBoth.
 	package := (self packageMatchingExtensionName: protocolName) ifNil: [ self basicRegisterPackage: (RPackage named: protocolName organizer: self) ].
-	nonTraitMethods := aProtocol methodSelectors
-		select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ].
-	nonTraitMethods ifEmpty:[^ self].
+	nonTraitMethods := aProtocol methodSelectors select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ].
+	nonTraitMethods ifEmpty: [ ^ self ].
 	self registerExtendingPackage: package forClass: aBehavior.
-	nonTraitMethods
-		do: [ :eachSelector | package addMethod: aBehavior >> eachSelector ]
+	nonTraitMethods do: [ :eachSelector | package addMethod: aBehavior >> eachSelector ]
 ]
 
 { #category : #'initialization - data' }

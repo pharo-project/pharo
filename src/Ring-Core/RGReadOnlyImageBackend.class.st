@@ -89,15 +89,11 @@ RGReadOnlyImageBackend >> createUnresolvedClassGroupFor: anRGBehavior [
 { #category : #package }
 RGReadOnlyImageBackend >> definedBehaviorsFor: anRGPackage do: aBlock [
 
-	| realPackage |
-
-	realPackage := self realPackageFor: anRGPackage.
-	realPackage ifNotNil: [
-		realPackage definedClassesDo: [:behaviorName |
-			| def cls |
-			cls := Smalltalk classOrTraitNamed: behaviorName.
-			def := self definitionFor: cls ifAbsentRegister: [cls asRingMinimalDefinitionIn: anRGPackage environment].
-			aBlock value: def.]]
+	(self realPackageFor: anRGPackage) ifNotNil: [ :realPackage |
+		realPackage definedClasses do: [ :cls |
+			| def |
+			def := self definitionFor: cls ifAbsentRegister: [ cls asRingMinimalDefinitionIn: anRGPackage environment ].
+			aBlock value: def ] ]
 ]
 
 { #category : #'trait exclusion' }
