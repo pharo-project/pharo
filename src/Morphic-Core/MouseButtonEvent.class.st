@@ -16,11 +16,8 @@ MouseButtonEvent >> asPseudoDoubleClickEvent [
 	| pseudoEvent secondEvent |
 	pseudoEvent := MouseButtonPseudoDoubleClickEvent new copyFrom: self.
 	secondEvent := self copy.
-	secondEvent
-		setType: self type
-		position: self hand cursorPoint
-		buttons: self buttons
-		hand: self hand.
+	secondEvent setPosition:
+		(self hand ifNil: [ self position ] ifNotNil: [ :h | h cursorPoint ]).
 	pseudoEvent secondEvent: secondEvent.
 	^ pseudoEvent
 ]
