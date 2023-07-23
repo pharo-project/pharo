@@ -1891,17 +1891,22 @@ UITheme >> focusIndicatorMorphFor: aMorph [
 ]
 
 { #category : #accessing }
-UITheme >> forms [
-	"Answer the value of forms"
-
-	^ forms
-]
-
-{ #category : #accessing }
 UITheme >> forms: anObject [
 	"Set the value of forms"
 
 	forms := anObject
+]
+
+{ #category : #private }
+UITheme >> formsForCurrentDisplayScaleFactor [
+
+	^ self formsForScale: self currentWorld displayScaleFactor
+]
+
+{ #category : #private }
+UITheme >> formsForScale: scale [
+
+	^ forms at: scale ifAbsentPut: [ self newFormsForScale: scale ]
 ]
 
 { #category : #'accessing - colors' }
@@ -1950,7 +1955,7 @@ UITheme >> initialize [
 	colorPalette := UIThemePalette new
 		colorConfigurator: self class colorConfiguratorClass new;
 		yourself.
-	self initializeForms.
+	forms := Dictionary new.
 
 	self initializeDefaultSettings.
 	colorPalette themeSettings: settings.
@@ -1962,18 +1967,6 @@ UITheme >> initialize [
 UITheme >> initializeDefaultSettings [
 
 	settings := self defaultSettings
-]
-
-{ #category : #initialization }
-UITheme >> initializeForms [
-	"Initialize the receiver's image forms."
-
-	self forms: Dictionary new.
-	self forms
-		at: #treeExpanded put: self newTreeExpandedForm;
-		at: #treeUnexpanded put: self newTreeUnexpandedForm;
-		at: #whiteTreeExpanded put: self newWhiteTreeExpandedForm;
-		at: #whiteTreeUnexpanded put: self newWhiteTreeUnexpandedForm
 ]
 
 { #category : #accessing }
@@ -2803,6 +2796,21 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 		bounds: aMorph focusBounds
 ]
 
+{ #category : #private }
+UITheme >> newFormsForScale: scale [
+
+	| size color |
+
+	size := (9 * scale) truncated.
+	color := Color gray: 0.5327468230694037.
+	^ Dictionary new
+		at: #treeExpanded put: (self newTreeForm: true size: size color: color);
+		at: #treeUnexpanded put: (self newTreeForm: false size: size color: color);
+		at: #whiteTreeExpanded put: (self newTreeForm: true size: size color: Color white);
+		at: #whiteTreeUnexpanded put: (self newTreeForm: false size: size color: Color white);
+		yourself
+]
+
 { #category : #'morph creation' }
 UITheme >> newFuzzyLabelIn: aThemedMorph for: aModel label: aString offset: offset alpha: alpha getEnabled: enabledSel [
 	"Answer a new fuzzy label."
@@ -3558,15 +3566,22 @@ UITheme >> newToolbarIn: aThemedMorph for: controls [
 	^answer
 ]
 
-{ #category : #initialization }
-UITheme >> newTreeExpandedForm [
-	"Answer a new form for an expanded tree item."
+{ #category : #private }
+UITheme >> newTreeForm: expanded size: size color: color [
 
-	^(Form
-	extent: 9@9
-	depth: 32
-	fromArray: #( 1049135240 2290649224 2290649224 2290649224 2290649224 2290649224 2290649224 2290649224 1200130184 478709896 4169697416 4287137928 4287137928 4287137928 4287137928 4287137928 4236806280 646482056 16777215 2508753032 4287137928 4287137928 4287137928 4287137928 4287137928 2726856840 16777215 16777215 495487112 4186474632 4287137928 4287137928 4287137928 4236806280 612927624 16777215 16777215 16777215 2542307464 4287137928 4287137928 4287137928 2676525192 16777215 16777215 16777215 16777215 478709896 4169697416 4287137928 4220029064 579373192 16777215 16777215 16777215 16777215 16777215 2424866952 4287137928 2626193544 16777215 16777215 16777215 16777215 16777215 16777215 394823816 4018702472 529041544 16777215 16777215 16777215 16777215 16777215 16777215 16777215 864585864 16777215 16777215 16777215 16777215)
-	offset: 0@0)
+	| rectangle insetDivisor triangleRectangle rectangleScaled triangleRectangleScaled vertices formCanvas |
+
+	rectangle := 0 asPoint extent: size asPoint.
+	insetDivisor := 13.
+	triangleRectangle := rectangle insetBy: rectangle extent / insetDivisor.
+	rectangleScaled := rectangle scaleBy: insetDivisor.
+	triangleRectangleScaled := triangleRectangle scaleBy: insetDivisor.
+	vertices := expanded
+		ifTrue: [ { triangleRectangleScaled topLeft. triangleRectangleScaled bottomCenter. triangleRectangleScaled topRight } ]
+		ifFalse: [ { triangleRectangleScaled topLeft. triangleRectangleScaled rightCenter. triangleRectangleScaled bottomLeft } ].
+	formCanvas := FormCanvas extent: rectangleScaled extent.
+	formCanvas drawPolygon: vertices fillStyle: color.
+	^ formCanvas form magnify: formCanvas form boundingBox by: insetDivisor reciprocal smoothing: insetDivisor
 ]
 
 { #category : #'morph creation' }
@@ -3591,17 +3606,6 @@ UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getS
 		yourself
 ]
 
-{ #category : #initialization }
-UITheme >> newTreeUnexpandedForm [
-	"Answer a new form for an unexpanded tree item."
-
-	^(Form
-	extent: 9@9
-	depth: 32
-	fromArray: #( 1049135240 461932680 16777215 16777215 16777215 16777215 16777215 16777215 16777215 2324203656 4152920200 2458421384 428378248 16777215 16777215 16777215 16777215 16777215 2357758088 4287137928 4287137928 4152920200 2408089736 394823816 16777215 16777215 16777215 2391312520 4287137928 4287137928 4287137928 4287137928 4119365768 2324203656 344492168 16777215 2408089736 4287137928 4287137928 4287137928 4287137928 4287137928 4287137928 3968370824 780699784 2391312520 4287137928 4287137928 4287137928 4287137928 4236806280 2659747976 529041544 16777215 2357758088 4287137928 4287137928 4253583496 2810742920 646482056 16777215 16777215 16777215 2324203656 4253583496 2777188488 696813704 16777215 16777215 16777215 16777215 16777215 1200130184 663259272 16777215 16777215 16777215 16777215 16777215 16777215 16777215)
-	offset: 0@0)
-]
-
 { #category : #'morph creation' }
 UITheme >> newVerticalSeparatorIn: aThemedMorph [
 	"Answer a new vertical separator."
@@ -3611,30 +3615,6 @@ UITheme >> newVerticalSeparatorIn: aThemedMorph [
 		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1);
 		extent: 2@2;
 		vResizing: #spaceFill
-]
-
-{ #category : #initialization }
-UITheme >> newWhiteTreeExpandedForm [
-
-	| form |
-	
-	form := self newTreeExpandedForm.
-	form replaceColor: Color white withColor: Color transparent.
-	(form colorsUsed reject: [ :color | color isTransparent ]) do: [ :color |
-		form replaceColor: color withColor: color whiter whiter whiter whiter whiter whiter ].
-	^ form
-]
-
-{ #category : #initialization }
-UITheme >> newWhiteTreeUnexpandedForm [
-
-	| form |
-	
-	form := self newTreeUnexpandedForm.
-	form replaceColor: Color white withColor: Color transparent.
-	(form colorsUsed reject: [ :color | color isTransparent ]) do: [ :color |
-		form replaceColor: color withColor: color whiter whiter whiter whiter whiter whiter ].
-	^ form
 ]
 
 { #category : #'morph creation' }
@@ -4752,7 +4732,7 @@ UITheme >> textFont [
 UITheme >> treeExpandedForm [
 	"Answer the form to use for an expanded tree item."
 
-	^(self forms at: #treeExpanded) scaledByDisplayScaleFactor
+	^ self formsForCurrentDisplayScaleFactor at: #treeExpanded
 ]
 
 { #category : #'basic-colors' }
@@ -4782,7 +4762,7 @@ UITheme >> treeLineWidth [
 UITheme >> treeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item."
 
-	^(self forms at: #treeUnexpanded) scaledByDisplayScaleFactor
+	^ self formsForCurrentDisplayScaleFactor at: #treeUnexpanded
 ]
 
 { #category : #'accessing - colors' }
@@ -4882,14 +4862,14 @@ UITheme >> warningTextColor [
 UITheme >> whiteTreeExpandedForm [
 	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^ (self forms at: #whiteTreeExpanded) scaledByDisplayScaleFactor
+	^ self formsForCurrentDisplayScaleFactor at: #whiteTreeExpanded
 ]
 
 { #category : #'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^ (self forms at: #whiteTreeUnexpanded) scaledByDisplayScaleFactor
+	^ self formsForCurrentDisplayScaleFactor at: #whiteTreeUnexpanded
 ]
 
 { #category : #'border-styles' }
