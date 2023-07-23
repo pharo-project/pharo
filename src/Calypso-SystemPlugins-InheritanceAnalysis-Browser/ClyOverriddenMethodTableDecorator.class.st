@@ -23,7 +23,7 @@ ClyOverriddenMethodTableDecorator class >> createMultiIconMorph [
 		listDirection: #topToBottom;
 		listCentering: #center;
 		wrapCentering: #center;
-		extent: 16@16;
+		extent: 16@16 * self currentWorld displayScaleFactor;
 		color: Color transparent
 ]
 

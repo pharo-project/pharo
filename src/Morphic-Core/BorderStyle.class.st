@@ -40,7 +40,7 @@ BorderStyle class >> default [
 
 { #category : #'instance creation' }
 BorderStyle class >> thinGray [
-	^ self width: 1 color: Color gray
+	^ self width: 1 * self currentWorld displayScaleFactor color: Color gray
 ]
 
 { #category : #'instance creation' }
