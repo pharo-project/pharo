@@ -193,14 +193,7 @@ RPackage >> addClassDefinition: aClass [
 RPackage >> addClassDefinition: aClass toClassTag: aSymbol [
 	"Tags the class aClass with the tag aSymbol"
 
-	self addClassDefinitionName: aClass name toClassTag: aSymbol
-]
-
-{ #category : #'class tags' }
-RPackage >> addClassDefinitionName: aClassName toClassTag: aSymbol [
-	"Tags the class aClass with the tag aSymbol"
-
-	(self addClassTag: aSymbol) addClassNamed: aClassName
+	(self addClassTag: aSymbol) addClassNamed: aClass name
 ]
 
 { #category : #'class tags' }
@@ -693,9 +686,7 @@ RPackage >> importClass: aClass [
 
 	self basicImportClass: aClass.
 	self basicImportClass: aClass classSide.
-	self
-		addClassDefinition:  aClass
-		toClassTag: (self toTagName: aClass category)
+	self addClassDefinition: aClass toClassTag: aClass category
 ]
 
 { #category : #private }

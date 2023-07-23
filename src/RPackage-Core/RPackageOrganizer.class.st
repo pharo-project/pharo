@@ -469,17 +469,13 @@ RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 
 { #category : #'initialization - data' }
 RPackageOrganizer >> initializeFor: aBehavior [
-	| package |
 
-	package := self packageMatchingExtensionName: aBehavior category.
-	package ifNil: [
-		"It should not happen.
+	| package |
+	package := (self packageMatchingExtensionName: aBehavior category) ifNil: [ "It should not happen.
 		 But actually could happen that one class is in a SystemCategory and not in a MC"
-		package := self basicRegisterPackage: (RPackage named: aBehavior category organizer: self) ].
+		           self ensurePackage: aBehavior category ].
 	package addClassDefinition: aBehavior.
-	package
-		addClassDefinition: aBehavior
-		toClassTag: aBehavior category asSymbol.
+	package addClassDefinition: aBehavior toClassTag: aBehavior category asSymbol.
 	self registerPackage: package forClass: aBehavior
 ]
 
