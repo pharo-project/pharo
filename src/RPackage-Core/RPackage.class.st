@@ -1087,20 +1087,6 @@ RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 		fromClassTag: aSymbol
 ]
 
-{ #category : #'add class' }
-RPackage >> removeClassDefinitionName: aClassName [
-	"remove the class definition from the package but not its method"
-
-	(aClassName endsWith: ' class') ifTrue: [ ^ self error: 'no metaclass name' ].
-
-	classTags do: [ :tag |
-		tag removeClassNamed: aClassName.
-		tag isEmpty ifTrue: [ self basicRemoveTag: tag ] ].
-
-	"remove the class definition"
-	self removeClassDefinitionNamed: aClassName asSymbol
-]
-
 { #category : #'class tags' }
 RPackage >> removeClassDefinitionName: aClassName fromClassTag: aSymbol [
 	"Detags the class aClass with the tag aSymbol"
@@ -1132,7 +1118,7 @@ RPackage >> removeClassDefinitionWithoutCheckingMethods: aClass [
 RPackage >> removeClassNamed: className [
 
 	self removeAllMethodsFromClassNamed: className.
-	self removeClassDefinitionName: className.
+	self removeClassDefinitionNamed: className asSymbol.
 	self removeClassTagsForClassNamed: className
 ]
 
