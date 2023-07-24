@@ -92,9 +92,18 @@ ClassDescriptionProtocolsTest >> testClassifyUnder [
 ClassDescriptionProtocolsTest >> testClassifyUnderExtensionFromTheSamePackage [
 	"If we classify a method as an extension of it's own package, we expect it to end up unclassified."
 
+	self
+		should: [
+			class compiler
+				protocol: ('*' , class package name) asSymbol;
+				install: 'king ^ 1' ]
+		raise: ExtensionProtocolPointsOwningPackageWarning.
+	[
 	class compiler
 		protocol: ('*' , class package name) asSymbol;
-		install: 'king ^ 1'.
+		install: 'king ^ 1' ]
+		on: ExtensionProtocolPointsOwningPackageWarning
+		do: [ :e | e resume ].
 
 	self deny: (class >> #king) isClassified.
 	self deny: (class >> #king) protocol isExtensionProtocol
@@ -509,7 +518,11 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsAnExtensionOfThePackageCont
 	self assert: (class hasProtocol: #demon).
 	self deny: (class hasProtocol: extension).
 	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
-	class renameProtocol: #demon as: extension.
+
+	self should: [ class renameProtocol: #demon as: extension ] raise: ExtensionProtocolPointsOwningPackageWarning.
+	[ class renameProtocol: #demon as: extension ]
+		on: ExtensionProtocolPointsOwningPackageWarning
+		do: [ :e | e resume ].
 
 	self assert: (class hasProtocol: #demon).
 	self deny: (class hasProtocol: extension).

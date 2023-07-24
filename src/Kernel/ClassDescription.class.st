@@ -266,7 +266,9 @@ ClassDescription >> classify: selector under: aProtocol [
 	(aProtocol isNil and: [ oldProtocol isNotNil ]) ifTrue: [ ^ self ].
 	
 	"If we try to classify the method as an extension of its own package, just unclassify the method to avoid any weird state where the method could be considered as an extension or not depending on the interpretation."
-	(self isProtocolExtensionFromTheSamePackage: aProtocol) ifTrue: [ ^ self classify: selector under: Protocol unclassified ].
+	(self isProtocolExtensionFromTheSamePackage: aProtocol) ifTrue: [
+		ExtensionProtocolPointsOwningPackageWarning signalFor: self package name.
+		^ self classify: selector under: Protocol unclassified ].
 
 	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
 
@@ -981,7 +983,9 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
 	
 	"We should not be able to have a protocol that is an extension of the same class so let's skip the rename."
-	(self isProtocolExtensionFromTheSamePackage: aNewProtocol) ifTrue: [ ^ self ].
+	(self isProtocolExtensionFromTheSamePackage: aNewProtocol) ifTrue: [ 
+		ExtensionProtocolPointsOwningPackageWarning signalFor: self package name.
+		^ self ].
 
 		oldProtocol := self ensureProtocol: anOldProtocol.
 		newProtocol := self ensureProtocol: aNewProtocol.
