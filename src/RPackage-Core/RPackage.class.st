@@ -1070,7 +1070,7 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 
 { #category : #removing }
 RPackage >> removeClass: aClass [
-	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
+	"I remove the class, methods and potential empty tags from myself."
 
 	^ self removeClassNamed: aClass instanceSide name
 ]
