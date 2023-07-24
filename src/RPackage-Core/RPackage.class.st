@@ -443,13 +443,6 @@ RPackage >> definedClasses [
 	^ definedClasses
 ]
 
-{ #category : #iteration }
-RPackage >> definedClassesDo: aBlock [
-
-	classDefinedSelectors keysDo: aBlock.
-	metaclassDefinedSelectors keysDo: aBlock
-]
-
 { #category : #private }
 RPackage >> definedMethodsBecomeExtendedForClass: aClassName [
 	"the package may contain defined methods and their class is removed to the receiver. The status of such methods should now be extended"

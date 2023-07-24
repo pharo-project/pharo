@@ -35,7 +35,6 @@ SystemNavigation >> allSentMessagesInPackage: aPackage [
 { #category : #'*HeuristicCompletion-Model' }
 SystemNavigation >> allSentMessagesInPackage: aPackage do: aBlock [
 	"Answer the set of selectors which are sent somewhere in the system."
-	aPackage definedClassesDo: [ :className | | class |
-		class := Smalltalk globals at: className.
-		self allSentMessagesInClass: class do: aBlock ]
+
+	aPackage definedClasses do: [ :class | self allSentMessagesInClass: class do: aBlock ]
 ]
