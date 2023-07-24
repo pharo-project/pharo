@@ -183,7 +183,7 @@ RPackage >> addClassDefinition: aClass [
 
 	| aClassName |
 	aClassName := aClass instanceSide name asSymbol.
-	(classes includes: aClassName) ifTrue: [ ^ self ].
+	(self includesClassNamed: aClassName) ifTrue: [ ^ self ].
 	classes add: aClassName.
 	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName.
 	self registerClassName: aClassName
@@ -510,8 +510,7 @@ RPackage >> definesOrExtendsClass: aClass [
 
 	| canonizedName |
 	canonizedName := aClass instanceSide name.
-	^ (classes includes: canonizedName)
-		or: [self extendedClassNames includes: canonizedName]
+	^ (self includesClassNamed: canonizedName) or: [ self extendedClassNames includes: canonizedName ]
 ]
 
 { #category : #converting }
@@ -1155,20 +1154,11 @@ RPackage >> removeClassDefinitionName: aClassName fromClassTag: aSymbol [
 		ifTrue: [ self basicRemoveTag: tag ]
 ]
 
-{ #category : #'private - register' }
-RPackage >> removeClassDefinitionNamed: aClassNameSymbol [
-	"aClassNameSymbol should be the name of a class and not a metaclass to be coherent with the class invariant that classes are only class names and not metaclass ones.
-
-	This method removes the class definition from the receiver and its organizer"
-
-	(classes remove: aClassNameSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed | self unregisterClass: removed ]
-]
-
 { #category : #private }
 RPackage >> removeClassDefinitionWithoutCheckingMethods: aClass [
 	"Same than 'removeClassDefinition', excepts that it does not make any check to set defined methods as extensions"
 
-	self removeClassDefinitionNamed: aClass instanceSide name asSymbol
+	(classes remove: aClass instanceSide name asSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed | self unregisterClass: removed ]
 ]
 
 { #category : #removing }
