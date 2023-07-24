@@ -1152,10 +1152,7 @@ RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
 { #category : #'private - registration' }
 RPackageOrganizer >> unregisterExtendingPackage: aPackage forClassName: aClassName [
 
-	| cur |
-
-	cur := classExtendingPackagesMapping at: aClassName asSymbol ifAbsent: [ nil ].
-	cur ifNotNil: [ cur remove: aPackage ifAbsent: [ "not happy with this one" ] ]
+	classExtendingPackagesMapping at: aClassName asSymbol ifPresent: [ :listOfPackages | listOfPackages remove: aPackage ifAbsent: [  ] ]
 ]
 
 { #category : #'system integration' }

@@ -1060,25 +1060,19 @@ RPackage >> registerClassName: aClassNameSymbol [
 RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 	"Remove all the methods (defined and extensions) that are related to class aClassNameSymbol. aClassNameSymbol is the name of a class and not a metaclass - see class comment."
 
-	classDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [nil].
-	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [nil].
-	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [nil].
-	metaclassExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [nil]
+	classDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+	metaclassExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+
+	self organizer unregisterExtendingPackage: self forClassName: aClassNameSymbol
 ]
 
 { #category : #removing }
 RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
-	| className |
-	aClass protocols do: [ :protocol | (self isYourClassExtension: protocol) ifTrue: [ aClass renameProtocol: protocol as: Protocol unclassified ] ].
-	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
-	"we also have also have to remove methods from class side"
-	(self definedMethodsForClass: aClass classSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
-
-	className := aClass instanceSide name asSymbol.
-	self removeClassDefinitionNamed: className.
-	self removeClassTagsForClassNamed: className
+	^ self removeClassNamed: aClass instanceSide name
 ]
 
 { #category : #'class tags' }
@@ -1114,10 +1108,9 @@ RPackage >> removeClassDefinitionNamed: aClassNameSymbol [
 RPackage >> removeClassNamed: aClassName [
 
 	| className |
-	self removeAllMethodsFromClassNamed: aClassName.
-
 	className := aClassName asSymbol.
-	self removeClassDefinitionNamed: className asSymbol.
+	self removeAllMethodsFromClassNamed: className.
+	self removeClassDefinitionNamed: className.
 	self removeClassTagsForClassNamed: className
 ]
 
