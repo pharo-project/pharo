@@ -123,3 +123,10 @@ RBRemoveAllMessageSendsTransformation >> storeOn: aStream [
 	class storeOn: aStream.
 	aStream nextPut: $)
 ]
+
+{ #category : #executing }
+RBRemoveAllMessageSendsTransformation >> transform [
+
+	self checkPreconditions.
+	self privateTransform
+]

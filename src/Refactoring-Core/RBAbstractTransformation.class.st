@@ -135,6 +135,13 @@ RBAbstractTransformation >> emptyCondition [
 	^ RBCondition true
 ]
 
+{ #category : #transforming }
+RBAbstractTransformation >> execute [
+	"Check precondition, execute the transformation that produces changes and finally execute the changes"
+	self primitiveExecute.
+	self performChanges
+]
+
 { #category : #accessing }
 RBAbstractTransformation >> model: aRBNamespace [
 
@@ -195,6 +202,14 @@ RBAbstractTransformation >> parserClass [
 	^ RBParser
 ]
 
+{ #category : #transforming }
+RBAbstractTransformation >> performChanges [
+
+	RBRefactoryChangeManager instance
+		performChange: self changes;
+		addUndoPointer: RBRefactoryChangeManager nextCounter
+]
+
 { #category : #accessing }
 RBAbstractTransformation >> poolVariableNamesFor: aClass [
 	| pools |
@@ -214,6 +229,12 @@ RBAbstractTransformation >> poolVariableNamesIn: poolName [
 
 { #category : #preconditions }
 RBAbstractTransformation >> preconditions [
+
+	self subclassResponsibility
+]
+
+{ #category : #private }
+RBAbstractTransformation >> primitiveExecute [ 
 
 	self subclassResponsibility
 ]
