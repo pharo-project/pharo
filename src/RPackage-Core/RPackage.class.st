@@ -1070,12 +1070,15 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
+	| className |
 	aClass protocols do: [ :protocol | (self isYourClassExtension: protocol) ifTrue: [ aClass renameProtocol: protocol as: Protocol unclassified ] ].
 	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
 	"we also have also have to remove methods from class side"
 	(self definedMethodsForClass: aClass classSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
-	self removeClassDefinitionWithoutCheckingMethods: aClass.
-	self removeClassTagsForClassNamed: aClass instanceSide name
+
+	className := aClass instanceSide name asSymbol.
+	self removeClassDefinitionNamed: className.
+	self removeClassTagsForClassNamed: className
 ]
 
 { #category : #'class tags' }
@@ -1107,17 +1110,13 @@ RPackage >> removeClassDefinitionNamed: aClassNameSymbol [
 	(classes remove: aClassNameSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed | self unregisterClass: removed ]
 ]
 
-{ #category : #private }
-RPackage >> removeClassDefinitionWithoutCheckingMethods: aClass [
-	"Same than 'removeClassDefinition', excepts that it does not make any check to set defined methods as extensions"
-
-	self removeClassDefinitionNamed: aClass instanceSide name asSymbol
-]
-
 { #category : #removing }
-RPackage >> removeClassNamed: className [
+RPackage >> removeClassNamed: aClassName [
 
-	self removeAllMethodsFromClassNamed: className.
+	| className |
+	self removeAllMethodsFromClassNamed: aClassName.
+
+	className := aClassName asSymbol.
 	self removeClassDefinitionNamed: className asSymbol.
 	self removeClassTagsForClassNamed: className
 ]
