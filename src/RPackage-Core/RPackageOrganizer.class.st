@@ -1104,19 +1104,11 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 
 { #category : #'system integration' }
 RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
-
-	| method |
-	method := ann method.
 	"If the method is provided by a trait, we do not care about it"
+
 	ann isProvidedByATrait ifTrue: [ ^ self ].
 
-	ann methodClass isMeta
-		ifFalse: [
-			(self packageDefiningOrExtendingSelector: ann selector inClassNamed: ann methodClass instanceSide originalName) ifNotNil: [ :methodPackage |
-				methodPackage removeSelector: ann selector ofClassName: ann methodClass instanceSide originalName ] ]
-		ifTrue: [
-			(self packageDefiningOrExtendingSelector: ann selector inMetaclassNamed: ann methodClass instanceSide originalName) ifNotNil: [ :methodPackage |
-				methodPackage removeSelector: ann selector ofMetaclassName: ann methodClass instanceSide originalName ] ]
+	ann method package removeMethod: ann method
 ]
 
 { #category : #accessing }

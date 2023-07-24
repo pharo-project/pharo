@@ -199,18 +199,19 @@ RPackageIncrementalTest >> testAddRemoveSelector [
 	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClassName: a2Name).
 	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClassName: a2Name).
 
-	p2 removeSelector: #methodDefinedInP2 ofClassName: a2Name.
+	p2 removeMethod: a2 >> #methodDefinedInP2.
 	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClassName: a2Name).
 	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClassName: a2Name).
 
-	p1 removeSelector: #methodDefinedInP1 ofClassName: a2Name.
+	p1 removeMethod: a2 >> #methodDefinedInP1.
 	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofClassName: a2Name).
 	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofClassName: a2Name)
 ]
 
 { #category : #'tests - method addition removal' }
 RPackageIncrementalTest >> testAddRemoveSelectorOfMetaclass [
-	| p1 p2 p3 a2   a2Name a2class |
+
+	| p1 p2 p3 a2 a2Name a2class |
 	a2Name := #A2InPackageP2.
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -231,11 +232,11 @@ RPackageIncrementalTest >> testAddRemoveSelectorOfMetaclass [
 	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofMetaclassName: a2Name).
 	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofMetaclassName: a2Name).
 
-	p2 removeSelector: #methodDefinedInP2 ofMetaclassName:  a2Name.
+	p2 removeMethod: a2 class >> #methodDefinedInP2.
 	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofMetaclassName: a2Name).
 	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofMetaclassName: a2Name).
 
-	p1 removeSelector: #methodDefinedInP1 ofMetaclassName:  a2Name.
+	p1 removeMethod: a2 class >> #methodDefinedInP1.
 	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofMetaclassName: a2Name).
 	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofMetaclassName: a2Name)
 ]
