@@ -358,16 +358,6 @@ RPackageOrganizer >> extendingPackagesOfClassNamed: aName [
 	^ classExtendingPackagesMapping at: aName asSymbol ifAbsent: [#()]
 ]
 
-{ #category : #'system integration' }
-RPackageOrganizer >> fullyRemoveClassNamed: className [
-	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
-
-	| rPackage |
-	rPackage := (self packageOfClassNamed: className) ifNil: [ ^ self ].
-	rPackage removeClassNamed: className.
-	(self extendingPackagesOfClassNamed: className) do: [ :each | each removeAllMethodsFromClassNamed: className ]
-]
-
 { #category : #'package - access from class' }
 RPackageOrganizer >> globalPackageOf: aClass [
 	"this method should return the 'global' parent package of aClass, that means the package holding the (possible) subcategory in which aClass is concretely defined. For example, 'Object package' returns Kernel-Object, whereas 'PackageOrganizer packageOf: Object' returns Kernel. So I guess that all use of 'packageOf' should be replaced by this method  "
@@ -803,6 +793,17 @@ RPackageOrganizer >> removeCategory: aCategory [
 	SystemAnnouncer uniqueInstance classCategoryRemoved: category
 ]
 
+{ #category : #'system integration' }
+RPackageOrganizer >> removeClass: class [
+	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
+
+	| rPackage className |
+	className := class originalName.
+	rPackage := (self packageOfClassNamed: className) ifNil: [ ^ self ].
+	rPackage removeClassNamed: className.
+	(self extendingPackagesOfClassNamed: className) do: [ :each | each removeAllMethodsFromClassNamed: className ]
+]
+
 { #category : #cleanup }
 RPackageOrganizer >> removeEmptyPackagesAndTags [
 	"Remove empty packages and tags."
@@ -962,11 +963,7 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 RPackageOrganizer >> systemClassRemovedActionFrom: ann [
 	"A class has been removed, we should update the package adequately."
 
-	| class className |
-	class := ann classRemoved.
-	className  := class originalName.
-
-	self fullyRemoveClassNamed: className
+	self removeClass: ann classRemoved
 ]
 
 { #category : #'system integration' }
