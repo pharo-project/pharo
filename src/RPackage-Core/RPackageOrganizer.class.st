@@ -349,7 +349,8 @@ RPackageOrganizer >> environment: aSystemDictionary [
 { #category : #'package - access from class' }
 RPackageOrganizer >> extendingPackagesOf: aClass [
 	"Returns the packages extending the class aClass"
-	^ classExtendingPackagesMapping at: aClass instanceSide name ifAbsent: [#()]
+
+	^ self extendingPackagesOfClassNamed: aClass instanceSide originalName
 ]
 
 { #category : #'package - access from class' }
@@ -797,11 +798,8 @@ RPackageOrganizer >> removeCategory: aCategory [
 RPackageOrganizer >> removeClass: class [
 	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
 
-	| rPackage className |
-	className := class originalName.
-	rPackage := (self packageOfClassNamed: className) ifNil: [ ^ self ].
-	rPackage removeClassNamed: className.
-	(self extendingPackagesOfClassNamed: className) do: [ :each | each removeAllMethodsFromClassNamed: className ]
+	(self packageOf: class) removeClass: class.
+	(self extendingPackagesOf: class) do: [ :extendedPackage | extendedPackage removeAllMethodsFromClassNamed: class originalName ]
 ]
 
 { #category : #cleanup }

@@ -1072,7 +1072,7 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"I remove the class, methods and potential empty tags from myself."
 
-	^ self removeClassNamed: aClass instanceSide name
+	^ self removeClassNamed: aClass instanceSide originalName
 ]
 
 { #category : #'class tags' }
