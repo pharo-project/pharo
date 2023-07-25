@@ -97,12 +97,12 @@ ClassDescriptionProtocolsTest >> testClassifyUnderExtensionFromTheSamePackage [
 			class compiler
 				protocol: ('*' , class package name) asSymbol;
 				install: 'king ^ 1' ]
-		raise: ExtensionProtocolPointsOwningPackageWarning.
+		raise: ExtensionPointsOwningPackageNotification.
 	[
 	class compiler
 		protocol: ('*' , class package name) asSymbol;
 		install: 'king ^ 1' ]
-		on: ExtensionProtocolPointsOwningPackageWarning
+		on: ExtensionPointsOwningPackageNotification
 		do: [ :e | e resume ].
 
 	self deny: (class >> #king) isClassified.
@@ -519,9 +519,9 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsAnExtensionOfThePackageCont
 	self deny: (class hasProtocol: extension).
 	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
 
-	self should: [ class renameProtocol: #demon as: extension ] raise: ExtensionProtocolPointsOwningPackageWarning.
+	self should: [ class renameProtocol: #demon as: extension ] raise: ExtensionPointsOwningPackageNotification.
 	[ class renameProtocol: #demon as: extension ]
-		on: ExtensionProtocolPointsOwningPackageWarning
+		on: ExtensionPointsOwningPackageNotification
 		do: [ :e | e resume ].
 
 	self assert: (class hasProtocol: #demon).
