@@ -7,10 +7,10 @@ This subclass adds an extra panel to display the source code of the methods and 
 - red indicates non-covered lines.
 
 To achieve this, this subclass has 4 new attributes: sourceCodePanel, coveredNodes, uncoveredNodes, and yellowNodes. Where sourceCodePanel is the panel that displays de source code highlighted and the rest list of nodes that has a method. Furthermore,  it has 4 new methods:
-1) `DTDefaultPluginPresenter>>#updateSourceCodePanel:` It updated the panel when the user click a method on the result list.
+1) `DTDefaultPluginPresenter>>#updateSourceCodePanel:` It updated the panel when the user click a method on the result list. It paint in descending order. First paint green as a base color.
 2) `DTDefaultPluginPresenter>>#defineColorCoverage:` According to the selected method, it updates the coveredNodes and uncoveredNodes attributes. 
-3) `DTDefaultPluginPresenter>>#defineColorMessageNode:` According to the selected method, it updated the yellowNodes attribute. Because RBMessageNode is a complex node that has a selector like IfTrue, IfFalse, do, and others. It helps to define if those selectors should be yellow o green highlighting.
-4)  `DTDefaultPluginPresenter>>#getSubIntervalsOf:from:` helps to define the positions of the selector of MessageNode to paint yellow.
+3) `DTDefaultPluginPresenter>>#defineColorMessageNode:` According to the selected method, it updated the yellowNodes attribute. Given that a RBMessageNode contains selectors like IfTrue, IfFalse, do, and others. It helps to define if those selectors should be yellow o green highlighting.
+4)  `DTDefaultPluginPresenter>>#addHighlightingOf:withColor:` method to refactor the painting in the source code panel for each attribute ( coveredNodes, uncoveredNodes, and yellowNodes)
 "
 Class {
 	#name : #DTCoveragePluginPresenter,
@@ -23,6 +23,17 @@ Class {
 	],
 	#category : #'DrTests-Spec'
 }
+
+{ #category : #highlighting }
+DTCoveragePluginPresenter >> addHighlightingOf: nodesCollection withColor: aColor [
+
+	nodesCollection do: [ :node |
+		sourceCodePanel addTextSegmentDecoration:
+			(SpTextPresenterDecorator forHighlight
+				 interval:
+					 (node sourceInterval first to: node sourceInterval last + 1);
+				 highlightColor: aColor) ]
+]
 
 { #category : #initialization }
 DTCoveragePluginPresenter >> connectPresenters [
@@ -63,61 +74,42 @@ DTCoveragePluginPresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #highlighting }
 DTCoveragePluginPresenter >> defineColorCoverage: aMethod [
+	" Clean the attributes to store new value to display on Source Code panel "
+
+	yellowNodes := OrderedCollection new.
+	uncoveredNodes := OrderedCollection new.
+	coveredNodes := OrderedCollection new.
 
 	aMethod ast nodesDo: [ :node |
 		node isSequence ifTrue: [
 			node hasBeenExecuted
-				ifTrue: [ coveredNodes add: node ]
+				ifTrue: [
+					(self hasRBSequenceNodeInside: node) ifFalse: [
+						coveredNodes add: node ] ]
 				ifFalse: [ uncoveredNodes add: node ] ].
 
 		node isMessage ifTrue: [ self defineColorMessageNode: node ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #highlighting }
 DTCoveragePluginPresenter >> defineColorMessageNode: aRBMessageNode [
 	"handle arguments of a RBMessageNode"
 
 	| blockNodes |
-	"handle arguments"
 	blockNodes := aRBMessageNode arguments select: [ :element |
-		              element isKindOf: RBBlockNode ].
+		              element isBlock ].
 	blockNodes isNotEmpty ifTrue: [
 		(blockNodes allSatisfy: [ :arg | arg body hasBeenExecuted ])
-			ifFalse: [
-				| nodeInterval nodeSubIntervals resultInterval |
-				nodeSubIntervals := OrderedCollection new.
-				nodeInterval := aRBMessageNode sourceInterval.
-				aRBMessageNode arguments do: [ :node |
-					nodeSubIntervals add: node sourceInterval ].
-				resultInterval := self
-					                  getSubIntervalsOf: nodeInterval
-					                  from: nodeSubIntervals.
-				yellowNodes addAll: resultInterval ] ]
+			ifFalse: [ yellowNodes add: aRBMessageNode ] ]
 ]
 
-{ #category : #'as yet unclassified' }
-DTCoveragePluginPresenter >> getSubIntervalsOf: intervalNode from: subIntervalNodes [
+{ #category : #highlighting }
+DTCoveragePluginPresenter >> hasRBSequenceNodeInside: aSequenceNode [
 
-	| resultArray previousEnd |
-	resultArray := OrderedCollection new.
-	previousEnd := intervalNode first - 2.
-	subIntervalNodes do: [ :subInterval |
-		| start end |
-		start := subInterval first.
-		end := subInterval last.
-
-		start - previousEnd > 1 ifTrue: [
-			resultArray add: (previousEnd + 1 to: start - 1) ].
-		previousEnd := end ].
-
-	previousEnd < intervalNode last ifTrue: [
-		resultArray add: (previousEnd + 1 to: intervalNode last) ].
-
-	resultArray := resultArray asOrderedCollection.
-
-	^ resultArray
+	^ aSequenceNode statements anySatisfy: [ :statement |
+		  statement allChildren anySatisfy: [ :node | node isSequence ] ]
 ]
 
 { #category : #initialization }
@@ -137,37 +129,28 @@ DTCoveragePluginPresenter >> initializeResultsTreeAndLabel [
 	sourceCodePanel := self instantiate: SpCodePresenter
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #layout }
 DTCoveragePluginPresenter >> updateSourceCodePanel: compiledMethod [
-
-	yellowNodes := OrderedCollection new.
-	uncoveredNodes := OrderedCollection new.
-	coveredNodes := OrderedCollection new.
+	" The colors overlap and paint in descending order"
 
 	self defineColorCoverage: compiledMethod.
-
 	sourceCodePanel beForMethod: compiledMethod.
 	sourceCodePanel text: compiledMethod sourceCode.
+	self
+		addHighlightingOf: coveredNodes
+		withColor: (Color r: 0.74 g: 0.98 b: 0.71).
+	self
+		addHighlightingOf: uncoveredNodes
+		withColor: (Color r: 0.98 g: 0.71 b: 0.71).
+	self
+		addHighlightingOf: yellowNodes
+		withColor: (Color r: 0.98 g: 0.95 b: 0.71).
 
-	uncoveredNodes do: [ :node |
-		sourceCodePanel addTextSegmentDecoration:
-			(SpTextPresenterDecorator forHighlight
-				 interval:
-					 (node sourceInterval first to: node sourceInterval last + 1);
-				 highlightColor: (Color r: 0.98 g: 0.71 b: 0.71)) ].
-
-	yellowNodes do: [ :interval |
-		sourceCodePanel addTextSegmentDecoration:
-			(SpTextPresenterDecorator forHighlight
-				 interval: interval + 1;
-				 highlightColor: (Color r: 0.98 g: 0.95 b: 0.71)) ].
-
-	coveredNodes do: [ :node |
-		sourceCodePanel addTextSegmentDecoration:
-			(SpTextPresenterDecorator forHighlight
-				 interval:
-					 (node sourceInterval first to: node sourceInterval last + 1);
-				 highlightColor: (Color r: 0.74 g: 0.98 b: 0.71)) ].
-
+	"Base color is green"
+	sourceCodePanel addTextSegmentDecoration:
+		(SpTextPresenterDecorator forHighlight
+			 interval: (compiledMethod ast body sourceInterval first to:
+					  compiledMethod ast body sourceInterval last + 1);
+			 highlightColor: (Color r: 0.74 g: 0.98 b: 0.71)).
 	^ sourceCodePanel yourself
 ]
