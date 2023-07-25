@@ -1108,7 +1108,7 @@ RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
 
 	ann isProvidedByATrait ifTrue: [ ^ self ].
 
-	ann method package removeMethod: ann method
+	ann method package ifNotNil: [ :package | package removeMethod: ann method ]
 ]
 
 { #category : #accessing }
