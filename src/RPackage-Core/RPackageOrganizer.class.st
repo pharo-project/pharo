@@ -1165,7 +1165,7 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	| className |
 	className := (aClass isString
 		              ifTrue: [ aClass ]
-		              ifFalse: [ aClass instanceSide name ]) asSymbol.
+		              ifFalse: [ aClass instanceSide originalName ]) asSymbol.
 
 	^ classPackageMapping removeKey: className ifAbsent: [ self error: aPackage name , ' still includes the class ' , className ]
 ]
