@@ -11,9 +11,7 @@ Class {
 		'myClass',
 		'selector',
 		'compiledMethod',
-		'priorMethod',
-		'protocolName',
-		'priorProtocol'
+		'protocolName'
 	],
 	#category : #'Monticello-Loading'
 }
@@ -26,8 +24,7 @@ MethodAddition >> compile [
 
 	self
 		createCompiledMethod;
-		installMethod;
-		notifyObservers.
+		installMethod.
 	^ selector
 ]
 
@@ -46,42 +43,18 @@ MethodAddition >> createCompiledMethod [
 	"CyrilFerlicot: Why do we need to explicitly write to the source? Why do we call the compiler?
 	
 	Can't we just call #compile:classfied: here?"
-	compiledMethod := myClass compiler permitUndeclared: true; compile: text asString.
+
+	compiledMethod := myClass compiler
+		                  permitUndeclared: true;
+		                  compile: text asString.
 	selector := compiledMethod selector.
-	self writeSourceToLog.
-	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
-	priorProtocol := myClass protocolOfSelector: selector
+	self writeSourceToLog
 ]
 
 { #category : #operations }
 MethodAddition >> installMethod [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod ]
-]
 
-{ #category : #notifying }
-MethodAddition >> notifyObservers [
-	SystemAnnouncer uniqueInstance 
-		suspendAllWhile: [myClass classify: selector under: protocolName].
-	priorMethod 
-		ifNil: [ SystemAnnouncer uniqueInstance
-				methodAdded: compiledMethod
-				configuredWith: [ :event | 
-					event
-						propertyAt: #eventSource
-						put: #Monticello ] ]
-		ifNotNil: [
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
-			priorProtocol name = protocolName ifFalse: [
-       			SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
-	"The following code doesn't seem to do anything."
-	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide.
-
-]
-
-{ #category : #accessing }
-MethodAddition >> priorProtocol [
-	^ priorProtocol
+	myClass addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocolName
 ]
 
 { #category : #operations }
