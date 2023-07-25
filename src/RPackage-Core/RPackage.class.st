@@ -443,44 +443,10 @@ RPackage >> definedClasses [
 	^ definedClasses
 ]
 
-{ #category : #private }
-RPackage >> definedMethodsBecomeExtendedForClass: aClassName [
-	"the package may contain defined methods and their class is removed to the receiver. The status of such methods should now be extended"
-	"Precondition: aClassName is in the defined list"
-
-	| ext |
-	(classDefinedSelectors keys includes: aClassName) ifFalse: [^ self].
-	ext := classDefinedSelectors at: aClassName.
-	classDefinedSelectors removeKey: aClassName ifAbsent: [self reportBogusBehaviorOf:   #definedMethodsBecomeExtendedForClass: ].
-	(classExtensionSelectors keys includes: aClassName) ifTrue: [self error: aClassName , ' should not be defined in extension'.]. "we should remove this check later"
-	classExtensionSelectors at: aClassName put: ext
-]
-
-{ #category : #private }
-RPackage >> definedMethodsBecomeExtendedForMetaclass: aClassName [
-	"the package may contain defined methods and their class is removed to the receiver. The status of such methods should now be extended"
-	"Precondition: aClassName is in the defined list"
-
-	| ext |
-	(metaclassDefinedSelectors keys includes: aClassName) ifFalse: [^ self].
-	ext := metaclassDefinedSelectors at: aClassName.
-	metaclassDefinedSelectors removeKey: aClassName ifAbsent: [self reportBogusBehaviorOf: #definedMethodsBecomeExtendedForMetaclass:].
-	(metaclassExtensionSelectors keys includes: aClassName) ifTrue: [self error: aClassName , ' should not be defined in extension'.]. "we should remove this check later"
-	metaclassDefinedSelectors at: aClassName put: ext
-]
-
 { #category : #accessing }
 RPackage >> definedMethodsForClass: aClass [
 
 	^ (self definedSelectorsForClass: aClass) asOrderedCollection collect: [ :each | aClass >> each ]
-]
-
-{ #category : #private }
-RPackage >> definedMethodsShouldBecomeExtensionWhenRemovingClass: aClassName [
-	"the package may contain defined methods and their class is removed from the receiver. The status of such methods should now be extensions"
-
-	self definedMethodsBecomeExtendedForClass: aClassName.
-	self definedMethodsBecomeExtendedForMetaclass: aClassName
 ]
 
 { #category : #accessing }
@@ -1094,28 +1060,19 @@ RPackage >> registerClassName: aClassNameSymbol [
 RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 	"Remove all the methods (defined and extensions) that are related to class aClassNameSymbol. aClassNameSymbol is the name of a class and not a metaclass - see class comment."
 
-	classDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [nil].
-	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [nil].
-	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [nil].
-	metaclassExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [nil]
+	classDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+	metaclassExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+
+	self organizer unregisterExtendingPackage: self forClassName: aClassNameSymbol
 ]
 
 { #category : #removing }
 RPackage >> removeClass: aClass [
-	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
+	"I remove the class, methods and potential empty tags from myself."
 
-	aClass protocols do: [ :protocol | (self isYourClassExtension: protocol) ifTrue: [ aClass renameProtocol: protocol as: Protocol unclassified ] ].
-	(self definedMethodsForClass: aClass instanceSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
-	"we also have also have to remove methods from class side"
-	(self definedMethodsForClass: aClass classSide) do: [ :aCompiledMethod | self removeMethod: aCompiledMethod ].
-	self removeClassDefinitionWithoutCheckingMethods: aClass.
-	self removeClassTagsForClassNamed: aClass name
-]
-
-{ #category : #'add class' }
-RPackage >> removeClassDefinition: aClass [
-	"Remove the class definition from the package but not its methods."
-	^ self removeClassDefinitionName: aClass instanceSide originalName
+	^ self removeClassNamed: aClass instanceSide name
 ]
 
 { #category : #'class tags' }
@@ -1125,23 +1082,6 @@ RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 	self
 		removeClassDefinitionName: aClass name
 		fromClassTag: aSymbol
-]
-
-{ #category : #'add class' }
-RPackage >> removeClassDefinitionName: aClassName [
-	"remove the class definition from the package but not its method"
-
-	| aClassNameSymbol |
-	(aClassName endsWith: ' class') ifTrue: [ ^ self error: 'no metaclass name' ].
-	aClassNameSymbol := aClassName asSymbol.
-	"clean up class tags"
-	classTags do: [ :tag |
-		tag removeClassNamed: aClassName.
-		tag isEmpty ifTrue: [ self basicRemoveTag: tag ] ].
-	"remove the class definition"
-	(classes remove: aClassNameSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed |
-		self definedMethodsShouldBecomeExtensionWhenRemovingClass: aClassName.
-		self unregisterClass: aClassNameSymbol ]
 ]
 
 { #category : #'class tags' }
@@ -1164,17 +1104,13 @@ RPackage >> removeClassDefinitionNamed: aClassNameSymbol [
 	(classes remove: aClassNameSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed | self unregisterClass: removed ]
 ]
 
-{ #category : #private }
-RPackage >> removeClassDefinitionWithoutCheckingMethods: aClass [
-	"Same than 'removeClassDefinition', excepts that it does not make any check to set defined methods as extensions"
-
-	self removeClassDefinitionNamed: aClass instanceSide name asSymbol
-]
-
 { #category : #removing }
-RPackage >> removeClassNamed: className [
-	self removeClassDefinitionName: className.
+RPackage >> removeClassNamed: aClassName [
+
+	| className |
+	className := aClassName asSymbol.
 	self removeAllMethodsFromClassNamed: className.
+	self removeClassDefinitionNamed: className.
 	self removeClassTagsForClassNamed: className
 ]
 
@@ -1195,12 +1131,6 @@ RPackage >> removeClassTagsForClassNamed: aString [
 			self
 				removeClassDefinitionName: aString
 				fromClassTag: eachTag name ]
-]
-
-{ #category : #'class tags' }
-RPackage >> removeClassesMatchingTag: aTag [
-
-	aTag classes do: [ :class | self removeClassDefinition: class ]
 ]
 
 { #category : #'class tags' }
