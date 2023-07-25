@@ -9,7 +9,7 @@ Class {
 	#category : #'Calypso-SystemPlugins-Traits-Queries'
 }
 
-{ #category : #'*Calypso-SystemPlugins-Traits-Queries' }
+{ #category : #converting }
 ClySingleTraitVisibilityLevel >> asTraitVisibility [
 	^self
 ]
