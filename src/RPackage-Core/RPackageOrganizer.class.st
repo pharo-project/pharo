@@ -735,20 +735,9 @@ RPackageOrganizer >> registerPackage: aPackage [
 
 { #category : #'private - registration' }
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
-	(aPackage includesClass: aClass)
-		ifFalse:
-			[self error: aPackage name , ' does not includes the class ' , aClass name].
-	^classPackageMapping at: aClass instanceSide name put: aPackage
-]
 
-{ #category : #'private - registration' }
-RPackageOrganizer >> registerPackage: aPackage forClassName: aClassNameSymbol [
-	"Register aPackage as the package of the class aClassNameSymbol. The package should contain the class in its class definitions."
-
-	(aPackage includesClassNamed: aClassNameSymbol asSymbol)
-		ifFalse:
-			[self error: aPackage name , ' does not include the class ' , aClassNameSymbol].
-	^classPackageMapping at: aClassNameSymbol put: aPackage
+	(aPackage includesClass: aClass) ifFalse: [ self error: aPackage name , ' does not includes the class ' , aClass name ].
+	^ classPackageMapping at: aClass instanceSide originalName put: aPackage
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -985,7 +974,7 @@ RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 	"we have to update the RPackageOrganizer.
 	update the 'classPackageDictionary' to replace the key with the new class name"
 	self unregisterPackage: package forClass: oldName.
-	self registerPackage: package forClassName: newName.
+	self registerPackage: package forClass: class.
 
 	"update the 'classExtendingPackagesMapping' to replace the key with the new class name"
 	extendingPackages do: [:aRPackage |

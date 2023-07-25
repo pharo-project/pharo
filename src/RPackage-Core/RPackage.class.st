@@ -186,7 +186,7 @@ RPackage >> addClassDefinition: aClass [
 	(classes includes: aClassName) ifTrue: [ ^ self ].
 	classes add: aClassName.
 	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName.
-	self registerClassName: aClassName
+	self registerClass: aClass
 ]
 
 { #category : #'class tags' }
@@ -1045,15 +1045,8 @@ RPackage >> register [
 { #category : #'private - register' }
 RPackage >> registerClass: aClass [
 	"Private method that declares the mapping between a class and its package."
-	self organizer
-		registerPackage: self forClass: aClass
-]
 
-{ #category : #'private - register' }
-RPackage >> registerClassName: aClassNameSymbol [
-	"Private method that declares the mapping between a class and its package."
-	self organizer
-		registerPackage: self forClassName: aClassNameSymbol
+	self organizer registerPackage: self forClass: aClass
 ]
 
 { #category : #'private - register' }
