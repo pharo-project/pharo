@@ -798,8 +798,9 @@ RPackageOrganizer >> removeCategory: aCategory [
 RPackageOrganizer >> removeClass: class [
 	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
 
+	class isClassSide ifTrue: [ self error: 'We should only be able to remove classes and not instances of metaclass.' ].
 	(self packageOf: class) removeClass: class.
-	(self extendingPackagesOf: class) do: [ :extendedPackage | extendedPackage removeAllMethodsFromClassNamed: class originalName ]
+	(self extendingPackagesOf: class) do: [ :extendedPackage | extendedPackage removeAllMethodsFromClass: class ]
 ]
 
 { #category : #cleanup }

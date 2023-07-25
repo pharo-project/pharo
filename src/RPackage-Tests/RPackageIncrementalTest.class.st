@@ -273,7 +273,7 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 	self deny: (p includesClass: a1).
 	self assert: (p includesClass: b1).
 
-	p removeClass: b1 class.
+	p removeClass: b1.
 	self deny: (p includesClass: b1)
 ]
 
@@ -302,7 +302,7 @@ RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 	self deny: (p includesClass: a1).
 	self assert: (p includesClass: b1).
 
-	p removeClass: b1 class.
+	p removeClass: b1.
 	self deny: (p includesClass: b1).
 	self assert: p classTags size equals: 0
 ]

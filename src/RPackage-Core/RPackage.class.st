@@ -1057,9 +1057,11 @@ RPackage >> registerClassName: aClassNameSymbol [
 ]
 
 { #category : #'private - register' }
-RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
-	"Remove all the methods (defined and extensions) that are related to class aClassNameSymbol. aClassNameSymbol is the name of a class and not a metaclass - see class comment."
+RPackage >> removeAllMethodsFromClass: aClass [
+	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
 
+	| aClassNameSymbol |
+	aClassNameSymbol := aClass originalName asSymbol.
 	classDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
 	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
 	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
@@ -1072,7 +1074,11 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"I remove the class, methods and potential empty tags from myself."
 
-	^ self removeClassNamed: aClass instanceSide originalName
+	| className |
+	className := aClass instanceSide originalName asSymbol.
+	self removeAllMethodsFromClass: aClass.
+	self removeClassDefinitionNamed: className.
+	self removeClassTagsForClassNamed: className
 ]
 
 { #category : #'class tags' }
@@ -1102,16 +1108,6 @@ RPackage >> removeClassDefinitionNamed: aClassNameSymbol [
 	This method removes the class definition from the receiver and its organizer"
 
 	(classes remove: aClassNameSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed | self unregisterClass: removed ]
-]
-
-{ #category : #removing }
-RPackage >> removeClassNamed: aClassName [
-
-	| className |
-	className := aClassName asSymbol.
-	self removeAllMethodsFromClassNamed: className.
-	self removeClassDefinitionNamed: className.
-	self removeClassTagsForClassNamed: className
 ]
 
 { #category : #'class tags' }
