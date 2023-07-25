@@ -516,9 +516,15 @@ NECMenuMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	evt wasHandled: false.
 	self flag: #pharoFixMe "ugly hack".
-	engine editor morph owner owner
-		takeKeyboardFocus;
-		handleMouseDown: evt.
+	
+	engine editor morph ifNotNil: [ :aMorph | 
+		aMorph owner ifNotNil: [ :anOwner | 
+			anOwner owner ifNotNil: [ :ownersOwner |
+				ownersOwner
+					takeKeyboardFocus;
+					handleMouseDown: evt.
+		 ] ] ].
+
 	self close
 ]
 

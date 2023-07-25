@@ -1492,7 +1492,7 @@ SystemWindow >> openModal [
 	MorphicRenderLoop new doOneCycleWhile: [ self isInWorld ]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : #'open/close' }
 SystemWindow >> openModal: aSystemWindow [
 	"Open the given window locking the receiver until it is dismissed.
 	Answer the system window.
