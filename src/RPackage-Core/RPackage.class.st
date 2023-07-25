@@ -179,13 +179,13 @@ RPackage >> addClass: aClass [
 
 { #category : #'add class' }
 RPackage >> addClassDefinition: aClass [
-	"Add only the class definition of aClass, as a class defined by the receiver. The term classdefinition denotes the fact that we do not treat its methods. aClass methods are not added to the package. aClass can be either a class or a metaclass"
+	"Add the class definition to the package.
+	We assume that this method is called at the creation of the class, thus methods should be added afterward. Else they might wrongly be considered as extensions."
 
 	| aClassName |
 	aClassName := aClass instanceSide name asSymbol.
 	(classes includes: aClassName) ifTrue: [ ^ self ].
 	classes add: aClassName.
-	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName.
 	self registerClassName: aClassName
 ]
 
@@ -515,42 +515,6 @@ RPackage >> extendedClasses [
 			union:  (classExtensionSelectors keys
 						select: [ :each| Smalltalk globals includesKey: each ]
 						thenCollect: [:each | Smalltalk globals at: each])
-]
-
-{ #category : #private }
-RPackage >> extendedMethodsBecomeDefinedForClass: aClassName [
-	"the package may contain extension methods and their class is added to the receiver. The status of such methods should now be defined"
-	"Precondition: aClassName is in the defined list"
-
-	| ext |
-	(classExtensionSelectors keys includes: aClassName) ifFalse: [^ self].
-	ext := classExtensionSelectors at: aClassName.
-	classExtensionSelectors removeKey: aClassName ifAbsent: [self reportBogusBehaviorOf:   #extendedMethodsBecomeDefinedForClass: ].
-	(classDefinedSelectors keys includes: aClassName) ifTrue: [self error: aClassName , ' should not be defined in extension'.]. "we should remove this check later"
-	classDefinedSelectors at: aClassName put: ext
-]
-
-{ #category : #private }
-RPackage >> extendedMethodsBecomeDefinedForMetaclass: aClassName [
-	"the package may contain extension methods and their class is added to the receiver. The status of such methods should now be defined"
-	"Precondition: aClassName is in the defined list"
-
-	| ext |
-	(metaclassExtensionSelectors keys includes: aClassName) ifFalse: [^ self].
-	ext := metaclassExtensionSelectors at: aClassName.
-	metaclassExtensionSelectors removeKey: aClassName  ifAbsent: [self reportBogusBehaviorOf:  #extendedMethodsBecomeDefinedForMetaclass: ].
-	(metaclassDefinedSelectors keys includes: aClassName)
-			ifTrue: [self error: aClassName , ' should not be defined in extension'.]. "we should remove this check later"
-	metaclassDefinedSelectors at: aClassName put: ext
-]
-
-{ #category : #private }
-RPackage >> extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName [
-	"the package may contain extension methods and their class is added to the receiver. The status of such methods should now be defined"
-	"Precondition: aClassName is in the defined list"
-
-	self extendedMethodsBecomeDefinedForClass: aClassName.
-	self extendedMethodsBecomeDefinedForMetaclass: aClassName
 ]
 
 { #category : #testing }
