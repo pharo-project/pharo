@@ -358,21 +358,21 @@ RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
 	p1 addClassDefinition: a1 toClassTag: #foo.
 	p1 addClassDefinition: b1 toClassTag: #foo.
 	p1 addClassDefinition: b1 toClassTag: #zork.
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #B1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesForClassTag: #foo) size equals: 2.
-	self deny: (((p1 classesForClassTag: #zork) collect: [:each | each name]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #zork) collect: [:each | each name]) includes: #B1DefinedInP1).	"now when we remove a class"	"from an existing tags list"
-	p1 removeClassDefinitionName: #A1DefinedInP1 fromClassTag: #foo.
-	self deny: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 1.	"from a nonexisting tag list"
-	p1 removeClassDefinitionName: #B1DefinedInP1 fromClassTag: #taz.
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #B1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #zork) collect: [:each | each name]) includes: #B1DefinedInP1).	"with a class not registered to a tag list"
-	p1 removeClassDefinitionName: #Tagada fromClassTag: #foo.
-	self deny: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #B1DefinedInP1).
+	self deny: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1). "now when we remove a class" "from an existing tags list"
+	p1 removeClassDefinition: a1 fromClassTag: #foo.
+	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesForClassTag: #foo) size equals: 1. "from a nonexisting tag list"
+	p1 removeClassDefinition: b1 fromClassTag: #taz.
+	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1). "with a class not registered to a tag list"
+	p1 removeClassDefinition: self class fromClassTag: #foo.
+	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesForClassTag: #foo) size equals: 1
 ]
 

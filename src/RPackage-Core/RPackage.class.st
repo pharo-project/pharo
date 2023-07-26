@@ -186,7 +186,7 @@ RPackage >> addClassDefinition: aClass [
 	(self includesClassNamed: aClassName) ifTrue: [ ^ self ].
 	classes add: aClassName.
 	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName.
-	self registerClassName: aClassName
+	self registerClass: aClass
 ]
 
 { #category : #'class tags' }
@@ -216,10 +216,10 @@ RPackage >> addClassTag: aSymbol [
 { #category : #'add method - compiled method' }
 RPackage >> addMethod: aCompiledMethod [
 	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
-	| methodClass |
 
+	| methodClass |
 	methodClass := aCompiledMethod methodClass.
-	(self includesClass: methodClass )
+	(self includesClass: methodClass)
 		ifTrue: [
 			methodClass isMeta
 				ifTrue: [
@@ -285,30 +285,6 @@ RPackage >> basicImportClass: aClass [
 	aClass protocols
 		reject: [ :protocol | protocol isExtensionProtocol ]
 		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
-]
-
-{ #category : #'add method - selector' }
-RPackage >> basicRemoveSelector: aSelector ofClassName: aClassName [
-	"Remove the method in the package but does not propagate to the class itself.  Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore."
-
-	| selectors |
-	selectors := (self includesClassNamed: aClassName)
-		             ifFalse: [ classExtensionSelectors at: aClassName ifAbsent: [ ^ IdentitySet new ] ]
-		             ifTrue: [ classDefinedSelectors at: aClassName ifAbsent: [ ^ IdentitySet new ] ].
-
-	selectors remove: aSelector ifAbsent: [  ]
-]
-
-{ #category : #'add method - selector' }
-RPackage >> basicRemoveSelector: aSelector ofMetaclassName: aClassName [
-	"Remove the method in the package. Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore. aClassName is the sole instance class name and not its metaclass one: i.e. adding Point class>>new is done as removeSelector: #new ofMetaclassName: #Point"
-
-	| selectors |
-	selectors := ( self includesClassNamed: aClassName)
-		ifFalse: [(metaclassExtensionSelectors  at: aClassName ifAbsent: [ ^ Set new])]
-		ifTrue: [(metaclassDefinedSelectors  at: aClassName ifAbsent: [ ^ Set new])].
-
-	selectors remove: aSelector ifAbsent: [  ]
 ]
 
 { #category : #'class tags' }
@@ -1043,21 +1019,16 @@ RPackage >> register [
 { #category : #'private - register' }
 RPackage >> registerClass: aClass [
 	"Private method that declares the mapping between a class and its package."
-	self organizer
-		registerPackage: self forClass: aClass
+
+	self organizer registerPackage: self forClass: aClass
 ]
 
 { #category : #'private - register' }
-RPackage >> registerClassName: aClassNameSymbol [
-	"Private method that declares the mapping between a class and its package."
-	self organizer
-		registerPackage: self forClassName: aClassNameSymbol
-]
+RPackage >> removeAllMethodsFromClass: aClass [
+	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
 
-{ #category : #'private - register' }
-RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
-	"Remove all the methods (defined and extensions) that are related to class aClassNameSymbol. aClassNameSymbol is the name of a class and not a metaclass - see class comment."
-
+	| aClassNameSymbol |
+	aClassNameSymbol := aClass originalName asSymbol.
 	classDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
 	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
 	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
@@ -1070,46 +1041,23 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"I remove the class, methods and potential empty tags from myself."
 
-	^ self removeClassNamed: aClass instanceSide name
+	"First I remove all the methods of the class from myself."
+	self removeAllMethodsFromClass: aClass.
+
+	"Then I remove the class from myself."
+	(classes remove: aClass originalName asSymbol ifAbsent: [ nil ]) ifNotNil: [ self unregisterClass: aClass ].
+
+	"Lastly I unregister it from the tags"
+	(self classTags select: [ :eachTag | eachTag includesClass: aClass ]) do: [ :eachTag | self removeClassDefinition: aClass fromClassTag: eachTag name ]
 ]
 
 { #category : #'class tags' }
 RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
-	"Detags the class aClass with the tag aSymbol"
 
-	self
-		removeClassDefinitionName: aClass name
-		fromClassTag: aSymbol
-]
-
-{ #category : #'class tags' }
-RPackage >> removeClassDefinitionName: aClassName fromClassTag: aSymbol [
-	"Detags the class aClass with the tag aSymbol"
 	| tag |
-
 	tag := self classTagNamed: (self toTagName: aSymbol) ifAbsent: [ ^ self ].
-	tag removeClassNamed: aClassName.
-	tag isEmpty
-		ifTrue: [ self basicRemoveTag: tag ]
-]
-
-{ #category : #'private - register' }
-RPackage >> removeClassDefinitionNamed: aClassNameSymbol [
-	"aClassNameSymbol should be the name of a class and not a metaclass to be coherent with the class invariant that classes are only class names and not metaclass ones.
-
-	This method removes the class definition from the receiver and its organizer"
-
-	(classes remove: aClassNameSymbol asSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed | self unregisterClass: removed ]
-]
-
-{ #category : #removing }
-RPackage >> removeClassNamed: aClassName [
-
-	| className |
-	className := aClassName asSymbol.
-	self removeAllMethodsFromClassNamed: className.
-	self removeClassDefinitionNamed: className.
-	self removeClassTagsForClassNamed: className
+	tag removeClass: aClass.
+	tag isEmpty ifTrue: [ self basicRemoveTag: tag ]
 ]
 
 { #category : #'class tags' }
@@ -1119,16 +1067,6 @@ RPackage >> removeClassTag: aSymbol [
 	self basicRemoveTag: (self
 		classTagNamed:  (self toTagName: aSymbol)
 		ifAbsent: [ ^ self ])
-]
-
-{ #category : #'class tags' }
-RPackage >> removeClassTagsForClassNamed: aString [
-	(self classTags
-		select: [ :eachTag | eachTag hasClassNamed: aString ])
-		do: [ :eachTag |
-			self
-				removeClassDefinitionName: aString
-				fromClassTag: eachTag name ]
 ]
 
 { #category : #'class tags' }
@@ -1157,18 +1095,34 @@ RPackage >> removeFromSystem [
 { #category : #'add method - compiled method' }
 RPackage >> removeMethod: aCompiledMethod [
 	"Remove the method to the receiver as a defined method."
-	|  methodClass |
 
+	| methodClass |
 	methodClass := aCompiledMethod methodClass.
-	methodClass isMeta
+	(self includesClass: methodClass)
 		ifTrue: [
-			self
-				removeSelector: aCompiledMethod selector
-				ofMetaclassName: methodClass instanceSide originalName ]
+			methodClass isMeta
+				ifTrue: [
+					metaclassDefinedSelectors at: methodClass instanceSide originalName ifPresent: [ :methods |
+						methods remove: aCompiledMethod selector ifAbsent: [  ].
+						methods ifEmpty: [ metaclassDefinedSelectors removeKey: methodClass instanceSide originalName ] ] ]
+				ifFalse: [
+					classDefinedSelectors at: methodClass originalName ifPresent: [ :methods |
+						methods remove: aCompiledMethod selector ifAbsent: [  ].
+						methods ifEmpty: [ classDefinedSelectors removeKey: methodClass originalName ] ] ] ]
 		ifFalse: [
-			self
-				removeSelector: aCompiledMethod selector
-				ofClassName: methodClass originalName ].
+			methodClass isMeta
+				ifTrue: [
+					metaclassExtensionSelectors at: methodClass instanceSide originalName ifPresent: [ :methods |
+						methods remove: aCompiledMethod selector ifAbsent: [  ].
+						methods ifEmpty: [ metaclassExtensionSelectors removeKey: methodClass instanceSide originalName ] ] ]
+				ifFalse: [
+					classExtensionSelectors at: methodClass originalName ifPresent: [ :methods |
+						methods remove: aCompiledMethod selector ifAbsent: [  ].
+						methods ifEmpty: [ classExtensionSelectors removeKey: methodClass originalName ] ] ] ].
+
+	((metaclassExtensionSelectors at: methodClass instanceSide originalName ifAbsent: [ #(  ) ]) isEmpty and: [
+		 (classExtensionSelectors at: methodClass instanceSide originalName ifAbsent: [ #(  ) ]) isEmpty ]) ifTrue: [
+		self organizer unregisterExtendingPackage: self forClassName: methodClass instanceSide originalName ].
 
 	^ aCompiledMethod
 ]
@@ -1200,42 +1154,6 @@ RPackage >> removeProperty: propName ifAbsent: aBlock [
 		ifAbsent: aBlock.
 	self removePropertiesIfEmpty.
 	^ property
-]
-
-{ #category : #'add method - selector' }
-RPackage >> removeSelector: aSelector ofClassName: aClassName [
-	"Remove the method in the package but does not propagate to the class itself.  Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore."
-
-	self basicRemoveSelector: aSelector ofClassName: aClassName.
-	(classExtensionSelectors at: aClassName ifAbsent: [ #() ]) ifEmpty: [
-		classExtensionSelectors removeKey: aClassName ifAbsent: [].
-	].
-	(classDefinedSelectors at: aClassName ifAbsent: [ #() ]) ifEmpty: [
-		classDefinedSelectors removeKey: aClassName ifAbsent: [].
-	].
-
-	((metaclassExtensionSelectors at: aClassName ifAbsent: [#()]) isEmpty and: [(classExtensionSelectors at: aClassName ifAbsent: [#()]) isEmpty])
-		ifTrue: [
-				self organizer unregisterExtendingPackage: self forClassName: aClassName
-	]
-]
-
-{ #category : #'add method - selector' }
-RPackage >> removeSelector: aSelector ofMetaclassName: aClassName [
-	"Remove the method in the package. Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore. aClassName is the sole instance class name and not its metaclass one: i.e. adding Point class>>new is done as removeSelector: #new ofMetaclassName: #Point"
-
-	self basicRemoveSelector: aSelector ofMetaclassName: aClassName.
-	(metaclassExtensionSelectors at: aClassName ifAbsent: [ #() ]) ifEmpty: [
-		metaclassExtensionSelectors removeKey: aClassName ifAbsent: [].
-	].
-	(metaclassDefinedSelectors at: aClassName ifAbsent: [ #() ]) ifEmpty: [
-		metaclassDefinedSelectors removeKey: aClassName ifAbsent: [].
-	].
-
-	((metaclassExtensionSelectors at: aClassName ifAbsent: [#()]) isEmpty and: [(classExtensionSelectors at: aClassName ifAbsent: [#()]) isEmpty])
-		ifTrue: [
-				self organizer unregisterExtendingPackage: self forClassName: aClassName
-	]
 ]
 
 { #category : #private }
