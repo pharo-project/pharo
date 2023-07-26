@@ -132,12 +132,13 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagsToAClass [
 
 { #category : #'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
-	self deny: ((testingEnvironment at: #A1DefinedInP1) isExtendedInPackage: p1).
-	self assert: (p1 includesClass: (testingEnvironment at: #A1DefinedInP1)).
-	self deny: (p1 extendsClass: (testingEnvironment at: #A1DefinedInP1)).
-	self assert: ((testingEnvironment at: #A2DefinedInP2) isExtendedInPackage: p1).
-	self deny: (p1 includesClass: (testingEnvironment at: #A2DefinedInP2)).
-	self assert: (p1 extendsClass: (testingEnvironment at: #A2DefinedInP2))
+
+	self deny: (a1 isExtendedInPackage: p1).
+	self assert: (p1 includesClass: a1).
+	self deny: (p1 extendsClass: a1).
+	self assert: (a2 isExtendedInPackage: p1).
+	self deny: (p1 includesClass: a2).
+	self assert: (p1 extendsClass: a2)
 ]
 
 { #category : #'tests - slice' }
@@ -172,25 +173,22 @@ A2DefinedInP2 classSideMethodDefinedInP3
 { #category : #'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsDefinedInPackage [
 
-	self assert: ((testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1 isDefinedInPackage: p1).
-	self deny: ((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1 isDefinedInPackage: p1)
+	self assert: (a1 >> #methodDefinedInP1 isDefinedInPackage: p1).
+	self deny: (a2 >> #methodDefinedInP1 isDefinedInPackage: p1)
 ]
 
 { #category : #'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsExtensionInPackage [
 
-	self deny: ((testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1 isExtensionInPackage: p1).
-	self assert: ((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1 isExtensionInPackage: p1)
+	self deny: (a1 >> #methodDefinedInP1 isExtensionInPackage: p1).
+	self assert: (a2 >> #methodDefinedInP1 isExtensionInPackage: p1)
 ]
 
 { #category : #'tests - compiled method' }
-RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackageFromOrganizer [
+RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackage [
 
-	| method |
-	method := (testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1.
-	self assert: method package equals: p1.
-	method := (testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1.
-	self assert: method package equals: p1
+	self assert: (a1 >> #methodDefinedInP1) package equals: p1.
+	self assert: (a2 >> #methodDefinedInP1) package equals: p1
 ]
 
 { #category : #'tests - situation' }
