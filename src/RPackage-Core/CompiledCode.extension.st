@@ -22,5 +22,6 @@ CompiledCode >> package [
 	"This method returns the package this method belongs to. It takes into account classes and traits.
 	If the method is in no package, returns nil"
 
+	self isInstalled ifFalse: [ ^ nil ].
 	^ self extensionPackage ifNil: [ self origin package ]
 ]
