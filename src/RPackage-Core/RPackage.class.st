@@ -183,7 +183,7 @@ RPackage >> addClassDefinition: aClass [
 
 	| aClassName |
 	aClassName := aClass instanceSide name asSymbol.
-	(classes includes: aClassName) ifTrue: [ ^ self ].
+	(self includesClassNamed: aClassName) ifTrue: [ ^ self ].
 	classes add: aClassName.
 	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName.
 	self registerClassName: aClassName
@@ -476,8 +476,7 @@ RPackage >> definesOrExtendsClass: aClass [
 
 	| canonizedName |
 	canonizedName := aClass instanceSide name.
-	^ (classes includes: canonizedName)
-		or: [self extendedClassNames includes: canonizedName]
+	^ (self includesClassNamed: canonizedName) or: [ self extendedClassNames includes: canonizedName ]
 ]
 
 { #category : #converting }
