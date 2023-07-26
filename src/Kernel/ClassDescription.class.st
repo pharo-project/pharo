@@ -264,6 +264,11 @@ ClassDescription >> classify: selector under: aProtocol [
 
 	"In case the method is already classified and we say to classify it under nil, we do not update the protocol."
 	(aProtocol isNil and: [ oldProtocol isNotNil ]) ifTrue: [ ^ self ].
+	
+	"If we try to classify the method as an extension of its own package, just unclassify the method to avoid any weird state where the method could be considered as an extension or not depending on the interpretation."
+	(self isProtocolExtensionFromTheSamePackage: aProtocol) ifTrue: [
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		^ self classify: selector under: Protocol unclassified ].
 
 	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
 
@@ -654,6 +659,23 @@ ClassDescription >> isMeta [
 	^self isClassSide
 ]
 
+{ #category : #private }
+ClassDescription >> isProtocolExtensionFromTheSamePackage: aProtocol [
+	"I return true if the protocol as parameter is an extension protocol and the concerned package is my origin package."
+
+	| protocolName |
+	aProtocol ifNil: [ ^ false ].
+
+	protocolName := aProtocol isString
+		                ifTrue: [ aProtocol ]
+		                ifFalse: [ aProtocol name ].
+
+	"If it is not an extension then there is no problem"
+	protocolName first = $* ifFalse: [ ^ false ].
+
+	^ (self packageOrganizer packageMatchingExtensionName: protocolName allButFirst) = self package
+]
+
 { #category : #testing }
 ClassDescription >> isTaggedWith: aSymbol [
 
@@ -959,6 +981,11 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
 
 	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
+	
+	"We should not be able to have a protocol that is an extension of the same class so let's skip the rename."
+	(self isProtocolExtensionFromTheSamePackage: aNewProtocol) ifTrue: [ 
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		^ self ].
 
 		oldProtocol := self ensureProtocol: anOldProtocol.
 		newProtocol := self ensureProtocol: aNewProtocol.
