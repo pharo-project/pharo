@@ -12,26 +12,18 @@ Class {
 TaClassCompositionElement >> methods [
 	"As I am representing a ClassTrait I have to filter the methods that are in all the class traits"
 
-	| innerClassLocalMethods traitedClassSelectors |
-	innerClassLocalMethods := innerClass localMethods collect: [ :each | each selector ].
+	| traitedClassSelectors |
 	traitedClassSelectors := TraitedClass selectors.
-	^ super methods reject: [ :method |
-		  | methodSelector |
-		  methodSelector := method selector.
-		  (innerClassLocalMethods includes: methodSelector) not and: [ traitedClassSelectors anySatisfy: [ :x | x = methodSelector ] ] ]
+	^ innerClass localMethods reject: [ :method | traitedClassSelectors includes: method selector ]
 ]
 
 { #category : #accessing }
 TaClassCompositionElement >> selectors [
 	"As I am representing a ClassTrait I have to filter the methods that are in all the class traits"
 
-	| innerClassLocalMethods traitedClassSelectors |
-	innerClassLocalMethods := innerClass localMethods collect: [ :each | each selector ].
+	| traitedClassSelectors |
 	traitedClassSelectors := TraitedClass selectors.
-	^ super selectors reject: [ :selector |
-		  | methodSelector |
-		  methodSelector := selector.
-		  (innerClassLocalMethods includes: methodSelector) not and: [ traitedClassSelectors anySatisfy: [ :x | x = methodSelector ] ] ]
+	^ innerClass localSelectors reject: [ :selector | traitedClassSelectors includes: selector ]
 ]
 
 { #category : #accessing }
