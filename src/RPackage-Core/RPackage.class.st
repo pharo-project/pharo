@@ -181,11 +181,9 @@ RPackage >> addClass: aClass [
 RPackage >> addClassDefinition: aClass [
 	"Add only the class definition of aClass, as a class defined by the receiver. The term classdefinition denotes the fact that we do not treat its methods. aClass methods are not added to the package. aClass can be either a class or a metaclass"
 
-	| aClassName |
-	aClassName := aClass instanceSide name asSymbol.
-	(self includesClassNamed: aClassName) ifTrue: [ ^ self ].
-	classes add: aClassName.
-	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName.
+	(self includesClass: aClass) ifTrue: [ ^ self ].
+	classes add: aClass instanceSide.
+	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClass instanceSide name asSymbol.
 	self registerClass: aClass
 ]
 
@@ -390,16 +388,13 @@ RPackage >> classesTaggedWith: aSymbol [
 RPackage >> definedClassNames [
 	"Return the class names having methods defined in the receiver."
 
-	^ classes
+	^ classes collect: [ :class | class name ]
 ]
 
 { #category : #accessing }
 RPackage >> definedClasses [
 
-	| definedClasses |
-	definedClasses := Set new: classes size.
-	classes do: [ :each | self environment at: each ifPresent: [ :aClass | definedClasses add: aClass ] ].
-	^ definedClasses
+	^ classes
 ]
 
 { #category : #accessing }
@@ -647,14 +642,14 @@ RPackage >> importProtocol: aProtocol forClass: aClass [
 RPackage >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ self includesClassNamed: aClass instanceSide name
+	^ classes includes: aClass instanceSide
 ]
 
 { #category : #testing }
 RPackage >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ classes includes: aSymbol
+	^ classes anySatisfy: [ :class | class name = aSymbol ]
 ]
 
 { #category : #testing }
@@ -769,7 +764,7 @@ RPackage >> includesSystemCategory: categoryName [
 { #category : #initialization }
 RPackage >> initialize [
 	super initialize.
-	classes := Set new.
+	classes := IdentitySet new.
 	metaclassExtensionSelectors := Dictionary new.
 	classExtensionSelectors := Dictionary new.
 	classDefinedSelectors := Dictionary new.
@@ -1031,7 +1026,7 @@ RPackage >> removeClass: aClass [
 	self removeAllMethodsFromClass: aClass.
 
 	"Then I remove the class from myself."
-	(classes remove: aClass originalName asSymbol ifAbsent: [ nil ]) ifNotNil: [ self unregisterClass: aClass ].
+	(classes remove: aClass ifAbsent: [ nil ]) ifNotNil: [ self unregisterClass: aClass ].
 
 	"Lastly I unregister it from the tags"
 	(self classTags select: [ :eachTag | eachTag includesClass: aClass ]) do: [ :eachTag | self removeClassDefinition: aClass fromClassTag: eachTag name ]
@@ -1277,8 +1272,8 @@ RPackage >> updateDefinedClassNamed: oldString withNewName: newString [
 	(oldString substrings size > 1 or: [ newString substrings size > 1 ])
 		ifTrue: [ Error signal: 'You should not use metaclass names' ].	"=> update the 'classDefinedSelectors' dictionary (replace the old key by the new one)
        => update the 'metaclassDefinedSelectors' dictionary (replace the old key by the new one)"
-	classes remove: oldString.
-	classes add: newString.	"Don't forget that class tags also register the classes names."
+
+	"Don't forget that class tags also register the classes names."
 	self classTags do: [ :aTag | aTag updateDefinedClassNamed: oldString withNewName: newString ].
 	self flag: #cyrille.	"what happens if this is a metaclass: it breaks the invariant of the package"	"worse so far the second block below breaks"	"the name of the method should be updateDefinedClassNamed: withNewName:"	"CD: i only use this method when a class is renamed in the system (systemClassRenamedActionFrom:). Normally we are not able to rename a metaclass in the system (?) so we should never end up in a case with metaclass names ?  "
 	(classDefinedSelectors at: oldString ifAbsent: [ nil ])
