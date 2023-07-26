@@ -186,7 +186,7 @@ RPackage >> addClassDefinition: aClass [
 	(self includesClassNamed: aClassName) ifTrue: [ ^ self ].
 	classes add: aClassName.
 	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName.
-	self registerClassName: aClassName
+	self registerClass: aClass
 ]
 
 { #category : #'class tags' }
@@ -1044,21 +1044,16 @@ RPackage >> register [
 { #category : #'private - register' }
 RPackage >> registerClass: aClass [
 	"Private method that declares the mapping between a class and its package."
-	self organizer
-		registerPackage: self forClass: aClass
+
+	self organizer registerPackage: self forClass: aClass
 ]
 
 { #category : #'private - register' }
-RPackage >> registerClassName: aClassNameSymbol [
-	"Private method that declares the mapping between a class and its package."
-	self organizer
-		registerPackage: self forClassName: aClassNameSymbol
-]
+RPackage >> removeAllMethodsFromClass: aClass [
+	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
 
-{ #category : #'private - register' }
-RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
-	"Remove all the methods (defined and extensions) that are related to class aClassNameSymbol. aClassNameSymbol is the name of a class and not a metaclass - see class comment."
-
+	| aClassNameSymbol |
+	aClassNameSymbol := aClass originalName asSymbol.
 	classDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
 	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
 	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
@@ -1071,46 +1066,23 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 RPackage >> removeClass: aClass [
 	"I remove the class, methods and potential empty tags from myself."
 
-	^ self removeClassNamed: aClass instanceSide name
+	"First I remove all the methods of the class from myself."
+	self removeAllMethodsFromClass: aClass.
+
+	"Then I remove the class from myself."
+	(classes remove: aClass originalName asSymbol ifAbsent: [ nil ]) ifNotNil: [ self unregisterClass: aClass ].
+
+	"Lastly I unregister it from the tags"
+	(self classTags select: [ :eachTag | eachTag includesClass: aClass ]) do: [ :eachTag | self removeClassDefinition: aClass fromClassTag: eachTag name ]
 ]
 
 { #category : #'class tags' }
 RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
-	"Detags the class aClass with the tag aSymbol"
 
-	self
-		removeClassDefinitionName: aClass name
-		fromClassTag: aSymbol
-]
-
-{ #category : #'class tags' }
-RPackage >> removeClassDefinitionName: aClassName fromClassTag: aSymbol [
-	"Detags the class aClass with the tag aSymbol"
 	| tag |
-
 	tag := self classTagNamed: (self toTagName: aSymbol) ifAbsent: [ ^ self ].
-	tag removeClassNamed: aClassName.
-	tag isEmpty
-		ifTrue: [ self basicRemoveTag: tag ]
-]
-
-{ #category : #'private - register' }
-RPackage >> removeClassDefinitionNamed: aClassNameSymbol [
-	"aClassNameSymbol should be the name of a class and not a metaclass to be coherent with the class invariant that classes are only class names and not metaclass ones.
-
-	This method removes the class definition from the receiver and its organizer"
-
-	(classes remove: aClassNameSymbol ifAbsent: [ nil ]) ifNotNil: [ :removed | self unregisterClass: removed ]
-]
-
-{ #category : #removing }
-RPackage >> removeClassNamed: aClassName [
-
-	| className |
-	className := aClassName asSymbol.
-	self removeAllMethodsFromClassNamed: className.
-	self removeClassDefinitionNamed: className.
-	self removeClassTagsForClassNamed: className
+	tag removeClass: aClass.
+	tag isEmpty ifTrue: [ self basicRemoveTag: tag ]
 ]
 
 { #category : #'class tags' }
@@ -1120,16 +1092,6 @@ RPackage >> removeClassTag: aSymbol [
 	self basicRemoveTag: (self
 		classTagNamed:  (self toTagName: aSymbol)
 		ifAbsent: [ ^ self ])
-]
-
-{ #category : #'class tags' }
-RPackage >> removeClassTagsForClassNamed: aString [
-	(self classTags
-		select: [ :eachTag | eachTag hasClassNamed: aString ])
-		do: [ :eachTag |
-			self
-				removeClassDefinitionName: aString
-				fromClassTag: eachTag name ]
 ]
 
 { #category : #'class tags' }

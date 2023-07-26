@@ -273,7 +273,7 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 	self deny: (p includesClass: a1).
 	self assert: (p includesClass: b1).
 
-	p removeClass: b1 class.
+	p removeClass: b1.
 	self deny: (p includesClass: b1)
 ]
 
@@ -302,7 +302,7 @@ RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 	self deny: (p includesClass: a1).
 	self assert: (p includesClass: b1).
 
-	p removeClass: b1 class.
+	p removeClass: b1.
 	self deny: (p includesClass: b1).
 	self assert: p classTags size equals: 0
 ]
@@ -650,21 +650,14 @@ RPackageIncrementalTest >> testPackageOfClassForDefinedClasses [
 { #category : #'tests - registration' }
 RPackageIncrementalTest >> testPrivateClassRegisterUnregister [
 	"Verify that when we register a class, the package organizer register it."
+
 	| p a1 |
 	p := self createNewPackageNamed: 'P1'.
 	a1 := self createNewClassNamed: #A1InPackageP1.
 	p definedClassNames add: #A1InPackageP1.
-		"ugly but necessary to test registerClass: independantly from addClassDefinition:"
-		"No event should be raised."
+	"ugly but necessary to test registerClass: independantly from addClassDefinition:"
+	"No event should be raised."
 	p registerClass: a1.
-	self assert: (RPackage organizer packageOf: a1) equals: p.
-	p definedClassNames remove: #A1InPackageP1.
-	p unregisterClass: a1.
-	self assert: (RPackage organizer packageOf: a1) isDefault.
-
-	p definedClassNames add: #A1InPackageP1.
-		"ugly but necessary to test registerClass: independant from addClassDefinition:"
-	p registerClassName: a1 name.
 	self assert: (RPackage organizer packageOf: a1) equals: p.
 	p definedClassNames remove: #A1InPackageP1.
 	p unregisterClass: a1.
