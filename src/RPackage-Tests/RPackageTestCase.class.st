@@ -75,6 +75,7 @@ RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 		       aBuilder
 			       name: aName;
 			       package: cat;
+			       installingEnvironment: self organizer environment;
 			       beTrait ].
 
 	createdClasses add: cls.
