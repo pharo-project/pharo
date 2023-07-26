@@ -398,7 +398,7 @@ RPackage >> definedClasses [
 
 	| definedClasses |
 	definedClasses := Set new: classes size.
-	classes do: [ :each | Smalltalk globals at: each ifPresent: [ :aClass | definedClasses add: aClass ] ].
+	classes do: [ :each | self environment at: each ifPresent: [ :aClass | definedClasses add: aClass ] ].
 	^ definedClasses
 ]
 
@@ -458,6 +458,12 @@ RPackage >> ensureProperties [
 ]
 
 { #category : #accessing }
+RPackage >> environment [
+
+	^ self organizer environment
+]
+
+{ #category : #accessing }
 RPackage >> extendedClassNames [
 	"Return the name of the classes which are extended by the receiver package. if a metaclass is extended, just get its sole instance class name."
 
@@ -467,12 +473,12 @@ RPackage >> extendedClassNames [
 { #category : #accessing }
 RPackage >> extendedClasses [
 	"Return classes and metaclasses that are extended in the receiver. They represent the classes of method extensions"
+
 	^ (metaclassExtensionSelectors keys
-		select: [ :each| Smalltalk globals includesKey: each ]
-		thenCollect: [:each | (Smalltalk globals at: each) classSide])
-			union:  (classExtensionSelectors keys
-						select: [ :each| Smalltalk globals includesKey: each ]
-						thenCollect: [:each | Smalltalk globals at: each])
+		   select: [ :each | self environment includesKey: each ]
+		   thenCollect: [ :each | (self environment at: each) classSide ]) union: (classExtensionSelectors keys
+			   select: [ :each | self environment includesKey: each ]
+			   thenCollect: [ :each | self environment at: each ])
 ]
 
 { #category : #private }
@@ -532,13 +538,13 @@ RPackage >> extensionCategoriesForClass: aClass [
 { #category : #accessing }
 RPackage >> extensionMethods [
 	"Extension methods are methods defined on classes that are not defined in the receiver"
-	| allExtensionMethods |
 
+	| allExtensionMethods |
 	allExtensionMethods := OrderedCollection new.
 	classExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) >> selector) ] ].
+		methods do: [ :selector | allExtensionMethods add: (self environment at: classSymbol) >> selector ] ].
 	metaclassExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) classSide >> selector) ] ].
+		methods do: [ :selector | allExtensionMethods add: (self environment at: classSymbol) classSide >> selector ] ].
 
 	^ allExtensionMethods
 ]
@@ -854,19 +860,15 @@ RPackage >> methodCategoryPrefix [
 { #category : #accessing }
 RPackage >> methods [
 	"Return all the methods defined in this package. Including extension methods (i.e., methods defined on a class that is not defined by me)"
-	| methods |
 
+	| methods |
 	methods := OrderedCollection new.
 
-	metaclassExtensionSelectors keysAndValuesDo: [:key :val |
-		val do: [:sel | 	methods add: ((Smalltalk globals at: key) classSide >> sel)]].
-	classExtensionSelectors keysAndValuesDo: [:key :val |
-		val do: [:sel | methods add: ((Smalltalk globals at: key) >> sel)]].
+	metaclassExtensionSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) classSide >> sel ] ].
+	classExtensionSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) >> sel ] ].
 
-	metaclassDefinedSelectors keysAndValuesDo: [:key :val |
-		val do: [:sel | methods add: ((Smalltalk globals at: key) classSide >> sel)]].
-	classDefinedSelectors keysAndValuesDo: [:key :val |
-		val do: [:sel | methods add: ((Smalltalk globals at: key) >> sel)]].
+	metaclassDefinedSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) classSide >> sel ] ].
+	classDefinedSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) >> sel ] ].
 
 	^ methods
 ]

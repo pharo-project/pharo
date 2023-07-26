@@ -132,12 +132,13 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagsToAClass [
 
 { #category : #'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
-	self deny: ((testingEnvironment at: #A1DefinedInP1) isExtendedInPackage: p1).
-	self assert: (p1 includesClass: (testingEnvironment at: #A1DefinedInP1)).
-	self deny: (p1 extendsClass: (testingEnvironment at: #A1DefinedInP1)).
-	self assert: ((testingEnvironment at: #A2DefinedInP2) isExtendedInPackage: p1).
-	self deny: (p1 includesClass: (testingEnvironment at: #A2DefinedInP2)).
-	self assert: (p1 extendsClass: (testingEnvironment at: #A2DefinedInP2))
+
+	self deny: (a1 isExtendedInPackage: p1).
+	self assert: (p1 includesClass: a1).
+	self deny: (p1 extendsClass: a1).
+	self assert: (a2 isExtendedInPackage: p1).
+	self deny: (p1 includesClass: a2).
+	self assert: (p1 extendsClass: a2)
 ]
 
 { #category : #'tests - slice' }
@@ -172,25 +173,22 @@ A2DefinedInP2 classSideMethodDefinedInP3
 { #category : #'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsDefinedInPackage [
 
-	self assert: ((testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1 isDefinedInPackage: p1).
-	self deny: ((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1 isDefinedInPackage: p1)
+	self assert: (a1 >> #methodDefinedInP1 isDefinedInPackage: p1).
+	self deny: (a2 >> #methodDefinedInP1 isDefinedInPackage: p1)
 ]
 
 { #category : #'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsExtensionInPackage [
 
-	self deny: ((testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1 isExtensionInPackage: p1).
-	self assert: ((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1 isExtensionInPackage: p1)
+	self deny: (a1 >> #methodDefinedInP1 isExtensionInPackage: p1).
+	self assert: (a2 >> #methodDefinedInP1 isExtensionInPackage: p1)
 ]
 
 { #category : #'tests - compiled method' }
-RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackageFromOrganizer [
+RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackage [
 
-	| method |
-	method := (testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1.
-	self assert: (method packageFromOrganizer: RPackage organizer) equals: p1.
-	method := (testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1.
-	self assert: (method packageFromOrganizer: RPackage  organizer) equals: p1
+	self assert: (a1 >> #methodDefinedInP1) package equals: p1.
+	self assert: (a2 >> #methodDefinedInP1) package equals: p1
 ]
 
 { #category : #'tests - situation' }
@@ -206,11 +204,12 @@ RPackageReadOnlyCompleteSetupTest >> testDefinedSelectors [
 
 { #category : #'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testDefinedSelectorsForClass [
+
 	self assert: (p1 definedSelectorsForClass: a1) size equals: 2.
 	self assert: (p1 definedMethodsForClass: a1) size equals: 2.
 	self assert: ((p1 definedSelectorsForClass: a1) includes: #methodDefinedInP1).
 	self assert: ((p1 definedSelectorsForClass: a1) includes: #anotherMethodDefinedInP1).
-	self assert: ((p1 definedMethodsForClass: a1) includes: (testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1).
+	self assert: ((p1 definedMethodsForClass: a1) includes: a1 >> #methodDefinedInP1).
 	self assertEmpty: (p1 definedSelectorsForClass: Object).
 	self assertEmpty: (p1 definedSelectorsForClass: Object class)
 ]
@@ -267,9 +266,10 @@ RPackageReadOnlyCompleteSetupTest >> testExtensionSelectors [
 
 { #category : #'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testExtensionSelectorsForClass [
+
 	self assert: (p1 extensionSelectorsForClass: a2) size equals: 1.
 	self assert: ((p1 extensionSelectorsForClass: a2) includes: #methodDefinedInP1).
-	self assert: ((p1 extensionMethodsForClass: a2) includes: (testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1).
+	self assert: ((p1 extensionMethodsForClass: a2) includes: a2 >> #methodDefinedInP1).
 	self assertEmpty: (p1 extensionSelectorsForClass: Object).
 	self assertEmpty: (p1 extensionSelectorsForClass: Object class)
 ]
@@ -300,17 +300,18 @@ RPackageReadOnlyCompleteSetupTest >> testMethods [
 
 { #category : #'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testMethodsForClass [
+
 	self assert: (p1 methodsForClass: a1) size equals: 2.
-	self assert: ((p1 methodsForClass: a1) includes: (testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1).
-	self assert: ((p1 methodsForClass: a1) includes: (testingEnvironment at: #A1DefinedInP1) >> #anotherMethodDefinedInP1).
+	self assert: ((p1 methodsForClass: a1) includes: a1 >> #methodDefinedInP1).
+	self assert: ((p1 methodsForClass: a1) includes: a1 >> #anotherMethodDefinedInP1).
 	self assertEmpty: (p1 methodsForClass: b1).
 	self assertEmpty: (p1 methodsForClass: Object).
 	self assertEmpty: (p1 methodsForClass: Object class).
 
 	self assert: (p3 methodsForClass: a2) size equals: 1.
-	self assert: ((p3 methodsForClass: a2) includes: (testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP3).
+	self assert: ((p3 methodsForClass: a2) includes: a2 >> #methodDefinedInP3).
 	self assert: (p3 methodsForClass: a2 class) size equals: 1.
-	self assert: ((p3 methodsForClass: a2 class) includes: (testingEnvironment at: #A2DefinedInP2) class >> #classSideMethodDefinedInP3)
+	self assert: ((p3 methodsForClass: a2 class) includes: a2 class >> #classSideMethodDefinedInP3)
 ]
 
 { #category : #'tests - accessing' }
