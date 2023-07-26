@@ -52,7 +52,7 @@ RPackageOrganizerTest >> pointRectangleInGraphElement [
 
 { #category : #utilities }
 RPackageOrganizerTest >> quadrangleClass [
-	^ self class environment at: #QuadrangleForTesting
+	^ self organizer environment at: #QuadrangleForTesting
 ]
 
 { #category : #tests }

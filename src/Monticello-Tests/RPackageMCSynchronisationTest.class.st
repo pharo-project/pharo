@@ -61,7 +61,7 @@ RPackageMCSynchronisationTest >> addZCategory [
 { #category : #setup }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
-	Smalltalk
+	self organizer environment
 		removeClassNamed: 'NewClass';
 		removeClassNamed: 'RPackageNewStubClass';
 		removeClassNamed: 'RPackageOldStubClass';
