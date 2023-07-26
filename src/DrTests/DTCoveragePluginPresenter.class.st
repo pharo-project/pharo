@@ -36,6 +36,15 @@ DTCoveragePluginPresenter >> addHighlightingOf: nodesCollection withColor: aColo
 ]
 
 { #category : #initialization }
+DTCoveragePluginPresenter >> cleanAttributesForHighlighting [
+	" Clean the attributes to store new value to display on Source Code panel "
+
+	yellowNodes := OrderedCollection new.
+	uncoveredNodes := OrderedCollection new.
+	coveredNodes := OrderedCollection new
+]
+
+{ #category : #initialization }
 DTCoveragePluginPresenter >> connectPresenters [
 
 	super connectPresenters.
@@ -76,11 +85,6 @@ DTCoveragePluginPresenter >> defaultLayout [
 
 { #category : #highlighting }
 DTCoveragePluginPresenter >> defineColorCoverage: aMethod [
-	" Clean the attributes to store new value to display on Source Code panel "
-
-	yellowNodes := OrderedCollection new.
-	uncoveredNodes := OrderedCollection new.
-	coveredNodes := OrderedCollection new.
 
 	aMethod ast nodesDo: [ :node |
 		node isSequence ifTrue: [
@@ -102,7 +106,7 @@ DTCoveragePluginPresenter >> defineColorMessageNode: aRBMessageNode [
 		              element isBlock ].
 	blockNodes isNotEmpty ifTrue: [
 		(blockNodes allSatisfy: [ :arg | arg body hasBeenExecuted ])
-			ifFalse: [ yellowNodes add: aRBMessageNode ] ]
+			ifFalse: [ yellowNodes add: aRBMessageNode . ] ]
 ]
 
 { #category : #highlighting }
@@ -126,13 +130,14 @@ DTCoveragePluginPresenter >> initializeResultsTreeAndLabel [
 
 	resultsList outputActivationPort transmitDo: [
 		(DTResultBrowseCommand forSpecContext: self) execute ].
-	sourceCodePanel := self instantiate: SpCodePresenter
+	sourceCodePanel := self instantiate: SpCodePresenter .
 ]
 
 { #category : #layout }
 DTCoveragePluginPresenter >> updateSourceCodePanel: compiledMethod [
 	" The colors overlap and paint in descending order"
 
+	self cleanAttributesForHighlighting.
 	self defineColorCoverage: compiledMethod.
 	sourceCodePanel beForMethod: compiledMethod.
 	sourceCodePanel text: compiledMethod sourceCode.
