@@ -65,7 +65,12 @@ RBAddTemporaryVariableTransformation >> applicabilityConditions [
 			withBlock: [ self definingClass isNotNil ]
 			errorString: 'No such class or trait named ', className )
 		& ( RBCondition definesSelector: selector in: self definingClass)
-		& ( RBCondition
+]
+
+{ #category : #preconditions }
+RBAddTemporaryVariableTransformation >> breakingChangeConditions [ 
+
+	^ ( RBCondition
 			withBlock: [ (self definingMethod allTemporaryVariables includes: variableName) not ]
 			errorString: 'Method named ', selector, ' already defines a temporary variable named ', variableName )
 		& ( RBCondition
