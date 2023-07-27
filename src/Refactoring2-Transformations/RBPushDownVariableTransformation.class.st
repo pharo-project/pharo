@@ -17,6 +17,50 @@ Class {
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
+{ #category : #preconditions }
+RBPushDownVariableTransformation >> applicabilityConditionsForClassVariable [
+	"it does not perform when two subclasses (and/or their subclasses) accesses this variable"
+
+	^ RBCondition
+		  definesClassVariable: variableName
+		  in: self definingClass
+]
+
+{ #category : #preconditions }
+RBPushDownVariableTransformation >> applicabilityConditionsForInstanceVariable [
+
+	^ RBCondition
+		  definesInstanceVariable: variableName
+		  in: self definingClass
+]
+
+{ #category : #preconditions }
+RBPushDownVariableTransformation >> breakingChangeConditionsForClassVariable [
+
+	^ RBCondition withBlock: [
+		  | numSubclassesAccessing |
+		  numSubclassesAccessing := self definingClass subclasses count: [
+			                            :subclass |
+			                            subclass withAllSubclasses anySatisfy: [
+				                            :e |
+				                            (e
+					                             whichSelectorsReferToClassVariable:
+					                             variableName) isNotEmpty or: [
+					                            (e classSide
+						                             whichSelectorsReferToClassVariable:
+						                             variableName) isNotEmpty ] ] ].
+		  numSubclassesAccessing < 2 ]
+]
+
+{ #category : #preconditions }
+RBPushDownVariableTransformation >> breakingChangeConditionsForInstanceVariable [
+
+	^ RBCondition
+		  accessesInstanceVariable: variableName
+		  in: self definingClass
+		  showIn: self
+]
+
 { #category : #executing }
 RBPushDownVariableTransformation >> buildTransformations [
 
@@ -42,29 +86,8 @@ RBPushDownVariableTransformation >> preconditions [
 	(and/or their subclasses) access this variable"
 
 	^ isClassVariable
-		ifTrue: [ self preconditionsForClassVariable ]
-		ifFalse: [ self preconditionsForInstanceVariable ]
-]
-
-{ #category : #preconditions }
-RBPushDownVariableTransformation >> preconditionsForClassVariable [
-	"it does not perform when two subclasses (and/or their subclasses) accesses this variable"
-
-	^ (RBCondition definesClassVariable: variableName in: self definingClass)
-		& (RBCondition withBlock: [
-			| numSubclassesAccessing |
-			numSubclassesAccessing := self definingClass subclasses count: [ :subclass |
-				subclass withAllSubclasses anySatisfy: [ :e |
-					(e whichSelectorsReferToClassVariable: variableName) isNotEmpty
-					or: [ (e classSide whichSelectorsReferToClassVariable: variableName) isNotEmpty ] ] ].
-			numSubclassesAccessing < 2 ])
-]
-
-{ #category : #preconditions }
-RBPushDownVariableTransformation >> preconditionsForInstanceVariable [
-
-	^ (RBCondition definesInstanceVariable: variableName in: self definingClass)
-		& (RBCondition accessesInstanceVariable: variableName in: self definingClass showIn: self)
+		ifTrue: [ self applicabilityConditionsForClassVariable ]
+		ifFalse: [ self applicabilityConditionsForInstanceVariable ]
 ]
 
 { #category : #printing }
