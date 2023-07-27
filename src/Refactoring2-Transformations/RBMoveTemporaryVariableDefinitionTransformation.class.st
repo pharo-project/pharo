@@ -69,14 +69,6 @@ RBMoveTemporaryVariableDefinitionTransformation >> applicabilityConditions [
 			errorString: 'Variable named ', variableName, ' is used in an outside block.')
 ]
 
-{ #category : #converting }
-RBMoveTemporaryVariableDefinitionTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
-]
-
 { #category : #executing }
 RBMoveTemporaryVariableDefinitionTransformation >> buildTransformations [
 

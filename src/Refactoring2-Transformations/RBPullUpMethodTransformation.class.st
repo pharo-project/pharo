@@ -49,14 +49,6 @@ RBPullUpMethodTransformation >> applicabilityConditions [
 							true])
 ]
 
-{ #category : #converting }
-RBPullUpMethodTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
-]
-
 { #category : #executing }
 RBPullUpMethodTransformation >> buildTransformations [
 	^ OrderedCollection new

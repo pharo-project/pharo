@@ -52,14 +52,6 @@ RBPushDownMethodTransformation >> applicabilityConditions [
 	^ condition 
 ]
 
-{ #category : #converting }
-RBPushDownMethodTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
-]
-
 { #category : #executing }
 RBPushDownMethodTransformation >> buildTransformations [
 

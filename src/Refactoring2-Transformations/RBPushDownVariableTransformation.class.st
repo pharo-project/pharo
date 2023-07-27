@@ -17,14 +17,6 @@ Class {
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
-{ #category : #converting }
-RBPushDownVariableTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
-]
-
 { #category : #executing }
 RBPushDownVariableTransformation >> buildTransformations [
 
