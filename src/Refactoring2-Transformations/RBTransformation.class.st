@@ -13,9 +13,6 @@ My main API is
 Class {
 	#name : #RBTransformation,
 	#superclass : #RBAbstractTransformation,
-	#instVars : [
-		'preconditionChecking'
-	],
 	#category : #'Refactoring2-Transformations-Model'
 }
 
