@@ -64,7 +64,6 @@ RBTransformation >> applicabilityConditions [
 { #category : #converting }
 RBTransformation >> asRefactoring [
 
-	self preconditionChecking: true.
 	^ self yourself
 ]
 
@@ -116,28 +115,10 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : #initialization }
-RBTransformation >> initialize [
-	super initialize.
-	preconditionChecking := false
-]
-
 { #category : #accessing }
 RBTransformation >> model [
 
 	^ model ifNil: [ model := self newModel ]
-]
-
-{ #category : #preconditions }
-RBTransformation >> preconditionChecking [
-
-	^ preconditionChecking
-]
-
-{ #category : #preconditions }
-RBTransformation >> preconditionChecking: aBoolean [
-
-	preconditionChecking := aBoolean
 ]
 
 { #category : #preconditions }
