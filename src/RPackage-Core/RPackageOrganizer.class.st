@@ -578,17 +578,15 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 
 { #category : #'system integration' }
 RPackageOrganizer >> packageMatchingExtensionName: aString includingClass: aClass [
-	| package categoryName |
 
+	| package categoryName |
 	categoryName := aString.
 	package := self packageMatchingExtensionName: categoryName.
-	[ package includesClass: aClass ]
-		whileFalse: [
-			(categoryName includes: $-)
-				ifFalse: [ self error: 'Class not categorized!' ].
+	[ package includesClass: aClass ] whileFalse: [
+		(categoryName includes: $-) ifFalse: [ self error: 'The class ' , aClass name , ' is not categorized but expected in category ' , aString ].
 
-			categoryName := categoryName copyUpToLast: $-.
-			package := self packageMatchingExtensionName: categoryName ].
+		categoryName := categoryName copyUpToLast: $-.
+		package := self packageMatchingExtensionName: categoryName ].
 
 	^ package
 ]
