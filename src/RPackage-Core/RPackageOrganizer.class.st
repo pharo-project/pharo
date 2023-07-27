@@ -1096,7 +1096,7 @@ RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
 	"Since the method was already removed we cannot just ask #package because it is unpackaged, but we still need to remove the selector from the method cache of its previous class"
 	package := ann method extensionPackage ifNil: [ self packageOf: ann method methodClass ].
 
-	package ifNotNil: [ :package | package removeMethod: ann method ]
+	package ifNotNil: [ :p | p removeMethod: ann method ]
 ]
 
 { #category : #accessing }
