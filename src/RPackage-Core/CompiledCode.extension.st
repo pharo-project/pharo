@@ -2,7 +2,8 @@ Extension { #name : #CompiledCode }
 
 { #category : #'*RPackage-Core' }
 CompiledCode >> package [
-	^ self packageFromOrganizer: RPackage organizer
+
+	^ self packageFromOrganizer: self origin packageOrganizer
 ]
 
 { #category : #'*RPackage-Core' }
