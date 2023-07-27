@@ -1008,7 +1008,6 @@ RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 
 { #category : #'system integration' }
 RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
-
 	"this announcement can correspond to several kind of modifications:
 		=> a method has been renamed
 		=> a method has been move to another category // SHOULD BE TREATED WITH SystemMethodRecategorizedEvent
@@ -1019,6 +1018,7 @@ RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
 			- maybe from a classic category to another classic category
 			)
 	"
+
 	| oldMethod newMethod methodPackage |
 	newMethod := ann newMethod.
 	oldMethod := ann oldMethod.
@@ -1027,17 +1027,16 @@ RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
 	We should remove this method to see if this is working."
 
 	"If the method origin is not the one of the event, we do not care about that method"
-	newMethod origin = ann methodClass ifFalse: [^ self].
+	newMethod origin = ann methodClass ifFalse: [ ^ self ].
 
 
 	"Special case for trait methods added an override"
-	newMethod origin = oldMethod origin
-		ifFalse: [ ^ self addMethod: newMethod ].
+	newMethod origin = oldMethod origin ifFalse: [ ^ self addMethod: newMethod ].
 
-	methodPackage := newMethod packageFromOrganizer: self.
+	methodPackage := newMethod package.
 	"maybe the name of the method has changed"
-	oldMethod selector = newMethod selector
-		ifFalse: [ methodPackage updateSelector: oldMethod selector inClass: oldMethod methodClass withNewSelector: newMethod selector]
+	oldMethod selector = newMethod selector ifFalse: [
+		methodPackage updateSelector: oldMethod selector inClass: oldMethod methodClass withNewSelector: newMethod selector ]
 ]
 
 { #category : #'system integration' }
@@ -1064,7 +1063,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		               ifNotNil: [ :protocol | protocol name ]
 		               ifNil: [ '' ].
 
-	methodPackage := method packageFromOrganizer: self.
+	methodPackage := method package.
 	(newProtocol sameAs: oldProtocol) ifTrue: [ ^ self ].
 
 	destinationPackage := (self hasPackageForProtocol: newProtocol)

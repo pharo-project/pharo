@@ -52,12 +52,12 @@ FuzzyMatcherExample class >> exampleClasses [
 
 { #category : #examples }
 FuzzyMatcherExample class >> examplePackages [
-	<example>
 
+	<example>
 	^ self new
-		pattern: '-st';
-		elements: (RPackage organizer packages collect: [:each | each name] );
-		open
+		  pattern: '-st';
+		  elements: (self packageOrganizer packages collect: [ :each | each name ]);
+		  open
 ]
 
 { #category : #examples }
