@@ -69,7 +69,8 @@ RPackageTag >> classNames [
 
 { #category : #accessing }
 RPackageTag >> classes [
-	^ self classNames collect: [ :each | self class environment at: each ]
+
+	^ self classNames collect: [ :each | self environment at: each ]
 ]
 
 { #category : #accessing }
@@ -77,6 +78,12 @@ RPackageTag >> ensureSystemCategory [
 	"We should not hardcode the global variable but ask the package organizer for the organization."
 
 	self packageOrganizer addCategory: self categoryName
+]
+
+{ #category : #accessing }
+RPackageTag >> environment [
+
+	^ self package environment
 ]
 
 { #category : #accessing }
@@ -122,9 +129,8 @@ RPackageTag >> includesProtocol: protocol ofClass: aClass [
 
 { #category : #testing }
 RPackageTag >> includesSelector: aSelector ofClass: aClass [
-	^ self package
-		includesSelector: aSelector
-		ofClass: aClass
+
+	^ self package includesSelector: aSelector ofClass: aClass
 ]
 
 { #category : #initialization }

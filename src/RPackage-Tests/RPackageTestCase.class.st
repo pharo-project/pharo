@@ -35,6 +35,7 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 	cls := self class classInstaller make: [ :aClassBuilder |
 		       aClassBuilder
 			       name: aName;
+			       installingEnvironment: self organizer environment;
 			       package: cat ].
 
 	createdClasses add: cls.
@@ -74,6 +75,7 @@ RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 		       aBuilder
 			       name: aName;
 			       package: cat;
+			       installingEnvironment: self organizer environment;
 			       beTrait ].
 
 	createdClasses add: cls.
@@ -130,7 +132,7 @@ RPackageTestCase >> setUp [
 { #category : #accessing }
 RPackageTestCase >> setupOrganizer [
 
-	^ RPackageOrganizer new
+	^ self class environment class new organization
 		  debuggingName: 'Organizer for RPackageTest';
 		  yourself
 ]
