@@ -49,12 +49,6 @@ RBRemoveDirectAccessToVariableTransformation >> getterMethod [
 			ifNil: [ variableName uncapitalized asSymbol ] ]
 ]
 
-{ #category : #preconditions }
-RBRemoveDirectAccessToVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveDirectAccessToVariableTransformation >> privateTransform [
 

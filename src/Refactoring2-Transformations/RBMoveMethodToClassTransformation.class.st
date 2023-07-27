@@ -54,11 +54,6 @@ RBMoveMethodToClassTransformation >> method: aMethod class: aClass [
 ]
 
 { #category : #transforming }
-RBMoveMethodToClassTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
-{ #category : #transforming }
 RBMoveMethodToClassTransformation >> privateTransform [
 	| oldClass newClass rbMethod originalProtocol |
 	oldClass := self classModelOf: method methodClass.

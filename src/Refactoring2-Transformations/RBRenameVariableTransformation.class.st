@@ -122,12 +122,6 @@ RBRenameVariableTransformation >> isNotGlobal [
 	^ (RBCondition isGlobal: newVariableName in: self model) not
 ]
 
-{ #category : #preconditions }
-RBRenameVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRenameVariableTransformation >> privateTransform [
 

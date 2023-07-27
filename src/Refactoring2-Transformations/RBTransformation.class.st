@@ -55,6 +55,12 @@ RBTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
 
+{ #category : #preconditions }
+RBTransformation >> applicabilityConditions [ 
+	
+	^ self trueCondition 
+]
+
 { #category : #converting }
 RBTransformation >> asRefactoring [
 
@@ -137,7 +143,7 @@ RBTransformation >> preconditionChecking: aBoolean [
 { #category : #preconditions }
 RBTransformation >> preconditions [
 
-	^ self trueCondition
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }
@@ -158,12 +164,12 @@ RBTransformation >> setOption: aSymbol toUse: aBlock [
 	self options at: aSymbol put: aBlock
 ]
 
-{ #category : #executing }
+{ #category : #transforming }
 RBTransformation >> transform [
 	"Performs this transformation in a model,
 	 then it adds the refactoring to the manager"
 
-	self preconditionChecking ifTrue: [ self checkPreconditions ].
+	self checkPreconditions.
 	self privateTransform
 
 	"below executes the refactoring without prompt"

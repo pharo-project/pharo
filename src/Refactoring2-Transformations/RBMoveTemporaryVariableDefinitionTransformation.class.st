@@ -170,12 +170,6 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 	^ definingNode
 ]
 
-{ #category : #preconditions }
-RBMoveTemporaryVariableDefinitionTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #printing }
 RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [
 

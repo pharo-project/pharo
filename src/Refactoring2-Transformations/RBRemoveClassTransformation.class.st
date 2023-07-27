@@ -131,12 +131,6 @@ RBRemoveClassTransformation >> preconditionIsNotMetaclass: aClass [
 		errorMacro: 'Cannot remove just the metaclass') not
 ]
 
-{ #category : #preconditions }
-RBRemoveClassTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveClassTransformation >> privateTransform [
 

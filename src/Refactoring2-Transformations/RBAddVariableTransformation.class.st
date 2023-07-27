@@ -47,12 +47,6 @@ RBAddVariableTransformation >> isNotGlobal [
 	^ (RBCondition isGlobal: variableName in: self model) not
 ]
 
-{ #category : #preconditions }
-RBAddVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBAddVariableTransformation >> privateTransform [
 

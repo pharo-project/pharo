@@ -60,12 +60,6 @@ RBAddMethodTransformation >> applicabilityConditions [
 		in: self definingClass) not
 ]
 
-{ #category : #preconditions }
-RBAddMethodTransformation >> preconditions [
-	
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBAddMethodTransformation >> privateTransform [
 

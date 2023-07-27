@@ -244,12 +244,6 @@ RBPullUpMethodTransformation >> copyDownMethods [
 	^ selectors flatCollect: [:each | self copyDownMethod: each]
 ]
 
-{ #category : #preconditions }
-RBPullUpMethodTransformation >> preconditions [
-	^ self applicabilityConditions 
-	
-]
-
 { #category : #executing }
 RBPullUpMethodTransformation >> pullUp: aSelector [
 	| source refactoring |

@@ -72,12 +72,6 @@ RBAddVariableAccessorTransformation >> getterMethod [
 	^ getterMethod
 ]
 
-{ #category : #preconditions }
-RBAddVariableAccessorTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBAddVariableAccessorTransformation >> privateTransform [
 

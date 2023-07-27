@@ -73,12 +73,6 @@ RBPushDownMethodTransformation >> classes: aCollection [
 	]
 ]
 
-{ #category : #preconditions }
-RBPushDownMethodTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #transforming }
 RBPushDownMethodTransformation >> pushDown: aSelector [
 

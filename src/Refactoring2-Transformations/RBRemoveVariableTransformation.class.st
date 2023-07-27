@@ -33,12 +33,6 @@ RBRemoveVariableTransformation >> applicabilityConditions [
 ]
 
 { #category : #preconditions }
-RBRemoveVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #preconditions }
 RBRemoveVariableTransformation >> preconditionsForClassVariable [
 
 	^ (RBCondition isMetaclass: class) not

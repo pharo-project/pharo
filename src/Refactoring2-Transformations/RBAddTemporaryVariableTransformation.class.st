@@ -73,12 +73,6 @@ RBAddTemporaryVariableTransformation >> applicabilityConditions [
 			errorString: 'Method named ', selector, ' already defines an argument named ', variableName )
 ]
 
-{ #category : #preconditions }
-RBAddTemporaryVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBAddTemporaryVariableTransformation >> privateTransform [
 

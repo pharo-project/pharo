@@ -13,8 +13,7 @@ Class {
 	#superclass : #RBTransformation,
 	#instVars : [
 		'previousTransformations',
-		'transformations',
-		'delegatesPreconditions'
+		'transformations'
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }
@@ -43,19 +42,6 @@ RBCompositeTransformation >> buildTransformations [
 ]
 
 { #category : #accessing }
-RBCompositeTransformation >> delegatesPreconditions: aBoolean [
-
-	delegatesPreconditions := aBoolean
-]
-
-{ #category : #initialization }
-RBCompositeTransformation >> initialize [
-
-	super initialize.
-	delegatesPreconditions := true
-]
-
-{ #category : #accessing }
 RBCompositeTransformation >> previousTransformations [
 	^ previousTransformations ifNil: [ previousTransformations := OrderedCollection new ]
 ]
@@ -72,7 +58,6 @@ RBCompositeTransformation >> privateTransform [
 		transformation
 			copyOptionsFrom: self options;
 			model: self model;
-			preconditionChecking: (delegatesPreconditions & self preconditionChecking);
 			transform ]
 ]
 
