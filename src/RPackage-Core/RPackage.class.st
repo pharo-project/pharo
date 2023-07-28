@@ -679,27 +679,7 @@ RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
 RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
 
-	| sels |
-	sels := self definedSelectorsForClass: aClass.
-	^ sels includes: aSelector asSymbol
-]
-
-{ #category : #testing }
-RPackage >> includesDefinedSelector: aSelector ofClassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
-
-	| sels |
-	sels := classDefinedSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector asSymbol
-]
-
-{ #category : #testing }
-RPackage >> includesDefinedSelector: aSelector ofMetaclassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
-
-	| sels |
-	sels := metaclassDefinedSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector asSymbol
+	^ (self definedSelectorsForClass: aClass) includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -745,25 +725,7 @@ RPackage >> includesProtocol: protocol ofClass: aClass [
 RPackage >> includesSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 
-	^ aClass isMeta
-		ifTrue: [ self includesSelector: aSelector ofMetaclassName: aClass instanceSide name  ]
-		ifFalse: [ self includesSelector: aSelector ofClassName: aClass name  ]
-]
-
-{ #category : #testing }
-RPackage >> includesSelector: aSelector ofClassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
-
-	^ (self includesDefinedSelector: aSelector ofClassName: aClassName)
-		or: [(self includesExtensionSelector: aSelector ofClassName: aClassName)]
-]
-
-{ #category : #testing }
-RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
-
-	^ (self includesDefinedSelector: aSelector ofMetaclassName: aClassName)
-		or: [(self includesExtensionSelector: aSelector ofMetaclassName: aClassName)]
+	^ (self includesDefinedSelector: aSelector ofClass: aClass) or: [ self includesExtensionSelector: aSelector ofClass: aClass ]
 ]
 
 { #category : #'system compatibility' }
