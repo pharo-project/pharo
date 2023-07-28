@@ -47,7 +47,7 @@ TaRemoveMethod >> removedSelectors: anObject [
 
 { #category : #accessing }
 TaRemoveMethod >> selectors [
-	^ inner selectors reject: [ :e | removedSelectors includes: e ]
+	^ inner selectors reject: [ :selector | removedSelectors includes: selector ]
 ]
 
 { #category : #printing }

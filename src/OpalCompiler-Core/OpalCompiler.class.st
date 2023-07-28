@@ -785,8 +785,8 @@ OpalCompiler >> semanticScope: anObject [
 
 { #category : #accessing }
 OpalCompiler >> source: aString [
+	"source should be a string, but call contents for old clients that send streams. Some users can also send text and so we transform it into a string. If we don't do this transformation, the compiled method #sourceCode method will return a Text instead of a String which can break its users."
 
-	"source should be a string, but call contents for old clients that send streams"
-	source := aString contents.
+	source := aString contents asString.
 	ast := nil
 ]

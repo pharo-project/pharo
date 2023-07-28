@@ -220,14 +220,30 @@ RPackage >> addMethod: aCompiledMethod [
 	(self includesClass: methodClass)
 		ifTrue: [
 			methodClass isMeta
-				ifTrue: [ (metaclassDefinedSelectors at: methodClass instanceSide name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ]
-				ifFalse: [ (classDefinedSelectors at: methodClass name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ] ]
-		ifFalse: [
+				ifTrue: [
+					(metaclassDefinedSelectors
+						at: methodClass instanceSide name
+						ifAbsentPut: [ IdentitySet new ])
+						add: aCompiledMethod selector]
+				ifFalse: [
+					(classDefinedSelectors
+						at: methodClass name
+						ifAbsentPut: [ IdentitySet new ])
+						add: aCompiledMethod selector ] ]
+		ifFalse:  [
 			methodClass isMeta
-				ifTrue: [ (metaclassExtensionSelectors at: methodClass instanceSide name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ]
-				ifFalse: [ (classExtensionSelectors at: methodClass name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ].
-			"we added a method extension so the receiver is an extending package of the class"
-			self organizer registerExtendingPackage: self forClass: methodClass ].
+				ifTrue: [
+					(metaclassExtensionSelectors
+						at: methodClass instanceSide name
+						ifAbsentPut: [ IdentitySet new ])
+						add: aCompiledMethod selector.]
+				ifFalse: [
+					(classExtensionSelectors
+						at: methodClass name
+						ifAbsentPut: [ IdentitySet new ])
+						add: aCompiledMethod selector].
+				"we added a method extension so the receiver is an extending package of the class"
+				self organizer registerExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
@@ -616,7 +632,7 @@ RPackage >> includesClass: aClass [
 RPackage >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ classes includes: aSymbol
+	^ classes includes: aSymbol asSymbol
 ]
 
 { #category : #testing }
@@ -637,7 +653,7 @@ RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 
 	| sels |
 	sels := self definedSelectorsForClass: aClass.
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -646,7 +662,7 @@ RPackage >> includesDefinedSelector: aSelector ofClassName: aClassName [
 
 	| sels |
 	sels := classDefinedSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -655,7 +671,7 @@ RPackage >> includesDefinedSelector: aSelector ofMetaclassName: aClassName [
 
 	| sels |
 	sels := metaclassDefinedSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -664,7 +680,7 @@ RPackage >> includesExtensionSelector: aSelector ofClass: aClass [
 
 	| sels |
 	sels := self extensionSelectorsForClass: aClass.
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -673,7 +689,7 @@ RPackage >> includesExtensionSelector: aSelector ofClassName: aClassName [
 
 	| sels |
 	sels := classExtensionSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -682,7 +698,7 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 
 	| sels |
 	sels := metaclassExtensionSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -731,11 +747,11 @@ RPackage >> includesSystemCategory: categoryName [
 { #category : #initialization }
 RPackage >> initialize [
 	super initialize.
-	classes := Set new.
-	metaclassExtensionSelectors := Dictionary new.
-	classExtensionSelectors := Dictionary new.
-	classDefinedSelectors := Dictionary new.
-	metaclassDefinedSelectors := Dictionary new.
+	classes := IdentitySet new.
+	metaclassExtensionSelectors := IdentityDictionary new.
+	classExtensionSelectors := IdentityDictionary new.
+	classDefinedSelectors := IdentityDictionary new.
+	metaclassDefinedSelectors := IdentityDictionary new.
 	classTags := Set new
 ]
 
@@ -1239,8 +1255,8 @@ RPackage >> updateDefinedClassNamed: oldString withNewName: newString [
 	(oldString substrings size > 1 or: [ newString substrings size > 1 ])
 		ifTrue: [ Error signal: 'You should not use metaclass names' ].	"=> update the 'classDefinedSelectors' dictionary (replace the old key by the new one)
        => update the 'metaclassDefinedSelectors' dictionary (replace the old key by the new one)"
-	classes remove: oldString.
-	classes add: newString.	"Don't forget that class tags also register the classes names."
+	classes remove: oldString asSymbol.
+	classes add: newString asSymbol.	"Don't forget that class tags also register the classes names."
 	self classTags do: [ :aTag | aTag updateDefinedClassNamed: oldString withNewName: newString ].
 	self flag: #cyrille.	"what happens if this is a metaclass: it breaks the invariant of the package"	"worse so far the second block below breaks"	"the name of the method should be updateDefinedClassNamed: withNewName:"	"CD: i only use this method when a class is renamed in the system (systemClassRenamedActionFrom:). Normally we are not able to rename a metaclass in the system (?) so we should never end up in a case with metaclass names ?  "
 	(classDefinedSelectors at: oldString ifAbsent: [ nil ])

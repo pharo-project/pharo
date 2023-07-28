@@ -50,7 +50,8 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: aString [
 
 { #category : #running }
 HDTestReport class >> runPackage: aString [
-	^ self runClasses: (RPackage organizer packageNamed: aString) definedClasses named: aString
+
+	^ self runClasses: (self packageOrganizer packageNamed: aString) definedClasses named: aString
 ]
 
 { #category : #running }

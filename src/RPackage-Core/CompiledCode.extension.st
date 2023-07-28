@@ -1,23 +1,27 @@
 Extension { #name : #CompiledCode }
 
 { #category : #'*RPackage-Core' }
-CompiledCode >> package [
-	^ self packageFromOrganizer: RPackage organizer
+CompiledCode >> extensionPackage [
+	"Private method - Do not use it if you don't know what to do.
+	In case I am in an extension, I return the package containing me. Else return nil."
+
+	| originSelector class |
+	originSelector := self originMethod selector.
+	class := self origin.
+
+	^ class extendingPackages
+		  detect: [ :extendedPackage |
+			  class isMeta
+				  ifFalse: [ extendedPackage includesExtensionSelector: originSelector ofClassName: class instanceSide originalName ]
+				  ifTrue: [ extendedPackage includesExtensionSelector: originSelector ofMetaclassName: class instanceSide originalName ] ]
+		  ifNone: [ nil ]
 ]
 
 { #category : #'*RPackage-Core' }
-CompiledCode >> packageFromOrganizer: anRPackageOrganizer [
-	| originSelector |
-	"This method returns the package this method belongs to.
-	It takes into account classes and traits.
-	If the method is in no package, returns nil by now"
-	self flag: 'TODO: use anRPackageOrganizer, or better delegate to anRPackageOrganizer'.
-	originSelector := self originMethod selector.
+CompiledCode >> package [
+	"This method returns the package this method belongs to. It takes into account classes and traits.
+	If the method is in no package, returns nil"
 
-	^self origin packages
-		detect: [ :each |
-			self origin isMeta
-				ifFalse: [ each includesSelector: originSelector ofClassName: self origin instanceSide originalName]
-				ifTrue: [ each includesSelector: originSelector ofMetaclassName: self origin instanceSide originalName]]
-		ifNone: [ nil ]
+	self isInstalled ifFalse: [ ^ nil ].
+	^ self extensionPackage ifNil: [ self origin package ]
 ]
