@@ -141,35 +141,6 @@ RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
 	self assert: (p1 extendsClass: a2)
 ]
 
-{ #category : #'tests - slice' }
-RPackageReadOnlyCompleteSetupTest >> testClassNamesAndExtensionSelectorsDo [
-	self assert: (String streamContents: [:stream |
-		{p1 . p2 .p3} do: [:p |
-			p classNamesAndExtensionSelectorsDo: [:aClassName :selector |
-				stream nextPutAll: aClassName  ; nextPutAll: ' ' ; nextPutAll:  selector asString; cr ]]])
-		equals: 'A2DefinedInP2 methodDefinedInP1
-A2DefinedInP2 methodDefinedInP3
-A2DefinedInP2_class classSideMethodDefinedInP3
-'
-]
-
-{ #category : #'tests - slice' }
-RPackageReadOnlyCompleteSetupTest >> testClassesAndExtensionMethodsDo [
-	| block |
-	self assert: (String streamContents: [:stream |
-		block := [ :aClassName :selectors |
-				stream nextPutAll: aClassName ; nextPutAll: ' '.
-				selectors do: [ :selector | stream nextPutAll: selector asString].
-				stream cr.].
-		{p1 . p2 . p3} do: [ :p |
-			p classExtensionSlicesDo: block.
-			p metaclassExtensionSlicesDo: block.]])
-		equals: 'A2DefinedInP2 methodDefinedInP1
-A2DefinedInP2 methodDefinedInP3
-A2DefinedInP2 classSideMethodDefinedInP3
-'
-]
-
 { #category : #'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsDefinedInPackage [
 
@@ -240,19 +211,8 @@ RPackageReadOnlyCompleteSetupTest >> testExtendingPackagesOfClass [
 RPackageReadOnlyCompleteSetupTest >> testExtensionMethods [
 	"a package can extend several classes, either the class or  the meta-class side. 'extensionMethods' should list all the methods involved in shuch extensions. P3 extend a2 and a2 class"
 
-	| package extensionMethods cpt |
-	package := p3.
-	extensionMethods := package extensionMethods.	"self assert: (extensionMethods size = 2)."
-	self assert: (extensionMethods includes: a2 >> #methodDefinedInP3).
-	self assert: (extensionMethods includes: a2 class >> #classSideMethodDefinedInP3).
-	cpt := 0.
-	package
-		metaclassExtensionSlicesDo: [ :className :listOfSelectors | (className = a2 name and: [ listOfSelectors includes: #classSideMethodDefinedInP3 ]) ifTrue: [ cpt := cpt + 1 ] ].
-	self assert: cpt equals: 1.
-	cpt := 0.
-	package
-		classExtensionSlicesDo: [ :className :listOfSelectors | (className = a2 name and: [ listOfSelectors includes: #methodDefinedInP3 ]) ifTrue: [ cpt := cpt + 1 ] ].
-	self assert: cpt equals: 1
+	self assert: (p3 extensionMethods includes: a2 >> #methodDefinedInP3).
+	self assert: (p3 extensionMethods includes: a2 class >> #classSideMethodDefinedInP3)
 ]
 
 { #category : #'tests - situation' }

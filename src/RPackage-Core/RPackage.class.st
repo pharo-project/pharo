@@ -285,38 +285,9 @@ RPackage >> basicRemoveTag: tag [
 	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
-{ #category : #slices }
-RPackage >> classDefinedSlicesDo: aBlock [
-	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
-
-	classDefinedSelectors keysAndValuesDo: aBlock
-]
-
 { #category : #private }
 RPackage >> classExtensionSelectors [
 	^ classExtensionSelectors
-]
-
-{ #category : #slices }
-RPackage >> classExtensionSlicesDo: aBlock [
-	"This method iterates over the class extensions and their associated selectors. A slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlock first argument is the class and the second argument a list of method selectors"
-
-	classExtensionSelectors keysAndValuesDo: aBlock
-]
-
-{ #category : #slices }
-RPackage >> classNamesAndExtensionSelectorsDo: aBlock [
-	"Iterate over the extended methods grouped by classes and apply the argument.
-	The block will be passed a class name and each individual selectors.
-	Only classes with methods are paired with their methods"
-
-	classExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-			methods do: [ :sel |  aBlock value: classSymbol	value: sel]].
-
-	metaclassExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-			methods do: [ :sel |  aBlock
-									value: (classSymbol, '_class') asSymbol
-									value: sel]]
 ]
 
 { #category : #'class tags' }
@@ -509,15 +480,6 @@ RPackage >> extendsClass: aClass [
 	| canonizedName |
 	canonizedName := aClass instanceSide name.
 	^ self extendedClassNames includes: canonizedName
-]
-
-{ #category : #'system compatibility' }
-RPackage >> extensionCategoriesForClass: aClass [
-
-	self
-		deprecated: 'Use #extensionProtocolsForClass: instead.'
-		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
-	^ self extensionProtocolsForClass: aClass
 ]
 
 { #category : #accessing }
@@ -760,23 +722,9 @@ RPackage >> linesOfCode [
 	^self methods inject: 0 into: [:sum :each | sum + each linesOfCode]
 ]
 
-{ #category : #slices }
-RPackage >> metaclassDefinedSlicesDo: aBlock [
-	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
-
-	metaclassDefinedSelectors keysAndValuesDo: aBlock
-]
-
 { #category : #private }
 RPackage >> metaclassExtensionSelectors [
 	^ metaclassExtensionSelectors
-]
-
-{ #category : #slices }
-RPackage >> metaclassExtensionSlicesDo: aBlock [
-	"This method iterates over the metaclass extensions and their associated selectors. A slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and second argument a list of selectors"
-
-	metaclassExtensionSelectors keysAndValuesDo: aBlock
 ]
 
 { #category : #'system compatibility' }
