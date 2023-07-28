@@ -23,10 +23,7 @@ CoBenchmarkPackage class >> on: aRPackage [
 { #category : #enumerating }
 CoBenchmarkPackage >> methodsDo: aBlockClosure [
 
-	package definedClassesDo: [ :each | | class |
-		class := self class environment at: each.
-		class isTrait ifFalse: [
-			(package definedMethodsForClass: class) do: aBlockClosure] ]
+	package definedClasses do: [ :class | class isTrait ifFalse: [ (package definedMethodsForClass: class) do: aBlockClosure ] ]
 ]
 
 { #category : #accessing }

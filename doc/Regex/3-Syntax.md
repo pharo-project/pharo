@@ -3,9 +3,9 @@
 The simplest regular expression is a single character. It matches exactly that character. A sequence of characters matches a string with exactly the same sequence of characters:
 
 ```st
-	'a' matchesRegex: 'a'.              "true"
-	'foobar' matchesRegex: 'foobar'.    "true"
-	'blorple' matchesRegex: 'foobar'.   "false"
+	'a' matchesRegex: 'a'.				"true"
+	'foobar' matchesRegex: 'foobar'.	"true"
+	'blorple' matchesRegex: 'foobar'.	"false"
 ```
 
 The above paragraph introduced a primitive regular expression (a character), and an operator (sequencing). Operators are applied to regular expressions to produce more complex regular expressions. Sequencing (placing expressions one after another) as an operator is, in a certain sense, 'invisible' — yet it is arguably the most common.
@@ -13,55 +13,55 @@ The above paragraph introduced a primitive regular expression (a character), and
 A more 'visible' operator is Kleene closure, more often simply referred to as 'a star'. A regular expression followed by an asterisk matches any number (including 0) of matches of the original expression. For example:
 
 ```st
-	'ab' matchesRegex: 'a*b'.           "true"
-	'aaaaab' matchesRegex: 'a*b'.       "true"
-	'b' matchesRegex: 'a*b'.            "true"
-	'aac' matchesRegex: 'a*b'.          "false: b does not match"
+	'ab' matchesRegex: 'a*b'.			"true"
+	'aaaaab' matchesRegex: 'a*b'.		"true"
+	'b' matchesRegex: 'a*b'.			"true"
+	'aac' matchesRegex: 'a*b'.			"false: b does not match"
 ```
 
 A star's precedence is higher than that of sequencing. A star applies to the shortest possible subexpression that precedes it. For example, 'ab*' means 'a followed by zero or more occurrences of b', not 'zero or more occurrences of ab':
 
 ```st
-	'abbb' matchesRegex: 'ab*'.         "true"
-	'abab' matchesRegex: 'ab*'.         "false"
+	'abbb' matchesRegex: 'ab*'.		"true"
+	'abab' matchesRegex: 'ab*'.		"false"
 ```
 
 To actually make a regex matching 'zero or more occurrences of ab', 'ab' is enclosed in parentheses:
 
 ```st
-	'abab' matchesRegex: '(ab)*'.       "true"
-	'abcab' matchesRegex: '(ab)*'.      "false: c spoils the fun"
+	'abab' matchesRegex: '(ab)*'.		"true"
+	'abcab' matchesRegex: '(ab)*'.		"false: c spoils the fun"
 ```
 
 Two other operators similar to '*' are '+' and '?'. '+' (positive closure, or simply 'plus') matches one or more occurrences of the original expression. '?' ('optional') matches zero or one, but never more, occurrences.
 
 ```st
-	'ac' matchesRegex: 'ab*c'.          "true"
-	'ac' matchesRegex: 'ab+c'.          "false: need at least one b"
-	'abbc' matchesRegex: 'ab+c'.        "true"
-	'abbc' matchesRegex: 'ab?c'.        "false: too many b's"
+	'ac' matchesRegex: 'ab*c'.			"true"
+	'ac' matchesRegex: 'ab+c'.			"false: need at least one b"
+	'abbc' matchesRegex: 'ab+c'.		"true"
+	'abbc' matchesRegex: 'ab?c'.		"false: too many b's"
 ```
 
-As we have seen, characters '*', '+', '?', '(', and ')' have special meaning in regular expressions. If one of them is to be used literally, it should be quoted: preceded with a backslash. (Thus, backslash is also special character, and needs to be quoted for a literal match--as well as any other special character described further).
+As we have seen, characters '*', '+', '?', '(', and ')' have special meaning in regular expressions. If one of them is to be used literally, it should be quoted: preceded with a backslash. (Thus, backslash is also special character, and needs to be quoted for a literal match - as well as any other special character described further).
 
 ```st
-	'ab*' matchesRegex: 'ab*'.          "false: star in the right string is special"
-	'ab*' matchesRegex: 'ab\*'.         "true"
-	'a\c' matchesRegex: 'a\\c'.         "true"
+	'ab*' matchesRegex: 'ab*'.			"false: star in the right string is special"
+	'ab*' matchesRegex: 'ab\*'.		"true"
+	'a\c' matchesRegex: 'a\\c'.			"true"
 ```
 
 The last operator is `'|'` meaning 'or'. It is placed between two regular expressions, and the resulting expression matches if one of the expressions matches. It has the lowest possible precedence (lower than sequencing). For example, `'ab*|ba*'` means 'a followed by any number of b's, or b followed by any number of a's':
 
 ```st
-	'abb' matchesRegex: 'ab*|ba*'.      "true"
-	'baa' matchesRegex: 'ab*|ba*'.      "true"
-	'baab' matchesRegex: 'ab*|ba*'.     "false"
+	'abb' matchesRegex: 'ab*|ba*'.		"true"
+	'baa' matchesRegex: 'ab*|ba*'.		"true"
+	'baab' matchesRegex: 'ab*|ba*'.	"false"
 ```
 
 A bit more complex example is the following expression, matching the name of any of the Lisp-style 'car', 'cdr', 'caar', 'cadr',
 
 ```st
-	'cadr' matchesRegex: 'c(a|d)+r'.    "true"
+	'cadr' matchesRegex: 'c(a|d)+r'.	"true"
 ```
 
 It is possible to write an expression matching an empty string, for example: 'a|'. However, it is an error to apply '*', '+', or '?' to such expression: '(a|)*' is an invalid expression.
@@ -71,23 +71,23 @@ So far, we have used only characters as the 'smallest' components of regular exp
 A character set is a string of characters enclosed in square brackets. It matches any single character if it appears between the brackets. For example, `'[01]'` matches either `'0'` or `'1'`:
 
 ```st
-	'0' matchesRegex: '[01]'.           "true"
-	'3' matchesRegex: '[01]'.           "false"
-	'11' matchesRegex: '[01]'.          "false: a set matches only one character"
+	'0' matchesRegex: '[01]'.			"true"
+	'3' matchesRegex: '[01]'.			"false"
+	'11' matchesRegex: '[01]'.			"false: a set matches only one character"
 ```
 
 Using plus operator, we can build the following binary number recognizer:
 
 ```st
-	'10010100' matchesRegex: '[01]+'.   "true"
-	'10001210' matchesRegex: '[01]+'.   "false"
+	'10010100' matchesRegex: '[01]+'.	"true"
+	'10001210' matchesRegex: '[01]+'.	"false"
 ```
 
 If the first character after the opening bracket is `'^'`, the set is inverted: it matches any single character *not* appearing between the brackets:
 
 ```st
-	'0' matchesRegex: '[^01]'.          "false"
-	'3' matchesRegex: '[^01]'.          "true"
+	'0' matchesRegex: '[^01]'.			"false"
+	'3' matchesRegex: '[^01]'.			"true"
 ```
 
 For convenience, a set may include ranges: pairs of characters separated with '-'. This is equivalent to listing all characters between them: '[0-9]' is the same as '[0123456789]'.
@@ -151,10 +151,10 @@ The last group of special primitive expressions includes:
 - `\>`: an empty string at the end of a word
 
 ```st
-	'axyzb' matchesRegex: 'a.+b'.       "true"
-	'ax zb' matchesRegex: 'a.+b'.       "true (space is matched by '.')"
+	'axyzb' matchesRegex: 'a.+b'.		"true"
+	'ax zb' matchesRegex: 'a.+b'.		"true (space is matched by '.')"
 	'ax
-zb' matchesRegex: 'a.+b'.               "true (carriage return is matched by '.')"
+zb' matchesRegex: 'a.+b'.			"true (carriage return is matched by '.')"
 ```
 
 Again, the dot ., caret ^ and dollar $ characters are special and should be quoted to be matched literally.

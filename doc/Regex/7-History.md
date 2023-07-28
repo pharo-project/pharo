@@ -3,21 +3,21 @@
 1. Updated documentation of character classes, making clear the problems of locale - an area for future improvement
 
 ## Version 1.3 (September 2008)
-1. \w now matches underscore as well as alphanumerics, in line with most other regex libraries (and our documentation!!).
-2. \W rejects underscore as well as alphanumerics
+1. `\w` now matches underscore as well as alphanumerics, in line with most other regex libraries (and our documentation!!).
+2. `\W` rejects underscore as well as alphanumerics
 3. added tests for this at the end of the test suite
 4. updated documentation and added notes to old incorrect comments in version 1.1 below
 
 ## Version 1.2.3 (November 2007)
 
-1. Regexs with `^` or `$` applied to copy empty strings caused infinite loops, e.g. ('' copyWithRegex: '^.*$' matchesReplacedWith: 'foo'). Applied a similar correction to that from version 1.1c to #copyStream:to:(replacingMatchesWith:|translatingMatchesUsing:).
+1. Regexs with `^` or `$` applied to copy empty strings caused infinite loops, e.g. `'' copyWithRegex: '^.*$' matchesReplacedWith: 'fo'`. Applied a similar correction to that from version 1.1c to #copyStream:to:(replacingMatchesWith:|translatingMatchesUsing:).
 2. Extended RxParser testing to run each test for #copy:translatingMatchesUsing: as well as #search:.
 3. Corrected #testSuite test that a dot does not match a null, which was passing by luck with Smalltalk code in a literal array.
 4. Added test to the end of the test suite for fix 1 above.
 
 ## Version 1.2.2 (November 2006)
 
-There was no way to specify a backslash in a character set. Now [\\] is accepted.
+There was no way to specify a backslash in a character set. Now `[\\]` is accepted.
 
 ## Version 1.2.1 (August 2006)
 
@@ -47,8 +47,9 @@ Changes valueNowOrOnUnwindDo: to ensure:, plus incorporates some earlier fixes.
 
 Regular expression syntax corrections and enhancements:
 
-1. Backslash escapes similar to those in Perl are allowed in patterns:
+\1. Backslash escapes similar to those in Perl are allowed in patterns:
 
+```text
 	\w any word constituent character (equivalent to [a-zA-Z0-9_]) *** underscore only since 1.3 ***
 	\W any character but a word constituent (equivalent to [^a-xA-Z0-9_]) *** underscore only since 1.3 ***
 	\d a digit (same as [0-9])
@@ -59,15 +60,19 @@ Regular expression syntax corrections and enhancements:
 	\B an empty string not at a word boundary
 	\< an empty string at the beginning of a word
 	\> an empty string at the end of a word
+```
 
-For example, '\w+' is now a valid expression matching any word.
+For example, `'\w+'` is now a valid expression matching any word.
 
-2. The following backslash escapes are also allowed in character sets (between square brackets):
+\2. The following backslash escapes are also allowed in character sets (between square brackets):
 
+```text
 	\w, \W, \d, \D, \s, and \S.
+```
 
-3. The following grep(1)-compatible named character classes are recognized in character sets as well:
+\3. The following grep(1)-compatible named character classes are recognized in character sets as well:
 
+```text
 	[:alnum:]
 	[:alpha:]
 	[:cntrl:]
@@ -79,26 +84,32 @@ For example, '\w+' is now a valid expression matching any word.
 	[:space:]
 	[:upper:]
 	[:xdigit:]
+```
 
 For example, the following patterns are equivalent:
 
+```text
 	'[[:alnum:]_]+' '\w+' '[\w]+' '[a-zA-Z0-9_]+' *** underscore only since 1.3 ***
+```
 
-4. Some non-printable characters can be represented in regular expressions using a common backslash notation:
+\4. Some non-printable characters can be represented in regular expressions using a common backslash notation:
 
+```text
 	\t  tab (Character tab)
 	\n  newline (Character lf)
 	\r  carriage return (Character cr)
 	\f  form feed (Character newPage)
 	\e  escape (Character esc)
+```
 
-5. A dot is correctly interpreted as 'any character but a newline'
+\5. A dot is correctly interpreted as 'any character but a newline'
 instead of 'anything but whitespace'.
 
-6. Case-insensitive matching. The easiest access to it are new messages that CharacterArray understands: #asRegexIgnoringCase, #matchesRegexIgnoringCase:, #prefixMatchesRegexIgnoringCase:.
+\6. Case-insensitive matching. The easiest access to it are new messages that CharacterArray understands: #asRegexIgnoringCase, #matchesRegexIgnoringCase:, #prefixMatchesRegexIgnoringCase:.
 
-7. The matcher (an instance of RxMatcher, the result of `String>>asRegex`) now provides a collection-like interface to matches in a particular string or on a particular stream, as well as substitution protocol. The interface includes the following messages:
+\7. The matcher (an instance of RxMatcher, the result of `String>>asRegex`) now provides a collection-like interface to matches in a particular string or on a particular stream, as well as substitution protocol. The interface includes the following messages:
 
+```text
 	matchesIn: aString
 	matchesIn: aString collect: aBlock
 	matchesIn: aString do: aBlock
@@ -112,6 +123,7 @@ instead of 'anything but whitespace'.
 
 	copyStream: aStream to: writeStream translatingMatchesUsing: aBlock
 	copyStream: aStream to: writeStream replacingMatchesWith: aString
+```
 
 Examples:
 

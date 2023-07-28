@@ -12,7 +12,6 @@ RBRemoveAllMessageSendsTransformationTest >> testClassDoesNotExist [
 				messageSend: #foo:
 				inMethod: #badMessage1
 				inClass: #ADoesNotExistClass).
-	trans preconditionChecking: true.
 	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.
 	self should: [ trans transform ] raise: trans refactoringErrorClass.
 ]
@@ -25,7 +24,6 @@ RBRemoveAllMessageSendsTransformationTest >> testFailureNonExistantSelector [
 				messageSend: #foo:
 				inMethod: #checkClass1:
 				inClass: #RBClassDataForRefactoringTest).
-	trans preconditionChecking: true.
 	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.
 	self should: [ trans transform ] raise: trans refactoringErrorClass.
 ]
@@ -38,7 +36,6 @@ RBRemoveAllMessageSendsTransformationTest >> testMethodDoesNotExist [
 				messageSend: #foo:
 				inMethod: #badMessage1
 				inClass: #RBClassDataForRefactoringTest).
-	trans preconditionChecking: true.
 	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.
 	self should: [ trans transform ] raise: trans refactoringErrorClass.
 ]
@@ -51,7 +48,6 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveMessageInsideBlock [
 				messageSend: #printString
 				inMethod: #caller1
 				inClass: #RBClassDataForRefactoringTest).
-	trans preconditionChecking: true.
 	trans transform.
 
 	self assert: ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #caller1) equals: (self parseMethod: 'caller1
@@ -82,7 +78,6 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascaded2Messag
 				messageSend: #inlineMethod
 				inMethod: #inlineMethod
 				inClass: #RBClassDataForRefactoringTest).
-	trans preconditionChecking: true.
 	trans transform.
 	transformedMethod := ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineMethod).
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])
@@ -125,7 +120,6 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascaded3Messag
 				messageSend: #errorBlock:
 				inMethod: #referencesConditionFor:
 				inClass: #RBClassDataForRefactoringTest).
-	trans preconditionChecking: true.
 	trans transform.
 	transformedMethod := ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #referencesConditionFor:).
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])
@@ -139,7 +133,6 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascadedMessage
 				messageSend: #cr
 				inMethod: (#called:, #on:) asSymbol
 				inClass: #RBClassDataForRefactoringTest).
-	trans preconditionChecking: true.
 	trans transform.
 
 	self assert: ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: (#called:, #on:) asSymbol)
@@ -164,7 +157,6 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSimpleSenderOfMessage [
 				messageSend: #called:on1:
 				inMethod: #caller1
 				inClass: #RBClassDataForRefactoringTest).
-	trans preconditionChecking: true.
 	trans transform.
 	transformedMethod := ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #caller1).
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])

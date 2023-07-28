@@ -36,17 +36,14 @@ RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 	pack := self createNewPackageNamed: 'P1'.
 	foo := self createNewClassNamed: #FooForTest inPackage: pack.
 	foo compile: 'bar ^42'.
-	method := foo>>#bar.
+	method := foo >> #bar.
 
 	foo obsolete.
-	self assert: (method packageFromOrganizer: pack organizer) equals: foo package.
-	] ensure: [
+	self assert: method package equals: foo package ] ensure: [
 		foo ifNotNil: [
 			foo setName: foo originalName.
-			foo removeFromSystem.
-			].
-		testingEnvironment removeKey: #FooForTest  ifAbsent:  [].
-	]
+			foo removeFromSystem ].
+		testingEnvironment removeKey: #FooForTest ifAbsent: [  ] ]
 ]
 
 { #category : #tests }

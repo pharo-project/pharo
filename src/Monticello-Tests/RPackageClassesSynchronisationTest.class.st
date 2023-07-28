@@ -272,7 +272,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassDefinedMe
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'. 
 	
-	Smalltalk removeClassNamed: 'NewClass'. 
+	self organizer environment removeClassNamed: 'NewClass'. 
 	self deny: (XPackage includesSelector: #stubMethod ofClass: class). 
 ]
 
@@ -287,7 +287,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassExtension
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'. 
 	
-	Smalltalk removeClassNamed: 'NewClass'. 
+	self organizer environment removeClassNamed: 'NewClass'. 
 	self deny: (YPackage includesSelector: #stubMethod ofClass: class). 
 ]
 
@@ -300,20 +300,20 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassFromItsPa
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	
-	Smalltalk removeClassNamed: 'NewClass'. 
+	self organizer environment removeClassNamed: 'NewClass'. 
 	self deny: (XPackage includesClass: class)
 ]
 
 { #category : #'tests - removing classes' }
 RPackageClassesSynchronisationTest >> testRemoveClassUpdateTheOrganizerMappings [
 	"test that when we remove a class, the organizer is updated so that the class is no longer present in the  'classPackageDictionary' dictionary"
-	
-	|XPackage  class|
+
+	| XPackage class |
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
-	Smalltalk removeClassNamed: 'NewClass'. 
+	self organizer environment removeClassNamed: 'NewClass'.
 	self deny: (self organizer includesPackageBackPointerForClass: class)
 ]
 

@@ -49,7 +49,7 @@ RPackageCategorySynchronisationTest >> testRenameCategoryAlsoRenameAllExtensionP
 	self createMethodNamed: 'longNameExtensionFromXInClassInY' inClass: classInY inCategory: '*XXXXX-subcategory'.
 	self createMethodNamed: 'extensionFromXInClassInZ' inClass: classInZ inCategory: '*XXXXX'.
 
-	self packageOrganizer renameCategory: 'XXXXX' toBe: 'NewCategoryName'.
+	self organizer renameCategory: 'XXXXX' toBe: 'NewCategoryName'.
 
 	self assert: xPackage name equals: 'NewCategoryName'.
 	self assert: (classInY >> #extensionFromXInClassInY) protocolName equals: '*NewCategoryName'.
@@ -65,7 +65,7 @@ RPackageCategorySynchronisationTest >> testRenameCategoryChangeTheNameOfThePacka
 	self addXCategory.
 	xPackage := self organizer packageNamed: #XXXXX.
 
-	self packageOrganizer renameCategory: 'XXXXX' toBe: 'YYYYY'.
+	self organizer renameCategory: 'XXXXX' toBe: 'YYYYY'.
 	self assert: xPackage name equals: 'YYYYY'
 ]
 
@@ -77,17 +77,7 @@ RPackageCategorySynchronisationTest >> testRenameCategoryUpdateTheOrganizer [
 	self addXCategory.
 
 	xPackage := self organizer packageNamed: #XXXXX.
-	self packageOrganizer renameCategory: 'XXXXX' toBe: 'YYYYY'.
+	self organizer renameCategory: 'XXXXX' toBe: 'YYYYY'.
 	self assert: (self organizer packageNamed: 'YYYYY' asSymbol) equals: xPackage.
 	self deny: (self organizer hasPackage: #XXXXX)
-]
-
-{ #category : #'tests - operations on categories' }
-RPackageCategorySynchronisationTest >> testRenameUnknownCategoryCreatesNewRPackage [
-	"test that when we rename a category that is not registered in RPackage , it does not raise errors and simply create a new package. We need this behaviour as for now, create a new category with the class browser does not emit the corrects events, and therefore RPackage can not be directly updated"
-
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ self addXCategory ].
-	self deny: (self organizer hasPackage: #XXXXX).
-	self packageOrganizer renameCategory: 'XXXXX' toBe: 'YYYYY'.
-	self assert: (self organizer hasPackage: #YYYYY)
 ]

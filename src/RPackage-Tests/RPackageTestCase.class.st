@@ -6,7 +6,8 @@ Class {
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'createdClasses',
-		'createdPackages'
+		'createdPackages',
+		'testEnvironment'
 	],
 	#category : #'RPackage-Tests'
 }
@@ -35,6 +36,7 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 	cls := self class classInstaller make: [ :aClassBuilder |
 		       aClassBuilder
 			       name: aName;
+			       installingEnvironment: testEnvironment;
 			       package: cat ].
 
 	createdClasses add: cls.
@@ -46,7 +48,7 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 
 	| cls |
-	cls := self createNewClassNamed: aName.
+	cls := self createNewClassNamed: aName inCategory: p name.
 	p addClassDefinition: cls.
 	^ cls
 ]
@@ -56,7 +58,7 @@ RPackageTestCase >> createNewPackageNamed: aName [
 
 	| pack |
 	self removePackage: aName.
-	pack := RPackage named: aName.
+	pack := RPackage named: aName organizer: self organizer.
 	createdPackages add: pack.
 	^ pack
 ]
@@ -74,6 +76,7 @@ RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 		       aBuilder
 			       name: aName;
 			       package: cat;
+			       installingEnvironment: testEnvironment;
 			       beTrait ].
 
 	createdClasses add: cls.
@@ -98,20 +101,22 @@ RPackageTestCase >> namesOfMockTestPackages [
 
 { #category : #accessing }
 RPackageTestCase >> organizer [
-	"This method will access the organizer that will temporarily swapped using the withOrganizer:do: method"
-	^ RPackage organizer
+
+	^ testEnvironment organization
 ]
 
 { #category : #utilities }
 RPackageTestCase >> removePackage: aName [
-	RPackage organizer basicUnregisterPackageNamed: aName
+
+	self organizer basicUnregisterPackageNamed: aName
 ]
 
 { #category : #running }
 RPackageTestCase >> runCase [
 
+	testEnvironment := self class environment class new.
 	[
-	^ RPackage withOrganizer: self setupOrganizer do: [
+	^ RPackage withOrganizer: self organizer do: [
 		  self resources do: [ :each | each availableFor: self ].
 		  self setUp.
 		  self performTest ] ] ensure: [
@@ -125,14 +130,6 @@ RPackageTestCase >> setUp [
 	super setUp.
 	createdClasses := Set new.
 	createdPackages := Set new
-]
-
-{ #category : #accessing }
-RPackageTestCase >> setupOrganizer [
-
-	^ RPackageOrganizer new
-		  debuggingName: 'Organizer for RPackageTest';
-		  yourself
 ]
 
 { #category : #running }

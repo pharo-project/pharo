@@ -253,6 +253,7 @@ MCWorkingCopy class >> registerInterestOnSystemChanges [
 MCWorkingCopy class >> registerPackage: aPackage packageOrganizer: aPackageOrganizer [
 
 	| workingCopy |
+	aPackage environment: aPackageOrganizer environment.
 	workingCopy := self new initializeWithPackage: aPackage.
 	self registry at: aPackage put: workingCopy.
 	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package.
@@ -809,19 +810,17 @@ MCWorkingCopy >> uniqueVersionNameIn: aRepository [
 { #category : #operations }
 MCWorkingCopy >> unload [
 	"Unloads mcpackage, rpackage, classes and method extensions from this working copy"
+
 	| postUnloadAction |
-	
-	postUnloadAction := [].
+	postUnloadAction := [  ].
 	self systemPackage ifNotNil: [ :aPackage |
 		aPackage packageManifestOrNil ifNotNil: [ :manifest |
 			postUnloadAction := manifest postUnloadAction.
-			manifest preUnload ]].
-	MCPackageLoader unloadPackage: self package.		
-	package packageSet unregister.
+			manifest preUnload ] ].
+	MCPackageLoader unloadPackage: self package.
+	self systemPackage ifNotNil: [ :aPackage | aPackage removeFromSystem ].
 	self unregister.
-	postUnloadAction value.
-	
-
+	postUnloadAction value
 ]
 
 { #category : #operations }

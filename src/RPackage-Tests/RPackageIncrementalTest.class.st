@@ -58,7 +58,7 @@ RPackageIncrementalTest >> tearDown [
 		self allWorkingCopies
 			detect: [ :mcPackage | mcPackage packageName = each packageName asString ]
 			ifFound: [ :mcPackage | mcPackage unregister ].
-		each extendedClasses do: [ :extendedClass | RPackage organizer unregisterExtendingPackage: each forClass: extendedClass ] ].
+		each extendedClasses do: [ :extendedClass | self organizer unregisterExtendingPackage: each forClass: extendedClass ] ].
 	"all ***extending*** classes the packages are also unregistered from PackageOrganizer"
 	super tearDown
 ]
@@ -199,18 +199,19 @@ RPackageIncrementalTest >> testAddRemoveSelector [
 	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClassName: a2Name).
 	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClassName: a2Name).
 
-	p2 removeSelector: #methodDefinedInP2 ofClassName: a2Name.
+	p2 removeMethod: a2 >> #methodDefinedInP2.
 	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClassName: a2Name).
 	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClassName: a2Name).
 
-	p1 removeSelector: #methodDefinedInP1 ofClassName: a2Name.
+	p1 removeMethod: a2 >> #methodDefinedInP1.
 	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofClassName: a2Name).
 	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofClassName: a2Name)
 ]
 
 { #category : #'tests - method addition removal' }
 RPackageIncrementalTest >> testAddRemoveSelectorOfMetaclass [
-	| p1 p2 p3 a2   a2Name a2class |
+
+	| p1 p2 p3 a2 a2Name a2class |
 	a2Name := #A2InPackageP2.
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -231,11 +232,11 @@ RPackageIncrementalTest >> testAddRemoveSelectorOfMetaclass [
 	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofMetaclassName: a2Name).
 	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofMetaclassName: a2Name).
 
-	p2 removeSelector: #methodDefinedInP2 ofMetaclassName:  a2Name.
+	p2 removeMethod: a2 class >> #methodDefinedInP2.
 	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofMetaclassName: a2Name).
 	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofMetaclassName: a2Name).
 
-	p1 removeSelector: #methodDefinedInP1 ofMetaclassName:  a2Name.
+	p1 removeMethod: a2 class >> #methodDefinedInP1.
 	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofMetaclassName: a2Name).
 	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofMetaclassName: a2Name)
 ]
@@ -268,12 +269,12 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 	self assert: (p includesClass: a1).
 	self assert: (p includesClass: b1).
 
-	p removeClassDefinition: a1.
+	p removeClass: a1.
 	self assert: p definedClasses size equals: 1.
 	self deny: (p includesClass: a1).
 	self assert: (p includesClass: b1).
 
-	p removeClassDefinition: b1 class.
+	p removeClass: b1.
 	self deny: (p includesClass: b1)
 ]
 
@@ -297,12 +298,12 @@ RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 	self assert: (p includesClass: a1).
 	self assert: (p includesClass: b1).
 
-	p removeClassDefinition: a1.
+	p removeClass: a1.
 	self assert: p definedClasses size equals: 1.
 	self deny: (p includesClass: a1).
 	self assert: (p includesClass: b1).
 
-	p removeClassDefinition: b1 class.
+	p removeClass: b1.
 	self deny: (p includesClass: b1).
 	self assert: p classTags size equals: 0
 ]
@@ -645,56 +646,6 @@ RPackageIncrementalTest >> testPackageOfClassForDefinedClasses [
 
 	self assert: a1 package equals: p.
 	self assert: b1 package equals: p
-]
-
-{ #category : #'tests - registration' }
-RPackageIncrementalTest >> testPrivateClassRegisterUnregister [
-	"Verify that when we register a class, the package organizer register it."
-	| p a1 |
-	p := self createNewPackageNamed: 'P1'.
-	a1 := self createNewClassNamed: #A1InPackageP1.
-	p definedClassNames add: #A1InPackageP1.
-		"ugly but necessary to test registerClass: independantly from addClassDefinition:"
-		"No event should be raised."
-	p registerClass: a1.
-	self assert: (RPackage organizer packageOf: a1) equals: p.
-	p definedClassNames remove: #A1InPackageP1.
-	p unregisterClass: a1.
-	self assert: (RPackage organizer packageOf: a1) isDefault.
-
-	p definedClassNames add: #A1InPackageP1.
-		"ugly but necessary to test registerClass: independant from addClassDefinition:"
-	p registerClassName: a1 name.
-	self assert: (RPackage organizer packageOf: a1) equals: p.
-	p definedClassNames remove: #A1InPackageP1.
-	p unregisterClass: a1.
-	self assert: (RPackage organizer packageOf: a1) isDefault
-]
-
-{ #category : #'tests - class addition removal' }
-RPackageIncrementalTest >> testRemoveClassAfterMethods [
-	| p1 a1 |
-	p1 := self createNewPackageNamed: self p1Name.
-	"the class is created but not added to the package for now"
-	a1 := self createNewClassNamed: #A1InPackageP1 inCategory: self p1Name.
-	p1 addClassDefinition: a1.
-	self assert: p1 definedClasses size equals: 1.
-	a1 compileSilently: 'newlyAddedToA1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a1>>#newlyAddedToA1).
-
-	"now we add a new method to the class and the to the package: it is considered
-	as defined"
-	self deny: (p1 includesExtensionSelector: #newlyAddedToA1 ofClass: a1).
-	self assert: (p1 includesDefinedSelector: #newlyAddedToA1 ofClass: a1).
-
-	p1 removeClassDefinition: a1.
-	self assert: p1 definedClasses size equals: 0.
-
-	self assert: (p1 includesSelector: #newlyAddedToA1 ofClass: a1).
-	self assert: (p1 includesExtensionSelector: #newlyAddedToA1 ofClass: a1).
-	self deny: (p1 includesDefinedSelector: #newlyAddedToA1 ofClass: a1).
-
-	"Now we add the class and this means that the method is not defined anymore but an extension "
 ]
 
 { #category : #'tests - class addition removal' }

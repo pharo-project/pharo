@@ -8,6 +8,13 @@ RPackageOrganizer >> categoryOfElement: behaviorName [
 ]
 
 { #category : #'*Deprecated12' }
+RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
+
+	self deprecated: 'Use #ensurePackage: instead.' transformWith: '`@rcv ensureExistAndRegisterPackageNamed: `@arg' -> '`@rcv ensurePackage: `@arg'.
+	^ self ensurePackage: aSymbol
+]
+
+{ #category : #'*Deprecated12' }
 RPackageOrganizer >> includesPackage: aPackage [
 
 	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.

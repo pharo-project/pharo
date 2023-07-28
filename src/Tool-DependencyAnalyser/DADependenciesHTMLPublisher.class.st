@@ -99,7 +99,7 @@ DADependenciesHTMLPublisher >> htmlForDependency: dependencyPackageName of: aPac
 { #category : #publishing }
 DADependenciesHTMLPublisher >> htmlForIgnoredDependenciesOf: aPackageName [
 	^ String streamContents: [ :str |
-		(RPackage organizer packageNamed: aPackageName) ignoredDependencies
+		(self packageOrganizer packageNamed: aPackageName) ignoredDependencies
 			do: [ :dependency | str << (self warningLabel: dependency) ]
 			separatedBy: [ str space ] ]
 ]

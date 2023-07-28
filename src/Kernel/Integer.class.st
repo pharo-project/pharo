@@ -368,7 +368,7 @@ Integer >> asScaledDecimal [
 	^ ScaledDecimal newFromNumber: self scale: 0
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #converting }
 Integer >> asSeconds [
 	^ Duration seconds: self
 ]
