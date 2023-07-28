@@ -88,7 +88,7 @@ DTTestCoveragePlugin >> runForConfiguration: aDTpluginConfiguration [
 	coverage := collector runOn: [ self runTestSuites: { suite } ].
 	notExecuted := coverage uncoveredMethods.
 
-	methods size isZero ifFalse: [
+	methods ifNotEmpty: [
 		result
 			percent: 1s2 - (notExecuted size / methods size asScaledDecimal: 2);
 			methodList: notExecuted;

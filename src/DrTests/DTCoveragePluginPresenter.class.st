@@ -104,7 +104,7 @@ DTCoveragePluginPresenter >> defineColorMessageNode: aRBMessageNode [
 	| blockNodes |
 	blockNodes := aRBMessageNode arguments select: [ :element |
 		              element isBlock ].
-	blockNodes isNotEmpty ifTrue: [
+	blockNodes ifNotEmpty: [
 		(blockNodes allSatisfy: [ :arg | arg body hasBeenExecuted ])
 			ifFalse: [ yellowNodes add: aRBMessageNode . ] ]
 ]

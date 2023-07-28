@@ -31,7 +31,7 @@ DTCoverageCollector >> basicCollectResult [
 	nodes do: [ :node |
 		node hasBeenExecuted ifTrue: [ res nodes add: node ] ].
 	res partiallyCoveredMethods: (methods select: [ :meth |
-			 meth ast hasBeenExecuted and: [ (self allNodesCovered: meth) not ] ]).
+			 meth ast hasBeenExecuted and: [ (self hasAllNodesCovered: meth) not ] ]).
 	^ res
 ]
 
@@ -40,8 +40,6 @@ DTCoverageCollector >> collectResult [
 	"Collect the results.
 	This also remaps the methods and  NOT resets the annotations."
 
-	| res |
 	self remapMethods.
-	res := self basicCollectResult.
-	^ res
+	^ self basicCollectResult
 ]

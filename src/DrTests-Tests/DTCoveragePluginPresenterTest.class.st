@@ -27,14 +27,8 @@ DTCoveragePluginPresenterTest >> testEmptyInitializeOfAttributes [
 { #category : #tests }
 DTCoveragePluginPresenterTest >> testUpdateSourceCodePanelUncovered [
 
-	| packageName package classes oneClass oneMethod  |
-	packageName := 'DrTests-TestCoverage-Tests-Mocks'.
-	package := RPackage allInstances
-		           detect: [ :each | each name = packageName ]
-		           ifNone: [ nil ].
-	classes := package classes .
-	oneClass := classes detect: [ :each | each name = 'MockForCoverage' ] ifNone: [ nil ].
-	oneMethod := oneClass methodDict at: #method2ForMock: .
+	| oneMethod  |
+	oneMethod := MockForCoverage >> #method2ForMock:.
 	presenter cleanAttributesForHighlighting .
 	presenter defineColorCoverage: oneMethod.
 
