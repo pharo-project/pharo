@@ -25,6 +25,22 @@ RPackage >> includesDefinedSelector: aSelector ofMetaclassName: aClassName [
 ]
 
 { #category : #'*Deprecated12' }
+RPackage >> includesExtensionSelector: aSelector ofClassName: aClassName [
+	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
+
+	self deprecated: 'Use #includesExtensionSelector:ofClass: with the class directly'.
+	^ self includesExtensionSelector: aSelector ofClass: (self environment at: aClassName)
+]
+
+{ #category : #'*Deprecated12' }
+RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
+	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
+
+	self deprecated: 'Use #includesExtensionSelector:ofClass: with the class side of the class directly'.
+	^ self includesExtensionSelector: aSelector ofClass: (self environment at: aClassName) class
+]
+
+{ #category : #'*Deprecated12' }
 RPackage >> includesSelector: aSelector ofClassName: aClassName [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 

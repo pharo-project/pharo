@@ -10,10 +10,7 @@ CompiledCode >> extensionPackage [
 	class := self origin.
 
 	^ class extendingPackages
-		  detect: [ :extendedPackage |
-			  class isMeta
-				  ifFalse: [ extendedPackage includesExtensionSelector: originSelector ofClassName: class instanceSide originalName ]
-				  ifTrue: [ extendedPackage includesExtensionSelector: originSelector ofMetaclassName: class instanceSide originalName ] ]
+		  detect: [ :extendedPackage | extendedPackage includesExtensionSelector: originSelector ofClass: class ]
 		  ifNone: [ nil ]
 ]
 

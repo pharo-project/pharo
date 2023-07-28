@@ -686,27 +686,7 @@ RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 RPackage >> includesExtensionSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
 
-	| sels |
-	sels := self extensionSelectorsForClass: aClass.
-	^ sels includes: aSelector asSymbol
-]
-
-{ #category : #testing }
-RPackage >> includesExtensionSelector: aSelector ofClassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
-
-	| sels |
-	sels := classExtensionSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector asSymbol
-]
-
-{ #category : #testing }
-RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
-
-	| sels |
-	sels := metaclassExtensionSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector asSymbol
+	^ (self extensionSelectorsForClass: aClass) includes: aSelector asSymbol
 ]
 
 { #category : #testing }

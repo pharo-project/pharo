@@ -348,17 +348,16 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedSelectors
 RPackageClassesSynchronisationTest >> testRenameClassUpdateClassExtensionSelectorsInTheExtendingPackages [
 	"test that when we rename a class, the  'classExtensionSelectors' dictionaries of the extending packages  are updated with the new name. Therfore we test that we can correctly access the selectors from the package by specifying the right name (the new name)"
 
-	| XPackage YPackage class |
+	| xPackage yPackage class |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage := self organizer packageNamed: #YYYYY.
+	xPackage := self organizer packageNamed: #XXXXX.
+	yPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
-	
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+
 	class rename: 'RPackageNewStubClass'.
-	
-	self assert: (YPackage includesExtensionSelector: #stubMethod ofClassName: 'RPackageNewStubClass' asSymbol ). 
-	self deny: (YPackage includesExtensionSelector: #stubMethod ofClassName: 'RPackageOldStubClass' asSymbol ).
+
+	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]
 
 { #category : #'tests - operations on classes' }
@@ -379,18 +378,17 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassDefinedSelec
 { #category : #'tests - operations on classes' }
 RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassExtensionSelectorsInTheExtendingPackages [
 	"test that when we rename a class, the  'metaclassExtensionSelectors' dictionaries of the extending packages  are updated with the new name. Ther fore we test that we can correctly access the selectors from the package by specifying the right name (the new name)"
-	
-	| XPackage YPackage class |
+
+	| xPackage yPackage class |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage := self organizer packageNamed: #YYYYY.
+	xPackage := self organizer packageNamed: #XXXXX.
+	yPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClassSideOfClass: class  inCategory: '*yyyyy'.
-	
+	self createMethodNamed: 'stubMethod' inClassSideOfClass: class inCategory: '*yyyyy'.
+
 	class rename: 'RPackageNewStubClass'.
-	
-	self assert: (YPackage includesExtensionSelector: #stubMethod ofMetaclassName: 'RPackageNewStubClass' asSymbol ). 
-	self deny: (YPackage includesExtensionSelector: #stubMethod ofMetaclassName: 'RPackageOldStubClass' asSymbol ).
+
+	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class class)
 ]
 
 { #category : #'tests - operations on classes' }
