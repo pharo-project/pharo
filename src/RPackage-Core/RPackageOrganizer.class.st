@@ -1090,9 +1090,13 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
 	"If the method is provided by a trait, we do not care about it"
 
+	| package |
 	ann isProvidedByATrait ifTrue: [ ^ self ].
 
-	ann method package ifNotNil: [ :package | package removeMethod: ann method ]
+	"Since the method was already removed we cannot just ask #package because it is unpackaged, but we still need to remove the selector from the method cache of its previous class"
+	package := ann method extensionPackage ifNil: [ self packageOf: ann method methodClass ].
+
+	package ifNotNil: [ :p | p removeMethod: ann method ]
 ]
 
 { #category : #accessing }
