@@ -12,13 +12,11 @@ Class {
 }
 
 { #category : #precalculations }
-DTCoverageCollector >> allNodesCovered: aMethod [
+DTCoverageCollector >> hasAllNodesCovered: aMethod [
 
-	| coveredMethod |
-	coveredMethod := true.
 	aMethod ast nodesDo: [ :node |
 		node isSequence ifTrue: [ node hasBeenExecuted ifFalse: [ ^ false ] ] ].
-	^ coveredMethod
+	^ true
 ]
 
 { #category : #basic }
