@@ -17,7 +17,7 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyProtocolAndPackageEditorMorph,
+	#name : #ClyProtocolEditorMorph,
 	#superclass : #ClyStatusBarItemMorph,
 	#instVars : [
 		'extensionCheckbox',
@@ -28,8 +28,13 @@ Class {
 	#category : #'Calypso-SystemTools-Core-Editors-Methods'
 }
 
+{ #category : #'class initialization' }
+ClyProtocolEditorMorph class >> initialize [
+	self deprecatedAliases: { #ClyProtocolAndPackageEditorMorph }
+]
+
 { #category : #building }
-ClyProtocolAndPackageEditorMorph >> build [
+ClyProtocolEditorMorph >> build [
 	self buildResetButton.
 	self addMorphBack: resetButton.
 
@@ -46,7 +51,7 @@ ClyProtocolAndPackageEditorMorph >> build [
 ]
 
 { #category : #building }
-ClyProtocolAndPackageEditorMorph >> buildEditButton [
+ClyProtocolEditorMorph >> buildEditButton [
 	editButton := IconicButtonMorph new
 		target: self;
 		actionSelector: #openEditor;
@@ -57,7 +62,7 @@ ClyProtocolAndPackageEditorMorph >> buildEditButton [
 ]
 
 { #category : #building }
-ClyProtocolAndPackageEditorMorph >> buildExtensionCheckBoxButton [
+ClyProtocolEditorMorph >> buildExtensionCheckBoxButton [
 	extensionCheckbox := self theme
 		newCheckboxIn: self
 		for: self
@@ -73,14 +78,14 @@ ClyProtocolAndPackageEditorMorph >> buildExtensionCheckBoxButton [
 ]
 
 { #category : #building }
-ClyProtocolAndPackageEditorMorph >> buildLabel [
+ClyProtocolEditorMorph >> buildLabel [
 
 	label := self theme newLabelIn: self label: self printProtocolOrPackage.
 	label on: #click send: #openEditor to: self
 ]
 
 { #category : #building }
-ClyProtocolAndPackageEditorMorph >> buildResetButton [
+ClyProtocolEditorMorph >> buildResetButton [
 
 	resetButton := IconicButtonMorph new
 		target: self;
@@ -94,19 +99,19 @@ ClyProtocolAndPackageEditorMorph >> buildResetButton [
 ]
 
 { #category : #initialization }
-ClyProtocolAndPackageEditorMorph >> initialize [
+ClyProtocolEditorMorph >> initialize [
 	super initialize.
 	self cellInset: 2@2
 ]
 
 { #category : #testing }
-ClyProtocolAndPackageEditorMorph >> isExtensionActive [
+ClyProtocolEditorMorph >> isExtensionActive [
 
 	^ownerTool extendingPackage notNil
 ]
 
 { #category : #operations }
-ClyProtocolAndPackageEditorMorph >> openEditor [
+ClyProtocolEditorMorph >> openEditor [
 
 	self requestChangeBy: [
 		self isExtensionActive
@@ -116,19 +121,19 @@ ClyProtocolAndPackageEditorMorph >> openEditor [
 ]
 
 { #category : #accessing }
-ClyProtocolAndPackageEditorMorph >> ownerTool: anObject [
+ClyProtocolEditorMorph >> ownerTool: anObject [
 
 	super ownerTool: anObject
 ]
 
 { #category : #printing }
-ClyProtocolAndPackageEditorMorph >> printProtocol [
+ClyProtocolEditorMorph >> printProtocol [
 
 	^ ownerTool methodProtocol ifNil: [ Protocol unclassified asText makeAllColor: Color red ]
 ]
 
 { #category : #printing }
-ClyProtocolAndPackageEditorMorph >> printProtocolOrPackage [
+ClyProtocolEditorMorph >> printProtocolOrPackage [
 
 	^self isExtensionActive
 		ifTrue: [ ownerTool extendingPackage name]
@@ -136,7 +141,7 @@ ClyProtocolAndPackageEditorMorph >> printProtocolOrPackage [
 ]
 
 { #category : #operations }
-ClyProtocolAndPackageEditorMorph >> requestChangeBy: aBlock [
+ClyProtocolEditorMorph >> requestChangeBy: aBlock [
 
 	aBlock on: CmdCommandAborted do: [ :err ].
 
@@ -144,7 +149,7 @@ ClyProtocolAndPackageEditorMorph >> requestChangeBy: aBlock [
 ]
 
 { #category : #operations }
-ClyProtocolAndPackageEditorMorph >> requestPackage [
+ClyProtocolEditorMorph >> requestPackage [
 
 	| extendingPackage |
 	extendingPackage := ownerTool context requestSinglePackage: 'Choose package for method'.
@@ -153,7 +158,7 @@ ClyProtocolAndPackageEditorMorph >> requestPackage [
 ]
 
 { #category : #operations }
-ClyProtocolAndPackageEditorMorph >> requestProtocol [
+ClyProtocolEditorMorph >> requestProtocol [
 
 	| newProtocol priorProtocol |
 	priorProtocol := ownerTool methodProtocol ifNil: [ '' ].
@@ -165,14 +170,14 @@ ClyProtocolAndPackageEditorMorph >> requestProtocol [
 ]
 
 { #category : #operations }
-ClyProtocolAndPackageEditorMorph >> resetProtocolAndPackage [
+ClyProtocolEditorMorph >> resetProtocolAndPackage [
 
-	ownerTool methodProtocol: nil.
+	ownerTool methodProtocol: Protocol unclassified.
 	self update
 ]
 
 { #category : #operations }
-ClyProtocolAndPackageEditorMorph >> toggleExtension [
+ClyProtocolEditorMorph >> toggleExtension [
 
 	self requestChangeBy: [
 		self isExtensionActive
@@ -182,7 +187,7 @@ ClyProtocolAndPackageEditorMorph >> toggleExtension [
 ]
 
 { #category : #building }
-ClyProtocolAndPackageEditorMorph >> update [
+ClyProtocolEditorMorph >> update [
 	label color: label defaultColor.
 	label contents: self printProtocolOrPackage.
 	self isExtensionActive
