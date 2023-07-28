@@ -117,7 +117,8 @@ UUID >> <= aMagnitude [
 
 { #category : #comparing }
 UUID >> = anUUID [
-	^(self uuidData = anUUID uuidData)
+	^self species == anUUID species and: [ 
+		(self uuidData = anUUID uuidData) ]
 	
 ]
 

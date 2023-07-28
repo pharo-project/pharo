@@ -24,9 +24,10 @@ ReClassNotCategorizedRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReClassNotCategorizedRule >> basicCheck: aClass [
+
 	aClass isMeta ifTrue: [ ^ false ].
 
-	^aClass tags isEmpty and: [ aClass package classTags size > 1 ]
+	^ aClass packageTag isNil and: [ aClass package classTags size > 1 ]
 ]
 
 { #category : #accessing }

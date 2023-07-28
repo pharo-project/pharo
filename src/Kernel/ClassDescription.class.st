@@ -264,6 +264,11 @@ ClassDescription >> classify: selector under: aProtocol [
 
 	"In case the method is already classified and we say to classify it under nil, we do not update the protocol."
 	(aProtocol isNil and: [ oldProtocol isNotNil ]) ifTrue: [ ^ self ].
+	
+	"If we try to classify the method as an extension of its own package, just unclassify the method to avoid any weird state where the method could be considered as an extension or not depending on the interpretation."
+	(self isProtocolExtensionFromTheSamePackage: aProtocol) ifTrue: [
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		^ self classify: selector under: Protocol unclassified ].
 
 	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
 
@@ -654,10 +659,27 @@ ClassDescription >> isMeta [
 	^self isClassSide
 ]
 
+{ #category : #private }
+ClassDescription >> isProtocolExtensionFromTheSamePackage: aProtocol [
+	"I return true if the protocol as parameter is an extension protocol and the concerned package is my origin package."
+
+	| protocolName |
+	aProtocol ifNil: [ ^ false ].
+
+	protocolName := aProtocol isString
+		                ifTrue: [ aProtocol ]
+		                ifFalse: [ aProtocol name ].
+
+	"If it is not an extension then there is no problem"
+	protocolName first = $* ifFalse: [ ^ false ].
+
+	^ (self packageOrganizer packageMatchingExtensionName: protocolName allButFirst) = self package
+]
+
 { #category : #testing }
 ClassDescription >> isTaggedWith: aSymbol [
 
-	^ self packageTag
+	^ self packageTagName
 		  ifNil: [ false ]
 		  ifNotNil: [ :tag | tag = aSymbol ]
 ]
@@ -959,6 +981,11 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
 
 	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
+	
+	"We should not be able to have a protocol that is an extension of the same class so let's skip the rename."
+	(self isProtocolExtensionFromTheSamePackage: aNewProtocol) ifTrue: [ 
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		^ self ].
 
 		oldProtocol := self ensureProtocol: anOldProtocol.
 		newProtocol := self ensureProtocol: aNewProtocol.
@@ -1130,30 +1157,6 @@ ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: sl
 		layout: newLayout
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> tagWith: aSymbol [
-	| package packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
-
-	package := self package.
-	packageTag := package addClassTag: aSymbol.
-	packageTag addClass: self
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> tags [
-
-	| packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we only define API to manage them on top of RPackageTag"
-	packageTag := self package classTagForClass: self.
-	packageTag ifNil: [ ^ #(  ) ].
-	packageTag isRoot ifTrue: [ ^ #(  ) ].
-
-	^ { packageTag name }
-]
-
 { #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theMetaClass [
 	"This method is deprecated so consider to migrate."
@@ -1174,20 +1177,6 @@ ClassDescription >> theNonMetaClass [
 ClassDescription >> uncategorizedSelectors [
 
 	^ self selectorsInProtocol: Protocol unclassified
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> untagFrom: aSymbol [
-	| package packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
-	package := self package.
-	packageTag := package classTagForClass: self.
-	packageTag ifNil: [ ^#() ].
-	packageTag isRoot ifTrue: [ ^#() ].
-	packageTag name = aSymbol ifFalse: [ ^self ].
-	packageTag removeClass: self.
-	package addClass: self
 ]
 
 { #category : #'pool variable' }

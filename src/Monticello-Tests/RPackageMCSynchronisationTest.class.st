@@ -19,12 +19,12 @@ Class {
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addXCategory [
-	testingEnvironment organization addCategory: 'XXXXX'.
+	self organizer addCategory: 'XXXXX'.
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addXMatchCategory [
-	testingEnvironment organization addCategory: 'XXXXX-YYYY'.
+	self organizer addCategory: 'XXXXX-YYYY'.
 ]
 
 { #category : #utilities }
@@ -47,21 +47,21 @@ RPackageMCSynchronisationTest >> addXYZCategory [
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addYCategory [
 
-	testingEnvironment organization addCategory: 'YYYYY'.
+	self organizer addCategory: 'YYYYY'.
 			
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addZCategory [
 
-	testingEnvironment organization addCategory: 'ZZZZZ'.
+	self organizer addCategory: 'ZZZZZ'.
 			
 ]
 
 { #category : #setup }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
-	Smalltalk
+	self organizer environment
 		removeClassNamed: 'NewClass';
 		removeClassNamed: 'RPackageNewStubClass';
 		removeClassNamed: 'RPackageOldStubClass';
@@ -70,7 +70,7 @@ RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 		removeClassNamed: 'NewTrait';
 		removeClassNamed: 'ClassInYPackage';
 		removeClassNamed: 'ClassInZPackage'.
-	self packageOrganizer
+	self organizer
 		removeCategory: 'Zork';
 		removeCategory: 'XXXXX';
 		removeCategory: 'XXXXX-YYYY';
@@ -126,14 +126,7 @@ RPackageMCSynchronisationTest >> runCase [
 
 	[
 	self initializeAnnouncers.
-
-	^ RPackage withOrganizer: self setupOrganizer do: [
-		  self resources do: [ :each | each availableFor: self ].
-		  self setUp.
-		  self performTest ] ] ensure: [
-		self tearDown.
-		self restoreAnnouncers.
-		self cleanUpInstanceVariables ]
+	super runCase ] ensure: [ self restoreAnnouncers ]
 ]
 
 { #category : #running }

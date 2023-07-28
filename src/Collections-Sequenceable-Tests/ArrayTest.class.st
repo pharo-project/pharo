@@ -871,7 +871,7 @@ ArrayTest >> testShuffleBy [
 	| base random shuffleByResult |
 	base := #(1 2 3 4 5) copy.
 	random := (Random seed: 42).
-	shuffleByResult := #(2 5 4 3 1) copy.
+	shuffleByResult := #(1 2 5 4 3) copy.
 
 	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult)
 ]

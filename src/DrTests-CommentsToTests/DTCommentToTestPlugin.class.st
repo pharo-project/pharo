@@ -47,8 +47,8 @@ DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
 { #category : #api }
 DTCommentToTestPlugin >> packagesAvailableForAnalysis [
-	^ RPackage organizer packages
-		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
+
+	^ self packageOrganizer packages select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
 ]
 
 { #category : #accessing }
