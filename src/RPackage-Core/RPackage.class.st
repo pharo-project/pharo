@@ -274,7 +274,9 @@ RPackage >> basicImportClass: aClass [
 	"Add the class definition and all the selectors which are not extensions of other packages. If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted (should I use silently or not?)."
 
 	"Question: should we check that for each extension, there is a real package behind or not?"
-
+	
+	"We first remove the potention methods in case there are extensions registered then we add the class."
+	self removeAllMethodsFromClass: aClass.
 	self addClassDefinition: aClass.
 	(aClass protocols
 		select: [ :protocol | self isYourClassExtension: protocol ])
