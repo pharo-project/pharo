@@ -79,6 +79,17 @@ OpalCompilerTest >> testCompileFromAnalysedAST [
 ]
 
 { #category : #tests }
+OpalCompilerTest >> testCompileFromText [
+
+	| source result |
+	source := 'tt ^3+4' asText.
+
+	result := MockForCompilation compiler compile: source.
+	self assert: result sourceCode isString.
+	self assert: result sourceCode equals: source asString
+]
+
+{ #category : #tests }
 OpalCompilerTest >> testCompileSource [
 	| source result |
 	source := 'tt ^3+4'.

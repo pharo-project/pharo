@@ -220,14 +220,30 @@ RPackage >> addMethod: aCompiledMethod [
 	(self includesClass: methodClass)
 		ifTrue: [
 			methodClass isMeta
-				ifTrue: [ (metaclassDefinedSelectors at: methodClass instanceSide name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ]
-				ifFalse: [ (classDefinedSelectors at: methodClass name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ] ]
-		ifFalse: [
+				ifTrue: [
+					(metaclassDefinedSelectors
+						at: methodClass instanceSide name
+						ifAbsentPut: [ IdentitySet new ])
+						add: aCompiledMethod selector]
+				ifFalse: [
+					(classDefinedSelectors
+						at: methodClass name
+						ifAbsentPut: [ IdentitySet new ])
+						add: aCompiledMethod selector ] ]
+		ifFalse:  [
 			methodClass isMeta
-				ifTrue: [ (metaclassExtensionSelectors at: methodClass instanceSide name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ]
-				ifFalse: [ (classExtensionSelectors at: methodClass name ifAbsentPut: [ Set new ]) add: aCompiledMethod selector ].
-			"we added a method extension so the receiver is an extending package of the class"
-			self organizer registerExtendingPackage: self forClass: methodClass ].
+				ifTrue: [
+					(metaclassExtensionSelectors
+						at: methodClass instanceSide name
+						ifAbsentPut: [ IdentitySet new ])
+						add: aCompiledMethod selector.]
+				ifFalse: [
+					(classExtensionSelectors
+						at: methodClass name
+						ifAbsentPut: [ IdentitySet new ])
+						add: aCompiledMethod selector].
+				"we added a method extension so the receiver is an extending package of the class"
+				self organizer registerExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
@@ -670,7 +686,7 @@ RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 
 	| sels |
 	sels := self definedSelectorsForClass: aClass.
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -679,7 +695,7 @@ RPackage >> includesDefinedSelector: aSelector ofClassName: aClassName [
 
 	| sels |
 	sels := classDefinedSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -688,7 +704,7 @@ RPackage >> includesDefinedSelector: aSelector ofMetaclassName: aClassName [
 
 	| sels |
 	sels := metaclassDefinedSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -697,7 +713,7 @@ RPackage >> includesExtensionSelector: aSelector ofClass: aClass [
 
 	| sels |
 	sels := self extensionSelectorsForClass: aClass.
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -706,7 +722,7 @@ RPackage >> includesExtensionSelector: aSelector ofClassName: aClassName [
 
 	| sels |
 	sels := classExtensionSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -715,7 +731,7 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 
 	| sels |
 	sels := metaclassExtensionSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector
+	^ sels includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -765,10 +781,10 @@ RPackage >> includesSystemCategory: categoryName [
 RPackage >> initialize [
 	super initialize.
 	classes := IdentitySet new.
-	metaclassExtensionSelectors := Dictionary new.
-	classExtensionSelectors := Dictionary new.
-	classDefinedSelectors := Dictionary new.
-	metaclassDefinedSelectors := Dictionary new.
+	metaclassExtensionSelectors := IdentityDictionary new.
+	classExtensionSelectors := IdentityDictionary new.
+	classDefinedSelectors := IdentityDictionary new.
+	metaclassDefinedSelectors := IdentityDictionary new.
 	classTags := Set new
 ]
 

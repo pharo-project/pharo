@@ -126,14 +126,7 @@ RPackageMCSynchronisationTest >> runCase [
 
 	[
 	self initializeAnnouncers.
-
-	^ RPackage withOrganizer: self setupOrganizer do: [
-		  self resources do: [ :each | each availableFor: self ].
-		  self setUp.
-		  self performTest ] ] ensure: [
-		self tearDown.
-		self restoreAnnouncers.
-		self cleanUpInstanceVariables ]
+	super runCase ] ensure: [ self restoreAnnouncers ]
 ]
 
 { #category : #running }

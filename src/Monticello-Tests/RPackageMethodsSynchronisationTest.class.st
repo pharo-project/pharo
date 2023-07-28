@@ -10,17 +10,17 @@ Class {
 { #category : #'tests - operations on methods' }
 RPackageMethodsSynchronisationTest >> testAddMethodInClassicCategoryAddMethodToTheParentPackageOfItsClass [
 	"test that when we add a method to a  class in a classic category (not beginning with *), this method is added to the parent package of the class"
-	
-	|tmpPackage class|
+
+	| tmpPackage class |
 	self addXCategory.
-	
+
 	tmpPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
-	self createMethodNamed: 'stubMethod' inClass:  class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
 
 	self assert: (class package includesDefinedSelector: #stubMethod ofClass: class).
-	self assert: ((class >> #stubMethod) packageFromOrganizer: self organizer ) equals: class package.
+	self assert: (class >> #stubMethod) package equals: class package
 ]
 
 { #category : #'tests - operations on methods' }
@@ -36,7 +36,7 @@ RPackageMethodsSynchronisationTest >> testAddMethodInClassicCategoryAddMethodToT
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'classic category'.
 
 	self assert: (trait package includesDefinedSelector: #stubMethod ofClass: trait).
-	self assert: (trait >> #stubMethod packageFromOrganizer: self organizer) equals: trait package
+	self assert: (trait >> #stubMethod) package equals: trait package
 ]
 
 { #category : #'tests - operations on methods' }
@@ -56,7 +56,7 @@ RPackageMethodsSynchronisationTest >> testModifyMethodByMovingFromClassicCategor
 	self assert: (class >> #stubMethod) protocolName equals: 'new category'.
 	self assert: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (firstPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: firstPackage
+	self assert: (class >> #stubMethod) package equals: firstPackage
 ]
 
 { #category : #'tests - operations on methods' }
@@ -73,12 +73,12 @@ RPackageMethodsSynchronisationTest >> testModifyMethodByMovingFromClassicCategor
 	class classify: #stubMethod under: '*yyyyy'.
 	self deny: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self assert: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: secondPackage.
+	self assert: (class >> #stubMethod) package equals: secondPackage.
 
 	class classify: #stubMethod under: '*yyyyy-subcategory'.
 	self deny: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self assert: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: secondPackage
+	self assert: (class >> #stubMethod) package equals: secondPackage
 ]
 
 { #category : #'tests - operations on methods' }
@@ -96,7 +96,7 @@ RPackageMethodsSynchronisationTest >> testModifyMethodByMovingFromExtensionCateg
 	class classify: #stubMethod under: 'classic category'.
 	self assert: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: firstPackage
+	self assert: (class >> #stubMethod) package equals: firstPackage
 ]
 
 { #category : #'tests - operations on methods' }
@@ -115,7 +115,7 @@ RPackageMethodsSynchronisationTest >> testModifyMethodByMovingFromExtensionCateg
 	self deny: (xPackage includesDefinedSelector: #newMethod ofClass: class).
 	self deny: (yPackage includesExtensionSelector: #newMethod ofClass: class).
 	self assert: (zPackage includesExtensionSelector: #newMethod ofClass: class).
-	self assert: (class >> #newMethod packageFromOrganizer: self organizer) equals: zPackage
+	self assert: (class >> #newMethod) package equals: zPackage
 ]
 
 { #category : #'tests - operations on methods' }
