@@ -1,16 +1,16 @@
 "
-This inherits from `DTDefaultPluginPresenter`.
+I am a specialized `DTDefaultPluginPresenter` for the DrTests coverage plugin.
 
-This subclass adds an extra panel to display the source code of the methods and highlight the covered code lines. The highlighting has 3 colors where:
+This subclass adds an extra panel to display the source code of the methods and highlight the covered lines of code. The highlighting has 3 colors where:
 - green indicates fully covered lines.
 - yellow indicates partially covered lines.
-- red indicates non-covered lines.
+- red indicates uncovered lines.
 
-To achieve this, this subclass has 4 new attributes: sourceCodePanel, coveredNodes, uncoveredNodes, and yellowNodes. Where sourceCodePanel is the panel that displays de source code highlighted and the rest list of nodes that has a method. Furthermore,  it has 4 new methods:
-1) `DTDefaultPluginPresenter>>#updateSourceCodePanel:` It updated the panel when the user click a method on the result list. It paint in descending order. First paint green as a base color.
-2) `DTDefaultPluginPresenter>>#defineColorCoverage:` According to the selected method, it updates the coveredNodes and uncoveredNodes attributes. 
-3) `DTDefaultPluginPresenter>>#defineColorMessageNode:` According to the selected method, it updated the yellowNodes attribute. Given that a RBMessageNode contains selectors like IfTrue, IfFalse, do, and others. It helps to define if those selectors should be yellow o green highlighting.
-4)  `DTDefaultPluginPresenter>>#addHighlightingOf:withColor:` method to refactor the painting in the source code panel for each attribute ( coveredNodes, uncoveredNodes, and yellowNodes)
+To achieve this, this subclass has 4 new attributes: sourceCodePanel, coveredNodes, uncoveredNodes, and yellowNodes. The sourceCodePanel is the panel that displays the highlighted source code below the list of method nodes. It also has 4 new methods:
+1) `DTCoveragePluginPresenter>>#updateSourceCodePanel:` updates the panel when the user clicks on a method in the result list. It colors in the order they are presented above, starting from green as a base color.
+2) `DTCoveragePluginPresenter>>#defineColorCoverage:` updates the coveredNodes and uncoveredNodes attributes according to the selected method. 
+3) `DTCoveragePluginPresenter>>#defineColorMessageNode:` updates the yellowNodes attribute according to the selected method. If an RBMessageNode contains selectors with block arguments like `ifTrue:`, `ifFalse:`, `do:` and others, it decides whether they should be highlighted in yellow or green.
+4) `DTCoveragePluginPresenter>>#addHighlightingOf:withColor:` applies the highlighting to the source code panel for each attribute (coveredNodes, uncoveredNodes, and yellowNodes).
 "
 Class {
 	#name : #DTCoveragePluginPresenter,

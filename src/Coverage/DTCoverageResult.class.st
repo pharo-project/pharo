@@ -1,14 +1,13 @@
 "
-This inherits from `CoverageResult` and like the parent class:
+I am a specialized `CoverageResult` for DrTests.
+Like my parent:
+- I represent the result of a code coverage measurement.
+- My instance is produced by `DTCoverageCollector>>#basicCollectResult`.
+- I contain the set of covered methods and sequence nodes.
 
-•	This class represents the result of a code coverage measure.
-•	This instance is produced by `DTCoverageCollector>>#basicCollectResult`.
-•	It contains the set of covered methods and sequence nodes.
+I add the partiallyCoveredMethods attribute to store the methods that are only partially covered by tests.
 
-
-In this subclass, I add the partillyCoveredMethods attribute. It stores the method that has some tests covered but not all the source code of the method.
-
-It helps to show the panel of sourceCode in the Coverage Pluguin of DrTestt
+I am used to display the sourceCode panel in DrTest's Coverage plugin.
 "
 Class {
 	#name : #DTCoverageResult,

@@ -1,9 +1,9 @@
 "
-This inherits from `DTCoverageCollector`.
+I am a specialized `CoverageCollector` for DrTests.
 
-I specify some changes to better fit the needs of the DrTest coverage plugin and display in a panel the source code by highlighting the covered code lines.
+I specify some changes to better fit the needs of the DrTests coverage plugin and display the source code in a panel by highlighting the covered lines of code.
 
-The main change is in the `DTCoverageCollector>>#collectResult` where I delete the ""self reset"" line.
+The main change is in `DTCoverageCollector>>#collectResult` where I omit the ""reset"" step.
 "
 Class {
 	#name : #DTCoverageCollector,
