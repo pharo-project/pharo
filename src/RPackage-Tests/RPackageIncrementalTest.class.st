@@ -58,7 +58,7 @@ RPackageIncrementalTest >> tearDown [
 		self allWorkingCopies
 			detect: [ :mcPackage | mcPackage packageName = each packageName asString ]
 			ifFound: [ :mcPackage | mcPackage unregister ].
-		each extendedClasses do: [ :extendedClass | RPackage organizer unregisterExtendingPackage: each forClass: extendedClass ] ].
+		each extendedClasses do: [ :extendedClass | self organizer unregisterExtendingPackage: each forClass: extendedClass ] ].
 	"all ***extending*** classes the packages are also unregistered from PackageOrganizer"
 	super tearDown
 ]
@@ -646,23 +646,6 @@ RPackageIncrementalTest >> testPackageOfClassForDefinedClasses [
 
 	self assert: a1 package equals: p.
 	self assert: b1 package equals: p
-]
-
-{ #category : #'tests - registration' }
-RPackageIncrementalTest >> testPrivateClassRegisterUnregister [
-	"Verify that when we register a class, the package organizer register it."
-
-	| p a1 |
-	p := self createNewPackageNamed: 'P1'.
-	a1 := self createNewClassNamed: #A1InPackageP1.
-	p definedClassNames add: #A1InPackageP1.
-	"ugly but necessary to test registerClass: independantly from addClassDefinition:"
-	"No event should be raised."
-	p registerClass: a1.
-	self assert: (RPackage organizer packageOf: a1) equals: p.
-	p definedClassNames remove: #A1InPackageP1.
-	p unregisterClass: a1.
-	self assert: (RPackage organizer packageOf: a1) isDefault
 ]
 
 { #category : #'tests - class addition removal' }
