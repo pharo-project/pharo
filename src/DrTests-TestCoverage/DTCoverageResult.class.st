@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'partiallyCoveredMethods'
 	],
-	#category : #'Coverage-Base'
+	#category : #'DrTests-TestCoverage'
 }
 
 { #category : #accessing }

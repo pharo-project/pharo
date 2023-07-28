@@ -1,7 +1,7 @@
 Class {
 	#name : #DTCoverageCollectorTest,
 	#superclass : #TestCase,
-	#category : #'Coverage-Tests'
+	#category : #'DrTests-TestCoverage-Tests'
 }
 
 { #category : #tests }

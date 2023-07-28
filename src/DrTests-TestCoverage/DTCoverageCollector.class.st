@@ -8,16 +8,8 @@ The main change is in `DTCoverageCollector>>#collectResult` where I omit the ""r
 Class {
 	#name : #DTCoverageCollector,
 	#superclass : #CoverageCollector,
-	#category : #'Coverage-Base'
+	#category : #'DrTests-TestCoverage'
 }
-
-{ #category : #precalculations }
-DTCoverageCollector >> hasAllNodesCovered: aMethod [
-
-	aMethod ast nodesDo: [ :node |
-		node isSequence ifTrue: [ node hasBeenExecuted ifFalse: [ ^ false ] ] ].
-	^ true
-]
 
 { #category : #basic }
 DTCoverageCollector >> basicCollectResult [
@@ -42,4 +34,12 @@ DTCoverageCollector >> collectResult [
 
 	self remapMethods.
 	^ self basicCollectResult
+]
+
+{ #category : #precalculations }
+DTCoverageCollector >> hasAllNodesCovered: aMethod [
+
+	aMethod ast nodesDo: [ :node |
+		node isSequence ifTrue: [ node hasBeenExecuted ifFalse: [ ^ false ] ] ].
+	^ true
 ]

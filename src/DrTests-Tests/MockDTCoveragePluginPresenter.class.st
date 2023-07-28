@@ -16,11 +16,13 @@ MockDTCoveragePluginPresenter >> uncoveredNodes [
 
 { #category : #initialization }
 MockDTCoveragePluginPresenter >> updatePresenter [
+	"I rewrite this method by commenting, so this class  cannot be initialized and run other methods that are unnecessary to perform the tests."
 
-	"super updatePresenter."
+	"super updatePresenter.
+	self updatePackagesList.
+	self updateResultViewsDropList."
 
-	"self updatePackagesList."
-	"self updateResultViewsDropList."
+	
 ]
 
 { #category : #'accessing - attributes' }

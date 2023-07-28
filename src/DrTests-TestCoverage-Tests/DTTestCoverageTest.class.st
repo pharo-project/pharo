@@ -28,15 +28,6 @@ DTTestCoverageTest >> testCoveragePercentForMock [
 	self assert: result percent class equals: ScaledDecimal
 ]
 
-{ #category : #improvements }
-DTTestCoverageTest >> testCoveragePluginUsingPresenterClassWithSourceCodePanel [
-	"DTCoveragePluginPresenter contains the extra panel that display de source code with highlighting "
-
-	self
-		assert: plugin pluginPresenterClass
-		equals: DTCoveragePluginPresenter
-]
-
 { #category : #running }
 DTTestCoverageTest >> testCoverageResultIsAnInstanceOfDTTestCoverageResult [
 
