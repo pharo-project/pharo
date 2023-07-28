@@ -10,9 +10,9 @@ DTCoverageCollectorTest >> testResultIsADTCoverageResultClass [
 	| cov res |
 	cov := DTCoverageCollector new.
 	cov methods: { (MockForCoverage >> #method1ForMock) . (MockForCoverage >> #method2ForMock:) }.
-	res := cov runOn: [ |mockClass| mockClass:=MockForCoverage new .  mockClass method1ForMock ].
+	res := cov runOn: [ |mockClass| mockClass := MockForCoverage new.  mockClass method1ForMock ].
 
-	self assert: res class  equals: DTCoverageResult .
+	self assert: res class equals: DTCoverageResult .
 ]
 
 { #category : #tests }

@@ -18,10 +18,10 @@ DTCoveragePluginPresenterTest >> setUp [
 DTCoveragePluginPresenterTest >> testEmptyInitializeOfAttributes [
 
 	| emptyPresenter |
-   emptyPresenter := MockDTCoveragePluginPresenter new .
+	emptyPresenter := MockDTCoveragePluginPresenter new .
 	self assert: emptyPresenter uncoveredNodes isNil.
 	self assert: emptyPresenter coveredNodes isNil.
-   self assert: emptyPresenter yellowNodes isNil.
+	self assert: emptyPresenter yellowNodes isNil.
 ]
 
 { #category : #tests }
@@ -34,5 +34,5 @@ DTCoveragePluginPresenterTest >> testUpdateSourceCodePanelUncovered [
 
 	self assert: presenter uncoveredNodes size equals: 1.
 	self assert: presenter coveredNodes size isZero .
-   self assert: presenter yellowNodes size isZero.
+	self assert: presenter yellowNodes size isZero.
 ]
