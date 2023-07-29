@@ -250,16 +250,6 @@ RPackage >> addMethod: aCompiledMethod [
 	^ aCompiledMethod
 ]
 
-{ #category : #'add method - selector' }
-RPackage >> addSelector: aSelector ofMetaclassName: aClassName [
-	"Add the method to the receiver. If the class is not locally defined in that package then the method is defined as a method extension: ie extending another package. Note that this method does not add the method to the class, it just records in the package that the method is packaged. aClassName is the sole instance class name and not its metaclass one: i.e. adding Point class>>new is done as addSelector: #new ofMetaclassName: #Point"
-
-	( self includesClassNamed: aClassName)
-		ifFalse: [(metaclassExtensionSelectors at: aClassName asSymbol ifAbsentPut: [Set new]) add: aSelector]
-		ifTrue: [(metaclassDefinedSelectors at: aClassName asSymbol ifAbsentPut: [Set new]) add: aSelector].
-	^ aSelector
-]
-
 { #category : #private }
 RPackage >> basicAddClassTag: tagName [
 	| packageTag |
@@ -295,38 +285,9 @@ RPackage >> basicRemoveTag: tag [
 	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
-{ #category : #slices }
-RPackage >> classDefinedSlicesDo: aBlock [
-	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
-
-	classDefinedSelectors keysAndValuesDo: aBlock
-]
-
 { #category : #private }
 RPackage >> classExtensionSelectors [
 	^ classExtensionSelectors
-]
-
-{ #category : #slices }
-RPackage >> classExtensionSlicesDo: aBlock [
-	"This method iterates over the class extensions and their associated selectors. A slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlock first argument is the class and the second argument a list of method selectors"
-
-	classExtensionSelectors keysAndValuesDo: aBlock
-]
-
-{ #category : #slices }
-RPackage >> classNamesAndExtensionSelectorsDo: aBlock [
-	"Iterate over the extended methods grouped by classes and apply the argument.
-	The block will be passed a class name and each individual selectors.
-	Only classes with methods are paired with their methods"
-
-	classExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-			methods do: [ :sel |  aBlock value: classSymbol	value: sel]].
-
-	metaclassExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-			methods do: [ :sel |  aBlock
-									value: (classSymbol, '_class') asSymbol
-									value: sel]]
 ]
 
 { #category : #'class tags' }
@@ -498,39 +459,18 @@ RPackage >> extendedClasses [
 ]
 
 { #category : #private }
-RPackage >> extendedMethodsBecomeDefinedForClass: aClassName [
-	"the package may contain extension methods and their class is added to the receiver. The status of such methods should now be defined"
-	"Precondition: aClassName is in the defined list"
-
-	| ext |
-	(classExtensionSelectors keys includes: aClassName) ifFalse: [^ self].
-	ext := classExtensionSelectors at: aClassName.
-	classExtensionSelectors removeKey: aClassName ifAbsent: [self reportBogusBehaviorOf:   #extendedMethodsBecomeDefinedForClass: ].
-	(classDefinedSelectors keys includes: aClassName) ifTrue: [self error: aClassName , ' should not be defined in extension'.]. "we should remove this check later"
-	classDefinedSelectors at: aClassName put: ext
-]
-
-{ #category : #private }
-RPackage >> extendedMethodsBecomeDefinedForMetaclass: aClassName [
-	"the package may contain extension methods and their class is added to the receiver. The status of such methods should now be defined"
-	"Precondition: aClassName is in the defined list"
-
-	| ext |
-	(metaclassExtensionSelectors keys includes: aClassName) ifFalse: [^ self].
-	ext := metaclassExtensionSelectors at: aClassName.
-	metaclassExtensionSelectors removeKey: aClassName  ifAbsent: [self reportBogusBehaviorOf:  #extendedMethodsBecomeDefinedForMetaclass: ].
-	(metaclassDefinedSelectors keys includes: aClassName)
-			ifTrue: [self error: aClassName , ' should not be defined in extension'.]. "we should remove this check later"
-	metaclassDefinedSelectors at: aClassName put: ext
-]
-
-{ #category : #private }
 RPackage >> extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName [
 	"the package may contain extension methods and their class is added to the receiver. The status of such methods should now be defined"
+
 	"Precondition: aClassName is in the defined list"
 
-	self extendedMethodsBecomeDefinedForClass: aClassName.
-	self extendedMethodsBecomeDefinedForMetaclass: aClassName
+	(classExtensionSelectors keys includes: aClassName) ifTrue: [
+		(classDefinedSelectors keys includes: aClassName) ifTrue: [ self error: aClassName , ' should not be defined in extension' ].
+		classDefinedSelectors at: aClassName put: (classExtensionSelectors removeKey: aClassName) ].
+
+	(metaclassExtensionSelectors keys includes: aClassName) ifTrue: [
+		(metaclassDefinedSelectors keys includes: aClassName) ifTrue: [ self error: aClassName , ' should not be defined in extension' ].
+		metaclassDefinedSelectors at: aClassName put: (metaclassExtensionSelectors removeKey: aClassName) ]
 ]
 
 { #category : #testing }
@@ -540,15 +480,6 @@ RPackage >> extendsClass: aClass [
 	| canonizedName |
 	canonizedName := aClass instanceSide name.
 	^ self extendedClassNames includes: canonizedName
-]
-
-{ #category : #'system compatibility' }
-RPackage >> extensionCategoriesForClass: aClass [
-
-	self
-		deprecated: 'Use #extensionProtocolsForClass: instead.'
-		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
-	^ self extensionProtocolsForClass: aClass
 ]
 
 { #category : #accessing }
@@ -689,54 +620,14 @@ RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
 RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
 
-	| sels |
-	sels := self definedSelectorsForClass: aClass.
-	^ sels includes: aSelector asSymbol
-]
-
-{ #category : #testing }
-RPackage >> includesDefinedSelector: aSelector ofClassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
-
-	| sels |
-	sels := classDefinedSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector asSymbol
-]
-
-{ #category : #testing }
-RPackage >> includesDefinedSelector: aSelector ofMetaclassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
-
-	| sels |
-	sels := metaclassDefinedSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector asSymbol
+	^ (self definedSelectorsForClass: aClass) includes: aSelector asSymbol
 ]
 
 { #category : #testing }
 RPackage >> includesExtensionSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
 
-	| sels |
-	sels := self extensionSelectorsForClass: aClass.
-	^ sels includes: aSelector asSymbol
-]
-
-{ #category : #testing }
-RPackage >> includesExtensionSelector: aSelector ofClassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
-
-	| sels |
-	sels := classExtensionSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector asSymbol
-]
-
-{ #category : #testing }
-RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
-
-	| sels |
-	sels := metaclassExtensionSelectors at: aClassName ifAbsent: [^ false].
-	^ sels includes: aSelector asSymbol
+	^ (self extensionSelectorsForClass: aClass) includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -755,25 +646,7 @@ RPackage >> includesProtocol: protocol ofClass: aClass [
 RPackage >> includesSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 
-	^ aClass isMeta
-		ifTrue: [ self includesSelector: aSelector ofMetaclassName: aClass instanceSide name  ]
-		ifFalse: [ self includesSelector: aSelector ofClassName: aClass name  ]
-]
-
-{ #category : #testing }
-RPackage >> includesSelector: aSelector ofClassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
-
-	^ (self includesDefinedSelector: aSelector ofClassName: aClassName)
-		or: [(self includesExtensionSelector: aSelector ofClassName: aClassName)]
-]
-
-{ #category : #testing }
-RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
-
-	^ (self includesDefinedSelector: aSelector ofMetaclassName: aClassName)
-		or: [(self includesExtensionSelector: aSelector ofMetaclassName: aClassName)]
+	^ (self includesDefinedSelector: aSelector ofClass: aClass) or: [ self includesExtensionSelector: aSelector ofClass: aClass ]
 ]
 
 { #category : #'system compatibility' }
@@ -849,23 +722,9 @@ RPackage >> linesOfCode [
 	^self methods inject: 0 into: [:sum :each | sum + each linesOfCode]
 ]
 
-{ #category : #slices }
-RPackage >> metaclassDefinedSlicesDo: aBlock [
-	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
-
-	metaclassDefinedSelectors keysAndValuesDo: aBlock
-]
-
 { #category : #private }
 RPackage >> metaclassExtensionSelectors [
 	^ metaclassExtensionSelectors
-]
-
-{ #category : #slices }
-RPackage >> metaclassExtensionSlicesDo: aBlock [
-	"This method iterates over the metaclass extensions and their associated selectors. A slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and second argument a list of selectors"
-
-	metaclassExtensionSelectors keysAndValuesDo: aBlock
 ]
 
 { #category : #'system compatibility' }

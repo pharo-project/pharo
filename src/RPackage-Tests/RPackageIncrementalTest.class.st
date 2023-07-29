@@ -147,35 +147,35 @@ RPackageIncrementalTest >> testAddClassDefinitionNoDuplicate [
 
 { #category : #'tests - method addition removal' }
 RPackageIncrementalTest >> testAddRemoveMethod [
-	| p1 p2 p3 a2   a2Name |
-	a2Name := #A2InPackageP2.
+
+	| p1 p2 p3 a2 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
 	p3 := self createNewPackageNamed: 'P3'.
-	a2 := self createNewClassNamed: a2Name inPackage: p2.
+	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
 
-	p2 addMethod: (a2>>#methodDefinedInP2).
+	p2 addMethod: a2 >> #methodDefinedInP2.
 	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
+	p1 addMethod: a2 >> #methodDefinedInP1.
 	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: (a2>>#methodDefinedInP3).
+	p3 addMethod: a2 >> #methodDefinedInP3.
 
-	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClassName: a2Name).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClassName: a2Name).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClassName: a2Name).
-	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClassName: a2Name).
-	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClassName: a2Name).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClassName: a2Name).
+	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2).
+	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a2).
+	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
+	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
+	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2).
+	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2).
 
 	"removeMethod by default removes from defined methods and not extension"
-	p2 removeMethod: (a2>>#methodDefinedInP2).
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClassName: a2Name).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClassName: a2Name).
+	p2 removeMethod: a2 >> #methodDefinedInP2.
+	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2).
+	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a2).
 
-	p1 removeMethod: (a2>>#methodDefinedInP1).
-	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofClassName: a2Name).
-	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofClassName: a2Name)
+	p1 removeMethod: a2 >> #methodDefinedInP1.
+	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
+	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofClass: a2)
 ]
 
 { #category : #'tests - method addition removal' }
@@ -192,53 +192,20 @@ RPackageIncrementalTest >> testAddRemoveSelector [
 	p1 addMethod: a2 >> (a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1').
 	p3 addMethod: a2 >> (a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3').
 
-	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClassName: a2Name).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClassName: a2Name).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClassName: a2Name).
-	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClassName: a2Name).
-	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClassName: a2Name).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClassName: a2Name).
+	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2).
+	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a2).
+	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
+	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
+	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2).
+	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2).
 
 	p2 removeMethod: a2 >> #methodDefinedInP2.
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClassName: a2Name).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClassName: a2Name).
+	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2).
+	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a2).
 
 	p1 removeMethod: a2 >> #methodDefinedInP1.
-	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofClassName: a2Name).
-	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofClassName: a2Name)
-]
-
-{ #category : #'tests - method addition removal' }
-RPackageIncrementalTest >> testAddRemoveSelectorOfMetaclass [
-
-	| p1 p2 p3 a2 a2Name a2class |
-	a2Name := #A2InPackageP2.
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
-	a2 := self createNewClassNamed: a2Name inPackage: p2.
-	a2class := a2 class.
-	a2class compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addSelector: #methodDefinedInP2 ofMetaclassName: a2Name.
-	a2class compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addSelector: #methodDefinedInP1 ofMetaclassName: a2Name.
-	a2class compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addSelector: #methodDefinedInP3 ofMetaclassName: a2Name.
-
-	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofMetaclassName: a2Name).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofMetaclassName: a2Name).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofMetaclassName: a2Name).
-	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofMetaclassName: a2Name).
-	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofMetaclassName: a2Name).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofMetaclassName: a2Name).
-
-	p2 removeMethod: a2 class >> #methodDefinedInP2.
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofMetaclassName: a2Name).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofMetaclassName: a2Name).
-
-	p1 removeMethod: a2 class >> #methodDefinedInP1.
-	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofMetaclassName: a2Name).
-	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofMetaclassName: a2Name)
+	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
+	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofClass: a2)
 ]
 
 { #category : #'tests - class addition removal' }
@@ -489,90 +456,91 @@ RPackageIncrementalTest >> testIncludeClassMore [
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testIncludeSelectorOfClass [
-	| p1 p2 p3 a2  |
+
+	| p1 p2 p3 a2 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
 	p3 := self createNewPackageNamed: 'P3'.
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addMethod: (a2>>#methodDefinedInP2).
+	p2 addMethod: a2 >> #methodDefinedInP2.
 	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
+	p1 addMethod: a2 >> #methodDefinedInP1.
 	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: (a2>>#methodDefinedInP3).
+	p3 addMethod: a2 >> #methodDefinedInP3.
 
 	"includesSelector checks both in defined and extension so we test both"
 	self assert: (p2 includesSelector: #methodDefinedInP2 ofClass: a2).
-	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClassName: a2 name).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClassName: a2 name).
+	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2).
+	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a2).
 
 	self deny: (p2 includesSelector: #methodDefinedInP3 ofClass: a2).
-	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClassName: a2 name).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClassName: a2 name).
+	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
+	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
 
 	self deny: (p2 includesSelector: #methodDefinedInP1 ofClass: a2).
-	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClassName: a2 name).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClassName: a2 name)
+	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2).
+	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testIncludeSelectorOfMetaClass [
-	| p1 p2 p3 a2  a2class |
+
+	| p1 p2 p3 a2 a2class |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
 	p3 := self createNewPackageNamed: 'P3'.
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2class := a2 class.
 	a2class compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addMethod: (a2class>>#methodDefinedInP2).
+	p2 addMethod: a2class >> #methodDefinedInP2.
 	a2class compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2class>>#methodDefinedInP1).
+	p1 addMethod: a2class >> #methodDefinedInP1.
 	a2class compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: (a2class>>#methodDefinedInP3).
+	p3 addMethod: a2class >> #methodDefinedInP3.
 
 	"includesSelector checks both in defined and extension so we test both"
 	self assert: (p2 includesSelector: #methodDefinedInP2 ofClass: a2class).
-	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofMetaclassName: a2 name).
+	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2 class).
 	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2class).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofMetaclassName: a2 name).
+	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a2 class).
 
 	self deny: (p2 includesSelector: #methodDefinedInP3 ofClass: a2).
-	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofMetaclassName: a2 name).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofMetaclassName: a2 name).
+	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2 class).
+	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClass: a2 class).
 
-	self deny: (p2 includesSelector: #methodDefinedInP1 ofMetaclassName: a2).
-	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofMetaclassName: a2 name).
+	self deny: (p2 includesSelector: #methodDefinedInP1 ofClass: a2 class).
 	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2 class).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClassName: a2 name).
+	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2 class).
 	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExtensions [
-	| p1 p2 p3 a2  a2name |
+
+	| p1 p2 p3 a2 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
 	p3 := self createNewPackageNamed: 'P3'.
-	a2name := #A2InPackageP2.
-	a2 := self createNewClassNamed: a2name inPackage: p2.
+	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 
 	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addMethod: (a2>>#methodDefinedInP2).
-	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClassName: a2name).
+	p2 addMethod: a2 >> #methodDefinedInP2.
+	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2).
 
 	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
-	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClassName: a2name).
+	p1 addMethod: a2 >> #methodDefinedInP1.
+	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2).
 
 	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: (a2>>#methodDefinedInP3).
-	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClassName: a2name).
+	p3 addMethod: a2 >> #methodDefinedInP3.
+	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
 
-	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClassName: a2name).
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP3 ofClassName: a2name).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP3 ofClassName: a2name).
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP1 ofClassName: a2name).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP1 ofClassName: a2name)
+	self assert: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2).
+	self deny: (p2 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
+	self deny: (p2 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
+	self deny: (p2 includesDefinedSelector: #methodDefinedInP1 ofClass: a2).
+	self deny: (p2 includesExtensionSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
 { #category : #'tests - extension' }
