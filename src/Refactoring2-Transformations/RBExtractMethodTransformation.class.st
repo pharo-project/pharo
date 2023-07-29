@@ -252,6 +252,13 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 	^ newMethodNode
 ]
 
+{ #category : #api }
+RBExtractMethodTransformation >> initialize [ 
+	super initialize.
+	self flag: #todo. "to be removed when all the applicability preconditions are enforced."
+	self preconditionChecking: true.
+]
+
 { #category : #executing }
 RBExtractMethodTransformation >> messageSendWith: aMethodName and: newArguments needsReturn: aBoolean [
 
