@@ -165,15 +165,16 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsRemoved [
 	self assert: (t1 >> #m1) package equals: self packageUnderTest.
 	self assert: (t2 >> #m1) package equals: self packageUnderTest.
 
-	self assert: (self packageOrganizer packageDefiningOrExtendingSelector: #m1 inClassNamed: #T1) equals: self packageUnderTest.
+	self packageUnderTest includesSelector: #m1 ofClass: t1.
 
 	t1 removeSelector: #m1.
 
 	self assert: (t1 protocolOfSelector: #m1) isNil.
 	self assert: (t2 protocolOfSelector: #m1) isNil.
 
-	self assert: (self packageOrganizer packageDefiningOrExtendingSelector: #m1 inClassNamed: #T1) isNil.
-	self assert: (self packageOrganizer packageDefiningOrExtendingSelector: #m1 inClassNamed: #T2) isNil
+	self packageOrganizer packages do: [ :package |
+		self deny: (package includesSelector: #m1 ofClass: t1).
+		self deny: (package includesSelector: #m1 ofClass: t2) ]
 ]
 
 { #category : #tests }

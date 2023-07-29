@@ -510,38 +510,6 @@ RPackageOrganizer >> orderedTraitsIn: category [
 	^ traits asArray
 ]
 
-{ #category : #accessing }
-RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inClassNamed: aClassNameSymbol [
-	"this implementation is slower
-		aClass packages detect: [:each | each includesSelector: aSelector ofClass: aClass ]"
-	| classPackage |
-
-	classPackage := self packageOfClassNamed: aClassNameSymbol.
-	classPackage ifNil: [ ^ nil ].
-	(classPackage includesSelector: aSelector ofClassName: aClassNameSymbol)
-		ifTrue: [ ^classPackage ].
-
-	^(self extendingPackagesOfClassNamed: aClassNameSymbol)
-		detect: [ :p | p includesSelector: aSelector ofClassName: aClassNameSymbol ]
-		ifNone: [ nil ]
-]
-
-{ #category : #accessing }
-RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inMetaclassNamed: aClassNameSymbol [
-	"this implementation is slower
-		aClass packages detect: [:each | each includesSelector: aSelector ofClass: aClass ]"
-	| classPackage |
-
-	classPackage := self packageOfClassNamed: aClassNameSymbol.
-	classPackage ifNil: [ ^ nil ].
-	(classPackage includesSelector: aSelector ofMetaclassName: aClassNameSymbol)
-		ifTrue: [ ^classPackage ].
-
-	^(self extendingPackagesOfClassNamed: aClassNameSymbol)
-		detect: [ :p | p includesSelector: aSelector ofMetaclassName: aClassNameSymbol ]
-		ifNone: [ nil ]
-]
-
 { #category : #'system integration' }
 RPackageOrganizer >> packageForProtocol: aProtocolName inClass: aClass [
 	"According aProtocolName is an extension protocol, will look for a matching package. If no matching package is found ,  return nil. If aProtocolName is not an extension protocol, return the parent package of aClass"
