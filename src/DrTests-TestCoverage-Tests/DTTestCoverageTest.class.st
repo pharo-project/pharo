@@ -63,7 +63,16 @@ DTTestCoverageTest >> testDTTestCoverageResultHas2Nodes [
 
 	| resultTree |
 	resultTree := (plugin runForConfiguration: pluginConfiguration) buildTreeForUI.
-	self assert: resultTree subResults size equals: 2
+	self assert: resultTree subResults size equals: 3
+]
+
+{ #category : #improvements }
+DTTestCoverageTest >> testDTTestCoverageResultHasCovered_Uncovered_PartiallyCoveredMethods [
+
+	| result |
+	result := plugin runForConfiguration: pluginConfiguration.
+	self assert: result methodList size equals: 1.
+	self assert: result partiallyCoveredMethods size equals: 1 .
 ]
 
 { #category : #running }
