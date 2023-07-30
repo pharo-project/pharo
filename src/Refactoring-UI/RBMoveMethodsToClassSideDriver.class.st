@@ -52,8 +52,21 @@ RBMoveMethodsToClassSideDriver >> displayWarnings: errorsList [
 	^ RBRefactoringWarning signal: errorStrings
 ]
 
+{ #category : #initialization }
+RBMoveMethodsToClassSideDriver >> model: aNamespace scopes: scopesList methods: aCollection [
+
+	model := aNamespace.
+	scopes := scopesList.
+	methods := aCollection.
+	refactorings := methods collect: [ :m |
+		                RBMoveMethodToClassSideRefactoring
+			                model: model
+			                method: m
+			                class: m origin ]
+]
+
 { #category : #execution }
-RBMoveMethodsToClassSideDriver >> execute [
+RBMoveMethodsToClassSideDriver >> runRefactoring [
 
 	| compositeChangesList errors warnings |
 	errors := OrderedCollection new.
@@ -74,17 +87,4 @@ RBMoveMethodsToClassSideDriver >> execute [
 	warnings ifNotEmpty: [ self displayWarnings: warnings ].
 
 	self openPreviewWithChanges: compositeChangesList
-]
-
-{ #category : #initialization }
-RBMoveMethodsToClassSideDriver >> model: aNamespace scopes: scopesList methods: aCollection [
-
-	model := aNamespace.
-	scopes := scopesList.
-	methods := aCollection.
-	refactorings := methods collect: [ :m |
-		                RBMoveMethodToClassSideRefactoring
-			                model: model
-			                method: m
-			                class: m origin ]
 ]
