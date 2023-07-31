@@ -177,6 +177,26 @@ ClassFactoryForTestCase >> initialize [
 ]
 
 { #category : #creating }
+ClassFactoryForTestCase >> make: aBlock [
+	"I return a new class or trait in the environment of the factory configured as the user specified in the make block.
+	Once the test is finished, I'll remove the created class or trait."
+
+	| newClass |
+	newClass := self class classInstaller make: [ :aBuilder | "Let's but some default values."
+		            aBuilder
+			            name: self newClassName;
+			            superclass: self defaultSuperclass;
+			            installingEnvironment: self environment;
+			            package: self packageName.
+
+		            "Now we let the users specify what they want."
+		            aBlock value: aBuilder ].
+
+	self createdClasses add: newClass.
+	^ newClass
+]
+
+{ #category : #creating }
 ClassFactoryForTestCase >> newClass [
 
 	^ self
@@ -269,20 +289,14 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 { #category : #creating }
 ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString category: category [
 
-	| newClass |
-	newClass := self class classInstaller make: [ :aBuilder |
-		            aBuilder
-			            name: self newClassName;
-			            superclass: aClass;
-			            installingEnvironment: self environment;
-			            traitComposition: aTraitComposition;
-			            slotsFromString: ivNamesString;
-			            sharedVariablesFromString: classVarsString;
-			            sharedPools: poolNamesString;
-			            package: (self packageName , '-' , category) asSymbol ].
-
-	self createdClasses add: newClass.
-	^ newClass
+	^ self make: [ :aBuilder |
+		  aBuilder
+			  superclass: aClass;
+			  traitComposition: aTraitComposition;
+			  slotsFromString: ivNamesString;
+			  sharedVariablesFromString: classVarsString;
+			  sharedPools: poolNamesString;
+			  package: (self packageName , '-' , category) asSymbol ]
 ]
 
 { #category : #creating }
