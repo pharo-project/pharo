@@ -248,7 +248,8 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 			            slotsFromString: ivNamesString;
 			            sharedVariablesFromString: classVarsString;
 			            sharedPools: poolNamesString;
-			            package: (self packageName , '-' , category) asSymbol ].
+			            package: self packageName;
+			            tag: category ].
 
 	self createdClasses add: newClass.
 	^ newClass
@@ -299,7 +300,8 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag
 		            aBuilder
 			            name: aTraitName;
 			            traitComposition: aTraitComposition;
-			            package: (self packageName , '-' , aTag) asSymbol;
+			            package: self packageName;
+			            tag: aTag;
 			            beTrait ].
 
 	self createdTraits add: newTrait.
