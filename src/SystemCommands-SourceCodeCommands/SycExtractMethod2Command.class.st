@@ -41,20 +41,6 @@ SycExtractMethod2Command >> asRefactorings [
 	^ { refactoring }
 ]
 
-{ #category : #actions }
-SycExtractMethod2Command >> computeInvalidArgNamesForSelector: aSymbol [
-
-	| invalidArgNames |
-	invalidArgNames := Set new.
-	(model allImplementorsOf: aSymbol) do: [ :e |
-		| mth |
-		mth := e realClass >> aSymbol.
-		invalidArgNames
-			addAll: mth argumentNames;
-			addAll: mth origin instVarNames ].
-	^ invalidArgNames
-]
-
 { #category : #accessing }
 SycExtractMethod2Command >> defaultMenuIconName [
 	^ #glamorousRestart
@@ -99,28 +85,11 @@ SycExtractMethod2Command >> getNewSelector [
 	^ methodName
 ]
 
-{ #category : #initialization }
-SycExtractMethod2Command >> initializeDefaultOptionsOf: refactoring [
-
-	NautilusRefactoring new refactoringOptions: refactoring
-]
-
 { #category : #execution }
 SycExtractMethod2Command >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
 	self setUpModelFromContext: aSourceCodeContext.
 	selectedTextInterval := aSourceCodeContext selectedTextInterval
-]
-
-{ #category : #initialization }
-SycExtractMethod2Command >> setUpModelFromContext: aContext [
-
-	| browser scope |
-	browser := aContext browser.
-	scope := browser defaultNavigationScope.
-	scope isCurrentImage ifTrue: [
-		scope := RefactoringSettings scopeRefactoring ].
-	model := RBClassModelFactory rbNamespace onEnvironment: scope asRBEnvironment
 ]
 
 { #category : #execution }

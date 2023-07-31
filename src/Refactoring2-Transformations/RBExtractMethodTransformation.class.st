@@ -260,7 +260,7 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 	^ newMethodNode
 ]
 
-{ #category : #api }
+{ #category : #initialization }
 RBExtractMethodTransformation >> initialize [ 
 	super initialize.
 	self flag: #todo. "to be removed when all the applicability preconditions are enforced."
