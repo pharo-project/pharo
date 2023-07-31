@@ -281,12 +281,6 @@ RBTransformationRuleTestData >> checkMethod: aSmalllintContext [
 ]
 
 { #category : #accessing }
-RBTransformationRuleTestData >> class [
-
-	^ class
-]
-
-{ #category : #accessing }
 RBTransformationRuleTestData >> class: anObject [
 
 	class := anObject
