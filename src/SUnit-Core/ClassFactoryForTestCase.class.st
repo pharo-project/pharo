@@ -23,7 +23,8 @@ Class {
 	#instVars : [
 		'createdClasses',
 		'createdTraits',
-		'createdSilently'
+		'createdSilently',
+		'environment'
 	],
 	#classVars : [
 		'Counter'
@@ -128,13 +129,25 @@ ClassFactoryForTestCase >> deleteClasses [
 { #category : #cleaning }
 ClassFactoryForTestCase >> deletePackage [
 
-	self packageOrganizer removeCategoriesMatching: self packageName , '-*'
+	self environment packageOrganizer removeCategoriesMatching: self packageName , '-*'
 ]
 
 { #category : #cleaning }
 ClassFactoryForTestCase >> deleteTraits [
 
 	self createdTraits do: [ :trait | self delete: trait ]
+]
+
+{ #category : #accessing }
+ClassFactoryForTestCase >> environment [
+
+	^ environment ifNil: [ self class environment ]
+]
+
+{ #category : #accessing }
+ClassFactoryForTestCase >> environment: anObject [
+
+	environment := anObject
 ]
 
 { #category : #initialization }
@@ -244,6 +257,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 		            aBuilder
 			            name: self newClassName;
 			            superclass: aClass;
+			            installingEnvironment: self environment;
 			            traitComposition: aTraitComposition;
 			            slotsFromString: ivNamesString;
 			            sharedVariablesFromString: classVarsString;
@@ -298,6 +312,7 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag
 	newTrait := self class classInstaller make: [ :aBuilder |
 		            aBuilder
 			            name: aTraitName;
+			            installingEnvironment: self environment;
 			            traitComposition: aTraitComposition;
 			            package: (self packageName , '-' , aTag) asSymbol;
 			            beTrait ].
@@ -362,6 +377,7 @@ ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: a
 		            aBuilder
 			            name: aClass name;
 			            superclass: aSuperclass;
+			            installingEnvironment: self environment;
 			            traitComposition: aTraitComposition;
 			            slotsFromString: ivNamesString;
 			            sharedVariablesFromString: classVarsString;
