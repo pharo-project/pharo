@@ -29,7 +29,7 @@ Class {
 		'arguments',
 		'temporaries',
 		'assignments',
-		'existingSelector'
+		'selectorOfExistingMethod'
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
@@ -67,15 +67,48 @@ RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aS
 ]
 
 { #category : #executing }
+RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemovedTemps: tempsToRemove [
+
+	| needsReturn messageSend newArguments |
+	needsReturn := self calculateIfReturnIsNeeded.
+	newMethod := self generateNewMethodWith: newMethodName.
+	newArguments := self calculateNewArgumentsIn: newMethodName.
+	messageSend := self
+		               messageSendWith: newMethodName
+		               and: newArguments
+		               needsReturn: needsReturn.
+
+	^ OrderedCollection new
+		  add: (RBAddMethodTransformation
+				   model: self model
+				   sourceCode: newMethod newSource
+				   in: class
+				   withProtocols: { Protocol unclassified });
+		  add: (RBReplaceSubtreeTransformation
+				   model: self model
+				   replace: sourceCode
+				   to: messageSend
+				   inMethod: selector
+				   inClass: class);
+		  addAll: (tempsToRemove collect: [ :temporary |
+					   RBRemoveTemporaryVariableTransformation
+						   model: self model
+						   variable: temporary
+						   inMethod: selector
+						   inClass: class ]);
+		  yourself
+]
+
+{ #category : #executing }
 RBExtractMethodTransformation >> buildTransformations [
 
 	subtree := self calculateSubtree.
 
-	existingSelector
+	selectorOfExistingMethod
 		ifNotNil: [
-			^ OrderedCollection with: (self parseTreeRewriterClass 
+			^ OrderedCollection with: (self parseTreeRewriterClass
 					   replaceCode: subtree
-					   byMessageSendTo: existingSelector
+					   byMessageSendTo: selectorOfExistingMethod
 					   in:
 					   (self definingClass methodFor: self calculateTree selector)) ]
 		ifNil: [
@@ -91,42 +124,17 @@ RBExtractMethodTransformation >> buildTransformations [
 					  assignments size > 1
 						  ifTrue: [ OrderedCollection new ]
 						  ifFalse: [
-							  | newMethodName newArguments messageSend needsReturn |
+							  | newMethodName |
 							  newMethodName := self newMethodName.
 							  newMethodName ifNil: [ ^ OrderedCollection new ].
-
-							  needsReturn := self calculateIfReturnIsNeeded.
-							  newMethod := self generateNewMethodWith: newMethodName.
-							  newArguments := self calculateNewArgumentsIn: newMethodName.
-							  messageSend := self
-								                 messageSendWith: newMethodName
-								                 and: newArguments
-								                 needsReturn: needsReturn.
-
-							  OrderedCollection new
-								  add: (RBAddMethodTransformation
-										   model: self model
-										   sourceCode: newMethod newSource
-										   in: class
-										   withProtocols: { Protocol unclassified });
-								  add: (RBReplaceSubtreeTransformation
-										   model: self model
-										   replace: sourceCode
-										   to: messageSend
-										   inMethod: selector
-										   inClass: class);
-								  addAll: (tempsToRemove collect: [ :temporary |
-											   RBRemoveTemporaryVariableTransformation
-												   model: self model
-												   variable: temporary
-												   inMethod: selector
-												   inClass: class ]);
-								  yourself ] ] ]
+							  self
+								  buildTransformationFor: newMethodName
+								  withRemovedTemps: tempsToRemove ] ] ]
 ]
 
 { #category : #querying }
 RBExtractMethodTransformation >> calculateArguments [
-	"returns a collection of variable that should be passed as arguments"
+	"returns a collection of variables that should be passed as arguments"
 
 	| allVariables accesses assigned |
 	allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
@@ -143,7 +151,7 @@ RBExtractMethodTransformation >> calculateAssignments [
 
 	^ assignments ifNil: [
 		| sequenceNode whoDefinesTemp |
-		sequenceNode := (parseTree allChildren select: #isSequence) last.
+		sequenceNode := (parseTree allChildren select: [ :each | each isSequence ]) last.
 
 		assignments := temporaries select: [ :temp |
 			whoDefinesTemp := (sequenceNode whoDefines: temp).
@@ -361,7 +369,7 @@ RBExtractMethodTransformation >> preconditions [
 			    whichMethodIn: searchSpace
 			    matches: aSubtree)
 			   ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
-				   existingSelector := opportunities anyOne.
+				   selectorOfExistingMethod := opportunities anyOne.
 				   true ]
 			   ifEmpty: [ true ] ])
 	
