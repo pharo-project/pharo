@@ -669,7 +669,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
-		when: ClassRemoved send: #systemClassRemovedActionFrom: to: self;
 		when: ClassRenamed send: #systemClassRenamedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
@@ -913,13 +912,6 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 	newPackageTag := newPackage addClassTag: newPackageName.
 
 	newPackage moveClass: class fromPackage: oldPackage toTag: newPackageTag
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemClassRemovedActionFrom: ann [
-	"A class has been removed, we should update the package adequately."
-
-	self removeClass: ann classRemoved
 ]
 
 { #category : #'system integration' }
