@@ -9,7 +9,7 @@ Class {
 
 { #category : #'code-critics' }
 ManifestSUnitCore class >> ruleExcessiveArgumentsRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#ClassFactoryForTestCase #newSubclassOf:uses:instanceVariableNames:classVariableNames:category: #false)) #'2021-12-05T23:11:40.799968+01:00') #(#(#RGMethodDefinition #(#ClassFactoryForTestCase #newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: #false)) #'2021-12-05T23:12:15.813959+01:00') #(#(#RGMethodDefinition #(#ClassFactoryForTestCase #redefineClass:subclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:package: #false)) #'2021-12-05T23:13:13.110809+01:00') )
+	^ #(#(#(#RGMethodDefinition #(#ClassFactoryForTestCase #newSubclassOf:uses:instanceVariableNames:classVariableNames:category: #false)) #'2021-12-05T23:11:40.799968+01:00') #(#(#RGMethodDefinition #(#ClassFactoryForTestCase #redefineClass:subclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:package: #false)) #'2021-12-05T23:13:13.110809+01:00') )
 ]
 
 { #category : #'code-critics' }

@@ -45,21 +45,18 @@ ObsoleteTest >> testClassObsolete [
 
 { #category : #tests }
 ObsoleteTest >> testFixObsoleteSharedPools [
+
 	| poolClass obsoletePoolName testClass preFixObsoleteClassNames postFixObsoleteClassNames |
-	poolClass := classFactory newClass.	"provides unique name over time via class variable counter"
-	testClass := classFactory
-		newSubclassOf: classFactory defaultSuperclass
-		uses: {}
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: poolClass name asString
-		category: classFactory defaultCategory.
+	poolClass := classFactory newClass. "provides unique name over time via class variable counter"
+
+	testClass := classFactory make: [ :aBuilder | aBuilder sharedPools: poolClass name asString ].
+
 	classFactory deleteClass: poolClass.
 	obsoletePoolName := poolClass name.
 	poolClass := nil.
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 
-	preFixObsoleteClassNames := SystemNavigation default obsoleteClasses collect: [:each | each name].
+	preFixObsoleteClassNames := SystemNavigation default obsoleteClasses collect: [ :each | each name ].
 	self assert: (preFixObsoleteClassNames includes: obsoletePoolName).
 	self assert: testClass sharedPoolNames size equals: 1.
 	self assert: (testClass sharedPoolNames includes: obsoletePoolName).
