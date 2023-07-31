@@ -931,7 +931,7 @@ RPackageOrganizer >> systemClassRenamedActionFrom: ann [
 	packageName := ann category.
 	oldName := ann oldName.
 	newName := ann newName.
-	package := self packageOfClassNamed: oldName.
+	package := self packageOf: class.
 	extendingPackages := self extendingPackagesOfClassNamed: oldName.
 
 	package updateDefinedClassNamed: oldName withNewName: newName.
