@@ -27,7 +27,7 @@ SystemNavigationTest >> classFactory [
 { #category : #utilities }
 SystemNavigationTest >> createClassFactory [
 
-	^ ClassFactoryWithOrganization newWithOrganization: self systemNavigationToTest environment organization
+	^ ClassFactoryForTestCase environment: self systemNavigationToTest environment
 ]
 
 { #category : #running }

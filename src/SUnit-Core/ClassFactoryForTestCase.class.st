@@ -32,6 +32,21 @@ Class {
 	#category : #'SUnit-Core-Extensions'
 }
 
+{ #category : #'instance creation' }
+ClassFactoryForTestCase class >> environment: aSystemDictionary [
+
+	^ self new
+		  environment: aSystemDictionary;
+		  yourself
+]
+
+{ #category : #'class initialization' }
+ClassFactoryForTestCase class >> initialize [
+	"Now we can personnalize the environment of the ClassFactoryForTestCase. So instead of having this duplicated class, we can just use this one and specify the environment that will have its own organization."
+
+	self deprecatedAliases: { #ClassFactoryWithOrganization }
+]
+
 { #category : #cleaning }
 ClassFactoryForTestCase >> cleanUp [
 
@@ -129,7 +144,9 @@ ClassFactoryForTestCase >> deleteClasses [
 { #category : #cleaning }
 ClassFactoryForTestCase >> deletePackage [
 
-	self environment packageOrganizer removeCategoriesMatching: self packageName , '-*'
+	self organization
+		removeCategoriesMatching: self packageName , '-*';
+		removeEmptyPackagesAndTags
 ]
 
 { #category : #cleaning }
@@ -335,6 +352,11 @@ ClassFactoryForTestCase >> nextCount [
 	"Global counter to avoid name clash between test runs, in case of some previous failure."
 
 	^ Counter := (Counter ifNil: [ 0 ]) + 1
+]
+
+{ #category : #accessing }
+ClassFactoryForTestCase >> organization [
+	^ self environment organization
 ]
 
 { #category : #accessing }
