@@ -8,7 +8,7 @@ Class {
 OCASTTimesRepeatTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineTimesRepeat . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineTimesRepeat))
 ]
 
 { #category : #tests }

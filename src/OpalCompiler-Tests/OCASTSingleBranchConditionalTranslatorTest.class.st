@@ -8,7 +8,7 @@ Class {
 OCASTSingleBranchConditionalTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineIf . #optionInlineIfNil . #optionInlineNone })
+			forSelector: #optimization addOptions: {#() . #(#optionInlineIf) . #(#optionInlineIfNil) . #( #optionInlineNone) . #(#optionInlineIf #optionInlineIfNil #optionInlineNone)})
 ]
 
 { #category : #'tests - ifFalse' }

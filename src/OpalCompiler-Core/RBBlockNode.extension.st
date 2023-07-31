@@ -40,6 +40,7 @@ RBBlockNode >> isClean [
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isInlined [
 	parent isMessage ifFalse: [ ^ false ].
+	parent methodCompilationContextOrNil ifNotNil:[:c | c optionInlineNone ifTrue: [ ^false ]].
 	parent isInlineAndOr ifTrue: [^ true].
 	parent isInlineIf ifTrue: [^ true].
 	parent isInlineIfNil ifTrue: [^ true].
