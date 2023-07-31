@@ -15,7 +15,6 @@ RBExtractMethodTransformationTest >> sourceCodeAt: anInterval forMethod: aSelect
 RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 
 	| transformation class |
-	self halt.
 	transformation := (RBExtractMethodTransformation
 		extract: 'rewriteRule tree printString'
 		from: #checkMethod:
@@ -271,9 +270,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 
 	| refactoring class |
 	refactoring := (RBExtractMethodTransformation
-		extract: (self
-			sourceCodeAt: (22 to: 280)
-			forMethod: #superSends in: RBTransformationRuleTestData)
+		extract: (self sourceCodeAt: (22 to: 280) forMethod: #superSends in: RBTransformationRuleTestData)
 		from: #superSends
 		to: #foo1 in: #RBTransformationRuleTestData) transform.
 
@@ -302,8 +299,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable2 [
 
 	| refactoring class |
 	refactoring := (RBExtractMethodTransformation
-		extract: (self sourceCodeAt: (78 to: 197)
-					forMethod: #displayName in: RBDummyLintRuleTest)
+		extract: (self sourceCodeAt: (78 to: 197) forMethod: #displayName in: RBDummyLintRuleTest)
 		from: #displayName
 		to: #foo:
 		in: #RBDummyLintRuleTest) transform.

@@ -29,14 +29,13 @@ SycExtractMethod2Command >> asRefactorings [
 	| selectedInterval refactoring |
 	selectedInterval := selectedTextInterval ifEmpty: [
 		                    sourceNode sourceInterval ].
-	self halt.
 
 	refactoring := RBExtractMethodTransformation
 		               extract: (method sourceCode
 				                copyFrom: selectedInterval first
 				                to: selectedInterval last)
 		               from: method selector
-		               to: nil "self getNewSelector selector"
+		               to: self getNewSelector selector
 		               in: method origin.
 	self setUpOptionsOf: refactoring.
 	^ { refactoring }
@@ -48,10 +47,11 @@ SycExtractMethod2Command >> computeInvalidArgNamesForSelector: aSymbol [
 	| invalidArgNames |
 	invalidArgNames := Set new.
 	(model allImplementorsOf: aSymbol) do: [ :e |
-		method := e realClass >> aSymbol.
+		| mth |
+		mth := e realClass >> aSymbol.
 		invalidArgNames
-			addAll: method argumentNames;
-			addAll: method origin instVarNames ].
+			addAll: mth argumentNames;
+			addAll: mth origin instVarNames ].
 	^ invalidArgNames
 ]
 
@@ -88,9 +88,8 @@ SycExtractMethod2Command >> getNewSelector [
 	methodName := RBMethodName 
 							selector: #fooForNow
 		  					arguments: #().
-	invalidArgs := self computeInvalidArgNamesForSelector:
-		               method selector.
-	dialog := StMethodNameEditorPresenter
+	invalidArgs := self computeInvalidArgNamesForSelector: method selector.
+	dialog := SycMethodNameEditorPresenter
 		          openOn: methodName
 		          withInvalidArgs: invalidArgs
 		          canRenameArgs: true
