@@ -204,7 +204,7 @@ SystemDictionary >> flushClassNameCache [
 ]
 
 { #category : #'accessing - classes and traits' }
-SystemDictionary >> forgetClass: aClass logged: aBool [
+SystemDictionary >> forgetClass: aClass [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
