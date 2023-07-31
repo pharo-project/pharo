@@ -72,9 +72,10 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 
 { #category : #tests }
 ObsoleteTest >> testTraitObsolete [
+
 	| aClass aTrait |
 	aTrait := classFactory newTrait.
-	aClass := classFactory newClassUsing: aTrait.
+	aClass := classFactory make: [ :aBuilder | aBuilder traitComposition: aTrait ].
 
 	self deny: aTrait isObsolete.
 	aTrait removeFromSystem.

@@ -121,22 +121,13 @@ EpHasImpactFilterTest >> testMethodWithoutImpact [
 
 { #category : #tests }
 EpHasImpactFilterTest >> testProtocolRemovalOfTraitProtocol [
-	| anEntry aClass |
 
-	aClass := classFactory
-		newSubclassOf: classFactory defaultSuperclass
-		uses: TAssertable
-		instanceVariableNames: ''
-		classVariableNames: ''
-		category: classFactory defaultTagPostfix.
-	anEntry := OmEntry content: (EpProtocolRemoval
-		behavior: aClass asRingDefinition
-		protocol: #private).
+	| anEntry aClass |
+	aClass := classFactory make: [ :aBuilder | aBuilder traitComposition: TAssertable ].
+	anEntry := OmEntry content: (EpProtocolRemoval behavior: aClass asRingDefinition protocol: #private).
 	self deny: (impactFilter accepts: anEntry).
 
-	aClass
-		compile: 'a ^1'
-		classified: #private.
+	aClass compile: 'a ^1' classified: #private.
 
 	self assert: (impactFilter accepts: anEntry)
 ]

@@ -343,14 +343,14 @@ EpCodeChangeIntegrationTest >> testRedundantClassDefinition [
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 
-	aClass := classFactory newClassUsing: TSizeTest.
+	aClass := classFactory make: [ :aBuilder | aBuilder traitComposition: TSizeTest ].
 	self
 		shouldnt: [
 			self class classInstaller make: [ :aBuilder |
 				aBuilder
 					name: aClass name;
-					traitComposition: {};
-					package: aClass category]]
+					traitComposition: {  };
+					package: aClass category ] ]
 		raise: MessageNotUnderstood
 ]
 

@@ -224,17 +224,6 @@ ClassFactoryForTestCase >> newClassName [
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newClassUsing: aTraitComposition [
-
-	^ self
-		  newSubclassOf: self defaultSuperclass
-		  uses: aTraitComposition
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-		  category: self defaultTagPostfix
-]
-
-{ #category : #creating }
 ClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
 
 	^ self
@@ -277,13 +266,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesS
 { #category : #creating }
 ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
 
-	^ self
-		  newSubclassOf: aClass
-		  uses: aTraitComposition
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-		  poolDictionaries: ''
-		  category: category
+	^ self newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: '' category: category
 ]
 
 { #category : #creating }
