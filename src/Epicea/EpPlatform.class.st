@@ -19,7 +19,7 @@ EpPlatform class >> current [
 { #category : #convenience }
 EpPlatform >> packageNameFor: aClassOrTrait [
 
-	^ (self packageOrganizer packageOfClassNamed: aClassOrTrait name)
+	^ (self packageOrganizer packageOf: aClassOrTrait)
 		  ifNotNil: [ :package | package name ]
 		  ifNil: [ 'nil' ]
 ]

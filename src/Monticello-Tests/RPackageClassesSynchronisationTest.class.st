@@ -419,7 +419,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackage
 
 	class rename: 'RPackageNewStubClass'.
 
-	self assert: (self organizer packageOfClassNamed: 'RPackageNewStubClass' asSymbol) equals: XPackage.
+	self assert: (self organizer packageOf: class) equals: XPackage.
 	self assert: (self organizer packageOfClassNamed: 'RPackageOldStubClass' asSymbol) equals: nil
 ]
 
