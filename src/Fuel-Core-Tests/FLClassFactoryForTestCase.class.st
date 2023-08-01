@@ -57,16 +57,10 @@ FLClassFactoryForTestCase >> newAnonymousTrait [
 { #category : #creating }
 FLClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
 
-	^ self newSubclassOf: self defaultSuperclass instanceVariableNames: aString
-]
-
-{ #category : #creating }
-FLClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString [
-
 	^ self
-		  newSubclassOf: aClass
+		  newSubclassOf: self defaultSuperclass
 		  uses: {  }
-		  instanceVariableNames: ivNamesString
+		  instanceVariableNames: aString
 		  classVariableNames: ''
 ]
 
@@ -164,11 +158,6 @@ FLClassFactoryForTestCase >> silentlyDo: aBlock [
 ]
 
 { #category : #'creating-silently' }
-FLClassFactoryForTestCase >> silentlyNewClass [
-	^ self silentlyNewSubclassOf: self defaultSuperclass
-]
-
-{ #category : #'creating-silently' }
 FLClassFactoryForTestCase >> silentlyNewClassUsing: aTraitComposition [
 
 	^ self
@@ -190,12 +179,6 @@ FLClassFactoryForTestCase >> silentlyNewClassWithClassVariableNames: aString [
 FLClassFactoryForTestCase >> silentlyNewClassWithInstanceVariableNames: aString [
 
 	^ self silentlyNewSubclassOf: self defaultSuperclass instanceVariableNames: aString
-]
-
-{ #category : #'creating-silently' }
-FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass [
-
-	^ self silentlyNewSubclassOf: aClass instanceVariableNames: ''
 ]
 
 { #category : #'creating-silently' }

@@ -300,90 +300,82 @@ FLCreateClassSerializationTest >> testCreateCompiledMethodClass [
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateHierarchy [
 	"Tests materialization of a hierarchy of classes that is not defined in the image"
-	
-	| serializedClasses materializedClasses a b c d |	
+
+	| serializedClasses materializedClasses a b c d |
 	a := self classFactory silentlyNewClass.
-	b := self classFactory silentlyNewSubclassOf: a.
-	c := self classFactory silentlyNewSubclassOf: a.
-	d := self classFactory silentlyNewSubclassOf: c.
-	serializedClasses := Array with: a with: b with: c with: d.
-	
+	b := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: a ].
+	c := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: a ].
+	d := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: c ].
+	serializedClasses := { a . b . c . d }.
+
 	materializedClasses := self resultOfSerializeRemoveAndMaterializeAll: serializedClasses.
 
-	self assert: serializedClasses size = materializedClasses size.
+	self assert: serializedClasses size equals: materializedClasses size.
 
-	serializedClasses withIndexDo: [ :aClass :index | 
-		self deny: aClass == (materializedClasses at: index) ].	
+	serializedClasses withIndexDo: [ :aClass :index | self deny: aClass identicalTo: (materializedClasses at: index) ].
 
-	self assert: Object = materializedClasses first superclass.
-	self assert: materializedClasses first = materializedClasses second superclass.
-	self assert: materializedClasses first = materializedClasses third superclass.
-	self assert: materializedClasses third = materializedClasses fourth superclass.
+	self assert: Object equals: materializedClasses first superclass.
+	self assert: materializedClasses first equals: materializedClasses second superclass.
+	self assert: materializedClasses first equals: materializedClasses third superclass.
+	self assert: materializedClasses third equals: materializedClasses fourth superclass.
 
-	self assert: (Set with: materializedClasses second with: materializedClasses third) = materializedClasses first subclasses asSet.
-	self assert: materializedClasses second subclasses isEmpty.
-	self assert: (Set with: materializedClasses fourth) = materializedClasses third subclasses asSet.
-	self assert: materializedClasses fourth subclasses isEmpty.
+	self assert: (Set with: materializedClasses second with: materializedClasses third) equals: materializedClasses first subclasses asSet.
+	self assertEmpty: materializedClasses second subclasses.
+	self assert: (Set with: materializedClasses fourth) equals: materializedClasses third subclasses asSet.
+	self assertEmpty: materializedClasses fourth subclasses.
 	"Notice that the instVar subclasses is only filled with classes inside the serialization. But for exernal classes Fuel does nothing. In this case,  FLStubA should NOT be added to Object subclasses."
 	self deny: (Object subclasses includes: materializedClasses first).
-	self deny: (Object subclasses identityIncludes: materializedClasses first).
+	self deny: (Object subclasses identityIncludes: materializedClasses first)
 ]
 
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateHierarchyWithExistingClasses [
 	"Tests materialization of a hierarchy of classes that are not defined in the image and classes that indeed are defined"
-	
-	| serializedClasses materializedClasses a b c d |	
+
+	| serializedClasses materializedClasses a b c d |
 	a := self classFactory silentlyNewClass.
-	b := self classFactory silentlyNewSubclassOf: a.
-	c := self classFactory silentlyNewSubclassOf: a.
-	d := self classFactory silentlyNewSubclassOf: Date.
-	serializedClasses := Array with: a with: b with: c with: d.
-	
+	b := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: a ].
+	c := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: a ].
+	d := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: Date ].
+	serializedClasses := { a . b . c . d }.
+
 	materializedClasses := self resultOfSerializeRemoveAndMaterializeAll: serializedClasses.
 
-	self assert: serializedClasses size = materializedClasses size.
+	self assert: serializedClasses size equals: materializedClasses size.
 
-	serializedClasses withIndexDo: [ :aClass :index | 
-		self deny: aClass == (materializedClasses at: index) ].	
-
-	self assert: Object == materializedClasses first superclass.
-	self assert: materializedClasses first == materializedClasses second superclass.
-	self assert: materializedClasses first == materializedClasses third superclass.
+	serializedClasses withIndexDo: [ :aClass :index | self deny: aClass identicalTo: (materializedClasses at: index) ].
+	self assert: Object identicalTo: materializedClasses first superclass.
+	self assert: materializedClasses first identicalTo: materializedClasses second superclass.
+	self assert: materializedClasses first identicalTo: materializedClasses third superclass.
 	"Notice that the superclass of d is Date and since it is present in the image, we need exactly that instance."
-	self assert: Date == materializedClasses fourth superclass.
+	self assert: Date identicalTo: materializedClasses fourth superclass.
 
-	self assert: (Set with: materializedClasses second with: materializedClasses third) = materializedClasses first subclasses asSet.
-	self assert: materializedClasses second subclasses isEmpty.
-	self assert: materializedClasses third subclasses isEmpty.
-	self assert: materializedClasses fourth subclasses isEmpty.
-	
+	self assert: (Set with: materializedClasses second with: materializedClasses third) equals: materializedClasses first subclasses asSet.
+	self assertEmpty: materializedClasses second subclasses.
+	self assertEmpty: materializedClasses third subclasses.
+	self assertEmpty: materializedClasses fourth subclasses.
+
 	self deny: (Object subclasses identityIncludes: materializedClasses first).
-	self deny: (Date subclasses identityIncludes: materializedClasses fourth).
+	self deny: (Date subclasses identityIncludes: materializedClasses fourth)
 ]
 
 { #category : #'tests-bugs' }
 FLCreateClassSerializationTest >> testCreateHierarchyWithSubclassSerializedBeforeSuperclass [
 	"Tests issue #210"
-	
-	| a b serializedClasses set |	
+
+	| a b serializedClasses set |
 	a := self classFactory silentlyNewClass.
-	b := self classFactory silentlyNewSubclassOf: a.
-	serializedClasses := {a. b}.
+	b := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: a ].
+	serializedClasses := { a . b }.
 	"Behavior clusters use an FLLargeIdentitySet for their objects.
 	We need to be sure that the subclass is serialized before the superclass."
-	serializedClasses reversed withIndexDo: [ :class :index |
-		self classFactory
-			silentlyCompile: 'largeIdentityHash ^ ', index asString
-			in: class class ].
+	serializedClasses reversed withIndexDo: [ :class :index | self classFactory silentlyCompile: 'largeIdentityHash ^ ' , index asString in: class class ].
 	set := FLLargeIdentitySet new
-		addAll: serializedClasses;
-		yourself.
-	self assert: set asArray first == b.
-	
-	self
-		shouldnt: [ self resultOfSerializeRemoveAndMaterializeAll: serializedClasses ]
-		raise: MessageNotUnderstood
+		       addAll: serializedClasses;
+		       yourself.
+	self assert: set asArray first identicalTo: b.
+
+	self shouldnt: [ self resultOfSerializeRemoveAndMaterializeAll: serializedClasses ] raise: MessageNotUnderstood
 ]
 
 { #category : #tests }
@@ -515,15 +507,14 @@ FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateWithSubclass [
 	"Tests materialization of a class that has a external subclass. Currently, this is the expected behaviour."
-	
-	| serializedClass aSubclass materializedClass |	
-	serializedClass := self classFactory silentlyNewClass.
-	aSubclass := self classFactory silentlyNewSubclassOf: serializedClass.
-	
-	materializedClass := self resultOfSerializeRemoveAndMaterialize: serializedClass.
 
-	self assert: materializedClass subclasses size = 1.
-	self assert: materializedClass subclasses first == aSubclass.
+	| serializedClass aSubclass materializedClass |
+	serializedClass := self classFactory silentlyNewClass.
+	aSubclass := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: serializedClass ].
+
+	materializedClass := self resultOfSerializeRemoveAndMaterialize: serializedClass.
+	self assert: materializedClass subclasses size equals: 1.
+	self assert: materializedClass subclasses first identicalTo: aSubclass
 ]
 
 { #category : #tests }

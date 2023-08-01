@@ -248,3 +248,9 @@ ClassFactoryForTestCase >> silentlyMake: aBlock [
 	createdSilently add: behavior.
 	^ behavior
 ]
+
+{ #category : #creating }
+ClassFactoryForTestCase >> silentlyNewClass [
+
+	^ self silentlyMake: [ :aBuilder | "Nothing to configure here" ]
+]
