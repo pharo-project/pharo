@@ -20,14 +20,10 @@ self assert: cls isBehavior
 "
 Class {
 	#name : #FLClassFactoryForTestCase,
-	#superclass : #Object,
+	#superclass : #ClassFactoryForTestCase,
 	#instVars : [
 		'createdClasses',
-		'createdTraits',
-		'environment'
-	],
-	#classVars : [
-		'Counter'
+		'createdTraits'
 	],
 	#category : #'Fuel-Core-Tests-Support-ClassFactory'
 }
@@ -85,30 +81,8 @@ FLClassFactoryForTestCase >> createdTraits [
 ]
 
 { #category : #'accessing-defaults' }
-FLClassFactoryForTestCase >> defaultNewClassName [
-
-	| postFix |
-	postFix := self nextCount printString.
-	^ (#ClassForTestToBeDeleted, postFix) asSymbol.
-]
-
-{ #category : #'accessing-defaults' }
-FLClassFactoryForTestCase >> defaultNewTraitName [
-
-	| postFix |
-	postFix := (self createdTraits size + 1) printString.
-	^ (#TraitForTestToBeDeleted, postFix) asSymbol
-]
-
-{ #category : #'accessing-defaults' }
 FLClassFactoryForTestCase >> defaultPackageAndTag [
-	^ (self defaultPackageName , '-', self defaultTagPostfix) asSymbol
-]
-
-{ #category : #'accessing-defaults' }
-FLClassFactoryForTestCase >> defaultPackageName [
-
-	^ #CategoryForTestToBeDeleted
+	^ (self packageName , '-', self defaultTagPostfix) asSymbol
 ]
 
 { #category : #'accessing-defaults' }
@@ -141,7 +115,7 @@ FLClassFactoryForTestCase >> deleteClasses [
 { #category : #'private-cleaning' }
 FLClassFactoryForTestCase >> deletePackage [
 
-	self packageOrganizer removePackage: self defaultPackageName
+	self packageOrganizer removePackage: self packageName
 ]
 
 { #category : #'private-cleaning' }
@@ -179,7 +153,7 @@ FLClassFactoryForTestCase >> newAnonymousTrait [
 	^ Smalltalk anonymousClassInstaller make: [ :builder |
 		builder
 			"The name is necessary to not break Pharo"
-			name: self defaultNewTraitName;
+			name: self newBehaviorName;
 			beTrait ]
 ]
 
@@ -267,7 +241,7 @@ FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition insta
 	newClass := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			environment: self environment;
-			name: self defaultNewClassName;
+			name: self newBehaviorName;
 			superclass: aClass;
 			traitComposition: aTraitComposition asTraitComposition;
 			classTraitComposition: aTraitComposition asTraitComposition classComposition;
@@ -283,7 +257,7 @@ FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition insta
 { #category : #'creating-traits' }
 FLClassFactoryForTestCase >> newTrait [
 	^ self
-		newTraitNamed: self defaultNewTraitName
+		newTraitNamed: self newBehaviorName
 		uses: Array new
 		instanceVariableNames: ''
 ]
@@ -460,7 +434,7 @@ FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass uses: aTraitCompositi
 { #category : #'creating-traits-silently' }
 FLClassFactoryForTestCase >> silentlyNewTrait [
 	^ self
-		silentlyNewTraitNamed: self defaultNewTraitName
+		silentlyNewTraitNamed: self newBehaviorName
 		uses: Array new
 		instanceVariableNames: ''
 ]
@@ -477,7 +451,7 @@ FLClassFactoryForTestCase >> silentlyNewTraitNamed: aTraitName uses: aTraitCompo
 { #category : #'creating-traits-silently' }
 FLClassFactoryForTestCase >> silentlyNewTraitWithInstanceVariableNames: aString [
 	^ self
-		silentlyNewTraitNamed: self defaultNewTraitName
+		silentlyNewTraitNamed: self newBehaviorName
 		uses: Array new
 		instanceVariableNames: aString
 ]
