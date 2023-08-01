@@ -18,3 +18,11 @@ MockForCoverage >> method2ForMock: anObject [
 
 	^ 1 + anObject
 ]
+
+{ #category : #'sample methods' }
+MockForCoverage >> method3ForMockWithConditional: anInteger [
+
+	anInteger > 5
+		ifTrue: [ ^ 1 ]
+		ifFalse: [ ^ 0 ]
+]

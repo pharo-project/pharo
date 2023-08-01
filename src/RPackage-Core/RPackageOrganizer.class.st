@@ -510,38 +510,6 @@ RPackageOrganizer >> orderedTraitsIn: category [
 	^ traits asArray
 ]
 
-{ #category : #accessing }
-RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inClassNamed: aClassNameSymbol [
-	"this implementation is slower
-		aClass packages detect: [:each | each includesSelector: aSelector ofClass: aClass ]"
-	| classPackage |
-
-	classPackage := self packageOfClassNamed: aClassNameSymbol.
-	classPackage ifNil: [ ^ nil ].
-	(classPackage includesSelector: aSelector ofClassName: aClassNameSymbol)
-		ifTrue: [ ^classPackage ].
-
-	^(self extendingPackagesOfClassNamed: aClassNameSymbol)
-		detect: [ :p | p includesSelector: aSelector ofClassName: aClassNameSymbol ]
-		ifNone: [ nil ]
-]
-
-{ #category : #accessing }
-RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inMetaclassNamed: aClassNameSymbol [
-	"this implementation is slower
-		aClass packages detect: [:each | each includesSelector: aSelector ofClass: aClass ]"
-	| classPackage |
-
-	classPackage := self packageOfClassNamed: aClassNameSymbol.
-	classPackage ifNil: [ ^ nil ].
-	(classPackage includesSelector: aSelector ofMetaclassName: aClassNameSymbol)
-		ifTrue: [ ^classPackage ].
-
-	^(self extendingPackagesOfClassNamed: aClassNameSymbol)
-		detect: [ :p | p includesSelector: aSelector ofMetaclassName: aClassNameSymbol ]
-		ifNone: [ nil ]
-]
-
 { #category : #'system integration' }
 RPackageOrganizer >> packageForProtocol: aProtocolName inClass: aClass [
 	"According aProtocolName is an extension protocol, will look for a matching package. If no matching package is found ,  return nil. If aProtocolName is not an extension protocol, return the parent package of aClass"
@@ -701,7 +669,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
-		when: ClassRemoved send: #systemClassRemovedActionFrom: to: self;
 		when: ClassRenamed send: #systemClassRenamedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
@@ -737,6 +704,7 @@ RPackageOrganizer >> registerPackage: aPackage [
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 
 	(aPackage includesClass: aClass) ifFalse: [ self error: aPackage name , ' does not includes the class ' , aClass name ].
+
 	^ classPackageMapping at: aClass instanceSide originalName put: aPackage
 ]
 
@@ -951,13 +919,6 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 	newPackageTag := newPackage addClassTag: newPackageName.
 
 	newPackage moveClass: class fromPackage: oldPackage toTag: newPackageTag
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemClassRemovedActionFrom: ann [
-	"A class has been removed, we should update the package adequately."
-
-	self removeClass: ann classRemoved
 ]
 
 { #category : #'system integration' }

@@ -176,10 +176,9 @@ FLEnvironmentProtectingWrapper >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #'classes and traits' }
-FLEnvironmentProtectingWrapper >> forgetClass: aBehavior logged: aBoolean [
-	self
-		removeKey: aBehavior name
-		ifAbsent: []
+FLEnvironmentProtectingWrapper >> forgetClass: aBehavior [
+
+	self removeKey: aBehavior name ifAbsent: [  ]
 ]
 
 { #category : #testing }
