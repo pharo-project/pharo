@@ -268,6 +268,21 @@ RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 			  , '#' , aString
 ]
 
+{ #category : #'instance creation' }
+RBCondition class >> hierarchyOf: aClass referencesSharedVariable: aString [
+
+	^ self new
+		  block: [
+			  (aClass withAllSubclasses anySatisfy: [ :each |
+				   (each whichSelectorsReferToClassVariable: aString) isNotEmpty ])
+				  and: [
+					  aClass classSide withAllSubclasses anySatisfy: [ :each |
+						  (each whichSelectorsReferToClassVariable: aString) isNotEmpty ] ] ]
+		  errorString: aClass printString
+			  , ' or subclass <1?:does not >reference<1?s:> shared variable '
+			  , '#' , aString
+]
+
 { #category : #utilities }
 RBCondition class >> invalidArgumentNamesForSelector: aSymbol in: aModel [
 	"Return the list of elements that when added as argument to a selector would break it e.g., an argument cannot have the same name as a instance variables or the same name as an already existing argument."
