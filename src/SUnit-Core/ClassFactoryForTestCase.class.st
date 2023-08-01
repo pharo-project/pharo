@@ -211,26 +211,6 @@ ClassFactoryForTestCase >> newClassName [
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
-
-	^ self newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: '' category: category
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString category: category [
-
-	^ self make: [ :aBuilder |
-		  aBuilder
-			  superclass: aClass;
-			  traitComposition: aTraitComposition;
-			  slotsFromString: ivNamesString;
-			  sharedVariablesFromString: classVarsString;
-			  sharedPools: poolNamesString;
-			  package: self packageName;
-			  tag: category ]
-]
-
-{ #category : #creating }
 ClassFactoryForTestCase >> newTrait [
 
 	^ self
@@ -345,45 +325,8 @@ ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: a
 	^ newClass
 ]
 
-{ #category : #'creating - silently' }
-ClassFactoryForTestCase >> silentlyNewClassInCategory: category [
+{ #category : #creating }
+ClassFactoryForTestCase >> silentlyMake: aBlock [
 
-	^ self
-		  silentlyNewSubclassOf: self defaultSuperclass
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-		  category: category
-]
-
-{ #category : #'creating - silently' }
-ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-
-	^ self
-		silentlyNewSubclassOf: aClass
-		instanceVariableNames: ivNamesString
-		classVariableNames: classVarsString
-		category: self defaultTagPostfix
-]
-
-{ #category : #'creating - silently' }
-ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
-
-	^ self
-		  silentlyNewSubclassOf: aClass
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-		  package: (self packageName , '-' , category) asSymbol
-]
-
-{ #category : #'creating - silently' }
-ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString package: packageName [
-
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		^ self
-			  newSubclassOf: aClass
-			  uses: #(  )
-			  instanceVariableNames: ivNamesString
-			  classVariableNames: classVarsString
-			  poolDictionaries: ''
-			  category: packageName ]
+	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self make: aBlock ]
 ]

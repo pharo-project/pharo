@@ -52,6 +52,35 @@ ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesS
 ]
 
 { #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
+	^ self make: [ :aBuilder |
+		  aBuilder
+			  superclass: aClass;
+			  traitComposition: aTraitComposition;
+			  slotsFromString: ivNamesString;
+			  sharedVariablesFromString: classVarsString;
+			  package: self packageName;
+			  tag: category ]
+]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString category: category [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
+	^ self make: [ :aBuilder |
+		  aBuilder
+			  superclass: aClass;
+			  traitComposition: aTraitComposition;
+			  slotsFromString: ivNamesString;
+			  sharedVariablesFromString: classVarsString;
+			  sharedPools: poolNamesString;
+			  package: self packageName;
+			  tag: category ]
+]
+
+{ #category : #'*Deprecated12' }
 ClassFactoryForTestCase >> newSubclassOf: aClass using: aTraitComposition [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -59,4 +88,48 @@ ClassFactoryForTestCase >> newSubclassOf: aClass using: aTraitComposition [
 		  aBuilder
 			  superclass: aClass;
 			  traitComposition: aTraitComposition ]
+]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> silentlyNewClassInCategory: category [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #silentlyMake: to find the default value I am setting.'.
+	^ self silentlyMake: [ :aBuilder | aBuilder tag: category ]
+]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
+
+	self deprecated:
+		'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #silentlyMake: to find the default value I am setting.'.
+	^ self silentlyMake: [ :aBuilder |
+		  aBuilder
+			  superclass: aClass;
+			  slotsFromString: ivNamesString;
+			  sharedVariablesFromString: classVarsString;
+			  tag: self defaultTagPostfix ]
+]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
+	
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #silentlyMake: to find the default value I am setting.'.
+	^ self silentlyMake: [ :aBuilder |
+		  aBuilder
+			  superclass: aClass;
+			  slotsFromString: ivNamesString;
+			  sharedVariablesFromString: classVarsString;
+			  tag: category ]
+]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString package: packageName [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #silentlyMake: to find the default value I am setting.'.
+	^ self silentlyMake: [ :aBuilder |
+		  aBuilder
+			  superclass: aClass;
+			  slotsFromString: ivNamesString;
+			  sharedVariablesFromString: classVarsString;
+			  package: self packageName ]
 ]
