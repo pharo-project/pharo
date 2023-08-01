@@ -9,7 +9,8 @@ Class {
 	#superclass : #DTPluginResult,
 	#instVars : [
 		'methodList',
-		'percent'
+		'percent',
+		'partiallyCoveredMethods'
 	],
 	#category : #'DrTests-TestCoverage'
 }
@@ -27,6 +28,10 @@ DTTestCoverageResult >> buildTreeForUI [
         (DTTreeNode new
             name: 'Uncovered methods';
             subResults: (self methodList collect: [:each | each asResultForDrTest]);
+            yourself).
+         (DTTreeNode new
+            name: 'Partially covered methods';
+            subResults: (self partiallyCoveredMethods collect: [:each | each asResultForDrTest]);
             yourself)}
     	]ifNil: [
        	 {(DTTreeNode new
@@ -44,6 +49,18 @@ DTTestCoverageResult >> methodList [
 { #category : #accessing }
 DTTestCoverageResult >> methodList: aCollectionOfMethods [
 	methodList := aCollectionOfMethods
+]
+
+{ #category : #accessing }
+DTTestCoverageResult >> partiallyCoveredMethods [
+
+	^ partiallyCoveredMethods
+]
+
+{ #category : #accessing }
+DTTestCoverageResult >> partiallyCoveredMethods: aCollectionOfMethods [
+
+	partiallyCoveredMethods := aCollectionOfMethods
 ]
 
 { #category : #accessing }

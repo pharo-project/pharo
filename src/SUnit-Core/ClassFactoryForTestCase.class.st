@@ -23,13 +23,29 @@ Class {
 	#instVars : [
 		'createdClasses',
 		'createdTraits',
-		'createdSilently'
+		'createdSilently',
+		'environment'
 	],
 	#classVars : [
 		'Counter'
 	],
 	#category : #'SUnit-Core-Extensions'
 }
+
+{ #category : #'instance creation' }
+ClassFactoryForTestCase class >> environment: aSystemDictionary [
+
+	^ self new
+		  environment: aSystemDictionary;
+		  yourself
+]
+
+{ #category : #'class initialization' }
+ClassFactoryForTestCase class >> initialize [
+	"Now we can personnalize the environment of the ClassFactoryForTestCase. So instead of having this duplicated class, we can just use this one and specify the environment that will have its own organization."
+
+	self deprecatedAliases: { #ClassFactoryWithOrganization }
+]
 
 { #category : #cleaning }
 ClassFactoryForTestCase >> cleanUp [
@@ -128,13 +144,27 @@ ClassFactoryForTestCase >> deleteClasses [
 { #category : #cleaning }
 ClassFactoryForTestCase >> deletePackage [
 
-	self packageOrganizer removeCategoriesMatching: self packageName , '-*'
+	self organization
+		removeCategoriesMatching: self packageName , '-*';
+		removeEmptyPackagesAndTags
 ]
 
 { #category : #cleaning }
 ClassFactoryForTestCase >> deleteTraits [
 
 	self createdTraits do: [ :trait | self delete: trait ]
+]
+
+{ #category : #accessing }
+ClassFactoryForTestCase >> environment [
+
+	^ environment ifNil: [ self class environment ]
+]
+
+{ #category : #accessing }
+ClassFactoryForTestCase >> environment: anObject [
+
+	environment := anObject
 ]
 
 { #category : #initialization }
@@ -244,11 +274,13 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 		            aBuilder
 			            name: self newClassName;
 			            superclass: aClass;
+			            installingEnvironment: self environment;
 			            traitComposition: aTraitComposition;
 			            slotsFromString: ivNamesString;
 			            sharedVariablesFromString: classVarsString;
 			            sharedPools: poolNamesString;
-			            package: (self packageName , '-' , category) asSymbol ].
+			            package: self packageName;
+			            tag: category ].
 
 	self createdClasses add: newClass.
 	^ newClass
@@ -298,8 +330,10 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag
 	newTrait := self class classInstaller make: [ :aBuilder |
 		            aBuilder
 			            name: aTraitName;
+			            installingEnvironment: self environment;
 			            traitComposition: aTraitComposition;
-			            package: (self packageName , '-' , aTag) asSymbol;
+			            package: self packageName;
+			            tag: aTag;
 			            beTrait ].
 
 	self createdTraits add: newTrait.
@@ -320,6 +354,11 @@ ClassFactoryForTestCase >> nextCount [
 	"Global counter to avoid name clash between test runs, in case of some previous failure."
 
 	^ Counter := (Counter ifNil: [ 0 ]) + 1
+]
+
+{ #category : #accessing }
+ClassFactoryForTestCase >> organization [
+	^ self environment organization
 ]
 
 { #category : #accessing }
@@ -362,6 +401,7 @@ ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: a
 		            aBuilder
 			            name: aClass name;
 			            superclass: aSuperclass;
+			            installingEnvironment: self environment;
 			            traitComposition: aTraitComposition;
 			            slotsFromString: ivNamesString;
 			            sharedVariablesFromString: classVarsString;
