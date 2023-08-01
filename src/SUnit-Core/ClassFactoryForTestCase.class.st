@@ -128,11 +128,11 @@ ClassFactoryForTestCase >> defaultTagPostfix [
 ClassFactoryForTestCase >> delete: aBehavior [
 
 	aBehavior isObsolete ifTrue: [ ^ self ].
-	self class environment
-		at: #ChangeSet
-		ifPresent: [ aBehavior removeFromChanges ].
+	self class environment at: #ChangeSet ifPresent: [ aBehavior removeFromChanges ].
 	(createdSilently includes: aBehavior)
-		ifTrue: [ aBehavior removeFromSystemUnlogged ]
+		ifTrue: [
+			createdSilently remove: aBehavior.
+			aBehavior removeFromSystemUnlogged ]
 		ifFalse: [ aBehavior removeFromSystem ]
 ]
 
@@ -325,5 +325,9 @@ ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: a
 { #category : #creating }
 ClassFactoryForTestCase >> silentlyMake: aBlock [
 
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self make: aBlock ]
+	| behavior |
+	behavior := SystemAnnouncer uniqueInstance suspendAllWhile: [ self make: aBlock ].
+
+	createdSilently add: behavior.
+	^ behavior
 ]
