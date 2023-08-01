@@ -17,18 +17,14 @@ Class {
 
 { #category : #running }
 DrTestsTestRunnerTest >> setUp [
+
 	super setUp.
-	package := RPackage organizer
-		packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
-	testToReRun := DTCoverageMockTest
-		selector: #testMethod1forMock.
+	package := self packageOrganizer packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
+	testToReRun := DTCoverageMockTest selector: #testMethod1forMock.
 	testCase := DTCoverageMockTest.
 	conf := DTPluginConfiguration
-		items:
-			({package}
-				flatCollect:
-					[ :p | p definedClasses select: [ :c | c allSuperclasses includes: TestCase ] ])
-		packages: {package}.
+		        items: ({ package } flatCollect: [ :p | p definedClasses select: [ :c | c allSuperclasses includes: TestCase ] ])
+		        packages: { package }.
 	reRunconf := DTReRunConfiguration new.
 	plugin := DTTestsRunnerPlugin new
 ]

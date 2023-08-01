@@ -25,7 +25,7 @@ ReNoSpaceAroundProtocolRule class >> uniqueIdentifierName [
 { #category : #running }
 ReNoSpaceAroundProtocolRule >> basicCheck: aMethod [
 
-	protocolName := aMethod protocol.
+	protocolName := aMethod protocolName.
 	^ (protocolName endsWith: ' ') or: [ protocolName beginsWith: ' ' ]
 ]
 

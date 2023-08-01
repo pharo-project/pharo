@@ -77,8 +77,8 @@ MCMethodDefinition class >> flushMethodCache [
 
 { #category : #'class initialization' }
 MCMethodDefinition class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
+
+	SessionManager default registerSystemClassNamed: self name
 ]
 
 { #category : #settings }
@@ -194,17 +194,11 @@ MCMethodDefinition >> hash [
 ]
 
 { #category : #serializing }
-MCMethodDefinition >> initializeWithClassName: classString
-classIsMeta: metaBoolean
-selector: selectorString
-category: catString
-timeStamp: timeString
-source: sourceString [
+MCMethodDefinition >> initializeWithClassName: classString classIsMeta: metaBoolean selector: selectorString category: protocolName timeStamp: timeString source: sourceString [
+
 	className := classString asSymbol.
 	selector := selectorString asSymbol.
-	category := catString
-		ifNil: [ #'as yet unclassified']
-		ifNotNil: [ (catString asSymbol) ifEmpty: [#'as yet unclassified']].
+	category := protocolName isEmptyOrNil ifTrue: [ Protocol unclassified ] ifFalse: [ protocolName asSymbol ].
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
 	source := sourceString withInternalLineEndings

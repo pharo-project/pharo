@@ -15,7 +15,7 @@ Class {
 
 { #category : #converting }
 AnnouncementSubscription >> makeStrong [
-	" i am already strong. Do nothing "
+	"I am already strong. Do nothing "
 ]
 
 { #category : #converting }
@@ -23,7 +23,7 @@ AnnouncementSubscription >> makeWeak [
 
 	action isBlock ifTrue: [
 		self error: 'Not currently available due to missing ephemerons support'
-		].
+	].
 
 	^ announcer replace: self with:
 		(WeakAnnouncementSubscription new
@@ -35,10 +35,12 @@ AnnouncementSubscription >> makeWeak [
 
 { #category : #accessing }
 AnnouncementSubscription >> subscriber [
+
 	^ subscriber
 ]
 
 { #category : #accessing }
 AnnouncementSubscription >> subscriber: aSubscriber [
+
 	subscriber := aSubscriber
 ]

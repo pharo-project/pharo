@@ -51,7 +51,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
 		               variable: aString
 		               class: nonMetaClass
 		               classVariable: true.
-	self performCompositeRefactoring: refactoring.
+	self generateChangesFor: refactoring.
 	rewriter := self parseTreeRewriter.
 	fromClass isMeta
 		ifTrue: [
@@ -91,7 +91,7 @@ RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [
 		               variable: aString
 		               class: fromClass
 		               classVariable: false.
-	self performCompositeRefactoring: refactoring.
+	self generateChangesFor: refactoring.
 	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: aString , ' := ``@object'
@@ -127,7 +127,7 @@ RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: from
 				forMethod: tree
 				fromClass: fromClass
 				toClasses: toClasses.
-	self performCompositeRefactoring: poolRefactoring.
+	self generateChangesFor: poolRefactoring.
 	self computeVariablesToAbstract
 ]
 
@@ -138,8 +138,10 @@ RBAbstractVariablesRefactoring >> classVariableNames [
 	^ (nonMetaClass allClassVariableNames collect: [ :each | each asString ]) asSet
 ]
 
-{ #category : #transforming }
+{ #category : #'for driver' }
 RBAbstractVariablesRefactoring >> computeVariablesToAbstract [
+	"should probably be moved to a driver"
+	
 	| searcher |
 	instVarReaders := Set new.
 	instVarWriters := Set new.
@@ -173,10 +175,10 @@ RBAbstractVariablesRefactoring >> parseTree [
 { #category : #preconditions }
 RBAbstractVariablesRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
-{ #category : #transforming }
+{ #category : #'for driver' }
 RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
@@ -188,7 +190,7 @@ RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 		ifTrue: [classVarWriters add: varName]
 ]
 
-{ #category : #transforming }
+{ #category : #'for driver' }
 RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
@@ -200,8 +202,9 @@ RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 		ifTrue: [classVarReaders add: varName]
 ]
 
-{ #category : #transforming }
+{ #category : #'for driver' }
 RBAbstractVariablesRefactoring >> removeDefinedClassVariables [
+
 	| selectionBlock nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
 	selectionBlock :=

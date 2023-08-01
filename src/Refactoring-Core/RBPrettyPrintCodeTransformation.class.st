@@ -12,7 +12,7 @@ Class {
 { #category : #preconditions }
 RBPrettyPrintCodeTransformation >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #transforming }
@@ -31,5 +31,9 @@ RBPrettyPrintCodeTransformation >> transform [
 											(source ~= formatted
 												and: [ (self parserClass parseMethod: formatted) = tree ])
 												ifTrue:
-													[ class compile: formatted classified: (class protocolsFor: selector) ] ] ] ] ] ]
+													[ 	self generateChangesFor:
+															(RBAddMethodTransformRefactoring
+																addMethod: formatted
+																toClass: class
+																inProtocols: (class protocolsFor: selector)) ] ] ] ] ] ]
 ]

@@ -67,6 +67,7 @@ RBDummyLintRuleTest >> hasConflicts [
 
 { #category : #initialization }
 RBDummyLintRuleTest >> initialize [
+	<ignoreUnusedVariables: #(#foo1)>
 	name := ''
 ]
 

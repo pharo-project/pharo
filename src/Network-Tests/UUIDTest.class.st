@@ -33,7 +33,10 @@ UUIDTest >> testComparison [
 	self assert: b >= a.
 
 	self deny: a > b equals: b > a.
-	self deny: a >= b equals: b >= a
+	self deny: a >= b equals: b >= a.
+	
+	self deny: a equals: #nonUUIDObject.
+
 ]
 
 { #category : #testing }

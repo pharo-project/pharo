@@ -23,8 +23,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'oldClass',
-		'builder',
-		'installingEnvironment'
+		'builder'
 	],
 	#category : #'Shift-ClassInstaller-Base'
 }
@@ -48,8 +47,9 @@ ShiftClassInstaller class >> make: aBlock [
 { #category : #building }
 ShiftClassInstaller class >> update: oldClass to: aBlock [
 	^ self new
+		fillFor: oldClass;
 		oldClass: oldClass;
-		make:aBlock
+		make: aBlock
 ]
 
 { #category : #validating }
@@ -104,6 +104,11 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	^ newObject
 ]
 
+{ #category : #initialization }
+ShiftClassInstaller >> fillFor: aClassOrTrait [
+	builder fillFor: aClassOrTrait
+]
+
 { #category : #building }
 ShiftClassInstaller >> fixSlotScope: newClass [
 	newClass superclass ifNil: [ ^ self ].
@@ -117,24 +122,21 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 
 { #category : #initialization }
 ShiftClassInstaller >> initialize [
+
 	super initialize.
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new
+	builder := ShiftClassBuilder new
 ]
 
 { #category : #building }
 ShiftClassInstaller >> installInEnvironment: newClass [
-
 	"I only install if there is a name / non anonymous"
+
 	builder name ifNil: [ ^ self ].
 
 	"I only install in the environment if there is not oldClass installed."
-	(self installingEnvironment hasClassNamed: builder name) ifFalse:[
-		self installingEnvironment installClass: newClass withName: builder name ].
+	(self installingEnvironment hasClassNamed: builder name) ifFalse: [ self installingEnvironment at: builder name put: newClass ].
 
-	self
-		updateBindings: (self installingEnvironment bindingAt: builder name)
-		of: newClass
+	self updateBindings: (self installingEnvironment bindingOf: builder name) of: newClass
 ]
 
 { #category : #building }
@@ -149,19 +151,19 @@ ShiftClassInstaller >> installSubclassInSuperclass: newClass [
 { #category : #building }
 ShiftClassInstaller >> installingEnvironment [
 
-	^ installingEnvironment ifNil: [ builder buildEnvironment ]
+	^ builder installingEnvironment
 ]
 
 { #category : #building }
 ShiftClassInstaller >> installingEnvironment: anEnvironment [
 
-	installingEnvironment := anEnvironment
+	builder installingEnvironment: anEnvironment
 ]
 
 { #category : #building }
 ShiftClassInstaller >> lookupOldClass [
-	oldClass
-		ifNil: [ oldClass := self installingEnvironment classNamed: builder name ifAbsent: [ nil ] ]
+
+	oldClass ifNil: [ oldClass := self installingEnvironment at: builder name ifAbsent: [ nil ] ]
 ]
 
 { #category : #building }
@@ -210,7 +212,7 @@ ShiftClassInstaller >> make: aBlock [
 	^self make
 ]
 
-{ #category : #'to sort' }
+{ #category : #initialization }
 ShiftClassInstaller >> makeWithBuilder: aBuilder [
 
 	builder := aBuilder.
@@ -296,7 +298,7 @@ ShiftClassInstaller >> recategorize: aClass to: newCategory [
 		ifTrue: [ ^ self ].
 
 	self installingEnvironment organization
-		ifNotNil: [ :e | e classify: aClass name under: newCategory ].
+		ifNotNil: [ :systemOrganizer | systemOrganizer classify: aClass name under: newCategory ].
 
 	(oldCategory isNil or:[ oldCategory = #Unclassified])
 		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]

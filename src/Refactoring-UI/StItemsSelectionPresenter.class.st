@@ -24,7 +24,7 @@ Class {
 		'label',
 		'selectedItems'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-UI'
 }
 
 { #category : #layout }

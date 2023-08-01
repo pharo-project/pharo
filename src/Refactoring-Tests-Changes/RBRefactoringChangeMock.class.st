@@ -29,6 +29,13 @@ RBRefactoringChangeMock >> accessAll [
 	^ instVar + SharedVar 
 ]
 
+{ #category : #initialization }
+RBRefactoringChangeMock >> initialize [
+
+	<ignoreUnusedVariables: #( #instVar )>
+	super initialize
+]
+
 { #category : #accessing }
 RBRefactoringChangeMock >> one [
 

@@ -15,11 +15,8 @@ Class {
 { #category : #'class initialization' }
 WeakArray class >> initialize [
 	"Do we need to initialize specialObjectsArray?"
-	Smalltalk specialObjectsArray size < 42
-		ifTrue: [Smalltalk recreateSpecialObjectsArray].
 
-	SessionManager default
-		registerSystemClassNamed: self name.
+	Smalltalk specialObjectsArray size < 42 ifTrue: [ Smalltalk recreateSpecialObjectsArray ].
 
 	FinalizationSemaphore := Smalltalk specialObjectsArray at: 42
 ]

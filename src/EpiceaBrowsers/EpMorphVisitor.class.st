@@ -54,6 +54,12 @@ EpMorphVisitor >> displayOperation: aString [
 ]
 
 { #category : #private }
+EpMorphVisitor >> displayPackage: aPackageName [
+
+	^ (self displayOperation: 'Package') , (self displayString: aPackageName asString)
+]
+
+{ #category : #private }
 EpMorphVisitor >> displayString: aString [
 
 	^ { aString asMorph }
@@ -105,12 +111,6 @@ EpMorphVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 
 { #category : #visitor }
 EpMorphVisitor >> visitCategoryAddition: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
-]
-
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryRegistration: aCategoryChange [
 
 	^ self displayCategory: aCategoryChange categoryName
 ]
@@ -194,6 +194,18 @@ EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 
 	^	(self displayOperation: 'MC load'),
 		(self displayString: aMonticelloVersionLoaded versionNames asCommaStringAnd)
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ self displayPackage: aPackageAddition packageName
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self displayPackage: aPackageRemoval packageName
 ]
 
 { #category : #visitor }

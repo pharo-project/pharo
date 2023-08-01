@@ -371,7 +371,7 @@ ClyFullBrowserMorph >> isPackagePartOfSelection: aPackage [
 	(self isPackageSelected: aPackage) ifTrue: [ ^true ].
 
 	^self projectSelection actualObjects
-		anySatisfy: [ :each | each includesPackage: aPackage ]
+		anySatisfy: [ :project | project includesPackage: aPackage ]
 ]
 
 { #category : #testing }
@@ -601,22 +601,14 @@ ClyFullBrowserMorph >> selectClass: aClass [
 			(self isPackageSelected: classDefinition definingPackage)
 				ifTrue: [ ^self classSelection selectItems: foundItems ]].
 
-		aClass tags
-			ifEmpty: [ self selectPackage: aClass package]
-			ifNotEmpty: [:tags | self selectPackage: aClass package atClassTag: tags anyOne].
+		aClass packageTagName
+			ifNil: [ self selectPackage: aClass package]
+			ifNotNil: [ :tag | self selectPackage: aClass package atClassTag: tag ].
 		self packageSelection isEmpty ifTrue: [ ^self ].
 
 		self showsFullClassHierarchy ifTrue: [ self switchToFullClassHierarchyOf: aClass ].
 		self classSelection selectItemsWith: { aClass instanceSide }
 	]
-]
-
-{ #category : #navigation }
-ClyFullBrowserMorph >> selectClass: aClass atMethodTag: tagName [
-
-	self changeStateBy: [
-		self selectClass: aClass.
-		self methodGroupSelection selectItemsWhere: [ :each | each name = tagName ]]
 ]
 
 { #category : #navigation }
@@ -737,9 +729,9 @@ ClyFullBrowserMorph >> silentlySelectPackageOfSelectedClass [
 	selectedClass := self classSelection lastSelectedItem actualObject.
 
 	packageView ignoreNavigationDuring: [
-		selectedClass tags
-			ifEmpty: [ self selectPackage: selectedClass package]
-			ifNotEmpty: [:tags | self selectPackage: selectedClass package atClassTag: tags anyOne]]
+		selectedClass packageTagName
+			ifNil: [ self selectPackage: selectedClass package]
+			ifNotNil: [ :tag | self selectPackage: selectedClass package atClassTag: tag ] ]
 ]
 
 { #category : #navigation }

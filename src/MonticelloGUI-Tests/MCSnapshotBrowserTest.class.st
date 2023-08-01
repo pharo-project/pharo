@@ -301,12 +301,13 @@ MCSnapshotBrowserTest >> testNoSelection [
 
 { #category : #testing }
 MCSnapshotBrowserTest >> testProtocolIsCleared [
+
 	self clickOnListItem: self mockCategoryName.
 	self clickOnListItem: 'MCMockASubclass'.
-	self clickOnListItem: 'as yet unclassified'.
+	self clickOnListItem: Protocol unclassified.
 	self clickOnListItem: 'MCMockClassA'.
-	
-	self denyAListHasSelection: 'as yet unclassified'.
+
+	self denyAListHasSelection: Protocol unclassified
 ]
 
 { #category : #testing }

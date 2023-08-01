@@ -101,8 +101,8 @@ DrTestsPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
 { #category : #api }
 DrTestsPlugin >> packagesAvailableForAnalysis [
-	^ RPackage organizer packages
-		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase ] ]
+
+	^ self packageOrganizer packages select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase ] ]
 ]
 
 { #category : #api }

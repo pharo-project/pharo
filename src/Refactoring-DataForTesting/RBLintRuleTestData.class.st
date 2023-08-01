@@ -84,6 +84,7 @@ RBLintRuleTestData >> hasConflicts [
 
 { #category : #initialization }
 RBLintRuleTestData >> initialize [
+	<ignoreUnusedVariables: #(#foo1)>
 	name := ''
 ]
 

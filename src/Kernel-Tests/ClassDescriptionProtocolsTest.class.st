@@ -89,6 +89,27 @@ ClassDescriptionProtocolsTest >> testClassifyUnder [
 ]
 
 { #category : #tests }
+ClassDescriptionProtocolsTest >> testClassifyUnderExtensionFromTheSamePackage [
+	"If we classify a method as an extension of it's own package, we expect it to end up unclassified."
+
+	self
+		should: [
+			class compiler
+				protocol: ('*' , class package name) asSymbol;
+				install: 'king ^ 1' ]
+		raise: ExtensionPointsOwningPackageNotification.
+	[
+	class compiler
+		protocol: ('*' , class package name) asSymbol;
+		install: 'king ^ 1' ]
+		on: ExtensionPointsOwningPackageNotification
+		do: [ :e | e resume ].
+
+	self deny: (class >> #king) isClassified.
+	self deny: (class >> #king) protocol isExtensionProtocol
+]
+
+{ #category : #tests }
 ClassDescriptionProtocolsTest >> testClassifyUnderUnclassified [
 	"Ensure unclassified is acting as any other protocol because that was not the case in the past."
 
@@ -134,12 +155,12 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithNil [
 	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified . #human }.
 	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz ).
 	
-	"Now let's test the behavior if we already have a protocol.
-	The behavior should change to not change the protocol but this test will ensure that the change is intentional and not a regression."
+	"In case we classify under nil while the method already has a protocol, we do not want to update the protocol."
 	class classify: #luz under: nil.
 
-	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified }.
-	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king #luz ).
+	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified . #human }.
+	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king ).
+	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz )
 ]
 
 { #category : #tests }
@@ -481,6 +502,31 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAs [
 	self assert: (class hasProtocol: #titan).
 	self deny: (class hasProtocol: #demon).
 	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king )
+]
+
+{ #category : #tests }
+ClassDescriptionProtocolsTest >> testRenameProtocolAsAnExtensionOfThePackageContainingTheClass [
+	"We should not be able to have a protocol that is an extension of the package containing the class"
+
+	| extension |
+	class compiler
+		protocol: #demon;
+		install: 'king ^1'.
+
+	extension := '*' , class package name.
+
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: extension).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
+
+	self should: [ class renameProtocol: #demon as: extension ] raise: ExtensionPointsOwningPackageNotification.
+	[ class renameProtocol: #demon as: extension ]
+		on: ExtensionPointsOwningPackageNotification
+		do: [ :e | e resume ].
+
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: extension).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
 ]
 
 { #category : #tests }

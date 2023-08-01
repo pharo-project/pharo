@@ -791,8 +791,17 @@ RBProgramNode >> isPragmaError [
 ]
 
 { #category : #testing }
-RBProgramNode >> isReservedVariable [
+RBProgramNode >> isPseudoVariable [
 	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isReservedVariable [
+	self
+		deprecated: 'Please use #isPseudoVariable instead'
+		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
+
+	^ self isPseudoVariable
 ]
 
 { #category : #testing }

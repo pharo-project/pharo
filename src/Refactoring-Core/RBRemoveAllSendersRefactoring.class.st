@@ -65,12 +65,12 @@ RBRemoveAllSendersRefactoring >> messagePattern [
 
 { #category : #preconditions }
 RBRemoveAllSendersRefactoring >> preconditions [
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #removing }
 RBRemoveAllSendersRefactoring >> removeMethod: aMethod of: node [
-	self performCompositeRefactoring: (RBRemoveSenderRefactoring
+	self generateChangesFor: (RBRemoveSenderRefactoring
 		model: self model
 		remove: node sourceInterval
 		inMethod: aMethod selector

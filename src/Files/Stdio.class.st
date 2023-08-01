@@ -69,12 +69,6 @@ Stdio class >> createWriteStreamBlock: aBlock [
 	self cleanStdioHandles
 ]
 
-{ #category : #'class initialization' }
-Stdio class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
-]
-
 { #category : #stdio }
 Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	"Create the requested stdio (#stdin, #stdout, #stderr) if possible.

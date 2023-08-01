@@ -1,9 +1,9 @@
 "
-I model ""super"" keyword
+I model ""super""
 "
 Class {
 	#name : #SuperVariable,
-	#superclass : #ReservedVariable,
+	#superclass : #PseudoVariable,
 	#category : #'Kernel-Variables'
 }
 

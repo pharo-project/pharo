@@ -40,11 +40,6 @@ EpApplyVisitor >> visitCategoryAddition: aPackageCreated [
 ]
 
 { #category : #visitor }
-EpApplyVisitor >> visitCategoryRegistration: aPackageCreated [
-
-]
-
-{ #category : #visitor }
 EpApplyVisitor >> visitCategoryRemoval: aPackageRemoved [
 	environment organization removeCategory: aPackageRemoved categoryName
 ]
@@ -115,6 +110,18 @@ EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 		behaviorNamed: aMethodRemoval behaviorAffectedName
 		ifPresent: [ :behavior |
 			behavior removeSelector: aMethodRemoval selector ]
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitPackageAddition: aPackageAddition [
+
+	self packageOrganizer registerPackageNamed: aPackageAddition packageName
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	self packageOrganizer removePackage: aPackageRemoval packageName
 ]
 
 { #category : #visitor }

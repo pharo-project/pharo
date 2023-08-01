@@ -23,7 +23,7 @@ ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation [
 
 	^CmdDragAndDropActivation
 		for: ClyMethod asCalypsoItemContext
-		toDropIn: ClyTaggedMethodGroup asCalypsoItemContext
+		toDropIn: ClyMethodsInProtocolGroup asCalypsoItemContext
 ]
 
 { #category : #activation }

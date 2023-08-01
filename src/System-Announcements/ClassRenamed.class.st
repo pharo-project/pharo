@@ -50,8 +50,9 @@ ClassRenamed >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #testing }
-ClassRenamed >> affectsMethodsTaggedWith: tagName [
-	^classRenamed tagsForMethods includes: tagName
+ClassRenamed >> affectsMethodsInProtocol: protocol [
+
+	^ classRenamed protocolNames includes: protocol
 ]
 
 { #category : #testing }

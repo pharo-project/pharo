@@ -115,7 +115,7 @@ OCCompilerNotifyingTest >> setUpForErrorsIn: aTextWithErrorsEnclosedInBackQuote 
 { #category : #tests }
 OCCompilerNotifyingTest >> testAssignmentOfSelf [
 
-	self setUpForErrorsIn: '` Assigment to reserved variable ->`self := 1. ^self'.
+	self setUpForErrorsIn: '` Assignment to read-only variable ->`self := 1. ^self'.
 	self enumerateAllSelections
 ]
 

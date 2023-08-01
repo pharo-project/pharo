@@ -62,8 +62,7 @@ ReSmalllintChecker >> checkMethodsForClass: aClass [
 { #category : #private }
 ReSmalllintChecker >> checkPackage: aPackage [
 
-	(environment includesPackage: aPackage) ifTrue: [
-		self getCritiquesAbout: aPackage by: packageRules ]
+	(environment includesPackage: aPackage) ifTrue: [ self getCritiquesAbout: aPackage by: packageRules ]
 ]
 
 { #category : #manifest }
@@ -164,10 +163,7 @@ ReSmalllintChecker >> manifestBuilderOfClass: aClass [
 { #category : #accessing }
 ReSmalllintChecker >> manifestBuilderOfMethod: aMethod [
 
-	| key class |
-	class := aMethod methodClass.
-	key := class name , aMethod protocol asString.
-	^ manifestClassCache at: key ifAbsentPut: [
+	^ manifestClassCache at: aMethod methodClass name , aMethod protocolName ifAbsentPut: [
 		  (self builderManifestClass hasManifestFor: aMethod)
 			  ifTrue: [ self builderManifestClass of: aMethod ]
 			  ifFalse: [ nil ] ]

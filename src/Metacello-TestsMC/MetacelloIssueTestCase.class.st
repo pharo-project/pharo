@@ -17,10 +17,11 @@ MetacelloIssueTestCase >> configurationRepository [
 
 { #category : #utilities }
 MetacelloIssueTestCase >> hasPackage: aString [
+
 	| package |
-	package := MCWorkingCopy allManagers
-		detect: [ :each | each packageName = aString ]
-		ifNone: [ nil ].
+	package := MCWorkingCopy allWorkingCopies
+		           detect: [ :wc | wc packageName = aString ]
+		           ifNone: [ nil ].
 	^ package notNil
 ]
 
@@ -70,47 +71,39 @@ MetacelloIssueTestCase >> runCase [
 
 { #category : #running }
 MetacelloIssueTestCase >> setUp [
-  | repo |
-  super setUp.
-  MetacelloPlatform current clearPackageCache.
-  repo := self monticelloRepository.
-  gofer := Gofer new.
-  gofer disablePackageCache.
-  gofer repository: repo.
-  testingEnvironment at: #'Metacello_Gofer_Test_Repository' put: repo.
-  repo := self configurationRepository.
-  gofer repository: repo.
-  testingEnvironment at: #'Metacello_Configuration_Test_Repository' put: repo.
-  initialWorkingCopyList := MCWorkingCopy allManagers
-    collect: [ :each | each packageName ]
+
+	| repo |
+	super setUp.
+	MetacelloPlatform current clearPackageCache.
+	repo := self monticelloRepository.
+	gofer := Gofer new.
+	gofer disablePackageCache.
+	gofer repository: repo.
+	testingEnvironment at: #Metacello_Gofer_Test_Repository put: repo.
+	repo := self configurationRepository.
+	gofer repository: repo.
+	testingEnvironment at: #Metacello_Configuration_Test_Repository put: repo.
+	initialWorkingCopyList := MCWorkingCopy allWorkingCopies collect: [ :wc | wc packageName ]
 ]
 
 { #category : #running }
 MetacelloIssueTestCase >> tearDown [
-  | aGofer finalWorkingCopyList diff |
-  aGofer := Gofer new.
-  self tearDownPackageNames
-    do: [ :pName | 
-      (self hasPackage: pName)
-        ifTrue: [ aGofer package: pName ] ].
-  aGofer references notEmpty
-    ifTrue: [ aGofer metacelloUnload ].
-  MCRepositoryGroup default
-    removeIdenticalRepository:
-        (testingEnvironment at: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ]);
-    removeIdenticalRepository:
-        (testingEnvironment at: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ]);
-    yourself.
-  testingEnvironment removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
-  testingEnvironment removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
-  finalWorkingCopyList := MCWorkingCopy allManagers
-    collect: [ :each | each packageName ].
-  diff := finalWorkingCopyList difference: initialWorkingCopyList.
-  diff
-    do: [ :leak | 
-      MetacelloNotification signal: ('leaked package from ' , self printString , ' -> ' , leak printString) ].
-  self assert: diff isEmpty.
-  super tearDown
+
+	| aGofer finalWorkingCopyList diff |
+	aGofer := Gofer new.
+	self tearDownPackageNames do: [ :pName | (self hasPackage: pName) ifTrue: [ aGofer package: pName ] ].
+	aGofer references notEmpty ifTrue: [ aGofer metacelloUnload ].
+	MCRepositoryGroup default
+		removeIdenticalRepository: (testingEnvironment at: #Metacello_Gofer_Test_Repository ifAbsent: [  ]);
+		removeIdenticalRepository: (testingEnvironment at: #Metacello_Configuration_Test_Repository ifAbsent: [  ]);
+		yourself.
+	testingEnvironment removeKey: #Metacello_Gofer_Test_Repository ifAbsent: [  ].
+	testingEnvironment removeKey: #Metacello_Configuration_Test_Repository ifAbsent: [  ].
+	finalWorkingCopyList := MCWorkingCopy allWorkingCopies collect: [ :wc | wc packageName ].
+	diff := finalWorkingCopyList difference: initialWorkingCopyList.
+	diff do: [ :leak | MetacelloNotification signal: 'leaked package from ' , self printString , ' -> ' , leak printString ].
+	self assert: diff isEmpty.
+	super tearDown
 ]
 
 { #category : #running }

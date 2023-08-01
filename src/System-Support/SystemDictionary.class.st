@@ -26,7 +26,7 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
-		'reservedVariables'
+		'pseudoVariables'
 	],
 	#category : #'System-Support-Utilities'
 }
@@ -204,11 +204,13 @@ SystemDictionary >> flushClassNameCache [
 ]
 
 { #category : #'accessing - classes and traits' }
-SystemDictionary >> forgetClass: aClass logged: aBool [
+SystemDictionary >> forgetClass: aClass [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
+	self flag: #package. "Unify categories and packages to have only one removal to do and not two."
 	self organization removeBehavior: aClass.
+	self organization removeClass: aClass.
 	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]
@@ -218,7 +220,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 	"Use the cached class and non-class names for better performance."
 
 	| name searchBlock |
-	(self reservedVariables hasBindingThatBeginsWith: aString) ifTrue: [
+	(self pseudoVariables hasBindingThatBeginsWith: aString) ifTrue: [
 		^ true ].
 	searchBlock := [ :element |
 	               (element beginsWith: aString)
@@ -257,7 +259,7 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 { #category : #'accessing - variable lookup' }
 SystemDictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
-	^self reservedVariables at: name ifAbsent: [self bindingOf: name]
+	^self pseudoVariables at: name ifAbsent: [self bindingOf: name]
 ]
 
 { #category : #'accessing - system attributes' }
@@ -332,6 +334,14 @@ SystemDictionary >> poolUsers [
 SystemDictionary >> printElementsOn: aStream [
 
 	aStream nextPutAll: '(lots of globals)'
+]
+
+{ #category : #'accessing - variable lookup' }
+SystemDictionary >> pseudoVariables [
+	"We cache the variables for speed"
+
+	^ pseudoVariables ifNil: [
+		  pseudoVariables := PseudoVariable lookupDictionary ]
 ]
 
 { #category : #'accessing - classes and traits' }
@@ -413,18 +423,10 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 ]
 
 { #category : #'accessing - variable lookup' }
-SystemDictionary >> reservedVariables [
-	"We cache the variables for speed"
+SystemDictionary >> resetPseudoVariables [
+	"Lazy init in the accessor, resetting it will take new subclasses on PseudoVariable into account"
 
-	^ reservedVariables ifNil: [
-		  reservedVariables := ReservedVariable lookupDictionary ]
-]
-
-{ #category : #'accessing - variable lookup' }
-SystemDictionary >> resetReservedVariables [
-	"Lazy init in the accessor, resetting it will take new subclasses on ReservedVariable into account"
-
-	^ reservedVariables := nil
+	^ pseudoVariables := nil
 ]
 
 { #category : #'accessing - class and trait names' }

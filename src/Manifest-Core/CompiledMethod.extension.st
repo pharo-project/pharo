@@ -36,5 +36,6 @@ CompiledMethod >> manifestBuilderForRuleChecker: aRuleChecker [
 
 { #category : #'*Manifest-Core' }
 CompiledMethod >> mcWorkingCopy [
-	 MCWorkingCopy managersForClass: self methodClass selector: self selector do: [ :package | ^ package ]
+
+	MCWorkingCopy workingCopiesForClass: self methodClass protocol: self protocol do: [ :package | ^ package ]
 ]

@@ -33,19 +33,13 @@ FinderPragmasSearchStrategy >> constructDictionary [
 { #category : #accessing }
 FinderPragmasSearchStrategy >> findSelectedClassIn: path [
 
-	^ path
-		  at: 3
-		  ifPresent: [ :node | node item ]
-		  ifAbsent: [ nil ]
+	^ (path at: 3 ifAbsent: [ nil ]) ifNotNil: [ :node | node item ]
 ]
 
 { #category : #accessing }
 FinderPragmasSearchStrategy >> findSelectedMethodIn: path [
 
-	^ path
-		  at: 2
-		  ifPresent: [ :node | node item ]
-		  ifAbsent: [ nil ]
+	^ (path at: 2 ifAbsent: [ nil ]) ifNotNil: [ :node | node item ]
 ]
 
 { #category : #testing }

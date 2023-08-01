@@ -11,7 +11,7 @@ Class {
 		'toClasses',
 		'ignore'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : #'Refactoring2-Transformations-To be removed'
 }
 
 { #category : #'instance creation' }
@@ -105,11 +105,11 @@ RBAbstractVariablesTransformation >> abstractInstanceVariables [
 
 { #category : #executing }
 RBAbstractVariablesTransformation >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
+
 	| poolTransformation |
 	tree := aBRProgramNode.
 	fromClass := self model classObjectFor: fromBehavior.
-	toClasses := behaviorCollection
-				collect: [:each | self model classObjectFor: each].
+	toClasses := behaviorCollection collect: [ :each | self model classObjectFor: each ].
 	ignore := aVariableName.
 	poolTransformation := (RBExpandReferencedPoolsTransformation
 				model: self model
@@ -127,7 +127,7 @@ RBAbstractVariablesTransformation >> classVariableNames [
 	^ (nonMetaClass allClassVariableNames collect: [ :each | each asString ]) asSet
 ]
 
-{ #category : #executing }
+{ #category : #'for driver' }
 RBAbstractVariablesTransformation >> computeVariablesToAbstract [
 	| searcher |
 	instVarReaders := Set new.
@@ -161,6 +161,7 @@ RBAbstractVariablesTransformation >> parseTree [
 
 { #category : #executing }
 RBAbstractVariablesTransformation >> privateTransform [
+	self flag: #popUp.
 	self hasVariablesToAbstract
 		ifTrue:
 			[self
@@ -170,7 +171,7 @@ RBAbstractVariablesTransformation >> privateTransform [
 	self abstractClassVariables
 ]
 
-{ #category : #executing }
+{ #category : #'for driver' }
 RBAbstractVariablesTransformation >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
@@ -182,7 +183,7 @@ RBAbstractVariablesTransformation >> processAssignmentNode: aNode [
 		ifTrue: [classVarWriters add: varName]
 ]
 
-{ #category : #executing }
+{ #category : #'for driver' }
 RBAbstractVariablesTransformation >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
@@ -194,7 +195,7 @@ RBAbstractVariablesTransformation >> processReferenceNode: aNode [
 		ifTrue: [classVarReaders add: varName]
 ]
 
-{ #category : #executing }
+{ #category : #'for driver' }
 RBAbstractVariablesTransformation >> removeDefinedClassVariables [
 	| selectionBlock nonMetaClass |
 	nonMetaClass := fromClass instanceSide.

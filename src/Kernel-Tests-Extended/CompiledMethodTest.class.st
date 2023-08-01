@@ -247,8 +247,9 @@ CompiledMethodTest >> shouldNotImplementMethod [
 
 { #category : #running }
 CompiledMethodTest >> tearDown [
-	RPackage organizer unregisterPackageNamed: self categoryNameForTemporaryClasses.
-	class ifNotNil: [ class removeFromSystem].
+
+	self packageOrganizer removePackage: self categoryNameForTemporaryClasses.
+	class ifNotNil: [ class removeFromSystem ].
 	super tearDown
 ]
 
@@ -454,6 +455,24 @@ CompiledMethodTest >> testIsDeprecated [
 		(deprecatedSelectors includes: each)
 			ifTrue: [ self assert: (self class >> each) isDeprecated ]
 			ifFalse: [ self deny: (self class >> each) isDeprecated ] ]
+]
+
+{ #category : #'tests - abstract' }
+CompiledMethodTest >> testIsExtension [
+
+	[
+	| method |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: 'protocol'.
+	self deny: (self class >> #isExtensionTestMethod) isExtension.
+
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	method := self class >> #isExtensionTestMethod.
+	self assert: method isExtension.
+
+	self class removeSelector: #isExtensionTestMethod.
+	self deny: method isExtension ] ensure: [
+		(self packageOrganizer packageNamed: 'Kernel-Tests-Generated-Package' ifAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
 { #category : #'tests - testing' }

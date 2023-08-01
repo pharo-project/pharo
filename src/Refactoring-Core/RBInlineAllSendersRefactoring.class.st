@@ -85,7 +85,7 @@ RBInlineAllSendersRefactoring >> inlineMessagesInClass: aClass andSelector: aSel
 				previousCountOfMessages := messagesToInline.
 				node := self selfSendIn: (aClass parseTreeForSelector: aSelector).
 				self onError:
-						[self performCompositeRefactoring: ((RBInlineMethodRefactoring
+						[self generateChangesFor: ((RBInlineMethodRefactoring
 									model: self model
 									inline: node sourceInterval
 									inMethod: aSelector
@@ -130,7 +130,7 @@ RBInlineAllSendersRefactoring >> preconditions [
 { #category : #transforming }
 RBInlineAllSendersRefactoring >> removeMethod [
 	self onError:
-			[self performCompositeRefactoring: (RBRemoveMethodRefactoring
+			[self generateChangesFor: (RBRemoveMethodRefactoring
 						model: self model
 						removeMethods: (Array with: selector)
 						from: class)]

@@ -12,12 +12,12 @@ Class {
 
 { #category : #running }
 DTTestProfilingTest >> setUp [
+
 	super setUp.
-	plugin := DTTestsProfilingPlugin  new.
-	package := RPackage organizer
-		packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
-	classes := plugin itemsToBeAnalysedFor: {package}.
-	dTconf := DTPluginConfiguration items: classes packages: {package}
+	plugin := DTTestsProfilingPlugin new.
+	package := self packageOrganizer packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
+	classes := plugin itemsToBeAnalysedFor: { package }.
+	dTconf := DTPluginConfiguration items: classes packages: { package }
 ]
 
 { #category : #running }

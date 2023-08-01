@@ -689,7 +689,7 @@ SmalltalkImage >> fullNameForImageNamed: aString [
 
 { #category : #'memory space' }
 SmalltalkImage >> garbageCollect [
-	"Primitive. Reclaims all garbage and answers the number of bytes of available space."
+	"Primitive. Reclaims all garbage and answers the size of the largest free chunk in old space."
 	Object flushDependents.
 	^self primitiveGarbageCollect
 ]
@@ -1178,9 +1178,9 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 12 put: nil. "was BlockContext."
 	newArray at: 13 put: Point.
 	newArray at: 14 put: LargePositiveInteger.
-	newArray at: 15 put: (self globals at: #Display ifAbsent: [nil]).
+	newArray at: 15 put: nil. "was Display."
 	newArray at: 16 put: Message.
-	newArray at: 17 put: CompiledMethod.
+	newArray at: 17 put: nil. "was CompiledMethod."
 	newArray at: 18 put: ((self primitiveGetSpecialObjectsArray at: 18) ifNil: [Semaphore new]). "low space Semaphore"
 	newArray at: 19 put: Semaphore.
 	newArray at: 20 put: Character.
@@ -1193,24 +1193,19 @@ SmalltalkImage >> newSpecialObjectsArray [
 							#* 1 #/ 1 #\\ 1 #@ 1 #bitShift: 1 #// 1 #bitAnd: 1 #bitOr: 1
 							#at: 1 #at:put: 2 #size 0 #next 0 #nextPut: 1 #atEnd 0 #== 1 #class 0
 							#'~~' 1 #value 0 #value: 1 #do: 1 #new 0 #new: 1 #x 0 #y 0 ).
-	"An array of the 255 Characters in ascii order.
-	 Cog inlines table into machine code at: prim so do not regenerate it.
-	 This is nil in Spur, which has immediate Characters."
-	newArray at: 25 put: (self primitiveGetSpecialObjectsArray at: 25).
+	newArray at: 25 put: nil "was an array of 255 Characters in ascii order".
 	newArray at: 26 put: #mustBeBoolean.
 	newArray at: 27 put: ByteArray.
-	newArray at: 28 put: Process.
-	"An array of up to 31 classes whose instances will have compact headers; an empty array in Spur"
-	newArray at: 29 put: {}.
+	newArray at: 28 put: nil. "was Process."
+	newArray at: 29 put: nil. "was compact classes".
 	newArray at: 30 put: ((self primitiveGetSpecialObjectsArray at: 30) ifNil: [Semaphore new]). "delay Semaphore"
 	newArray at: 31 put: ((self primitiveGetSpecialObjectsArray at: 31) ifNil: [Semaphore new]). "user interrupt Semaphore"
-	"Entries 32 - 34 unreferenced. Previously these contained prototype instances to be copied for fast initialization"
 	newArray at: 32 put: Float32Array. "was the prototype Float"
 	newArray at: 33 put: Float64Array. "was the prototype 4-byte LargePositiveInteger"
 	newArray at: 34 put: nil. "was the prototype Point"
 	newArray at: 35 put: #cannotInterpret:.
 	newArray at: 36 put: nil. "was the prototype MethodContext"
-	newArray at: 37 put: BlockClosure.
+	newArray at: 37 put: nil. "was BlockClosure."
 	newArray at: 38 put: nil. "was the prototype BlockContext"
 	"array of objects referred to by external code"
 	newArray at: 39 put: (self primitiveGetSpecialObjectsArray at: 39).	"external semaphores"
@@ -1221,8 +1216,8 @@ SmalltalkImage >> newSpecialObjectsArray [
 	"External objects for callout.
 	 Note: Written so that one can actually completely remove the FFI."
 	newArray at: 44 put: (self at: #ExternalAddress ifAbsent: []).
-	newArray at: 45 put: (self at: #ExternalStructure ifAbsent: []).
-	newArray at: 46 put: (self at: #ExternalData ifAbsent: []).
+	newArray at: 45 put: nil. "was ExternalStructure"
+	newArray at: 46 put: nil. "was ExternalData"
 	newArray at: 47 put: nil.
 	newArray at: 48 put: nil.
 	newArray at: 49 put: #aboutToReturn:through:.
@@ -1382,7 +1377,7 @@ SmalltalkImage >> primSignalAtBytesLeft: numBytes [
 
 { #category : #'memory space' }
 SmalltalkImage >> primitiveGarbageCollect [
-	"Primitive. Reclaims all garbage and answers the size of the largest free chunk in old space.."
+	"Primitive. Reclaims all garbage and answers the size of the largest free chunk in old space."
 
 	<primitive: 130>
 	^self primitiveFailed
@@ -1531,7 +1526,7 @@ SmalltalkImage >> removeEmptyMessageCategories [
 
 	self garbageCollect.
 	SystemNavigation default allBehaviorsDo: [ :class | class removeEmptyProtocols ].
-	self packageOrganizer removeEmptyPackages
+	self packageOrganizer removeEmptyPackagesAndTags
 ]
 
 { #category : #shrinking }

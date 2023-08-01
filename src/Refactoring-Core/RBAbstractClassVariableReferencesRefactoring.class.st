@@ -60,7 +60,7 @@ RBAbstractClassVariableReferencesRefactoring >> accessorsRefactoring [
 
 { #category : #transforming }
 RBAbstractClassVariableReferencesRefactoring >> createAccessors [
-	self performCompositeRefactoring: self accessorsRefactoring
+	self generateChangesFor: self accessorsRefactoring
 ]
 
 { #category : #preconditions }

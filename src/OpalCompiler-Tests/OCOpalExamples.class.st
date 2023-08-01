@@ -879,7 +879,7 @@ OCOpalExamples >> noRemoteBlockArgument [
 
 { #category : #examples }
 OCOpalExamples >> noRemoteBlockReturn [
-	(self announcements at: self index ifAbsent: [ ^ self ])
+	(self yourself at: self index ifAbsent: [ ^ self ])
 		open
 ]
 

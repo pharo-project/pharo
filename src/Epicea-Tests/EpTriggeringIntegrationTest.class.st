@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 EpTriggeringIntegrationTest >> changesBrowserOpenedWindows [
 
-	^ ChangesBrowser allSubInstances reject: [ :each | each window isClosed ]
+	^ StChangesBrowserPresenter allSubInstances reject: [ :each | each window isClosed ]
 ]
 
 { #category : #accessing }

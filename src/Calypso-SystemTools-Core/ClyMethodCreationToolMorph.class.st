@@ -42,17 +42,14 @@ ClyMethodCreationToolMorph >> applyChanges [
 	| newMethod selector selectedClass |
 	selectedClass := self chooseClassForNewMethodIfNone: [^false].
 
-	selector := methodTags
-		ifEmpty: [ selectedClass compile: self pendingText asString notifying: textMorph]
-		ifNotEmpty: [
-			selectedClass compile: self pendingText asString classified: methodTags anyOne notifying: textMorph].
+	selector := selectedClass compile: self pendingText asString classified: methodProtocol notifying: textMorph.
 
 	selector ifNil: [ ^false ].
 
 	newMethod := selectedClass >> selector.
-	MethodClassifier classify: newMethod fallbackProtocol: (methodTags ifEmpty: [ nil ] ifNotEmpty: [ :tags | tags anyOne]).
-	methodTags := newMethod tags.
-	self tagAndPackageEditingMethod: newMethod.
+	MethodClassifier classify: newMethod fallbackProtocol: methodProtocol.
+	methodProtocol := newMethod protocolName.
+	self protocolAndPackageEditingMethod: newMethod.
 
 	self removeFromBrowser.
 	browser tabManager desiredSelection: {ClyMethodCodeEditorToolMorph}.
@@ -98,7 +95,7 @@ ClyMethodCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 
 	^methodClass == anotherBrowserTool methodClass
-		and: [ methodTags = anotherBrowserTool methodTags
+		and: [ methodProtocol = anotherBrowserTool methodProtocol
 				and: [ extendingPackage = anotherBrowserTool extendingPackage ] ]
 ]
 
@@ -126,16 +123,15 @@ ClyMethodCreationToolMorph >> restoreBrowserState [
 
 { #category : #initialization }
 ClyMethodCreationToolMorph >> setUpModelFromContext [
+
 	| selectedGroup |
 	super setUpModelFromContext.
 
 	methodClass := context selectedClassSide.
-	context isMethodGroupSelected ifFalse: [ ^self].
+	context isMethodGroupSelected ifFalse: [ ^ self ].
 	selectedGroup := context lastSelectedMethodGroup.
-	(selectedGroup isKindOf: ClyExternalPackageMethodGroup) ifTrue: [
-		^extendingPackage := selectedGroup package].
-	(selectedGroup isKindOf: ClyTaggedMethodGroup) ifTrue: [
-		^methodTags := {selectedGroup tag}]
+	(selectedGroup isKindOf: ClyExternalPackageMethodGroup) ifTrue: [ ^ extendingPackage := selectedGroup package ].
+	(selectedGroup isKindOf: ClyMethodsInProtocolGroup) ifTrue: [ ^ methodProtocol := selectedGroup protocol ]
 ]
 
 { #category : #initialization }

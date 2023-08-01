@@ -69,9 +69,11 @@ ClassTest >> setUp [
 
 { #category : #running }
 ClassTest >> tearDown [
+
 	self deleteClass.
-	{self unclassifiedCategory. self categoryNameForTemporaryClasses} do: [:category|
-			RPackage organizer unregisterPackageNamed: category].
+	{
+		self unclassifiedCategory.
+		self categoryNameForTemporaryClasses } do: [ :category | self packageOrganizer removePackage: category ].
 	super tearDown
 ]
 
@@ -529,7 +531,7 @@ ClassTest >> testSubclassInstanceVariableNames [
 	cls := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: #SubclassExample;
-			slots: 'x y' asSlotCollection].
+			slotsFromString: 'x y'].
 
 	self assert: (testEnvironment includesKey: #SubclassExample).
 

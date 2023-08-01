@@ -103,11 +103,11 @@ RBFindAndReplaceTransformation >> extract: occurrence of: rbMethod [
 	[|refactoring |
 	refactoring := self extractMethodRefactoring.
 	refactoring model: self model.
-	refactoring 	extract: occurrence key from: rbMethod selector in: rbMethod modelClass.
+	refactoring extract: occurrence key from: rbMethod selector in: rbMethod modelClass.
 	refactoring setOption: #existingSelector toUse:  [ :ref |
 			ref parameters: (self argumentsOf: occurrence value).
 			selector].
-	self performCompositeRefactoring: refactoring ] on: Exception do: [ :e | e ]
+	self generateChangesFor: refactoring ] on: Exception do: [ :e | e ]
 ]
 
 { #category : #accessing }
@@ -221,10 +221,10 @@ RBFindAndReplaceTransformation >> preconditions [
 	rbMethod := class methodFor: selector.
 	condition := (RBCondition definesSelector: selector in: class)
 	             & (replacesAllHierarchy
-			              ifFalse: [ self emptyCondition ]
+			              ifFalse: [ self trueCondition ]
 			              ifTrue: [
 				              class allSubclasses
-					              inject: self emptyCondition
+					              inject: self trueCondition
 					              into: [ :cond :aClass |
 						              cond
 						              &

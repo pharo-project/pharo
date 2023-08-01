@@ -844,6 +844,93 @@ LinkedListTest >> testNewFromCollection [
 ]
 
 { #category : #tests }
+LinkedListTest >> testRechainNilValue [
+	
+	list addAll: (1 to: 5).
+	
+	list rechain: [ :listLink | listLink value % 2 = 1 ifTrue: [ listLink value ] ].
+	
+	self assert: list equals: #(1 3 5)
+]
+
+{ #category : #tests }
+LinkedListTest >> testRechainPreserveCutList [
+	
+	list addAll: (1 to: 5).
+	
+	list rechain: [ :listLink | listLink value % 2 = 1 ifTrue: [ listLink ] ].
+	
+	self assert: list equals: #(1 3 5)
+]
+
+{ #category : #tests }
+LinkedListTest >> testRechainPreserveList [
+	
+	list addAll: (1 to: 5).
+	
+	list rechain: [ :listLink | listLink ].
+	
+	self assert: list equals: (1 to: 5)
+]
+
+{ #category : #tests }
+LinkedListTest >> testRechainWithChains [
+	
+	list addAll: (1 to: 5).
+	
+	list rechain: [ :listLink | 
+		|tempLink|
+		tempLink := nil.
+		1 to: (listLink value) do: [ :_ |
+			|l|
+			l := listLink value asLink.
+			l nextLink: tempLink.
+			tempLink := l ].
+		tempLink ].
+	
+	self assert: list equals: #(1 2 2 3 3 3 4 4 4 4 5 5 5 5 5)
+]
+
+{ #category : #tests }
+LinkedListTest >> testRechainWithChainsAndNil [
+
+	list addAll: (1 to: 5).
+
+	list rechain: [ :listLink |
+		listLink value % 2 = 1 ifTrue: [
+			| tempLink |
+			tempLink := nil.
+			1 to: listLink value do: [ :_ |
+				| l |
+				l := listLink value asLink.
+				l nextLink: tempLink.
+				tempLink := l ].
+			tempLink ] ].
+
+	self assert: list equals: #( 1 3 3 3 5 5 5 5 5 )
+]
+
+{ #category : #tests }
+LinkedListTest >> testRechainWithChainsAndPreserve [
+
+	list addAll: (1 to: 5).
+
+	list rechain: [ :listLink |
+		listLink value % 2 = 1 ifTrue: [
+			| tempLink |
+			tempLink := nil.
+			1 to: listLink value do: [ :_ |
+				| l |
+				l := listLink value asLink.
+				l nextLink: tempLink.
+				tempLink := l ].
+			tempLink ]
+		ifFalse: [ listLink ] ].
+
+	self assert: list equals: #( 1 2 3 3 3 4 5 5 5 5 5 )
+]
+
+{ #category : #tests }
 LinkedListTest >> testRemoveAll [
 	| list2 |
 	list add: link1.

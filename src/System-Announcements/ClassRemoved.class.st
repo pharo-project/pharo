@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'categoryName',
 		'classRemoved',
-		'ownerPackage'
+		'affectedPackage'
 	],
 	#category : #'System-Announcements-System-Classes'
 }
@@ -19,6 +19,19 @@ ClassRemoved class >> class: aClass category: aCategoryName [
 			classRemoved: aClass;
 			categoryName: aCategoryName;
 			yourself
+]
+
+{ #category : #'instance creation' }
+ClassRemoved class >> class: aClass package: aPackage category: aCategoryName [
+
+	^ (self class: aClass category: aCategoryName)
+		  affectedPackage: aPackage;
+		  yourself
+]
+
+{ #category : #accessing }
+ClassRemoved >> affectedPackage: aPackage [
+	affectedPackage := aPackage
 ]
 
 { #category : #testing }
@@ -41,12 +54,13 @@ ClassRemoved >> affectsMethodsDefinedInClass: aClass [
 { #category : #testing }
 ClassRemoved >> affectsMethodsDefinedInPackage: aPackage [
 
-	^ownerPackage == aPackage
+	^affectedPackage == aPackage
 ]
 
 { #category : #testing }
-ClassRemoved >> affectsMethodsTaggedWith: tagName [
-	^classRemoved tagsForMethods includes: tagName
+ClassRemoved >> affectsMethodsInProtocol: protocol [
+
+	^ classRemoved protocolNames includes: protocol
 ]
 
 { #category : #accessing }
@@ -76,15 +90,21 @@ ClassRemoved >> classRemoved [
 ClassRemoved >> classRemoved: aClass [
 
 	classRemoved := aClass.
-	ownerPackage := aClass package
+	affectedPackage := aClass package
 ]
 
 { #category : #accessing }
 ClassRemoved >> classTagAffected [
-	^ownerPackage toTagName: categoryName
+	^affectedPackage toTagName: categoryName
 ]
 
 { #category : #accessing }
 ClassRemoved >> packageAffected [
-	^ownerPackage
+	^affectedPackage
+]
+
+{ #category : #accessing }
+ClassRemoved >> packageAffected: aPackage [
+
+	affectedPackage := aPackage
 ]

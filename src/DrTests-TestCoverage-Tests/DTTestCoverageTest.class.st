@@ -13,10 +13,9 @@ Class {
 DTTestCoverageTest >> setUp [
 
 	super setUp.
-	package := RPackage organizer
-		packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
+	package := self packageOrganizer packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
 	"The test classes are in the same package as classes under test."
-	pluginConfiguration := DTPluginConfiguration items: {package} packages: {package}.
+	pluginConfiguration := DTPluginConfiguration items: { package } packages: { package }.
 	plugin := DTTestCoveragePlugin new
 ]
 
@@ -64,7 +63,16 @@ DTTestCoverageTest >> testDTTestCoverageResultHas2Nodes [
 
 	| resultTree |
 	resultTree := (plugin runForConfiguration: pluginConfiguration) buildTreeForUI.
-	self assert: resultTree subResults size equals: 2
+	self assert: resultTree subResults size equals: 3
+]
+
+{ #category : #improvements }
+DTTestCoverageTest >> testDTTestCoverageResultHasCovered_Uncovered_PartiallyCoveredMethods [
+
+	| result |
+	result := plugin runForConfiguration: pluginConfiguration.
+	self assert: result methodList size equals: 1.
+	self assert: result partiallyCoveredMethods size equals: 1 .
 ]
 
 { #category : #running }

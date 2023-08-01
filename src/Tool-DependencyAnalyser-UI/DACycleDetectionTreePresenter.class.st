@@ -35,6 +35,12 @@ DACycleDetectionTreePresenter class >> system [
 		(self packageOrganizer packages collect: [ :package | package packageName asString ])
 ]
 
+{ #category : #specs }
+DACycleDetectionTreePresenter class >> title [
+
+	^ 'Cycles analysis'
+]
+
 { #category : #accessing }
 DACycleDetectionTreePresenter >> analysis [
 	^ analysis
@@ -152,9 +158,4 @@ DACycleDetectionTreePresenter >> refresh [
 { #category : #accessing }
 DACycleDetectionTreePresenter >> reversedRoots [
 	self tree roots: (self tree roots reversed)
-]
-
-{ #category : #protocol }
-DACycleDetectionTreePresenter >> title [
-	^ 'Cycles analysis'
 ]
