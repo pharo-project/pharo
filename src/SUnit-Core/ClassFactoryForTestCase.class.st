@@ -152,9 +152,15 @@ ClassFactoryForTestCase >> deleteClass: aClass [
 { #category : #cleaning }
 ClassFactoryForTestCase >> deletePackage [
 
-	self organization
-		removeCategoriesMatching: self packageName , '-*';
-		removeEmptyPackagesAndTags
+	| organizer |
+	self flag: #package. "This is way more complicated than needed because of the package and category mess."
+	organizer := self organization.
+
+	(organizer categoriesMatching: self packageName , '-*') , { self packageName } do: [ :category |
+		(organizer listAtCategoryNamed: category) do: [ :behavior | organizer removeBehavior: behavior ].
+		organizer removeCategory: category ].
+
+	(organizer packages select: [ :package | package name beginsWith: self packageName ]) do: [ :package | package removeFromSystem ]
 ]
 
 { #category : #accessing }
