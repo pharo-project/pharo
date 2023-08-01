@@ -32,15 +32,16 @@ ObsoleteTest >> tearDown [
 
 { #category : #tests }
 ObsoleteTest >> testClassObsolete [
-	| aClass |
-	aClass := classFactory newClass.
 
-	self deny: aClass isObsolete.
-	self deny: aClass class isObsolete.
-	aClass removeFromSystem.
-	self assert: aClass isObsolete.
-	self assert: aClass class isObsolete.
-	self assert: (aClass originalName beginsWith: #ClassForTestToBeDeleted)
+	| class name |
+	class := classFactory newClass.
+	name := class name.
+	self deny: class isObsolete.
+	self deny: class class isObsolete.
+	class removeFromSystem.
+	self assert: class isObsolete.
+	self assert: class class isObsolete.
+	self assert: (class originalName beginsWith: name)
 ]
 
 { #category : #tests }
