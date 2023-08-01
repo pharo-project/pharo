@@ -11,32 +11,28 @@ Class {
 FLIgnoredVariablesTest >> testAllVariablesIgnored [
 
 	| anObject result aClass |
-	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a b'.
-	self classFactory
-		silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a b)'
-		in: aClass class.
+	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b' ].
+	self classFactory silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a b)' in: aClass class.
 	anObject := aClass new
-		instVarAt: 1 put: $A;
-		instVarAt: 2 put: $B;
-		yourself.
+		            instVarAt: 1 put: $A;
+		            instVarAt: 2 put: $B;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: anObject.
 
 	self assert: (result instVarAt: 1) isNil.
-	self assert: (result instVarAt: 2) isNil.
+	self assert: (result instVarAt: 2) isNil
 ]
 
 { #category : #tests }
 FLIgnoredVariablesTest >> testIgnoredValueIsNotMaterialized [
 
 	| anObject materialized aClass |
-	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a'.
-	self classFactory
-		silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a)'
-		in: aClass class.
+	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a' ].
+	self classFactory silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a)' in: aClass class.
 	anObject := aClass new
-		instVarAt: 1 put: #A;
-		yourself.
+		            instVarAt: 1 put: #A;
+		            yourself.
 
 	self serialize: anObject.
 	materialized := self materialized.
@@ -46,16 +42,15 @@ FLIgnoredVariablesTest >> testIgnoredValueIsNotMaterialized [
 
 { #category : #tests }
 FLIgnoredVariablesTest >> testOneIgnoredVariable [
+
 	| anObject result aClass |
-	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a b c'.
-	self classFactory
-		silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(b)'
-		in: aClass class.
+	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
+	self classFactory silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(b)' in: aClass class.
 	anObject := aClass new
-		instVarAt: 1 put: $A;
-		instVarAt: 2 put: $B;
-		instVarAt: 3 put: $C;
-		yourself.
+		            instVarAt: 1 put: $A;
+		            instVarAt: 2 put: $B;
+		            instVarAt: 3 put: $C;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: anObject.
 
@@ -66,16 +61,15 @@ FLIgnoredVariablesTest >> testOneIgnoredVariable [
 
 { #category : #tests }
 FLIgnoredVariablesTest >> testTwoIgnoredVariables [
+
 	| anObject result aClass |
-	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'a b c'.
-	self classFactory
-		silentlyCompile:  'fuelIgnoredInstanceVariableNames ^#(a c)'
-		in: aClass class.
+	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
+	self classFactory silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a c)' in: aClass class.
 	anObject := aClass new
-		instVarAt: 1 put: $A;
-		instVarAt: 2 put: $B;
-		instVarAt: 3 put: $C;
-		yourself.
+		            instVarAt: 1 put: $A;
+		            instVarAt: 2 put: $B;
+		            instVarAt: 3 put: $C;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: anObject.
 

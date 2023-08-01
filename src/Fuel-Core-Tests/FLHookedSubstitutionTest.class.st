@@ -23,8 +23,8 @@ FLHookedSubstitutionTest >> testAvoidRecursion [
 { #category : #tests }
 FLHookedSubstitutionTest >> testClassWithCachedValueByNil [
 
-	| aClassWithCachedValue result original | 
-	aClassWithCachedValue := self classFactory silentlyNewClassWithInstanceVariableNames: 'cache'.
+	| aClassWithCachedValue result original |
+	aClassWithCachedValue := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'cache' ].
 	self classFactory
 		silentlyCompile: 'cache ^cache' in: aClassWithCachedValue;
 		silentlyCompile: 'cache: x cache := x' in: aClassWithCachedValue;
@@ -35,14 +35,15 @@ FLHookedSubstitutionTest >> testClassWithCachedValueByNil [
 					ifNotNil: [
 						aVisitor
 							visitSubstitution: self
-							by: (self copy cache: nil)]' in: aClassWithCachedValue.
+							by: (self copy cache: nil)]'
+		in: aClassWithCachedValue.
 
 	original := aClassWithCachedValue new
-		cache: 5;
-		yourself.
+		            cache: 5;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: original.
-	
+
 	self assert: result cache isNil
 ]
 
@@ -51,13 +52,14 @@ FLHookedSubstitutionTest >> testObjectByProxyThatBecomesItsContent [
 	"Tests a substitution of an object by a proxy that becomes another object on materialization."
 
 	| aProxyClass result |
-	aProxyClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'someState'.
+	aProxyClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'someState' ].
 	self classFactory
 		silentlyCompile: 'initialize  someState := 5@1' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: (', FLProxyThatBecomesItsContent name, ' newWith: someState)' in: aProxyClass.
+				by: (' , FLProxyThatBecomesItsContent name , ' newWith: someState)'
+		in: aProxyClass.
 
 	result := self resultOfSerializeAndMaterialize: aProxyClass new.
 

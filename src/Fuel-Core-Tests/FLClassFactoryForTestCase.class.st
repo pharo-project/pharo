@@ -158,12 +158,6 @@ FLClassFactoryForTestCase >> silentlyDo: aBlock [
 ]
 
 { #category : #'creating-silently' }
-FLClassFactoryForTestCase >> silentlyNewClassWithInstanceVariableNames: aString [
-
-	^ self silentlyNewSubclassOf: self defaultSuperclass instanceVariableNames: aString
-]
-
-{ #category : #'creating-silently' }
 FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: aString [
 
 	^ self silentlyNewSubclassOf: aClass instanceVariableNames: aString classVariableNames: ''

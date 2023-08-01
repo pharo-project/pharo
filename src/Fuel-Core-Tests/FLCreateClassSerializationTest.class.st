@@ -147,31 +147,23 @@ FLCreateClassSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVar
 	"Tests materialization of a class and a trait not defined in the image.
 	The class uses the trait.
 	The trait has instance variables."
-	
-	| aClass aTrait result materializedClass materializedTrait materializedObject |	
-	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'ivar'.
-	self classFactory
-		silentlyCompile: 'ivar: x ivar := x'
-		in: aClass.
-	self classFactory
-		silentlyCompile: 'ivar ^ ivar'
-		in: aClass.
+
+	| aClass aTrait result materializedClass materializedTrait materializedObject |
+	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'ivar' ].
+	self classFactory silentlyCompile: 'ivar: x ivar := x' in: aClass.
+	self classFactory silentlyCompile: 'ivar ^ ivar' in: aClass.
 	aTrait := self classFactory silentlyNewTraitWithInstanceVariableNames: 'traitIvar'.
-	self classFactory
-		silentlyCompile: 'traitIvar: x traitIvar := x'
-		in: aTrait.
-	self classFactory
-		silentlyCompile: 'traitIvar ^ traitIvar'
-		in: aTrait.
+	self classFactory silentlyCompile: 'traitIvar: x traitIvar := x' in: aTrait.
+	self classFactory silentlyCompile: 'traitIvar ^ traitIvar' in: aTrait.
 	aClass addToComposition: aTrait.
-	
+
 	result := self resultOfSerializeRemoveAndMaterializeAll: {
-		aClass.
-		aTrait.
-		aClass new
-			perform: #ivar: with: 1;
-			perform: #traitIvar: with: 2;
-			yourself }.
+			          aClass.
+			          aTrait.
+			          (aClass new
+				           perform: #ivar: with: 1;
+				           perform: #traitIvar: with: 2;
+				           yourself) }.
 	materializedClass := result first.
 	materializedTrait := result second.
 	materializedObject := result third.
@@ -182,7 +174,7 @@ FLCreateClassSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVar
 	self assert: materializedClass slots second name equals: 'traitIvar'.
 	self assert: (materializedObject perform: #ivar) equals: 1.
 	self assert: (materializedObject perform: #traitIvar) equals: 2.
-	
+
 	"Check that the class format is correct and that the instance
 	was allocated with enough space to store values."
 	materializedObject
@@ -190,30 +182,27 @@ FLCreateClassSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVar
 		perform: #traitIvar: with: 4.
 	self assert: (materializedObject perform: #ivar) equals: 3.
 	self assert: (materializedObject perform: #traitIvar) equals: 4
-	
 ]
 
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateClassWithInstance [
 	"Tests materialization of a class who references an instance of itself."
-	
+
 	| aClass anInstance materializedClass materializedInstance |
-	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'name'.
+	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'name' ].
 	aClass class instanceVariableNames: 'instance'.
-	
+
 	anInstance := aClass new
-		instVarNamed: 'name' put: #testName;
-		yourself.
-	aClass 
-		instVarNamed: 'instance' 
-		put: anInstance.
+		              instVarNamed: 'name' put: #testName;
+		              yourself.
+	aClass instVarNamed: 'instance' put: anInstance.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 	materializedInstance := materializedClass instVarNamed: 'instance'.
-	
+
 	self deny: aClass == materializedClass.
 	self deny: anInstance == materializedInstance.
-	self assert: #testName = (materializedInstance instVarNamed: 'name').
+	self assert: #testName = (materializedInstance instVarNamed: 'name')
 ]
 
 { #category : #tests }
@@ -284,7 +273,7 @@ FLCreateClassSerializationTest >> testCreateClassWithVariables [
 	"Tests materialization of a class not defined in the image, with instance variables."
 
 	| aClass materializedClass |
-	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'var1 var2'.
+	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'var1 var2' ].
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 
@@ -520,17 +509,17 @@ FLCreateClassSerializationTest >> testCreateWithSubclass [
 { #category : #tests }
 FLCreateClassSerializationTest >> testMaterializationDoesNotModifySerializedClass [
 	"Tests that materialization does not change the source class."
-	
-	| aClass materializedClass |	
-	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'var'.
-	
+
+	| aClass materializedClass |
+	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'var' ].
+
 	self serializer fullySerializeBehavior: aClass.
 	self serialize: aClass.
 	aClass removeInstVarNamed: 'var'.
 	materializedClass := self materialized.
 
-	self assert: materializedClass instVarNames = #(var) description: 'The materialized class has the variable as the serialized class'.
-	self assert: aClass instVarNames isEmpty description: 'Materialization should not modify the serialized class'.
+	self assert: materializedClass instVarNames = #( var ) description: 'The materialized class has the variable as the serialized class'.
+	self assert: aClass instVarNames isEmpty description: 'Materialization should not modify the serialized class'
 ]
 
 { #category : #'tests-bugs' }

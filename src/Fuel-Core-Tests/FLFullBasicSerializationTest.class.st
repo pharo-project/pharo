@@ -85,16 +85,16 @@ FLFullBasicSerializationTest >> testCreateClassWithChangedSuperclassFormat [
 	"Tests issue #221"
 
 	| a b |
-	a := self classFactory silentlyNewClassWithInstanceVariableNames: 'one'.
+	a := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'one' ].
 	b := self classFactory silentlyNewSubclassOf: a instanceVariableNames: 'two'.
 	self serializer fullySerializeBehavior: b.
-	self serialize: {b new. b}.
-	
+	self serialize: {
+			b new.
+			b }.
+
 	a addInstVarNamed: 'newIVar'.
-		
-	self
-		shouldnt: [ self materialized ]
-		raise: PrimitiveFailed
+
+	self shouldnt: [ self materialized ] raise: PrimitiveFailed
 ]
 
 { #category : #'tests-long' }
