@@ -21,34 +21,8 @@ self assert: cls isBehavior
 Class {
 	#name : #FLClassFactoryForTestCase,
 	#superclass : #ClassFactoryForTestCase,
-	#instVars : [
-		'createdClasses',
-		'createdTraits'
-	],
 	#category : #'Fuel-Core-Tests-Support-ClassFactory'
 }
-
-{ #category : #cleaning }
-FLClassFactoryForTestCase >> cleanUp [
-	| createdClassNames createdTraitNames |
-	createdClassNames := self createdClassNames.
-	createdTraitNames := self createdTraitNames.
-	self deleteClasses.
-	self deleteTraits.
-	self deletePackage.
-	self cleanUpChangeSetForClassNames: createdClassNames.
-	self cleanUpChangeSetForClassNames: createdTraitNames
-]
-
-{ #category : #accessing }
-FLClassFactoryForTestCase >> createdClasses [
-	^createdClasses
-]
-
-{ #category : #accessing }
-FLClassFactoryForTestCase >> createdTraits [
-	^createdTraits
-]
 
 { #category : #'accessing-defaults' }
 FLClassFactoryForTestCase >> defaultPackageAndTag [
@@ -57,33 +31,15 @@ FLClassFactoryForTestCase >> defaultPackageAndTag [
 
 { #category : #cleaning }
 FLClassFactoryForTestCase >> deleteBehavior: aBehavior [
-	self createdClasses
-		remove: aBehavior
-		ifAbsent: [].
-	self createdTraits
-		remove: aBehavior
-		ifAbsent: [].
+
+	createdBehaviors remove: aBehavior ifAbsent: [  ].
 	self removeFromSystem: aBehavior
 ]
 
 { #category : #'private-cleaning' }
-FLClassFactoryForTestCase >> deleteClasses [
-	self createdClasses do: [:class|
-		self deleteBehavior: class]
-]
+FLClassFactoryForTestCase >> deleteBehaviors [
 
-{ #category : #'private-cleaning' }
-FLClassFactoryForTestCase >> deleteTraits [
-	self createdTraits do: [:trait|
-		self deleteBehavior: trait]
-]
-
-{ #category : #initialization }
-FLClassFactoryForTestCase >> initialize [
-
-	super initialize.
-	createdClasses := IdentitySet new.
-	createdTraits := IdentitySet new
+	self createdBehaviors do: [ :behavior | self deleteBehavior: behavior ]
 ]
 
 { #category : #'creating-anonymous' }
@@ -129,19 +85,20 @@ FLClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivName
 
 { #category : #creating }
 FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString [
+
 	| newClass |
 	newClass := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			environment: self environment;
-			name: self newBehaviorName;
-			superclass: aClass;
-			traitComposition: aTraitComposition asTraitComposition;
-			classTraitComposition: aTraitComposition asTraitComposition classComposition;
-			slots: ivNamesString asSlotCollection;
-			sharedVariablesFromString: classVarsString;
-			package: self defaultPackageAndTag ].
+		            aBuilder
+			            environment: self environment;
+			            name: self newBehaviorName;
+			            superclass: aClass;
+			            traitComposition: aTraitComposition asTraitComposition;
+			            classTraitComposition: aTraitComposition asTraitComposition classComposition;
+			            slots: ivNamesString asSlotCollection;
+			            sharedVariablesFromString: classVarsString;
+			            package: self defaultPackageAndTag ].
 
-	self createdClasses add: newClass.
+	createdBehaviors add: newClass.
 	^ newClass
 ]
 
@@ -153,24 +110,24 @@ FLClassFactoryForTestCase >> newTrait [
 
 { #category : #'creating-traits' }
 FLClassFactoryForTestCase >> newTraitNamed: aTraitName instanceVariableNames: aString [
+
 	| newTrait |
 	newTrait := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			environment: self environment;
-			name: aTraitName;
-			slots: aString asSlotCollection;
-			package: self defaultPackageAndTag;
-			beTrait ].
+		            aBuilder
+			            environment: self environment;
+			            name: aTraitName;
+			            slots: aString asSlotCollection;
+			            package: self defaultPackageAndTag;
+			            beTrait ].
 
-	self createdTraits add: newTrait.
+	createdBehaviors add: newTrait.
 	^ newTrait
 ]
 
 { #category : #accessing }
 FLClassFactoryForTestCase >> registerBehavior: aBehavior [
-	(aBehavior isTrait
-		ifTrue: [ self createdTraits ]
-		ifFalse: [ self createdClasses ]) add: aBehavior
+
+	createdBehaviors add: aBehavior
 ]
 
 { #category : #'private-cleaning' }
