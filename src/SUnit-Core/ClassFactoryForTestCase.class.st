@@ -254,3 +254,9 @@ ClassFactoryForTestCase >> silentlyNewClass [
 
 	^ self silentlyMake: [ :aBuilder | "Nothing to configure here" ]
 ]
+
+{ #category : #'creating-traits-silently' }
+ClassFactoryForTestCase >> silentlyNewTrait [
+
+	^ self silentlyMake: [ :aBuilder | aBuilder beTrait ]
+]

@@ -19,7 +19,10 @@ FLGlobalTraitSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVar
 	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'ivar' ].
 	self classFactory silentlyCompile: 'ivar: x ivar := x' in: aClass.
 	self classFactory silentlyCompile: 'ivar ^ ivar' in: aClass.
-	aTrait := self classFactory silentlyNewTraitWithInstanceVariableNames: 'traitIvar'.
+	aTrait := self classFactory silentlyMake: [ :aBuilder |
+		          aBuilder
+			          beTrait;
+			          slotsFromString: 'traitIvar' ].
 	self classFactory silentlyCompile: 'traitIvar: x traitIvar := x' in: aTrait.
 	self classFactory silentlyCompile: 'traitIvar ^ traitIvar' in: aTrait.
 	aClass addToComposition: aTrait.

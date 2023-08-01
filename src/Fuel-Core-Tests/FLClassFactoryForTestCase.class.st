@@ -54,44 +54,6 @@ FLClassFactoryForTestCase >> newAnonymousTrait [
 			beTrait ]
 ]
 
-{ #category : #creating }
-FLClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
-
-	| newClass |
-	newClass := self class classInstaller make: [ :aBuilder |
-		            aBuilder
-			            environment: self environment;
-			            name: self newBehaviorName;
-			            superclass: self defaultSuperclass;
-			            slots: aString asSlotCollection;
-			            package: self defaultPackageAndTag ].
-
-	createdBehaviors add: newClass.
-	^ newClass
-]
-
-{ #category : #'creating-traits' }
-FLClassFactoryForTestCase >> newTrait [
-
-	^ self newTraitNamed: self newBehaviorName instanceVariableNames: ''
-]
-
-{ #category : #'creating-traits' }
-FLClassFactoryForTestCase >> newTraitNamed: aTraitName instanceVariableNames: aString [
-
-	| newTrait |
-	newTrait := self class classInstaller make: [ :aBuilder |
-		            aBuilder
-			            environment: self environment;
-			            name: aTraitName;
-			            slots: aString asSlotCollection;
-			            package: self defaultPackageAndTag;
-			            beTrait ].
-
-	createdBehaviors add: newTrait.
-	^ newTrait
-]
-
 { #category : #accessing }
 FLClassFactoryForTestCase >> registerBehavior: aBehavior [
 
@@ -142,24 +104,6 @@ FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSourc
 { #category : #private }
 FLClassFactoryForTestCase >> silentlyDo: aBlock [
 	^ SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
-]
-
-{ #category : #'creating-traits-silently' }
-FLClassFactoryForTestCase >> silentlyNewTrait [
-
-	^ self silentlyNewTraitNamed: self newBehaviorName instanceVariableNames: ''
-]
-
-{ #category : #'creating-traits-silently' }
-FLClassFactoryForTestCase >> silentlyNewTraitNamed: aTraitName instanceVariableNames: aString [
-
-	^ self silentlyDo: [ self newTraitNamed: aTraitName instanceVariableNames: aString ]
-]
-
-{ #category : #'creating-traits-silently' }
-FLClassFactoryForTestCase >> silentlyNewTraitWithInstanceVariableNames: aString [
-
-	^ self silentlyNewTraitNamed: self newBehaviorName instanceVariableNames: aString
 ]
 
 { #category : #'renaming-silently' }
