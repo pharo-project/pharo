@@ -11,7 +11,7 @@ Class {
 FLMigrationTest >> redefined: aClass with: instanceVariableNames [
 	| name |
 	name := aClass name.
-	self classFactory deleteBehavior: aClass.
+	self classFactory delete: aClass.
 	"In this case we need to create a class with notifications"
 	^ self classFactory
 		silentlyRename: (self classFactory newClassWithInstanceVariableNames: instanceVariableNames)

@@ -30,16 +30,14 @@ FLClassFactoryForTestCase >> defaultPackageAndTag [
 ]
 
 { #category : #cleaning }
-FLClassFactoryForTestCase >> deleteBehavior: aBehavior [
+FLClassFactoryForTestCase >> delete: aBehavior [
 
 	createdBehaviors remove: aBehavior ifAbsent: [  ].
-	self removeFromSystem: aBehavior
-]
+	aBehavior isObsolete ifTrue: [ ^ self ].
 
-{ #category : #'private-cleaning' }
-FLClassFactoryForTestCase >> deleteBehaviors [
+	self class environment at: #ChangeSet ifPresent: [ :changeSet | aBehavior removeFromChanges ].
 
-	self createdBehaviors do: [ :behavior | self deleteBehavior: behavior ]
+	aBehavior removeFromSystemUnlogged
 ]
 
 { #category : #'creating-anonymous' }
@@ -128,18 +126,6 @@ FLClassFactoryForTestCase >> newTraitNamed: aTraitName instanceVariableNames: aS
 FLClassFactoryForTestCase >> registerBehavior: aBehavior [
 
 	createdBehaviors add: aBehavior
-]
-
-{ #category : #'private-cleaning' }
-FLClassFactoryForTestCase >> removeFromSystem: aBehavior [
-	aBehavior isObsolete	ifTrue: [ ^ self ].
-	
-	self class environment
-		at: #ChangeSet
-		ifPresent: [ :changeSet |
-			aBehavior removeFromChanges ].
-	
-	aBehavior removeFromSystemUnlogged
 ]
 
 { #category : #'compiling-silently' }

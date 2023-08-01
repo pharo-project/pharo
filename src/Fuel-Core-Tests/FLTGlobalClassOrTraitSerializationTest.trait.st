@@ -44,7 +44,7 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideObsolete [
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	self classFactory deleteBehavior: classOrTrait.
+	self classFactory delete: classOrTrait.
 
 	self 
 		should: [self serialize: classOrTrait ] 
@@ -100,7 +100,7 @@ FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRemoval [
 	classOrTrait := self newClassOrTrait.
 	
 	self serialize: classOrTrait.
-	self classFactory 	deleteBehavior: classOrTrait.
+	self classFactory 	delete: classOrTrait.
 	
 	self should: [self materialized] raise: FLClassNotFound.
 ]
@@ -126,7 +126,7 @@ FLTGlobalClassOrTraitSerializationTest >> testObsolete [
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	self classFactory deleteBehavior: classOrTrait.
+	self classFactory delete: classOrTrait.
 
 	self 
 		should: [self serialize: classOrTrait ] 

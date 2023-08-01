@@ -16,7 +16,7 @@ FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterialize:
 	| materialized |
 	self serializer fullySerializeBehavior: aClass.
 	self serialize: aClass.
-	self classFactory deleteBehavior: aClass.
+	self classFactory delete: aClass.
 	materialized := self materialized.
 	self classFactory registerBehavior: materialized.
 	^ materialized
@@ -28,7 +28,7 @@ FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterializeA
 	classesOrTraits := objects select: [ :anObject | anObject isBehavior or: [anObject isTrait]].
 	self serializer fullySerializeAllBehaviors: classesOrTraits.
 	self serialize: objects.
-	classesOrTraits do: [ :aClassOrTrait | self classFactory deleteBehavior: aClassOrTrait . ].
+	classesOrTraits do: [ :aClassOrTrait | self classFactory delete: aClassOrTrait . ].
 	materialized := self materialized.
 	materialized 
 		select: [ :object | object isBehavior ]
