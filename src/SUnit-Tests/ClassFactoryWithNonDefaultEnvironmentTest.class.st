@@ -48,18 +48,16 @@ ClassFactoryWithNonDefaultEnvironmentTest >> testClassCreationInDifferentCategor
 ]
 
 { #category : #testing }
-ClassFactoryWithNonDefaultEnvironmentTest >> testClassFastCreationInDifferentCategories [
+ClassFactoryWithNonDefaultEnvironmentTest >> testClassFastCreationInDifferentTags [
+
 	| firstThreeClasses lastTwoClasses |
-	3 timesRepeat: [
-		factory newClassInCategory: #One].
+	3 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #One ] ].
 	firstThreeClasses := factory createdClasses copy.
-	2 timesRepeat: [
-		factory newClassInCategory: #Two].
+	2 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
 	self assert: (firstThreeClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'One') ]).
 	self assert: (lastTwoClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'Two') ]).
-	factory createdClasses do: [ :aClass |
-		self assertEnvironmentOf: aClass ]
+	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
 ]
 
 { #category : #testing }
@@ -88,9 +86,10 @@ ClassFactoryWithNonDefaultEnvironmentTest >> testMultipleClassCreation [
 
 { #category : #testing }
 ClassFactoryWithNonDefaultEnvironmentTest >> testPackageCleanUp [
+
 	| createdClassNames allClasses |
-	3 timesRepeat: [ factory newClassInCategory: #One ].
-	2 timesRepeat: [ factory newClassInCategory: #Two ].
+	3 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #One ] ].
+	2 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	createdClassNames := factory createdClassNames.
 	factory cleanUp.
 	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).

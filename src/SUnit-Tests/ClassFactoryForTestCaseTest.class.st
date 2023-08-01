@@ -12,7 +12,7 @@ Class {
 
 { #category : #history }
 ClassFactoryForTestCaseTest class >> lastStoredRun [
-	^ ((Dictionary new) add: (#passed->((Set new) add: #testDefaultCategoryCleanUp; add: #testPackageCleanUp; add: #testSingleClassCreation; add: #testClassCreationInDifferentCategories; add: #testClassFastCreationInDifferentCategories; add: #testMultipleClassCreation; add: #testSingleClassFastCreation; yourself)); add: (#timeStamp->'22 November 2008 10:11:35 pm'); add: (#failures->((Set new))); add: (#errors->((Set new))); yourself)
+	^ ((Dictionary new) add: (#passed->((Set new) add: #testDefaultCategoryCleanUp; add: #testPackageCleanUp; add: #testSingleClassCreation; add: #testClassCreationInDifferentCategories; add: #testClassFastCreationInDifferentTags; add: #testMultipleClassCreation; add: #testSingleClassFastCreation; yourself)); add: (#timeStamp->'22 November 2008 10:11:35 pm'); add: (#failures->((Set new))); add: (#errors->((Set new))); yourself)
 ]
 
 { #category : #running }
@@ -42,16 +42,15 @@ ClassFactoryForTestCaseTest >> testClassCreationInDifferentCategories [
 ]
 
 { #category : #testing }
-ClassFactoryForTestCaseTest >> testClassFastCreationInDifferentCategories [
+ClassFactoryForTestCaseTest >> testClassFastCreationInDifferentTags [
+
 	| firstThreeClasses lastTwoClasses |
-	3 timesRepeat: [
-		factory newClassInCategory: #One].
+	3 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #One ] ].
 	firstThreeClasses := factory createdClasses copy.
-	2 timesRepeat: [
-		factory newClassInCategory: #Two].
+	2 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
-	self assert: (firstThreeClasses allSatisfy: [:class| class category = (factory packageName, '-', #One) asSymbol]).
-	self assert: (lastTwoClasses allSatisfy: [:class| class category = (factory packageName, '-', #Two) asSymbol])
+	self assert: (firstThreeClasses allSatisfy: [ :class | class category = (factory packageName , '-' , #One) asSymbol ]).
+	self assert: (lastTwoClasses allSatisfy: [ :class | class category = (factory packageName , '-' , #Two) asSymbol ])
 ]
 
 { #category : #testing }
@@ -89,9 +88,10 @@ ClassFactoryForTestCaseTest >> testMultipleClassCreation [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testPackageCleanUp [
+
 	| createdClassNames allClasses |
-	3 timesRepeat: [ factory newClassInCategory: #One ].
-	2 timesRepeat: [ factory newClassInCategory: #Two ].
+	3 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #One ] ].
+	2 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	createdClassNames := factory createdClassNames.
 	factory cleanUp.
 	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).

@@ -206,16 +206,6 @@ ClassFactoryForTestCase >> newClass [
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newClassInCategory: category [
-
-	^ self
-		  newSubclassOf: self defaultSuperclass
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-		  category: category
-]
-
-{ #category : #creating }
 ClassFactoryForTestCase >> newClassName [
 
 	| postFix |
@@ -279,7 +269,8 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 			  slotsFromString: ivNamesString;
 			  sharedVariablesFromString: classVarsString;
 			  sharedPools: poolNamesString;
-			  package: (self packageName , '-' , category) asSymbol ]
+			  package: self packageName;
+			  tag: category ]
 ]
 
 { #category : #creating }
