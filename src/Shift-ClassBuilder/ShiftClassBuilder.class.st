@@ -21,7 +21,6 @@ Class {
 		'comment',
 		'commentStamp',
 		'superclass',
-		'category',
 		'newMetaclass',
 		'newClass',
 		'oldClass',
@@ -33,7 +32,9 @@ Class {
 		'changes',
 		'metaSuperclass',
 		'superclassResolver',
-		'inRemake'
+		'inRemake',
+		'package',
+		'tag'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -127,12 +128,23 @@ ShiftClassBuilder >> builderEnhancer: anObject [
 
 { #category : #accessing }
 ShiftClassBuilder >> category [
-	^ category
+
+	self flag: #package. "Category is an old concept mixing packages and tag. For now this is what is used by the system but in the future we should go away from it."
+	^ self tag
+		  ifNotNil: [ :packageTag | self package , '-' , packageTag ]
+		  ifNil: [ self package ]
 ]
 
-{ #category : #accessing }
-ShiftClassBuilder >> category: anObject [
-	category := anObject
+{ #category : #deprecated }
+ShiftClassBuilder >> category: aString [
+
+	self flag: #package. "Category is an old concept mixing packages and tag. For now this is what is used by the system but in the future we should go away from it."
+	(aString includes: $-)
+		ifTrue: [
+			self
+				package: (aString copyUpToLast: $-);
+				tag: (aString copyAfterLast: $-) ]
+		ifFalse: [ self package: aString ]
 ]
 
 { #category : #accessing }
@@ -336,7 +348,7 @@ ShiftClassBuilder >> initialize [
 	changeComparers := OrderedCollection new.
 	changes := Set new.
 
-	category := 'Unclassified'.
+	package := 'Unclassified'.
 	inRemake := false.
 
 	buildEnvironment := self class environment
@@ -452,9 +464,15 @@ ShiftClassBuilder >> oldMetaclass [
 ]
 
 { #category : #accessing }
-ShiftClassBuilder >> package: anObject [
+ShiftClassBuilder >> package [
 
-	self category: anObject
+	^ package
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> package: aString [
+
+	package := aString
 ]
 
 { #category : #changes }
@@ -547,6 +565,18 @@ ShiftClassBuilder >> superclassName: anObject [
 { #category : #accessing }
 ShiftClassBuilder >> superclassResolver: asuperclassResolver [
 	superclassResolver:= asuperclassResolver
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> tag [
+
+	^ tag
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> tag: anObject [
+
+	tag := anObject
 ]
 
 { #category : #building }

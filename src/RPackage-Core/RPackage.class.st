@@ -179,13 +179,11 @@ RPackage >> addClass: aClass [
 
 { #category : #'add class' }
 RPackage >> addClassDefinition: aClass [
-	"Add only the class definition of aClass, as a class defined by the receiver. The term classdefinition denotes the fact that we do not treat its methods. aClass methods are not added to the package. aClass can be either a class or a metaclass"
+	"Add the class definition to the package.
+	We assume that this method is called at the creation of the class, thus methods should be added afterward. Else they might wrongly be considered as extensions."
 
-	| aClassName |
-	aClassName := aClass instanceSide name asSymbol.
-	(self includesClassNamed: aClassName) ifTrue: [ ^ self ].
-	classes add: aClassName.
-	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName.
+	(self includesClass: aClass) ifTrue: [ ^ self ].
+	classes add: aClass instanceSide name asSymbol.
 	self registerClass: aClass
 ]
 
@@ -266,7 +264,9 @@ RPackage >> basicImportClass: aClass [
 	"Add the class definition and all the selectors which are not extensions of other packages. If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted (should I use silently or not?)."
 
 	"Question: should we check that for each extension, there is a real package behind or not?"
-
+	
+	"We first remove the potention methods in case there are extensions registered then we add the class."
+	self removeAllMethodsFromClass: aClass.
 	self addClassDefinition: aClass.
 	(aClass protocols
 		select: [ :protocol | self isYourClassExtension: protocol ])
@@ -456,21 +456,6 @@ RPackage >> extendedClasses [
 		   thenCollect: [ :each | (self environment at: each) classSide ]) union: (classExtensionSelectors keys
 			   select: [ :each | self environment includesKey: each ]
 			   thenCollect: [ :each | self environment at: each ])
-]
-
-{ #category : #private }
-RPackage >> extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassName [
-	"the package may contain extension methods and their class is added to the receiver. The status of such methods should now be defined"
-
-	"Precondition: aClassName is in the defined list"
-
-	(classExtensionSelectors keys includes: aClassName) ifTrue: [
-		(classDefinedSelectors keys includes: aClassName) ifTrue: [ self error: aClassName , ' should not be defined in extension' ].
-		classDefinedSelectors at: aClassName put: (classExtensionSelectors removeKey: aClassName) ].
-
-	(metaclassExtensionSelectors keys includes: aClassName) ifTrue: [
-		(metaclassDefinedSelectors keys includes: aClassName) ifTrue: [ self error: aClassName , ' should not be defined in extension' ].
-		metaclassDefinedSelectors at: aClassName put: (metaclassExtensionSelectors removeKey: aClassName) ]
 ]
 
 { #category : #testing }

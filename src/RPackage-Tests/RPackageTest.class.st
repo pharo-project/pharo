@@ -30,18 +30,18 @@ RPackageTest >> testActualClassTags [
 
 { #category : #tests }
 RPackageTest >> testAddClass [
-	| package1 package2 class done |
 
-	package1 := (RPackage named: #Test1) register.
+	| package1 package2 class done |
+	package1 := (self createNewPackageNamed: #Test1) register.
 	done := 0.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
-	SystemAnnouncer uniqueInstance when: ClassRecategorized do: [ done := done + 1] for: self.
+	SystemAnnouncer uniqueInstance when: ClassRecategorized do: [ done := done + 1 ] for: self.
 
 	self assert: (package1 includesClass: class).
 	self assert: (package1 classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
 	self assert: ((package1 classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 
-	package2 := (RPackage named: #Test2) register.
+	package2 := (self createNewPackageNamed: #Test2) register.
 
 	package2 addClass: class.
 
@@ -54,14 +54,14 @@ RPackageTest >> testAddClass [
 
 { #category : #tests }
 RPackageTest >> testAddClassFromTag [
-	| package1 package2 class |
 
-	package1 := (RPackage named: #Test1) register.
+	| package1 package2 class |
+	package1 := (self createNewPackageNamed: #Test1) register.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
 
 	self assert: (package1 includesClass: class).
 
-	package2 := (RPackage named: #Test2) register.
+	package2 := (self createNewPackageNamed: #Test2) register.
 
 	package2 addClass: class.
 
@@ -73,9 +73,9 @@ RPackageTest >> testAddClassFromTag [
 
 { #category : #tests }
 RPackageTest >> testAllUnsentMessages [
-	| package class1 class2 |
 
-	package := (RPackage named: #Test1) register.
+	| package class1 class2 |
+	package := (self createNewPackageNamed: #Test1) register.
 
 	class1 := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
 	class2 := self createNewClassNamed: 'TestClassOther' inCategory: 'Test1-TAG'.
@@ -91,7 +91,9 @@ RPackageTest >> testAllUnsentMessages [
 
 	self assert: package allUnsentMessages size equals: 3.
 
-	self assert: package allUnsentMessages equals: (#('nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4') collect: [:each | each asSymbol]) asSet
+	self
+		assert: package allUnsentMessages
+		equals: (#( 'nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4' ) collect: [ :each | each asSymbol ]) asSet
 ]
 
 { #category : #tests }
@@ -320,9 +322,9 @@ RPackageTest >> testRemoveEmptyTags [
 
 { #category : #tests }
 RPackageTest >> testRenameToMakesMCDirty [
-	| package |
 
-	package := (RPackage named: #'Test1') register.
+	| package |
+	package := (self createNewPackageNamed: #Test1) register.
 	self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
 
 	package renameTo: 'Test2'

@@ -328,7 +328,8 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag
 			            name: aTraitName;
 			            installingEnvironment: self environment;
 			            traitComposition: aTraitComposition;
-			            package: (self packageName , '-' , aTag) asSymbol;
+			            package: self packageName;
+			            tag: aTag;
 			            beTrait ].
 
 	self createdTraits add: newTrait.
