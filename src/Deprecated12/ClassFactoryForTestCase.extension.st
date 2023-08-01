@@ -38,3 +38,15 @@ ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesS
 			  slotsFromString: ivNamesString;
 			  sharedVariablesFromString: classVarsString ]
 ]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
+	^ self make: [ :aBuilder |
+		  aBuilder
+			  superclass: aClass;
+			  slotsFromString: ivNamesString;
+			  sharedVariablesFromString: classVarsString;
+			  tag: category ]
+]

@@ -12,7 +12,7 @@ Class {
 
 { #category : #history }
 ClassFactoryForTestCaseTest class >> lastStoredRun [
-	^ ((Dictionary new) add: (#passed->((Set new) add: #testDefaultCategoryCleanUp; add: #testPackageCleanUp; add: #testSingleClassCreation; add: #testClassCreationInDifferentCategories; add: #testClassFastCreationInDifferentTags; add: #testMultipleClassCreation; add: #testSingleClassFastCreation; yourself)); add: (#timeStamp->'22 November 2008 10:11:35 pm'); add: (#failures->((Set new))); add: (#errors->((Set new))); yourself)
+	^ ((Dictionary new) add: (#passed->((Set new) add: #testDefaultCategoryCleanUp; add: #testPackageCleanUp; add: #testSingleClassCreation; add: #testClassCreationInDifferentTags; add: #testMultipleClassCreation; add: #testSingleClassFastCreation; yourself)); add: (#timeStamp->'22 November 2008 10:11:35 pm'); add: (#failures->((Set new))); add: (#errors->((Set new))); yourself)
 ]
 
 { #category : #running }
@@ -29,20 +29,7 @@ ClassFactoryForTestCaseTest >> tearDown [
 ]
 
 { #category : #testing }
-ClassFactoryForTestCaseTest >> testClassCreationInDifferentCategories [
-	| firstThreeClasses lastTwoClasses |
-	3 timesRepeat: [
-		factory newSubclassOf: Object instanceVariableNames: '' classVariableNames: '' category: #One].
-	firstThreeClasses := factory createdClasses copy.
-	2 timesRepeat: [
-		factory newSubclassOf: Object instanceVariableNames: '' classVariableNames: '' category: #Two].
-	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
-	self assert: (firstThreeClasses allSatisfy: [:class| class category = (factory packageName, '-', #One) asSymbol]).
-	self assert: (lastTwoClasses allSatisfy: [:class| class category = (factory packageName, '-', #Two) asSymbol])
-]
-
-{ #category : #testing }
-ClassFactoryForTestCaseTest >> testClassFastCreationInDifferentTags [
+ClassFactoryForTestCaseTest >> testClassCreationInDifferentTags [
 
 	| firstThreeClasses lastTwoClasses |
 	3 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #One ] ].

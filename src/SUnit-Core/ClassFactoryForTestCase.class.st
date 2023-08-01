@@ -211,17 +211,6 @@ ClassFactoryForTestCase >> newClassName [
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
-
-	^ self
-		  newSubclassOf: aClass
-		  uses: {  }
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-		  category: category
-]
-
-{ #category : #creating }
 ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
 
 	^ self newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: '' category: category
@@ -408,20 +397,4 @@ ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: 
 			  classVariableNames: classVarsString
 			  poolDictionaries: ''
 			  category: packageName ]
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> withNotificationsNewClass [
-
-	^ self withNotificationsNewClassWithInstanceVariableNames: ''
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> withNotificationsNewClassWithInstanceVariableNames: instanceVariableNames [
-
-	^ self
-		  newSubclassOf: Object
-		  instanceVariableNames: instanceVariableNames
-		  classVariableNames: ''
-		  category: self defaultTagPostfix
 ]

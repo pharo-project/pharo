@@ -25,30 +25,7 @@ ClassFactoryWithNonDefaultEnvironmentTest >> setUp [
 ]
 
 { #category : #testing }
-ClassFactoryWithNonDefaultEnvironmentTest >> testClassCreationInDifferentCategories [
-
-	| firstThreeClasses lastTwoClasses |
-	3 timesRepeat: [
-		factory
-			newSubclassOf: Object
-			instanceVariableNames: ''
-			classVariableNames: ''
-			category: #One ].
-	firstThreeClasses := factory createdClasses copy.
-	2 timesRepeat: [
-		factory
-			newSubclassOf: Object
-			instanceVariableNames: ''
-			classVariableNames: ''
-			category: #Two ].
-	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
-	self assert: (firstThreeClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'One') ]).
-	self assert: (lastTwoClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'Two') ]).
-	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
-]
-
-{ #category : #testing }
-ClassFactoryWithNonDefaultEnvironmentTest >> testClassFastCreationInDifferentTags [
+ClassFactoryWithNonDefaultEnvironmentTest >> testClassCreationInDifferentTags [
 
 	| firstThreeClasses lastTwoClasses |
 	3 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #One ] ].
