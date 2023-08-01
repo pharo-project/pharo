@@ -110,17 +110,11 @@ FluidBuilder >> fillShiftClassBuilder [
 		                     name: nameToBuild;
 		                     slots: slotsToBuild;
 		                     traitComposition: uses;
-		                     yourself.
-
-	(tagToBuild isNil or: [ tagToBuild isEmpty ])
-		ifTrue: [ shiftClassBuilder category: packageName ]
-		ifFalse: [
-		tagToBuild
-			ifEmpty: [ shiftClassBuilder category: packageName ]
-			ifNotEmpty: [ shiftClassBuilder category: packageName , '-' , tagToBuild asString ] ].
-
-	shiftClassBuilder classSlots: classSlotsToBuild.
-	shiftClassBuilder classTraitComposition: classTraitsToBuild
+		                     package: packageName;
+		                     tag: tagToBuild;
+		                     classSlots: classSlotsToBuild;
+		                     classTraitComposition: classTraitsToBuild;
+		                     yourself
 ]
 
 { #category : #building }

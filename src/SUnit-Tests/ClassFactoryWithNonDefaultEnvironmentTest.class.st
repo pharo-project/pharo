@@ -2,7 +2,7 @@
 SUnit tests for ClassFactoryWithOrganization
 "
 Class {
-	#name : #ClassFactoryWithOrganizationTest,
+	#name : #ClassFactoryWithNonDefaultEnvironmentTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'factory'
@@ -11,35 +11,44 @@ Class {
 }
 
 { #category : #testing }
-ClassFactoryWithOrganizationTest >> assertEnvironmentOf: aBehavior [
+ClassFactoryWithNonDefaultEnvironmentTest >> assertEnvironmentOf: aBehavior [
 	self assert: aBehavior environment equals: self testedEnvironment
 ]
 
 { #category : #running }
-ClassFactoryWithOrganizationTest >> setUp [
+ClassFactoryWithNonDefaultEnvironmentTest >> setUp [
+
 	| environment |
 	super setUp.
 	environment := SystemDictionary new.
-	factory := ClassFactoryWithOrganization newWithOrganization: environment organization
+	factory := ClassFactoryForTestCase environment: environment
 ]
 
 { #category : #testing }
-ClassFactoryWithOrganizationTest >> testClassCreationInDifferentCategories [
+ClassFactoryWithNonDefaultEnvironmentTest >> testClassCreationInDifferentCategories [
+
 	| firstThreeClasses lastTwoClasses |
 	3 timesRepeat: [
-		factory newSubclassOf: Object instanceVariableNames: '' classVariableNames: '' category: #One].
+		factory
+			newSubclassOf: Object
+			instanceVariableNames: ''
+			classVariableNames: ''
+			category: #One ].
 	firstThreeClasses := factory createdClasses copy.
 	2 timesRepeat: [
-		factory newSubclassOf: Object instanceVariableNames: '' classVariableNames: '' category: #Two].
+		factory
+			newSubclassOf: Object
+			instanceVariableNames: ''
+			classVariableNames: ''
+			category: #Two ].
 	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
-	self assert: (firstThreeClasses allSatisfy: [:class| class category = #One]).
-	self assert: (lastTwoClasses allSatisfy: [:class| class category = #Two]).
-	factory createdClasses do: [ :aClass |
-		self assertEnvironmentOf: aClass ]
+	self assert: (firstThreeClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'One') ]).
+	self assert: (lastTwoClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'Two') ]).
+	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
 ]
 
 { #category : #testing }
-ClassFactoryWithOrganizationTest >> testClassFastCreationInDifferentCategories [
+ClassFactoryWithNonDefaultEnvironmentTest >> testClassFastCreationInDifferentCategories [
 	| firstThreeClasses lastTwoClasses |
 	3 timesRepeat: [
 		factory newClassInCategory: #One].
@@ -47,14 +56,14 @@ ClassFactoryWithOrganizationTest >> testClassFastCreationInDifferentCategories [
 	2 timesRepeat: [
 		factory newClassInCategory: #Two].
 	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
-	self assert: (firstThreeClasses allSatisfy: [:class| class category =  #One]).
-	self assert: (lastTwoClasses allSatisfy: [:class| class category = #Two]).
+	self assert: (firstThreeClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'One') ]).
+	self assert: (lastTwoClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'Two') ]).
 	factory createdClasses do: [ :aClass |
 		self assertEnvironmentOf: aClass ]
 ]
 
 { #category : #testing }
-ClassFactoryWithOrganizationTest >> testDefaultCategoryCleanUp [
+ClassFactoryWithNonDefaultEnvironmentTest >> testDefaultCategoryCleanUp [
 	| createdClassNames allClasses |
 	3 timesRepeat: [
 		factory newClass].
@@ -69,7 +78,7 @@ ClassFactoryWithOrganizationTest >> testDefaultCategoryCleanUp [
 ]
 
 { #category : #testing }
-ClassFactoryWithOrganizationTest >> testMultipleClassCreation [
+ClassFactoryWithNonDefaultEnvironmentTest >> testMultipleClassCreation [
 	5 timesRepeat: [ factory newClass ].
 	self assert: (self testedEnvironment allClasses includesAll: factory createdClasses).
 	self assert: factory createdClassNames asSet size equals: 5.
@@ -78,7 +87,7 @@ ClassFactoryWithOrganizationTest >> testMultipleClassCreation [
 ]
 
 { #category : #testing }
-ClassFactoryWithOrganizationTest >> testPackageCleanUp [
+ClassFactoryWithNonDefaultEnvironmentTest >> testPackageCleanUp [
 	| createdClassNames allClasses |
 	3 timesRepeat: [ factory newClassInCategory: #One ].
 	2 timesRepeat: [ factory newClassInCategory: #Two ].
@@ -92,7 +101,7 @@ ClassFactoryWithOrganizationTest >> testPackageCleanUp [
 ]
 
 { #category : #testing }
-ClassFactoryWithOrganizationTest >> testSingleClassCreation [
+ClassFactoryWithNonDefaultEnvironmentTest >> testSingleClassCreation [
 	| class elementsInCategoryForTest |
 	class := factory newSubclassOf: Object instanceVariableNames: 'a b c' classVariableNames: 'X Y'.
 	self assert: (self testedEnvironment allClasses includes: class).
@@ -104,7 +113,7 @@ ClassFactoryWithOrganizationTest >> testSingleClassCreation [
 ]
 
 { #category : #testing }
-ClassFactoryWithOrganizationTest >> testSingleClassFastCreation [
+ClassFactoryWithNonDefaultEnvironmentTest >> testSingleClassFastCreation [
 	| class elementsInCategoryForTest |
 	class := factory newClass.
 	self assert: (self testedEnvironment allClasses includes: class).
@@ -116,11 +125,11 @@ ClassFactoryWithOrganizationTest >> testSingleClassFastCreation [
 ]
 
 { #category : #accessing }
-ClassFactoryWithOrganizationTest >> testedEnvironment [
+ClassFactoryWithNonDefaultEnvironmentTest >> testedEnvironment [
 	^self testedOrganization environment
 ]
 
 { #category : #accessing }
-ClassFactoryWithOrganizationTest >> testedOrganization [
+ClassFactoryWithNonDefaultEnvironmentTest >> testedOrganization [
 	^factory organization
 ]
