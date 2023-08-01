@@ -21,8 +21,7 @@ Class {
 	#name : #ClassFactoryForTestCase,
 	#superclass : #Object,
 	#instVars : [
-		'createdClasses',
-		'createdTraits',
+		'createdBehaviors',
 		'createdSilently',
 		'environment'
 	],
@@ -50,16 +49,13 @@ ClassFactoryForTestCase class >> initialize [
 { #category : #cleaning }
 ClassFactoryForTestCase >> cleanUp [
 
-	| createdClassNames createdTraitNames |
-	createdClassNames := self createdClassNames.
-	createdTraitNames := self createdTraitNames.
+	| createdBehaviorNames |
+	createdBehaviorNames := self createdBehaviorNames.
 
 	self
-		deleteClasses;
-		deleteTraits;
+		deleteBehaviors;
 		deletePackage;
-		cleanUpChangeSetForClassNames: createdClassNames;
-		cleanUpChangeSetForClassNames: createdTraitNames
+		cleanUpChangeSetForClassNames: createdBehaviorNames
 ]
 
 { #category : #cleaning }
@@ -75,6 +71,18 @@ ClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
 ]
 
 { #category : #accessing }
+ClassFactoryForTestCase >> createdBehaviorNames [
+
+	^ self createdBehaviors collect: [ :class | class name ]
+]
+
+{ #category : #accessing }
+ClassFactoryForTestCase >> createdBehaviors [
+
+	^ createdBehaviors
+]
+
+{ #category : #accessing }
 ClassFactoryForTestCase >> createdClassNames [
 
 	^ self createdClasses collect: [ :class | class name ]
@@ -83,7 +91,7 @@ ClassFactoryForTestCase >> createdClassNames [
 { #category : #accessing }
 ClassFactoryForTestCase >> createdClasses [
 
-	^ createdClasses
+	^ self createdBehaviors reject: [ :behavior | behavior isTrait ]
 ]
 
 { #category : #accessing }
@@ -95,7 +103,7 @@ ClassFactoryForTestCase >> createdTraitNames [
 { #category : #accessing }
 ClassFactoryForTestCase >> createdTraits [
 
-	^ createdTraits
+	^ self createdBehaviors select: [ :behavior | behavior isTrait ]
 ]
 
 { #category : #accessing }
@@ -129,16 +137,16 @@ ClassFactoryForTestCase >> delete: aBehavior [
 ]
 
 { #category : #cleaning }
-ClassFactoryForTestCase >> deleteClass: aClass [
+ClassFactoryForTestCase >> deleteBehaviors [
 
-	self createdClasses remove: aClass.
-	self delete: aClass
+	self createdBehaviors do: [ :behavior | self delete: behavior ]
 ]
 
 { #category : #cleaning }
-ClassFactoryForTestCase >> deleteClasses [
+ClassFactoryForTestCase >> deleteClass: aClass [
 
-	self createdClasses do: [ :class | self delete: class ]
+	createdBehaviors remove: aClass.
+	self delete: aClass
 ]
 
 { #category : #cleaning }
@@ -147,12 +155,6 @@ ClassFactoryForTestCase >> deletePackage [
 	self organization
 		removeCategoriesMatching: self packageName , '-*';
 		removeEmptyPackagesAndTags
-]
-
-{ #category : #cleaning }
-ClassFactoryForTestCase >> deleteTraits [
-
-	self createdTraits do: [ :trait | self delete: trait ]
 ]
 
 { #category : #accessing }
@@ -171,8 +173,7 @@ ClassFactoryForTestCase >> environment: anObject [
 ClassFactoryForTestCase >> initialize [
 
 	super initialize.
-	createdClasses := IdentitySet new.
-	createdTraits := IdentitySet new.
+	createdBehaviors := IdentitySet new.
 	createdSilently := IdentitySet new
 ]
 
@@ -192,7 +193,7 @@ ClassFactoryForTestCase >> make: aBlock [
 		            "Now we let the users specify what they want."
 		            aBlock value: aBuilder ].
 
-	self createdClasses add: newClass.
+	createdBehaviors add: newClass.
 	^ newClass
 ]
 
@@ -205,9 +206,7 @@ ClassFactoryForTestCase >> newClass [
 { #category : #creating }
 ClassFactoryForTestCase >> newClassName [
 
-	| postFix |
-	postFix := self nextCount printString.
-	^ (#ClassForTestToBeDeleted , postFix) asSymbol
+	^ (#ClassForTestToBeDeleted , self nextCount printString) asSymbol
 ]
 
 { #category : #creating }
@@ -231,9 +230,7 @@ ClassFactoryForTestCase >> newTraitInTag: aTag [
 { #category : #creating }
 ClassFactoryForTestCase >> newTraitName [
 
-	| postFix |
-	postFix := (self createdTraits size + 1) printString.
-	^ (#TraitForTestToBeDeleted , postFix) asSymbol
+	^ (#TraitForTestToBeDeleted , self nextCount printString) asSymbol
 ]
 
 { #category : #creating }
@@ -249,7 +246,7 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag
 			            tag: aTag;
 			            beTrait ].
 
-	self createdTraits add: newTrait.
+	createdBehaviors add: newTrait.
 	^ newTrait
 ]
 
@@ -321,7 +318,7 @@ ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: a
 			            sharedPools: poolNamesString;
 			            package: aPackageName asSymbol ].
 
-	self createdClasses add: newClass.
+	createdBehaviors add: newClass.
 	^ newClass
 ]
 
