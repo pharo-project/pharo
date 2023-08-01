@@ -125,80 +125,29 @@ FLClassFactoryForTestCase >> newClass [
 ]
 
 { #category : #creating }
-FLClassFactoryForTestCase >> newClassWithClassVariableNames: aString [
-
-	^ self 
-		newSubclassOf: self defaultSuperclass
-		instanceVariableNames: ''
-		classVariableNames: aString
-]
-
-{ #category : #creating }
 FLClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
 
-	^ self 
-		newSubclassOf: self defaultSuperclass
-		instanceVariableNames: aString
-		classVariableNames: ''
-]
-
-{ #category : #creating }
-FLClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString classVariableNames: anotherString [
-
-	^ self 
-		newSubclassOf: self defaultSuperclass
-		instanceVariableNames: aString
-		classVariableNames: anotherString
+	^ self newSubclassOf: self defaultSuperclass instanceVariableNames: aString
 ]
 
 { #category : #creating }
 FLClassFactoryForTestCase >> newSubclassOf: aClass [
 
-	^ self 
-		newSubclassOf: aClass
-		instanceVariableNames: ''
-		classVariableNames: ''
+	^ self newSubclassOf: aClass instanceVariableNames: ''
 ]
 
 { #category : #creating }
 FLClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString [
-	^ self 
-		newSubclassOf: aClass
-		instanceVariableNames: ivNamesString 
-		classVariableNames: ''
-]
 
-{ #category : #creating }
-FLClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-	^ self 
-		newSubclassOf: aClass 
-		uses: { }
-		instanceVariableNames: ivNamesString 
-		classVariableNames: classVarsString
-]
-
-{ #category : #creating }
-FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition [
-	^ self 
-		newSubclassOf: aClass
-		uses: aTraitComposition
-		instanceVariableNames: ''
-		classVariableNames: ''
+	^ self
+		  newSubclassOf: aClass
+		  uses: {  }
+		  instanceVariableNames: ivNamesString
+		  classVariableNames: ''
 ]
 
 { #category : #creating }
 FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-
-	^ self
-		  newSubclassOf: aClass
-		  uses: aTraitComposition
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-		  poolDictionaries: ''
-]
-
-{ #category : #creating }
-FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString [
 	| newClass |
 	newClass := self class classInstaller make: [ :aBuilder |
 		aBuilder
@@ -209,7 +158,6 @@ FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition insta
 			classTraitComposition: aTraitComposition asTraitComposition classComposition;
 			slots: ivNamesString asSlotCollection;
 			sharedVariablesFromString: classVarsString;
-			sharedPools: poolNamesString;
 			package: self defaultPackageAndTag ].
 
 	self createdClasses add: newClass.
@@ -218,21 +166,18 @@ FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition insta
 
 { #category : #'creating-traits' }
 FLClassFactoryForTestCase >> newTrait [
-	^ self
-		newTraitNamed: self newBehaviorName
-		uses: Array new
-		instanceVariableNames: ''
+
+	^ self newTraitNamed: self newBehaviorName instanceVariableNames: ''
 ]
 
 { #category : #'creating-traits' }
-FLClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition instanceVariableNames: aString [
+FLClassFactoryForTestCase >> newTraitNamed: aTraitName instanceVariableNames: aString [
 	| newTrait |
 	newTrait := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			environment: self environment;
 			name: aTraitName;
 			slots: aString asSlotCollection;
-			traitComposition: aTraitComposition asTraitComposition;
 			package: self defaultPackageAndTag;
 			beTrait ].
 
@@ -261,19 +206,18 @@ FLClassFactoryForTestCase >> removeFromSystem: aBehavior [
 
 { #category : #'compiling-silently' }
 FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior [
-	^ self
-		silentlyCompile: aString
-		in: aBehavior
-		storingSource: true
+
+	^ self silentlyCompile: aString in: aBehavior storingSource: true
 ]
 
 { #category : #'compiling-silently' }
 FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior category: anotherString [
+
 	^ self
-		silentlyCompile: aString
-		in: aBehavior
-		category: anotherString
-		storingSource: true
+		  silentlyCompile: aString
+		  in: aBehavior
+		  category: anotherString
+		  storingSource: true
 ]
 
 { #category : #'compiling-silently' }
@@ -293,11 +237,12 @@ FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior category: an
 
 { #category : #'compiling-silently' }
 FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSource: aBoolean [
+
 	^ self
-		silentlyCompile: aString
-		in: aBehavior
-		category: 'unclassified'
-		storingSource: aBoolean
+		  silentlyCompile: aString
+		  in: aBehavior
+		  category: 'unclassified'
+		  storingSource: aBoolean
 ]
 
 { #category : #private }
@@ -311,6 +256,16 @@ FLClassFactoryForTestCase >> silentlyNewClass [
 ]
 
 { #category : #'creating-silently' }
+FLClassFactoryForTestCase >> silentlyNewClassUsing: aTraitComposition [
+
+	^ self
+		  silentlyNewSubclassOf: self defaultSuperclass
+		  uses: aTraitComposition
+		  instanceVariableNames: ''
+		  classVariableNames: ''
+]
+
+{ #category : #'creating-silently' }
 FLClassFactoryForTestCase >> silentlyNewClassWithClassVariableNames: aString [
 	^ self
 		silentlyNewSubclassOf: self defaultSuperclass
@@ -320,96 +275,59 @@ FLClassFactoryForTestCase >> silentlyNewClassWithClassVariableNames: aString [
 
 { #category : #'creating-silently' }
 FLClassFactoryForTestCase >> silentlyNewClassWithInstanceVariableNames: aString [
-	^ self
-		silentlyNewSubclassOf: self defaultSuperclass
-		instanceVariableNames: aString
-]
 
-{ #category : #'creating-silently' }
-FLClassFactoryForTestCase >> silentlyNewClassWithInstanceVariableNames: aString classVariableNames: anotherString [
-	^ self
-		silentlyNewSubclassOf: self defaultSuperclass
-		instanceVariableNames: aString
-		classVariableNames: anotherString
+	^ self silentlyNewSubclassOf: self defaultSuperclass instanceVariableNames: aString
 ]
 
 { #category : #'creating-silently' }
 FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass [
-	^ self
-		silentlyNewSubclassOf: aClass
-		instanceVariableNames: ''
+
+	^ self silentlyNewSubclassOf: aClass instanceVariableNames: ''
 ]
 
 { #category : #'creating-silently' }
 FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: aString [
-	^ self
-		silentlyNewSubclassOf: aClass
-		instanceVariableNames: aString
-		classVariableNames: ''
+
+	^ self silentlyNewSubclassOf: aClass instanceVariableNames: aString classVariableNames: ''
 ]
 
 { #category : #'creating-silently' }
 FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-	^ self
-		silentlyNewSubclassOf: aClass
-		uses: #()
-		instanceVariableNames: ivNamesString
-		classVariableNames: classVarsString
-]
 
-{ #category : #'creating-silently' }
-FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass uses: aTraitComposition [
 	^ self
 		  silentlyNewSubclassOf: aClass
-		  uses: aTraitComposition
-		  instanceVariableNames: ''
-		  classVariableNames: ''
+		  uses: #(  )
+		  instanceVariableNames: ivNamesString
+		  classVariableNames: classVarsString
 ]
 
 { #category : #'creating-silently' }
 FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-	^ self
-		silentlyNewSubclassOf: aClass
-		uses: aTraitComposition
-		instanceVariableNames: ivNamesString
-		classVariableNames: classVarsString
-		poolDictionaries: ''
-]
 
-{ #category : #'creating-silently' }
-FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString [
 	^ self silentlyDo: [
-		self
-			newSubclassOf: aClass
-			uses: aTraitComposition
-			instanceVariableNames: ivNamesString
-			classVariableNames: classVarsString
-			poolDictionaries: poolNamesString ]
+		  self
+			  newSubclassOf: aClass
+			  uses: aTraitComposition
+			  instanceVariableNames: ivNamesString
+			  classVariableNames: classVarsString ]
 ]
 
 { #category : #'creating-traits-silently' }
 FLClassFactoryForTestCase >> silentlyNewTrait [
-	^ self
-		silentlyNewTraitNamed: self newBehaviorName
-		uses: Array new
-		instanceVariableNames: ''
+
+	^ self silentlyNewTraitNamed: self newBehaviorName instanceVariableNames: ''
 ]
 
 { #category : #'creating-traits-silently' }
-FLClassFactoryForTestCase >> silentlyNewTraitNamed: aTraitName uses: aTraitComposition instanceVariableNames: aString [
-	^ self silentlyDo: [			
-		self
-			newTraitNamed: aTraitName
-			uses: aTraitComposition
-			instanceVariableNames: aString ]
+FLClassFactoryForTestCase >> silentlyNewTraitNamed: aTraitName instanceVariableNames: aString [
+
+	^ self silentlyDo: [ self newTraitNamed: aTraitName instanceVariableNames: aString ]
 ]
 
 { #category : #'creating-traits-silently' }
 FLClassFactoryForTestCase >> silentlyNewTraitWithInstanceVariableNames: aString [
-	^ self
-		silentlyNewTraitNamed: self newBehaviorName
-		uses: Array new
-		instanceVariableNames: aString
+
+	^ self silentlyNewTraitNamed: self newBehaviorName instanceVariableNames: aString
 ]
 
 { #category : #'renaming-silently' }
