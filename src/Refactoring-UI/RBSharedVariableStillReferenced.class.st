@@ -6,10 +6,8 @@ Class {
 
 { #category : #execution }
 RBSharedVariableStillReferenced >> browse [
-	"This is not satisfactory because not connected to any UI element."
-	SystemNavigation default 
-		browseAllAccessesTo: self refactoring variableName  
-		from: self refactoring refactoredClass realClass
+
+	MessageBrowserPresenter browse: (SystemNavigation default allReferencesToBinding: (self refactoring refactoredClass realClass bindingOf: self refactoring variableName))
 ]
 
 { #category : #accessing }
