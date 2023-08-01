@@ -50,3 +50,13 @@ ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesS
 			  sharedVariablesFromString: classVarsString;
 			  tag: category ]
 ]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> newSubclassOf: aClass using: aTraitComposition [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
+	^ self make: [ :aBuilder |
+		  aBuilder
+			  superclass: aClass;
+			  traitComposition: aTraitComposition ]
+]

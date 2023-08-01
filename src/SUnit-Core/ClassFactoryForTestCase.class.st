@@ -231,17 +231,6 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass using: aTraitComposition [
-
-	^ self
-		  newSubclassOf: aClass
-		  uses: aTraitComposition
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-		  category: self defaultTagPostfix
-]
-
-{ #category : #creating }
 ClassFactoryForTestCase >> newTrait [
 
 	^ self

@@ -116,10 +116,10 @@ EpCodeChangeIntegrationTest >> testClassModificationWithHierarchy [
 
 	| modifications |
 	aClass := classFactory newClass.
-	classFactory newSubclassOf: aClass using: {}.
+	classFactory make: [ :aBuilder | aBuilder superclass: aClass ].
 	aClass addSlot: #i asSlot.
 
-	modifications := (self allLogEntriesWith: EpClassModification) collect: [:each | each content].
+	modifications := (self allLogEntriesWith: EpClassModification) collect: [ :each | each content ].
 	self assert: modifications size equals: 1.
 	self assert: modifications first behaviorAffectedName equals: aClass name
 ]
