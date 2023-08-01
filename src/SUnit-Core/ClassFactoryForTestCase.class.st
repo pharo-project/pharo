@@ -199,7 +199,7 @@ ClassFactoryForTestCase >> make: aBlock [
 		            "Now we let the users specify what they want."
 		            aBlock value: aBuilder ].
 
-	createdBehaviors add: newClass.
+	self registerBehavior: newClass.
 	^ newClass
 ]
 
@@ -251,6 +251,12 @@ ClassFactoryForTestCase >> organization [
 ClassFactoryForTestCase >> packageName [
 
 	^ #CategoryForTestToBeDeleted
+]
+
+{ #category : #accessing }
+ClassFactoryForTestCase >> registerBehavior: aBehavior [
+
+	createdBehaviors add: aBehavior
 ]
 
 { #category : #'compiling - silently' }
@@ -319,7 +325,7 @@ ClassFactoryForTestCase >> silentlyNewTrait [
 	^ self silentlyMake: [ :aBuilder | aBuilder beTrait ]
 ]
 
-{ #category : #'renaming-silently' }
+{ #category : #creating }
 ClassFactoryForTestCase >> silentlyRename: aClass to: aName [
 	^ self silentlyDo: [ aClass rename: aName asSymbol ]
 ]

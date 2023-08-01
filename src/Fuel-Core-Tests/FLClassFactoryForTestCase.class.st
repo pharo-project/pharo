@@ -34,9 +34,3 @@ FLClassFactoryForTestCase >> delete: aBehavior [
 
 	aBehavior removeFromSystemUnlogged
 ]
-
-{ #category : #accessing }
-FLClassFactoryForTestCase >> registerBehavior: aBehavior [
-
-	createdBehaviors add: aBehavior
-]
