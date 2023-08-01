@@ -31,8 +31,29 @@ RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes push
 		  pushUp: methodsList
 ]
 
+{ #category : #initialization }
+RBPushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUp: methodsList [
+
+	model := aRBNamespace.
+	scopes := refactoringScopes.
+	methods := methodsList.
+	class := methods first origin
+]
+
+{ #category : #resources }
+RBPushUpMethodDriver >> refactoring [
+	"I'm gathering user input and creating refactoring instance"
+
+	self selectMethodsAndSuperclass.
+	refactoring := RBPullUpMethodRefactoring
+		  model: model
+		  pullUp: (methods collect: [ :each | each selector ])
+		  from: methods first origin
+		  to: superclass
+]
+
 { #category : #execution }
-RBPushUpMethodDriver >> execute [
+RBPushUpMethodDriver >> runRefactoring [
 
 	| changes |
 	self refactoring.
@@ -53,27 +74,6 @@ RBPushUpMethodDriver >> execute [
 			           "If user answers no, error is being propagated."
 			           err resume ].
 	self openPreviewWithChanges: { changes }
-]
-
-{ #category : #initialization }
-RBPushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUp: methodsList [
-
-	model := aRBNamespace.
-	scopes := refactoringScopes.
-	methods := methodsList.
-	class := methods first origin
-]
-
-{ #category : #resources }
-RBPushUpMethodDriver >> refactoring [
-	"I'm gathering user input and creating refactoring instance"
-
-	self selectMethodsAndSuperclass.
-	refactoring := RBPullUpMethodRefactoring
-		  model: model
-		  pullUp: (methods collect: [ :each | each selector ])
-		  from: methods first origin
-		  to: superclass
 ]
 
 { #category : #'initialization - data' }

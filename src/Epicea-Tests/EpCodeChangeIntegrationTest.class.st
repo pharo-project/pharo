@@ -116,10 +116,10 @@ EpCodeChangeIntegrationTest >> testClassModificationWithHierarchy [
 
 	| modifications |
 	aClass := classFactory newClass.
-	classFactory newSubclassOf: aClass using: {}.
+	classFactory make: [ :aBuilder | aBuilder superclass: aClass ].
 	aClass addSlot: #i asSlot.
 
-	modifications := (self allLogEntriesWith: EpClassModification) collect: [:each | each content].
+	modifications := (self allLogEntriesWith: EpClassModification) collect: [ :each | each content ].
 	self assert: modifications size equals: 1.
 	self assert: modifications first behaviorAffectedName equals: aClass name
 ]
@@ -168,10 +168,7 @@ EpCodeChangeIntegrationTest >> testInstanceVariableAddition [
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testInstanceVariableRemoval [
 
-	aClass := classFactory
-		newSubclassOf: Object
-		instanceVariableNames: 'x'
-		classVariableNames: ''.
+	aClass := classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x' ].
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 	aClass removeInstVarNamed: #x.
@@ -343,14 +340,14 @@ EpCodeChangeIntegrationTest >> testRedundantClassDefinition [
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 
-	aClass := classFactory newClassUsing: TSizeTest.
+	aClass := classFactory make: [ :aBuilder | aBuilder traitComposition: TSizeTest ].
 	self
 		shouldnt: [
 			self class classInstaller make: [ :aBuilder |
 				aBuilder
 					name: aClass name;
-					traitComposition: {};
-					package: aClass category]]
+					traitComposition: {  };
+					package: aClass category ] ]
 		raise: MessageNotUnderstood
 ]
 

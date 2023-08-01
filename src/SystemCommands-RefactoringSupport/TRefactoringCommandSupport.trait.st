@@ -12,11 +12,11 @@ TRefactoringCommandSupport >> computeInvalidArgNamesForSelector: aSymbol [
 	| invalidArgNames |
 	invalidArgNames := Set new.
 	(model allImplementorsOf: aSymbol) do: [ :e |
-		| method |
-		method := e realClass >> aSymbol.
+		| mth |
+		mth := e realClass >> aSymbol.
 		invalidArgNames
-			addAll: method argumentNames;
-			addAll: method origin instVarNames ].
+			addAll: mth argumentNames;
+			addAll: mth origin instVarNames ].
 	^ invalidArgNames
 ]
 

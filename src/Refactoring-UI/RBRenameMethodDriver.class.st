@@ -38,27 +38,6 @@ RBRenameMethodDriver >> command: aCommand andPostAction: aClosure [
 	postAction := aClosure
 ]
 
-{ #category : #execution }
-RBRenameMethodDriver >> execute [
-
-	refactoring := self refactoring.
-	[
-		[
-		| changes |
-		newMessage := self requestNewMessage.
-		refactoring newSelector: newMessage selector.
-		refactoring permutation: newMessage permutation.
-		refactoring renameMap: newMessage renameMap.
-		refactoring newNameDoesNotRequireRefactoringPreconditions check.
-		changes := refactoring generateChanges.
-		self openPreviewWithChanges: { changes }
-		"arg postAction value." ]
-			on: RBApplicabilityChecksFailedError
-			do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
-			on: RBBreakingChangeChecksFailedWarning
-			do: [ :err | self furtherActionFor: (RBOverrideMethod new refactoring: refactoring).  err return ]
-]
-
 { #category : #initialize }
 RBRenameMethodDriver >> furtherActionFor: aReport [
 
@@ -103,6 +82,27 @@ RBRenameMethodDriver >> requestNewMessage [
 		          canEditName: self canEditName.
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 	^ methodName
+]
+
+{ #category : #execution }
+RBRenameMethodDriver >> runRefactoring [
+
+	refactoring := self refactoring.
+	[
+		[
+		| changes |
+		newMessage := self requestNewMessage.
+		refactoring newSelector: newMessage selector.
+		refactoring permutation: newMessage permutation.
+		refactoring renameMap: newMessage renameMap.
+		refactoring newNameDoesNotRequireRefactoringPreconditions check.
+		changes := refactoring generateChanges.
+		self openPreviewWithChanges: { changes }
+		"arg postAction value." ]
+			on: RBApplicabilityChecksFailedError
+			do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
+			on: RBBreakingChangeChecksFailedWarning
+			do: [ :err | self furtherActionFor: (RBOverrideMethod new refactoring: refactoring).  err return ]
 ]
 
 { #category : #initialize }
