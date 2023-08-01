@@ -292,16 +292,19 @@ ShiftClassInstaller >> oldClass: anObject [
 
 { #category : #notifications }
 ShiftClassInstaller >> recategorize: aClass to: newCategory [
-	| oldCategory |
-	oldCategory := oldClass ifNotNil:[oldClass basicCategory].
-	oldCategory == newCategory asSymbol
-		ifTrue: [ ^ self ].
 
-	self installingEnvironment organization
-		ifNotNil: [ :systemOrganizer | systemOrganizer classify: aClass name under: newCategory ].
+	| oldCategory installingOrganizer |
+	oldCategory := oldClass ifNotNil: [ oldClass basicCategory ].
+	oldCategory == newCategory asSymbol ifTrue: [ ^ self ].
 
-	(oldCategory isNil or:[ oldCategory = #Unclassified])
-		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
+	self flag: #package. "Here we are classifying the class in the SystemOrganizer and also in the package organizer in case of the creation. In the future the SystemORganizer should vanish and only the package organizer should do something."
+	installingOrganizer := self installingEnvironment organization.
+	installingOrganizer classify: aClass name under: newCategory.
+
+	(oldCategory isNil or: [ oldCategory = #Unclassified ])
+		ifTrue: [
+			((installingOrganizer packageMatchingExtensionName: aClass category) ifNil: [ installingOrganizer ensurePackage: aClass category ]) importClass: aClass.
+			SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
 		ifFalse: [ SystemAnnouncer uniqueInstance class: aClass recategorizedFrom: oldCategory to: newCategory ]
 ]
 

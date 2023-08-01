@@ -667,7 +667,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 
 	anAnnouncer weak
 		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
-		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ClassRenamed send: #systemClassRenamedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
@@ -884,18 +883,6 @@ RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 	| package |
 	package := (self packageMatchingExtensionName: ann categoryName) ifNil: [ self ensurePackage: ann categoryName ].
 	package name = ann categoryName ifFalse: [ package addClassTag: ann categoryName asSymbol ]
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemClassAddedActionFrom: ann [
-
-	| class package categoryNameSymbol |
-	class := ann classAffected.
-
-	categoryNameSymbol := class category.
-	package := (self packageMatchingExtensionName: categoryNameSymbol) ifNil: [ self ensurePackage: categoryNameSymbol ].
-
-	package importClass: class
 ]
 
 { #category : #'system integration' }
