@@ -214,15 +214,6 @@ ClassFactoryForTestCase >> newClassName [
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
-
-	^ self
-		  newSubclassOf: self defaultSuperclass
-		  instanceVariableNames: aString
-		  classVariableNames: ''
-]
-
-{ #category : #creating }
 ClassFactoryForTestCase >> newSubclassOf: aClass [
 
 	^ self

@@ -38,7 +38,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 
 	| class className saveClassDefinition |
 	"Define a class and save its definition"
-	class := factory newClassWithInstanceVariableNames: 'zzz'.
+	class := factory make: [ :aBuilder | aBuilder slotsFromString: 'zzz' ].
 	className := class name.
 	saveClassDefinition := class definitionString.
 
@@ -59,7 +59,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 	record being updated in the current change set."
 
 	| class saveClassDefinition |
-	class := factory newClassWithInstanceVariableNames: 'zzz'.
+	class := factory make: [ :aBuilder | aBuilder slotsFromString: 'zzz' ].
 	saveClassDefinition := class definitionString.
 	ChangeSet current removeClassChanges: class name.
 	"Redefine the class, adding one instance variable"

@@ -13,3 +13,10 @@ ClassFactoryForTestCase >> newClassUsing: aTraitComposition [
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
 	^ self make: [ :aBuilder | aBuilder traitComposition: aTraitComposition ]
 ]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
+	^ self make: [ :aBuilder | aBuilder slotsFromString: aString ]
+]
