@@ -1,11 +1,11 @@
 Class {
-	#name : #RBInstanceVariableStillReferenced,
+	#name : #RBSharedVariableStillReferenced,
 	#superclass : #RBBreakingChangeReport,
 	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #execution }
-RBInstanceVariableStillReferenced >> browse [
+RBSharedVariableStillReferenced >> browse [
 	"This is not satisfactory because not connected to any UI element."
 	SystemNavigation default 
 		browseAllAccessesTo: self refactoring variableName  
@@ -13,11 +13,11 @@ RBInstanceVariableStillReferenced >> browse [
 ]
 
 { #category : #accessing }
-RBInstanceVariableStillReferenced >> refactoring: aRefactoring [
+RBSharedVariableStillReferenced >> refactoring: aRefactoring [
 
 	refactoring := aRefactoring.
 	"Not sure that we need the following. "
 	environment := RBBrowserEnvironment new 
-		instVarRefsTo: aRefactoring variableName 
+		classVarRefsTo: aRefactoring variableName 
 		in: aRefactoring refactoredClass realClass
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #RBRemoveClassVariableDriver,
+	#name : #RBRemoveSharedVariableDriver,
 	#superclass : #RBDriver,
 	#instVars : [
 		'class',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #execution }
-RBRemoveClassVariableDriver >> execute [
+RBRemoveSharedVariableDriver >> execute [
 
 	self refactoring.
 	[
@@ -37,7 +37,7 @@ RBRemoveClassVariableDriver >> execute [
 ]
 
 { #category : #execution }
-RBRemoveClassVariableDriver >> furtherActionFor: aReport [
+RBRemoveSharedVariableDriver >> furtherActionFor: aReport [
 	
 	"Smalltalk tools messageList
 		new
@@ -50,20 +50,22 @@ RBRemoveClassVariableDriver >> furtherActionFor: aReport [
 	Now it could be packaged in the report object.
 	Note that the report holds an environment and that we also have scopes so the message
 	list should be passed the scope when the widget will be able to handle it."
-	aReport execute.
+	aReport browse
 
 
 ]
 
 { #category : #resources }
-RBRemoveClassVariableDriver >> refactoring [
+RBRemoveSharedVariableDriver >> refactoring [
 
-	refactoring := RBRemoveInstanceVariableRefactoring2 
-		  model: model remove: variables first from: class
+	refactoring := RBRemoveSharedVariableRefactoring
+		               model: model
+		               remove: variables first
+		               from: class
 ]
 
 { #category : #initialization }
-RBRemoveClassVariableDriver >> scopes: refactoringScopes variable: aVariable for: aClass [
+RBRemoveSharedVariableDriver >> scopes: refactoringScopes variable: aVariable for: aClass [
 	
 	scopes := refactoringScopes.
 	variables := {aVariable}.

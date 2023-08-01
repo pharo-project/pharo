@@ -1,34 +1,34 @@
 Class {
-	#name : #RBRemoveInstanceVariableRefactoring2,
+	#name : #RBRemoveInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
 	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
-RBRemoveInstanceVariableRefactoring2 class >> model: aNamespace remove: variable from: class [
+RBRemoveInstanceVariableRefactoring class >> model: aNamespace remove: variable from: class [
 	^ self model: aNamespace variable: variable class: class
 ]
 
 { #category : #'instance creation' }
-RBRemoveInstanceVariableRefactoring2 class >> remove: variable from: class [
+RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 	^ self variable: variable class: class
 ]
 
 { #category : #preconditions }
-RBRemoveInstanceVariableRefactoring2 >> applicabilityConditions [
+RBRemoveInstanceVariableRefactoring >> applicabilityConditions [
 
 	^ RBCondition directlyDefinesInstanceVariable: variableName asString in: class
 ]
 
 { #category : #preconditions }
-RBRemoveInstanceVariableRefactoring2 >> breakingChangeConditions [ 
+RBRemoveInstanceVariableRefactoring >> breakingChangeConditions [ 
 
 	^ (RBCondition hierarchyOf: class referencesInstanceVariable: variableName) not
 	
 ]
 
 { #category : #preconditions }
-RBRemoveInstanceVariableRefactoring2 >> generateChanges [
+RBRemoveInstanceVariableRefactoring >> generateChanges [
 	
 	self applicabilityConditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
@@ -42,17 +42,17 @@ RBRemoveInstanceVariableRefactoring2 >> generateChanges [
 ]
 
 { #category : #preconditions }
-RBRemoveInstanceVariableRefactoring2 >> preconditions [
+RBRemoveInstanceVariableRefactoring >> preconditions [
 
 	^ self applicabilityConditions & self breakingChangeConditions 
 ]
 
 { #category : #accessing }
-RBRemoveInstanceVariableRefactoring2 >> refactoredClass [
+RBRemoveInstanceVariableRefactoring >> refactoredClass [
 	^ class
 ]
 
 { #category : #transforming }
-RBRemoveInstanceVariableRefactoring2 >> transform [
+RBRemoveInstanceVariableRefactoring >> transform [
 	class removeInstanceVariable: variableName
 ]

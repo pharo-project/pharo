@@ -62,7 +62,7 @@ RBRenameMethodDriver >> execute [
 { #category : #initialize }
 RBRenameMethodDriver >> furtherActionFor: aReport [
 
-	aReport execute.
+	aReport browse
 ]
 
 { #category : #initialize }
