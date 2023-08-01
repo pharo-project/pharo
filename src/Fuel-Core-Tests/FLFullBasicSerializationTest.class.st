@@ -86,7 +86,10 @@ FLFullBasicSerializationTest >> testCreateClassWithChangedSuperclassFormat [
 
 	| a b |
 	a := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'one' ].
-	b := self classFactory silentlyNewSubclassOf: a instanceVariableNames: 'two'.
+	b := self classFactory make: [ :aBuilder |
+		     aBuilder
+			     superclass: a;
+			     slotsFromString: 'two' ].
 	self serializer fullySerializeBehavior: b.
 	self serialize: {
 			b new.

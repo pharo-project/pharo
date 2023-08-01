@@ -42,7 +42,10 @@ FLMigrationTest >> testChangeInSuperclass [
 
 	| aClass aClassSubclass instance materializedInstance |
 	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
-	aClassSubclass := self classFactory silentlyNewSubclassOf: aClass instanceVariableNames: 'd e'.
+	aClassSubclass := self classFactory make: [ :aBuilder |
+		                  aBuilder
+			                  superclass: aClass;
+			                  slotsFromString: 'd e' ].
 
 	instance := aClassSubclass new.
 	instance instVarNamed: 'a' put: $A.
@@ -137,7 +140,10 @@ FLMigrationTest >> testSuperclassChange [
 
 	| aClass aClassSubclass instance materializedInstance anotherSuperclass |
 	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
-	aClassSubclass := self classFactory silentlyNewSubclassOf: aClass instanceVariableNames: 'd e'.
+	aClassSubclass := self classFactory make: [ :aBuilder |
+		                  aBuilder
+			                  superclass: aClass;
+			                  slotsFromString: 'd e' ].
 	anotherSuperclass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x' ].
 
 	instance := aClassSubclass new.
