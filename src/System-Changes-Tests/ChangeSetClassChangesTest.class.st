@@ -45,7 +45,10 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 	self assert: saveClassDefinition equals: class definitionString.
 
 	"Redefine the class, adding one instance variable"
-	factory redefineClass: class instanceVariableNames: 'zzz aaa'.
+	factory make: [ :aBuilder |
+		aBuilder
+			fillFor: class;
+			slotsFromString: 'zzz aaa' ].
 
 	self deny: class definitionString equals: saveClassDefinition.
 
@@ -63,7 +66,10 @@ ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 	saveClassDefinition := class definitionString.
 	ChangeSet current removeClassChanges: class name.
 	"Redefine the class, adding one instance variable"
-	factory redefineClass: class instanceVariableNames: 'zzz aaa'.
+	factory make: [ :aBuilder |
+		aBuilder
+			fillFor: class;
+			slotsFromString: 'zzz aaa' ].
 
 	self assert: (ChangeSet current changeRecorderFor: class name) priorDefinition equals: saveClassDefinition
 ]
@@ -82,7 +88,10 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 	self assert: saveClassDefinition equals: class definitionString.
 
 	"Redefine the class, changing only the class category"
-	factory redefineClass: class category: 'TestPackage2'.
+	factory make: [ :aBuilder |
+		aBuilder
+			fillFor: class;
+			package: 'TestPackage2' ].
 	self deny: class definitionString equals: saveClassDefinition.
 
 	"Assert that the change has been recorded in the current change set"
@@ -106,7 +115,10 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	ChangeSet current removeClassChanges: class name.
 
 	"Redefine the class, changing only the class category"
-	factory redefineClass: class category: 'TestPackage2'.
+	factory make: [ :aBuilder |
+		aBuilder
+			fillFor: class;
+			package: 'TestPackage2' ].
 
 	self assert: (ChangeSet current changeRecorderFor: class) priorDefinition equals: class definitionString
 ]

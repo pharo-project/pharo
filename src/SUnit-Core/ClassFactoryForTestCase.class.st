@@ -234,51 +234,6 @@ ClassFactoryForTestCase >> packageName [
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> redefineClass: aClass category: aString [
-
-	^ self
-		  redefineClass: aClass
-		  subclassOf: aClass superclass
-		  uses: aClass traitComposition
-		  instanceVariableNames: aClass instanceVariablesString
-		  classVariableNames: aClass classVariablesString
-		  poolDictionaries: aClass sharedPoolsString
-		  package: aString
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> redefineClass: aClass instanceVariableNames: aString [
-
-	^ self
-		  redefineClass: aClass
-		  subclassOf: aClass superclass
-		  uses: aClass traitComposition
-		  instanceVariableNames: aString
-		  classVariableNames: aClass classVariablesString
-		  poolDictionaries: aClass sharedPoolsString
-		  package: aClass category
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString package: aPackageName [
-
-	| newClass |
-	newClass := self class classInstaller make: [ :aBuilder |
-		            aBuilder
-			            name: aClass name;
-			            superclass: aSuperclass;
-			            installingEnvironment: self environment;
-			            traitComposition: aTraitComposition;
-			            slotsFromString: ivNamesString;
-			            sharedVariablesFromString: classVarsString;
-			            sharedPools: poolNamesString;
-			            package: aPackageName asSymbol ].
-
-	createdBehaviors add: newClass.
-	^ newClass
-]
-
-{ #category : #creating }
 ClassFactoryForTestCase >> silentlyMake: aBlock [
 
 	| behavior |

@@ -123,6 +123,42 @@ ClassFactoryForTestCase >> newTraitUsing: aTraitComposition [
 ]
 
 { #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> redefineClass: aClass category: aString [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
+	^ self make: [ :aBuilder |
+		  aBuilder
+			  fillFor: aClass;
+			  package: aString ]
+]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> redefineClass: aClass instanceVariableNames: aString [
+
+	self deprecated:
+		'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
+	^ self make: [ :aBuilder |
+		  aBuilder
+			  fillFor: aClass;
+			  slotsFromString: aString ]
+]
+
+{ #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString package: aPackageName [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
+	^ self make: [ :aBuilder |
+		  aBuilder
+			  name: aClass name;
+			  superclass: aSuperclass;
+			  traitComposition: aTraitComposition;
+			  slotsFromString: ivNamesString;
+			  sharedVariablesFromString: classVarsString;
+			  sharedPools: poolNamesString;
+			  package: aPackageName asSymbol ]
+]
+
+{ #category : #'*Deprecated12' }
 ClassFactoryForTestCase >> silentlyNewClassInCategory: category [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #silentlyMake: to find the default value I am setting.'.
