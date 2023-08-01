@@ -204,6 +204,20 @@ ClassFactoryForTestCase >> make: aBlock [
 ]
 
 { #category : #creating }
+ClassFactoryForTestCase >> newAnonymousClass [
+	^ self defaultSuperclass newAnonymousSubclass
+]
+
+{ #category : #creating }
+ClassFactoryForTestCase >> newAnonymousTrait [
+	^ Smalltalk anonymousClassInstaller make: [ :builder |
+		builder
+			"The name is necessary to not break Pharo"
+			name: self newBehaviorName;
+			beTrait ]
+]
+
+{ #category : #creating }
 ClassFactoryForTestCase >> newBehaviorName [
 
 	^ (#BehaviorForTestToBeDeleted , self nextCount printString) asSymbol
@@ -239,11 +253,55 @@ ClassFactoryForTestCase >> packageName [
 	^ #CategoryForTestToBeDeleted
 ]
 
+{ #category : #'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior [
+
+	^ self silentlyCompile: aString in: aBehavior storingSource: true
+]
+
+{ #category : #'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString [
+
+	^ self
+		  silentlyCompile: aString
+		  in: aBehavior
+		  protocol: anotherString
+		  storingSource: true
+]
+
+{ #category : #'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString storingSource: aBoolean [
+
+	^ self silentlyDo: [
+		  Author useAuthor: 'TestsAuthor' during: [
+			  aBehavior
+				  compile: aString
+				  classified: anotherString
+				  withStamp: nil
+				  notifying: nil
+				  logSource: aBoolean ] ]
+]
+
+{ #category : #'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSource: aBoolean [
+
+	^ self
+		  silentlyCompile: aString
+		  in: aBehavior
+		  protocol: 'unclassified'
+		  storingSource: aBoolean
+]
+
+{ #category : #private }
+ClassFactoryForTestCase >> silentlyDo: aBlock [
+	^ SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
+]
+
 { #category : #creating }
 ClassFactoryForTestCase >> silentlyMake: aBlock [
 
 	| behavior |
-	behavior := SystemAnnouncer uniqueInstance suspendAllWhile: [ self make: aBlock ].
+	behavior := self silentlyDo: [ self make: aBlock ].
 
 	createdSilently add: behavior.
 	^ behavior
@@ -255,8 +313,13 @@ ClassFactoryForTestCase >> silentlyNewClass [
 	^ self silentlyMake: [ :aBuilder | "Nothing to configure here" ]
 ]
 
-{ #category : #'creating-traits-silently' }
+{ #category : #creating }
 ClassFactoryForTestCase >> silentlyNewTrait [
 
 	^ self silentlyMake: [ :aBuilder | aBuilder beTrait ]
+]
+
+{ #category : #'renaming-silently' }
+ClassFactoryForTestCase >> silentlyRename: aClass to: aName [
+	^ self silentlyDo: [ aClass rename: aName asSymbol ]
 ]

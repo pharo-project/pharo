@@ -10,11 +10,10 @@ Class {
 { #category : #running }
 FLMigrationTest >> redefined: aClass with: instanceVariableNames [
 
-	| name |
-	name := aClass name.
-	self classFactory delete: aClass.
-	"In this case we need to create a class with notifications"
-	^ self classFactory silentlyRename: (self classFactory make: [ :aBuilder | aBuilder slotsFromString: instanceVariableNames ]) to: name
+	^ self classFactory make: [ :aBuilder |
+		  aBuilder
+			  fillFor: aClass;
+			  slotsFromString: instanceVariableNames ]
 ]
 
 { #category : #'tests-manual' }

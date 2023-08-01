@@ -104,7 +104,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithClassSideMethod [
 	self classFactory
 		silentlyCompile:  'fortyTwo ^42'
 		in: aClassOrTrait classSide
-		category: category.
+		protocol: category.
 
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
@@ -226,7 +226,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithMethod [
 	self classFactory
 		silentlyCompile: 'fortyTwo ^42'
 		in: aClassOrTrait
-		category: category.
+		protocol: category.
 
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 

@@ -24,11 +24,6 @@ Class {
 	#category : #'Fuel-Core-Tests-Support-ClassFactory'
 }
 
-{ #category : #'accessing-defaults' }
-FLClassFactoryForTestCase >> defaultPackageAndTag [
-	^ (self packageName , '-', self defaultTagPostfix) asSymbol
-]
-
 { #category : #cleaning }
 FLClassFactoryForTestCase >> delete: aBehavior [
 
@@ -40,73 +35,8 @@ FLClassFactoryForTestCase >> delete: aBehavior [
 	aBehavior removeFromSystemUnlogged
 ]
 
-{ #category : #'creating-anonymous' }
-FLClassFactoryForTestCase >> newAnonymousClass [
-	^ self defaultSuperclass newAnonymousSubclass
-]
-
-{ #category : #'creating-traits-anonymous' }
-FLClassFactoryForTestCase >> newAnonymousTrait [
-	^ Smalltalk anonymousClassInstaller make: [ :builder |
-		builder
-			"The name is necessary to not break Pharo"
-			name: self newBehaviorName;
-			beTrait ]
-]
-
 { #category : #accessing }
 FLClassFactoryForTestCase >> registerBehavior: aBehavior [
 
 	createdBehaviors add: aBehavior
-]
-
-{ #category : #'compiling-silently' }
-FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior [
-
-	^ self silentlyCompile: aString in: aBehavior storingSource: true
-]
-
-{ #category : #'compiling-silently' }
-FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior category: anotherString [
-
-	^ self
-		  silentlyCompile: aString
-		  in: aBehavior
-		  category: anotherString
-		  storingSource: true
-]
-
-{ #category : #'compiling-silently' }
-FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior category: anotherString storingSource: aBoolean [
-
-	^ self silentlyDo: [
-		  Author
-				useAuthor: 'TestsAuthor'
-				during: [
-					aBehavior
-						compile: aString
-						classified: anotherString
-						withStamp: nil
-						notifying: nil
-						logSource: aBoolean ] ]
-]
-
-{ #category : #'compiling-silently' }
-FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSource: aBoolean [
-
-	^ self
-		  silentlyCompile: aString
-		  in: aBehavior
-		  category: 'unclassified'
-		  storingSource: aBoolean
-]
-
-{ #category : #private }
-FLClassFactoryForTestCase >> silentlyDo: aBlock [
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
-]
-
-{ #category : #'renaming-silently' }
-FLClassFactoryForTestCase >> silentlyRename: aClass to: aName [
-	^ self silentlyDo: [ aClass rename: aName asSymbol ]
 ]
