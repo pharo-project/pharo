@@ -52,6 +52,12 @@ RBRemoveSharedVariableRefactoring >> preconditions [
 	^ self applicabilityConditions & self breakingChangeConditions 
 ]
 
+{ #category : #accessing }
+RBRemoveSharedVariableRefactoring >> refactoredClass [
+
+	^ class
+]
+
 { #category : #transforming }
 RBRemoveSharedVariableRefactoring >> transform [
 	class removeClassVariable: variableName

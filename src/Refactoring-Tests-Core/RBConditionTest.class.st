@@ -133,12 +133,13 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableAccessing [
 
 	| textConstantClass |
 	textConstantClass := rbNamespace classNamed: #TextConstants.
-	"only the class side is accessing the shared variable"
-	
-	self deny: (RBCondition
+	"only the class side is accessing the shared variable. But the query should 
+	check both sides."
+
+	self assert: (RBCondition
 			 hierarchyOf: textConstantClass
 			 referencesSharedVariable: #Basal) check.
-			
+
 	self assert: (RBCondition
 			 hierarchyOf: textConstantClass classSide
 			 referencesSharedVariable: #Basal) check
