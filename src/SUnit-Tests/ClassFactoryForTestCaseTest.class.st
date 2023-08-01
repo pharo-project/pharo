@@ -127,13 +127,20 @@ ClassFactoryForTestCaseTest >> testSingleTraitCreation [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testTraitCreationInDifferentCategories [
+
 	| firstThreeTraits lastTwoTraits |
 	3 timesRepeat: [
-		factory newTraitInTag: #One].
+		factory make: [ :aBuilder |
+			aBuilder
+				beTrait;
+				tag: #One ] ].
 	firstThreeTraits := factory createdTraits copy.
 	2 timesRepeat: [
-		factory newTraitInTag: #Two].
+		factory make: [ :aBuilder |
+			aBuilder
+				beTrait;
+				tag: #Two ] ].
 	lastTwoTraits := factory createdTraits copyWithoutAll: firstThreeTraits.
-	self assert: (firstThreeTraits allSatisfy: [:trait| trait category = (factory packageName, '-', #One) asSymbol]).
-	self assert: (lastTwoTraits allSatisfy: [:trait| trait category = (factory packageName, '-', #Two) asSymbol])
+	self assert: (firstThreeTraits allSatisfy: [ :trait | trait category = (factory packageName , '-' , #One) asSymbol ]).
+	self assert: (lastTwoTraits allSatisfy: [ :trait | trait category = (factory packageName , '-' , #Two) asSymbol ])
 ]

@@ -219,15 +219,6 @@ ClassFactoryForTestCase >> newTrait [
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newTraitInTag: aTag [
-
-	^ self
-		  newTraitNamed: self newTraitName
-		  uses: Array new
-		  tag: aTag asSymbol
-]
-
-{ #category : #creating }
 ClassFactoryForTestCase >> newTraitName [
 
 	^ (#TraitForTestToBeDeleted , self nextCount printString) asSymbol
