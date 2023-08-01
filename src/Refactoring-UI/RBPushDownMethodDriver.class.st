@@ -28,8 +28,26 @@ RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pu
 	^ self new model: aRBNamespace scopes: refactoringScopes pushDown: methods
 ]
 
+{ #category : #initialization }
+RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown: methodsList [
+
+	model := aRBNamespace.
+	scopes := refactoringScopes.
+	methods := methodsList.
+	class := methods first origin
+]
+
+{ #category : #resources }
+RBPushDownMethodDriver >> refactoring [
+
+	refactoring :=  RBPushDownMethodRefactoring
+		  model: model
+		  pushDown: (methods collect: [ :each | each selector ])
+		  from: class
+]
+
 { #category : #execution }
-RBPushDownMethodDriver >> execute [
+RBPushDownMethodDriver >> runRefactoring [
 
 	| changes |
 	methods := self selectMethods.
@@ -47,24 +65,6 @@ RBPushDownMethodDriver >> execute [
 			           "If user answers no, error is being propagated."
 			           err resume ].
 	self openPreviewWithChanges: { changes }
-]
-
-{ #category : #initialization }
-RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown: methodsList [
-
-	model := aRBNamespace.
-	scopes := refactoringScopes.
-	methods := methodsList.
-	class := methods first origin
-]
-
-{ #category : #resources }
-RBPushDownMethodDriver >> refactoring [
-
-	refactoring :=  RBPushDownMethodRefactoring
-		  model: model
-		  pushDown: (methods collect: [ :each | each selector ])
-		  from: class
 ]
 
 { #category : #execution }

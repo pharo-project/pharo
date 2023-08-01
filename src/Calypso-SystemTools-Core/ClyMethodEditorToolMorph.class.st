@@ -117,7 +117,7 @@ ClyMethodEditorToolMorph >> fillStatusBar [
 	statusBar addCommandItem: (ClyTextLineNumbersSwitchMorph of: textMorph).
 	statusBar addCommandItem: (ClyFormatAsReadSwitchMorph of: textMorph).
 
-	statusBar addCommandItem: (ClyProtocolAndPackageEditorMorph for: self)
+	statusBar addCommandItem: (ClyProtocolEditorMorph for: self)
 ]
 
 { #category : #operations }
@@ -201,7 +201,7 @@ ClyMethodEditorToolMorph >> protocolAndPackageEditingMethod: aMethod [
 
 { #category : #accessing }
 ClyMethodEditorToolMorph >> protocolAndPackageEditor [
-	^(statusBar findDeeplyA: ClyProtocolAndPackageEditorMorph) ifNil: [ CmdCommandAborted signal ]
+	^(statusBar findDeeplyA: ClyProtocolEditorMorph) ifNil: [ CmdCommandAborted signal ]
 ]
 
 { #category : #'rubric interaction model' }

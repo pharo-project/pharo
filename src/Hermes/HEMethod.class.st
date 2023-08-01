@@ -108,7 +108,7 @@ HEMethod >> readFrom: aReader [
 
 	name := aReader readByteSymbol.
 	className := aReader readByteSymbol.
-	protocol := aReader readByteSymbol.
+	protocol := Protocol named: (aReader readByteSymbol).
 
 	encoderClassName := aReader readByteString.
 	numArgs := aReader readUInt32.

@@ -10,7 +10,33 @@ Class {
 }
 
 { #category : #execution }
-RBRemoveInstanceVariableDriver >> execute [
+RBRemoveInstanceVariableDriver >> furtherActionFor: aReport [
+	
+	"Smalltalk tools messageList
+		new
+		  messages: (self halt);
+		  title: 'jlklkjljlkjkl';
+		  open."
+	
+	"for now use the report to see and not the driver state. To be reevaluated later."
+	"use system navigation to avoid to duplicate logic. 
+	Now it could be packaged in the report object.
+	Note that the report holds an environment and that we also have scopes so the message
+	list should be passed the scope when the widget will be able to handle it."
+	aReport runRefactoring.
+
+
+]
+
+{ #category : #resources }
+RBRemoveInstanceVariableDriver >> refactoring [
+
+	refactoring := RBRemoveInstanceVariableRefactoring2 
+		  model: model remove: variables first from: class
+]
+
+{ #category : #execution }
+RBRemoveInstanceVariableDriver >> runRefactoring [
 
 	self refactoring.
 	[
@@ -34,32 +60,6 @@ RBRemoveInstanceVariableDriver >> execute [
 								dialog 
 									ifTrue: [ self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring)].  err return ].
 	
-]
-
-{ #category : #execution }
-RBRemoveInstanceVariableDriver >> furtherActionFor: aReport [
-	
-	"Smalltalk tools messageList
-		new
-		  messages: (self halt);
-		  title: 'jlklkjljlkjkl';
-		  open."
-	
-	"for now use the report to see and not the driver state. To be reevaluated later."
-	"use system navigation to avoid to duplicate logic. 
-	Now it could be packaged in the report object.
-	Note that the report holds an environment and that we also have scopes so the message
-	list should be passed the scope when the widget will be able to handle it."
-	aReport execute.
-
-
-]
-
-{ #category : #resources }
-RBRemoveInstanceVariableDriver >> refactoring [
-
-	refactoring := RBRemoveInstanceVariableRefactoring2 
-		  model: model remove: variables first from: class
 ]
 
 { #category : #initialization }
