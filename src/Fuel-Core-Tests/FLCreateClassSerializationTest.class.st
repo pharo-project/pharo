@@ -118,28 +118,23 @@ FLCreateClassSerializationTest >> testCreateClassWithClassVariable [
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateClassWithCreatedTrait [
 	"Tests materialization of a class and a trait not defined in the image. The class uses the trait."
-	
-	| aClass aTrait result materializedClass materializedTrait |	
+
+	| aClass aTrait result materializedClass materializedTrait |
 	aClass := self classFactory silentlyNewClass.
-	self classFactory
-		silentlyCompile:  'fortyOne ^41'
-		in: aClass.
+	self classFactory silentlyCompile: 'fortyOne ^41' in: aClass.
 	aTrait := self classFactory silentlyNewTrait.
-	self classFactory
-		silentlyCompile:  'fortyTwo ^42'
-		in: aTrait.
+	self classFactory silentlyCompile: 'fortyTwo ^42' in: aTrait.
 	aClass addToComposition: aTrait.
-	
+
 	result := self resultOfSerializeRemoveAndMaterializeAll: (Array with: aClass with: aTrait).
 	materializedClass := result first.
 	materializedTrait := result second.
-
-	self assert: result size = 2.
-	self assert: (materializedClass traits first == materializedTrait).
+	self assert: result size equals: 2.
+	self assert: materializedClass traits first identicalTo: materializedTrait.
 	self assert: (materializedTrait users includes: materializedClass).
-	self assert: materializedClass localSelectors size = 1.
+	self assert: materializedClass localSelectors size equals: 1.
 	self assert: (materializedClass localSelectors includes: #fortyOne).
-	self assert: materializedClass traitComposition transformations isEmpty not.
+	self assert: materializedClass traitComposition transformations isNotEmpty
 ]
 
 { #category : #tests }
@@ -149,7 +144,7 @@ FLCreateClassSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVar
 	The trait has instance variables."
 
 	| aClass aTrait result materializedClass materializedTrait materializedObject |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'ivar' ].
+	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'ivar' ].
 	self classFactory silentlyCompile: 'ivar: x ivar := x' in: aClass.
 	self classFactory silentlyCompile: 'ivar ^ ivar' in: aClass.
 	aTrait := self classFactory silentlyMake: [ :aBuilder |
@@ -230,7 +225,7 @@ FLCreateClassSerializationTest >> testCreateClassWithSharedPoolAndMethodReferenc
 	aClass := self classFactory silentlyNewClass.
 	anObject := Object new.
 
-	sharedPool := self classFactory make: [ :aBuilder | aBuilder superclass: SharedPool ].
+	sharedPool := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: SharedPool ].
 	sharedPool addClassVarNamed: 'ClassVar1'.
 	self classFactory
 		silentlyCompile: 'classVar1: a  ClassVar1 := a.' in: sharedPool class;
@@ -449,7 +444,7 @@ FLCreateClassSerializationTest >> testCreateWithClassVariableAccessors [
 	"Tests materialization of a compiled method in a class not defined in the image. The class defines accessors for a class variable."
 
 	| aClass materializedClass instance |
-	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'AnFLClassVariable' ].
+	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'AnFLClassVariable' ].
 	self classFactory
 		silentlyCompile: 'classVariable ^AnFLClassVariable' in: aClass;
 		silentlyCompile: 'classVariable: value AnFLClassVariable := value' in: aClass.

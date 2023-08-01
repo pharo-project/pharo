@@ -125,7 +125,7 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConstant [
 FLBlockClosureSerializationTest >> testBlockClosureMaterializesClassVariablesCorrectly [
 
 	| class closure method |
-	class := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'ClassVariableForTesting' ].
+	class := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'ClassVariableForTesting' ].
 	self classFactory silentlyCompile: 'methodWithClosure  ^ [ ClassVariableForTesting ]' in: class.
 
 	method := class methodNamed: #methodWithClosure.

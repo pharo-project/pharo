@@ -95,6 +95,12 @@ ClassFactoryForTestCase >> createdClasses [
 ]
 
 { #category : #accessing }
+ClassFactoryForTestCase >> createdSilently [
+
+	^ createdSilently
+]
+
+{ #category : #accessing }
 ClassFactoryForTestCase >> createdTraitNames [
 
 	^ self createdTraits collect: [ :trait | trait name ]
@@ -127,6 +133,7 @@ ClassFactoryForTestCase >> defaultTagPostfix [
 { #category : #cleaning }
 ClassFactoryForTestCase >> delete: aBehavior [
 
+	createdBehaviors remove: aBehavior ifAbsent: [  ].
 	aBehavior isObsolete ifTrue: [ ^ self ].
 	self class environment at: #ChangeSet ifPresent: [ aBehavior removeFromChanges ].
 	(createdSilently includes: aBehavior)

@@ -360,7 +360,7 @@ FLConfigurationTest >> testStreamFinalizerDefault [
 
 	<ignoreNotImplementedSelectors: #( _log )>
 	| logClass log |
-	logClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'log' ].
+	logClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'log' ].
 	self classFactory
 		silentlyCompile: 'initialize log := OrderedCollection new' in: logClass;
 		silentlyCompile: '_log ^ log' in: logClass;

@@ -152,7 +152,7 @@ FLSerializationTest >> setUp [
 { #category : #running }
 FLSerializationTest >> setUpClassFactory [
 
-	classFactory := FLClassFactoryForTestCase environment: self environmentOfTest
+	classFactory := ClassFactoryForTestCase environment: self environmentOfTest
 ]
 
 { #category : #running }

@@ -83,7 +83,7 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
 
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'A' ].
+	aClassWithVariable := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'A' ].
 
 	self classFactory silentlyCompile: 'm1 A:= 3' in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #m1.
@@ -99,7 +99,7 @@ FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariableInADoit [
 
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'A' ].
+	aClassWithVariable := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'A' ].
 
 	self classFactory silentlyCompile: 'DoIt A:= 3' in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #DoIt.
