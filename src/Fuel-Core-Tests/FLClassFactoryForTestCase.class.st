@@ -48,31 +48,9 @@ FLClassFactoryForTestCase >> cleanUp [
 	self cleanUpChangeSetForClassNames: createdTraitNames
 ]
 
-{ #category : #'private-cleaning' }
-FLClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
-
-	self class environment at: #ChangeSet ifPresent: [ :aChangeSetClass |
-		| changeSet |
-		changeSet := aChangeSetClass current.
-		classeNames do: [:name|	
-			changeSet 
-				removeClassChanges: name;
-				removeClassChanges: name, ' class']]
-]
-
-{ #category : #accessing }
-FLClassFactoryForTestCase >> createdClassNames [
-	^self createdClasses collect: [ :class| class name ]
-]
-
 { #category : #accessing }
 FLClassFactoryForTestCase >> createdClasses [
 	^createdClasses
-]
-
-{ #category : #accessing }
-FLClassFactoryForTestCase >> createdTraitNames [
-	^self createdTraits collect: [ :trait | trait name ]
 ]
 
 { #category : #accessing }
@@ -83,16 +61,6 @@ FLClassFactoryForTestCase >> createdTraits [
 { #category : #'accessing-defaults' }
 FLClassFactoryForTestCase >> defaultPackageAndTag [
 	^ (self packageName , '-', self defaultTagPostfix) asSymbol
-]
-
-{ #category : #'accessing-defaults' }
-FLClassFactoryForTestCase >> defaultSuperclass [ 
-	^Object
-]
-
-{ #category : #'accessing-defaults' }
-FLClassFactoryForTestCase >> defaultTagPostfix [
-	^ #Default
 ]
 
 { #category : #cleaning }
@@ -110,12 +78,6 @@ FLClassFactoryForTestCase >> deleteBehavior: aBehavior [
 FLClassFactoryForTestCase >> deleteClasses [
 	self createdClasses do: [:class|
 		self deleteBehavior: class]
-]
-
-{ #category : #'private-cleaning' }
-FLClassFactoryForTestCase >> deletePackage [
-
-	self packageOrganizer removePackage: self packageName
 ]
 
 { #category : #'private-cleaning' }
@@ -276,12 +238,6 @@ FLClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition i
 
 	self createdTraits add: newTrait.
 	^ newTrait
-]
-
-{ #category : #accessing }
-FLClassFactoryForTestCase >> nextCount [
-	"Global counter to avoid name clash between test runs, in case of some previous failure."
-	^ Counter := (Counter ifNil: [ 0 ]) + 1.
 ]
 
 { #category : #accessing }
