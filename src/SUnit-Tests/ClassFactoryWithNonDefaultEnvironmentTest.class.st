@@ -3,53 +3,33 @@ SUnit tests for ClassFactoryWithOrganization
 "
 Class {
 	#name : #ClassFactoryWithNonDefaultEnvironmentTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'factory'
-	],
+	#superclass : #ClassFactoryForTestCaseTest,
 	#category : #'SUnit-Tests-Core'
 }
 
 { #category : #testing }
 ClassFactoryWithNonDefaultEnvironmentTest >> assertEnvironmentOf: aBehavior [
-	self assert: aBehavior environment equals: self testedEnvironment
+	self assert: aBehavior environment equals: self environment
+]
+
+{ #category : #accessing }
+ClassFactoryWithNonDefaultEnvironmentTest >> environment [
+
+	^ factory environment
 ]
 
 { #category : #running }
 ClassFactoryWithNonDefaultEnvironmentTest >> setUp [
 
-	| environment |
 	super setUp.
-	environment := SystemDictionary new.
-	factory := ClassFactoryForTestCase environment: environment
+	factory := ClassFactoryForTestCase environment: SystemDictionary new
 ]
 
 { #category : #testing }
 ClassFactoryWithNonDefaultEnvironmentTest >> testClassCreationInDifferentTags [
 
-	| firstThreeClasses lastTwoClasses |
-	3 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #One ] ].
-	firstThreeClasses := factory createdClasses copy.
-	2 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #Two ] ].
-	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
-	self assert: (firstThreeClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'One') ]).
-	self assert: (lastTwoClasses allSatisfy: [ :class | class category = (factory packageName , '-' , 'Two') ]).
+	super testClassCreationInDifferentTags.
 	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
-]
-
-{ #category : #testing }
-ClassFactoryWithNonDefaultEnvironmentTest >> testDefaultCategoryCleanUp [
-	| createdClassNames allClasses |
-	3 timesRepeat: [
-		factory newClass].
-	createdClassNames := factory createdClassNames.
-	factory cleanUp.
-	self assert: (factory createdClasses allSatisfy: [:class| class isObsolete]).
-	allClasses := self testedEnvironment allClasses.
-	self assert: (factory createdClasses noneSatisfy: [:class| allClasses includes: class]).
-	self deny: (self testedOrganization categories includes: factory defaultCategory).
-	self class environment at: #ChangeSet ifPresent: [:changeSet |
-		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
 
 { #category : #testing }
@@ -57,66 +37,13 @@ ClassFactoryWithNonDefaultEnvironmentTest >> testMultipleClassCreation [
 
 	self flag: #package. "Broken because of the SystemOrganizer/PackageOrganizer mixup."
 	self skip.
-	5 timesRepeat: [ factory newClass ].
-	self assert: (self testedEnvironment allClasses includesAll: factory createdClasses).
-	self assert: factory createdClassNames asSet size equals: 5.
-	self assertCollection: (self packageOrganizer packageNamed: factory packageName) definedClasses hasSameElements: factory createdClasses.
+	super testMultipleClassCreation.
 	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
-]
-
-{ #category : #testing }
-ClassFactoryWithNonDefaultEnvironmentTest >> testPackageCleanUp [
-
-	| createdClassNames allClasses |
-	3 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #One ] ].
-	2 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #Two ] ].
-	createdClassNames := factory createdClassNames.
-	factory cleanUp.
-	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).
-	allClasses := self testedEnvironment allClasses.
-	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
-	self assertEmpty: (self testedOrganization categoriesMatching: factory packageName , '*').
-	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
 
 { #category : #testing }
 ClassFactoryWithNonDefaultEnvironmentTest >> testSingleClassCreation [
 
-	| class elementsInCategoryForTest |
-	class := factory make: [ :aBuilder |
-		         aBuilder
-			         superclass: Object;
-			         slotsFromString: 'a b c';
-			         sharedVariablesFromString: 'X Y';
-			         tag: factory defaultTagPostfix ].
-	self assert: (self testedEnvironment allClasses includes: class).
-	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ].
-	elementsInCategoryForTest := self testedOrganization listAtCategoryNamed: factory defaultCategory.
-	self assert: elementsInCategoryForTest equals: { class name }.
-	self assert: class instVarNames equals: #( a b c ).
-	self assert: class classPool keys asSet equals: #( X Y ) asSet
-]
-
-{ #category : #testing }
-ClassFactoryWithNonDefaultEnvironmentTest >> testSingleClassFastCreation [
-
-	| class |
-	self flag: #package. "Broken because of the SystemOrganizer/PackageOrganizer mixup."
-	self skip.
-	class := factory newClass.
-	self assert: (self testedEnvironment allClasses includes: class).
-	self assertCollection: (self packageOrganizer packageNamed: factory packageName) definedClasses hasSameElements: { class }.
-	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ].
-	self assertEmpty: class instVarNames.
-	self assertEmpty: class classPool
-]
-
-{ #category : #accessing }
-ClassFactoryWithNonDefaultEnvironmentTest >> testedEnvironment [
-	^self testedOrganization environment
-]
-
-{ #category : #accessing }
-ClassFactoryWithNonDefaultEnvironmentTest >> testedOrganization [
-	^factory organization
+	super testSingleClassCreation.
+	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
 ]
