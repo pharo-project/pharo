@@ -28,14 +28,6 @@ Class {
 	#category : #'Fuel-Core-Tests-Support-ClassFactory'
 }
 
-{ #category : #'instance creation' }
-FLClassFactoryForTestCase class >> forEnvironment: anEnvironment [
-	^ self basicNew
-		initializeWithEnvironment: anEnvironment;
-		initialize;
-		yourself
-]
-
 { #category : #cleaning }
 FLClassFactoryForTestCase >> cleanUp [
 	| createdClassNames createdTraitNames |
@@ -86,23 +78,12 @@ FLClassFactoryForTestCase >> deleteTraits [
 		self deleteBehavior: trait]
 ]
 
-{ #category : #accessing }
-FLClassFactoryForTestCase >> environment [
-	^ environment
-]
-
 { #category : #initialization }
 FLClassFactoryForTestCase >> initialize [
+
 	super initialize.
 	createdClasses := IdentitySet new.
-	createdTraits := IdentitySet new.
-	environment ifNil: [
-		environment := self class environment ]
-]
-
-{ #category : #initialization }
-FLClassFactoryForTestCase >> initializeWithEnvironment: anEnvironment [
-	environment := anEnvironment
+	createdTraits := IdentitySet new
 ]
 
 { #category : #'creating-anonymous' }
