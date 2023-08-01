@@ -57,26 +57,13 @@ FLClassFactoryForTestCase >> newAnonymousTrait [
 { #category : #creating }
 FLClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
 
-	^ self
-		  newSubclassOf: self defaultSuperclass
-		  uses: {  }
-		  instanceVariableNames: aString
-		  classVariableNames: ''
-]
-
-{ #category : #creating }
-FLClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-
 	| newClass |
 	newClass := self class classInstaller make: [ :aBuilder |
 		            aBuilder
 			            environment: self environment;
 			            name: self newBehaviorName;
-			            superclass: aClass;
-			            traitComposition: aTraitComposition asTraitComposition;
-			            classTraitComposition: aTraitComposition asTraitComposition classComposition;
-			            slots: ivNamesString asSlotCollection;
-			            sharedVariablesFromString: classVarsString;
+			            superclass: self defaultSuperclass;
+			            slots: aString asSlotCollection;
 			            package: self defaultPackageAndTag ].
 
 	createdBehaviors add: newClass.
@@ -155,27 +142,6 @@ FLClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSourc
 { #category : #private }
 FLClassFactoryForTestCase >> silentlyDo: aBlock [
 	^ SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
-]
-
-{ #category : #'creating-silently' }
-FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-
-	^ self
-		  silentlyNewSubclassOf: aClass
-		  uses: #(  )
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-]
-
-{ #category : #'creating-silently' }
-FLClassFactoryForTestCase >> silentlyNewSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-
-	^ self silentlyDo: [
-		  self
-			  newSubclassOf: aClass
-			  uses: aTraitComposition
-			  instanceVariableNames: ivNamesString
-			  classVariableNames: classVarsString ]
 ]
 
 { #category : #'creating-traits-silently' }
