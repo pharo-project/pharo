@@ -101,6 +101,18 @@ ClassFactoryForTestCase >> newTraitInTag: aTag [
 ]
 
 { #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag: aTag [
+
+	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
+	^ self make: [ :aBuilder |
+		  aBuilder
+			  name: aTraitName;
+			  traitComposition: aTraitComposition;
+			  tag: aTag;
+			  beTrait ]
+]
+
+{ #category : #'*Deprecated12' }
 ClassFactoryForTestCase >> newTraitUsing: aTraitComposition [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.

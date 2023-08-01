@@ -212,27 +212,7 @@ ClassFactoryForTestCase >> newClass [
 { #category : #creating }
 ClassFactoryForTestCase >> newTrait [
 
-	^ self
-		  newTraitNamed: self newBehaviorName
-		  uses: Array new
-		  tag: self defaultTagPostfix
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag: aTag [
-
-	| newTrait |
-	newTrait := self class classInstaller make: [ :aBuilder |
-		            aBuilder
-			            name: aTraitName;
-			            installingEnvironment: self environment;
-			            traitComposition: aTraitComposition;
-			            package: self packageName;
-			            tag: aTag;
-			            beTrait ].
-
-	createdBehaviors add: newTrait.
-	^ newTrait
+	^ self make: [ :aBuilder | aBuilder beTrait ]
 ]
 
 { #category : #accessing }
