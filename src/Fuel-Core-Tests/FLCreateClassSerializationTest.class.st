@@ -233,30 +233,29 @@ FLCreateClassSerializationTest >> testCreateClassWithSharedPool [
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateClassWithSharedPoolAndMethodReferencingAClassVariableOfIt [
 	"Tests materialization of a class not defined in the image, with a shared pool and a compiled method that referers to a class side variable of the  sharedPool (NOTE: it will be an identity problem if it isn't a Smalltalk global')"
-	
-	| aClass materializedClass sharedPool anObject |	
-	
+
+	| aClass materializedClass sharedPool anObject |
 	aClass := self classFactory silentlyNewClass.
 	anObject := Object new.
-	
-	sharedPool := self classFactory newSubclassOf: SharedPool.
+
+	sharedPool := self classFactory make: [ :aBuilder | aBuilder superclass: SharedPool ].
 	sharedPool addClassVarNamed: 'ClassVar1'.
 	self classFactory
 		silentlyCompile: 'classVar1: a  ClassVar1 := a.' in: sharedPool class;
 		silentlyCompile: 'classVar1 ^  ClassVar1' in: sharedPool class.
 	sharedPool perform: #classVar1: with: anObject.
-	
-	aClass addSharedPool: sharedPool.	
+
+	aClass addSharedPool: sharedPool.
 	self classFactory
-		silentlyCompile:  'xxx ^ ClassVar1.' in: aClass;
+		silentlyCompile: 'xxx ^ ClassVar1.' in: aClass;
 		silentlyCompile: 'yyy ^ ClassVar1.' in: aClass class.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 
-	self assert: 1 equals: materializedClass sharedPools size.
+	self assert: materializedClass sharedPools size equals: 1.
 	self assert: sharedPool identicalTo: materializedClass sharedPools first.
-	self assert:  ((materializedClass >> #xxx) literalAt: 1) value identicalTo: (sharedPool classPool at: #ClassVar1).
-	self assert:  ((materializedClass class >> #yyy) literalAt: 1) value identicalTo: (sharedPool classPool at: #ClassVar1).
+	self assert: (materializedClass >> #xxx literalAt: 1) value identicalTo: (sharedPool classPool at: #ClassVar1).
+	self assert: (materializedClass class >> #yyy literalAt: 1) value identicalTo: (sharedPool classPool at: #ClassVar1).
 	self assert: (materializedClass new perform: #xxx) identicalTo: anObject.
 	self assert: (materializedClass perform: #yyy) identicalTo: anObject
 ]
@@ -264,34 +263,32 @@ FLCreateClassSerializationTest >> testCreateClassWithSharedPoolAndMethodReferenc
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateClassWithSharedPoolAndMethodReferencingIt [
 	"Tests materialization of a class not defined in the image, with a shared pool and a compiled method that referers to an Association with such sharedPool (NOTE: it will be an identity problem if it isn't a Smalltalk global')"
-	
-	| aClass materializedClass sharedPool materializedMethod literalIndex |	
+
+	| aClass materializedClass sharedPool materializedMethod literalIndex |
 	aClass := self classFactory silentlyNewClass.
-	sharedPool := self classFactory newSubclassOf: SharedPool.
+	sharedPool := self classFactory make: [ :aBuilder | aBuilder superclass: SharedPool ].
 	aClass addSharedPool: sharedPool.
-	self classFactory
-		silentlyCompile: 'initialize ', sharedPool name asString, ' name.'
-		in: aClass class.
+	self classFactory silentlyCompile: 'initialize ' , sharedPool name asString , ' name.' in: aClass class.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 	materializedMethod := materializedClass class >> #initialize.
 	literalIndex := materializedMethod literals indexOf: (self environmentOfTest bindingOf: sharedPool name).
 
-	self assert: 1 equals: (materializedClass sharedPools size).
+	self assert: materializedClass sharedPools size equals: 1.
 	self assert: sharedPool identicalTo: materializedClass sharedPools first.
-	self assert:  (materializedMethod literalAt: literalIndex) value identicalTo: sharedPool
+	self assert: (materializedMethod literalAt: literalIndex) value identicalTo: sharedPool
 ]
 
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateClassWithVariables [
 	"Tests materialization of a class not defined in the image, with instance variables."
-	
-	| aClass materializedClass |	
+
+	| aClass materializedClass |
 	aClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'var1 var2'.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 
-	self assert: aClass instVarNames = materializedClass instVarNames.
+	self assert: aClass instVarNames equals: materializedClass instVarNames
 ]
 
 { #category : #tests }
@@ -398,17 +395,15 @@ FLCreateClassSerializationTest >> testCreateNormalClass [
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateSharedPoolClass [
 	"Tests materialization of a shared pool class not defined in the image (NOTE: it will be an identity problem if it isn't a Smalltalk global')"
-	
-	|  materializedClass sharedPool |
-	sharedPool := self classFactory newSubclassOf: SharedPool.
+
+	| materializedClass sharedPool |
+	sharedPool := self classFactory make: [ :aBuilder | aBuilder superclass: SharedPool ].
 	sharedPool addClassVarNamed: 'ClassVar1'.
 	self classFactory
 		silentlyCompile: 'classVar1: a  ClassVar1 := a.' in: sharedPool class;
 		silentlyCompile: 'classVar1 ^  ClassVar1 ' in: sharedPool class.
-	
-	sharedPool
-		perform: #classVar1:
-		with: #foo.
+
+	sharedPool perform: #classVar1: with: #foo.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: sharedPool.
 

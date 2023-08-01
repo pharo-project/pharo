@@ -55,20 +55,9 @@ FLClassFactoryForTestCase >> newAnonymousTrait [
 ]
 
 { #category : #creating }
-FLClassFactoryForTestCase >> newClass [
-	^ self newSubclassOf: self defaultSuperclass
-]
-
-{ #category : #creating }
 FLClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
 
 	^ self newSubclassOf: self defaultSuperclass instanceVariableNames: aString
-]
-
-{ #category : #creating }
-FLClassFactoryForTestCase >> newSubclassOf: aClass [
-
-	^ self newSubclassOf: aClass instanceVariableNames: ''
 ]
 
 { #category : #creating }
