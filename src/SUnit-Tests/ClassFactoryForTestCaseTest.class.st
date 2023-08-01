@@ -67,10 +67,11 @@ ClassFactoryForTestCaseTest >> testDefaultCategoryCleanUp [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testMultipleClassCreation [
+
 	5 timesRepeat: [ factory newClass ].
 	self assert: (SystemNavigation new allClasses includesAll: factory createdClasses).
 	self assert: factory createdClassNames asSet size equals: 5.
-	self assert: (self packageOrganizer listAtCategoryNamed: factory defaultCategory) asSet equals: factory createdClassNames asSet
+	self assertCollection: (self packageOrganizer packageNamed: factory packageName) definedClasses hasSameElements: factory createdClasses
 ]
 
 { #category : #testing }
@@ -107,11 +108,11 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testSingleClassFastCreation [
-	| class elementsInCategoryForTest |
+
+	| class |
 	class := factory newClass.
 	self assert: (SystemNavigation new allClasses includes: class).
-	elementsInCategoryForTest := self packageOrganizer listAtCategoryNamed: factory defaultCategory.
-	self assert: elementsInCategoryForTest equals: {class name}.
+	self assertCollection: (self packageOrganizer packageNamed: factory packageName) definedClasses hasSameElements: { class }.
 	self assertEmpty: class instVarNames.
 	self assertEmpty: class classPool
 ]
