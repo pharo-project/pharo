@@ -18,6 +18,6 @@ FLCreateTraitSerializationTest >> newAnonymousClassOrTrait [
 FLCreateTraitSerializationTest >> newInstanceFrom: aClassOrTrait [
 
 	^ (aClassOrTrait isTrait
-		   ifTrue: [ self classFactory silentlyNewClassUsing: aClassOrTrait ]
+		   ifTrue: [ self classFactory silentlyMake: [ :aBuilder | aBuilder traitComposition: aClassOrTrait ] ]
 		   ifFalse: [ aClassOrTrait ]) new
 ]

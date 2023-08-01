@@ -102,9 +102,9 @@ FLCreateClassSerializationTest >> testCreateClassWithClassSideVariable [
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateClassWithClassVariable [
 	"Tests materialization a class not defined in the image, with a class variable."
-	
-	| aClass materializedClass |	
-	aClass := self classFactory silentlyNewClassWithClassVariableNames: 'ClassVariable'.
+
+	| aClass materializedClass |
+	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'ClassVariable' ].
 	aClass classPool at: 'ClassVariable' put: #test.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
@@ -455,11 +455,11 @@ FLCreateClassSerializationTest >> testCreateWithClassSideInitializeMethod [
 { #category : #tests }
 FLCreateClassSerializationTest >> testCreateWithClassVariableAccessors [
 	"Tests materialization of a compiled method in a class not defined in the image. The class defines accessors for a class variable."
-	
-	| aClass materializedClass instance |	
-	aClass := self classFactory silentlyNewClassWithClassVariableNames: 'AnFLClassVariable'.
+
+	| aClass materializedClass instance |
+	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'AnFLClassVariable' ].
 	self classFactory
-		silentlyCompile:  'classVariable ^AnFLClassVariable' in: aClass;
+		silentlyCompile: 'classVariable ^AnFLClassVariable' in: aClass;
 		silentlyCompile: 'classVariable: value AnFLClassVariable := value' in: aClass.
 	(self newInstanceFrom: aClass) classVariable: 42.
 

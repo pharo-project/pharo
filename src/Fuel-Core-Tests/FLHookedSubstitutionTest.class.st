@@ -66,18 +66,20 @@ FLHookedSubstitutionTest >> testObjectByProxyThatBecomesItsContent [
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testProxyByTarget [
+
 	| aProxyClass result original |
-	aProxyClass := self classFactory silentlyNewClassWithClassVariableNames: 'Target'.
+	aProxyClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
 	self classFactory
 		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: Target' in: aProxyClass.
+				by: Target'
+		in: aProxyClass.
 
 	original := aProxyClass new
-		target: 5;
-		yourself.
+		            target: 5;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: original.
 
@@ -86,23 +88,25 @@ FLHookedSubstitutionTest >> testProxyByTarget [
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
+
 	| aProxyClass result pair original |
-	aProxyClass := self classFactory silentlyNewClassWithClassVariableNames: 'Target'.
+	aProxyClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
 	self classFactory
 		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: Target' in: aProxyClass.
+				by: Target'
+		in: aProxyClass.
 
 	pair := FLPair new
-		left: 6;
-		right: 'foo';
-		yourself.
+		        left: 6;
+		        right: 'foo';
+		        yourself.
 
 	original := aProxyClass new
-		target: pair;
-		yourself.
+		            target: pair;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: original.
 
@@ -112,26 +116,28 @@ FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testProxyByTargetInsideObjectAndAnalisysIsPropagated [
+
 	| aProxyClass result original pair pairRoot |
-	aProxyClass := self classFactory silentlyNewClassWithClassVariableNames: 'Target'.
+	aProxyClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
 	self classFactory
-		silentlyCompile:  'target: x  Target := x' in: aProxyClass;
+		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: Target' in: aProxyClass.
+				by: Target'
+		in: aProxyClass.
 
 	pair := FLPair new
-		left: 6;
-		right: 'foo'.
+		        left: 6;
+		        right: 'foo'.
 
 	original := aProxyClass new
-		target: pair;
-		yourself.
+		            target: pair;
+		            yourself.
 
 	pairRoot := FLPair new
-		left: original;
-		yourself.
+		            left: original;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: pairRoot.
 
@@ -142,22 +148,24 @@ FLHookedSubstitutionTest >> testProxyByTargetInsideObjectAndAnalisysIsPropagated
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testProxyInsideObjectByTarget [
+
 	| aProxyClass result original pair |
-	aProxyClass := self classFactory silentlyNewClassWithClassVariableNames: 'Target'.
+	aProxyClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
 	self classFactory
-		silentlyCompile:  'target: x  Target := x' in: aProxyClass;
+		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: Target' in: aProxyClass.
+				by: Target'
+		in: aProxyClass.
 
 	original := aProxyClass new
-		target: 5;
-		yourself.
+		            target: 5;
+		            yourself.
 
 	pair := FLPair new
-		left: original;
-		right: 'foo'.
+		        left: original;
+		        right: 'foo'.
 
 	result := self resultOfSerializeAndMaterialize: pair.
 
