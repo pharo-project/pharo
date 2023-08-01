@@ -185,7 +185,7 @@ ClassFactoryForTestCase >> make: aBlock [
 	| newClass |
 	newClass := self class classInstaller make: [ :aBuilder | "Let's but some default values."
 		            aBuilder
-			            name: self newClassName;
+			            name: self newBehaviorName;
 			            superclass: self defaultSuperclass;
 			            installingEnvironment: self environment;
 			            package: self packageName.
@@ -198,30 +198,24 @@ ClassFactoryForTestCase >> make: aBlock [
 ]
 
 { #category : #creating }
+ClassFactoryForTestCase >> newBehaviorName [
+
+	^ (#BehaviorForTestToBeDeleted , self nextCount printString) asSymbol
+]
+
+{ #category : #creating }
 ClassFactoryForTestCase >> newClass [
 
 	^ self make: [ :aBuilder | "We customize nothing on this one" ]
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newClassName [
-
-	^ (#ClassForTestToBeDeleted , self nextCount printString) asSymbol
-]
-
-{ #category : #creating }
 ClassFactoryForTestCase >> newTrait [
 
 	^ self
-		  newTraitNamed: self newTraitName
+		  newTraitNamed: self newBehaviorName
 		  uses: Array new
 		  tag: self defaultTagPostfix
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newTraitName [
-
-	^ (#TraitForTestToBeDeleted , self nextCount printString) asSymbol
 ]
 
 { #category : #creating }
@@ -239,15 +233,6 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag
 
 	createdBehaviors add: newTrait.
 	^ newTrait
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newTraitUsing: aTraitComposition [
-
-	^ self
-		  newTraitNamed: self newTraitName
-		  uses: aTraitComposition
-		  tag: self defaultTagPostfix
 ]
 
 { #category : #accessing }
