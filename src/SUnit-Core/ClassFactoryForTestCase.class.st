@@ -199,10 +199,7 @@ ClassFactoryForTestCase >> make: aBlock [
 { #category : #creating }
 ClassFactoryForTestCase >> newClass [
 
-	^ self
-		  newSubclassOf: self defaultSuperclass
-		  instanceVariableNames: ''
-		  classVariableNames: ''
+	^ self make: [ :aBuilder | "We customize nothing on this one" ]
 ]
 
 { #category : #creating }
@@ -211,17 +208,6 @@ ClassFactoryForTestCase >> newClassName [
 	| postFix |
 	postFix := self nextCount printString.
 	^ (#ClassForTestToBeDeleted , postFix) asSymbol
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-
-	^ self
-		  newSubclassOf: aClass
-		  uses: {  }
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-		  category: self defaultTagPostfix
 ]
 
 { #category : #creating }

@@ -103,13 +103,19 @@ ClassFactoryForTestCaseTest >> testPackageCleanUp [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testSingleClassCreation [
+
 	| class elementsInCategoryForTest |
-	class := factory newSubclassOf: Object instanceVariableNames: 'a b c' classVariableNames: 'X Y'.
+	class := factory make: [ :aBuilder |
+		         aBuilder
+			         superclass: Object;
+			         slotsFromString: 'a b c';
+			         sharedVariablesFromString: 'X Y';
+			         tag: factory defaultTagPostfix ].
 	self assert: (SystemNavigation new allClasses includes: class).
 	elementsInCategoryForTest := self packageOrganizer listAtCategoryNamed: factory defaultCategory.
-	self assert: elementsInCategoryForTest equals: {class name}.
-	self assert: class instVarNames equals: #(a b c).
-	self assert: class classPool keys asSet equals: #(X Y) asSet
+	self assert: elementsInCategoryForTest equals: { class name }.
+	self assert: class instVarNames equals: #( a b c ).
+	self assert: class classPool keys asSet equals: #( X Y ) asSet
 ]
 
 { #category : #testing }

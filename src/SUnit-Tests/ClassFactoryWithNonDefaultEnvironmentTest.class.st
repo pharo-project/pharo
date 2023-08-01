@@ -101,14 +101,20 @@ ClassFactoryWithNonDefaultEnvironmentTest >> testPackageCleanUp [
 
 { #category : #testing }
 ClassFactoryWithNonDefaultEnvironmentTest >> testSingleClassCreation [
+
 	| class elementsInCategoryForTest |
-	class := factory newSubclassOf: Object instanceVariableNames: 'a b c' classVariableNames: 'X Y'.
+	class := factory make: [ :aBuilder |
+		         aBuilder
+			         superclass: Object;
+			         slotsFromString: 'a b c';
+			         sharedVariablesFromString: 'X Y';
+			         tag: factory defaultTagPostfix ].
 	self assert: (self testedEnvironment allClasses includes: class).
 	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ].
 	elementsInCategoryForTest := self testedOrganization listAtCategoryNamed: factory defaultCategory.
-	self assert: elementsInCategoryForTest equals: {class name}.
-	self assert: class instVarNames equals: #(a b c).
-	self assert: class classPool keys asSet equals: #(X Y) asSet
+	self assert: elementsInCategoryForTest equals: { class name }.
+	self assert: class instVarNames equals: #( a b c ).
+	self assert: class classPool keys asSet equals: #( X Y ) asSet
 ]
 
 { #category : #testing }
