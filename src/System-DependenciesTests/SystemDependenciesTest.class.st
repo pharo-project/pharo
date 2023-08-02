@@ -152,12 +152,6 @@ SystemDependenciesTest >> knownUIDependencies [
 	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
 ]
 
-{ #category : #utilities }
-SystemDependenciesTest >> longTestCase [
-
-	self timeLimit: 60 seconds
-]
-
 { #category : #accessing }
 SystemDependenciesTest >> metacelloPackageNames [
 

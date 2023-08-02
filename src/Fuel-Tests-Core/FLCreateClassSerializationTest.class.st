@@ -59,6 +59,8 @@ FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 	"Tests materialization a class or trait not defined in the image and that the metaclass is also created."
 
 	| class materializedClassOrTrait environment category name metaclassName metaclass |
+	self longTestCase.
+	
 	class := self classFactory silentlyNewClass.
 	environment := class environment.
 	category := class category.

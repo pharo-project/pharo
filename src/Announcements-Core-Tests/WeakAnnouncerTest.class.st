@@ -57,12 +57,6 @@ WeakAnnouncerTest >> benchWeakSubscriptionStatic [
 	] timeToRun
 ]
 
-{ #category : #utilities }
-WeakAnnouncerTest >> longTestCase [
-
-	self timeLimit: 60 seconds
-]
-
 { #category : #tests }
 WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
 	self longTestCase.
