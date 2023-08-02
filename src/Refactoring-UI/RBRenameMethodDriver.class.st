@@ -41,7 +41,7 @@ RBRenameMethodDriver >> command: aCommand andPostAction: aClosure [
 { #category : #initialize }
 RBRenameMethodDriver >> furtherActionFor: aReport [
 
-	aReport runRefactoring.
+	aReport browse
 ]
 
 { #category : #initialize }

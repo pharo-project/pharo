@@ -446,7 +446,7 @@ RBBrowserEnvironment >> instVarReadersTo: instVarName in: aClass [
 
 { #category : #environments }
 RBBrowserEnvironment >> instVarRefsTo: instVarName in: aClass [
-	^RBVariableEnvironment
+	^ RBVariableEnvironment
 		on: self
 		referencesToInstanceVariable: instVarName
 		in: aClass
