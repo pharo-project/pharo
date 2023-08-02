@@ -75,7 +75,7 @@ RBVariableTransformation class >> variable: aVariableName class: aClassName clas
 RBVariableTransformation >> definingClass [
 
 	^ isClassVariable
-		ifTrue: [ super definingClass classSide ]
+		ifTrue: [ super definingClass instanceSide ]
 		ifFalse: [ super definingClass ]
 ]
 
