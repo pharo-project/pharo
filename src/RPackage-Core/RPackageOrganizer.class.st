@@ -691,6 +691,7 @@ RPackageOrganizer >> registerPackage: aPackage [
 	self validateCanBeAddedPackageName: aPackage name tagName: nil.
 
 	self basicRegisterPackage: aPackage.
+	self addCategory: aPackage name.
 	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
 	aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
 

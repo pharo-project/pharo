@@ -48,6 +48,15 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingCategoryWithoutDashDoes
 ]
 
 { #category : #tests }
+RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingPackage [
+
+	self packageOrganizer ensurePackage: self packageName.
+
+	self assert: (self packageOrganizer packageNames includes: self packageName).
+	self assert: (self packageOrganizer includesCategory: self packageName)
+]
+
+{ #category : #tests }
 RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingCategory [
 	"Regression test because removing a category corresponding to a tag from the system organizer was not removing the package tag from the system oprganizer."
 
