@@ -73,8 +73,3 @@ ToolShortcutsCategory >> saveImage [
 			(Smalltalk snapshot: true andQuit: false)
 				ifFalse: [ UIManager default inform: 'Image saved' ] ]
 ]
-
-{ #category : #accessing }
-ToolShortcutsCategory >> tools [
-	^ PharoCommonTools new
-]

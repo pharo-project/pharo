@@ -47,23 +47,27 @@ DebugContext class >> forContext: aContext [
 DebugContext >> blockNotFoundDialog: aMethod with: aText [
 
 	| message result newMethod |
-
 	message := 'Method for block not found on stack, can''t edit and continue'.
 
 	"shouldn't edit doits"
-	aMethod selector isDoIt
-		ifTrue: [ ^ self inform: message ].
+	aMethod selector isDoIt ifTrue: [ ^ self inform: message ].
 
-	result := UIManager default
-						confirm: message
-						trueChoice: 'Compile and Browse'
-						falseChoice: 'Cancel'.
+	result := self
+		          confirm: message
+		          trueChoice: 'Compile and Browse'
+		          falseChoice: 'Cancel'.
 
 	"possible return values are true | false | nil"
 	result ifFalse: [ ^ self ].
 
 	newMethod := self recompileCurrentMethodTo: aText notifying: nil.
-	newMethod ifNotNil: [newMethod browse]
+	newMethod ifNotNil: [ self browseMethod: newMethod ]
+]
+
+{ #category : #private }
+DebugContext >> browseMethod: aMethod [
+
+	aMethod browse
 ]
 
 { #category : #private }
@@ -74,6 +78,15 @@ DebugContext >> checkSelectorUnchanged: aSelector [
 	unchanged
 		ifFalse: [ self inform: 'can''t change selector' ].
 	^ unchanged
+]
+
+{ #category : #'ui requests' }
+DebugContext >> confirm: message trueChoice: trueChoice falseChoice: falseChoice [
+
+	^ UIManager default
+		confirm: message
+		trueChoice: trueChoice
+		falseChoice: falseChoice
 ]
 
 { #category : #private }

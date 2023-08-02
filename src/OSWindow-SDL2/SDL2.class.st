@@ -122,20 +122,18 @@ SDL2 class >> ffiLibraryName [
 
 { #category : #native }
 SDL2 class >> findSDL2 [
+	| libFullPath |
+
 	"In Linux, try to use the linked version."
 	OSSDL2Driver hasPlugin.
 
-	"Look for SDL2 using different names."
-	#(0							"Static"
-	SDL2
-	'libSDL2-2.0.0.dylib'		"Mac"
-	'libSDL2-2.0.so.0'			"Linux 1"
-	'libSDL2-2.0.so.0.2.1'	"Linux 2"
-	'SDL2.dll'					"Windows"
-	) do: [ :eachName |
-		[ (self checkLibraryName: eachName) ifTrue: [ ^ eachName ] ]
-		onErrorDo: [nil] ].
-	self error: 'Failed to find SDL2 library.'
+	libFullPath := Smalltalk platform ffiLibraryName: SDL2.
+	(self checkLibraryName: libFullPath)
+		ifTrue: [ ^ libFullPath ]
+		ifFalse: [
+			libFullPath asFileReference exists
+				ifFalse: [ self error: libFullPath asString , ' does not exist. Please install or update SDL2 in your system' ]
+				ifTrue: [ self error: 'Failed to load SDL2 library. Check if the library ' , libFullPath asString , ' exports the SDL_Init symbol and matches this platform' ] ]
 ]
 
 { #category : #video }
@@ -309,6 +307,15 @@ SDL2 class >> joystickOpen: deviceIndex [
 	^ self ffiCall: #( SDL_Joystick SDL_JoystickOpen ( int deviceIndex ) )
 ]
 
+{ #category : #native }
+SDL2 class >> macLibraryName [
+
+	^ FFIMacLibraryFinder
+		findAnyLibrary: #(
+			'libSDL2.dylib'
+			'libSDL2-2.0.0.dylib')
+]
+
 { #category : #mouse }
 SDL2 class >> modState [
 	^ self ffiCall: #( SDL_Keymod SDL_GetModState ( ) )
@@ -408,6 +415,14 @@ SDL2 class >> ticks [
 	^ self ffiCall: #( Uint32 SDL_GetTicks ( ) )
 ]
 
+{ #category : #native }
+SDL2 class >> unix64LibraryName [
+
+	^ FFIUnix64LibraryFinder findAnyLibrary: #(
+		'libSDL2-2.0.so.0.2.1'
+		'libSDL2-2.0.so.0')
+]
+
 { #category : #common }
 SDL2 class >> version [
 	"Answer the SDL version. For example, a SDL_Version(2.0.7)."
@@ -422,6 +437,12 @@ SDL2 class >> version [
 { #category : #common }
 SDL2 class >> wasInit: flags [
 	^ self ffiCall: #( int SDL_WasInit ( Uint32 flags ) )
+]
+
+{ #category : #native }
+SDL2 class >> win32LibraryName [
+
+	^ FFIWindowsLibraryFinder findAnyLibrary: #('SDL2.dll' 'libSDL2.dll')
 ]
 
 { #category : #'nb-library' }

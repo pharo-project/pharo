@@ -748,6 +748,12 @@ TestCase >> logFailure: aString [
 			flush]
 ]
 
+{ #category : #utilities }
+TestCase >> longTestCase [
+
+	self timeLimit: 60 seconds
+]
+
 { #category : #accessing }
 TestCase >> nameForReport [
 

@@ -45,11 +45,6 @@ OCReceiverDoItSemanticScope >> receiver: anObject [
 ]
 
 { #category : #accessing }
-OCReceiverDoItSemanticScope >> targetClass [
-	^targetReceiver class
-]
-
-{ #category : #accessing }
 OCReceiverDoItSemanticScope >> targetReceiver [
 
 	^ targetReceiver

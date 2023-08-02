@@ -51,3 +51,8 @@ OCDoItSemanticScope >> parseASTBy: aParser [
 OCDoItSemanticScope >> receiver [
 	^ self subclassResponsibility
 ]
+
+{ #category : #accessing }
+OCDoItSemanticScope >> targetClass [
+ 	^ self receiver class
+]

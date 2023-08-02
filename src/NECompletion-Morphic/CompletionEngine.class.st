@@ -328,7 +328,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 		to: wordEnd - 1.
 	old := self editor selection.
 
-	( old size >= aString size )
+	( NECPreferences caseSensitive not or: [ old size >= aString size ] )
 		ifTrue:[
 				self editor replaceSelectionWith: aString. ]
 		ifFalse: [
