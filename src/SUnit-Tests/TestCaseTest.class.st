@@ -34,7 +34,7 @@ TestCaseTest >> testAnnouncement [
 
 	oldCollection := collection copy.
 	unitTest resetAnnouncer.
-	unitTest debug: #testClassCreationInDifferentCategories.
+	unitTest debug: #testClassCreationInDifferentTags.
 	self assert: collection equals: oldCollection
 ]
 

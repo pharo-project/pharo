@@ -1,8 +1,29 @@
 Class {
 	#name : #RBConditionTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'rbNamespace',
+		'objectClass',
+		'messageNodeClass',
+		'newClass'
+	],
 	#category : #'Refactoring-Tests-Core'
 }
+
+{ #category : #running }
+RBConditionTest >> setUp [
+
+	super setUp.
+	rbNamespace := RBClassModelFactory rbNamespace new.
+	objectClass := rbNamespace classNamed: #Object.
+	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
+	rbNamespace defineClass: 'Object << #SomeClassName
+	slots: { #instanceVariable1 . #instanceVariable2};
+	sharedVariables: { #ClassVariable1};
+	sharedPools: {TextConstants};
+	package: #''Refactory-Testing'''.
+	newClass := rbNamespace classNamed: #SomeClassName
+]
 
 { #category : #tests }
 RBConditionTest >> testCheckFailEarlyAndDoesNotCoverEveryConditions [
@@ -93,6 +114,46 @@ RBConditionTest >> testCheckValidMethodName [
 	self assert: (RBCondition checkMethodName: #foo).
 
 	self assert: (RBCondition checkMethodName: #+)
+]
+
+{ #category : #'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesInstanceVariable [
+
+	| testClass |
+	testClass := rbNamespace classNamed: self class name.
+
+	self assert: (testClass withAllSuperclasses includes: objectClass).
+	self assert: (RBCondition
+			 hierarchyOf: testClass
+			 referencesInstanceVariable: #objectClass) check
+]
+
+{ #category : #'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesSharedVariableAccessing [
+
+	| textConstantClass |
+	textConstantClass := rbNamespace classNamed: #TextConstants.
+	"only the class side is accessing the shared variable. But the query should 
+	check both sides."
+
+	self assert: (RBCondition
+			 hierarchyOf: textConstantClass
+			 referencesSharedVariable: #Basal) check.
+
+	self assert: (RBCondition
+			 hierarchyOf: textConstantClass classSide
+			 referencesSharedVariable: #Basal) check
+]
+
+{ #category : #'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesSharedVariableNotAccessing [
+
+	| testClass |
+	testClass := rbNamespace classNamed: self class name.
+
+	self deny: (RBCondition
+			 hierarchyOf: newClass
+			 referencesSharedVariable: #ClassVariable1) check
 ]
 
 { #category : #tests }
