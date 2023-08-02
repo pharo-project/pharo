@@ -16,5 +16,5 @@ ShAnonymousClassInstallerTest >> testSubclasses [
 	self assert: aSubClass superclass equals: Point.
 	self deny: (Smalltalk hasClassNamed: #AnotherPoint).
 
-	self assert: (self packageOrganizer packageOf: aSubClass) equals: nil
+	self assert: (self packageOrganizer packageOfClassNamed: aSubClass name) isNil
 ]
