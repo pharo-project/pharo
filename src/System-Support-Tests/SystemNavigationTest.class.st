@@ -160,7 +160,5 @@ SystemNavigationTest >> testSenderOfASelectorInBlock [
 	otherClass compileSilently: 'yetAnotherMethod ^[[self ' , selector asString , ']]'.
 
 	senders := self systemNavigationToTest allSendersOf: selector.
-	self assertCollection: senders hasSameElements: {
-			(class >> #anotherMethod).
-			(otherClass >> #yetAnotherMethod) }
+	self assert: (senders collect: [ :method | method selector ]) asSet equals: { #anotherMethod. #yetAnotherMethod } asSet
 ]
