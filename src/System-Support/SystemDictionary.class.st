@@ -388,9 +388,11 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	"Rename the class, aClass, to have the title newName."
 
 	| oldref category |
+	self flag: #package. "When the category thing will be removed, we should have only one line updating the organization"
 	category := self organization categoryOfBehavior: oldName.
 	self organization classify: newName under: category.
 	self organization removeBehavior: oldName.
+	self organization renameClass: aClass from: oldName to: newName.
 	oldref := self associationAt: oldName.
 	self removeKey: oldName.
 	oldref key: newName.
@@ -402,11 +404,7 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 		from: oldName
 		to: newName
 		inCategory: category.
-	aClass subclassesDo: [ :subclass |
-		SystemAnnouncer uniqueInstance
-			classParentOf: subclass
-			renamedFrom: oldName
-			to: newName ]
+	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: newName ]
 ]
 
 { #category : #renaming }

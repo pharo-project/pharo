@@ -4,6 +4,6 @@ Extension { #name : #Trait }
 Trait >> asEpiceaRingDefinition [
 
 	^ self asRingDefinition
-		package: (EpPlatform current packageNameFor: self);
+		package: self packageName;
 		yourself
 ]
