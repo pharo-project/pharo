@@ -17,9 +17,9 @@ Class {
 		'class',
 		'methods',
 		'superclass',
-		'scopes'
+		'refactoring'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #initialization }
@@ -29,33 +29,6 @@ RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes push
 		  model: aRBNamespace
 		  scopes: refactoringScopes
 		  pushUp: methodsList
-]
-
-{ #category : #execution }
-RBPushUpMethodDriver >> execute [
-
-	| changes refactoring |
-	refactoring := self refactoring.
-	changes := [
-	           [
-	           [ refactoring generateChanges ]
-		           on: RBInputValidationFailedError
-		           do: [ :err |
-			           self selectMethodsAndSuperclass.
-			           refactoring superclass: superclass.
-			           err resume ] ]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err |
-		           ^ RBRefactoringError signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err |
-			           RBRefactoringWarning signal: err messageText.
-			           "If user answers no, error is being propagated."
-			           err resume ].
-	(StRefactoringPreviewPresenter
-		 changes: changes
-		 inEnvironment: model
-		 scopes: scopes) open
 ]
 
 { #category : #initialization }
@@ -72,11 +45,35 @@ RBPushUpMethodDriver >> refactoring [
 	"I'm gathering user input and creating refactoring instance"
 
 	self selectMethodsAndSuperclass.
-	^ RBPullUpMethodRefactoring
+	refactoring := RBPullUpMethodRefactoring
 		  model: model
 		  pullUp: (methods collect: [ :each | each selector ])
 		  from: methods first origin
 		  to: superclass
+]
+
+{ #category : #execution }
+RBPushUpMethodDriver >> runRefactoring [
+
+	| changes |
+	self refactoring.
+	changes := [
+	           [
+	           [ refactoring generateChanges ]
+		           on: RBInputValidationFailedError
+		           do: [ :err |
+			           self selectMethodsAndSuperclass.
+			           refactoring superclass: superclass.
+			           err resume ] ]
+		           on: RBApplicabilityChecksFailedError
+		           do: [ :err |
+		           ^ RBRefactoringError signal: err messageText ] ]
+		           on: RBBreakingChangeChecksFailedWarning
+		           do: [ :err |
+			           RBRefactoringWarning signal: err messageText.
+			           "If user answers no, error is being propagated."
+			           err resume ].
+	self openPreviewWithChanges: { changes }
 ]
 
 { #category : #'initialization - data' }

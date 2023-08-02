@@ -24,8 +24,7 @@ MetacelloScriptingStdTstHarnessTestCase >> doSilently [
 { #category : #utilities }
 MetacelloScriptingStdTstHarnessTestCase >> hasPackage: aString [
 
-	^ MCWorkingCopy allManagers
-		anySatisfy: [ :each | each packageName = aString ]
+	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :wc | wc packageName = aString ]
 ]
 
 { #category : #running }
@@ -42,16 +41,15 @@ MetacelloScriptingStdTstHarnessTestCase >> runCase [
 
 { #category : #running }
 MetacelloScriptingStdTstHarnessTestCase >> setUp [
-  super setUp.
-  MetacelloPlatform current clearPackageCache.
-  registry := MetacelloProjectRegistration registry.
-  self setUpRepositories.
-  self setUpRepositoryContents.
-  MetacelloProjectRegistration resetRegistry.
-  initialWorkingCopyList := MCWorkingCopy allManagers
-    collect: [ :each | each packageName ].
-  self disableUndefinedSymbolTracking
-    ifTrue: [ undefinedSymbols := MetacelloPlatform current disableUndefinedSybolUpdates ]
+
+	super setUp.
+	MetacelloPlatform current clearPackageCache.
+	registry := MetacelloProjectRegistration registry.
+	self setUpRepositories.
+	self setUpRepositoryContents.
+	MetacelloProjectRegistration resetRegistry.
+	initialWorkingCopyList := MCWorkingCopy allWorkingCopies collect: [ :wc | wc packageName ].
+	self disableUndefinedSymbolTracking ifTrue: [ undefinedSymbols := MetacelloPlatform current disableUndefinedSybolUpdates ]
 ]
 
 { #category : #running }
@@ -64,20 +62,17 @@ MetacelloScriptingStdTstHarnessTestCase >> setUpRepositoryContents [
 
 { #category : #running }
 MetacelloScriptingStdTstHarnessTestCase >> tearDown [
-  | finalWorkingCopyList diff |  
-  self tearDownPackages.
-  self tearDownRepositories.
-  MetacelloProjectRegistration registry: registry.
-  self disableUndefinedSymbolTracking
-    ifTrue: [ MetacelloPlatform current reenableUndefinedSybolUpdates: undefinedSymbols ].
-  finalWorkingCopyList := MCWorkingCopy allManagers
-    collect: [ :each | each packageName ].
-  diff := finalWorkingCopyList difference: initialWorkingCopyList.
-  diff
-    do: [ :leak | 
-      MetacelloNotification signal: ('leaked package from ' , self printString , ' -> ' , leak printString) ].
-  self assert: diff isEmpty.
-  super tearDown
+
+	| finalWorkingCopyList diff |
+	self tearDownPackages.
+	self tearDownRepositories.
+	MetacelloProjectRegistration registry: registry.
+	self disableUndefinedSymbolTracking ifTrue: [ MetacelloPlatform current reenableUndefinedSybolUpdates: undefinedSymbols ].
+	finalWorkingCopyList := MCWorkingCopy allWorkingCopies collect: [ :wc | wc packageName ].
+	diff := finalWorkingCopyList difference: initialWorkingCopyList.
+	diff do: [ :leak | MetacelloNotification signal: 'leaked package from ' , self printString , ' -> ' , leak printString ].
+	self assert: diff isEmpty.
+	super tearDown
 ]
 
 { #category : #running }
@@ -146,22 +141,27 @@ MetacelloScriptingStdTstHarnessTestCase >> validateProjects: specArrays [
 
 { #category : #utilities }
 MetacelloScriptingStdTstHarnessTestCase >> verify: packageName loadedFrom: repositoryDescription [
-    | externalCoreWorkingCopy |
-    externalCoreWorkingCopy := MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ].
-    self
-        assert:
-            (externalCoreWorkingCopy repositoryGroup repositories
-                includes: (MetacelloMCProject new repositorySpec description: repositoryDescription) createRepository)
+
+	| externalCoreWorkingCopy |
+	externalCoreWorkingCopy := MCWorkingCopy allWorkingCopies detect: [ :wc | wc packageName = packageName ].
+	self assert:
+		(externalCoreWorkingCopy repositoryGroup repositories includes: (MetacelloMCProject new repositorySpec description: repositoryDescription) createRepository)
 ]
 
 { #category : #utilities }
 MetacelloScriptingStdTstHarnessTestCase >> verify: packageName version: fileName [
-	| externalCoreWorkingCopy x |
-	externalCoreWorkingCopy := MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ].
-	self assert: (x := externalCoreWorkingCopy ancestors first name) equals: fileName
+
+	| externalCoreWorkingCopy |
+	externalCoreWorkingCopy := MCWorkingCopy allWorkingCopies detect: [ :wc | wc packageName = packageName ].
+	self assert: externalCoreWorkingCopy ancestors first name equals: fileName
 ]
 
 { #category : #utilities }
 MetacelloScriptingStdTstHarnessTestCase >> verifyPackageNotLoaded: packageName [
-	self assert: (MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ] ifNone: [  ]) identicalTo: nil
+
+	self
+		assert: (MCWorkingCopy allWorkingCopies
+				 detect: [ :wc | wc packageName = packageName ]
+				 ifNone: [  ])
+		identicalTo: nil
 ]

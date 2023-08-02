@@ -39,7 +39,7 @@ ClyClassSideLinkTableDecorator class >> methodDecorationStrategy [
 ClyClassSideLinkTableDecorator class >> methodGroupDecorationStrategy [
 	<classAnnotation>
 
-	^ClyTableDecorationStrategyAnnotation for: ClyTaggedMethodGroup asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: ClyMethodsInProtocolGroup asCalypsoItemContext
 ]
 
 { #category : #decoration }

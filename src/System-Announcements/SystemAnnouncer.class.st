@@ -38,11 +38,9 @@ SystemAnnouncer class >> reset [
 { #category : #initialization }
 SystemAnnouncer class >> restoreAllNotifications [
 
-	"self restoreAllNotifications"
-
+	<script>
 	self reset.
-	(Pragma allNamed: #systemEventRegistration) do: [ :pragma |
-		pragma methodClass instanceSide perform: pragma methodSelector ]
+	(Pragma allNamed: #systemEventRegistration) do: [ :pragma | pragma methodClass instanceSide perform: pragma methodSelector ]
 ]
 
 { #category : #'instance creation' }
@@ -129,11 +127,6 @@ SystemAnnouncer >> classParentOf: aClass renamedFrom: oldName to: newName [
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> classRemoved: aClass fromCategory: aCategoryName [
-	self announce: (ClassRemoved class: aClass category: aCategoryName)
-]
-
-{ #category : #triggering }
 SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName inCategory: aCategoryName [
 	self announce: (ClassRenamed
 				class: aClass
@@ -143,34 +136,11 @@ SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName inCa
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> classReorganized: aClass [
-	self announce: (ClassReorganized class: aClass)
-]
-
-{ #category : #triggering }
 SystemAnnouncer >> classRepackaged: aClass from: aPackage to: anotherPackage [
 	self announce: (ClassRepackaged
 						classRepackaged: aClass
 						oldPackage: aPackage
 						newPackage: anotherPackage)
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> classTagAdded: tagName inPackage: aPackage [
-
-	self announce: (ClassTagAdded in: aPackage tag: tagName)
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> classTagRemoved: tagName fromPackage: aPackage [
-
-	self announce: (ClassTagRemoved in: aPackage tag: tagName)
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> classTagRenamed: tagName inPackage: aPackage to: newTagName [
-
-	self announce: (ClassTagRenamed in: aPackage tag: tagName to: newTagName)
 ]
 
 { #category : #triggering }

@@ -69,11 +69,8 @@ ClapTestRunner >> packagePatterns [
 
 { #category : #accessing }
 ClapTestRunner >> packages [
-	^ self packagePatterns
-		flatCollect: [ :regex |
-			RPackage organizer packages
-				select: [ :package | regex matches: package name ]]
-		as: Set
+
+	^ self packagePatterns flatCollect: [ :regex | self packageOrganizer packages select: [ :package | regex matches: package name ] ] as: Set
 ]
 
 { #category : #accessing }

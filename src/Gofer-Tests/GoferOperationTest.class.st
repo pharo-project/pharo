@@ -10,12 +10,6 @@ Class {
 	#category : #'Gofer-Tests-Tests'
 }
 
-{ #category : #utilities }
-GoferOperationTest >> allManagers [
-
-	^ MCWorkingCopy allManagers
-]
-
 { #category : #accessing }
 GoferOperationTest >> environment [
 	^ environment
@@ -42,13 +36,13 @@ GoferOperationTest >> hasClass: aSymbol selector: aSelector [
 { #category : #utilities }
 GoferOperationTest >> hasPackage: aString [
 
-	^ self allManagers anySatisfy: [ :package | package packageName = aString ]
+	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :package | package packageName = aString ]
 ]
 
 { #category : #utilities }
 GoferOperationTest >> hasVersion: aString [
 
-	^ self allManagers anySatisfy: [ :version | version ancestry ancestorString = aString ]
+	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :version | version ancestry ancestorString = aString ]
 ]
 
 { #category : #running }

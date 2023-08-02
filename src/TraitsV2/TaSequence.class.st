@@ -158,13 +158,12 @@ TaSequence >> isLocalAliasSelector: aSymbol [
 
 { #category : #accessing }
 TaSequence >> memberForSelector: aSelector [
-
 	"I return the member that defines a given selector.
 	I first look for a valid member, if not, I will return the first"
+
 	^ members
-		detect:
-			[ :e | (e selectors includes: aSelector) and: [ (e compiledMethodAt: aSelector) isRequired not ] ]
-		ifNone: [ members detect: [ :e | e selectors includes: aSelector ] ]
+		  detect: [ :member | (member selectors includes: aSelector) and: [ (member compiledMethodAt: aSelector) isRequired not ] ]
+		  ifNone: [ members detect: [ :member | member selectors includes: aSelector ] ]
 ]
 
 { #category : #operations }
@@ -185,7 +184,7 @@ TaSequence >> name [
 { #category : #querying }
 TaSequence >> originSelectorOf: aSelector [
 
-	^ (self traitDefining: aSelector ifNone: [ ^aSelector ]) originSelectorOf: aSelector
+	^ (self traitDefining: aSelector ifNone: [ ^ aSelector ]) originSelectorOf: aSelector
 ]
 
 { #category : #accessing }
@@ -195,7 +194,7 @@ TaSequence >> protocolForMethod: aMethod [
 	originalSelector := aMethod selector.
 	protocols := (self methods
 		              select: [ :method | method selector = originalSelector ]
-		              thenCollect: #protocol) asSet.
+		              thenCollect: #protocolName) asSet.
 
 	"If we have more than a protocol, for example if there is an alias or if multiple traits have the same method, we return a conflicting protocol name."
 	^ protocols size = 1

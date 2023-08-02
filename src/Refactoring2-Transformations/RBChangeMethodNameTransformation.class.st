@@ -11,6 +11,14 @@ Class {
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
+{ #category : #preconditions }
+RBChangeMethodNameTransformation >> applicabilityConditions [
+		
+	^ (RBCondition definesSelector: oldSelector in: class)
+				& (RBCondition isValidMethodName: newSelector for: class).
+
+]
+
 { #category : #support }
 RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
 	(self model allReferencesTo: aSymbol in: classes)
@@ -53,16 +61,24 @@ RBChangeMethodNameTransformation >> implementorsCanBePrimitives [
 	^false
 ]
 
+{ #category : #preconditions }
+RBChangeMethodNameTransformation >> interactionConditions [
+	
+	self flag: #popUp.
+	
+	^ (RBCondition withBlock:
+		[self implementors size > 1
+			ifTrue:
+				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?'
+							expandMacrosWith: self implementors size)].
+		true])
+]
+
 { #category : #support }
 RBChangeMethodNameTransformation >> modifyImplementorParseTree: parseTree in: aClass [
 	| oldArgs |
 	oldArgs := parseTree arguments.
 	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
-]
-
-{ #category : #support }
-RBChangeMethodNameTransformation >> myConditions [
-	"^self subclassResponsibility"
 ]
 
 { #category : #support }
@@ -87,20 +103,13 @@ RBChangeMethodNameTransformation >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
 	| conditions |
-	conditions := self myConditions
-				& (RBCondition definesSelector: oldSelector in: class)
-				& (RBCondition isValidMethodName: newSelector for: class).
+	conditions := self applicabilityConditions. 
 
 	conditions := self implementors
 		inject: conditions into: [ :condition :each |
 			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ].
 
-	^conditions & (RBCondition withBlock:
-		[self implementors size > 1
-			ifTrue:
-				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?'
-							expandMacrosWith: self implementors size)].
-		true])
+	^ conditions & self interactionConditions 
 ]
 
 { #category : #support }

@@ -486,12 +486,6 @@ UIManager >> lowSpaceWatcherDefaultAction: preemptedProcess [
 ]
 
 { #category : #'ui requests' }
-UIManager >> merge: merger informing: aString [
-
-	self subclassResponsibility
-]
-
-{ #category : #'ui requests' }
 UIManager >> multiLineRequest: queryString initialAnswer: defaultAnswer answerHeight: answerHeight [
 	"Create a multi-line instance of me whose question is queryString with
 	 the given initial answer. Invoke it centered at the given point, and

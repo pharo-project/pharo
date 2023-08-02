@@ -769,6 +769,13 @@ RGBehavior >> protocols [
 		ifNotEmpty: [ methodTags  ]
 ]
 
+{ #category : #'accessing - model' }
+RGBehavior >> protocolsForAllMethods [
+	"I act as #tagsForMethods but I also takes into account methods comming from traits"
+
+	^ self methods flatCollect: [ :each  | each tags ] as: Set
+]
+
 { #category : #'private - backend interface' }
 RGBehavior >> pvtAddLocalMethod: anRGMethod [
 
@@ -1080,13 +1087,6 @@ RGBehavior >> tags [
 RGBehavior >> tagsDo: aBlock [
 
 	self backend forBehavior tagsForClass: self do: aBlock
-]
-
-{ #category : #'accessing - model' }
-RGBehavior >> tagsForAllMethods [
-	"I act as #tagsForMethods but I also takes into account methods comming from traits"
-
-	^ self methods flatCollect: [ :each  | each tags ] as: Set
 ]
 
 { #category : #'accessing - model' }

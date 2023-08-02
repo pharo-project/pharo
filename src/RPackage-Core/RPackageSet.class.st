@@ -147,11 +147,12 @@ RPackageSet >> includesSystemCategory: categoryName [
 
 { #category : #initialization }
 RPackageSet >> initialize: aString [
+
 	self initialize.
 	packageName := aString asSymbol.
-	packages := (RPackage organizer packageNamed: aString ifAbsent: [  nil ])
-		ifNotNil: [ :package | { package }  ]
-		ifNil: [ {} ]
+	packages := (self organizer packageNamed: aString ifAbsent: [ nil ])
+		            ifNotNil: [ :package | { package } ]
+		            ifNil: [ {  } ]
 ]
 
 { #category : #'system compatibility' }
@@ -178,6 +179,14 @@ RPackageSet >> methodCategoryPrefix [
 { #category : #accessing }
 RPackageSet >> methods [
 	^ methods ifNil: [ methods := (self packages flatCollect: [ :p | p methods ]) ]
+]
+
+{ #category : #querying }
+RPackageSet >> organizer [
+
+	(self packages isNil or: [ self package isEmpty ]) ifTrue: [ ^ self packageOrganizer ].
+
+	^ self packages anyOne organizer
 ]
 
 { #category : #accessing }

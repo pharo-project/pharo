@@ -27,19 +27,20 @@ ClyNoTagClassGroup class >> priority [
 
 { #category : #operations }
 ClyNoTagClassGroup >> importClass: aClass [
+
 	| newPackages |
 	super importClass: aClass.
 	newPackages := OrderedCollection new.
-	classQuery scope packagesDo: [ :each |
-		each = aClass package ifFalse: [ newPackages add: each ]].
-	newPackages size > 1 ifTrue: [ ^self error: 'You should select single package for import!' ].
+	classQuery scope packagesDo: [ :each | each = aClass package ifFalse: [ newPackages add: each ] ].
+	newPackages size > 1 ifTrue: [ ^ self error: 'You should select single package for import!' ].
 
-	newPackages ifNotEmpty: [ ^newPackages first addClass: aClass ].
-	aClass tags do: [:eachTag | aClass untagFrom: eachTag ]
+	newPackages ifNotEmpty: [ ^ newPackages first addClass: aClass ].
+	self flag: #package. "I'm not sure this next line even makes sens after moving the class from package. The tag should be removed automatically?"
+	aClass removePackageTag
 ]
 
 { #category : #operations }
 ClyNoTagClassGroup >> renameClassTagTo: newTag [
 
-	self classes do: [ :each | each tagWith: newTag]
+	self classes do: [ :class | class packageTag: newTag ]
 ]

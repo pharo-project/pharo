@@ -286,3 +286,31 @@ OCCodeReparatorTest >> testUndeclaredVariable [
 	self assert: method literals first isUndeclaredVariable.
 	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle ^ goo'
 ]
+
+{ #category : #tests }
+OCCodeReparatorTest >> testdefineClass [
+	
+	[ OCCodeReparator new
+		node: (self class>>#testdefineClass) ast;
+		defineClass: 'MyTestClassForDefineClass'
+	]
+		on: ProvideAnswerNotification
+		do: [ :e | e resume: true ].
+		
+	self assert: (Smalltalk globals hasClassNamed: #MyTestClassForDefineClass).
+	Smalltalk globals removeClassNamed:  #MyTestClassForDefineClass
+]
+
+{ #category : #tests }
+OCCodeReparatorTest >> testdefineTrait [
+	
+	[ OCCodeReparator new
+		node: (self class>>#testdefineTrait) ast;
+		defineTrait: 'MyTestTraitForDefineTrait'
+	]
+		on: ProvideAnswerNotification
+		do: [ :e | e resume: true ].
+		
+	self assert: (Smalltalk traitNames includes: #MyTestTraitForDefineTrait).
+	Smalltalk globals removeClassNamed:  #MyTestTraitForDefineTrait
+]

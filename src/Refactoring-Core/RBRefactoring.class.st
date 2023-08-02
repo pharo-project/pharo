@@ -131,10 +131,13 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 ]
 
 { #category : #transforming }
-RBRefactoring >> execute [
+RBRefactoring >> generateChangesFor: aRefactoring [
+	"I will generate changes and save them in the model, BUT I will not apply them!
+	Use me when a refactorings is composed of multiple other refactorings"
 
-	self primitiveExecute.
-	self performChanges
+	"Execute the argument but passing the receiver options to that refactoring"
+	aRefactoring copyOptionsFrom: self options.
+	aRefactoring primitiveExecute
 ]
 
 { #category : #transforming }
@@ -157,29 +160,9 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 			ex return: nil]
 ]
 
-{ #category : #transforming }
-RBRefactoring >> performChanges [
-
-	RBRefactoryChangeManager instance
-		performChange: self changes;
-		addUndoPointer: RBRefactoryChangeManager nextCounter
-]
-
-{ #category : #transforming }
-RBRefactoring >> performCompositeRefactoring: aRefactoring [
-	aRefactoring copyOptionsFrom: self options.
-	aRefactoring primitiveExecute
-]
-
-{ #category : #transforming }
-RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [
-	[ aRefactoring copyOptionsFrom: self options.
-	aRefactoring primitiveExecute ]
-	on: RBRefactoringWarning do: [ :ex | ex resume ]
-]
-
 { #category : #private }
 RBRefactoring >> primitiveExecute [
+	
 	self checkPreconditions.
 	self transform
 ]

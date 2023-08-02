@@ -62,18 +62,18 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 		  self packageOn: s ]
 ]
 
-{ #category : #printing }
-FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName forClass: aClassName [
+{ #category : #template }
+FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName named: aClassName [
 
 		^ String streamContents: [ :s |
-						s nextPutAll: 'Object << '. aClassName asSymbol printOn: s. s crtab.
+						s nextPutAll: 'Object << '; print: aClassName asSymbol; crtab.
 						s nextPutAll: 'layout: FixedLayout;'; crtab.
 						s nextPutAll: 'traits: {};'; crtab.
 						s nextPutAll: 'slots: {};'; crtab.
 						s nextPutAll: 'sharedVariables: {};'; crtab.
 						s nextPutAll: 'sharedPools: {};'; crtab.
 						s nextPutAll: 'tag: '''' ;';crtab.
-						s nextPutAll: 'package: ''', aPackageName, '''' ]
+						s nextPutAll: 'package: '''; nextPutAll: aPackageName; nextPutAll: '''' ]
 ]
 
 { #category : #'elementary operations' }
@@ -292,7 +292,9 @@ FluidClassDefinitionPrinter >> metaclassDefinitionString [
 									nextPutAll: forClass name ] ]
 			ifNil: [ strm nextPutAll: 'ProtoObject ' ].
 		self lastTraitsOn: strm.
-		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ] ]
+		self class displayEmptySlots
+				ifTrue: [ self lastSlotsOn: strm ]
+		  		ifFalse: [forClass slots ifNotEmpty: [ self lastSlotsOn: strm ]]]
 ]
 
 { #category : #'elementary operations' }
@@ -388,9 +390,7 @@ FluidClassDefinitionPrinter >> slotShiftOn: aStream [
 FluidClassDefinitionPrinter >> slotsOn: s [
 	"uses: can the last part of a definition so watch out for terminating ;"
 
-	s crtab.
-	s nextPutAll: 'slots: '.
-	self slotDefinitionsOn: s.
+	self lastSlotsOn: s.
 	s nextPutAll: ';'
 ]
 
@@ -432,12 +432,13 @@ FluidClassDefinitionPrinter >> traitDefinitionString [
 			self packageOn: strm ]
 ]
 
-{ #category : #printing }
-FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName [
+{ #category : #template }
+FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName named: aTraitName [
 
 	^ String streamContents: [ :s |
 		  s
-			  nextPutAll: 'Trait << #TMyTrait';
+			  nextPutAll: 'Trait << ';
+			  print: aTraitName asSymbol;
 			  crtab.
 		  s
 			  nextPutAll: 'traits: {};';

@@ -10,6 +10,11 @@ ClyMethodSourceCodeContext >> isMethodSelected [
 	^self selectedSourceNode isMethod
 ]
 
+{ #category : #'tool controlling' }
+ClyMethodSourceCodeContext >> lastSelectedClass [ 
+	^ self selectedMethod methodClass
+]
+
 { #category : #selection }
 ClyMethodSourceCodeContext >> lastSelectedMethod [
 	^self selectedMethod

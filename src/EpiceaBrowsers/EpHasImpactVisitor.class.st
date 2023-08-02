@@ -84,12 +84,6 @@ EpHasImpactVisitor >> visitCategoryAddition: aChange [
 ]
 
 { #category : #visitor }
-EpHasImpactVisitor >> visitCategoryRegistration: aChange [
-
-	^ (environment organization includesCategory: aChange categoryName) not
-]
-
-{ #category : #visitor }
 EpHasImpactVisitor >> visitCategoryRemoval: aChange [
 
 	^ environment organization includesCategory: aChange categoryName
@@ -126,7 +120,7 @@ EpHasImpactVisitor >> visitMethodChange: aChange [
 			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method |
-					method protocol ~= aChange methodAffectedProtocol or: [
+					method protocol name ~= aChange methodAffectedProtocol or: [
 					method sourceCode ~= aChange methodAffectedSourceCode ] ]
 				ifAbsent: [ true ] ].
 
@@ -146,6 +140,18 @@ EpHasImpactVisitor >> visitMethodRemoval: aChange [
 				ifAbsent: [ false ] ].
 
 	^ false "No impact if container does not exist"
+]
+
+{ #category : #visitor }
+EpHasImpactVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ (self packageOrganizer hasPackage: aPackageAddition packageName) not
+]
+
+{ #category : #visitor }
+EpHasImpactVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self packageOrganizer hasPackage: aPackageRemoval packageName
 ]
 
 { #category : #visitor }

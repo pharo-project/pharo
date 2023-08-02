@@ -34,12 +34,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorOrigin := method origin ].
 
 	oldProtocol := self protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
-		self classify: selector under: ((protocol isString
-				  ifTrue: [ protocol ]
-				  ifFalse: [ protocol name ]) = Protocol unclassified
-				 ifTrue: [ oldProtocol ]
-				 ifFalse: [ protocol ]) ].
+	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
@@ -49,11 +44,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			self
-				notifyRepackage: selector
-				method: compiledMethod
-				oldProtocol: oldProtocol
-				newProtocol: newProtocol.
+			self notifyRepackage: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol.
 
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
@@ -80,7 +71,6 @@ ClassDescription >> addProtocol: aProtocol [
 	protocols := protocols copyWith: protocol.
 
 	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
-	SystemAnnouncer announce: (ClassReorganized class: self).
 	^ protocol
 ]
 
@@ -270,7 +260,17 @@ ClassDescription >> classVariablesString [
 ClassDescription >> classify: selector under: aProtocol [
 
 	| oldProtocol newProtocol |
-	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
+	oldProtocol := self protocolOfSelector: selector.
+
+	"In case the method is already classified and we say to classify it under nil, we do not update the protocol."
+	(aProtocol isNil and: [ oldProtocol isNotNil ]) ifTrue: [ ^ self ].
+	
+	"If we try to classify the method as an extension of its own package, just unclassify the method to avoid any weird state where the method could be considered as an extension or not depending on the interpretation."
+	(self isProtocolExtensionFromTheSamePackage: aProtocol) ifTrue: [
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		^ self classify: selector under: Protocol unclassified ].
+
+	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
 
 	oldProtocol ifNotNil: [
 		oldProtocol removeMethodSelector: selector.
@@ -330,7 +330,7 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 ClassDescription >> compile: sourceCode notifying: requestor [
 	"Refer to the comment in Behavior|compile:notifying:."
 
-	^ self compile: sourceCode classified: Protocol unclassified notifying: requestor
+	^ self compile: sourceCode classified: nil notifying: requestor
 ]
 
 { #category : #compiling }
@@ -424,9 +424,7 @@ ClassDescription >> dependentClasses [
 	"We unify a class and its metaclass"
 	self methods , self classSide methods do: [ :method |
 		method literalsDo: [ :literal | "We also check if the method is not an extension"
-			self flag: #CompileMethodProtocolMiration.
-			(literal isVariableBinding and: [ literal isGlobalClassNameBinding and: [ method protocolName isNotEmpty and: [ method protocolName first ~= $* ] ] ])
-				ifTrue: [ classes add: literal value ] ] ].
+			(literal isVariableBinding and: [ literal isGlobalClassNameBinding and: [ method isExtension not ] ]) ifTrue: [ classes add: literal value ] ] ].
 
 	^ classes asArray
 ]
@@ -651,13 +649,6 @@ ClassDescription >> isInstanceSide [
 ]
 
 { #category : #testing }
-ClassDescription >> isLocalMethodsProtocol: aProtocol [
-	aProtocol methodSelectors ifEmpty: [ ^ true ].
-
-	^ aProtocol methodSelectors anySatisfy: [ :each | self isLocalSelector: each ]
-]
-
-{ #category : #testing }
 ClassDescription >> isLocalSelector: aSelector [
 
 	^ self methodDict includesKey: aSelector
@@ -668,10 +659,27 @@ ClassDescription >> isMeta [
 	^self isClassSide
 ]
 
+{ #category : #private }
+ClassDescription >> isProtocolExtensionFromTheSamePackage: aProtocol [
+	"I return true if the protocol as parameter is an extension protocol and the concerned package is my origin package."
+
+	| protocolName |
+	aProtocol ifNil: [ ^ false ].
+
+	protocolName := aProtocol isString
+		                ifTrue: [ aProtocol ]
+		                ifFalse: [ aProtocol name ].
+
+	"If it is not an extension then there is no problem"
+	protocolName first = $* ifFalse: [ ^ false ].
+
+	^ (self packageOrganizer packageMatchingExtensionName: protocolName allButFirst) = self package
+]
+
 { #category : #testing }
 ClassDescription >> isTaggedWith: aSymbol [
 
-	^ self packageTag
+	^ self packageTagName
 		  ifNil: [ false ]
 		  ifNotNil: [ :tag | tag = aSymbol ]
 ]
@@ -698,16 +706,6 @@ ClassDescription >> localSlots [
 ClassDescription >> methodsInProtocol: protocol [
 
 	^ (self selectorsInProtocol: protocol) collect: [ :selector | self compiledMethodAt: selector ]
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> methodsTaggedWith: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	And class contains all method tags which used or not used yet by methods.
-	This method select all methods marked by given tag.
-	Tags are not inherited from traits. So we only select local methods"
-
-	^self localMethods select: [ :each | each isTaggedWith: aSymbol ]
 ]
 
 { #category : #slots }
@@ -781,18 +779,16 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 ]
 
 { #category : #private }
-ClassDescription >> notifyRepackage: selector method: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol [
+ClassDescription >> notifyRepackage: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol [
 
 	| oldPackage newPackage |
 	newProtocol = oldProtocol ifTrue: [ ^ self ].
 
-	"This indirection is because we need to abstract RPackage from the kernel"
-	self class environment at: #RPackage ifPresent: [ :rPackageClass |
-		newPackage := rPackageClass organizer packageForProtocol: newProtocol name inClass: self.
-		oldPackage := rPackageClass organizer packageForProtocol: oldProtocol name inClass: self.
+	newPackage := self packageOrganizer packageForProtocol: newProtocol name inClass: self.
+	oldPackage := self packageOrganizer packageForProtocol: oldProtocol name inClass: self.
 
-		"Announce recategorization"
-		newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ] ].
+	"Announce recategorization"
+	newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ].
 
 	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
@@ -953,8 +949,7 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames.
 	protocols := protocols copyWithout: protocol.
-	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol).
-	SystemAnnouncer announce: (ClassReorganized class: self)
+	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol)
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -986,35 +981,20 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
 
 	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
+	
+	"We should not be able to have a protocol that is an extension of the same class so let's skip the rename."
+	(self isProtocolExtensionFromTheSamePackage: aNewProtocol) ifTrue: [ 
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		^ self ].
 
-	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
-	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
 		oldProtocol := self ensureProtocol: anOldProtocol.
+		newProtocol := self ensureProtocol: aNewProtocol.
 
-		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
-	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
-		(self hasProtocol: aNewProtocol)
-			ifTrue: [
-				newProtocol := self ensureProtocol: aNewProtocol.
+		oldProtocol = newProtocol ifTrue: [ ^ self ].
 
-				oldProtocol = newProtocol ifTrue: [ ^ self ].
-
-				newProtocol addAllMethodsFrom: oldProtocol ]
-			ifFalse: [ "Ideally the code in the #ifTrue: should be executed all the time and the #ifFalse: should be removed."
-				| newProtocolName |
-				newProtocolName := aNewProtocol isString
-					                   ifTrue: [ aNewProtocol ]
-					                   ifFalse: [ aNewProtocol name ].
-				oldProtocol name = newProtocolName ifTrue: [ ^ self ].
-				newProtocol := oldProtocol copy
-					               name: newProtocolName;
-					               yourself.
-				protocols := protocols copyWith: newProtocol ].
+		newProtocol addAllMethodsFrom: oldProtocol.
 		oldProtocol resetMethodSelectors.
-		self removeProtocolIfEmpty: oldProtocol ].
-
-	"Announce the changes in the system"
-	SystemAnnouncer announce: (ClassReorganized class: self).
+		self removeProtocolIfEmpty: oldProtocol.
 
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
 	newProtocol methodSelectors do: [ :each | self notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]
@@ -1177,44 +1157,6 @@ ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: sl
 		layout: newLayout
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> tagWith: aSymbol [
-	| package packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
-
-	package := self package.
-	packageTag := package addClassTag: aSymbol.
-	packageTag addClass: self
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> tags [
-
-	| packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we only define API to manage them on top of RPackageTag"
-	packageTag := self package classTagForClass: self.
-	packageTag ifNil: [ ^ #(  ) ].
-	packageTag isRoot ifTrue: [ ^ #(  ) ].
-
-	^ { packageTag name }
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> tagsForMethods [
-	"Any method could be tagged with multiple symbols for user purpose.
-	And class contains all method tags which used or not used yet by methods.
-	For now we could only implemented it on top of Protocol.
-	It supposed to not include any method tags inherited from Traits
-	which is opposite to current Protocol implementation.
-	And extension protocol is not treated as tag"
-	| allProtocols |
-	allProtocols := self protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
-
-	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
-]
-
 { #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theMetaClass [
 	"This method is deprecated so consider to migrate."
@@ -1235,20 +1177,6 @@ ClassDescription >> theNonMetaClass [
 ClassDescription >> uncategorizedSelectors [
 
 	^ self selectorsInProtocol: Protocol unclassified
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> untagFrom: aSymbol [
-	| package packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
-	package := self package.
-	packageTag := package classTagForClass: self.
-	packageTag ifNil: [ ^#() ].
-	packageTag isRoot ifTrue: [ ^#() ].
-	packageTag name = aSymbol ifFalse: [ ^self ].
-	packageTag removeClass: self.
-	package addClass: self
 ]
 
 { #category : #'pool variable' }

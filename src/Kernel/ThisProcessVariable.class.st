@@ -1,9 +1,9 @@
 "
-I model thisProcess keyword
+I model thisProcess
 "
 Class {
 	#name : #ThisProcessVariable,
-	#superclass : #ReservedVariable,
+	#superclass : #PseudoVariable,
 	#category : #'Kernel-Variables'
 }
 

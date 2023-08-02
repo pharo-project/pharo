@@ -63,6 +63,23 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 ]
 
 { #category : #preconditions }
+RBRemoveClassTransformation >> applicabilityConditions [ 
+
+	^ className 
+			inject: RBCondition true 
+			into: [ :cond :aClass |
+		| aClassOrTrait |
+		aClassOrTrait := self model classNamed: className asSymbol.
+		aClassOrTrait ifNil: [ self refactoringError: 'No such class or trait named ', className ].
+
+		cond
+			& ( (self preconditionIsNotMetaclass: aClassOrTrait)
+			& (self preconditionHasNoReferences: className)
+			& (self preconditionHasNoSubclasses: aClassOrTrait)
+			& (self preconditionHasNoUsers: aClassOrTrait ) ) ]
+]
+
+{ #category : #preconditions }
 RBRemoveClassTransformation >> environmentWithReferencesTo: aClass [
 
 	^ RBBrowserEnvironment new
@@ -117,17 +134,7 @@ RBRemoveClassTransformation >> preconditionIsNotMetaclass: aClass [
 { #category : #preconditions }
 RBRemoveClassTransformation >> preconditions [
 
-	^ className inject: RBCondition empty into: [ :cond :aClass |
-		| aClassOrTrait |
-		aClassOrTrait := self model classNamed: className asSymbol.
-		aClassOrTrait ifNil: [ self
-			refactoringError: 'No such class or trait named ', className ].
-
-		cond
-			& ( (self preconditionIsNotMetaclass: aClassOrTrait)
-			& (self preconditionHasNoReferences: className)
-			& (self preconditionHasNoSubclasses: aClassOrTrait)
-			& (self preconditionHasNoUsers: aClassOrTrait ) ) ]
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

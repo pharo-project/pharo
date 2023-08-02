@@ -92,12 +92,6 @@ RGEnvironmentAnnouncer >> behaviorRenamed: anRGBehavior from: oldName [
 		newName: anRGBehavior name)
 ]
 
-{ #category : #triggering }
-RGEnvironmentAnnouncer >> behaviorReorganized: anRGBehavior [
-
-	self announce: (ClassReorganized class: anRGBehavior)
-]
-
 { #category : #testing }
 RGEnvironmentAnnouncer >> isSuspended [
 	^suspended ifNil: [ suspended := false ]

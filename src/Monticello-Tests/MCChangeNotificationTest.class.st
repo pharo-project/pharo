@@ -33,7 +33,7 @@ MCChangeNotificationTest >> setUp [
                ifAbsent:[].
        PackageOrganizer default unregisterPackageNamed: 'MonticelloMocks'."
 		super setUp.	
-      workingCopy := MCWorkingCopy forPackage: self mockPackage.
+      workingCopy := MCWorkingCopy ensureForPackage: self mockPackage.
 ]
 
 { #category : #tests }

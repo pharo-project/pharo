@@ -202,7 +202,10 @@ FLMaterializer >> shouldMaterializeHeaderOnly [
 
 { #category : #private }
 FLMaterializer >> streamFactoryForFilePath: aString [
-	^ [ FLPlatform current readStreamForFilePath: aString ]
+	^ [
+	  (File named: aString) readStream
+		  binary;
+		  yourself ]
 ]
 
 { #category : #private }

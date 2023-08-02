@@ -178,6 +178,13 @@ ClassDescription >> listAtCategoryNamed: aName [
 ]
 
 { #category : #'*Deprecated12' }
+ClassDescription >> methodsTaggedWith: aSymbol [
+
+	self deprecated: 'Use methodsInProtocol: instead.' transformWith: '`@rcv methodsTaggedWith: `@arg' -> '`@rcv methodsInProtocol: `@arg'.
+	^ self methodsInProtocol: aSymbol
+]
+
+{ #category : #'*Deprecated12' }
 ClassDescription >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization
 	of the messages of the receiver."
@@ -260,6 +267,45 @@ ClassDescription >> subject [
 
 	self deprecated: 'ClassOrganization was inlined and we do not need an organized class anymore.' transformWith: '`@rcv subject' -> '`@rcv'.
 	^ self
+]
+
+{ #category : #'*Deprecated12' }
+ClassDescription >> tagWith: aSymbol [
+
+	self deprecated: 'Use #packageTag: instead.' transformWith: '`@rcv tagWith: `@arg' -> '`@rcv packageTag: `@arg'.
+	^ self packageTag: aSymbol
+]
+
+{ #category : #'*Deprecated12' }
+ClassDescription >> tags [
+
+	self deprecated: 'Since a class can have only one tag, it is easier to just call the method #packageTag.'.
+	^ self packageTagName
+		  ifNil: [ {  } ]
+		  ifNotNil: [ :tag | { tag } ]
+]
+
+{ #category : #'*Deprecated12' }
+ClassDescription >> tagsForMethods [
+
+	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv tagsForMethods' -> '`@rcv protocolNames'.
+	^ self protocolNames
+]
+
+{ #category : #'*Deprecated12' }
+ClassDescription >> untagFrom: aSymbol [
+
+	| package packageTag |
+	self deprecated: 'A class can have only one package tag so it is easier to use #removePackageTag.'.
+	"Any class or trait could be tagged by multiple symbols for user purpose.
+	For now we could only model single tag with RPackageTag"
+	package := self package.
+	packageTag := package classTagForClass: self.
+	packageTag ifNil: [ ^ #(  ) ].
+	packageTag isRoot ifTrue: [ ^ #(  ) ].
+	packageTag name = aSymbol ifFalse: [ ^ self ].
+	packageTag removeClass: self.
+	package addClass: self
 ]
 
 { #category : #'*Deprecated12' }

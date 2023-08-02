@@ -57,7 +57,7 @@ MCSerializationTest >> assertVersionsMatchWith: writerClass [
 MCSerializationTest >> mockDiffyVersion [
 	| repos workingCopy base next |
 	repos := MCDictionaryRepository new.
-	workingCopy := MCWorkingCopy forPackage: self mockPackage.
+	workingCopy := MCWorkingCopy ensureForPackage: self mockPackage.
 	workingCopy repositoryGroup addRepository: repos.
 	MCRepositoryGroup default removeRepository: repos.
 	base := self mockVersion.

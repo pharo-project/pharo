@@ -276,7 +276,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	aClass := self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: self aClassName;
-			package: self aCategory ].
+			package: self slotTestPackageName ].
 
 	self assertEmpty: aClass subclasses.
 	aClass classLayout checkIntegrity.
@@ -285,7 +285,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 		aClassBuilder
 			name: self anotherClassName;
 			superclass: aClass;
-			package: self aCategory ].
+			package: self slotTestPackageName ].
 
 	self assert: aClass subclasses equals: {anotherClass}.
 	self assertEmpty: anotherClass subclasses.
@@ -296,7 +296,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 		aClassBuilder
 			name: self yetAnotherClassName;
 			superclass: anotherClass;
-			package: self aCategory ].
+			package: self slotTestPackageName ].
 
 
 	self assert: aClass subclasses equals: {anotherClass}.
@@ -309,7 +309,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	"level 4"
 	yetYetAnotherClass := (yetAnotherClass
 		<< self yetYetAnotherClassName
-		package: self aCategory) install.
+		package: self slotTestPackageName) install.
 
 	self assert: aClass subclasses equals: {anotherClass}.
 	self assert: anotherClass subclasses equals: {yetAnotherClass}.
@@ -324,8 +324,8 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	aClass := self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: self aClassName;
-			slots: 'x' asSlotCollection;
-			package: self aCategory ].
+			slotsFromString: 'x';
+			package: self slotTestPackageName ].
 
 	self assert: aClass instVarNames equals: #(x).
 	aClass classLayout checkIntegrity.
@@ -340,7 +340,7 @@ SlotIntegrationTest >> testReshapeClassWithClassSlot [
 	aClass := self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: self aClassName;
-			package: self aCategory ].
+			package: self slotTestPackageName ].
 
 	aClass class
 		instanceVariableNames: #x.
@@ -350,8 +350,8 @@ SlotIntegrationTest >> testReshapeClassWithClassSlot [
 	aClass := self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: self aClassName;
-			slots: 'x' asSlotCollection;
-			package: self aCategory ].
+			slotsFromString: 'x';
+			package: self slotTestPackageName ].
 
 	self assert: aClass class instVarNames equals: #(x)
 ]

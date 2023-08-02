@@ -19,10 +19,11 @@ MetacelloCypressPackageSpec >> compareCurrentVersion: anOperator targetVersionSt
 
 { #category : #querying }
 MetacelloCypressPackageSpec >> isPackageLoaded: aLoader [
-  MCWorkingCopy allManagers
-    detect: [ :wc | wc packageName = self file ]
-    ifNone: [ ^ false ].
-  ^ true
+
+	MCWorkingCopy allWorkingCopies
+		detect: [ :wc | wc packageName = self file ]
+		ifNone: [ ^ false ].
+	^ true
 ]
 
 { #category : #fetching }

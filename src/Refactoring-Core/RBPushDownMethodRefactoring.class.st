@@ -72,7 +72,7 @@ RBPushDownMethodRefactoring >> preconditions [
 
 	| condition |
 	condition := selectors
-		             inject: self emptyCondition
+		             inject: self trueCondition
 		             into: [ :cond :each |
 			             cond & (RBCondition definesSelector: each in: class)
 			             &
@@ -92,10 +92,14 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 		               forMethod: (class parseTreeForSelector: aSelector)
 		               fromClass: class
 		               toClasses: self allClasses.
-	self performCompositeRefactoring: refactoring.
+	self generateChangesFor: refactoring.
 	self allClasses do: [ :each |
 		(each directlyDefinesMethod: aSelector) ifFalse: [
-			each compile: code classified: protocols ] ]
+			self generateChangesFor:
+				(RBAddMethodTransformRefactoring
+					addMethod: code
+					toClass: each
+					inProtocols: protocols) ] ]
 ]
 
 { #category : #initialization }

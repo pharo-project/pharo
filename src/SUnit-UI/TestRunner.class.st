@@ -77,11 +77,10 @@ TestRunner >> addDeclaredPackagesUnderTestTo: listOfPackages [
 	"This method looks for #packageNamesUnderTest method in class side of classes defined packages in listOfPackages.
 	 If a class defines this method, then the coverage tool knows the methods of which packages should be spied to compute the coverage.
 	 Thus, it adds it to #listOfPackages collection provided as parameter."
+
 	classesSelected
-		select: [ :class | (class class includesSelector: #packageNamesUnderTest) ]
-		thenDo: [ :class |
-			class packageNamesUnderTest do: [ :name |
-				listOfPackages add: (RPackage organizer packageNamed: name) ] ]
+		select: [ :class | class class includesSelector: #packageNamesUnderTest ]
+		thenDo: [ :class | class packageNamesUnderTest do: [ :name | listOfPackages add: (self packageOrganizer packageNamed: name) ] ]
 ]
 
 { #category : #actions }
@@ -115,7 +114,7 @@ TestRunner >> browseClass [
 	targetClasses := classesSelected asArray.
 	targetClasses ifEmpty: [ ^ self ].
 	targetClasses size > 1
-		ifTrue: [ (UIManager default
+		ifTrue: [ (self 
 				confirm: 'Do you want to open all ' , targetClasses size printString , ' classes?')
 				ifTrue: [ targetClasses do: #browse ].
 			^ self ].
@@ -398,7 +397,7 @@ TestRunner >> collectCoverageFor: methods [
 
 	notExecuted := coverage uncoveredMethods.
 	notExecuted isEmpty
-		ifTrue:  [ UIManager default inform: 'Congratulations. Your tests cover all code under analysis.' ]
+		ifTrue:  [ self inform: 'Congratulations. Your tests cover all code under analysis.' ]
 		ifFalse: [
 			Smalltalk tools messageList
 				browse: notExecuted
@@ -833,7 +832,7 @@ TestRunner >> runCoverage [
 		to: methods.
 	self excludeClassesNotUnderTestFrom: methods.
 	methods isEmpty ifTrue:
-		[ ^ UIManager default inform: 'No methods found for coverage analysis.' ].
+		[ ^ self inform: 'No methods found for coverage analysis.' ].
 	self collectCoverageFor: methods
 ]
 

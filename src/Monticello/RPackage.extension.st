@@ -23,9 +23,8 @@ RPackage >> mcPackage [
 
 { #category : #'*Monticello-RPackage' }
 RPackage >> mcWorkingCopy [
-	
-	^ MCWorkingCopy allManagers 
-		detect: [ :each | each package name = name ]
-		ifNone: [ nil ].
-	
+
+	^ (MCWorkingCopy hasPackageNamed: name)
+		  ifTrue: [ MCWorkingCopy forPackageNamed: name ]
+		  ifFalse: [ nil ]
 ]

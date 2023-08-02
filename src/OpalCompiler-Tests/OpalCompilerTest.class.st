@@ -79,6 +79,17 @@ OpalCompilerTest >> testCompileFromAnalysedAST [
 ]
 
 { #category : #tests }
+OpalCompilerTest >> testCompileFromText [
+
+	| source result |
+	source := 'tt ^3+4' asText.
+
+	result := MockForCompilation compiler compile: source.
+	self assert: result sourceCode isString.
+	self assert: result sourceCode equals: source asString
+]
+
+{ #category : #tests }
 OpalCompilerTest >> testCompileSource [
 	| source result |
 	source := 'tt ^3+4'.
@@ -238,4 +249,13 @@ OpalCompilerTest >> testInstallRequestor [
 	self deny: (MockForCompilation includesSelector: #foo).
 	self assert: method isNil.
 	self assert: requestor notifyList first first equals: 'Unknown character ->'
+]
+
+{ #category : #tests }
+OpalCompilerTest >> testShadowPseudoVariable [
+	"We can shadw PseudoVariables (here thisContext) and it works"
+	| result |
+	result := Smalltalk compiler
+       evaluate: '| thisContext | thisContext := 42. ^thisContext'.
+	self assert: result equals: 42
 ]

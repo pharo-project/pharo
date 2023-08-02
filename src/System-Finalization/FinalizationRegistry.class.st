@@ -178,3 +178,15 @@ FinalizationRegistry >> size [
 
 	^ ephemeronCollection size
 ]
+
+{ #category : #accessing }
+FinalizationRegistry >> values [
+
+	^ ephemeronCollection collect: [ :e | e value ]
+]
+
+{ #category : #enumerating }
+FinalizationRegistry >> valuesDo: aBlock [
+
+	^ self values do: aBlock
+]

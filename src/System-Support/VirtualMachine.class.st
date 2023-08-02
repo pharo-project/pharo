@@ -237,6 +237,30 @@ VirtualMachine >> gcBiasToGrowLimit: arg [
 	^self primitiveFailed
 ]
 
+{ #category : #statistics }
+VirtualMachine >> gcStatisticsDuring: aBlockClosure [ 
+	
+	| incrementalGCCount fullGCCount incrementalGCTime fullGCTime timeToRun |
+	incrementalGCCount := self incrementalGCCount.
+	fullGCCount := self fullGCCount.
+	incrementalGCTime := self totalIncrementalGCTime.
+	fullGCTime := self totalFullGCTime.
+	
+	timeToRun := aBlockClosure timeToRun.
+
+	incrementalGCCount := self incrementalGCCount - incrementalGCCount.
+	fullGCCount := self fullGCCount - fullGCCount.
+	incrementalGCTime := self totalIncrementalGCTime - incrementalGCTime.
+	fullGCTime := self totalFullGCTime - fullGCTime.
+
+	
+	^ { #incrementalGCCount -> incrementalGCCount.
+	  #fullGCCount -> fullGCCount.
+	  #incrementalGCTime -> incrementalGCTime milliSecond.
+	  #fullGCTime -> fullGCTime milliSecond.
+	  #timeToRun -> timeToRun } asDictionary 
+]
+
 { #category : #parameters }
 VirtualMachine >> getParameters [
 	"Answer an Array containing the current values of the VM's internal
@@ -790,6 +814,12 @@ VirtualMachine >> parameterLabels [
 		77 'number of JIT compiled block since startup (read-only)'
 		78 'total milliseconds spent on JIT compiled block since startup (read-only)'
 		79 'Image version stored in the header of the image file'
+		80 'From OldSpace Remembered set used size'
+		81 'From OldSpace Remembered set max size'
+		82 'From Perm to Old Space Remembered set used size'
+		83 'From Perm to Old Space Remembered set max size'
+		84 'From Perm to New Space Remembered set used size'
+		85 'From Perm to New Space Remembered set max size'
 		)
 ]
 

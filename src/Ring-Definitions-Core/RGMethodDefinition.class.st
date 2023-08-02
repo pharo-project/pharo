@@ -113,13 +113,6 @@ RGMethodDefinition class >> realClass: aClass selector: aString [
 	^(aClass>>aString asSymbol) asActiveRingDefinition
 ]
 
-{ #category : #categories }
-RGMethodDefinition class >> unclassifiedProtocolName [
-	"Return the string labeling the unclassified protocol."
-
-	^ 'as yet unclassified'
-]
-
 { #category : #comparing }
 RGMethodDefinition >> <= aRGMethodDefinition [
 	"Sort method definitions according to: 1. class name - 2. class comment - 3. method selector - 4. timestamp"
@@ -257,14 +250,12 @@ RGMethodDefinition >> fromActiveToPassive [
 	"If the receiver was generated as an active method, it can be converted to a passive one by reading the data of the compiled method (if exists)"
 
 	| compiledMethod |
-	self isActive
-		ifFalse: [ ^ self ].
+	self isActive ifFalse: [ ^ self ].
 	compiledMethod := self compiledMethod.
-	compiledMethod notNil
-		ifTrue: [
-			self protocol: compiledMethod category.
-			self sourceCode: compiledMethod sourceCode.
-			self stamp: compiledMethod timeStamp ].
+	compiledMethod notNil ifTrue: [
+		self protocol: compiledMethod protocolName.
+		self sourceCode: compiledMethod sourceCode.
+		self stamp: compiledMethod timeStamp ].
 	self asPassive
 ]
 
@@ -539,9 +530,9 @@ RGMethodDefinition >> printOn: aStream [
 RGMethodDefinition >> protocol [
 
 	self isActive
-		ifTrue: [ ^ self compiledMethod ifNil: [ protocol ] ifNotNil: [ self compiledMethod protocol ]].
+		ifTrue: [ ^ self compiledMethod ifNil: [ protocol ] ifNotNil: [ self compiledMethod protocolName ]].
 	self isHistorical
-		ifTrue: [ ^ self protocolAtPointer ifNil: [ self compiledMethod ifNil: [ protocol ] ifNotNil:[ :cm | cm protocol ] ] ].
+		ifTrue: [ ^ self protocolAtPointer ifNil: [ self compiledMethod ifNil: [ protocol ] ifNotNil:[ :cm | cm protocolName ] ] ].
 	^ protocol
 ]
 

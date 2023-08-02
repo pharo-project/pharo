@@ -214,11 +214,11 @@ RBAddMethodChange >> protocols [
 ]
 
 { #category : #'initialize-release' }
-RBAddMethodChange >> protocols: aCollectionOrString [
+RBAddMethodChange >> protocols: aCollectionOrProtocol [
 
-	protocols := aCollectionOrString isString
-		             ifTrue: [ { aCollectionOrString } ]
-		             ifFalse: [ aCollectionOrString ]
+	protocols := (aCollectionOrProtocol isCollection and: [ aCollectionOrProtocol isString not])
+		             ifTrue: [ aCollectionOrProtocol ]
+		             ifFalse: [  { aCollectionOrProtocol } ]
 ]
 
 { #category : #accessing }

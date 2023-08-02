@@ -157,7 +157,7 @@ TraitsResource >> createClassNamed: aSymbol superclass: aClass uses: aTraitCompo
 	class := self class classInstaller make: [ :aBuilder |
 		aBuilder name: aSymbol;
 			superclass: aClass;
-			traitComposition: aTraitComposition asTraitComposition;
+			traitComposition: aTraitComposition;
 			package: self categoryName ].
 
 	self createdClassesAndTraits add: class.
@@ -167,10 +167,14 @@ TraitsResource >> createClassNamed: aSymbol superclass: aClass uses: aTraitCompo
 { #category : #utilities }
 TraitsResource >> createTraitNamed: aSymbol uses: aTraitComposition [
 	| trait |
-	trait := Trait
-		named: aSymbol
-		uses: aTraitComposition
-		package: self categoryName.
+	
+	trait := self class classInstaller make: [ :aBuilder |
+		aBuilder
+			name: aSymbol;
+			traitComposition: aTraitComposition;
+			package: self categoryName;
+			beTrait ].
+
 	self createdClassesAndTraits add: trait.
 	^trait
 ]

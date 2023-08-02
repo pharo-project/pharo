@@ -6,7 +6,7 @@ Class {
 		'dropLabel',
 		'acceptBlock'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-UI'
 }
 
 { #category : #layout }

@@ -35,6 +35,16 @@ RBDeprecateClassRefactoring class >> model: aRBSmalltalk deprecate: aClass in: a
 		yourself
 ]
 
+{ #category : #adding }
+RBDeprecateClassRefactoring >> addMethod: source to: aClass in: aProtocol [
+
+	self generateChangesFor: 
+		(RBAddMethodTransformRefactoring 
+			addMethod: source
+			toClass: aClass
+			inProtocols: aProtocol)
+]
+
 { #category : #initialization }
 RBDeprecateClassRefactoring >> className: aName newName: aNewName [
 	className := aName asSymbol.
@@ -61,19 +71,21 @@ RBDeprecateClassRefactoring >> convertDeprecatedToSubclass [
 	deprecatedClass classSide selectors do: [ :symbol |
 		(deprecatedClass realClass classSide compiledMethodAt: symbol) isExtension
 			ifFalse: [ deprecatedClass classSide removeMethod: symbol ] ].
-	deprecatedClass classSide compile: 'isDeprecated
+	self addMethod: 'isDeprecated
 		" Uses ', newName, ' instead of ', className,'"
-		^ true' classified: {'testing'}
+		^ true'
+			to: deprecatedClass classSide
+			in: 'testing'
 ]
 
 { #category : #transforming }
 RBDeprecateClassRefactoring >> copyExtensionMethods [
 
 	(self instanceSideExtensionMethodsOf: deprecatedClass)
-		do: [ :each | self newClass instanceSide compile: each source classified: each protocols ].
+		do: [ :each | self addMethod: each source to: self newClass instanceSide in: each protocols ].
 
 	(self classSideExtensionMethodsOf: deprecatedClass)
-		do: [ :each | self newClass classSide compile: each source classified: each protocols ]
+		do: [ :each | self addMethod: each source to: self newClass classSide in: each protocols ]
 ]
 
 { #category : #accessing }

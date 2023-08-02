@@ -4,7 +4,7 @@ I am preview to select variables (Class Variable)
 Class {
 	#name : #StVariablesSelectionPresenter,
 	#superclass : #StItemsSelectionPresenter,
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-UI'
 }
 
 { #category : #examples }

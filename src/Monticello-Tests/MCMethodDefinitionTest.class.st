@@ -26,11 +26,6 @@ MCMethodDefinitionTest >> mockPackageName [
 ]
 
 { #category : #running }
-MCMethodDefinitionTest >> ownPackage [
-	^ MCWorkingCopy forPackage: (MCPackage named: 'Monticello')
-]
-
-{ #category : #running }
 MCMethodDefinitionTest >> secondExtensionPackageName [
 
 	^ 'MonticelloTestsSecondExtensionMockPackage-override'

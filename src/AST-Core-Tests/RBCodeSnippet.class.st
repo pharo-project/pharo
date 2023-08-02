@@ -1747,24 +1747,21 @@ RBCodeSnippet class >> badSemantic [
 			         styled: 'XXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
-			         notices: #( #( 1 4 1 'Assigment to reserved variable' )
-				            #( 1 4 1 'Assignment to read-only variable' ) )).
+			         notices: #( #( 1 4 1 'Assignment to read-only variable' ) )).
 		        (self new
 			         source: 'super := super';
 			         nodeAt: '22222000011111';
 			         styled: 'XXXXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
-			         notices: #( #( 1 5 1 'Assigment to reserved variable' )
-				            #( 1 5 1 'Assignment to read-only variable' ) )).
+			         notices: #( #( 1 5 1 'Assignment to read-only variable' ) )).
 		        (self new
 			         source: 'thisContext := thisContext';
 			         nodeAt: '22222222222000011111111111';
 			         styled: 'XXXXXXXXXXXXXXXXXXXXXXXXXX';
 			         isFaulty: true;
 			         numberOfCritiques: 1;
-			         notices: #( #( 1 11 1 'Assigment to reserved variable' )
-				            #( 1 11 1 'Assignment to read-only variable' ) )).
+			         notices: #( #( 1 11 1 'Assignment to read-only variable' ) )).
 		        (self new
 			         source: 'Object := Object';
 			         nodeAt: '2222220000111111';
@@ -1779,23 +1776,20 @@ RBCodeSnippet class >> badSemantic [
 			         source: '| self | self := 1. ^ self';
 			         nodeAt: '00111100044442222300556666';
 			         styled: '| TTTT | tttt    n. ^ tttt';
-			         isFaulty: true;
 			         value: 1;
-			         notices: #( #( 3 6 3 'Reserved variable name' ) )).
+			         notices: #( #( 3 6 3 'Name already defined' ) )).
 		        (self new
 			         source: '| super | super := 1. ^ super';
 			         nodeAt: '00111110004444422223005566666';
 			         styled: '| TTTTT | ttttt    n. ^ ttttt';
-			         isFaulty: true;
 			         value: 1;
-			         notices: #( #( 3 7 3 'Reserved variable name' ) )).
+			         notices: #( #( 3 7 3 'Name already defined' ) )).
 		        (self new
 			         source: '| thisContext | thisContext := 1. ^ thisContext';
 			         nodeAt: '00111111111110004444444444422223005566666666666';
 			         styled: '| TTTTTTTTTTT | ttttttttttt    n. ^ ttttttttttt';
-			         isFaulty: true;
 			         value: 1;
-			         notices: #( #( 3 13 3 'Reserved variable name' ) )).
+			         notices: #( #( 3 13 3 'Name already defined' ) )).
 		        (self new
 			         source: '| Object | Object := 1. ^ Object';
 			         nodeAt: '00111111000444444222230055666666';
@@ -1807,25 +1801,22 @@ RBCodeSnippet class >> badSemantic [
 			         nodeAt: '00000111103355554446';
 			         styled: 'pppp AAAA ^ aaaa s n';
 			         isScripting: false;
-			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 6 9 6 'Reserved variable name' ) )).
+			         notices: #( #( 6 9 6 'Name already defined' ) )).
 		        (self new
 			         source: 'foo: super ^ super + 1';
 			         nodeAt: '0000011111033555554446';
 			         styled: 'pppp AAAAA ^ aaaaa s n';
 			         isScripting: false;
-			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 6 10 6 'Reserved variable name' ) )).
+			         notices: #( #( 6 10 6 'Name already defined' ) )).
 		        (self new
 			         source: 'foo: thisContext ^ thisContext + 1';
 			         nodeAt: '0000011111111111033555555555554446';
 			         styled: 'pppp AAAAAAAAAAA ^ aaaaaaaaaaa s n';
 			         isScripting: false;
-			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 6 16 6 'Reserved variable name' ) )).
+			         notices: #( #( 6 16 6 'Name already defined' ) )).
 		        (self new
 			         source: 'foo: Object ^ Object + 1';
 			         nodeAt: '000001111110335555554446';
@@ -1837,23 +1828,20 @@ RBCodeSnippet class >> badSemantic [
 			         source: '[ :self | self + 1 ]';
 			         nodeAt: '00011110004444333500';
 			         styled: '0 :BBBB | bbbb s n 0';
-			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 4 7 4 'Reserved variable name' ) )).
+			         notices: #( #( 4 7 4 'Name already defined' ) )).
 		        (self new
 			         source: '[ :super | super + 1 ]';
 			         nodeAt: '0001111100044444333500';
 			         styled: '0 :BBBBB | bbbbb s n 0';
-			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 4 8 4 'Reserved variable name' ) )).
+			         notices: #( #( 4 8 4 'Name already defined' ) )).
 		        (self new
 			         source: '[ :thisContext | thisContext + 1 ]';
 			         nodeAt: '0001111111111100044444444444333500';
 			         styled: '0 :BBBBBBBBBBB | bbbbbbbbbbb s n 0';
-			         isFaulty: true;
 			         value: 2;
-			         notices: #( #( 4 14 4 'Reserved variable name' ) )).
+			         notices: #( #( 4 14 4 'Name already defined' ) )).
 		        (self new
 			         source: '[ :Object | Object + 1 ]';
 			         nodeAt: '000111111000444444333500';

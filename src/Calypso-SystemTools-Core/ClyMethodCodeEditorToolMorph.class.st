@@ -34,17 +34,18 @@ ClyMethodCodeEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContex
 
 { #category : #operations }
 ClyMethodCodeEditorToolMorph >> applyChanges [
+
 	| selector methodClass currentMethod |
-	methodClass := self chooseClassForNewMethodIfNone: [^false].
+	methodClass := self chooseClassForNewMethodIfNone: [ ^ false ].
 	selector := methodClass compile: self pendingText asString classified: editingMethod protocol notifying: textMorph.
-	selector ifNil: [^false ].
+	selector ifNil: [ ^ false ].
 	currentMethod := methodClass >> selector.
 	self setMethodProtocol: currentMethod.
-	self tagAndPackageEditingMethod: currentMethod.
+	self protocolAndPackageEditingMethod: currentMethod.
 	self switchToMethod: currentMethod.
 	"update the AST to the just compiled method. This clears breakpoints. To be improved"
 	ast := self initializeAST.
-	^true
+	^ true
 ]
 
 { #category : #building }
@@ -104,7 +105,7 @@ ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
 
 { #category : #operations }
 ClyMethodCodeEditorToolMorph >> cancelChanges [
-	self updateMethodTagsAndPackage.
+	self updateProtocolAndPackage.
 
 	super cancelChanges
 ]
@@ -254,10 +255,11 @@ ClyMethodCodeEditorToolMorph >> methodClass [
 ]
 
 { #category : #accessing }
-ClyMethodCodeEditorToolMorph >> methodTags: tagsArray [
-	super methodTags: tagsArray.
+ClyMethodCodeEditorToolMorph >> methodProtocol: protocolName [
 
-	self hasUnacceptedEdits ifFalse: [ self tagEditingMethod: editingMethod]
+	super methodProtocol: protocolName.
+
+	self hasUnacceptedEdits ifFalse: [ self editProtocolOf: editingMethod ]
 ]
 
 { #category : #testing }
@@ -341,7 +343,7 @@ ClyMethodCodeEditorToolMorph >> setUpModelFromContext [
 ClyMethodCodeEditorToolMorph >> setUpParametersFromModel [
 	super setUpParametersFromModel.
 
-	self updateMethodTagsAndPackage
+	self updateProtocolAndPackage
 ]
 
 { #category : #initialization }
@@ -378,8 +380,8 @@ ClyMethodCodeEditorToolMorph >> update [
 ]
 
 { #category : #updating }
-ClyMethodCodeEditorToolMorph >> updateMethodTagsAndPackage [
+ClyMethodCodeEditorToolMorph >> updateProtocolAndPackage [
 
-	methodTags := editingMethod tags reject: [ :each | each beginsWith: '*' ].
-	extendingPackage := editingMethod isExtension ifTrue: [ editingMethod package ] ifFalse: [ nil ]
+	self methodProtocol: editingMethod protocolName.
+	editingMethod isExtension ifTrue: [ extendingPackage := editingMethod package ]
 ]

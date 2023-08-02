@@ -54,8 +54,8 @@ ClyCommitPackageCommand >> execute [
 		                 ^ self inform: 'Iceberg 0.7 and higher is required' ].
 	packages ifEmpty: [ ^ repoBrowser new open ].
 	repos := IceRepository registry select: [ :repo |
-		         packages anySatisfy: [ :each |
-			         repo includesPackageNamed: each name ] ].
+		         packages anySatisfy: [ :package |
+			         repo includesPackageNamed: package name ] ].
 	repos ifEmpty: [
 		^ self inform: 'Selected packages are not managed by Iceberg' ].
 	targetRepo := repos size = 1

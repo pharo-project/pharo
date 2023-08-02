@@ -87,24 +87,28 @@ RBAbstractTransformation class >> refactoringOptions [
 ]
 
 { #category : #accessing }
-RBAbstractTransformation class >> setDefaultOption: aSymbol to: aBlock [
-	self refactoringOptions at: aSymbol put: aBlock
-]
-
-{ #category : #accessing }
 RBAbstractTransformation >> changes [
 
-	^ self model changes
+	^ model changes
 ]
 
-{ #category : #'defining conditions' }
+{ #category : #'condition definitions' }
 RBAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 	^RBCondition checkInstanceVariableName: aName in: aClass
 ]
 
-{ #category : #'defining conditions' }
+{ #category : #'condition definitions' }
 RBAbstractTransformation >> checkMethodName: aName in: aClass [
 	^RBCondition checkMethodName: aName in: aClass
+]
+
+{ #category : #preconditions }
+RBAbstractTransformation >> classExist [
+
+	| className |
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString: 'Class named ' , className , ' does not exist' 
 ]
 
 { #category : #private }
@@ -125,9 +129,17 @@ RBAbstractTransformation >> defaultEnvironment [
 	^ RBBrowserEnvironment new
 ]
 
-{ #category : #'defining conditions' }
+{ #category : #'condition definitions' }
 RBAbstractTransformation >> emptyCondition [
-	^ RBCondition empty
+	self deprecated: 'Use trueCondition' transformWith: '`@rec emptyCondition' -> '`@rec trueCondition'. 
+	^ RBCondition true
+]
+
+{ #category : #transforming }
+RBAbstractTransformation >> execute [
+	"Check precondition, execute the transformation that produces changes and finally execute the changes"
+	self primitiveExecute.
+	self performChanges
 ]
 
 { #category : #accessing }
@@ -139,13 +151,14 @@ RBAbstractTransformation >> model: aRBNamespace [
 { #category : #initialize }
 RBAbstractTransformation >> newModel [
 
-	^ (RBNamespace
+	model := (RBNamespace
 			onEnvironment: self defaultEnvironment)
 			name: self printString;
-			yourself
+			yourself.
+	^ model
 ]
 
-{ #category : #executing }
+{ #category : #'To be removed' }
 RBAbstractTransformation >> openBrowserOn: anEnvironment [
 
 	^ (self options at: #openBrowser)
@@ -189,6 +202,14 @@ RBAbstractTransformation >> parserClass [
 	^ RBParser
 ]
 
+{ #category : #transforming }
+RBAbstractTransformation >> performChanges [
+
+	RBRefactoryChangeManager instance
+		performChange: self changes;
+		addUndoPointer: RBRefactoryChangeManager nextCounter
+]
+
 { #category : #accessing }
 RBAbstractTransformation >> poolVariableNamesFor: aClass [
 	| pools |
@@ -208,6 +229,12 @@ RBAbstractTransformation >> poolVariableNamesIn: poolName [
 
 { #category : #preconditions }
 RBAbstractTransformation >> preconditions [
+
+	self subclassResponsibility
+]
+
+{ #category : #'private hook' }
+RBAbstractTransformation >> primitiveExecute [ 
 
 	self subclassResponsibility
 ]
@@ -299,5 +326,12 @@ RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
 
 { #category : #transforming }
 RBAbstractTransformation >> transform [
+	"Do the actual operations."
+	
 	self subclassResponsibility
+]
+
+{ #category : #'condition definitions' }
+RBAbstractTransformation >> trueCondition [
+	^ RBCondition true
 ]

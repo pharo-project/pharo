@@ -20,12 +20,11 @@ ReTestBasedTestCase >> setUp [
 		named: #'Renraku-Programmatically-Created-Class-Tests') register.
 
 	"create tests in wrong package"
-	testClass := TestCase
-		subclass: 'RenrakuProgrammaticallyCreatedClassTest'
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: testPackage name
+	testClass := self class classInstaller make: [ :builder |
+			builder
+				superclass: TestCase;
+				name: #RenrakuProgrammaticallyCreatedClassTest;
+				package: testPackage name ]
 ]
 
 { #category : #running }

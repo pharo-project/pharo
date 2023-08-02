@@ -204,7 +204,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	newMethod setSourcePointer: aCompiledMethod sourcePointer.
 
-	aClass classify: aSelector under: aCompiledMethod protocol.
+	aClass classify: aSelector under: aCompiledMethod protocolName.
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
@@ -301,14 +301,10 @@ TaAbstractComposition >> installSelector: aSelector into: aClass replacing: repl
 	It is probable the aliased method does not exists any more in the trait composition. This situation is checked when creating the trait composition."
 
 
-	[
-		^ (self needsRecompilation: aSelector)
+	^ (self needsRecompilation: aSelector)
 			ifTrue:[ self compile: aSelector into: aClass	]
 			ifFalse:[ self copyMethod: aSelector into: aClass replacing: replacing ].
-	 ] on: NotFound
-		do: [ ^ true ].
 
-	^ true
 ]
 
 { #category : #testing }
@@ -370,7 +366,7 @@ TaAbstractComposition >> protocolForMethod: method [
 	This is useful when the method is aliased or the method came from different traits or it is a conflicting protocol.
 	The basic implementation returns the protocol of the method"
 
-	^ method protocol
+	^ method protocolName
 ]
 
 { #category : #querying }

@@ -66,6 +66,16 @@ RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aS
 		yourself
 ]
 
+{ #category : #preconditions }
+RBDeprecateMethodTransformation >> applicabilityConditions [ 
+
+	^ (RBCondition definesSelector: selector in: class)
+		& (RBCondition canUnderstand: newSelector in: class)
+		& (RBCondition
+							withBlock: [selector numArgs = newSelector numArgs or: [ newSelector numArgs = 0 ]]
+							errorString: 'The new selectors should have the same number of arguments as the old one, or not have them at all')
+]
+
 { #category : #executing }
 RBDeprecateMethodTransformation >> buildTransformations [
 	| node parseTree method start |
@@ -101,11 +111,7 @@ RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass using: 
 { #category : #preconditions }
 RBDeprecateMethodTransformation >> preconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-		& (RBCondition canUnderstand: newSelector in: class)
-		& (RBCondition
-							withBlock: [selector numArgs = newSelector numArgs or: [ newSelector numArgs = 0 ]]
-							errorString: 'The new selectors should have the same number of arguments as the old one, or not have them at all')
+	^ self applicabilityConditions 
 ]
 
 { #category : #printing }

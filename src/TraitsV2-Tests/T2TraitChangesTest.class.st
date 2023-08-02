@@ -11,13 +11,14 @@ T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 
 	t1 := self newTrait: #T1 with: {}.
 
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new.
-
-	Trait configureBuilder: builder withName: #T1 traitComposition: TEmpty slots: {}  packageName: 'TraitsV2-Tests-TestClasses'.
-
-	builder tryToFillOldClass.
-	builder detectBuilderEnhancer.
+	builder := ShiftClassBuilder new
+		name: #T1;
+		category: 'TraitsV2-Tests-TestClasses';
+		traitComposition: TEmpty;
+		tryToFillOldClass;
+		detectBuilderEnhancer;
+		beTrait.
+		
 	builder builderEnhancer validateRedefinition: builder oldClass.
 
 	builder validateSuperclass.
@@ -30,13 +31,14 @@ T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 
 	| t1 builder |
+	t1 := self newTrait: #T1 with: {  }.
 
-	t1 := self newTrait: #T1 with: {}.
-
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new.
-
-	Trait configureBuilder: builder withName: #T1 traitComposition: TEmpty slots: {}  packageName: 'TraitsV2-Tests-TestClasses'.
+	builder := ShiftClassBuilder new
+		           name: #T1;
+		           category: 'TraitsV2-Tests-TestClasses';
+		           traitComposition: TEmpty;
+		           beTrait;
+		           yourself.
 
 	builder oldClass: t1.
 
@@ -54,10 +56,11 @@ T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 T2TraitChangesTest >> testconfigureBuilderWithNameTraitCompositionInstanceVariableNamesPackageName [
 
 	| builder |
-
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new.
-	Trait configureBuilder: builder withName: #T1 traitComposition: {} instanceVariableNames: 'a b'  packageName: 'TraitsV2-Tests-TestClasses'.
+	builder := ShiftClassBuilder new
+		           name: #T1;
+		           beTrait;
+		           slotsFromString: 'a b';
+		           category: 'TraitsV2-Tests-TestClasses'.
 
 	self assert: builder slots size equals: 2.
 	self assert: builder slots first name equals: 'a'.

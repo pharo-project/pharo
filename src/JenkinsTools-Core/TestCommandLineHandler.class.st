@@ -45,34 +45,36 @@ TestCommandLineHandler >> activate [
 
 { #category : #accessing }
 TestCommandLineHandler >> addPackagesMatching: aString to: aSet [
+
 	| regex |
-	
-	[ regex := aString asRegex ] 
-		on: Error do: [ ].
+	[ regex := aString asRegex ]
+		on: Error
+		do: [  ].
 	regex ifNotNil: [ ^ self addPackagesMatchingRegex: regex to: aSet ].
-	
-	(aString includes: $*)
-		ifTrue: [ ^ self addPackagesMatchingGlob: aString to: aSet ].
-	
-	"exact match, and just those who actually have classes inside (to avoid 
-	 super-package duplications)"
-	((RPackage organizer includesPackageNamed: aString) 
-		and: [ (RPackage organizer packageNamed: aString) definedClasses notEmpty ])
-		ifTrue: [ aSet add: aString ]
+
+	(aString includes: $*) ifTrue: [ ^ self addPackagesMatchingGlob: aString to: aSet ].
+
+	"exact match, and just those who actually have classes inside (to avoid super-package duplications)"
+	((self packageOrganizer hasPackage: aString) and: [ (self packageOrganizer packageNamed: aString) definedClasses isNotEmpty ]) ifTrue: [ aSet add: aString ]
+]
+
+{ #category : #accessing }
+TestCommandLineHandler >> addPackagesMatchingBlock: aBlock to: aSet [
+	"Ideally we should not sort the packages but the Pharo tests are currently breaking if the order is changed. We should try to find the origin of this problem, fix it and remove the sorting."
+
+	self packageOrganizer packageNames asSortedCollection do: [ :packageName | (aBlock value: packageName) ifTrue: [ aSet add: packageName ] ]
 ]
 
 { #category : #accessing }
 TestCommandLineHandler >> addPackagesMatchingGlob: aGlobString to: aSet [
-	RPackage organizer packageNames do: [ :packageName|
-		(aGlobString match: packageName)
-			ifTrue: [ aSet add: packageName ]]
+
+	self addPackagesMatchingBlock: [ :packageName | aGlobString match: packageName ] to: aSet
 ]
 
 { #category : #accessing }
 TestCommandLineHandler >> addPackagesMatchingRegex: aRegex to: aSet [
-	RPackage organizer packageNames do: [ :packageName|
-		(aRegex matches: packageName)
-			ifTrue: [ aSet add: packageName ]]
+
+	self addPackagesMatchingBlock: [ :packageName | aRegex matches: packageName ] to: aSet
 ]
 
 { #category : #private }

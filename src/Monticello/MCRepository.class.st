@@ -28,11 +28,6 @@ MCRepository class >> description [
 	^ nil
 ]
 
-{ #category : #'request handling' }
-MCRepository class >> fillInTheBlankRequest [
-	self subclassResponsibility.
-]
-
 { #category : #'instance creation' }
 MCRepository class >> fromUrl: aUrlOrString [ 
 	| url |
@@ -49,11 +44,6 @@ MCRepository class >> fromUrl: aUrlOrString [
 { #category : #testing }
 MCRepository class >> isAbstract [
 	^ self description isNil
-]
-
-{ #category : #'instance creation' }
-MCRepository class >> morphicConfigure [
-	^ self new
 ]
 
 { #category : #accessing }

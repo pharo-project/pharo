@@ -1,14 +1,10 @@
 "
-Specific version of compiled code for method's.
+Specific version of compiled code for methods. They encode only the method's bytecodes and literals, blocks have each a CompiledBlock.
 
-CompiledMethod instances can be in two forms:
-- up until Pharo 6, they encode both the method and the inner closures bytecodes and literals.
-- since Pharo 6, they encode only the method's bytecodes and literals.
+In addition the execution mechanics, a compiled method has two extra literals. The last literal is the class in which the method is installed. The last but one literal is either the method's selector or an AdditionalMethodState instance. AdditionalMethodState instances are used to encode pragmas and properties.
 
-In addition the execution mechanics, a compiled method have two extra optional literals. The last literal, optional if there are no super sends, is the class in which the method is installed. The last but one literal is either the method's selector or an AdditionalMethodState instance. AdditionalMethodState instances are used to encode additional state to a method, as for example the pragmas.
-
-The bytecode encodes the trailer at the end, in most cases it has 4 bytes encoding the sourcer pointer (see CompiledMethodTrailer).
-Thus endPC of a compiled method is not the size of the bytecode, but the size minus the length of the trailer.
+The bytecode encodes the trailer at the end, see #trailerSize for the current size used.
+Thus endPC of a compiled method is not the size of the bytecode, but the size minus the fixed length of the trailer.
 
 "
 Class {
@@ -213,9 +209,10 @@ CompiledMethod >> cachePragmas [
 	self pragmas do: [ :pragma | pragma class addToCache: pragma ]
 ]
 
-{ #category : #'accessing - backward compatible' }
+{ #category : #deprecated }
 CompiledMethod >> category [
 
+	self deprecated: 'Use #protocolName instead.' transformWith: '`@rcv category' -> '`@rcv protocolName'.
 	^ self protocolName
 ]
 
@@ -388,8 +385,7 @@ CompiledMethod >> isClassSide [
 { #category : #testing }
 CompiledMethod >> isClassified [
 
-	self flag: #CompileMethodProtocolMiration.
-	^ self protocolName ~= Protocol unclassified
+	^ self protocol isUnclassifiedProtocol not
 ]
 
 { #category : #testing }
@@ -530,13 +526,6 @@ CompiledMethod >> isSubclassResponsibility [
 { #category : #testing }
 CompiledMethod >> isSubclassResponsibility: marker [
 	^ marker == self class subclassResponsibilityMarker
-]
-
-{ #category : #testing }
-CompiledMethod >> isTaggedWith: aSymbol [
-	"Not methods tags implemented by protocols. Look #tags comment"
-
-	^ self protocolName == aSymbol
 ]
 
 { #category : #'source code management' }
@@ -780,19 +769,19 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 		[propertiesOrSelector propertyKeysAndValuesDo: aBlock]
 ]
 
-{ #category : #accessing }
+{ #category : #protocols }
 CompiledMethod >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
 
-	^ self category
+	^ self methodClass protocolOfSelector: self selector
 ]
 
-{ #category : #accessing }
+{ #category : #protocols }
 CompiledMethod >> protocol: aProtocol [
 	^ self methodClass classify: self selector under: aProtocol
 ]
 
-{ #category : #accessing }
+{ #category : #protocols }
 CompiledMethod >> protocolName [
 	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
 
@@ -973,29 +962,6 @@ CompiledMethod >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'accessing - tags' }
-CompiledMethod >> tagWith: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	This method should apply new tag. All existing tags should not be changed.
-	But now we could only implemented tags with protocols.
-	So tagging method with tag removes all existing tags and add new one.
-	It should not be problem with single tag scenario which are now defined by single protocol"
-
-	self protocol: aSymbol
-]
-
-{ #category : #'accessing - tags' }
-CompiledMethod >> tags [
-	"Any method could be tagged with multiple symbols for user purpose.
-	For now we only define API to manage them implemented on top of method protocols.
-	Protocol unclassified means that method is not tagged by anything"
-	| protocol |
-	protocol := self protocolName.
-	protocol ifNil: [ ^#() ].
-	protocol = Protocol unclassified ifTrue: [ ^#() ].
-	^{protocol}
-]
-
 { #category : #'source code management' }
 CompiledMethod >> tempNames [
 	"on the level of the compiled method, tempNames includes argument names"
@@ -1007,14 +973,10 @@ CompiledMethod >> trailer [
 	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
-{ #category : #'accessing - tags' }
-CompiledMethod >> untagFrom: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	This method should remove given tag from it. All other tags should not be changed.
-	But now we could implemented tags with protocols which allow only tag for method.
-	And to remove tag from method we must change it protocol to Protocol unclassified"
-	self protocolName = aSymbol ifTrue: [
-		self protocol: Protocol unclassified]
+{ #category : #protocols }
+CompiledMethod >> unclassify [
+
+	self protocol: Protocol unclassified
 ]
 
 { #category : #testing }

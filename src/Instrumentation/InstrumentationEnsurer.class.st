@@ -1,3 +1,6 @@
+"
+Me, my subclass, and all the extension methods that are defined in this package provide support for instrumentation. If you want to instrument methods, it's important that you don't instrument the methods that have the pragma <noInstrumentation>. If you want an example of how to use this package to instrument your code, you can look at the library MethodProxies: https://github.com/pharo-contributions/MethodProxies
+"
 Class {
 	#name : #InstrumentationEnsurer,
 	#superclass : #Object,

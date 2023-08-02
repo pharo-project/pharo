@@ -8,7 +8,7 @@ Class {
 	#category : #'Calypso-SystemTools-FullBrowser-Commands-MethodGroups'
 }
 
-{ #category : #controling }
+{ #category : #controlling }
 ClySwitchToVariablesCommand >> execute [
 	browser switchToVariables
 ]

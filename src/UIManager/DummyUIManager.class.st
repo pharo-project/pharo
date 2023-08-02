@@ -94,10 +94,6 @@ DummyUIManager >> lowSpaceWatcherDefaultAction [
 ]
 
 { #category : #'ui requests' }
-DummyUIManager >> merge: merger informing: aString [
-]
-
-{ #category : #'ui requests' }
 DummyUIManager >> multiLineRequest: queryString initialAnswer: defaultAnswer answerHeight: answerHeight [
 ]
 

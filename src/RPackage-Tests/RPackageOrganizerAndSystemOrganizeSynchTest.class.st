@@ -28,12 +28,42 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> tearDown [
 ]
 
 { #category : #tests }
-RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingPackage [
+RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingCategory [
 
 	self packageOrganizer addCategory: self packageName.
 
 	self assert: (self packageOrganizer packageNames includes: self packageName).
 	self assert: (self packageOrganizer includesCategory: self packageName)
+]
+
+{ #category : #tests }
+RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingCategoryWithoutDashDoesNotCreateTag [
+	"Regression test because creating a category without dash was creating a tag of the same name which is wrong."
+
+	self packageOrganizer addCategory: self packageName.
+
+	self assert: (self packageOrganizer packageNames includes: self packageName).
+	self assert: (self packageOrganizer includesCategory: self packageName).
+	self assertEmpty: (self packageOrganizer packageNamed: self packageName) classTags
+]
+
+{ #category : #tests }
+RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingCategory [
+	"Regression test because removing a category corresponding to a tag from the system organizer was not removing the package tag from the system oprganizer."
+
+	| categoryName |
+	categoryName := self packageName , '-tag1'.
+	self packageOrganizer ensureTagNamed: 'tag1' inPackageNamed: self packageName.
+
+	self assert: (self packageOrganizer packageNames includes: self packageName).
+	self assert: ((self packageOrganizer packageNamed: self packageName) classTags anySatisfy: [ :tag | tag name = 'tag1' ]).
+	self assert: (self packageOrganizer includesCategory: categoryName).
+
+	self packageOrganizer removeCategory: categoryName.
+
+	self assert: (self packageOrganizer packageNames includes: self packageName).
+	self deny: ((self packageOrganizer packageNamed: self packageName) classTags includes: 'tag1').
+	self deny: (self packageOrganizer includesCategory: categoryName)
 ]
 
 { #category : #tests }

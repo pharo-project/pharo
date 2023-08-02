@@ -51,14 +51,26 @@ LegacyClassDefinitionPrinter >> classDefinitionString [
 ]
 
 { #category : #template }
-LegacyClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString forClass: aClassName [
+LegacyClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString named: aClassName [
 
 	^ String streamContents: [ :s |
-			s nextPutAll: 'Object subclass: '. aClassName asSymbol printOn: s. s crtab.
-			s nextPutAll: 'instanceVariableNames: '''' '; crtab.
-			s nextPutAll: 'classVariableNames: '''''; crtab.
-			s nextPutAll: 'poolDictionaries: '''''; crtab.
-			s nextPutAll: 'category ''', aString, '''' ]
+		  s
+			  nextPutAll: 'Object subclass: ';
+			  print: aClassName asSymbol;
+			  crtab.
+		  s
+			  nextPutAll: 'instanceVariableNames: '''' ';
+			  crtab.
+		  s
+			  nextPutAll: 'classVariableNames: ''''';
+			  crtab.
+		  s
+			  nextPutAll: 'poolDictionaries: ''''';
+			  crtab.
+		  s
+			  nextPutAll: 'category ''';
+			  nextPutAll: aString;
+			  nextPutAll: '''' ]
 ]
 
 { #category : #delegating }
@@ -104,6 +116,20 @@ LegacyClassDefinitionPrinter >> traitDefinitionString [
 			nextPutAll: ' package: ';
 			nextPutAll: forClass category asString printString
 	]
+]
+
+{ #category : #template }
+LegacyClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString named: aTraitName [
+
+	^ String streamContents: [ :s |
+		  s
+			  nextPutAll: 'Trait named: ';
+			  print: aTraitName asSymbol;
+			  nextPutAll: ' uses: {}
+	 package: '''.
+		  s
+			  nextPutAll: aString;
+			  nextPut: $' ]
 ]
 
 { #category : #'public API' }

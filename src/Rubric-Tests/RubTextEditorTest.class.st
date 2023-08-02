@@ -107,6 +107,48 @@ RubTextEditorTest >> testPreviousWord [
 ]
 
 { #category : #tests }
+RubTextEditorTest >> testSelectWord [
+
+	string := '#Lorem #ipsum #dolor #sit #amet'.
+	editor addString: string.
+
+	editor selectWordMark: 0 point: 0.
+	editor selectWord.
+	
+	self assert: editor hasSelection.
+	self assert: editor selection equals: '#Lorem'.
+	
+	editor selectWordMark: 2 point: 4. "Lorem ipsum dolor sit amet >> [Lorem ]ipsum dolor sit amet "
+	editor selectWord.	
+	self assert: editor selection equals: '#Lorem'.
+	
+	editor selectWordMark: 9 point: 11. "Lorem ipsum dolor sit amet >> Lorem [ipsum] dolor sit amet "
+	editor selectWord.		
+	self assert: editor selection equals: '#ipsum'.
+	
+	editor selectWordMark: 9 point: 12. "Lorem ipsum dolor sit amet >> Lorem [ipsum ]dolor sit amet "
+	editor selectWord.	
+	self assert: editor selection equals: '#ipsum'.
+
+	editor selectWordMark: 3 point: 24. "Lorem ipsum dolor sit amet >> [Lorem ipsum dolor sit amet ]"
+	editor selectWord.	
+	self assert: editor selection equals: '#sit'.
+	
+	editor selectWordMark: 1 point: 26. "Lorem ipsum dolor sit amet >> [Lorem ipsum dolor sit amet ]"
+	editor selectWord.	
+	self assert: editor selection equals: '#amet'.
+	
+	editor selectWordMark: 1 point: 1. "Lorem ipsum dolor sit amet >> [Lorem] ipsum dolor sit amet"
+	editor selectWord.	
+	self assert: editor selection equals: '#Lorem'.
+
+	editor selectWordMark: 26 point: 26. "Lorem ipsum dolor sit amet >> Lorem ipsum dolor sit [amet ]"
+	editor selectWord.	
+	self assert: editor selection equals: '#amet'.
+
+]
+
+{ #category : #tests }
 RubTextEditorTest >> testSelectWordMarkPoint [
 
 	| textSize |

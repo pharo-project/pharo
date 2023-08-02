@@ -24,11 +24,6 @@ TimeProfilerNode >> childrenItems [
 ]
 
 { #category : #actions }
-TimeProfilerNode >> exploreItem [
-	self item inspect
-]
-
-{ #category : #actions }
 TimeProfilerNode >> inspectItem [
 	self item inspect
 ]
@@ -41,8 +36,6 @@ TimeProfilerNode >> keyDown: anEvent from: aTreeMorph [
 		ifTrue: [self browseItem. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
 ]
 
@@ -55,11 +48,7 @@ TimeProfilerNode >> menu: menu shifted: b [
 	menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem.
-	menu
-		add: 'Explore (I)'
-		target: self
-		selector: #exploreItem
+		selector: #inspectItem
 ]
 
 { #category : #'accessing - computed' }

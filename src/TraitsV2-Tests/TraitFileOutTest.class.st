@@ -26,7 +26,7 @@ TraitFileOutTest >> categoryName [
 { #category : #running }
 TraitFileOutTest >> setUp [
 	super setUp.
-	self class environment organization addCategory: self categoryName.
+	self packageOrganizer addCategory: self categoryName.
 
 	td := self createTraitNamed: #TD uses: {}.
 	td compile: 'd' classified: #cat1.
@@ -53,7 +53,7 @@ TraitFileOutTest >> tearDown [
 	self createdClassesAndTraits, self resourceClassesAndTraits  do: [:each |
 		(dir / each asString,'st') ensureDelete ] .
 	(dir / self categoryName,'st') ensureDelete.
-	self class environment organization removeSystemCategory: self categoryName.
+	self packageOrganizer removeSystemCategory: self categoryName.
 	"Ensure cleaning of obsoletes refs"
 	ca := cb := ta := tb := tc := td := nil.
 	super tearDown
@@ -65,8 +65,8 @@ TraitFileOutTest >> testFileOutCategory [
 	file them in again."
 
 	self timeLimit: 30 seconds.
-	self class environment organization fileOutCategory: self categoryName.
-	self class environment organization removeSystemCategory: self categoryName.
+	self packageOrganizer fileOutCategory: self categoryName.
+	self packageOrganizer removeSystemCategory: self categoryName.
 	self deny: (testingEnvironment keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
 
 	CodeImporter evaluateFileNamed: (self categoryName , '.st').

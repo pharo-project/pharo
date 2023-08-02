@@ -25,11 +25,6 @@ PackageAbstractNodeExample >> doubleClick [
 ]
 
 { #category : #accessing }
-PackageAbstractNodeExample >> exploreItem [
-	self inspect
-]
-
-{ #category : #accessing }
 PackageAbstractNodeExample >> inspectItem [
 	self inspect
 ]
@@ -42,8 +37,6 @@ PackageAbstractNodeExample >> keyStroke: anEvent from: aTreeMorph [
 		ifTrue: [self browseItem. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
 ]
 
@@ -60,9 +53,5 @@ PackageAbstractNodeExample >> menu: menu shifted: b [
 	menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem.
-	menu
-		add: 'Explore (I)'
-		target: self
-		selector: #exploreItem
+		selector: #inspectItem
 ]

@@ -25,6 +25,22 @@ Class {
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
+{ #category : #preconditions }
+RBRemoveDirectAccessToVariableTransformation >> applicabilityConditions [ 
+
+	class := self model classObjectFor: className.
+
+	^ (isClassVariable
+			ifTrue: [ (RBCondition isMetaclass: class) not
+					& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class)
+					& ((RBCondition withBlock:
+				[(#(#Object #Behavior #ClassDescription #Class) includes: class name) not])
+				errorMacro: 'This refactoring does not work for Object, Behavior, ClassDescription, or Class')]
+			ifFalse: [ (RBCondition directlyDefinesInstanceVariable: variableName in: class) ])
+		& (RBCondition canUnderstand: self getterMethod in: self definingClass)
+		& (RBCondition canUnderstand: self setterMethod in: self definingClass)
+]
+
 { #category : #private }
 RBRemoveDirectAccessToVariableTransformation >> getterMethod [
 
@@ -36,17 +52,7 @@ RBRemoveDirectAccessToVariableTransformation >> getterMethod [
 { #category : #preconditions }
 RBRemoveDirectAccessToVariableTransformation >> preconditions [
 
-	class := self model classObjectFor: className.
-
-	^ (isClassVariable
-		ifTrue: [ (RBCondition isMetaclass: class) not
-			& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class)
-			& ((RBCondition withBlock:
-				[(#(#Object #Behavior #ClassDescription #Class) includes: class name) not])
-				errorMacro: 'This refactoring does not work for Object, Behavior, ClassDescription, or Class')]
-		ifFalse: [ (RBCondition directlyDefinesInstanceVariable: variableName in: class) ])
-		& (RBCondition canUnderstand: self getterMethod in: self definingClass)
-		& (RBCondition canUnderstand: self setterMethod in: self definingClass)
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

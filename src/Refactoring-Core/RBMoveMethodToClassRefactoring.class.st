@@ -36,6 +36,7 @@ RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 
 { #category : #transforming }
 RBMoveMethodToClassRefactoring >> classModelOf: aClass [
+
 	| classModel |
 	classModel := aClass isMeta
 		ifTrue: [ RBClassModelFactory rbMetaclass named: aClass name ]
@@ -77,5 +78,9 @@ RBMoveMethodToClassRefactoring >> transform [
 	originalProtocol := method protocolName.
 	oldClass removeMethod: method selector.
 	newClass addMethod: rbMethod.
-	newClass compile: rbMethod source classified: {originalProtocol}
+	self generateChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: rbMethod source
+			toClass: newClass
+			inProtocols: originalProtocol)
 ]

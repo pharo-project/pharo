@@ -305,7 +305,7 @@ ChangeSet class >> newChangeSet: newName [
 	| newSet |
 	newName ifNil: [ ^ nil ].
 	(self named: newName) ifNotNil: [
-		self inform: 'Sorry that name is already used'.
+		self error: 'Sorry name "', newName , '" is already used'.
 		^ nil ].
 	newSet := self newNamed: newName.
 	AllChangeSets add: newSet.
@@ -333,7 +333,7 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: ClassAdded send: #classAdded: to: aChangeSet;
 		when: ClassCommented send: #classCommented: to: aChangeSet;
 		when: ClassRenamed send: #classRenamed: to: aChangeSet;
-		when: ClassReorganized send: #classReorganized: to: aChangeSet;
+		when: ProtocolAnnouncement send: #classReorganized: to: aChangeSet;
 		when: ClassRecategorized send: #classRecategorized: to: aChangeSet;
 		when: ClassModifiedClassDefinition send: #classModified: to: aChangeSet.
 

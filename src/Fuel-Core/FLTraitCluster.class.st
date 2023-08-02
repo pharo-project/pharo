@@ -22,13 +22,15 @@ FLTraitCluster >> materializeInstanceWith: aDecoder [
 
 { #category : #'serialize/materialize' }
 FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
-	| category name environment format layout instanceVariableNames |
+	| category name environment format layout instanceVariableNames comment stamp |
 	category := aDecoder nextEncodedReference.
 	name := aDecoder nextEncodedReference.
 	environment := aDecoder nextEncodedReference.
 	format := aDecoder nextEncodedReference.
 	layout := self materializeLayoutWith: aDecoder.
 	instanceVariableNames := aDecoder nextEncodedString substrings: ' '.
+	comment := aDecoder nextEncodedString.
+	stamp := aDecoder nextEncodedString.
 	
 	aTrait 
 		initialize;
@@ -42,7 +44,11 @@ FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
 		installLayout: layout
 		withFormat: format
 		variableNames: instanceVariableNames
-		into: aTrait
+		into: aTrait.
+		
+	aTrait
+		comment: comment
+		stamp: stamp
 ]
 
 { #category : #analyzing }
@@ -55,9 +61,7 @@ FLTraitCluster >> referencesOf: aTrait do: aBlock [
 		value: aTrait category;
 		value: aTrait name;
 		value: aTrait format;
-		value: (FLPlatform current hasStatefulTraits
-			ifTrue: [ aTrait classLayout class ]
-			ifFalse: [ nil ])
+		value: aTrait classLayout class
 ]
 
 { #category : #'serialize/materialize' }
@@ -73,11 +77,11 @@ FLTraitCluster >> serializePostInstance: aTrait with: anEncoder [
 		encodeReferenceTo: aTrait name;
 		encodeReferenceTo: aTrait basicEnvironment;
 		encodeReferenceTo: aTrait format.
-	FLPlatform current hasStatefulTraits
-		ifTrue: [
-			self
-				serializeLayout: aTrait classLayout
-				with: anEncoder ]
-		ifFalse: [ anEncoder encodeReferenceTo: nil ].
-	anEncoder encodeString: aTrait instanceVariablesString
+	self
+		serializeLayout: aTrait classLayout
+		with: anEncoder.
+	anEncoder
+		encodeString: aTrait instanceVariablesString;
+		encodeString: aTrait comment;
+		encodeString: aTrait commentStamp
 ]

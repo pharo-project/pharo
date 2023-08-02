@@ -9,7 +9,8 @@ Class {
 
 { #category : #environmentSetUp }
 ASTClassBuilderTest >> environment [
-	^ ShSmalltalkGlobalsEnvironment new
+
+	^ self class environment
 ]
 
 { #category : #running }
@@ -408,6 +409,5 @@ ASTClassBuilderTest >> testUseUndefinedClass [
 			useUndefinedClass;
 			buildEnvironment: self environment;
 			buildFromAST: ast ].
-	self assert: [ (ShSmalltalkGlobalsEnvironment new classNamed: #PoPouet) isUndefined ] ] ensure: [
-		(ShSmalltalkGlobalsEnvironment new classNamed: #PoPouet) ifNotNil: #removeFromSystem ]
+	self assert: [ (self environment at: #PoPouet) isUndefined ] ] ensure: [ (self environment at: #PoPouet) ifNotNil: #removeFromSystem ]
 ]

@@ -28,6 +28,6 @@ ClyRequestMethodPackageForEditorCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyRequestMethodPackageForEditorCommand >> execute [
 	| packageEditor |
-	packageEditor := methodEditor tagsAndPackageEditor.
+	packageEditor := methodEditor protocolAndPackageEditor.
 	packageEditor requestChangeBy: [ packageEditor requestPackage]
 ]

@@ -1829,12 +1829,6 @@ RubTextEditor >> previousWord: position [
 	^ index
 ]
 
-{ #category : #'nonediting/nontyping keys' }
-RubTextEditor >> raiseContextMenu: aKeyboardEvent [
-
-	^ textArea yellowButtonActivity: textArea activeHand lastEvent shiftPressed
-]
-
 { #category : #'accessing - selection' }
 RubTextEditor >> recomputeSelection [
 	"The same characters are selected but their coordinates may have changed.
@@ -2159,7 +2153,7 @@ RubTextEditor >> selectWord [
 			[hereChar := string at: (here := here + direction).
 			match = 0
 				ifTrue: ["token scan goes left, then right"
-					hereChar tokenish
+					(hereChar tokenish or: [ hereChar = $# ])
 						ifTrue: [here = 1
 								ifTrue:
 									[start := 1.
