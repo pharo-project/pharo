@@ -1,5 +1,5 @@
 Class {
-	#name : #RBRemoveInstanceVariableDriver,
+	#name : #RBRemoveMethodDriver,
 	#superclass : #RBDriver,
 	#instVars : [
 		'class',
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : #resources }
-RBRemoveInstanceVariableDriver >> refactoring [
+RBRemoveMethodDriver >> refactoring [
 
 	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
 ]
 
 { #category : #execution }
-RBRemoveInstanceVariableDriver >> runRefactoring [
+RBRemoveMethodDriver >> runRefactoring [
 
 	self refactoring.
 	[
@@ -43,7 +43,7 @@ RBRemoveInstanceVariableDriver >> runRefactoring [
 ]
 
 { #category : #initialization }
-RBRemoveInstanceVariableDriver >> scopes: refactoringScopes variable: aVariable for: aClass [
+RBRemoveMethodDriver >> scopes: refactoringScopes variable: aVariable for: aClass [
 	
 	scopes := refactoringScopes.
 	variables := {aVariable}.

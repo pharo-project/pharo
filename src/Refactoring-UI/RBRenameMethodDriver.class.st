@@ -39,12 +39,6 @@ RBRenameMethodDriver >> command: aCommand andPostAction: aClosure [
 ]
 
 { #category : #initialize }
-RBRenameMethodDriver >> furtherActionFor: aReport [
-
-	aReport browse
-]
-
-{ #category : #initialize }
 RBRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
 	model := aModel.
 	originalMessage := aMessage.

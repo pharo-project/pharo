@@ -26,6 +26,12 @@ RBDriver class >> isAbstract [
 ]
 
 { #category : #execution }
+RBDriver >> furtherActionFor: aReport [
+	
+	aReport browse
+]
+
+{ #category : #execution }
 RBDriver >> openPreviewWithChanges: changes [
 	
 	^ (StRefactoringPreviewPresenter
