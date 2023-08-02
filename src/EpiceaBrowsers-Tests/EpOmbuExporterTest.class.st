@@ -12,6 +12,12 @@ Class {
 	#category : #'EpiceaBrowsers-Tests-Exporter'
 }
 
+{ #category : #asserting }
+EpOmbuExporterTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpOmbuExporterTest >> setUp [
 
