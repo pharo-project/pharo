@@ -13,26 +13,35 @@ FLTCreateClassOrTraitSerializationTest >> newAnonymousClassOrTrait [
 
 { #category : #tests }
 FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterialize: aClass [
-	| materialized |
+
+	| materialized wasSilent |
 	self serializer fullySerializeBehavior: aClass.
 	self serialize: aClass.
-	self classFactory deleteBehavior: aClass.
+	wasSilent := self classFactory createdSilently includes: aClass.
+	self classFactory delete: aClass.
 	materialized := self materialized.
 	self classFactory registerBehavior: materialized.
+	wasSilent ifTrue: [ self classFactory createdSilently add: materialized ].
 	^ materialized
 ]
 
 { #category : #tests }
 FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterializeAll: objects [
-	| classesOrTraits materialized |
-	classesOrTraits := objects select: [ :anObject | anObject isBehavior or: [anObject isTrait]].
+
+	| classesOrTraits materialized silent |
+	silent := OrderedCollection new.
+	classesOrTraits := objects select: [ :anObject | anObject isBehavior or: [ anObject isTrait ] ].
 	self serializer fullySerializeAllBehaviors: classesOrTraits.
 	self serialize: objects.
-	classesOrTraits do: [ :aClassOrTrait | self classFactory deleteBehavior: aClassOrTrait . ].
+	classesOrTraits do: [ :aClassOrTrait |
+		(self classFactory createdSilently includes: aClassOrTrait) ifTrue: [ silent add: aClassOrTrait name ].
+		self classFactory delete: aClassOrTrait ].
 	materialized := self materialized.
-	materialized 
+	materialized
 		select: [ :object | object isBehavior ]
-		thenDo: [ :behavior | self classFactory registerBehavior: behavior ].
+		thenDo: [ :behavior |
+			self classFactory registerBehavior: behavior.
+			(silent includes: behavior name) ifTrue: [ self classFactory createdSilently add: behavior ] ].
 	^ materialized
 ]
 
@@ -104,7 +113,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithClassSideMethod [
 	self classFactory
 		silentlyCompile:  'fortyTwo ^42'
 		in: aClassOrTrait classSide
-		category: category.
+		protocol: category.
 
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
@@ -226,7 +235,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithMethod [
 	self classFactory
 		silentlyCompile: 'fortyTwo ^42'
 		in: aClassOrTrait
-		category: category.
+		protocol: category.
 
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 

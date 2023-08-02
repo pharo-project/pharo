@@ -8,6 +8,12 @@ Class {
 	#category : #'EpiceaBrowsers-Tests-Filters'
 }
 
+{ #category : #asserting }
+EpHasImpactFilterTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpHasImpactFilterTest >> setUp [
 	super setUp.
