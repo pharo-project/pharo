@@ -73,7 +73,9 @@ RBVariableTransformation class >> variable: aVariableName class: aClassName clas
 
 { #category : #accessing }
 RBVariableTransformation >> definingClass [
-
+	"Usually a shared variable is defined on the instance side and instance 
+	variables on both instance and class side."
+	
 	^ isClassVariable
 		ifTrue: [ super definingClass instanceSide ]
 		ifFalse: [ super definingClass ]

@@ -1,12 +1,14 @@
 "
-Replaces all the direct accesses to this variable in this class by invocation to this variable's getter and setter. It assumes that both getter and setter are implemented in the class.
+Replaces all the direct accesses to this variable in this class (and its metaclass) by invocation to this variable's getter and setter. It assumes that both getter and setter are implemented in the class.
 
 Usage:
+```
 transformation := (RBRemoveDirectAccessToVariableTransformation
 	instanceVariable: 'environment'
 	class: #RBNamespace)
 	transform.
 (ChangesBrowser changes: transformation model changes changes) open
+```
 
 Preconditions:
 - the class must exist
@@ -39,6 +41,16 @@ RBRemoveDirectAccessToVariableTransformation >> applicabilityConditions [
 			ifFalse: [ (RBCondition directlyDefinesInstanceVariable: variableName in: class) ])
 		& (RBCondition canUnderstand: self getterMethod in: self definingClass)
 		& (RBCondition canUnderstand: self setterMethod in: self definingClass)
+]
+
+{ #category : #accessing }
+RBRemoveDirectAccessToVariableTransformation >> definingClass [
+	"For this refactoring the defining class is the class in which the refactoring should be applied.
+	This is basically the basic defining class"
+	
+	^ isClassVariable
+		ifTrue: [ super definingClass classSide ]
+		ifFalse: [ super definingClass ]
 ]
 
 { #category : #private }

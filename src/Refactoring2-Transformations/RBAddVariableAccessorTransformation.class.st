@@ -67,6 +67,16 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 	^setterMethod
 ]
 
+{ #category : #accessing }
+RBAddVariableAccessorTransformation >> definingClass [
+	"Usually a shared variable is defined on the instance side and instance 
+	variables on both instance and class side."
+	
+	^ isClassVariable
+		ifTrue: [ super definingClass classSide ]
+		ifFalse: [ super definingClass ]
+]
+
 { #category : #private }
 RBAddVariableAccessorTransformation >> getterMethod [
 	^ getterMethod
