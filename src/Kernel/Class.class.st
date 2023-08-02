@@ -263,14 +263,7 @@ Class >> category [
 	category name stored in the ivar is still correct and only if this fails look it up
 	(latter is much more expensive)"
 
-	| result |
-	self basicCategory ifNotNil: [ :symbol | ((self packageOrganizer listAtCategoryNamed: symbol) includes: self name) ifTrue: [ ^ symbol ] ].
-	result := (self environment organization categoryOfBehavior: self)
-		          ifNil: [ #Unclassified ]
-		          ifNotNil: [ :value | value ].
-	self basicCategory: result.
-
-	^ result
+	^ self basicCategory ifNil: [ self error: 'Category should not be nil' ]
 ]
 
 { #category : #organization }
@@ -280,13 +273,9 @@ Class >> category: aString [
 
 	| oldCategory |
 	oldCategory := self basicCategory.
-	aString isString
-		ifTrue: [
-			self basicCategory: aString asSymbol.
-			self packageOrganizer classify: self name under: self basicCategory ]
-		ifFalse: [self errorCategoryName].
-	SystemAnnouncer uniqueInstance
-		class: self recategorizedFrom: oldCategory to: self basicCategory
+	self basicCategory: aString asSymbol.
+	self packageOrganizer classify: self name under: self basicCategory.
+	SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self basicCategory
 ]
 
 { #category : #'subclass creation - variableByte' }
