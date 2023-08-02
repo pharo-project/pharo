@@ -280,7 +280,7 @@ RPackage >> basicImportClass: aClass [
 { #category : #'class tags' }
 RPackage >> basicRemoveTag: tag [
 
-	classTags remove: tag ifAbsent: [  ].
+	classTags remove: tag ifAbsent: [ ^ self "If the tag is not here we should stop" ].
 
 	self flag: #package. "This next line should be removed in the future with the system organizer."
 	self organizer removeCategory: tag categoryName.
