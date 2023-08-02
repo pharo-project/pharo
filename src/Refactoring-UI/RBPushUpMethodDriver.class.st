@@ -7,7 +7,7 @@ When I gather all needed information I am calling and executing push up method r
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBPushUpMethodDriver model: aRBNamespace scopes: refactoringScopes pushUp: methods) execute
+(RBPushUpMethodDriver model: aRBNamespace scopes: refactoringScopes pushUp: methods) runRefactoring
 ```
 "
 Class {

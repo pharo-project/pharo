@@ -27,6 +27,24 @@ RBRemoveMethodRefactoring class >> removeMethods: selectorCollection from: aClas
 ]
 
 { #category : #preconditions }
+RBRemoveMethodRefactoring >> applicabilityConditions [
+	self halt.
+	^ (selectors
+		   inject: self trueCondition
+		   into: [ :cond :each |
+		   cond & (RBCondition definesSelector: each selector in: class) ])
+	 
+]
+
+{ #category : #preconditions }
+RBRemoveMethodRefactoring >> breakingChangeConditions [
+
+	^  (RBCondition withBlock: [
+			   self checkSuperMethods.
+			   true ])
+]
+
+{ #category : #preconditions }
 RBRemoveMethodRefactoring >> checkBrowseAllOccurrences: anCollectionOfOccurrences [
 	| methods callers |
 	methods := anCollectionOfOccurrences collect: [ :c | c key ] as: Set.
@@ -108,6 +126,20 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 	self checkReferencesToSuperSendsToAnyOf: superMessages
 ]
 
+{ #category : #actions }
+RBRemoveMethodRefactoring >> generateChanges [
+	
+	self applicabilityConditions check ifFalse: [
+		^ RBApplicabilityChecksFailedError signal:
+			  self applicabilityConditions errorString ].
+	self breakingChangeConditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangeConditions errorString ].
+
+	self transform.
+	^ self changes
+]
+
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 
@@ -138,13 +170,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> preconditions [
 
-	^ (selectors
-		   inject: self trueCondition
-		   into: [ :cond :each |
-		   cond & (RBCondition definesSelector: each in: class) ])
-	  & (RBCondition withBlock: [
-			   self checkSuperMethods.
-			   true ])
+	^ self applicabilityConditions & self breakingChangeConditions 
 ]
 
 { #category : #initialization }

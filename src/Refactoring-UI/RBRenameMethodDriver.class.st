@@ -1,3 +1,6 @@
+"
+I'm a model for user interaction for the rename method refactoring.
+"
 Class {
 	#name : #RBRenameMethodDriver,
 	#superclass : #RBDriver,

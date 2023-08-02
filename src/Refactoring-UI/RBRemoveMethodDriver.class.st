@@ -1,10 +1,14 @@
+"
+I'm a model for user interaction for the remove method refactoring.
+"
 Class {
 	#name : #RBRemoveMethodDriver,
 	#superclass : #RBDriver,
 	#instVars : [
 		'class',
 		'variables',
-		'refactoring'
+		'refactoring',
+		'methods'
 	],
 	#category : #'Refactoring-UI-Drivers'
 }
@@ -12,7 +16,7 @@ Class {
 { #category : #resources }
 RBRemoveMethodDriver >> refactoring [
 
-	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
+	refactoring := RBRemoveMethodRefactoring model: model removeMethods: methods from: class
 ]
 
 { #category : #execution }
@@ -32,14 +36,30 @@ RBRemoveMethodDriver >> runRefactoring [
 								| dialog |
 								dialog := SpConfirmDialog 
 									 new
-										title: 'Methods still accessing variables';
+										title: 'Methods are still calling removed method';
 										label: 'Do you want to browse them?';
 										acceptLabel: 'Sure!';
 										cancelLabel: 'No, forget it';
 										openModal.
 								dialog 
-									ifTrue: [ self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring)].  err return ].
+									ifTrue: [ self furtherActionFor: (RBMethodStillCalled new refactoring: refactoring)].  err return ].
 	
+]
+
+{ #category : #initialization }
+RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod for: aClass [
+	
+	scopes := refactoringScopes.
+	variables := {aMethod}.
+	class := aClass
+]
+
+{ #category : #initialization }
+RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods for: aClass [
+	
+	scopes := refactoringScopes.
+	methods := aMethods.
+	class := aClass
 ]
 
 { #category : #initialization }

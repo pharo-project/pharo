@@ -9,7 +9,7 @@ I implement methods from parent class and define some helper methods that are ne
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBMoveMethodsToClassSideDriver model: aRBNamespace methods: aCollectionOfMethods) execute
+(RBMoveMethodsToClassSideDriver model: aRBNamespace methods: aCollectionOfMethods) runRefactoring
 ```
 "
 Class {
