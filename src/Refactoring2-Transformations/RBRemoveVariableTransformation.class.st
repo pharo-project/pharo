@@ -25,7 +25,7 @@ Class {
 { #category : #preconditions }
 RBRemoveVariableTransformation >> applicabilityConditions [ 
 
-	class := self definingClass instanceSide.
+	class := self definingClass.
 
 	^ isClassVariable
 		ifTrue: [ self applicabilityConditionsForClassVariable ]
