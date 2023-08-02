@@ -28,11 +28,11 @@ RBRemoveMethodRefactoring class >> removeMethods: selectorCollection from: aClas
 
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> applicabilityConditions [
-	self halt.
+
 	^ (selectors
 		   inject: self trueCondition
 		   into: [ :cond :each |
-		   cond & (RBCondition definesSelector: each selector in: class) ])
+		   cond & (RBCondition definesSelector: each in: class) ])
 	 
 ]
 
