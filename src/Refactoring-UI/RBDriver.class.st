@@ -26,15 +26,15 @@ RBDriver class >> isAbstract [
 ]
 
 { #category : #execution }
-RBDriver >> execute [
-
-	self subclassResponsibility
-]
-
-{ #category : #execution }
 RBDriver >> openPreviewWithChanges: changes [
 	
 	^ (StRefactoringPreviewPresenter
 		 changes: changes
 		 scopes: scopes) openModal
+]
+
+{ #category : #execution }
+RBDriver >> runRefactoring [
+
+	self subclassResponsibility
 ]

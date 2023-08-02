@@ -89,7 +89,7 @@ RBAbstractTransformation class >> refactoringOptions [
 { #category : #accessing }
 RBAbstractTransformation >> changes [
 
-	^ self model changes
+	^ model changes
 ]
 
 { #category : #'condition definitions' }
@@ -233,7 +233,7 @@ RBAbstractTransformation >> preconditions [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : #'private hook' }
 RBAbstractTransformation >> primitiveExecute [ 
 
 	self subclassResponsibility

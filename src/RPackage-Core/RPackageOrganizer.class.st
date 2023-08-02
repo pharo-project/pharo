@@ -669,7 +669,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
-		when: ClassRenamed send: #systemClassRenamedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodModified send: #systemMethodModifiedActionFrom: to: self;
@@ -829,6 +828,28 @@ RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 ]
 
 { #category : #'system integration' }
+RPackageOrganizer >> renameClass: class from: oldName to: newName [
+
+	| package extendingPackages |
+	package := self packageOfClassNamed: oldName.
+	extendingPackages := self extendingPackagesOfClassNamed: oldName.
+
+	package updateDefinedClassNamed: oldName withNewName: newName.
+	"we have to update all RPackages extending this class"
+	extendingPackages do: [ :extendingPackage | extendingPackage updateExtensionForClassNamed: oldName withNewName: newName ].
+
+	"we have to update the package organizer.
+	update the 'classPackageDictionary' to replace the key with the new class name"
+	self unregisterPackage: package forClass: oldName.
+	self registerPackage: package forClass: class.
+
+	"update the 'classExtendingPackagesMapping' to replace the key with the new class name"
+	extendingPackages do: [ :extendingPackage |
+		self unregisterExtendingPackage: extendingPackage forClassName: oldName.
+		self registerExtendingPackage: extendingPackage forClassName: newName ]
+]
+
+{ #category : #'system integration' }
 RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 
 	| classesAndProtocolsToRename |
@@ -919,38 +940,6 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 	newPackageTag := newPackage addClassTag: newPackageName.
 
 	newPackage moveClass: class fromPackage: oldPackage toTag: newPackageTag
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemClassRenamedActionFrom: ann [
-	"When a class is renamed, we update its package as well as the organizer"
-
-	| newName oldName class package extendingPackages packageName |
-	class := ann classAffected.
-	packageName := ann category.
-	oldName := ann oldName.
-	newName := ann newName.
-	package := self packageOfClassNamed: oldName.
-	extendingPackages := self extendingPackagesOfClassNamed: oldName.
-
-	package updateDefinedClassNamed: oldName withNewName: newName.
-	"we have to update all RPackages extending this class"
-	extendingPackages do: [:aRPackage |
-		aRPackage updateExtensionForClassNamed: oldName withNewName: newName].
-
-	"we have to update the RPackageOrganizer.
-	update the 'classPackageDictionary' to replace the key with the new class name"
-	self unregisterPackage: package forClass: oldName.
-	self registerPackage: package forClass: class.
-
-	"update the 'classExtendingPackagesMapping' to replace the key with the new class name"
-	extendingPackages do: [:aRPackage |
-		self unregisterExtendingPackage: aRPackage forClassName: oldName.
-		self registerExtendingPackage:  aRPackage forClassName: newName
-		].
-	self flag: #cyrille. "we will see that."
-	"maybe we should remove also the key from the extendedPackages dictionary"
-	"CD: This is what are doing the lines above I think"
 ]
 
 { #category : #'system integration' }

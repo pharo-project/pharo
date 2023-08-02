@@ -20,8 +20,18 @@ Class {
 	#category : #'Refactoring-UI-Drivers'
 }
 
+{ #category : #resources }
+RBPushDownMethodInSomeClassesDriver >> refactoring [
+
+	refactoring :=  RBPushDownMethodRefactoring
+		model: model
+		pushDown: (methods collect: [ :each | each selector ])
+		from: class
+		in: classes.
+]
+
 { #category : #execution }
-RBPushDownMethodInSomeClassesDriver >> execute [
+RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 
 	| changes  |
 	methods := self selectMethods.
@@ -41,16 +51,6 @@ RBPushDownMethodInSomeClassesDriver >> execute [
 			           "If user answers no, error is being propagated."
 			           err resume ].
 	self openPreviewWithChanges: { changes }
-]
-
-{ #category : #resources }
-RBPushDownMethodInSomeClassesDriver >> refactoring [
-
-	refactoring :=  RBPushDownMethodRefactoring
-		model: model
-		pushDown: (methods collect: [ :each | each selector ])
-		from: class
-		in: classes.
 ]
 
 { #category : #execution }

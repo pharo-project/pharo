@@ -13,27 +13,26 @@ Class {
 
 { #category : #execution }
 SycReplaceMessageCommand >> createRefactoring [
-	self flag: 'TODO'."Improve preview to add args when change the sender with empty args"
+
+	self flag: 'TODO'. "Improve preview to add args when change the sender with empty args"
 
 	^ newSelector newArgs
-		ifNotEmpty:[
-		(self refactoringClass
-		model: model
-		replaceMethod: originalMessage selector
-		in: selectedClass
-		to: newSelector selector
-		permutation: newSelector permutation
-		inAllClasses: self replaceInAllClasses)
-		initializers: newSelector newArgs values ]
-	ifEmpty:[
-	 (self refactoringClass
-		model: model
-		replaceMethod: originalMessage selector
-		in: selectedClass
-		to: newSelector selector
-		permutation: newSelector permutation
-		inAllClasses: self replaceInAllClasses)
-		initializers: newSelector newArgs ]
+		  ifNotEmpty: [
+			  (self refactoringClass
+				   model: model
+				   replaceMethod: originalMessage selector
+				   in: selectedClass
+				   to: newSelector selector
+				   permutation: newSelector permutation
+				   inAllClasses: self replaceInAllClasses) initializers: newSelector newArgs values ]
+		  ifEmpty: [
+			  (self refactoringClass
+				   model: model
+				   replaceMethod: originalMessage selector
+				   in: selectedClass
+				   to: newSelector selector
+				   permutation: newSelector permutation
+				   inAllClasses: self replaceInAllClasses) initializers:  newSelector newArgs ]
 ]
 
 { #category : #accessing }

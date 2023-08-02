@@ -136,7 +136,8 @@ RBTransformation >> preconditionChecking: aBoolean [
 
 { #category : #preconditions }
 RBTransformation >> preconditions [
-
+	"By default everything is ok so precondition is true"
+	
 	^ self trueCondition
 ]
 
