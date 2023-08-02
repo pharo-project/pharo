@@ -220,30 +220,14 @@ RPackage >> addMethod: aCompiledMethod [
 	(self includesClass: methodClass)
 		ifTrue: [
 			methodClass isMeta
-				ifTrue: [
-					(metaclassDefinedSelectors
-						at: methodClass instanceSide name
-						ifAbsentPut: [ IdentitySet new ])
-						add: aCompiledMethod selector]
-				ifFalse: [
-					(classDefinedSelectors
-						at: methodClass name
-						ifAbsentPut: [ IdentitySet new ])
-						add: aCompiledMethod selector ] ]
-		ifFalse:  [
+				ifTrue: [ (metaclassDefinedSelectors at: methodClass instanceSide name ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
+				ifFalse: [ (classDefinedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ] ]
+		ifFalse: [
 			methodClass isMeta
-				ifTrue: [
-					(metaclassExtensionSelectors
-						at: methodClass instanceSide name
-						ifAbsentPut: [ IdentitySet new ])
-						add: aCompiledMethod selector.]
-				ifFalse: [
-					(classExtensionSelectors
-						at: methodClass name
-						ifAbsentPut: [ IdentitySet new ])
-						add: aCompiledMethod selector].
-				"we added a method extension so the receiver is an extending package of the class"
-				self organizer registerExtendingPackage: self forClass: methodClass ].
+				ifTrue: [ (metaclassExtensionSelectors at: methodClass instanceSide name ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
+				ifFalse: [ (classExtensionSelectors at: methodClass name ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ].
+			"we added a method extension so the receiver is an extending package of the class"
+			self organizer registerExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
@@ -394,8 +378,8 @@ RPackage >> definedOrExtendedClasses [
 RPackage >> definedSelectorsForClass: aClass [
 
 	^ aClass isMeta
-		ifTrue: [ metaclassDefinedSelectors at: aClass instanceSide originalName ifAbsent: [ #() ] ]
-		ifFalse: [ classDefinedSelectors at: aClass originalName ifAbsent: [ #() ] ]
+		  ifTrue: [ metaclassDefinedSelectors at: aClass instanceSide originalName ifAbsent: [ #(  ) ] ]
+		  ifFalse: [ classDefinedSelectors at: aClass ifAbsent: [ #(  ) ] ]
 ]
 
 { #category : #testing }
@@ -728,7 +712,7 @@ RPackage >> methods [
 	classExtensionSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) >> sel ] ].
 
 	metaclassDefinedSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) classSide >> sel ] ].
-	classDefinedSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) >> sel ] ].
+	classDefinedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
 
 	^ methods
 ]
@@ -875,10 +859,10 @@ RPackage >> removeAllMethodsFromClass: aClass [
 
 	| aClassNameSymbol |
 	aClassNameSymbol := aClass originalName asSymbol.
-	classDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
-	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
-	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
-	metaclassExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+	classDefinedSelectors removeKey: aClass ifAbsent: [  ].
+	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [  ].
+	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [  ].
+	metaclassExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [  ].
 
 	self organizer unregisterExtendingPackage: self forClassName: aClassNameSymbol
 ]
@@ -952,9 +936,9 @@ RPackage >> removeMethod: aCompiledMethod [
 						methods remove: aCompiledMethod selector ifAbsent: [  ].
 						methods ifEmpty: [ metaclassDefinedSelectors removeKey: methodClass instanceSide originalName ] ] ]
 				ifFalse: [
-					classDefinedSelectors at: methodClass originalName ifPresent: [ :methods |
+					classDefinedSelectors at: methodClass ifPresent: [ :methods |
 						methods remove: aCompiledMethod selector ifAbsent: [  ].
-						methods ifEmpty: [ classDefinedSelectors removeKey: methodClass originalName ] ] ] ]
+						methods ifEmpty: [ classDefinedSelectors removeKey: methodClass ] ] ] ]
 		ifFalse: [
 			methodClass isMeta
 				ifTrue: [
@@ -1072,13 +1056,13 @@ RPackage >> roots [
 { #category : #accessing }
 RPackage >> selectors [
 
-	| sel |
-	sel := Set new.
-	metaclassExtensionSelectors valuesDo: [:each | sel addAll: each].
-	classExtensionSelectors valuesDo: [:each | sel addAll: each].
-	metaclassDefinedSelectors valuesDo: [:each | sel addAll: each].
-	classDefinedSelectors valuesDo: [:each | sel addAll: each].
-	^ sel
+	| allSelectors |
+	allSelectors := Set new.
+	metaclassExtensionSelectors valuesDo: [ :each | allSelectors addAll: each ].
+	classExtensionSelectors valuesDo: [ :each | allSelectors addAll: each ].
+	metaclassDefinedSelectors valuesDo: [ :each | allSelectors addAll: each ].
+	classDefinedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
+	^ allSelectors
 ]
 
 { #category : #accessing }
@@ -1134,25 +1118,17 @@ RPackage >> unregisterClass: aClass [
 RPackage >> updateDefinedClassNamed: oldString withNewName: newString [
 	"this method should only be used with class names , and not metaclass names"
 
-	(oldString substrings size > 1 or: [ newString substrings size > 1 ])
-		ifTrue: [ Error signal: 'You should not use metaclass names' ].	"=> update the 'classDefinedSelectors' dictionary (replace the old key by the new one)
+	(oldString substrings size > 1 or: [ newString substrings size > 1 ]) ifTrue: [ Error signal: 'You should not use metaclass names' ]. "=> update the 'classDefinedSelectors' dictionary (replace the old key by the new one)
        => update the 'metaclassDefinedSelectors' dictionary (replace the old key by the new one)"
 	classes remove: oldString asSymbol.
-	classes add: newString asSymbol.	"Don't forget that class tags also register the classes names."
+	classes add: newString asSymbol. "Don't forget that class tags also register the classes names."
+
 	self classTags do: [ :aTag | aTag updateDefinedClassNamed: oldString withNewName: newString ].
-	self flag: #cyrille.	"what happens if this is a metaclass: it breaks the invariant of the package"	"worse so far the second block below breaks"	"the name of the method should be updateDefinedClassNamed: withNewName:"	"CD: i only use this method when a class is renamed in the system (systemClassRenamedActionFrom:). Normally we are not able to rename a metaclass in the system (?) so we should never end up in a case with metaclass names ?  "
-	(classDefinedSelectors at: oldString ifAbsent: [ nil ])
-		ifNotNil: [
-			classDefinedSelectors at: newString put: (classDefinedSelectors at: oldString).
-			classDefinedSelectors
-				removeKey: oldString
-				ifAbsent: [ self reportBogusBehaviorOf: #updateDefinedClassNamed:withNewName: ] ].
-	(metaclassDefinedSelectors at: oldString ifAbsent: [ nil ])
-		ifNotNil: [
-			metaclassDefinedSelectors at: newString put: (metaclassDefinedSelectors at: oldString).
-			metaclassDefinedSelectors
-				removeKey: oldString
-				ifAbsent: [ self reportBogusBehaviorOf: #updateDefinedClassNamed:withNewName: ] ]
+
+	metaclassDefinedSelectors at: oldString ifPresent: [ :selectors |
+		metaclassDefinedSelectors
+			at: newString put: selectors;
+			removeKey: oldString ]
 ]
 
 { #category : #updating }
@@ -1161,10 +1137,10 @@ RPackage >> updateDefinedSelector: oldSelector inClass: aClass withNewSelector: 
 	aClass isMeta
 		ifTrue: [
 			(metaclassDefinedSelectors at: aClass instanceSide name asSymbol) remove: oldSelector.
-			(metaclassDefinedSelectors at: aClass instanceSide name asSymbol) add: newSelector. ]
+			(metaclassDefinedSelectors at: aClass instanceSide name asSymbol) add: newSelector ]
 		ifFalse: [
-			(classDefinedSelectors  at: aClass name asSymbol) remove: oldSelector.
-			(classDefinedSelectors  at: aClass name asSymbol) add: newSelector. ]
+			(classDefinedSelectors at: aClass) remove: oldSelector.
+			(classDefinedSelectors at: aClass) add: newSelector ]
 ]
 
 { #category : #updating }
