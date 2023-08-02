@@ -1,3 +1,6 @@
+"
+My responsibility is to add accessors to all variables both on instance and class side and then convert direct accesses to those variables to generated accessors.
+"
 Class {
 	#name : #RBAbstractVariablesTransformation,
 	#superclass : #RBTransformation,
