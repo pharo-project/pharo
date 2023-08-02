@@ -42,7 +42,9 @@ RBAddVariableAccessorTransformation >> createGetterAccessor [
 { #category : #private }
 RBAddVariableAccessorTransformation >> createSetterAccessor [
 
-	(self definingClass setterMethodFor: variableName) ifNil: [ self defineSetterMethod ]
+	(self definingClass setterMethodFor: variableName)
+		ifNil: [ self defineSetterMethod ]
+		ifNotNil: [ setterMethod := self definingClass setterMethodFor: variableName ]
 ]
 
 { #category : #private }
