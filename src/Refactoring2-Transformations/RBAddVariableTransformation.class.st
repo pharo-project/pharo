@@ -30,8 +30,6 @@ RBAddVariableTransformation >> applicabilityConditions [
 			   (RBCondition isMetaclass: class)
 			   & (RBCondition isValidClassVarName: variableName for: class) ]
 		   ifFalse: [
-			   (RBCondition isMetaclass: class) not
-			   &
 			   (RBCondition
 				    isValidInstanceVariableName: variableName
 				    for: class) ])
