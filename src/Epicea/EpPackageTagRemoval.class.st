@@ -10,5 +10,5 @@ Class {
 { #category : #visitor }
 EpPackageTagRemoval >> accept: aVisitor [
 
-	^ aVisitor visitCategoryRemoval: self
+	^ aVisitor visitPackageTagRemoval: self
 ]
