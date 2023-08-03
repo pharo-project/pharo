@@ -6,7 +6,8 @@ Class {
 	#superclass : #EpCodeChange,
 	#instVars : [
 		'classCategoryName',
-		'affectedPackageName'
+		'affectedPackageName',
+		'packageTagName'
 	],
 	#category : #'Epicea-Model'
 }
@@ -34,6 +35,15 @@ EpCategoryChange class >> packageNameFromCategoryName: aName [
 		  ifNil: [ aName ]
 ]
 
+{ #category : #'instance creation' }
+EpCategoryChange class >> tagName: aName packageName: aPackageName [
+
+	^ self new
+		  packageTagName: aName;
+		  affectedPackageName: aPackageName;
+		  yourself
+]
+
 { #category : #accessing }
 EpCategoryChange >> affectedPackageName [
 
@@ -49,7 +59,11 @@ EpCategoryChange >> affectedPackageName: anObject [
 { #category : #accessing }
 EpCategoryChange >> categoryName [
 
-	^ classCategoryName
+	self flag: #package. "We should not rely on categories"
+	^ classCategoryName ifNil: [
+		  self packageTagName = self affectedPackageName
+			  ifTrue: [ self affectedPackageName ]
+			  ifFalse: [ self affectedPackageName , '-' , self packageTagName ] ]
 ]
 
 { #category : #accessing }
@@ -69,4 +83,16 @@ EpCategoryChange >> doesOverride: aCodeChange [
 EpCategoryChange >> isEpCategoryChange [
 
 	^ true
+]
+
+{ #category : #accessing }
+EpCategoryChange >> packageTagName [
+
+	^ packageTagName
+]
+
+{ #category : #accessing }
+EpCategoryChange >> packageTagName: anObject [
+
+	packageTagName := anObject
 ]
