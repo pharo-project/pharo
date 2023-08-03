@@ -89,7 +89,7 @@ EpNewStateVisitor >> visitPackageTagAddition: aPackageTagAddition [
 			  nextPutAll: aPackageTagAddition affectedPackageName;
 			  nextPut: $";
 			  lf;
-			  nextPutAll: aPackageTagAddition packageTagName ]
+			  nextPutAll: aPackageTagAddition tagName ]
 ]
 
 { #category : #visitor }

@@ -202,7 +202,7 @@ EpApplyPreviewer >> visitPackageRemoval: aPackageRemoval [
 { #category : #visitor }
 EpApplyPreviewer >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ (self packageOrganizer hasTag: aPackageTagAddition packageTagName inPackage: aPackageTagAddition affectedPackageName)
+	^ (self packageOrganizer hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition affectedPackageName)
 		  ifTrue: [ #(  ) ]
 		  ifFalse: [ { aPackageTagAddition } ]
 ]

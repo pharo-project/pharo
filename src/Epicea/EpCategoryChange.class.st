@@ -39,7 +39,7 @@ EpCategoryChange class >> packageNameFromCategoryName: aName [
 EpCategoryChange class >> tagName: aName packageName: aPackageName [
 
 	^ self new
-		  packageTagName: aName;
+		  tagName: aName;
 		  affectedPackageName: aPackageName;
 		  yourself
 ]
@@ -61,9 +61,9 @@ EpCategoryChange >> categoryName [
 
 	self flag: #package. "We should not rely on categories"
 	^ classCategoryName ifNil: [
-		  self packageTagName = self affectedPackageName
+		  self tagName = self affectedPackageName
 			  ifTrue: [ self affectedPackageName ]
-			  ifFalse: [ self affectedPackageName , '-' , self packageTagName ] ]
+			  ifFalse: [ self affectedPackageName , '-' , self tagName ] ]
 ]
 
 { #category : #accessing }
@@ -86,13 +86,13 @@ EpCategoryChange >> isEpCategoryChange [
 ]
 
 { #category : #accessing }
-EpCategoryChange >> packageTagName [
+EpCategoryChange >> tagName [
 
 	^ packageTagName
 ]
 
 { #category : #accessing }
-EpCategoryChange >> packageTagName: anObject [
+EpCategoryChange >> tagName: aString [
 
-	packageTagName := anObject
+	packageTagName := aString
 ]
