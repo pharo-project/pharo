@@ -23,9 +23,14 @@ RPackage >> definesOverridesOf: aMethod [
 
 	aMethod origin isInstanceSide
 		ifTrue: [
+			| classExtensionSelectors |
+			classExtensionSelectors := Dictionary new.
+			extensionSelectors keysAndValuesDo: [ :class :selectors | class isInstanceSide ifTrue: [ classExtensionSelectors at: class put: selectors ] ].
 			(self definesOverridesOf: aMethod in: classDefinedSelectors) ifTrue: [ ^ true ].
 			(self definesOverridesOf: aMethod in: classExtensionSelectors) ifTrue: [ ^ true ] ]
-		ifFalse: [
+		ifFalse: [| metaclassExtensionSelectors |
+			metaclassExtensionSelectors := Dictionary new.
+			extensionSelectors keysAndValuesDo: [ :class :selectors | class isClassSide ifTrue: [ metaclassExtensionSelectors at: class put: selectors ] ].
 			(self definesOverridesOfClassSide: aMethod in: metaclassDefinedSelectors) ifTrue: [ ^ true ].
 			(self definesOverridesOfClassSide: aMethod in: metaclassExtensionSelectors) ifTrue: [ ^ true ] ].
 

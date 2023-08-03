@@ -70,10 +70,9 @@ Class {
 	#name : #RPackage,
 	#superclass : #Object,
 	#instVars : [
+		'extensionSelectors',
 		'classDefinedSelectors',
 		'metaclassDefinedSelectors',
-		'classExtensionSelectors',
-		'metaclassExtensionSelectors',
 		'classes',
 		'name',
 		'classTags',
@@ -223,9 +222,7 @@ RPackage >> addMethod: aCompiledMethod [
 				ifTrue: [ (metaclassDefinedSelectors at: methodClass instanceSide ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
 				ifFalse: [ (classDefinedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ] ]
 		ifFalse: [
-			methodClass isMeta
-				ifTrue: [ (metaclassExtensionSelectors at: methodClass instanceSide ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
-				ifFalse: [ (classExtensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ].
+			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector.
 			"we added a method extension so the receiver is an extending package of the class"
 			self organizer registerExtendingPackage: self forClass: methodClass ].
 
@@ -267,11 +264,6 @@ RPackage >> basicRemoveTag: tag [
 	classTags remove: tag ifAbsent: [  ].
 
 	SystemAnnouncer announce: (PackageTagRemoved to: tag)
-]
-
-{ #category : #private }
-RPackage >> classExtensionSelectors [
-	^ classExtensionSelectors
 ]
 
 { #category : #'class tags' }
@@ -428,14 +420,14 @@ RPackage >> environment [
 RPackage >> extendedClassNames [
 	"Return the name of the classes which are extended by the receiver package. if a metaclass is extended, just get its sole instance class name."
 
-	^ (classExtensionSelectors keys union: metaclassExtensionSelectors keys) collect: [ :class | class name ]
+	^ extensionSelectors keys collect: [ :class | class instanceSide name ] as: Set
 ]
 
 { #category : #accessing }
 RPackage >> extendedClasses [
 	"Return classes and metaclasses that are extended in the receiver. They represent the classes of method extensions"
 
-	^ (metaclassExtensionSelectors keys collect: [ :class | class classSide ]) union: classExtensionSelectors keys
+	^ extensionSelectors keys
 ]
 
 { #category : #testing }
@@ -451,12 +443,10 @@ RPackage >> extendsClass: aClass [
 RPackage >> extensionMethods [
 	"Extension methods are methods defined on classes that are not defined in the receiver"
 
-	| allExtensionMethods |
-	allExtensionMethods := OrderedCollection new.
-	classExtensionSelectors keysAndValuesDo: [ :class :selectors | allExtensionMethods addAll: (selectors collect: [ :selector | class >> selector ]) ].
-	metaclassExtensionSelectors keysAndValuesDo: [ :class :selectors | allExtensionMethods addAll: (selectors collect: [ :selector | class classSide >> selector ]) ].
-
-	^ allExtensionMethods
+	| methods |
+	methods := OrderedCollection new.
+	extensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
+	^ methods
 ]
 
 { #category : #accessing }
@@ -478,17 +468,14 @@ RPackage >> extensionSelectors [
 
 	| allSelectors |
 	allSelectors := Set new.
-	classExtensionSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
-	metaclassExtensionSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
+	extensionSelectors keysAndValuesDo: [ :class :selectors | allSelectors addAll: selectors ].
 	^ allSelectors
 ]
 
 { #category : #accessing }
 RPackage >> extensionSelectorsForClass: aClass [
 
-	^ aClass isMeta
-		  ifTrue: [ metaclassExtensionSelectors at: aClass instanceSide ifAbsent: [ #(  ) ] ]
-		  ifFalse: [ classExtensionSelectors at: aClass ifAbsent: [ #(  ) ] ]
+	^ extensionSelectors at: aClass ifAbsent: [ #(  ) ]
 ]
 
 { #category : #'class tags' }
@@ -536,12 +523,12 @@ RPackage >> importClass: aClass inTag: aTag [
 ]
 
 { #category : #private }
-RPackage >> importPackage: anRPackage [
+RPackage >> importPackage: aPackage [
 
-	anRPackage definedClasses do: [ :className | self importClass: className ].
+	aPackage definedClasses do: [ :className | self importClass: className ].
+
 	"new rpackage inherits the extentions"
-	classExtensionSelectors := classExtensionSelectors , anRPackage classExtensionSelectors.
-	metaclassExtensionSelectors := metaclassExtensionSelectors , anRPackage metaclassExtensionSelectors
+	extensionSelectors := extensionSelectors , aPackage privateExtensionSelectors
 ]
 
 { #category : #private }
@@ -620,12 +607,12 @@ RPackage >> includesSystemCategory: categoryName [
 
 { #category : #initialization }
 RPackage >> initialize [
+
 	super initialize.
 	classes := IdentitySet new.
-	metaclassExtensionSelectors := IdentityDictionary new.
-	classExtensionSelectors := IdentityDictionary new.
 	classDefinedSelectors := IdentityDictionary new.
 	metaclassDefinedSelectors := IdentityDictionary new.
+	extensionSelectors := IdentityDictionary new.
 	classTags := Set new
 ]
 
@@ -685,11 +672,6 @@ RPackage >> linesOfCode [
 	^self methods inject: 0 into: [:sum :each | sum + each linesOfCode]
 ]
 
-{ #category : #private }
-RPackage >> metaclassExtensionSelectors [
-	^ metaclassExtensionSelectors
-]
-
 { #category : #'system compatibility' }
 RPackage >> methodCategoryPrefix [
 	^ '*', self name asLowercase
@@ -702,8 +684,7 @@ RPackage >> methods [
 	| methods |
 	methods := OrderedCollection new.
 
-	metaclassExtensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class classSide >> selector ]) ].
-	classExtensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
+	extensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
 
 	metaclassDefinedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class classSide >> selector ]) ].
 	classDefinedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
@@ -801,6 +782,12 @@ RPackage >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
+{ #category : #private }
+RPackage >> privateExtensionSelectors [
+
+	^ extensionSelectors
+]
+
 { #category : #properties }
 RPackage >> properties [
 	^ Properties at: self ifAbsent: nil
@@ -855,8 +842,8 @@ RPackage >> removeAllMethodsFromClass: aClass [
 	aClassNameSymbol := aClass originalName asSymbol.
 	classDefinedSelectors removeKey: aClass ifAbsent: [  ].
 	metaclassDefinedSelectors removeKey: aClass ifAbsent: [  ].
-	classExtensionSelectors removeKey: aClass ifAbsent: [  ].
-	metaclassExtensionSelectors removeKey: aClass ifAbsent: [  ].
+	extensionSelectors removeKey: aClass ifAbsent: [  ].
+	extensionSelectors removeKey: aClass classSide ifAbsent: [  ].
 
 	self organizer unregisterExtendingPackage: self forClassName: aClassNameSymbol
 ]
@@ -934,18 +921,12 @@ RPackage >> removeMethod: aCompiledMethod [
 						methods remove: aCompiledMethod selector ifAbsent: [  ].
 						methods ifEmpty: [ classDefinedSelectors removeKey: methodClass ] ] ] ]
 		ifFalse: [
-			methodClass isMeta
-				ifTrue: [
-					metaclassExtensionSelectors at: methodClass instanceSide ifPresent: [ :methods |
-						methods remove: aCompiledMethod selector ifAbsent: [  ].
-						methods ifEmpty: [ metaclassExtensionSelectors removeKey: methodClass instanceSide ] ] ]
-				ifFalse: [
-					classExtensionSelectors at: methodClass ifPresent: [ :methods |
-						methods remove: aCompiledMethod selector ifAbsent: [  ].
-						methods ifEmpty: [ classExtensionSelectors removeKey: methodClass ] ] ] ].
+			extensionSelectors at: methodClass ifPresent: [ :selectors |
+				selectors remove: aCompiledMethod selector ifAbsent: [  ].
+				selectors ifEmpty: [ extensionSelectors removeKey: methodClass ] ] ].
 
-	((metaclassExtensionSelectors at: methodClass instanceSide ifAbsent: [ #(  ) ]) isEmpty and: [
-		 (classExtensionSelectors at: methodClass instanceSide ifAbsent: [ #(  ) ]) isEmpty ]) ifTrue: [
+	((extensionSelectors at: methodClass instanceSide ifAbsent: [ #(  ) ]) isEmpty and: [
+		 (extensionSelectors at: methodClass classSide ifAbsent: [ #(  ) ]) isEmpty ]) ifTrue: [
 		self organizer unregisterExtendingPackage: self forClassName: methodClass instanceSide originalName ].
 
 	^ aCompiledMethod
@@ -1052,8 +1033,7 @@ RPackage >> selectors [
 
 	| allSelectors |
 	allSelectors := Set new.
-	metaclassExtensionSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
-	classExtensionSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
+	extensionSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
 	metaclassDefinedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
 	classDefinedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
 	^ allSelectors
@@ -1136,13 +1116,9 @@ RPackage >> updateDefinedSelector: oldSelector inClass: aClass withNewSelector: 
 { #category : #updating }
 RPackage >> updateExtensionSelector: oldSelector inClass: aClass withNewSelector: newSelector [
 
-	aClass isMeta
-		ifTrue: [
-			(metaclassExtensionSelectors at: aClass instanceSide) remove: oldSelector.
-			(metaclassExtensionSelectors at: aClass instanceSide) add: newSelector ]
-		ifFalse: [
-			(classExtensionSelectors at: aClass) remove: oldSelector.
-			(classExtensionSelectors at: aClass) add: newSelector ]
+	(extensionSelectors at: aClass)
+		remove: oldSelector;
+		add: newSelector
 ]
 
 { #category : #updating }
