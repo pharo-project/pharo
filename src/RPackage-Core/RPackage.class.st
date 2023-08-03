@@ -509,6 +509,15 @@ RPackage >> hasProperty: aKey [
 	^ true
 ]
 
+{ #category : #testing }
+RPackage >> hasTag: aTag [
+	"Takes a package tag or a package tag name as parameter and return true if I include this package tag."
+
+	^ aTag isString
+		  ifTrue: [ self classTags anySatisfy: [ :tag | tag name = aTag ] ]
+		  ifFalse: [ self classTags includes: aTag ]
+]
+
 { #category : #accessing }
 RPackage >> hierarchyRoots [
 	"Returns all the hiearchy roots (by opposition to single classes inheriting from class outside the package) of a package"

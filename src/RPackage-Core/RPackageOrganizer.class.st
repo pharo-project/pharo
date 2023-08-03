@@ -415,6 +415,14 @@ RPackageOrganizer >> hasPackageMatchingExtensionName: anExtensionName [
 	^ false
 ]
 
+{ #category : #testing }
+RPackageOrganizer >> hasTag: aTag inPackage: aPackage [
+
+	(self hasPackage: aPackage) ifFalse: [ ^ false ].
+
+	^ (self ensurePackage: aPackage) hasTag: aTag
+]
+
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> includesCategory: aString [
 	"Tests if a category is already included."
