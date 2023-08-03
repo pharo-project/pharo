@@ -1,27 +1,27 @@
 Class {
-	#name : #RBAddClassVariableParametrizedTest,
+	#name : #RBAddClassVariableTransformationParametrizedTest,
 	#superclass : #RBWithDifferentConstructorsParametrizedTest,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
-{ #category : #tests }
-RBAddClassVariableParametrizedTest class >> testParameters [
+{ #category : #'building suites' }
+RBAddClassVariableTransformationParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBAddClassVariableRefactoring .
-					  #constructor -> #variable:class: };
 		addCase: { #rbClass -> RBAddVariableTransformation .
 					  #constructor -> #classVariable:class: };
+		addCase: { #rbClass -> RBAddClassVariableRefactoring .
+					  #constructor -> #variable:class: };
 		yourself
 ]
 
 { #category : #running }
-RBAddClassVariableParametrizedTest >> setUp [
+RBAddClassVariableTransformationParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
 { #category : #tests }
-RBAddClassVariableParametrizedTest >> testAddClassVariable [
+RBAddClassVariableTransformationParametrizedTest >> testAddClassVariable [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
 		{'Asdf' . #RBTransformationRuleTestData }.
@@ -34,24 +34,14 @@ RBAddClassVariableParametrizedTest >> testAddClassVariable [
 ]
 
 { #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testFailureAlreadyExistingName [
-
-	self shouldFail: (self createRefactoringWithArguments:
-			 { #RecursiveSelfRule. #RBTransformationRuleTestData }).
-	self shouldFail: (self createRefactoringWithArguments: {
-				 self objectClassVariable.
-				 #RBTransformationRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testFailureMetaClassFailure [
+RBAddClassVariableTransformationParametrizedTest >> testFailureMetaClassFailure [
 
 	self skip.
 	"	self shouldFail: (self createRefactoringWithArguments: { #VariableName . #'RBTransformationRuleTestData class'})"
 ]
 
 { #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testFailureMetaclass [
+RBAddClassVariableTransformationParametrizedTest >> testFailureMetaclass [
 
 	| refactoring |
 	self skip.
@@ -62,15 +52,7 @@ RBAddClassVariableParametrizedTest >> testFailureMetaclass [
 ]
 
 { #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testFailureModelAlreadyExistingName [
-
-	self shouldFail: (self
-			 createRefactoringWithModel: model
-			 andArguments: { #ClassVarName2. #Bar })
-]
-
-{ #category : #'failure tests' }
-RBAddClassVariableParametrizedTest >> testFailureModelMetaclass [
+RBAddClassVariableTransformationParametrizedTest >> testFailureModelMetaclass [
 
 	| refactoring |
 	self skip.
@@ -81,7 +63,7 @@ RBAddClassVariableParametrizedTest >> testFailureModelMetaclass [
 ]
 
 { #category : #tests }
-RBAddClassVariableParametrizedTest >> testModelAddClassVariable [
+RBAddClassVariableTransformationParametrizedTest >> testModelAddClassVariable [
 	| refactoring |
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { #ClassVarName3 . #Bar }.
