@@ -803,6 +803,14 @@ RPackageOrganizer >> removeSystemCategory: category [
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
+RPackageOrganizer >> removeTag: aTag fromPackage: aPackage [
+
+	(self hasPackage: aPackage) ifFalse: [ ^ self "no need to remove the tag if the package is not there." ].
+
+	(self ensurePackage: aPackage) removeTag: aTag
+]
+
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 	"Rename a category. No action if new name already exists, or if old name does not exist."
 

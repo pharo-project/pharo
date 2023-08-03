@@ -123,12 +123,7 @@ EpApplyVisitor >> visitPackageTagAddition: aPackageTagAddition [
 { #category : #visitor }
 EpApplyVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	| package |
-	package := environment organization
-		           packageNamed: aPackageTagRemoval affectedPackageName
-		           ifAbsent: [ ^ self "If there is no package there is nothing to remove" ].
-
-	package removeClassTag: aPackageTagRemoval tagName
+	environment organization removeTag: aPackageTagRemoval tagName fromPackage: aPackageTagRemoval affectedPackageName
 ]
 
 { #category : #visitor }

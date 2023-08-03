@@ -995,6 +995,16 @@ RPackage >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
+{ #category : #'class tags' }
+RPackage >> removeTag: aTag [
+
+	| tagName |
+	tagName := aTag isString
+		           ifTrue: [ aTag ]
+		           ifFalse: [ aTag name ].
+	self removeClassTag: tagName
+]
+
 { #category : #private }
 RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 

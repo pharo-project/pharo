@@ -32,20 +32,6 @@ EpApplyTest >> testBehaviorNameChange [
 ]
 
 { #category : #tests }
-EpApplyTest >> testCategoryRemovalWithPackageTagAddition [
-
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	(self packageOrganizer packageNamed: classFactory packageName) removeClassTag: classFactory defaultTagPostfix.
-	self setHeadAsInputEntry.
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-
-	self assert: inputEntry content class equals: EpPackageTagRemoval.
-	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
-	self applyInputEntry.
-	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName)
-]
-
-{ #category : #tests }
 EpApplyTest >> testCategoryRename [
 
 	| aCategory anotherCategory |
@@ -352,7 +338,7 @@ EpApplyTest >> testPackageRemoval [
 ]
 
 { #category : #tests }
-EpApplyTest >> testPackageTagAdditionWithCategoryRemoved [
+EpApplyTest >> testPackageTagAdditionWithPackageTagRemoval [
 
 	| aCategory |
 	aCategory := classFactory defaultCategory.
@@ -365,6 +351,20 @@ EpApplyTest >> testPackageTagAdditionWithCategoryRemoved [
 	self deny: (self packageOrganizer includesCategory: aCategory).
 	self applyInputEntry.
 	self assert: (self packageOrganizer includesCategory: aCategory)
+]
+
+{ #category : #tests }
+EpApplyTest >> testPackageTagRemovalWithPackageTagAddition [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
+	self setHeadAsInputEntry.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+
+	self assert: inputEntry content class equals: EpPackageTagRemoval.
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self applyInputEntry.
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName)
 ]
 
 { #category : #tests }
