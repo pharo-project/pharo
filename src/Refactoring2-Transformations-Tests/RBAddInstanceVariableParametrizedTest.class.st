@@ -50,3 +50,16 @@ RBAddInstanceVariableParametrizedTest >> testAddToModel [
 		classNamed: #FOOBAR)
 		directlyDefinesInstanceVariable: 'asdf')
 ]
+
+{ #category : #tests }
+RBAddInstanceVariableParametrizedTest >> testInvalidVariableName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { ''. #RBTransformationRuleTestData }).
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'true'. #RBTransformationRuleTestData }).
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'Asdf'. #RBTransformationRuleTestData })
+]
