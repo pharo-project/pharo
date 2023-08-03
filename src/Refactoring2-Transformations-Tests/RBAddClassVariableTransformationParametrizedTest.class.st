@@ -36,8 +36,8 @@ RBAddClassVariableTransformationParametrizedTest >> testAddClassVariable [
 { #category : #'failure tests' }
 RBAddClassVariableTransformationParametrizedTest >> testFailureMetaClassFailure [
 
-	self skip.
-	"	self shouldFail: (self createRefactoringWithArguments: { #VariableName . #'RBTransformationRuleTestData class'})"
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #VariableName. #'RBTransformationRuleTestData class' })
 ]
 
 { #category : #'failure tests' }
@@ -47,8 +47,8 @@ RBAddClassVariableTransformationParametrizedTest >> testFailureMetaclass [
 	self skip.
 	refactoring := self
 		               createRefactoringWithModel: model
-		               andArguments: { #ClassVarName3. #'Object class' }
-	"	self shouldFail: refactoring"
+		               andArguments: { #ClassVarName3. #'Object class' }.
+	self shouldFail: refactoring
 ]
 
 { #category : #'failure tests' }
@@ -58,8 +58,8 @@ RBAddClassVariableTransformationParametrizedTest >> testFailureModelMetaclass [
 	self skip.
 	refactoring := self
 		               createRefactoringWithModel: model
-		               andArguments: { #ClassVarName3. #'Bar class' }
-	"	self shouldFail: refactoring"
+		               andArguments: { #ClassVarName3. #'Bar class' }.
+	self shouldFail: refactoring
 ]
 
 { #category : #tests }
