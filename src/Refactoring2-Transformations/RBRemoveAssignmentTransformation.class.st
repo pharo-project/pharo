@@ -87,12 +87,6 @@ RBRemoveAssignmentTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #preconditions }
-RBRemoveAssignmentTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveAssignmentTransformation >> privateTransform [
 	| methodTree valueNode assignments nodeToRemove |

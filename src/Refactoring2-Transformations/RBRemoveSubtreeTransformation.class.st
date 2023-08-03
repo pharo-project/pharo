@@ -74,12 +74,6 @@ RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
 	sourceCode := aString
 ]
 
-{ #category : #preconditions }
-RBRemoveSubtreeTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveSubtreeTransformation >> privateTransform [
 

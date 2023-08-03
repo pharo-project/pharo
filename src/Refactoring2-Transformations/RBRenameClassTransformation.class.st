@@ -94,12 +94,6 @@ RBRenameClassTransformation >> isValidClassName [
 	^ RBCondition isValidClassName: newClassName
 ]
 
-{ #category : #preconditions }
-RBRenameClassTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRenameClassTransformation >> privateTransform [
 

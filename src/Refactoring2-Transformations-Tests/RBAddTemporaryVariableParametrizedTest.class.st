@@ -44,10 +44,3 @@ RBAddTemporaryVariableParametrizedTest >> testFailureMethodDoesNotExist [
 	self shouldFail: (self createRefactoringWithArguments:
 			 { 'variable2'. #method. #RBAddReturnStatementTransformationTest })
 ]
-
-{ #category : #'failure tests' }
-RBAddTemporaryVariableParametrizedTest >> testFailureVariableAlreadyExists [
-
-	self shouldFail: (self createRefactoringWithArguments:
-			 { 'variable'. #methodBefore. #RBAddReturnStatementTransformationTest })
-]

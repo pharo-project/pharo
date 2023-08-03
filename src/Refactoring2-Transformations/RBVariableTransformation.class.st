@@ -71,14 +71,6 @@ RBVariableTransformation class >> variable: aVariableName class: aClassName clas
 		yourself
 ]
 
-{ #category : #accessing }
-RBVariableTransformation >> definingClass [
-
-	^ isClassVariable
-		ifTrue: [ super definingClass classSide ]
-		ifFalse: [ super definingClass ]
-]
-
 { #category : #printing }
 RBVariableTransformation >> storeOn: aStream [
 

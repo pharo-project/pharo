@@ -13,9 +13,6 @@ My main API is
 Class {
 	#name : #RBTransformation,
 	#superclass : #RBAbstractTransformation,
-	#instVars : [
-		'preconditionChecking'
-	],
 	#category : #'Refactoring2-Transformations-Model'
 }
 
@@ -55,10 +52,15 @@ RBTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
 
+{ #category : #preconditions }
+RBTransformation >> applicabilityConditions [ 
+	
+	^ self trueCondition 
+]
+
 { #category : #converting }
 RBTransformation >> asRefactoring [
 
-	self preconditionChecking: true.
 	^ self yourself
 ]
 
@@ -110,12 +112,6 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : #initialization }
-RBTransformation >> initialize [
-	super initialize.
-	preconditionChecking := false
-]
-
 { #category : #accessing }
 RBTransformation >> model [
 
@@ -123,22 +119,9 @@ RBTransformation >> model [
 ]
 
 { #category : #preconditions }
-RBTransformation >> preconditionChecking [
-
-	^ preconditionChecking
-]
-
-{ #category : #preconditions }
-RBTransformation >> preconditionChecking: aBoolean [
-
-	preconditionChecking := aBoolean
-]
-
-{ #category : #preconditions }
 RBTransformation >> preconditions [
-	"By default everything is ok so precondition is true"
-	
-	^ self trueCondition
+
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }
@@ -159,12 +142,12 @@ RBTransformation >> setOption: aSymbol toUse: aBlock [
 	self options at: aSymbol put: aBlock
 ]
 
-{ #category : #executing }
+{ #category : #transforming }
 RBTransformation >> transform [
 	"Performs this transformation in a model,
 	 then it adds the refactoring to the manager"
 
-	self preconditionChecking ifTrue: [ self checkPreconditions ].
+	self checkPreconditions.
 	self privateTransform
 
 	"below executes the refactoring without prompt"

@@ -175,12 +175,6 @@ RBSplitClassTransformation >> isNotGlobal [
 	^ (RBCondition isGlobal: newClassName in: self model) not
 ]
 
-{ #category : #preconditions }
-RBSplitClassTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #printing }
 RBSplitClassTransformation >> storeOn: aStream [
 
