@@ -46,12 +46,12 @@ EpCodeChangeIntegrationTest >> testBehaviorCommentChange [
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testCategoryAddition [
 
-	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 0.
+	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 0.
 
 	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
 
-	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 1.
-	self assert: (self allLogEventsWith: EpCategoryAddition) first categoryName equals: self categoryNameForTesting
+	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 1.
+	self assert: (self allLogEventsWith: EpPackageTagAddition) first categoryName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }

@@ -41,7 +41,7 @@ EpApplyTest >> testCategoryAdditionWithCategoryRemoved [
 	self setHeadAsInputEntry.
 	self packageOrganizer removeCategory: aCategory.
 
-	self assert: inputEntry content class equals: EpCategoryAddition.
+	self assert: inputEntry content class equals: EpPackageTagAddition.
 	self deny: (self packageOrganizer includesCategory: aCategory).
 	self applyInputEntry.
 	self assert: (self packageOrganizer includesCategory: aCategory)

@@ -48,11 +48,6 @@ EpIconVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 ]
 
 { #category : #visitor }
-EpIconVisitor >> visitCategoryAddition: aCategoryChange [
-	^ self additionIcon
-]
-
-{ #category : #visitor }
 EpIconVisitor >> visitCategoryRemoval: aCategoryChange [
 	^ self removalIcon
 ]
@@ -127,6 +122,11 @@ EpIconVisitor >> visitPackageAddition: aPackageAddition [
 EpIconVisitor >> visitPackageRemoval: aPackageRemoval [
 
 	^ self removalIcon
+]
+
+{ #category : #visitor }
+EpIconVisitor >> visitPackageTagAddition: aCategoryChange [
+	^ self additionIcon
 ]
 
 { #category : #visitor }

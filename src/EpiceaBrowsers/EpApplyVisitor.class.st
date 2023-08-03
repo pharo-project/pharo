@@ -35,11 +35,6 @@ EpApplyVisitor >> visitBehaviorNameChange: aClassRenameChange [
 ]
 
 { #category : #visitor }
-EpApplyVisitor >> visitCategoryAddition: aPackageCreated [
-	environment organization addCategory: aPackageCreated categoryName
-]
-
-{ #category : #visitor }
 EpApplyVisitor >> visitCategoryRemoval: aPackageRemoved [
 	environment organization removeCategory: aPackageRemoved categoryName
 ]
@@ -122,6 +117,11 @@ EpApplyVisitor >> visitPackageAddition: aPackageAddition [
 EpApplyVisitor >> visitPackageRemoval: aPackageRemoval [
 
 	self packageOrganizer removePackage: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitPackageTagAddition: aPackageCreated [
+	environment organization addCategory: aPackageCreated categoryName
 ]
 
 { #category : #visitor }
