@@ -71,8 +71,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'extensionSelectors',
-		'classDefinedSelectors',
-		'metaclassDefinedSelectors',
+		'definedSelectors',
 		'classes',
 		'name',
 		'classTags',
@@ -217,10 +216,7 @@ RPackage >> addMethod: aCompiledMethod [
 	| methodClass |
 	methodClass := aCompiledMethod methodClass.
 	(self includesClass: methodClass)
-		ifTrue: [
-			methodClass isMeta
-				ifTrue: [ (metaclassDefinedSelectors at: methodClass instanceSide ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
-				ifFalse: [ (classDefinedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ] ]
+		ifTrue: [ (definedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
 		ifFalse: [
 			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector.
 			"we added a method extension so the receiver is an extending package of the class"
@@ -369,9 +365,7 @@ RPackage >> definedOrExtendedClasses [
 { #category : #accessing }
 RPackage >> definedSelectorsForClass: aClass [
 
-	^ aClass isMeta
-		  ifTrue: [ metaclassDefinedSelectors at: aClass instanceSide ifAbsent: [ #(  ) ] ]
-		  ifFalse: [ classDefinedSelectors at: aClass ifAbsent: [ #(  ) ] ]
+	^ definedSelectors at: aClass ifAbsent: [ #(  ) ]
 ]
 
 { #category : #testing }
@@ -610,8 +604,7 @@ RPackage >> initialize [
 
 	super initialize.
 	classes := IdentitySet new.
-	classDefinedSelectors := IdentityDictionary new.
-	metaclassDefinedSelectors := IdentityDictionary new.
+	definedSelectors := IdentityDictionary new.
 	extensionSelectors := IdentityDictionary new.
 	classTags := Set new
 ]
@@ -685,9 +678,7 @@ RPackage >> methods [
 	methods := OrderedCollection new.
 
 	extensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
-
-	metaclassDefinedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class classSide >> selector ]) ].
-	classDefinedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
+	definedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
 
 	^ methods
 ]
@@ -840,8 +831,9 @@ RPackage >> removeAllMethodsFromClass: aClass [
 
 	| aClassNameSymbol |
 	aClassNameSymbol := aClass originalName asSymbol.
-	classDefinedSelectors removeKey: aClass ifAbsent: [  ].
-	metaclassDefinedSelectors removeKey: aClass ifAbsent: [  ].
+
+	definedSelectors removeKey: aClass ifAbsent: [  ].
+	definedSelectors removeKey: aClass classSide ifAbsent: [  ].
 	extensionSelectors removeKey: aClass ifAbsent: [  ].
 	extensionSelectors removeKey: aClass classSide ifAbsent: [  ].
 
@@ -911,15 +903,9 @@ RPackage >> removeMethod: aCompiledMethod [
 	methodClass := aCompiledMethod methodClass.
 	(self includesClass: methodClass)
 		ifTrue: [
-			methodClass isMeta
-				ifTrue: [
-					metaclassDefinedSelectors at: methodClass instanceSide ifPresent: [ :methods |
-						methods remove: aCompiledMethod selector ifAbsent: [  ].
-						methods ifEmpty: [ metaclassDefinedSelectors removeKey: methodClass instanceSide ] ] ]
-				ifFalse: [
-					classDefinedSelectors at: methodClass ifPresent: [ :methods |
-						methods remove: aCompiledMethod selector ifAbsent: [  ].
-						methods ifEmpty: [ classDefinedSelectors removeKey: methodClass ] ] ] ]
+			definedSelectors at: methodClass ifPresent: [ :selectors |
+				selectors remove: aCompiledMethod selector.
+				selectors ifEmpty: [ definedSelectors removeKey: methodClass ] ] ]
 		ifFalse: [
 			extensionSelectors at: methodClass ifPresent: [ :selectors |
 				selectors remove: aCompiledMethod selector ifAbsent: [  ].
@@ -1034,8 +1020,7 @@ RPackage >> selectors [
 	| allSelectors |
 	allSelectors := Set new.
 	extensionSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
-	metaclassDefinedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
-	classDefinedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
+	definedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
 	^ allSelectors
 ]
 
@@ -1104,13 +1089,9 @@ RPackage >> updateDefinedClassNamed: oldString withNewName: newString [
 { #category : #updating }
 RPackage >> updateDefinedSelector: oldSelector inClass: aClass withNewSelector: newSelector [
 
-	aClass isMeta
-		ifTrue: [
-			(metaclassDefinedSelectors at: aClass instanceSide) remove: oldSelector.
-			(metaclassDefinedSelectors at: aClass instanceSide) add: newSelector ]
-		ifFalse: [
-			(classDefinedSelectors at: aClass) remove: oldSelector.
-			(classDefinedSelectors at: aClass) add: newSelector ]
+	(definedSelectors at: aClass)
+		remove: oldSelector;
+		add: newSelector
 ]
 
 { #category : #updating }
