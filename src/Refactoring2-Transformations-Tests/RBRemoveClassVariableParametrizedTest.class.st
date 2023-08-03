@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBRemoveClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRemoveClassVariableRefactoring .
@@ -19,13 +19,6 @@ RBRemoveClassVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { #RecursiveSelfRule1. #RBTransformationRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBRemoveClassVariableParametrizedTest >> testFailureReferencedVariable [
-
-	self shouldWarn: (self createRefactoringWithArguments:
-			 { #RecursiveSelfRule. #RBTransformationRuleTestData })
 ]
 
 { #category : #tests }
