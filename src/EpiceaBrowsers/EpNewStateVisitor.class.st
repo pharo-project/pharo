@@ -83,7 +83,13 @@ EpNewStateVisitor >> visitPackageRemoval: aPackageRemoval [
 { #category : #visitor }
 EpNewStateVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ aPackageTagAddition categoryName
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: '"Package: ';
+			  nextPutAll: aPackageTagAddition affectedPackageName;
+			  nextPut: $";
+			  lf;
+			  nextPutAll: aPackageTagAddition packageTagName ]
 ]
 
 { #category : #visitor }

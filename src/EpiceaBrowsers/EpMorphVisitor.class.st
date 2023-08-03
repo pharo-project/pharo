@@ -36,7 +36,8 @@ EpMorphVisitor >> displayBrowserOperation: aBrowserOperationEvent [
 { #category : #private }
 EpMorphVisitor >> displayCategory: aCategoryName [
 
-	^ (self displayOperation: 'Package tag'), (self displayString: aCategoryName asString)
+	self flag: #package. "We should not rely on categories :("
+	^ (self displayOperation: 'Package tag') , (self displayString: aCategoryName asString)
 ]
 
 { #category : #private }
@@ -69,6 +70,12 @@ EpMorphVisitor >> displayString: aString [
 EpMorphVisitor >> displayString: aString color: aColor [
 
 	^ { self morphFactory stringFor: aString color: aColor }
+]
+
+{ #category : #private }
+EpMorphVisitor >> displayTag: aTagName inPackage: aPackageName [
+
+	^ (self displayOperation: 'Tag') , (self displayString: aTagName) , (self displayOperation: ' in package') , (self displayString: aPackageName)
 ]
 
 { #category : #private }
@@ -205,7 +212,7 @@ EpMorphVisitor >> visitPackageRemoval: aPackageRemoval [
 { #category : #visitor }
 EpMorphVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ self displayCategory: aPackageTagAddition categoryName
+	^ self displayTag: aPackageTagAddition packageTagName inPackage: aPackageTagAddition affectedPackageName
 ]
 
 { #category : #visitor }

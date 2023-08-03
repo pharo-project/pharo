@@ -593,7 +593,7 @@ EpApplyPreviewerTest >> testSequenceOfClassAndMethodAddition [
 	self assertOutputsEventsWith: [:output |
 		| outputClasses |
 		outputClasses := output collect: #class as: Array.
-		self assert: outputClasses equals: { EpClassAddition. EpMethodAddition }.
+		self assert: outputClasses equals: { EpPackageTagAddition . EpClassAddition . EpMethodAddition }.
 		]
 ]
 
@@ -613,7 +613,7 @@ EpApplyPreviewerTest >> testSequenceOfMethodModifications [
 	self assertOutputsEventsWith: [:output |
 		| outputClasses |
 		outputClasses := output collect: #class as: Array.
-		self assert: outputClasses equals: { EpClassAddition. EpMethodModification }.
+		self assert: outputClasses equals: { EpPackageTagAddition . EpClassAddition . EpMethodModification }.
 		self assert: output last methodAffectedSourceCode equals: 'fortyTwo ^44'.
 		]
 ]

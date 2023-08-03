@@ -28,6 +28,8 @@ EpTCodeChangeVisitor >> visitBehaviorNameChange: aChange [
 
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitCategoryChange: aChange [
+
+	self flag: #package. "Categories should be removed"
 	^ self visitCodeChange: aChange
 ]
 
