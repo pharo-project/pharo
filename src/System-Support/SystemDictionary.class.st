@@ -204,11 +204,13 @@ SystemDictionary >> flushClassNameCache [
 ]
 
 { #category : #'accessing - classes and traits' }
-SystemDictionary >> forgetClass: aClass logged: aBool [
+SystemDictionary >> forgetClass: aClass [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
+	self flag: #package. "Unify categories and packages to have only one removal to do and not two."
 	self organization removeBehavior: aClass.
+	self organization removeClass: aClass.
 	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]
@@ -386,9 +388,11 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	"Rename the class, aClass, to have the title newName."
 
 	| oldref category |
+	self flag: #package. "When the category thing will be removed, we should have only one line updating the organization"
 	category := self organization categoryOfBehavior: oldName.
 	self organization classify: newName under: category.
 	self organization removeBehavior: oldName.
+	self organization renameClass: aClass from: oldName to: newName.
 	oldref := self associationAt: oldName.
 	self removeKey: oldName.
 	oldref key: newName.
@@ -400,11 +404,7 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 		from: oldName
 		to: newName
 		inCategory: category.
-	aClass subclassesDo: [ :subclass |
-		SystemAnnouncer uniqueInstance
-			classParentOf: subclass
-			renamedFrom: oldName
-			to: newName ]
+	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: newName ]
 ]
 
 { #category : #renaming }

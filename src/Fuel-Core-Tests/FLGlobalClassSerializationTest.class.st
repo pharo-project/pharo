@@ -16,7 +16,7 @@ FLGlobalClassSerializationTest >> testInstanceOfAnObsoleteClass [
 	| aClass instance |
 	aClass := self classFactory silentlyNewClass.
 	instance := self newInstanceFrom: aClass.
-	self classFactory deleteBehavior: aClass.
+	self classFactory delete: aClass.
 
 	self 
 		should: [self serialize: instance ] 

@@ -24,7 +24,17 @@ RBClassTest >> setUp [
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
-{ #category : #'method tests' }
+{ #category : #'tests - navigation' }
+RBClassTest >> testClassSide [
+
+	| meta |
+	meta := objectClass classSide.
+	self assert: meta isMeta.
+	self assert: meta instanceSide equals: objectClass.
+	self deny: objectClass isMeta.
+]
+
+{ #category : #'tests - definition' }
 RBClassTest >> testDefinesClassVariable [
 	self deny: (objectClass definesClassVariable: #ClassVariable1).
 	self assert: (objectClass definesClassVariable: self objectClassVariable).
@@ -34,7 +44,7 @@ RBClassTest >> testDefinesClassVariable [
 		assert: (messageNodeClass definesClassVariable: self objectClassVariable)
 ]
 
-{ #category : #'method tests' }
+{ #category : #'tests - definition' }
 RBClassTest >> testDefinesInstanceVariable [
 	self deny: (objectClass definesInstanceVariable: 'instanceVariable1').
 	self assert: (newClass definesInstanceVariable: 'instanceVariable1').
@@ -43,14 +53,14 @@ RBClassTest >> testDefinesInstanceVariable [
 	self assert: (messageNodeClass definesInstanceVariable: 'selector')
 ]
 
-{ #category : #'method tests' }
+{ #category : #'tests - definition' }
 RBClassTest >> testDefinesMethod [
 	self assert: (objectClass definesMethod: #printString).
 	self assert: (newClass definesMethod: #printString).
 	self assert: (messageNodeClass definesMethod: #printString)
 ]
 
-{ #category : #'method tests' }
+{ #category : #'tests - definition' }
 RBClassTest >> testDefinesPoolDictionary [
 	self deny: (objectClass definesPoolDictionary: #OpcodePool).
 	self assert: (newClass definesPoolDictionary: #TextConstants).
@@ -59,7 +69,7 @@ RBClassTest >> testDefinesPoolDictionary [
 				definesPoolDictionary: #TextConstants)
 ]
 
-{ #category : #'method tests' }
+{ #category : #'tests - definition' }
 RBClassTest >> testDefinesTraitMethod [
 	| user trait |
 	user := rbNamespace classNamed: #MOPTestClassD.
@@ -80,6 +90,22 @@ RBClassTest >> testHierarchy [
 	meta := objectClass classSide.
 	self assert: (objectClass withAllSubclasses includes: meta).
 	self assert: (meta withAllSuperclasses includes: objectClass)
+]
+
+{ #category : #'tests - navigation' }
+RBClassTest >> testIsInstanceSide [
+
+	self deny: objectClass instanceSide isMeta.
+	self assert: objectClass classSide isMeta.
+	self deny: objectClass classSide instanceSide isMeta.
+	
+]
+
+{ #category : #'tests - navigation' }
+RBClassTest >> testIsMeta [
+
+	self assert: objectClass classSide isMeta.
+	self deny: objectClass isMeta
 ]
 
 { #category : #tests }

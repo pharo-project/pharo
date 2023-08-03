@@ -72,9 +72,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 	trait := classFactory newTrait.
 	"force recompilation"
 	trait addInstVarNamed: 'var'.
-	classFactory
-		newSubclassOf: classFactory defaultSuperclass
-		using: trait.
+	classFactory make: [ :aBuilder | aBuilder traitComposition: trait ].
 
 	"Need to know the length of the author name"
 	Author

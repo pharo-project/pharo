@@ -10,22 +10,20 @@ Class {
 { #category : #running }
 RPackageTagTest >> tearDown [
 
-	#(TestClass TestClassOther)
-		do: [ :each |
-			self class environment at: each ifPresent: #removeFromSystem ].
+	#( TestClass TestClassOther ) do: [ :each | testEnvironment at: each ifPresent: #removeFromSystem ].
 	super tearDown
 ]
 
 { #category : #tests }
 RPackageTagTest >> testAddClass [
-	| package1 package2 class |
 
-	package1 := (RPackage named: #Test1) register.
+	| package1 package2 class |
+	package1 := (self createNewPackageNamed: #Test1) register.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
 
 	self assert: (package1 includesClass: class).
 
-	package2 := (RPackage named: #Test2) register.
+	package2 := (self createNewPackageNamed: #Test2) register.
 
 	(package2 addClassTag: #TAG) addClass: class.
 
@@ -39,14 +37,14 @@ RPackageTagTest >> testAddClass [
 RPackageTagTest >> testAddClassFromTag [
 	| package1 package2 class |
 
-	package1 := (RPackage named: #Test1) register.
+	package1 := (self createNewPackageNamed: #Test1) register.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
 
 	self assert: (package1 includesClass: class).
 	self assert: (package1 classTagNamed: #TAG1 ifAbsent: [ nil ]) notNil.
 	self assert: ((package1 classTagNamed: #TAG1 ifAbsent: [ nil ]) includesClass: class).
 
-	package2 := (RPackage named: #Test2) register.
+	package2 := (self createNewPackageNamed: #Test2) register.
 
 	(package2 addClassTag: #TAG2) addClass: class.
 
@@ -58,27 +56,28 @@ RPackageTagTest >> testAddClassFromTag [
 
 { #category : #tests }
 RPackageTagTest >> testAsRPackage [
-	| package1 tag convertedTag class |
 
-	package1 := (RPackage named: #Test1) register.
+	| package1 tag convertedTag class |
+	package1 := (self createNewPackageNamed: #Test1) register.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	tag := (package1 classTagNamed: #TAG1).
+	tag := package1 classTagNamed: #TAG1.
 
 	convertedTag := tag asRPackage.
 
 	self assert: (convertedTag includesClass: class).
-	self assert: (convertedTag includesSelector: 'foo' ofClass:  class)
+	self assert: (convertedTag includesSelector: 'foo' ofClass: class)
 ]
 
 { #category : #tests }
 RPackageTagTest >> testAsRPackageWithExtensionMethods [
+
 	| package1 convertedTag class |
-	package1 := (RPackage named: #Test1) register.
+	package1 := (self createNewPackageNamed: #Test1) register.
 	package1 addClassTag: #TAG1.
 
-	(RPackage named: #Test2) register.
+	(self createNewPackageNamed: #Test2) register.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test2'.
 
 	class compile: 'foo ^42' classified: '*Test1-TAG1'.
@@ -91,9 +90,9 @@ RPackageTagTest >> testAsRPackageWithExtensionMethods [
 
 { #category : #tests }
 RPackageTagTest >> testPromoteAsRPackage [
-	| package1 package2 class tag1 |
 
-	package1 := (RPackage named: #Test1) register.
+	| package1 package2 class tag1 |
+	package1 := (self createNewPackageNamed: #Test1) register.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
@@ -101,7 +100,7 @@ RPackageTagTest >> testPromoteAsRPackage [
 
 	tag1 promoteAsRPackage.
 
-	package2:= RPackage organizer packageNamed: 'Test1-TAG1'.
+	package2 := self organizer packageNamed: 'Test1-TAG1'.
 	self assert: package2 notNil.
 	self assert: (package2 classes includes: class).
 	self deny: (package1 classes includes: class)
@@ -109,11 +108,11 @@ RPackageTagTest >> testPromoteAsRPackage [
 
 { #category : #tests }
 RPackageTagTest >> testPromoteAsRPackageWithExtension [
-	| packageOriginal packagePromoted class classOther tag |
 
-	packageOriginal := (RPackage named: #Test1) register.
+	| packageOriginal packagePromoted class classOther tag |
+	packageOriginal := (self createNewPackageNamed: #Test1) register.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
-	class compile: 'foo ^42' classified: #'accessing'.
+	class compile: 'foo ^42' classified: #accessing.
 
 	classOther := self createNewClassNamed: 'TestClassOther' inCategory: 'XXXX'.
 	classOther compile: 'bar ^42' classified: #'*Test1-TAG1'.
@@ -121,11 +120,11 @@ RPackageTagTest >> testPromoteAsRPackageWithExtension [
 	tag := packageOriginal classTagNamed: 'TAG1'.
 	tag promoteAsRPackage.
 
-	packagePromoted:= RPackage organizer packageNamed: 'Test1-TAG1'.
+	packagePromoted := self organizer packageNamed: 'Test1-TAG1'.
 	self assert: packagePromoted notNil.
 	self assert: (packagePromoted classes includes: class).
-	self assert: (packagePromoted extensionMethods includes: classOther>>#bar).
-	self assert: (classOther>>#bar) protocolName equals: '*Test1-TAG1'.
+	self assert: (packagePromoted extensionMethods includes: classOther >> #bar).
+	self assert: (classOther >> #bar) protocolName equals: '*Test1-TAG1'.
 	self deny: (packageOriginal classes includes: class).
-	self deny: (packageOriginal extensionMethods includes: classOther>>#bar)
+	self deny: (packageOriginal extensionMethods includes: classOther >> #bar)
 ]

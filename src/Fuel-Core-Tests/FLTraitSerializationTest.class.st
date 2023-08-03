@@ -9,5 +9,5 @@ Class {
 
 { #category : #'instance creation' }
 FLTraitSerializationTest >> newClassOrTrait [
-	^ self classFactory newTrait
+	^ self classFactory silentlyNewTrait
 ]

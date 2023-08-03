@@ -126,7 +126,7 @@ BaselineOfPharo class >> roassal [
 		newName: 'Roassal3' 
 		owner: 'ObjectProfile' 
 		project: 'Roassal3' 
-		version: 'v1.01'
+		version: 'v1.02'
 ]
 
 { #category : #'repository urls' }

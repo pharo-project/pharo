@@ -510,38 +510,6 @@ RPackageOrganizer >> orderedTraitsIn: category [
 	^ traits asArray
 ]
 
-{ #category : #accessing }
-RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inClassNamed: aClassNameSymbol [
-	"this implementation is slower
-		aClass packages detect: [:each | each includesSelector: aSelector ofClass: aClass ]"
-	| classPackage |
-
-	classPackage := self packageOfClassNamed: aClassNameSymbol.
-	classPackage ifNil: [ ^ nil ].
-	(classPackage includesSelector: aSelector ofClassName: aClassNameSymbol)
-		ifTrue: [ ^classPackage ].
-
-	^(self extendingPackagesOfClassNamed: aClassNameSymbol)
-		detect: [ :p | p includesSelector: aSelector ofClassName: aClassNameSymbol ]
-		ifNone: [ nil ]
-]
-
-{ #category : #accessing }
-RPackageOrganizer >> packageDefiningOrExtendingSelector: aSelector inMetaclassNamed: aClassNameSymbol [
-	"this implementation is slower
-		aClass packages detect: [:each | each includesSelector: aSelector ofClass: aClass ]"
-	| classPackage |
-
-	classPackage := self packageOfClassNamed: aClassNameSymbol.
-	classPackage ifNil: [ ^ nil ].
-	(classPackage includesSelector: aSelector ofMetaclassName: aClassNameSymbol)
-		ifTrue: [ ^classPackage ].
-
-	^(self extendingPackagesOfClassNamed: aClassNameSymbol)
-		detect: [ :p | p includesSelector: aSelector ofMetaclassName: aClassNameSymbol ]
-		ifNone: [ nil ]
-]
-
 { #category : #'system integration' }
 RPackageOrganizer >> packageForProtocol: aProtocolName inClass: aClass [
 	"According aProtocolName is an extension protocol, will look for a matching package. If no matching package is found ,  return nil. If aProtocolName is not an extension protocol, return the parent package of aClass"
@@ -701,8 +669,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
-		when: ClassRemoved send: #systemClassRemovedActionFrom: to: self;
-		when: ClassRenamed send: #systemClassRenamedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodModified send: #systemMethodModifiedActionFrom: to: self;
@@ -737,6 +703,7 @@ RPackageOrganizer >> registerPackage: aPackage [
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 
 	(aPackage includesClass: aClass) ifFalse: [ self error: aPackage name , ' does not includes the class ' , aClass name ].
+
 	^ classPackageMapping at: aClass instanceSide originalName put: aPackage
 ]
 
@@ -855,6 +822,28 @@ RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 ]
 
 { #category : #'system integration' }
+RPackageOrganizer >> renameClass: class from: oldName to: newName [
+
+	| package extendingPackages |
+	package := self packageOfClassNamed: oldName.
+	extendingPackages := self extendingPackagesOfClassNamed: oldName.
+
+	package updateDefinedClassNamed: oldName withNewName: newName.
+	"we have to update all RPackages extending this class"
+	extendingPackages do: [ :extendingPackage | extendingPackage updateExtensionForClassNamed: oldName withNewName: newName ].
+
+	"we have to update the package organizer.
+	update the 'classPackageDictionary' to replace the key with the new class name"
+	self unregisterPackage: package forClass: oldName.
+	self registerPackage: package forClass: class.
+
+	"update the 'classExtendingPackagesMapping' to replace the key with the new class name"
+	extendingPackages do: [ :extendingPackage |
+		self unregisterExtendingPackage: extendingPackage forClassName: oldName.
+		self registerExtendingPackage: extendingPackage forClassName: newName ]
+]
+
+{ #category : #'system integration' }
 RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 
 	| classesAndProtocolsToRename |
@@ -948,45 +937,6 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 ]
 
 { #category : #'system integration' }
-RPackageOrganizer >> systemClassRemovedActionFrom: ann [
-	"A class has been removed, we should update the package adequately."
-
-	self removeClass: ann classRemoved
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemClassRenamedActionFrom: ann [
-	"When a class is renamed, we update its package as well as the organizer"
-
-	| newName oldName class package extendingPackages packageName |
-	class := ann classAffected.
-	packageName := ann category.
-	oldName := ann oldName.
-	newName := ann newName.
-	package := self packageOfClassNamed: oldName.
-	extendingPackages := self extendingPackagesOfClassNamed: oldName.
-
-	package updateDefinedClassNamed: oldName withNewName: newName.
-	"we have to update all RPackages extending this class"
-	extendingPackages do: [:aRPackage |
-		aRPackage updateExtensionForClassNamed: oldName withNewName: newName].
-
-	"we have to update the RPackageOrganizer.
-	update the 'classPackageDictionary' to replace the key with the new class name"
-	self unregisterPackage: package forClass: oldName.
-	self registerPackage: package forClass: class.
-
-	"update the 'classExtendingPackagesMapping' to replace the key with the new class name"
-	extendingPackages do: [:aRPackage |
-		self unregisterExtendingPackage: aRPackage forClassName: oldName.
-		self registerExtendingPackage:  aRPackage forClassName: newName
-		].
-	self flag: #cyrille. "we will see that."
-	"maybe we should remove also the key from the extendedPackages dictionary"
-	"CD: This is what are doing the lines above I think"
-]
-
-{ #category : #'system integration' }
 RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	"when a class is reorganized, we have to check if an extension has not been added"
 
@@ -1008,7 +958,6 @@ RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 
 { #category : #'system integration' }
 RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
-
 	"this announcement can correspond to several kind of modifications:
 		=> a method has been renamed
 		=> a method has been move to another category // SHOULD BE TREATED WITH SystemMethodRecategorizedEvent
@@ -1019,6 +968,7 @@ RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
 			- maybe from a classic category to another classic category
 			)
 	"
+
 	| oldMethod newMethod methodPackage |
 	newMethod := ann newMethod.
 	oldMethod := ann oldMethod.
@@ -1027,17 +977,16 @@ RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
 	We should remove this method to see if this is working."
 
 	"If the method origin is not the one of the event, we do not care about that method"
-	newMethod origin = ann methodClass ifFalse: [^ self].
+	newMethod origin = ann methodClass ifFalse: [ ^ self ].
 
 
 	"Special case for trait methods added an override"
-	newMethod origin = oldMethod origin
-		ifFalse: [ ^ self addMethod: newMethod ].
+	newMethod origin = oldMethod origin ifFalse: [ ^ self addMethod: newMethod ].
 
-	methodPackage := newMethod packageFromOrganizer: self.
+	methodPackage := newMethod package.
 	"maybe the name of the method has changed"
-	oldMethod selector = newMethod selector
-		ifFalse: [ methodPackage updateSelector: oldMethod selector inClass: oldMethod methodClass withNewSelector: newMethod selector]
+	oldMethod selector = newMethod selector ifFalse: [
+		methodPackage updateSelector: oldMethod selector inClass: oldMethod methodClass withNewSelector: newMethod selector ]
 ]
 
 { #category : #'system integration' }
@@ -1064,7 +1013,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		               ifNotNil: [ :protocol | protocol name ]
 		               ifNil: [ '' ].
 
-	methodPackage := method packageFromOrganizer: self.
+	methodPackage := method package.
 	(newProtocol sameAs: oldProtocol) ifTrue: [ ^ self ].
 
 	destinationPackage := (self hasPackageForProtocol: newProtocol)
@@ -1091,9 +1040,13 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
 	"If the method is provided by a trait, we do not care about it"
 
+	| package |
 	ann isProvidedByATrait ifTrue: [ ^ self ].
 
-	ann method package ifNotNil: [ :package | package removeMethod: ann method ]
+	"Since the method was already removed we cannot just ask #package because it is unpackaged, but we still need to remove the selector from the method cache of its previous class"
+	package := ann method extensionPackage ifNil: [ self packageOf: ann method methodClass ].
+
+	package ifNotNil: [ :p | p removeMethod: ann method ]
 ]
 
 { #category : #accessing }

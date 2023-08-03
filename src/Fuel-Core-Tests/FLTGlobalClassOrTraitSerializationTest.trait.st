@@ -44,7 +44,7 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideObsolete [
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	self classFactory deleteBehavior: classOrTrait.
+	self classFactory delete: classOrTrait.
 
 	self 
 		should: [self serialize: classOrTrait ] 
@@ -100,7 +100,7 @@ FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRemoval [
 	classOrTrait := self newClassOrTrait.
 	
 	self serialize: classOrTrait.
-	self classFactory 	deleteBehavior: classOrTrait.
+	self classFactory 	delete: classOrTrait.
 	
 	self should: [self materialized] raise: FLClassNotFound.
 ]
@@ -108,15 +108,13 @@ FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRemoval [
 { #category : #tests }
 FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRename [
 	"Tests that serializer does not tolarate when the class was renamed between serialization and materialization"
-	
+
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	
+
 	self serialize: classOrTrait.
-	self classFactory
-		silentlyRename: classOrTrait
-		to: classOrTrait name, 'Renamed'.
-	
+	self classFactory silentlyRename: classOrTrait to: classOrTrait name , 'Renamed'.
+
 	self should: [ self materialized ] raise: FLClassNotFound
 ]
 
@@ -126,7 +124,7 @@ FLTGlobalClassOrTraitSerializationTest >> testObsolete [
 	
 	| classOrTrait |
 	classOrTrait := self newClassOrTrait.
-	self classFactory deleteBehavior: classOrTrait.
+	self classFactory delete: classOrTrait.
 
 	self 
 		should: [self serialize: classOrTrait ] 

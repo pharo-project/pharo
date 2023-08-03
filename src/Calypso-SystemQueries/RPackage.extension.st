@@ -39,11 +39,12 @@ RPackage >> definesOverridesOf: aMethod in: classAndSelectors [
 	methodClass := aMethod origin.
 	selector := aMethod selector.
 
-	classAndSelectors keysAndValuesDo: [ :className :selectors |
-		((selectors includes: selector)
-			and: [ (self environment classNamed: className) inheritsFrom: methodClass ])
-				ifTrue: [ ^true ] ].
-	^false
+	classAndSelectors keysAndValuesDo: [ :class :selectors |
+		((selectors includes: selector) and: [
+			 (class isString
+				  ifTrue: [ self environment classNamed: class ]
+				  ifFalse: [ class ]) inheritsFrom: methodClass ]) ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #'*Calypso-SystemQueries' }
@@ -53,11 +54,12 @@ RPackage >> definesOverridesOfClassSide: aMethod in: classAndSelectors [
 	methodClass := aMethod origin.
 	selector := aMethod selector.
 
-	classAndSelectors keysAndValuesDo: [ :className :selectors |
-		((selectors includes: selector)
-			and: [ (self environment classNamed: className) classSide inheritsFrom: methodClass ])
-				ifTrue: [ ^true ] ].
-	^false
+	classAndSelectors keysAndValuesDo: [ :class :selectors |
+		((selectors includes: selector) and: [
+			 (class isString
+				  ifTrue: [ self environment classNamed: class ]
+				  ifFalse: [ class ]) classSide inheritsFrom: methodClass ]) ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #'*Calypso-SystemQueries' }

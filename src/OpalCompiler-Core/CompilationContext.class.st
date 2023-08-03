@@ -496,22 +496,29 @@ CompilationContext >> optionConstantBlockClosure [
 
 { #category : #options }
 CompilationContext >> optionInlineAndOr [
-	^ options includes: #optionInlineAndOr
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineAndOr ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineCase [
-	^ options includes: #optionInlineCase
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineCase ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineIf [
-	^ options includes: #optionInlineIf
+
+	^ self optionInlineNone not and: [ options includes: #optionInlineIf ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineIfNil [
-	^ options includes: #optionInlineIfNil
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineIfNil ]
 ]
 
 { #category : #options }
@@ -521,22 +528,30 @@ CompilationContext >> optionInlineNone [
 
 { #category : #options }
 CompilationContext >> optionInlineRepeat [
-	^ options includes: #optionInlineRepeat
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineRepeat ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineTimesRepeat [
-	^ options includes: #optionInlineTimesRepeat
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineTimesRepeat ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineToDo [
-	^ options includes: #optionInlineToDo
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineToDo ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineWhile [
-	^ options includes: #optionInlineWhile
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineWhile ]
 ]
 
 { #category : #options }

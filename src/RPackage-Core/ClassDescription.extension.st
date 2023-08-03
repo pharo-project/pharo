@@ -8,7 +8,8 @@ ClassDescription >> definedSelectors [
 { #category : #'*RPackage-Core' }
 ClassDescription >> extendingPackages [
 	"the extending packages of a class are the packages that extend it."
-	^ RPackage organizer extendingPackagesOf: self
+
+	^ self packageOrganizer extendingPackagesOf: self
 ]
 
 { #category : #'*RPackage-Core' }
@@ -37,13 +38,20 @@ ClassDescription >> isExtendedInPackage: aPackage [
 
 { #category : #'*RPackage-Core' }
 ClassDescription >> package [
-	^ RPackage organizer packageOf: self
+
+	^ self packageOrganizer packageOf: self
 ]
 
 { #category : #'*RPackage-Core' }
 ClassDescription >> packageFromOrganizer: anOrganizer [
 	"returns the package that defines this class"
 	^ anOrganizer packageOf: self
+]
+
+{ #category : #'*RPackage-Core' }
+ClassDescription >> packageName [
+
+	^ self package ifNotNil: [ :package | package name ]
 ]
 
 { #category : #'*RPackage-Core' }
