@@ -680,8 +680,7 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodModified send: #systemMethodModifiedActionFrom: to: self;
-		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self;
-		when: MethodRemoved send: #systemMethodRemovedActionFrom: to: self
+		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
 ]
 
 { #category : #'system integration' }
@@ -1050,19 +1049,6 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	destinationPackage addMethod: method.
 
 	SystemAnnouncer uniqueInstance methodRepackaged: method from: methodPackage to: destinationPackage
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
-	"If the method is provided by a trait, we do not care about it"
-
-	| package |
-	ann isProvidedByATrait ifTrue: [ ^ self ].
-
-	"Since the method was already removed we cannot just ask #package because it is unpackaged, but we still need to remove the selector from the method cache of its previous class"
-	package := ann method extensionPackage ifNil: [ self packageOf: ann method methodClass ].
-
-	package ifNotNil: [ :p | p removeMethod: ann method ]
 ]
 
 { #category : #accessing }
