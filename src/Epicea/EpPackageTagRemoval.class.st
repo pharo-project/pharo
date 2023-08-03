@@ -1,14 +1,14 @@
 "
-I represent the removal of a category in a package.
+I represent the removal of a tag in a package.
 "
 Class {
-	#name : #EpCategoryRemoval,
+	#name : #EpPackageTagRemoval,
 	#superclass : #EpCategoryChange,
 	#category : #'Epicea-Model'
 }
 
 { #category : #visitor }
-EpCategoryRemoval >> accept: aVisitor [
+EpPackageTagRemoval >> accept: aVisitor [
 
 	^ aVisitor visitCategoryRemoval: self
 ]

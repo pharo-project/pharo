@@ -119,7 +119,7 @@ EpApplyPreviewerTest >> testCategoryRemovalWithPackageTagAddition [
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 
 	self assertOutputsAnEventWith: [ :output |
-		self assert: output class equals: EpCategoryRemoval.
+		self assert: output class equals: EpPackageTagRemoval.
 		self assert: output categoryName equals: classFactory defaultCategory ]
 ]
 
