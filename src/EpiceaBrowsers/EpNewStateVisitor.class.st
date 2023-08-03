@@ -81,9 +81,9 @@ EpNewStateVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
-EpNewStateVisitor >> visitPackageTagAddition: aClassCategoryCreatedChange [
+EpNewStateVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ aClassCategoryCreatedChange categoryName
+	^ aPackageTagAddition categoryName
 ]
 
 { #category : #visitor }

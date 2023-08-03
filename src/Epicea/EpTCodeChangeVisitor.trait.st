@@ -104,8 +104,8 @@ EpTCodeChangeVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
-EpTCodeChangeVisitor >> visitPackageTagAddition: aChange [
-	^ self visitCategoryChange: aChange
+EpTCodeChangeVisitor >> visitPackageTagAddition: aPackageTagAddition [
+	^ self visitCategoryChange: aPackageTagAddition
 ]
 
 { #category : #visitor }

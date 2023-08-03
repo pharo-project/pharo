@@ -120,8 +120,9 @@ EpApplyVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
-EpApplyVisitor >> visitPackageTagAddition: aPackageCreated [
-	environment organization addCategory: aPackageCreated categoryName
+EpApplyVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	environment organization ensureTagNamed: aPackageTagAddition packageTagName inPackageNamed: aPackageTagAddition affectedPackageName
 ]
 
 { #category : #visitor }

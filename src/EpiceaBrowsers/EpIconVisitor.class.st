@@ -125,7 +125,7 @@ EpIconVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
-EpIconVisitor >> visitPackageTagAddition: aCategoryChange [
+EpIconVisitor >> visitPackageTagAddition: aPackageTagAddition [
 	^ self additionIcon
 ]
 

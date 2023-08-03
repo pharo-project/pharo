@@ -203,9 +203,9 @@ EpMorphVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
-EpMorphVisitor >> visitPackageTagAddition: aCategoryChange [
+EpMorphVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ self displayCategory: aCategoryChange categoryName
+	^ self displayCategory: aPackageTagAddition categoryName
 ]
 
 { #category : #visitor }

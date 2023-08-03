@@ -41,9 +41,12 @@ EpInverseVisitor >> visitBehaviorNameChange: aChange [
 { #category : #visitor }
 EpInverseVisitor >> visitCategoryRemoval: aChange [
 
-	^ EpPackageTagAddition
-			named: aChange categoryName
-			packageName: aChange affectedPackageName
+	| tagName |
+	self flag: #package. "The category removal should know the tag and pass it instead of this magic."
+	tagName := aChange categoryName = aChange affectedPackageName
+		           ifTrue: [ aChange affectedPackageName ]
+		           ifFalse: [ aChange categoryName withoutPrefix: aChange affectedPackageName , '-' ].
+	^ EpPackageTagAddition tagName: aChange categoryName packageName: aChange affectedPackageName
 ]
 
 { #category : #visitor }
@@ -109,11 +112,11 @@ EpInverseVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
-EpInverseVisitor >> visitPackageTagAddition: aChange [
+EpInverseVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
 	^ EpCategoryRemoval
-			named: aChange categoryName
-			packageName: aChange affectedPackageName
+			named: aPackageTagAddition categoryName
+			packageName: aPackageTagAddition affectedPackageName
 ]
 
 { #category : #visitor }
