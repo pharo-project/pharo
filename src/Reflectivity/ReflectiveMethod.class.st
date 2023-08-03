@@ -196,6 +196,12 @@ ReflectiveMethod >> methodClass: aClass [
 	^compiledMethod methodClass: aClass
 ]
 
+{ #category : #removing }
+ReflectiveMethod >> package [
+
+	^ self extensionPackage ifNil: [ self origin package ]
+]
+
 { #category : #printing }
 ReflectiveMethod >> printOn: aStream [
 	"Overrides method inherited from the byte arrayed collection."
@@ -218,6 +224,12 @@ ReflectiveMethod >> recompileAST [
 { #category : #accessing }
 ReflectiveMethod >> reflectiveMethod [
 	^self
+]
+
+{ #category : #removing }
+ReflectiveMethod >> removeFromPackage [
+
+	self isFromTrait ifFalse: [ self package ifNotNil: [ :package | package removeMethod: self ] ]
 ]
 
 { #category : #invalidate }
