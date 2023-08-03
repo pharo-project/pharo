@@ -67,12 +67,6 @@ RBAddTemporaryVariableTransformation >> applicabilityConditions [
 	  & (RBCondition definesSelector: selector in: self definingClass)
 	  & (RBCondition
 			   withBlock: [
-				   (self definingMethod allTemporaryVariables includes:
-					    variableName) not ]
-			   errorString: 'Method named ' , selector
-				   , ' already defines a temporary variable named ' , variableName)
-	  & (RBCondition
-			   withBlock: [
 				   (self definingMethod allArgumentVariables includes:
 					    variableName) not ]
 			   errorString:
@@ -92,8 +86,22 @@ RBAddTemporaryVariableTransformation >> privateTransform [
 		nodeInInterval := methodTree bestNodeFor: interval.
 		nodeInInterval isSequence ifTrue: [ parseTree := nodeInInterval ] ].
 
+	self flag: #skippingConditions.
+	(parseTree allTemporaryVariables includes: variableName) ifTrue: [ ^ self ].
+	
 	parseTree addTemporaryNamed: variableName.
 	class compileTree: methodTree
+]
+
+{ #category : #preconditions }
+RBAddTemporaryVariableTransformation >> skippingConditions [
+
+	^ RBCondition
+		  withBlock: [
+			  (self definingMethod allTemporaryVariables includes: variableName)
+				  not ]
+		  errorString: 'Method named ' , selector
+			  , ' already defines a temporary variable named ' , variableName
 ]
 
 { #category : #printing }
