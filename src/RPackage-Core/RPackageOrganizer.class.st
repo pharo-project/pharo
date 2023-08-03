@@ -844,8 +844,6 @@ RPackageOrganizer >> renameClass: class from: oldName to: newName [
 	extendingPackages := self extendingPackagesOfClassNamed: oldName.
 
 	package updateDefinedClassNamed: oldName withNewName: newName.
-	"we have to update all RPackages extending this class"
-	extendingPackages do: [ :extendingPackage | extendingPackage updateExtensionForClassNamed: oldName withNewName: newName ].
 
 	"we have to update the package organizer.
 	update the 'classPackageDictionary' to replace the key with the new class name"
