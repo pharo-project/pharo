@@ -151,7 +151,7 @@ EpHasImpactVisitor >> visitPackageTagAddition: aPackageTagAddition [
 { #category : #visitor }
 EpHasImpactVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	^ environment organization includesCategory: aPackageTagRemoval categoryName
+	^ environment organization hasTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval affectedPackageName
 ]
 
 { #category : #visitor }

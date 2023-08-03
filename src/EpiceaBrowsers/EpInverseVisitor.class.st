@@ -109,12 +109,7 @@ EpInverseVisitor >> visitPackageTagAddition: aPackageTagAddition [
 { #category : #visitor }
 EpInverseVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	| tagName |
-	self flag: #package. "The category removal should know the tag and pass it instead of this magic."
-	tagName := aPackageTagRemoval categoryName = aPackageTagRemoval affectedPackageName
-		           ifTrue: [ aPackageTagRemoval affectedPackageName ]
-		           ifFalse: [ aPackageTagRemoval categoryName withoutPrefix: aPackageTagRemoval affectedPackageName , '-' ].
-	^ EpPackageTagAddition tagName: aPackageTagRemoval categoryName packageName: aPackageTagRemoval affectedPackageName
+	^ EpPackageTagAddition tagName: aPackageTagRemoval tagName packageName: aPackageTagRemoval affectedPackageName
 ]
 
 { #category : #visitor }

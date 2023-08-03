@@ -27,6 +27,18 @@ EpContentStringVisitor >> printProtocol: protocol sourceCode: sourceCode [
 			nextPutAll: sourceCode ]
 ]
 
+{ #category : #private }
+EpContentStringVisitor >> printTag: aTagName package: aPackageName [
+
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: '"Package: ';
+			  nextPutAll: aPackageName;
+			  nextPut: $";
+			  lf;
+			  nextPutAll: aTagName ]
+]
+
 { #category : #visitor }
 EpContentStringVisitor >> stringForBehavior: aClassOrTrait [
 

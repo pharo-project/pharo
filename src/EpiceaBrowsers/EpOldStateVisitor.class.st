@@ -66,7 +66,7 @@ EpOldStateVisitor >> visitMethodRemoval: aMethodRemoval [
 { #category : #visitor }
 EpOldStateVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	^ aPackageTagRemoval categoryName
+	^ self printTag: aPackageTagRemoval tagName package: aPackageTagRemoval affectedPackageName
 ]
 
 { #category : #visitor }
