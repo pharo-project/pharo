@@ -28,6 +28,44 @@ TEnumeratingTest >> simpleCollection [
 ]
 
 { #category : #'tests - enumerating' }
+TEnumeratingTest >> testCartesianProductDo [
+
+   | collection index elements |
+
+   collection := #(1 2).
+	index := 1.
+	elements := #(#(1 1) #(1 2) #(2 1) #(2 2)).
+   collection permutationsWithRepetitionsDo: [ : product |
+	   self 
+			assertCollection: product hasSameElements: (elements at: index).
+			index := index + 1 ]
+]
+
+{ #category : #'tests - enumerating' }
+TEnumeratingTest >> testCartesianProductDo3Elements [
+
+   | collection index elements |
+   collection := #(1 2 3).
+	index := 1.
+	elements := #(#(1 1 1) #(1 1 2) #(1 1 3) #(1 2 1) #(1 2 2) #(1 2 3) #(1 3 1) #(1 3 2) #(1 3 3) #(2 1 1) #(2 1 2) #(2 1 3) #(2 2 1) #(2 2 2) #(2 2 3) #(2 3 1) #(2 3 2) #(2 3 3) #(3 1 1) #(3 1 2) #(3 1 3) #(3 2 1) #(3 2 2) #(3 2 3) #(3 3 1) #(3 3 2) #(3 3 3)).
+   collection permutationsWithRepetitionsDo: [ : product |
+	   self 
+			assert: product
+			equals: (elements at: index).
+		index := index + 1 ]
+]
+
+{ #category : #'tests - enumerating' }
+TEnumeratingTest >> testCartesianProductOfSize [
+
+   | collection result |
+   collection := #(1 2 3).
+   result := collection permutationsWithRepetitionsOfSize: 2.
+   self assert: result size equals: 9.
+   self assert: (result includesAll: #(#(1 1) #(1 2) #(1 3) #(2 1) #(2 2) #(2 3) #(3 1) #(3 2) #(3 3))).
+]
+
+{ #category : #'tests - enumerating' }
 TEnumeratingTest >> testFlatCollect [
 
 	self assert: (self simpleCollection flatCollect: [ :x | { x } ]) equals: self simpleCollection.
@@ -83,28 +121,4 @@ TEnumeratingTest >> testFlattened [
 	self assert: self collectionOfCollectionsOfStrings flattened equals: #('foo' 'bar' 'zorg').
 	"we do not try to flatten CompiledMethods"
 	self assert: { Object>>#halt } flattened equals:  { Object>>#halt }
-]
-
-{ #category : #'tests - enumerating' }
-TEnumeratingTest >> testProductWithRepetitions [
-
-   | collection result |
-   collection := #(1 2 3).
-   result := collection productsOfSize: 2.
-   self assert: result size equals: 9.
-   self assert: (result includesAll: #(#(1 1) #(1 2) #(1 3) #(2 1) #(2 2) #(2 3) #(3 1) #(3 2) #(3 3))).
-]
-
-{ #category : #'tests - enumerating' }
-TEnumeratingTest >> testProductWithRepetitionsIteration [
-
-   | collection index elements |
-   collection := #(1 2 3).
-	index := 1.
-	elements := #(#(1 1 1) #(1 1 2) #(1 1 3) #(1 2 1) #(1 2 2) #(1 2 3) #(1 3 1) #(1 3 2) #(1 3 3) #(2 1 1) #(2 1 2) #(2 1 3) #(2 2 1) #(2 2 2) #(2 2 3) #(2 3 1) #(2 3 2) #(2 3 3) #(3 1 1) #(3 1 2) #(3 1 3) #(3 2 1) #(3 2 2) #(3 2 3) #(3 3 1) #(3 3 2) #(3 3 3)).
-   collection productsDo: [ : product |
-	   self 
-			assert: product
-			equals: (elements at: index).
-		index := index + 1 ]
 ]
