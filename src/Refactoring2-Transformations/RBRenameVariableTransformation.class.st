@@ -160,7 +160,7 @@ RBRenameVariableTransformation >> renameReferences [
 					or block temporary <n> variable in this class or one of its subclasses'
 					expandMacrosWith: newVariableName )].
 	subclasses := (self model classObjectFor: className) withAllSubclasses.
-	isClassVariable ifTrue: [ subclasses addAll: self definingClass withAllSubclasses ].
+	isClassVariable ifTrue: [ subclasses addAll: self definingClass classSide withAllSubclasses ].
 
 	self model
 		convertClasses: subclasses
