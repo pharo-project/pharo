@@ -415,6 +415,14 @@ RPackageOrganizer >> hasPackageMatchingExtensionName: anExtensionName [
 	^ false
 ]
 
+{ #category : #testing }
+RPackageOrganizer >> hasTag: aTag inPackage: aPackage [
+
+	(self hasPackage: aPackage) ifFalse: [ ^ false ].
+
+	^ (self ensurePackage: aPackage) hasTag: aTag
+]
+
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> includesCategory: aString [
 	"Tests if a category is already included."
@@ -792,6 +800,14 @@ RPackageOrganizer >> removeSystemCategory: category [
 	(self orderedTraitsIn: category) , (self superclassOrder: category) reverseDo: [ :each | each removeFromSystem ].
 
 	self removeCategory: category
+]
+
+{ #category : #'deprecated - SystemOrganizer leftovers' }
+RPackageOrganizer >> removeTag: aTag fromPackage: aPackage [
+
+	(self hasPackage: aPackage) ifFalse: [ ^ self "no need to remove the tag if the package is not there." ].
+
+	(self ensurePackage: aPackage) removeTag: aTag
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
