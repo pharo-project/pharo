@@ -279,16 +279,12 @@ EpRevertTest >> testMethodRemovalWithMethodAlreadyAdded [
 { #category : #tests }
 EpRevertTest >> testPackageTagAdditionWithCategoryRemoved [
 
-	| organization aCategory |
-	organization := self packageOrganizer.
-	aCategory := classFactory defaultCategory.
-
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
 
-	self assert: (organization includesCategory: aCategory).
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
 	self revertInputEntry.
-	self deny: (organization includesCategory: aCategory)
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName)
 ]
 
 { #category : #tests }
