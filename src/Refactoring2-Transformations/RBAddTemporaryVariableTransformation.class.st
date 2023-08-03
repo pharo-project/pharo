@@ -61,21 +61,23 @@ RBAddTemporaryVariableTransformation class >> variable: aString inMethod: aSelec
 { #category : #preconditions }
 RBAddTemporaryVariableTransformation >> applicabilityConditions [
 
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'No such class or trait named ', className )
-		& ( RBCondition definesSelector: selector in: self definingClass)
-]
-
-{ #category : #preconditions }
-RBAddTemporaryVariableTransformation >> breakingChangeConditions [ 
-
-	^ ( RBCondition
-			withBlock: [ (self definingMethod allTemporaryVariables includes: variableName) not ]
-			errorString: 'Method named ', selector, ' already defines a temporary variable named ', variableName )
-		& ( RBCondition
-			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
-			errorString: 'Method named ', selector, ' already defines an argument named ', variableName )
+	^ (RBCondition
+		   withBlock: [ self definingClass isNotNil ]
+		   errorString: 'No such class or trait named ' , className)
+	  & (RBCondition definesSelector: selector in: self definingClass)
+	  & (RBCondition
+			   withBlock: [
+				   (self definingMethod allTemporaryVariables includes:
+					    variableName) not ]
+			   errorString: 'Method named ' , selector
+				   , ' already defines a temporary variable named ' , variableName)
+	  & (RBCondition
+			   withBlock: [
+				   (self definingMethod allArgumentVariables includes:
+					    variableName) not ]
+			   errorString:
+				   'Method named ' , selector
+				   , ' already defines an argument named ' , variableName)
 ]
 
 { #category : #executing }
