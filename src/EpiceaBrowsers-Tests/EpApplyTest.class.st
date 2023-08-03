@@ -32,23 +32,7 @@ EpApplyTest >> testBehaviorNameChange [
 ]
 
 { #category : #tests }
-EpApplyTest >> testCategoryAdditionWithCategoryRemoved [
-
-	| aCategory |
-	aCategory := classFactory defaultCategory.
-	
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	self setHeadAsInputEntry.
-	self packageOrganizer removeCategory: aCategory.
-
-	self assert: inputEntry content class equals: EpPackageTagAddition.
-	self deny: (self packageOrganizer includesCategory: aCategory).
-	self applyInputEntry.
-	self assert: (self packageOrganizer includesCategory: aCategory)
-]
-
-{ #category : #tests }
-EpApplyTest >> testCategoryRemovalWithCategoryAdded [
+EpApplyTest >> testCategoryRemovalWithPackageTagAddition [
 
 	| aCategory |
 	aCategory := classFactory defaultCategory.
@@ -368,6 +352,22 @@ EpApplyTest >> testPackageRemoval [
 	self assert: (self packageOrganizer hasPackage: classFactory packageName).
 	self applyInputEntry.
 	self deny: (self packageOrganizer hasPackage: classFactory packageName) ] ensure: [ self packageOrganizer removePackage: classFactory packageName ]
+]
+
+{ #category : #tests }
+EpApplyTest >> testPackageTagAdditionWithCategoryRemoved [
+
+	| aCategory |
+	aCategory := classFactory defaultCategory.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self setHeadAsInputEntry.
+	self packageOrganizer removeCategory: aCategory.
+
+	self assert: inputEntry content class equals: EpPackageTagAddition.
+	self deny: (self packageOrganizer includesCategory: aCategory).
+	self applyInputEntry.
+	self assert: (self packageOrganizer includesCategory: aCategory)
 ]
 
 { #category : #tests }

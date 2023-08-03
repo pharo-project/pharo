@@ -110,19 +110,7 @@ EpApplyPreviewerTest >> testBehaviorNameChange [
 ]
 
 { #category : #tests }
-EpApplyPreviewerTest >> testCategoryAdditionWithCategoryRemoved [
-
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	self setHeadAsInputEntry.
-	self packageOrganizer removeCategory: classFactory defaultCategory.
-
-	self assertOutputsAnEventWith: [ :output |
-		self assert: output class equals: EpPackageTagAddition.
-		self assert: output categoryName equals: classFactory defaultCategory ]
-]
-
-{ #category : #tests }
-EpApplyPreviewerTest >> testCategoryRemovalWithCategoryAdded [
+EpApplyPreviewerTest >> testCategoryRemovalWithPackageTagAddition [
 
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self packageOrganizer removeCategory: classFactory defaultCategory.
@@ -360,6 +348,19 @@ EpApplyPreviewerTest >> testNonCodeChangeEvent [
 ]
 
 { #category : #tests }
+EpApplyPreviewerTest >> testPackageTagAdditionWithCategoryRemoved [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self setHeadAsInputEntry.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
+
+	self assertOutputsAnEventWith: [ :output |
+		self assert: output class equals: EpPackageTagAddition.
+		self assert: output affectedPackageName equals: classFactory packageName.
+		self assert: output tagName equals: classFactory defaultTagPostfix ]
+]
+
+{ #category : #tests }
 EpApplyPreviewerTest >> testProtocolAdditionWithProtocolRemoved [
 
 	| aClass |
@@ -438,15 +439,6 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 	aClass comment: 'before'.
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
-
-	self assertEmptyPreviewLog
-]
-
-{ #category : #tests }
-EpApplyPreviewerTest >> testRedundantCategoryAddition [
-
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
 ]
@@ -539,6 +531,15 @@ EpApplyPreviewerTest >> testRedundantMethodRemovalWithAbsentBehavior [
 	aClass removeSelector: #fortyTwo.
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
+
+	self assertEmptyPreviewLog
+]
+
+{ #category : #tests }
+EpApplyPreviewerTest >> testRedundantPackageTagAddition [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
 ]

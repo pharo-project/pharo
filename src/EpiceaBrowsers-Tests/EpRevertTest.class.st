@@ -59,22 +59,7 @@ EpRevertTest >> testBehaviorNameChange [
 ]
 
 { #category : #tests }
-EpRevertTest >> testCategoryAdditionWithCategoryRemoved [
-
-	| organization aCategory |
-	organization := self packageOrganizer.
-	aCategory := classFactory defaultCategory.
-
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	self setHeadAsInputEntry.
-
-	self assert: (organization includesCategory: aCategory).
-	self revertInputEntry.
-	self deny: (organization includesCategory: aCategory)
-]
-
-{ #category : #tests }
-EpRevertTest >> testCategoryRemovalWithCategoryAdded [
+EpRevertTest >> testCategoryRemovalWithPackageTagAddition [
 
 	| organization aCategory |
 	organization := self packageOrganizer.
@@ -289,6 +274,21 @@ EpRevertTest >> testMethodRemovalWithMethodAlreadyAdded [
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
 	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
+]
+
+{ #category : #tests }
+EpRevertTest >> testPackageTagAdditionWithCategoryRemoved [
+
+	| organization aCategory |
+	organization := self packageOrganizer.
+	aCategory := classFactory defaultCategory.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self setHeadAsInputEntry.
+
+	self assert: (organization includesCategory: aCategory).
+	self revertInputEntry.
+	self deny: (organization includesCategory: aCategory)
 ]
 
 { #category : #tests }

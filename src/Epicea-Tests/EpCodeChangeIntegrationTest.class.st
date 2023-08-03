@@ -44,17 +44,6 @@ EpCodeChangeIntegrationTest >> testBehaviorCommentChange [
 ]
 
 { #category : #tests }
-EpCodeChangeIntegrationTest >> testCategoryAddition [
-
-	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 0.
-
-	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
-
-	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 1.
-	self assert: (self allLogEventsWith: EpPackageTagAddition) first categoryName equals: self categoryNameForTesting
-]
-
-{ #category : #tests }
 EpCodeChangeIntegrationTest >> testCategoryRemoval [
 
 	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
@@ -292,6 +281,17 @@ EpCodeChangeIntegrationTest >> testPackageRemoval [
 
 	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 1.
 	self assert: (self allLogEventsWith: EpPackageRemoval) first affectedPackageName equals: self packageNameForTesting
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> testPackageTagAddition [
+
+	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 0.
+
+	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 1.
+	self assert: (self allLogEventsWith: EpPackageTagAddition) first categoryName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }
