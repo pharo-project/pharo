@@ -27,12 +27,14 @@ RPackageTag class >> package: aPackage name: aString [
 
 { #category : #accessing }
 RPackageTag >> addClass: aClass [
-	aClass category: self categoryName
+
+	aClass category = self categoryName ifFalse: [ aClass category: self categoryName ].
+	classNames add: aClass name
 ]
 
 { #category : #accessing }
 RPackageTag >> addClassNamed: aSymbol [
-	(classNames includes: aSymbol) ifTrue: [ ^ self ].
+
 	^ classNames add: aSymbol
 ]
 

@@ -189,7 +189,7 @@ RPackage >> addClassDefinition: aClass [
 RPackage >> addClassDefinition: aClass toClassTag: aSymbol [
 	"Tags the class aClass with the tag aSymbol"
 
-	(self addClassTag: aSymbol) addClassNamed: aClass name
+	(self addClassTag: aSymbol) addClass: aClass
 ]
 
 { #category : #'class tags' }
