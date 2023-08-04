@@ -69,7 +69,7 @@ EpRevertTest >> testCategoryRename [
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 
-	self assert: inputEntry content class equals: EpCategoryRename.
+	self assert: inputEntry content class equals: EpPackageTagRename.
 	self deny: (organization includesCategory: aCategory).
 	self assert: (organization includesCategory: anotherCategory).
 	self revertInputEntry.

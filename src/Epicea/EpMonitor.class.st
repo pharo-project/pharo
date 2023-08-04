@@ -467,9 +467,7 @@ EpMonitor >> packageTagRemoved: aPackageTagRemoved [
 { #category : #'announcement handling' }
 EpMonitor >> packageTagRenamed: aPackageTagRenamed [
 
-	self addEvent: (EpCategoryRename
-			 oldName: aPackageTagRenamed package name , '-' , aPackageTagRenamed oldName
-			 newName: aPackageTagRenamed package name , '-' , aPackageTagRenamed newName)
+	self addEvent: (EpPackageTagRename oldName: aPackageTagRenamed oldName newName: aPackageTagRenamed newName packageName: aPackageTagRenamed package name)
 ]
 
 { #category : #'announcement handling' }

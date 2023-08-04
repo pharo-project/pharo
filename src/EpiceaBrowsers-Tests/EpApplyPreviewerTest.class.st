@@ -124,7 +124,7 @@ EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
 	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
 
 	self assertOutputsAnEventWith: [ :output |
-		self assert: output class equals: EpCategoryRename.
+		self assert: output class equals: EpPackageTagRename.
 		self assert: output oldCategoryName equals: aCategory.
 		self assert: output newCategoryName equals: anotherCategory ]
 ]

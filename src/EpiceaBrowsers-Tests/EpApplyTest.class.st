@@ -40,7 +40,7 @@ EpApplyTest >> testCategoryRename [
 
 	self packageOrganizer renameTag: classFactory defaultTagPostfix , '2' to: classFactory defaultTagPostfix inPackage: classFactory packageName. "Rollback"
 
-	self assert: inputEntry content class equals: EpCategoryRename.
+	self assert: inputEntry content class equals: EpPackageTagRename.
 	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
 	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName).
 	self applyInputEntry.
@@ -67,7 +67,7 @@ EpApplyTest >> testCategoryRenameWithClass [
 
 	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
 
-	self assert: inputEntry content class equals: EpCategoryRename.
+	self assert: inputEntry content class equals: EpPackageTagRename.
 	self assert: aClass category equals: aCategory.
 	self applyInputEntry.
 	self assert: aClass category equals: anotherCategory
@@ -93,7 +93,7 @@ EpApplyTest >> testCategoryRenameWithExtension [
 	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , anotherCategory.
 	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
 
-	self assert: inputEntry content class equals: EpCategoryRename.
+	self assert: inputEntry content class equals: EpPackageTagRename.
 	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , aCategory.
 	self applyInputEntry.
 	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , anotherCategory

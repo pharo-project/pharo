@@ -13,26 +13,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-EpCategoryChange class >> named: aName [
-
-	^ self named: aName packageName: (self packageNameFromCategoryName: aName)
-]
-
-{ #category : #'instance creation' }
 EpCategoryChange class >> named: aName packageName: aPackageName [
 
 	^ self new
 		  classCategoryName: aName;
 		  affectedPackageName: aPackageName;
 		  yourself
-]
-
-{ #category : #private }
-EpCategoryChange class >> packageNameFromCategoryName: aName [
-
-	^ (self packageOrganizer packageMatchingExtensionName: aName)
-		  ifNotNil: [ :package | package name ]
-		  ifNil: [ aName ]
 ]
 
 { #category : #'instance creation' }
