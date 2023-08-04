@@ -31,12 +31,6 @@ EpApplyPreviewer >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #private }
-EpApplyPreviewer >> includesCategory: aString [
-	self flag: #epicea. "We should kill the category usage."
-	^ self packageOrganizer includesCategory: aString
-]
-
 { #category : #visitor }
 EpApplyPreviewer >> visitBehaviorCategoryChange: aChange [
 

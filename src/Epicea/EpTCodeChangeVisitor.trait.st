@@ -27,13 +27,6 @@ EpTCodeChangeVisitor >> visitBehaviorNameChange: aChange [
 ]
 
 { #category : #visitor }
-EpTCodeChangeVisitor >> visitCategoryChange: aChange [
-
-	self flag: #package. "Categories should be removed"
-	^ self visitCodeChange: aChange
-]
-
-{ #category : #visitor }
 EpTCodeChangeVisitor >> visitClassAddition: aChange [
 	^ self visitClassChange: aChange
 ]
@@ -103,17 +96,23 @@ EpTCodeChangeVisitor >> visitPackageRename: aPackageRename [
 
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitPackageTagAddition: aPackageTagAddition [
-	^ self visitCategoryChange: aPackageTagAddition
+	^ self visitPackageTagChange: aPackageTagAddition
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageTagChange: aChange [
+
+	^ self visitCodeChange: aChange
 ]
 
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
-	^ self visitCategoryChange: aPackageTagRemoval
+	^ self visitPackageTagChange: aPackageTagRemoval
 ]
 
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitPackageTagRename: aPackageTagRename [
-	^ self visitCategoryChange: aPackageTagRename
+	^ self visitPackageTagChange: aPackageTagRename
 ]
 
 { #category : #visitor }
