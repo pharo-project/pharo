@@ -84,8 +84,7 @@ FinalizationRegistry >> add: anObject finalizer: finalizer [
 
 	self protected: [ | newEntry |
 		newEntry := FinalizationRegistryEntry key: anObject value: finalizer container: self.
-		ephemeronListHead ifNotNil: [
-			ephemeronListHead chainNext: newEntry].
+		ephemeronListHead chainNext: newEntry.
 	].
 	^ anObject
 ]
@@ -115,7 +114,7 @@ FinalizationRegistry >> finalizeEphemeron: anEphemeron [
 { #category : #'private - synchronization' }
 FinalizationRegistry >> handleErrorsDuring: aBlock [
 
-	aBlock	 on: Error fork: [ :e | e pass ]
+	aBlock on: Error fork: [ :e | e pass ]
 ]
 
 { #category : #testing }
@@ -143,14 +142,21 @@ FinalizationRegistry >> isEmpty [
 ]
 
 { #category : #adding }
-FinalizationRegistry >> keys [
-
-	^ #()
+FinalizationRegistry >> ephemeronAtKey: aKey [
+	| current |
+	current := ephemeronListHead.
+	[ current notNil ] whileTrue: [
+		current key == aKey
+			ifTrue: [ ^ current ].
+		current := current next
+	].
+	"Not found"
+	^ nil
 ]
 
 { #category : #copying }
 FinalizationRegistry >> postCopy [
-	"should we prohibit any attempts to copy receiver?"
+	"should we prohibit any attempts to copy the receiver?"
 	self protected: [
 		semaphore := Semaphore forMutualExclusion.
 		ephemeronListHead := ephemeronListHead copy
@@ -167,10 +173,11 @@ FinalizationRegistry >> protected: aBlock [
 ]
 
 { #category : #adding }
-FinalizationRegistry >> remove: anEphemeron ifAbsent: aBlock [
-
-	(anEphemeron isKindOf: FinalizationRegistryEntry) ifFalse: [ ^ aBlock value ].
-	^ self removeEphemeron: anEphemeron
+FinalizationRegistry >> remove: aKey ifAbsent: aBlock [
+	| ephemeron |
+	ephemeron := self ephemeronAtKey: aKey.
+	ephemeron ifNil: [ ^ aBlock value ].
+	^ self removeEphemeron: ephemeron
 ]
 
 { #category : #adding }
