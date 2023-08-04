@@ -204,6 +204,13 @@ EpMorphVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
+EpMorphVisitor >> visitPackageRename: aPackageRename [
+
+	^ (self displayOperation: 'Rename package') , (self displayString: aPackageRename oldPackageName) , (self displayOperation: 'as')
+	  , (self displayString: aPackageRename newPackageName)
+]
+
+{ #category : #visitor }
 EpMorphVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
 	^ self displayTag: aPackageTagAddition tagName inPackage: aPackageTagAddition affectedPackageName

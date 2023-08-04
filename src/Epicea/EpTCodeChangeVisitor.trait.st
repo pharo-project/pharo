@@ -101,6 +101,12 @@ EpTCodeChangeVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageRename: aPackageRename [
+
+	^ self visitPackageChange: aPackageRename
+]
+
+{ #category : #visitor }
 EpTCodeChangeVisitor >> visitPackageTagAddition: aPackageTagAddition [
 	^ self visitCategoryChange: aPackageTagAddition
 ]

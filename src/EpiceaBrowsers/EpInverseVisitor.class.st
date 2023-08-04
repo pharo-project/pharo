@@ -101,6 +101,12 @@ EpInverseVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
+EpInverseVisitor >> visitPackageRename: aPackageRename [
+
+	^ EpCategoryRename oldName: aPackageRename newPackageName newName: aPackageRename oldPackageName
+]
+
+{ #category : #visitor }
 EpInverseVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
 	^ EpPackageTagRemoval tagName: aPackageTagAddition tagName packageName: aPackageTagAddition affectedPackageName

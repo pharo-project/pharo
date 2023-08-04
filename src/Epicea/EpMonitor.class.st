@@ -453,9 +453,9 @@ EpMonitor >> packageRemoved: packageRemoved [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> packageRenamed: aCategoryRenamed [
+EpMonitor >> packageRenamed: aPackageRenamed [
 
-	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldName newName: aCategoryRenamed newName)
+	self addEvent: (EpPackageRename oldName: aPackageRenamed oldName newName: aPackageRenamed newName)
 ]
 
 { #category : #'announcement handling' }

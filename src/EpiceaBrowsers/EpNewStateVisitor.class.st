@@ -81,6 +81,12 @@ EpNewStateVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
+EpNewStateVisitor >> visitPackageRename: aPackageRename [
+
+	^ aPackageRename newPackageName
+]
+
+{ #category : #visitor }
 EpNewStateVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
 	^ self printTag: aPackageTagAddition tagName package: aPackageTagAddition affectedPackageName

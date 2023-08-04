@@ -115,6 +115,12 @@ EpApplyVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
+EpApplyVisitor >> visitPackageRename: aPackageRename [
+
+	environment organization renamePackage: aPackageRename oldPackageName to: aPackageRename newPackageName
+]
+
+{ #category : #visitor }
 EpApplyVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
 	environment organization ensureTagNamed: aPackageTagAddition tagName inPackageNamed: aPackageTagAddition affectedPackageName

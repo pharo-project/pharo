@@ -143,6 +143,12 @@ EpHasImpactVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
+EpHasImpactVisitor >> visitPackageRename: aPackageRename [
+
+	^ environment organization hasPackage: aPackageRename oldPackageName
+]
+
+{ #category : #visitor }
 EpHasImpactVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
 	^ (environment organization hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition affectedPackageName) not

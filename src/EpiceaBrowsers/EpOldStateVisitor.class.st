@@ -64,6 +64,12 @@ EpOldStateVisitor >> visitMethodRemoval: aMethodRemoval [
 ]
 
 { #category : #visitor }
+EpOldStateVisitor >> visitPackageRename: aPackageRename [
+
+	^ aPackageRename oldPackageName
+]
+
+{ #category : #visitor }
 EpOldStateVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
 	^ self printTag: aPackageTagRemoval tagName package: aPackageTagRemoval affectedPackageName

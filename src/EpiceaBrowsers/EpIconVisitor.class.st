@@ -120,6 +120,11 @@ EpIconVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
+EpIconVisitor >> visitPackageRename: aPackageRename [
+	^ self modificationIcon
+]
+
+{ #category : #visitor }
 EpIconVisitor >> visitPackageTagAddition: aPackageTagAddition [
 	^ self additionIcon
 ]
