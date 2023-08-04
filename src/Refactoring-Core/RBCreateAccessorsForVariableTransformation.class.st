@@ -253,6 +253,13 @@ RBCreateAccessorsForVariableTransformation >> preconditions [
 ]
 
 { #category : #transforming }
+RBCreateAccessorsForVariableTransformation >> privateTransform [
+	self
+		createGetterAccessor;
+		createSetterAccessor
+]
+
+{ #category : #transforming }
 RBCreateAccessorsForVariableTransformation >> selector [
 	^ selector ifNil: [
 		selector := self safeMethodNameFor: self definingClass
@@ -283,13 +290,6 @@ RBCreateAccessorsForVariableTransformation >> storeOn: aStream [
 	aStream nextPutAll: ' classVariable: '.
 	classVariable storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBCreateAccessorsForVariableTransformation >> transform [
-	self
-		createGetterAccessor;
-		createSetterAccessor
 ]
 
 { #category : #testing }

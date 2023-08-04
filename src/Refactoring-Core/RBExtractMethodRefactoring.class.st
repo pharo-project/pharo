@@ -361,6 +361,18 @@ RBExtractMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBExtractMethodRefactoring >> privateTransform [
+
+	| existingSelector |
+	existingSelector := self existingSelector.
+	self nameNewMethod: (existingSelector
+			 ifNil: [ newExtractedSelector ifNil: [ self getNewMethodName ] ]
+			 ifNotNil: [ existingSelector ]).
+	existingSelector ifNil: [ self compileExtractedMethod ].
+	class compileTree: modifiedParseTree
+]
+
+{ #category : #transforming }
 RBExtractMethodRefactoring >> remainingTemporaries [
 	| temps |
 	temps := modifiedParseTree allDefinedVariables asSet.
@@ -439,18 +451,6 @@ RBExtractMethodRefactoring >> storeOn: aStream [
 { #category : #accessing }
 RBExtractMethodRefactoring >> targetClass [
 	^ class
-]
-
-{ #category : #transforming }
-RBExtractMethodRefactoring >> transform [
-
-	| existingSelector |
-	existingSelector := self existingSelector.
-	self nameNewMethod: (existingSelector
-			 ifNil: [ newExtractedSelector ifNil: [ self getNewMethodName ] ]
-			 ifNotNil: [ existingSelector ]).
-	existingSelector ifNil: [ self compileExtractedMethod ].
-	class compileTree: modifiedParseTree
 ]
 
 { #category : #transforming }

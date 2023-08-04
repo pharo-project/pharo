@@ -164,7 +164,7 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 RBRefactoring >> primitiveExecute [
 	
 	self checkPreconditions.
-	self transform
+	self privateTransform
 ]
 
 { #category : #removing }

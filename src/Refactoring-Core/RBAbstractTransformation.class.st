@@ -239,12 +239,6 @@ RBAbstractTransformation >> primitiveExecute [
 	self subclassResponsibility
 ]
 
-{ #category : #'private hook' }
-RBAbstractTransformation >> privateTransform [
-
-	self subclassResponsibility 
-]
-
 { #category : #exceptions }
 RBAbstractTransformation >> refactoringConfirmWarning: aString [
 	| ret |
@@ -333,6 +327,7 @@ RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
 { #category : #transforming }
 RBAbstractTransformation >> transform [
 	"Do the actual operations."
+	self deprecated: 'Use primitiveExecute or privateTransform instead. Check subclasses for more details.'. 
 	
 	self subclassResponsibility
 ]

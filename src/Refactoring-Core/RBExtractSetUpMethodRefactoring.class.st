@@ -109,20 +109,7 @@ RBExtractSetUpMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
-	^ true
-]
-
-{ #category : #transforming }
-RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
-	| node |
-	node := class parseTreeForSelector: selector.
-	^ node statements ifEmpty: [ node body start ]
-		ifNotEmpty: [ node statements first start ]
-]
-
-{ #category : #transforming }
-RBExtractSetUpMethodRefactoring >> transform [
+RBExtractSetUpMethodRefactoring >> privateTransform [
 
 	| existingSelector |
 	existingSelector := self existingSelector.
@@ -137,6 +124,19 @@ RBExtractSetUpMethodRefactoring >> transform [
 				inProtocols: #running)].
 	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
 	class compileTree: modifiedParseTree
+]
+
+{ #category : #transforming }
+RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
+	^ true
+]
+
+{ #category : #transforming }
+RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
+	| node |
+	node := class parseTreeForSelector: selector.
+	^ node statements ifEmpty: [ node body start ]
+		ifNotEmpty: [ node statements first start ]
 ]
 
 { #category : #transforming }

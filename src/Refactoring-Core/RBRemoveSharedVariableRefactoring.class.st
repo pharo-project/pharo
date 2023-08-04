@@ -42,7 +42,7 @@ RBRemoveSharedVariableRefactoring >> generateChanges [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
 
-	self transform.
+	self privateTransform.
 	^ self changes
 ]
 
@@ -52,13 +52,13 @@ RBRemoveSharedVariableRefactoring >> preconditions [
 	^ self applicabilityConditions & self breakingChangeConditions 
 ]
 
+{ #category : #transforming }
+RBRemoveSharedVariableRefactoring >> privateTransform [
+	class removeClassVariable: variableName
+]
+
 { #category : #accessing }
 RBRemoveSharedVariableRefactoring >> refactoredClass [
 
 	^ class
-]
-
-{ #category : #transforming }
-RBRemoveSharedVariableRefactoring >> transform [
-	class removeClassVariable: variableName
 ]

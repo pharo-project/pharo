@@ -82,6 +82,12 @@ RBPushDownMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBPushDownMethodRefactoring >> privateTransform [
+	selectors do: [:each | self pushDown: each].
+	selectors do: [:each | class removeMethod: each]
+]
+
+{ #category : #transforming }
 RBPushDownMethodRefactoring >> pushDown: aSelector [
 
 	| code protocols refactoring |
@@ -139,10 +145,4 @@ RBPushDownMethodRefactoring >> storeOn: aStream [
 { #category : #preconditions }
 RBPushDownMethodRefactoring >> targetClass [
 	^ class
-]
-
-{ #category : #transforming }
-RBPushDownMethodRefactoring >> transform [
-	selectors do: [:each | self pushDown: each].
-	selectors do: [:each | class removeMethod: each]
 ]

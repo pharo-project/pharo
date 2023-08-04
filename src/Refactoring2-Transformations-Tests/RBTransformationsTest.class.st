@@ -308,7 +308,7 @@ RBTransformationsTest >> testRemoveMessageSendTransform [
 		messageSend: #cr
 		inMethod: (#called:, #on:) asSymbol
 		inClass: #RBClassDataForRefactoringTest)
-		transform.
+		primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 1.
 

@@ -37,7 +37,7 @@ RBRemoveInstanceVariableRefactoring >> generateChanges [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
 
-	self transform.
+	self privateTransform.
 	^ self changes
 ]
 
@@ -47,12 +47,12 @@ RBRemoveInstanceVariableRefactoring >> preconditions [
 	^ self applicabilityConditions & self breakingChangeConditions 
 ]
 
+{ #category : #transforming }
+RBRemoveInstanceVariableRefactoring >> privateTransform [
+	class removeInstanceVariable: variableName
+]
+
 { #category : #accessing }
 RBRemoveInstanceVariableRefactoring >> refactoredClass [
 	^ class
-]
-
-{ #category : #transforming }
-RBRemoveInstanceVariableRefactoring >> transform [
-	class removeInstanceVariable: variableName
 ]

@@ -73,6 +73,11 @@ RBAddMethodTransformRefactoring >> preconditions [
 	^ self trueCondition
 ]
 
+{ #category : #transforming }
+RBAddMethodTransformRefactoring >> privateTransform [
+	class compile: source classified: protocols
+]
+
 { #category : #accessing }
 RBAddMethodTransformRefactoring >> selector [
 
@@ -91,9 +96,4 @@ RBAddMethodTransformRefactoring >> storeOn: aStream [
 	aStream nextPutAll: ' inProtocols: '.
 	protocols storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBAddMethodTransformRefactoring >> transform [
-	class compile: source classified: protocols
 ]

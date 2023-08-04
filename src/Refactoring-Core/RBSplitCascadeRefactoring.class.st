@@ -112,6 +112,12 @@ RBSplitCascadeRefactoring >> preconditions [
 		true ])
 ]
 
+{ #category : #transforming }
+RBSplitCascadeRefactoring >> privateTransform [
+	self extractReceiver.
+	self splitCascade
+]
+
 { #category : #initialization }
 RBSplitCascadeRefactoring >> split: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
@@ -144,10 +150,4 @@ RBSplitCascadeRefactoring >> storeOn: aStream [
 		nextPutAll: ' forClass: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBSplitCascadeRefactoring >> transform [
-	self extractReceiver.
-	self splitCascade
 ]

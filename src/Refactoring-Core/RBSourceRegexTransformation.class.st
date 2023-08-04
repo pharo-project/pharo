@@ -24,7 +24,7 @@ RBSourceRegexTransformation >> parseSelector: aSelector [
 ]
 
 { #category : #transforming }
-RBSourceRegexTransformation >> transform [
+RBSourceRegexTransformation >> privateTransform [
 
 	| original replacement protocols |
 

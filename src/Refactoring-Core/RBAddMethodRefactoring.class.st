@@ -70,6 +70,12 @@ RBAddMethodRefactoring >> preconditions [
 	^ (RBCondition canUnderstand: transformation selector in: class) not
 ]
 
+{ #category : #transforming }
+RBAddMethodRefactoring >> privateTransform [
+
+	transformation privateTransform
+]
+
 { #category : #printing }
 RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
@@ -82,10 +88,4 @@ RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPutAll: ' inProtocols: '.
 	protocols storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBAddMethodRefactoring >> transform [
-
-	transformation transform
 ]

@@ -148,6 +148,14 @@ RBSplitClassRefactoring >> preconditions [
 					not
 ]
 
+{ #category : #transforming }
+RBSplitClassRefactoring >> privateTransform [
+	self
+		createNewClass;
+		createReference;
+		abstractVariableReferences
+]
+
 { #category : #printing }
 RBSplitClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
@@ -162,12 +170,4 @@ RBSplitClassRefactoring >> storeOn: aStream [
 		nextPutAll: ' referenceVariableName: ''';
 		nextPutAll: referenceVariableName;
 		nextPutAll: ''')'
-]
-
-{ #category : #transforming }
-RBSplitClassRefactoring >> transform [
-	self
-		createNewClass;
-		createReference;
-		abstractVariableReferences
 ]
