@@ -859,17 +859,9 @@ RPackageOrganizer >> renameClass: class from: oldName to: newName [
 { #category : #'system integration' }
 RPackageOrganizer >> renamePackage: aPackage to: newName [
 
-	| package |
 	(self hasPackage: aPackage) ifFalse: [ ^ self ].
 
-	package := self ensurePackage: aPackage.
-
-	packages removeKey: package name.
-	package name: newName.
-	packages at: newName put: package.
-
-	"we also rename all the extension protocols in the system with the new name"
-	package extensionMethods do: [ :method | method methodClass renameProtocol: method protocol as: '*' , newName ]
+	(self ensurePackage: aPackage) renameTo: newName
 ]
 
 { #category : #'system integration' }
@@ -950,6 +942,7 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
 	newPackageName := announcement newCategory.
 	oldPackageName := announcement oldCategory.
+
 	newPackageName = oldPackageName ifTrue: [ ^ self ].
 	oldPackage := self packageMatchingExtensionName: oldPackageName includingClass: class.
 	newPackage := (self packageMatchingExtensionName: newPackageName) ifNil: [ self ensurePackage: newPackageName ].

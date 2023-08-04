@@ -59,25 +59,6 @@ EpRevertTest >> testBehaviorNameChange [
 ]
 
 { #category : #tests }
-EpRevertTest >> testCategoryRename [
-
-	| organization aCategory anotherCategory |
-	organization := self packageOrganizer.
-	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	organization renameCategory: aCategory toBe: anotherCategory.
-	self setHeadAsInputEntry.
-
-	self assert: inputEntry content class equals: EpPackageTagRename.
-	self deny: (organization includesCategory: aCategory).
-	self assert: (organization includesCategory: anotherCategory).
-	self revertInputEntry.
-	self assert: (organization includesCategory: aCategory).
-	self deny: (organization includesCategory: anotherCategory)
-]
-
-{ #category : #tests }
 EpRevertTest >> testClassAddition [
 
 	| aClass className |
@@ -285,6 +266,25 @@ EpRevertTest >> testPackageTagRemovalWithPackageTagAddition [
 	self deny: (organization includesCategory: aCategory).
 	self revertInputEntry.
 	self assert: (organization includesCategory: aCategory)
+]
+
+{ #category : #tests }
+EpRevertTest >> testPackageTagRename [
+
+	| organization aCategory anotherCategory |
+	organization := self packageOrganizer.
+	aCategory := classFactory defaultCategory.
+	anotherCategory := aCategory, '2'.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	organization renameCategory: aCategory toBe: anotherCategory.
+	self setHeadAsInputEntry.
+
+	self assert: inputEntry content class equals: EpPackageTagRename.
+	self deny: (organization includesCategory: aCategory).
+	self assert: (organization includesCategory: anotherCategory).
+	self revertInputEntry.
+	self assert: (organization includesCategory: aCategory).
+	self deny: (organization includesCategory: anotherCategory)
 ]
 
 { #category : #tests }
