@@ -115,19 +115,19 @@ EpApplyVisitor >> visitPackageRename: aPackageRename [
 { #category : #visitor }
 EpApplyVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	environment organization ensureTagNamed: aPackageTagAddition tagName inPackageNamed: aPackageTagAddition affectedPackageName
+	environment organization ensureTagNamed: aPackageTagAddition tagName inPackageNamed: aPackageTagAddition packageName
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	environment organization removeTag: aPackageTagRemoval tagName fromPackage: aPackageTagRemoval affectedPackageName
+	environment organization removeTag: aPackageTagRemoval tagName fromPackage: aPackageTagRemoval packageName
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitPackageTagRename: aPackageTagRename [
 
-	environment organization renameTag: aPackageTagRename oldTagName to: aPackageTagRename newTagName inPackage: aPackageTagRename affectedPackageName
+	environment organization renameTag: aPackageTagRename oldTagName to: aPackageTagRename newTagName inPackage: aPackageTagRename packageName
 ]
 
 { #category : #visitor }

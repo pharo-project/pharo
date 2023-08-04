@@ -100,19 +100,19 @@ EpInverseVisitor >> visitPackageRename: aPackageRename [
 { #category : #visitor }
 EpInverseVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ EpPackageTagRemoval tagName: aPackageTagAddition tagName packageName: aPackageTagAddition affectedPackageName
+	^ EpPackageTagRemoval tagName: aPackageTagAddition tagName packageName: aPackageTagAddition packageName
 ]
 
 { #category : #visitor }
 EpInverseVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	^ EpPackageTagAddition tagName: aPackageTagRemoval tagName packageName: aPackageTagRemoval affectedPackageName
+	^ EpPackageTagAddition tagName: aPackageTagRemoval tagName packageName: aPackageTagRemoval packageName
 ]
 
 { #category : #visitor }
 EpInverseVisitor >> visitPackageTagRename: aPackageTagRename [
 
-	^ EpPackageTagRename oldName: aPackageTagRename newTagName newName: aPackageTagRename oldTagName packageName: aPackageTagRename affectedPackageName
+	^ EpPackageTagRename oldName: aPackageTagRename newTagName newName: aPackageTagRename oldTagName packageName: aPackageTagRename packageName
 ]
 
 { #category : #visitor }

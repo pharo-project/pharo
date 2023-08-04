@@ -5,8 +5,8 @@ Class {
 	#name : #EpPackageTagChange,
 	#superclass : #EpCodeChange,
 	#instVars : [
-		'affectedPackageName',
-		'packageTagName'
+		'packageTagName',
+		'packageName'
 	],
 	#category : #'Epicea-Model'
 }
@@ -22,20 +22,14 @@ EpPackageTagChange class >> tagName: aName packageName: aPackageName [
 
 	^ self new
 		  tagName: aName;
-		  affectedPackageName: aPackageName;
+		  packageName: aPackageName;
 		  yourself
 ]
 
 { #category : #accessing }
 EpPackageTagChange >> affectedPackageName [
 
-	^ affectedPackageName
-]
-
-{ #category : #accessing }
-EpPackageTagChange >> affectedPackageName: anObject [
-
-	affectedPackageName := anObject
+	^ packageName
 ]
 
 { #category : #testing }
@@ -49,6 +43,18 @@ EpPackageTagChange >> doesOverride: aCodeChange [
 EpPackageTagChange >> isEpPackageTagChange [
 
 	^ true
+]
+
+{ #category : #accessing }
+EpPackageTagChange >> packageName [
+
+	^ packageName
+]
+
+{ #category : #accessing }
+EpPackageTagChange >> packageName: aString [
+
+	packageName := aString
 ]
 
 { #category : #accessing }

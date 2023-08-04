@@ -248,7 +248,7 @@ EpCodeChangeIntegrationTest >> testPackageAddition [
 	self packageOrganizer createPackageNamed: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageAddition) equals: 1.
-	self assert: (self allLogEventsWith: EpPackageAddition) first affectedPackageName equals: self packageNameForTesting
+	self assert: (self allLogEventsWith: EpPackageAddition) first packageName equals: self packageNameForTesting
 ]
 
 { #category : #tests }
@@ -261,7 +261,7 @@ EpCodeChangeIntegrationTest >> testPackageRemoval [
 	self packageOrganizer removePackage: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 1.
-	self assert: (self allLogEventsWith: EpPackageRemoval) first affectedPackageName equals: self packageNameForTesting
+	self assert: (self allLogEventsWith: EpPackageRemoval) first packageName equals: self packageNameForTesting
 ]
 
 { #category : #tests }
@@ -272,7 +272,7 @@ EpCodeChangeIntegrationTest >> testPackageTagAddition [
 	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 1.
-	self assert: (self allLogEventsWith: EpPackageTagAddition) first affectedPackageName equals: self packageNameForTesting.
+	self assert: (self allLogEventsWith: EpPackageTagAddition) first packageName equals: self packageNameForTesting.
 	self assert: (self allLogEventsWith: EpPackageTagAddition) first tagName equals: self packageTagNameForTesting
 ]
 
@@ -285,7 +285,7 @@ EpCodeChangeIntegrationTest >> testPackageTagRemoval [
 	self packageOrganizer removeTag: self packageTagNameForTesting fromPackage: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageTagRemoval) equals: 1.
-	self assert: (self allLogEventsWith: EpPackageTagRemoval) first affectedPackageName equals: self packageNameForTesting.
+	self assert: (self allLogEventsWith: EpPackageTagRemoval) first packageName equals: self packageNameForTesting.
 	self assert: (self allLogEventsWith: EpPackageTagRemoval) first tagName equals: self packageTagNameForTesting
 ]
 

@@ -145,19 +145,19 @@ EpHasImpactVisitor >> visitPackageRename: aPackageRename [
 { #category : #visitor }
 EpHasImpactVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ (environment organization hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition affectedPackageName) not
+	^ (environment organization hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName) not
 ]
 
 { #category : #visitor }
 EpHasImpactVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	^ environment organization hasTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval affectedPackageName
+	^ environment organization hasTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval packageName
 ]
 
 { #category : #visitor }
 EpHasImpactVisitor >> visitPackageTagRename: aPackageTagRename [
 
-	^ environment organization hasTag: aPackageTagRename oldTagName inPackage: aPackageTagRename affectedPackageName
+	^ environment organization hasTag: aPackageTagRename oldTagName inPackage: aPackageTagRename packageName
 ]
 
 { #category : #visitor }

@@ -83,13 +83,13 @@ EpNewStateVisitor >> visitPackageRename: aPackageRename [
 { #category : #visitor }
 EpNewStateVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ self printTag: aPackageTagAddition tagName package: aPackageTagAddition affectedPackageName
+	^ self printTag: aPackageTagAddition tagName package: aPackageTagAddition packageName
 ]
 
 { #category : #visitor }
 EpNewStateVisitor >> visitPackageTagRename: aPackageTagRename [
 
-	^ self printTag: aPackageTagRename newTagName package: aPackageTagRename affectedPackageName
+	^ self printTag: aPackageTagRename newTagName package: aPackageTagRename packageName
 ]
 
 { #category : #visitor }

@@ -66,13 +66,13 @@ EpOldStateVisitor >> visitPackageRename: aPackageRename [
 { #category : #visitor }
 EpOldStateVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	^ self printTag: aPackageTagRemoval tagName package: aPackageTagRemoval affectedPackageName
+	^ self printTag: aPackageTagRemoval tagName package: aPackageTagRemoval packageName
 ]
 
 { #category : #visitor }
 EpOldStateVisitor >> visitPackageTagRename: aPackageTagRename [
 
-	^ self printTag: aPackageTagRename oldTagName package: aPackageTagRename affectedPackageName
+	^ self printTag: aPackageTagRename oldTagName package: aPackageTagRename packageName
 ]
 
 { #category : #visitor }

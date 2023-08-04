@@ -188,7 +188,7 @@ EpApplyPreviewer >> visitPackageRename: aPackageRename [
 { #category : #visitor }
 EpApplyPreviewer >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ (self packageOrganizer hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition affectedPackageName)
+	^ (self packageOrganizer hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName)
 		  ifTrue: [ #(  ) ]
 		  ifFalse: [ { aPackageTagAddition } ]
 ]
@@ -196,7 +196,7 @@ EpApplyPreviewer >> visitPackageTagAddition: aPackageTagAddition [
 { #category : #visitor }
 EpApplyPreviewer >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	^ (self packageOrganizer hasTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval affectedPackageName)
+	^ (self packageOrganizer hasTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval packageName)
 		  ifTrue: [ { aPackageTagRemoval } ]
 		  ifFalse: [ #(  ) ]
 ]
@@ -204,7 +204,7 @@ EpApplyPreviewer >> visitPackageTagRemoval: aPackageTagRemoval [
 { #category : #visitor }
 EpApplyPreviewer >> visitPackageTagRename: aPackageTagRename [
 
-	^ (self packageOrganizer hasTag: aPackageTagRename oldTagName inPackage: aPackageTagRename affectedPackageName)
+	^ (self packageOrganizer hasTag: aPackageTagRename oldTagName inPackage: aPackageTagRename packageName)
 		  ifTrue: [ { aPackageTagRename } ]
 		  ifFalse: [ #(  ) ]
 ]

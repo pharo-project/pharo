@@ -197,20 +197,20 @@ EpMorphVisitor >> visitPackageRename: aPackageRename [
 { #category : #visitor }
 EpMorphVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ self displayTag: aPackageTagAddition tagName inPackage: aPackageTagAddition affectedPackageName
+	^ self displayTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName
 ]
 
 { #category : #visitor }
 EpMorphVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	^ self displayTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval affectedPackageName
+	^ self displayTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval packageName
 ]
 
 { #category : #visitor }
 EpMorphVisitor >> visitPackageTagRename: aPackageTagRename [
 
 	^ (self displayOperation: 'Rename tag') , (self displayString: aPackageTagRename oldTagName) , (self displayOperation: 'as')
-	  , (self displayString: aPackageTagRename newTagName) , (self displayOperation: 'in package') , (self displayString: aPackageTagRename affectedPackageName)
+	  , (self displayString: aPackageTagRename newTagName) , (self displayOperation: 'in package') , (self displayString: aPackageTagRename packageName)
 ]
 
 { #category : #visitor }
