@@ -326,17 +326,14 @@ EpApplyTest >> testPackageRenameWithExtension [
 { #category : #tests }
 EpApplyTest >> testPackageTagAdditionWithPackageTagRemoval [
 
-	| aCategory |
-	aCategory := classFactory defaultCategory.
-	
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
-	self packageOrganizer removeCategory: aCategory.
+	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpPackageTagAddition.
-	self deny: (self packageOrganizer includesCategory: aCategory).
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
 	self applyInputEntry.
-	self assert: (self packageOrganizer includesCategory: aCategory)
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName)
 ]
 
 { #category : #tests }
@@ -384,9 +381,11 @@ EpApplyTest >> testPackageTagRenameWithClass [
 	self packageOrganizer renameTag: classFactory defaultTagPostfix , '2' to: classFactory defaultTagPostfix inPackage: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpPackageTagRename. "Rollback"
-	self assert: aClass category equals: classFactory defaultCategory.
+	self assert: aClass packageName equals: classFactory packageName.
+	self assert: aClass packageTagName equals: classFactory defaultTagPostfix.
 	self applyInputEntry.
-	self assert: aClass category equals: classFactory defaultCategory , '2'
+	self assert: aClass packageName equals: classFactory packageName.
+	self assert: aClass packageTagName equals: classFactory defaultTagPostfix , '2'
 ]
 
 { #category : #tests }

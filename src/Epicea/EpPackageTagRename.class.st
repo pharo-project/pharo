@@ -30,15 +30,6 @@ EpPackageTagRename >> newTagName [
 ]
 
 { #category : #accessing }
-EpPackageTagRename >> oldCategoryName [
-
-	self flag: #package. "We should not rely on categories"
-	^ self oldTagName = self affectedPackageName
-		  ifTrue: [ self affectedPackageName ]
-		  ifFalse: [ self affectedPackageName , '-' , self oldTagName ]
-]
-
-{ #category : #accessing }
 EpPackageTagRename >> oldTagName [
 
 	^ oldTagName

@@ -342,7 +342,7 @@ EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 				aBuilder
 					name: aClass name;
 					traitComposition: {  };
-					package: aClass category ] ]
+					package: aClass packageName ] ]
 		raise: MessageNotUnderstood
 ]
 
