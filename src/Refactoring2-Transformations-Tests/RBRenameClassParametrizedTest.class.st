@@ -151,7 +151,7 @@ rename class B to A
 		            superclass: #Object
 		            subclasses: {  }
 		            category: self class package name.
-	self executeRefactoring: addClass asRefactoring.
+	self executeRefactoring: addClass.
 	self assert: (model includesClassNamed: classA).
 	renameClass := self
 		               createRefactoringWithModel: model

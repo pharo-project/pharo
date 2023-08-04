@@ -35,8 +35,12 @@ ReNoSpaceAroundProtocolRule >> critiqueFor: aMethod [
 	| proposedProtocol |
 	proposedProtocol := protocolName trimBoth.
 
-	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:
-		  (RBMethodProtocolTransformation protocol: { proposedProtocol } inMethod: aMethod selector inClass: aMethod methodClass name asSymbol) asRefactoring
+	^ (ReRefactoringCritique
+		   withAnchor: (self anchorFor: aMethod)
+		   by: self) refactoring: (RBMethodProtocolTransformation
+			   protocol: { proposedProtocol }
+			   inMethod: aMethod selector
+			   inClass: aMethod methodClass name asSymbol)
 ]
 
 { #category : #accessing }
