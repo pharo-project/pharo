@@ -203,9 +203,10 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	Smalltalk allClassesAndTraits
 		do: [ :behavior |
-			self initializeMethodsFor: behavior.
-			self initializeMethodsFor: behavior classSide ]
-		displayingProgress: 'Importing methods'.
+			behavior package
+				importDefinedMethodsOf: behavior;
+				importDefinedMethodsOf: behavior classSide ]
+		displayingProgress: 'Importing defined methods'.
 
 	Smalltalk allClassesAndTraits
 		do: [ :behavior |
@@ -474,19 +475,6 @@ RPackageOrganizer >> initializeFor: aBehavior [
 	package addClassDefinition: aBehavior.
 	package addClassDefinition: aBehavior toClassTag: aBehavior category asSymbol.
 	self registerPackage: package forClass: aBehavior
-]
-
-{ #category : #'initialization - data' }
-RPackageOrganizer >> initializeMethodsFor: aBehavior [
-
-	| package |
-	package := aBehavior package.
-	(aBehavior protocols
-		reject: [ :each | each isExtensionProtocol ])
-		do: [ :protocol |
-			 (protocol methodSelectors
-				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
-				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
