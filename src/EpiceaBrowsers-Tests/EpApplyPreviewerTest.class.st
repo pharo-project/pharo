@@ -337,7 +337,8 @@ EpApplyPreviewerTest >> testPackageTagRemovalWithPackageTagAddition [
 
 	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpPackageTagRemoval.
-		self assert: output categoryName equals: classFactory defaultCategory ]
+		self assert: output affectedPackageName equals: classFactory packageName.
+		self assert: output tagName equals: classFactory defaultTagPostfix ]
 ]
 
 { #category : #tests }
@@ -351,8 +352,9 @@ EpApplyPreviewerTest >> testPackageTagRenameWithPreviousRollback [
 
 	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpPackageTagRename.
-		self assert: output oldCategoryName equals: classFactory defaultCategory.
-		self assert: output newCategoryName equals: classFactory defaultCategory , '2' ]
+		self assert: output affectedPackageName equals: classFactory packageName.
+		self assert: output oldTagName equals: classFactory defaultTagPostfix.
+		self assert: output newTagName equals: classFactory defaultTagPostfix , '2' ]
 ]
 
 { #category : #tests }

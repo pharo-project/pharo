@@ -22,8 +22,6 @@ EpCodeChangeIntegrationTest >> packageTagNameForTesting [
 { #category : #running }
 EpCodeChangeIntegrationTest >> tearDown [
 
-	self flag: #package. "To remove when categories will not be a thing anymore."
-	self packageOrganizer removeCategoriesMatching: self packageNameForTesting , '-*'.
 	(self packageNameForTesting asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	super tearDown
 ]

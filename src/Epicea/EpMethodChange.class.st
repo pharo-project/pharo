@@ -7,6 +7,12 @@ Class {
 	#category : #'Epicea-Model'
 }
 
+{ #category : #testing }
+EpMethodChange class >> isAbstract [
+
+	^ self == EpMethodChange
+]
+
 { #category : #accessing }
 EpMethodChange >> behaviorAffectedName [
 

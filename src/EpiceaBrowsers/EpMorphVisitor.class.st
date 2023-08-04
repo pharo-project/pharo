@@ -34,13 +34,6 @@ EpMorphVisitor >> displayBrowserOperation: aBrowserOperationEvent [
 ]
 
 { #category : #private }
-EpMorphVisitor >> displayCategory: aCategoryName [
-
-	self flag: #package. "We should not rely on categories :("
-	^ (self displayOperation: 'Package tag') , (self displayString: aCategoryName asString)
-]
-
-{ #category : #private }
 EpMorphVisitor >> displayClass: aClassName protocol: aProtocolName [
 
 	^ (self displayBehavior: aClassName), (self displayOperation: 'protocol'), (self displayString: aProtocolName)

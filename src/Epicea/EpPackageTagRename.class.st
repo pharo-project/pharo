@@ -24,12 +24,6 @@ EpPackageTagRename >> accept: aVisitor [
 ]
 
 { #category : #accessing }
-EpPackageTagRename >> newCategoryName [
-
-	^ self categoryName
-]
-
-{ #category : #accessing }
 EpPackageTagRename >> newTagName [
 
 	^ self tagName

@@ -11,6 +11,12 @@ Class {
 	#category : #'Epicea-Model'
 }
 
+{ #category : #testing }
+EpPackageTagChange class >> isAbstract [
+
+	^ self == EpPackageTagChange
+]
+
 { #category : #'instance creation' }
 EpPackageTagChange class >> tagName: aName packageName: aPackageName [
 
@@ -32,24 +38,15 @@ EpPackageTagChange >> affectedPackageName: anObject [
 	affectedPackageName := anObject
 ]
 
-{ #category : #accessing }
-EpPackageTagChange >> categoryName [
-
-	self flag: #package. "We should not rely on categories"
-	^ self tagName = self affectedPackageName
-		  ifTrue: [ self affectedPackageName ]
-		  ifFalse: [ self affectedPackageName , '-' , self tagName ]
-]
-
 { #category : #testing }
 EpPackageTagChange >> doesOverride: aCodeChange [
 
-	^ aCodeChange isEpCategoryChange and: [
+	^ aCodeChange isEpPackageTagChange and: [
 		aCodeChange affectedPackageName = self affectedPackageName ]
 ]
 
 { #category : #testing }
-EpPackageTagChange >> isEpCategoryChange [
+EpPackageTagChange >> isEpPackageTagChange [
 
 	^ true
 ]
