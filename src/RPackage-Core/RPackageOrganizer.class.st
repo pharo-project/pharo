@@ -165,14 +165,11 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 RPackageOrganizer >> addCategory: catString [
 	"Add a new category named catString"
 
-	| package category |
+	| category |
 	category := catString asSymbol.
 	categoryMap at: category asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
 
-	package := (self packageMatchingExtensionName: category) ifNil: [ self ensurePackage: category ].
-	package name = category ifFalse: [ package addClassTag: category ].
-
-	SystemAnnouncer uniqueInstance classCategoryAdded: catString
+	((self packageMatchingExtensionName: category) ifNil: [ self ensurePackage: category ]) addClassTag: category
 ]
 
 { #category : #private }
