@@ -29,12 +29,6 @@ RBMergeInstanceVariableIntoAnotherTransformation >> applicabilityConditions [
 	  & self isNotGlobal
 ]
 
-{ #category : #preconditions }
-RBMergeInstanceVariableIntoAnotherTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBMergeInstanceVariableIntoAnotherTransformation >> privateTransform [
 

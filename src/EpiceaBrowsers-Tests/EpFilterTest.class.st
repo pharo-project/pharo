@@ -4,6 +4,12 @@ Class {
 	#category : #'EpiceaBrowsers-Tests-Filters'
 }
 
+{ #category : #asserting }
+EpFilterTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpFilterTest >> assert: aFilter accepts: anEvent rejects: anotherEvent [
 	self assert: (aFilter accepts: anEvent).

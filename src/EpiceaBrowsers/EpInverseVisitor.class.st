@@ -39,22 +39,6 @@ EpInverseVisitor >> visitBehaviorNameChange: aChange [
 ]
 
 { #category : #visitor }
-EpInverseVisitor >> visitCategoryAddition: aChange [
-
-	^ EpCategoryRemoval
-			named: aChange categoryName
-			packageName: aChange affectedPackageName
-]
-
-{ #category : #visitor }
-EpInverseVisitor >> visitCategoryRemoval: aChange [
-
-	^ EpCategoryAddition
-			named: aChange categoryName
-			packageName: aChange affectedPackageName
-]
-
-{ #category : #visitor }
 EpInverseVisitor >> visitCategoryRename: aChange [
 
 	^ EpCategoryRename
@@ -114,6 +98,18 @@ EpInverseVisitor >> visitPackageAddition: aPackageAddition [
 EpInverseVisitor >> visitPackageRemoval: aPackageRemoval [
 
 	^ EpPackageAddition packageName: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
+EpInverseVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ EpPackageTagRemoval tagName: aPackageTagAddition tagName packageName: aPackageTagAddition affectedPackageName
+]
+
+{ #category : #visitor }
+EpInverseVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ EpPackageTagAddition tagName: aPackageTagRemoval tagName packageName: aPackageTagRemoval affectedPackageName
 ]
 
 { #category : #visitor }

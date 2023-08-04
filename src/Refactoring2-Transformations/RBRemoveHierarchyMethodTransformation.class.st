@@ -53,12 +53,6 @@ RBRemoveHierarchyMethodTransformation >> deleteSelectors [
 	 ]
 ]
 
-{ #category : #preconditions }
-RBRemoveHierarchyMethodTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #removing }
 RBRemoveHierarchyMethodTransformation >> removeMethods: selectorCollection from: aClass [
 	class := self model classObjectFor: aClass.

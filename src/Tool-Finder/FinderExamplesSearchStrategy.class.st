@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #accessing }
+FinderExamplesSearchStrategy class >> parseAsNodes: anExpression [
+
+	^ (RBParser parseExpression: '{', anExpression , '}') statements asArray
+]
+
+{ #category : #accessing }
 FinderExamplesSearchStrategy class >> strategyName [
 
 	^ #Examples
@@ -21,7 +27,7 @@ FinderExamplesSearchStrategy >> computeWithMethodFinder [
 	(finder searchingString includes: $.) ifFalse: [ ^ #(  ) ]. "delete trailing period. This should be fixed in the Parser!"
 	data := finder searchingString trimRight: [ :char | char isSeparator or: [ char = $. ] ].
 
-	[ dataObjects := Smalltalk compiler evaluate: '{' , data , '}' ]
+	[ dataObjects := self class parseAsNodes: data. dataObjects do: #evaluate. ]
 		on: CodeError , RuntimeSyntaxError
 		do: [ :e |
 			self inform: 'Error: ' , e messageText.

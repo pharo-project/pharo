@@ -38,11 +38,11 @@ RBMoveClassTransformationTest >> testTransform [
 
 	transformation := (RBMoveClassTransformation
 							move: self changeMockClass name
-							to: #'Refactoring2-Transformations-Test')
+							to: #'Refactoring2-Transformations-Tests-Test')
 							transform.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self changeMockClass name asSymbol.
-	self assert: class category equals: #'Refactoring2-Transformations-Test'
+	self assert: class category equals: #'Refactoring2-Transformations-Tests-Test'
 ]

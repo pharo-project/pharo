@@ -9,6 +9,12 @@ Class {
 	#category : #'RottenTestsFinder-FakeTests'
 }
 
+{ #category : #asserting }
+RTFFakeTestSuperClass >> shouldLogWithEpicea [
+
+	^ false
+]
+
 { #category : #wrappers }
 RTFFakeTestSuperClass >> superAssertHelper [
 	self assert: true

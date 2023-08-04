@@ -65,12 +65,6 @@ RBRemoveProtocolTransformation >> classExist [
 		  errorString: 'Class named ' , className , ' does not exist' 
 ]
 
-{ #category : #preconditions }
-RBRemoveProtocolTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveProtocolTransformation >> privateTransform [
 

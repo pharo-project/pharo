@@ -108,14 +108,6 @@ RBInsertNewClassTransformation >> isValidClassName [
 	^ RBCondition isValidClassName: className
 ]
 
-{ #category : #preconditions }
-RBInsertNewClassTransformation >> preconditions [
-	"Superclass and subclasses shouldn't be metaclasses.
-	Each subclass should be immediate subclass of superclass."
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBInsertNewClassTransformation >> privateTransform [
 
