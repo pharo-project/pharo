@@ -1008,6 +1008,16 @@ RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 	protocols do: [ :protocol | protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ]
 ]
 
+{ #category : #'class tags' }
+RPackage >> renameTag: aTag to: newName [
+
+	(self hasTag: aTag) ifFalse: [ ^ self ].
+
+	(aTag isString
+		 ifTrue: [ self classTagNamed: aTag ]
+		 ifFalse: [ aTag ]) renameTo: newName
+]
+
 { #category : #private }
 RPackage >> renameTagsPrefixedWith: oldName to: newName [
 	| oldPrefix newPrefix |

@@ -34,21 +34,18 @@ EpApplyTest >> testBehaviorNameChange [
 { #category : #tests }
 EpApplyTest >> testCategoryRename [
 
-	| aCategory anotherCategory |
-	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory , '2'.
-
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	self packageOrganizer renameCategory: aCategory toBe: anotherCategory.
+	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
-	self packageOrganizer renameCategory: anotherCategory toBe: aCategory. "Rollback"
+
+	self packageOrganizer renameTag: classFactory defaultTagPostfix , '2' to: classFactory defaultTagPostfix inPackage: classFactory packageName. "Rollback"
 
 	self assert: inputEntry content class equals: EpCategoryRename.
-	self assert: (self packageOrganizer includesCategory: aCategory).
-	self deny: (self packageOrganizer includesCategory: anotherCategory).
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName).
 	self applyInputEntry.
-	self deny: (self packageOrganizer includesCategory: aCategory).
-	self assert: (self packageOrganizer includesCategory: anotherCategory)
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName)
 ]
 
 { #category : #tests }

@@ -872,6 +872,14 @@ RPackageOrganizer >> renamePackage: aPackage to: newName [
 	package extensionMethods do: [ :method | method methodClass renameProtocol: method protocol as: '*' , newName ]
 ]
 
+{ #category : #'system integration' }
+RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
+
+	(self hasPackage: aPackage) ifFalse: [ ^ self ].
+
+	(self ensurePackage: aPackage) renameTag: aTag to: newName
+]
+
 { #category : #private }
 RPackageOrganizer >> reportBogusBehaviorOf: aSelector [
 
