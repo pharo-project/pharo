@@ -8,20 +8,18 @@ Class {
 RBRemoveTemporaryVariableTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation
-							variable: 'temp'
-							inMethod: #foo
-							inClass: #RBTemporaryVariableTransformationTest)
-							asRefactoring
+			 variable: 'temp'
+			 inMethod: #foo
+			 inClass: #RBTemporaryVariableTransformationTest)
 ]
 
 { #category : #tests }
 RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation
-							variable: 'temp'
-							inMethod: #foofoo
-							inClass: #RBRemoveTemporaryVariableTransformationTest)
-							asRefactoring
+			 variable: 'temp'
+			 inMethod: #foofoo
+			 inClass: #RBRemoveTemporaryVariableTransformationTest)
 ]
 
 { #category : #tests }
@@ -36,8 +34,7 @@ RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 										Transcript show: temp printString; cr.
 										^temp * temp'
 		                in: #RBRemoveTemporaryVariableTransformationTest
-		                withProtocols: { #accessing }) asRefactoring
-		               primitiveExecute.
+		                withProtocols: { #accessing }) primitiveExecute.
 
 	refactoring := (RBRemoveTemporaryVariableTransformation
 		                model: refactoring model
@@ -45,7 +42,7 @@ RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 		                inMethod: #foo
 		                inClass:
 		                #RBRemoveTemporaryVariableTransformationTest)
-		               asRefactoring primitiveExecute.
+		               primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 2.
 
@@ -91,8 +88,7 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 RBRemoveTemporaryVariableTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation
-							variable: 'temp123'
-							inMethod: #foo
-							inClass: #RBRemoveTemporaryVariableTransformationTest)
-							asRefactoring
+			 variable: 'temp123'
+			 inMethod: #foo
+			 inClass: #RBRemoveTemporaryVariableTransformationTest)
 ]

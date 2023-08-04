@@ -25,30 +25,27 @@ RBRemovePragmaTransformationTest >> methodBefore [
 RBRemovePragmaTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation
-							pragma: '<pragmaForTesting: 34>'
-							inMethod: #methodBefore
-							inClass: #RBPragmaTransformationTest)
-							asRefactoring
+			 pragma: '<pragmaForTesting: 34>'
+			 inMethod: #methodBefore
+			 inClass: #RBPragmaTransformationTest)
 ]
 
 { #category : #tests }
 RBRemovePragmaTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation
-							pragma: '<pragmaForTesting: 34>'
-							inMethod: #method
-							inClass: #RBRemovePragmaTransformationTest)
-							asRefactoring
+			 pragma: '<pragmaForTesting: 34>'
+			 inMethod: #method
+			 inClass: #RBRemovePragmaTransformationTest)
 ]
 
 { #category : #tests }
 RBRemovePragmaTransformationTest >> testPragmaDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation
-							pragma: '<gtPresentationOrder: 34>'
-							inMethod: #methodBefore
-							inClass: #RBRemovePragmaTransformationTest)
-							asRefactoring
+			 pragma: '<gtPresentationOrder: 34>'
+			 inMethod: #methodBefore
+			 inClass: #RBRemovePragmaTransformationTest)
 ]
 
 { #category : #tests }
@@ -59,7 +56,7 @@ RBRemovePragmaTransformationTest >> testRefactoring [
 		                pragma: '<pragmaForTesting: 34>'
 		                inMethod: #methodBefore
 		                inClass: #RBRemovePragmaTransformationTest)
-		               asRefactoring primitiveExecute.
+		               primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 1.
 

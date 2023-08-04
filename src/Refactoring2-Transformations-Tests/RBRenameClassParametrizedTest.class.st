@@ -142,24 +142,31 @@ rename class B to A
 -> class A is not marked as removed (model includesClassNamed:#A -> true"
 
 	| addClass renameClass classA classB classC |
-
 	classA := ('RBClass' , 'ToRename') asSymbol.
 	classB := 'TestUnmarkClassRenameSource' asSymbol.
 	classC := 'TestUnmarkClassRenameTarget' asSymbol.
 	addClass := RBInsertNewClassTransformation
-		model: model
-		addClass: classB
-		superclass: #Object
-		subclasses: {}
-		category: self class package name.
+		            model: model
+		            addClass: classB
+		            superclass: #Object
+		            subclasses: {  }
+		            category: self class package name.
 	self executeRefactoring: addClass asRefactoring.
 	self assert: (model includesClassNamed: classA).
-	renameClass := self createRefactoringWithModel: model andArguments: { classA . classC }.
-	self executeRefactoring: renameClass asRefactoring.
+	renameClass := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               classA.
+				               classC }.
+	self executeRefactoring: renameClass.
 	self deny: (model includesClassNamed: classA).
 	self assert: (model includesClassNamed: classC).
-	renameClass :=self createRefactoringWithModel: model andArguments: { classB . classA }.
-	self executeRefactoring: renameClass asRefactoring.
+	renameClass := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               classB.
+				               classA }.
+	self executeRefactoring: renameClass.
 	self deny: (model includesClassNamed: classB).
 	self assert: (model includesClassNamed: classC).
 	self assert: (model includesClassNamed: classA)

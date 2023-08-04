@@ -8,20 +8,18 @@ Class {
 RBMethodProtocolTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBMethodProtocolTransformation
-							protocol: 'empty protocol 2'
-							inMethod: #someMethod
-							inClass: #RBDummyEmptyClass123)
-							asRefactoring
+			 protocol: 'empty protocol 2'
+			 inMethod: #someMethod
+			 inClass: #RBDummyEmptyClass123)
 ]
 
 { #category : #tests }
 RBMethodProtocolTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBMethodProtocolTransformation
-							protocol: 'empty protocol 2'
-							inMethod: #method
-							inClass: #RBDummyEmptyClass)
-							asRefactoring
+			 protocol: 'empty protocol 2'
+			 inMethod: #method
+			 inClass: #RBDummyEmptyClass)
 ]
 
 { #category : #tests }
@@ -33,8 +31,7 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 	refactoring := (RBMethodProtocolTransformation
 		                protocol: 'empty protocol 2'
 		                inMethod: #someMethod
-		                inClass: #RBDummyEmptyClass) asRefactoring
-		               primitiveExecute.
+		                inClass: #RBDummyEmptyClass) primitiveExecute.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
 	self deny:
@@ -43,8 +40,7 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 	refactoring := (RBMethodProtocolTransformation
 		                protocol: 'empty protocol 1'
 		                inMethod: #someMethod
-		                inClass: #RBDummyEmptyClass) asRefactoring
-		               primitiveExecute.
+		                inClass: #RBDummyEmptyClass) primitiveExecute.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')

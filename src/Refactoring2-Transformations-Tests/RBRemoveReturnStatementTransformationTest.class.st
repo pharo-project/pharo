@@ -23,20 +23,18 @@ RBRemoveReturnStatementTransformationTest >> methodBefore [
 RBRemoveReturnStatementTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
-							return: '^ variable'
-							inMethod: #methodBefore
-							inClass: #RBReturnStatementTransformationTest)
-							asRefactoring
+			 return: '^ variable'
+			 inMethod: #methodBefore
+			 inClass: #RBReturnStatementTransformationTest)
 ]
 
 { #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
-							return: '^ variable'
-							inMethod: #method
-							inClass: #RBRemoveReturnStatementTransformationTest)
-							asRefactoring
+			 return: '^ variable'
+			 inMethod: #method
+			 inClass: #RBRemoveReturnStatementTransformationTest)
 ]
 
 { #category : #tests }
@@ -47,7 +45,7 @@ RBRemoveReturnStatementTransformationTest >> testRefactoring [
 		                return: '^ variable'
 		                inMethod: #methodBefore
 		                inClass: #RBRemoveReturnStatementTransformationTest)
-		               asRefactoring primitiveExecute.
+		               primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -62,10 +60,9 @@ RBRemoveReturnStatementTransformationTest >> testRefactoring [
 RBRemoveReturnStatementTransformationTest >> testReturnDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
-							return: '^ variable'
-							inMethod: #methodAfter
-							inClass: #RBRemoveReturnStatementTransformationTest)
-							asRefactoring
+			 return: '^ variable'
+			 inMethod: #methodAfter
+			 inClass: #RBRemoveReturnStatementTransformationTest)
 ]
 
 { #category : #tests }

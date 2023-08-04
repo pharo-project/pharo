@@ -9,8 +9,7 @@ RBAddAccessorsForClassTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddAccessorsForClassTransformation className:
-		                #RBVariableTransformation) asRefactoring
-		               primitiveExecute.
+		                #RBVariableTransformation) primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 4.
 

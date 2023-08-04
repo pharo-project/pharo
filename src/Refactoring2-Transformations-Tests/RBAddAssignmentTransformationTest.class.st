@@ -23,22 +23,20 @@ RBAddAssignmentTransformationTest >> methodBefore [
 RBAddAssignmentTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
-							variable: 'variable'
-							value: '1 asString'
-							inMethod: #methodBefore
-							inClass: #RBAssignmentTransformationTest)
-							asRefactoring
+			 variable: 'variable'
+			 value: '1 asString'
+			 inMethod: #methodBefore
+			 inClass: #RBAssignmentTransformationTest)
 ]
 
 { #category : #tests }
 RBAddAssignmentTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
-							variable: 'variable'
-							value: '1 asString'
-							inMethod: #method
-							inClass: #RBAddAssignmentTransformationTest)
-							asRefactoring
+			 variable: 'variable'
+			 value: '1 asString'
+			 inMethod: #method
+			 inClass: #RBAddAssignmentTransformationTest)
 ]
 
 { #category : #tests }
@@ -50,7 +48,7 @@ RBAddAssignmentTransformationTest >> testRefactoring [
 		                value: '1 asString'
 		                inMethod: #methodBefore
 		                inClass: #RBAddAssignmentTransformationTest)
-		               asRefactoring primitiveExecute.
+		               primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -90,9 +88,8 @@ RBAddAssignmentTransformationTest >> testTransform [
 RBAddAssignmentTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
-							variable: 'variable1'
-							value: '1 asString'
-							inMethod: #methodBefore
-							inClass: #RBAddAssignmentTransformationTest)
-							asRefactoring
+			 variable: 'variable1'
+			 value: '1 asString'
+			 inMethod: #methodBefore
+			 inClass: #RBAddAssignmentTransformationTest)
 ]

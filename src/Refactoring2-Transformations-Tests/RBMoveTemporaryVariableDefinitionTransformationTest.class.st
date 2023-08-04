@@ -48,7 +48,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 		                   variable: #association
 		                   inMethod: #referencesConditionFor:
 		                   inClass: #RBClassDataForRefactoringTest)
-		                  asRefactoring primitiveExecute.
+		                  primitiveExecute.
 
 	class := transformation model classNamed:
 		         #RBClassDataForRefactoringTest.
@@ -71,31 +71,27 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 
 	| transformation |
-	transformation := (RBMoveTemporaryVariableDefinitionTransformation
-							variable: #temp
-							inMethod: #noMoveDefinition
-							inClass: #RBClassDataForRefactoringTest).
-	self 
-		assert: transformation model changes changes size 
-		equals: 0.
+	transformation := RBMoveTemporaryVariableDefinitionTransformation
+		                  variable: #temp
+		                  inMethod: #noMoveDefinition
+		                  inClass: #RBClassDataForRefactoringTest.
+	self assert: transformation model changes changes size equals: 0.
 
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
-							variable: #temp
-							inMethod: #noMoveDefinition
-							inClass: #RBClassDataForRefactoringTest)
-							asRefactoring
+			 variable: #temp
+			 inMethod: #noMoveDefinition
+			 inClass: #RBClassDataForRefactoringTest)
 ]
 
 { #category : #tests }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
-							variable: #temp
-							inMethod: #displayName
-							inClass: #RBDummyLintRuleTest).
+			 variable: #temp
+			 inMethod: #displayName
+			 inClass: #RBDummyLintRuleTest).
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
-							variable: #temp
-							inMethod: #displayName
-							inClass: #RBDummyLintRuleTest)
-							asRefactoring
+			 variable: #temp
+			 inMethod: #displayName
+			 inClass: #RBDummyLintRuleTest)
 ]

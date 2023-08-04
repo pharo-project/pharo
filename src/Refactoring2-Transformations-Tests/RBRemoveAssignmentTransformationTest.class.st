@@ -27,36 +27,34 @@ RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 		                variable: 'variable2'
 		                inMethod: #methodBefore
 		                inClass: #RBRemoveAssignmentTransformationTest)
-		               asRefactoring primitiveExecute.
+		               primitiveExecute.
 
 	self shouldFail: (RBRemoveAssignmentTransformation
 			 model: refactoring model
 			 variable: 'variable2'
 			 value: '1 asString'
 			 inMethod: #methodBefore
-			 inClass: #RBRemoveAssignmentTransformationTest) asRefactoring
+			 inClass: #RBRemoveAssignmentTransformationTest)
 ]
 
 { #category : #tests }
 RBRemoveAssignmentTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveAssignmentTransformation
-							variable: 'variable'
-							value: '1 asString'
-							inMethod: #methodBefore
-							inClass: #RBAssignmentTransformationTest)
-							asRefactoring
+			 variable: 'variable'
+			 value: '1 asString'
+			 inMethod: #methodBefore
+			 inClass: #RBAssignmentTransformationTest)
 ]
 
 { #category : #tests }
 RBRemoveAssignmentTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveAssignmentTransformation
-							variable: 'variable'
-							value: '1 asString'
-							inMethod: #method
-							inClass: #RBRemoveAssignmentTransformationTest)
-							asRefactoring
+			 variable: 'variable'
+			 value: '1 asString'
+			 inMethod: #method
+			 inClass: #RBRemoveAssignmentTransformationTest)
 ]
 
 { #category : #tests }
@@ -68,7 +66,7 @@ RBRemoveAssignmentTransformationTest >> testRefactoring [
 		                value: '1 asString'
 		                inMethod: #methodBefore
 		                inClass: #RBRemoveAssignmentTransformationTest)
-		               asRefactoring primitiveExecute.
+		               primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -101,9 +99,8 @@ RBRemoveAssignmentTransformationTest >> testTransform [
 RBRemoveAssignmentTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBRemoveAssignmentTransformation
-							variable: 'variable1'
-							value: '1 asString'
-							inMethod: #methodBefore
-							inClass: #RBRemoveAssignmentTransformationTest)
-							asRefactoring
+			 variable: 'variable1'
+			 value: '1 asString'
+			 inMethod: #methodBefore
+			 inClass: #RBRemoveAssignmentTransformationTest)
 ]

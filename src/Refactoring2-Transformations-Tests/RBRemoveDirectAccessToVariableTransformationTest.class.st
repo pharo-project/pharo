@@ -17,8 +17,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 	| refactoring class |
 	refactoring := (RBRemoveDirectAccessToVariableTransformation
 		                classVariable: 'UndoSize'
-		                class: #RBRefactoryChangeManager) asRefactoring
-		               primitiveExecute.
+		                class: #RBRefactoryChangeManager) primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 2.
 
@@ -42,14 +41,12 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 
 	self
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation
-						model: model
-						instanceVariable: 'instVarName1'
-						class: #Bar)
-						asRefactoring;
+				 model: model
+				 instanceVariable: 'instVarName1'
+				 class: #Bar);
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation
-						classVariable: 'Foo1'
-						class: #RBFooLintRuleTestData)
-						asRefactoring
+				 classVariable: 'Foo1'
+				 class: #RBFooLintRuleTestData)
 ]
 
 { #category : #tests }
@@ -57,14 +54,12 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccesso
 
 	self
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation
-						model: model
-						instanceVariable: 'instVarName1'
-						class: #Foo)
-						asRefactoring;
+				 model: model
+				 instanceVariable: 'instVarName1'
+				 class: #Foo);
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation
-						classVariable: 'RecursiveSelfRule'
-						class: #RBTransformationRuleTestData)
-						asRefactoring
+				 classVariable: 'RecursiveSelfRule'
+				 class: #RBTransformationRuleTestData)
 ]
 
 { #category : #tests }
@@ -74,7 +69,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 	(RBRemoveDirectAccessToVariableTransformation
 		 model: model
 		 instanceVariable: 'instVarName2'
-		 class: #Foo) asRefactoring primitiveExecute.
+		 class: #Foo) primitiveExecute.
 
 	class := model classNamed: #Foo.
 	self
@@ -88,7 +83,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 	| refactoring class |
 	refactoring := (RBRemoveDirectAccessToVariableTransformation
 		                instanceVariable: 'environment'
-		                class: #RBNamespace) asRefactoring primitiveExecute.
+		                class: #RBNamespace) primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 4.
 

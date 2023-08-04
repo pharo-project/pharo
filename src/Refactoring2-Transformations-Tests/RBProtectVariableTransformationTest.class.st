@@ -18,7 +18,7 @@ RBProtectVariableTransformationTest >> testAccessorsAlreadyExist [
 	(RBProtectVariableTransformation
 		 model: model
 		 instanceVariable: 'instVarName1'
-		 class: #Foo) asRefactoring primitiveExecute.
+		 class: #Foo) primitiveExecute.
 
 	class := model classNamed: #Foo.
 	self
@@ -46,7 +46,7 @@ RBProtectVariableTransformationTest >> testClassVariable [
 	| refactoring class |
 	refactoring := (RBProtectVariableTransformation
 		                classVariable: 'RecursiveSelfRule'
-		                class: #RBTransformationRuleTestData) asRefactoring
+		                class: #RBTransformationRuleTestData)
 		               primitiveExecute.
 
 	class := (refactoring model classNamed: #RBTransformationRuleTestData)
@@ -90,7 +90,7 @@ RBProtectVariableTransformationTest >> testClassVariableInModel [
 	(RBProtectVariableTransformation
 		 model: model
 		 classVariable: 'ClassVarName1'
-		 class: #Foo) asRefactoring primitiveExecute.
+		 class: #Foo) primitiveExecute.
 
 	class := (model classNamed: #Foo) classSide.
 	self
@@ -138,7 +138,7 @@ RBProtectVariableTransformationTest >> testMetaclass [
 	(RBProtectVariableTransformation
 		 model: model
 		 instanceVariable: 'foo'
-		 class: class) asRefactoring primitiveExecute.
+		 class: class) primitiveExecute.
 
 	self
 		assert: (class parseTreeForSelector: #foo1)
@@ -157,9 +157,8 @@ RBProtectVariableTransformationTest >> testMetaclass [
 RBProtectVariableTransformationTest >> testMetaclassFailure [
 
 	self shouldFail: (RBProtectVariableTransformation
-							classVariable: #RecursiveSelfRule
-							class: RBTransformationRuleTestData class)
-							asRefactoring
+			 classVariable: #RecursiveSelfRule
+			 class: RBTransformationRuleTestData class)
 ]
 
 { #category : #tests }
@@ -168,7 +167,7 @@ RBProtectVariableTransformationTest >> testRefactoring [
 	| refactoring class |
 	refactoring := (RBProtectVariableTransformation
 		                instanceVariable: 'builder'
-		                class: #RBTransformationRuleTestData) asRefactoring
+		                class: #RBTransformationRuleTestData)
 		               primitiveExecute.
 
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
@@ -243,13 +242,11 @@ RBProtectVariableTransformationTest >> testVariableDoesNotExist [
 
 	self
 		shouldFail: (RBProtectVariableTransformation
-						instanceVariable: 'foo'
-						class: #RBBasicLintRuleTestData)
-						asRefactoring;
+				 instanceVariable: 'foo'
+				 class: #RBBasicLintRuleTestData);
 		shouldFail: (RBProtectVariableTransformation
-						classVariable: #Foo
-						class: #RBBasicLintRuleTestData)
-						asRefactoring
+				 classVariable: #Foo
+				 class: #RBBasicLintRuleTestData)
 ]
 
 { #category : #tests }
@@ -277,18 +274,15 @@ RBProtectVariableTransformationTest >> testVariableNotDirectlyDefined [
 
 	self
 		shouldFail: (RBProtectVariableTransformation
-						instanceVariable: 'name'
-						class: #RBBasicLintRuleTestData)
-						asRefactoring;
+				 instanceVariable: 'name'
+				 class: #RBBasicLintRuleTestData);
 		shouldFail: (RBProtectVariableTransformation
-						classVariable: #DependentsFields
-						class: #RBBasicLintRuleTestData)
-						asRefactoring;
+				 classVariable: #DependentsFields
+				 class: #RBBasicLintRuleTestData);
 		shouldFail: (RBProtectVariableTransformation
-						model: model
-						classVariable: 'ClassVarName2'
-						class: #Bar)
-						asRefactoring
+				 model: model
+				 classVariable: 'ClassVarName2'
+				 class: #Bar)
 ]
 
 { #category : #tests }
@@ -298,7 +292,7 @@ RBProtectVariableTransformationTest >> testWithAssignment [
 	refactoring := (RBProtectVariableTransformation
 		                model: model
 		                instanceVariable: 'instVarName2'
-		                class: #Foo) asRefactoring primitiveExecute.
+		                class: #Foo) primitiveExecute.
 
 	class := model classNamed: #Foo.
 	self

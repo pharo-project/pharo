@@ -13,8 +13,8 @@ RBRemoveClassTransformationTest class >> defaultTimeLimit [
 RBRemoveClassTransformationTest >> testRefactoring [
 
 	| refactoring |
-	refactoring := (RBRemoveClassTransformation className:
-		                #RBFooDummyLintRuleTest1) asRefactoring.
+	refactoring := RBRemoveClassTransformation className:
+		               #RBFooDummyLintRuleTest1.
 
 	self
 		should: [ refactoring primitiveExecute ]

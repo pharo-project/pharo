@@ -6,26 +6,44 @@ Class {
 
 { #category : #tests }
 RBRemoveSubtreeTransformationTest >> testEmptyCode [
-	
-	self shouldFail: (RBRemoveSubtreeTransformation code: '' from: #one in: self changeMockClass name).
 
-	self shouldFail: (RBRemoveSubtreeTransformation code: '' from: #selector:from: in: #RBRemoveMethodTransformation) asRefactoring
+	self shouldFail: (RBRemoveSubtreeTransformation
+			 code: ''
+			 from: #one
+			 in: self changeMockClass name).
+
+	self shouldFail: (RBRemoveSubtreeTransformation
+			 code: ''
+			 from: #selector:from:
+			 in: #RBRemoveMethodTransformation)
 ]
 
 { #category : #tests }
 RBRemoveSubtreeTransformationTest >> testFailureExtract [
-	
-	self shouldFail: (RBRemoveSubtreeTransformation code: ':= anInterval' from: #one in: self changeMockClass name).
 
-	self shouldFail: (RBRemoveSubtreeTransformation code: ':= aSelector' from: #selector:from: in: #RBRemoveMethodTransformation) asRefactoring
+	self shouldFail: (RBRemoveSubtreeTransformation
+			 code: ':= anInterval'
+			 from: #one
+			 in: self changeMockClass name).
+
+	self shouldFail: (RBRemoveSubtreeTransformation
+			 code: ':= aSelector'
+			 from: #selector:from:
+			 in: #RBRemoveMethodTransformation)
 ]
 
 { #category : #tests }
 RBRemoveSubtreeTransformationTest >> testMethodDoesNotExist [
-	
-	self shouldFail: (RBRemoveSubtreeTransformation code: 'selector := aSelector' from: #two in: self changeMockClass name).
 
-	self shouldFail: (RBRemoveSubtreeTransformation code: 'selector := aSelector' from: #selector:for: in: #RBRemoveMethodTransformation) asRefactoring
+	self shouldFail: (RBRemoveSubtreeTransformation
+			 code: 'selector := aSelector'
+			 from: #two
+			 in: self changeMockClass name).
+
+	self shouldFail: (RBRemoveSubtreeTransformation
+			 code: 'selector := aSelector'
+			 from: #selector:for:
+			 in: #RBRemoveMethodTransformation)
 ]
 
 { #category : #tests }
@@ -35,7 +53,7 @@ RBRemoveSubtreeTransformationTest >> testRefactoring [
 	transformation := (RBRemoveSubtreeTransformation
 		                   code: 'selector := aSelector'
 		                   from: #selector:from:
-		                   in: #RBRemoveMethodTransformation) asRefactoring
+		                   in: #RBRemoveMethodTransformation)
 		                  primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 1.

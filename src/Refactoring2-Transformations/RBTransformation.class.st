@@ -61,6 +61,7 @@ RBTransformation >> applicabilityConditions [
 { #category : #converting }
 RBTransformation >> asRefactoring [
 
+	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self yourself
 ]
 

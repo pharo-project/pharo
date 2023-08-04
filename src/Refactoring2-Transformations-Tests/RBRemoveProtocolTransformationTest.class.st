@@ -15,8 +15,7 @@ RBRemoveProtocolTransformationTest >> testRefactoring [
 
 	refactoring := (RBRemoveProtocolTransformation
 		                protocol: 'transforming'
-		                inClass: #RBDummyEmptyClass) asRefactoring
-		               primitiveExecute.
+		                inClass: #RBDummyEmptyClass) primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 1
 ]

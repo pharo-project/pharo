@@ -59,23 +59,31 @@ RBExtractMethodTransformationTest >> testFailureBadInterval [
 RBExtractMethodTransformationTest >> testFailureExtract [
 
 	self shouldFail: (RBExtractMethodTransformation
-			extract: (self sourceCodeAt: (80 to: 269)
-						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
-			from: #subclassOf:overrides:
-			to: #foo in: #'RBBasicLintRuleTestData class').
+			 extract: (self
+					  sourceCodeAt: (80 to: 269)
+					  forMethod: #subclassOf:overrides:
+					  in: RBBasicLintRuleTestData class)
+			 from: #subclassOf:overrides:
+			 to: #foo
+			 in: #'RBBasicLintRuleTestData class').
 
 	self shouldFail: (RBExtractMethodTransformation
-			extract: (self sourceCodeAt: (53 to: 56)
-						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
-			from: #subclassOf:overrides:
-			to: #foo in: #'RBBasicLintRuleTestData class').
+			 extract: (self
+					  sourceCodeAt: (53 to: 56)
+					  forMethod: #subclassOf:overrides:
+					  in: RBBasicLintRuleTestData class)
+			 from: #subclassOf:overrides:
+			 to: #foo
+			 in: #'RBBasicLintRuleTestData class').
 
 	self shouldFail: (RBExtractMethodTransformation
-			extract: (self sourceCodeAt: (77 to: 222)
-						forMethod: #subclassResponsibilityNotDefined in: RBBasicLintRuleTestData class)
-			from: #subclassResponsibilityNotDefined
-			to: #foo in: #'RBBasicLintRuleTestData class')
-			asRefactoring
+			 extract: (self
+					  sourceCodeAt: (77 to: 222)
+					  forMethod: #subclassResponsibilityNotDefined
+					  in: RBBasicLintRuleTestData class)
+			 from: #subclassResponsibilityNotDefined
+			 to: #foo
+			 in: #'RBBasicLintRuleTestData class')
 ]
 
 { #category : #'tests - failures' }
