@@ -29,12 +29,12 @@ SycRemoveVariableCommand >> execute [
 			(RBRemoveInstanceVariableDriver new
 				 scopes: toolContext refactoringScopes
 				 variable: variables first name
-				 for: variables first definingClass) execute ]
+				 for: variables first definingClass) runRefactoring ]
 		ifTrue: [
 			(RBRemoveSharedVariableDriver new
 				 scopes: toolContext refactoringScopes
 				 variable: variables first name
-				 for: variables first definingClass) execute ]
+				 for: variables first definingClass) runRefactoring ]
 ]
 
 { #category : #testing }

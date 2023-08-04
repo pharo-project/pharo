@@ -78,12 +78,6 @@ RBAddReturnStatementTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #preconditions }
-RBAddReturnStatementTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBAddReturnStatementTransformation >> privateTransform [
 	"the transformation is straighforward: just add the node at the last position of the method.

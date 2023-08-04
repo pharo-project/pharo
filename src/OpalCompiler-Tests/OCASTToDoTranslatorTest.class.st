@@ -8,7 +8,7 @@ Class {
 OCASTToDoTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineToDo . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineToDo))
 ]
 
 { #category : #'tests - blocks - optimized' }

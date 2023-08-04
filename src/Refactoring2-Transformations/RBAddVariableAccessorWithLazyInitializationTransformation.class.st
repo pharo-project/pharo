@@ -117,11 +117,6 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [
 	^ self safeMethodNameFor: self definingClass basedOn: variableName asString
 ]
 
-{ #category : #preconditions }
-RBAddVariableAccessorWithLazyInitializationTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
 { #category : #printing }
 RBAddVariableAccessorWithLazyInitializationTransformation >> storeOn: aStream [
 

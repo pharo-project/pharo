@@ -59,37 +59,6 @@ EpRevertTest >> testBehaviorNameChange [
 ]
 
 { #category : #tests }
-EpRevertTest >> testCategoryAdditionWithCategoryRemoved [
-
-	| organization aCategory |
-	organization := self packageOrganizer.
-	aCategory := classFactory defaultCategory.
-
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	self setHeadAsInputEntry.
-
-	self assert: (organization includesCategory: aCategory).
-	self revertInputEntry.
-	self deny: (organization includesCategory: aCategory)
-]
-
-{ #category : #tests }
-EpRevertTest >> testCategoryRemovalWithCategoryAdded [
-
-	| organization aCategory |
-	organization := self packageOrganizer.
-	aCategory := classFactory defaultCategory.
-	
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	organization removeCategory: aCategory.
-	self setHeadAsInputEntry.
-
-	self deny: (organization includesCategory: aCategory).
-	self revertInputEntry.
-	self assert: (organization includesCategory: aCategory)
-]
-
-{ #category : #tests }
 EpRevertTest >> testCategoryRename [
 
 	| organization aCategory anotherCategory |
@@ -289,6 +258,33 @@ EpRevertTest >> testMethodRemovalWithMethodAlreadyAdded [
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
 	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
+]
+
+{ #category : #tests }
+EpRevertTest >> testPackageTagAdditionWithPackageTagRemoval [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self setHeadAsInputEntry.
+
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self revertInputEntry.
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName)
+]
+
+{ #category : #tests }
+EpRevertTest >> testPackageTagRemovalWithPackageTagAddition [
+
+	| organization aCategory |
+	organization := self packageOrganizer.
+	aCategory := classFactory defaultCategory.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	organization removeCategory: aCategory.
+	self setHeadAsInputEntry.
+
+	self deny: (organization includesCategory: aCategory).
+	self revertInputEntry.
+	self assert: (organization includesCategory: aCategory)
 ]
 
 { #category : #tests }

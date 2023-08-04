@@ -280,6 +280,12 @@ RBTransformationRuleTestData >> checkMethod: aSmalllintContext [
 						classified: aSmalllintContext protocols]]
 ]
 
+{ #category : #accessing }
+RBTransformationRuleTestData >> class: anObject [
+
+	class := anObject
+]
+
 { #category : #testing }
 RBTransformationRuleTestData >> hasConflicts [
 	^true

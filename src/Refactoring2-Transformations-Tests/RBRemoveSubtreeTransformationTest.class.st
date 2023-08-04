@@ -6,27 +6,24 @@ Class {
 
 { #category : #tests }
 RBRemoveSubtreeTransformationTest >> testEmptyCode [
-	| transformation |
-	transformation := (RBRemoveSubtreeTransformation code: '' from: #one in: self changeMockClass name) transform.
-	self assertEmpty: transformation model changes changes.
+	
+	self shouldFail: (RBRemoveSubtreeTransformation code: '' from: #one in: self changeMockClass name).
 
 	self shouldFail: (RBRemoveSubtreeTransformation code: '' from: #selector:from: in: #RBRemoveMethodTransformation) asRefactoring
 ]
 
 { #category : #tests }
 RBRemoveSubtreeTransformationTest >> testFailureExtract [
-	| transformation |
-	transformation := (RBRemoveSubtreeTransformation code: ':= anInterval' from: #one in: self changeMockClass name) transform.
-	self assertEmpty: transformation model changes changes.
+	
+	self shouldFail: (RBRemoveSubtreeTransformation code: ':= anInterval' from: #one in: self changeMockClass name).
 
 	self shouldFail: (RBRemoveSubtreeTransformation code: ':= aSelector' from: #selector:from: in: #RBRemoveMethodTransformation) asRefactoring
 ]
 
 { #category : #tests }
 RBRemoveSubtreeTransformationTest >> testMethodDoesNotExist [
-	| transformation |
-	transformation := (RBRemoveSubtreeTransformation code: 'selector := aSelector' from: #two in: self changeMockClass name) transform.
-	self assertEmpty: transformation model changes changes.
+	
+	self shouldFail: (RBRemoveSubtreeTransformation code: 'selector := aSelector' from: #two in: self changeMockClass name).
 
 	self shouldFail: (RBRemoveSubtreeTransformation code: 'selector := aSelector' from: #selector:for: in: #RBRemoveMethodTransformation) asRefactoring
 ]
