@@ -89,17 +89,6 @@ RBTransformation >> buildSelectorString: aSelector withPermuteMap: anIntegerColl
 	^stream contents
 ]
 
-{ #category : #preconditions }
-RBTransformation >> checkPreconditions [
-
-	| conditions result |
-	conditions := self preconditions.
-
-	result := conditions check.
-	result ifFalse: [ self refactoringError: conditions errorString ].
-	^ result
-]
-
 { #category : #accessing }
 RBTransformation >> copyOptionsFrom: aDictionary [
 	| dict |
@@ -123,23 +112,6 @@ RBTransformation >> model [
 RBTransformation >> preconditions [
 
 	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
-RBTransformation >> primitiveExecute [
-	"compatibility method RBRefactoring"
-
-	self checkPreconditions.
-	self privateTransform
-	
-	"below executes the refactoring without prompt"
-	"RBRefactoringManager instance addRefactoring: self"
-]
-
-{ #category : #executing }
-RBTransformation >> privateTransform [
-
-	self subclassResponsibility
 ]
 
 { #category : #accessing }

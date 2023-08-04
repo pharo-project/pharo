@@ -103,6 +103,19 @@ RBAbstractTransformation >> checkMethodName: aName in: aClass [
 ]
 
 { #category : #preconditions }
+RBAbstractTransformation >> checkPreconditions [
+
+	| conditions block |
+	conditions := self preconditions.
+	conditions check ifTrue: [ ^ self ].
+	block := conditions errorBlock.
+	block
+		ifNotNil: [
+		self refactoringWarning: conditions errorString with: block ]
+		ifNil: [ self refactoringError: conditions errorString ]
+]
+
+{ #category : #preconditions }
 RBAbstractTransformation >> classExist [
 
 	| className |
@@ -233,10 +246,21 @@ RBAbstractTransformation >> preconditions [
 	self subclassResponsibility
 ]
 
-{ #category : #'private hook' }
-RBAbstractTransformation >> primitiveExecute [ 
+{ #category : #executing }
+RBAbstractTransformation >> primitiveExecute [
+	"compatibility method RBRefactoring"
 
-	self subclassResponsibility
+	self checkPreconditions.
+	self privateTransform
+	
+	"below executes the refactoring without prompt"
+	"RBRefactoringManager instance addRefactoring: self"
+]
+
+{ #category : #transforming }
+RBAbstractTransformation >> privateTransform [ 
+
+	self subclassResponsibility 
 ]
 
 { #category : #exceptions }

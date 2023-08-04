@@ -71,19 +71,6 @@ RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	^aMatcher answer
 ]
 
-{ #category : #preconditions }
-RBRefactoring >> checkPreconditions [
-
-	| conditions block |
-	conditions := self preconditions.
-	conditions check ifTrue: [ ^ self ].
-	block := conditions errorBlock.
-	block
-		ifNotNil: [
-		self refactoringWarning: conditions errorString with: block ]
-		ifNil: [ self refactoringError: conditions errorString ]
-]
-
 { #category : #private }
 RBRefactoring >> classObjectFor: anObject [
 
@@ -160,13 +147,6 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 			[:ex |
 			errorBlock cull: ex.
 			ex return: nil]
-]
-
-{ #category : #private }
-RBRefactoring >> primitiveExecute [
-	
-	self checkPreconditions.
-	self privateTransform
 ]
 
 { #category : #removing }
