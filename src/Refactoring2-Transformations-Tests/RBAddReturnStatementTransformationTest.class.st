@@ -64,16 +64,18 @@ RBAddReturnStatementTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddReturnStatementTransformation
-						return: '^ variable'
-						inMethod: #methodBefore
-						inClass: #RBAddReturnStatementTransformationTest)
-						asRefactoring transform.
+		                return: '^ variable'
+		                inMethod: #methodBefore
+		                inClass: #RBAddReturnStatementTransformationTest)
+		               asRefactoring primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed: #RBAddReturnStatementTransformationTest.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	class := refactoring model classNamed:
+		         #RBAddReturnStatementTransformationTest.
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }
@@ -81,14 +83,14 @@ RBAddReturnStatementTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBAddReturnStatementTransformation new
-		return: '^ variable'
-		inMethod: #methodBefore
-		inClass: self class name)
-		transform.
+		                   return: '^ variable'
+		                   inMethod: #methodBefore
+		                   inClass: self class name) primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]

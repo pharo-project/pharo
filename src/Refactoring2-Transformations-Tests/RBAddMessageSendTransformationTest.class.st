@@ -54,16 +54,18 @@ RBAddMessageSendTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddMessageSendTransformation
-						messageSend: 'variable byteAt: 1'
-						inMethod: #methodBefore
-						inClass: #RBAddMessageSendTransformationTest)
-						asRefactoring transform.
+		                messageSend: 'variable byteAt: 1'
+		                inMethod: #methodBefore
+		                inClass: #RBAddMessageSendTransformationTest)
+		               asRefactoring primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed: #RBAddMessageSendTransformationTest.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	class := refactoring model classNamed:
+		         #RBAddMessageSendTransformationTest.
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }
@@ -71,14 +73,14 @@ RBAddMessageSendTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBAddMessageSendTransformation new
-		messageSend: 'variable byteAt: 1'
-		inMethod: #methodBefore
-		inClass: self class name)
-		transform.
+		                   messageSend: 'variable byteAt: 1'
+		                   inMethod: #methodBefore
+		                   inClass: self class name) primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]

@@ -218,6 +218,12 @@ RBRefactoring >> setOption: aSymbol toUse: aBlock [
 	self options: dict
 ]
 
+{ #category : #transforming }
+RBRefactoring >> transform [ 
+
+	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
+]
+
 { #category : #private }
 RBRefactoring >> uniqueMethodNameFor: anInteger [
 	| before after index name |

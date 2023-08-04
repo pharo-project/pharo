@@ -113,7 +113,7 @@ RBRenameTemporaryParametrizedTest >> testFailureModelExistingVariable [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 		                   in: self class name
-		                   withProtocols: { #accessing }) transform.
+		                   withProtocols: { #accessing }) primitiveExecute.
 
 	self shouldFail: (self
 			 createRefactoringWithModel: transformation model

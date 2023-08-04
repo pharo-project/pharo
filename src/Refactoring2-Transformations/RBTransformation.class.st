@@ -127,7 +127,12 @@ RBTransformation >> preconditions [
 { #category : #executing }
 RBTransformation >> primitiveExecute [
 	"compatibility method RBRefactoring"
-	self transform
+
+	self checkPreconditions.
+	self privateTransform
+	
+	"below executes the refactoring without prompt"
+	"RBRefactoringManager instance addRefactoring: self"
 ]
 
 { #category : #executing }
@@ -144,6 +149,9 @@ RBTransformation >> setOption: aSymbol toUse: aBlock [
 
 { #category : #transforming }
 RBTransformation >> transform [
+
+	self deprecated: 'Use primitiveExecute instead' transformWith: '`@rec transform' -> '`@rec primitiveExecute'.
+	
 	"Performs this transformation in a model,
 	 then it adds the refactoring to the manager"
 

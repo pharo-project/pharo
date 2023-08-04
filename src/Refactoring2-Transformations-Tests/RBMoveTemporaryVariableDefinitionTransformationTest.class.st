@@ -18,13 +18,14 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 
 	| transformation class |
 	transformation := (RBMoveTemporaryVariableDefinitionTransformation
-							variable: #temp
-							inMethod: #moveDefinition
-							inClass: #RBClassDataForRefactoringTest)
-							transform.
+		                   variable: #temp
+		                   inMethod: #moveDefinition
+		                   inClass: #RBClassDataForRefactoringTest)
+		                  primitiveExecute.
 
-	class := transformation model classNamed: #RBClassDataForRefactoringTest.
-	self 
+	class := transformation model classNamed:
+		         #RBClassDataForRefactoringTest.
+	self
 		assert: (class parseTreeForSelector: #moveDefinition)
 		equals: (self parseMethod: 'moveDefinition
 								^(self collect:
@@ -44,14 +45,16 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 
 	| transformation class |
 	transformation := (RBMoveTemporaryVariableDefinitionTransformation
-							variable: #association
-							inMethod: #referencesConditionFor:
-							inClass: #RBClassDataForRefactoringTest)
-							asRefactoring transform.
+		                   variable: #association
+		                   inMethod: #referencesConditionFor:
+		                   inClass: #RBClassDataForRefactoringTest)
+		                  asRefactoring primitiveExecute.
 
-	class := transformation model classNamed: #RBClassDataForRefactoringTest.
-	self assert: (class parseTreeForSelector: #referencesConditionFor:)
-		  equals: (self parseMethod: 'referencesConditionFor: aClass
+	class := transformation model classNamed:
+		         #RBClassDataForRefactoringTest.
+	self
+		assert: (class parseTreeForSelector: #referencesConditionFor:)
+		equals: (self parseMethod: 'referencesConditionFor: aClass
 						| environment  |
 						^(RBCondition withBlock:
 								[| association |association := Smalltalk globals associationAt: aClass name

@@ -24,18 +24,17 @@ RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 
 	| refactoring |
 	refactoring := (RBAddTemporaryVariableTransformation
-						variable: 'variable2'
-						inMethod: #methodBefore
-						inClass: #RBRemoveAssignmentTransformationTest)
-						asRefactoring transform.
+		                variable: 'variable2'
+		                inMethod: #methodBefore
+		                inClass: #RBRemoveAssignmentTransformationTest)
+		               asRefactoring primitiveExecute.
 
 	self shouldFail: (RBRemoveAssignmentTransformation
-							model: refactoring model
-							variable: 'variable2'
-							value: '1 asString'
-							inMethod: #methodBefore
-							inClass: #RBRemoveAssignmentTransformationTest)
-							asRefactoring
+			 model: refactoring model
+			 variable: 'variable2'
+			 value: '1 asString'
+			 inMethod: #methodBefore
+			 inClass: #RBRemoveAssignmentTransformationTest) asRefactoring
 ]
 
 { #category : #tests }
@@ -65,17 +64,19 @@ RBRemoveAssignmentTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBRemoveAssignmentTransformation
-						variable: 'variable'
-						value: '1 asString'
-						inMethod: #methodBefore
-						inClass: #RBRemoveAssignmentTransformationTest)
-						asRefactoring transform.
+		                variable: 'variable'
+		                value: '1 asString'
+		                inMethod: #methodBefore
+		                inClass: #RBRemoveAssignmentTransformationTest)
+		               asRefactoring primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed: #RBRemoveAssignmentTransformationTest.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	class := refactoring model classNamed:
+		         #RBRemoveAssignmentTransformationTest.
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }
@@ -83,17 +84,17 @@ RBRemoveAssignmentTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBRemoveAssignmentTransformation new
-		variable: 'variable'
-		value: '1 asString'
-		inMethod: #methodBefore
-		inClass: self class name)
-		transform.
+		                   variable: 'variable'
+		                   value: '1 asString'
+		                   inMethod: #methodBefore
+		                   inClass: self class name) primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }

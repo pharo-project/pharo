@@ -56,16 +56,18 @@ RBRemovePragmaTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBRemovePragmaTransformation
-						pragma: '<pragmaForTesting: 34>'
-						inMethod: #methodBefore
-						inClass: #RBRemovePragmaTransformationTest)
-						asRefactoring transform.
+		                pragma: '<pragmaForTesting: 34>'
+		                inMethod: #methodBefore
+		                inClass: #RBRemovePragmaTransformationTest)
+		               asRefactoring primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed: #RBRemovePragmaTransformationTest.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	class := refactoring model classNamed:
+		         #RBRemovePragmaTransformationTest.
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }
@@ -73,14 +75,14 @@ RBRemovePragmaTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBRemovePragmaTransformation new
-		pragma: '<pragmaForTesting: 34>'
-		inMethod: #methodBefore
-		inClass: self class name)
-		transform.
+		                   pragma: '<pragmaForTesting: 34>'
+		                   inMethod: #methodBefore
+		                   inClass: self class name) primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]

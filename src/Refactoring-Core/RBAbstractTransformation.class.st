@@ -239,6 +239,12 @@ RBAbstractTransformation >> primitiveExecute [
 	self subclassResponsibility
 ]
 
+{ #category : #'private hook' }
+RBAbstractTransformation >> privateTransform [
+
+	self subclassResponsibility 
+]
+
 { #category : #exceptions }
 RBAbstractTransformation >> refactoringConfirmWarning: aString [
 	| ret |

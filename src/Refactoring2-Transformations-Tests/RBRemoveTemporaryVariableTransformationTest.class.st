@@ -29,28 +29,32 @@ RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddMethodTransformation
-						sourceCode: 'foo
+		                sourceCode: 'foo
 										| temp bar |
 										bar := 5.
 										temp := bar * bar.
 										Transcript show: temp printString; cr.
 										^temp * temp'
-						in: #RBRemoveTemporaryVariableTransformationTest
-						withProtocols: {#accessing})
-						asRefactoring transform.
+		                in: #RBRemoveTemporaryVariableTransformationTest
+		                withProtocols: { #accessing }) asRefactoring
+		               primitiveExecute.
 
 	refactoring := (RBRemoveTemporaryVariableTransformation
-						model: refactoring model
-						variable: 'temp'
-						inMethod: #foo
-						inClass: #RBRemoveTemporaryVariableTransformationTest)
-						asRefactoring transform.
+		                model: refactoring model
+		                variable: 'temp'
+		                inMethod: #foo
+		                inClass:
+		                #RBRemoveTemporaryVariableTransformationTest)
+		               asRefactoring primitiveExecute.
 
 	self assert: refactoring model changes changes size equals: 2.
 
-	class := refactoring model classNamed: #RBRemoveTemporaryVariableTransformationTest.
+	class := refactoring model classNamed:
+		         #RBRemoveTemporaryVariableTransformationTest.
 	self assert: (class directlyDefinesMethod: #foo).
-	self assert: (class parseTreeForSelector: #foo) temporaries size equals: 1
+	self
+		assert: (class parseTreeForSelector: #foo) temporaries size
+		equals: 1
 ]
 
 { #category : #tests }
@@ -58,28 +62,29 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBAddMethodTransformation
-					sourceCode: 'foo
+		                   sourceCode: 'foo
 									| temp bar |
 									bar := 5.
 									temp := bar * bar.
 									Transcript show: temp printString; cr.
 									^temp * temp'
-					in: self changeMockClass name
-					withProtocols: {#accessing})
-					transform.
+		                   in: self changeMockClass name
+		                   withProtocols: { #accessing }) primitiveExecute.
 
 	transformation := (RBRemoveTemporaryVariableTransformation
-				model: transformation model
-				variable: 'temp'
-				inMethod: #foo
-				inClass: self changeMockClass name)
-				transform.
+		                   model: transformation model
+		                   variable: 'temp'
+		                   inMethod: #foo
+		                   inClass: self changeMockClass name)
+		                  primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 2.
 
 	class := transformation model classNamed: self changeMockClass name.
 	self assert: (class directlyDefinesMethod: #one).
-	self assert: (class parseTreeForSelector: #foo) temporaries size equals: 1
+	self
+		assert: (class parseTreeForSelector: #foo) temporaries size
+		equals: 1
 ]
 
 { #category : #tests }
