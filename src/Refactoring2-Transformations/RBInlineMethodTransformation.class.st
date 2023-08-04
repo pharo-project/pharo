@@ -46,6 +46,30 @@ RBInlineMethodTransformation >> addTemporary: sourceNode assignedTo: replacement
 					value: replacementNode)
 ]
 
+{ #category : #preconditions }
+RBInlineMethodTransformation >> applicabilityConditions [
+
+	^ (RBCondition definesSelector: sourceSelector in: class)
+	  & (RBCondition withBlock: [
+			   self findSelectedMessage.
+			   self checkOverridden ifTrue: [
+				   self isOverridden ifTrue: [
+					   self refactoringWarning:
+						   ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
+							    expandMacrosWith: self classOfTheMethodToInline
+							    with: self inlineSelector) ] ].
+			   self parseInlineMethod.
+			   self isPrimitive ifTrue: [
+				   self refactoringError: 'Cannot inline primitives' ].
+			   self checkSuperMessages.
+			   self rewriteInlinedTree.
+			   (sourceMessage parent isReturn or: [
+				    self hasMultipleReturns not ]) ifFalse: [
+				   self refactoringError:
+					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
+			   true ])
+]
+
 { #category : #adding }
 RBInlineMethodTransformation >> checkOverridden [
 	^ checkOverridden ifNil: [ checkOverridden := true ]
@@ -259,30 +283,6 @@ RBInlineMethodTransformation >> parseInlineMethod [
 	inlineParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
 	inlineParseTree lastIsReturn
 		ifFalse: [ inlineParseTree addSelfReturn ]
-]
-
-{ #category : #preconditions }
-RBInlineMethodTransformation >> preconditions [
-	^(RBCondition definesSelector: sourceSelector in: class)
-		& (RBCondition withBlock:
-					[self findSelectedMessage.
-					self checkOverridden ifTrue: [
-						self isOverridden
-						ifTrue:
-							[self
-								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
-										expandMacrosWith: self classOfTheMethodToInline
-										with: self inlineSelector)] ].
-					self parseInlineMethod.
-					self isPrimitive
-						ifTrue: [self refactoringError: 'Cannot inline primitives'].
-					self checkSuperMessages.
-					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
-						ifFalse:
-							[self
-								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
-					true])
 ]
 
 { #category : #adding }

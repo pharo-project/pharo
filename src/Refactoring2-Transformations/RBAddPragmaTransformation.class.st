@@ -81,12 +81,6 @@ RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClass
 	pragma := aString
 ]
 
-{ #category : #preconditions }
-RBAddPragmaTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBAddPragmaTransformation >> privateTransform [
 	"the transformation is straighforward: just add the node at the last position of the method.

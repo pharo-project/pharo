@@ -121,12 +121,6 @@ RBExtractToTemporaryTransformation >> parseTree [
 	^ parseTree doSemanticAnalysis
 ]
 
-{ #category : #preconditions }
-RBExtractToTemporaryTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #accessing }
 RBExtractToTemporaryTransformation >> referencesTo: aNode [
 	| children |

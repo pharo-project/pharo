@@ -40,11 +40,6 @@ RBRealizeClassTransformation >> applicabilityConditions [
 	^ (RBCondition isClassNamed: className definedIn: model)
 ]
 
-{ #category : #preconditions }
-RBRealizeClassTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRealizeClassTransformation >> privateTransform [
 	self transform: self theClass.

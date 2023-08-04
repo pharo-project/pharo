@@ -84,12 +84,6 @@ RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector 
 	message := aMessageSend
 ]
 
-{ #category : #preconditions }
-RBAddMessageSendTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBAddMessageSendTransformation >> privateTransform [
 	| methodTree messageNode assignments variables previousNode |

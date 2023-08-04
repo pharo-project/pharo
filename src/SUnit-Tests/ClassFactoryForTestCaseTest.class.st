@@ -98,7 +98,7 @@ ClassFactoryForTestCaseTest >> testPackageCleanUp [
 	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).
 	allClasses := self environment allClasses.
 	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
-	self assertEmpty: (self organization categoriesMatching: factory packageName , '*').
+	self assertEmpty: (self organization packages select: [ :package | package name beginsWith: factory packageName ]).
 	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
 

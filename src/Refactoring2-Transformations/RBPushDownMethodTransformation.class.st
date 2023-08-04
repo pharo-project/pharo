@@ -52,14 +52,6 @@ RBPushDownMethodTransformation >> applicabilityConditions [
 	^ condition 
 ]
 
-{ #category : #converting }
-RBPushDownMethodTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
-]
-
 { #category : #executing }
 RBPushDownMethodTransformation >> buildTransformations [
 
@@ -71,12 +63,6 @@ RBPushDownMethodTransformation >> classes: aCollection [
 	classes := aCollection collect: [ :cls |
 		self model classObjectFor: cls.
 	]
-]
-
-{ #category : #preconditions }
-RBPushDownMethodTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #transforming }

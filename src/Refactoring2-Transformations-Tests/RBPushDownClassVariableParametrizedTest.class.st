@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBPushDownClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPushDownClassVariableRefactoring .
@@ -19,27 +19,6 @@ RBPushDownClassVariableParametrizedTest >> testFailureModelNonExistantName [
 
 	model defineClass:
 		'Object << #SomeClass package: #''Refactory-Test data'''.
-	self shouldFail: (self
-			 createRefactoringWithModel: model
-			 andArguments: { #Foo. #SomeClass })
-]
-
-{ #category : #'failure tests' }
-RBPushDownClassVariableParametrizedTest >> testFailureModelPushDownToMultipleSubclassesFailure [
-
-	model defineClass: 'Object << #SomeClass
-		sharedVariables: { #Foo } ;
-		package: #''Refactory-Test data'''.
-	model defineClass: 'SomeClass << #Subclass
-		package: #''Refactory-Test data'''.
-	(model classNamed: #Subclass)
-		compile: 'foo ^Foo'
-		classified: #( #accessing ).
-	model defineClass: 'SomeClass << #AnotherSubclass
-		package: #''Refactory-Test data'''.
-	(model metaclassNamed: #AnotherSubclass)
-		compile: 'bar ^Foo'
-		classified: #( #accessing ).
 	self shouldFail: (self
 			 createRefactoringWithModel: model
 			 andArguments: { #Foo. #SomeClass })

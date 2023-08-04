@@ -84,11 +84,6 @@ RBRemovePragmaTransformation >> pragma: aPragmaDefinition inMethod: aSelector in
 	pragma := aPragmaDefinition
 ]
 
-{ #category : #preconditions }
-RBRemovePragmaTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemovePragmaTransformation >> privateTransform [
 	| methodTree pragmaNode nodesToRemove |

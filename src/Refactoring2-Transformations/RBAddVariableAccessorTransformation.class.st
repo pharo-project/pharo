@@ -42,7 +42,9 @@ RBAddVariableAccessorTransformation >> createGetterAccessor [
 { #category : #private }
 RBAddVariableAccessorTransformation >> createSetterAccessor [
 
-	(self definingClass setterMethodFor: variableName) ifNil: [ self defineSetterMethod ]
+	(self definingClass setterMethodFor: variableName)
+		ifNil: [ self defineSetterMethod ]
+		ifNotNil: [ setterMethod := self definingClass setterMethodFor: variableName ]
 ]
 
 { #category : #private }
@@ -67,15 +69,19 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 	^setterMethod
 ]
 
+{ #category : #accessing }
+RBAddVariableAccessorTransformation >> definingClass [
+	"Usually a shared variable is defined on the instance side and instance 
+	variables on both instance and class side."
+	
+	^ isClassVariable
+		ifTrue: [ super definingClass classSide ]
+		ifFalse: [ super definingClass ]
+]
+
 { #category : #private }
 RBAddVariableAccessorTransformation >> getterMethod [
 	^ getterMethod
-]
-
-{ #category : #preconditions }
-RBAddVariableAccessorTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

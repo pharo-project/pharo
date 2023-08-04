@@ -83,12 +83,6 @@ RBAddSubtreeTransformation >> interval: anInterval with: aString from: aSelector
 	sourceCode := aString
 ]
 
-{ #category : #preconditions }
-RBAddSubtreeTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBAddSubtreeTransformation >> privateTransform [
 	| parseTree newNode |
