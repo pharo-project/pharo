@@ -456,13 +456,11 @@ RPackageOrganizer >> initialize [
 { #category : #'initialization - data' }
 RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 
-	| package protocolName nonTraitMethods |
+	| protocolName |
 	protocolName := aProtocol name allButFirst trimBoth.
-	package := (self packageMatchingExtensionName: protocolName) ifNil: [ self basicRegisterPackage: (RPackage named: protocolName organizer: self) ].
-	nonTraitMethods := aProtocol methodSelectors select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ].
-	nonTraitMethods ifEmpty: [ ^ self ].
-	self registerExtendingPackage: package forClass: aBehavior.
-	nonTraitMethods do: [ :eachSelector | package addMethod: aBehavior >> eachSelector ]
+	((self packageMatchingExtensionName: protocolName) ifNil: [ self basicRegisterPackage: (RPackage named: protocolName organizer: self) ])
+		importProtocol: aProtocol
+		forClass: aBehavior
 ]
 
 { #category : #'initialization - data' }
