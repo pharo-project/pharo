@@ -69,13 +69,8 @@ RBGeneratePrintOnTransformation >> preconditions [
 			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
-{ #category : #accessing }
-RBGeneratePrintOnTransformation >> theClass [
-	^ (self classObjectFor: className) instanceSide
-]
-
 { #category : #transforming }
-RBGeneratePrintOnTransformation >> transform [
+RBGeneratePrintOnTransformation >> privateTransform [
 	| method |
 	method := self parserClass
 		parseMethod:
@@ -95,6 +90,11 @@ RBGeneratePrintOnTransformation >> transform [
 			addMethod: method formattedCode
 			toClass: self theClass
 			inProtocols: #printing)
+]
+
+{ #category : #accessing }
+RBGeneratePrintOnTransformation >> theClass [
+	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #accessing }

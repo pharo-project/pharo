@@ -154,6 +154,13 @@ RBChangeMethodNameRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBChangeMethodNameRefactoring >> privateTransform [
+	self renameImplementors.
+	self renameMessageSends.
+	self removeRenamedImplementors
+]
+
+{ #category : #transforming }
 RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 	oldSelector = newSelector
 		ifTrue: [ ^ self ].
@@ -224,11 +231,4 @@ RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel p
 	self renameMethod: aSelector asSymbol in: aClass.
 	newSelector := newSel asSymbol.
 	permutation := aMap
-]
-
-{ #category : #transforming }
-RBChangeMethodNameRefactoring >> transform [
-	self renameImplementors.
-	self renameMessageSends.
-	self removeRenamedImplementors
 ]

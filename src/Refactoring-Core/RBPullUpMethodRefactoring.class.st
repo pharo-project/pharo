@@ -268,6 +268,15 @@ RBPullUpMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBPullUpMethodRefactoring >> privateTransform [
+	self
+		copyDownMethods;
+		pullUpMethods;
+		removePulledUpMethods;
+		removeDuplicateMethods
+]
+
+{ #category : #transforming }
 RBPullUpMethodRefactoring >> pullUp: aSelector [
 	| source refactoring |
 	source := class sourceCodeFor: aSelector.
@@ -380,13 +389,4 @@ RBPullUpMethodRefactoring >> superClass: anObject [
 { #category : #initialization }
 RBPullUpMethodRefactoring >> targetClass [
 	^ class
-]
-
-{ #category : #transforming }
-RBPullUpMethodRefactoring >> transform [
-	self
-		copyDownMethods;
-		pullUpMethods;
-		removePulledUpMethods;
-		removeDuplicateMethods
 ]

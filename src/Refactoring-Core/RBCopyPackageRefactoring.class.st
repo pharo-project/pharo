@@ -113,6 +113,16 @@ RBCopyPackageRefactoring >> preconditions [
 			   errorString: 'The system already includes a package named ' , newName)
 ]
 
+{ #category : #transforming }
+RBCopyPackageRefactoring >> privateTransform [
+	| copyClasses |
+
+	self model addPackageNamed: newName.
+	copyClasses := self copyAllClasses.
+	self changeReferencesOf: self classes with: copyClasses.
+	self reparent: self classes with: copyClasses
+]
+
 { #category : #renaming }
 RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 	| replacer |
@@ -165,14 +175,4 @@ RBCopyPackageRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: #';
 		nextPutAll: newName;
 		nextPut: $)
-]
-
-{ #category : #transforming }
-RBCopyPackageRefactoring >> transform [
-	| copyClasses |
-
-	self model addPackageNamed: newName.
-	copyClasses := self copyAllClasses.
-	self changeReferencesOf: self classes with: copyClasses.
-	self reparent: self classes with: copyClasses
 ]

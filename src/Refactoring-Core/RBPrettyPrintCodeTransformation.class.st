@@ -16,7 +16,7 @@ RBPrettyPrintCodeTransformation >> preconditions [
 ]
 
 { #category : #transforming }
-RBPrettyPrintCodeTransformation >> transform [
+RBPrettyPrintCodeTransformation >> privateTransform [
 	| source tree formatted |
 	self model
 		allClassesDo: [ :class |

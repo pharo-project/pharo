@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #transforming }
-RBProtocolRegexTransformation >> transform [
+RBProtocolRegexTransformation >> privateTransform [
 
 	| replacement |
 	self model allClassesDo: [ :class |

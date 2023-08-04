@@ -68,6 +68,11 @@ RBRemoveAllSendersRefactoring >> preconditions [
 	^ self trueCondition
 ]
 
+{ #category : #transforming }
+RBRemoveAllSendersRefactoring >> privateTransform [
+	self removeSelfSenders
+]
+
 { #category : #removing }
 RBRemoveAllSendersRefactoring >> removeMethod: aMethod of: node [
 	self generateChangesFor: (RBRemoveSenderRefactoring
@@ -117,9 +122,4 @@ RBRemoveAllSendersRefactoring >> storeOn: aStream [
 	aStream nextPutAll: ' removeSendersOf: '.
 	aStream nextPutAll: selector.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBRemoveAllSendersRefactoring >> transform [
-	self removeSelfSenders
 ]

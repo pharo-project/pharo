@@ -25,7 +25,7 @@ RBPushDownInstanceVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBPushDownInstanceVariableRefactoring >> transform [
+RBPushDownInstanceVariableRefactoring >> privateTransform [
 	class removeInstanceVariable: variableName.
 	class subclasses do: [:each | each addInstanceVariable: variableName]
 ]

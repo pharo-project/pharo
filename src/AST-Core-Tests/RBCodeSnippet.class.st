@@ -2827,9 +2827,7 @@ RBCodeSnippet class >> updateSnippets: snippets [
 	snippets
 		do: [ :snippet |
 			snippet definitionRefactoring ifNotNil: [ :refactoring |
-				refactoring
-					transform;
-					execute ] ]
+				refactoring execute ] ]
 		displayingProgress: 'Updating snippets...'
 ]
 
@@ -3277,9 +3275,7 @@ RBCodeSnippet >> updateDefinition [
 	"Do the update of the definition of self in the method (class-side) that defines it"
 
 	self definitionRefactoring ifNotNil: [ :transformation |
-		transformation
-			transform;
-			execute ]
+		transformation execute ]
 ]
 
 { #category : #updating }

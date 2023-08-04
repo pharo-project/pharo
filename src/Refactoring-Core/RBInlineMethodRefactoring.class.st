@@ -299,6 +299,14 @@ RBInlineMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBInlineMethodRefactoring >> privateTransform [
+	self
+		renameConflictingTemporaries;
+		insertInlinedMethod;
+		compileMethod
+]
+
+{ #category : #transforming }
 RBInlineMethodRefactoring >> removeEmptyIfTrues [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -435,14 +443,6 @@ RBInlineMethodRefactoring >> storeOn: aStream [
 		nextPutAll: ' forClass: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBInlineMethodRefactoring >> transform [
-	self
-		renameConflictingTemporaries;
-		insertInlinedMethod;
-		compileMethod
 ]
 
 { #category : #transforming }

@@ -62,6 +62,21 @@ RBRenameArgumentOrTemporaryRefactoring >> preconditions [
 ]
 
 { #category : #tranforming }
+RBRenameArgumentOrTemporaryRefactoring >> privateTransform [
+	| definingNode variableNode |
+	parseTree := class parseTreeForSelector: selector.
+	variableNode := self whichVariableNode: parseTree inInterval: interval name: oldName.
+	(variableNode isNil or: [ variableNode isVariable not ])
+		ifTrue: [ self refactoringError: oldName asString , ' isn''t a valid variable' ].
+	variableNode name = oldName
+		ifFalse: [ self refactoringError: 'Invalid selection' ].
+	definingNode := variableNode whoDefines: oldName.
+	definingNode ifNil: [ self refactoringError: oldName asString , ' isn''t defined by the method' ].
+	self renameNode: definingNode.
+	class compileTree: parseTree
+]
+
+{ #category : #tranforming }
 RBRenameArgumentOrTemporaryRefactoring >> renameNode: aParseTree [
 	(aParseTree whoDefines: newName)
 		ifNotNil: [ self refactoringError: newName asString , ' is already defined' ].
@@ -85,19 +100,4 @@ RBRenameArgumentOrTemporaryRefactoring >> storeOn: aStream [
 		nextPutAll: ' selector: #';
 		nextPutAll: selector.
 	aStream nextPut: $)
-]
-
-{ #category : #tranforming }
-RBRenameArgumentOrTemporaryRefactoring >> transform [
-	| definingNode variableNode |
-	parseTree := class parseTreeForSelector: selector.
-	variableNode := self whichVariableNode: parseTree inInterval: interval name: oldName.
-	(variableNode isNil or: [ variableNode isVariable not ])
-		ifTrue: [ self refactoringError: oldName asString , ' isn''t a valid variable' ].
-	variableNode name = oldName
-		ifFalse: [ self refactoringError: 'Invalid selection' ].
-	definingNode := variableNode whoDefines: oldName.
-	definingNode ifNil: [ self refactoringError: oldName asString , ' isn''t defined by the method' ].
-	self renameNode: definingNode.
-	class compileTree: parseTree
 ]

@@ -9,9 +9,10 @@ Class {
 
 { #category : #builder }
 RBRenameVariableParametrizedTest >> createRefactoringWithArguments: aParameterCollection [
-	^ (self renameVariableClass
-		perform: constructor
-		withArguments: aParameterCollection , extraArgument) asRefactoring
+
+	^ self renameVariableClass
+		  perform: constructor
+		  withArguments: aParameterCollection , extraArgument
 ]
 
 { #category : #parameterization }
