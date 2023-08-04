@@ -38,7 +38,7 @@ SycDeprecateMessageCommand >> execute [
 	(RBDeprecateMethodDriver
 		 deprecateMethod: originalMessage selector
 		 in: originalMessage methodClass
-		 scopes: refactoringScopes) execute
+		 scopes: refactoringScopes) runRefactoring
 ]
 
 { #category : #testing }

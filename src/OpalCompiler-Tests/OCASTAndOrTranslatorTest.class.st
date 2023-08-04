@@ -6,9 +6,10 @@ Class {
 
 { #category : #'building suites' }
 OCASTAndOrTranslatorTest class >> testParameters [
-	^ super testParameters *
-		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineAndOr . #optionInlineNone })
+
+	^ super testParameters * (ParametrizedTestMatrix new
+		   forSelector: #optimization
+		   addOptions: (self inliningOptionsFor: #optionInlineAndOr))
 ]
 
 { #category : #'tests - and & or' }

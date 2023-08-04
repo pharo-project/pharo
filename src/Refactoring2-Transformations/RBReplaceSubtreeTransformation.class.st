@@ -74,11 +74,6 @@ RBReplaceSubtreeTransformation >> applicabilityConditions [
 					true ])
 ]
 
-{ #category : #preconditions }
-RBReplaceSubtreeTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBReplaceSubtreeTransformation >> privateTransform [
 	| tree oldTree newTree |

@@ -50,7 +50,7 @@ SycRenameMessage2Command >> execute [
 		          renameMethodSignature: originalMessage
 		          in: refactoredClass.
 	driver command: self andPostAction: [ toolContext showMessage: originalMessage renamedTo: driver newMessage ].
-	driver execute.
+	driver runRefactoring.
 	
 ]
 

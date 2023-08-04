@@ -35,15 +35,16 @@ RPackageTest >> testAddClass [
 	package1 := (self createNewPackageNamed: #Test1) register.
 	done := 0.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
-	SystemAnnouncer uniqueInstance when: ClassRecategorized do: [ done := done + 1 ] for: self.
+
 
 	self assert: (package1 includesClass: class).
 	self assert: (package1 classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
 	self assert: ((package1 classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 
 	package2 := (self createNewPackageNamed: #Test2) register.
-
-	package2 addClass: class.
+	[
+	SystemAnnouncer uniqueInstance when: ClassRecategorized do: [ done := done + 1 ] for: self.
+	package2 addClass: class ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ].
 
 	self assert: done equals: 1.
 	self deny: (package1 includesClass: class).

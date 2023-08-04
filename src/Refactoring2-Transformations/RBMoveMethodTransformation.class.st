@@ -87,6 +87,22 @@ RBMoveMethodTransformation >> addSelfReturn [
 	parseTree addSelfReturn
 ]
 
+{ #category : #preconditions }
+RBMoveMethodTransformation >> applicabilityConditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition withBlock: [
+			   self buildParseTree.
+			   self checkForPrimitiveMethod.
+			   self checkForSuperReferences.
+			   self checkAssignmentsToVariable.
+			   self getClassesToMoveTo.
+			   self getArgumentNameForSelf.
+			   self checkTemporaryVariableNames.
+			   self getNewMethodName.
+			   true ])
+]
+
 { #category : #transforming }
 RBMoveMethodTransformation >> buildParseTree [
 
@@ -325,21 +341,6 @@ RBMoveMethodTransformation >> isMovingToInstVar [
 RBMoveMethodTransformation >> needsToReplaceSelfReferences [
 	^self hasSelfReferences
 		or: [self abstractVariablesRefactoring hasVariablesToAbstract]
-]
-
-{ #category : #transforming }
-RBMoveMethodTransformation >> preconditions [
-	^ (RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self buildParseTree.
-					self checkForPrimitiveMethod.
-					self checkForSuperReferences.
-					self checkAssignmentsToVariable.
-					self getClassesToMoveTo.
-					self getArgumentNameForSelf.
-					self checkTemporaryVariableNames.
-					self getNewMethodName.
-					true])
 ]
 
 { #category : #executing }

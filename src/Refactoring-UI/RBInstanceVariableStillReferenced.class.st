@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #execution }
-RBInstanceVariableStillReferenced >> execute [
+RBInstanceVariableStillReferenced >> browse [
 	"This is not satisfactory because not connected to any UI element."
 	SystemNavigation default 
 		browseAllAccessesTo: self refactoring variableName  

@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RBRemoveInstanceVariable2ParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRemoveInstanceVariableRefactoring2 .
+		addCase: { #rbClass -> RBRemoveInstanceVariableRefactoring .
 					  #constructor -> #variable:class: };
 		yourself
 ]

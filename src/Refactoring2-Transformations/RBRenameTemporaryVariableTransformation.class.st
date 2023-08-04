@@ -89,14 +89,6 @@ RBRenameTemporaryVariableTransformation >> class: aClass selector: aSelector ren
 	newVariableName := aNewSymbol
 ]
 
-{ #category : #preconditions }
-RBRenameTemporaryVariableTransformation >> preconditions [
-	"check whether variable exists?
-	 test instance variables as well"
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRenameTemporaryVariableTransformation >> privateTransform [
 	| parseTree definingNode variableNode |

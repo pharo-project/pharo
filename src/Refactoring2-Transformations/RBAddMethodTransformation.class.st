@@ -18,7 +18,8 @@ Class {
 	#superclass : #RBMethodTransformation,
 	#instVars : [
 		'sourceCode',
-		'protocols'
+		'protocols',
+		'rbMethod'
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
@@ -46,7 +47,7 @@ RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols:
 
 { #category : #preconditions }
 RBAddMethodTransformation >> applicabilityConditions [
-	| rbMethod |
+
 	rbMethod := self parserClass
 		parseMethod: sourceCode
 		onError: [ :string :position |
@@ -55,15 +56,15 @@ RBAddMethodTransformation >> applicabilityConditions [
 						refactoringError: 'The content of this method cannot be parsed.' ] ].
 	rbMethod selector
 		ifNil: [ self refactoringError: 'The method has no selector.' ].
-	^ (RBCondition
-		canUnderstand: rbMethod selector
-		in: self definingClass) not
+	^ self trueCondition
 ]
 
 { #category : #preconditions }
-RBAddMethodTransformation >> preconditions [
-	
-	^ self applicabilityConditions 
+RBAddMethodTransformation >> breakingChangeConditions [ 
+
+	^ (RBCondition
+		canUnderstand: rbMethod selector
+		in: self definingClass) not
 ]
 
 { #category : #executing }

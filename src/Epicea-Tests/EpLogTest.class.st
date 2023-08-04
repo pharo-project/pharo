@@ -8,6 +8,12 @@ Class {
 	#category : #'Epicea-Tests-Log'
 }
 
+{ #category : #asserting }
+EpLogTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpLogTest >> setUp [
 	super setUp.

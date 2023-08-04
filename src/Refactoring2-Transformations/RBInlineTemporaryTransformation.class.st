@@ -61,11 +61,6 @@ RBInlineTemporaryTransformation >> inline: anInterval from: aSelector in: aClass
 	sourceInterval := anInterval
 ]
 
-{ #category : #preconditions }
-RBInlineTemporaryTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBInlineTemporaryTransformation >> replaceAssignment [
 	^ RBCustomTransformation model: self model with: [ :rbModel |

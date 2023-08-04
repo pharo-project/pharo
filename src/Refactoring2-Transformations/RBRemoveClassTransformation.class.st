@@ -74,9 +74,14 @@ RBRemoveClassTransformation >> applicabilityConditions [
 
 		cond
 			& ( (self preconditionIsNotMetaclass: aClassOrTrait)
-			& (self preconditionHasNoReferences: className)
 			& (self preconditionHasNoSubclasses: aClassOrTrait)
 			& (self preconditionHasNoUsers: aClassOrTrait ) ) ]
+]
+
+{ #category : #preconditions }
+RBRemoveClassTransformation >> breakingChangeConditions [
+
+	^ self preconditionHasNoReferences: className
 ]
 
 { #category : #preconditions }
@@ -129,12 +134,6 @@ RBRemoveClassTransformation >> preconditionIsNotMetaclass: aClass [
 
 	^ ((RBCondition isMetaclass: aClass)
 		errorMacro: 'Cannot remove just the metaclass') not
-]
-
-{ #category : #preconditions }
-RBRemoveClassTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

@@ -55,12 +55,6 @@ RBAddProtocolTransformation >> classExist [
 		  errorString: 'Class named ' , className , ' does not exist'
 ]
 
-{ #category : #preconditions }
-RBAddProtocolTransformation >> preconditions [
-
-	^ self applicabilityConditions
-]
-
 { #category : #executing }
 RBAddProtocolTransformation >> privateTransform [
 
