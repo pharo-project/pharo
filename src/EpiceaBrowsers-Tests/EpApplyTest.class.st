@@ -52,25 +52,19 @@ EpApplyTest >> testCategoryRename [
 EpApplyTest >> testCategoryRenameWithClass [
 	"Let's rename a package with a class and see if the class has the right package after."
 
-	| organization aCategory anotherCategory aClass |
-	organization := self packageOrganizer.
-	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory , '2'.
-	
+	| aClass |
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 
-	aClass := classFactory newClass.
-	aClass category: aCategory.
+	aClass := classFactory make: [ :aBuilder | aBuilder tag: classFactory defaultTagPostfix ].
 
-	organization renameCategory: aCategory toBe: anotherCategory.
+	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
+	self packageOrganizer renameTag: classFactory defaultTagPostfix , '2' to: classFactory defaultTagPostfix inPackage: classFactory packageName.
 
-	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
-
-	self assert: inputEntry content class equals: EpPackageTagRename.
-	self assert: aClass category equals: aCategory.
+	self assert: inputEntry content class equals: EpPackageTagRename. "Rollback"
+	self assert: aClass category equals: classFactory defaultCategory.
 	self applyInputEntry.
-	self assert: aClass category equals: anotherCategory
+	self assert: aClass category equals: classFactory defaultCategory , '2'
 ]
 
 { #category : #tests }
@@ -87,11 +81,12 @@ EpApplyTest >> testCategoryRenameWithExtension [
 	aClass category: aCategory , '3'.
 	aClass compile: 'fortyTwo ^42' classified: '*' , aCategory.
 
-	organization renameCategory: aCategory toBe: anotherCategory.
+	organization renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
 	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , anotherCategory.
-	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
+	"Rollback"
+	organization renameTag: classFactory defaultTagPostfix , '2' to: classFactory defaultTagPostfix inPackage: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpPackageTagRename.
 	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , aCategory.

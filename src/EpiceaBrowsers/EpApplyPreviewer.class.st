@@ -210,9 +210,9 @@ EpApplyPreviewer >> visitPackageTagRemoval: aPackageTagRemoval [
 { #category : #visitor }
 EpApplyPreviewer >> visitPackageTagRename: aPackageTagRename [
 
-	^ (self includesCategory: aPackageTagRename oldCategoryName)
-		ifTrue: [ { aPackageTagRename } ]
-		ifFalse: [ #() ]
+	^ (self packageOrganizer hasTag: aPackageTagRename oldTagName inPackage: aPackageTagRename affectedPackageName)
+		  ifTrue: [ { aPackageTagRename } ]
+		  ifFalse: [ #(  ) ]
 ]
 
 { #category : #visitor }

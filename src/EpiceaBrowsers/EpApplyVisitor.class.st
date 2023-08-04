@@ -127,9 +127,7 @@ EpApplyVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 { #category : #visitor }
 EpApplyVisitor >> visitPackageTagRename: aPackageTagRename [
 
-	environment organization
-		renameCategory: aPackageTagRename oldCategoryName
-		toBe: aPackageTagRename newCategoryName
+	environment organization renameTag: aPackageTagRename oldTagName to: aPackageTagRename newTagName inPackage: aPackageTagRename affectedPackageName
 ]
 
 { #category : #visitor }
