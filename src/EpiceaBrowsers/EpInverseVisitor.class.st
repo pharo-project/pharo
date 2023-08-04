@@ -39,15 +39,6 @@ EpInverseVisitor >> visitBehaviorNameChange: aChange [
 ]
 
 { #category : #visitor }
-EpInverseVisitor >> visitCategoryRename: aChange [
-
-	^ EpCategoryRename
-			oldName: aChange newCategoryName
-			newName: aChange oldCategoryName
-			packageName: aChange affectedPackageName
-]
-
-{ #category : #visitor }
 EpInverseVisitor >> visitClassAddition: aChange [
 
 	^ EpClassRemoval class: aChange behaviorAffected
@@ -101,15 +92,27 @@ EpInverseVisitor >> visitPackageRemoval: aPackageRemoval [
 ]
 
 { #category : #visitor }
+EpInverseVisitor >> visitPackageRename: aPackageRename [
+
+	^ EpPackageRename oldName: aPackageRename newPackageName newName: aPackageRename oldPackageName
+]
+
+{ #category : #visitor }
 EpInverseVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	^ EpPackageTagRemoval tagName: aPackageTagAddition tagName packageName: aPackageTagAddition affectedPackageName
+	^ EpPackageTagRemoval tagName: aPackageTagAddition tagName packageName: aPackageTagAddition packageName
 ]
 
 { #category : #visitor }
 EpInverseVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	^ EpPackageTagAddition tagName: aPackageTagRemoval tagName packageName: aPackageTagRemoval affectedPackageName
+	^ EpPackageTagAddition tagName: aPackageTagRemoval tagName packageName: aPackageTagRemoval packageName
+]
+
+{ #category : #visitor }
+EpInverseVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	^ EpPackageTagRename oldName: aPackageTagRename newTagName newName: aPackageTagRename oldTagName packageName: aPackageTagRename packageName
 ]
 
 { #category : #visitor }

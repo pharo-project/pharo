@@ -828,7 +828,7 @@ RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 
 	"We do it in all cases because we have a few cases where a category was not created but a package was. It's bugs but since categories will vanish there is no reason to care too much."
 	package := (self packageMatchingExtensionName: oldName) ifNil: [ self ensurePackage: newName ].
-	package name = oldName ifTrue: [ self renamePackage: package from: oldName to: newName ].
+	package name = oldName ifTrue: [ self renamePackage: package to: newName ].
 
 	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ].
 
@@ -857,17 +857,19 @@ RPackageOrganizer >> renameClass: class from: oldName to: newName [
 ]
 
 { #category : #'system integration' }
-RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
+RPackageOrganizer >> renamePackage: aPackage to: newName [
 
-	| classesAndProtocolsToRename |
-	rPackage name: newName.
+	(self hasPackage: aPackage) ifFalse: [ ^ self ].
 
-	packages at: newName put: rPackage.
-	packages removeKey: oldName ifAbsent: [ self reportBogusBehaviorOf: #systemCategoryRenamedActionFrom: ].
+	(self ensurePackage: aPackage) renameTo: newName
+]
 
-	"we also rename all the extension protocols in the system with the new name"
-	classesAndProtocolsToRename := rPackage extensionMethods asIdentitySet.
-	classesAndProtocolsToRename do: [ :method | method methodClass renameProtocol: method protocol as: '*' , newName ]
+{ #category : #'system integration' }
+RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
+
+	(self hasPackage: aPackage) ifFalse: [ ^ self ].
+
+	(self ensurePackage: aPackage) renameTag: aTag to: newName
 ]
 
 { #category : #private }
@@ -940,6 +942,7 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
 	newPackageName := announcement newCategory.
 	oldPackageName := announcement oldCategory.
+
 	newPackageName = oldPackageName ifTrue: [ ^ self ].
 	oldPackage := self packageMatchingExtensionName: oldPackageName includingClass: class.
 	newPackage := (self packageMatchingExtensionName: newPackageName) ifNil: [ self ensurePackage: newPackageName ].
