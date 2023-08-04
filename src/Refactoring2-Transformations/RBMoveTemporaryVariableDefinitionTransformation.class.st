@@ -69,14 +69,6 @@ RBMoveTemporaryVariableDefinitionTransformation >> applicabilityConditions [
 			errorString: 'Variable named ', variableName, ' is used in an outside block.')
 ]
 
-{ #category : #converting }
-RBMoveTemporaryVariableDefinitionTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
-]
-
 { #category : #executing }
 RBMoveTemporaryVariableDefinitionTransformation >> buildTransformations [
 
@@ -168,12 +160,6 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 		ifFalse: [self refactoringError: 'Variable is an argument'].
 
 	^ definingNode
-]
-
-{ #category : #preconditions }
-RBMoveTemporaryVariableDefinitionTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #printing }

@@ -336,7 +336,7 @@ RBTransformationsTest >> testRenameClassTransform [
 							to: newClassName)
 							transform.
 
-	self assert: transformation model changes changes size equals: 1.
+	self assert: transformation model changes changes size equals: 6.
 
 	class := transformation model classNamed: newClassName.
 	self assert: (class parseTreeForSelector: #method1)

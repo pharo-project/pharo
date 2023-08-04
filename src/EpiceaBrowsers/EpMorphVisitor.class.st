@@ -36,7 +36,8 @@ EpMorphVisitor >> displayBrowserOperation: aBrowserOperationEvent [
 { #category : #private }
 EpMorphVisitor >> displayCategory: aCategoryName [
 
-	^ (self displayOperation: 'Package tag'), (self displayString: aCategoryName asString)
+	self flag: #package. "We should not rely on categories :("
+	^ (self displayOperation: 'Package tag') , (self displayString: aCategoryName asString)
 ]
 
 { #category : #private }
@@ -69,6 +70,12 @@ EpMorphVisitor >> displayString: aString [
 EpMorphVisitor >> displayString: aString color: aColor [
 
 	^ { self morphFactory stringFor: aString color: aColor }
+]
+
+{ #category : #private }
+EpMorphVisitor >> displayTag: aTagName inPackage: aPackageName [
+
+	^ (self displayOperation: 'Tag') , (self displayString: aTagName) , (self displayOperation: ' in package') , (self displayString: aPackageName)
 ]
 
 { #category : #private }
@@ -107,18 +114,6 @@ EpMorphVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 		(self displayBehavior: aClassRenamedChange oldName),
 		(self displayOperation: 'as'),
 		(self displayString: aClassRenamedChange newName)
-]
-
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryAddition: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
-]
-
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryRemoval: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
 ]
 
 { #category : #visitor }
@@ -206,6 +201,18 @@ EpMorphVisitor >> visitPackageAddition: aPackageAddition [
 EpMorphVisitor >> visitPackageRemoval: aPackageRemoval [
 
 	^ self displayPackage: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ self displayTag: aPackageTagAddition tagName inPackage: aPackageTagAddition affectedPackageName
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ self displayTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval affectedPackageName
 ]
 
 { #category : #visitor }

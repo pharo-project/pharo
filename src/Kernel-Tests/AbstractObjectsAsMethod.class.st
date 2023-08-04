@@ -37,5 +37,9 @@ AbstractObjectsAsMethod >> pragmas [
 ]
 
 { #category : #compatibility }
+AbstractObjectsAsMethod >> removeFromPackage [
+]
+
+{ #category : #compatibility }
 AbstractObjectsAsMethod >> selector: aSymbol [
 ]

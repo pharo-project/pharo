@@ -70,12 +70,6 @@ RBRemoveReturnStatementTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #preconditions }
-RBRemoveReturnStatementTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveReturnStatementTransformation >> privateTransform [
 

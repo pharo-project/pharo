@@ -97,11 +97,6 @@ RBMoveMethodToClassSideTransformation >> parseTree [
 ]
 
 { #category : #refactoring }
-RBMoveMethodToClassSideTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
-{ #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> privateTransform [
 	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.

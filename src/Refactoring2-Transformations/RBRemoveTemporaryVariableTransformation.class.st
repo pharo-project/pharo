@@ -72,12 +72,6 @@ RBRemoveTemporaryVariableTransformation >> classExist [
 		  errorString: 'No such class or trait named ' , className asString
 ]
 
-{ #category : #preconditions }
-RBRemoveTemporaryVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveTemporaryVariableTransformation >> privateTransform [
 

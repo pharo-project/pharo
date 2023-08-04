@@ -415,6 +415,14 @@ RPackageOrganizer >> hasPackageMatchingExtensionName: anExtensionName [
 	^ false
 ]
 
+{ #category : #testing }
+RPackageOrganizer >> hasTag: aTag inPackage: aPackage [
+
+	(self hasPackage: aPackage) ifFalse: [ ^ false ].
+
+	^ (self ensurePackage: aPackage) hasTag: aTag
+]
+
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> includesCategory: aString [
 	"Tests if a category is already included."
@@ -672,8 +680,7 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodModified send: #systemMethodModifiedActionFrom: to: self;
-		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self;
-		when: MethodRemoved send: #systemMethodRemovedActionFrom: to: self
+		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
 ]
 
 { #category : #'system integration' }
@@ -794,6 +801,14 @@ RPackageOrganizer >> removeSystemCategory: category [
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
+RPackageOrganizer >> removeTag: aTag fromPackage: aPackage [
+
+	(self hasPackage: aPackage) ifFalse: [ ^ self "no need to remove the tag if the package is not there." ].
+
+	(self ensurePackage: aPackage) removeTag: aTag
+]
+
+{ #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 	"Rename a category. No action if new name already exists, or if old name does not exist."
 
@@ -828,8 +843,6 @@ RPackageOrganizer >> renameClass: class from: oldName to: newName [
 	extendingPackages := self extendingPackagesOfClassNamed: oldName.
 
 	package updateDefinedClassNamed: oldName withNewName: newName.
-	"we have to update all RPackages extending this class"
-	extendingPackages do: [ :extendingPackage | extendingPackage updateExtensionForClassNamed: oldName withNewName: newName ].
 
 	"update the 'classExtendingPackagesMapping' to replace the key with the new class name"
 	extendingPackages do: [ :extendingPackage |
@@ -1028,19 +1041,6 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	destinationPackage addMethod: method.
 
 	SystemAnnouncer uniqueInstance methodRepackaged: method from: methodPackage to: destinationPackage
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
-	"If the method is provided by a trait, we do not care about it"
-
-	| package |
-	ann isProvidedByATrait ifTrue: [ ^ self ].
-
-	"Since the method was already removed we cannot just ask #package because it is unpackaged, but we still need to remove the selector from the method cache of its previous class"
-	package := ann method extensionPackage ifNil: [ self packageOf: ann method methodClass ].
-
-	package ifNotNil: [ :p | p removeMethod: ann method ]
 ]
 
 { #category : #accessing }

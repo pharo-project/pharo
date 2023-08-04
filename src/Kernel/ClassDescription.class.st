@@ -961,8 +961,9 @@ ClassDescription >> removeSelector: selector [
 	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := priorMethod origin.
 	priorProtocol := self protocolOfSelector: selector.
-	self removeFromProtocols: selector.
 
+	priorMethod removeFromPackage.
+	self removeFromProtocols: selector.
 	super removeSelector: selector.
 
 	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin

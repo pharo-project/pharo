@@ -49,14 +49,6 @@ RBPullUpMethodTransformation >> applicabilityConditions [
 							true])
 ]
 
-{ #category : #converting }
-RBPullUpMethodTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
-]
-
 { #category : #executing }
 RBPullUpMethodTransformation >> buildTransformations [
 	^ OrderedCollection new
@@ -242,12 +234,6 @@ RBPullUpMethodTransformation >> copyDownMethod: aSelector [
 { #category : #executing }
 RBPullUpMethodTransformation >> copyDownMethods [
 	^ selectors flatCollect: [:each | self copyDownMethod: each]
-]
-
-{ #category : #preconditions }
-RBPullUpMethodTransformation >> preconditions [
-	^ self applicabilityConditions 
-	
 ]
 
 { #category : #executing }

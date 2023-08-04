@@ -70,12 +70,6 @@ RBMethodProtocolTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #preconditions }
-RBMethodProtocolTransformation >> preconditions [
-
-	^ self applicabilityConditions
-]
-
 { #category : #executing }
 RBMethodProtocolTransformation >> privateTransform [
 

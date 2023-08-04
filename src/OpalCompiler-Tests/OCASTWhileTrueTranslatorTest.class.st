@@ -8,7 +8,7 @@ Class {
 OCASTWhileTrueTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineWhile . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineWhile))
 ]
 
 { #category : #'tests - blocks - optimized' }

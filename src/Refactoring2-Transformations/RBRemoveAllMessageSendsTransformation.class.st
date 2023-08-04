@@ -87,12 +87,6 @@ RBRemoveAllMessageSendsTransformation >> messageSend: aMessageSend inMethod: aSe
 	message := aMessageSend
 ]
 
-{ #category : #preconditions }
-RBRemoveAllMessageSendsTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveAllMessageSendsTransformation >> privateTransform [
 

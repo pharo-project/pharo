@@ -104,7 +104,9 @@ SystemNavigationTest >> testIsMessageSentInSystemWithClassesActuallySendngTheMes
 	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	classesSendingMessage := (self classFactory createdClasses asArray first: 2) , (self classFactory createdClasses asArray last: 3).
 	classesSendingMessage do: [ :class | class compileSilently: 'meth self ' , sentMessageSelector ].
-	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size equals: 5
+	self
+		assertCollection: (self systemNavigationToTest allSendersOf: sentMessageSelector)
+		hasSameElements: (classesSendingMessage collect: [ :class | class >> #meth ])
 ]
 
 { #category : #tests }
@@ -116,7 +118,9 @@ SystemNavigationTest >> testIsMessageSentInSystemWithTheSelectorInsideAnArray [
 	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	classesSendingMessage := (self classFactory createdClasses asArray first: 2) , (self classFactory createdClasses asArray last: 3).
 	classesSendingMessage do: [ :class | class compileSilently: 'meth ^#(a b ' , sentMessageSelector , ' c)' ].
-	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size equals: 5
+	self
+		assertCollection: (self systemNavigationToTest allSendersOf: sentMessageSelector)
+		hasSameElements: (classesSendingMessage collect: [ :class | class >> #meth ])
 ]
 
 { #category : #tests }
@@ -160,7 +164,5 @@ SystemNavigationTest >> testSenderOfASelectorInBlock [
 	otherClass compileSilently: 'yetAnotherMethod ^[[self ' , selector asString , ']]'.
 
 	senders := self systemNavigationToTest allSendersOf: selector.
-	self assertCollection: senders hasSameElements: {
-			(class >> #anotherMethod).
-			(otherClass >> #yetAnotherMethod) }
+	self assert: (senders collect: [ :method | method selector ]) asSet equals: { #anotherMethod. #yetAnotherMethod } asSet
 ]
