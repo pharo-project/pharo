@@ -21,8 +21,9 @@ RenrakuBaseTestCase class >> isAbstract [
 
 { #category : #running }
 RenrakuBaseTestCase >> setUp [
+
 	super setUp.
-	testPackage := (RPackage named: #'RenrakuCreatedForTests') register.
+	testPackage := self packageOrganizer ensurePackage: #RenrakuCreatedForTests.
 	self setupScreamerRule
 ]
 
@@ -53,8 +54,7 @@ RenrakuBaseTestCase >> setupScreamerRule [
 RenrakuBaseTestCase >> tearDown [
 
 	self tearDownscreamerRule.
-	testPackage unregister.
-	testPackage := nil.
+	testPackage removeFromSystem.
 	super tearDown
 ]
 
