@@ -5,7 +5,6 @@ Class {
 	#name : #EpPackageTagRename,
 	#superclass : #EpCategoryChange,
 	#instVars : [
-		'oldCategoryName',
 		'oldTagName'
 	],
 	#category : #'Epicea-Model'
@@ -40,16 +39,9 @@ EpPackageTagRename >> newTagName [
 EpPackageTagRename >> oldCategoryName [
 
 	self flag: #package. "We should not rely on categories"
-	^ oldCategoryName ifNil: [
-		  self oldTagName = self affectedPackageName
-			  ifTrue: [ self affectedPackageName ]
-			  ifFalse: [ self affectedPackageName , '-' , self oldTagName ] ]
-]
-
-{ #category : #accessing }
-EpPackageTagRename >> oldCategoryName: anObject [
-
-	oldCategoryName := anObject
+	^ self oldTagName = self affectedPackageName
+		  ifTrue: [ self affectedPackageName ]
+		  ifFalse: [ self affectedPackageName , '-' , self oldTagName ]
 ]
 
 { #category : #accessing }
