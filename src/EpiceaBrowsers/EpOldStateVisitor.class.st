@@ -72,7 +72,7 @@ EpOldStateVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 { #category : #visitor }
 EpOldStateVisitor >> visitPackageTagRename: aPackageTagRename [
 
-	^ aPackageTagRename oldCategoryName
+	^ self printTag: aPackageTagRename oldTagName package: aPackageTagRename affectedPackageName
 ]
 
 { #category : #visitor }

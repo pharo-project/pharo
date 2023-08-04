@@ -89,7 +89,7 @@ EpNewStateVisitor >> visitPackageTagAddition: aPackageTagAddition [
 { #category : #visitor }
 EpNewStateVisitor >> visitPackageTagRename: aPackageTagRename [
 
-	^ aPackageTagRename newCategoryName
+	^ self printTag: aPackageTagRename newTagName package: aPackageTagRename affectedPackageName
 ]
 
 { #category : #visitor }

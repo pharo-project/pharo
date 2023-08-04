@@ -216,10 +216,8 @@ EpMorphVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 { #category : #visitor }
 EpMorphVisitor >> visitPackageTagRename: aPackageTagRename [
 
-	^	(self displayOperation: 'Rename tag'),
-		(self displayString: aPackageTagRename oldCategoryName),
-		(self displayOperation: 'as'),
-		(self displayString: aPackageTagRename newCategoryName )
+	^ (self displayOperation: 'Rename tag') , (self displayString: aPackageTagRename oldTagName) , (self displayOperation: 'as')
+	  , (self displayString: aPackageTagRename newTagName) , (self displayOperation: 'in package') , (self displayString: aPackageTagRename affectedPackageName)
 ]
 
 { #category : #visitor }
