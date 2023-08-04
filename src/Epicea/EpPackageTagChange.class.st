@@ -2,7 +2,7 @@
 I represent a change in the categories of a package.
 "
 Class {
-	#name : #EpCategoryChange,
+	#name : #EpPackageTagChange,
 	#superclass : #EpCodeChange,
 	#instVars : [
 		'affectedPackageName',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-EpCategoryChange class >> tagName: aName packageName: aPackageName [
+EpPackageTagChange class >> tagName: aName packageName: aPackageName [
 
 	^ self new
 		  tagName: aName;
@@ -21,19 +21,19 @@ EpCategoryChange class >> tagName: aName packageName: aPackageName [
 ]
 
 { #category : #accessing }
-EpCategoryChange >> affectedPackageName [
+EpPackageTagChange >> affectedPackageName [
 
 	^ affectedPackageName
 ]
 
 { #category : #accessing }
-EpCategoryChange >> affectedPackageName: anObject [
+EpPackageTagChange >> affectedPackageName: anObject [
 
 	affectedPackageName := anObject
 ]
 
 { #category : #accessing }
-EpCategoryChange >> categoryName [
+EpPackageTagChange >> categoryName [
 
 	self flag: #package. "We should not rely on categories"
 	^ self tagName = self affectedPackageName
@@ -42,26 +42,26 @@ EpCategoryChange >> categoryName [
 ]
 
 { #category : #testing }
-EpCategoryChange >> doesOverride: aCodeChange [
+EpPackageTagChange >> doesOverride: aCodeChange [
 
 	^ aCodeChange isEpCategoryChange and: [
 		aCodeChange affectedPackageName = self affectedPackageName ]
 ]
 
 { #category : #testing }
-EpCategoryChange >> isEpCategoryChange [
+EpPackageTagChange >> isEpCategoryChange [
 
 	^ true
 ]
 
 { #category : #accessing }
-EpCategoryChange >> tagName [
+EpPackageTagChange >> tagName [
 
 	^ packageTagName
 ]
 
 { #category : #accessing }
-EpCategoryChange >> tagName: aString [
+EpPackageTagChange >> tagName: aString [
 
 	packageTagName := aString
 ]

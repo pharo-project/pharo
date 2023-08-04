@@ -35,14 +35,6 @@ EpApplyVisitor >> visitBehaviorNameChange: aClassRenameChange [
 ]
 
 { #category : #visitor }
-EpApplyVisitor >> visitCategoryRename: aChange [
-
-	environment organization
-		renameCategory: aChange oldCategoryName
-		toBe: aChange newCategoryName
-]
-
-{ #category : #visitor }
 EpApplyVisitor >> visitClassAddition: aClassCreation [
 	(self compiler evaluate: aClassCreation classAdded definitionSource) fluidInstall.
 	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) fluidInstall.
@@ -130,6 +122,14 @@ EpApplyVisitor >> visitPackageTagAddition: aPackageTagAddition [
 EpApplyVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
 	environment organization removeTag: aPackageTagRemoval tagName fromPackage: aPackageTagRemoval affectedPackageName
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	environment organization
+		renameCategory: aPackageTagRename oldCategoryName
+		toBe: aPackageTagRename newCategoryName
 ]
 
 { #category : #visitor }

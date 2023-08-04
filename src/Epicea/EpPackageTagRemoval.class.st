@@ -3,7 +3,7 @@ I represent the removal of a tag in a package.
 "
 Class {
 	#name : #EpPackageTagRemoval,
-	#superclass : #EpCategoryChange,
+	#superclass : #EpPackageTagChange,
 	#category : #'Epicea-Model'
 }
 

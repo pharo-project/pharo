@@ -3,7 +3,7 @@ I represent the rename of a category in a package.
 "
 Class {
 	#name : #EpPackageTagRename,
-	#superclass : #EpCategoryChange,
+	#superclass : #EpPackageTagChange,
 	#instVars : [
 		'oldTagName'
 	],
@@ -20,7 +20,7 @@ EpPackageTagRename class >> oldName: oldName newName: newName packageName: packa
 
 { #category : #visitor }
 EpPackageTagRename >> accept: aVisitor [
-	^ aVisitor visitCategoryRename: self
+	^ aVisitor visitPackageTagRename: self
 ]
 
 { #category : #accessing }
