@@ -110,7 +110,7 @@ PharoDarkTheme >> initialize [
 { #category : #accessing }
 PharoDarkTheme >> menuBorderWidth [
 
-	^ self borderWidth * self displayScaleFactor
+	^ self borderWidth
 ]
 
 { #category : #'fill-styles - scrollbars' }

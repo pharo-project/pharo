@@ -79,7 +79,7 @@ ClyNotebookPageMorph >> initialize [
 	But this is not good, think a better way."
 	labelMorph := labelPresenter build
 		              hResizing: #rigid;
-		              width: 120;
+		              width: 120 * self currentWorld displayScaleFactor;
 		              yourself
 ]
 

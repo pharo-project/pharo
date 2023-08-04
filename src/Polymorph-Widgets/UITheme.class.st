@@ -2171,7 +2171,7 @@ UITheme >> menuBorderColor [
 
 { #category : #accessing }
 UITheme >> menuBorderWidth [
-	^  self settings menuBorderWidth * self displayScaleFactor
+	^  self settings menuBorderWidth
 ]
 
 { #category : #'label-styles' }
@@ -4738,7 +4738,7 @@ UITheme >> setSystemProgressMorphDefaultParameters: aProgressMorph [
 	aProgressMorph color: self settings derivedMenuColor.
 	self settings preferRoundCorner
 		ifTrue: [aProgressMorph useRoundedCorners].
-	aProgressMorph borderWidth: self menuBorderWidth * self displayScaleFactor.
+	aProgressMorph borderWidth: self menuBorderWidth.
 	aProgressMorph borderColor: self menuBorderColor.
 	aProgressMorph updateColor
 ]
