@@ -26,6 +26,7 @@ Class {
 		'name',
 		'url',
 		'icons',
+		'scale',
 		'reportNotFound'
 	],
 	#classVars : [
@@ -300,20 +301,20 @@ ThemeIcons >> iconNamed: aSymbol [
 			self isReportingNotFound
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
-					self notFoundIcon ]
-				ifFalse: [ self blankIcon ]]) scaledByDisplayScaleFactor
+					self notFoundIcon scaledByDisplayScaleFactor ]
+				ifFalse: [ self blankIcon scaledByDisplayScaleFactor ]])
 ]
 
 { #category : #accessing }
 ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 
-	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon ].
+	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ].
 	"Trying the old way"
 
 	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [
 		self icons
 			at: (aSymbol allButLast: 4) asSymbol
-			ifPresent: [ :icon | ^ icon ]
+			ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ]
 	].
 
 	^ aBlock value
@@ -331,12 +332,18 @@ ThemeIcons >> isReportingNotFound [
 
 { #category : #loading }
 ThemeIcons >> loadIconsFromUrl [
+
+	^ self loadIconsFromUrlUsingScale: 1
+]
+
+{ #category : #loading }
+ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
 	| newIcons zipArchive |
 
 	newIcons := IdentityDictionary new.
 	zipArchive := self downloadFromUrl.
 
-	(((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*scale1.0' ) anyOne
+	(((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*scale' , newScale asFloat asString) anyOne
 	allChildrenMatching: '*.png')
 		reject: [ :each | each base beginsWith: '.' ]
 		thenDo: [ :each |
@@ -344,7 +351,8 @@ ThemeIcons >> loadIconsFromUrl [
 				at: each base asSymbol
 				put: (self readPNGFrom: each) ]
 			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
-	icons := newIcons
+	icons := newIcons.
+	scale := newScale
 ]
 
 { #category : #accessing }
@@ -374,6 +382,11 @@ ThemeIcons >> printOn: stream [
 ThemeIcons >> readPNGFrom: aReference [
 	^ aReference binaryReadStreamDo: [ :stream |
 		PNGReadWriter formFromStream: stream ]
+]
+
+{ #category : #accessing }
+ThemeIcons >> scale [
+	^ scale ifNil: [ scale := 1 ]
 ]
 
 { #category : #accessing }
