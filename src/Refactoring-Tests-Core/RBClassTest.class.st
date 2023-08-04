@@ -113,3 +113,90 @@ RBClassTest >> testObjectIsNotAbstract [
 	self deny: objectClass isAbstract.
 	self deny: objectClass classSide isAbstract
 ]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorDefinedInTheClass [
+
+	self
+		assert: (objectClass whichClassIncludesSelector: #'~~>')
+		equals: objectClass
+]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorDoNotFind [
+
+	self
+		assert: (objectClass whichClassIncludesSelector: #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorDoesNotExist [
+
+	self
+		assert: (objectClass whichClassIncludesSelector: #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorGoingUp [
+
+	self
+		assert:
+			((rbNamespace classNamed: #Model) whichClassIncludesSelector:
+				 #'~~>')
+		equals: objectClass
+]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorGoingUpAndDoNotFind [
+
+	self
+		assert:
+			((rbNamespace classNamed: #Model) whichClassIncludesSelector:
+				 #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodDefinedInTheClass [
+
+	self
+		assert: (objectClass whoDefinesMethod: #'~~>')
+		equals: objectClass
+]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodDoesNotExist [
+
+	self
+		assert: (objectClass whoDefinesMethod: #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodGoingUp [
+
+	self
+		assert:
+		((rbNamespace classNamed: #Model) whoDefinesMethod: #'~~>')
+		equals: objectClass
+]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodGoingUpAndDoNotFind [
+
+	self
+		assert:
+			((rbNamespace classNamed: #Model) whoDefinesMethod:
+				 #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : #'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodSelectorDoNotFind [
+
+	self
+		assert: (objectClass whoDefinesMethod: #doesNotExistAtAll)
+		equals: nil
+]
