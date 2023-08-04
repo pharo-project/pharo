@@ -1099,10 +1099,7 @@ RPackage >> updateDefinedClassNamed: oldString withNewName: newString [
 	(oldString substrings size > 1 or: [ newString substrings size > 1 ]) ifTrue: [ Error signal: 'You should not use metaclass names' ].
 
 	classes remove: oldString asSymbol.
-	classes add: newString asSymbol.
-
-	"Don't forget that class tags also register the classes names."
-	self classTags do: [ :aTag | aTag updateDefinedClassNamed: oldString withNewName: newString ]
+	classes add: newString asSymbol
 ]
 
 { #category : #updating }
