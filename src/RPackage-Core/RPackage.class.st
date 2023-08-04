@@ -913,7 +913,7 @@ RPackage >> removeMethod: aCompiledMethod [
 	(self includesClass: methodClass)
 		ifTrue: [
 			definedSelectors at: methodClass ifPresent: [ :selectors |
-				selectors remove: aCompiledMethod selector.
+				selectors remove: aCompiledMethod selector ifAbsent: [ ].
 				selectors ifEmpty: [ definedSelectors removeKey: methodClass ] ] ]
 		ifFalse: [
 			extensionSelectors at: methodClass ifPresent: [ :selectors |
