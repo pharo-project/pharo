@@ -56,16 +56,14 @@ FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 { #category : #accessing }
 FinalizationRegistryEntry >> chainNext: aNode [
 	"Insert a node in the middle of myself and my next node.
-	Assume the argument has no next or previous"
-	| currentNext |
-	currentNext := next.
+	Assume the argument is a valid node with has no next or previous."
+	| previousNext |
+	previousNext := next.
 	next := aNode.
-	aNode ifNil: [ ^ self ].
-
-	aNode next: currentNext.
-	currentNext ifNotNil: [
-		currentNext previous: aNode ].
-
+	previousNext ifNotNil: [
+		previousNext previous: aNode ].
+	
+	aNode next: previousNext.
 	aNode previous: self
 ]
 
@@ -93,6 +91,13 @@ FinalizationRegistryEntry >> includes: anObject [
 	key = anObject ifTrue: [ ^ true ].
 	next ifNil: [ ^ false ].
 	^ next includes: anObject
+]
+
+{ #category : #enumerating }
+FinalizationRegistryEntry >> keys [
+
+	next ifNil: [ ^ { key } ].
+	^ { key }, next keys
 ]
 
 { #category : #mourning }
@@ -132,8 +137,14 @@ FinalizationRegistryEntry >> previous: anObject [
 { #category : #accessing }
 FinalizationRegistryEntry >> removeFromChain [
 
+	| previousNext |
 	previous ifNil: [ ^ self ].
-	previous chainNext: next
+
+	previousNext := next.
+	previous next: previousNext.
+
+	previousNext ifNil: [ ^ self ].
+	previousNext previous: previous.
 ]
 
 { #category : #accessing }
