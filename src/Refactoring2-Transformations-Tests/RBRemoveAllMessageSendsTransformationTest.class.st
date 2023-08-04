@@ -12,8 +12,7 @@ RBRemoveAllMessageSendsTransformationTest >> testClassDoesNotExist [
 				messageSend: #foo:
 				inMethod: #badMessage1
 				inClass: #ADoesNotExistClass).
-	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.
-	self should: [ trans privateTransform ] raise: trans refactoringErrorClass.
+	self should: [ trans primitiveExecute ] raise: trans refactoringErrorClass.
 ]
 
 { #category : #'failure tests' }
@@ -24,8 +23,7 @@ RBRemoveAllMessageSendsTransformationTest >> testFailureNonExistantSelector [
 				messageSend: #foo:
 				inMethod: #checkClass1:
 				inClass: #RBClassDataForRefactoringTest).
-	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.
-	self should: [ trans privateTransform ] raise: trans refactoringErrorClass.
+	self should: [ trans primitiveExecute ] raise: trans refactoringErrorClass.
 ]
 
 { #category : #'failure tests' }
@@ -36,8 +34,7 @@ RBRemoveAllMessageSendsTransformationTest >> testMethodDoesNotExist [
 				messageSend: #foo:
 				inMethod: #badMessage1
 				inClass: #RBClassDataForRefactoringTest).
-	self should: [ trans checkPreconditions ] raise: trans refactoringErrorClass.
-	self should: [ trans privateTransform ] raise: trans refactoringErrorClass.
+	self should: [ trans primitiveExecute ] raise: trans refactoringErrorClass.
 ]
 
 { #category : #tests }
