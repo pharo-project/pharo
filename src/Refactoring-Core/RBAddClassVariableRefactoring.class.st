@@ -10,12 +10,25 @@ Class {
 }
 
 { #category : #preconditions }
+RBAddClassVariableRefactoring >> applicabilityConditions [
+
+	^ (RBCondition isMetaclass: class) not
+	  & (RBCondition isValidClassVarName: variableName for: class)
+	  & (RBCondition isGlobal: variableName in: self model) not
+]
+
+{ #category : #preconditions }
+RBAddClassVariableRefactoring >> breakingChangeConditions [
+
+	^ (RBCondition
+		   hierarchyOf: class
+		   definesVariable: variableName asString) not
+]
+
+{ #category : #preconditions }
 RBAddClassVariableRefactoring >> preconditions [
-	^(RBCondition isMetaclass: class) not
-		& (RBCondition isValidClassVarName: variableName for: class)
-			& (RBCondition hierarchyOf: class definesVariable: variableName asString)
-					not
-			& (RBCondition isGlobal: variableName in: self model) not
+
+	^ self applicabilityConditions & self breakingChangeConditions
 ]
 
 { #category : #transforming }

@@ -6,26 +6,22 @@ Class {
 
 { #category : #tests }
 RBAddSubtreeTransformationTest >> testMethodDoesNotExist [
-	| transformation |
-	transformation := (RBAddSubtreeTransformation
+	
+	self shouldFail: (RBAddSubtreeTransformation
 		interval: (0 to: 1)
 		with: 'self printString'
 		from: #two
-		in: self changeMockClass name) transform.
-
-	self assertEmpty: transformation model changes changes
+		in: self changeMockClass name)
 ]
 
 { #category : #tests }
 RBAddSubtreeTransformationTest >> testParseFailure [
-	| transformation |
-	transformation := (RBAddSubtreeTransformation
+
+	self shouldFail: (RBAddSubtreeTransformation
 		interval: (0 to: 1)
 		with: ':= 123'
 		from: #one
-		in: self changeMockClass name) transform.
-
-	self assertEmpty: transformation model changes changes
+		in: self changeMockClass name)
 ]
 
 { #category : #tests }

@@ -484,6 +484,15 @@ RPackage >> hasProperty: aKey [
 	^ true
 ]
 
+{ #category : #testing }
+RPackage >> hasTag: aTag [
+	"Takes a package tag or a package tag name as parameter and return true if I include this package tag."
+
+	^ aTag isString
+		  ifTrue: [ self classTags anySatisfy: [ :tag | tag name = aTag ] ]
+		  ifFalse: [ self classTags includes: aTag ]
+]
+
 { #category : #accessing }
 RPackage >> hierarchyRoots [
 	"Returns all the hiearchy roots (by opposition to single classes inheriting from class outside the package) of a package"
@@ -945,6 +954,16 @@ RPackage >> removeProperty: propName ifAbsent: aBlock [
 		ifAbsent: aBlock.
 	self removePropertiesIfEmpty.
 	^ property
+]
+
+{ #category : #'class tags' }
+RPackage >> removeTag: aTag [
+
+	| tagName |
+	tagName := aTag isString
+		           ifTrue: [ aTag ]
+		           ifFalse: [ aTag name ].
+	self removeClassTag: tagName
 ]
 
 { #category : #private }

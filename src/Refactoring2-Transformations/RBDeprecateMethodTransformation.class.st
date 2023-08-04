@@ -108,12 +108,6 @@ RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass using: 
 	class := self model classObjectFor: aClass
 ]
 
-{ #category : #preconditions }
-RBDeprecateMethodTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #printing }
 RBDeprecateMethodTransformation >> storeOn: aStream [
 

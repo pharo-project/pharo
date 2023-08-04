@@ -230,18 +230,6 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> categoryAdded: aCategoryAdded [
-
-	self addEvent: (EpCategoryAddition named: aCategoryAdded categoryName)
-]
-
-{ #category : #'announcement handling' }
-EpMonitor >> categoryRemoved: aPackageCategoryRemoved [
-
-	self addEvent: (EpCategoryRemoval named: aPackageCategoryRemoved categoryName)
-]
-
-{ #category : #'announcement handling' }
 EpMonitor >> categoryRenamed: aCategoryRenamed [
 
 	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldCategoryName newName: aCategoryRenamed newCategoryName)
@@ -471,6 +459,18 @@ EpMonitor >> packageRenamed: aCategoryRenamed [
 ]
 
 { #category : #'announcement handling' }
+EpMonitor >> packageTagAdded: aPackageTagAddition [
+
+	self addEvent: (EpPackageTagAddition tagName: aPackageTagAddition tag name packageName: aPackageTagAddition package name)
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageTagRemoved: aPackageTagRemoved [
+
+	self addEvent: (EpPackageTagRemoval tagName: aPackageTagRemoved tag name packageName: aPackageTagRemoved package name)
+]
+
+{ #category : #'announcement handling' }
 EpMonitor >> protocolAdded: aProtocolAdded [
 
 	self addEvent: (EpProtocolAddition behavior: aProtocolAdded classAffected protocol: aProtocolAdded protocol name)
@@ -522,30 +522,25 @@ EpMonitor >> subscribeToJobAnnouncer [
 { #category : #private }
 EpMonitor >> subscribeToSystemAnnouncer [
 
-	{	CategoryAdded -> #categoryAdded:.
-		CategoryRemoved -> #categoryRemoved:.
-		CategoryRenamed -> #categoryRenamed:.
-		PackageAdded -> #packageAdded:.
-		PackageRenamed -> #packageRenamed:.
-		PackageRemoved -> #packageRemoved:.
-		ClassAdded-> #behaviorAdded:.
-		ClassRemoved->#behaviorRemoved:.
-		MethodAdded -> #methodAdded:.
-		MethodRemoved -> #methodRemoved:.
-		ProtocolAdded -> #protocolAdded:.
-		ProtocolRemoved -> #protocolRemoved:.
-		ClassModifiedClassDefinition -> #behaviorModified:.
-		MethodModified -> #methodModified:.
-		ClassRecategorized -> #classRecategorized:.
-		ClassRenamed -> #classRenamed:.
-		ClassCommented -> #classCommented:.
-		MethodRecategorized -> #methodRecategorized:.
-
-	} do: [ :pair |
-		systemAnnouncer weak
-			when: pair key
-			send: pair value
-			to: self ]
+	{
+		(CategoryRenamed -> #categoryRenamed:).
+		(PackageAdded -> #packageAdded:).
+		(PackageRenamed -> #packageRenamed:).
+		(PackageRemoved -> #packageRemoved:).
+		(PackageTagAdded -> #packageTagAdded:).
+		(PackageTagRemoved -> #packageTagRemoved:).
+		(ClassAdded -> #behaviorAdded:).
+		(ClassRemoved -> #behaviorRemoved:).
+		(MethodAdded -> #methodAdded:).
+		(MethodRemoved -> #methodRemoved:).
+		(ProtocolAdded -> #protocolAdded:).
+		(ProtocolRemoved -> #protocolRemoved:).
+		(ClassModifiedClassDefinition -> #behaviorModified:).
+		(MethodModified -> #methodModified:).
+		(ClassRecategorized -> #classRecategorized:).
+		(ClassRenamed -> #classRenamed:).
+		(ClassCommented -> #classCommented:).
+		(MethodRecategorized -> #methodRecategorized:) } do: [ :pair | systemAnnouncer weak when: pair key send: pair value to: self ]
 ]
 
 { #category : #private }

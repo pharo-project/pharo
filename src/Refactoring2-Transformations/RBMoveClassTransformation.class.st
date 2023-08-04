@@ -67,12 +67,6 @@ RBMoveClassTransformation >> move: aClassName to: aCategoryName [
 	category := aCategoryName
 ]
 
-{ #category : #preconditions }
-RBMoveClassTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBMoveClassTransformation >> privateTransform [
 
