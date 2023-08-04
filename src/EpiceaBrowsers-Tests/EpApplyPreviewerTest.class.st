@@ -110,26 +110,6 @@ EpApplyPreviewerTest >> testBehaviorNameChange [
 ]
 
 { #category : #tests }
-EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
-
-	| organization aCategory anotherCategory |
-	organization := self packageOrganizer.
-	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory , '2'.
-
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-
-	organization renameCategory: aCategory toBe: anotherCategory.
-	self setHeadAsInputEntry.
-	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
-
-	self assertOutputsAnEventWith: [ :output |
-		self assert: output class equals: EpPackageTagRename.
-		self assert: output oldCategoryName equals: aCategory.
-		self assert: output newCategoryName equals: anotherCategory ]
-]
-
-{ #category : #tests }
 EpApplyPreviewerTest >> testClassAdditionWithClassRemoved [
 
 	| aClass classDefinition |
@@ -358,6 +338,21 @@ EpApplyPreviewerTest >> testPackageTagRemovalWithPackageTagAddition [
 	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpPackageTagRemoval.
 		self assert: output categoryName equals: classFactory defaultCategory ]
+]
+
+{ #category : #tests }
+EpApplyPreviewerTest >> testPackageTagRenameWithPreviousRollback [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+
+	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
+	self setHeadAsInputEntry.
+	self packageOrganizer renameTag: classFactory defaultTagPostfix , '2' to: classFactory defaultTagPostfix inPackage: classFactory packageName. "Rollback"
+
+	self assertOutputsAnEventWith: [ :output |
+		self assert: output class equals: EpPackageTagRename.
+		self assert: output oldCategoryName equals: classFactory defaultCategory.
+		self assert: output newCategoryName equals: classFactory defaultCategory , '2' ]
 ]
 
 { #category : #tests }

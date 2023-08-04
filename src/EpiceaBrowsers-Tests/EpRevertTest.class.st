@@ -271,20 +271,17 @@ EpRevertTest >> testPackageTagRemovalWithPackageTagAddition [
 { #category : #tests }
 EpRevertTest >> testPackageTagRename [
 
-	| organization aCategory anotherCategory |
-	organization := self packageOrganizer.
-	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
-	organization renameCategory: aCategory toBe: anotherCategory.
+	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpPackageTagRename.
-	self deny: (organization includesCategory: aCategory).
-	self assert: (organization includesCategory: anotherCategory).
+
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName).
 	self revertInputEntry.
-	self assert: (organization includesCategory: aCategory).
-	self deny: (organization includesCategory: anotherCategory)
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName)
 ]
 
 { #category : #tests }
