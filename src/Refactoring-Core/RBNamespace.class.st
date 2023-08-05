@@ -581,7 +581,7 @@ RBNamespace >> privateReferencesTo: aSelector inPackages: aColl [
 RBNamespace >> privateRootClasses [
 	| classes |
 	classes := OrderedCollection new.
-	Class rootsOfTheWorld do: [ :each |
+	{ ProtoObject } do: [ :each |
 		| class |
 		class := self classFor: each.
 		(class notNil and: [ class superclass isNil ])
