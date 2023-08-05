@@ -189,7 +189,7 @@ RPackage >> addClassDefinition: aClass [
 RPackage >> addClassDefinition: aClass toClassTag: aSymbol [
 	"Tags the class aClass with the tag aSymbol"
 
-	(self addClassTag: aSymbol) addClassNamed: aClass name
+	(self addClassTag: aSymbol) addClass: aClass
 ]
 
 { #category : #'class tags' }
@@ -1109,10 +1109,7 @@ RPackage >> updateDefinedClassNamed: oldString withNewName: newString [
 	(oldString substrings size > 1 or: [ newString substrings size > 1 ]) ifTrue: [ Error signal: 'You should not use metaclass names' ].
 
 	classes remove: oldString asSymbol.
-	classes add: newString asSymbol.
-
-	"Don't forget that class tags also register the classes names."
-	self classTags do: [ :aTag | aTag updateDefinedClassNamed: oldString withNewName: newString ]
+	classes add: newString asSymbol
 ]
 
 { #category : #updating }

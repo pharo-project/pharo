@@ -1103,8 +1103,8 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	className := (aClass isString
 		              ifTrue: [ aClass ]
 		              ifFalse: [ aClass instanceSide originalName ]) asSymbol.
-
-	^ classPackageMapping removeKey: className ifAbsent: [ self error: aPackage name , ' still includes the class ' , className ]
+	self flag: #package. "When RPackage will be simplified we should not have to check the package but it is required for now"
+	^ (classPackageMapping at: className ifAbsent: [ ^ self ]) = aPackage ifTrue: [ classPackageMapping removeKey: className ]
 ]
 
 { #category : #private }
