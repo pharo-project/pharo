@@ -311,7 +311,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUpdateTheOrganizerMappings 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self organizer environment removeClassNamed: 'NewClass'.
-	self deny: (self organizer includesPackageBackPointerForClass: class)
+	self deny: (self organizer packageOf: class) isNil
 ]
 
 { #category : #'tests - operations on classes' }
