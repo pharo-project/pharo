@@ -138,6 +138,13 @@ RBReplaceMessageSendTransformation >> preconditions [
 	^ conditions
 ]
 
+{ #category : #transforming }
+RBReplaceMessageSendTransformation >> privateTransform [
+	self replaceInAllClasses
+		ifTrue: [ self renameMessageSends ]
+		ifFalse: [ self renameMessageSendsIn: {class} ]
+]
+
 { #category : #initialization }
 RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap [
 
@@ -157,11 +164,4 @@ RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to
 { #category : #accessing }
 RBReplaceMessageSendTransformation >> replaceInAllClasses [
 	^ replaceInAllClasses ifNil: [ replaceInAllClasses := false ]
-]
-
-{ #category : #transforming }
-RBReplaceMessageSendTransformation >> transform [
-	self replaceInAllClasses
-		ifTrue: [ self renameMessageSends ]
-		ifFalse: [ self renameMessageSendsIn: {class} ]
 ]

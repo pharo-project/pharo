@@ -166,15 +166,15 @@ RBGenerateEqualHashTransformation >> preconditions [
 			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
+{ #category : #transforming }
+RBGenerateEqualHashTransformation >> privateTransform [
+	self compileHash.
+	self compileEqual
+]
+
 { #category : #accessing }
 RBGenerateEqualHashTransformation >> theClass [
 	^ (self classObjectFor: className) instanceSide
-]
-
-{ #category : #transforming }
-RBGenerateEqualHashTransformation >> transform [
-	self compileHash.
-	self compileEqual
 ]
 
 { #category : #accessing }

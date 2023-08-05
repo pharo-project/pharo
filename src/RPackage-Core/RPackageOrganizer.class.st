@@ -203,9 +203,10 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	Smalltalk allClassesAndTraits
 		do: [ :behavior |
-			self initializeMethodsFor: behavior.
-			self initializeMethodsFor: behavior classSide ]
-		displayingProgress: 'Importing methods'.
+			behavior package
+				importDefinedMethodsOf: behavior;
+				importDefinedMethodsOf: behavior classSide ]
+		displayingProgress: 'Importing defined methods'.
 
 	Smalltalk allClassesAndTraits
 		do: [ :behavior |
@@ -455,13 +456,11 @@ RPackageOrganizer >> initialize [
 { #category : #'initialization - data' }
 RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 
-	| package protocolName nonTraitMethods |
+	| protocolName |
 	protocolName := aProtocol name allButFirst trimBoth.
-	package := (self packageMatchingExtensionName: protocolName) ifNil: [ self basicRegisterPackage: (RPackage named: protocolName organizer: self) ].
-	nonTraitMethods := aProtocol methodSelectors select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ].
-	nonTraitMethods ifEmpty: [ ^ self ].
-	self registerExtendingPackage: package forClass: aBehavior.
-	nonTraitMethods do: [ :eachSelector | package addMethod: aBehavior >> eachSelector ]
+	((self packageMatchingExtensionName: protocolName) ifNil: [ self basicRegisterPackage: (RPackage named: protocolName organizer: self) ])
+		importProtocol: aProtocol
+		forClass: aBehavior
 ]
 
 { #category : #'initialization - data' }
@@ -474,19 +473,6 @@ RPackageOrganizer >> initializeFor: aBehavior [
 	package addClassDefinition: aBehavior.
 	package addClassDefinition: aBehavior toClassTag: aBehavior category asSymbol.
 	self registerPackage: package forClass: aBehavior
-]
-
-{ #category : #'initialization - data' }
-RPackageOrganizer >> initializeMethodsFor: aBehavior [
-
-	| package |
-	package := aBehavior package.
-	(aBehavior protocols
-		reject: [ :each | each isExtensionProtocol ])
-		do: [ :protocol |
-			 (protocol methodSelectors
-				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
-				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -826,7 +812,7 @@ RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 
 	"We do it in all cases because we have a few cases where a category was not created but a package was. It's bugs but since categories will vanish there is no reason to care too much."
 	package := (self packageMatchingExtensionName: oldName) ifNil: [ self ensurePackage: newName ].
-	package name = oldName ifTrue: [ self renamePackage: package from: oldName to: newName ].
+	package name = oldName ifTrue: [ self renamePackage: package to: newName ].
 
 	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ].
 
@@ -841,8 +827,6 @@ RPackageOrganizer >> renameClass: class from: oldName to: newName [
 	package := self packageOfClassNamed: oldName.
 	extendingPackages := self extendingPackagesOfClassNamed: oldName.
 
-	package updateDefinedClassNamed: oldName withNewName: newName.
-
 	"we have to update the package organizer.
 	update the 'classPackageDictionary' to replace the key with the new class name"
 	self unregisterPackage: package forClass: oldName.
@@ -855,17 +839,19 @@ RPackageOrganizer >> renameClass: class from: oldName to: newName [
 ]
 
 { #category : #'system integration' }
-RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
+RPackageOrganizer >> renamePackage: aPackage to: newName [
 
-	| classesAndProtocolsToRename |
-	rPackage name: newName.
+	(self hasPackage: aPackage) ifFalse: [ ^ self ].
 
-	packages at: newName put: rPackage.
-	packages removeKey: oldName ifAbsent: [ self reportBogusBehaviorOf: #systemCategoryRenamedActionFrom: ].
+	(self ensurePackage: aPackage) renameTo: newName
+]
 
-	"we also rename all the extension protocols in the system with the new name"
-	classesAndProtocolsToRename := rPackage extensionMethods asIdentitySet.
-	classesAndProtocolsToRename do: [ :method | method methodClass renameProtocol: method protocol as: '*' , newName ]
+{ #category : #'system integration' }
+RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
+
+	(self hasPackage: aPackage) ifFalse: [ ^ self ].
+
+	(self ensurePackage: aPackage) renameTag: aTag to: newName
 ]
 
 { #category : #private }
@@ -938,6 +924,7 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
 	newPackageName := announcement newCategory.
 	oldPackageName := announcement oldCategory.
+
 	newPackageName = oldPackageName ifTrue: [ ^ self ].
 	oldPackage := self packageMatchingExtensionName: oldPackageName includingClass: class.
 	newPackage := (self packageMatchingExtensionName: newPackageName) ifNil: [ self ensurePackage: newPackageName ].
@@ -1098,8 +1085,8 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	className := (aClass isString
 		              ifTrue: [ aClass ]
 		              ifFalse: [ aClass instanceSide originalName ]) asSymbol.
-
-	^ classPackageMapping removeKey: className ifAbsent: [ self error: aPackage name , ' still includes the class ' , className ]
+	self flag: #package. "When RPackage will be simplified we should not have to check the package but it is required for now"
+	^ (classPackageMapping at: className ifAbsent: [ ^ self ]) = aPackage ifTrue: [ classPackageMapping removeKey: className ]
 ]
 
 { #category : #private }

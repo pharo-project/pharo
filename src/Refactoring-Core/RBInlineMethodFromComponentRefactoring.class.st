@@ -129,6 +129,13 @@ RBInlineMethodFromComponentRefactoring >> newNameForSelf [
 ]
 
 { #category : #transforming }
+RBInlineMethodFromComponentRefactoring >> privateTransform [
+	self abstractVariableReferences.
+	self renameSelfReferences.
+	super privateTransform
+]
+
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> renameSelfReferences [
 	self addSelfReferenceToSourceMessage.
 	self addSelfReferenceToInlineParseTree
@@ -153,11 +160,4 @@ RBInlineMethodFromComponentRefactoring >> safeVariableNameBasedOn: aString [
 				[i := i + 1.
 				newString := baseString , i printString].
 	^newString
-]
-
-{ #category : #transforming }
-RBInlineMethodFromComponentRefactoring >> transform [
-	self abstractVariableReferences.
-	self renameSelfReferences.
-	super transform
 ]

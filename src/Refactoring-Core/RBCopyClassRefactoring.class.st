@@ -121,7 +121,7 @@ RBCopyClassRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBCopyClassRefactoring >> transform [
+RBCopyClassRefactoring >> privateTransform [
 	self copyClass.
 	self copyVariables.
 	self copyMethods

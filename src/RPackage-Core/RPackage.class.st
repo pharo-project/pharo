@@ -189,7 +189,7 @@ RPackage >> addClassDefinition: aClass [
 RPackage >> addClassDefinition: aClass toClassTag: aSymbol [
 	"Tags the class aClass with the tag aSymbol"
 
-	(self addClassTag: aSymbol) addClassNamed: aClass name
+	(self addClassTag: aSymbol) addClass: aClass
 ]
 
 { #category : #'class tags' }
@@ -241,17 +241,13 @@ RPackage >> basicImportClass: aClass [
 	"Add the class definition and all the selectors which are not extensions of other packages. If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted (should I use silently or not?)."
 
 	"Question: should we check that for each extension, there is a real package behind or not?"
-	
+
 	"We first remove the potention methods in case there are extensions registered then we add the class."
+
 	self removeAllMethodsFromClass: aClass.
 	self addClassDefinition: aClass.
-	(aClass protocols
-		select: [ :protocol | self isYourClassExtension: protocol ])
-		do: [ :protocol | aClass renameProtocol: protocol as: Protocol unclassified ].
-
-	aClass protocols
-		reject: [ :protocol | protocol isExtensionProtocol ]
-		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
+	(aClass protocols select: [ :protocol | self isYourClassExtension: protocol ]) do: [ :protocol | aClass renameProtocol: protocol as: Protocol unclassified ].
+	self importDefinedMethodsOf: aClass
 ]
 
 { #category : #'class tags' }
@@ -520,6 +516,14 @@ RPackage >> importClass: aClass inTag: aTag [
 	self
 		addClassDefinition:  aClass
 		toClassTag: aTag name
+]
+
+{ #category : #private }
+RPackage >> importDefinedMethodsOf: aClass [
+
+	aClass protocols
+		reject: [ :protocol | protocol isExtensionProtocol ]
+		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
 ]
 
 { #category : #private }
@@ -972,6 +976,16 @@ RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 	protocols do: [ :protocol | protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ]
 ]
 
+{ #category : #'class tags' }
+RPackage >> renameTag: aTag to: newName [
+
+	(self hasTag: aTag) ifFalse: [ ^ self ].
+
+	(aTag isString
+		 ifTrue: [ self classTagNamed: aTag ]
+		 ifFalse: [ aTag ]) renameTo: newName
+]
+
 { #category : #private }
 RPackage >> renameTagsPrefixedWith: oldName to: newName [
 	| oldPrefix newPrefix |
@@ -1087,13 +1101,6 @@ RPackage >> unregisterClass: aClass [
 	"Private method that declares the mapping between a class and its package."
 
 	self organizer unregisterPackage: self forClass: aClass
-]
-
-{ #category : #updating }
-RPackage >> updateDefinedClassNamed: oldString withNewName: newString [
-	"this method should only be used with class names , and not metaclass names"
-	
-	self classTags do: [ :aTag | aTag updateDefinedClassNamed: oldString withNewName: newString ]
 ]
 
 { #category : #updating }

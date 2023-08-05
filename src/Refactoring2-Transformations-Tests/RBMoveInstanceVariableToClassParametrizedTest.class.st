@@ -49,7 +49,7 @@ RBMoveInstanceVariableToClassParametrizedTest >> testRefactoring [
 		(oldClass directlyDefinesInstanceVariable: 'methodBlock').
 	self deny: (newClass directlyDefinesInstanceVariable: 'methodBlock').
 
-	refactoring transform.
+	refactoring primitiveExecute.
 	self assert: refactoring model changes changes size equals: 2.
 	oldClass := refactoring model classNamed: #RBBasicLintRuleTestData.
 	newClass := refactoring model classNamed: #RBFooLintRuleTestData.

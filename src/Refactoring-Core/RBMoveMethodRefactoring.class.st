@@ -329,6 +329,17 @@ RBMoveMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBMoveMethodRefactoring >> privateTransform [
+	self
+		abstractVariables;
+		addSelfReturn;
+		replaceSelfReferences;
+		replaceVariableReferences;
+		compileNewMethods;
+		compileDelegatorMethod
+]
+
+{ #category : #transforming }
 RBMoveMethodRefactoring >> removeArgument [
 	"Removes the excess argument if any.
 	This argument is the variable which is
@@ -387,17 +398,6 @@ RBMoveMethodRefactoring >> storeOn: aStream [
 		nextPutAll: ' variable: ''';
 		nextPutAll: variable;
 		nextPutAll: ''')'
-]
-
-{ #category : #transforming }
-RBMoveMethodRefactoring >> transform [
-	self
-		abstractVariables;
-		addSelfReturn;
-		replaceSelfReferences;
-		replaceVariableReferences;
-		compileNewMethods;
-		compileDelegatorMethod
 ]
 
 { #category : #transforming }

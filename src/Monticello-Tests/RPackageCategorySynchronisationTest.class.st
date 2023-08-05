@@ -53,7 +53,7 @@ RPackageCategorySynchronisationTest >> testRenameCategoryAlsoRenameAllExtensionP
 
 	self assert: xPackage name equals: 'NewCategoryName'.
 	self assert: (classInY >> #extensionFromXInClassInY) protocolName equals: '*NewCategoryName'.
-	self assert: (classInY >> #longNameExtensionFromXInClassInY) protocolName equals: '*NewCategoryName'.
+	self assert: (classInY >> #longNameExtensionFromXInClassInY) protocolName equals: '*NewCategoryName-subcategory'.
 	self assert: (classInZ >> #extensionFromXInClassInZ) protocolName equals: '*NewCategoryName'
 ]
 

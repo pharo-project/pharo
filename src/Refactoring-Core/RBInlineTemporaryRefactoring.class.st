@@ -66,6 +66,14 @@ RBInlineTemporaryRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBInlineTemporaryRefactoring >> privateTransform [
+	self
+		replaceAssignment;
+		replaceReferences;
+		compileMethod
+]
+
+{ #category : #transforming }
 RBInlineTemporaryRefactoring >> replaceAssignment [
 	assignmentNode parent isSequence
 		ifTrue: [assignmentNode parent removeNode: assignmentNode]
@@ -94,14 +102,6 @@ RBInlineTemporaryRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBInlineTemporaryRefactoring >> transform [
-	self
-		replaceAssignment;
-		replaceReferences;
-		compileMethod
 ]
 
 { #category : #preconditions }
