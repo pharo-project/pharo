@@ -16,7 +16,10 @@ Class {
 { #category : #resources }
 RBRemoveMethodDriver >> refactoring [
 
-	refactoring := RBRemoveMethodRefactoring model: model removeMethods: methods from: class
+	refactoring := RBRemoveMethodRefactoring
+		               model: model
+		               removeMethods: (methods collect: [ :each | each selector ])
+		               from: class
 ]
 
 { #category : #execution }
@@ -24,26 +27,33 @@ RBRemoveMethodDriver >> runRefactoring [
 
 	self refactoring.
 	[
-		[ 
-			| changes |
-			changes := refactoring generateChanges.
-			self openPreviewWithChanges: { changes } ]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err |
-		           		^ RBRefactoringError signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err |
-								| dialog |
-								dialog := SpConfirmDialog 
-									 new
-										title: 'Methods are still calling removed method';
-										label: 'Do you want to browse them?';
-										acceptLabel: 'Sure!';
-										cancelLabel: 'No, forget it';
-										openModal.
-								dialog 
-									ifTrue: [ self furtherActionFor: (RBMethodStillCalled new refactoring: refactoring)].  err return ].
-	
+	[
+	| changes senders |
+	senders := refactoring senders.
+
+	senders size = 0
+		ifTrue: [ changes := refactoring generateChanges ]
+		ifFalse: [ 
+				 
+			].
+
+
+	self openPreviewWithChanges: { changes } ]
+		on: RBApplicabilityChecksFailedError
+		do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
+		on: RBBreakingChangeChecksFailedWarning
+		do: [ :err |
+			| dialog |
+			dialog := SpConfirmDialog new
+				          title: 'Methods are still calling removed method';
+				          label: 'Do you want to browse them?';
+				          acceptLabel: 'Sure!';
+				          cancelLabel: 'No, forget it';
+				          openModal.
+			dialog ifTrue: [
+				self furtherActionFor:
+					(RBMethodStillCalled new refactoring: refactoring) ].
+			err return ]
 ]
 
 { #category : #initialization }

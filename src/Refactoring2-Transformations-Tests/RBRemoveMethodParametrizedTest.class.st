@@ -63,6 +63,23 @@ RBRemoveMethodParametrizedTest >> testFailureRemoveSameMethodButSendsSuper [
 ]
 
 { #category : #tests }
+RBRemoveMethodParametrizedTest >> testJustSendsSuper [
+
+	| refactoring selectors |
+	selectors := Array with: #justSuperSendInSubclass .
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArgumentsColl: selectors
+		               andOtherArgs: { #RBSubclassOfClassToRename }.
+
+	selectors do: [ :symbol |
+		self assert: ((model classNamed: #RBSubclassOfClassToRename)
+				 directlyDefinesMethod: symbol) ].
+
+	self assert: (refactoring first justSendsSuper: #justSuperSendInSubclass)
+]
+
+{ #category : #tests }
 RBRemoveMethodParametrizedTest >> testModelRecursiveMethodThatIsNotReferencedFromOtherMethods [
 	| class otherClass |
 	class := model classNamed: #Object.
@@ -101,4 +118,43 @@ RBRemoveMethodParametrizedTest >> testRemoveMethod [
 			(( model classNamed: #RBClassDataForRefactoringTest)
 				directlyDefinesMethod: symbol)
 	]
+]
+
+{ #category : #tests }
+RBRemoveMethodParametrizedTest >> testSendersOfSuper [
+
+	| refactoring selectors |
+	selectors := Array with: #justSuperSendInSubclass.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArgumentsColl: selectors
+		               andOtherArgs: { #RBSubclassOfClassToRename }.
+	self halt.
+	self assert:
+		(refactoring first sendersOf: #justSuperSendInSubclass) isNotEmpty
+]
+
+{ #category : #tests }
+RBRemoveMethodParametrizedTest >> testSendersOfUnsentMessage [
+
+	| refactoring selectors |
+	selectors := Array with: #methodThatIsNotUsedForSure.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArgumentsColl: selectors
+		               andOtherArgs: { #RBSubclassOfClassToRename }.
+	self assert:
+		(refactoring first sendersOf: {#methodThatIsNotUsedForSure}) isEmpty
+]
+
+{ #category : #tests }
+RBRemoveMethodParametrizedTest >> testSendersOfUnsentMessageAndUndefinedMessage [
+
+	| refactoring selectors |
+	selectors := Array with: #methodThatIsNotUsedForSure123456.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArgumentsColl: selectors
+		               andOtherArgs: { #RBSubclassOfClassToRename }.
+	self assert: (refactoring first sendersOf: selectors) isEmpty
 ]

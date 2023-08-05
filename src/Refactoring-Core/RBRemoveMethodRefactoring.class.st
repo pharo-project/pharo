@@ -13,11 +13,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRemoveMethodRefactoring class >> model: aRBSmalltalk removeMethods: selectorCollection from: aClass [
+RBRemoveMethodRefactoring class >> model: aRBNamespace removeMethods: selectorCollection from: aClass [
+
 	^ self new
-		model: aRBSmalltalk;
-		removeMethods: selectorCollection from: aClass;
-		yourself
+		  model: aRBNamespace;
+		  removeMethods: selectorCollection from: aClass;
+		  yourself
 ]
 
 { #category : #'instance creation' }
@@ -39,7 +40,7 @@ RBRemoveMethodRefactoring >> applicabilityConditions [
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> breakingChangeConditions [
 
-	^  (RBCondition withBlock: [
+	^ (RBCondition withBlock: [
 			   self checkSuperMethods.
 			   true ])
 ]
@@ -87,15 +88,9 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
 
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> checkReferencesToAnyOf: aSelectorCollection [
+
 	| occurrences |
-	occurrences := OrderedCollection new.
-	aSelectorCollection
-		do: [ :each |
-			self model
-				allReferencesTo: each
-				do: [ :aRBMethod |
-					(aSelectorCollection includes: aRBMethod selector)
-						ifFalse: [ occurrences add: each -> aRBMethod ] ] ].
+	occurrences := self sendersOf: aSelectorCollection.
 	occurrences ifEmpty: [ ^ self ].
 	^ self checkBrowseOccurrences: occurrences
 ]
@@ -144,7 +139,7 @@ RBRemoveMethodRefactoring >> generateChanges [
 RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 
 	| matcher parseTree superclass |
-
+	self halt.
 	matcher := self parseTreeSearcherClass justSendsSuper.
 	parseTree := class parseTreeForSelector: aSelector.
 	( matcher executeTree: parseTree initialAnswer: false )
@@ -177,6 +172,24 @@ RBRemoveMethodRefactoring >> preconditions [
 RBRemoveMethodRefactoring >> removeMethods: selectorCollection from: aClass [
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection
+]
+
+{ #category : #preconditions }
+RBRemoveMethodRefactoring >> senders [
+
+	^ self sendersOf: selectors
+]
+
+{ #category : #preconditions }
+RBRemoveMethodRefactoring >> sendersOf: aCollection [
+
+	| occurrences |
+	occurrences := OrderedCollection new.
+	aCollection do: [ :each |
+		self model allReferencesTo: each do: [ :aRBMethod |
+			(aCollection includes: aRBMethod selector) ifFalse: [
+				occurrences add: each -> aRBMethod ] ] ].
+	^ occurrences
 ]
 
 { #category : #printing }
