@@ -738,9 +738,7 @@ RPackageOrganizer >> removeCategory: aCategory [
 	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
 		package name = category
 			ifTrue: [ self removePackage: package ]
-			ifFalse: [ package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | package removeClassTag: tag name ] ] ].
-
-	SystemAnnouncer uniqueInstance classCategoryRemoved: category
+			ifFalse: [ package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | package removeClassTag: tag name ] ] ]
 ]
 
 { #category : #'system integration' }
@@ -799,27 +797,22 @@ RPackageOrganizer >> removeTag: aTag fromPackage: aPackage [
 RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 	"Rename a category. No action if new name already exists, or if old name does not exist."
 
-	| oldName newName package announceChange |
+	| oldName newName package |
 	oldName := oldCatString asSymbol.
 	newName := newCatString asSymbol.
-	announceChange := false.
 
 	categoryMap at: newName ifPresent: [ "new name exists, so no action" ^ self ].
 
 	categoryMap at: oldName ifPresent: [ :classes |
 		categoryMap
 			at: newName put: classes;
-			removeKey: oldName.
-		announceChange := true ].
+			removeKey: oldName ].
 
 	"We do it in all cases because we have a few cases where a category was not created but a package was. It's bugs but since categories will vanish there is no reason to care too much."
 	package := (self packageMatchingExtensionName: oldName) ifNil: [ self ensurePackage: newName ].
 	package name = oldName ifTrue: [ self renamePackage: package to: newName ].
 
-	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ].
-
-	"I prefer to announce the category rename after updating the packages in case a listener to this announcement manipulates packages."
-	announceChange ifTrue: [ SystemAnnouncer uniqueInstance classCategoryRenamedFrom: oldName to: newName ]
+	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ]
 ]
 
 { #category : #'system integration' }
