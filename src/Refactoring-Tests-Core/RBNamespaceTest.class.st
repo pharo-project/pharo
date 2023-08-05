@@ -207,11 +207,14 @@ RBNamespaceTest >> testReparentSuperclassChange [
 
 { #category : #'class tests' }
 RBNamespaceTest >> testRoots [
+
 	| model |
 	model := modelFactory rbNamespace new.
 	self
-		assert: (model rootClasses asSortedCollection: [:a :b | a name < b name])
+		assert:
+			(model rootClasses asSortedCollection: [ :a :b | a name < b name ])
 				asArray
-		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
-							asSortedCollection: [:a :b | a name < b name]) asArray
+		equals:
+			(({ ProtoObject} collect: [ :each | model classFor: each ])
+				 asSortedCollection: [ :a :b | a name < b name ]) asArray
 ]

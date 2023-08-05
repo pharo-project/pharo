@@ -104,13 +104,7 @@ RBRemoveMethodTransformation >> checkBrowseOccurrences: anCollectionOfOccurrence
 RBRemoveMethodTransformation >> checkReferences [
 
 	| occurrences |
-	occurrences := OrderedCollection new.
-
-	self model
-		  allReferencesTo: selector
-		  do: [ :aRBMethod |
-				(selector = aRBMethod selector)
-				ifFalse: [ occurrences add: selector -> aRBMethod ] ].
+	occurrences := self senders.
 	occurrences ifEmpty: [ ^ self ].
 	^ self checkBrowseOccurrences: occurrences
 ]
@@ -173,6 +167,17 @@ RBRemoveMethodTransformation >> selector: aSelector from: aClassName [
 
 	self className: aClassName.
 	selector := aSelector
+]
+
+{ #category : #preconditions }
+RBRemoveMethodTransformation >> senders [
+
+	| occurrences |
+	occurrences := OrderedCollection new.
+	self model allReferencesTo: selector do: [ :aRBMethod |
+		selector = aRBMethod selector ifFalse: [
+			occurrences add: selector -> aRBMethod ] ].
+	^ occurrences
 ]
 
 { #category : #printing }
