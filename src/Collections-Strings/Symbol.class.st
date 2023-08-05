@@ -410,6 +410,11 @@ Symbol >> cull: anObject [
 	^anObject perform: self
 ]
 
+{ #category : #evaluating }
+Symbol >> cull: receiverObject cull: argumentObject [
+	^ receiverObject perform: self withEnoughArguments: { argumentObject }
+]
+
 { #category : #private }
 Symbol >> errorNoModification [
 
@@ -614,6 +619,11 @@ Symbol >> uncapitalized [
 { #category : #evaluating }
 Symbol >> value: anObject [
 	^anObject perform: self
+]
+
+{ #category : #evaluating }
+Symbol >> valueWithArguments: aCollection [ 
+	^ aCollection first perform: self withArguments: aCollection allButFirst.
 ]
 
 { #category : #copying }
