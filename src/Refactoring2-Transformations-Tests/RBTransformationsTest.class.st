@@ -360,7 +360,7 @@ RBTransformationsTest >> testRenameClassTransform [
 		                   rename: oldClassName
 		                   to: newClassName) primitiveExecute.
 
-	self assert: transformation model changes changes size equals: 6.
+	self assert: transformation model changes changes size equals: 9.
 
 	class := transformation model classNamed: newClassName.
 	self
