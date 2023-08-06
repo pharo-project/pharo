@@ -17,9 +17,29 @@ RBSubclassOfClassToRename >> calls1 [
 	^self rewriteRule1: (self rewriteRule1: self calls)
 ]
 
+{ #category : #performing }
+RBSubclassOfClassToRename >> equallyDefinedInSubclass [
+
+	self method1 + 33
+]
+
+{ #category : #accessing }
+RBSubclassOfClassToRename >> justSuperSendInSubclass [
+
+	super justSuperSendInSubclass
+]
+
 { #category : #accessing }
 RBSubclassOfClassToRename >> name [
 	^rewriteRule1
+]
+
+{ #category : #accessing }
+RBSubclassOfClassToRename >> printOn: aStream [
+
+	"just for the test"
+	super printOn: aStream.
+	aStream nextPutAll: 'tintin'
 ]
 
 { #category : #performing }
