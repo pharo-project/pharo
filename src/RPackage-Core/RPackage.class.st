@@ -388,7 +388,7 @@ RPackage >> demoteToTagInPackageNamed: aString [
 	aString = self name ifTrue: [ ^ self ].
 
 	self unregister.
-	newPackage := self class organizer packageNamed: aString ifAbsent: [ (self class named: aString organizer: self organizer) register ].
+	newPackage := self organizer ensurePackage: aString.
 	newPackage importPackage: self.
 
 	newPackage classes do: [ :each | SystemAnnouncer uniqueInstance classRepackaged: each from: self to: newPackage ].
