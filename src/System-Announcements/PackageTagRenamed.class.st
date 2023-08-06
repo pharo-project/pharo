@@ -14,7 +14,7 @@ Class {
 { #category : #'class initialization' }
 PackageTagRenamed class >> initialize [
 
-	self deprecatedAliases: { 'ClassTagRenamed' }
+	self deprecatedAliases: { #ClassTagRenamed . #CategoryRenamed }
 ]
 
 { #category : #'instance creation' }
