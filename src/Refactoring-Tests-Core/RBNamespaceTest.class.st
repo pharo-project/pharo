@@ -58,14 +58,14 @@ RBNamespaceTest >> testAllReferencesToOnClassSubset [
 	rbNamespace2 := RBNamespace onEnvironment: rbclasses.
 
 	self
-		assert:
-		(rbNamespace2 allReferencesTo: #methodThatIsNotUsedForSure) size
-		equals: 0.
+		assertEmpty: 
+		(rbNamespace2 allReferencesTo: #methodThatIsNotUsedForSure).
+		
 	"A method just defined the same is not a reference"
 	self
-		assert:
-		(rbNamespace2 allReferencesTo: #equallyDefinedInSubclass) size
-		equals: 0
+		assertEmpty:
+		(rbNamespace2 allReferencesTo: #equallyDefinedInSubclass) 
+		
 ]
 
 { #category : #'tests - on environment' }
