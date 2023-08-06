@@ -91,20 +91,6 @@ SystemAnnouncer >> classCategoryAdded: aClassCategoryName [
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> classCategoryRemoved: aClassCategoryName [
-
-	self announce: (CategoryRemoved categoryName: aClassCategoryName)
-]
-
-{ #category : #triggering }
-SystemAnnouncer >> classCategoryRenamedFrom: anOldClassCategoryName to: aNewClassCategoryName [
-
-	self announce: (CategoryRenamed
-					classCategoryRenamedFrom: anOldClassCategoryName
-					to: aNewClassCategoryName)
-]
-
-{ #category : #triggering }
 SystemAnnouncer >> classCommented: aClass [
 	"A class with the given name was commented in the system."
 

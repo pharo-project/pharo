@@ -7,6 +7,12 @@ Class {
 	#category : #'Epicea-Model'
 }
 
+{ #category : #testing }
+EpCodeChange class >> isAbstract [
+
+	^ self == EpCodeChange
+]
+
 { #category : #accessing }
 EpCodeChange >> affectedPackageName [
 

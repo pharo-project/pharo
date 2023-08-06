@@ -105,6 +105,13 @@ RBRemoveClassRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBRemoveClassRefactoring >> privateTransform [
+	self
+		reparentSubclasses;
+		removeClasses
+]
+
+{ #category : #transforming }
 RBRemoveClassRefactoring >> removeClasses [
 	classNames do: [:each | self model removeClassNamed: each]
 ]
@@ -125,11 +132,4 @@ RBRemoveClassRefactoring >> storeOn: aStream [
 	aStream nextPutAll: ' classNames: '.
 	classNames asArray storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBRemoveClassRefactoring >> transform [
-	self
-		reparentSubclasses;
-		removeClasses
 ]

@@ -26,12 +26,6 @@ EpOldStateVisitor >> visitBehaviorNameChange: aClassRenameChange [
 ]
 
 { #category : #visitor }
-EpOldStateVisitor >> visitCategoryRename: aClassCategoryRenamedChange [
-
-	^ aClassCategoryRenamedChange oldCategoryName
-]
-
-{ #category : #visitor }
 EpOldStateVisitor >> visitClassModification: aModificationClassChange [
 
 	^ self stringForBehavior: aModificationClassChange oldClass
@@ -64,9 +58,21 @@ EpOldStateVisitor >> visitMethodRemoval: aMethodRemoval [
 ]
 
 { #category : #visitor }
+EpOldStateVisitor >> visitPackageRename: aPackageRename [
+
+	^ aPackageRename oldPackageName
+]
+
+{ #category : #visitor }
 EpOldStateVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
 
-	^ self printTag: aPackageTagRemoval tagName package: aPackageTagRemoval affectedPackageName
+	^ self printTag: aPackageTagRemoval tagName package: aPackageTagRemoval packageName
+]
+
+{ #category : #visitor }
+EpOldStateVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	^ self printTag: aPackageTagRename oldTagName package: aPackageTagRename packageName
 ]
 
 { #category : #visitor }

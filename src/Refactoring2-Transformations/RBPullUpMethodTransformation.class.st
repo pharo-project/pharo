@@ -308,7 +308,7 @@ RBPullUpMethodTransformation >> removeDuplicatesOf: aSelector [
 						(RBRemoveMethodTransformation
 							model: self model
 							selector: aClass
-							from: aSelector) transform ]]]]
+							from: aSelector) primitiveExecute ]]]]
 ]
 
 { #category : #executing }

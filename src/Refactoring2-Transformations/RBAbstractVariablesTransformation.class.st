@@ -40,28 +40,30 @@ RBAbstractVariablesTransformation class >> model: aRBSmalltalk abstractVariables
 
 { #category : #executing }
 RBAbstractVariablesTransformation >> abstractClassVariable: aString [
+
 	| transformation rewriter nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
 	transformation := (RBAddVariableAccessorTransformation
-		model: self model
-		variable: aString
-		class: nonMetaClass
-		classVariable: true)
-		transform.
+		                   model: self model
+		                   variable: aString
+		                   class: nonMetaClass
+		                   classVariable: true) primitiveExecute.
 	rewriter := self parseTreeRewriter.
 	fromClass isMeta
-		ifTrue:
-			[ rewriter
+		ifTrue: [
+			rewriter
 				replace: aString , ' := ``@object'
-					with: ('self <1s> ``@object' expandMacrosWith: transformation setterMethod);
-				replace: aString
-					with: 'self ' , transformation getterMethod ]
-		ifFalse:
-			[ rewriter
+				with:
+					('self <1s> ``@object' expandMacrosWith:
+							 transformation setterMethod);
+				replace: aString with: 'self ' , transformation getterMethod ]
+		ifFalse: [
+			rewriter
 				replace: aString , ' := ``@object'
-					with: ('self class <1s> ``@object' expandMacrosWith: transformation setterMethod);
+				with: ('self class <1s> ``@object' expandMacrosWith:
+							 transformation setterMethod);
 				replace: aString
-					with: 'self class ' , transformation getterMethod ].
+				with: 'self class ' , transformation getterMethod ].
 	(rewriter executeTree: tree) ifTrue: [ tree := rewriter tree ]
 ]
 
@@ -79,19 +81,21 @@ RBAbstractVariablesTransformation >> abstractClassVariables [
 
 { #category : #executing }
 RBAbstractVariablesTransformation >> abstractInstanceVariable: aString [
+
 	| transformation rewriter |
 	transformation := (RBAddVariableAccessorTransformation
-		model: self model
-		variable: aString
-		class: fromClass
-		classVariable: false)
-		transform.
+		                   model: self model
+		                   variable: aString
+		                   class: fromClass
+		                   classVariable: false) primitiveExecute.
 	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: aString , ' := ``@object'
-			with: ('self <1s> ``@object' expandMacrosWith: transformation setterMethod);
+		with:
+			('self <1s> ``@object' expandMacrosWith:
+					 transformation setterMethod);
 		replace: aString with: 'self ' , transformation getterMethod.
-	(rewriter executeTree: tree) ifTrue: [tree := rewriter tree]
+	(rewriter executeTree: tree) ifTrue: [ tree := rewriter tree ]
 ]
 
 { #category : #executing }
@@ -112,14 +116,14 @@ RBAbstractVariablesTransformation >> abstractVariablesIn: aBRProgramNode from: f
 	| poolTransformation |
 	tree := aBRProgramNode.
 	fromClass := self model classObjectFor: fromBehavior.
-	toClasses := behaviorCollection collect: [ :each | self model classObjectFor: each ].
+	toClasses := behaviorCollection collect: [ :each |
+		             self model classObjectFor: each ].
 	ignore := aVariableName.
 	poolTransformation := (RBExpandReferencedPoolsTransformation
-				model: self model
-				forMethod: tree
-				fromClass: fromClass
-				toClasses: toClasses)
-				transform.
+		                       model: self model
+		                       forMethod: tree
+		                       fromClass: fromClass
+		                       toClasses: toClasses) primitiveExecute.
 	self computeVariablesToAbstract
 ]
 

@@ -147,6 +147,11 @@ RBRemoveMethodRefactoring >> preconditions [
 			   true ])
 ]
 
+{ #category : #transforming }
+RBRemoveMethodRefactoring >> privateTransform [
+	selectors do: [:each | class removeMethod: each]
+]
+
 { #category : #initialization }
 RBRemoveMethodRefactoring >> removeMethods: selectorCollection from: aClass [
 	class := self classObjectFor: aClass.
@@ -175,9 +180,4 @@ RBRemoveMethodRefactoring >> superclassEquivalentlyDefines: aSelector [
 	( superTree isNil or: [ myTree isNil ] )
 		ifTrue: [ ^ false ].
 	^ superTree equalTo: myTree exceptForVariables: #()
-]
-
-{ #category : #transforming }
-RBRemoveMethodRefactoring >> transform [
-	selectors do: [:each | class removeMethod: each]
 ]

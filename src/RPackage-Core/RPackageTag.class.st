@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'package',
 		'name',
-		'classNames'
+		'classes'
 	],
 	#category : #'RPackage-Core-Base'
 }
@@ -27,13 +27,9 @@ RPackageTag class >> package: aPackage name: aString [
 
 { #category : #accessing }
 RPackageTag >> addClass: aClass [
-	aClass category: self categoryName
-]
 
-{ #category : #accessing }
-RPackageTag >> addClassNamed: aSymbol [
-	(classNames includes: aSymbol) ifTrue: [ ^ self ].
-	^ classNames add: aSymbol
+	aClass category = self categoryName ifFalse: [ aClass category: self categoryName ].
+	classes add: aClass
 ]
 
 { #category : #private }
@@ -62,13 +58,14 @@ RPackageTag >> categoryName [
 
 { #category : #accessing }
 RPackageTag >> classNames [
-	^ classNames
+
+	^ self classes collect: [ :class | class name ]
 ]
 
 { #category : #accessing }
 RPackageTag >> classes [
 
-	^ self classNames collect: [ :each | self environment at: each ]
+	^ classes
 ]
 
 { #category : #accessing }
@@ -133,8 +130,9 @@ RPackageTag >> includesSelector: aSelector ofClass: aClass [
 
 { #category : #initialization }
 RPackageTag >> initialize [
+
 	super initialize.
-	classNames := Set new
+	classes := IdentitySet new
 ]
 
 { #category : #initialization }
@@ -205,12 +203,8 @@ RPackageTag >> promoteAsRPackage [
 
 { #category : #accessing }
 RPackageTag >> removeClass: aClass [
-	^ self removeClassNamed: aClass name
-]
 
-{ #category : #accessing }
-RPackageTag >> removeClassNamed: aSymbol [
-	^ classNames remove: aSymbol ifAbsent: []
+	^ classes remove: aClass ifAbsent: [  ]
 ]
 
 { #category : #accessing }
@@ -236,7 +230,7 @@ RPackageTag >> renameTo: newTagName [
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self classes do: [ :each | each category: categoryName ].
 		self organizer renameCategory: oldName toBe: categoryName ].
-	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldName newName: newTagName)
+	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: tagName newName: newTagName)
 ]
 
 { #category : #accessing }
@@ -257,12 +251,4 @@ RPackageTag >> toCategoryName: aString [
 	^ aString = self packageName
 		ifTrue: [ aString ]
 		ifFalse: [ self packageName, '-', aString ]
-]
-
-{ #category : #updating }
-RPackageTag >> updateDefinedClassNamed: oldString withNewName: newString [
-	(self hasClassNamed: oldString)
-		ifFalse: [ ^ self ].
-	self removeClassNamed: oldString.
-	self addClassNamed: newString
 ]

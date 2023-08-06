@@ -123,6 +123,16 @@ RBChildrenToSiblingsRefactoring >> preconditions [
 					& (RBCondition isImmediateSubclass: each of: parent)]
 ]
 
+{ #category : #transforming }
+RBChildrenToSiblingsRefactoring >> privateTransform [
+	self
+		addSuperclass;
+		pushUpVariables;
+		pullUpMethods;
+		changeIsKindOfReferences;
+		reparentSubclasses
+]
+
 { #category : #'private - variables' }
 RBChildrenToSiblingsRefactoring >> pullUpClassInstanceVariables [
 	| newSuperclass |
@@ -257,14 +267,4 @@ RBChildrenToSiblingsRefactoring >> subclassResponsibilityFor: aSelector in: aCla
 		ifFalse: [ methodNode arguments last stop ].
 	^ '<1s><n><t>self subclassResponsibility'
 		expandMacrosWith: (source copyFrom: 1 to: position)
-]
-
-{ #category : #transforming }
-RBChildrenToSiblingsRefactoring >> transform [
-	self
-		addSuperclass;
-		pushUpVariables;
-		pullUpMethods;
-		changeIsKindOfReferences;
-		reparentSubclasses
 ]

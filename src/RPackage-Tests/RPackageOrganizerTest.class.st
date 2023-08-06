@@ -375,11 +375,11 @@ RPackageOrganizerTest >> testRemovePackage [
 	self organizer removePackage: p2.
 	self organizer removePackage: p3.
 
-	self deny: (self organizer includesPackageBackPointerForClass: a1).
-	self deny: (self organizer includesPackageBackPointerForClass: a2).
-	self deny: (self organizer includesPackageBackPointerForClass: b1).
-	self deny: (self organizer includesPackageBackPointerForClass: b2).
-	self deny: (self organizer includesPackageBackPointerForClass: a3)
+	self deny: (self organizer packageOf: a1) isNil.
+	self deny: (self organizer packageOf: a2) isNil.
+	self deny: (self organizer packageOf: b1) isNil.
+	self deny: (self organizer packageOf: b2) isNil.
+	self deny: (self organizer packageOf: a3) isNil
 ]
 
 { #category : #tests }

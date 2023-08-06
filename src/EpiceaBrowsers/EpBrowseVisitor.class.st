@@ -18,19 +18,6 @@ EpBrowseVisitor >> visitBehaviorChange: aChange [
 ]
 
 { #category : #visitor }
-EpBrowseVisitor >> visitCategoryChange: aChange [
-
-	| package |
-	package := RPackageOrganizer default packageNamed: aChange affectedPackageName.
-	package classTags
-		detect: [ :tag |
-			tag categoryName = aChange categoryName
-		]
-		ifFound: [ :tag | Smalltalk tools browser openOnPackage: tag ]
-		ifNone: [ self inform: 'Category ' , aChange categoryName , ' not found.' ]
-]
-
-{ #category : #visitor }
 EpBrowseVisitor >> visitCodeChange: aChange [
 	^ self error: 'Should not be reached'
 ]
@@ -54,4 +41,14 @@ EpBrowseVisitor >> visitMethodChange: aChange [
 EpBrowseVisitor >> visitPackageChange: aChange [
 
 	(self packageOrganizer packageNamed: aChange packageName ifAbsent: [ ^ self inform: 'Package ' , aChange packageName , ' not found.' ]) browse
+]
+
+{ #category : #visitor }
+EpBrowseVisitor >> visitPackageTagChange: aPackageTagChange [
+
+	Smalltalk tools browser openOnPackage: ((self packageOrganizer
+			  packageNamed: aPackageTagChange packageName
+			  ifAbsent: [ ^ self inform: 'Package named ' , aPackageTagChange packageName , ' not found in the system' ])
+			 classTagNamed: aPackageTagChange tagName
+			 ifAbsent: [ ^ self inform: 'Tag named ' , aPackageTagChange tagName , ' not found in package named ' , aPackageTagChange packageName ])
 ]

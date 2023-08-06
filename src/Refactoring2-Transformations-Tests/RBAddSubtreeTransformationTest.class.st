@@ -29,17 +29,15 @@ RBAddSubtreeTransformationTest >> testRefactoring [
 
 	self
 		shouldFail: (RBAddSubtreeTransformation
-							interval: (0 to: 1)
-							with: ':= 123'
-							from: #selector:from:
-							in: #RBRemoveMethodTransformation)
-							asRefactoring;
+				 interval: (0 to: 1)
+				 with: ':= 123'
+				 from: #selector:from:
+				 in: #RBRemoveMethodTransformation);
 		shouldFail: (RBAddSubtreeTransformation
-							interval: (0 to: 1)
-							with: '^ selector'
-							from: #selector:for:
-							in: #RBRemoveMethodTransformation)
-							asRefactoring
+				 interval: (0 to: 1)
+				 with: '^ selector'
+				 from: #selector:for:
+				 in: #RBRemoveMethodTransformation)
 ]
 
 { #category : #tests }
@@ -47,15 +45,17 @@ RBAddSubtreeTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBAddSubtreeTransformation
-		interval: (0 to: 1)
-		with: 'self printString'
-		from: #one
-		in: self changeMockClass name)
-		transform.
+		                   interval: (0 to: 1)
+		                   with: 'self printString'
+		                   from: #one
+		                   in: self changeMockClass name) primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed: self changeMockClass name asSymbol.
+	class := transformation model classNamed:
+		         self changeMockClass name asSymbol.
 	self assert: (class directlyDefinesMethod: #one).
-	self assert: (class parseTreeForSelector: #one) body statements size equals: 2
+	self
+		assert: (class parseTreeForSelector: #one) body statements size
+		equals: 2
 ]

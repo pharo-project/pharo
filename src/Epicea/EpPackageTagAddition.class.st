@@ -3,7 +3,7 @@ I represent the creation of a tag in a package.
 "
 Class {
 	#name : #EpPackageTagAddition,
-	#superclass : #EpCategoryChange,
+	#superclass : #EpPackageTagChange,
 	#category : #'Epicea-Model'
 }
 

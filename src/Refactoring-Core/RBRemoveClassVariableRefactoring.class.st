@@ -38,6 +38,6 @@ RBRemoveClassVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBRemoveClassVariableRefactoring >> transform [
+RBRemoveClassVariableRefactoring >> privateTransform [
 	class removeClassVariable: variableName
 ]

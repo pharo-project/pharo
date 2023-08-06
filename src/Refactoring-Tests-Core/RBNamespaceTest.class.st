@@ -212,6 +212,6 @@ RBNamespaceTest >> testRoots [
 	self
 		assert: (model rootClasses asSortedCollection: [:a :b | a name < b name])
 				asArray
-		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
+		equals: (({ProtoObject} collect: [:each | model classFor: each])
 							asSortedCollection: [:a :b | a name < b name]) asArray
 ]
