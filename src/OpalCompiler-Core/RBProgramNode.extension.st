@@ -43,8 +43,9 @@ RBProgramNode >> irInstruction [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> isClean [
-	^ self children allSatisfy: [ :child | child isClean ]
+RBProgramNode >> isAccessingSelf [
+	"return true if accessing an ivar, self or super"
+	^ self children anySatisfy: [ :child | child isAccessingSelf ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
