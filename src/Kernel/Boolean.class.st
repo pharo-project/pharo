@@ -80,6 +80,11 @@ Boolean >> asBit [
 	self subclassResponsibility
 ]
 
+{ #category : #converting }
+Boolean >> asInteger [
+	^ self subclassResponsibility
+]
+
 { #category : #copying }
 Boolean >> deepCopy [
 	"Receiver has two concrete subclasses, True and False.
@@ -181,6 +186,12 @@ Boolean >> or: alternativeBlock [
 	"(false or: [3]) >>> 3"
 
 	self subclassResponsibility
+]
+
+{ #category : #pinning }
+Boolean >> setPinnedInMemory: aBoolean [
+
+	self error: self printString , ' cannot be pinned.'
 ]
 
 { #category : #copying }

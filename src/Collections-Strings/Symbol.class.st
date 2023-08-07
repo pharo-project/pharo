@@ -115,9 +115,8 @@ Symbol class >> hasInterned: aString ifTrue: symBlock [
 
 { #category : #'class initialization' }
 Symbol class >> initialize [
-	self rehash.
-	SessionManager default
-		registerSystemClassNamed: #Symbol
+
+	self rehash
 ]
 
 { #category : #'symbol table' }
@@ -494,6 +493,23 @@ Symbol >> isUnary [
 	"#between:and: isUnary >>> false"
 
 	^ self precedence = 1
+]
+
+{ #category : #sorting }
+Symbol >> keywordsStrict [
+	"Returns the keywords of the provided selector. If the receiver is not keyword-based, an empty array is returned."
+
+	"#foo: keywordsStrict >>> #('foo:')"
+
+	"#foo:bar: keywordsStrict >>> #('foo:' 'bar:')"
+
+	"#foo keywordsStrict >>> #()"
+
+	"#+ keywordsStrict >>> #()"
+
+	^ self isKeyword
+		  ifTrue: [ self keywords ]
+		  ifFalse: [ #(  ) ]
 ]
 
 { #category : #comparing }

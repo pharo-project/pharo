@@ -225,7 +225,7 @@ SettingBrowser class >> forKeywords: aCollectionOfKeywords [
 { #category : #accessing }
 SettingBrowser class >> initialExtent [
 	"Initial extent of the SettingBrowser window"
-	^ 900@600
+	^ (900@600) scaledByDisplayScaleFactor
 ]
 
 { #category : #'world menu' }
@@ -279,12 +279,6 @@ SettingBrowser class >> settingsKeywords [
 { #category : #icons }
 SettingBrowser class >> taskbarIconName [
 	^#smallConfiguration
-]
-
-{ #category : #'private helpers' }
-SettingBrowser class >> viewAllSettings [
-	"self viewAllSettings"
-	Smalltalk tools workspace openContents: self allSettingsState label: 'Current Setting assignments'
 ]
 
 { #category : #menu }

@@ -46,28 +46,23 @@ ReSmalllintChecker >> checkClass: aClass [
 { #category : #private }
 ReSmalllintChecker >> checkMethodsForClass: aClass [
 
-	environment
-		selectorsForClass: aClass
-		do: [ :selector | | method ast |
-			method := aClass>>selector.
-			self getCritiquesAbout: method by: methodRules.
-			nodeRules do: [ :r |
-				ast := method ast.
-				"for rewrite rules, we run every rule on a copy of the ast"
-				r isRewriteRule ifTrue: [ ast := ast copy  ].
-				ast nodesDo: [ :node |
-						r
-							check: node
-							forCritiquesDo: [ :crit |
-								crit sourceAnchor initializeEnitity: method.
-								self addCritique: crit ] ] ]]
+	environment methodsForClass: aClass do: [ :method |
+		| ast |
+		self getCritiquesAbout: method by: methodRules.
+		nodeRules do: [ :r |
+			ast := method ast.
+			"for rewrite rules, we run every rule on a copy of the ast"
+			r isRewriteRule ifTrue: [ ast := ast copy ].
+			ast nodesDo: [ :node |
+				r check: node forCritiquesDo: [ :crit |
+					crit sourceAnchor initializeEnitity: method.
+					self addCritique: crit ] ] ] ]
 ]
 
 { #category : #private }
 ReSmalllintChecker >> checkPackage: aPackage [
 
-	(environment includesPackage: aPackage) ifTrue: [
-		self getCritiquesAbout: aPackage by: packageRules ]
+	(environment includesPackage: aPackage) ifTrue: [ self getCritiquesAbout: aPackage by: packageRules ]
 ]
 
 { #category : #manifest }
@@ -167,15 +162,11 @@ ReSmalllintChecker >> manifestBuilderOfClass: aClass [
 
 { #category : #accessing }
 ReSmalllintChecker >> manifestBuilderOfMethod: aMethod [
-	| key cl |
-	cl := aMethod methodClass.
-	key := cl name , aMethod category asString.
-	^ manifestClassCache
-		at: key
-		ifAbsentPut: [
-			(self builderManifestClass hasManifestFor: aMethod)
-				ifTrue: [ self builderManifestClass of: aMethod ]
-				ifFalse: [ nil ] ]
+
+	^ manifestClassCache at: aMethod methodClass name , aMethod protocolName ifAbsentPut: [
+		  (self builderManifestClass hasManifestFor: aMethod)
+			  ifTrue: [ self builderManifestClass of: aMethod ]
+			  ifFalse: [ nil ] ]
 ]
 
 { #category : #accessing }

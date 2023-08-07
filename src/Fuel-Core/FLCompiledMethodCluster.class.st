@@ -19,31 +19,17 @@ FLCompiledMethodCluster class >> cleanUp [
 
 { #category : #'class initialization' }
 FLCompiledMethodCluster class >> initialize [ 
-	self setTrailerWithSourceCode
+	self setTrailerWithoutSourceCode
 ]
 
 { #category : #configuring }
-FLCompiledMethodCluster class >> setTrailerWithNoChange [
-	"Make compiled methods be serialized as they are."
+FLCompiledMethodCluster class >> setTrailerWithoutSourceCode [
+	"Make compiled methods be serialized without source code.
+	As of Pharo 12, source code is stored in the #source property
+	and no longer the method trailer."
 
-	^ self transformationForSerializing: [:aCompiledMethod | aCompiledMethod ]
-]
-
-{ #category : #configuring }
-FLCompiledMethodCluster class >> setTrailerWithNoSource [
-	"Make compiled methods be serialized without source code."
-
-	^ self transformationForSerializing: [:aCompiledMethod |
-		aCompiledMethod copyWithTrailerBytes: CompiledMethodTrailer empty ]
-]
-
-{ #category : #configuring }
-FLCompiledMethodCluster class >> setTrailerWithSourceCode [
-	"Make compiled methods be serialized with embedded source code."
-
-	^ self transformationForSerializing: [:aCompiledMethod | 
-		aCompiledMethod copyWithTrailerBytes: 
-			(CompiledMethodTrailer new sourceCode: aCompiledMethod sourceCode) ]
+	self transformationForSerializing: [ :aCompiledMethod |
+		aCompiledMethod copy clearSourcePointer ]
 ]
 
 { #category : #accessing }

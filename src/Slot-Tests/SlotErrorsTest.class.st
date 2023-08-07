@@ -77,16 +77,6 @@ SlotErrorsTest >> testClassSlotDuplicationConflict [
 ]
 
 { #category : #tests }
-SlotErrorsTest >> testClassSlotWithReservedName [
-
-	#(#self #super #thisContext #true #false #nil) do: [:reservedName |
-		self should: [
-			self make: [ :builder |
-				builder classSlots: { reservedName } ] ]
-			raise: InvalidSlotName ]
-]
-
-{ #category : #tests }
 SlotErrorsTest >> testDangerousClassesConditions [
 
 	| specialObjectsArrayItem |
@@ -186,16 +176,6 @@ SlotErrorsTest >> testSlotDuplicationConflict [
 ]
 
 { #category : #tests }
-SlotErrorsTest >> testSlotWithReservedName [
-
-	#(#self #super #thisContext #true #false #nil) do: [:reservedName |
-		self should: [
-			self make: [ :builder |
-				builder slots: { reservedName } ] ]
-			raise: InvalidSlotName ]
-]
-
-{ #category : #tests }
 SlotErrorsTest >> testUndeclareSlot [
 	| slot instance |
 
@@ -238,7 +218,7 @@ SlotErrorsTest >> testUndeclareSlotFixWhenSlotIsLoaded [
 		aClassBuilder
 			name: self anotherClassName;
 			superclass: PropertySlot;
-			package: self aCategory ].
+			package: self slotTestPackageName ].
 
 	self assert: (slot read: instance) equals: nil.
 

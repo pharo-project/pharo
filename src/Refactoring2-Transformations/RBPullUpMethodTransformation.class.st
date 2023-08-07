@@ -35,6 +35,20 @@ RBPullUpMethodTransformation class >> pullUp: selectorCollection from: aClass to
 	^ self new pullUp: selectorCollection from: aClass to: aSuperClass
 ]
 
+{ #category : #preconditions }
+RBPullUpMethodTransformation >> applicabilityConditions [ 
+
+	^ (selectors 
+			inject: (RBCondition hasSuperclass: class)
+			into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
+					& (RBCondition withBlock:
+							[self checkInstVars.
+							self checkClassVars.
+							self checkSuperclass.
+							self checkSuperMessages.
+							true])
+]
+
 { #category : #converting }
 RBPullUpMethodTransformation >> asRefactoring [
 
@@ -195,7 +209,7 @@ RBPullUpMethodTransformation >> copyDownMethod: aSelector [
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
 	oldSource ifNil:
 			[ self
-				refactoringFailure: ('Source code for <1s> superclass method not available'
+				refactoringError: ('Source code for <1s> superclass method not available'
 						expandMacrosWith: aSelector)].
 	oldProtocol := superclassDefiner protocolsFor: aSelector.
 	subclasses := targetSuperclass subclasses
@@ -232,22 +246,15 @@ RBPullUpMethodTransformation >> copyDownMethods [
 
 { #category : #preconditions }
 RBPullUpMethodTransformation >> preconditions [
-	self requestSuperClass.
-	^(selectors inject: (RBCondition hasSuperclass: class)
-		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
-			& (RBCondition withBlock:
-						[self checkInstVars.
-						self checkClassVars.
-						self checkSuperclass.
-						self checkSuperMessages.
-						true])
+	^ self applicabilityConditions 
+	
 ]
 
 { #category : #executing }
 RBPullUpMethodTransformation >> pullUp: aSelector [
 	| source refactoring |
 	source := class sourceCodeFor: aSelector.
-	source ifNil: [self refactoringFailure: 'Source for method not available'].
+	source ifNil: [self refactoringError: 'Source for method not available'].
 	refactoring := RBExpandReferencedPoolsTransformation
 				model: self model
 				forMethod: (class parseTreeForSelector: aSelector)
@@ -269,9 +276,9 @@ RBPullUpMethodTransformation >> pullUp: selectorCollection from: aClass [
 
 { #category : #api }
 RBPullUpMethodTransformation >> pullUp: selectorCollection from: aClass to: aSuperClass [
-	self setOption: #superClass toUse: [ :ref | ].
+
 	class := self model classObjectFor: aClass.
-	targetSuperclass := self model classObjectFor: aSuperClass .
+	targetSuperclass := self model classObjectFor: aSuperClass.
 	selectors := selectorCollection.
 	removeDuplicates := false
 ]
@@ -325,11 +332,6 @@ RBPullUpMethodTransformation >> removePulledUpMethods [
 			model: self model
 			selector: symbol
 			from: class ]
-]
-
-{ #category : #preconditions }
-RBPullUpMethodTransformation >> requestSuperClass [
-	^ (self options at: #superClass) value: self
 ]
 
 { #category : #printing }

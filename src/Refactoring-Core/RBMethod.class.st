@@ -42,6 +42,11 @@ RBMethod class >> for: aRBClass source: aString selector: aSelector [
 ]
 
 { #category : #accessing }
+RBMethod >> argumentNames [
+	^ self ast argumentNames
+]
+
+{ #category : #accessing }
 RBMethod >> ast [
 	^ self parseTree
 ]
@@ -116,7 +121,12 @@ RBMethod >> package [
 
 { #category : #accessing }
 RBMethod >> parseTree [
-	^ self parserClass parseMethod: self source onError: [:str :pos | ^nil]
+	| tree |
+	tree := self parserClass
+		  parseMethod: self source
+		  onError: [ :str :pos | ^ nil ].
+	tree ifNotNil: [ tree doSemanticAnalysis ].
+	^ tree
 ]
 
 { #category : #testing }

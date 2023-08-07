@@ -71,16 +71,13 @@ RBAddParameterRefactoring >> checkSendersAccessTo: name [
 RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
-
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var'
 		do: [ :aNode :answer |
 			| name |
-
 			name := aNode name.
-			( aNode whoDefines: name ) ifNil: [ self checkSendersAccessTo: name ]
-			].
+			(aNode whoDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
 	searcher executeTree: aParseTree
 ]
 
@@ -105,7 +102,7 @@ RBAddParameterRefactoring >> myConditions [
 	^RBCondition withBlock:
 		[oldSelector numArgs < newSelector numArgs
 			ifFalse:
-				[self refactoringFailure: newSelector printString,
+				[self refactoringError: newSelector printString,
 				' doesn''t have the proper number of arguments.'].
 		self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg value1 ].
 		true]
@@ -139,17 +136,6 @@ RBAddParameterRefactoring >> newSelectorString [
 						nextPutAll: each printString].
 			stream nextPut: $ ].
 	^stream contents
-]
-
-{ #category : #private }
-RBAddParameterRefactoring >> parseTreeRewriter [
-	| rewriteRule oldString newString |
-	rewriteRule := self parseTreeRewriterClass new.
-	oldString := self buildSelectorString: oldSelector.
-	newString := self newSelectorString.
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
-	^rewriteRule
 ]
 
 { #category : #action }
@@ -205,12 +191,12 @@ RBAddParameterRefactoring >> senders [
 { #category : #printing }
 RBAddParameterRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
-	self class storeOn: aStream.
+	aStream nextPutAll: self class name.
 	aStream
 		nextPutAll: ' addParameterToMethod: #';
 		nextPutAll: oldSelector;
 		nextPutAll: ' in: '.
-	class storeOn: aStream.
+	aStream nextPutAll: class name.
 	aStream
 		nextPutAll: ' newSelector: #';
 		nextPutAll: newSelector;
@@ -227,8 +213,8 @@ RBAddParameterRefactoring >> verifyInitializationExpressionOf: initializer [
 	| tree |
 	tree := self parserClass
 		parseExpression: initializer
-		onError: [ :msg :index | self refactoringFailure: 'Illegal initialization code because:.', msg ].
+		onError: [ :msg :index | self refactoringError: 'Illegal initialization code because:.', msg ].
 	tree isValue
-		ifFalse: [ self refactoringFailure: 'The initialization code cannot be a return node or a list of statements' ].
+		ifFalse: [ self refactoringError: 'The initialization code cannot be a return node or a list of statements' ].
 	self checkVariableReferencesIn: tree
 ]

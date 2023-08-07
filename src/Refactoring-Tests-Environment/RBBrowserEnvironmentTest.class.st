@@ -110,10 +110,9 @@ RBBrowserEnvironmentTest >> numberSelectorsFor: aBrowserEnvironment [
 
 { #category : #private }
 RBBrowserEnvironmentTest >> protocolsFor: aBrowserEnvironment [
+
 	aBrowserEnvironment classesAndSelectorsDo: [ :class :selector |
-		| protocol |
-		protocol := aBrowserEnvironment whichProtocolIncludes: selector in: class.
-		self assert: (aBrowserEnvironment includesProtocol: protocol in: class) ]
+		self assert: (aBrowserEnvironment includesProtocol: (class protocolOfSelector: selector) in: class) ]
 ]
 
 { #category : #running }
@@ -308,7 +307,7 @@ RBBrowserEnvironmentTest >> testNotEnvironment [
 	self assertEmpty: (notPrintStringEnvironment referencesTo: #printString).
 	self assert: (notPrintStringEnvironment not includesClass: RBBrowserEnvironmentTest).
 	self assert: (notPrintStringEnvironment not includesSelector: #testNotEnvironment in: RBBrowserEnvironmentTest).
-	self assert: (notKernelEnvironment includesPackage: 'Kernel' asPackage) not.
+	self deny: (notKernelEnvironment includesPackage: 'Kernel' asPackage).
 	self assertEmpty: (notKernelEnvironment & kernelEnvironment) packages
 ]
 
@@ -341,7 +340,7 @@ RBBrowserEnvironmentTest >> testOrEnvironment [
 	self assert: orEnvironment classNames asSortedCollection equals: universalEnvironment classNames asSortedCollection.
 	self
 		assert: (orEnvironment protocolsFor: Object)
-		equals: ((universalEnvironment protocolsFor: Object) reject: [ :each | (Object allSelectorsInProtocol: each) isEmpty ])
+		equals: ((universalEnvironment protocolsFor: Object) reject: [ :protocolName | (Object allSelectorsInProtocol: protocolName) isEmpty ])
 ]
 
 { #category : #'tests - environments' }

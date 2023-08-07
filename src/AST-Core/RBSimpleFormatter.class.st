@@ -227,8 +227,8 @@ RBSimpleFormatter >> formatStatementCommentsFor: aStatementNode [
 
 { #category : #private }
 RBSimpleFormatter >> formatTemporariesFor: aSequenceNode [
-	aSequenceNode temporaries isEmpty
-		ifTrue: [ ^ self ].
+	aSequenceNode hasTemporaries
+		ifFalse: [ ^ self ].
 	self
 		bracketWith: '|'
 		around: [
@@ -387,6 +387,12 @@ RBSimpleFormatter >> traditionalBinaryPrecedenceArray [
 ]
 
 { #category : #visiting }
+RBSimpleFormatter >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+
+	codeStream nextPut: $@
+]
+
+{ #category : #visiting }
 RBSimpleFormatter >> visitArrayNode: anArrayNode [
 	self bracketWith: '{}' around: [ self formatArray: anArrayNode ]
 ]
@@ -424,6 +430,8 @@ RBSimpleFormatter >> visitCascadeNode: aCascadeNode [
 { #category : #visiting }
 RBSimpleFormatter >> visitEnglobingErrorNode: aNode [
 
+	aNode isTemporariesError ifTrue: [
+		^ self formatTemporariesFor: aNode ].
 	self writeString: aNode value.
 	self formatBlockArgumentsFor: aNode.
 	aNode contents do: [ :each | self visitNode: each ] separatedBy: [

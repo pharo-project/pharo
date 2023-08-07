@@ -77,7 +77,7 @@ SlotBasicTest >> testClassWithCommentAndStamp [
 
 	self assert: aClass name equals: self aClassName.
 	self assert: aClass comment equals: 'A class Comment'.
-	self assert: aClass organization commentStamp equals: (Object>>#halt) stamp
+	self assert: aClass commentStamp equals: (Object>>#halt) stamp
 ]
 
 { #category : #'tests - basic' }
@@ -230,7 +230,7 @@ SlotBasicTest >> testWithSharedPool [
 
 { #category : #'tests - shared variables' }
 SlotBasicTest >> testWithSharedVariable [
-
+	<ignoreNotImplementedSelectors: #(var:)>
 	aClass := self make: [ :builder |
 		builder sharedVariablesFromString: 'Var' ].
 	aClass class

@@ -1146,6 +1146,34 @@ SequenceableCollection >> from: startIndex to: endIndex put: anObject [
 ]
 
 { #category : #enumerating }
+SequenceableCollection >> groupByRuns: aBlock [
+	"Answer a new collection of the same species as the receiver with elements being collections (of the receiver species) containing those elements of the receiver for which the given block consecutively evaluates to the same object."
+
+	"(#(1 2 3 4 4 1 2 3 5 6 ) groupByRuns: [ :each | each = 4]) >>> #(#(1 2 3) #(4 4) #(1 2 3 5 6))"
+
+	"(#(1 2 3 4 1 2 3 4 5 6 ) groupByRuns: [ :each | each = 4]) >>> #(#(1 2 3) #(4) #(1 2 3) #(4) #(5 6))"
+
+	"((1 to: 12) groupByRuns: [ :each | (each \\ 3) = 0]) >>> #(#(1 2) #(3) #(4 5) #(6) #(7 8) #(9) #(10 11) #(12))"
+
+	| str eStr r |
+	str := Array new writeStream.
+	r := nil.
+	eStr := Array new writeStream.
+	self
+		do: [ :e |
+			| t |
+			(t := aBlock value: e) = r
+				ifFalse: [ r := t.
+					eStr isEmpty
+						ifFalse: [ str nextPut: (eStr contents as: self species).
+							eStr reset ] ].
+			eStr nextPut: e ].
+	eStr isEmpty
+		ifFalse: [ str nextPut: (eStr contents as: self species) ].
+	^ str contents as: self species
+]
+
+{ #category : #enumerating }
 SequenceableCollection >> groupsOf: n atATimeCollect: aBlock [
 	"Evaluate aBlock with my elements taken n at a time. Ignore any leftovers at the end.
 	Allows use of a flattened array for things that naturally group into groups of n.
@@ -2108,28 +2136,6 @@ SequenceableCollection >> seventh [
 	"#(a b c d e f g h i) seventh >>> #g"
 
 	^ self at: 7
-]
-
-{ #category : #shuffling }
-SequenceableCollection >> shuffle [
-	"Modify the receiver but with its elements in random positions.
-	This method use Random class as random generator"
-
-	^ self shuffleBy: Random new
-]
-
-{ #category : #shuffling }
-SequenceableCollection >> shuffleBy: aRandom [
-	"Durstenfeld's version of the Fisher-Yates shuffle"
-	"({1. 2. 3. 4. 5} shuffleBy: (Random seed: 42)) >>> #(2 5 4 3 1)"
-
-	self size to: 2 by: -1 do: [ :i |
-		self swap: i with: (aRandom nextInteger: i) ]
-]
-
-{ #category : #copying }
-SequenceableCollection >> shuffled [
-	^ self copy shuffle
 ]
 
 { #category : #accessing }

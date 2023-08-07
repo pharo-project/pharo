@@ -75,19 +75,19 @@ InitializePackagesCommandLineHandler >> initializePackagesFrom: aFileName [
 { #category : #activation }
 InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
 
-	(File named: aFileName) readStreamDo: [:binaryStream | | stream |
+	(File named: aFileName) readStreamDo: [ :binaryStream |
+		| stream |
 		stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
-		[stream atEnd] whileFalse: [ | line items selector class |
+		[ stream atEnd ] whileFalse: [
+			| line items selector class |
 			line := stream upTo: Character cr.
 			items := line findTokens: String tab.
-			class := (items second = 'true')
-				ifTrue: [(Smalltalk classOrTraitNamed: items first) classSide]
-				ifFalse: [Smalltalk classOrTraitNamed: items first].
+			class := items second = 'true'
+				         ifTrue: [ (Smalltalk classOrTraitNamed: items first) classSide ]
+				         ifFalse: [ Smalltalk classOrTraitNamed: items first ].
 			selector := items third asSymbol.
 
-			class ifNil: [
-				self error: ('Could not found class: ', items first printString , ' for selector: ', selector printString) ].
+			class ifNil: [ self error: 'Could not found class: ' , items first printString , ' for selector: ' , selector printString ].
 
-			(class selectors includes: selector)
-				ifTrue: [class organization classify: selector under: items fourth]]]
+			(class selectors includes: selector) ifTrue: [ class classify: selector under: items fourth ] ] ]
 ]

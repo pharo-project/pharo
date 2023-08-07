@@ -161,7 +161,7 @@ Object << #Faked
 { #category : #configure }
 ClassDefinitionPrinter class >> showFluidClassDefinition [
 
-	^ ShowFluidClassDefinition ifNil: [ ShowFluidClassDefinition := false ]
+	^ ShowFluidClassDefinition ifNil: [ ShowFluidClassDefinition := true ]
 ]
 
 { #category : #configure }
@@ -183,11 +183,11 @@ ClassDefinitionPrinter >> classDefinitionString [
 
 { #category : #accessing }
 ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
-	^ self classDefinitionTemplateInPackage: aPackageName forClass: #MyClass
+	^ self classDefinitionTemplateInPackage: aPackageName named: #MyClass
 ]
 
-{ #category : #printing }
-ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName forClass: aClassName [
+{ #category : #template }
+ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName named: aClassName [
 	^ self subclassResponsibility
 ]
 
@@ -226,6 +226,16 @@ ClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString [
 
 { #category : #'public api' }
 ClassDefinitionPrinter >> traitDefinitionString [
+	^ self subclassResponsibility
+]
+
+{ #category : #template }
+ClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
+	^ self traitDefinitionTemplateInPackage: aString named: #TMyTrait
+]
+
+{ #category : #template }
+ClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName named: aTraitName [ 
 	^ self subclassResponsibility
 ]
 

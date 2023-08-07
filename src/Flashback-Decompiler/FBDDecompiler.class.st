@@ -584,7 +584,6 @@ FBDDecompiler >> recompile: selector from: oldClass [
 		source: (self decompile: oldClass >> selector) formattedCode;
 		class: oldClass;
 		failBlock: [ ^ self ];
-		compiledMethodTrailer: CompiledMethodTrailer empty;
 		compile.	"Assume OK after proceed from SyntaxError"
 	selector == newMethod selector
 		ifFalse: [ self error: 'selector changed!' ].
@@ -608,11 +607,6 @@ FBDDecompiler >> send: selector super: supered numArgs: numberArguments [
 { #category : #asserting }
 FBDDecompiler >> shouldUseOriginalMethod: aCompiledMethod [
 	^ aCompiledMethod hasProperty: #ffiNonCompiledMethod
-]
-
-{ #category : #'data flow instructions' }
-FBDDecompiler >> skipTemps: numTemps [
-	instructionStream method encoderClass skipTemps: numTemps for: self
 ]
 
 { #category : #'data flow instructions' }

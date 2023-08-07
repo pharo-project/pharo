@@ -57,7 +57,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	ExternalSemaphoreTable initialize.
 	Collection initialize.
 	CompiledMethod initialize.
-	Categorizer initialize.
 	Slot initialize.
 	RPackage initialize.
 	Behavior initialize.
@@ -75,12 +74,12 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	"FFI"
 	ExternalObject initialize.
 	ExternalType initialize.
-	FFIBackend initialize.
 
 	"Initialize basic command line behaviour"
-	Stdio initialize.
 	NonInteractiveTranscript initialize.
 	BasicCommandLineHandler initialize.
+
+	SessionManager initializeKernelRegistrations.
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive
 ]

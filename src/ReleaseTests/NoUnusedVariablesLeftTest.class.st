@@ -22,7 +22,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 
-	validExceptions := #( OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData
+	validExceptions := #( OSKeySymbols SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData
 	                      RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject FLFullBasicSerializationTest
 	                      SHRBStyleAttributionTest SHRBMockSharedPoolStyler ).
 
@@ -32,17 +32,18 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
-	| variables classes validExceptions remaining |
 
-	variables := Smalltalk globals allBehaviors flatCollect: [ :each | each instanceVariables ].
-	variables := variables reject: [ :each | each isReferenced ].
+	| variables classes |
+	variables := Smalltalk globals allBehaviors flatCollect: [ :class | class instanceVariables ].
+
+	variables := variables reject: [ :variable |
+		             variable isReferenced or: [
+			             variable definingClass pragmas anySatisfy: [ :pragma |
+				             pragma selector = #ignoreUnusedVariables: and: [ (pragma argumentAt: 1) includes: variable name ] ] ] ].
 
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 
-	validExceptions := { RBFooLintRuleTestData . RBLintRuleTestData .RBFooDummyLintRuleTest . RBDummyLintRuleTest. MockWithComplexSlot .ClassDescription }.
-
-	remaining := classes asOrderedCollection removeAll: validExceptions; yourself.
-	self assert: remaining isEmpty description: ('the following classes have unused instance variables and should be cleaned: ', remaining asString)
+	self assert: classes isEmpty description: 'the following classes have unused instance variables and should be cleaned: ' , classes asOrderedCollection asString
 ]
 
 { #category : #testing }

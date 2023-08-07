@@ -51,7 +51,7 @@ UserInterruptHandler >> handleUserInterrupt [
 	[
 		self processToInterrupt
 			ifNotNil: [ :proc | proc debugWithTitle: 'User Interrupt' ]
-			ifNil: [ UIManager default inform: 'Process not interruptable' ]
+			ifNil: [ self inform: 'Process not interruptable' ]
 
 	"fork exceptions, we don't want interrupt handler to die"
 	] on: Error fork: [:ex | ex pass]

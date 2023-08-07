@@ -11,8 +11,7 @@ Class {
 		'log',
 		'entryReferenceByEvent',
 		'jobAnnouncer',
-		'announcer',
-		'debugMode'
+		'announcer'
 	],
 	#classInstVars : [
 		'current'
@@ -76,21 +75,18 @@ EpMonitor class >> newWithLog: aLog [
 
 { #category : #'class initialization' }
 EpMonitor class >> reset [
-	"
-	self reset
-	"
 
-	self hasCurrent ifTrue: [
-		self current disable.
-		self current: nil ]
+	<script>
+	self hasCurrent ifFalse: [ ^ self ].
+
+	self current disable.
+	self current: nil
 ]
 
 { #category : #initialization }
 EpMonitor class >> restart [
-	"
-	self restart
-	"
 
+	<script>
 	self reset.
 	self current enable
 ]
@@ -124,16 +120,14 @@ EpMonitor >> addEvent: anEvent newEntryDo: aBlock [
 EpMonitor >> addEvent: anEvent newEntryDo: aBlock triggerReference: triggerReference [
 
 	| newEntry |
-	newEntry := log
-		addEntryWith: anEvent
-		tags: [ :tags |
-			triggerReference isNull ifFalse: [
-				tags
-					at: EpLog triggererReferenceKey
-					put: triggerReference ].
 
-			tags at: EpLog authorKey put: self author.
-			tags at: EpLog timeKey put: self time ].
+	"During the tests, we should only log with Epicea if the test case declare it wants logging."
+	(CurrentExecutionEnvironment value isTest and: [ CurrentExecutionEnvironment value testCase shouldLogWithEpicea not ]) ifTrue: [ ^ self ].
+	newEntry := log addEntryWith: anEvent tags: [ :tags |
+		            triggerReference isNull ifFalse: [ tags at: EpLog triggererReferenceKey put: triggerReference ].
+
+		            tags at: EpLog authorKey put: self author.
+		            tags at: EpLog timeKey put: self time ].
 
 	aBlock value: newEntry
 ]
@@ -165,118 +159,92 @@ EpMonitor >> basicLog [
 
 { #category : #'announcement handling' }
 EpMonitor >> behaviorAdded: aClassAddedAnnouncement [
-	self
-		handleAnyErrorDuring: [ aClassAddedAnnouncement classAdded isTrait
-				ifTrue: [ self traitAdded: aClassAddedAnnouncement ]
-				ifFalse: [ self classAdded: aClassAddedAnnouncement ] ]
+
+	aClassAddedAnnouncement classAdded isTrait
+		ifTrue: [ self traitAdded: aClassAddedAnnouncement ]
+		ifFalse: [ self classAdded: aClassAddedAnnouncement ]
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> behaviorModified: aClassModifiedClassDefinitionAnnouncement [
 
-	self handleAnyErrorDuring: [
-		| event |
-		event := aClassModifiedClassDefinitionAnnouncement classAffected isTrait
-			ifTrue: [ self traitModified: aClassModifiedClassDefinitionAnnouncement ]
-			ifFalse: [ self classModified: aClassModifiedClassDefinitionAnnouncement ].
+	| event |
+	event := aClassModifiedClassDefinitionAnnouncement classAffected isTrait
+		         ifTrue: [ self traitModified: aClassModifiedClassDefinitionAnnouncement ]
+		         ifFalse: [ self classModified: aClassModifiedClassDefinitionAnnouncement ].
 
-		event hasChanges ifTrue: [ self addEvent: event ]
-	]
+	event hasChanges ifTrue: [ self addEvent: event ]
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
-	| toReplace |
-	self handleAnyErrorDuring: [
-		"Workaround: the announcement occurs after class is renamed to AnObsolete
+
+	| toReplace classRemoved |
+	"Workaround: the announcement occurs after class is renamed to AnObsolete
 		and removed from package."
+	classRemoved := aClassRemovedAnnouncement classRemoved asEpiceaRingDefinition.
 
-		| classRemoved |
-		classRemoved := aClassRemovedAnnouncement classRemoved asEpiceaRingDefinition.
+	"Fix class name (remove AnObsolete prefix)"
+	classRemoved definitionSource: (classRemoved definitionSource
+			 copyReplaceAll: aClassRemovedAnnouncement classRemoved name asString
+			 with: aClassRemovedAnnouncement classRemoved originalName asString).
 
-		"Fix class name (remove AnObsolete prefix)"
-		classRemoved definitionSource:
-			(classRemoved definitionSource
-				copyReplaceAll: aClassRemovedAnnouncement classRemoved name asString
-				with: aClassRemovedAnnouncement classRemoved originalName asString).
+	"Fix class name in the metaclass"
+	classRemoved classSide definitionSource:
+		(classRemoved classSide definitionSource copyReplaceAll: aClassRemovedAnnouncement classRemoved name with: aClassRemovedAnnouncement classRemoved originalName).
 
-		"Fix class name in the metaclass"
-		classRemoved classSide definitionSource:
-			(classRemoved classSide definitionSource
-				copyReplaceAll: aClassRemovedAnnouncement classRemoved name
-				with: aClassRemovedAnnouncement classRemoved originalName).
+	"Fix category"
+	toReplace := (classRemoved definitionSource includesSubstring: '_UnpackagedPackage')
+		             ifTrue: [ 'package: ' , '_UnpackagedPackage' printString ]
+		             ifFalse: [ 'package: ' , 'Unclassified' printString ].
 
-		"Fix category"
-		toReplace := (classRemoved definitionSource includesSubstring: '_UnpackagedPackage')
-			ifTrue: [  'package: ', '_UnpackagedPackage' printString ]
-			ifFalse: [ 'package: ', 'Unclassified' printString].
-			
-		classRemoved definitionSource:
-			(classRemoved definitionSource
-				copyReplaceAll: toReplace
-				with: 'package: ', aClassRemovedAnnouncement categoryName printString).
-	
+	classRemoved definitionSource: (classRemoved definitionSource copyReplaceAll: toReplace with: 'package: ' , aClassRemovedAnnouncement categoryName printString).
 
-		classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
-		classRemoved category: aClassRemovedAnnouncement categoryName.
-		classRemoved package: aClassRemovedAnnouncement packageAffected name.
+	classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
+	classRemoved category: aClassRemovedAnnouncement categoryName.
+	classRemoved package: aClassRemovedAnnouncement packageAffected name.
 
-		(aClassRemovedAnnouncement classRemoved methods, aClassRemovedAnnouncement classRemoved classSide methods)
-			do: [:each | self behaviorRemovedImpliesMethodRemoved: each defaultPackageName: classRemoved package ].
+	aClassRemovedAnnouncement classRemoved methods , aClassRemovedAnnouncement classRemoved classSide methods do: [ :each |
+		self behaviorRemovedImpliesMethodRemoved: each defaultPackageName: classRemoved package ].
 
-		aClassRemovedAnnouncement classAffected isTrait
-			ifTrue:  [ self traitRemoved: classRemoved ]
-			ifFalse: [ self classRemoved: classRemoved ] ]
+	aClassRemovedAnnouncement classAffected isTrait
+		ifTrue: [ self traitRemoved: classRemoved ]
+		ifFalse: [ self classRemoved: classRemoved ]
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior defaultPackageName: aSymbol [
+
 	| packageName |
-	packageName := (RPackageOrganizer default
-		packageForProtocol: aMethodInAnObsoleteBehavior protocol
-		inClass: aMethodInAnObsoleteBehavior methodClass) name.
+	packageName := ((self packageOrganizer packageForProtocol: aMethodInAnObsoleteBehavior protocolName inClass: aMethodInAnObsoleteBehavior methodClass) ifNil: [
+		                aMethodInAnObsoleteBehavior methodClass package ]) name.
 
 	"If the method is local, (belongs to the class being removed) then the package was wrong,  and we fix it"
-	packageName = RPackage defaultPackageName
-		ifTrue: [ packageName := aSymbol ].
+	packageName = RPackage defaultPackageName ifTrue: [ packageName := aSymbol ].
 
-	self addEvent:
-		(EpMethodRemoval method:
-			(aMethodInAnObsoleteBehavior asEpiceaRingDefinition
-				parentName: aMethodInAnObsoleteBehavior methodClass originalName;
-				protocol: aMethodInAnObsoleteBehavior protocol;
-				package: packageName;
-				yourself))
+	self addEvent: (EpMethodRemoval method: (aMethodInAnObsoleteBehavior asEpiceaRingDefinition
+				  parentName: aMethodInAnObsoleteBehavior methodClass originalName;
+				  protocol: aMethodInAnObsoleteBehavior protocolName;
+				  package: packageName;
+				  yourself))
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> categoryAdded: aCategoryAdded [
 
-	self handleAnyErrorDuring: [
-		self addEvent: (EpCategoryAddition named: aCategoryAdded categoryName) ]
-]
-
-{ #category : #'announcement handling' }
-EpMonitor >> categoryRegistered: aCategoryAdded [
-
-	self handleAnyErrorDuring: [
-			self addEvent: (EpCategoryRegistration named: aCategoryAdded package name) ]
+	self addEvent: (EpCategoryAddition named: aCategoryAdded categoryName)
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> categoryRemoved: aPackageCategoryRemoved [
 
-	self handleAnyErrorDuring:[
-		self addEvent: (EpCategoryRemoval named: aPackageCategoryRemoved categoryName) ]
+	self addEvent: (EpCategoryRemoval named: aPackageCategoryRemoved categoryName)
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> categoryRenamed: aCategoryRenamed [
 
-	self handleAnyErrorDuring: [
-		self addEvent: (EpCategoryRename
-			oldName: aCategoryRenamed oldCategoryName
-			newName: aCategoryRenamed newCategoryName) ]
+	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldCategoryName newName: aCategoryRenamed newCategoryName)
 ]
 
 { #category : #'announcement handling' }
@@ -302,14 +270,12 @@ EpMonitor >> classModified: aClassModifiedAnnouncement [
 { #category : #'announcement handling' }
 EpMonitor >> classRecategorized: aClassRecategorizedAnnouncement [
 
-	self handleAnyErrorDuring: [
-		aClassRecategorizedAnnouncement newCategory = aClassRecategorizedAnnouncement oldCategory
-			ifTrue: [ ^ self ].
+	aClassRecategorizedAnnouncement newCategory = aClassRecategorizedAnnouncement oldCategory ifTrue: [ ^ self ].
 
-		self addEvent: (EpBehaviorCategoryChange
-			oldCategory: aClassRecategorizedAnnouncement oldCategory
-			newCategory: aClassRecategorizedAnnouncement newCategory
-			class: aClassRecategorizedAnnouncement classAffected)]
+	self addEvent: (EpBehaviorCategoryChange
+			 oldCategory: aClassRecategorizedAnnouncement oldCategory
+			 newCategory: aClassRecategorizedAnnouncement newCategory
+			 class: aClassRecategorizedAnnouncement classAffected)
 ]
 
 { #category : #'announcement handling' }
@@ -321,11 +287,7 @@ EpMonitor >> classRemoved: classRemoved [
 { #category : #'announcement handling' }
 EpMonitor >> classRenamed: aClassRenamed [
 
-	self handleAnyErrorDuring: [
-		self addEvent: (EpBehaviorNameChange
-			oldName: aClassRenamed oldName
-			newName: aClassRenamed  newName
-			class: aClassRenamed classAffected) ]
+	self addEvent: (EpBehaviorNameChange oldName: aClassRenamed oldName newName: aClassRenamed newName class: aClassRenamed classAffected)
 ]
 
 { #category : #private }
@@ -341,16 +303,6 @@ EpMonitor >> currentTriggerReference [
 						ifAbsent: [ false ] ]
 				ifNone: [ ^ log nullReference ].
 			]
-]
-
-{ #category : #accessing }
-EpMonitor >> debugMode [
-	^ debugMode ifNil: [ false ]
-]
-
-{ #category : #accessing }
-EpMonitor >> debugMode: aBoolean [
-	debugMode := aBoolean
 ]
 
 { #category : #enabling }
@@ -395,20 +347,6 @@ EpMonitor >> enabled: aBoolean [
 	aBoolean
 		ifTrue: [ self enable ]
 		ifFalse: [ self disable ]
-]
-
-{ #category : #private }
-EpMonitor >> handleAnyErrorDuring: aBlock [
-
-	aBlock on: Error do: [:error | self handleError: error ]
-]
-
-{ #category : #private }
-EpMonitor >> handleError: error [
-
-	self debugMode
-		ifTrue: [ error pass ]
-		ifFalse: [ 'EpMonitor could not log a change. You can enable debugging with "EpMonitor current debugMode: true".' traceCr ]
 ]
 
 { #category : #initialization }
@@ -473,88 +411,79 @@ EpMonitor >> logEntryCommented: aCommentModification [
 { #category : #'announcement handling' }
 EpMonitor >> methodAdded: aMethodAddedAnnouncement [
 
-	self handleAnyErrorDuring: [
-		self addEvent: (EpMethodAddition method: aMethodAddedAnnouncement methodAffected) ]
+	self addEvent: (EpMethodAddition method: aMethodAddedAnnouncement methodAffected)
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> methodModified: aMethodModified [
 
-	self handleAnyErrorDuring: [
-		(aMethodModified oldMethod sourceCode = aMethodModified newMethod sourceCode
-			and: [ aMethodModified oldProtocol = aMethodModified newProtocol ])
-			ifTrue: [ ^self ].
+	(aMethodModified oldMethod sourceCode = aMethodModified newMethod sourceCode and: [ aMethodModified oldProtocol = aMethodModified newProtocol ]) ifTrue: [
+		^ self ].
 
-		self addEvent:
-			(EpMethodModification
-				oldMethod: aMethodModified oldMethod
-				newMethod: aMethodModified newMethod) ]
+	self addEvent: (EpMethodModification oldMethod: aMethodModified oldMethod newMethod: aMethodModified newMethod)
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> methodRecategorized: aMethodRecategorized [
 
-	self handleAnyErrorDuring: [
-		| oldMethod newMethod |
-		"Workaround: When a trait is removed from the trait composition,
+	| oldMethod newMethod |
+	"Workaround: When a trait is removed from the trait composition,
 		then this announcement is wrongly announced."
+	aMethodRecategorized methodRecategorized ifNil: [ ^ self ].
+	oldMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
+		             protocol: aMethodRecategorized oldProtocol name;
+		             yourself.
+	newMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
+		             protocol: (aMethodRecategorized newProtocol ifNotNil: [ :protocol | protocol name ]);
+		             yourself.
 
-		aMethodRecategorized methodRecategorized ifNil: [ ^ self ].
-		oldMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			protocol: aMethodRecategorized oldProtocol;
-			yourself.
-		newMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-			protocol: aMethodRecategorized newProtocol;
-			yourself.
-
-		self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod)]
+	self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod)
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 	"RPackage already unregistered the method so we have to workaround protocol and package."
 
-	self handleAnyErrorDuring: [
-		self addEvent:
-			(EpMethodRemoval method:
-				(aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
-					protocol: aMethodRemovedAnnouncement protocol;
-					package: (RPackageOrganizer default
-						packageForProtocol: aMethodRemovedAnnouncement protocol
-						inClass: aMethodRemovedAnnouncement methodAffected methodClass) name;
-					yourself))]
+	self addEvent: (EpMethodRemoval method: (aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
+				  protocol: aMethodRemovedAnnouncement protocol name;
+				  package:
+					  ((self packageOrganizer packageForProtocol: aMethodRemovedAnnouncement protocol name inClass: aMethodRemovedAnnouncement methodAffected methodClass)
+						   ifNil: [ aMethodRemovedAnnouncement methodAffected methodClass package ]) name;
+				  yourself))
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageAdded: packageAdded [
+
+	self addEvent: (EpPackageAddition packageName: packageAdded package name)
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageRemoved: packageRemoved [
+
+	self addEvent: (EpPackageRemoval packageName: packageRemoved package name)
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> packageRenamed: aCategoryRenamed [
 
-	self handleAnyErrorDuring: [
-		self addEvent: (EpCategoryRename
-			oldName: aCategoryRenamed oldName
-			newName: aCategoryRenamed newName) ]
+	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldName newName: aCategoryRenamed newName)
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> protocolAdded: aProtocolAdded [
 
-	self handleAnyErrorDuring: [
-		self addEvent:
-			(EpProtocolAddition
-				behavior: aProtocolAdded classAffected
-				protocol: aProtocolAdded protocol)]
+	self addEvent: (EpProtocolAddition behavior: aProtocolAdded classAffected protocol: aProtocolAdded protocol name)
 ]
 
 { #category : #'announcement handling' }
 EpMonitor >> protocolRemoved: aProtocolRemoved [
-
 	"Skip an irrelevant case"
-	aProtocolRemoved protocol = Protocol unclassified ifTrue: [ ^self ].
 
-	self handleAnyErrorDuring: [
-		self addEvent:
-			(EpProtocolRemoval
-				behavior: aProtocolRemoved classAffected
-				protocol: aProtocolRemoved protocol)]
+	aProtocolRemoved protocol isUnclassifiedProtocol ifTrue: [ ^ self ].
+
+
+	self addEvent: (EpProtocolRemoval behavior: aProtocolRemoved classAffected protocol: aProtocolRemoved protocol name)
 ]
 
 { #category : #'announcement handling' }
@@ -596,8 +525,9 @@ EpMonitor >> subscribeToSystemAnnouncer [
 	{	CategoryAdded -> #categoryAdded:.
 		CategoryRemoved -> #categoryRemoved:.
 		CategoryRenamed -> #categoryRenamed:.
-		RPackageRegistered -> #categoryRegistered:.
-		RPackageRenamed -> #packageRenamed:.
+		PackageAdded -> #packageAdded:.
+		PackageRenamed -> #packageRenamed:.
+		PackageRemoved -> #packageRemoved:.
 		ClassAdded-> #behaviorAdded:.
 		ClassRemoved->#behaviorRemoved:.
 		MethodAdded -> #methodAdded:.

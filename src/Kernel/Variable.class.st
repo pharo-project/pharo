@@ -161,6 +161,11 @@ Variable >> isInstanceVariable [
 ]
 
 { #category : #testing }
+Variable >> isInvalidVariable [
+	^false
+]
+
+{ #category : #testing }
 Variable >> isLiteralVariable [
 	"returns true for Global Variables, Class Variables and some others
 	(e.g. Workspace bindings and Undeclared variables, see subclasses)"
@@ -179,6 +184,12 @@ Variable >> isPoolVariable [
 ]
 
 { #category : #testing }
+Variable >> isPseudoVariable [
+	"thisContext, super, self, thisProcess are reserved variables (true, false and nil are literals)"
+	^false
+]
+
+{ #category : #testing }
 Variable >> isReadIn: aCompiledCode [
 	^aCompiledCode ast readNodes
 		 anySatisfy: [ :node | node binding == self ]
@@ -191,8 +202,11 @@ Variable >> isReferenced [
 
 { #category : #testing }
 Variable >> isReservedVariable [
-	"thisContext, super, self are reserved variables (true, false and nil are literals)"
-	^false
+	self
+		deprecated: 'Please use #isPseudoVariable instead'
+		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
+
+	^ self isPseudoVariable
 ]
 
 { #category : #testing }
@@ -223,6 +237,11 @@ Variable >> isTempVariable [
 
 { #category : #testing }
 Variable >> isThisContextVariable [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isThisProcessVariable [
 	^false
 ]
 
@@ -273,6 +292,14 @@ Variable >> name: aSymbol [
 Variable >> needsFullDefinition [
 	"all but InstanceVariableSlot and ClassVariable need to print the full definition"
 	^true
+]
+
+{ #category : #accessing }
+Variable >> originalVar [
+	"Because some AST analysis optimize temps representatipn, specific implementation-dependant variables cas apears in AST. This method return the original temp.
+	On other varialbes, it's just self."
+
+	^ self
 ]
 
 { #category : #properties }

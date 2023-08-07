@@ -166,7 +166,7 @@ Number >> addAssignToFloatArray: aFloatArray [
 	^ aFloatArray primAddScalar: self asFloat
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #converting }
 Number >> asDuration [
 
  	^ Duration seconds: self asInteger
@@ -180,16 +180,16 @@ Number >> asFloat [
 ]
 
 { #category : #converting }
+Number >> asFraction [
+	^ self subclassResponsibility
+]
+
+{ #category : #converting }
 Number >> asInteger [
 	"Round me towards nearest integer closer to zero."
 	"This violates the ANSI standard, but the system depends on this"
 
 	^self truncated
-]
-
-{ #category : #converting }
-Number >> asMargin [
-	^ Margin fromNumber: self
 ]
 
 { #category : #converting }
@@ -220,7 +220,7 @@ Number >> asScaledDecimal: scale [
 	^ ScaledDecimal newFromNumber: self scale: scale
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #converting }
 Number >> asSeconds [
 	^ Duration milliSeconds: self * 1000
 ]
@@ -273,13 +273,13 @@ Number >> copySignTo: aNumber [
 		ifFalse: [aNumber abs negated]
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> day [
 
  	^ self days
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> days [
 
  	^ Duration days: self
@@ -329,13 +329,13 @@ Number >> fractionPart [
 	^self - self integerPart
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> hour [
 
  	^ self hours
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> hours [
 
  	^ Duration hours: self
@@ -364,11 +364,16 @@ Number >> isNumber [
 ]
 
 { #category : #testing }
+Number >> isPowerOfTwo [
+	^ self subclassResponsibility
+]
+
+{ #category : #testing }
 Number >> isZero [
 	^self = 0
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> milliSecond [
 	"1 milliSecond printString >>> '0:00:00:00.001'"
 	"(1 second + 1 milliSecond) printString >>> '0:00:00:01.001'"
@@ -376,7 +381,7 @@ Number >> milliSecond [
  	^ self milliSeconds
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> milliSeconds [
 
 	"2 milliSeconds printString >>> '0:00:00:00.002'"
@@ -385,7 +390,7 @@ Number >> milliSeconds [
  	^ Duration milliSeconds: self
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> minute [
 	"1 minute printString >>> '0:00:01:00'"
 	"(1 hour + 1 minute) printString >>> '0:01:01:00'"
@@ -393,7 +398,7 @@ Number >> minute [
  	^ self minutes
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> minutes [
 	"2 minutes printString >>> '0:00:02:00'"
 	"(1 hour + 2 minutes) printString >>> '0:01:02:00'"
@@ -401,7 +406,7 @@ Number >> minutes [
  	^ Duration minutes: self
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> nanoSecond [
 	"1 nanoSecond printString >>> '0:00:00:00.000000001'"
 	"(1 milliSecond + 1 nanoSecond) printString >>> '0:00:00:00.001000001'"
@@ -409,7 +414,7 @@ Number >> nanoSecond [
  	^ self nanoSeconds
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> nanoSeconds [
 	"2 nanoSeconds printString >>> '0:00:00:00.000000002'"
 	"(1 milliSecond + 2 nanoSeconds) printString >>> '0:00:00:00.001000002'"
@@ -536,9 +541,9 @@ Number >> raisedTo: aNumber [
 	0 = aNumber ifTrue: [^ self class one].	"Special case of exponent=0"
 	1 = aNumber ifTrue: [^ self].	"Special case of exponent=1"
 	0 = self ifTrue: [				"Special case of self = 0"
-		aNumber < 0
-			ifTrue: [^ (ZeroDivide dividend: 1) signal]
-			ifFalse: [^ self]].
+		^ aNumber < 0
+			ifTrue: [ (ZeroDivide dividend: 1) signal]
+			ifFalse: [ self]].
 	^ (aNumber * self ln) exp		"Otherwise use logarithms"
 ]
 
@@ -656,7 +661,7 @@ Number >> rounded [
 	^(self + (self sign / 2)) truncated
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> second [
 	"1 second printString >>> '0:00:00:01'"
 	"(1 minute + 1 second) printString >>> '0:00:01:01'"
@@ -664,7 +669,7 @@ Number >> second [
  	^ self seconds
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> seconds [
 
 	"2 seconds printString >>> '0:00:00:02'"
@@ -745,25 +750,25 @@ Number >> truncated [
 	^self quo: 1
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> week [
 
  	^ self weeks
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> weeks [
 
  	^ Duration weeks: self
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> year [
 
  	^self years
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> years [
 
  	^ Duration years: self

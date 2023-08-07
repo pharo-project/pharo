@@ -38,6 +38,17 @@ RBMoveMethodToClassSideTransformation >> addMethod: rbMethod to: aClass toProtoc
 ]
 
 { #category : #refactoring }
+RBMoveMethodToClassSideTransformation >> applicabilityConditions [
+	^ (RBCondition
+			definesSelector: method selector
+			in: class classSide) not
+		& (RBCondition withBlock: [ class isMeta not ])
+		
+	
+
+]
+
+{ #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> checkVariableNamed: aString [
 	(class whoDefinesInstanceVariable: aString) ifNotNil:
 			[^ true].
@@ -80,24 +91,21 @@ RBMoveMethodToClassSideTransformation >> parseTree [
 
 	parseTree
 		ifNil: [ parseTree := class parseTreeForSelector: method selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 			].
-	^ parseTree
+	^ parseTree doSemanticAnalysis
 ]
 
 { #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> preconditions [
-	^(RBCondition
-		definesSelector: method selector
-		in: class classSide) not
-		& (RBCondition withBlock: [ class isMeta not ])
+	^ self applicabilityConditions 
 ]
 
 { #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> privateTransform [
 	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
-	originalProtocol := method protocol.
+	originalProtocol := method protocolName.
 	oldClass := class.
 	self removeInstVariableReferences.
 	method := class methodFor: method selector.

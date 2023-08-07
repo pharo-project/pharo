@@ -214,6 +214,17 @@ Float class >> initialize [
 ]
 
 { #category : #constants }
+Float class >> machineEpsilon [
+	"Answer the machine epsilon or macheps, defined by wikipedia (https://en.wikipedia.org/wiki/Machine_epsilon) as:
+
+	*an upper bound on the relative approximation error due to rounding in floating point arithmetic*
+
+	Compute it as the difference between 1.0 and previous representable value"
+
+	^1.0 timesTwoPower: 1 - self precision
+]
+
+{ #category : #constants }
 Float class >> maxExactInteger [
 	"Answer the biggest integer such that it is exactly represented in a float, and all smaller integers also are"
 	^1 bitShift: self precision
@@ -638,11 +649,11 @@ Float >> asApproximateFractionAtOrder: maxOrder [
 								^ Fraction numerator: num1 denominator: denom1].
 					^ Fraction numerator: num2 denominator: denom2]].
 	"If fractional part is zero, return the first ratio"
-	denom1 = 1
+	^ denom1 = 1
 		ifTrue: ["Am I really an Integer?"
-				^ num1 "Yes, return Integer result"]
+				num1 "Yes, return Integer result"]
 		ifFalse: ["Otherwise return Fraction result"
-				^ Fraction numerator: num1 denominator: denom1]
+				Fraction numerator: num1 denominator: denom1]
 ]
 
 { #category : #converting }
@@ -719,8 +730,8 @@ Float >> asMinimalDecimalFraction [
 	shead := s bitShift: slowbit.
 	[d := (r bitShift: slowbit) // shead.
 	r := r - (d * s).
-	(tc1 := (r > mMinus) not and: [roundingIncludesLimits or: [r < mMinus]]) |
-	(tc2 := (r + mPlus < s) not and: [roundingIncludesLimits or: [r + mPlus > s]])] whileFalse:
+	(tc1 := r <= mMinus and: [roundingIncludesLimits or: [r < mMinus]]) |
+	(tc2 := r + mPlus >= s and: [roundingIncludesLimits or: [r + mPlus > s]])] whileFalse:
 		[numerator := 10 * numerator + d.
 		denominator := 10 * denominator.
 		r := r * 10.

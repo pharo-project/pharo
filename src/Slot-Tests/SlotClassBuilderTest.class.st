@@ -10,18 +10,8 @@ Class {
 }
 
 { #category : #'helpers-names' }
-SlotClassBuilderTest >> aCategory [
-	^ 'SlotTestsTmp'
-]
-
-{ #category : #'helpers-names' }
 SlotClassBuilderTest >> aClassName [
 	^ #SlotTestsClassA
-]
-
-{ #category : #'helpers-names' }
-SlotClassBuilderTest >> anotherCategory [
-	^ 'SlotTestsTmp-Another'
 ]
 
 { #category : #'helpers-names' }
@@ -60,14 +50,13 @@ SlotClassBuilderTest >> layoutClassesWithSlots [
 SlotClassBuilderTest >> make: anUnaryBlock [
 	"I build a class for testing, providing basic default values, but eventually customized by the received unary block."
 
-	^Smalltalk classInstaller make: [:builder|
-		builder
-			superclass: Object;
-			name: self aClassName;
-			layoutClass: FixedLayout;
-			category: self aCategory.
-		anUnaryBlock value: builder
-		]
+	^ Smalltalk classInstaller make: [ :builder |
+		  builder
+			  superclass: Object;
+			  name: self aClassName;
+			  layoutClass: FixedLayout;
+			  package: self slotTestPackageName.
+		  anUnaryBlock value: builder ]
 ]
 
 { #category : #'helpers-building' }
@@ -88,15 +77,21 @@ SlotClassBuilderTest >> makeWithLayout: aClassLayout andSlots: someSlots [
 		]
 ]
 
+{ #category : #'helpers-names' }
+SlotClassBuilderTest >> slotTestPackageName [
+	^ 'SlotTestsTmp'
+]
+
 { #category : #running }
 SlotClassBuilderTest >> tearDown [
 	"We remove the classes that could have been created during test run"
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		{ self aClassName. self anotherClassName. self yetAnotherClassName. self yetYetAnotherClassName } do: [ :each |
-			testingEnvironment
-				at: each
-				ifPresent: [ :class | class removeFromSystem ]]].
+		{
+			self aClassName.
+			self anotherClassName.
+			self yetAnotherClassName.
+			self yetYetAnotherClassName } do: [ :each | testingEnvironment at: each ifPresent: [ :class | class removeFromSystem ] ] ].
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 
@@ -104,11 +99,7 @@ SlotClassBuilderTest >> tearDown [
 		cleanUpTrait: TOne;
 		cleanUpTrait: TTwo.
 
-	Smalltalk organization removeCategory: self aCategory.
-	(RPackageOrganizer default
-		packageNamed: self aCategory
-		ifAbsent: [ ^ self ])
-		unregister.
+	self packageOrganizer removePackage: self slotTestPackageName.
 
 	super tearDown
 ]

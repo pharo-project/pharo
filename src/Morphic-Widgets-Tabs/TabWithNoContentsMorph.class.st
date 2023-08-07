@@ -10,6 +10,12 @@ Class {
 	#category : #'Morphic-Widgets-Tabs-Support'
 }
 
+{ #category : #'class initialization' }
+TabWithNoContentsMorph class >> initialize [
+
+	self deprecatedAliases: { #TabWithNoContents }
+]
+
 { #category : #'instance creation' }
 TabWithNoContentsMorph class >> signalTab: aTab [
 

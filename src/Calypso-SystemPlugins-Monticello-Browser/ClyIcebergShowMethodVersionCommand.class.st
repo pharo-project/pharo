@@ -55,9 +55,9 @@ ClyIcebergShowMethodVersionCommand >> execute [
 
 	packageName := method package name.
 	repositoriesWithPackage := 	IceRepository registry
-		select: [ :each | each includesPackageNamed: packageName ].
+		select: [ :repo | repo includesPackageNamed: packageName ].
 	repositoriesWithPackage ifEmpty: [
-		UIManager default inform: 'No repositories include package ', packageName.
+		self inform: 'No repositories include package ', packageName.
 		^ self ].
 	repository := repositoriesWithPackage size > 1
 		ifTrue: [

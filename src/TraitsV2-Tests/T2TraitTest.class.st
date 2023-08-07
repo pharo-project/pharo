@@ -101,7 +101,7 @@ T2TraitTest >> testClassTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 { #category : #tests }
 T2TraitTest >> testClassTraits [
 	| t1 t2 aClass |
-
+	<ignoreNotImplementedSelectors: #(otherSelector otherSelector2 anAlias aSelector)>
 	t1 := self newTrait: #T1 with: #().
 	t2 := self newTrait: #T2 with: #().
 
@@ -166,6 +166,7 @@ T2TraitTest >> testEmptyCompositionManagesTEmpty [
 { #category : #tests }
 T2TraitTest >> testIndirectSequence [
 	| t1 t2 t3 c1 obj |
+	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2)>
 
 	t1 := self createT1.
 	t2 := self createT2.
@@ -285,16 +286,15 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 
 { #category : #tests }
 T2TraitTest >> testRemovingTraitsUpdatesCategories [
-	| t1 t2 c1 |
 
+	| t1 t2 c1 |
 	t1 := self createT1.
 	t2 := self createT2.
 	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {  }.
 
-	c1 organization allMethodSelectors do: [:each | self assert: (c1 includesSelector: each) ].
-	c1 class organization allMethodSelectors do: [:each |
-		self assert: (c1 class includesSelector: each) ]
+	c1 selectors do: [ :selector | self assert: (c1 includesSelector: selector) ].
+	c1 class selectors do: [ :selector | self assert: (c1 class includesSelector: selector) ]
 ]
 
 { #category : #tests }
@@ -324,6 +324,7 @@ T2TraitTest >> testSelectorsWithExplicitOriginNoTrait [
 { #category : #tests }
 T2TraitTest >> testSequence [
 	| t1 t2 c1 obj |
+	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2 )>
 
 	t1 := self createT1.
 	t2 := self createT2.

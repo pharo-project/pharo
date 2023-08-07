@@ -58,7 +58,7 @@ RBExtractMethodToComponentRefactoring >> extractMethod [
 			methodName
 				selector: extractedMethodSelector;
 				yourself].
-	self performCompositeRefactoring: refactoring
+	self generateChangesFor: refactoring
 ]
 
 { #category : #transforming }
@@ -69,7 +69,7 @@ RBExtractMethodToComponentRefactoring >> inlineForwarder [
 				sendersOf: extractedMethodSelector
 				in: class.
 	refactoring setOption: #inlineExpression toUse: [:ref :string | true].
-	self performCompositeRefactoring: refactoring
+	self generateChangesFor: refactoring
 ]
 
 { #category : #transforming }
@@ -78,19 +78,19 @@ RBExtractMethodToComponentRefactoring >> moveMethod [
 	| variable refactoring |
 
 	variable := self selectVariableToMoveMethodTo: extractedMethodSelector class: class.
-	variable ifNil: [ self refactoringFailure: 'Did not extract method' ].
+	variable ifNil: [ self refactoringError: 'Did not extract method' ].
 	refactoring := RBMoveMethodRefactoring
 		model: self model
 		selector: extractedMethodSelector
 		class: class
 		variable: variable.
-	self performCompositeRefactoring: refactoring
+	self generateChangesFor: refactoring
 ]
 
 { #category : #preconditions }
 RBExtractMethodToComponentRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #printing }

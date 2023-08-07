@@ -35,10 +35,10 @@ RBReplaceMessageSendTransformation class >> basicMenuItemString [
 	^ 'Replace senders'
 ]
 
-{ #category : #accessing }
-RBReplaceMessageSendTransformation class >> kind [
+{ #category : #displaying }
+RBReplaceMessageSendTransformation class >> isTransformation [ 
 
-	^ 'Transformation'
+	^ true
 ]
 
 { #category : #'instance creation' }
@@ -120,19 +120,6 @@ RBReplaceMessageSendTransformation >> newSelectorString [
 	^stream contents
 ]
 
-{ #category : #transforming }
-RBReplaceMessageSendTransformation >> parseTreeRewriter [
-
-	| rewriteRule oldString newString |
-	rewriteRule := self parseTreeRewriterClass new.
-	oldString := self buildSelectorString: oldSelector.
-	newString := self newSelectorString.
-	rewriteRule
-		replace: '``@object ' , oldString
-		with: '``@object ' , newString.
-	^ rewriteRule
-]
-
 { #category : #preconditions }
 RBReplaceMessageSendTransformation >> preconditions [
 
@@ -141,7 +128,7 @@ RBReplaceMessageSendTransformation >> preconditions [
 		               oldSelector numArgs < newSelector numArgs ifTrue: [
 			               oldSelector numArgs + self initializers size
 			               = newSelector numArgs ifFalse: [
-				               self refactoringFailure:
+				               self refactoringError:
 					               'You don''t have the necessary initializers to replace senders.' ] ].
 		               true ])
 	              & (RBCondition definesSelector: oldSelector in: class)

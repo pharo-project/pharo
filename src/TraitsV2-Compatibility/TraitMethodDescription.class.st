@@ -50,34 +50,9 @@ TraitMethodDescription >> conflictMethod [
 		binary: binary
 ]
 
-{ #category : #accessing }
-TraitMethodDescription >> effectiveMethodCategory [
-	^ self effectiveMethodCategoryCurrent: nil new: nil
-]
-
-{ #category : #accessing }
-TraitMethodDescription >> effectiveMethodCategoryCurrent: currentCategoryOrNil new: newCategoryOrNil [
-	| result size isCurrent isConflict |
-	size := self size.
-	size = 0 ifTrue: [^ nil].
-	result := self locatedMethods anyOne category.
-	size = 1 ifTrue: [^ result].
-
-	isCurrent := currentCategoryOrNil isNil.
-	isConflict := false.
-	self locatedMethods do: [:each | | cat |
-		cat := each category.
-		isCurrent := isCurrent or: [cat == currentCategoryOrNil].
-		isConflict := isConflict or: [cat ~~ result]].
-	isConflict ifFalse: [^ result].
-	(isCurrent not and: [newCategoryOrNil notNil]) ifTrue: [^ newCategoryOrNil].
-
-	^ Protocol ambiguous
-]
-
 { #category : #private }
 TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs: aNumber binary: aBoolean [
-	| source node keywords |
+	| source keywords method |
 	source := String streamContents: [:stream |
 		aNumber < 1
 			ifTrue: [stream nextPutAll: aSelector]
@@ -92,12 +67,12 @@ TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs:
 							nextPutAll: 'arg'; nextPutAll: argumentNumber asString; space]]].
 		stream cr; tab; nextPutAll: 'self '; nextPutAll: aSymbol].
 
-	node := self class compiler
+	method := self class compiler
 		source: source;
 		class: self class;
-		failBlock: [];
-		parse.
-	^(node generateWithSource) selector: aSelector; yourself
+		permitFaulty;
+		compile.
+	^method selector: aSelector; yourself
 ]
 
 { #category : #initialization }

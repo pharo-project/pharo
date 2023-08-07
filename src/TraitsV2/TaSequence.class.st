@@ -83,17 +83,6 @@ TaSequence >> allTraits [
 	^ members flatCollect: #allTraits
 ]
 
-{ #category : #accessing }
-TaSequence >> categoryOfMethod: method withSelector: selector [
-	| categories |
-
-	categories := (self methods select: [ :e | e selector = selector ] thenCollect: #category) asSet.
-
-	^ categories size = 1
-		ifTrue: [ ^ categories anyOne ]
-		ifFalse: [ Protocol ambiguous ]
-]
-
 { #category : #testing }
 TaSequence >> changesSourceCode: aSelector [
 	"If the selector has conflicts it should be recompiled"
@@ -169,13 +158,12 @@ TaSequence >> isLocalAliasSelector: aSymbol [
 
 { #category : #accessing }
 TaSequence >> memberForSelector: aSelector [
-
 	"I return the member that defines a given selector.
 	I first look for a valid member, if not, I will return the first"
+
 	^ members
-		detect:
-			[ :e | (e selectors includes: aSelector) and: [ (e compiledMethodAt: aSelector) isRequired not ] ]
-		ifNone: [ members detect: [ :e | e selectors includes: aSelector ] ]
+		  detect: [ :member | (member selectors includes: aSelector) and: [ (member compiledMethodAt: aSelector) isRequired not ] ]
+		  ifNone: [ members detect: [ :member | member selectors includes: aSelector ] ]
 ]
 
 { #category : #operations }
@@ -196,7 +184,22 @@ TaSequence >> name [
 { #category : #querying }
 TaSequence >> originSelectorOf: aSelector [
 
-	^ (self traitDefining: aSelector ifNone: [ ^aSelector ]) originSelectorOf: aSelector
+	^ (self traitDefining: aSelector ifNone: [ ^ aSelector ]) originSelectorOf: aSelector
+]
+
+{ #category : #accessing }
+TaSequence >> protocolForMethod: aMethod [
+
+	| protocols originalSelector |
+	originalSelector := aMethod selector.
+	protocols := (self methods
+		              select: [ :method | method selector = originalSelector ]
+		              thenCollect: #protocolName) asSet.
+
+	"If we have more than a protocol, for example if there is an alias or if multiple traits have the same method, we return a conflicting protocol name."
+	^ protocols size = 1
+		  ifTrue: [ protocols anyOne ]
+		  ifFalse: [ Protocol traitConflictName ]
 ]
 
 { #category : #users }

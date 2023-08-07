@@ -10,3 +10,25 @@ SequenceableCollection >> atRandom: aGenerator [
 
 	^ self at: (aGenerator nextInteger: self size)
 ]
+
+{ #category : #'*Random-Core' }
+SequenceableCollection >> shuffle [
+	"Modify the receiver but with its elements in random positions.
+	This method use Random class as random generator"
+
+	^ self shuffleBy: Random new
+]
+
+{ #category : #'*Random-Core' }
+SequenceableCollection >> shuffleBy: aRandom [
+	"Durstenfeld's version of the Fisher-Yates shuffle"
+	"({1. 2. 3. 4. 5} shuffleBy: (Random seed: 42)) >>> #(1 2 5 4 3)"
+
+	self size to: 2 by: -1 do: [ :i |
+		self swap: i with: (aRandom nextInteger: i) ]
+]
+
+{ #category : #'*Random-Core' }
+SequenceableCollection >> shuffled [
+	^ self copy shuffle
+]

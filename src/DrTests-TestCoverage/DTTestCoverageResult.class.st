@@ -9,7 +9,8 @@ Class {
 	#superclass : #DTPluginResult,
 	#instVars : [
 		'methodList',
-		'percent'
+		'percent',
+		'partiallyCoveredMethods'
 	],
 	#category : #'DrTests-TestCoverage'
 }
@@ -18,15 +19,26 @@ Class {
 DTTestCoverageResult >> buildTreeForUI [
 	<dtTestCoverageResultTreeNamed: 'List of uncovered methods' order: 1>
 	^ DTTreeNode new
-		subResults:
-			{(DTTreeNode new
-				name: (percent * 100 printShowingDecimalPlaces: 2) , ' % Code Coverage';
-				subResults: {};
-				yourself).
-			(DTTreeNode new
-				name: 'Uncovered methods';
-				subResults: (self methodList collect: [:each | each asResultForDrTest]);
-				yourself)}
+		subResults: (self methodList 
+		ifNotNil: [
+        {(DTTreeNode new
+            name: (percent * 100 printShowingDecimalPlaces: 2) , ' % Code Coverage';
+            subResults: {};
+            yourself).
+        (DTTreeNode new
+            name: 'Uncovered methods';
+            subResults: (self methodList collect: [:each | each asResultForDrTest]);
+            yourself).
+         (DTTreeNode new
+            name: 'Partially covered methods';
+            subResults: (self partiallyCoveredMethods collect: [:each | each asResultForDrTest]);
+            yourself)}
+    	]ifNil: [
+       	 {(DTTreeNode new
+        	    name: 'no package has been selected';
+      	 	    subResults: {};
+             yourself)}
+    	])
 ]
 
 { #category : #accessing }
@@ -37,6 +49,18 @@ DTTestCoverageResult >> methodList [
 { #category : #accessing }
 DTTestCoverageResult >> methodList: aCollectionOfMethods [
 	methodList := aCollectionOfMethods
+]
+
+{ #category : #accessing }
+DTTestCoverageResult >> partiallyCoveredMethods [
+
+	^ partiallyCoveredMethods
+]
+
+{ #category : #accessing }
+DTTestCoverageResult >> partiallyCoveredMethods: aCollectionOfMethods [
+
+	partiallyCoveredMethods := aCollectionOfMethods
 ]
 
 { #category : #accessing }

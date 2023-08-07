@@ -1318,6 +1318,13 @@ RubTextEditor >> inOutdent: aKeyboardEvent delta: delta [
 	^ true
 ]
 
+{ #category : #'menu messages' }
+RubTextEditor >> indent [
+
+	^ self indent: nil
+
+]
+
 { #category : #'editing keys' }
 RubTextEditor >> indent: aKeyboardEvent [
 	"Add a tab at the front of every line occupied by the selection."
@@ -1364,6 +1371,14 @@ RubTextEditor >> insertAndSelect: aString at: anInteger [
 		with: (Text string: (' ' , aString)
 					attributes: self emphasisHere)
 		and: [self ]
+]
+
+{ #category : #api }
+RubTextEditor >> insertAndSelectAfterCurrentSelection: aString [ 
+	
+	| selectionInterval |
+	selectionInterval := self selectionInterval.
+	self insertAndSelect: aString at: selectionInterval last + 1
 ]
 
 { #category : #testing }
@@ -1447,12 +1462,37 @@ RubTextEditor >> lf: aKeyboardEvent [
 	^false
 ]
 
+{ #category : #private }
+RubTextEditor >> lineIndentationStart: aPosition [
+	"The offset of the start of the line of `aPostion`, but skip leading spaces and tabs"
+
+	| string position spaces |
+	string := self string.
+	position := self lineStart: aPosition.
+	spaces := {Character tab. Character space}. "Only space and tab, so do not skip `Character cr` ending the line"
+	[ position <= string size and: [
+		spaces includes: (string at: position) ] ] whileTrue: [
+		position := position + 1 ].
+
+	^ position
+]
+
 { #category : #'menu messages' }
 RubTextEditor >> lineSelectAndEmptyCheck: returnBlock [
 	"If the current selection is an insertion point, expand it to be the entire current line; if after that's done the selection is still empty, then evaluate the returnBlock, which will typically consist of '[^ self]' in the caller -- check senders of this method to understand this."
 
 	self selectLine.  "if current selection is an insertion point, then first select the entire line in which occurs before proceeding"
 	self hasSelection ifFalse: [textArea flash.  ^ returnBlock value]
+]
+
+{ #category : #private }
+RubTextEditor >> lineStart: position [
+	"The offset of the start of the line of `postion`"
+
+	^ (self string
+		   lastIndexOf: Character cr
+		   startingAt: position - 1
+		   ifAbsent: [ 0 ]) + 1
 ]
 
 { #category : #private }
@@ -1671,6 +1711,13 @@ RubTextEditor >> oppositeDelimiterSelection [
 	^ RubTextSelectionColor oppositeDelimiterSelection
 ]
 
+{ #category : #'menu messages' }
+RubTextEditor >> outdent [
+
+	^ self outdent: nil
+
+]
+
 { #category : #'editing keys' }
 RubTextEditor >> outdent: aKeyboardEvent [
 	"Remove a tab from the front of every line occupied by the selection."
@@ -1780,12 +1827,6 @@ RubTextEditor >> previousWord: position [
 	beforeCaretIsAlpha = afterCaretIsAlpha and: [ index > 1 ] ]
 		whileTrue: [ index := index - 1 ].
 	^ index
-]
-
-{ #category : #'nonediting/nontyping keys' }
-RubTextEditor >> raiseContextMenu: aKeyboardEvent [
-
-	^ textArea yellowButtonActivity: textArea activeHand lastEvent shiftPressed
 ]
 
 { #category : #'accessing - selection' }
@@ -2112,7 +2153,7 @@ RubTextEditor >> selectWord [
 			[hereChar := string at: (here := here + direction).
 			match = 0
 				ifTrue: ["token scan goes left, then right"
-					hereChar tokenish
+					(hereChar tokenish or: [ hereChar = $# ])
 						ifTrue: [here = 1
 								ifTrue:
 									[start := 1.
@@ -2172,15 +2213,6 @@ RubTextEditor >> selectWordMark: marker point: selectionPoint [
 RubTextEditor >> selection [
 	"Answer the text in the paragraph that is currently selected."
 	^self text copyFrom: self startIndex to: self stopIndex - 1
-]
-
-{ #category : #'accessing - selection' }
-RubTextEditor >> selectionAsStream [
-	"Answer a ReadStream on the text in the paragraph that is currently
-	selected."
-
-	^ReadStream
-		on: (self string copyFrom: self startIndex to: self stopIndex - 1)
 ]
 
 { #category : #'accessing - selection' }
@@ -2430,6 +2462,12 @@ RubTextEditor >> tab: aKeyboardEvent [
 	self addString: String tab.
 	self unselect.
 	^false
+]
+
+{ #category : #protocol }
+RubTextEditor >> takeKeyboardFocus [
+	
+	textArea takesKeyboardFocus
 ]
 
 { #category : #accessing }

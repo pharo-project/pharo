@@ -10,13 +10,26 @@ Class {
 { #category : #tests }
 EpCodeChangeIntegrationTest >> categoryNameForTesting [
 
-	^ #'EpiceaTestingWith-A-Really-WeirdCategoryName'
+	^ (self packageNameForTesting , '-' , self packageTagNameForTesting) asSymbol
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> packageNameForTesting [
+
+	^ #'EpiceaTestingWith-A-Really-WeirdPackageName'
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> packageTagNameForTesting [
+
+	^ 'WeirdCategoryName'
 ]
 
 { #category : #running }
 EpCodeChangeIntegrationTest >> tearDown [
 
-	self class environment organization removeCategory: self categoryNameForTesting.
+	self packageOrganizer removeCategory: self categoryNameForTesting.
+	(self packageNameForTesting asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	super tearDown
 ]
 
@@ -26,7 +39,7 @@ EpCodeChangeIntegrationTest >> testBehaviorCommentChange [
 	aClass := classFactory newClass.
 	self assert: (self countLogEventsWith: EpBehaviorCommentChange) equals: 0.
 
-	aClass classComment: 'hey!' stamp: DateAndTime now.
+	aClass comment: 'hey!' stamp: DateAndTime now.
 	self assert: (self countLogEventsWith: EpBehaviorCommentChange) equals: 1
 ]
 
@@ -35,25 +48,22 @@ EpCodeChangeIntegrationTest >> testCategoryAddition [
 
 	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 0.
 
-	self class environment organization addCategory: self categoryNameForTesting.
+	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 1.
-	self
-		assert: (self allLogEventsWith: EpCategoryAddition) first affectedPackageName
-		equals: self categoryNameForTesting
+	self assert: (self allLogEventsWith: EpCategoryAddition) first categoryName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testCategoryRemoval [
 
-	self class environment organization addCategory: self categoryNameForTesting.
+	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 0.
 
-	self class environment organization removeCategory: self categoryNameForTesting.
+	self packageOrganizer removeCategory: self categoryNameForTesting.
+
 	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 1.
-	self
-		assert: (self allLogEventsWith: EpCategoryRemoval) first affectedPackageName
-		equals: self categoryNameForTesting
+	self assert: (self allLogEventsWith: EpCategoryRemoval) first categoryName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }
@@ -106,10 +116,10 @@ EpCodeChangeIntegrationTest >> testClassModificationWithHierarchy [
 
 	| modifications |
 	aClass := classFactory newClass.
-	classFactory newSubclassOf: aClass using: {}.
+	classFactory make: [ :aBuilder | aBuilder superclass: aClass ].
 	aClass addSlot: #i asSlot.
 
-	modifications := (self allLogEntriesWith: EpClassModification) collect: [:each | each content].
+	modifications := (self allLogEntriesWith: EpClassModification) collect: [ :each | each content ].
 	self assert: modifications size equals: 1.
 	self assert: modifications first behaviorAffectedName equals: aClass name
 ]
@@ -158,10 +168,7 @@ EpCodeChangeIntegrationTest >> testInstanceVariableAddition [
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testInstanceVariableRemoval [
 
-	aClass := classFactory
-		newSubclassOf: Object
-		instanceVariableNames: 'x'
-		classVariableNames: ''.
+	aClass := classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x' ].
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 	aClass removeInstVarNamed: #x.
@@ -207,7 +214,7 @@ EpCodeChangeIntegrationTest >> testMethodModificationOfProtocol [
 	| events event |
 	aClass := classFactory newClass.
 	aClass compile: 'fortyTwo ^42' classified: 'old'.
-	(aClass>>#fortyTwo) protocol: 'new'.
+	aClass >> #fortyTwo protocol: 'new'.
 
 	events := self allLogEventsWith: EpMethodModification.
 	self assert: events size equals: 1.
@@ -264,10 +271,34 @@ EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 ]
 
 { #category : #tests }
+EpCodeChangeIntegrationTest >> testPackageAddition [
+
+	self assert: (self countLogEventsWith: EpPackageAddition) equals: 0.
+
+	self packageOrganizer createPackageNamed: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageAddition) equals: 1.
+	self assert: (self allLogEventsWith: EpPackageAddition) first affectedPackageName equals: self packageNameForTesting
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> testPackageRemoval [
+
+	self packageOrganizer createPackageNamed: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 0.
+
+	self packageOrganizer removePackage: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 1.
+	self assert: (self allLogEventsWith: EpPackageRemoval) first affectedPackageName equals: self packageNameForTesting
+]
+
+{ #category : #tests }
 EpCodeChangeIntegrationTest >> testProtocolAddition [
 
 	aClass := classFactory newClass.
-	aClass organization addCategory: #testing42.
+	aClass addProtocol: #testing42.
 
 	self assert: (self countLogEventsWith: EpProtocolAddition) equals: 1
 ]
@@ -309,14 +340,14 @@ EpCodeChangeIntegrationTest >> testRedundantClassDefinition [
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 
-	aClass := classFactory newClassUsing: TSizeTest.
+	aClass := classFactory make: [ :aBuilder | aBuilder traitComposition: TSizeTest ].
 	self
 		shouldnt: [
 			self class classInstaller make: [ :aBuilder |
 				aBuilder
 					name: aClass name;
-					traitComposition: {};
-					package: aClass category]]
+					traitComposition: {  };
+					package: aClass category ] ]
 		raise: MessageNotUnderstood
 ]
 

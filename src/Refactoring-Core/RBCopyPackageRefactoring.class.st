@@ -86,7 +86,7 @@ RBCopyPackageRefactoring >> copyAllClasses [
 	^ self classes collect: [ :symbol |
 		| copyClassName |
 		copyClassName := (self classMappings at: symbol) asSymbol.
-		self performCompositeRefactoring:
+		self generateChangesFor:
 			(RBCopyClassRefactoring
 				model: self model
 				copyClass: symbol
@@ -104,13 +104,13 @@ RBCopyPackageRefactoring >> copyPackage: aString1 in: aString2 [
 
 { #category : #preconditions }
 RBCopyPackageRefactoring >> preconditions [
-	^ super preconditions & (RBCondition withBlock: [ newName = packageName ifTrue:
-		[ self refactoringError: 'Use a different name' ].
-		true ]) &
-	(RBCondition withBlock: [ [RPackage organizer validatePackageDoesNotExist: newName. true]
-			on: Error
-			do: [ :e | self refactoringError: e messageText ]
-		])
+
+	^ super preconditions
+		& (RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.')
+		& (RBCondition
+			   withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+				   (self packageOrganizer hasPackage: newName) not ]
+			   errorString: 'The system already includes a package named ' , newName)
 ]
 
 { #category : #renaming }
@@ -122,14 +122,14 @@ RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 					withValueFrom:
 						[:aNode |
 						self
-							refactoringFailure: aClass2 , ' already exists within the reference scope'];
+							refactoringError: aClass2 , ' already exists within the reference scope'];
 				yourself.
 	self model allReferencesToClass: aClass1 inPackages: { newName }
 		do:
 			[:method |
 			(method modelClass hierarchyDefinesVariable: aClass2)
 				ifTrue:
-					[self refactoringFailure: aClass2 , ' is already defined in hierarchy of '
+					[self refactoringError: aClass2 , ' is already defined in hierarchy of '
 								, method modelClass printString].
 			self
 				convertMethod: method selector

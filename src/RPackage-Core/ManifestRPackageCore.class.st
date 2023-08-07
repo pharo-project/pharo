@@ -9,5 +9,7 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestRPackageCore class >> manuallyResolvedDependencies [
-	^ #(#UIManager)
+
+	<ignoreForCoverage>
+	^ #( #Jobs #'Transcript-Core' #'Announcements-Core' )
 ]

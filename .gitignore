@@ -25,3 +25,5 @@ play-cache/
 bootstrap-cache/
 
 github--*.zip
+
+**/.DS_STORE

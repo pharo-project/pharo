@@ -299,3 +299,11 @@ Color class >> pixelScreenForDepth: depth [
 		with: mask
 		with: mask bitInvert32
 ]
+
+{ #category : #'*Graphics-Primitives' }
+Color class >> shutDown [
+
+	<script>
+	CachedColormaps := nil. "Maps to translate between color depths"
+	MaskingMap := nil "Maps all colors except transparent to black for creating a mask"
+]

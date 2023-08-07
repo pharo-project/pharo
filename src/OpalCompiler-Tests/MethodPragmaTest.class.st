@@ -48,9 +48,9 @@ MethodPragmaTest >> pragma: aSymbol selector: aSelector times: anInteger [
 
 { #category : #running }
 MethodPragmaTest >> tearDown [
-	(self class organization listAtCategoryNamed: self methodCategory)
-		do: [ :each | self class removeSelectorSilently: each ].
-	self class organization removeCategory: self methodCategory.
+
+	(self class selectorsInProtocol: self methodCategory) do: [ :each | self class removeSelectorSilently: each ].
+	self class removeProtocolIfEmpty: self methodCategory.
 	super tearDown
 ]
 
@@ -257,6 +257,7 @@ MethodPragmaTest >> testNumArgs [
 { #category : #'tests - primitives' }
 MethodPragmaTest >> testPrimitiveIndexed1 [
 	"This test useses the #instVarAt: primitive."
+	<ignoreNotImplementedSelectors: #(inst)>
 
 	self compile: '<primitive: 74> ^ #inst' selector: #inst.
 	self assert: self inst equals: #inst
@@ -265,7 +266,7 @@ MethodPragmaTest >> testPrimitiveIndexed1 [
 { #category : #'tests - primitives' }
 MethodPragmaTest >> testPrimitiveIndexed2 [
 	"This test useses the #identityHash primitive."
-
+	<ignoreNotImplementedSelectors: #(idHash)>
 	self compile: '<primitive: 75> ^ #idHash' selector: #idHash.
 	self assert: self idHash equals: self basicIdentityHash
 ]
@@ -281,7 +282,7 @@ MethodPragmaTest >> testPrimitiveNamed1 [
 { #category : #'tests - primitives' }
 MethodPragmaTest >> testPrimitiveNamed2 [
 	"This test useses the #primPathNameDelimiter primitive."
-
+	<ignoreNotImplementedSelectors: #(delim)>
 	self compile: '<primitive: ''primitiveDirectoryDelimitor'' module: ''FilePlugin''> ^ #delim' selector: #delim.
 	self assert: self delim equals: File delimiter
 ]

@@ -108,23 +108,23 @@ Class {
 
 { #category : #primitives }
 String class >> compare: string1 with: string2 collated: order [
-	"Return 1, 2 or 3, if string1 is <, =, or > string2, with the collating order of characters given by the order array."
+	"Return -1, 0 or 3, if string1 is <, =, or > string2, with the collating order of characters given by the order array."
 
 	| len1 len2 c1 c2 |
-	order
-		ifNil: [ len1 := string1 size.
-			len2 := string2 size.
-			1 to: (len1 min: len2) do: [ :i |
-				c1 := string1 basicAt: i.
-				c2 := string2 basicAt: i.
-				c1 = c2
-					ifFalse: [ ^ c1 < c2
-							ifTrue: [ 1 ]
-							ifFalse: [ 3 ] ] ].
-			len1 = len2 ifTrue: [ ^ 2 ].
-			^ len1 < len2
-				ifTrue: [ 1 ]
-				ifFalse: [ 3 ] ].
+	order ifNil: [
+		len1 := string1 size.
+		len2 := string2 size.
+		1 to: (len1 min: len2) do: [ :i |
+			c1 := string1 basicAt: i.
+			c2 := string2 basicAt: i.
+			c1 = c2 ifFalse: [
+				^ c1 < c2
+					  ifTrue: [ -1 ]
+					  ifFalse: [ 1 ] ] ].
+		len1 = len2 ifTrue: [ ^ 0 ].
+		^ len1 < len2
+			  ifTrue: [ -1 ]
+			  ifFalse: [ 1 ] ].
 	len1 := string1 size.
 	len2 := string2 size.
 	1 to: (len1 min: len2) do: [ :i |
@@ -132,14 +132,14 @@ String class >> compare: string1 with: string2 collated: order [
 		c2 := string2 basicAt: i.
 		c1 < 256 ifTrue: [ c1 := order at: c1 + 1 ].
 		c2 < 256 ifTrue: [ c2 := order at: c2 + 1 ].
-		c1 = c2
-			ifFalse: [ ^ c1 < c2
-					ifTrue: [ 1 ]
-					ifFalse: [ 3 ] ] ].
-	len1 = len2 ifTrue: [ ^ 2 ].
+		c1 = c2 ifFalse: [
+			^ c1 < c2
+				  ifTrue: [ -1 ]
+				  ifFalse: [ 1 ] ] ].
+	len1 = len2 ifTrue: [ ^ 0 ].
 	^ len1 < len2
-		ifTrue: [ 1 ]
-		ifFalse: [ 3 ]
+		  ifTrue: [ -1 ]
+		  ifFalse: [ 1 ]
 ]
 
 { #category : #'instance creation' }
@@ -475,58 +475,71 @@ String class >> with: aCharacter [
 String >> < aString [
 	"Answer whether the receiver sorts before aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'abc' < 'def' >>> true"
+
 	" 'abc' < 'abc' >>> false"
+
 	" 'def' < 'abc' >>> false"
 
-
-	^ (self compare: self with: aString collated: AsciiOrder) = 1
+	^ (self compare: self with: aString) < 0
 ]
 
 { #category : #comparing }
 String >> <= aString [
 	"Answer whether the receiver sorts before or equal to aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'abc' <= 'def' >>> true"
+
 	" 'abc' <= 'abc' >>> true"
+
 	" 'def' <= 'abc' >>> false"
 
-	^ (self compare: self with: aString collated: AsciiOrder) <= 2
+	^ (self compare: self with: aString) <= 0
 ]
 
 { #category : #comparing }
 String >> = aString [
 	"Answer whether the receiver sorts equally as aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'abc' = 'def' >>> false"
+
 	" 'abc' = 'abc' >>> true"
+
 	" 'def' = 'abc' >>> false"
 
-	(aString isString and: [self size = aString size]) ifFalse: [^false].
-	^ (self compare: self with: aString collated: AsciiOrder) = 2
+	(aString isString and: [ self size = aString size ]) ifFalse: [ ^ false ].
+	^ (self compare: self with: aString) = 0
 ]
 
 { #category : #comparing }
 String >> > aString [
 	"Answer whether the receiver sorts after aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'def' > 'abc' >>> true"
+
 	" 'def' > 'def' >>> false"
+
 	" 'abc' > 'def' >>> false"
 
-
-	^ (self compare: self with: aString collated: AsciiOrder) = 3
+	^ (self compare: self with: aString) > 0
 ]
 
 { #category : #comparing }
 String >> >= aString [
 	"Answer whether the receiver sorts after or equal to aString.
 	The collation order is simple ascii (with case differences)."
+
 	" 'def' >= 'abc' >>> true"
+
 	" 'def' >= 'def' >>> true"
+
 	" 'abc' >= 'def' >>> false"
 
-	^ (self compare: self with: aString collated: AsciiOrder) >= 2
+	^ (self compare: self with: aString) >= 0
 ]
 
 { #category : #comparing }
@@ -956,26 +969,45 @@ String >> compare: aString caseSensitive: aBool [
 		2 - equal
 		3 - after.
 	"
+
 	| map |
-	map := aBool ifTrue:[CaseSensitiveOrder] ifFalse:[CaseInsensitiveOrder].
-	^self compare: self with: aString collated: map
+	map := aBool
+		       ifTrue: [ CaseSensitiveOrder ]
+		       ifFalse: [ CaseInsensitiveOrder ].
+	^ (self compare: self with: aString collated: map) sign + 2
+]
+
+{ #category : #verification }
+String >> compare: string1 with: string2 [
+
+	(string1 isByteString and: [ string2 isByteString ]) ifTrue: [
+		^ string1 compareWith: string2 "Not giving the order allows to use the jitted version of the primitive" ].
+
+	"Primitive does not fail properly right now"
+	^ String compare: string1 with: string2 collated: AsciiOrder
 ]
 
 { #category : #comparing }
 String >> compare: string1 with: string2 collated: order [
-
 	"'abc' = 'abc' asWideString >>> true"
+
 	"'abc' asWideString = 'abc' >>> true"
+
 	"(ByteArray with: 97 with: 0 with: 0 with: 0) asString ~= 'a000' asWideString >>> true"
+
 	"('abc' sameAs: 'aBc' asWideString) >>> true"
+
 	"('aBc' asWideString sameAs: 'abc') >>> true"
+
 	"('a000' asWideString ~= (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> true"
+
 	"((ByteArray with: 97 with: 0 with: 0 with: 0) asString sameAs: 'Abcd' asWideString) >>> false"
+
 	"('a000' asWideString sameAs: (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> false"
 
-	(string1 isByteString and: [string2 isByteString]) ifTrue: [
-		^ ByteString compare: string1 with: string2 collated: order].
-     "Primitive does not fail properly right now"
+	(string1 isByteString and: [ string2 isByteString ]) ifTrue: [ ^ string1 compareWith: string2 collated: order ].
+
+	"Primitive does not fail properly right now"
 	^ String compare: string1 with: string2 collated: order
 ]
 
@@ -2053,25 +2085,30 @@ String >> join: aCollection [
 
 { #category : #converting }
 String >> keywords [
-	"Answer an array of the keywords that compose the receiver."
+	"Returns the keywords of the provided selector. Assumes the reciever is a valid keyword based selector (@reciever isKeyword > true). Prefer using Symbol>>#keywordsStrict if you're not sure if the reciever is keyword-based."
+
+	"#foo: keywords >>> #('foo:')"
+
+	"#foo:bar: keywords >>> #('foo:' 'bar:')"
+	
+	"#foo keywords >>> #('foo')" "Invalid input/output !"
+	
+	"#+ keywords >>> #('+')" "Invalid input/output !"
+
 	| keywords |
-	keywords := Array streamContents:
-		[:kwds | | char kwd | kwd := (String new: 16) writeStream.
-		1 to: self size do:
-			[:i |
-			kwd nextPut: (char := self at: i).
-			char = $: ifTrue:
-					[kwds nextPut: kwd contents.
-					kwd reset]].
-		(kwd position = 0) ifFalse: [kwds nextPut: kwd contents]].
-	(keywords size >= 1 and: [(keywords at: 1) = ':']) ifTrue:
-		["Has an initial keyword, as in #:if:then:else:"
-		keywords := keywords allButFirst].
-	(keywords size >= 2 and: [(keywords at: keywords size - 1) = ':']) ifTrue:
-		["Has a final keyword, as in #nextPut::andCR"
-		keywords := keywords copyReplaceFrom: keywords size - 1
-								to: keywords size with: {':' , keywords last}].
+	keywords := Array streamContents: [ :kwds |
+		            | kwd |
+		            kwd := (String new: 16) writeStream.
+
+		            self do: [ :char |
+			            kwd nextPut: char.
+			            char = $: ifTrue: [
+				            kwds nextPut: kwd contents.
+				            kwd reset ] ].
+
+		            kwd position = 0 ifFalse: [ kwds nextPut: kwd contents ] ].
 	^ keywords
+	
 ]
 
 { #category : #testing }
@@ -2487,7 +2524,7 @@ String >> stemAndNumericSuffix [
 		[suffix :=  stem last digitValue * position + suffix.
 		position := position * 10.
 		stem := stem copyFrom: 1 to: stem size - 1].
-	^ Array with: stem with: suffix
+	^ { stem . suffix }
 ]
 
 { #category : #printing }

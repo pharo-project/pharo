@@ -40,8 +40,12 @@ ClyAllMethodGroupsQueryTest >> testFromSingleClass [
 
 	self queryFromScope: ClyInstanceSideScope of: ClyClass1FromP1Mock.
 
-	self assert: (resultItems collect: #class as: Set) equals: { ClyAllMethodGroup. ClyTaggedMethodGroup} asSet.
+	self assertCollection: (resultItems collect: #class) hasSameElements: {
+			ClyAllMethodGroup.
+			ClyMethodsInProtocolGroup }.
 	self
-		assert: (resultItems select:[:each | each class = ClyTaggedMethodGroup] thenCollect: #tag) asSet
-		equals: ClyClass1FromP1Mock tagsForMethods asSet
+		assertCollection: (resultItems
+				 select: [ :each | each class = ClyMethodsInProtocolGroup ]
+				 thenCollect: #protocol)
+		hasSameElements: ClyClass1FromP1Mock protocolNames
 ]

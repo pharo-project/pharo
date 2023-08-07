@@ -17,7 +17,7 @@ TestCaseTest >> testAnnouncement [
 	self deny: unitTest shouldAnnounce.
 	self deny: unitTest new shouldAnnounce.
 
-	unitTest announcer when: TestCaseAnnouncement do: [ :ann | collection add: ann ].
+	unitTest announcer when: TestCaseAnnouncement do: [ :ann | collection add: ann ] for: self.
 
 	self assert: unitTest shouldAnnounce.
 	self assert: unitTest new shouldAnnounce.
@@ -34,7 +34,7 @@ TestCaseTest >> testAnnouncement [
 
 	oldCollection := collection copy.
 	unitTest resetAnnouncer.
-	unitTest debug: #testClassCreationInDifferentCategories.
+	unitTest debug: #testClassCreationInDifferentTags.
 	self assert: collection equals: oldCollection
 ]
 

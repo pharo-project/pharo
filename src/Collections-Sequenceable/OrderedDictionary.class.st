@@ -67,7 +67,7 @@ OrderedDictionary class >> newFromKeys: keys andValues: values [
 	"(OrderedDictionary newFromKeys: #(#x #y) andValues: #(3 6)) >>> (OrderedDictionary new at: #x put: 3; at: #y put: 6 ;yourself)"
 
 	| dict |
-	dict := self new.
+	dict := self new: keys size.
 	keys with: values do: [ :k :v | dict at: k put: v ].
 	^ dict
 ]

@@ -60,7 +60,7 @@ RBMoveMethodRefactoring class >> selector: aSymbol class: aClass variable: aVari
 
 { #category : #transforming }
 RBMoveMethodRefactoring >> abstractVariables [
-	self performCompositeRefactoring: self abstractVariablesRefactoring.
+	self generateChangesFor: self abstractVariablesRefactoring.
 	parseTree := self abstractVariablesRefactoring parseTree
 ]
 
@@ -84,7 +84,8 @@ RBMoveMethodRefactoring >> addSelfReturn [
 RBMoveMethodRefactoring >> buildParseTree [
 
 	parseTree := ( class parseTreeForSelector: selector ) copy.
-	parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
+	parseTree doSemanticAnalysis
 ]
 
 { #category : #preconditions }
@@ -191,7 +192,7 @@ RBMoveMethodRefactoring >> getClassForGlobalOrClassVariable [
 				ifNil: [ self model classNamed: #Object ] ]
 		ifNotNil: [ type := definingClass typeOfClassVariable: variable ].
 	moveToClasses := self selectVariableTypesFrom: (Array with: type) selected: (Array with: type).
-	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
+	moveToClasses ifNil: [ self refactoringError: 'Method not moved' ]
 ]
 
 { #category : #'private - accessing' }
@@ -205,7 +206,7 @@ RBMoveMethodRefactoring >> getClassesForInstanceVariable [
 	types := typer typesFor: variable.
 	types ifEmpty: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
 	moveToClasses := self selectVariableTypesFrom: types selected: ( typer guessTypesFor: variable ).
-	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
+	moveToClasses ifNil: [ self refactoringError: 'Method not moved' ]
 ]
 
 { #category : #'private - accessing' }
@@ -216,7 +217,7 @@ RBMoveMethodRefactoring >> getClassesForTemporaryVariable [
 	types := RBRefactoryTyper typesFor: variable in: parseTree model: self model.
 	types ifEmpty: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
 	moveToClasses := self selectVariableTypesFrom: types selected: types.
-	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
+	moveToClasses ifNil: [ self refactoringError: 'Method not moved' ]
 ]
 
 { #category : #'private - accessing' }
@@ -227,7 +228,7 @@ RBMoveMethodRefactoring >> getClassesToMoveTo [
 			[self isMovingToInstVar
 				ifTrue: [self getClassesForInstanceVariable]
 				ifFalse: [self getClassForGlobalOrClassVariable]].
-	moveToClasses ifEmpty: [self refactoringFailure: 'No classes selected, method not moved.']
+	moveToClasses ifEmpty: [self refactoringError: 'No classes selected, method not moved.']
 ]
 
 { #category : #preconditions }
@@ -244,7 +245,7 @@ RBMoveMethodRefactoring >> getNewMethodName [
 		arguments: parameters.
 
 	[ newMethodName := self requestMethodNameFor: methodName.
-	newMethodName ifNil: [ self refactoringFailure: 'Did not move method' ].
+	newMethodName ifNil: [ self refactoringError: 'Did not move method' ].
 	newMethodName isValid
 		ifTrue: [ newSelector := newMethodName selector ]
 		ifFalse: [ self refactoringWarning: 'Invalid method name' ].

@@ -13,6 +13,7 @@ BaselineOfKernelTests >> baseline: spec [
 
 			package: 	'Collections-Abstract-Tests';					
 			package: 	'Collections-Atomic-Tests';
+			package: 'Collections-Native-Tests';	
 			package:	'Collections-Sequenceable-Tests';
 			package: 	'Collections-Stack-Tests';	
 			package: 	'Collections-Streams-Tests';		
@@ -20,7 +21,7 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'Collections-Support-Tests';								
 			package: 	'Collections-Unordered-Tests';
 			package: 	'Collections-Weak-Tests' with: [ spec requires: #('Collections-Unordered-Tests') ];					
-			package: 	'Collections-Tests' with: [ spec requires: #('Collections-Abstract-Tests' 'Collections-Atomic-Tests' 'Collections-Sequenceable-Tests'  
+			package: 	'Collections-Tests' with: [ spec requires: #('Collections-Abstract-Tests' 'Collections-Atomic-Tests' 'Collections-Native-Tests' 'Collections-Sequenceable-Tests'  
 					   'Collections-Streams-Tests' 'Collections-Strings-Tests' 'Collections-Support-Tests' 'Collections-Stack-Tests' 'Collections-Weak-Tests') ];
 			package: 	'Kernel-Tests'; 
 			package: 	'Kernel-Tests-Extended' ;

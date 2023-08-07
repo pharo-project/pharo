@@ -62,11 +62,10 @@ ImageCleaner class >> shareLiterals [
 
 { #category : #accessing }
 ImageCleaner class >> testPackages [
+	"All test packages to wipe out, except ReleeaseTests package."
 
 	<script: 'self testPackages inspect'>
-	"All test packages to wipe out, except ReleeaseTests package."
-	^ RPackageOrganizer default testPackageNames copyWithout:
-		  'ReleaseTests'
+	^ RPackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
 ]
 
 { #category : #api }
@@ -100,8 +99,6 @@ ImageCleaner >> cleanUpForRelease [
 	self
 		removeEmptyCategories;
 		removeEmptyPackages.
-
-	Smalltalk organization sortCategories.
 
 	Smalltalk
 		garbageCollect;
@@ -180,12 +177,14 @@ ImageCleaner >> detroyLiteralTable [
 
 { #category : #cleaning }
 ImageCleaner >> examplePackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
+
+	^ self class examplePackages
 ]
 
 { #category : #cleaning }
 ImageCleaner >> helpPackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
+
+	^ self class helpPackages
 ]
 
 { #category : #'literal sharing' }
@@ -208,18 +207,13 @@ ImageCleaner >> packagesForCleanUpInProduction [
 
 { #category : #cleaning }
 ImageCleaner >> removeEmptyCategories [
-
 	"Remove empty categories, which are not in MC packages, because MC does
 	not do this (this script does not make packages dirty)"
-	Smalltalk organization removeEmptyCategories.
-	Smalltalk
-		allClassesAndTraitsDo: [ :class |
-			[ :each |
-				each
-					removeEmptyCategories;
-					sortCategories ]
-						value: class organization;
-						value: class class organization ]
+
+	self packageOrganizer removeEmptyPackagesAndTags.
+	Smalltalk allClassesAndTraitsDo: [ :class |
+		class removeEmptyProtocols.
+		class class removeEmptyProtocols ]
 ]
 
 { #category : #cleaning }

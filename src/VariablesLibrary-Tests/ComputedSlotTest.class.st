@@ -49,6 +49,7 @@ ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
 { #category : #tests }
 ComputedSlotTest >> testWriteComputedSlotCompiled [
 	| slot object |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).

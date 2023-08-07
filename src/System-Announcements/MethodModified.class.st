@@ -35,8 +35,9 @@ MethodModified >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #testing }
-MethodModified >> affectsMethodsTaggedWith: tagName [
-	^(super affectsMethodsTaggedWith: tagName) or: [ oldProtocol = tagName ]
+MethodModified >> affectsMethodsInProtocol: protocol [
+
+	^ (super affectsMethodsInProtocol: protocol) or: [ self oldProtocol name = protocol ]
 ]
 
 { #category : #accessing }

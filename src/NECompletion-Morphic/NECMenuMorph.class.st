@@ -277,11 +277,9 @@ NECMenuMorph >> delete [
 { #category : #drawing }
 NECMenuMorph >> detailMessage [
 
-	^ String streamContents: [:stream |
-		NECPreferences captureNavigationKeys ifTrue: [
-			stream << (detailMorph
-				ifNil: ['cmd-> open detail']
-				ifNotNil: ['cmd<- close detail']	) ] ]
+	^ self itemsCount isZero
+		  ifTrue: [ 'no entries' ]
+		  ifFalse: [ 'cmd+B browse entry' ]
 ]
 
 { #category : #accessing }
@@ -518,9 +516,15 @@ NECMenuMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	evt wasHandled: false.
 	self flag: #pharoFixMe "ugly hack".
-	engine editor morph owner owner
-		takeKeyboardFocus;
-		handleMouseDown: evt.
+	
+	engine editor morph ifNotNil: [ :aMorph | 
+		aMorph owner ifNotNil: [ :anOwner | 
+			anOwner owner ifNotNil: [ :ownersOwner |
+				ownersOwner
+					takeKeyboardFocus;
+					handleMouseDown: evt.
+		 ] ] ].
+
 	self close
 ]
 
@@ -663,6 +667,7 @@ NECMenuMorph >> takesKeyboardFocus [
 NECMenuMorph >> updateDetail [
 	detailMorph
 		ifNil: [^ self].
+	detailPosition ifNil: [^ self].
 	detailMorph
 		entryDescription: (self selectedEntry description);
 		position: detailPosition menuWidth: self width;

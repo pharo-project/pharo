@@ -53,14 +53,25 @@ RBOrEnvironment >> includesClass: aClass [
 
 { #category : #testing }
 RBOrEnvironment >> includesProtocol: aProtocol in: aClass [
-	^ (environment includesProtocol: aProtocol in: aClass)
-		or: [ self orEnvironment includesProtocol: aProtocol in: aClass ]
+
+	^ (environment includesProtocol: aProtocol in: aClass) or: [ self orEnvironment includesProtocol: aProtocol in: aClass ]
 ]
 
 { #category : #testing }
 RBOrEnvironment >> includesSelector: aSelector in: aClass [
 	^ (environment includesSelector: aSelector in: aClass)
 		or: [ self orEnvironment includesSelector: aSelector in: aClass ]
+]
+
+{ #category : #accessing }
+RBOrEnvironment >> methodsForClass: aClass do: aBlock [
+
+	| enumerated |
+	enumerated := IdentitySet new.
+	environment methodsForClass: aClass do: [ :method |
+		enumerated add: method.
+		aBlock value: method ].
+	self orEnvironment methodsForClass: aClass do: [ :method | (enumerated includes: method) ifFalse: [ aBlock value: method ] ]
 ]
 
 { #category : #accessing }

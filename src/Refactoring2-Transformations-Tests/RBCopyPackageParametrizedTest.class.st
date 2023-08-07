@@ -33,13 +33,11 @@ RBCopyPackageParametrizedTest >> constructor [
 { #category : #accessing }
 RBCopyPackageParametrizedTest >> createPackageNamed: packageName withClasses: aCollection [
 
-	[ RPackageOrganizer default createPackageNamed: packageName ]
-	on: RPackageConflictError
-	do: [ ].
+	self packageOrganizer ensurePackage: packageName.
 
 	aCollection do: [ : className |
 		| refactoring |
-		refactoring := RBInsertClassTransformation
+		refactoring := RBInsertNewClassTransformation
 						addClass: className
 						superclass: #Object
 						subclasses: #()
@@ -56,7 +54,7 @@ RBCopyPackageParametrizedTest >> removePackageNamed: packageName [
 { #category : #running }
 RBCopyPackageParametrizedTest >> setUp [
 	super setUp.
-	model := self defaultNamespace new.
+	model := self defaultNamespaceClass new.
 	self
 		createPackageNamed: 'RefactoringSmallPackageForTest'
 		withClasses: #('RBFTTest1' 'RBFTTest2').
@@ -69,12 +67,6 @@ RBCopyPackageParametrizedTest >> tearDown [
 	(RBRefactoryChangeFactory instance removePackageNamed: 'RefactoringSmallPackageForTest')
 		execute.
 	super tearDown
-]
-
-{ #category : #'failure tests' }
-RBCopyPackageParametrizedTest >> testBadName [
-	self shouldFail: (self createRefactoringWithArguments:
-		{#'Refactoring-Tests-Core' . #'Refactoring-Tests-Core'})
 ]
 
 { #category : #tests }
@@ -121,7 +113,14 @@ RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 ]
 
 { #category : #'failure tests' }
-RBCopyPackageParametrizedTest >> testExistingPackage [
+RBCopyPackageParametrizedTest >> testFailureBadName [
 	self shouldFail: (self createRefactoringWithArguments:
-		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes'})
+		{#'Refactoring-Tests-Core' . #'Refactoring-Tests-Core'})
+]
+
+{ #category : #'failure tests' }
+RBCopyPackageParametrizedTest >> testFailureExistingPackage [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #'Refactoring-Tests-Core'. #'Refactoring-Tests-Changes' })
 ]

@@ -35,6 +35,16 @@ RBDeprecateClassRefactoring class >> model: aRBSmalltalk deprecate: aClass in: a
 		yourself
 ]
 
+{ #category : #adding }
+RBDeprecateClassRefactoring >> addMethod: source to: aClass in: aProtocol [
+
+	self generateChangesFor: 
+		(RBAddMethodTransformRefactoring 
+			addMethod: source
+			toClass: aClass
+			inProtocols: aProtocol)
+]
+
 { #category : #initialization }
 RBDeprecateClassRefactoring >> className: aName newName: aNewName [
 	className := aName asSymbol.
@@ -61,19 +71,21 @@ RBDeprecateClassRefactoring >> convertDeprecatedToSubclass [
 	deprecatedClass classSide selectors do: [ :symbol |
 		(deprecatedClass realClass classSide compiledMethodAt: symbol) isExtension
 			ifFalse: [ deprecatedClass classSide removeMethod: symbol ] ].
-	deprecatedClass classSide compile: 'isDeprecated
+	self addMethod: 'isDeprecated
 		" Uses ', newName, ' instead of ', className,'"
-		^ true' classified: {'testing'}
+		^ true'
+			to: deprecatedClass classSide
+			in: 'testing'
 ]
 
 { #category : #transforming }
 RBDeprecateClassRefactoring >> copyExtensionMethods [
 
 	(self instanceSideExtensionMethodsOf: deprecatedClass)
-		do: [ :each | self newClass instanceSide compile: each source classified: each protocols ].
+		do: [ :each | self addMethod: each source to: self newClass instanceSide in: each protocols ].
 
 	(self classSideExtensionMethodsOf: deprecatedClass)
-		do: [ :each | self newClass classSide compile: each source classified: each protocols ]
+		do: [ :each | self addMethod: each source to: self newClass classSide in: each protocols ]
 ]
 
 { #category : #accessing }
@@ -115,7 +127,7 @@ RBDeprecateClassRefactoring >> preconditions [
 	^((RBCondition withBlock: [deprecatedClass notNil and: [deprecatedClass isMeta not]])
 			& (RBCondition isValidClassName: newName)
 			& (RBCondition isGlobal: newName in: self model)) |
-			(RBCondition withBlock: [ self refactoringFailure: newName , ' is not a valid class name'])
+			(RBCondition withBlock: [ self refactoringError: newName , ' is not a valid class name'])
 ]
 
 { #category : #transforming }
@@ -135,12 +147,12 @@ RBDeprecateClassRefactoring >> renameReferences [
 		replace: className with: newName;
 		replaceArgument: newName
 		withValueFrom: [:aNode |
-			self refactoringFailure: newName , ' already exists within the reference scope'];
+			self refactoringError: newName , ' already exists within the reference scope'];
 		yourself.
 
 	self model allReferencesToClass: deprecatedClass do: [ :method |
 		(method modelClass hierarchyDefinesVariable: newName) ifTrue: [
-			self refactoringFailure: newName , ' is already defined in hierarchy of ', method modelClass printString].
+			self refactoringError: newName , ' is already defined in hierarchy of ', method modelClass printString].
 
 		self convertMethod: method selector
 			for: method modelClass

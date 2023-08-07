@@ -39,19 +39,19 @@ RBRemoveParameterRefactoring >> applyValidations [
 
 	| tree |
 	(class directlyDefinesMethod: oldSelector) ifFalse: [
-		self refactoringFailure: 'Method doesn''t exist' ].
+		self refactoringError: 'Method doesn''t exist' ].
 	tree := class parseTreeForSelector: oldSelector.
-	tree ifNil: [ self refactoringFailure: 'Cannot parse sources' ].
+	tree ifNil: [ self refactoringError: 'Cannot parse sources' ].
 	argument ifNil: [
-		self refactoringFailure: 'This method does not have an argument' ].
+		self refactoringError: 'This method does not have an argument' ].
 	parameterIndex := tree argumentNames
 		                  indexOf: argument
 		                  ifAbsent: [
-		                  self refactoringFailure: 'Select a parameter!!' ].
+		                  self refactoringError: 'Select a parameter!!' ].
 	oldSelector numArgs == 0 ifTrue: [
-		self refactoringFailure: 'This method contains no arguments' ].
+		self refactoringError: 'This method contains no arguments' ].
 	oldSelector isInfix ifTrue: [
-		self refactoringFailure:
+		self refactoringError:
 			'Cannot remove parameters of infix selectors' ]
 ]
 
@@ -79,7 +79,7 @@ RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
 	| tree |
 
 	tree := each parseTreeForSelector: oldSelector.
-	tree ifNil: [ self refactoringFailure: 'Cannot parse sources.' ].
+	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
 ]
 
@@ -110,13 +110,14 @@ RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aS
 
 { #category : #printing }
 RBRemoveParameterRefactoring >> storeOn: aStream [
+
 	aStream nextPut: $(.
-	self class storeOn: aStream.
+	aStream nextPutAll: self class name.
 	aStream
 		nextPutAll: ' removeParameter: ''';
 		nextPutAll: argument;
 		nextPutAll: ''' in: '.
-	class storeOn: aStream.
+	aStream nextPutAll: class name.
 	aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector.

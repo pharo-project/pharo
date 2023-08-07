@@ -126,7 +126,7 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLib
 
 { #category : #private }
 FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
-	| ir ffiLibrary properties |
+	| ir ffiLibrary properties method |
 	functionSpec resolveUsing: self requestor.
 
 	ffiLibrary := self extractLibrary.
@@ -147,7 +147,9 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 		r := self generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary.
 		ffiLibrary postMethodBuildContext: sender builder: builder spec: functionSpec.
 		r].
-	^ ir generate: self methodTrailer
+	method := ir generate.
+	self method isCompiledMethod ifTrue: [method sourcePointer: self method sourcePointer  ].
+	^method
 ]
 
 { #category : #initialization }
@@ -187,12 +189,6 @@ FFICalloutMethodBuilder >> libraryName [
 { #category : #accessing }
 FFICalloutMethodBuilder >> method [
 	^ self sender homeMethod
-]
-
-{ #category : #accessing }
-FFICalloutMethodBuilder >> methodTrailer [
-
-	^ self method trailer
 ]
 
 { #category : #private }

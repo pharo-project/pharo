@@ -174,8 +174,10 @@ ClyBrowserContext >> selectedObjects [
 ]
 
 { #category : #'tool controlling' }
-ClyBrowserContext >> showMethodTag: aString [
+ClyBrowserContext >> showProtocol: protocolName [
 	"Default is to do nothing"
+
+	
 ]
 
 { #category : #accessing }

@@ -27,7 +27,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryB
 	self deny: (YPackage includesDefinedSelector: #newMethod ofClass: class).
 	self assert: (XPackage includesExtensionSelector: #newMethod ofClass: class).
 
-	self assert: (class >> #newMethod packageFromOrganizer: self organizer) equals: XPackage
+	self assert: (class >> #newMethod) package equals: XPackage
 ]
 
 { #category : #'we are not sure' }
@@ -45,62 +45,62 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryM
 	self assert: (YPackage includesExtensionSelector: #newMethod ofClass: class).
 	self deny: (XPackage includesDefinedSelector: #newMethod ofClass: class).
 
-	self assert: (class >> #newMethod packageFromOrganizer: self organizer) equals: YPackage
+	self assert: (class >> #newMethod) package equals: YPackage
 ]
 
 { #category : #testing }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackage [
 	"test that when we add a method  in an extension category ( beginning with *)that does not refer to an existing categorya new package with the name of this category is added, and that the method is added to this new package"
+
 	| class firstPackage |
-	
 	self addXCategory.
-	
+
 	firstPackage := self organizer packageNamed: #XXXXX.
-	
+
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	
-	self createMethodNamed: #newMethod inClass:  class inCategory: '*SomethingDifferentNothingToDoWithWhatWeHave'.
-	
+
+	self createMethodNamed: #newMethod inClass: class inCategory: '*SomethingDifferentNothingToDoWithWhatWeHave'.
+
 	self deny: (class package includesDefinedSelector: #newMethod ofClass: class).
-	
-	self assert: (self organizer includesPackageNamed: #SomethingDifferentNothingToDoWithWhatWeHave).
+
+	self assert: (self organizer hasPackage: #SomethingDifferentNothingToDoWithWhatWeHave)
 ]
 
 { #category : #testing }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackageAndInstallsMethodInIt [
 	"test that when we add a method  in an extension category ( beginning with *)that does not refer to an existing categorya new package with the name of this category is added, and that the method is added to this new package"
+
 	| class firstPackage |
-	
 	self addXCategory.
-	
+
 	firstPackage := self organizer packageNamed: #XXXXX.
-	
+
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	
-	self createMethodNamed: #newMethod inClass:  class inCategory: '*SomethingDifferentNothingToDoWithWhatWeHave'.
-	
+
+	self createMethodNamed: #newMethod inClass: class inCategory: '*SomethingDifferentNothingToDoWithWhatWeHave'.
+
 	self deny: (class package includesDefinedSelector: #newMethod ofClass: class).
-	
-	self assert: (self organizer includesPackageNamed: #SomethingDifferentNothingToDoWithWhatWeHave).
-	self assert: ((class >> #newMethod) packageFromOrganizer: self organizer ) equals: (self organizer packageNamed: #SomethingDifferentNothingToDoWithWhatWeHave).
+
+	self assert: (self organizer hasPackage: #SomethingDifferentNothingToDoWithWhatWeHave).
+	self assert: (class >> #newMethod) package equals: (self organizer packageNamed: #SomethingDifferentNothingToDoWithWhatWeHave)
 ]
 
 { #category : #'we are not sure' }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotRespectingCaseAddMethodToTheExtendingPackage [
 	"test that when we add a method  in an extension category ( beginning with *)thae does not match the case of the corresponding package (for example *packagea for PackageA), this method is added to the corresponding extending package"
-	
-	| class firstPackage secondPackage|
+
+	| class firstPackage secondPackage |
 	self addXYCategory.
 	firstPackage := self organizer packageNamed: #XXXXX.
 	secondPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	
-	self createMethodNamed: 'stubMethod' inClass:  class inCategory: '*yyYyY'.
-	
+
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyYyY'.
+
 	self assert: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
-	
-	self assert: ((class >> #stubMethod) packageFromOrganizer: self organizer ) equals: secondPackage.
+
+	self assert: (class >> #stubMethod) package equals: secondPackage
 ]
 
 { #category : #'we are not sure' }
@@ -121,7 +121,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryW
 	self assert: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 
-	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: secondPackage
+	self assert: (class >> #stubMethod) package equals: secondPackage
 ]
 
 { #category : #'tests - operations on methods' }
@@ -137,10 +137,10 @@ RPackageExtensionMethodsSynchronisationTest >> testModifyMethodByChangingCode [
 	class compile: 'stubMethod ^22222222222'.
 
 	"nothing should change"
-	self assert: (class >> #stubMethod) category equals: 'classic category'.
+	self assert: (class >> #stubMethod) protocolName equals: 'classic category'.
 	self assert: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (firstPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: firstPackage
+	self assert: (class >> #stubMethod) package equals: firstPackage
 ]
 
 { #category : #'tests - operations on methods' }
@@ -156,29 +156,10 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 	secondPackage addClass: class.
 
 	"Everything should now be in second package (and not listed as an extension)."
-	self assert: (class >> #stubMethod) category equals: Protocol defaultName.
+	self deny: (class >> #stubMethod) isClassified.
 	self assert: (secondPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: secondPackage
-]
-
-{ #category : #'tests - operations on methods' }
-RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensionsOnClass2 [
-	"Move a class in package XXXXX (with extensions from XXXX) to package YYYYY."
-
-	| class secondPackage |
-	self addXYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*XXXXX'.
-
-	secondPackage addClass: class.
-
-	"Everything should now be in second package (and not listed as an extension)."
-	self assert: (class >> #stubMethod) category equals: Protocol defaultName.
-	self assert: (secondPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: secondPackage
+	self assert: (class >> #stubMethod) package equals: secondPackage
 ]
 
 { #category : #'tests - operations on methods' }
@@ -196,16 +177,16 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 
 	"Everything should now be in second package (and not listed as an extension, but instead as 'as yet unclassified')."
 
-	self assert: (class >> #stubMethod) category equals: Protocol defaultName.
+	self deny: (class >> #stubMethod) isClassified.
 	self assert: (secondPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod packageFromOrganizer: self organizer) equals: secondPackage.
+	self assert: (class >> #stubMethod) package equals: secondPackage.
 
 	"Moving back, we should not see the extension reappear."
 
 	firstPackage addClass: class.
 
-	self assert: (class >> #stubMethod) category equals: Protocol defaultName.
+	self deny: (class >> #stubMethod) isClassified.
 	self assert: (firstPackage includesDefinedSelector: #stubMethod ofClass: class).
 	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]
@@ -214,76 +195,76 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 RPackageExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsFromMetaAndInstanceSideUpdateOrganizerExtensionsMapping [
 	"test that In a class (from the meta  and the instance side ), when we remove all the method extended by the same external package, the class get unregistered from the classExtendingPackagesMapping of the organizer "
 
-	|XPackage  class YPackage|
+	| xPackage class yPackage |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage  := self organizer packageNamed: #YYYYY.
+	xPackage := self organizer packageNamed: #XXXXX.
+	yPackage := self organizer packageNamed: #YYYYY.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'. 
-	self createMethodNamed: 'stubMethod2' inClass: class classSide  inCategory: '*yyyyy'. 
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod2' inClass: class classSide inCategory: '*yyyyy'.
 
 	class removeSelector: #stubMethod.
 	class classSide removeSelector: #stubMethod2.
 	"there should be no differences made between class and metaClass:"
-	self deny: ((self organizer extendingPackagesOf: class) includes: YPackage). 
-	self deny: ((self organizer extendingPackagesOf: class classSide) includes: YPackage). 
+	self deny: ((self organizer extendingPackagesOf: class) includes: yPackage).
+	self deny: ((self organizer extendingPackagesOf: class classSide) includes: yPackage)
 ]
 
 { #category : #'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsRemoveTheClassFromExtendedClasses [
 	"test that In a class, when we remove all the method extended by the same external package, the class get unregistered from the extended classes of the external package "
 
-	|XPackage  class YPackage|
+	| xPackage class yPackage |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage  := self organizer packageNamed: #YYYYY.
+	xPackage := self organizer packageNamed: #XXXXX.
+	yPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'. 
-	self createMethodNamed: 'stubMethod2' inClass: class  inCategory: '*yyyyy'. 
-	
-	self assert: (YPackage includesExtensionSelector: #stubMethod ofClass: class). 
-	self assert: (YPackage includesExtensionSelector: #stubMethod2 ofClass: class). 
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod2' inClass: class inCategory: '*yyyyy'.
+
+	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
+	self assert: (yPackage includesExtensionSelector: #stubMethod2 ofClass: class).
 
 	class removeSelector: #stubMethod.
 	class removeSelector: #stubMethod2.
-	self deny: (YPackage extendsClass: class).
-	self deny: (YPackage extendsClass: class classSide).
+	self deny: (yPackage extendsClass: class).
+	self deny: (yPackage extendsClass: class classSide)
 ]
 
 { #category : #'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodDoesNotRemoveExtendingPackage [
 	"test that when we remove a method that is an extension from an external package, the package is not removed from the the class extending packages if another extension still exist"
 
-	|XPackage  class YPackage|
+	| xPackage class yPackage |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage  := self organizer packageNamed: #YYYYY.
+	xPackage := self organizer packageNamed: #XXXXX.
+	yPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'. 
-	self createMethodNamed: 'stubMethod2' inClass: class  inCategory: '*yyyyy'. 
-	
-	self assert: (YPackage includesExtensionSelector: #stubMethod ofClass: class). 
-	self assert: (YPackage includesExtensionSelector: #stubMethod2 ofClass: class). 
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod2' inClass: class inCategory: '*yyyyy'.
+
+	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
+	self assert: (yPackage includesExtensionSelector: #stubMethod2 ofClass: class).
 
 	"If we only remove one of the extension methods, the package should still be extending the class."
 	class removeSelector: #stubMethod.
-	self assert: (YPackage extendsClass: class).
-	self assert: (YPackage extendsClass: class classSide).
+	self assert: (yPackage extendsClass: class).
+	self assert: (yPackage extendsClass: class classSide)
 ]
 
 { #category : #'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodRemoveMethodFromItsPackage [
 	"test that when we remove a method that is an extension from an external package, the method is removed from this package"
 
-	|XPackage  class YPackage|
+	| xPackage class yPackage |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage  := self organizer packageNamed: #YYYYY.
-	
+	xPackage := self organizer packageNamed: #XXXXX.
+	yPackage := self organizer packageNamed: #YYYYY.
+
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
-	
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+
 	class removeSelector: #stubMethod.
-	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class). 
+	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]

@@ -43,7 +43,8 @@ DTTestCoveragePlugin >> defineData: aDTpluginConfiguration [
 	methods := aDTpluginConfiguration items flatCollect: [ :p |
 		           p methods reject: [ :meth |
 			           meth isTestMethod or: [meth methodClass isTestCase] ] ].
-	methods := methods reject: [ :meth | meth isSubclassResponsibility ].
+	methods := methods reject: [ :method | method isAbstract or: [ (method hasPragmaNamed: #ignoreForCoverage) ] ] .
+	
 	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [
 		               :p | p classes ]
 ]
@@ -55,8 +56,14 @@ DTTestCoveragePlugin >> firstListLabel [
 
 { #category : #api }
 DTTestCoveragePlugin >> itemsToBeAnalysedFor: packagesSelected [
-	^ RPackage organizer packages
-		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
+
+	^ self packageOrganizer packages select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
+]
+
+{ #category : #ui }
+DTTestCoveragePlugin >> pluginPresenterClass [
+
+	^ DTCoveragePluginPresenter
 ]
 
 { #category : #accessing }
@@ -71,19 +78,21 @@ DTTestCoveragePlugin >> resultButtonHelp [
 
 { #category : #api }
 DTTestCoveragePlugin >> runForConfiguration: aDTpluginConfiguration [
+
 	| suite collector coverage notExecuted result |
 	result := self pluginResultClass new.
 	self defineData: aDTpluginConfiguration.
 	suite := self suiteFor: testClasses.
-	collector := CoverageCollector new.
+	collector := DTCoverageCollector new.
 	collector methods: methods.
-	coverage := collector runOn: [ self runTestSuites: {suite} ].
+	coverage := collector runOn: [ self runTestSuites: { suite } ].
 	notExecuted := coverage uncoveredMethods.
-	notExecuted isEmpty
-		ifTrue: [ result percent: 1s2 ]
-		ifFalse: [ result
-				percent: 1s2 - (notExecuted size / methods size asScaledDecimal: 2);
-				methodList: notExecuted ].
+
+	methods ifNotEmpty: [
+		result
+			percent: 1s2 - (notExecuted size / methods size asScaledDecimal: 2);
+			methodList: notExecuted;
+			partiallyCoveredMethods: coverage partiallyCoveredMethods ].
 	^ result
 ]
 
@@ -91,7 +100,8 @@ DTTestCoveragePlugin >> runForConfiguration: aDTpluginConfiguration [
 DTTestCoveragePlugin >> runSuite: aTestSuite withResult: aResult [
 
 	aTestSuite when: TestAnnouncement do: [ :testAnnouncement |
-		self announceStatusChanged: ('Running test {1}.' format: { testAnnouncement test asString }) ].
+		self announceStatusChanged: ('Running test {1}.' format: { testAnnouncement test asString }) ]
+	for: self.
 	[ aTestSuite run: aResult ] ensure: [
 		aTestSuite unsubscribe: TestAnnouncement ]
 ]

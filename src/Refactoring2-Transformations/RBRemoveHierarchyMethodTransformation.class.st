@@ -13,6 +13,13 @@ RBRemoveHierarchyMethodTransformation class >> removeMethods: selectorCollection
 		removeMethods: selectorCollection from: aClass
 ]
 
+{ #category : #preconditions }
+RBRemoveHierarchyMethodTransformation >> applicabilityConditions [ 
+
+	^ selectors inject: self trueCondition into: [ :cond :aSelector |
+		  cond & (RBCondition definesSelector: aSelector in: class) ]
+]
+
 { #category : #executing }
 RBRemoveHierarchyMethodTransformation >> buildTransformations [
 	transformations := OrderedCollection new.
@@ -31,7 +38,7 @@ RBRemoveHierarchyMethodTransformation >> delete: aSelector in: aClass [
 									model: self model
 									removeMethods: { aSelector }
 									from: aClass) ]"
-		on: RBRefactoringError
+		on: RBRefactoringWarning
 			do: [ :ex | ( self confirm:
 				(ex messageText copyReplaceAll: 'Browse references?' with: 'Remove anyway?') )
 				ifTrue:[ ex resume ] ] ]
@@ -49,8 +56,7 @@ RBRemoveHierarchyMethodTransformation >> deleteSelectors [
 { #category : #preconditions }
 RBRemoveHierarchyMethodTransformation >> preconditions [
 
-	^ selectors inject: self emptyCondition into: [ :cond :aSelector |
-		  cond & (RBCondition definesSelector: aSelector in: class) ]
+	^ self applicabilityConditions 
 ]
 
 { #category : #removing }

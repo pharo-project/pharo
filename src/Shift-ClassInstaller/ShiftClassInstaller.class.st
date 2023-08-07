@@ -23,8 +23,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'oldClass',
-		'builder',
-		'installingEnvironment'
+		'builder'
 	],
 	#category : #'Shift-ClassInstaller-Base'
 }
@@ -48,8 +47,9 @@ ShiftClassInstaller class >> make: aBlock [
 { #category : #building }
 ShiftClassInstaller class >> update: oldClass to: aBlock [
 	^ self new
+		fillFor: oldClass;
 		oldClass: oldClass;
-		make:aBlock
+		make: aBlock
 ]
 
 { #category : #validating }
@@ -64,7 +64,7 @@ ShiftClassInstaller >> builder [
 
 { #category : #accessing }
 ShiftClassInstaller >> comment: newClass [
-	builder comment ifNotNil: [ newClass classComment: builder comment stamp: builder commentStamp ]
+	builder comment ifNotNil: [ newClass comment: builder comment stamp: builder commentStamp ]
 ]
 
 { #category : #building }
@@ -74,31 +74,39 @@ ShiftClassInstaller >> copyClassSlotsFromExistingClass [
 
 { #category : #copying }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
-	| newObject hiddenSlots |
 
-	newObject := (newClass isVariable and: [oldClass isVariable])
-		ifTrue: [ newClass basicNew: oldObject basicSize ]
-		ifFalse: [ newClass basicNew ].
+	| newObject |
+	newObject := (newClass isVariable and: [ oldClass isVariable ])
+		             ifTrue: [
+			             | createdObject |
+			             createdObject := newClass basicNew: oldObject basicSize.
+			             "Copying the variabls"
+			             1 to: oldObject basicSize do: [ :offset | createdObject basicAt: offset put: (oldObject basicAt: offset) ].
+			             createdObject ]
+		             ifFalse: [ newClass basicNew ].
 
 	"first initialize all hidden slots"
-	hiddenSlots := newClass classLayout allSlots reject: [:each | each isVisible].
-	hiddenSlots do: [ :newSlot |
-			newSlot initialize: newObject.
-			oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
-				newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
+	newClass classLayout allSlots
+		reject: [ :aSlot | aSlot isVisible ]
+		thenDo: [ :newHiddenSlot |
+			newHiddenSlot initialize: newObject.
+			oldObject class slotNamed: newHiddenSlot name ifFound: [ :oldSlot | newHiddenSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	"the initialize all visible slots"
-	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
-			newSlot initialize: newObject.
-		   newSlot write: (oldSlot read: oldObject) to: newObject ] ].
-
-	newClass isVariable
-		ifTrue: [ 1 to: oldObject basicSize do: [ :offset | newObject basicAt: offset put: (oldObject basicAt: offset) ] ].
+	newClass allSlots do: [ :newSlot |
+		newSlot initialize: newObject.
+		oldObject class slotNamed: newSlot name ifFound: [ :oldSlot |
+			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	"Clearing the readonly-ness in the old objects so the become is able to work"
 	oldObject setIsReadOnlyObject: false.
 
 	^ newObject
+]
+
+{ #category : #initialization }
+ShiftClassInstaller >> fillFor: aClassOrTrait [
+	builder fillFor: aClassOrTrait
 ]
 
 { #category : #building }
@@ -114,24 +122,21 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 
 { #category : #initialization }
 ShiftClassInstaller >> initialize [
+
 	super initialize.
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new
+	builder := ShiftClassBuilder new
 ]
 
 { #category : #building }
 ShiftClassInstaller >> installInEnvironment: newClass [
-
 	"I only install if there is a name / non anonymous"
+
 	builder name ifNil: [ ^ self ].
 
 	"I only install in the environment if there is not oldClass installed."
-	(self installingEnvironment hasClassNamed: builder name) ifFalse:[
-		self installingEnvironment installClass: newClass withName: builder name ].
+	(self installingEnvironment hasClassNamed: builder name) ifFalse: [ self installingEnvironment at: builder name put: newClass ].
 
-	self
-		updateBindings: (self installingEnvironment bindingAt: builder name)
-		of: newClass
+	self updateBindings: (self installingEnvironment bindingOf: builder name) of: newClass
 ]
 
 { #category : #building }
@@ -146,19 +151,19 @@ ShiftClassInstaller >> installSubclassInSuperclass: newClass [
 { #category : #building }
 ShiftClassInstaller >> installingEnvironment [
 
-	^ installingEnvironment ifNil: [ builder buildEnvironment ]
+	^ builder installingEnvironment
 ]
 
 { #category : #building }
 ShiftClassInstaller >> installingEnvironment: anEnvironment [
 
-	installingEnvironment := anEnvironment
+	builder installingEnvironment: anEnvironment
 ]
 
 { #category : #building }
 ShiftClassInstaller >> lookupOldClass [
-	oldClass
-		ifNil: [ oldClass := self installingEnvironment classNamed: builder name ifAbsent: [ nil ] ]
+
+	oldClass ifNil: [ oldClass := self installingEnvironment at: builder name ifAbsent: [ nil ] ]
 ]
 
 { #category : #building }
@@ -207,7 +212,7 @@ ShiftClassInstaller >> make: aBlock [
 	^self make
 ]
 
-{ #category : #'to sort' }
+{ #category : #initialization }
 ShiftClassInstaller >> makeWithBuilder: aBuilder [
 
 	builder := aBuilder.
@@ -226,7 +231,10 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	newClass subclasses: oldClass subclasses.
 
 	slotsToMigrate := newClass class allSlots reject:[:e | builder builderEnhancer hasToSkipSlot: e ].
-	slotsToMigrate do: [ :newSlot | oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
+	slotsToMigrate do: [ :newSlot | 
+		"the slot might need to initialize the new class"
+		newSlot wantsInitialization ifTrue: [ newSlot initialize: newClass ].
+		oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
 
 	oldClassVariables := OrderedCollection new.
 	newClassVariables := OrderedCollection new.
@@ -290,7 +298,7 @@ ShiftClassInstaller >> recategorize: aClass to: newCategory [
 		ifTrue: [ ^ self ].
 
 	self installingEnvironment organization
-		ifNotNil: [ :e | e classify: aClass name under: newCategory ].
+		ifNotNil: [ :systemOrganizer | systemOrganizer classify: aClass name under: newCategory ].
 
 	(oldCategory isNil or:[ oldCategory = #Unclassified])
 		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]

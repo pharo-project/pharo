@@ -84,11 +84,6 @@ RPackageSet >> asRPackageSet [
 	^self
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> category: categoryName matches: prefix [
-	^ RPackageOrganizer default category: categoryName matches: prefix
-]
-
 { #category : #accessing }
 RPackageSet >> categoryNames [
 	^  self packages
@@ -113,7 +108,11 @@ RPackageSet >> extendedClasses [
 
 { #category : #'system compatibility' }
 RPackageSet >> extensionCategoriesForClass: aClass [
-	^ aClass organization categories select: [:cat | self isYourClassExtension: cat]
+
+	self
+		deprecated: 'Use #extensionProtocolsForClass: instead.'
+		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
+	^ self extensionProtocolsForClass: aClass
 ]
 
 { #category : #accessing }
@@ -123,16 +122,21 @@ RPackageSet >> extensionMethods [
 		(self packages flatCollect: [ :p | p extensionMethods ] as: Set) asArray ]
 ]
 
+{ #category : #'system compatibility' }
+RPackageSet >> extensionProtocolsForClass: aClass [
+
+	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol ]
+]
+
 { #category : #testing }
 RPackageSet >> includesClass: aClass [
 	^self packages anySatisfy: [ :each | each includesClass: aClass ]
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> includesMethodCategory: categoryName ofClass: aClass [
-	^ (self isYourClassExtension: categoryName)
-		or: [(self includesClass: aClass)
-				and: [(self isForeignClassExtension: categoryName) not ]]
+RPackageSet >> includesProtocol: protocol ofClass: aClass [
+
+	^ (self isYourClassExtension: protocol) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: protocol) not ] ]
 ]
 
 { #category : #'system compatibility' }
@@ -143,21 +147,28 @@ RPackageSet >> includesSystemCategory: categoryName [
 
 { #category : #initialization }
 RPackageSet >> initialize: aString [
+
 	self initialize.
 	packageName := aString asSymbol.
-	packages := (RPackage organizer packageNamed: aString ifAbsent: [  nil ])
-		ifNotNil: [ :package | { package }  ]
-		ifNil: [ {} ]
+	packages := (self organizer packageNamed: aString ifAbsent: [ nil ])
+		            ifNotNil: [ :package | { package } ]
+		            ifNil: [ {  } ]
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> isForeignClassExtension: categoryName [
-	^ categoryName first = $* and: [(self isYourClassExtension: categoryName) not]
+RPackageSet >> isForeignClassExtension: protocol [
+
+	protocol ifNil: [ ^ false ].
+
+	^ protocol isExtensionProtocol and: [ (self isYourClassExtension: protocol) not ]
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> isYourClassExtension: categoryName [
-	^ categoryName notNil and: [self category: categoryName asLowercase matches: self methodCategoryPrefix]
+RPackageSet >> isYourClassExtension: protocol [
+
+	protocol ifNil: [ ^ false ].
+
+	^ protocol name asLowercase isCategoryOf: self methodCategoryPrefix
 ]
 
 { #category : #'system compatibility' }
@@ -168,6 +179,14 @@ RPackageSet >> methodCategoryPrefix [
 { #category : #accessing }
 RPackageSet >> methods [
 	^ methods ifNil: [ methods := (self packages flatCollect: [ :p | p methods ]) ]
+]
+
+{ #category : #querying }
+RPackageSet >> organizer [
+
+	(self packages isNil or: [ self package isEmpty ]) ifTrue: [ ^ self packageOrganizer ].
+
+	^ self packages anyOne organizer
 ]
 
 { #category : #accessing }

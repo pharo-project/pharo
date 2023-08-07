@@ -1194,7 +1194,7 @@ Collection >> ifEmpty: aBlock [
 	"(#() ifEmpty: [0]) >>> 0"
 	"('' ifEmpty: ['(nil)']) >>> '(nil)'"
 
-	"Note that the fact that this method returns its receiver in case the receiver is not empty allows one to write expressions like the following ones: self classifyMethodAs: (myProtocol ifEmpty: ['As yet unclassified'])"
+	"Note that the fact that this method returns its receiver in case the receiver is not empty allows one to write expressions like the following ones: self classifyMethodAs: (myProtocol ifEmpty: [ Protocol unclassified ])"
 
 	^ self isEmpty
 		ifTrue: [ aBlock value ]

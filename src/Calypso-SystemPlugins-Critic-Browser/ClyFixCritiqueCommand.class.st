@@ -28,5 +28,5 @@ ClyFixCritiqueCommand >> description [
 { #category : #execution }
 ClyFixCritiqueCommand >> execute [
 
-	(ChangesBrowser changes: { critique change }) open
+	(StChangesBrowserPresenter changes: { critique change }) open
 ]

@@ -28,8 +28,8 @@ CDClassNameNode >> className: aString [
 CDClassNameNode >> existingBindingIfAbsent: aBlock [
 
 	| binding |
-	binding := originalNode methodNode compilationContext environment bindingOf: className.
-	^binding ifNil: aBlock
+	binding := originalNode methodNode scope environment bindingOf: className.
+	^binding ifNil: [ aBlock ]
 ]
 
 { #category : #accessing }

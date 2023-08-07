@@ -40,6 +40,18 @@ RBPushDownMethodTransformation >> allClasses [
 	^ classes ifNil: [ class subclasses ]
 ]
 
+{ #category : #preconditions }
+RBPushDownMethodTransformation >> applicabilityConditions [ 
+
+	| condition |
+	condition := selectors
+		             inject: (RBCondition isAbstractClass: class)
+		             into: [ :cond :each |
+			             cond & (RBCondition definesSelector: each in: class) 
+							&  (RBCondition subclassesOf: class referToSelector: each) not ].
+	^ condition 
+]
+
 { #category : #converting }
 RBPushDownMethodTransformation >> asRefactoring [
 
@@ -64,15 +76,7 @@ RBPushDownMethodTransformation >> classes: aCollection [
 { #category : #preconditions }
 RBPushDownMethodTransformation >> preconditions [
 
-	| condition |
-	condition := selectors
-		             inject: self emptyCondition
-		             into: [ :cond :each |
-			             cond & (RBCondition definesSelector: each in: class)
-			             &
-			             (RBCondition subclassesOf: class referToSelector: each)
-				             not ].
-	^ condition & (RBCondition isAbstractClass: class)
+	^ self applicabilityConditions 
 ]
 
 { #category : #transforming }

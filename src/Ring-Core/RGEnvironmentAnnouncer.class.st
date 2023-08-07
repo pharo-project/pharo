@@ -92,12 +92,6 @@ RGEnvironmentAnnouncer >> behaviorRenamed: anRGBehavior from: oldName [
 		newName: anRGBehavior name)
 ]
 
-{ #category : #triggering }
-RGEnvironmentAnnouncer >> behaviorReorganized: anRGBehavior [
-
-	self announce: (ClassReorganized class: anRGBehavior)
-]
-
 { #category : #testing }
 RGEnvironmentAnnouncer >> isSuspended [
 	^suspended ifNil: [ suspended := false ]
@@ -111,8 +105,15 @@ RGEnvironmentAnnouncer >> methodAdded: aMethod [
 
 { #category : #triggering }
 RGEnvironmentAnnouncer >> methodRemoved: aMethod [
+	"For the protocol we should just send #protocol to the method when #protocol will return a protocol and not a symbol."
 
-	self announce: (MethodRemoved methodRemoved: aMethod protocol: aMethod protocol origin: aMethod parent)
+	self announce: (MethodRemoved
+			 methodRemoved: aMethod
+			 protocol: (self class environment
+					  at: aMethod methodClass
+					  ifPresent: [ :class | class protocolNamed: aMethod protocol ]
+					  ifAbsent: [ aMethod protocol ])
+			 origin: aMethod parent)
 ]
 
 { #category : #accessing }

@@ -233,24 +233,18 @@ Model >> wantsSteps [
 	^ false
 ]
 
-{ #category : #stepping }
-Model >> wantsStepsIn: aSystemWindow [
-	self deprecated: 'use #wantsSteps on the parameter instead'.
-	^ self wantsSteps
-]
-
 { #category : #announcing }
 Model >> whenChangedDo: aBlock [
 	"Culled block [ :newValue :oldValue :announcement :announcer | ]"
 
 	| block |
 	block := [ :announcement :ann |
-	aBlock
-		cull: announcement newValue
-		cull: announcement oldValue
-		cull: announcement
-		cull: ann ].
-	self announcer when: ValueChanged do: block
+	         aBlock
+		         cull: announcement newValue
+		         cull: announcement oldValue
+		         cull: announcement
+		         cull: ann ].
+	self announcer when: ValueChanged do: block for: aBlock receiver
 ]
 
 { #category : #announcing }

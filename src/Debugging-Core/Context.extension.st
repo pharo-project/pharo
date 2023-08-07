@@ -51,20 +51,12 @@ Context >> instructionStream [
 
 { #category : #'*Debugging-Core' }
 Context >> lookupTempVar: aSymbol [
-	| var |
-	var := self lookupVar: aSymbol.
-	var isLocalVariable ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
-	^var
-]
 
-{ #category : #'*Debugging-Core' }
-Context >> lookupVar: aSymbol [
-	^ self astScope lookupVar: aSymbol
-]
-
-{ #category : #'*Debugging-Core' }
-Context >> lookupVar: aSymbol declare: aBoolean [
-	^ self astScope lookupVar: aSymbol declare: aBoolean
+	self
+		deprecated: 'Use lookupVar: instead'
+		transformWith: '`@receiver lookupTempVar: `@argument'
+			-> '`@receiver lookupVar: `@argument'.
+	^ self lookupVar: aSymbol
 ]
 
 { #category : #'*Debugging-Core' }
@@ -343,7 +335,7 @@ Context class >> tallyInstructions: aBlock [
 	
 	This method uses the in-image bytecode interpreter to evaluate and count the instructions."
 	
-	"(Context tallyInstructions: [3.14159 printString]) size >>> 122"
+	"(Context tallyInstructions: [3.14159 printString]) size >>> 120"
 	
 	| tallies |
 	tallies := Bag new.
@@ -377,15 +369,23 @@ Context class >> tallyMethods: aBlock [
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
-
-	^(self lookupTempVar: aName) readInContext: self
+	| var |
+	var := self lookupVar: aName.
+	"To be checked. if we keep the error, we should raise a dedicated exception, 
+	but no client would catch it, so why do we need it at all?"
+ 	var isLocalVariable ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
+	^var readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
-	
-	^(self lookupTempVar: aName) write: anObject inContext: self
+	| var |
+	var := self lookupVar: aName.
+	"To be checked. if we keep the error, we should raise a dedicated exception, 
+	but no client would catch it, so why do we need it at all?"
+ 	var isLocalVariable ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
+	^var write: anObject inContext: self
 ]
 
 { #category : #'*Debugging-Core' }
@@ -405,7 +405,7 @@ Context >> tempNames [
 Context >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName)
 		ifFalse: [ ^ nil ].
-	^self lookupTempVar: aName
+	^self lookupVar: aName
 ]
 
 { #category : #'*Debugging-Core' }

@@ -36,9 +36,11 @@ RBClassRegexRefactoring >> copyFrom: aSourceClass to: aTargetClass [
 		aSourceClass sharedPoolNames
 			do: [ :each | aTargetClass addPoolDictionary: each ] ].
 	aSourceClass selectors do: [ :each |
-		aTargetClass
-			compile: (aSourceClass sourceCodeFor: each)
-			classified: (aSourceClass protocolsFor: each) ]
+		self generateChangesFor:
+			(RBAddMethodTransformRefactoring
+				addMethod: (aSourceClass sourceCodeFor: each)
+				toClass: aTargetClass
+				inProtocols: (aSourceClass protocolsFor: each))]
 ]
 
 { #category : #transforming }
@@ -85,7 +87,7 @@ RBClassRegexRefactoring >> initialize [
 RBClassRegexRefactoring >> rename: aClass name: aSymbol [
 	^ RBRenameClassRefactoring
 		model: self model
-		rename: aClass
+		rename: aClass name
 		to: aSymbol
 ]
 

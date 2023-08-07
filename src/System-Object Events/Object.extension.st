@@ -87,17 +87,16 @@ forEvent: anEventSelector [
 { #category : #'*System-Object Events' }
 Object >> removeActionsForEvent: anEventSelector [
 
-    | map |
-    map := self actionMap.
-    map removeKey: anEventSelector asSymbol ifAbsent: [].
-    map isEmpty
-        ifTrue: [self releaseActionMap]
+	| map |
+	map := self actionMap.
+	map removeKey: anEventSelector asSymbol ifAbsent: [  ].
+	map ifEmpty: [ self releaseActionMap ]
 ]
 
 { #category : #'*System-Object Events' }
 Object >> removeActionsSatisfying: aBlock [
 
-	self actionMap keysDo:
+	self actionMap copy keysDo:
 		[:eachEventSelector |
 			self
    				removeActionsSatisfying: aBlock
@@ -119,12 +118,8 @@ forEvent: anEventSelector [
 { #category : #'*System-Object Events' }
 Object >> removeActionsWithReceiver: anObject [
 
-	self actionMap copy keysDo:
-		[:eachEventSelector |
-			self
-   				removeActionsSatisfying: [:anAction | anAction receiver == anObject]
-				forEvent: eachEventSelector
-		]
+	self removeActionsSatisfying: [ :anAction |
+		anAction receiver == anObject ]
 ]
 
 { #category : #'*System-Object Events' }

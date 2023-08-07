@@ -43,8 +43,9 @@ MethodAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #testing }
-MethodAnnouncement >> affectsMethodsTaggedWith: tagName [
-	^method isTaggedWith: tagName asSymbol
+MethodAnnouncement >> affectsMethodsInProtocol: protocol [
+
+	^ method protocolName == protocol
 ]
 
 { #category : #testing }
@@ -110,7 +111,8 @@ MethodAnnouncement >> packagesAffected [
 { #category : #accessing }
 MethodAnnouncement >> protocol [
 
-	^ method protocol
+	"This should just be `method protocol` when #protocol will return an actual protocol."
+	^ method methodClass protocolOfSelector: method selector
 ]
 
 { #category : #accessing }

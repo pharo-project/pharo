@@ -20,14 +20,14 @@ Class {
 		'buttonOk',
 		'buttonCancel'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-UI'
 }
 
 { #category : #'instance creation' }
-StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes [
+StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scopes: scopes [
 
 	^ self new
-		  changesFrom: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes;
+		  changesFrom: aCompositeRefactoring scopes: scopes;
 		  yourself
 ]
 
@@ -38,9 +38,14 @@ StRefactoringPreviewPresenter class >> title [
 
 { #category : #action }
 StRefactoringPreviewPresenter >> accept [
-
+	
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
-		UIManager default inform: 'No changes to apply.'.
+		"UIManager default inform: 'No changes to apply.'."
+		self application newInform 
+				title: 'No changes to apply.';
+				acceptLabel: 'Close this!';
+				openDialog.
+		
 		self closeWindow ].
 	[
 	selectedChanges do: [ :change |
@@ -61,9 +66,10 @@ StRefactoringPreviewPresenter >> buildDiffFor: aChange [
 ]
 
 { #category : #initialization }
-StRefactoringPreviewPresenter >> changesFrom: aCompositeChange inEnvironment: anEnvironment scopes: aCollection [
+StRefactoringPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollection [
 
-	changes := aCompositeChange whatToDisplayIn: self.
+	changes := aCompositeChange collect: [ :each | each whatToDisplayIn: self].
+	changes := changes flattened.
 	scopes := aCollection.
 	self updateScopeList.
 	self updateChanges.
@@ -96,7 +102,7 @@ StRefactoringPreviewPresenter >> connectPresenters [
 		selection selectedItem ifNotNil: [
 			self buildDiffFor: selection selectedItem ] ].
 
-	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateActiveScope; updateChanges ].
+	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateActiveScope; updateChanges; updateTablePresenter ].
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ]
@@ -104,30 +110,34 @@ StRefactoringPreviewPresenter >> connectPresenters [
 
 { #category : #layout }
 StRefactoringPreviewPresenter >> defaultLayout [
-
-	| scopesLayout actionsLayout |
+	| scopesLayout |
+	
 	scopesLayout := SpBoxLayout newLeftToRight
-		                add: scopeLabel
-		                withConstraints:
-			                [ :constraints | constraints width: 60 ] yourself;
-		                add: scopeDropList;
-		                yourself.
-	actionsLayout := SpBoxLayout newLeftToRight
-		                 spacing: 5;
-		                 addLast: buttonOk expand: false fill: true;
-		                 addLast: buttonCancel expand: false fill: true;
-		                 yourself.
-
+		vAlignCenter;
+		spacing: 5;
+		add: scopeLabel expand: false;
+		add: scopeDropList;
+		yourself.
+	
 	^ SpBoxLayout newTopToBottom
-		  add: (SpBoxLayout newTopToBottom
-				   add: scopesLayout
-				   withConstraints:
-					   [ :constraints | constraints height: 30 ] yourself;
-				   add: table;
-				   add: diffPresenter;
-				   yourself);
-		  add: actionsLayout expand: false;
-		  yourself
+		spacing: 5;
+		add: scopesLayout expand: false;
+		add: table;
+		add: diffPresenter;
+		yourself
+]
+
+{ #category : #initialization }
+StRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+	"Used to initialize the model in the case of the use into a dialog window.
+	 Override this to set buttons other than the default (Ok, Cancel)."
+	
+	aDialogWindowPresenter
+		addButton: 'Ok' do: [ :presenter | 
+			self accept.
+			presenter close ];
+		addButton: 'Cancel' do: [ :presenter | 
+			presenter close ]	
 ]
 
 { #category : #initialization }

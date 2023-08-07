@@ -463,7 +463,6 @@ OCOpalExamples >> examplePushTemporaryVariable [
 
 { #category : #'examples - blocks-optimized' }
 OCOpalExamples >> exampleRepeatEffect [
-	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	[
@@ -474,7 +473,6 @@ OCOpalExamples >> exampleRepeatEffect [
 
 { #category : #'examples - blocks-optimized' }
 OCOpalExamples >> exampleRepeatValue [
-	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	^ [
@@ -583,7 +581,8 @@ OCOpalExamples >> exampleSimpleBlockReturn [
 
 { #category : #'examples - blocks' }
 OCOpalExamples >> exampleSimpleBlockiVar [
-	^[iVar] value
+
+	^ [ iVar ] value
 ]
 
 { #category : #'examples - variables' }
@@ -880,7 +879,7 @@ OCOpalExamples >> noRemoteBlockArgument [
 
 { #category : #examples }
 OCOpalExamples >> noRemoteBlockReturn [
-	(self announcements at: self index ifAbsent: [ ^ self ])
+	(self yourself at: self index ifAbsent: [ ^ self ])
 		open
 ]
 

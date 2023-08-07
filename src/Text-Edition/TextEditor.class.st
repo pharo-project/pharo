@@ -75,11 +75,6 @@ TextEditor class >> buildTextEditorShortcutsOn: aBuilder [
 		default: PharoShortcuts current setSearchStringShortcut
 		do: [ :target | target setSearchString ].
 
-	(aBuilder shortcut: #cancel)
-		category: #TextEditor
-		default: PharoShortcuts current cancelShortcut
-		do: [ :target | target cancelWithoutConfirmation ].
-
 	(aBuilder shortcut: #paste)
 		category: #TextEditor
 		default: PharoShortcuts current pasteShortcut
@@ -1493,7 +1488,7 @@ TextEditor >> evaluateSelectionAndDo: aBlock [
 				ctxt := model doItContext]
 		ifFalse: [rcvr := ctxt := nil].
 	result := rcvr class compiler
-			source: self selectionAsStream;
+			source: self selection;
 			context: ctxt;
 			receiver: rcvr;
 			requestor: self;
@@ -2399,14 +2394,6 @@ TextEditor >> processKeyStroke: aKeyboardEvent [
 	^self handleKeystrokeAction: [self dispatchOn: aKeyboardEvent]
 ]
 
-{ #category : #'nonediting/nontyping keys' }
-TextEditor >> raiseContextMenu: aKeyboardEvent [
-
-	(morph respondsTo: #editView)
-		ifTrue: [ ^ morph editView yellowButtonActivity: morph activeHand lastEvent shiftPressed].
-	^ true
-]
-
 { #category : #'current selection' }
 TextEditor >> recomputeInterval [
 	"The same characters are selected but their coordinates may have changed."
@@ -2755,15 +2742,6 @@ TextEditor >> selection [
 	"Answer the text in the paragraph that is currently selected."
 
 	^self text copyFrom: self startIndex to: self stopIndex - 1
-]
-
-{ #category : #'accessing - selection' }
-TextEditor >> selectionAsStream [
-	"Answer a ReadStream on the text in the paragraph that is currently
-	selected."
-
-	^ReadStream
-		on: (self string copyFrom: self startIndex to: self stopIndex - 1)
 ]
 
 { #category : #'accessing - selection' }

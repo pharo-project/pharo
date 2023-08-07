@@ -9,18 +9,23 @@ You can create an instance with:
 RBAddMethodRefactoring 
 	model: RBNamespace new 
 	addMethod:'foo ^ self' 
-	toClass:Morph inProtocols:{'test'}.
+	toClass:Morph
+	inProtocols:{'test'}.
 ```
 
 The method to compile is the full method source (selector, arguments and code).
 
-My precondition verifies that the methods source can be parsed and that the class does not already understands this methods selectors. That means, you can not use this refactoring to add methods for overwriting superclass methods.
+I am composed of `RBAddMethodTransformRefactoring`.
+
+My precondition verifies that the class does not already understands this methods selectors. That means, you can not use this refactoring to add methods for overwriting superclass methods.
+My preconditions also verify that `RBAddMethodTransformRefactoring` preconditions are met.
 
 "
 Class {
 	#name : #RBAddMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
+		'transformation',
 		'protocols',
 		'source'
 	],
@@ -49,20 +54,20 @@ RBAddMethodRefactoring class >> model: aRBSmalltalk addMethod: aString toClass: 
 RBAddMethodRefactoring >> addMethod: aString toClass: aClass inProtocols: protocolList [
 	class := self classObjectFor: aClass.
 	source := aString.
-	protocols := protocolList
+	protocols := protocolList.
+	transformation := RBAddMethodTransformRefactoring
+								model: model
+								addMethod: aString
+								toClass: aClass
+								inProtocols: protocolList 
 ]
 
 { #category : #preconditions }
 RBAddMethodRefactoring >> preconditions [
-	| selector method |
-	method := self parserClass
-		parseMethod: source
-		onError: [ :string :position |
-			^ RBCondition
-				withBlock: [ self refactoringFailure: 'The sources could not be parsed' ] ].
-	selector := method selector.
-	selector ifNil: [ self refactoringFailure: 'Invalid source.' ].
-	^ (RBCondition canUnderstand: selector in: class) not
+
+	transformation checkPreconditions.
+	
+	^ (RBCondition canUnderstand: transformation selector in: class) not
 ]
 
 { #category : #printing }
@@ -81,5 +86,6 @@ RBAddMethodRefactoring >> storeOn: aStream [
 
 { #category : #transforming }
 RBAddMethodRefactoring >> transform [
-	class compile: source classified: protocols
+
+	transformation transform
 ]

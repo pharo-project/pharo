@@ -35,13 +35,13 @@ EpRevertTest >> testBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
-	aClass classComment: 'after'.
+	aClass comment: 'before'.
+	aClass comment: 'after'.
 	self setHeadAsInputEntry.
 
 	self revertInputEntry.
 
-	self assert: aClass organization classComment equals: 'before'
+	self assert: aClass comment equals: 'before'
 ]
 
 { #category : #tests }
@@ -62,9 +62,10 @@ EpRevertTest >> testBehaviorNameChange [
 EpRevertTest >> testCategoryAdditionWithCategoryRemoved [
 
 	| organization aCategory |
-	organization := self class environment organization.
+	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
 
 	self assert: (organization includesCategory: aCategory).
@@ -76,9 +77,10 @@ EpRevertTest >> testCategoryAdditionWithCategoryRemoved [
 EpRevertTest >> testCategoryRemovalWithCategoryAdded [
 
 	| organization aCategory |
-	organization := self class environment organization.
+	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	organization removeCategory: aCategory.
 	self setHeadAsInputEntry.
 
@@ -91,10 +93,10 @@ EpRevertTest >> testCategoryRemovalWithCategoryAdded [
 EpRevertTest >> testCategoryRename [
 
 	| organization aCategory anotherCategory |
-	organization := self class environment organization.
+	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
 	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 
@@ -248,9 +250,9 @@ EpRevertTest >> testMethodModificationWithProtocolChanged [
 
 	(aClass>>#fortyTwo) protocol: 'three'.
 
-	self assert: (aClass>>#fortyTwo) protocol equals: 'three'.
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'three'.
 	self revertInputEntry.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'one'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'one'
 ]
 
 { #category : #tests }
@@ -267,7 +269,7 @@ EpRevertTest >> testMethodRemoval [
 	self revertInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -286,7 +288,7 @@ EpRevertTest >> testMethodRemovalWithMethodAlreadyAdded [
 	self revertInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -294,13 +296,13 @@ EpRevertTest >> testProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpProtocolAddition.
-	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
+	self assert: (aClass hasProtocol: 'protocol').
 	self revertInputEntry.
-	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
+	self deny: (aClass hasProtocol: 'protocol')
 ]
 
 { #category : #tests }
@@ -308,14 +310,14 @@ EpRevertTest >> testProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
-	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
+	self deny: (aClass hasProtocol: 'protocol').
 	self revertInputEntry.
-	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
+	self assert: (aClass hasProtocol: 'protocol')
 ]
 
 { #category : #tests }

@@ -50,15 +50,14 @@ DADependencyChecker >> computeDependenciesOf: aPackageName visitedPackages: visi
 
 { #category : #'computing - dependencies' }
 DADependencyChecker >> computeImageDependencies [
+
 	| visited |
 	self newReport.
 	report
 		analysisRunString: 'Pharo image dependencies';
 		imageVersion: SystemVersion current.
 	visited := Set new.
-	RPackageOrganizer default packageNames
-		do: [ :packageName |
-			self computeDependenciesOf: packageName visitedPackages: visited ].
+	self packageOrganizer packageNames do: [ :packageName | self computeDependenciesOf: packageName visitedPackages: visited ].
 	^ report
 ]
 
@@ -85,7 +84,7 @@ DADependencyChecker >> dependenciesOf: aPackageName [
 
 { #category : #private }
 DADependencyChecker >> ignoredDependenciesOf: aPackageName [
-	^ (RPackage organizer packageNamed: aPackageName) ignoredDependencies
+	^ (self packageOrganizer packageNamed: aPackageName) ignoredDependencies
 ]
 
 { #category : #initialization }
@@ -96,7 +95,7 @@ DADependencyChecker >> initialize [
 
 { #category : #private }
 DADependencyChecker >> manuallyResolvedDependenciesOf: aPackageName [
-	^ (RPackage organizer packageNamed: aPackageName) manuallyResolvedDependencies
+	^ (self packageOrganizer packageNamed: aPackageName) manuallyResolvedDependencies
 ]
 
 { #category : #initialization }

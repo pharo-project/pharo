@@ -24,28 +24,28 @@ Class {
 }
 
 { #category : #api }
-RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocols: protocols [
+RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocols: aCollection [
 
 	^ self new
 		model: aRBModel;
 		sourceCode: aString
 		in: aClass
-		withProtocols: protocols;
+		withProtocols: aCollection;
 		yourself
 ]
 
 { #category : #api }
-RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols: protocols [
+RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols: aCollection [
 
 	^ self new
 		sourceCode: aString
 		in: aClass
-		withProtocols: protocols;
+		withProtocols: aCollection;
 		yourself
 ]
 
 { #category : #preconditions }
-RBAddMethodTransformation >> preconditions [
+RBAddMethodTransformation >> applicabilityConditions [
 	| rbMethod |
 	rbMethod := self parserClass
 		parseMethod: sourceCode
@@ -58,6 +58,12 @@ RBAddMethodTransformation >> preconditions [
 	^ (RBCondition
 		canUnderstand: rbMethod selector
 		in: self definingClass) not
+]
+
+{ #category : #preconditions }
+RBAddMethodTransformation >> preconditions [
+	
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

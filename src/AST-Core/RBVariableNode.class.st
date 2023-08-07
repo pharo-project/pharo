@@ -28,6 +28,8 @@ RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 		ifTrue: [ ^ self selfNode start: aPosition ].
 	anIdentifierName = #thisContext
 		ifTrue: [ ^ self thisContextNode start: aPosition ].
+	anIdentifierName = #thisProcess
+		ifTrue: [ ^ self thisProcessNode start: aPosition ].
 	anIdentifierName = #super
 		ifTrue: [ ^ self superNode start: aPosition ].
 	^ self named: anIdentifierName start: aPosition
@@ -47,17 +49,22 @@ RBVariableNode class >> named: aName start: aPosition [
 
 { #category : #'instance creation' }
 RBVariableNode class >> selfNode [
-	^ (self named: #self) variable: SelfVariable instance
+	^ self named: #self
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> superNode [
-	^ (self named: #super) variable: SuperVariable instance
+	^ self named: #super
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> thisContextNode [
-	^ (self named: #thisContext) variable: ThisContextVariable instance
+	^ self named: #thisContext
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> thisProcessNode [
+	^ self named: #thisProcess
 ]
 
 { #category : #comparing }
@@ -156,13 +163,13 @@ RBVariableNode >> isLocalVariable [
 ]
 
 { #category : #testing }
-RBVariableNode >> isRead [
-	^ self isWrite not and: [ self isUsed ]
+RBVariableNode >> isPseudoVariable [
+	^ variable isPseudoVariable
 ]
 
 { #category : #testing }
-RBVariableNode >> isReservedVariable [
-	^ variable isReservedVariable
+RBVariableNode >> isRead [
+	^ self isWrite not and: [ self isUsed ]
 ]
 
 { #category : #testing }
@@ -260,12 +267,9 @@ RBVariableNode >> replaceSourceWith: aNode [
 ]
 
 { #category : #accessing }
-RBVariableNode >> start [
-	^ start
-]
-
-{ #category : #accessing }
 RBVariableNode >> start: aPosition [
+	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+
 	start := aPosition
 ]
 

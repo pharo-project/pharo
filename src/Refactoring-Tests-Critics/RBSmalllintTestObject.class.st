@@ -111,8 +111,8 @@ RBSmalllintTestObject >> consistencyCheck [
 ]
 
 { #category : #methods }
-RBSmalllintTestObject >> debbuggingMessageSent [
-	self rearmOneShot
+RBSmalllintTestObject >> debuggingMessageSent [
+	self isThisEverCalled
 ]
 
 { #category : #methods }
@@ -553,11 +553,13 @@ RBSmalllintTestObject >> unclassifiedMethods [
 
 { #category : #methods }
 RBSmalllintTestObject >> uncommonMessageSend [
+	<ignoreNotImplementedSelectors: #(#false)>
 	true false
 ]
 
 { #category : #methods }
 RBSmalllintTestObject >> uncommonMessageSend2 [
+	<ignoreNotImplementedSelectors: #(Object)>
 	|a|
 	a:=3
 	Object new.

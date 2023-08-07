@@ -103,13 +103,16 @@ RBCreateLazyAccessorsForVariableTransformation >> defaultValue: aString [
 { #category : #transforming }
 RBCreateLazyAccessorsForVariableTransformation >> defineGetterMethod [
 
-	self definingClass
-		compile: ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
-			expandMacrosWith: self selector
-			with: variableName
-			with: self defaultValue)
-		classified: #(#accessing).
-	^selector
+	self generateChangesFor:
+		(RBAddMethodTransformRefactoring
+			 addMethod: ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
+					  expandMacrosWith: self selector
+					  with: variableName
+					  with: self defaultValue)
+			 toClass: self definingClass
+			 inProtocols: #( #accessing )).
+
+	^ selector
 ]
 
 { #category : #preconditions }
@@ -125,8 +128,8 @@ RBCreateLazyAccessorsForVariableTransformation >> verifyInitializationExpression
 	| tree |
 	tree := self parserClass
 		parseExpression: initializer
-		onError: [ :msg :index | self refactoringFailure: 'Illegal initialization code because: ', msg ].
+		onError: [ :msg :index | self refactoringError: 'Illegal initialization code because: ', msg ].
 	tree isValue
-		ifFalse: [ self refactoringFailure: 'The initialization code cannot be a return node or a list of statements' ].
+		ifFalse: [ self refactoringError: 'The initialization code cannot be a return node or a list of statements' ].
 	self checkVariableReferencesIn: tree
 ]

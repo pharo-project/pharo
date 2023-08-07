@@ -6,7 +6,7 @@ SystemWindow >> aboutText [
 
 	^self model
 		ifNil: ['This is a system window without a model' translated]
-		ifNotNil: [self model class instanceSide organization classComment
+		ifNotNil: [self model class instanceSide comment
 					ifEmpty: ['The model of this window has no class comment']
 					ifNotEmpty: [:comment | comment]]
 ]
@@ -159,7 +159,7 @@ SystemWindow >> addMorph: aMorph fullFrame: aLayoutFrame [
 
 	super addMorph: aMorph fullFrame: frame.
 
-	paneMorphs := paneMorphs copyReplaceFrom: 1 to: 0 with: (Array with: aMorph).
+	paneMorphs := paneMorphs copyReplaceFrom: 1 to: 0 with: {aMorph}.
 	"aMorph adoptPaneColor: self paneColor."
 	aMorph
 		borderStyle: (self theme windowPaneBorderStyleFor: aMorph in: self).
@@ -721,9 +721,7 @@ SystemWindow >> initializeLabelArea [
 		expandBox := self createExpandBox.
 		self setExpandBoxBalloonText].
 	menuBox := self createMenuBox.
-	stripes := Array
-						with: (Morph newBounds: bounds)
-						with: (Morph newBounds: bounds).
+	stripes := {Morph newBounds: bounds . Morph newBounds: bounds }.
 	self addLabelArea.
 	labelArea
 		goBehind.

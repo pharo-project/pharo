@@ -122,12 +122,11 @@ ClySystemEnvironment >> classes [
 
 { #category : #compiling }
 ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
-
-	"The receiver's textual content is a request to define a new class. The
+	"The receiver's textual content is a request to define a new class or trait. The
 	source code is defString. If any errors occur in compilation, notify
 	aController."
 
-	| newClassName |
+	| newClassName newClass |
 	newClassName := self extractNameFrom: newClassDefinitionString.
 	((self
 		  isOverridingExistingClassWhenDefiningClassNamed: newClassName
@@ -135,28 +134,24 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 		 (self confirmToOverrideExistingClassNamed: newClassName) not ])
 		ifTrue: [ ^ nil ].
 
-	(self isFluidDefinition: newClassDefinitionString)
-		ifTrue: [
-			ClassDefinitionPrinter showFluidClassDefinition: true.
-			^ self
-				  defineNewFluidClassOrTraitFrom: newClassDefinitionString
-				  notifying: aController
-				  startingFrom: oldClass ]
-		ifFalse: [
-			(self isTraitDefinition: newClassDefinitionString)
-				ifTrue: [
-					^ self
-						  defineTrait: newClassDefinitionString
-						  notifying: aController
-						  startingFrom: oldClass ]
-				ifFalse: [
-					(self isClassDefinition: newClassDefinitionString)
-						ifTrue: [
-							^ self
-							  defineNewClassFrom: newClassDefinitionString
-							  notifying: aController
-							  startingFrom: oldClass ]
-						ifFalse: [ ^ nil ] ] ]
+	"On parser & semantic errors (including undeclared because we are in the legacy scripting interactive mode),
+	there is UI notification.
+	On execution, some methods might be recompiled and cause issues:
+	* Warnings (undeclared/shadowed) are sillently passed, but should be fixed by the user later.
+	* Errors are unlikely (method should be already broken), but cause (resumable) syntax error for now."
+	newClass := (self classCompilerFor: oldClass)
+		            source: newClassDefinitionString;
+		            requestor: aController;
+		            failBlock: [ ^ nil ];
+		            logged: true;
+		            evaluate. 
+	"mild ugly hack for fluid classes"
+	(newClass isKindOf: FluidBuilder) ifTrue: [ newClass := newClass fluidInstall ].
+
+	"evaluation can lead to anything (just put a literal in the class defintion pane and accept), these are ignored"
+	^ (newClass isBehavior or: [ newClass isTrait ])
+		  ifTrue: [ newClass ]
+		  ifFalse: [ nil ]
 ]
 
 { #category : #'class management' }
@@ -183,58 +178,10 @@ ClySystemEnvironment >> defaultClassCompiler [
 	^ self class compiler
 ]
 
-{ #category : #compiling }
-ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
-
-	"Precondition: newClassDefinitionString is not a fluid class"
-
-	| newClass |
-	[
-	newClass := (self classCompilerFor: oldClass)
-		            source: newClassDefinitionString;
-		            requestor: aController;
-		            failBlock: [ ^ nil ];
-		            logged: true;
-		            evaluate ]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex | "we are only interested in class definitions"
-			ex compilationContext noPattern ifFalse: [ ex pass ].
-			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
-			self inform: 'Undeclared Variable in Class Definition'.
-			^ nil ].
-
-	^ newClass isBehavior
-		  ifTrue: [ newClass ]
-		  ifFalse: [ nil ]
-]
-
-{ #category : #compiling }
-ClySystemEnvironment >> defineNewFluidClassOrTraitFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
-
-	"Precondition: newClassDefinitionString is a fluid class or trait"
-
-	| newClass |
-	[
-	newClass := (self classCompilerFor: oldClass)
-		            source: '(' , newClassDefinitionString , ') install';
-		            requestor: aController;
-		            logged: true;
-		            "for now a super ugly patch"evaluate ]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex | "we are only interested in class definitions"
-			ex compilationContext noPattern ifFalse: [ ex pass ].
-			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
-			self inform: 'Undeclared Variable in Class Definition'.
-			^ nil ].
-
-	^ newClass isBehavior
-		  ifTrue: [ newClass ]
-		  ifFalse: [ nil ]
-]
-
 { #category : #'package management' }
-ClySystemEnvironment >> ensureExistAndRegisterPackageNamed: packageName [
-	^packageOrganizer ensureExistAndRegisterPackageNamed: packageName
+ClySystemEnvironment >> ensurePackage: packageName [
+
+	^ packageOrganizer ensurePackage: packageName
 ]
 
 { #category : #accessing }
@@ -413,7 +360,7 @@ ClySystemEnvironment >> registerProjectManager: aPackageManager [
 { #category : #'package management' }
 ClySystemEnvironment >> removePackage: aPackage [
 
-	packageOrganizer unregisterPackage: aPackage
+	packageOrganizer removePackage: aPackage
 ]
 
 { #category : #subscription }

@@ -62,7 +62,7 @@ RBGeneratePrintOnTransformation >> preconditions [
 	"Checks that the class actually defines all the variables that will be part of the printOn:."
 
 	^ variables
-		  inject: self emptyCondition
+		  inject: self trueCondition
 		  into: [ :condition :variable |
 			  condition
 			  &
@@ -90,7 +90,11 @@ RBGeneratePrintOnTransformation >> transform [
 					(self parserClass
 						parseExpression:
 							('aStream nextPutAll: '' <1s>: ''; print: <1s>' expandMacrosWith: each)) ].
-	self theClass compile: method formattedCode classified: #(printing)
+	self generateChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: method formattedCode
+			toClass: self theClass
+			inProtocols: #printing)
 ]
 
 { #category : #accessing }

@@ -80,7 +80,7 @@ SpRubFindReplaceService >> findPolicyChanged [
 SpRubFindReplaceService >> findText: aStringOrText [
 
 	super findText: aStringOrText.
-	self textArea whenFindTextChanged: RubFindTextChanged new.
+	self textArea ifNotNil: [:textArea | textArea whenFindTextChanged: RubFindTextChanged new].
 	^ true
 ]
 

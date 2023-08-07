@@ -112,14 +112,6 @@ TaAbstractComposition >> asTraitComposition [
 	^ self
 ]
 
-{ #category : #accessing }
-TaAbstractComposition >> categoryOfMethod: method withSelector: selector [
-	"I return the category of the method with the selector.
-	This is useful when the method is aliased or the method came from different traits or it is a conflicting category.
-	The basic implementation returns the category of the method"
-	^ method category
-]
-
 { #category : #testing }
 TaAbstractComposition >> changesSourceCode: aSelector [
 	"Checks if a selector should be compiled because its code has been rewritten."
@@ -137,32 +129,26 @@ TaAbstractComposition >> compile: selector into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
 	This version classify the method in the class passed as parameter"
 
-	| method newMethod sourceCode trailer traitDefining |
-
+	| method newMethod sourceCode traitDefining |
 	traitDefining := self traitDefining: selector.
 
 	method := self compiledMethodAt: selector.
 	sourceCode := self sourceCodeAt: selector.
-	trailer := method trailer.
 
 	newMethod := aClass compiler
-				source: sourceCode;
-				class: aClass ;
-				failBlock: [^ false];
-				compiledMethodTrailer: trailer;
-				compile.   "Assume OK after proceed from SyntaxError"
+		             source: sourceCode;
+		             permitUndeclared: true;
+		             compile.
+	newMethod sourcePointer: method sourcePointer.
+	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
 
-	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-
-	(selector ~= method selector or: [self changesSourceCode: selector])
+	(selector ~= method selector or: [ self changesSourceCode: selector ])
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod setSourcePointer: method sourcePointer ].
 
-	aClass addSelectorSilently: selector withMethod: newMethod.
+	aClass classify: selector under: (self protocolForMethod: method).
 
-	aClass organization protocolOrganizer
-		classify: selector
-		inProtocolNamed: (self categoryOfMethod: method withSelector: method selector).
+	aClass addSelectorSilently: selector withMethod: newMethod.
 
 	aClass >> selector propertyAt: #traitSource put: traitDefining.
 	^ true
@@ -187,7 +173,6 @@ TaAbstractComposition >> compiledMethodAt: aSelector ifAbsent: aValuable [
 
 { #category : #operations }
 TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing [
-
 	"When the included method does not need to be source rewritten or recompiled,
 	it is query by using #changesSourceCode:, the method is inserted in aClass' method dictionary.
 	The compiled method is just copied and the source is stored in the change file
@@ -197,7 +182,6 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	"
 
 	| aCompiledMethod source newMethod traitDefining sourceHasChanged |
-
 	traitDefining := self traitDefining: aSelector.
 	aCompiledMethod := self compiledMethodAt: aSelector.
 	source := self getSourceCodeOf: aCompiledMethod usingSelector: aSelector.
@@ -210,8 +194,9 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	 - The trait defining the method is not the same.
 	 - If both methods have source code and if the source codes are not the same.
 	"
-	aClass methodDict at: aSelector ifPresent:[ :originalMethod |
-		((replacing not and: [(originalMethod traitSource = traitDefining) and: [originalMethod hasSourceCode]]) and: [ source isNotNil and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ]].
+	aClass methodDict at: aSelector ifPresent: [ :originalMethod |
+		((replacing not and: [ originalMethod traitSource = traitDefining and: [ originalMethod hasSourceCode ] ]) and: [
+			 source isNotNil and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ] ].
 
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
@@ -219,13 +204,9 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 
 	newMethod setSourcePointer: aCompiledMethod sourcePointer.
 
+	aClass classify: aSelector under: aCompiledMethod protocolName.
+
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
-
-	aClass organization protocolOrganizer
-		classify: aSelector
-		inProtocolNamed: aCompiledMethod category asSymbol.
-
-	aClass organization removeEmptyCategories.
 
 	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
 
@@ -320,14 +301,10 @@ TaAbstractComposition >> installSelector: aSelector into: aClass replacing: repl
 	It is probable the aliased method does not exists any more in the trait composition. This situation is checked when creating the trait composition."
 
 
-	[
-		^ (self needsRecompilation: aSelector)
+	^ (self needsRecompilation: aSelector)
 			ifTrue:[ self compile: aSelector into: aClass	]
 			ifFalse:[ self copyMethod: aSelector into: aClass replacing: replacing ].
-	 ] on: NotFound
-		do: [ ^ true ].
 
-	^ true
 ]
 
 { #category : #testing }
@@ -381,6 +358,15 @@ TaAbstractComposition >> originSelectorOf: aSelector [
 TaAbstractComposition >> printOn: aStream [
 
 	aStream nextPutAll: self traitCompositionExpression
+]
+
+{ #category : #accessing }
+TaAbstractComposition >> protocolForMethod: method [
+	"I return the protocol of the method given as parameter.
+	This is useful when the method is aliased or the method came from different traits or it is a conflicting protocol.
+	The basic implementation returns the protocol of the method"
+
+	^ method protocolName
 ]
 
 { #category : #querying }

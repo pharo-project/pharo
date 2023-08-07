@@ -32,7 +32,7 @@
 - Special: (reserved) `thisContext`, `super`, `self`, `true`, `false`, `nil`
 - Method Temporary: local to a method
 
-```
+```st
 myMethod
    | tmp1 temp2 |
    ...
@@ -40,7 +40,7 @@ myMethod
 
 - Block Temporary: local to a block
 
-```
+```st
 [ 
    | tmp1 temp2 |
    ... ]
@@ -48,14 +48,14 @@ myMethod
 
 - Method Parameters: automatic local vars created as a result of message call with params
 
-```
+```st
 myMethod: myArg
    ...
 ```
    
 - Block Parameters: automatic local vars created as a result of value: message call    
 
-```
+```st
 [ :each |
    ... ]
 ```
@@ -76,13 +76,13 @@ myMethod: myArg
 ### Comments 
 Comments are enclosed in quotes
 
-```
+```st
 "Comments are enclosed in quotes"
 ```
 ### Instruction separator 
 Period (`.`) is the statement separator
 
-```
+```st
 self doThis.
 self doThat
 ```
@@ -90,7 +90,7 @@ self doThat
 
 ## Assignment
 
-```
+```st
 | x y |
 x := 5.                                                     "assignment"
 x := y := z := 6.                                           "compound assignment"
@@ -104,14 +104,14 @@ x := Integer allSuperclasses.                               "assign all supercla
 
 ## Copy
 
-```
+```st
 y := x copy.                                                "copy object"
 y := x deepCopy.                                            "copy object and instance vars"
 ```
 
 ## Literals
 
-```
+```st
 | b |
 b := true.                                                  "true constant"
 b := false.                                                 "false constant"
@@ -140,7 +140,7 @@ x := #('abc' 2 $a).                                         "mixing of types all
 
 ## Booleans
 
-```
+```st
 | b x y |
 x := 1. y := 2.
 b := x = y.                                                 "equals"
@@ -179,7 +179,7 @@ b := $A isLowercase.                                        "test if lower case 
 
 ## Arithmetic expressions
 
-```
+```st
 | x |
 x := 6 + 3.                                                 "addition"
 x := 6 - 3.                                                 "subtraction"
@@ -238,7 +238,7 @@ x := 100 atRandom.                                          "quick random number
 
 ## Bitwise Manipulation
 
-```
+```st
 | b x |
 x := 2r1111 bitAnd: 2r0100.                                 "and bits"
 x := 4r3333 bitAnd: 2r011011011.                            "and with different bases"
@@ -259,7 +259,7 @@ b := 16rFF noMask: 16r0F.                                   "test if all bits se
 
 ## Conversion
 
-```
+```st
 | x |
 x := 3.99 asInteger.                                        "convert number to integer (truncates)"
 x := 3.99 asFraction.                                       "convert number to fraction"
@@ -281,7 +281,7 @@ x := 15 printStringBase: 2.                                 "string in given bas
 - blocks intended for long term storage should not contain ^
 
 
-```
+```st
 | x y z |
 x := [ y := 1. z := 2. ]. x value.                          "simple block usage"
 x := [ :argOne :argTwo |   argOne, ' and ' , argTwo.].      "set up block with argument passing"
@@ -297,7 +297,7 @@ x := [ | t | t := 1.].                                      "local var in block"
 - keyword methods are messages with selectors including colons
 
 
-```
+```st
 | x |
 x := 2 sqrt.                                                "unary message"
 x := 2 raisedTo: 10.                                        "keyword message"
@@ -332,7 +332,7 @@ Standard protocols:
 
 ## Conditional statements
 
-```
+```st
 | x switch result |
 X := 20 atRandom.
 x > 10 ifTrue: [ 'ifTrue' traceCr ].             "if then"
@@ -349,7 +349,7 @@ x > 10                                                      "if else then"
    ifFalse: ['ifFalse']) traceCr.
 ```
 
-```
+```st
 switch := Dictionary new.                                   "switch functionality"
 switch at: $A put: [ 'Case A' traceCr].
 switch at: $B put: [ 'Case B' traceCr].
@@ -359,7 +359,7 @@ result := (switch at: $B) value.
 
 ## Iteration statements
 
-```
+```st
 | x y |
 x := 4. y := 1.
 [x > 0] whileTrue: [x := x - 1. y := y * 2].                "while true loop"
@@ -372,7 +372,7 @@ x timesRepeat: [y := y * 2].                                "times repear loop (
 
 ## String
 
-```
+```st
 | b x y |
 x := 'This is a string'.                                    "string assignment"
 x allButFirst: 10.                                          "returns string"
@@ -396,7 +396,8 @@ y := x shuffled.                                            "randomly shuffle st
 ```
 
 ## Character
-```
+
+```st
 | x y |
 x := $A.                                                    "character assignment"
 y := x isLowercase.                                         "test if lower case"
@@ -417,7 +418,7 @@ y := $A max: $B.
 
 ## Symbol
 
-```
+```st
 | b x y |
 x := #Hello.                                                "symbol assignment"
 y := 'String', 'Concatenation'.                             "symbol concatenation (result is string)"
@@ -444,7 +445,7 @@ y := x asSet.                                               "convert symbol to s
 - WordArray:     Array limited to word elements (0-2^32)
 
 
-```
+```st
 | b x y sum max |
 x := #[255 255 255].                                        "constant byte array"
 x := #(4 3 2 1).                                            "literal array"
@@ -488,7 +489,7 @@ y := x asSet.                                               "convert to set coll
 ## OrderedCollection
 acts like an expandable array
 
-```
+```st
 | b x y sum max |
 x := OrderedCollection with: 4 with: 3 with: 2 with: 1.     "create collection with up to 4 elements"
 x := OrderedCollection new.                                 "allocate collection"
@@ -532,7 +533,7 @@ y := x asSet.                                               "convert to set coll
 ## SortedCollection
 Like OrderedCollection except order of elements determined by sorting criteria
 
-```
+```st
 | b x y sum max |
 x := SortedCollection with: 4 with: 3 with: 2 with: 1.      "create collection with up to 4 elements"
 x := SortedCollection new.                                  "allocate collection"
@@ -575,7 +576,7 @@ y := x asSet.                                               "convert to set coll
 ## Bag
 Like OrderedCollection except elements are in no particular order
 
-```
+```st
 | b x y sum max |
 x := Bag with: 4 with: 3 with: 2 with: 1.                   "create collection with up to 4 elements"
 x := Bag new.                                               "allocate collection"
@@ -608,7 +609,7 @@ y := x asSet.                                               "convert to set coll
 Like Bag except duplicates not allowed
 IdentitySet:   uses identity test (== rather than =)
 
-```
+```st
 | b x y sum max |
 x := Set with: 4 with: 3 with: 2 with: 1.                   "create collection with up to 4 elements"
 x := Set new.                                               "allocate collection"
@@ -638,7 +639,7 @@ y := x asSet.                                               "convert to set coll
 
 ## Interval
 
-```
+```st
 | b x y sum max |
 x := Interval from: 5 to: 10.                               "create interval object"
 x := 5 to: 10.
@@ -667,7 +668,7 @@ y := x asSet.                                               "convert to set coll
 
 ## Associations (Pairs)
 
-```
+```st
 | x y |
 x := #myVar->'hello'.
 y := x key.
@@ -677,7 +678,7 @@ y := x value.
 ## Dictionary
 - IdentityDictionary:   uses identity test (== rather than =)
 
-```
+```st
 | b x y |
 x := Dictionary new.                                        "allocate collection"
 x add: #a->4; add: #b->3; add: #c->1; add: #d->2; yourself. "add element to collection"
@@ -717,7 +718,7 @@ y := x asSet.                                               "convert to set coll
 
 ## Internal Stream
 
-```
+```st
 | b x ios |
 ios := ReadStream on: 'Hello read stream'.
 ios := ReadStream on: 'Hello read stream' from: 1 to: 5.
@@ -748,7 +749,7 @@ b := ios atEnd.
 
 ## File
 
-```
+```st
 "Creating a file"
 file := File named: 'asd.txt' asFileReference fullName.
 
@@ -782,7 +783,7 @@ buffer asString.
 
 ## File Reference
 
-```
+```st
 | p m hello |
 p := FileLocator home.                                      "user's home directory"
 p := FileLocator root.                                      "file system root"
@@ -803,7 +804,7 @@ hello readStreamDo: [ :stream | stream contents ].          "read from file"
 
 ## Date
 
-```
+```st
 | x y |
 x := Date today.                                            "create date for today"
 x := Date dateAndTimeNow.                                   "create date from current time/date"
@@ -837,7 +838,7 @@ b := (x <= Date today).                                     "comparison"
 
 ## Time
 
-```
+```st
 | x y |
 x := Time now.                                              "create time from current time"
 x := Time now asdateAndTime.                                "create time from current time/date"
@@ -858,7 +859,7 @@ b := x <= Time now.                                       "comparison"
 
 ## Point
 
-```
+```st
 | pt x y |
 pt := 200@100.                                              "obtain a new point"
 x := pt x.                                                  "x coordinate"
@@ -884,14 +885,15 @@ pt := 20@5 dotProduct: 10@2.                                "sum of product (x1*
 
 ### Rectangle
 
-```
+```st
 Rectangle fromUser.
 ```
 
 ## Dynamic Message Calling/Compiling
 
 ### Unary message
-```
+
+```st
 | receiver message result argument keyword1 keyword2 argument1 argument2 |
 receiver := 5.
 message := 'factorial' asSymbol.
@@ -902,7 +904,7 @@ result := (Message new setSelector: message arguments: #()) sentTo: receiver.
 
 ### Binary message
 
-```
+```st
 receiver := 1.
 message := '+' asSymbol.
 argument := 2.
@@ -913,7 +915,7 @@ result := (Message new setSelector: message arguments: (Array with: argument)) s
 
 ### Keyword messages
 
-```
+```st
 receiver := 12.
 keyword1 := 'between:' asSymbol.
 keyword2 := 'and:' asSymbol.
@@ -937,29 +939,32 @@ result := (Message new
 ## Exceptions
 
 Installing an exception handler
-```
+
+```st
 [ 1/0 ] on: ZeroDivide do: [ :ex | ... ex ... ].
 ```
 
 Raising an exception
-```
+
+```st
 Warning signal: 'watch out!'.
 ```
 
 Always execute last block
 
-```
+```st
 [ 1/0 ] ensure: [ 'exception' trace].
 ```
 
 Execute last block only if fail or unwind
-```
+
+```st
 [ 1/0 ] ifCurtailed: [ Transcript show: 'exception' ].    
 ```
 
 ### Debugging
 
-```
+```st
 String browse.                                              "browse specified class"
 x inspect.                                                  "open object inspector window"
 x confirm: 'Is this correct?'.
@@ -978,18 +983,18 @@ x primitiveFailed.                                          "system primitive fa
 
 ### Stdio
 
-```
+```st
 'Hello World' trace.                "output string in internal log"
 ```
 
-``` 
+```st
 Stdio stdout nextPutAll: 'Hello world' "output string in external log"
 ```
 
 
 ### Misc
 
-```
+```st
 | x |
 'Hello World' asMorph openInWindow.
 UIManager default message: 'Hello Pharo'.                   "display message"
@@ -1000,7 +1005,7 @@ x := UIManager default request: 'Enter value:'.             "prompt user for inp
     
 ### Class/Metaclass
 
-```
+```st
 | b x |
 x := String name.                                           "class name"
 x := String category.                                       "organization category"

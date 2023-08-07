@@ -49,6 +49,15 @@ RBAddVariableAccessorWithLazyInitializationTransformation class >> variable: aVa
 ]
 
 { #category : #preconditions }
+RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityConditions [ 
+
+	^ super applicabilityConditions &
+	(RBCondition withBlock: [
+		self verifyInitializationExpressionOf: self defaultValue.
+		true ])
+]
+
+{ #category : #preconditions }
 RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
@@ -110,10 +119,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [
 
 { #category : #preconditions }
 RBAddVariableAccessorWithLazyInitializationTransformation >> preconditions [
-	^ super preconditions &
-	(RBCondition withBlock: [
-		self verifyInitializationExpressionOf: self defaultValue.
-		true ])
+	^ self applicabilityConditions 
 ]
 
 { #category : #printing }
@@ -137,8 +143,8 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> verifyInitializatio
 	| tree |
 	tree := self parserClass
 		parseExpression: initializer
-		onError: [ :msg :index | self refactoringFailure: 'Illegal initialization code because:.', msg ].
+		onError: [ :msg :index | self refactoringError: 'Illegal initialization code because:.', msg ].
 	tree isValue
-		ifFalse: [ self refactoringFailure: 'The initialization code cannot be a return node or a list of statements' ].
+		ifFalse: [ self refactoringError: 'The initialization code cannot be a return node or a list of statements' ].
 	self checkVariableReferencesIn: tree
 ]

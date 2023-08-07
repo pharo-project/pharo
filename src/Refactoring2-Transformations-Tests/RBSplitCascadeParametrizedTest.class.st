@@ -24,13 +24,13 @@ RBSplitCascadeParametrizedTest >> methodWithCascades [
 ]
 
 { #category : #'failure tests' }
-RBSplitCascadeParametrizedTest >> testMethodWithoutCascade [
+RBSplitCascadeParametrizedTest >> testFailureMethodWithoutCascade [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ (54 to: 55) . ('an', 'InstVar:') asSymbol . RBBasicLintRuleTestData })
 ]
 
 { #category : #'failure tests' }
-RBSplitCascadeParametrizedTest >> testNonExistantSelectorName [
+RBSplitCascadeParametrizedTest >> testFailureNonExistantSelectorName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ (54 to: 55) . #foo . self class })
 ]

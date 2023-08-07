@@ -305,7 +305,7 @@ ChangeSet class >> newChangeSet: newName [
 	| newSet |
 	newName ifNil: [ ^ nil ].
 	(self named: newName) ifNotNil: [
-		self inform: 'Sorry that name is already used'.
+		self error: 'Sorry name "', newName , '" is already used'.
 		^ nil ].
 	newSet := self newNamed: newName.
 	AllChangeSets add: newSet.
@@ -333,7 +333,7 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: ClassAdded send: #classAdded: to: aChangeSet;
 		when: ClassCommented send: #classCommented: to: aChangeSet;
 		when: ClassRenamed send: #classRenamed: to: aChangeSet;
-		when: ClassReorganized send: #classReorganized: to: aChangeSet;
+		when: ProtocolAnnouncement send: #classReorganized: to: aChangeSet;
 		when: ClassRecategorized send: #classRecategorized: to: aChangeSet;
 		when: ClassModifiedClassDefinition send: #classModified: to: aChangeSet.
 
@@ -344,7 +344,7 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet;
 		when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
 
-	SystemAnnouncer uniqueInstance announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
+	SystemAnnouncer announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
 ]
 
 { #category : #services }
@@ -437,20 +437,6 @@ ChangeSet class >> resetCurrentToNewUnnamedChangeSet [
 	self newChanges: current
 ]
 
-{ #category : #scanning }
-ChangeSet class >> scanFile: file category: cat class: class meta: meta stamp: stamp [
-
-	| itemPosition method items |
-	items := OrderedCollection new.
-	[itemPosition := file position.
-	method := file nextChunk.
-	file skipStyleChunk.
-	method notEmpty] whileTrue:[
-		items add: (ChangeRecord new file: file position: itemPosition type: #method
-							class: class category: cat meta: meta stamp: stamp)].
-	^ items
-]
-
 { #category : #'file in/out' }
 ChangeSet class >> traitsOrder: aCollection [
 	"Arrange the traits in the collection, first who don't depend on others."
@@ -525,8 +511,11 @@ ChangeSet >> addCoherency: className [
 ChangeSet >> adoptSelector: aSelector forClass: aClass [
 	"Adopt the given selector/class combination as a change in the receiver"
 
-	self noteNewMethod: (aClass compiledMethodAt: aSelector)
-			forClass: aClass selector: aSelector priorMethod: nil
+	self
+		noteNewMethod: (aClass compiledMethodAt: aSelector)
+		forClass: aClass
+		selector: aSelector
+		priorMethod: nil
 ]
 
 { #category : #'moving changes' }
@@ -671,16 +660,13 @@ ChangeSet >> changedMessageList [
 { #category : #'file in/out' }
 ChangeSet >> checkForSlips [
 	"Return a collection of method refs with possible debugging code in them."
+
 	| slips |
 	slips := OrderedCollection new.
-	self changedClasses do:
-		[:aClass |
-		(self methodChangesAtClass: aClass name) associationsDo:
-				[:mAssoc | | method | (#(remove addedThenRemoved) includes: mAssoc value) ifFalse:
-					[method := aClass compiledMethodAt: mAssoc key ifAbsent: [nil].
-					method ifNotNil:
-						[(self hasReportableSlip: method)
-							ifTrue: [ slips add: (aClass >> mAssoc key) ]]]]].
+	self changedClasses do: [ :aClass |
+		(self methodChangesAtClass: aClass name) associationsDo: [ :mAssoc |
+			(#( remove addedThenRemoved ) includes: mAssoc value) ifFalse: [
+				aClass compiledMethodAt: mAssoc key ifPresent: [ :method | (self hasReportableSlip: method) ifTrue: [ slips add: aClass >> mAssoc key ] ] ] ] ].
 	^ slips
 ]
 
@@ -895,9 +881,7 @@ ChangeSet >> fileOutClassDefinition: class on: stream [
 				vars in this class, warn author when new ones are added." ] ].
 	(self atClass: class includes: #comment)
 		ifFalse: [ ^ self ].
-	class instanceSide organization
-		putCommentOnFile: stream
-		forClass: class instanceSide.
+	class instanceSide putCommentOnFile: stream.
 	stream cr
 ]
 
@@ -959,7 +943,7 @@ ChangeSet >> fileOutPSFor: class on: stream [
 				cr ].
 	(classRecord includesChangeType: #reorganize)
 		ifFalse: [ ^ self ].
-	class fileOutOrganizationOn: stream.
+	class fileOutProtocolsOn: stream.
 	stream cr
 ]
 
@@ -1123,42 +1107,7 @@ ChangeSet >> methodRemoved: anEvent [
 		removeSelector: anEvent selector
 		class: anEvent methodClass
 		priorMethod: anEvent method
-		lastMethodInfo: {
-				anEvent method sourcePointer.
-				anEvent protocol }
-]
-
-{ #category : #testing }
-ChangeSet >> methodsWithoutClassifications [
-	"Return a collection representing methods in the receiver which have not been categorized"
-
-	| slips notClassified |
-
-	notClassified := {	Protocol unclassified. #all}.
-	slips := OrderedCollection new.
-	self changedClasses do:
-		[:aClass |
-		(self methodChangesAtClass: aClass name) associationsDo:
-				[:mAssoc | | aSelector | (aClass includesSelector:  (aSelector := mAssoc key)) ifTrue:
-						[(notClassified includes: (aClass organization categoryOfElement: aSelector))
-								ifTrue: [slips add: aClass name , ' ' , aSelector]]]].
-	^ slips
-]
-
-{ #category : #'moving changes' }
-ChangeSet >> methodsWithoutComments [
-	"Return a collection representing methods in the receiver which have no precode comments"
-
-	| slips |
-	slips := OrderedCollection new.
-	self changedClasses do:
-		[:aClass |
-		(self methodChangesAtClass: aClass name) associationsDo:
-				[:mAssoc | (#(remove addedThenRemoved) includes: mAssoc value) ifFalse:
-					[(aClass includesSelector:  mAssoc key) ifTrue:
-						[(aClass>>mAssoc key) hasComment
-								ifTrue: [slips add: aClass name , ' ' , mAssoc key]]]]].
-	^ slips
+		lastSourcePointer: anEvent method sourcePointer
 ]
 
 { #category : #accessing }
@@ -1358,14 +1307,11 @@ ChangeSet >> removePreamble [
 ]
 
 { #category : #'change logging' }
-ChangeSet >> removeSelector: selector class: class priorMethod: priorMethod lastMethodInfo: info [
-	"Include indication that a method has been forgotten.
-	info is a pair of the source code pointer and message category
-	for the method that was removed."
+ChangeSet >> removeSelector: selector class: class priorMethod: priorMethod lastSourcePointer: lastSourcePointer [
+	"Include indication that a method has been forgotten."
 
-	class wantsChangeSetLogging ifFalse: [^ self].
-	(self changeRecorderFor: class)
-		noteRemoveSelector: selector priorMethod: priorMethod lastMethodInfo: info
+	class wantsChangeSetLogging ifFalse: [ ^ self ].
+	(self changeRecorderFor: class) noteRemoveSelector: selector priorMethod: priorMethod lastSourcePointer: lastSourcePointer
 ]
 
 { #category : #'method changes' }

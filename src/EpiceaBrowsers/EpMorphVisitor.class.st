@@ -54,6 +54,12 @@ EpMorphVisitor >> displayOperation: aString [
 ]
 
 { #category : #private }
+EpMorphVisitor >> displayPackage: aPackageName [
+
+	^ (self displayOperation: 'Package') , (self displayString: aPackageName asString)
+]
+
+{ #category : #private }
 EpMorphVisitor >> displayString: aString [
 
 	^ { aString asMorph }
@@ -105,12 +111,6 @@ EpMorphVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 
 { #category : #visitor }
 EpMorphVisitor >> visitCategoryAddition: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
-]
-
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryRegistration: aCategoryChange [
 
 	^ self displayCategory: aCategoryChange categoryName
 ]
@@ -197,19 +197,27 @@ EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 ]
 
 { #category : #visitor }
+EpMorphVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ self displayPackage: aPackageAddition packageName
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self displayPackage: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
 EpMorphVisitor >> visitProtocolAddition: aProtocolChange [
 
-	^ self
-		displayClass: aProtocolChange behaviorAffectedName
-		protocol: aProtocolChange protocol asString
+	^ self displayClass: aProtocolChange behaviorAffectedName protocol: aProtocolChange protocol
 ]
 
 { #category : #visitor }
 EpMorphVisitor >> visitProtocolRemoval: aProtocolChange [
 
-	^ self
-		displayClass: aProtocolChange behaviorAffectedName
-		protocol: aProtocolChange protocol asString
+	^ self displayClass: aProtocolChange behaviorAffectedName protocol: aProtocolChange protocol
 ]
 
 { #category : #visitor }

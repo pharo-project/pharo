@@ -41,8 +41,9 @@ RBPackageTransformation >> packageName: anObject [
 
 { #category : #preconditions }
 RBPackageTransformation >> preconditions [
-	^ (RBCondition withBlock: [ [ RPackage organizer includesPackageNamed: packageName ]
-			on: Error
-			do: [ :e | self refactoringError: e messageText ]
-		])
+
+	^ RBCondition
+		  withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+			  self packageOrganizer hasPackage: packageName ]
+		  errorString: 'The package ' , packageName , ' does not exsit in the system.'
 ]

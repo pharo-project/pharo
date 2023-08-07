@@ -1,8 +1,3 @@
-"
-I am a refactoring for removing instance variables.
-
-My precondition verifies that there is no reference to this instance  variable.
-"
 Class {
 	#name : #RBRemoveInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
@@ -20,19 +15,41 @@ RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 ]
 
 { #category : #preconditions }
+RBRemoveInstanceVariableRefactoring >> applicabilityConditions [
+
+	^ RBCondition directlyDefinesInstanceVariable: variableName asString in: class
+]
+
+{ #category : #preconditions }
+RBRemoveInstanceVariableRefactoring >> breakingChangeConditions [ 
+
+	^ (RBCondition hierarchyOf: class referencesInstanceVariable: variableName) not
+	
+]
+
+{ #category : #preconditions }
+RBRemoveInstanceVariableRefactoring >> generateChanges [
+	
+	self applicabilityConditions check ifFalse: [
+		^ RBApplicabilityChecksFailedError signal:
+			  self applicabilityConditions errorString ].
+	self breakingChangeConditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangeConditions errorString ].
+
+	self transform.
+	^ self changes
+]
+
+{ #category : #preconditions }
 RBRemoveInstanceVariableRefactoring >> preconditions [
 
-	| references |
+	^ self applicabilityConditions & self breakingChangeConditions 
+]
 
-	references := RBCondition hierarchyOf: class referencesInstanceVariable: variableName.
-	class realClass
-		ifNil: [ references errorMacro: ( '<1s> is referenced.' expandMacrosWith: variableName ) ]
-		ifNotNil: [ references
-				errorMacro: ( '<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName );
-				errorBlock:
-						[ self openBrowserOn: ( RBBrowserEnvironment new instVarRefsTo: variableName in: class realClass ) ]
-			].
-	^ ( RBCondition definesInstanceVariable: variableName asString in: class ) & references not
+{ #category : #accessing }
+RBRemoveInstanceVariableRefactoring >> refactoredClass [
+	^ class
 ]
 
 { #category : #transforming }

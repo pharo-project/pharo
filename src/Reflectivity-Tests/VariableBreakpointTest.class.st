@@ -56,11 +56,10 @@ VariableBreakpointTest >> argNodes [
 { #category : #helpers }
 VariableBreakpointTest >> compileTestClass [
 
-	testClass := VariableBreakpointMockClass
-		             subclass: #VariableBreakpointTestSubclass
-		             instanceVariableNames: 'v3'
-		             classVariableNames: ''
-		             package: 'Reflectivity-Tests-Breakpoints'.
+	testClass := (VariableBreakpointMockClass
+		             << #VariableBreakpointTestSubclass
+		             slots:  {#v3}; 
+		             package: 'Reflectivity-Tests-Breakpoints') install.
 	testClass compile: 'accessingV1 ^v1'.
 	testClass compile: 'accessingtemp |temp| temp := 0'
 ]
@@ -68,11 +67,8 @@ VariableBreakpointTest >> compileTestClass [
 { #category : #helpers }
 VariableBreakpointTest >> compileTestClass2 [
 
-	testSubclass := testClass
-		                subclass: #VariableBreakpointTestSubclass2
-		                instanceVariableNames: ''
-		                classVariableNames: ''
-		                package: 'Reflectivity-Tests-Breakpoints'.
+	testSubclass := (testClass
+		                << #VariableBreakpointTestSubclass2 package: 'Reflectivity-Tests-Breakpoints') install.
 	testSubclass compile: 'accessingV1 ^v1'
 ]
 
@@ -446,6 +442,7 @@ VariableBreakpointTest >> testNewForClass [
 VariableBreakpointTest >> testNoRemoveAfterSubclassRemoved [
 	"Removing the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
 	|testClassNode testSubclassNode|
+	<ignoreNotImplementedSelectors: #(accessingV1)>
 	self compileTestClass.
 	self compileTestClass2.
 	testClassNode := (testClass >> #accessingV1) ast allChildren detect:[:n| n isVariable].
@@ -571,6 +568,7 @@ VariableBreakpointTest >> testRemoveAfterClassRemoved [
 VariableBreakpointTest >> testRemoveAfterClassWithTempVarRemoved [
 	"Removing the class where the target temporary variable of a variable breakpoint is defined should uninstall the variable breakpoint"
 	|testClassNodes|
+	<ignoreNotImplementedSelectors: #(accessingtemp)>
 	self compileTestClass.
 	testClassNodes := (testClass >> #accessingtemp) ast allChildren.
 
@@ -588,6 +586,7 @@ VariableBreakpointTest >> testRemoveAfterClassWithTempVarRemoved [
 VariableBreakpointTest >> testRemoveAfterSuperclassRemoved [
 	"Removing the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
 	|testClassNodes|
+		<ignoreNotImplementedSelectors: #(accessingV1)>
 	self compileTestClass.
 	self compileTestClass2.
 	testClassNodes := (testClass >> #accessingV1) ast allChildren.

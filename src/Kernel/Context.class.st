@@ -156,17 +156,13 @@ Context class >> initializePrimitiveSimulators [
 
 { #category : #simulation }
 Context class >> initializeTryNamedPrimitiveTemplateMethod [
-	| source method |
+	| source |
 	source := 'tryNamedPrimitive
 	"This method is a template that the Smalltalk simulator uses to
 	execute primitives. See Object documentation whatIsAPrimitive."
 	<primitive:'' module:'' error: errorCode>
 	^ Context primitiveFailTokenFor: errorCode'.
-	method := Smalltalk compiler
-				class: UndefinedObject;
-				source: source;
-				compile.
-	TryNamedPrimitiveTemplateMethod := method copyWithSource: source
+	TryNamedPrimitiveTemplateMethod := Smalltalk compiler compile: source
 ]
 
 { #category : #'instance creation' }
@@ -775,6 +771,16 @@ Context >> failPrimitiveWith: maybePrimFailToken [
 		[self at: stackp put: maybePrimFailToken last]
 ]
 
+{ #category : #'debugger access' }
+Context >> filterDebuggerStack [
+	"Answer self or the first sender that do not have the pragma `debuggerCompleteToSender` or belong to the `Exception` class hierarchy"
+
+	^ ((self method methodClass instanceSide includesBehavior: Exception)
+		   or: [ self method hasPragmaNamed: #debuggerCompleteToSender ])
+		  ifTrue: [ sender ifNotNil: [ sender filterDebuggerStack ] ]
+		  ifFalse: [ self ]
+]
+
 { #category : #query }
 Context >> findContextSuchThat: testBlock [
 	"Search self and my sender chain for first one that satisfies testBlock.  Return nil if none satisfy"
@@ -912,9 +918,10 @@ Context >> home [
 	"Answer the context in which the receiver was defined, i.e. the context from which an ^-return ] should return from."
 
 	closureOrNil ifNil: [ ^ self ].
-	"this happens for clean blocks. We should later check if it is not better to return nil"
-	closureOrNil outerContext ifNil: [ ^ self ].
-	^ closureOrNil outerContext home
+	"this happens for clean blocks, we try to find the home on the stack"
+	^ closureOrNil outerContext 
+		ifNil: [ self activeHome ]
+		ifNotNil: [:outer | outer home ]
 ]
 
 { #category : #accessing }
@@ -1385,7 +1392,6 @@ Context >> printDebugStackOn: aStream [
 
 { #category : #printing }
 Context >> printDetails: stream [
-
 	"Put my class>>selector and instance variables and arguments and temporaries on the stream.  Protect against errors during printing."
 
 	| errorMessage string |
@@ -1395,18 +1401,18 @@ Context >> printDetails: stream [
 		tab;
 		nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
-	stream nextPutAll:
-		([ receiver printStringLimitedTo: 90 ] on: Exception do: [ errorMessage ]).
+	stream nextPutAll: ([ receiver printStringLimitedTo: 90 ]
+			 on: Exception
+			 do: [ errorMessage ]).
 
 	stream
 		cr;
 		tab;
 		nextPutAll: 'Arguments and temporary variables: ';
 		cr.
-	string := [
-	          (self tempsAndValuesLimitedTo: 80 indent: 2)
-		          padRightTo: 1
-		          with: $x ] on: Exception do:  [ errorMessage ].
+	string := [ (self tempsAndValuesLimitedTo: 80 indent: 2) padRightTo: 1 with: $x ]
+		          on: Exception
+		          do: [ errorMessage ].
 	stream nextPutAll: string.
 
 	stream
@@ -1414,13 +1420,15 @@ Context >> printDetails: stream [
 		tab;
 		nextPutAll: 'Receiver''s instance variables: ';
 		cr.
-	receiver class allInstVarNames isEmpty
-		ifTrue: [
-			stream nextPutAll:
-				([ receiver printStringLimitedTo: 90 ] on: Exception do:  [ errorMessage ]) ]
-		ifFalse: [
+	receiver class allInstVarNames
+		ifEmpty: [
+			stream nextPutAll: ([ receiver printStringLimitedTo: 90 ]
+					 on: Exception
+					 do: [ errorMessage ]) ]
+		ifNotEmpty: [
 			[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ]
-				on: Exception do:  [ stream nextPutAll: errorMessage ] ].
+				on: Exception
+				do: [ stream nextPutAll: errorMessage ] ].
 	stream cr
 ]
 

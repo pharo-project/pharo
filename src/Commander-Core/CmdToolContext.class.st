@@ -88,12 +88,12 @@ CmdToolContext >> processFailure: anException of: aCommand [
 ]
 
 { #category : #'user requests' }
-CmdToolContext >> requestSingleMethodTag: queryTitle [
-	^self requestSingleMethodTag: queryTitle suggesting: ''
+CmdToolContext >> requestProtocol: queryTitle [
+	^self requestProtocol: queryTitle suggesting: ''
 ]
 
 { #category : #'user requests' }
-CmdToolContext >> requestSingleMethodTag: queryTitle suggesting: suggestedTag [
+CmdToolContext >> requestProtocol: queryTitle suggesting: suggestedTag [
 	| knownTags ui selectedTag |
 	knownTags := (SystemNavigation default allExistingProtocolsFor: true)
 		reject: [ :each | each beginsWith: '*' ].

@@ -23,8 +23,9 @@ MethodRecategorized class >> method: aCompiledMethod oldProtocol: anOldProtocol 
 ]
 
 { #category : #testing }
-MethodRecategorized >> affectsMethodsTaggedWith: tagName [
-	^(super affectsMethodsTaggedWith: tagName) or: [ oldProtocol = tagName ]
+MethodRecategorized >> affectsMethodsInProtocol: protocol [
+
+	^ (super affectsMethodsInProtocol: protocol) or: [ self oldProtocol name = protocol ]
 ]
 
 { #category : #accessing }

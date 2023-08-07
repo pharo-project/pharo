@@ -705,7 +705,7 @@ HandMorph >> moveToEvent: anEvent [
 		setType: #mouseMove
 		startPoint: self position
 		endPoint: anEvent position
-		trail: (Array with: self position with: anEvent position)
+		trail: {self position . anEvent position}
 		buttons: anEvent buttons
 		hand: self
 		stamp: anEvent timeStamp)

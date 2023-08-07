@@ -28,6 +28,15 @@ RBInlineTemporaryTransformation class >> model: aRBNamespace inline: anInterval 
 		yourself
 ]
 
+{ #category : #preconditions }
+RBInlineTemporaryTransformation >> applicabilityConditions [ 
+
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition withBlock:
+					[self verifySelectedInterval.
+					true])
+]
+
 { #category : #executing }
 RBInlineTemporaryTransformation >> buildTransformations [
 	^ OrderedCollection
@@ -54,10 +63,7 @@ RBInlineTemporaryTransformation >> inline: anInterval from: aSelector in: aClass
 
 { #category : #preconditions }
 RBInlineTemporaryTransformation >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self verifySelectedInterval.
-					true])
+	^ self applicabilityConditions 
 ]
 
 { #category : #executing }
@@ -98,10 +104,10 @@ RBInlineTemporaryTransformation >> storeOn: aStream [
 RBInlineTemporaryTransformation >> verifySelectedInterval [
 
 	sourceTree := class parseTreeForSelector: selector.
-	sourceTree ifNil: [ self refactoringFailure: 'Could not parse source' ].
+	sourceTree ifNil: [ self refactoringError: 'Could not parse source' ].
 	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
 	assignmentNode isAssignment
-		ifFalse: [ self refactoringFailure: 'The selected node is not an assignment statement' ].
+		ifFalse: [ self refactoringError: 'The selected node is not an assignment statement' ].
 	definingNode := assignmentNode whoDefines: assignmentNode variable name.
 	self hasOnlyOneAssignment
 		ifFalse: [ self refactoringError: 'There are multiple assignments to the variable' ].

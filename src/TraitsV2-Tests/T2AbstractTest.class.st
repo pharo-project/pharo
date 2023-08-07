@@ -37,7 +37,7 @@ T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots trait: aCo
 			name: aName;
 			superclass: aSuperclass;
 			slots: slots;
-			traitComposition: aComposition asTraitComposition;
+			traitComposition: aComposition;
 			package: category ].
 
 	createdClasses add:class.
@@ -61,7 +61,7 @@ T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aCom
 			name: aName;
 			superclass: aSuperclass;
 			slots: slots;
-			traitComposition: aComposition asTraitComposition;
+			traitComposition: aComposition;
 			package: category ].
 
 	createdClasses add:class.
@@ -95,7 +95,7 @@ T2AbstractTest >> newTrait: aName with: slots trait: aComposition category: cate
 	class := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: aName;
-			traitComposition: aComposition asTraitComposition;
+			traitComposition: aComposition;
 			slots: slots;
 			package: category;
 			beTrait ].
@@ -116,7 +116,7 @@ T2AbstractTest >> newTrait: aName with: slots uses: aComposition category: categ
 	class := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: aName;
-			traitComposition: aComposition asTraitComposition;
+			traitComposition: aComposition;
 			slots: slots;
 			package: category;
 			beTrait ].

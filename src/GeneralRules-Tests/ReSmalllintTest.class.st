@@ -220,11 +220,6 @@ ReSmalllintTest >> testAddRemoveDependents [
 ]
 
 { #category : #tests }
-ReSmalllintTest >> testAnySatisfy [
-	self ruleFor: self currentSelector
-]
-
-{ #category : #tests }
 ReSmalllintTest >> testAsOrderedCollectionNotNeeded [
 	self ruleFor: self currentSelector
 ]
@@ -251,7 +246,7 @@ ReSmalllintTest >> testAtIfAbsent [
 
 { #category : #tests }
 ReSmalllintTest >> testBadMessage [
-	self ruleFor: self currentSelector plusSelectors: #(badMessage collectionMessagesToExternalObject)
+	self ruleFor: self currentSelector plusSelectors: #(badMessage collectionMessagesToExternalObject debuggingMessageSent)
 ]
 
 { #category : #tests }
@@ -266,7 +261,7 @@ ReSmalllintTest >> testClassNotReferenced [
 
 { #category : #tests }
 ReSmalllintTest >> testCodeCruftLeftInMethods [
-	self ruleFor: self currentSelector plusSelectors: #(haltClassMentioned flagged transcriptMentioned debbuggingMessageSent)
+	self ruleFor: self currentSelector plusSelectors: #(haltClassMentioned flagged transcriptMentioned #debuggingMessageSent)
 ]
 
 { #category : #tests }
@@ -358,11 +353,6 @@ ReSmalllintTest >> testLiteralArrayCharacters [
 
 { #category : #tests }
 ReSmalllintTest >> testLiteralArrayContainsComma [
-	self ruleFor: self currentSelector
-]
-
-{ #category : #tests }
-ReSmalllintTest >> testLiteralArrayContainsSuspiciousTrueFalseOrNil [
 	self ruleFor: self currentSelector
 ]
 

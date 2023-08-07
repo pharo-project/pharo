@@ -154,7 +154,6 @@ Integer >> < aNumber [
 Integer >> << shiftAmount [
 	"left shift"
 
-	shiftAmount < 0 ifTrue: [self error: 'negative arg'].
 	^ self bitShift: shiftAmount
 ]
 
@@ -174,8 +173,7 @@ Integer >> = aNumber [
 	aNumber isNumber ifFalse: [^ false].
 	aNumber isInteger ifTrue:
 		[^ aNumber negative == self negative
-			ifTrue: [ (self bytesCompare: aNumber) = 0]
-			ifFalse: [ false]].
+			and: [ (self bytesCompare: aNumber) = 0]].
 	^ aNumber adaptToInteger: self andCompare: #=
 ]
 
@@ -205,7 +203,6 @@ Integer >> >= aNumber [
 Integer >> >> shiftAmount [
 	"right shift"
 
-	shiftAmount < 0 ifTrue: [self error: 'negative arg'].
 	^ self bitShift: 0 - shiftAmount
 ]
 
@@ -371,7 +368,7 @@ Integer >> asScaledDecimal [
 	^ ScaledDecimal newFromNumber: self scale: 0
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #converting }
 Integer >> asSeconds [
 	^ Duration seconds: self
 ]
@@ -500,8 +497,8 @@ Integer >> bitShift: shiftCount [
 	shift right. Zeros are shifted in from the right in left shifts."
 	| magnitudeShift |
 	magnitudeShift := self bitShiftMagnitude: shiftCount.
-	^ ((self negative and: [shiftCount negative])
-		and: [self anyBitOfMagnitudeFrom: 1 to: shiftCount negated])
+	^ (self negative and: [shiftCount negative
+		and: [self anyBitOfMagnitudeFrom: 1 to: shiftCount negated]])
 		ifTrue: [magnitudeShift - 1]
 		ifFalse: [magnitudeShift]
 ]

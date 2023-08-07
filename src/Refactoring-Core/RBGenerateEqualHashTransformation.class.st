@@ -118,7 +118,11 @@ RBGenerateEqualHashTransformation >> compileEqual [
 	method
 		addNode: statement;
 		addReturn.
-	self theClass compile: method formattedCode classified: #(comparing)
+	self generateChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: method formattedCode
+			toClass: self theClass
+			inProtocols: #comparing)
 ]
 
 { #category : #transforming }
@@ -143,7 +147,11 @@ RBGenerateEqualHashTransformation >> compileHash [
 	method
 		addNode: statement;
 		addReturn.
-	self theClass compile: method formattedCode classified: #(comparing)
+	self generateChangesFor:
+		(RBAddMethodTransformRefactoring
+			addMethod: method formattedCode
+			toClass: self theClass
+			inProtocols: #comparing)
 ]
 
 { #category : #preconditions }
@@ -151,7 +159,7 @@ RBGenerateEqualHashTransformation >> preconditions [
 	"Checks that the class actually defines all the variables that will be part of the hash."
 
 	^ variables
-		  inject: self emptyCondition
+		  inject: self trueCondition
 		  into: [ :condition :variable |
 			  condition
 			  &

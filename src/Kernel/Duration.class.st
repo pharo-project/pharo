@@ -192,8 +192,7 @@ Duration >> = comparand [
  		ifTrue: [true]
  		ifFalse:
  			[self species = comparand species
- 				ifTrue: [self asNanoSeconds = comparand asNanoSeconds]
- 				ifFalse: [false] ]
+ 				and: [self asNanoSeconds = comparand asNanoSeconds]]
 ]
 
 { #category : #operations }

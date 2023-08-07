@@ -12,18 +12,14 @@ Class {
 { #category : #transforming }
 RBProtocolRegexTransformation >> transform [
 
-	| original replacement |
-
-	self model
-		allClassesDo: [ :class |
-			class selectors
-				do: [ :selector |
-					original := ( class realClass whichCategoryIncludesSelector: selector ) asString.
-					original
-						ifNotNil: [ replacement := self execute: original.
-							replacement = original
-								ifFalse: [ class compile: ( class sourceCodeFor: selector ) classified: replacement ]
-							]
-					]
-			]
+	| replacement |
+	self model allClassesDo: [ :class |
+		class selectors do: [ :selector |
+			(class realClass protocolNameOfSelector: selector) asString ifNotNil: [ :original |
+				replacement := self execute: original.
+				replacement = original ifFalse: [ self generateChangesFor:
+																(RBAddMethodTransformRefactoring
+																	addMethod: (class sourceCodeFor: selector)
+																	toClass: class
+																	inProtocols: replacement)] ] ] ]
 ]

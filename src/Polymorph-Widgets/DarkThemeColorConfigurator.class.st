@@ -155,6 +155,13 @@ DarkThemeColorConfigurator >> errorPopperBackgroundColor [
 ]
 
 { #category : #colors }
+DarkThemeColorConfigurator >> highlightTextColor [
+	"I am a color used to have a text color that is more visible than the classic text color to do some highlights."
+
+	^ Color fromHexString: 'FF6E40'
+]
+
+{ #category : #colors }
 DarkThemeColorConfigurator >> lessConspicuousColorFrom: aColor [
 
 	^ aColor slightlyLighter

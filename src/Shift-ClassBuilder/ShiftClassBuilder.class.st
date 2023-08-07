@@ -14,13 +14,13 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'buildEnvironment',
+		'installingEnvironment',
 		'superclassName',
 		'name',
 		'layoutDefinition',
 		'comment',
 		'commentStamp',
 		'superclass',
-		'category',
 		'newMetaclass',
 		'newClass',
 		'oldClass',
@@ -32,7 +32,9 @@ Class {
 		'changes',
 		'metaSuperclass',
 		'superclassResolver',
-		'inRemake'
+		'inRemake',
+		'package',
+		'tag'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -68,6 +70,7 @@ ShiftClassBuilder >> allSlots [
 
 { #category : #building }
 ShiftClassBuilder >> build [
+
 	self tryToFillOldClass.
 	self detectBuilderEnhancer.
 	self builderEnhancer validateRedefinition: self oldClass.
@@ -81,25 +84,23 @@ ShiftClassBuilder >> build [
 	We need to check if there is no conflicts with existing subclasses.
 	If we are in a remake, it have been done when building the superclass modified before."
 
-	self isInRemake
-		ifFalse: [ self layoutDefinition validate ].
+	self isInRemake ifFalse: [ self layoutDefinition validate ].
 
 	self createMetaclass.
 	self createClass.
+
+	self oldClass ifNotNil: [
+		self newClass basicCategory: self oldClass basicCategory.
+		self copyProtocols.
+		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 
 	self createSharedVariables.
 
 	self installSlotsAndVariables.
 
-	self oldClass ifNotNil: [
-			self newClass basicCategory: self oldClass basicCategory.
-			self copyOrganization.
-			self builderEnhancer compileMethodsFor: self. ].
+	self oldClass ifNotNil: [ self builderEnhancer compileMethodsFor: self ].
 
 	self builderEnhancer afterMethodsCompiled: self.
-
-
-
 	^ newClass
 ]
 
@@ -127,12 +128,23 @@ ShiftClassBuilder >> builderEnhancer: anObject [
 
 { #category : #accessing }
 ShiftClassBuilder >> category [
-	^ category
+
+	self flag: #package. "Category is an old concept mixing packages and tag. For now this is what is used by the system but in the future we should go away from it."
+	^ self tag
+		  ifNotNil: [ :packageTag | self package , '-' , packageTag ]
+		  ifNil: [ self package ]
 ]
 
-{ #category : #accessing }
-ShiftClassBuilder >> category: anObject [
-	category := anObject
+{ #category : #deprecated }
+ShiftClassBuilder >> category: aString [
+
+	self flag: #package. "Category is an old concept mixing packages and tag. For now this is what is used by the system but in the future we should go away from it."
+	(aString includes: $-)
+		ifTrue: [
+			self
+				package: (aString copyUpToLast: $-);
+				tag: (aString copyAfterLast: $-) ]
+		ifFalse: [ self package: aString ]
 ]
 
 { #category : #accessing }
@@ -147,7 +159,8 @@ ShiftClassBuilder >> changes [
 
 { #category : #accessing }
 ShiftClassBuilder >> classNamed: aName [
-	^ self buildEnvironment classNamed:aName
+
+	^ self buildEnvironment at: aName ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
@@ -201,21 +214,22 @@ ShiftClassBuilder >> compareWithOldClass [
 
 { #category : #compiling }
 ShiftClassBuilder >> compileMethods [
-	| toRemove |
-	newClass compileAllFrom: self oldClass.
 
-	toRemove := newClass organization allMethodSelectors reject: [ :aSelector | newClass includesSelector: aSelector ].
-	toRemove do: [ :aSelector | newClass organization removeElement: aSelector  ]
+	newClass
+		compileAllFrom: self oldClass;
+		removeNonexistentSelectorsFromProtocols
 ]
 
 { #category : #building }
-ShiftClassBuilder >> copyOrganization [
-	newClass organization copyFrom: oldClass organization.
-	newClass class organization copyFrom: oldClass class organization
+ShiftClassBuilder >> copyProtocols [
+
+	newClass protocols: oldClass protocols copy.
+	newClass class protocols: oldClass class protocols copy
 ]
 
 { #category : #installing }
 ShiftClassBuilder >> createClass [
+
 	newClass := newMetaclass new.
 	newClass setName: self name.
 
@@ -225,7 +239,7 @@ ShiftClassBuilder >> createClass [
 		withLayoutType: self layoutDefinition layoutClass
 		slots: self layoutDefinition slots.
 
-	newClass environment: self buildEnvironment environment.
+	newClass environment: self installingEnvironment.
 
 	self builderEnhancer classCreated: self
 ]
@@ -285,16 +299,19 @@ ShiftClassBuilder >> doesNotUnderstand: aMessage [
 
 { #category : #accessing }
 ShiftClassBuilder >> environment [
-	^ buildEnvironment environment
+
+	^ self buildEnvironment
 ]
 
 { #category : #accessing }
-ShiftClassBuilder >> environment: anEnvironment [
-	^ buildEnvironment environment: anEnvironment
+ShiftClassBuilder >> environment: anObject [
+
+	^ self buildEnvironment: anObject
 ]
 
 { #category : #initialization }
 ShiftClassBuilder >> fillFor: aClass [
+
 	self
 		superclass: aClass superclass;
 		name: aClass getName;
@@ -304,7 +321,7 @@ ShiftClassBuilder >> fillFor: aClass [
 		sharedVariablesFromString: aClass classVariablesString;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
-		environment: aClass environment;
+		installingEnvironment: aClass environment;
 		oldClass: aClass.
 
 	self builderEnhancer fillBuilder: self from: aClass
@@ -317,6 +334,7 @@ ShiftClassBuilder >> hasToMigrateInstances [
 
 { #category : #initialization }
 ShiftClassBuilder >> initialize [
+
 	super initialize.
 
 	self useStrictSuperclass.
@@ -330,8 +348,10 @@ ShiftClassBuilder >> initialize [
 	changeComparers := OrderedCollection new.
 	changes := Set new.
 
-	category := 'Unclassified'.
-	inRemake := false
+	package := 'Unclassified'.
+	inRemake := false.
+
+	buildEnvironment := self class environment
 ]
 
 { #category : #building }
@@ -340,6 +360,19 @@ ShiftClassBuilder >> installSlotsAndVariables [
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
 	newClass class classLayout slots do: [ :each | each installingIn: newClass class ].
 	newClass classVariables do: [ :each | each installingIn: newClass ]
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> installingEnvironment [
+	"The build environment is used to find the classes used during the building of a class such as the layouts, and the installing environment is the environment in which the class should be installed."
+
+	^ installingEnvironment ifNil: [ self buildEnvironment ]
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> installingEnvironment: anObject [
+
+	installingEnvironment := anObject
 ]
 
 { #category : #accessing }
@@ -431,9 +464,15 @@ ShiftClassBuilder >> oldMetaclass [
 ]
 
 { #category : #accessing }
-ShiftClassBuilder >> package: anObject [
+ShiftClassBuilder >> package [
 
-	self category: anObject
+	^ package
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> package: aString [
+
+	package := aString
 ]
 
 { #category : #changes }
@@ -497,8 +536,14 @@ ShiftClassBuilder >> slots: aCollection [
 ]
 
 { #category : #accessing }
+ShiftClassBuilder >> slotsFromString: aString [
+	self slots: aString asSlotCollection
+]
+
+{ #category : #accessing }
 ShiftClassBuilder >> superclass [
-	^ superclass ifNil: [ superclassName ifNotNil: [buildEnvironment classNamed: (self superclassName) ]]
+
+	^ superclass ifNil: [ superclassName ifNotNil: [ self classNamed: self superclassName ] ]
 ]
 
 { #category : #accessing }
@@ -522,11 +567,24 @@ ShiftClassBuilder >> superclassResolver: asuperclassResolver [
 	superclassResolver:= asuperclassResolver
 ]
 
+{ #category : #accessing }
+ShiftClassBuilder >> tag [
+
+	^ tag
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> tag: anObject [
+
+	tag := anObject
+]
+
 { #category : #building }
 ShiftClassBuilder >> tryToFillOldClass [
-	oldClass ifNotNil: [ ^self ].
-	name ifNil: [ ^self ].
-	self oldClass: (self buildEnvironment classNamed: self name)
+
+	oldClass ifNotNil: [ ^ self ].
+	name ifNil: [ ^ self ].
+	self oldClass: (self classNamed: self name)
 ]
 
 { #category : #building }

@@ -828,13 +828,30 @@ ArrayTest >> testSelfEvaluating [
 
 { #category : #tests }
 ArrayTest >> testSelfEvaluatingComplexCase [
+
 	| complexArray restoredArray |
-	complexArray := {1 . true . false . nil . #a . 'a' . $a . Float pi . Float halfPi . (4 / 5) . Float infinity negated . (1 @ 2) . (0 @ 0 extent: 1 @ 1).
-	('hola' -> 0) . Object . Object class}.
+	complexArray := {
+		                1.
+		                true.
+		                false.
+		                nil.
+		                #a.
+		                'a'.
+		                $a.
+		                Float pi.
+		                Float halfPi.
+		                (4 / 5).
+		                Float infinity negated.
+		                (1 @ 2).
+		                (0 @ 0 extent: 1 @ 1).
+		                ('hola' -> 0).
+		                Object.
+		                Object class }.
 	complexArray := complexArray copyWith: complexArray.
 	self assert: complexArray isSelfEvaluating.
 
-	restoredArray := self class evaluate: complexArray printString.
+	restoredArray := self class compiler evaluate:
+		                 complexArray printString.
 	self assert: restoredArray equals: complexArray
 ]
 
@@ -854,7 +871,7 @@ ArrayTest >> testShuffleBy [
 	| base random shuffleByResult |
 	base := #(1 2 3 4 5) copy.
 	random := (Random seed: 42).
-	shuffleByResult := #(2 5 4 3 1) copy.
+	shuffleByResult := #(1 2 5 4 3) copy.
 
 	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult)
 ]

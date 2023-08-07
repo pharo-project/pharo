@@ -13,6 +13,12 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
+{ #category : #specs }
+DAAddPackagePresenter class >> title [
+
+	^ 'Choose packages to add'
+]
+
 { #category : #protocol }
 DAAddPackagePresenter >> actionOnAddPackage [
 	| relationGraph packagesToAdd |
@@ -88,10 +94,6 @@ DAAddPackagePresenter >> selectedItemsFromPackageList [
 
 { #category : #accessing }
 DAAddPackagePresenter >> systemPackages [
-	^ (RPackageOrganizer default packages collect: [ :package | package packageName asString ] )asSortedCollection
-]
 
-{ #category : #protocol }
-DAAddPackagePresenter >> title [
-	^ 'Choose packages to add'
+	^ (self packageOrganizer packages collect: [ :package | package packageName asString ]) asSortedCollection
 ]

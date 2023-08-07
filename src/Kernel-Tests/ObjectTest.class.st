@@ -13,6 +13,27 @@ ObjectTest >> classToBeTested [
 	^ Object
 ]
 
+{ #category : #'tests - reflecting' }
+ObjectTest >> testAdoptInstance [
+
+	| point |
+	self assert: Point format equals: Association format. "non-indexable with 2 ivars"
+
+	point := 10 @ 20.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	Association adoptInstance: point.
+	self assert: point class equals: Association.
+	self assert: point printString equals: '10->20'.
+
+	Point adoptInstance: point.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	self should: [ Object adoptInstance: point ] raise: PrimitiveFailed
+]
+
 { #category : #tests }
 ObjectTest >> testAs [
 	| coll1 coll2 |
@@ -98,7 +119,7 @@ ObjectTest >> testBeRecursivelyWritableObject [
 	self assert: array second first equals: 2
 ]
 
-{ #category : #tests }
+{ #category : #'tests - reflecting' }
 ObjectTest >> testBecome [
 	"this test should that all the variables pointing to an object are pointing now to another one, and all
       object pointing to the other are pointing to the object"
@@ -114,7 +135,7 @@ ObjectTest >> testBecome [
 	self assert: pt1 equals: 100 @ 100
 ]
 
-{ #category : #tests }
+{ #category : #'tests - reflecting' }
 ObjectTest >> testBecomeForward [
 	"this test should that all the variables pointing to an object are pointing now to another one.
 	Not that this inverse is not true. This kind of become is called oneWayBecome in VW"
@@ -262,6 +283,27 @@ ObjectTest >> testInstVarNamedPut [
 	self assert: (obj instVarNamed: 'variable') equals: 1.
 	self shouldnt: [ obj instVarNamed: 'variable' put: 1 ] raise: InstanceVariableNotFound.
 	self should: [ obj instVarNamed: 'timoleon' put: 1 ] raise: InstanceVariableNotFound
+]
+
+{ #category : #'tests - reflecting' }
+ObjectTest >> testPrimitiveChangeClassTo [
+
+	| point |
+	self assert: Point format equals: Association format. "non-indexable with 2 ivars"
+
+	point := 10 @ 20.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	point primitiveChangeClassTo: Association new.
+	self assert: point class equals: Association.
+	self assert: point printString equals: '10->20'.
+
+	point primitiveChangeClassTo: Point new.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	self should: [ point primitiveChangeClassTo: Object new ] raise: PrimitiveFailed
 ]
 
 { #category : #'tests - printing' }

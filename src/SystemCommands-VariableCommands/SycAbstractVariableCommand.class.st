@@ -31,6 +31,6 @@ SycAbstractVariableCommand >> defaultMenuItemName [
 SycAbstractVariableCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
-	selectedClass := aToolContext selectedClassSide.
+	selectedClass := aToolContext selectedVariables first definingClass.
 	variables := aToolContext selectedVariables
 ]

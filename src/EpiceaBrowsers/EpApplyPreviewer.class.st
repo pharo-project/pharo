@@ -33,8 +33,8 @@ EpApplyPreviewer >> environment: anObject [
 
 { #category : #private }
 EpApplyPreviewer >> includesCategory: aString [
-
-	^ self environment organization includesCategory: aString
+	self flag: #epicea. "We should kill the category usage."
+	^ self packageOrganizer includesCategory: aString
 ]
 
 { #category : #visitor }
@@ -63,13 +63,13 @@ EpApplyPreviewer >> visitBehaviorCommentChange: aChange [
 	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aBehavior |
-			(aBehavior organization classComment = aChange newComment) ifFalse: [
+			(aBehavior comment = aChange newComment) ifFalse: [
 				^ {
 					EpBehaviorCommentChange
 						newWithBehavior: aBehavior
-						oldComment: aBehavior organization classComment
+						oldComment: aBehavior comment
 						newComment: aChange newComment
-						oldStamp: aBehavior organization commentStamp
+						oldStamp: aBehavior commentStamp
 						newStamp: aChange newStamp
 				} ] ].
 
@@ -92,14 +92,6 @@ EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 
 { #category : #visitor }
 EpApplyPreviewer >> visitCategoryAddition: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ #() ]
-			ifFalse: [ { aChange } ]
-]
-
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryRegistration: aChange [
 
 	^ (self includesCategory: aChange categoryName)
 			ifTrue: [ #() ]
@@ -172,7 +164,7 @@ EpApplyPreviewer >> visitMethodChange: aChange [
 			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method |
-					(method protocol ~= aChange methodAffectedProtocol
+					(method protocol name ~= aChange methodAffectedProtocol
 						or: [ method sourceCode ~= aChange methodAffectedSourceCode ])
 						ifTrue: [ {(EpMethodModification
 								oldMethod: method
@@ -200,29 +192,41 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 ]
 
 { #category : #visitor }
+EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
+
+	^ (self packageOrganizer hasPackage: aPackageAddition packageName)
+		  ifTrue: [ {  } ]
+		  ifFalse: [ { aPackageAddition } ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageRemoval: aPackageRemoval [
+
+	^ (self packageOrganizer hasPackage: aPackageRemoval packageName)
+		  ifTrue: [ { aPackageRemoval } ]
+		  ifFalse: [ {  } ]
+]
+
+{ #category : #visitor }
 EpApplyPreviewer >> visitProtocolAddition: aChange [
 
-	self
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			^(behavior organization protocolOrganizer hasProtocolNamed: aChange protocol)
-				ifTrue: [ #() ]
-				ifFalse: [ { EpProtocolAddition behavior: behavior protocol: aChange protocol } ] ].
+	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
+		^ (behavior hasProtocol: aChange protocol)
+			  ifTrue: [ #(  ) ]
+			  ifFalse: [ { (EpProtocolAddition behavior: behavior protocol: aChange protocol) } ] ].
 
-	^ #()
+	^ #(  )
 ]
 
 { #category : #visitor }
 EpApplyPreviewer >> visitProtocolRemoval: aChange [
 
-	self
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			^(behavior organization protocolOrganizer hasProtocolNamed: aChange protocol)
-				ifTrue: [ { EpProtocolRemoval behavior: behavior protocol: aChange protocol } ]
-				ifFalse: [ #() ] ].
+	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
+		^ (behavior hasProtocol: aChange protocol)
+			  ifTrue: [ { (EpProtocolRemoval behavior: behavior protocol: aChange protocol) } ]
+			  ifFalse: [ #(  ) ] ].
 
-	^ #()
+	^ #(  )
 ]
 
 { #category : #visitor }

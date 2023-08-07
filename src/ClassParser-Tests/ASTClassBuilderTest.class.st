@@ -9,7 +9,8 @@ Class {
 
 { #category : #environmentSetUp }
 ASTClassBuilderTest >> environment [
-	^ ShSmalltalkGlobalsEnvironment new
+
+	^ self class environment
 ]
 
 { #category : #running }
@@ -111,15 +112,14 @@ ASTClassBuilderTest >> testCreateNormalClassSuperClass [
 
 	| ast class |
 	ast := self parserClass parse: 'Xcrd subclass: #TestSubClass'.
+	[
 	class := ShiftClassBuilder new
 		         useUndefinedClass;
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
 		         build.
 
-	self
-		assert: class superclass
-		equals: (self environment classNamed: 'Xcrd')
+	self assert: class superclass equals: (self environment classNamed: 'Xcrd') ] ensure: [ (self environment classNamed: 'Xcrd') ifNotNil: #removeFromSystem ]
 ]
 
 { #category : #tests }
@@ -403,11 +403,11 @@ ASTClassBuilderTest >> testUseUndefinedClass [
 
 	| ast |
 	ast := self parserClass parse: 'PoPouet subclass: #TestClass'.
+	[
 	ShiftClassInstaller new make: [ :builder |
 		builder
 			useUndefinedClass;
 			buildEnvironment: self environment;
 			buildFromAST: ast ].
-	self assert: [
-		(ShSmalltalkGlobalsEnvironment new classNamed: #PoPouet) isUndefined ]
+	self assert: [ (self environment at: #PoPouet) isUndefined ] ] ensure: [ (self environment at: #PoPouet) ifNotNil: #removeFromSystem ]
 ]

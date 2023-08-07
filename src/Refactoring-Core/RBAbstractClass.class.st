@@ -195,7 +195,7 @@ RBAbstractClass >> classBinding [
 	^ Smalltalk globals associationAt: self name
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - navigation' }
 RBAbstractClass >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 
@@ -440,7 +440,7 @@ RBAbstractClass >> initialize [
 	name := #'Unknown Class'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - navigation' }
 RBAbstractClass >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 
@@ -488,18 +488,16 @@ RBAbstractClass >> localSelectors [
 
 { #category : #'method accessing' }
 RBAbstractClass >> methodFor: aSelector [
-	^ self newMethods
-		at: aSelector
-		ifAbsent: [ | compiledMethod class |
-			(self hasRemoved: aSelector) ifTrue: [ ^ nil ].
-			class := self realClass.
-			class ifNil: [ ^ nil ].
-			compiledMethod := class compiledMethodAt: aSelector ifAbsent: [ nil ].
-			compiledMethod ifNotNil: [
-				compiledMethod isFromTrait
-					ifTrue: [ (compiledMethod traitSource hasMethod: aSelector) ifTrue: [
-						(model classNamed: compiledMethod origin name) methodFor: aSelector ] ]
-					ifFalse: [modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ]] ]
+
+	^ self newMethods at: aSelector ifAbsent: [
+		  | class |
+		  (self hasRemoved: aSelector) ifTrue: [ ^ nil ].
+		  class := self realClass.
+		  class ifNil: [ ^ nil ].
+		  class compiledMethodAt: aSelector ifPresent: [ :compiledMethod |
+			  compiledMethod isFromTrait
+				  ifTrue: [ (compiledMethod traitSource hasMethod: aSelector) ifTrue: [ (model classNamed: compiledMethod origin name) methodFor: aSelector ] ]
+				  ifFalse: [ modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ] ] ]
 ]
 
 { #category : #accessing }
@@ -547,7 +545,7 @@ RBAbstractClass >> parseTreeForSelector: aSelector [
 	class ifNil: [ ^ nil ].
 	method := class methodFor: aSelector.
 	method ifNil: [ ^ nil ].
-	^ method parseTree
+	^ method parseTree doSemanticAnalysis
 ]
 
 { #category : #accessing }
@@ -792,17 +790,14 @@ RBAbstractClass >> whichSelectorsReferToClass: aRBClass [
 RBAbstractClass >> whichSelectorsReferToClassVariable: aString [
 
 	| selectors |
-
 	selectors := Set new.
-	newMethods
-		ifNotNil: [ newMethods
-				do: [ :each |
-					( each refersToVariable: aString )
-						ifTrue: [ selectors add: each selector ]
-					]
-			].
-	self isDefined
-		ifTrue: [ selectors addAll: ( self existingMethodsThatReferToClassVariable: aString ) ].
+	newMethods ifNotNil: [
+		newMethods do: [ :each |
+			(each refersToVariable: aString) ifTrue: [
+				selectors add: each selector ] ] ].
+	self isDefined ifTrue: [
+		selectors addAll:
+			(self existingMethodsThatReferToClassVariable: aString) ].
 	^ selectors
 ]
 

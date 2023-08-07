@@ -48,7 +48,9 @@ UnixResolver >> preferences [
 
 { #category : #origins }
 UnixResolver >> temp [
-	^ '/tmp' asFileReference
+
+^self directoryFromEnvVariableNamed: 'TMPDIR' or: [  
+	 '/tmp' asFileReference]
 ]
 
 { #category : #origins }

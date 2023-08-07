@@ -23,35 +23,29 @@ ReInconsistentMethodClassificationRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiqueBlock [
+
 	| ownerProtocol |
-	ownerProtocol := aMethod protocol.
-	ownerProtocol ifNil: [ ^ self ].
-	((#('as yet unclassified' 'deprecation') includes: ownerProtocol)
-				or: [ ownerProtocol first = $*	 ]) ifTrue: [ ^ self ].
+	ownerProtocol := aMethod protocol ifNil: [ ^ self ].
+
+	(ownerProtocol isUnclassifiedProtocol or: [ ownerProtocol isExtensionProtocol ]) ifTrue: [ ^ self ].
 
 	aMethod methodClass superclass ifNotNil: [ :superclass |
-			(superclass lookupSelector: aMethod selector) ifNotNil: [ :superMethod |
-				| superProtocol |
-				superProtocol := superMethod protocol.
-				(superProtocol isNil or: [
-			 	 superProtocol == #'as yet unclassified' or: [
-			 	 superProtocol first = $*	 ] ]) ifFalse: [
-					ownerProtocol ~= superProtocol ifTrue: [
-        aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol) ]] ] ]
+		(superclass lookupSelector: aMethod selector) ifNotNil: [ :superMethod |
+			| superProtocol |
+			superProtocol := superMethod protocol ifNil: [ ^ self ].
+			(superProtocol isUnclassifiedProtocol or: [ superProtocol isExtensionProtocol ]) ifTrue: [ ^ self ].
+			ownerProtocol name ~= superProtocol name ifTrue: [
+				aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol name) ] ] ]
 ]
 
 { #category : #helpers }
 ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
-	| supercategory |
-	supercategory := (aMethod methodClass superclass lookupSelector:
-		                  aMethod selector) protocol.
 
-	^ (ReRefactoringCritique
-		   withAnchor: (self anchorFor: aMethod)
-		   by: self) refactoring: (RBMethodProtocolTransformation
-			   protocol: { supercategory }
-			   inMethod: aMethod selector
-			   inClass: aMethod methodClass name) asRefactoring
+	| protocolInSuperclass |
+	protocolInSuperclass := (aMethod methodClass superclass lookupSelector: aMethod selector) protocolName.
+
+	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:
+		  (RBMethodProtocolTransformation protocol: { protocolInSuperclass } inMethod: aMethod selector inClass: aMethod methodClass name) asRefactoring
 ]
 
 { #category : #accessing }

@@ -17,7 +17,7 @@ Class {
 { #category : #'instance creation' }
 DACycleDetectionTreePresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
-			(RPackageOrganizer default packages
+			(self packageOrganizer packages
 				select: [ :package | match match: package packageName asString ]
 				thenCollect: [ :package | package packageName ]) )
 ]
@@ -32,7 +32,13 @@ DACycleDetectionTreePresenter class >> onPackagesNamed: aCollection [
 { #category : #'instance creation' }
 DACycleDetectionTreePresenter class >> system [
 	^ self onPackagesNamed:
-		(RPackageOrganizer default packages collect: [ :package | package packageName asString ])
+		(self packageOrganizer packages collect: [ :package | package packageName asString ])
+]
+
+{ #category : #specs }
+DACycleDetectionTreePresenter class >> title [
+
+	^ 'Cycles analysis'
 ]
 
 { #category : #accessing }
@@ -152,9 +158,4 @@ DACycleDetectionTreePresenter >> refresh [
 { #category : #accessing }
 DACycleDetectionTreePresenter >> reversedRoots [
 	self tree roots: (self tree roots reversed)
-]
-
-{ #category : #protocol }
-DACycleDetectionTreePresenter >> title [
-	^ 'Cycles analysis'
 ]

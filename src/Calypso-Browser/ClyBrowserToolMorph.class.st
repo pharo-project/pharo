@@ -250,6 +250,7 @@ ClyBrowserToolMorph >> browser [
 
 { #category : #accessing }
 ClyBrowserToolMorph >> browser: aBrowser [
+
 	browser := aBrowser
 ]
 

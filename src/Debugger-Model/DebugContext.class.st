@@ -113,11 +113,7 @@ DebugContext >> context [
 
 { #category : #'evaluating actions' }
 DebugContext >> evaluate: expression [
-	^ Smalltalk compiler
-		source: expression;
-		context: context;
-		receiver: context receiver;
-		evaluate
+	^ context compiler evaluate: expression
 ]
 
 { #category : #initialization }
@@ -162,18 +158,27 @@ DebugContext >> receiverClass [
 DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
 	| classOrTraitOfMethod selector |
 
-	selector := self selectedClass compiler parseSelector: aText.
-	(self checkSelectorUnchanged: selector) ifFalse: [ ^ nil ].
+	self context method isDoIt ifFalse: [
+		selector := self selectedClass compiler parseSelector: aText.
+		(self checkSelectorUnchanged: selector) ifFalse: [ ^ nil ] ].
+
+	self context method isInstalled ifFalse: [
+		^ self selectedClass compiler
+			protocol: self selectedMessageCategoryName;
+			isScripting: self selectedMessageName isDoIt;
+			requestor: aNotifyer;
+			compile: aText.
+	].
+	
 	classOrTraitOfMethod := self confirmOnTraitOverwrite: selector inClass: self selectedClass.
+	classOrTraitOfMethod ifNil:[ ^ nil] .
 
-	classOrTraitOfMethod ifNil:[ ^ nil].
+	^ classOrTraitOfMethod compiler
+		protocol: self selectedMessageCategoryName;
+		isScripting: self selectedMessageName isDoIt;
+		requestor: aNotifyer;
+		install: aText.
 
-	selector := classOrTraitOfMethod
-		compile: aText
-		classified: self selectedMessageCategoryName
-		notifying: aNotifyer.
-	^ selector
-		ifNotNil: [ classOrTraitOfMethod compiledMethodAt: selector ]
 ]
 
 { #category : #accessing }
@@ -187,7 +192,7 @@ DebugContext >> selectedClass [
 DebugContext >> selectedMessageCategoryName [
 	"Answer the name of the message category of the message of the current context."
 
-	^ self selectedClass organization categoryOfElement: self selectedMessageName
+	^ self selectedClass protocolNameOfSelector: self selectedMessageName
 ]
 
 { #category : #accessing }

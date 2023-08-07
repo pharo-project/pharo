@@ -95,7 +95,7 @@ OCClosureTest >> testCleanBlockClosure [
 
 { #category : #'test - clean' }
 OCClosureTest >> testConstantBlockClosure [
-	<compilerOptions: #(+ optionConstantBlockClosure)>
+	<compilerOptions: #(+ optionCleanBlockClosure)>
 	| block |
 	"this is a test that enales optionCleanBlockClosure and check that clean blocks work"
 	block := [1].
@@ -156,8 +156,8 @@ OCClosureTest >> testConstantBlockClosure [
 	block := [:arg1 :arg2 :arg3 :arg4 | 1].
 	self assert: block isClean.
 	self assert: block sourceNode isConstant.
-	"but we do not compile is special for now"
-	self assert: block class equals: FullBlockClosure.
+	"but we do not compile it as a ConstantBLockCloure for now"
+	self assert: block class equals: CleanBlockClosure.
 
 	self should: [block value] raise: ArgumentsCountMismatch.
 	self should: [block value: nil] raise: ArgumentsCountMismatch.
@@ -169,8 +169,7 @@ OCClosureTest >> testConstantBlockClosure [
 	block := [:arg1 :arg2 :arg3 :arg4 :arg5 | 1].
 	self assert: block isClean.
 	self assert: block sourceNode isConstant.
-	"but we do not compile is special for now"
-	self assert: block class equals: FullBlockClosure.
+	self assert: block class equals: CleanBlockClosure.
 
  	self should: [block value] raise: ArgumentsCountMismatch.
  	self should: [block value: nil] raise: ArgumentsCountMismatch.

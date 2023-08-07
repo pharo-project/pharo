@@ -29,11 +29,11 @@ RBRemoveHierarchyMethodRefactoring class >> removeMethods: selectorCollection fr
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> delete: selector in: aClass [
 	 (aClass realClass includesSelector: selector) ifTrue: [
-		 [self performCompositeRefactoring: (RBRemoveMethodRefactoring
+		 [self generateChangesFor: (RBRemoveMethodRefactoring
 									model: self model
 									removeMethods: { selector }
 									from: aClass) ]
-		on: RBRefactoringError
+		on: RBRefactoringWarning
 			do: [ :ex | ( self confirm:
 				(ex messageText copyReplaceAll: 'Browse references?' with: 'Remove anyway?') )
 				ifTrue:[ ex resume ] ] ]
@@ -57,7 +57,7 @@ RBRemoveHierarchyMethodRefactoring >> deleteSelectors [
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> preconditions [
 
-	^ selectors inject: self emptyCondition into: [ :cond :selector |
+	^ selectors inject: self trueCondition into: [ :cond :selector |
 		  cond & (RBCondition definesSelector: selector in: class) ]
 ]
 

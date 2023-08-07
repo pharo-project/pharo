@@ -7,6 +7,8 @@
 set -x
 set -e
 
+echo $(date -u) "Bootstrap: Beginning to download resources required for bootstrap process"
+
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
 . ${SCRIPTS}/envvars.sh

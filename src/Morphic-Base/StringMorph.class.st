@@ -89,7 +89,7 @@ StringMorph class >> exampleManyStringMorphs [
 
 	| c |
 	c := AlignmentMorph newColumn.
-	self class environment organization categories do:
+	self packageOrganizer categories do:
 		[:cat | c addMorph: (StringMorph new contents: cat)].
 	^ c position: 100@50;
 			openInWorld
@@ -359,7 +359,7 @@ StringMorph >> hasFocus [
 	^ hasFocus
 ]
 
-{ #category : #'*Morphic-Base-Widgets' }
+{ #category : #accessing }
 StringMorph >> heightToDisplayInList: aList [
 
 	^ self contents heightToDisplayInList: aList
@@ -503,7 +503,7 @@ StringMorph >> privateSetContents: newContents [
 					newContents]
 ]
 
-{ #category : #'*Morphic-Base-MorphTreeWidget' }
+{ #category : #accessing }
 StringMorph >> rowMorphForNode: aNode inColumn: aColumn [
 	| hasIcon |
 	hasIcon := (aColumn container iconBlock value: aNode) notNil.
@@ -574,7 +574,7 @@ StringMorph >> wantsKeyboardFocusOnShiftClick [
 	^ owner topRendererOrSelf wantsKeyboardFocusFor: self
 ]
 
-{ #category : #'*Morphic-Base-Widgets' }
+{ #category : #accessing }
 StringMorph >> widthToDisplayInList: aList [
 
 	^ self contents widthToDisplayInList: aList

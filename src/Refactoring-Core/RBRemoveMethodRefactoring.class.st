@@ -34,14 +34,14 @@ RBRemoveMethodRefactoring >> checkBrowseAllOccurrences: anCollectionOfOccurrence
 	methods size = 1
 		ifTrue: [
 			self
-				refactoringError:
+				refactoringWarning:
 					('Possible call to <2s> in <1p> methods.<n>Browse references?'
 						expandMacrosWith: anCollectionOfOccurrences size
 						with: methods anyOne)
 				with: [ self openBrowserOn: (RBBrowserEnvironment new referencesTo: methods anyOne) ] ]
 		ifFalse: [
 			self
-				refactoringError:
+				refactoringWarning:
 					('Possible call to the <2p> selectors in <1p> methods.<n>Browse references?'
 						expandMacrosWith: callers size
 						with: methods size)
@@ -55,7 +55,7 @@ RBRemoveMethodRefactoring >> checkBrowseAllOccurrences: anCollectionOfOccurrence
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> checkBrowseOccurrenceOf: selector in: aRBMethod [
 	self
-		refactoringError:
+		refactoringWarning:
 			('Possible call to <2s> in <1p><n>Browse references?' expandMacrosWith: aRBMethod modelClass with: selector)
 		with: [ self openBrowserOn: (RBBrowserEnvironment new referencesTo: selector) ]
 ]
@@ -139,7 +139,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 RBRemoveMethodRefactoring >> preconditions [
 
 	^ (selectors
-		   inject: self emptyCondition
+		   inject: self trueCondition
 		   into: [ :cond :each |
 		   cond & (RBCondition definesSelector: each in: class) ])
 	  & (RBCondition withBlock: [

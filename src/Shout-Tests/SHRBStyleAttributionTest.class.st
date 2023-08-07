@@ -35,6 +35,7 @@ SHRBStyleAttributionTest >> setUp [
 
 	super setUp.
 	styler := SHRBMockTextStyler new.
+	styler declared: #( #/ #setUp #style: testKeywordStyle ).
 	oldSetting := SHRBMockTextStyler instVarNamed: #formatIncompleteIdentifiers
 ]
 
@@ -42,12 +43,7 @@ SHRBStyleAttributionTest >> setUp [
 SHRBStyleAttributionTest >> style: aText [
 
 	| ast |
-	ast := self class compiler
-		       source: aText asString;
-		       noPattern: false;
-		       class: self class;
-		       options: #( + optionParseErrors + optionSkipSemanticWarnings );
-		       parse.
+	ast := self class compiler parse: aText asString.
 	styler style: aText ast: ast.
 
 	^ ast
@@ -289,6 +285,24 @@ SHRBStyleAttributionTest >> testClassVarStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testCommentOfVariableInParenthesis [
+	"Regression test for https://github.com/pharo-project/pharo/issues/13316"
+
+	| aText |
+	aText := 'test
+
+	| toto |
+	^ (toto "this returns nil")' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 26
+		and: 43
+		shouldBe: #comment
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testCommentStyle [
 
 	| aText |
@@ -303,6 +317,82 @@ SHRBStyleAttributionTest >> testCommentStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testCommentsInLiteralArrayNode [
+
+	| aText |
+	aText := 'test
+	(#(123) "comment")' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 15
+		and: 23
+		shouldBe: #comment
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testCommentsInLiteralValueNode [
+
+	| aText |
+	aText := 'test
+	(123 "comment")' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 12
+		and: 20
+		shouldBe: #comment
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testCommentsInVariaousPlaces [
+	"For now, the AST does not visit really well the comments. Some work is needed to do that and until it is done, this test will help to avoid regression."
+
+	| aText |
+	aText := 'test
+	("comment1" (123 "comment2")) + ("comment3" (self "comment4"))' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 8
+		and: 17
+		shouldBe: #comment.
+	self
+		assertStyleOf: aText
+		between: 24
+		and: 33
+		shouldBe: #comment.
+	self
+		assertStyleOf: aText
+		between: 40
+		and: 49
+		shouldBe: #comment.
+	self
+		assertStyleOf: aText
+		between: 57
+		and: 66
+		shouldBe: #comment
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testCommentsPragmaNode [
+
+	| aText |
+	aText := 'test
+	<test "comment">' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 13
+		and: 21
+		shouldBe: #comment
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testDefaultStyle [
 
 	| aText |
@@ -310,6 +400,56 @@ SHRBStyleAttributionTest >> testDefaultStyle [
 	self style: aText.
 
 	self assertStyleOf: aText at: 2 shouldBe: #default
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testDeprecatedClass [
+
+	| aText |
+	aText := 'm ^ SHRBDeprecatedClassMock' asText.
+	self style: aText.
+
+	5 to: 27 do: [ :index | self assert: ((aText attributesAt: index) includes: TextEmphasis struckOut) ]
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testDeprecatedGlobalVariable [
+
+	[
+	| aText |
+	Smalltalk globals at: #SHRBDeprecatedGlobalVariable put: self class.
+	(Smalltalk globals lookupVar: #SHRBDeprecatedGlobalVariable) isDeprecated: true.
+	aText := 'm ^ SHRBDeprecatedGlobalVariable' asText.
+	self style: aText.
+
+	5 to: 32 do: [ :index | self assert: ((aText attributesAt: index) includes: TextEmphasis struckOut) ] ] ensure: [
+		Smalltalk globals removeKey: #SHRBDeprecatedGlobalVariable ifAbsent: [ "Do nothing. The test just crashed really really early." ] ]
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testErrorStyle [
+
+	| aText |
+	aText := 'm 1 ] . foo: . [ 2' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 5
+		and: 5
+		shouldBe: #invalid. "closing ]"
+
+	self
+		assertStyleOf: aText
+		between: 9
+		and: 9
+		shouldBe: #invalid. "f of foo: because missing receiver"
+
+	self
+		assertStyleOf: aText
+		between: 16
+		and: 16
+		shouldBe: #invalid. "opening ["
 ]
 
 { #category : #tests }
@@ -487,6 +627,22 @@ SHRBStyleAttributionTest >> testParenthesisStyle [
 ]
 
 { #category : #tests }
+SHRBStyleAttributionTest >> testParenthesisSurroundingVar [
+
+	| aText |
+	aText := 'm |var| ^ (var)' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 11 shouldBe: #parenthesis.
+	self
+		assertStyleOf: aText
+		between: 12
+		and: 14
+		shouldBe: #tempVar.
+	self assertStyleOf: aText at: 15 shouldBe: #parenthesis
+]
+
+{ #category : #tests }
 SHRBStyleAttributionTest >> testPatternArgStyle [
 
 	| aText |
@@ -539,9 +695,30 @@ SHRBStyleAttributionTest >> testPragmaStyle [
 
 	self
 		assertStyleOf: aText
-		between: 4
+		between: 3
 		and: 8
 		shouldBe: #pragma
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testPragmaStyleWithCrazyPragma [
+
+	| aText |
+	aText := 'm 	<  test: #toto test2: 2 > ^ a' asText.
+	self style: aText.
+
+	self assertStyleOf: aText at: 4 shouldBe: #pragma.
+	self
+		assertStyleOf: aText
+		between: 7
+		and: 11
+		shouldBe: #pragma.
+	self
+		assertStyleOf: aText
+		between: 19
+		and: 24
+		shouldBe: #pragma.
+	self assertStyleOf: aText at: 28 shouldBe: #pragma
 ]
 
 { #category : #tests }
@@ -673,6 +850,20 @@ SHRBStyleAttributionTest >> testThisContextStyle [
 		between: 3
 		and: 12
 		shouldBe: #thisContext
+]
+
+{ #category : #tests }
+SHRBStyleAttributionTest >> testThisProcessStyle [
+
+	| aText |
+	aText := 'm thisProcess senders' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 3
+		and: 12
+		shouldBe: #thisProcess
 ]
 
 { #category : #tests }

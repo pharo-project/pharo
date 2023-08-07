@@ -130,7 +130,7 @@ ProfStef class >> menuCommandOn: aBuilder [
 		parent: #PharoHelp;
 		order: 3;
 		action: [ self openPharoZenWorkspace ];
-		icon: ((self iconNamed: #pharo) scaledToSize: 16@16);
+		icon: ((self iconNamed: #pharo) scaledToSize: (16@16) scaledByDisplayScaleFactor);
 		help: 'Pharo values.'
 ]
 

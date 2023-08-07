@@ -4,7 +4,7 @@ Class {
 	#category : #'EpiceaBrowsers-Tests-Integration'
 }
 
-{ #category : #tests }
+{ #category : #helpers }
 EpApplyTest >> applyInputEntry [
 
 	EpLogBrowserOperationFactory new
@@ -34,54 +34,105 @@ EpApplyTest >> testBehaviorNameChange [
 { #category : #tests }
 EpApplyTest >> testCategoryAdditionWithCategoryRemoved [
 
-	| organization aCategory |
-	organization := self class environment organization.
+	| aCategory |
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
-	organization removeCategory: aCategory.
+	self packageOrganizer removeCategory: aCategory.
 
 	self assert: inputEntry content class equals: EpCategoryAddition.
-	self deny: (organization includesCategory: aCategory).
+	self deny: (self packageOrganizer includesCategory: aCategory).
 	self applyInputEntry.
-	self assert: (organization includesCategory: aCategory)
+	self assert: (self packageOrganizer includesCategory: aCategory)
 ]
 
 { #category : #tests }
 EpApplyTest >> testCategoryRemovalWithCategoryAdded [
 
-	| organization aCategory |
-	organization := self class environment organization.
+	| aCategory |
 	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
-	organization removeCategory: aCategory.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer removeCategory: aCategory.
 	self setHeadAsInputEntry.
-	organization addCategory: aCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpCategoryRemoval.
-	self assert: (organization includesCategory: aCategory).
+	self assert: (self packageOrganizer includesCategory: aCategory).
 	self applyInputEntry.
-	self deny: (organization includesCategory: aCategory)
+	self deny: (self packageOrganizer includesCategory: aCategory)
 ]
 
 { #category : #tests }
 EpApplyTest >> testCategoryRename [
 
-	| organization aCategory anotherCategory |
-	organization := self class environment organization.
+	| aCategory anotherCategory |
 	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
+	anotherCategory := aCategory , '2'.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer renameCategory: aCategory toBe: anotherCategory.
+	self setHeadAsInputEntry.
+	self packageOrganizer renameCategory: anotherCategory toBe: aCategory. "Rollback"
+
+	self assert: inputEntry content class equals: EpCategoryRename.
+	self assert: (self packageOrganizer includesCategory: aCategory).
+	self deny: (self packageOrganizer includesCategory: anotherCategory).
+	self applyInputEntry.
+	self deny: (self packageOrganizer includesCategory: aCategory).
+	self assert: (self packageOrganizer includesCategory: anotherCategory)
+]
+
+{ #category : #tests }
+EpApplyTest >> testCategoryRenameWithClass [
+	"Let's rename a package with a class and see if the class has the right package after."
+
+	| organization aCategory anotherCategory aClass |
+	organization := self packageOrganizer.
+	aCategory := classFactory defaultCategory.
+	anotherCategory := aCategory , '2'.
+	
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+
+	aClass := classFactory newClass.
+	aClass category: aCategory.
+
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
+
 	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
 
 	self assert: inputEntry content class equals: EpCategoryRename.
-	self assert: (organization includesCategory: aCategory).
-	self deny: (organization includesCategory: anotherCategory).
+	self assert: aClass category equals: aCategory.
 	self applyInputEntry.
-	self deny: (organization includesCategory: aCategory).
-	self assert: (organization includesCategory: anotherCategory)
+	self assert: aClass category equals: anotherCategory
+]
+
+{ #category : #tests }
+EpApplyTest >> testCategoryRenameWithExtension [
+	"Let's rename a package with a class and see if the class has the right package after."
+
+	| organization aCategory anotherCategory aClass |
+	organization := self packageOrganizer.
+	aCategory := classFactory defaultCategory.
+	anotherCategory := aCategory , '2'.
+	organization addCategory: aCategory.
+
+	aClass := classFactory newClass.
+	aClass category: aCategory , '3'.
+	aClass compile: 'fortyTwo ^42' classified: '*' , aCategory.
+
+	organization renameCategory: aCategory toBe: anotherCategory.
+	self setHeadAsInputEntry.
+
+	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , anotherCategory.
+	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
+
+	self assert: inputEntry content class equals: EpCategoryRename.
+	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , aCategory.
+	self applyInputEntry.
+	self assert: (aClass >> #fortyTwo) protocolName equals: '*' , anotherCategory
 ]
 
 { #category : #tests }
@@ -113,6 +164,21 @@ EpApplyTest >> testClassAdditionWithClassRemoved [
 	self deny: (self class environment hasClassNamed: className).
 	self applyInputEntry.
 	self assert: (self class environment hasClassNamed: className)
+]
+
+{ #category : #tests }
+EpApplyTest >> testClassAdditionWithCommentChanged [
+
+	| aClass |
+	aClass := classFactory newClass.
+	aClass comment: 'First comment'.
+	self setHeadAsInputEntry.
+
+	aClass comment: 'Second comment'.
+
+	self assert: aClass comment equals: 'Second comment'.
+	self applyInputEntry.
+	self assert: aClass comment equals: 'First comment'
 ]
 
 { #category : #tests }
@@ -207,7 +273,7 @@ EpApplyTest >> testMethodAdditionWithMethodRemoved [
 	self deny: (aClass includesSelector: #fortyTwo).
 	self applyInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -218,11 +284,11 @@ EpApplyTest >> testMethodAdditionWithProtocolChanged [
 	aClass compile: 'fortyTwo ^42' classified: 'number'.
 	self setHeadAsInputEntry.
 
-	(aClass>>#fortyTwo) protocol: 'none'.
+	aClass >> #fortyTwo protocol: 'none'.
 
-	self assert: (aClass>>#fortyTwo) protocol equals: 'none'.
+	self assert: (aClass >> #fortyTwo) protocolName equals: 'none'.
 	self applyInputEntry.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass >> #fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -255,7 +321,7 @@ EpApplyTest >> testMethodModificationWithMethodRemoved [
 	self deny: (aClass includesSelector: #fortyTwo).
 	self applyInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass >> #fortyTwo) protocolName equals: 'number'
 ]
 
 { #category : #tests }
@@ -276,18 +342,47 @@ EpApplyTest >> testMethodRemovalWithMethodAdded [
 ]
 
 { #category : #tests }
+EpApplyTest >> testPackageAddition [
+
+	[
+	self packageOrganizer ensurePackage: classFactory packageName.
+	self setHeadAsInputEntry.
+	self packageOrganizer removePackage: classFactory packageName.
+
+	self assert: inputEntry content class equals: EpPackageAddition.
+	self deny: (self packageOrganizer hasPackage: classFactory packageName).
+	self applyInputEntry.
+	self assert: (self packageOrganizer hasPackage: classFactory packageName) ] ensure: [ self packageOrganizer removePackage: classFactory packageName ]
+]
+
+{ #category : #tests }
+EpApplyTest >> testPackageRemoval [
+
+	[
+	self packageOrganizer ensurePackage: classFactory packageName.
+	self packageOrganizer removePackage: classFactory packageName.
+	self setHeadAsInputEntry.
+	self packageOrganizer ensurePackage: classFactory packageName.
+
+	self assert: inputEntry content class equals: EpPackageRemoval.
+	self assert: (self packageOrganizer hasPackage: classFactory packageName).
+	self applyInputEntry.
+	self deny: (self packageOrganizer hasPackage: classFactory packageName) ] ensure: [ self packageOrganizer removePackage: classFactory packageName ]
+]
+
+{ #category : #tests }
 EpApplyTest >> testProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass removeProtocol: 'protocol'.
 
 	self assert: inputEntry content class equals: EpProtocolAddition.
-	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
+	self deny: (aClass hasProtocol: 'protocol').
 	self applyInputEntry.
-	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
+	self assert: (aClass hasProtocol: 'protocol')
 ]
 
 { #category : #tests }
@@ -295,15 +390,15 @@ EpApplyTest >> testProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
-	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
+	self assert: (aClass hasProtocol: 'protocol').
 	self applyInputEntry.
-	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
+	self deny: (aClass hasProtocol: 'protocol')
 ]
 
 { #category : #tests }

@@ -101,16 +101,40 @@ RBTemporaryToInstanceVariableTransformation class >> model: aRBSmalltalk class: 
 ]
 
 { #category : #preconditions }
+RBTemporaryToInstanceVariableTransformation >> applicabilityConditions [
+
+	^ (RBCondition definesSelector: selector in: class) & (RBCondition
+		   definesInstanceVariable: temporaryVariableName asString
+		   in: class) not
+	  & (RBCondition withBlock: [
+			   self checkForValidTemporaryVariable.
+			   true ])
+]
+
+{ #category : #preconditions }
+RBTemporaryToInstanceVariableTransformation >> breakingChangeConditions [
+
+	^ RBCondition withBlock: [
+		  (class allSubclasses anySatisfy: [ :cls |
+			   cls definesInstanceVariable: temporaryVariableName asString ])
+			  ifTrue: [
+				  self refactoringWarning:
+					  ('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?'
+						   expandMacrosWith: class name) ].
+		  true ]
+]
+
+{ #category : #preconditions }
 RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 	| parseTree |
 	parseTree := class parseTreeForSelector: selector.
 	(parseTree allTemporaryVariables includes: temporaryVariableName)
 		ifFalse:
-			[self refactoringFailure: temporaryVariableName
+			[self refactoringError: temporaryVariableName
 						, ' isn''t a valid temporary variable name'].
 	(parseTree allArgumentVariables includes: temporaryVariableName)
 		ifTrue:
-			[self refactoringFailure: temporaryVariableName , ' is a block parameter'].
+			[self refactoringError: temporaryVariableName , ' is a block parameter'].
 	(RBReadBeforeWrittenTester isVariable: temporaryVariableName
 		readBeforeWrittenIn: parseTree)
 			ifTrue:
@@ -128,17 +152,8 @@ RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector
 
 { #category : #preconditions }
 RBTemporaryToInstanceVariableTransformation >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition definesInstanceVariable: temporaryVariableName asString in: class) not
-		& (RBCondition withBlock: [
-			(class allSubclasses anySatisfy:
-				[ :cls | cls definesInstanceVariable: temporaryVariableName asString ])
-			ifTrue: [ self refactoringWarning:
-				('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?' expandMacrosWith: class name) ].
-			true ])
-			& (RBCondition withBlock:
-						[self checkForValidTemporaryVariable.
-						true])
+
+	^ self applicabilityConditions & self breakingChangeConditions
 ]
 
 { #category : #executing }
@@ -161,7 +176,7 @@ RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfMethod: aSelecto
 	| parseTree matcher aMethod |
 	aMethod := aClass methodFor: aSelector.
 	parseTree := aMethod parseTree.
-	parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ].
+	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
 	( matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName )
 		executeTree: parseTree.
 	aMethod compileTree: matcher tree

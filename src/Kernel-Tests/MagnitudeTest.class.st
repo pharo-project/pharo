@@ -27,9 +27,10 @@ MagnitudeTest >> testBeBetweenAnd [
 
 { #category : #tests }
 MagnitudeTest >> testBetweenAnd [
+
 	self assert: (3 between: 0 and: 5).
 	self assert: (5.0 between: 5.0 and: 5.0).
-	self assert: (Date today between: Date today +1 and: Date today +3) not
+	self deny: (Date today between: Date today + 1 and: Date today + 3)
 ]
 
 { #category : #tests }

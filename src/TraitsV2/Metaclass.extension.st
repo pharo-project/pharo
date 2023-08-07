@@ -38,7 +38,6 @@ Metaclass >> trait: aTraitCompositionOrArray slots: slotArray [
 		update: theClass
 		to: [ :builder |
 			builder
-				fillFor: theClass;
 				classTraitComposition: aTraitCompositionOrArray asTraitComposition;
 				classSlots: slotArray ].
 	^ theClass classSide
@@ -66,7 +65,6 @@ Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [
 		update: theClass
 		to: [ :builder |
 			builder
-				fillFor: theClass;
 				classTraitComposition: aTraitCompositionOrArray asTraitComposition;
 				classSlots: slotArray ].
 	^ theClass classSide

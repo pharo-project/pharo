@@ -6,7 +6,7 @@ My name is strange but this is to avoid to match with a Manifest class which is 
 "
 Class {
 	#name : #TheManifestBuilder,
-	#superclass : #AbstractTool,
+	#superclass : #Model,
 	#instVars : [
 		'manifestClass'
 	],
@@ -340,7 +340,7 @@ TheManifestBuilder >> createManifestNamed: packageName [
 			package: packageName ].
 
 	manifestClass
-		tagWith: self class manifestTag;
+		packageTag: self class manifestTag;
 		comment: self class manifestClassComment.
 	^ manifestClass
 ]
@@ -511,12 +511,6 @@ TheManifestBuilder >> removeAllItem: aSet selector: selector [
 ]
 
 { #category : #'adding-removing' }
-TheManifestBuilder >> removeAllManifest [
-
-	self removeClasses: (self class allManifestClasses)
-]
-
-{ #category : #'adding-removing' }
 TheManifestBuilder >> removeAllToDo: fp of: ruleId version: versionId [
 
 	| selector |
@@ -541,7 +535,7 @@ TheManifestBuilder >> removeItem: fp selector: selector [
 TheManifestBuilder >> removeManifestOf: aItem [
 
 	(self manifestOf: aItem) ifNotNil: [ :myManifest |
-			self removeClass: myManifest  ]
+			SystemNavigation new removeClass: myManifest  ]
 ]
 
 { #category : #private }

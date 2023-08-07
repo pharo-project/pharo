@@ -22,21 +22,14 @@ EpCategoryRename class >> oldName: oldName newName: newName [
 { #category : #'instance creation' }
 EpCategoryRename class >> oldName: oldName newName: newName packageName: packageName [
 
-	^ self basicNew
-		initializeOldName: oldName newName: newName packageName: packageName;
-		yourself
+	^ (self named: newName packageName: packageName)
+		  oldCategoryName: oldName;
+		  yourself
 ]
 
 { #category : #visitor }
 EpCategoryRename >> accept: aVisitor [
 	^ aVisitor visitCategoryRename: self
-]
-
-{ #category : #accessing }
-EpCategoryRename >> initializeOldName: theOldName newName: theNewName packageName: aPackageName [
-
-	self initializeNamed: theNewName packageName: aPackageName.
-	oldCategoryName := theOldName
 ]
 
 { #category : #accessing }
@@ -49,4 +42,10 @@ EpCategoryRename >> newCategoryName [
 EpCategoryRename >> oldCategoryName [
 
 	^ oldCategoryName
+]
+
+{ #category : #accessing }
+EpCategoryRename >> oldCategoryName: anObject [
+
+	oldCategoryName := anObject
 ]

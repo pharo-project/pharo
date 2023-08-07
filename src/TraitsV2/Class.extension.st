@@ -1,247 +1,246 @@
 Extension { #name : #Class }
 
 { #category : #'*TraitsV2' }
-Class >> immediateSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList
-	classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
+Class >> immediateSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aCategory [
 
-	^ self immediateSubclass: aClassName
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: cat
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aClassName;
+			  superclass: self;
+			  slotsFromString: instVarNameList;
+			  layoutClass: ImmediateLayout;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> immediateSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
 
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		layout: ImmediateLayout
-		slots: someInstanceVariableNames asSlotCollection
-		classVariablesNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		category: aCategory
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: someInstanceVariableNames;
+			  layoutClass: ImmediateLayout;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> setTraitComposition: aTraitComposition [
 
 	^ self classInstaller
-		update: self to: [ :builder |
-			builder
-				fillFor: self;
-				traitComposition: aTraitComposition asTraitComposition;
-				classTraitComposition: aTraitComposition asTraitComposition classComposition]
+		  update: self
+		  to: [ :builder | builder traitComposition: aTraitComposition ]
 ]
 
 { #category : #'*TraitsV2' }
-Class >> subclass: t uses: aTraitComposition [
+Class >> subclass: aName uses: aTraitComposition [
 
-	^ self
-		subclass: t
-		uses: aTraitComposition
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'Unclassified'
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  traitComposition: aTraitComposition ]
 ]
 
 { #category : #'*TraitsV2' }
-Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategory [
 
-	^ self
-		subclass: aTraitName
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		category: cat
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: instVarNameList;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
-Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aCategory [
 
-	^ self
-		subclass: aTraitName
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		category: cat
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: instVarNameList;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
 
-	^ self
-		subclass: aName
-		uses: aTraitCompositionOrArray
-		layout: self classLayout class
-		slots: someInstanceVariableNames asSlotCollection
-		classVariablesNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		category: aCategory
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: someInstanceVariableNames;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
 
-	^ self
-		subclass: aName
-		uses: aTraitCompositionOrArray
-		layout: self classLayout class
-		slots: someInstanceVariableNames asSlotCollection
-		classVariablesNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		category: aCategory
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: someInstanceVariableNames;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray layout: layoutClass slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
 
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		layout: layoutClass
-		slots: slotDefinition
-		classVariables: classVarDefinition
-		poolDictionaries: ''
-		category: aCategorySymbol
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aSubclassSymbol;
+			  superclass: self;
+			  slots: slotDefinition;
+			  layoutClass: layoutClass;
+			  sharedVariables: classVarDefinition;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategorySymbol ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray layout: layoutClass slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		layout: layoutClass
-		slots: slotDefinition
-		classVariables: classVarDefinition
-		poolDictionaries: ''
-		category: aCategorySymbol
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aSubclassSymbol;
+			  superclass: self;
+			  slots: slotDefinition;
+			  layoutClass: layoutClass;
+			  sharedVariables: classVarDefinition;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategorySymbol ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: someSlots classVariables: someClassVariables poolDictionaries: somePoolDictionaries category: aCategory [
 
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				name: subclassName;
-				superclass: self;
-				slots: someSlots;
-				layoutClass: aLayout;
-				sharedVariables: someClassVariables;
-				sharedPools: somePoolDictionaries;
-				traitComposition: aTraitComposition asTraitComposition;
-				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory ]
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: subclassName;
+			  superclass: self;
+			  slots: someSlots;
+			  layoutClass: aLayout;
+			  sharedVariables: someClassVariables;
+			  sharedPools: somePoolDictionaries;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: someSlots classVariables: someClassVariables poolDictionaries: somePoolDictionaries package: aCategory [
 
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				name: subclassName;
-				superclass: self;
-				slots: someSlots;
-				layoutClass: aLayout;
-				sharedVariables: someClassVariables;
-				sharedPools: somePoolDictionaries;
-				traitComposition: aTraitComposition asTraitComposition;
-				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory ]
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: subclassName;
+			  superclass: self;
+			  slots: someSlots;
+			  layoutClass: aLayout;
+			  sharedVariables: someClassVariables;
+			  sharedPools: somePoolDictionaries;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: someSlots classVariablesNames: someClassVariablesNames poolDictionaries: somePoolDictionaries category: aCategory [
 
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				name: subclassName;
-				superclass: self;
-				slots: someSlots;
-				layoutClass: aLayout;
-				sharedVariablesFromString: someClassVariablesNames;
-				sharedPools: somePoolDictionaries;
-				traitComposition: aTraitComposition asTraitComposition;
-				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory ]
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: subclassName;
+			  superclass: self;
+			  slots: someSlots;
+			  layoutClass: aLayout;
+			  sharedVariablesFromString: someClassVariablesNames;
+			  sharedPools: somePoolDictionaries;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: someSlots classVariablesNames: someClassVariablesNames poolDictionaries: somePoolDictionaries package: aCategory [
 
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				name: subclassName;
-				superclass: self;
-				slots: someSlots;
-				layoutClass: aLayout;
-				sharedVariablesFromString: someClassVariablesNames;
-				sharedPools: somePoolDictionaries;
-				traitComposition: aTraitComposition asTraitComposition;
-				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory ]
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: subclassName;
+			  superclass: self;
+			  slots: someSlots;
+			  layoutClass: aLayout;
+			  sharedVariablesFromString: someClassVariablesNames;
+			  sharedPools: somePoolDictionaries;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
 
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		layout: self classLayout class
-		slots: slotDefinition
-		classVariables: classVarDefinition
-		poolDictionaries: ''
-		category: aCategorySymbol
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aSubclassSymbol;
+			  superclass: self;
+			  slots: slotDefinition;
+			  sharedVariables: classVarDefinition;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategorySymbol ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		layout: self classLayout class
-		slots: slotDefinition
-		classVariables: classVarDefinition
-		poolDictionaries: ''
-		category: aCategorySymbol
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aSubclassSymbol;
+			  superclass: self;
+			  slots: slotDefinition;
+			  sharedVariables: classVarDefinition;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategorySymbol ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
 
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		layout: self classLayout class
-		slots: slotDefinition
-		classVariables: classVarDefinition
-		poolDictionaries: someSharedPoolNames
-		category: aCategorySymbol
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aSubclassSymbol;
+			  superclass: self;
+			  slots: slotDefinition;
+			  sharedVariables: classVarDefinition;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategorySymbol ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
 
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		layout: self classLayout class
-		slots: slotDefinition
-		classVariables: classVarDefinition
-		poolDictionaries: someSharedPoolNames
-		category: aCategorySymbol
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aSubclassSymbol;
+			  superclass: self;
+			  slots: slotDefinition;
+			  sharedVariables: classVarDefinition;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategorySymbol ]
 ]
 
 { #category : #'*TraitsV2' }
@@ -257,174 +256,206 @@ Class >> usesTraitLocally: aTrait [
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
+Class >> variableByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategory [
 
-	^ self
-		variableByteSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		category: cat
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				name: className;
+				superclass: self;
+				slotsFromString: instVarNameList;
+				layoutClass: (self checkForCompiledMethodLayout: className);
+				sharedVariablesFromString: classVarNames;
+				traitComposition: aTraitCompositionOrArray;
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> variableByteSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
-	| oldClassOrNil actualLayoutClass |
-	oldClassOrNil := self environment at: aName ifAbsent: [ nil ].
-	actualLayoutClass := (oldClassOrNil notNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
-		ifTrue: [ CompiledMethodLayout ]
-		ifFalse: [ ByteLayout ].
 
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		layout: actualLayoutClass
-		slots: someInstanceVariableNames asSlotCollection
-		classVariablesNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		category: aCategory
+	^ self classInstaller
+		make: [ :builder |
+			builder
+				name: aName;
+				superclass: self;
+				slotsFromString: someInstanceVariableNames;
+				layoutClass: (self checkForCompiledMethodLayout: aName);
+				sharedVariablesFromString: someClassVariableNames;
+				sharedPools: someSharedPoolNames;
+				traitComposition: aTraitComposition;
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
+Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategory [
 
-	^ self
-		variableSubclass: aClassName
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		category: cat
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aClassName;
+			  superclass: self;
+			  layoutClass: VariableLayout;
+			  slotsFromString: instVarNameList;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
+Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aCategory [
 
-	^ self
-		variableSubclass: aClassName
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		category: cat
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aClassName;
+			  superclass: self;
+			  layoutClass: VariableLayout;
+			  slotsFromString: instVarNameList;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
 
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		layout: VariableLayout
-		slots: someInstanceVariableNames asSlotCollection
-		classVariablesNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		category: aCategory
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  layoutClass: VariableLayout;
+			  slotsFromString: someInstanceVariableNames;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
 
-	^ self
-		variableSubclass: aName
-		uses: aTraitComposition
-		instanceVariableNames: someInstanceVariableNames
-		classVariableNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		category: aCategory
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  layoutClass: VariableLayout;
+			  slotsFromString: someInstanceVariableNames;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
+Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategory [
 
-	^ self
-		variableWordSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		package: cat
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: className;
+			  superclass: self;
+			  slotsFromString: instVarNameList;
+			  layoutClass: WordLayout;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
-	^ self
-		variableWordSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: cat
+Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aCategory [
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: className;
+			  superclass: self;
+			  slotsFromString: instVarNameList;
+			  layoutClass: WordLayout;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
 
-	^ self
-		variableWordSubclass: aName
-		uses: aTraitComposition
-		instanceVariableNames: someInstanceVariableNames
-		classVariableNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		package: aCategory
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: someInstanceVariableNames;
+			  layoutClass: WordLayout;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
 
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		layout: WordLayout
-		slots: someInstanceVariableNames asSlotCollection
-		classVariablesNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		category: aCategory
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: someInstanceVariableNames;
+			  layoutClass: WordLayout;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
-Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
+Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategory [
 
-	^ self
-		weakSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		category: cat
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: className;
+			  superclass: self;
+			  slotsFromString: instVarNameList;
+			  layoutClass: WeakLayout;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
-Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
+Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aCategory [
 
-	^ self
-		weakSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNameList
-		classVariableNames: classVarNames
-		category: cat
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: className;
+			  superclass: self;
+			  slotsFromString: instVarNameList;
+			  layoutClass: WeakLayout;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> weakSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
 
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		layout: WeakLayout
-		slots: someInstanceVariableNames asSlotCollection
-		classVariablesNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		category: aCategory
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: someInstanceVariableNames;
+			  layoutClass: WeakLayout;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
 Class >> weakSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
 
-	^ self
-		weakSubclass: aName
-		uses: aTraitComposition
-		instanceVariableNames: someInstanceVariableNames
-		classVariableNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		category: aCategory
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: someInstanceVariableNames;
+			  layoutClass: WeakLayout;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitComposition;
+			  category: aCategory ]
 ]

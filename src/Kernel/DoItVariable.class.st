@@ -135,8 +135,8 @@ DoItVariable >> isLocalVariable [
 ]
 
 { #category : #testing }
-DoItVariable >> isReservedVariable [
-	^actualVariable isReservedVariable
+DoItVariable >> isPseudoVariable [
+	^actualVariable isPseudoVariable
 ]
 
 { #category : #testing }
@@ -157,6 +157,11 @@ DoItVariable >> isTempVariable [
 { #category : #testing }
 DoItVariable >> isThisContextVariable [
 	^actualVariable isThisContextVariable
+]
+
+{ #category : #testing }
+DoItVariable >> isThisProcessVariable [
+	^actualVariable isThisProcessVariable
 ]
 
 { #category : #testing }

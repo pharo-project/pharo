@@ -20,7 +20,7 @@ ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 		select: [ :node |
 				node isGlobalVariable and: [
 					node variable isGlobalClassNameBinding not and: [
-					(self isKnownGlobal: node name) not ] ] ]
+					(self isKnownGlobal: node name) not and: [	node variable isDeprecated not ] ] ] ]
 		thenDo: [ :node |
 			aCriticBlock cull: (self
 				createTrivialCritiqueOn: aMethod
@@ -43,7 +43,6 @@ ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 			Processor
 			Smalltalk
 			SourceFiles
-			SystemOrganization
 			Transcript
 			Undeclared
 			World

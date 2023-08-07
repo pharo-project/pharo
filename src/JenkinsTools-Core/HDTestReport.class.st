@@ -50,7 +50,8 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: aString [
 
 { #category : #running }
 HDTestReport class >> runPackage: aString [
-	^ self runClasses: (RPackage organizer packageNamed: aString) definedClasses named: aString
+
+	^ self runClasses: (self packageOrganizer packageNamed: aString) definedClasses named: aString
 ]
 
 { #category : #running }
@@ -281,7 +282,8 @@ HDTestReport >> serializeError: error of: aTestCase [
 		at: #FLDebuggerStackSerializer
 		ifPresent: [ :fuelOutStackDebugAction | 
 			| context testCaseMethodContext |
-			context := error signalerContext.
+			"we use signalContext and findMethodContextSuchThat: to find the method even with clean blocks in the middle"
+ 			context := error signalContext.
 			testCaseMethodContext := context findMethodContextSuchThat: [ :ctx | 
 				                         ctx receiver == aTestCase and: [ 
 					                         ctx selector == #performTest ] ].

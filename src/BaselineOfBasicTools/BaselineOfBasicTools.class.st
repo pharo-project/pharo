@@ -70,7 +70,10 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Metacello-Reference'.
 		spec package: 'Metacello-Tutorial'.
 		spec package: 'MonticelloGUI'.
-		spec package: 'Tests'.
+		spec package: 'Monticello-GUI-Diff' with: [ spec requires: #( 'Tool-Diff' 'MonticelloGUI') ].
+		spec package: 'System-Changes-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
+		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
+		spec package: 'System-Announcements-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'RPackage-Tests'.
 		spec package: 'Monticello-Tests'.
 		spec package: 'MonticelloGUI-Tests'.
@@ -90,6 +93,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Tool-Diff'.
 		spec package: 'Tool-FileList'.
 		spec package: 'Tool-Finder'.
+		spec package: 'Tool-Finder-UI'.
 		spec package: 'Tool-ImageCleaner'.
 		spec package: 'Tools' ]
 ]
@@ -101,7 +105,6 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 	
 	Smalltalk tools register: TestRunner as: #testRunner.
-	Smalltalk tools register: MCWorkingCopyBrowser as: #monticelloBrowser.
 	
 	RBRefactoryChangeManager nuke.
 	Smalltalk garbageCollect.

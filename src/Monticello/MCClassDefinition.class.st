@@ -171,7 +171,8 @@ MCClassDefinition >> createClass [
 		ifTrue: [ Context comment = comment 
 						ifFalse: [ Context comment: comment stamp: commentStamp ].
 					^ self ].
-	superClass := superclassName == #nil
+
+	superClass := superclassName = #nil
 		ifFalse: [ Smalltalk globals at: superclassName ].
 	^ [ Smalltalk classInstaller
 		make: [ :builder | 
@@ -224,7 +225,7 @@ MCClassDefinition >> definitionString [
 
 { #category : #accessing }
 MCClassDefinition >> description [
-	^ Array with: name
+	^ { name }
 
 ]
 
@@ -265,55 +266,25 @@ MCClassDefinition >> hash [
 ]
 
 { #category : #initializing }
-MCClassDefinition >> initializeWithName: nameString
-superclassName: superclassString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-type: typeSymbol
-comment: commentString
-commentStamp: stampStringOrNil [
-	name := nameString asSymbol.
-	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
-	category := categoryString.
-	name = #CompiledMethod ifTrue: [type := #compiledMethod] ifFalse: [type := typeSymbol].
-	comment := commentString withInternalLineEndings.
-	commentStamp := stampStringOrNil ifNil: [self defaultCommentStamp].
-	variables := OrderedCollection  new.
-	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition.
-	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition.
-	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition.
-]
+MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampStringOrNil [
 
-{ #category : #initializing }
-MCClassDefinition >> initializeWithName: nameString
-superclassName: superclassString
-traitComposition: traitCompositionString
-classTraitComposition: classTraitCompositionString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-type: typeSymbol
-comment: commentString
-commentStamp: stampStringOrNil [
 	name := nameString asSymbol.
-	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
+	superclassName := superclassString
+		                  ifNil: [ #nil ]
+		                  ifNotNil: [ superclassString asSymbol ].
 	traitComposition := traitCompositionString.
 	classTraitComposition := classTraitCompositionString.
 	category := categoryString.
-	name = #CompiledMethod ifTrue: [type := #compiledMethod] ifFalse: [type := typeSymbol].
+	 type := (#(#CompiledMethod #CompiledBlock #CompiledCode) includes: name)
+		ifTrue: [ #compiledMethod ]
+		ifFalse: [ typeSymbol ].
 	comment := commentString withInternalLineEndings.
-	commentStamp := stampStringOrNil ifNil: [self defaultCommentStamp].
-	variables := OrderedCollection  new.
+	commentStamp := stampStringOrNil ifNil: [ self defaultCommentStamp ].
+	variables := OrderedCollection new.
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
 	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition.
 	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition.
-	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition.
+	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition
 ]
 
 { #category : #accessing }
@@ -456,14 +427,15 @@ MCClassDefinition >> printMetaDefinitionOn: stream [
 
 { #category : #comparing }
 MCClassDefinition >> provisions [
-	^ Array with: name
+	^ { name }
 ]
 
 { #category : #comparing }
 MCClassDefinition >> requirements [
-	^ ((superclassName == #nil) or: [superclassName asString beginsWith: 'AnObsolete'])
-		ifTrue: [self poolDictionaries]
-		ifFalse: [(Array with: superclassName), self poolDictionaries]
+
+	^ (superclassName = #nil or: [ superclassName asString beginsWith: 'AnObsolete' ])
+		  ifTrue: [ self poolDictionaries ]
+		  ifFalse: [ { superclassName } , self poolDictionaries ]
 ]
 
 { #category : #accessing }

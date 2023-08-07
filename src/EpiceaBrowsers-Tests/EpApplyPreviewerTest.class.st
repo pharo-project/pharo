@@ -79,9 +79,9 @@ EpApplyPreviewerTest >> testBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
-	aClass classComment: 'after'.
+	aClass comment: 'after'.
 
 	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpBehaviorCommentChange.
@@ -112,48 +112,47 @@ EpApplyPreviewerTest >> testBehaviorNameChange [
 { #category : #tests }
 EpApplyPreviewerTest >> testCategoryAdditionWithCategoryRemoved [
 
-	self class environment organization addCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpCategoryAddition.
-		self assert: output categoryName equals: classFactory defaultCategory.
-		]
+		self assert: output categoryName equals: classFactory defaultCategory ]
 ]
 
 { #category : #tests }
 EpApplyPreviewerTest >> testCategoryRemovalWithCategoryAdded [
 
-	self class environment organization addCategory: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
-	self class environment organization addCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpCategoryRemoval.
-		self assert: output categoryName equals: classFactory defaultCategory.
-		]
+		self assert: output categoryName equals: classFactory defaultCategory ]
 ]
 
 { #category : #tests }
 EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
 
 	| organization aCategory anotherCategory |
-	organization := self class environment organization.
+	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
+	anotherCategory := aCategory , '2'.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpCategoryRename.
 		self assert: output oldCategoryName equals: aCategory.
-		self assert: output newCategoryName equals: anotherCategory.
-		]
+		self assert: output newCategoryName equals: anotherCategory ]
 ]
 
 { #category : #tests }
@@ -365,14 +364,13 @@ EpApplyPreviewerTest >> testProtocolAdditionWithProtocolRemoved [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass removeProtocol: 'protocol'.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpProtocolAddition.
-		self assert: output protocol equals: 'protocol'.
-		]
+		self assert: output protocol equals: 'protocol' ]
 ]
 
 { #category : #tests }
@@ -380,15 +378,14 @@ EpApplyPreviewerTest >> testProtocolRemovalWithProtocolAdded [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpProtocolRemoval.
-		self assert: output protocol equals: 'protocol'.
-		]
+		self assert: output protocol equals: 'protocol' ]
 ]
 
 { #category : #tests }
@@ -425,9 +422,9 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
-	aClass classComment: 'after'.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
+	aClass comment: 'after'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -438,7 +435,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
 
@@ -448,7 +445,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 { #category : #tests }
 EpApplyPreviewerTest >> testRedundantCategoryAddition [
 
-	self class environment organization addCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -457,8 +454,8 @@ EpApplyPreviewerTest >> testRedundantCategoryAddition [
 { #category : #tests }
 EpApplyPreviewerTest >> testRedundantCategoryRemoval [
 
-	self class environment organization addCategory: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer removeCategory: classFactory defaultCategory.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -468,10 +465,11 @@ EpApplyPreviewerTest >> testRedundantCategoryRemoval [
 EpApplyPreviewerTest >> testRedundantCategoryRenameWithAbsentCategory [
 
 	| organization aCategory anotherCategory |
-	organization := self class environment organization.
+	organization := self packageOrganizer.
 	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
+	anotherCategory := aCategory , '2'.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
 	organization renameCategory: aCategory toBe: anotherCategory.
 	self setHeadAsInputEntry.
 
@@ -550,7 +548,7 @@ EpApplyPreviewerTest >> testRedundantProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -561,7 +559,7 @@ EpApplyPreviewerTest >> testRedundantProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 

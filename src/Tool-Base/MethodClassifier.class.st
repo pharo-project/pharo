@@ -195,7 +195,8 @@ MethodClassifier class >> shouldAlwaysClassify: anObject [
 
 { #category : #classification }
 MethodClassifier class >> suggestProtocolFor: aMethod [
-	^ (self new suggestProtocolFor: aMethod) ifNil: [ 'as yet unclassified' ]
+
+	^ (self new suggestProtocolFor: aMethod) ifNil: [ Protocol unclassified ]
 ]
 
 { #category : #classification }
@@ -284,18 +285,14 @@ MethodClassifier >> protocolByKnownPrefix: aMethod [
 
 { #category : #'classification-rules' }
 MethodClassifier >> protocolByOtherImplementors: aMethod [
-	| protocolBag |
 
+	| protocolBag |
 	protocolBag := Bag new.
 
-	aMethod implementors
-		ifEmpty: [ ^ self ]
-		ifNotEmpty: [ :methods |
-			methods
-				do: [ :method |
-					((method protocol beginsWith: '*') or: [ method protocol = Protocol unclassified ])
-						ifFalse: [ protocolBag add: method protocol ]]
-				without: aMethod ].
+	aMethod implementors ifEmpty: [ ^ self ] ifNotEmpty: [ :implementor |
+		implementor
+			do: [ :method | (method isExtension or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ]
+			without: aMethod ].
 
 	protocolBag ifEmpty: [ ^ self ].
 	protocol := protocolBag sortedCounts first value
@@ -356,17 +353,15 @@ MethodClassifier >> suggestProtocolFor: aMethod [
 
 { #category : #classification }
 MethodClassifier >> superclassProtocol: aMethod [
+
 	| currentClass |
 	currentClass := aMethod methodClass.
 
 	[ currentClass superclass isNil ] whileFalse: [
 		currentClass := currentClass superclass.
-		(currentClass includesSelector: aMethod selector)
-			ifTrue: [
-				| possibleProtocol |
-				possibleProtocol := (currentClass >> aMethod selector) protocol.
-				((possibleProtocol beginsWith: '*') or:
-					(possibleProtocol asSymbol = currentClass package name))
-						ifFalse: [ ^ possibleProtocol ]]].
+		(currentClass includesSelector: aMethod selector) ifTrue: [
+			| possibleProtocol |
+			possibleProtocol := (currentClass >> aMethod selector) protocol.
+			(possibleProtocol isExtensionProtocol or: [ possibleProtocol name = currentClass package name ]) ifFalse: [ ^ possibleProtocol name ] ] ].
 	^ nil
 ]

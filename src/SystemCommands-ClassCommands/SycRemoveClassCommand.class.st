@@ -31,7 +31,7 @@ SycRemoveClassCommand >> confirmRefactoringInContext: aToolContext by: aCommandA
 	because there is no information about kind of users in #openBrowser option"
 
 	[super confirmRefactoringInContext: aToolContext by: aCommandActivator ]
-		on: RBRefactoringError do: [ :err | err resume: true ]
+		on: RBRefactoringWarning do: [ :err | err resume: true ]
 ]
 
 { #category : #accessing }

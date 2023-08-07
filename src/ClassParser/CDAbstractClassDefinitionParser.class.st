@@ -153,9 +153,7 @@ CDAbstractClassDefinitionParser >> handleTraitUsesFromNode: aNode [
 CDAbstractClassDefinitionParser >> parse: aString [
 	| expressionTree |
 	expressionTree := self parserClass parseExpression: aString.
-	[expressionTree doSemanticAnalysis]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex | ex resume: ex declareUndefined ].
+	expressionTree doSemanticAnalysis.
 	^ self parseRootNode: expressionTree
 ]
 

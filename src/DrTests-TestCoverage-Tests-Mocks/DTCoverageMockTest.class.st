@@ -27,3 +27,9 @@ DTCoverageMockTest >> testMethod2forMock [
 		assert: 5
 		equals: 5
 ]
+
+{ #category : #running }
+DTCoverageMockTest >> testMethod3forMock [
+
+	self assert: (mockObj method3ForMockWithConditional: 2 ) equals: 0
+]

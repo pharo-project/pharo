@@ -19,102 +19,72 @@ Class {
 		'refactorings',
 		'methods'
 	],
-	#category : #'Refactoring-UI'
+	#category : #'Refactoring-UI-Drivers'
 }
 
 { #category : #'instance creation' }
-RBMoveMethodsToClassSideDriver class >> model: aNamespace methods: aCollectionOfMethods [
+RBMoveMethodsToClassSideDriver class >> model: aNamespace scopes: scopesList methods: aCollectionOfMethods [
 
-	^ self new model: aNamespace methods: aCollectionOfMethods
+	^ self new model: aNamespace scopes: scopesList methods: aCollectionOfMethods
 ]
 
-{ #category : #preconditions }
-RBMoveMethodsToClassSideDriver >> checkApplicability [
-
-	| checks |
-	checks := self refactorings collect: [ :each |
-		          each applicabilityConditions check ].
-	^ checks reduce: [ :a :b | a & b ]
-]
-
-{ #category : #preconditions }
-RBMoveMethodsToClassSideDriver >> checkBreakingChanges [
-
-	| checks |
-	checks := self refactorings collect: [ :each |
-		          each breakingChangeConditions check ].
-
-	^ checks reduce: [ :a :b | a & b ]
-]
-
-{ #category : #preconditions }
-RBMoveMethodsToClassSideDriver >> confirmBreakingChanges [
+{ #category : #execution }
+RBMoveMethodsToClassSideDriver >> displayErrors: errorsList [
 
 	| errorStrings |
-	errorStrings := self refactorings
-		                reject: [ :each | each breakingChangeConditions check ]
-		                thenCollect: [ :each |
-		                each breakingChangeConditions errorString ].
+
 	errorStrings := String streamContents: [ :stream |
-		                errorStrings
-			                do: [ :str | stream << str ]
+		                errorsList
+			                do: [ :err | stream << err messageText ]
 			                separatedBy: [ stream << String cr ] ].
-	errorStrings := errorStrings , String cr
-	                , ' Method(s) in the class side will be overwritten.'.
-	RBRefactoringWarning signal: errorStrings
+	^ RBRefactoringError signal: errorStrings
 ]
 
 { #category : #execution }
-RBMoveMethodsToClassSideDriver >> execute [
+RBMoveMethodsToClassSideDriver >> displayWarnings: errorsList [
 
-	self checkApplicability ifFalse: [ self refactoringError ].
-	self checkBreakingChanges ifFalse: [ "Open warning dialog. It throws an error if user answers No."
-		self confirmBreakingChanges ].
-	self executeRefactorings
-]
+	| errorStrings |
 
-{ #category : #execution }
-RBMoveMethodsToClassSideDriver >> executeRefactorings [
-
-	refactorings do: [ :each |
-		each transform.
-		each performChanges ]
-]
-
-{ #category : #accessing }
-RBMoveMethodsToClassSideDriver >> generateRefactorings [
-
-	refactorings := methods collect: [ :each |
-		                RBMoveMethodToClassSideRefactoring
-			                model: model
-			                method: each
-			                class: each origin ].
-	^ refactorings
+	errorStrings := String streamContents: [ :stream |
+		                errorsList
+			                do: [ :err | stream << err messageText ]
+			                separatedBy: [ stream << String cr ] ].
+	^ RBRefactoringWarning signal: errorStrings
 ]
 
 { #category : #initialization }
-RBMoveMethodsToClassSideDriver >> model: aNamespace methods: aCollection [
+RBMoveMethodsToClassSideDriver >> model: aNamespace scopes: scopesList methods: aCollection [
+
 	model := aNamespace.
-	methods := aCollection
+	scopes := scopesList.
+	methods := aCollection.
+	refactorings := methods collect: [ :m |
+		                RBMoveMethodToClassSideRefactoring
+			                model: model
+			                method: m
+			                class: m origin ]
 ]
 
-{ #category : #error }
-RBMoveMethodsToClassSideDriver >> refactoringError [
+{ #category : #execution }
+RBMoveMethodsToClassSideDriver >> runRefactoring [
 
-	| errorStrings |
-	errorStrings := self refactorings
-		                reject: [ :each | each applicabilityConditions check ]
-		                thenCollect: [ :each |
-		                each applicabilityConditions errorString ].
-	errorStrings := String streamContents: [ :stream |
-		                errorStrings
-			                do: [ :str | stream << str ]
-			                separatedBy: [ stream << String cr ] ].
-	RBRefactoringFailure signal: errorStrings
-]
+	| compositeChangesList errors warnings |
+	errors := OrderedCollection new.
+	warnings := OrderedCollection new.
+	compositeChangesList := refactorings collect: [ :refactoring |
+		                   [
+		                   [ refactoring generateChanges ]
+			                   on: RBRefactoringError
+			                   do: [ :err |
+				                   errors add: err. nil ] ]
+			                   on: RBBreakingChangeChecksFailedWarning
+			                   do: [ :err |
+				                   warnings add: err. nil ] ]
+		thenReject: [ :ref | ref isNil ].
 
-{ #category : #accessing }
-RBMoveMethodsToClassSideDriver >> refactorings [
+	errors ifNotEmpty: [ self displayErrors: errors ].
 
-	^ refactorings ifNil: [ self generateRefactorings ]
+	warnings ifNotEmpty: [ self displayWarnings: warnings ].
+
+	self openPreviewWithChanges: compositeChangesList
 ]

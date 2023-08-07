@@ -18,7 +18,7 @@ RBRenameClassParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBRenameClassParametrizedTest >> testBadName [
+RBRenameClassParametrizedTest >> testFailureBadName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #RBLintRuleTestData . self objectClassVariable }).
 	self shouldFail: (self createRefactoringWithArguments:
@@ -26,16 +26,19 @@ RBRenameClassParametrizedTest >> testBadName [
 ]
 
 { #category : #'failure tests' }
-RBRenameClassParametrizedTest >> testExistingName [
-	self shouldFail:
-		(self createRefactoringWithArguments:  { self class name . #Object })
+RBRenameClassParametrizedTest >> testFailureExistingName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 self class name.
+				 #Object })
 ]
 
 { #category : #'failure tests' }
-RBRenameClassParametrizedTest >> testMetaClassFailure [
+RBRenameClassParametrizedTest >> testFailureMetaClassFailure [
 
-	self shouldFail:
-		(self createRefactoringWithArguments: { self class class name . #Foo })
+	self shouldFail: (self createRefactoringWithArguments: {
+				 self class class name.
+				 #Foo })
 ]
 
 { #category : #tests }
@@ -118,7 +121,7 @@ RBRenameClassParametrizedTest >> testRenameClassFromTrait [
 
 	classA := ('RBClass', 'ToRename') asSymbol.
 	classB := ('RBNew', 'ClassName') asSymbol.
-	classC := #RBDummy.
+	classC := #RBTDummy.
 	refactoring := self createRefactoringWithArguments: { classA . classB }.
 	self executeRefactoring: refactoring.
 	aModel := refactoring model.
@@ -128,7 +131,7 @@ RBRenameClassParametrizedTest >> testRenameClassFromTrait [
 	self assert: (class parseTreeForSelector: #methodFromTrait)
 				equals: (self parseMethod: 'methodFromTrait
 	RBNewClassName justForTest').
-	self assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) methodFor: #methodFromTrait) modelClass name equals: #RBDummy
+	self assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) methodFor: #methodFromTrait) modelClass name equals: #RBTDummy
 ]
 
 { #category : #tests }
@@ -143,7 +146,7 @@ rename class B to A
 	classA := ('RBClass' , 'ToRename') asSymbol.
 	classB := 'TestUnmarkClassRenameSource' asSymbol.
 	classC := 'TestUnmarkClassRenameTarget' asSymbol.
-	addClass := RBInsertClassTransformation
+	addClass := RBInsertNewClassTransformation
 		model: model
 		addClass: classB
 		superclass: #Object

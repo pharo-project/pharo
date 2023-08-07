@@ -62,7 +62,7 @@ EpHasImpactVisitor >> visitBehaviorCommentChange: aChange [
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aClass |
 			^ aClass comment ~= aChange newComment or: [
-			aClass organization commentStamp ~= aChange newStamp ] ].
+			aClass commentStamp ~= aChange newStamp ] ].
 
 	^ true
 ]
@@ -79,12 +79,6 @@ EpHasImpactVisitor >> visitBehaviorNameChange: aChange [
 
 { #category : #visitor }
 EpHasImpactVisitor >> visitCategoryAddition: aChange [
-
-	^ (environment organization includesCategory: aChange categoryName) not
-]
-
-{ #category : #visitor }
-EpHasImpactVisitor >> visitCategoryRegistration: aChange [
 
 	^ (environment organization includesCategory: aChange categoryName) not
 ]
@@ -126,7 +120,7 @@ EpHasImpactVisitor >> visitMethodChange: aChange [
 			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method |
-					method protocol ~= aChange methodAffectedProtocol or: [
+					method protocol name ~= aChange methodAffectedProtocol or: [
 					method sourceCode ~= aChange methodAffectedSourceCode ] ]
 				ifAbsent: [ true ] ].
 
@@ -149,12 +143,23 @@ EpHasImpactVisitor >> visitMethodRemoval: aChange [
 ]
 
 { #category : #visitor }
+EpHasImpactVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ (self packageOrganizer hasPackage: aPackageAddition packageName) not
+]
+
+{ #category : #visitor }
+EpHasImpactVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self packageOrganizer hasPackage: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
 EpHasImpactVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	self
 		behaviorNamed: aProtocolAddition behaviorAffectedName
-		ifPresent: [ :behavior |
-			^ (behavior organization protocolOrganizer hasProtocolNamed: aProtocolAddition protocol) not ].
+		ifPresent: [ :behavior | ^ (behavior hasProtocol: aProtocolAddition protocol) not ].
 
 	^ true
 ]
@@ -165,15 +170,9 @@ EpHasImpactVisitor >> visitProtocolRemoval: aProtocolRemoved [
 	- the protocl exists, and
 	- there are methods in the protocol that are not trait methods"
 
-	self
-		behaviorNamed: aProtocolRemoved behaviorAffectedName
-		ifPresent: [ :behavior | | selectors |
-			selectors := (behavior organization protocolOrganizer
-				getProtocolNamed: aProtocolRemoved protocol
-				ifNone: [ ^ false ]) methodSelectors.
-			(selectors allSatisfy: [ :each |
-					(behavior compiledMethodAt: each) isFromTrait ]) ifTrue:
-						[ ^ false ] ].
+	self behaviorNamed: aProtocolRemoved behaviorAffectedName ifPresent: [ :behavior |
+		(behavior hasProtocol: aProtocolRemoved protocol) ifFalse: [ ^ false ].
+		((behavior methodsInProtocol: aProtocolRemoved protocol) allSatisfy: [ :method | method isFromTrait ]) ifTrue: [ ^ false ] ].
 
 	^ true
 ]

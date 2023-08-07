@@ -16,6 +16,11 @@ CompiledMethod >> decompileIR [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+CompiledMethod >> lookupVar: aString [
+	^self ast scope lookupVar: aString
+]
+
+{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> methodNode [
 	"returns an AST for this method, do not cache it. (see #ast for the cached alternative)"
 	^self parseTree
@@ -28,7 +33,8 @@ CompiledMethod >> recompile [
 
 { #category : #'*OpalCompiler-Core' }
 CompiledMethod >> reformat [
-	self methodClass compile: self ast formattedCode classified:  self category
+
+	self methodClass compile: self ast formattedCode classified: self protocol
 ]
 
 { #category : #'*OpalCompiler-Core' }

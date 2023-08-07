@@ -120,6 +120,46 @@ Metaclass >> classVariables [
 		ifNotNil: [ :class | class classVariables ]
 ]
 
+{ #category : #'accessing - comment' }
+Metaclass >> comment [
+    ^ self instanceSide comment
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> comment: aStringOrText [
+	"Set the receiver's comment to be the argument, aStringOrText."
+
+	self instanceSide comment: aStringOrText
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> comment: aStringOrText stamp: aStamp [
+	"Set the receiver's comment to be the argument, aStringOrText."
+
+	self instanceSide comment: aStringOrText stamp: aStamp
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentSourcePointer [
+	^ self instanceSide commentSourcePointer
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentSourcePointer: anObject [
+	^ self instanceSide commentSourcePointer: anObject
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentStamp [
+
+	^ self instanceSide commentStamp
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> commentStamp: changeStamp [
+	self instanceSide commentStamp: changeStamp
+]
+
 { #category : #fileout }
 Metaclass >> definitionStringFor: aConfiguredPrinter [
 
@@ -155,6 +195,12 @@ Metaclass >> hasClassVarNamed: aString [
 	^self instanceSide
 		ifNil: [ false ]
 		ifNotNil: [ :class | class hasClassVarNamed: aString ]
+]
+
+{ #category : #'accessing - comment' }
+Metaclass >> hasComment [
+	"Return whether this class truly has a comment other than the default"
+	^ self instanceSide hasComment
 ]
 
 { #category : #compiling }
@@ -292,9 +338,7 @@ Metaclass >> slots: slotCollection [
 	theClass := self instanceSide.
 
 	theClass := theClass classInstaller update: theClass to: [ :builder |
-		builder
-			fillFor: theClass;
-			classSlots: slotCollection ].
+		builder classSlots: slotCollection ].
 	^ theClass classSide
 ]
 

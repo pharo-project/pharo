@@ -82,7 +82,7 @@ RBSplitClassTransformation >> abstractVariableReferences [
 RBSplitClassTransformation >> addClass [
 
 	transformations add:
-		(RBInsertClassTransformation
+		(RBInsertNewClassTransformation
 			model: self model
 			addClass: newClassName
 			superclass: #Object
@@ -100,6 +100,27 @@ RBSplitClassTransformation >> addInstanceVariables [
 				instanceVariable: instVar
 				class: newClassName ]
 		thenDo: [ :each | transformations add: each ]
+]
+
+{ #category : #preconditions }
+RBSplitClassTransformation >> applicabilityConditions [
+
+	class := self definingClass.
+
+	"check whether instVar exist"
+	^ (RBCondition isValidClassName: newClassName) & self isNotGlobal
+	  & (RBCondition
+			   isValidInstanceVariableName: referenceVariableName
+			   for: class)
+	  &
+		  (RBCondition
+			   hierarchyOf: class
+			   definesVariable: referenceVariableName) not
+	  & (RBCondition isGlobal: referenceVariableName in: self model) not
+	  &
+		  (RBCondition
+			   definesTemporaryVariable: referenceVariableName
+			   in: class) not
 ]
 
 { #category : #executing }
@@ -149,19 +170,15 @@ RBSplitClassTransformation >> definingClass [
 ]
 
 { #category : #preconditions }
+RBSplitClassTransformation >> isNotGlobal [
+
+	^ (RBCondition isGlobal: newClassName in: self model) not
+]
+
+{ #category : #preconditions }
 RBSplitClassTransformation >> preconditions [
 
-	class := self definingClass.
-
-	"check whether instVar exist"
-	^(RBCondition isValidClassName: newClassName)
-		& (RBCondition isGlobal: newClassName in: self model) not
-		& (RBCondition isValidInstanceVariableName: referenceVariableName for: class)
-		& (RBCondition hierarchyOf: class definesVariable: referenceVariableName)
-				not
-		& (RBCondition isGlobal: referenceVariableName in: self model) not
-		& (RBCondition definesTemporaryVariable: referenceVariableName in: class)
-				not
+	^ self applicabilityConditions 
 ]
 
 { #category : #printing }

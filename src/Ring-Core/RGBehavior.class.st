@@ -165,16 +165,9 @@ RGBehavior >> addLocalMethod: anRGMethod [
 ]
 
 { #category : #'accessing - backend' }
-RGBehavior >> addMethodTag: aSymbol [
-
-	self announceDefinitionChangeDuring: [
-		self backend forBehavior addMethodTag: aSymbol to: self. ]
-]
-
-{ #category : #'accessing - backend' }
 RGBehavior >> addProtocol: aSymbol [
 
-	self addMethodTag: aSymbol
+	self announceDefinitionChangeDuring: [ self backend forBehavior addMethodTag: aSymbol to: self ]
 ]
 
 { #category : #'managing container' }
@@ -435,9 +428,11 @@ RGBehavior >> ensureLocalMethodNamed: aSymbol [
 { #category : #'queries - tags' }
 RGBehavior >> ensureMethodTagNamed: aSymbol [
 
-	^ self tagsForMethods detect: [ :each | each asSymbol = aSymbol ] ifNone: [
-		self addMethodTag: aSymbol.
-		aSymbol ]
+	^ self tagsForMethods
+		  detect: [ :each | each asSymbol = aSymbol ]
+		  ifNone: [
+			  self addProtocol: aSymbol.
+			  aSymbol ]
 ]
 
 { #category : #'queries - protocols' }
@@ -664,19 +659,6 @@ RGBehavior >> lookupVar: aName [
 		  ifNone: [ self bindingOf: aName ]
 ]
 
-{ #category : #lookup }
-RGBehavior >> lookupVar: aName declare: aBoolean [
-	^ self lookupVar: aName
-]
-
-{ #category : #lookup }
-RGBehavior >> lookupVarForDeclaration: aName [
-
-	"This is a version of #lookupVar: that skips the OCRequestorScope, from here on it is the same as lookupVar:"
-
-	^ self lookupVar: aName
-]
-
 { #category : #resolving }
 RGBehavior >> makeResolved [
 
@@ -785,6 +767,13 @@ RGBehavior >> protocols [
 				ifNotEmpty: [  OrderedCollection with: self class asYetUnclassifiedProtocolName   ].
 			]
 		ifNotEmpty: [ methodTags  ]
+]
+
+{ #category : #'accessing - model' }
+RGBehavior >> protocolsForAllMethods [
+	"I act as #tagsForMethods but I also takes into account methods comming from traits"
+
+	^ self methods flatCollect: [ :each  | each tags ] as: Set
 ]
 
 { #category : #'private - backend interface' }
@@ -1098,13 +1087,6 @@ RGBehavior >> tags [
 RGBehavior >> tagsDo: aBlock [
 
 	self backend forBehavior tagsForClass: self do: aBlock
-]
-
-{ #category : #'accessing - model' }
-RGBehavior >> tagsForAllMethods [
-	"I act as #tagsForMethods but I also takes into account methods comming from traits"
-
-	^ self methods flatCollect: [ :each  | each tags ] as: Set
 ]
 
 { #category : #'accessing - model' }

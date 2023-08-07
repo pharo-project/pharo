@@ -51,7 +51,7 @@ RGEnvironment >> addPackage: anRGPackage [
 
 	self backend forPackage addPackage: anRGPackage to: self.
 
-	self announce: (RPackageRegistered to: anRGPackage)
+	self announce: (PackageAdded to: anRGPackage)
 ]
 
 { #category : #accessing }
@@ -89,9 +89,7 @@ RGEnvironment >> bindingOf: aSymbol [
 
 	| behavior result |
 
-	(ReservedVariable nameIsReserved: aSymbol)
-		ifTrue: [ ^ ReservedVariable lookupDictionary at: aSymbol ].
-
+	PseudoVariable lookupDictionary at: aSymbol ifPresent: [ :val | ^ val ].
 	self globalVariablesBindings at: aSymbol ifPresent: [ :val | ^ val ].
 
 	self ask globalVariables detect: [ :each | each name = aSymbol  ] ifFound: [ :found |
@@ -799,7 +797,7 @@ RGEnvironment >> removePackage: anRGPackage [
 
 	self backend forPackage removePackage: anRGPackage from: self.
 
-	self announce: (RPackageUnregistered to: anRGPackage)
+	self announce: (PackageRemoved to: anRGPackage)
 ]
 
 { #category : #unpackaged }

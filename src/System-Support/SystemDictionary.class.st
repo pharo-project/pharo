@@ -26,19 +26,10 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
-		'reservedVariables'
+		'pseudoVariables'
 	],
 	#category : #'System-Support-Utilities'
 }
-
-{ #category : #'instance creation' }
-SystemDictionary class >> withOrganizer: anOrganizer [
-
-	| dictionary |
-	dictionary := self new.
-	dictionary organization: anOrganizer. "update too the back pointer"
-	^ dictionary
-]
 
 { #category : #'accessing - classes and traits' }
 SystemDictionary >> allBehaviors [
@@ -213,11 +204,13 @@ SystemDictionary >> flushClassNameCache [
 ]
 
 { #category : #'accessing - classes and traits' }
-SystemDictionary >> forgetClass: aClass logged: aBool [
+SystemDictionary >> forgetClass: aClass [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
-	self organization removeElement: aClass name.
+	self flag: #package. "Unify categories and packages to have only one removal to do and not two."
+	self organization removeBehavior: aClass.
+	self organization removeClass: aClass.
 	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]
@@ -227,7 +220,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 	"Use the cached class and non-class names for better performance."
 
 	| name searchBlock |
-	(self reservedVariables hasBindingThatBeginsWith: aString) ifTrue: [
+	(self pseudoVariables hasBindingThatBeginsWith: aString) ifTrue: [
 		^ true ].
 	searchBlock := [ :element |
 	               (element beginsWith: aString)
@@ -266,12 +259,7 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 { #category : #'accessing - variable lookup' }
 SystemDictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
-	^self reservedVariables at: name ifAbsent: [self bindingOf: name]
-]
-
-{ #category : #'accessing - variable lookup' }
-SystemDictionary >> lookupVar: name declare: aBoolean [
-	^ self lookupVar: name
+	^self pseudoVariables at: name ifAbsent: [self bindingOf: name]
 ]
 
 { #category : #'accessing - system attributes' }
@@ -299,7 +287,9 @@ SystemDictionary >> nonClassNames [
 SystemDictionary >> organization [
 	"Return the organizer for the receiver"
 
-	^ self at: #SystemOrganization ifAbsent: nil
+	^ self at: #SystemOrganization ifAbsent: [
+		  self organization: RPackageOrganizer new.
+		  self at: #SystemOrganization ]
 ]
 
 { #category : #accessing }
@@ -346,6 +336,14 @@ SystemDictionary >> printElementsOn: aStream [
 	aStream nextPutAll: '(lots of globals)'
 ]
 
+{ #category : #'accessing - variable lookup' }
+SystemDictionary >> pseudoVariables [
+	"We cache the variables for speed"
+
+	^ pseudoVariables ifNil: [
+		  pseudoVariables := PseudoVariable lookupDictionary ]
+]
+
 { #category : #'accessing - classes and traits' }
 SystemDictionary >> removeClassNamed: aName [
 	"Invoked from fileouts: if there is currently a class in the system named aName, then remove it"
@@ -390,9 +388,11 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	"Rename the class, aClass, to have the title newName."
 
 	| oldref category |
-	category := self organization categoryOfElement: oldName.
+	self flag: #package. "When the category thing will be removed, we should have only one line updating the organization"
+	category := self organization categoryOfBehavior: oldName.
 	self organization classify: newName under: category.
-	self organization removeElement: oldName.
+	self organization removeBehavior: oldName.
+	self organization renameClass: aClass from: oldName to: newName.
 	oldref := self associationAt: oldName.
 	self removeKey: oldName.
 	oldref key: newName.
@@ -404,11 +404,7 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 		from: oldName
 		to: newName
 		inCategory: category.
-	aClass subclassesDo: [ :subclass |
-		SystemAnnouncer uniqueInstance
-			classParentOf: subclass
-			renamedFrom: oldName
-			to: newName ]
+	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: newName ]
 ]
 
 { #category : #renaming }
@@ -425,18 +421,10 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 ]
 
 { #category : #'accessing - variable lookup' }
-SystemDictionary >> reservedVariables [
-	"We cache the variables for speed"
+SystemDictionary >> resetPseudoVariables [
+	"Lazy init in the accessor, resetting it will take new subclasses on PseudoVariable into account"
 
-	^ reservedVariables ifNil: [
-		  reservedVariables := ReservedVariable lookupDictionary ]
-]
-
-{ #category : #'accessing - variable lookup' }
-SystemDictionary >> resetReservedVariables [
-	"Lazy init in the accessor, resetting it will take new subclasses on ReservedVariable into account"
-
-	^ reservedVariables := nil
+	^ pseudoVariables := nil
 ]
 
 { #category : #'accessing - class and trait names' }

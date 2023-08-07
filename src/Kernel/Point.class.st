@@ -115,8 +115,7 @@ Point >> <= aPoint [
 Point >> = aPoint [
 
 	^ self species = aPoint species
-		ifTrue: [ x = aPoint x and: [ y = aPoint y ]]
-		ifFalse: [ false ]
+		and: [ x = aPoint x and: [ y = aPoint y ]]
 ]
 
 { #category : #comparing }
@@ -191,13 +190,6 @@ Point >> asIntegerPoint [
 	self isIntegerPoint
 		ifTrue: [ ^ self ].
 	^ x asInteger @ y asInteger
-]
-
-{ #category : #converting }
-Point >> asMargin [
-	"Return a margin instance based on the receiver. aMargin is an object representing either 1, 2 or 4 numbers. It represents the space between a rectangular area and this rectangular area augmented by the margin"
-
-	^ Margin fromPoint: self
 ]
 
 { #category : #converting }

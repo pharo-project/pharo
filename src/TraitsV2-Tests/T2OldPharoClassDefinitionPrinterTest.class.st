@@ -45,7 +45,7 @@ T2OldPharoClassDefinitionPrinterTest >> testComplexTrait [
 	uses: Trait2 @ {#c3->#c2}
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	package: ''Tests-Traits-MOP'''
+	package: ' , self packageTagOfMOP
 ]
 
 { #category : #'tests - traits' }
@@ -127,11 +127,8 @@ T2OldPharoClassDefinitionPrinterTest >> testTrait3 [
 { #category : #'tests - traits' }
 T2OldPharoClassDefinitionPrinterTest >> testTrait3AndTag [
 
-	self
-		assert: (self forClass: Trait3)
-		equals:
- 'Trait named: #Trait3
+	self assert: (self forClass: Trait3) equals: 'Trait named: #Trait3
 	uses: Trait2
 	instanceVariableNames: ''''
-	package: ''Tests-Traits-MOP'''
+	package: ' , self packageTagOfMOP
 ]

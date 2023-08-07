@@ -33,13 +33,12 @@ TraitBuilderEnhancer class >> isApplicableFor: aBuilder [
 
 { #category : #'class modifications' }
 TraitBuilderEnhancer >> afterMethodsCompiled: aBuilder [
-
 	"we need to remove the categories leftover after removing Traits"
-	aBuilder newClass organization cleanUpCategoriesForClass: aBuilder newClass.
-	aBuilder newClass class organization cleanUpCategoriesForClass: aBuilder newClass class.
 
-	(self isTraitedMetaclass: aBuilder)
-		ifFalse: [ ^ self ].
+	aBuilder newClass removeNonexistentSelectorsFromProtocols.
+	aBuilder newClass class removeNonexistentSelectorsFromProtocols.
+
+	(self isTraitedMetaclass: aBuilder) ifFalse: [ ^ self ].
 
 	builder newMetaclass rebuildMethodDictionary.
 	aBuilder newClass rebuildMethodDictionary

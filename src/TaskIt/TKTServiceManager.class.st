@@ -52,9 +52,3 @@ TKTServiceManager >> startService: aService [
 		ifNone: [ aService launch.
 			services add: aService ]
 ]
-
-{ #category : #'start-stop' }
-TKTServiceManager >> stopService: aService [
-
-	aService requestStop
-]

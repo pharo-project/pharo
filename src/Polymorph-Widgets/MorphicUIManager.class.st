@@ -314,7 +314,7 @@ MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 				setText: aText asString;
 				yourself.
 	aBlockOrNil ifNotNil: [
-		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text]].
+		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text] for: self].
 	window addMorph: pane frame: (0@0 corner: 1@1); openInWorld.
 	^ window
 ]
@@ -422,21 +422,6 @@ Here are some suggestions:
  If you want to investigate further, choose "debug" in this window.  Do not use the debugger "fullStack" command unless you are certain that the stack is not very deep. (Trying to show the full stack will definitely use up all remaining memory if the low-space problem is caused by an infinite recursion!).
 
 '
-]
-
-{ #category : #'ui requests' }
-MorphicUIManager >> merge: merger informing: aString [
-
-	| mergeMorph  window |
-	mergeMorph := PSMCMergeMorph forMerger: merger.
-	mergeMorph
-		fromDescription: 'Working copy' translated;
-		toDescription: aString.
-	window := mergeMorph newWindow
-		title: aString;
-		yourself.
-	window openModal.
-	^ mergeMorph merged
 ]
 
 { #category : #accessing }
@@ -653,14 +638,6 @@ MorphicUIManager >> spawnNewProcess [
 	UIProcess
 		name: 'Morphic UI Process';
 		resume
-]
-
-{ #category : #'ui requests' }
-MorphicUIManager >> syntaxErrorNotificationDefaultAction: anException [
-	"Handle a syntax error.
-	Note, if there is no #syntaxErrorDebugger registered, it will be silently ignored"
-	^Smalltalk tools using: #syntaxErrorDebugger do: [:tool |
-			tool open: (tool syntaxError: anException)]
 ]
 
 { #category : #'ui requests' }

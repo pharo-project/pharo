@@ -28,8 +28,7 @@ RubCharacterBlock >> <= aCharacterBlock [
 { #category : #comparing }
 RubCharacterBlock >> = aCharacterBlock [
 	^ self species = aCharacterBlock species
-		ifTrue: [ stringIndex = aCharacterBlock stringIndex ]
-		ifFalse: [ false ]
+		and: [ stringIndex = aCharacterBlock stringIndex ]
 ]
 
 { #category : #comparing }

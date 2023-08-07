@@ -47,8 +47,8 @@ DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
 { #category : #api }
 DTCommentToTestPlugin >> packagesAvailableForAnalysis [
-	^ RPackage organizer packages
-		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
+
+	^ self packageOrganizer packages select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
 ]
 
 { #category : #accessing }
@@ -73,7 +73,8 @@ DTCommentToTestPlugin >> runSuite: aTestSuite withResult: aResult [
 	aTestSuite
 		when: TestAnnouncement
 		do: [ :testAnnouncement |
-			self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test asString}) ].
+			self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test asString}) ]
+		for: self.
 	[ aTestSuite run: aResult ]
 		ensure: [ aTestSuite unsubscribe: TestAnnouncement ]
 ]

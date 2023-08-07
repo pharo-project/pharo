@@ -32,12 +32,6 @@ EpNewStateVisitor >> visitCategoryAddition: aClassCategoryCreatedChange [
 ]
 
 { #category : #visitor }
-EpNewStateVisitor >> visitCategoryRegistration: aClassCategoryCreatedChange [
-
-	^ aClassCategoryCreatedChange categoryName
-]
-
-{ #category : #visitor }
 EpNewStateVisitor >> visitCategoryRename: aClassCategoryRenamedChange [
 
 	^ aClassCategoryRenamedChange newCategoryName
@@ -68,9 +62,8 @@ EpNewStateVisitor >> visitLogCommentModification: anEvent [
 
 { #category : #visitor }
 EpNewStateVisitor >> visitMethodAddition: aMethodCreatedChange [
-	^ self
-		printProtocol: aMethodCreatedChange protocol
-		sourceCode: aMethodCreatedChange sourceCode
+
+	^ self printProtocol: aMethodCreatedChange protocol sourceCode: aMethodCreatedChange sourceCode
 ]
 
 { #category : #visitor }
@@ -79,6 +72,18 @@ EpNewStateVisitor >> visitMethodModification: aMethodModification [
 	^ self
 		printProtocol: aMethodModification newProtocol
 		sourceCode: aMethodModification newSourceCode
+]
+
+{ #category : #visitor }
+EpNewStateVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ aPackageAddition packageName
+]
+
+{ #category : #visitor }
+EpNewStateVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ aPackageRemoval packageName
 ]
 
 { #category : #visitor }

@@ -39,7 +39,6 @@ BaselineOfMetacello >> baseline: spec [
 		spec 
 			package: 'Metacello-TestsMCResources';
 			package: 'Metacello-TestsCore';
-			package: 'Metacello-TestsCommonMC';
 			package: 'Metacello-TestsMC';	"standalone"
 			package: 'Metacello-TestsMCCore';	"standalone"
 			package: 'Metacello-TestsPlatform';	"standalone"
@@ -48,6 +47,6 @@ BaselineOfMetacello >> baseline: spec [
 
 		spec 
 			group: 'Core' with: #('ScriptingExtensions' 'System-FileRegistry' 'FileSystem-Memory' 'Regex-Core' 'StartupPreferences' 'ConfigurationCommandLineHandler-Core' 'PragmaCollector' 'System-FileRegistry' 'MonticelloConfigurations' 'Gofer-Core' 'Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'Metacello-MC' 'Metacello-PharoCommonPlatform' 'MonticelloFileTree-FileSystem-Utilities' 'STON-Core' 'Metacello-GitBasedRepository' 'Metacello-GitHub' 'Metacello-Gitlab' 'Metacello-Bitbucket' 'Metacello-Platform' 'Metacello-ToolBox' 'Metacello-PharoExtensions' 'MetacelloCommandLineHandler-Core');
-			group: 'Tests' with: #( 'Metacello-TestsMCResources' 'Metacello-TestsCore' 'Metacello-TestsCommonMC' 'Metacello-TestsMC' 'Metacello-TestsMCCore' 'Metacello-TestsPlatform' 'Metacello-TestsReference' 'Metacello-Gitlab-Tests');
+			group: 'Tests' with: #( 'Metacello-TestsMCResources' 'Metacello-TestsCore' 'Metacello-TestsMC' 'Metacello-TestsMCCore' 'Metacello-TestsPlatform' 'Metacello-TestsReference' 'Metacello-Gitlab-Tests');
 			group: 'default' with: #('Core') ]
 ]

@@ -1,9 +1,9 @@
 "
-I model thisContext keyword
+I model thisContext
 "
 Class {
 	#name : #ThisContextVariable,
-	#superclass : #ReservedVariable,
+	#superclass : #PseudoVariable,
 	#category : #'Kernel-Variables'
 }
 
@@ -17,7 +17,7 @@ ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitThisContextNode: aNode
 ]
 
-{ #category : #emitting }
+{ #category : #'code generation' }
 ThisContextVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushThisContext

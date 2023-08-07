@@ -14,13 +14,10 @@ MCChangeNotificationTest >> foreignMethod [
 
 { #category : #events }
 MCChangeNotificationTest >> modifiedEventFor: aSelector ofClass: aClass [
+
 	| method |
 	method := aClass compiledMethodAt: aSelector.
-	^ MethodModified 
-		methodChangedFrom: method
-		to: method
-		oldProtocol: nil
-
+	^ MethodModified methodChangedFrom: method to: method oldProtocol: nil
 ]
 
 { #category : #running }
@@ -36,7 +33,7 @@ MCChangeNotificationTest >> setUp [
                ifAbsent:[].
        PackageOrganizer default unregisterPackageNamed: 'MonticelloMocks'."
 		super setUp.	
-      workingCopy := MCWorkingCopy forPackage: self mockPackage.
+      workingCopy := MCWorkingCopy ensureForPackage: self mockPackage.
 ]
 
 { #category : #tests }

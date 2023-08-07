@@ -57,11 +57,14 @@ SUnitTest >> deprecatedMessage [
 
 { #category : #private }
 SUnitTest >> error [
+	<ignoreNotImplementedSelectors: #(zork)>
 	3 zork
 ]
 
 { #category : #testing }
 SUnitTest >> errorShouldntRaise [
+	<ignoreNotImplementedSelectors: #(someMessageThatIsntUnderstood)>
+
 	self someMessageThatIsntUnderstood
 ]
 

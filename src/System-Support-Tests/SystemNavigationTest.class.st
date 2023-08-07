@@ -27,7 +27,7 @@ SystemNavigationTest >> classFactory [
 { #category : #utilities }
 SystemNavigationTest >> createClassFactory [
 
-	^ ClassFactoryWithOrganization newWithOrganization: self systemNavigationToTest environment organization
+	^ ClassFactoryForTestCase environment: self systemNavigationToTest environment
 ]
 
 { #category : #running }
@@ -68,14 +68,13 @@ SystemNavigationTest >> testAllClassesImplementing [
 SystemNavigationTest >> testAllExistingProtocolsFor [
 
 	| instSideProtocols classSideProtocols |
-
 	instSideProtocols := self systemNavigationToTest allExistingProtocolsFor: true.
 	classSideProtocols := self systemNavigationToTest allExistingProtocolsFor: false.
 
 	self assert: (instSideProtocols allSatisfy: #isSymbol).
 	self assert: (classSideProtocols allSatisfy: #isSymbol).
-	self assert: (instSideProtocols includesAll: (Object protocols)).
-	self assert: (classSideProtocols includesAll: (Object class protocols))
+	self assert: (instSideProtocols includesAll: Object protocolNames).
+	self assert: (classSideProtocols includesAll: Object class protocolNames)
 ]
 
 { #category : #tests }
@@ -101,8 +100,8 @@ SystemNavigationTest >> testIsMessageSentInSystemWithClassesActuallySendngTheMes
 
 	| classesSendingMessage sentMessageSelector |
 	sentMessageSelector := 'MessageSentOnlyByTestClassesXXXShouldNotBeRealyDefined' asSymbol.
-	5 timesRepeat: [ self classFactory newClassInCategory: #One ].
-	5 timesRepeat: [ self classFactory newClassInCategory: #Two ].
+	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #One ] ].
+	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	classesSendingMessage := (self classFactory createdClasses asArray first: 2) , (self classFactory createdClasses asArray last: 3).
 	classesSendingMessage do: [ :class | class compileSilently: 'meth self ' , sentMessageSelector ].
 	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size equals: 5
@@ -113,8 +112,8 @@ SystemNavigationTest >> testIsMessageSentInSystemWithTheSelectorInsideAnArray [
 
 	| classesSendingMessage sentMessageSelector |
 	sentMessageSelector := 'MessageSentOnlyByTestClassesXXXShouldNotBeRealyDefined' asSymbol.
-	5 timesRepeat: [ self classFactory newClassInCategory: #One ].
-	5 timesRepeat: [ self classFactory newClassInCategory: #Two ].
+	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #One ] ].
+	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	classesSendingMessage := (self classFactory createdClasses asArray first: 2) , (self classFactory createdClasses asArray last: 3).
 	classesSendingMessage do: [ :class | class compileSilently: 'meth ^#(a b ' , sentMessageSelector , ' c)' ].
 	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size equals: 5

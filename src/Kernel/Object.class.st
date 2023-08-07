@@ -441,7 +441,12 @@ Object >> basicAt: index [
 	Object documentation whatIsAPrimitive."
 
 	<primitive: 60>
-	index isInteger ifTrue: [self errorSubscriptBounds: index].
+	index isInteger ifTrue: [
+		SubscriptOutOfBounds
+			signalFor: index
+			lowerBound: 1
+			upperBound: self basicSize
+			in: self ].
 	self errorNonIntegerIndex
 ]
 
@@ -516,12 +521,6 @@ Object >> beWritableObject [
 	 Set the read-only flag of the receiver to false and answer the previous vaue of the flag."
 
 	^ self setIsReadOnlyObject: false
-]
-
-{ #category : #binding }
-Object >> bindingOf: aString [
-
-	^ nil
 ]
 
 { #category : #dependencies }
@@ -632,7 +631,7 @@ Object >> clone [
 					ifTrue:
 						[class isCompiledMethodClass
 							ifTrue:
-								[class newMethod: self basicSize - self initialPC + 1 header: self header]
+								[class newMethod: self basicSize - self initialPC + 1 + CompiledMethod trailerSize header: self header]
 							ifFalse:
 								[class basicNew: self basicSize]]
 					ifFalse:
@@ -1021,12 +1020,6 @@ Object >> handleProcessTerminationOfWaitingContext: suspendedContext [
 { #category : #'error handling' }
 Object >> handles: exception [
 	"This method exists in case a non exception class is the first arg in an on:do: (for instance using a exception class that is not loaded). We prefer this to raising an error during error handling itself. Also, semantically it makes sense that the exception handler is not active if its exception class is not loaded"
-
-	^ false
-]
-
-{ #category : #binding }
-Object >> hasBindingOf: aString [
 
 	^ false
 ]
@@ -1474,9 +1467,10 @@ Object >> longPrintString [
 	"Answer a String whose characters are a description of the receiver."
 
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #printing }
@@ -1484,9 +1478,10 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 	"Answer a String whose characters are a description of the receiver."
 
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0 ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #dependencies }
@@ -1543,6 +1538,12 @@ Object >> notify: aString [
 Object >> okToChange [
 	"Allows a controller to ask this of any model"
 	^ true
+]
+
+{ #category : #accessing }
+Object >> packageOrganizer [
+
+	^ self class packageOrganizer
 ]
 
 { #category : #'message performing' }
@@ -1804,8 +1805,8 @@ Object >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
 	| dependents |
-	dependents := self dependents reject: [:each | each == anObject].
-	self myDependents: (dependents isEmpty ifFalse: [dependents]).
+	dependents := self dependents reject: [ :each | each == anObject ].
+	self myDependents: dependents.
 	^ anObject
 ]
 

@@ -51,26 +51,25 @@ RPackageClassesSynchronisationTest >> testAddClassUpdateTheOrganizerMappings [
 { #category : #'tests - recategorizing class' }
 RPackageClassesSynchronisationTest >> testRecategorizeClassRaisesClassRepackagedEvent [
 	"test that when we recategorize a class, the organizer is updated so that the class name point the the new RPackage"
-	
+
 	| XPackage YPackage class ann |
-	
 	ann := nil.
 	SystemAnnouncer uniqueInstance
 		when: ClassRepackaged do: [ :a |
 			ann := a.
-		].
+		] for: self.
 	
 	self addXCategory.
 	self addYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	class category: 'YYYYY'.	
-	
+	class category: 'YYYYY'.
+
 	self assert: ann notNil.
 	self assert: ann classRepackaged equals: class.
 	self assert: ann oldPackage equals: XPackage.
-	self assert: ann newPackage equals: YPackage.
+	self assert: ann newPackage equals: YPackage
 ]
 
 { #category : #'tests - recategorizing class' }
@@ -218,31 +217,28 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassUpdateTheOrganizerMap
 
 { #category : #'tests - recategorizing class' }
 RPackageClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsRegisterAllClassMethodsInTheNewPackage [
-
 	"test that when we recategorize a class (having methods defined in both instance and class side), the new package in which it is defined include all the methods (from instance and class side) defined in this class (not extensions)"
-	
-	| XPackage YPackage ZPackage class|
+
+	| xPackage yPackage zPackage class |
 	self addXCategory.
 	self addYCategory.
 	self addZCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage := self organizer packageNamed: #YYYYY.
-	ZPackage := self organizer packageNamed: #ZZZZZ.
-	
+	xPackage := self organizer packageNamed: #XXXXX.
+	yPackage := self organizer packageNamed: #YYYYY.
+	zPackage := self organizer packageNamed: #ZZZZZ.
+
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	
-	self createMethodNamed: 'method1' inClass: class classSide inCategory: 'category'.
-	self createMethodNamed: 'method2' inClass: class classSide inCategory: '*yyyyy'.
-	self createMethodNamed: 'method3' inClass: class classSide inCategory: '*zzzzz'.
-	
+
+	self createMethodNamed: 'method1' inClass: class class inCategory: 'category'.
+	self createMethodNamed: 'method2' inClass: class class inCategory: '*yyyyy'.
+	self createMethodNamed: 'method3' inClass: class class inCategory: '*zzzzz'.
+
 	class category: 'YYYYY'.
-	
+
 	"lets check metaclass methods"
-	self assert: (YPackage includesDefinedSelector: #method1 ofMetaclassName: class name).
-	
-	self assert: (YPackage includesDefinedSelector: #method2 ofMetaclassName: class name). 
-	
-	self assert: (ZPackage includesExtensionSelector: #method3 ofMetaclassName: class name ).
+	self assert: (yPackage includesDefinedSelector: #method1 ofClass: class class).
+	self assert: (yPackage includesDefinedSelector: #method2 ofClass: class class).
+	self assert: (zPackage includesExtensionSelector: #method3 ofClass: class class)
 ]
 
 { #category : #'tests - recategorizing class' }
@@ -273,7 +269,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassDefinedMe
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'. 
 	
-	Smalltalk removeClassNamed: 'NewClass'. 
+	self organizer environment removeClassNamed: 'NewClass'. 
 	self deny: (XPackage includesSelector: #stubMethod ofClass: class). 
 ]
 
@@ -288,7 +284,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassExtension
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'. 
 	
-	Smalltalk removeClassNamed: 'NewClass'. 
+	self organizer environment removeClassNamed: 'NewClass'. 
 	self deny: (YPackage includesSelector: #stubMethod ofClass: class). 
 ]
 
@@ -301,20 +297,20 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassFromItsPa
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	
-	Smalltalk removeClassNamed: 'NewClass'. 
+	self organizer environment removeClassNamed: 'NewClass'. 
 	self deny: (XPackage includesClass: class)
 ]
 
 { #category : #'tests - removing classes' }
 RPackageClassesSynchronisationTest >> testRemoveClassUpdateTheOrganizerMappings [
 	"test that when we remove a class, the organizer is updated so that the class is no longer present in the  'classPackageDictionary' dictionary"
-	
-	|XPackage  class|
+
+	| XPackage class |
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
-	Smalltalk removeClassNamed: 'NewClass'. 
+	self organizer environment removeClassNamed: 'NewClass'.
 	self deny: (self organizer includesPackageBackPointerForClass: class)
 ]
 
@@ -336,67 +332,63 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedInThePare
 { #category : #'tests - operations on classes' }
 RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedSelectorsInTheParentPackage [
 	"test that when we rename a class, the  'classDefinedSelectors' dictionary of the parent package is updated with the new name. There fore we test that we can correctly access the selector from the package by specifying the right name (the new name)"
-	
-	| XPackage  class |
+
+	| xPackage class |
 	self addXCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
+	xPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'.
-	
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+
 	class rename: 'RPackageNewStubClass'.
-	
-	self assert: (XPackage includesDefinedSelector: #stubMethod ofClassName: 'RPackageNewStubClass' asSymbol ). 
-	self deny: (XPackage includesDefinedSelector: #stubMethod ofClassName: 'RPackageOldStubClass' asSymbol ).
+
+	self assert: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]
 
 { #category : #'tests - operations on classes' }
 RPackageClassesSynchronisationTest >> testRenameClassUpdateClassExtensionSelectorsInTheExtendingPackages [
 	"test that when we rename a class, the  'classExtensionSelectors' dictionaries of the extending packages  are updated with the new name. Therfore we test that we can correctly access the selectors from the package by specifying the right name (the new name)"
 
-	| XPackage YPackage class |
+	| xPackage yPackage class |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage := self organizer packageNamed: #YYYYY.
+	xPackage := self organizer packageNamed: #XXXXX.
+	yPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
-	
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+
 	class rename: 'RPackageNewStubClass'.
-	
-	self assert: (YPackage includesExtensionSelector: #stubMethod ofClassName: 'RPackageNewStubClass' asSymbol ). 
-	self deny: (YPackage includesExtensionSelector: #stubMethod ofClassName: 'RPackageOldStubClass' asSymbol ).
+
+	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]
 
 { #category : #'tests - operations on classes' }
 RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassDefinedSelectorsInTheParentPackage [
 	"test that when we rename a class, the  'metaclassDefinedSelectors' dictionary of the parent package is updated with the new name. Ther fore we test that we can correctly access the selector from the package by specifying the right name (the new name)"
-	
-	| XPackage  class |
+
+	| xPackage class |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
+	xPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClassSideOfClass: class  inCategory: 'classic category'.
-	
+	self createMethodNamed: 'stubMethod' inClassSideOfClass: class inCategory: 'classic category'.
+
 	class rename: 'RPackageNewStubClass'.
-	
-	self assert: (XPackage  includesDefinedSelector: #stubMethod ofMetaclassName: 'RPackageNewStubClass' asSymbol ). 
-	self deny: (XPackage  includesDefinedSelector: #stubMethod ofMetaclassName: 'RPackageOldStubClass' asSymbol ).
+
+	self assert: (xPackage includesDefinedSelector: #stubMethod ofClass: class class)
 ]
 
 { #category : #'tests - operations on classes' }
 RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassExtensionSelectorsInTheExtendingPackages [
 	"test that when we rename a class, the  'metaclassExtensionSelectors' dictionaries of the extending packages  are updated with the new name. Ther fore we test that we can correctly access the selectors from the package by specifying the right name (the new name)"
-	
-	| XPackage YPackage class |
+
+	| xPackage yPackage class |
 	self addXYCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage := self organizer packageNamed: #YYYYY.
+	xPackage := self organizer packageNamed: #XXXXX.
+	yPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClassSideOfClass: class  inCategory: '*yyyyy'.
-	
+	self createMethodNamed: 'stubMethod' inClassSideOfClass: class inCategory: '*yyyyy'.
+
 	class rename: 'RPackageNewStubClass'.
-	
-	self assert: (YPackage includesExtensionSelector: #stubMethod ofMetaclassName: 'RPackageNewStubClass' asSymbol ). 
-	self deny: (YPackage includesExtensionSelector: #stubMethod ofMetaclassName: 'RPackageOldStubClass' asSymbol ).
+
+	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class class)
 ]
 
 { #category : #'tests - operations on classes' }
@@ -434,15 +426,15 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackage
 { #category : #'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testReorganizeClassByAddingExtensionProtocol [
 	"test that when we reoganized a class by adding a category, nothing change from  RPackage point of vue."
-	
-	|class| 
+
+	| class |
 	self addXCategory.
-	 
+
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.  
-	class organization addCategory: '*yyyyy' before: nil.
-	
-	self assert: (self organizer includesPackageNamed: #Yyyyy).
+	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
+	class addProtocol: '*yyyyy'.
+
+	self assert: (self organizer hasPackage: #Yyyyy)
 ]
 
 { #category : #'tests - operations on protocols' }
@@ -454,7 +446,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByAddingNewProtocolDoes
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
-	class organization addCategory: 'accessing' before: nil.
+	class addProtocol: 'accessing'.
 
 	self assert: (XPackage includesClass: class).
 	self assert: (XPackage includesDefinedSelector: #newMethod ofClass: class).
@@ -494,36 +486,37 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRemovingExtensionCate
 ]
 
 { #category : #'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCategoryToExtensionCategoryMoveAllMethodsFromParentPackageToExtendingPackage [	 
+RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCategoryToExtensionCategoryMoveAllMethodsFromParentPackageToExtendingPackage [
 	"test that when we reoganized a class by renaming a  classic category (a category not beginning with '*') to an extension category, all the methods are moved from the  parent package of the class to the extending package"
-	|XPackage YPackage class| 
+
+	| XPackage YPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage  := self organizer packageNamed: #YYYYY.
+	YPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'.
-	self createMethodNamed: 'stubMethod2' inClass: class  inCategory: 'classic category'.
-	
-	class organization renameCategory: 'classic category' toBe: '*yyyyy'.
-	
+
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod2' inClass: class inCategory: 'classic category'.
+
+	class renameProtocol: 'classic category' as: '*yyyyy'.
+
 	self assert: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (YPackage includesExtensionSelector: #stubMethod2 ofClass: class).
 	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self deny: (XPackage includesDefinedSelector: #stubMethod2 ofClass: class).
+	self deny: (XPackage includesDefinedSelector: #stubMethod2 ofClass: class)
 ]
 
 { #category : #'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCategoryToExtensionCategoryMoveMethodsFromParentPackageToExtendingPackage [
 	"test that when we reoganized a class by renaming a  classic category (a category not beginning with '*') to an extension category, all the methods are moved from the  parent package of the class to the extending package"
 
-	|XPackage YPackage class| 
+	| XPackage YPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage  := self organizer packageNamed: #YYYYY.
+	YPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'.
-	class organization renameCategory: 'classic category' toBe: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+	class renameProtocol: 'classic category' as: '*yyyyy'.
 	self assert: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]
@@ -531,15 +524,15 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCatego
 { #category : #'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCategoryToAnotherExtensionCategoryAddMethodsToTheNewPackage [
 	"test that when we reoganized a class by renaming an extension category (a category beginning with '*') to another extension category, all the methods are moved to the new extendingPackage"
-	
-	|XPackage YPackage ZPackage class| 
+
+	| XPackage YPackage ZPackage class |
 	self addXYZCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage  := self organizer packageNamed: #YYYYY.
-	ZPackage  := self organizer packageNamed: #ZZZZZ.
+	YPackage := self organizer packageNamed: #YYYYY.
+	ZPackage := self organizer packageNamed: #ZZZZZ.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
-	class organization renameCategory: '*yyyyy' toBe: '*zzzzz'.
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	class renameProtocol: '*yyyyy' as: '*zzzzz'.
 	self assert: (ZPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class)
@@ -548,35 +541,35 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 { #category : #'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCategoryToClassicCategoryMoveAllMethodsFromExtendingPackageToParentPackage [
 	"test that when we reoganized a class by renaming an extension category (a category beginning with '*') to a classic category, all the methods are moved from the  extendingPackage to the parent package of the class"
-	
-	|XPackage YPackage class| 
+
+	| XPackage YPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage  := self organizer packageNamed: #YYYYY.
+	YPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
-	self createMethodNamed: 'stubMethod2' inClass: class  inCategory: '*yyyyy'.
-	
-	class organization renameCategory: '*yyyyy' toBe: 'classic category'.
-	
+
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod2' inClass: class inCategory: '*yyyyy'.
+
+	class renameProtocol: '*yyyyy' as: 'classic category'.
+
 	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (YPackage includesExtensionSelector: #stubMethod2 ofClass: class).
 	self assert: (XPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self assert: (XPackage includesDefinedSelector: #stubMethod2 ofClass: class).
+	self assert: (XPackage includesDefinedSelector: #stubMethod2 ofClass: class)
 ]
 
 { #category : #'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCategoryToClassicCategoryMoveMethodsFromExtendingPackageToParentPackage [
 	"test that when we reoganized a class by renaming an extension category (a category beginning with '*') to a classic category, all the methods are moved from the  extendingPackage to the parent package of the class"
-	
-	|XPackage YPackage class| 
+
+	| XPackage YPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	YPackage  := self organizer packageNamed: #YYYYY.
+	YPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
-	class organization renameCategory: '*yyyyy' toBe: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	class renameProtocol: '*yyyyy' as: 'classic category'.
 	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (XPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]

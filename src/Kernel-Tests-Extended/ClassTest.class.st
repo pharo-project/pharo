@@ -69,9 +69,11 @@ ClassTest >> setUp [
 
 { #category : #running }
 ClassTest >> tearDown [
+
 	self deleteClass.
-	{self unclassifiedCategory. self categoryNameForTemporaryClasses} do: [:category|
-			RPackage organizer unregisterPackageNamed: category].
+	{
+		self unclassifiedCategory.
+		self categoryNameForTemporaryClasses } do: [ :category | self packageOrganizer removePackage: category ].
 	super tearDown
 ]
 
@@ -156,7 +158,7 @@ ClassTest >> testClassSide [
 { #category : #tests }
 ClassTest >> testClassVariableEntanglement [
 	| firstClassName firstClass secondClassName secondClass thirdClassName thirdClass |
-
+	<ignoreNotImplementedSelectors: #(myVar myVar:)>
 	firstClassName := 'MyFirstClass'.
 
 	firstClass := self class classInstaller make: [ :aBuilder |
@@ -224,6 +226,26 @@ ClassTest >> testClassVariableEntanglement [
 			removeFromSystemUnlogged ]
 ]
 
+{ #category : #'tests - accessing - comments' }
+ClassTest >> testComment [
+	self assert: Object comment isNotNil.
+	self assert: Object class comment equals: Object comment
+]
+
+{ #category : #'tests - accessing - comments' }
+ClassTest >> testCommentSourcePointer [
+
+	self
+		assert: Object class commentSourcePointer
+		identicalTo: Object commentSourcePointer
+]
+
+{ #category : #'tests - accessing - comments' }
+ClassTest >> testCommentStamp [
+	self assert: Object commentStamp equals: ''.
+	self assert: Object class commentStamp equals: ''.
+]
+
 { #category : #tests }
 ClassTest >> testCommonSuperclassWith [
 	self assert: (OrderedCollection commonSuperclassWith: Array) equals: SequenceableCollection.
@@ -274,6 +296,12 @@ ClassTest >> testHasClassVarNamed [
 
 	self assert: (Object hasClassVarNamed: #DependentsFields).
 	self deny: (Object hasClassVarNamed: #CompilerClass)
+]
+
+{ #category : #'tests - accessing - comments' }
+ClassTest >> testHasComments [
+	self assert: Object hasComment.
+	self assert: Object class hasComment
 ]
 
 { #category : #'tests - access' }
@@ -503,7 +531,7 @@ ClassTest >> testSubclassInstanceVariableNames [
 	cls := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: #SubclassExample;
-			slots: 'x y' asSlotCollection].
+			slotsFromString: 'x y'].
 
 	self assert: (testEnvironment includesKey: #SubclassExample).
 

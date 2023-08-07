@@ -32,6 +32,12 @@ RBMoveMethodToClassTransformation class >> model: aRBSmalltalk method: aMethod c
 ]
 
 { #category : #transforming }
+RBMoveMethodToClassTransformation >> applicabilityConditions [
+
+	^ (RBCondition definesSelector: method selector in: class) not
+]
+
+{ #category : #transforming }
 RBMoveMethodToClassTransformation >> classModelOf: aClass [
 	| classModel |
 	classModel := aClass isMeta
@@ -49,7 +55,7 @@ RBMoveMethodToClassTransformation >> method: aMethod class: aClass [
 
 { #category : #transforming }
 RBMoveMethodToClassTransformation >> preconditions [
-	^(RBCondition definesSelector: method selector in: class) not
+	^ self applicabilityConditions 
 ]
 
 { #category : #transforming }
@@ -58,7 +64,7 @@ RBMoveMethodToClassTransformation >> privateTransform [
 	oldClass := self classModelOf: method methodClass.
 	newClass := self classModelOf: class.
 	rbMethod := RBClassModelFactory rbMethod for: newClass source: method sourceCode selector: method selector.
-	originalProtocol := method protocol.
+	originalProtocol := method protocolName.
 	oldClass removeMethod: method selector.
 	newClass addMethod: rbMethod.
 	newClass compile: rbMethod source classified: {originalProtocol}

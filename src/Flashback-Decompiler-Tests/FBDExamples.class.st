@@ -979,8 +979,6 @@ FBDExamples >> examplePushBigArray [
 
 { #category : #'examples - loops' }
 FBDExamples >> exampleRepeatEffect [
-	<sampleInstance>
-	<compilerOptions: #(+ #optionInlineRepeat)>
 
 	| i |
 	i := 1.
@@ -992,8 +990,6 @@ FBDExamples >> exampleRepeatEffect [
 
 { #category : #'examples - loops' }
 FBDExamples >> exampleRepeatValue [
-	<sampleInstance>
-	<compilerOptions: #(+ #optionInlineRepeat)>
 
 	| i |
 	i := 1.

@@ -5,19 +5,17 @@ Class {
 	#name : #RPackageTestCase,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'announcerForTest',
-		'oldSystemAnnouncer',
 		'createdClasses',
 		'createdPackages',
-		'createdCategories'
+		'testEnvironment'
 	],
 	#category : #'RPackage-Tests'
 }
 
 { #category : #accessing }
-RPackageTestCase >> allManagers [
+RPackageTestCase >> allWorkingCopies [
 
-	^ MCWorkingCopy allManagers
+	^ MCWorkingCopy allWorkingCopies
 ]
 
 { #category : #utilities }
@@ -36,12 +34,13 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 
 	| cls |
 	cls := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: aName;
-			package: cat ].
+		       aClassBuilder
+			       name: aName;
+			       installingEnvironment: testEnvironment;
+			       package: cat ].
 
 	createdClasses add: cls.
-	createdCategories add: cat.
+	createdPackages add: cls package.
 	^ cls
 ]
 
@@ -49,7 +48,7 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 
 	| cls |
-	cls := self createNewClassNamed: aName.
+	cls := self createNewClassNamed: aName inCategory: p name.
 	p addClassDefinition: cls.
 	^ cls
 ]
@@ -59,7 +58,7 @@ RPackageTestCase >> createNewPackageNamed: aName [
 
 	| pack |
 	self removePackage: aName.
-	pack := self packageClass named: aName.
+	pack := RPackage named: aName organizer: self organizer.
 	createdPackages add: pack.
 	^ pack
 ]
@@ -74,13 +73,14 @@ RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 
 	| cls |
 	cls := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: aName;
-			package:  cat;
-			beTrait ].
+		       aBuilder
+			       name: aName;
+			       package: cat;
+			       installingEnvironment: testEnvironment;
+			       beTrait ].
 
 	createdClasses add: cls.
-	createdCategories add: cat.
+	createdPackages add: cls package.
 	^ cls
 ]
 
@@ -93,13 +93,6 @@ RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 	^ cls
 ]
 
-{ #category : #'announcer handling' }
-RPackageTestCase >> initializeAnnouncers [
-	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-
-	SystemAnnouncer announcer: (announcerForTest := SystemAnnouncer new)
-]
-
 { #category : #utilities }
 RPackageTestCase >> namesOfMockTestPackages [
 
@@ -108,60 +101,41 @@ RPackageTestCase >> namesOfMockTestPackages [
 
 { #category : #accessing }
 RPackageTestCase >> organizer [
-	"This method will access the organizer that will temporarily swapped using the withOrganizer:do: method"
-	^ self packageClass organizer
-]
 
-{ #category : #accessing }
-RPackageTestCase >> packageClass [
-	"returns the system class that represents Packages"
-	^ RPackage
-]
-
-{ #category : #accessing }
-RPackageTestCase >> packageOrganizerClass [
-	"returns the package organizer class"
-	^ RPackageOrganizer
+	^ testEnvironment organization
 ]
 
 { #category : #utilities }
 RPackageTestCase >> removePackage: aName [
-	self packageClass organizer basicUnregisterPackageNamed: aName
-]
 
-{ #category : #'announcer handling' }
-RPackageTestCase >> restoreAnnouncers [
-	SystemAnnouncer announcer: oldSystemAnnouncer
+	self organizer basicUnregisterPackageNamed: aName
 ]
 
 { #category : #running }
 RPackageTestCase >> runCase [
-	[
-	self initializeAnnouncers.
 
-	^ self packageClass
-		withOrganizer: self setupOrganizer
-		do: [
-			self resources do: [:each | each availableFor: self].
-			self setUp.
-			self performTest
-			]
-	] ensure: [
+	testEnvironment := self class environment class new.
+	[
+	^ RPackage withOrganizer: self organizer do: [
+		  self resources do: [ :each | each availableFor: self ].
+		  self setUp.
+		  self performTest ] ] ensure: [
 		self tearDown.
-		self restoreAnnouncers.
-		self cleanUpInstanceVariables
-	]
+		self cleanUpInstanceVariables ]
 ]
 
 { #category : #running }
 RPackageTestCase >> setUp [
+
 	super setUp.
-	createdClasses := OrderedCollection new.
-	createdPackages := OrderedCollection new.
-	createdCategories := Set new
+	createdClasses := Set new.
+	createdPackages := Set new
 ]
 
-{ #category : #accessing }
-RPackageTestCase >> setupOrganizer [
-	^ self packageOrganizerClass basicNew initialize; debuggingName: 'Organizer for RPackageTest'; yourself
+{ #category : #running }
+RPackageTestCase >> tearDown [
+
+	createdClasses do: [ :cls | cls removeFromSystem ].
+
+	super tearDown
 ]

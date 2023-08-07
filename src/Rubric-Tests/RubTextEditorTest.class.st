@@ -22,6 +22,38 @@ RubTextEditorTest >> setUp [
 ]
 
 { #category : #tests }
+RubTextEditorTest >> testLineIndentationStart [
+
+	| starts |
+	string := 'foo<r>  a b<r><t><t>a<t>b<r><r><r> <t><r> ' expandMacros.
+	editor textArea privateText: string.
+	self assert: editor string equals: string.
+
+	starts := (1 to: string size + 1) collect: [ :i |
+		          editor lineIndentationStart: i ].
+	self
+		assert: starts
+		equals:
+		#( 1 1 1 1 7 7 7 7 7 7 13 13 13 13 13 13 17 18 21 21 21 23 23 )
+]
+
+{ #category : #tests }
+RubTextEditorTest >> testLineStart [
+
+	| starts |
+	string := 'foo<r>  a b<r><t><t>a<t>b<r><r><r> <t><r> ' expandMacros.
+	editor textArea privateText: string.
+	self assert: editor string equals: string.
+
+	starts := (1 to: string size + 1) collect: [ :i |
+		          editor lineStart: i ].
+	self
+		assert: starts
+		equals:
+		#( 1 1 1 1 5 5 5 5 5 5 11 11 11 11 11 11 17 18 19 19 19 22 22 )
+]
+
+{ #category : #tests }
 RubTextEditorTest >> testNextWord [
 
 	| textSize |
@@ -72,6 +104,48 @@ RubTextEditorTest >> testPreviousWord [
 		self assert: (editor previousWord: i) equals: 7 ].
 
 	self assert: (editor previousWord: 999) equals: 7. "Out of range"
+]
+
+{ #category : #tests }
+RubTextEditorTest >> testSelectWord [
+
+	string := '#Lorem #ipsum #dolor #sit #amet'.
+	editor addString: string.
+
+	editor selectWordMark: 0 point: 0.
+	editor selectWord.
+	
+	self assert: editor hasSelection.
+	self assert: editor selection equals: '#Lorem'.
+	
+	editor selectWordMark: 2 point: 4. "Lorem ipsum dolor sit amet >> [Lorem ]ipsum dolor sit amet "
+	editor selectWord.	
+	self assert: editor selection equals: '#Lorem'.
+	
+	editor selectWordMark: 9 point: 11. "Lorem ipsum dolor sit amet >> Lorem [ipsum] dolor sit amet "
+	editor selectWord.		
+	self assert: editor selection equals: '#ipsum'.
+	
+	editor selectWordMark: 9 point: 12. "Lorem ipsum dolor sit amet >> Lorem [ipsum ]dolor sit amet "
+	editor selectWord.	
+	self assert: editor selection equals: '#ipsum'.
+
+	editor selectWordMark: 3 point: 24. "Lorem ipsum dolor sit amet >> [Lorem ipsum dolor sit amet ]"
+	editor selectWord.	
+	self assert: editor selection equals: '#sit'.
+	
+	editor selectWordMark: 1 point: 26. "Lorem ipsum dolor sit amet >> [Lorem ipsum dolor sit amet ]"
+	editor selectWord.	
+	self assert: editor selection equals: '#amet'.
+	
+	editor selectWordMark: 1 point: 1. "Lorem ipsum dolor sit amet >> [Lorem] ipsum dolor sit amet"
+	editor selectWord.	
+	self assert: editor selection equals: '#Lorem'.
+
+	editor selectWordMark: 26 point: 26. "Lorem ipsum dolor sit amet >> Lorem ipsum dolor sit [amet ]"
+	editor selectWord.	
+	self assert: editor selection equals: '#amet'.
+
 ]
 
 { #category : #tests }

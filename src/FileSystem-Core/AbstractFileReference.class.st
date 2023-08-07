@@ -840,13 +840,6 @@ AbstractFileReference >> size [
 	^ self resolve size
 ]
 
-{ #category : #streams }
-AbstractFileReference >> streamWritable: writable do: aBlock [
-	^ writable
-		ifTrue: [ self writeStreamDo: aBlock ]
-		ifFalse: [ self readStreamDo: aBlock ]
-]
-
 { #category : #accessing }
 AbstractFileReference >> targetPath [
 	^ self resolve targetPath

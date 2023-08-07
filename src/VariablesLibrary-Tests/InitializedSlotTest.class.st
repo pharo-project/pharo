@@ -62,6 +62,7 @@ InitializedSlotTest >> testPrintOn [
 { #category : #'tests - read/write' }
 InitializedSlotTest >> testReadWriteCompiled [
 	| slot object|
+	<ignoreNotImplementedSelectors: #(slot1 slot1:)>
 	slot := #slot1 => InitializedSlot default: 5.
 	aClass := self make: [ :builder | builder slots: {slot}].
 	self assert: (aClass hasSlotNamed: #slot1).

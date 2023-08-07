@@ -18,6 +18,11 @@ ClyCritiqueMenuItemMorph >> deselect: sth [
 ]
 
 { #category : #accessing }
+ClyCritiqueMenuItemMorph >> hasIcon [
+	^ false
+]
+
+{ #category : #accessing }
 ClyCritiqueMenuItemMorph >> hasIconOrMarker [
 	^ true
 ]
