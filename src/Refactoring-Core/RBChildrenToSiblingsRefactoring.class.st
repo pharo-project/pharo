@@ -97,7 +97,7 @@ RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in
 		(RBAddMethodTransformation
 			sourceCode: source
 			in: aClass superclass
-			withProtocols: (aClass protocolsFor: aSelector))
+			withProtocol: (aClass protocolsFor: aSelector))
 ]
 
 { #category : #initialization }
@@ -196,7 +196,7 @@ RBChildrenToSiblingsRefactoring >> pushUp: aSelector in: aClass [
 		(RBAddMethodTransformation
 			sourceCode: source
 			in: aClass superclass
-			withProtocols: (aClass protocolsFor: aSelector)) ]
+			withProtocol: (aClass protocolsFor: aSelector)) ]
 ]
 
 { #category : #'private - methods' }

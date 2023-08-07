@@ -35,5 +35,5 @@ RBPrettyPrintCodeTransformation >> privateTransform [
 															(RBAddMethodTransformation
 																sourceCode: formatted
 																in: class
-																withProtocols: (class protocolsFor: selector)) ] ] ] ] ] ]
+																withProtocol: (class protocolsFor: selector)) ] ] ] ] ] ]
 ]

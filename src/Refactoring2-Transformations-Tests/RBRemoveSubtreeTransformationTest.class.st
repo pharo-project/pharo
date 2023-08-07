@@ -93,7 +93,7 @@ RBRemoveSubtreeTransformationTest >> testTransformNotSequenceNode [
 			                   with: (RBAddMethodTransformation
 					                    sourceCode: 'printString1 super printString'
 					                    in: self changeMockClass name
-					                    withProtocols: { #accessing })
+					                    withProtocol: #accessing )
 			                   with: (RBRemoveSubtreeTransformation
 					                    code: 'super printString'
 					                    from: #printString1

@@ -238,7 +238,7 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 										(RBAddMethodTransformation
 											sourceCode: oldSource
 											in: each
-											withProtocols: oldProtocol)]
+											withProtocol: oldProtocol)]
 ]
 
 { #category : #transforming }
@@ -291,7 +291,7 @@ RBPullUpMethodRefactoring >> pullUp: aSelector [
 		(RBAddMethodTransformation
 			sourceCode: source
 			in: targetSuperclass 
-			withProtocols: (class protocolsFor: aSelector))
+			withProtocol: (class protocolsFor: aSelector))
 ]
 
 { #category : #initialization }

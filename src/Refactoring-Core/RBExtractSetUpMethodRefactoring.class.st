@@ -121,7 +121,7 @@ RBExtractSetUpMethodRefactoring >> privateTransform [
 			(RBAddMethodTransformation
 				sourceCode: extractedParseTree newSource
 				in: class
-				withProtocols: #running)].
+				withProtocol: #running)].
 	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
 	class compileTree: modifiedParseTree
 ]

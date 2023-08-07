@@ -89,7 +89,7 @@ RBGeneratePrintOnTransformation >> privateTransform [
 		(RBAddMethodTransformation
 			sourceCode: method formattedCode
 			in: self theClass
-			withProtocols: #printing)
+			withProtocol: #printing)
 ]
 
 { #category : #accessing }

@@ -125,7 +125,7 @@ RBCreateAccessorsForVariableTransformation >> defineGetterMethod [
 					  expandMacrosWith: self selector
 					  with: variableName)
 			 in: self definingClass
-			 withProtocols: #( #accessing )).
+			 withProtocol: #accessing ).
 
 	^ selector
 ]
@@ -145,7 +145,7 @@ RBCreateAccessorsForVariableTransformation >> defineSetterMethod [
 		(RBAddMethodTransformation
 		 	 sourceCode: (string expandMacrosWith: selector with: variableName)
 			 in: definingClass
-		 	 withProtocols: #( #accessing )).
+		 	 withProtocol: #accessing ).
 
 	^selector
 ]

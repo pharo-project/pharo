@@ -95,7 +95,7 @@ RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 				model: self model
 				sourceCode: rbMethod source
 				in: rbClass2
-				withProtocols: rbMethod protocols)
+				withProtocol: rbMethod protocols)
 	]
 ]
 

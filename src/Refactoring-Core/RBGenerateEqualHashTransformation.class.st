@@ -122,7 +122,7 @@ RBGenerateEqualHashTransformation >> compileEqual [
 		(RBAddMethodTransformation
 			sourceCode: method formattedCode
 			in: self theClass
-			withProtocols: #comparing)
+			withProtocol: #comparing)
 ]
 
 { #category : #transforming }
@@ -151,7 +151,7 @@ RBGenerateEqualHashTransformation >> compileHash [
 		(RBAddMethodTransformation
 			sourceCode: method formattedCode
 			in: self theClass
-			withProtocols: #comparing)
+			withProtocol: #comparing)
 ]
 
 { #category : #preconditions }

@@ -26,28 +26,28 @@ Class {
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'transformation',
-		'protocols',
-		'source'
+		'source',
+		'protocol'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
-RBAddMethodRefactoring class >> model: aRBSmalltalk sourceCode: aString in: aClass withProtocols: protocolList [
+RBAddMethodRefactoring class >> model: aRBSmalltalk sourceCode: aString in: aClass withProtocol: aProtocol [
 	^ self new
 		model: aRBSmalltalk;
 		sourceCode: aString
 			in: aClass
-			withProtocols: protocolList;
+			withProtocol: aProtocol;
 		yourself
 ]
 
 { #category : #'instance creation' }
-RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocols: protocolList [
+RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocol: aProtocol [
 	^ self new
 		sourceCode: aString
 		in: aClass
-		withProtocols: protocolList
+		withProtocol: aProtocol
 ]
 
 { #category : #preconditions }
@@ -65,15 +65,15 @@ RBAddMethodRefactoring >> privateTransform [
 ]
 
 { #category : #initialization }
-RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocols: protocolList [
+RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocol: aProtocol [
 	class := self classObjectFor: aClass.
 	source := aString.
-	protocols := protocolList.
+	protocol := aProtocol.
 	transformation := RBAddMethodTransformation
 								model: model
 								sourceCode: aString
 								in: aClass
-								withProtocols: protocolList 
+								withProtocol: aProtocol 
 ]
 
 { #category : #printing }
@@ -81,11 +81,11 @@ RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
-		nextPutAll: ' addMethod: ''';
+		nextPutAll: ' sourceCode: ''';
 		nextPutAll: source;
-		nextPutAll: ''' toClass: '.
+		nextPutAll: ''' in: '.
 	class storeOn: aStream.
-	aStream nextPutAll: ' inProtocols: '.
-	protocols storeOn: aStream.
+	aStream nextPutAll: ' withProtocol: '.
+	protocol storeOn: aStream.
 	aStream nextPut: $)
 ]

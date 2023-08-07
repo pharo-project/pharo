@@ -171,7 +171,7 @@ RBDeprecateMethodRefactoring >> privateTransform [
 		(RBAddMethodTransformation
 			 sourceCode: parseTree newSource
 			 in: class
-			 withProtocols: method protocols)
+			 withProtocol: method protocols)
 ]
 
 { #category : #printing }

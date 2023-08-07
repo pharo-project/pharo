@@ -58,7 +58,7 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 		(RBAddMethodTransformation
 			sourceCode: rbMethod source
 			in: aClass
-			withProtocols: protocol)
+			withProtocol: protocol)
 ]
 
 { #category : #preconditions }

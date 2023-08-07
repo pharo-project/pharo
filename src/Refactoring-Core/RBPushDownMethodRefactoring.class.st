@@ -105,7 +105,7 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 				(RBAddMethodTransformation
 					sourceCode: code
 					in: each
-					withProtocols: protocols) ] ]
+					withProtocol: protocols) ] ]
 ]
 
 { #category : #initialization }

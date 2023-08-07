@@ -18,30 +18,30 @@ Class {
 	#superclass : #RBMethodTransformation,
 	#instVars : [
 		'sourceCode',
-		'protocols',
-		'rbMethod'
+		'rbMethod',
+		'protocol'
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
-RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocols: aCollection [
+RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocol: aProtocol [
 
 	^ self new
 		model: aRBModel;
 		sourceCode: aString
 		in: aClass
-		withProtocols: aCollection;
+		withProtocol: aProtocol;
 		yourself
 ]
 
 { #category : #api }
-RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols: aCollection [
+RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocol: aProtocol [
 
 	^ self new
 		sourceCode: aString
 		in: aClass
-		withProtocols: aCollection;
+		withProtocol: aProtocol;
 		yourself
 ]
 
@@ -70,7 +70,7 @@ RBAddMethodTransformation >> privateTransform [
 
 	self definingClass
 		compile: sourceCode
-		classified: protocols asArray
+		classified: protocol
 ]
 
 { #category : #accessing }
@@ -80,11 +80,11 @@ RBAddMethodTransformation >> selector [
 ]
 
 { #category : #api }
-RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocols: symbols [
+RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocol: aSymbol [
 
 	self className: aClassName.
 	sourceCode := aString.
-	protocols := symbols
+	protocol := aSymbol
 ]
 
 { #category : #printing }
@@ -97,7 +97,7 @@ RBAddMethodTransformation >> storeOn: aStream [
 	aStream nextPutAll: ''' in: '.
 	class storeOn: aStream.
 	aStream
-		nextPutAll: ' withProtocols: '.
-	protocols storeOn: aStream.
+		nextPutAll: ' withProtocol: '.
+	protocol storeOn: aStream.
 	aStream nextPut: $)
 ]

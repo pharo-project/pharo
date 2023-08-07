@@ -42,7 +42,7 @@ RBDeprecateClassRefactoring >> addMethod: source to: aClass in: aProtocol [
 		(RBAddMethodTransformation
 			sourceCode: source
 			in: aClass
-			withProtocols: aProtocol)
+			withProtocol: aProtocol)
 ]
 
 { #category : #initialization }

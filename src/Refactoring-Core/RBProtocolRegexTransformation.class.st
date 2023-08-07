@@ -21,5 +21,5 @@ RBProtocolRegexTransformation >> privateTransform [
 																(RBAddMethodTransformation
 																	sourceCode: (class sourceCodeFor: selector)
 																	in: class
-																	withProtocols: replacement)] ] ] ]
+																	withProtocol: replacement)] ] ] ]
 ]

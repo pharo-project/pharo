@@ -51,7 +51,7 @@ RBMakeClassAbstractTransformation >> privateTransform [
 
 	^ self == ' , targetClass asString
 		 in: targetClass classSide
-		 withProtocols: #( #testing )) execute
+		 withProtocol: #testing) execute
 ]
 
 { #category : #preconditions }

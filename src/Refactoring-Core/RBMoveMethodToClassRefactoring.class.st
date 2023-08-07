@@ -69,7 +69,7 @@ RBMoveMethodToClassRefactoring >> privateTransform [
 		(RBAddMethodTransformation
 			sourceCode: rbMethod source
 			in: newClass
-			withProtocols: originalProtocol)
+			withProtocol: originalProtocol)
 ]
 
 { #category : #printing }

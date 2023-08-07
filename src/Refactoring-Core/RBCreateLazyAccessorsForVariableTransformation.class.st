@@ -110,7 +110,7 @@ RBCreateLazyAccessorsForVariableTransformation >> defineGetterMethod [
 					  with: variableName
 					  with: self defaultValue)
 			 in: self definingClass
-			 withProtocols: #( #accessing )).
+			 withProtocol: #accessing).
 
 	^ selector
 ]

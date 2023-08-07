@@ -40,7 +40,7 @@ RBClassRegexRefactoring >> copyFrom: aSourceClass to: aTargetClass [
 			(RBAddMethodTransformation
 				sourceCode: (aSourceClass sourceCodeFor: each)
 				in: aTargetClass
-				withProtocols: (aSourceClass protocolsFor: each))]
+				withProtocol: (aSourceClass protocolsFor: each))]
 ]
 
 { #category : #transforming }

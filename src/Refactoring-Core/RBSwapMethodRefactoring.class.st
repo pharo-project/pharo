@@ -50,7 +50,7 @@ RBSwapMethodRefactoring >> privateTransform [
 		(RBAddMethodTransformation
 			sourceCode: (class sourceCodeFor: selector)
 			in: target
-			withProtocols: (class protocolsFor: selector)).
+			withProtocol: (class protocolsFor: selector)).
 	class removeMethod: selector
 ]
 

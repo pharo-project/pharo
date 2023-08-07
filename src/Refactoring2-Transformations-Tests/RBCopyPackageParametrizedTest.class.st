@@ -22,7 +22,7 @@ RBCopyPackageParametrizedTest >> addMethodWithRefTo: classRefName inClass: class
 					  << '	^ ';
 					  << classRefName ])
 		 in: className asSymbol
-		 withProtocols: { #accessing }) execute
+		 withProtocol: #accessing ) execute
 ]
 
 { #category : #accessing }

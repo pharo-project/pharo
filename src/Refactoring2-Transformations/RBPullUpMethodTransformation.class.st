@@ -228,7 +228,7 @@ RBPullUpMethodTransformation >> copyDownMethod: aSelector [
 			model: self model
 			sourceCode: oldSource
 			in: each
-			withProtocols: oldProtocol])
+			withProtocol: oldProtocol])
 ]
 
 { #category : #executing }
@@ -252,7 +252,7 @@ RBPullUpMethodTransformation >> pullUp: aSelector [
 		model: self model
 		sourceCode: source
 		in: targetSuperclass
-		withProtocols: (class protocolsFor: aSelector))
+		withProtocol: (class protocolsFor: aSelector))
 ]
 
 { #category : #api }

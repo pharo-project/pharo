@@ -172,7 +172,7 @@ RBExtractMethodTransformationTest >> testTransform [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 		                   in: self changeMockClass name
-		                   withProtocols: { #accessing }) primitiveExecute.
+		                   withProtocol: #accessing ) primitiveExecute.
 
 	transformation := (RBExtractMethodTransformation
 		                   model: transformation model

@@ -43,7 +43,7 @@ RBSourceRegexTransformation >> privateTransform [
 											(RBAddMethodTransformation
 												sourceCode: replacement
 												in: class
-												withProtocols: protocols)
+												withProtocol: protocols)
 									]
 							]
 					]

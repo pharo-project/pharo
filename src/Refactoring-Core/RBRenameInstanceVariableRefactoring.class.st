@@ -157,7 +157,7 @@ RBRenameInstanceVariableRefactoring >> renameAccessorsReferences [
 								(RBAddMethodTransformation
 									sourceCode: each source
 									in: (model classNamed: class name)
-									withProtocols: each protocols) ] ]
+									withProtocol: each protocols) ] ]
 ]
 
 { #category : #transforming }
