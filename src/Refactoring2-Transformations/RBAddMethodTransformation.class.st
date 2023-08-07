@@ -59,12 +59,10 @@ RBAddMethodTransformation >> applicabilityConditions [
 	^ self trueCondition
 ]
 
-{ #category : #preconditions }
-RBAddMethodTransformation >> breakingChangeConditions [ 
+{ #category : #accessing }
+RBAddMethodTransformation >> method [
 
-	^ (RBCondition
-		canUnderstand: rbMethod selector
-		in: self definingClass) not
+	^ rbMethod 
 ]
 
 { #category : #executing }
@@ -73,6 +71,12 @@ RBAddMethodTransformation >> privateTransform [
 	self definingClass
 		compile: sourceCode
 		classified: protocols asArray
+]
+
+{ #category : #accessing }
+RBAddMethodTransformation >> selector [
+
+	^ rbMethod selector
 ]
 
 { #category : #api }

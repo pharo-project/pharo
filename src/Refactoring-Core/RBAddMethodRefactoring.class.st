@@ -55,11 +55,11 @@ RBAddMethodRefactoring >> addMethod: aString toClass: aClass inProtocols: protoc
 	class := self classObjectFor: aClass.
 	source := aString.
 	protocols := protocolList.
-	transformation := RBAddMethodTransformRefactoring
+	transformation := RBAddMethodTransformation
 								model: model
-								addMethod: aString
-								toClass: aClass
-								inProtocols: protocolList 
+								sourceCode: aString
+								in: aClass
+								withProtocols: protocolList 
 ]
 
 { #category : #preconditions }
