@@ -315,13 +315,10 @@ RPackage >> classes [
 ]
 
 { #category : #'class tags' }
-RPackage >> classesForClassTag: aSymbol [
+RPackage >> classesForClassTag: aTagName [
 	"Returns the classes tagged using aSymbol"
 
-	^ (self
-		classTagNamed: (self toTagName: aSymbol)
-		ifAbsent: [ ^ #() ])
-		classes
+	^ (self classTagNamed: aTagName ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : #queries }
@@ -872,7 +869,7 @@ RPackage >> removeClass: aClass [
 RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 
 	| tag |
-	tag := self classTagNamed: (self toTagName: aSymbol) ifAbsent: [ ^ self ].
+	tag := self classTagNamed: aSymbol ifAbsent: [ ^ self ].
 	tag removeClass: aClass.
 	tag isEmpty ifTrue: [ self basicRemoveTag: tag ]
 ]
