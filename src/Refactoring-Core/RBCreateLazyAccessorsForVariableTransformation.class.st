@@ -109,8 +109,8 @@ RBCreateLazyAccessorsForVariableTransformation >> defineGetterMethod [
 					  expandMacrosWith: self selector
 					  with: variableName
 					  with: self defaultValue)
-			 toClass: self definingClass
-			 inProtocols: #( #accessing )).
+			 in: self definingClass
+			 withProtocols: #( #accessing )).
 
 	^ selector
 ]

@@ -10,7 +10,7 @@ RBAddMethodTransformationParametrizedTest class >> testParameters [
 		addCase: { #rbClass -> RBAddMethodTransformation .
 					  #constructor -> #sourceCode:in:withProtocols: };
 		addCase: { #rbClass -> RBAddMethodRefactoring .
-					  #constructor -> #addMethod:toClass:inProtocols: };
+					  #constructor -> #sourceCode:in:withProtocols: };
 		yourself
 ]
 

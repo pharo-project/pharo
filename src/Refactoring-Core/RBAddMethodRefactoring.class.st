@@ -33,33 +33,21 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBAddMethodRefactoring class >> addMethod: aString toClass: aClass inProtocols: protocolList [
-	^ self new
-		addMethod: aString
-		toClass: aClass
-		inProtocols: protocolList
-]
-
-{ #category : #'instance creation' }
-RBAddMethodRefactoring class >> model: aRBSmalltalk addMethod: aString toClass: aClass inProtocols: protocolList [
+RBAddMethodRefactoring class >> model: aRBSmalltalk sourceCode: aString in: aClass withProtocols: protocolList [
 	^ self new
 		model: aRBSmalltalk;
-		addMethod: aString
-			toClass: aClass
-			inProtocols: protocolList;
+		sourceCode: aString
+			in: aClass
+			withProtocols: protocolList;
 		yourself
 ]
 
-{ #category : #initialization }
-RBAddMethodRefactoring >> addMethod: aString toClass: aClass inProtocols: protocolList [
-	class := self classObjectFor: aClass.
-	source := aString.
-	protocols := protocolList.
-	transformation := RBAddMethodTransformation
-								model: model
-								sourceCode: aString
-								in: aClass
-								withProtocols: protocolList 
+{ #category : #'instance creation' }
+RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocols: protocolList [
+	^ self new
+		sourceCode: aString
+		in: aClass
+		withProtocols: protocolList
 ]
 
 { #category : #preconditions }
@@ -74,6 +62,18 @@ RBAddMethodRefactoring >> preconditions [
 RBAddMethodRefactoring >> privateTransform [
 
 	transformation privateTransform
+]
+
+{ #category : #initialization }
+RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocols: protocolList [
+	class := self classObjectFor: aClass.
+	source := aString.
+	protocols := protocolList.
+	transformation := RBAddMethodTransformation
+								model: model
+								sourceCode: aString
+								in: aClass
+								withProtocols: protocolList 
 ]
 
 { #category : #printing }
