@@ -246,6 +246,12 @@ RPackageTag >> renameTo: aString category: categoryName [
 		self organizer renameCategory: oldName toBe: categoryName ]
 ]
 
+{ #category : #accessing }
+RPackageTag >> rootTagName [
+
+	^ self package rootTagName
+]
+
 { #category : #private }
 RPackageTag >> toCategoryName: aString [
 	^ aString = self packageName
