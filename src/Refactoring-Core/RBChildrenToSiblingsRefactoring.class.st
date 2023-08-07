@@ -94,10 +94,10 @@ RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in
 	source := self subclassResponsibilityFor: aSelector in: aClass.
 	source ifNil: [ ^ self ].
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: source
-			toClass: aClass superclass
-			inProtocols: (aClass protocolsFor: aSelector))
+		(RBAddMethodTransformation
+			sourceCode: source
+			in: aClass superclass
+			withProtocols: (aClass protocolsFor: aSelector))
 ]
 
 { #category : #initialization }
@@ -193,10 +193,10 @@ RBChildrenToSiblingsRefactoring >> pushUp: aSelector in: aClass [
 	source := aClass sourceCodeFor: aSelector.
 	source
 		ifNotNil: [ 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: source
-			toClass: aClass superclass
-			inProtocols: (aClass protocolsFor: aSelector)) ]
+		(RBAddMethodTransformation
+			sourceCode: source
+			in: aClass superclass
+			withProtocols: (aClass protocolsFor: aSelector)) ]
 ]
 
 { #category : #'private - methods' }

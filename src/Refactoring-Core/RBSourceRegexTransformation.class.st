@@ -40,10 +40,10 @@ RBSourceRegexTransformation >> privateTransform [
 									( self parseSelector: replacement ) = selector
 										ifFalse: [ class removeMethod: selector ].
 										self generateChangesFor:
-											(RBAddMethodTransformRefactoring
-												addMethod: replacement
-												toClass: class
-												inProtocols: protocols)
+											(RBAddMethodTransformation
+												sourceCode: replacement
+												in: class
+												withProtocols: protocols)
 									]
 							]
 					]

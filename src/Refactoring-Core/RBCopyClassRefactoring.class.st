@@ -91,11 +91,11 @@ RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	rbClass1 selectors do: [ :symbol | | rbMethod |
 		rbMethod := rbClass1 methodFor: symbol.
 		self generateChangesFor:
-			(RBAddMethodTransformRefactoring 
+			(RBAddMethodTransformation
 				model: self model
-				addMethod: rbMethod source
-				toClass: rbClass2
-				inProtocols: rbMethod protocols)
+				sourceCode: rbMethod source
+				in: rbClass2
+				withProtocols: rbMethod protocols)
 	]
 ]
 

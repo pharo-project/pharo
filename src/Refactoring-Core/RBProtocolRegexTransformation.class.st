@@ -18,8 +18,8 @@ RBProtocolRegexTransformation >> privateTransform [
 			(class realClass protocolNameOfSelector: selector) asString ifNotNil: [ :original |
 				replacement := self execute: original.
 				replacement = original ifFalse: [ self generateChangesFor:
-																(RBAddMethodTransformRefactoring
-																	addMethod: (class sourceCodeFor: selector)
-																	toClass: class
-																	inProtocols: replacement)] ] ] ]
+																(RBAddMethodTransformation
+																	sourceCode: (class sourceCodeFor: selector)
+																	in: class
+																	withProtocols: replacement)] ] ] ]
 ]

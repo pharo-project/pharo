@@ -55,10 +55,10 @@ RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol: protocol [
 	aClass addMethod: rbMethod.
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: rbMethod source
-			toClass: aClass
-			inProtocols: protocol)
+		(RBAddMethodTransformation
+			sourceCode: rbMethod source
+			in: aClass
+			withProtocols: protocol)
 ]
 
 { #category : #preconditions }

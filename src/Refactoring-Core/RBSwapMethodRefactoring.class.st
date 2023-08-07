@@ -47,10 +47,10 @@ RBSwapMethodRefactoring >> preconditions [
 RBSwapMethodRefactoring >> privateTransform [
 
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: (class sourceCodeFor: selector)
-			toClass: target
-			inProtocols: (class protocolsFor: selector)).
+		(RBAddMethodTransformation
+			sourceCode: (class sourceCodeFor: selector)
+			in: target
+			withProtocols: (class protocolsFor: selector)).
 	class removeMethod: selector
 ]
 

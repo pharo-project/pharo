@@ -119,10 +119,10 @@ RBGenerateEqualHashTransformation >> compileEqual [
 		addNode: statement;
 		addReturn.
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: method formattedCode
-			toClass: self theClass
-			inProtocols: #comparing)
+		(RBAddMethodTransformation
+			sourceCode: method formattedCode
+			in: self theClass
+			withProtocols: #comparing)
 ]
 
 { #category : #transforming }
@@ -148,10 +148,10 @@ RBGenerateEqualHashTransformation >> compileHash [
 		addNode: statement;
 		addReturn.
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: method formattedCode
-			toClass: self theClass
-			inProtocols: #comparing)
+		(RBAddMethodTransformation
+			sourceCode: method formattedCode
+			in: self theClass
+			withProtocols: #comparing)
 ]
 
 { #category : #preconditions }

@@ -32,8 +32,8 @@ RBPrettyPrintCodeTransformation >> privateTransform [
 												and: [ (self parserClass parseMethod: formatted) = tree ])
 												ifTrue:
 													[ 	self generateChangesFor:
-															(RBAddMethodTransformRefactoring
-																addMethod: formatted
-																toClass: class
-																inProtocols: (class protocolsFor: selector)) ] ] ] ] ] ]
+															(RBAddMethodTransformation
+																sourceCode: formatted
+																in: class
+																withProtocols: (class protocolsFor: selector)) ] ] ] ] ] ]
 ]

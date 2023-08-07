@@ -102,10 +102,10 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 	self allClasses do: [ :each |
 		(each directlyDefinesMethod: aSelector) ifFalse: [
 			self generateChangesFor:
-				(RBAddMethodTransformRefactoring
-					addMethod: code
-					toClass: each
-					inProtocols: protocols) ] ]
+				(RBAddMethodTransformation
+					sourceCode: code
+					in: each
+					withProtocols: protocols) ] ]
 ]
 
 { #category : #initialization }
