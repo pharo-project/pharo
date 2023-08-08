@@ -8,41 +8,49 @@ Class {
 RBMoveClassTransformationTest >> testBadCategoryName [
 
 	self shouldFail: (RBMoveClassTransformation
-							move: self class name
-							to: #'Refactoring2-Transformations-Test')
-							asRefactoring
+			 move: self class name
+			 to: #'Refactoring2-Transformations-Test')
 ]
 
 { #category : #tests }
 RBMoveClassTransformationTest >> testRefactoring [
 
 	| transformation class |
-	self assert: self class category equals: #'Refactoring2-Transformations-Tests-Test'.
+	self
+		assert: self class category
+		equals: #'Refactoring2-Transformations-Tests-Test'.
 
 	transformation := (RBMoveClassTransformation
-							move: self class name
-							to: #'Refactoring2-Transformations-Utilities')
-							asRefactoring transform.
+		                   move: self class name
+		                   to: #'Refactoring2-Transformations-Utilities')
+		                  primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self class name.
-	self assert: class category equals: #'Refactoring2-Transformations-Utilities'
+	self
+		assert: class category
+		equals: #'Refactoring2-Transformations-Utilities'
 ]
 
 { #category : #tests }
 RBMoveClassTransformationTest >> testTransform [
 
 	| transformation class |
-	self assert: self changeMockClass category equals: #'Refactoring-Tests-Changes'.
+	self
+		assert: self changeMockClass category
+		equals: #'Refactoring-Tests-Changes'.
 
 	transformation := (RBMoveClassTransformation
-							move: self changeMockClass name
-							to: #'Refactoring2-Transformations-Test')
-							transform.
+		                   move: self changeMockClass name
+		                   to: #'Refactoring2-Transformations-Tests-Test')
+		                  primitiveExecute.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed: self changeMockClass name asSymbol.
-	self assert: class category equals: #'Refactoring2-Transformations-Test'
+	class := transformation model classNamed:
+		         self changeMockClass name asSymbol.
+	self
+		assert: class category
+		equals: #'Refactoring2-Transformations-Tests-Test'
 ]

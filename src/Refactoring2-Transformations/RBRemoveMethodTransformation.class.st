@@ -150,12 +150,6 @@ RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 		ifNone: [nil]) isNil" each isVariable and: [ each name = 'self' ] ]
 ]
 
-{ #category : #preconditions }
-RBRemoveMethodTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveMethodTransformation >> privateTransform [
 

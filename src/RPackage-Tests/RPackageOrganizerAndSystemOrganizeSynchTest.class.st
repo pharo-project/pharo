@@ -37,17 +37,6 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingCategory [
 ]
 
 { #category : #tests }
-RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingCategoryWithoutDashDoesNotCreateTag [
-	"Regression test because creating a category without dash was creating a tag of the same name which is wrong."
-
-	self packageOrganizer addCategory: self packageName.
-
-	self assert: (self packageOrganizer packageNames includes: self packageName).
-	self assert: (self packageOrganizer includesCategory: self packageName).
-	self assertEmpty: (self packageOrganizer packageNamed: self packageName) classTags
-]
-
-{ #category : #tests }
 RPackageOrganizerAndSystemOrganizeSynchTest >> testRemovingCategory [
 	"Regression test because removing a category corresponding to a tag from the system organizer was not removing the package tag from the system oprganizer."
 

@@ -79,12 +79,6 @@ RBAddAssignmentTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #preconditions }
-RBAddAssignmentTransformation >> preconditions [
-
-	^ self applicabilityConditions
-]
-
 { #category : #executing }
 RBAddAssignmentTransformation >> privateTransform [
 	"if the variable was previously assigned, the transformation adds

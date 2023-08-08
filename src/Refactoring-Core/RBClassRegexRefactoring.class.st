@@ -37,10 +37,10 @@ RBClassRegexRefactoring >> copyFrom: aSourceClass to: aTargetClass [
 			do: [ :each | aTargetClass addPoolDictionary: each ] ].
 	aSourceClass selectors do: [ :each |
 		self generateChangesFor:
-			(RBAddMethodTransformRefactoring
-				addMethod: (aSourceClass sourceCodeFor: each)
-				toClass: aTargetClass
-				inProtocols: (aSourceClass protocolsFor: each))]
+			(RBAddMethodTransformation
+				sourceCode: (aSourceClass sourceCodeFor: each)
+				in: aTargetClass
+				withProtocol: (aSourceClass protocolsFor: each))]
 ]
 
 { #category : #transforming }
@@ -84,6 +84,19 @@ RBClassRegexRefactoring >> initialize [
 ]
 
 { #category : #transforming }
+RBClassRegexRefactoring >> privateTransform [
+	| replacement refactoring |
+	self model allClassesDo: [ :class |
+		(class isNil or: [ class isMeta ]) ifFalse: [
+			replacement := self execute: class name.
+			replacement = class name asString ifFalse: [
+				refactoring := self perform: mode
+					with: class with: replacement asSymbol.
+				(refactoring notNil and: [ refactoring preconditions check ])
+					ifTrue: [ refactoring privateTransform ] ] ] ]
+]
+
+{ #category : #transforming }
 RBClassRegexRefactoring >> rename: aClass name: aSymbol [
 	^ RBRenameClassRefactoring
 		model: self model
@@ -104,17 +117,4 @@ RBClassRegexRefactoring >> rootClass [
 { #category : #initialization }
 RBClassRegexRefactoring >> rootClass: aClass [
 	rootClass := aClass instanceSide
-]
-
-{ #category : #transforming }
-RBClassRegexRefactoring >> transform [
-	| replacement refactoring |
-	self model allClassesDo: [ :class |
-		(class isNil or: [ class isMeta ]) ifFalse: [
-			replacement := self execute: class name.
-			replacement = class name asString ifFalse: [
-				refactoring := self perform: mode
-					with: class with: replacement asSymbol.
-				(refactoring notNil and: [ refactoring preconditions check ])
-					ifTrue: [ refactoring transform ] ] ] ]
 ]

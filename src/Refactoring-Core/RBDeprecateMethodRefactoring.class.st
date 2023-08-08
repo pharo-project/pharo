@@ -131,7 +131,7 @@ RBDeprecateMethodRefactoring >> generateChanges [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
 
-	self transform.
+	self privateTransform.
 	^ self changes
 ]
 
@@ -158,6 +158,22 @@ RBDeprecateMethodRefactoring >> preconditions [
 	^ self applicabilityConditions & self breakingChangeConditions
 ]
 
+{ #category : #transforming }
+RBDeprecateMethodRefactoring >> privateTransform [
+
+	| node parseTree method |
+	method := class methodFor: oldSelector.
+	parseTree := method parseTree.
+	node := self parserClass parseExpression: self callDeprecationMethod.
+	parseTree body addNodeFirst: node.
+
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			 sourceCode: parseTree newSource
+			 in: class
+			 withProtocol: method protocols)
+]
+
 { #category : #printing }
 RBDeprecateMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
@@ -171,20 +187,4 @@ RBDeprecateMethodRefactoring >> storeOn: aStream [
 		nextPutAll: ' using: #';
 		nextPutAll: newSelector.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBDeprecateMethodRefactoring >> transform [
-
-	| node parseTree method |
-	method := class methodFor: oldSelector.
-	parseTree := method parseTree.
-	node := self parserClass parseExpression: self callDeprecationMethod.
-	parseTree body addNodeFirst: node.
-
-	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			 addMethod: parseTree newSource
-			 toClass: class
-			 inProtocols: method protocols)
 ]

@@ -24,7 +24,7 @@ RBPushDownMethodParametrizedTest >> testFailurePushDownMethodOnNonAbstractClass 
 	refactoring := self createRefactoringWithArguments: {
 			               #( #isArray ).
 			               Array }.
-	self shouldFail: refactoring asRefactoring
+	self shouldFail: refactoring
 ]
 
 { #category : #'failure tests' }
@@ -48,7 +48,7 @@ RBPushDownMethodParametrizedTest >> testFailurePushDownMethodSubclassesReferToSe
 		               model: model
 		               pushDown: #( #yourself )
 		               from: (model classNamed: #Superclass).
-	self shouldFail: refactoring asRefactoring
+	self shouldFail: refactoring
 ]
 
 { #category : #'failure tests' }
@@ -58,34 +58,37 @@ RBPushDownMethodParametrizedTest >> testFailurePushDownNonExistantMenu [
 	refactoring := self createRefactoringWithArguments: {
 			               #( #someMethodThatDoesNotExist ).
 			               RBLintRuleTestData }.
-	self shouldFail: refactoring asRefactoring
+	self shouldFail: refactoring
 ]
 
 { #category : #tests }
 RBPushDownMethodParametrizedTest >> testPushDownMethod [
+
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:
-		{ #(#name: ) . RBLintRuleTestData }.
-	self executeRefactoring: refactoring asRefactoring.
+	refactoring := self createRefactoringWithArguments: {
+			               #( #name: ).
+			               RBLintRuleTestData }.
+	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #name:).
-	class subclasses do:
-		[ :each |
-		self assert: (each parseTreeForSelector: #name:)
+	class subclasses do: [ :each |
+		self
+			assert: (each parseTreeForSelector: #name:)
 			equals: (self parseMethod: 'name: aString name := aString') ]
 ]
 
 { #category : #tests }
 RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictionary [
+
 	| refactoring class parseTree |
 	parseTree := RBLintRuleTestData parseTreeForSelector: #junk.
-	refactoring := self createRefactoringWithArguments:
-		{ #(#junk ) . RBLintRuleTestData }.
-	self executeRefactoring: refactoring asRefactoring.
+	refactoring := self createRefactoringWithArguments: {
+			               #( #junk ).
+			               RBLintRuleTestData }.
+	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #junk).
-	class subclasses do:
-		[ :each |
+	class subclasses do: [ :each |
 		self assert: (each parseTreeForSelector: #junk) equals: parseTree.
 		self assert: (each definesPoolDictionary: 'TextConstants' asSymbol) ]
 ]

@@ -43,20 +43,20 @@ RBMakeClassAbstractTransformation >> preconditions [
 	^ self skippingPreconditions
 ]
 
+{ #category : #transforming }
+RBMakeClassAbstractTransformation >> privateTransform [
+
+	(RBAddMethodTransformation
+		 sourceCode: 'isAbstract
+
+	^ self == ' , targetClass asString
+		 in: targetClass classSide
+		 withProtocol: #testing) execute
+]
+
 { #category : #preconditions }
 RBMakeClassAbstractTransformation >> skippingPreconditions [
 	"We cannot validate that the class is actually not used and not receiving a message new."
 	
 	^ (RBCondition isAbstractClass: targetClass) not
-]
-
-{ #category : #transforming }
-RBMakeClassAbstractTransformation >> transform [
-
-	(RBAddMethodTransformRefactoring
-		 addMethod: 'isAbstract
-
-	^ self == ' , targetClass asString
-		 toClass: targetClass classSide
-		 inProtocols: #( #testing )) execute
 ]

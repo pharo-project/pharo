@@ -48,18 +48,12 @@ RBMoveInstanceVariableToClassParametrizedTest >> testRefactoring [
 	self assert:
 		(oldClass directlyDefinesInstanceVariable: 'methodBlock').
 	self deny: (newClass directlyDefinesInstanceVariable: 'methodBlock').
-	self shouldFail: refactoring.
-	
-	"This test is now expected to fail since transform raises non-resumable RBRefactoringError.
-	The test expected resumable RBRefactoringError to be raised and we changed this in #13367.
-	Previously it would catch RBRefactoringError and resume."
-	"[ refactoring transform ]
-		on: RBRefactoringWarning
-		do: [ :e | e resume ].
+
+	refactoring primitiveExecute.
 	self assert: refactoring model changes changes size equals: 2.
 	oldClass := refactoring model classNamed: #RBBasicLintRuleTestData.
 	newClass := refactoring model classNamed: #RBFooLintRuleTestData.
 	self deny: (oldClass directlyDefinesInstanceVariable: 'methodBlock').
 	self assert:
-		(newClass directlyDefinesInstanceVariable: 'methodBlock')"
+		(newClass directlyDefinesInstanceVariable: 'methodBlock')
 ]

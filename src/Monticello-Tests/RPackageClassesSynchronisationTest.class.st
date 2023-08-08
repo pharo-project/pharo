@@ -311,7 +311,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUpdateTheOrganizerMappings 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self organizer environment removeClassNamed: 'NewClass'.
-	self deny: (self organizer includesPackageBackPointerForClass: class)
+	self deny: (self organizer packageOf: class) isNil
 ]
 
 { #category : #'tests - operations on classes' }
@@ -419,7 +419,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackage
 
 	class rename: 'RPackageNewStubClass'.
 
-	self assert: (self organizer packageOfClassNamed: 'RPackageNewStubClass' asSymbol) equals: XPackage.
+	self assert: (self organizer packageOf: class) equals: XPackage.
 	self assert: (self organizer packageOfClassNamed: 'RPackageOldStubClass' asSymbol) equals: nil
 ]
 

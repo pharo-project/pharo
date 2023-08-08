@@ -18,35 +18,36 @@ Class {
 	#superclass : #RBMethodTransformation,
 	#instVars : [
 		'sourceCode',
-		'protocols'
+		'rbMethod',
+		'protocol'
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
-RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocols: aCollection [
+RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocol: aProtocol [
 
 	^ self new
 		model: aRBModel;
 		sourceCode: aString
 		in: aClass
-		withProtocols: aCollection;
+		withProtocol: aProtocol;
 		yourself
 ]
 
 { #category : #api }
-RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols: aCollection [
+RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocol: aProtocol [
 
 	^ self new
 		sourceCode: aString
 		in: aClass
-		withProtocols: aCollection;
+		withProtocol: aProtocol;
 		yourself
 ]
 
 { #category : #preconditions }
 RBAddMethodTransformation >> applicabilityConditions [
-	| rbMethod |
+
 	rbMethod := self parserClass
 		parseMethod: sourceCode
 		onError: [ :string :position |
@@ -55,15 +56,13 @@ RBAddMethodTransformation >> applicabilityConditions [
 						refactoringError: 'The content of this method cannot be parsed.' ] ].
 	rbMethod selector
 		ifNil: [ self refactoringError: 'The method has no selector.' ].
-	^ (RBCondition
-		canUnderstand: rbMethod selector
-		in: self definingClass) not
+	^ self trueCondition
 ]
 
-{ #category : #preconditions }
-RBAddMethodTransformation >> preconditions [
-	
-	^ self applicabilityConditions 
+{ #category : #accessing }
+RBAddMethodTransformation >> method [
+
+	^ rbMethod 
 ]
 
 { #category : #executing }
@@ -71,15 +70,21 @@ RBAddMethodTransformation >> privateTransform [
 
 	self definingClass
 		compile: sourceCode
-		classified: protocols asArray
+		classified: protocol
+]
+
+{ #category : #accessing }
+RBAddMethodTransformation >> selector [
+
+	^ rbMethod selector
 ]
 
 { #category : #api }
-RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocols: symbols [
+RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocol: aSymbol [
 
 	self className: aClassName.
 	sourceCode := aString.
-	protocols := symbols
+	protocol := aSymbol
 ]
 
 { #category : #printing }
@@ -92,7 +97,7 @@ RBAddMethodTransformation >> storeOn: aStream [
 	aStream nextPutAll: ''' in: '.
 	class storeOn: aStream.
 	aStream
-		nextPutAll: ' withProtocols: '.
-	protocols storeOn: aStream.
+		nextPutAll: ' withProtocol: '.
+	protocol storeOn: aStream.
 	aStream nextPut: $)
 ]

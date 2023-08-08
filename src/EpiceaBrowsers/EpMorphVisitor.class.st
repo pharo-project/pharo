@@ -34,12 +34,6 @@ EpMorphVisitor >> displayBrowserOperation: aBrowserOperationEvent [
 ]
 
 { #category : #private }
-EpMorphVisitor >> displayCategory: aCategoryName [
-
-	^ (self displayOperation: 'Package tag'), (self displayString: aCategoryName asString)
-]
-
-{ #category : #private }
 EpMorphVisitor >> displayClass: aClassName protocol: aProtocolName [
 
 	^ (self displayBehavior: aClassName), (self displayOperation: 'protocol'), (self displayString: aProtocolName)
@@ -69,6 +63,12 @@ EpMorphVisitor >> displayString: aString [
 EpMorphVisitor >> displayString: aString color: aColor [
 
 	^ { self morphFactory stringFor: aString color: aColor }
+]
+
+{ #category : #private }
+EpMorphVisitor >> displayTag: aTagName inPackage: aPackageName [
+
+	^ (self displayOperation: 'Tag') , (self displayString: aTagName) , (self displayOperation: ' in package') , (self displayString: aPackageName)
 ]
 
 { #category : #private }
@@ -107,27 +107,6 @@ EpMorphVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 		(self displayBehavior: aClassRenamedChange oldName),
 		(self displayOperation: 'as'),
 		(self displayString: aClassRenamedChange newName)
-]
-
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryAddition: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
-]
-
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryRemoval: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
-]
-
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryRename: aCategoryChange [
-
-	^	(self displayOperation: 'Rename tag'),
-		(self displayString: aCategoryChange oldCategoryName),
-		(self displayOperation: 'as'),
-		(self displayString: aCategoryChange newCategoryName )
 ]
 
 { #category : #visitor }
@@ -206,6 +185,32 @@ EpMorphVisitor >> visitPackageAddition: aPackageAddition [
 EpMorphVisitor >> visitPackageRemoval: aPackageRemoval [
 
 	^ self displayPackage: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageRename: aPackageRename [
+
+	^ (self displayOperation: 'Rename package') , (self displayString: aPackageRename oldPackageName) , (self displayOperation: 'as')
+	  , (self displayString: aPackageRename newPackageName)
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ self displayTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ self displayTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval packageName
+]
+
+{ #category : #visitor }
+EpMorphVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	^ (self displayOperation: 'Rename tag') , (self displayString: aPackageTagRename oldTagName) , (self displayOperation: 'as')
+	  , (self displayString: aPackageTagRename newTagName) , (self displayOperation: 'in package') , (self displayString: aPackageTagRename packageName)
 ]
 
 { #category : #visitor }

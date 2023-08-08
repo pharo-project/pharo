@@ -12,8 +12,17 @@ Class {
 	#category : #'Refactoring-UI-Drivers'
 }
 
+{ #category : #resources }
+RBRemoveSharedVariableDriver >> refactoring [
+
+	refactoring := RBRemoveSharedVariableRefactoring
+		               model: model
+		               remove: variables first
+		               from: class
+]
+
 { #category : #execution }
-RBRemoveSharedVariableDriver >> execute [
+RBRemoveSharedVariableDriver >> runRefactoring [
 
 	self refactoring.
 	[
@@ -36,15 +45,6 @@ RBRemoveSharedVariableDriver >> execute [
 				self furtherActionFor:
 					(RBSharedVariableStillReferenced new refactoring: refactoring) ].
 			err return ]
-]
-
-{ #category : #resources }
-RBRemoveSharedVariableDriver >> refactoring [
-
-	refactoring := RBRemoveSharedVariableRefactoring
-		               model: model
-		               remove: variables first
-		               from: class
 ]
 
 { #category : #initialization }

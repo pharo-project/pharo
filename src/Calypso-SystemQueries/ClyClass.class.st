@@ -40,10 +40,10 @@ ClyClass class >> itemsSortOrderForCalypso [
 ClyClass class >> match: aClass forQueryBrowserFilter: aQueryBrowserFilter [
 
 	(aQueryBrowserFilter matchesString: aClass name) ifTrue: [ ^true ].
-	^aQueryBrowserFilter matchesString: aClass package name
+	^aQueryBrowserFilter matchesString: aClass packageName
 ]
 
 { #category : #printing }
 ClyClass class >> printSystemPathTo: aClass [
-	^aClass package name
+	^aClass packageName
 ]

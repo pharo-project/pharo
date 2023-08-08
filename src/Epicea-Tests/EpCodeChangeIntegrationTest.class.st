@@ -8,12 +8,6 @@ Class {
 }
 
 { #category : #tests }
-EpCodeChangeIntegrationTest >> categoryNameForTesting [
-
-	^ (self packageNameForTesting , '-' , self packageTagNameForTesting) asSymbol
-]
-
-{ #category : #tests }
 EpCodeChangeIntegrationTest >> packageNameForTesting [
 
 	^ #'EpiceaTestingWith-A-Really-WeirdPackageName'
@@ -28,7 +22,6 @@ EpCodeChangeIntegrationTest >> packageTagNameForTesting [
 { #category : #running }
 EpCodeChangeIntegrationTest >> tearDown [
 
-	self packageOrganizer removeCategory: self categoryNameForTesting.
 	(self packageNameForTesting asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	super tearDown
 ]
@@ -41,29 +34,6 @@ EpCodeChangeIntegrationTest >> testBehaviorCommentChange [
 
 	aClass comment: 'hey!' stamp: DateAndTime now.
 	self assert: (self countLogEventsWith: EpBehaviorCommentChange) equals: 1
-]
-
-{ #category : #tests }
-EpCodeChangeIntegrationTest >> testCategoryAddition [
-
-	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 0.
-
-	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
-
-	self assert: (self countLogEventsWith: EpCategoryAddition) equals: 1.
-	self assert: (self allLogEventsWith: EpCategoryAddition) first categoryName equals: self categoryNameForTesting
-]
-
-{ #category : #tests }
-EpCodeChangeIntegrationTest >> testCategoryRemoval [
-
-	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
-	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 0.
-
-	self packageOrganizer removeCategory: self categoryNameForTesting.
-
-	self assert: (self countLogEventsWith: EpCategoryRemoval) equals: 1.
-	self assert: (self allLogEventsWith: EpCategoryRemoval) first categoryName equals: self categoryNameForTesting
 ]
 
 { #category : #tests }
@@ -278,7 +248,7 @@ EpCodeChangeIntegrationTest >> testPackageAddition [
 	self packageOrganizer createPackageNamed: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageAddition) equals: 1.
-	self assert: (self allLogEventsWith: EpPackageAddition) first affectedPackageName equals: self packageNameForTesting
+	self assert: (self allLogEventsWith: EpPackageAddition) first packageName equals: self packageNameForTesting
 ]
 
 { #category : #tests }
@@ -291,7 +261,32 @@ EpCodeChangeIntegrationTest >> testPackageRemoval [
 	self packageOrganizer removePackage: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 1.
-	self assert: (self allLogEventsWith: EpPackageRemoval) first affectedPackageName equals: self packageNameForTesting
+	self assert: (self allLogEventsWith: EpPackageRemoval) first packageName equals: self packageNameForTesting
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> testPackageTagAddition [
+
+	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 0.
+
+	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 1.
+	self assert: (self allLogEventsWith: EpPackageTagAddition) first packageName equals: self packageNameForTesting.
+	self assert: (self allLogEventsWith: EpPackageTagAddition) first tagName equals: self packageTagNameForTesting
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> testPackageTagRemoval [
+
+	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
+	self assert: (self countLogEventsWith: EpPackageTagRemoval) equals: 0.
+
+	self packageOrganizer removeTag: self packageTagNameForTesting fromPackage: self packageNameForTesting.
+
+	self assert: (self countLogEventsWith: EpPackageTagRemoval) equals: 1.
+	self assert: (self allLogEventsWith: EpPackageTagRemoval) first packageName equals: self packageNameForTesting.
+	self assert: (self allLogEventsWith: EpPackageTagRemoval) first tagName equals: self packageTagNameForTesting
 ]
 
 { #category : #tests }
@@ -347,7 +342,7 @@ EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 				aBuilder
 					name: aClass name;
 					traitComposition: {  };
-					package: aClass category ] ]
+					package: aClass packageName ] ]
 		raise: MessageNotUnderstood
 ]
 

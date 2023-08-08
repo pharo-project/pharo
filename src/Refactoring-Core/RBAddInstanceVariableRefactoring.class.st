@@ -10,13 +10,25 @@ Class {
 }
 
 { #category : #preconditions }
+RBAddInstanceVariableRefactoring >> applicabilityConditions [
+
+	^ (RBCondition isValidInstanceVariableName: variableName for: class)
+	  & (RBCondition isGlobal: variableName in: self model) not
+]
+
+{ #category : #preconditions }
+RBAddInstanceVariableRefactoring >> breakingChangeConditions [
+
+	^ (RBCondition hierarchyOf: class definesVariable: variableName) not
+]
+
+{ #category : #preconditions }
 RBAddInstanceVariableRefactoring >> preconditions [
-	^(RBCondition isValidInstanceVariableName: variableName for: class)
-		& (RBCondition hierarchyOf: class definesVariable: variableName) not
-			& (RBCondition isGlobal: variableName in: self model) not
+
+	^ self applicabilityConditions & self breakingChangeConditions
 ]
 
 { #category : #transforming }
-RBAddInstanceVariableRefactoring >> transform [
+RBAddInstanceVariableRefactoring >> privateTransform [
 	class addInstanceVariable: variableName
 ]

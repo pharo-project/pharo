@@ -49,14 +49,6 @@ RBPullUpMethodTransformation >> applicabilityConditions [
 							true])
 ]
 
-{ #category : #converting }
-RBPullUpMethodTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
-]
-
 { #category : #executing }
 RBPullUpMethodTransformation >> buildTransformations [
 	^ OrderedCollection new
@@ -236,18 +228,12 @@ RBPullUpMethodTransformation >> copyDownMethod: aSelector [
 			model: self model
 			sourceCode: oldSource
 			in: each
-			withProtocols: oldProtocol])
+			withProtocol: oldProtocol])
 ]
 
 { #category : #executing }
 RBPullUpMethodTransformation >> copyDownMethods [
 	^ selectors flatCollect: [:each | self copyDownMethod: each]
-]
-
-{ #category : #preconditions }
-RBPullUpMethodTransformation >> preconditions [
-	^ self applicabilityConditions 
-	
 ]
 
 { #category : #executing }
@@ -266,7 +252,7 @@ RBPullUpMethodTransformation >> pullUp: aSelector [
 		model: self model
 		sourceCode: source
 		in: targetSuperclass
-		withProtocols: (class protocolsFor: aSelector))
+		withProtocol: (class protocolsFor: aSelector))
 ]
 
 { #category : #api }
@@ -322,7 +308,7 @@ RBPullUpMethodTransformation >> removeDuplicatesOf: aSelector [
 						(RBRemoveMethodTransformation
 							model: self model
 							selector: aClass
-							from: aSelector) transform ]]]]
+							from: aSelector) primitiveExecute ]]]]
 ]
 
 { #category : #executing }

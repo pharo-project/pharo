@@ -31,12 +31,6 @@ EpApplyPreviewer >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #private }
-EpApplyPreviewer >> includesCategory: aString [
-	self flag: #epicea. "We should kill the category usage."
-	^ self packageOrganizer includesCategory: aString
-]
-
 { #category : #visitor }
 EpApplyPreviewer >> visitBehaviorCategoryChange: aChange [
 
@@ -88,30 +82,6 @@ EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 					class: behavior } ].
 
 	^ #()
-]
-
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryAddition: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ #() ]
-			ifFalse: [ { aChange } ]
-]
-
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryRemoval: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ { aChange } ]
-			ifFalse: [ #() ]
-]
-
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryRename: aChange [
-
-	^ (self includesCategory: aChange oldCategoryName)
-		ifTrue: [ { aChange } ]
-		ifFalse: [ #() ]
 ]
 
 { #category : #visitor }
@@ -205,6 +175,38 @@ EpApplyPreviewer >> visitPackageRemoval: aPackageRemoval [
 	^ (self packageOrganizer hasPackage: aPackageRemoval packageName)
 		  ifTrue: [ { aPackageRemoval } ]
 		  ifFalse: [ {  } ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageRename: aPackageRename [
+
+	^ (self packageOrganizer hasPackage: aPackageRename oldPackageName)
+		  ifTrue: [ { aPackageRename } ]
+		  ifFalse: [ #(  ) ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ (self packageOrganizer hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName)
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ { aPackageTagAddition } ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ (self packageOrganizer hasTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval packageName)
+		  ifTrue: [ { aPackageTagRemoval } ]
+		  ifFalse: [ #(  ) ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageTagRename: aPackageTagRename [
+
+	^ (self packageOrganizer hasTag: aPackageTagRename oldTagName inPackage: aPackageTagRename packageName)
+		  ifTrue: [ { aPackageTagRename } ]
+		  ifFalse: [ #(  ) ]
 ]
 
 { #category : #visitor }

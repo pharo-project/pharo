@@ -96,7 +96,7 @@ RBClassTest >> testHierarchy [
 RBClassTest >> testIsInstanceSide [
 
 	self deny: objectClass instanceSide isMeta.
-	self deny: objectClass classSide isMeta.
+	self assert: objectClass classSide isMeta.
 	self deny: objectClass classSide instanceSide isMeta.
 	
 ]

@@ -61,6 +61,11 @@ RBRemoveHierarchyMethodRefactoring >> preconditions [
 		  cond & (RBCondition definesSelector: selector in: class) ]
 ]
 
+{ #category : #transforming }
+RBRemoveHierarchyMethodRefactoring >> privateTransform [
+	self deleteSelectors
+]
+
 { #category : #removing }
 RBRemoveHierarchyMethodRefactoring >> removeMethods: selectorCollection from: aClass [
 	class := self classObjectFor: aClass.
@@ -76,9 +81,4 @@ RBRemoveHierarchyMethodRefactoring >> storeOn: aStream [
 	aStream nextPutAll: ' from: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBRemoveHierarchyMethodRefactoring >> transform [
-	self deleteSelectors
 ]

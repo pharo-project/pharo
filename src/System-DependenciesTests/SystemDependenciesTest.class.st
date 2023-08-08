@@ -65,6 +65,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
 	     #'Refactoring-Critics' #'Commander-Core' #'SystemCommands-RefactoringSupport' 
+		  #'Refactoring2-Transformations'
 	     #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests'
 	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets' )
 ]

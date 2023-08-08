@@ -43,6 +43,17 @@ RBSwapMethodRefactoring >> preconditions [
 		& (RBCondition withBlock: [ self checkInstVars. true ])
 ]
 
+{ #category : #transforming }
+RBSwapMethodRefactoring >> privateTransform [
+
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			sourceCode: (class sourceCodeFor: selector)
+			in: target
+			withProtocol: (class protocolsFor: selector)).
+	class removeMethod: selector
+]
+
 { #category : #initialization }
 RBSwapMethodRefactoring >> swapMethod: aSelector in: aClass [
 	class := self classObjectFor: aClass.
@@ -50,15 +61,4 @@ RBSwapMethodRefactoring >> swapMethod: aSelector in: aClass [
 			ifTrue: [ class instanceSide ]
 			ifFalse: [ class classSide ]).
 	selector := aSelector
-]
-
-{ #category : #transforming }
-RBSwapMethodRefactoring >> transform [
-
-	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: (class sourceCodeFor: selector)
-			toClass: target
-			inProtocols: (class protocolsFor: selector)).
-	class removeMethod: selector
 ]

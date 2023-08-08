@@ -46,6 +46,14 @@ RBSubclassOfClassToRename >> name [
 	^rewriteRule1
 ]
 
+{ #category : #accessing }
+RBSubclassOfClassToRename >> printOn: aStream [
+
+	"just for the test"
+	super printOn: aStream.
+	aStream nextPutAll: 'tintin'
+]
+
 { #category : #performing }
 RBSubclassOfClassToRename >> reference [
 	^ RBClassToRename new

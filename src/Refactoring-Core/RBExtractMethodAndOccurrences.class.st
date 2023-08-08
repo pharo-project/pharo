@@ -96,6 +96,13 @@ RBExtractMethodAndOccurrences >> preconditions [
 	^ self trueCondition
 ]
 
+{ #category : #transforming }
+RBExtractMethodAndOccurrences >> privateTransform [
+	| newExtractedSelector |
+	newExtractedSelector := self extractMethod.
+	self findOccurrencesOf: newExtractedSelector
+]
+
 { #category : #asserting }
 RBExtractMethodAndOccurrences >> shouldSearchInHierarchy [
 	^(self options at: #searchInWholeHierarchy) value: self value: class
@@ -113,11 +120,4 @@ RBExtractMethodAndOccurrences >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBExtractMethodAndOccurrences >> transform [
-	| newExtractedSelector |
-	newExtractedSelector := self extractMethod.
-	self findOccurrencesOf: newExtractedSelector
 ]

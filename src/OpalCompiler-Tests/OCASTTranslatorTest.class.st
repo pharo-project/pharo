@@ -12,6 +12,17 @@ Class {
 }
 
 { #category : #'building suites' }
+OCASTTranslatorTest class >> inliningOptionsFor: enableOption [
+
+	^ {
+		  #(  ). "No options supplied"
+		  { enableOption }. "Explicitly enable this type of inlining"
+		  #( #optionInlineNone ). "Disable all inlining"
+		  "Disable all inlining, *but* the specific option is also set (and should be ignored). See bug #14323."
+		  { enableOption. #optionInlineNone }}
+]
+
+{ #category : #'building suites' }
 OCASTTranslatorTest class >> testParameters [
 
 	^ super testParameters
@@ -24,11 +35,10 @@ OCASTTranslatorTest >> compilationContext [
 
 	| context |
 	context := CompilationContext new
-		encoderClass: self encoder;
-		bindings: globals;
-		parseOptions: { #'+' . optimization };
-		yourself.	
-	
+		           encoderClass: self encoder;
+		           bindings: globals;
+		           yourself.
+	self optimization ifNotNil: [ :a | context parseOptions: #( #+ ) , a ].
 	^ context
 ]
 

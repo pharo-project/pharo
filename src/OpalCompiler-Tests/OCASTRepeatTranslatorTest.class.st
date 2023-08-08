@@ -8,7 +8,7 @@ Class {
 OCASTRepeatTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineRepeat . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineRepeat))
 ]
 
 { #category : #'tests - blocks - optimized' }

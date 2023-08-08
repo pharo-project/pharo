@@ -22,9 +22,10 @@ RBRemoveMethodParametrizedTest class >> testParameters [
 
 { #category : #builder }
 RBRemoveMethodParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
-	^ (rbClass
-		perform: #model: , constructor
-		withArguments: {rbNamespace}, aParameterCollection) asRefactoring
+
+	^ rbClass
+		  perform: #model: , constructor
+		  withArguments: { rbNamespace } , aParameterCollection
 ]
 
 { #category : #builder }
