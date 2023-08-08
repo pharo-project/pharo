@@ -274,9 +274,10 @@ RPackage >> classTagCategoryNames [
 
 { #category : #'class tags' }
 RPackage >> classTagForClass: aClass [
-	^ self
-		classTagNamed: (self toTagName: aClass category)
-		ifAbsent: [ nil ]
+
+	^ self classTags
+		  detect: [ :tag | tag hasClass: aClass ]
+		  ifNone: [ nil ]
 ]
 
 { #category : #'class tags' }
@@ -314,13 +315,10 @@ RPackage >> classes [
 ]
 
 { #category : #'class tags' }
-RPackage >> classesForClassTag: aSymbol [
+RPackage >> classesForClassTag: aTagName [
 	"Returns the classes tagged using aSymbol"
 
-	^ (self
-		classTagNamed: (self toTagName: aSymbol)
-		ifAbsent: [ ^ #() ])
-		classes
+	^ (self classTagNamed: aTagName ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : #queries }
@@ -871,7 +869,7 @@ RPackage >> removeClass: aClass [
 RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 
 	| tag |
-	tag := self classTagNamed: (self toTagName: aSymbol) ifAbsent: [ ^ self ].
+	tag := self classTagNamed: aSymbol ifAbsent: [ ^ self ].
 	tag removeClass: aClass.
 	tag isEmpty ifTrue: [ self basicRemoveTag: tag ]
 ]
@@ -1039,6 +1037,13 @@ RPackage >> reportBogusBehaviorOf: aSelector [
 ]
 
 { #category : #accessing }
+RPackage >> rootTagName [
+
+	self flag: #package. "In the future we should not use the name of the package because it causes bugs."
+	^ self name
+]
+
+{ #category : #accessing }
 RPackage >> roots [
 	"Returns all the root classes of a package. A root class is a class whose superclass is not defined in the package.
 	Root classes are potentially root of inheritance trees defined in a package."
@@ -1090,7 +1095,10 @@ RPackage >> toTagName: aSymbol [
 
 	^ (aSymbol beginsWith: self name asString , '-')
 		  ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
-		  ifFalse: [ aSymbol ]
+		  ifFalse: [
+			  (aSymbol sameAs: self name)
+				  ifTrue: [ self rootTagName ]
+				  ifFalse: [ aSymbol ] ]
 ]
 
 { #category : #register }
