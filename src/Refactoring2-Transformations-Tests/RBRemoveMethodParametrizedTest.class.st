@@ -80,7 +80,7 @@ RBRemoveMethodParametrizedTest >> testJustSendsSuper [
 	selectors do: [ :symbol |
 		self assert: ((model classNamed: #RBSubclassOfClassToRename)
 				 directlyDefinesMethod: symbol) ].
-	self halt.
+	
 	self assert: (refactoring first justSendsSuper: #justSuperSendInSubclass)
 ]
 
