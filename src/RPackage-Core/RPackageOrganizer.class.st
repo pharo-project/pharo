@@ -583,16 +583,16 @@ RPackageOrganizer >> packageNamesDo: aBlock [
 { #category : #'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
-	^ classPackageMapping
-		at: aClass instanceSide originalName
-		ifAbsent: [self packageNamed: RPackage defaultPackageName]
+	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self packageNamed: RPackage defaultPackageName ]
 ]
 
 { #category : #'package - access from class' }
 RPackageOrganizer >> packageOfClassNamed: aName [
 
 	self flag: #pharoFixMe. "Should probably return _UnunpackagedPackage instead of nil"
-	^ classPackageMapping at: aName asSymbol ifAbsent: [nil]
+	classPackageMapping keysAndValuesDo: [ :class :package | class originalName = aName ifTrue: [ ^ package ] ].
+
+	^ nil
 ]
 
 { #category : #accessing }
@@ -686,8 +686,7 @@ RPackageOrganizer >> registerPackage: aPackage [
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 
 	(aPackage includesClass: aClass) ifFalse: [ self error: aPackage name , ' does not includes the class ' , aClass name ].
-
-	^ classPackageMapping at: aClass instanceSide originalName put: aPackage
+	^ classPackageMapping at: aClass instanceSide put: aPackage
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -809,15 +808,10 @@ RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 RPackageOrganizer >> renameClass: class from: oldName to: newName [
 
 	| package extendingPackages |
-	package := self packageOfClassNamed: oldName.
+	package := self packageOf: class.
 	extendingPackages := self extendingPackagesOfClassNamed: oldName.
 
 	package updateDefinedClassNamed: oldName withNewName: newName.
-
-	"we have to update the package organizer.
-	update the 'classPackageDictionary' to replace the key with the new class name"
-	self unregisterPackage: package forClass: oldName.
-	self registerPackage: package forClass: class.
 
 	"update the 'classExtendingPackagesMapping' to replace the key with the new class name"
 	extendingPackages do: [ :extendingPackage |
@@ -980,7 +974,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	| oldProtocol newProtocol method methodPackage destinationPackage |
 	method := ann method ifNil: [ ^ self ].
 	method origin = ann methodClass ifFalse: [ ^ self ].
-	(self packageOfClassNamed: ann methodClass instanceSide name) ifNil: [ ^ self ].
+	(self packageOf: ann methodClass instanceSide) ifNil: [ ^ self ].
 
 	newProtocol := ann newProtocol
 		               ifNotNil: [ :protocol | protocol name ]
@@ -1060,12 +1054,8 @@ RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	"unregister the back pointer mapping from classes to packages."
 
-	| className |
-	className := (aClass isString
-		              ifTrue: [ aClass ]
-		              ifFalse: [ aClass instanceSide originalName ]) asSymbol.
 	self flag: #package. "When RPackage will be simplified we should not have to check the package but it is required for now"
-	^ (classPackageMapping at: className ifAbsent: [ ^ self ]) = aPackage ifTrue: [ classPackageMapping removeKey: className ]
+	^ (classPackageMapping at: aClass instanceSide ifAbsent: [ ^ self ]) = aPackage ifTrue: [ classPackageMapping removeKey: aClass instanceSide ]
 ]
 
 { #category : #private }
