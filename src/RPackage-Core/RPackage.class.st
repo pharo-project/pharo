@@ -842,15 +842,12 @@ RPackage >> registerClass: aClass [
 RPackage >> removeAllMethodsFromClass: aClass [
 	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
 
-	| aClassNameSymbol |
-	aClassNameSymbol := aClass originalName asSymbol.
-
 	definedSelectors removeKey: aClass ifAbsent: [  ].
 	definedSelectors removeKey: aClass classSide ifAbsent: [  ].
 	extensionSelectors removeKey: aClass ifAbsent: [  ].
 	extensionSelectors removeKey: aClass classSide ifAbsent: [  ].
 
-	self organizer unregisterExtendingPackage: self forClassName: aClassNameSymbol
+	self organizer unregisterExtendingPackage: self forClass: aClass
 ]
 
 { #category : #removing }
@@ -917,7 +914,7 @@ RPackage >> removeMethod: aCompiledMethod [
 	(self includesClass: methodClass)
 		ifTrue: [
 			definedSelectors at: methodClass ifPresent: [ :selectors |
-				selectors remove: aCompiledMethod selector ifAbsent: [ ].
+				selectors remove: aCompiledMethod selector ifAbsent: [  ].
 				selectors ifEmpty: [ definedSelectors removeKey: methodClass ] ] ]
 		ifFalse: [
 			extensionSelectors at: methodClass ifPresent: [ :selectors |
@@ -926,7 +923,7 @@ RPackage >> removeMethod: aCompiledMethod [
 
 	((extensionSelectors at: methodClass instanceSide ifAbsent: [ #(  ) ]) isEmpty and: [
 		 (extensionSelectors at: methodClass classSide ifAbsent: [ #(  ) ]) isEmpty ]) ifTrue: [
-		self organizer unregisterExtendingPackage: self forClassName: methodClass instanceSide originalName ].
+		self organizer unregisterExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
