@@ -172,11 +172,18 @@ RBRemoveMethodTransformation >> selector: aSelector from: aClassName [
 { #category : #preconditions }
 RBRemoveMethodTransformation >> senders [
 
+	^ self sendersOf: { selector }
+]
+
+{ #category : #preconditions }
+RBRemoveMethodTransformation >> sendersOf: aCollection [
+	"This method expects a collection of selectors to have the same API than the corresponding refactoring. This should be revisited in the future."
 	| occurrences |
 	occurrences := OrderedCollection new.
-	self model allReferencesTo: selector do: [ :aRBMethod |
-		selector = aRBMethod selector ifFalse: [
-			occurrences add: selector -> aRBMethod ] ].
+	aCollection do: [ :each |
+		self model allReferencesTo: each do: [ :aRBMethod |
+			selector = aRBMethod selector ifFalse: [
+				occurrences add: each -> aRBMethod ] ] ].
 	^ occurrences
 ]
 
@@ -197,7 +204,6 @@ RBRemoveMethodTransformation >> storeOn: aStream [
 RBRemoveMethodTransformation >> superclassEquivalentlyDefines: aSelector [
 
 	| superTree myTree |
-
 	self definingClass superclass ifNil: [ ^ false ].
 	superTree := self definingClass superclass parseTreeForSelector: aSelector.
 	myTree := self definingClass parseTreeForSelector: aSelector.

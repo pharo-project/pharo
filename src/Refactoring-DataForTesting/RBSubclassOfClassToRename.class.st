@@ -30,6 +30,12 @@ RBSubclassOfClassToRename >> justSuperSendInSubclass [
 ]
 
 { #category : #accessing }
+RBSubclassOfClassToRename >> justSuperSendInSubclassBroken [
+
+	^ super justSuperSendInSubclass + 2
+]
+
+{ #category : #accessing }
 RBSubclassOfClassToRename >> methodThatIsNotUsedForSure [
 
 	

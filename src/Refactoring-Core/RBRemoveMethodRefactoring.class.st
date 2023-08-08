@@ -206,7 +206,6 @@ RBRemoveMethodRefactoring >> storeOn: aStream [
 RBRemoveMethodRefactoring >> superclassEquivalentlyDefines: aSelector [
 
 	| superTree myTree |
-
 	class superclass ifNil: [ ^ false ].
 	superTree := class superclass parseTreeForSelector: aSelector.
 	myTree := class parseTreeForSelector: aSelector.
