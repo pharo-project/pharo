@@ -80,7 +80,7 @@ RBNamespaceTest >> testAllReferencesToTakesIntoAccountSuperCall [
 	self
 		assert:
 		(rbNamespace2 allReferencesTo: #justSuperSendInSubclass) size
-		equals: 1
+		equals: 2
 ]
 
 { #category : #'tests - classes' }

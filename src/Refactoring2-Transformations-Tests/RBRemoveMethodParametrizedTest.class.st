@@ -71,7 +71,7 @@ RBRemoveMethodParametrizedTest >> testFailureRemoveSameMethodButSendsSuper [
 RBRemoveMethodParametrizedTest >> testJustSendsSuper [
 
 	| refactoring selectors |
-	selectors := Array with: #justSuperSendInSubclass .
+	selectors := Array with: #justSuperSendInSubclass.
 	refactoring := self
 		               createRefactoringWithModel: model
 		               andArgumentsColl: selectors
@@ -157,13 +157,21 @@ RBRemoveMethodParametrizedTest >> testSendersIncludesSuperCalls [
 { #category : #tests }
 RBRemoveMethodParametrizedTest >> testSendersOfUnsentMessage [
 
-	| refactoring selectors |
+	| refactoring selectors rbclasses rbNamespace2|
+	 
+	rbclasses := RBClassEnvironment classes: {
+			             RBClassToRename.
+			             RBSubclassOfClassToRename }.
+	rbNamespace2 := RBNamespace onEnvironment: rbclasses.
+
+	
 	selectors := Array with: #methodThatIsNotUsedForSure.
 	refactoring := self
 		               createRefactoringWithModel: model
 		               andArgumentsColl: selectors
 		               andOtherArgs: { #RBSubclassOfClassToRename }.
+	refactoring first model: rbNamespace2.
 	self assert:
-		(refactoring first sendersOf: { #methodThatIsNotUsedForSure }) size equals: 1.
+		(refactoring first sendersOf: { #methodThatIsNotUsedForSure }) size equals: 0.
 	"this is because this test method is taken into account."
 ]
