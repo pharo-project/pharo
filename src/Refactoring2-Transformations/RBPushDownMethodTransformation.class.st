@@ -82,7 +82,7 @@ RBPushDownMethodTransformation >> pushDown: aSelector [
 				model: self model
 				sourceCode: code
 				in: each
-				withProtocols: protocols ])
+				withProtocol: protocols ])
 ]
 
 { #category : #api }

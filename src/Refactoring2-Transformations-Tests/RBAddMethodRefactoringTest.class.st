@@ -15,9 +15,9 @@ RBAddMethodRefactoringTest >> setUp [
 RBAddMethodRefactoringTest >> testFailureExistingSelector [
 
 	self shouldFail: (RBAddMethodRefactoring
-			 addMethod: 'printString ^super printString'
-			 toClass: RBBasicLintRuleTestData
-			 inProtocols: #( #accessing ))
+			 sourceCode: 'printString ^super printString'
+			 in: RBBasicLintRuleTestData
+			 withProtocol: #accessing)
 ]
 
 { #category : #'failure tests' }
@@ -26,14 +26,14 @@ RBAddMethodRefactoringTest >> testFailureModelExistingSelector [
 	self
 		shouldFail: (RBAddMethodRefactoring
 				 model: model
-				 addMethod: 'classVarName1 ^super printString'
-				 toClass: (model classNamed: #Bar)
-				 inProtocols: #( #accessing ));
+				 sourceCode: 'classVarName1 ^super printString'
+				 in: (model classNamed: #Bar)
+				 withProtocol: #accessing);
 		shouldFail: (RBAddMethodRefactoring
 				 model: model
-				 addMethod: 'printString ^super printString'
-				 toClass: (model classNamed: #Bar)
-				 inProtocols: { #accessing })
+				 sourceCode: 'printString ^super printString'
+				 in: (model classNamed: #Bar)
+				 withProtocol: #accessing)
 ]
 
 { #category : #'failure tests' }
@@ -42,8 +42,8 @@ RBAddMethodRefactoringTest >> testFailureModelInheritedSelector [
 	| refactoring |
 	refactoring := RBAddMethodRefactoring
 		               model: model
-		               addMethod: 'printString ^super printString'
-		               toClass: (model classNamed: #Bar)
-		               inProtocols: #( #accessing ).
+		               sourceCode: 'printString ^super printString'
+		               in: (model classNamed: #Bar)
+		               withProtocol: #accessing .
 	self shouldFail: refactoring
 ]

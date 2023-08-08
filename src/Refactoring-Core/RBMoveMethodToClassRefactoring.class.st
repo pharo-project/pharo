@@ -66,10 +66,10 @@ RBMoveMethodToClassRefactoring >> privateTransform [
 	oldClass removeMethod: method selector.
 	newClass addMethod: rbMethod.
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: rbMethod source
-			toClass: newClass
-			inProtocols: originalProtocol)
+		(RBAddMethodTransformation
+			sourceCode: rbMethod source
+			in: newClass
+			withProtocol: originalProtocol)
 ]
 
 { #category : #printing }

@@ -37,10 +37,10 @@ RBClassRegexRefactoring >> copyFrom: aSourceClass to: aTargetClass [
 			do: [ :each | aTargetClass addPoolDictionary: each ] ].
 	aSourceClass selectors do: [ :each |
 		self generateChangesFor:
-			(RBAddMethodTransformRefactoring
-				addMethod: (aSourceClass sourceCodeFor: each)
-				toClass: aTargetClass
-				inProtocols: (aSourceClass protocolsFor: each))]
+			(RBAddMethodTransformation
+				sourceCode: (aSourceClass sourceCodeFor: each)
+				in: aTargetClass
+				withProtocol: (aSourceClass protocolsFor: each))]
 ]
 
 { #category : #transforming }

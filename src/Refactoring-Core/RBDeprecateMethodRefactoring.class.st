@@ -168,10 +168,10 @@ RBDeprecateMethodRefactoring >> privateTransform [
 	parseTree body addNodeFirst: node.
 
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			 addMethod: parseTree newSource
-			 toClass: class
-			 inProtocols: method protocols)
+		(RBAddMethodTransformation
+			 sourceCode: parseTree newSource
+			 in: class
+			 withProtocol: method protocols)
 ]
 
 { #category : #printing }

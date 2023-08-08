@@ -8,9 +8,9 @@ Class {
 RBAddMethodTransformationParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddMethodTransformation .
-					  #constructor -> #sourceCode:in:withProtocols: };
+					  #constructor -> #sourceCode:in:withProtocol: };
 		addCase: { #rbClass -> RBAddMethodRefactoring .
-					  #constructor -> #addMethod:toClass:inProtocols: };
+					  #constructor -> #sourceCode:in:withProtocol: };
 		yourself
 ]
 

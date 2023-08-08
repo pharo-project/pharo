@@ -118,10 +118,10 @@ RBExtractSetUpMethodRefactoring >> privateTransform [
 		self renameAllParameters.
 		extractedParseTree body addNodeFirst: (RBParser parseExpression: 'super setUp').
 		self generateChangesFor:
-			(RBAddMethodTransformRefactoring
-				addMethod: extractedParseTree newSource
-				toClass: class
-				inProtocols: #running)].
+			(RBAddMethodTransformation
+				sourceCode: extractedParseTree newSource
+				in: class
+				withProtocol: #running)].
 	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
 	class compileTree: modifiedParseTree
 ]
