@@ -46,7 +46,7 @@ NullFFIBackend >> integerOfObject: anObject at: byteOffset size: nBytes signed: 
 { #category : #'instance creation' }
 NullFFIBackend >> loadSymbol: moduleSymbol module: module [
 
-	^ self primitiveFailed
+	^ Error signal: 'Null FFI Backend'
 ]
 
 { #category : #callbacks }
