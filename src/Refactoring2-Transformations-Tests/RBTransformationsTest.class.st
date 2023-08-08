@@ -51,7 +51,7 @@ RBTransformationsTest >> testAddMethodTransform [
 	transformation := (RBAddMethodTransformation
 		                   sourceCode: 'printString1 ^super printString'
 		                   in: self changeMockClass name
-		                   withProtocols: { #accessing }) primitiveExecute.
+		                   withProtocol: #accessing ) primitiveExecute.
 
 	class := transformation model classNamed: self changeMockClass name.
 	self
@@ -145,7 +145,7 @@ RBTransformationsTest >> testCompositeTransform [
 			                   add: (RBAddMethodTransformation
 					                    sourceCode: 'printString1 ^super printString'
 					                    in: newClassName
-					                    withProtocols: { #accessing });
+					                    withProtocol: #accessing );
 			                   yourself).
 	transformation primitiveExecute.
 
@@ -397,7 +397,7 @@ RBTransformationsTest >> testRenameTemporaryTransform [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 		                   in: self changeMockClass name
-		                   withProtocols: { #accessing }) primitiveExecute.
+		                   withProtocol: #accessing ) primitiveExecute.
 
 	transformation := (RBRenameTemporaryVariableTransformation
 		                   model: transformation model

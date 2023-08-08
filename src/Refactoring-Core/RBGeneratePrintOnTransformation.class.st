@@ -86,10 +86,10 @@ RBGeneratePrintOnTransformation >> privateTransform [
 						parseExpression:
 							('aStream nextPutAll: '' <1s>: ''; print: <1s>' expandMacrosWith: each)) ].
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: method formattedCode
-			toClass: self theClass
-			inProtocols: #printing)
+		(RBAddMethodTransformation
+			sourceCode: method formattedCode
+			in: self theClass
+			withProtocol: #printing)
 ]
 
 { #category : #accessing }
