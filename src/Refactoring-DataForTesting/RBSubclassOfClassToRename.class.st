@@ -26,7 +26,7 @@ RBSubclassOfClassToRename >> equallyDefinedInSubclass [
 { #category : #accessing }
 RBSubclassOfClassToRename >> justSuperSendInSubclass [
 
-	super justSuperSendInSubclass
+	^ super justSuperSendInSubclass
 ]
 
 { #category : #accessing }

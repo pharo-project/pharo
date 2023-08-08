@@ -139,7 +139,6 @@ RBRemoveMethodRefactoring >> generateChanges [
 RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 
 	| matcher parseTree superclass |
-	self halt.
 	matcher := self parseTreeSearcherClass justSendsSuper.
 	parseTree := class parseTreeForSelector: aSelector.
 	( matcher executeTree: parseTree initialAnswer: false )
