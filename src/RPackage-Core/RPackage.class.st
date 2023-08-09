@@ -380,21 +380,18 @@ RPackage >> definesOrExtendsClass: aClass [
 ]
 
 { #category : #converting }
-RPackage >> demoteToTagInPackageNamed: aString [
+RPackage >> demoteToTagInPackage [
 
 	| newPackage tag |
-	aString = self name ifTrue: [ ^ self ].
-
-	(self name beginsWith: aString , '-') ifFalse: [
-		self error: 'To demote a package to a package with a tag, the new package name needs to be a prefix of the old package name' ].
+	(self name includes: $-) ifFalse: [ self error: 'To demote a package, it name needs to contain at least one dash `-`.' ].
 
 	self flag: #package. "We need to unregister because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a #removeFromSystem at the end to avoid to have a removal system AND an unregistering system."
 	self unregister.
 
-	newPackage := self organizer ensurePackage: aString.
+	newPackage := self organizer ensurePackage: (self name copyUpToLast: $-).
 
 	"We keep the suffix that was removed as the tag name to create."
-	tag := newPackage addClassTag: (self name withoutPrefix: aString , '-').
+	tag := newPackage addClassTag: (self name withoutPrefix: newPackage name , '-').
 
 	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
 	self extensionMethods do: [ :method | newPackage addMethod: method ].

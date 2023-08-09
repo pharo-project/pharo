@@ -113,7 +113,7 @@ RPackageTest >> testAnonymousClassAndSelector [
 	ghost classify: #rpackagetest under: '*rpackagetest'
 ]
 
-{ #category : #tests }
+{ #category : #'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamed [
 
 	| package1 package2 class |
@@ -121,7 +121,7 @@ RPackageTest >> testDemoteToRPackageNamed [
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	package1 demoteToTagInPackageNamed: 'Test1'.
+	package1 demoteToTagInPackage.
 
 	self deny: (self organizer hasPackage: package1).
 	package2 := self organizer packageNamed: 'Test1'.
@@ -130,7 +130,7 @@ RPackageTest >> testDemoteToRPackageNamed [
 	self assert: ((package2 classTagNamed: 'TAG1') classes includes: class)
 ]
 
-{ #category : #tests }
+{ #category : #'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 
 	| package1 package2 packageExisting class |
@@ -139,7 +139,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	package1 demoteToTagInPackageNamed: 'Test1'.
+	package1 demoteToTagInPackage.
 
 	self deny: (self organizer hasPackage: package1).
 	package2 := self organizer packageNamed: 'Test1'.
@@ -149,7 +149,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 	self assert: ((package2 classTagNamed: 'TAG1') classes includes: class)
 ]
 
-{ #category : #tests }
+{ #category : #'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 
 	| newOrganizer package renamedPackage |
@@ -157,37 +157,20 @@ RPackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 
 	package := (RPackage named: #'Test1-TAG1' organizer: newOrganizer) register.
 
-	renamedPackage := package demoteToTagInPackageNamed: 'Test1'.
+	renamedPackage := package demoteToTagInPackage.
 
 	self assert: renamedPackage organizer identicalTo: newOrganizer
 ]
 
-{ #category : #tests }
-RPackageTest >> testDemoteToRPackageNamedMultilevelPackage1 [
+{ #category : #'tests - demotion' }
+RPackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 
 	| package1 package2 class |
 	package1 := (self createNewPackageNamed: #'Test1-TAG1-X1') register.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1-X1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	package1 demoteToTagInPackageNamed: 'Test1'.
-
-	self deny: (self organizer hasPackage: package1).
-	package2 := self organizer packageNamed: 'Test1'.
-	self assert: package2 notNil.
-	self assert: (package2 classes includes: class).
-	self assert: ((package2 classTagNamed: 'TAG1-X1') classes includes: class)
-]
-
-{ #category : #tests }
-RPackageTest >> testDemoteToRPackageNamedMultilevelPackage2 [
-
-	| package1 package2 class |
-	package1 := (self createNewPackageNamed: #'Test1-TAG1-X1') register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1-X1'.
-	class compile: 'foo ^42' classified: 'accessing'.
-
-	package1 demoteToTagInPackageNamed: 'Test1-TAG1'.
+	package1 demoteToTagInPackage.
 
 	self deny: (self organizer hasPackage: package1).
 	package2 := self organizer packageNamed: 'Test1-TAG1'.
@@ -196,7 +179,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage2 [
 	self assert: ((package2 classTagNamed: 'X1') classes includes: class)
 ]
 
-{ #category : #tests }
+{ #category : #'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamedWithExtension [
 
 	| packageOriginal packageDemoted class classOther |
@@ -207,7 +190,7 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 	classOther := self createNewClassNamed: 'TestClassOther' inCategory: 'XXXX'.
 	classOther compile: 'bar ^42' classified: #'*Test1-TAG1'.
 
-	packageOriginal demoteToTagInPackageNamed: 'Test1'.
+	packageOriginal demoteToTagInPackage.
 
 	self deny: (self organizer hasPackage: packageOriginal).
 	packageDemoted := self organizer packageNamed: 'Test1'.
