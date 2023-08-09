@@ -217,9 +217,16 @@ RBAbstractTransformation >> parserClass [
 
 { #category : #transforming }
 RBAbstractTransformation >> performChanges [
+	
+	self performChanges: self changes
+]
 
+{ #category : #transforming }
+RBAbstractTransformation >> performChanges: aCompositeChange [
+	"Perform the changes contained in a composite change"
+	
 	RBRefactoryChangeManager instance
-		performChange: self changes;
+		performChange: aCompositeChange;
 		addUndoPointer: RBRefactoryChangeManager nextCounter
 ]
 

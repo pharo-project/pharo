@@ -173,7 +173,7 @@ RBRemoveMethodRefactoring >> privateTransform [
 { #category : #actions }
 RBRemoveMethodRefactoring >> removeMethodChanges [
 
-	self transform.
+	self privateTransform.
 	^ self changes
 ]
 

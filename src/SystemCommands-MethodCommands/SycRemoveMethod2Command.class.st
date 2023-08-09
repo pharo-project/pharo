@@ -2,7 +2,8 @@ Class {
 	#name : #SycRemoveMethod2Command,
 	#superclass : #SycMethodCommand,
 	#instVars : [
-		'removeStrategy'
+		'removeStrategy',
+		'toolContext'
 	],
 	#category : #'SystemCommands-MethodCommands'
 }
@@ -33,8 +34,11 @@ SycRemoveMethod2Command >> defaultMenuItemName [
 
 { #category : #execution }
 SycRemoveMethod2Command >> execute [
-
-	removeStrategy removeMethods: methods
+	
+	(RBRemoveMethodDriver new
+				 scopes: toolContext refactoringScopes
+				 method: methods first
+				for: methods first methodClass ) runRefactoring
 ]
 
 { #category : #initialization }
@@ -46,9 +50,16 @@ SycRemoveMethod2Command >> initialize [
 ]
 
 { #category : #execution }
+SycRemoveMethod2Command >> isComplexRefactoring [ 
+
+	^ false
+]
+
+{ #category : #execution }
 SycRemoveMethod2Command >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	(RBRemoveMethodDriver new scopes: aToolContext refactoringScopes methods: methods for: aToolContext lastSelectedClass) runRefactoring
+	toolContext := aToolContext.
+	"(RBRemoveMethodDriver new scopes: aToolContext refactoringScopes methods: methods for: aToolContext lastSelectedClass) runRefactoring"
 
 ]
 

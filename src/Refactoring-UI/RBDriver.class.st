@@ -36,7 +36,9 @@ RBDriver >> openPreviewWithChanges: changes [
 	
 	^ (StRefactoringPreviewPresenter
 		 changes: changes
-		 scopes: scopes) openModal
+		 scopes: scopes)
+		refactoring: self refactoring;
+		openModal
 ]
 
 { #category : #execution }

@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 RBRemoveChoice >> action [
 
-	refactoring removeMethodChanges
+	driver removeMethodChanges
 ]
 
 { #category : #accessing }

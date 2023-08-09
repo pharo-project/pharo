@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #accessing }
+RBRemoveAndShowSendersChoice >> action [ 
+	
+	driver removeMethodChanges.
+	driver browseSenders.
+]
+
+{ #category : #accessing }
 RBRemoveAndShowSendersChoice >> description [
 
 	^ 'Remove, then browse senders'

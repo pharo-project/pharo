@@ -6,12 +6,22 @@ Class {
 	#superclass : #RBDriver,
 	#instVars : [
 		'class',
-		'variables',
 		'refactoring',
-		'methods'
+		'methods',
+		'senders'
 	],
 	#category : #'Refactoring-UI-Drivers'
 }
+
+{ #category : #execution }
+RBRemoveMethodDriver >> browseSenders [
+
+
+	StMessageBrowserPresenter  
+		browse: (senders collect: [ :each | each value ]) 
+		asSendersOf: refactoring selector 
+	"this does not work for multiple selectors remove."
+]
 
 { #category : #resources }
 RBRemoveMethodDriver >> configureRefactoring [
@@ -22,13 +32,17 @@ RBRemoveMethodDriver >> configureRefactoring [
 		               from: class
 ]
 
-{ #category : #resources }
+{ #category : #accessing }
 RBRemoveMethodDriver >> refactoring [
 
-	refactoring := RBRemoveMethodRefactoring
-		               model: model
-		               removeMethods: (methods collect: [ :each | each selector ])
-		               from: class
+	^ refactoring
+]
+
+{ #category : #execution }
+RBRemoveMethodDriver >> removeMethodChanges [ 
+
+	self openPreviewWithChanges: { refactoring removeMethodChanges }
+
 ]
 
 { #category : #execution }
@@ -38,51 +52,38 @@ RBRemoveMethodDriver >> runRefactoring [
 	self configureRefactoring.
 	[
 	[
-	| changes senders |
+	| changes |
 	senders := refactoring senders.
 
 	senders size = 0
 		ifTrue: [ changes := refactoring generateChanges ]
 		ifFalse: [ 
 		
-		
 		select := SpSelectDialog new 
 			title: 'There are ', senders size asString,  ' methods calling ', refactoring selector;
 			label: 'Select a strategy';
-			items: (RBRemoveMethodChoice subclasses collect: [ :each | each  new refactoring: refactoring]);
-		display: [ :each | each description ];
-		displayIcon: [ :each | self iconNamed: each systemIconName ];
-		openModal.
-		
-	select ifNotNil: [ 
-		select inspect ]
-				
-		].
-
-
-	self openPreviewWithChanges: { changes } ]
+			items: (RBRemoveMethodChoice subclasses collect: [ :each | each  new driver: self]);
+			display: [ :each | each description ];
+			displayIcon: [ :each | self iconNamed: each systemIconName ];
+			openModal.
+			
+	select 
+		ifNotNil: [ 
+			select action ]]]
+	
 		on: RBApplicabilityChecksFailedError
 		do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
 		on: RBBreakingChangeChecksFailedWarning
-		do: [ :err |
-			| dialog |
-			dialog := SpConfirmDialog new
-				          title: 'Methods are still calling removed method';
-				          label: 'Do you want to browse them?';
-				          acceptLabel: 'Sure!';
-				          cancelLabel: 'No, forget it';
-				          openModal.
-			dialog ifTrue: [
-				self furtherActionFor:
-					(RBMethodStillCalled new refactoring: refactoring) ].
-			err return ]
+		do: [ :err |	 err return ]
+	
+
 ]
 
 { #category : #initialization }
 RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod for: aClass [
 	
 	scopes := refactoringScopes.
-	variables := {aMethod}.
+	methods := {aMethod}.
 	class := aClass
 ]
 
@@ -91,13 +92,5 @@ RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods for: aClass 
 	
 	scopes := refactoringScopes.
 	methods := aMethods.
-	class := aClass
-]
-
-{ #category : #initialization }
-RBRemoveMethodDriver >> scopes: refactoringScopes variable: aVariable for: aClass [
-	
-	scopes := refactoringScopes.
-	variables := {aVariable}.
 	class := aClass
 ]
