@@ -385,10 +385,14 @@ RPackage >> demoteToTagInPackageNamed: aString [
 	| newPackage |
 	aString = self name ifTrue: [ ^ self ].
 
-	self unregister.
-	newPackage := self organizer ensurePackage: aString.
-	newPackage importPackage: self.
+	(self name beginsWith: aString , '-') ifFalse: [
+		self error: 'To demote a package to a package with a tag, the new package name needs to be a prefix of the old package name' ].
 
+
+	newPackage := self organizer ensurePackage: aString.
+	newPackage importPackage: self inTag: (self name withoutPrefix: aString , '-').
+
+	self unregister.
 	newPackage classes do: [ :each | SystemAnnouncer uniqueInstance classRepackaged: each from: self to: newPackage ].
 	^ newPackage
 ]
@@ -528,9 +532,9 @@ RPackage >> importDefinedMethodsOf: aClass [
 ]
 
 { #category : #private }
-RPackage >> importPackage: aPackage [
+RPackage >> importPackage: aPackage inTag: aTag [
 
-	aPackage definedClasses do: [ :className | self importClass: className ].
+	aPackage definedClasses do: [ :className | self moveClass: className toTag: aTag ].
 
 	"new rpackage inherits the extentions"
 	extensionSelectors := extensionSelectors , aPackage privateExtensionSelectors
@@ -714,12 +718,8 @@ RPackage >> moveClass: aClass fromPackage: oldPackage toTag: aTag [
 
 { #category : #private }
 RPackage >> moveClass: aClass toTag: aTag [
-	"TODO: deprecate system categories / replace this with a direct call to moveClass:fromPackage:toTag:"
 
-	"This change the class category as appropriate.
-		(and by cascade, ensure systemClassRecategorizedAction: is called)."
-
-	aClass category: aTag categoryName
+	^ self moveClass: aClass fromPackage: aClass package toTag: aTag
 ]
 
 { #category : #accessing }
