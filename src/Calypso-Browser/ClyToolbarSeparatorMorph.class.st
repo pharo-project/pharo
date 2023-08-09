@@ -24,7 +24,7 @@ ClyToolbarSeparatorMorph >> initialize [
 		changeTableLayout;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
-		layoutInset: 4@0.
+		layoutInset: (4@0) scaledByDisplayScaleFactor.
 	separator := self theme newLabelIn: self label: '|'.
 
 	self addMorph: separator
