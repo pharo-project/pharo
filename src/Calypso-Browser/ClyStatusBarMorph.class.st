@@ -44,7 +44,7 @@ ClyStatusBarMorph >> buildCommandBar [
 		listDirection: #rightToLeft;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
-		cellInset: 4@0;
+		cellInset: (4@0) scaledByDisplayScaleFactor;
 		color: Color transparent;
 		height: 0;
 		minHeight: 0.
@@ -59,7 +59,7 @@ ClyStatusBarMorph >> buildContextBar [
 		listDirection: #leftToRight;
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap;
-		cellInset: 4@0;
+		cellInset: (4@0) scaledByDisplayScaleFactor;
 		color: Color transparent;
 		height: 0;
 		minHeight: 0.
@@ -83,7 +83,7 @@ ClyStatusBarMorph >> initialize [
 		vResizing: #shrinkWrap;
 		height: 0;
 		minHeight: 0;
-		layoutInset: 10@2.
+		layoutInset: (10@2) scaledByDisplayScaleFactor.
 	self buildContextBar.
 	self buildCommandBar
 ]
