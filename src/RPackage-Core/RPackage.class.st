@@ -472,12 +472,6 @@ RPackage >> extensionSelectorsForClass: aClass [
 	^ extensionSelectors at: aClass ifAbsent: [ #(  ) ]
 ]
 
-{ #category : #'class tags' }
-RPackage >> extensionsForTag: aRPackageTag [
-
-	^ self extensionMethods select: [ :extensionMethod | extensionMethod protocolName allButFirst isCategoryOf: aRPackageTag categoryName ]
-]
-
 { #category : #properties }
 RPackage >> hasProperty: aKey [
 	self propertyAt: aKey ifAbsent: [ ^ false ].
@@ -1027,6 +1021,12 @@ RPackage >> renameTo: aSymbol [
 RPackage >> reportBogusBehaviorOf: aSelector [
 
 	self traceCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'
+]
+
+{ #category : #'class tags' }
+RPackage >> rootTag [
+
+	^ self addClassTag: self rootTagName
 ]
 
 { #category : #accessing }
