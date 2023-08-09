@@ -361,13 +361,7 @@ RPackageOrganizer >> environment: aSystemDictionary [
 RPackageOrganizer >> extendingPackagesOf: aClass [
 	"Returns the packages extending the class aClass"
 
-	^ self extendingPackagesOfClassNamed: aClass instanceSide originalName
-]
-
-{ #category : #'package - access from class' }
-RPackageOrganizer >> extendingPackagesOfClassNamed: aName [
-	"Returns the packages extending the class named a Symbol"
-	^ classExtendingPackagesMapping at: aName asSymbol ifAbsent: [#()]
+	^ classExtendingPackagesMapping at: aClass instanceSide ifAbsent: [ #(  ) ]
 ]
 
 { #category : #'package - access from class' }
@@ -624,23 +618,7 @@ RPackageOrganizer >> register [
 { #category : #'private - registration' }
 RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
 
-	| cur |
-
-	cur := classExtendingPackagesMapping at: aClass instanceSide name ifAbsent: [ nil ].
-	cur
-		ifNil: [ classExtendingPackagesMapping at: aClass instanceSide name put: ( Set with: aPackage ) ]
-		ifNotNil: [ cur add: aPackage ]
-]
-
-{ #category : #'private - registration' }
-RPackageOrganizer >> registerExtendingPackage: aPackage forClassName: aClassName [
-
-	| cur |
-
-	cur := classExtendingPackagesMapping at: aClassName asSymbol ifAbsent: [ nil ].
-	cur
-		ifNil: [ classExtendingPackagesMapping at: aClassName asSymbol put: ( Set with: aPackage ) ]
-		ifNotNil: [ cur add: aPackage ]
+	(classExtendingPackagesMapping at: aClass instanceSide ifAbsentPut: [ IdentitySet new ]) add: aPackage
 ]
 
 { #category : #'system integration' }
@@ -807,16 +785,7 @@ RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 { #category : #'system integration' }
 RPackageOrganizer >> renameClass: class from: oldName to: newName [
 
-	| package extendingPackages |
-	package := self packageOf: class.
-	extendingPackages := self extendingPackagesOfClassNamed: oldName.
-
-	package updateDefinedClassNamed: oldName withNewName: newName.
-
-	"update the 'classExtendingPackagesMapping' to replace the key with the new class name"
-	extendingPackages do: [ :extendingPackage |
-		self unregisterExtendingPackage: extendingPackage forClassName: oldName.
-		self registerExtendingPackage: extendingPackage forClassName: newName ]
+	(self packageOf: class) updateDefinedClassNamed: oldName withNewName: newName
 ]
 
 { #category : #'system integration' }
@@ -1026,21 +995,8 @@ RPackageOrganizer >> unregister [
 
 { #category : #'private - registration' }
 RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
-	| extendingPackageForClass |
 
-	extendingPackageForClass := classExtendingPackagesMapping
-		at: aClass instanceSide name
-		ifAbsent: [ nil ].
-	extendingPackageForClass ifNotNil: [
-		extendingPackageForClass
-			remove: aPackage
-			ifAbsent: [] "not happy with this one" ]
-]
-
-{ #category : #'private - registration' }
-RPackageOrganizer >> unregisterExtendingPackage: aPackage forClassName: aClassName [
-
-	classExtendingPackagesMapping at: aClassName asSymbol ifPresent: [ :listOfPackages | listOfPackages remove: aPackage ifAbsent: [  ] ]
+	classExtendingPackagesMapping at: aClass instanceSide ifPresent: [ :extendingPackages | extendingPackages remove: aPackage ifAbsent: [  ] ]
 ]
 
 { #category : #'system integration' }
