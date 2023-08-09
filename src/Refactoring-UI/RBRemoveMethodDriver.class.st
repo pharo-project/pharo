@@ -16,9 +16,8 @@ Class {
 { #category : #execution }
 RBRemoveMethodDriver >> browseSenders [
 
-
 	StMessageBrowserPresenter  
-		browse: (senders collect: [ :each | each value ]) 
+		browse: (senders collect: [ :each | each value methodClass realClass >> each value selector ]) 
 		asSendersOf: refactoring selector 
 	"this does not work for multiple selectors remove."
 ]
@@ -52,11 +51,10 @@ RBRemoveMethodDriver >> runRefactoring [
 	self configureRefactoring.
 	[
 	[
-	| changes |
 	senders := refactoring senders.
 
 	senders size = 0
-		ifTrue: [ changes := refactoring generateChanges ]
+		ifTrue: [ self openPreviewWithChanges: { refactoring generateChanges } ]
 		ifFalse: [ 
 		
 		select := SpSelectDialog new 
