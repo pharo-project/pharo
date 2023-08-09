@@ -382,18 +382,23 @@ RPackage >> definesOrExtendsClass: aClass [
 { #category : #converting }
 RPackage >> demoteToTagInPackageNamed: aString [
 
-	| newPackage |
+	| newPackage tag |
 	aString = self name ifTrue: [ ^ self ].
 
 	(self name beginsWith: aString , '-') ifFalse: [
 		self error: 'To demote a package to a package with a tag, the new package name needs to be a prefix of the old package name' ].
 
+	self flag: #package. "We need to unregister because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a #removeFromSystem at the end to avoid to have a removal system AND an unregistering system."
+	self unregister.
 
 	newPackage := self organizer ensurePackage: aString.
-	newPackage importPackage: self inTag: (self name withoutPrefix: aString , '-').
 
-	self unregister.
-	newPackage classes do: [ :each | SystemAnnouncer uniqueInstance classRepackaged: each from: self to: newPackage ].
+	"We keep the suffix that was removed as the tag name to create."
+	tag := newPackage addClassTag: (self name withoutPrefix: aString , '-').
+
+	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
+	self extensionMethods do: [ :method | newPackage addMethod: method ].
+
 	^ newPackage
 ]
 
@@ -529,15 +534,6 @@ RPackage >> importDefinedMethodsOf: aClass [
 	aClass protocols
 		reject: [ :protocol | protocol isExtensionProtocol ]
 		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
-]
-
-{ #category : #private }
-RPackage >> importPackage: aPackage inTag: aTag [
-
-	aPackage definedClasses do: [ :className | self moveClass: className toTag: aTag ].
-
-	"new rpackage inherits the extentions"
-	extensionSelectors := extensionSelectors , aPackage privateExtensionSelectors
 ]
 
 { #category : #private }
