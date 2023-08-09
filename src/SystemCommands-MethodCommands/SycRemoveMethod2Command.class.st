@@ -7,6 +7,20 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
+{ #category : #activation }
+SycRemoveMethod2Command class >> methodMenuActivation [
+	<classAnnotation>
+
+	^ CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #activation }
+SycRemoveMethod2Command class >> methodShortcutActivation [
+	<classAnnotation>
+
+	^CmdShortcutActivation removalFor: ClyMethod asCalypsoItemContext
+]
+
 { #category : #accessing }
 SycRemoveMethod2Command >> defaultMenuIconName [
 	^#removeIcon
@@ -25,6 +39,7 @@ SycRemoveMethod2Command >> execute [
 
 { #category : #initialization }
 SycRemoveMethod2Command >> initialize [
+	
 	super initialize.
 
 	removeStrategy := SycSilentlyRemoveMethodStrategy new

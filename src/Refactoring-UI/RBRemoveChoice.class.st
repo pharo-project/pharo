@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+RBRemoveChoice >> action [
+
+	refactoring removeMethodChanges
+]
+
+{ #category : #accessing }
 RBRemoveChoice >> description [
 
 	^ 'Remove it'

@@ -130,9 +130,7 @@ RBRemoveMethodRefactoring >> generateChanges [
 	self breakingChangeConditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
-
-	self transform.
-	^ self changes
+	^ self removeMethodChanges 
 ]
 
 { #category : #preconditions }
@@ -172,10 +170,22 @@ RBRemoveMethodRefactoring >> privateTransform [
 	selectors do: [:each | class removeMethod: each]
 ]
 
+{ #category : #actions }
+RBRemoveMethodRefactoring >> removeMethodChanges [
+
+	self transform.
+	^ self changes
+]
+
 { #category : #initialization }
 RBRemoveMethodRefactoring >> removeMethods: selectorCollection from: aClass [
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection
+]
+
+{ #category : #accessing }
+RBRemoveMethodRefactoring >> selector [
+	^ selectors first
 ]
 
 { #category : #preconditions }

@@ -3,3 +3,9 @@ Class {
 	#superclass : #RBChoice,
 	#category : #'Refactoring-UI-Choices'
 }
+
+{ #category : #accessing }
+RBRemoveMethodChoice >> action [
+
+	self halt
+]

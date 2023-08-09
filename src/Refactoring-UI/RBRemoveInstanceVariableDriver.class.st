@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : #resources }
+RBRemoveInstanceVariableDriver >> configureRefactoring [
+
+	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
+]
+
+{ #category : #resources }
 RBRemoveInstanceVariableDriver >> refactoring [
 
 	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
@@ -21,7 +27,7 @@ RBRemoveInstanceVariableDriver >> refactoring [
 { #category : #execution }
 RBRemoveInstanceVariableDriver >> runRefactoring [
 
-	self refactoring.
+	self configureRefactoring.
 	[
 		[ 
 			| changes |

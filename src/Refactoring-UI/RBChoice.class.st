@@ -2,10 +2,23 @@ Class {
 	#name : #RBChoice,
 	#superclass : #Object,
 	#instVars : [
-		'refactoring'
+		'refactoring',
+		'driver'
 	],
 	#category : #'Refactoring-UI-Choices'
 }
+
+{ #category : #accessing }
+RBChoice >> driver [
+
+	^ driver
+]
+
+{ #category : #accessing }
+RBChoice >> driver: aDriver [
+
+	driver := aDriver
+]
 
 { #category : #accessing }
 RBChoice >> refactoring [

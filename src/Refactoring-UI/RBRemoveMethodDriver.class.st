@@ -14,6 +14,15 @@ Class {
 }
 
 { #category : #resources }
+RBRemoveMethodDriver >> configureRefactoring [
+
+	refactoring := RBRemoveMethodRefactoring
+		               model: model
+		               removeMethods: (methods collect: [ :each | each selector ])
+		               from: class
+]
+
+{ #category : #resources }
 RBRemoveMethodDriver >> refactoring [
 
 	refactoring := RBRemoveMethodRefactoring
@@ -25,7 +34,8 @@ RBRemoveMethodDriver >> refactoring [
 { #category : #execution }
 RBRemoveMethodDriver >> runRefactoring [
 
-	self refactoring.
+	| select |
+	self configureRefactoring.
 	[
 	[
 	| changes senders |
@@ -34,8 +44,20 @@ RBRemoveMethodDriver >> runRefactoring [
 	senders size = 0
 		ifTrue: [ changes := refactoring generateChanges ]
 		ifFalse: [ 
-				 
-			].
+		
+		
+		select := SpSelectDialog new 
+			title: 'There are ', senders size asString,  ' methods calling ', refactoring selector;
+			label: 'Select a strategy';
+			items: (RBRemoveMethodChoice subclasses collect: [ :each | each  new refactoring: refactoring]);
+		display: [ :each | each description ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ];
+		openModal.
+		
+	select ifNotNil: [ 
+		select inspect ]
+				
+		].
 
 
 	self openPreviewWithChanges: { changes } ]

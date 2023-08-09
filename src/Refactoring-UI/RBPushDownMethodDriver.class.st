@@ -28,6 +28,15 @@ RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pu
 	^ self new model: aRBNamespace scopes: refactoringScopes pushDown: methods
 ]
 
+{ #category : #resources }
+RBPushDownMethodDriver >> configureRefactoring [
+
+	refactoring :=  RBPushDownMethodRefactoring
+		  model: model
+		  pushDown: (methods collect: [ :each | each selector ])
+		  from: class
+]
+
 { #category : #initialization }
 RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown: methodsList [
 
@@ -53,7 +62,7 @@ RBPushDownMethodDriver >> runRefactoring [
 	methods := self selectMethods.
 	methods ifNil: [ ^ self ].
 
-	self refactoring.
+	self configureRefactoring.
 	changes := [
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError
