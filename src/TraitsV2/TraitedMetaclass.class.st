@@ -35,13 +35,6 @@ TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod 
 ]
 
 { #category : #'accessing - method dictionary' }
-TraitedMetaclass >> addSelector: selector withMethod: compiledMethod [
-	self localMethodDict at: selector put: compiledMethod.
-	super addSelector: selector withMethod: compiledMethod.
-	TraitChange addSelector: selector on: self
-]
-
-{ #category : #'accessing - method dictionary' }
 TraitedMetaclass >> addSelector: selector withRecompiledMethod: compiledMethod [
 
 	compiledMethod isFromTrait ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
