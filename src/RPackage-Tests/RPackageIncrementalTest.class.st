@@ -181,11 +181,12 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 
 { #category : #'tests - class addition removal' }
 RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
-	| p a1 b1|
 
+	| p a1 b1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPAckageP1 inCategory: self p1Name.
-	b1 := self createNewClassNamed: #B1InPAckageP1 inCategory: self p1Name.
+	p register.
+	a1 := self createNewClassNamed: #A1InPAckageP1.
+	b1 := self createNewClassNamed: #B1InPAckageP1.
 	self assert: p definedClasses size equals: 0.
 
 	p addClassDefinition: a1.

@@ -695,18 +695,15 @@ RPackage >> methodsForClass: aClass [
 ]
 
 { #category : #private }
-RPackage >> moveClass: aClass fromPackage: oldPackage toTag: aTag [
+RPackage >> moveClass: aClass toTag: aTag [
+
+	| oldPackage |
+	oldPackage := aClass package.
 
 	oldPackage removeClass: aClass.
 	self importClass: aClass inTag: aTag.
 
 	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
-]
-
-{ #category : #private }
-RPackage >> moveClass: aClass toTag: aTag [
-
-	^ self moveClass: aClass fromPackage: aClass package toTag: aTag
 ]
 
 { #category : #accessing }
