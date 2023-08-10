@@ -89,7 +89,7 @@ RBAbstractTransformation class >> refactoringOptions [
 { #category : #accessing }
 RBAbstractTransformation >> changes [
 
-	^ model changes
+	^ self model changes
 ]
 
 { #category : #'condition definitions' }
@@ -238,7 +238,7 @@ RBAbstractTransformation >> poolVariableNamesFor: aClass [
 
 { #category : #accessing }
 RBAbstractTransformation >> poolVariableNamesIn: poolName [
-	^(model classNamed: poolName) classPool keys
+	^(self model classNamed: poolName) classPool keys
 ]
 
 { #category : #preconditions }
