@@ -120,12 +120,12 @@ RBCreateAccessorsForVariableTransformation >> createSetterAccessor [
 RBCreateAccessorsForVariableTransformation >> defineGetterMethod [
 
 	self generateChangesFor: 
-		(RBAddMethodTransformRefactoring
-			 addMethod: ('<1s><r><r><t>^ <2s>'
+		(RBAddMethodTransformation
+			 sourceCode: ('<1s><r><r><t>^ <2s>'
 					  expandMacrosWith: self selector
 					  with: variableName)
-			 toClass: self definingClass
-			 inProtocols: #( #accessing )).
+			 in: self definingClass
+			 withProtocol: #accessing ).
 
 	^ selector
 ]
@@ -142,10 +142,10 @@ RBCreateAccessorsForVariableTransformation >> defineSetterMethod [
 						basedOn: variableName asString , ':'.
 						
 	self generateChangesFor: 
-		(RBAddMethodTransformRefactoring
-		 	 addMethod: (string expandMacrosWith: selector with: variableName)
-			 toClass: definingClass
-		 	 inProtocols: #( #accessing )).
+		(RBAddMethodTransformation
+		 	 sourceCode: (string expandMacrosWith: selector with: variableName)
+			 in: definingClass
+		 	 withProtocol: #accessing ).
 
 	^selector
 ]
@@ -253,6 +253,13 @@ RBCreateAccessorsForVariableTransformation >> preconditions [
 ]
 
 { #category : #transforming }
+RBCreateAccessorsForVariableTransformation >> privateTransform [
+	self
+		createGetterAccessor;
+		createSetterAccessor
+]
+
+{ #category : #transforming }
 RBCreateAccessorsForVariableTransformation >> selector [
 	^ selector ifNil: [
 		selector := self safeMethodNameFor: self definingClass
@@ -283,13 +290,6 @@ RBCreateAccessorsForVariableTransformation >> storeOn: aStream [
 	aStream nextPutAll: ' classVariable: '.
 	classVariable storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBCreateAccessorsForVariableTransformation >> transform [
-	self
-		createGetterAccessor;
-		createSetterAccessor
 ]
 
 { #category : #testing }

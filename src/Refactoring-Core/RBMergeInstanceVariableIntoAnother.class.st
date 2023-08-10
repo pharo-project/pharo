@@ -50,16 +50,7 @@ RBMergeInstanceVariableIntoAnother >> preconditions [
 ]
 
 { #category : #transforming }
-RBMergeInstanceVariableIntoAnother >> renameVariable [
-	model
-		renameInstanceVariable: variableName
-		to: newName
-		in: class
-		around: [ self renameReferences ]
-]
-
-{ #category : #transforming }
-RBMergeInstanceVariableIntoAnother >> transform [
+RBMergeInstanceVariableIntoAnother >> privateTransform [
 	renameAccessors ifTrue: [
 		self removeOldAccessors
 	].
@@ -69,4 +60,13 @@ RBMergeInstanceVariableIntoAnother >> transform [
 	renameAccessors ifFalse: [ ^ self ].
 	self addNewAccessors.
 	self renameAccessorsReferences
+]
+
+{ #category : #transforming }
+RBMergeInstanceVariableIntoAnother >> renameVariable [
+	model
+		renameInstanceVariable: variableName
+		to: newName
+		in: class
+		around: [ self renameReferences ]
 ]

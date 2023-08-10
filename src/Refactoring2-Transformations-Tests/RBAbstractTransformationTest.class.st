@@ -55,7 +55,9 @@ RBAbstractTransformationTest >> setUp [
 RBAbstractTransformationTest >> shouldFail: aRefactoring [
 
 	self proceedThroughWarning: [
-		self should: [ aRefactoring transform ] raise: RBRefactoringError ]
+		self
+			should: [ aRefactoring primitiveExecute ]
+			raise: RBRefactoringError ]
 ]
 
 { #category : #tests }

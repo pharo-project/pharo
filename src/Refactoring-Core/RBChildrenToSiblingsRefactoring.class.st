@@ -94,10 +94,10 @@ RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in
 	source := self subclassResponsibilityFor: aSelector in: aClass.
 	source ifNil: [ ^ self ].
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: source
-			toClass: aClass superclass
-			inProtocols: (aClass protocolsFor: aSelector))
+		(RBAddMethodTransformation
+			sourceCode: source
+			in: aClass superclass
+			withProtocol: (aClass protocolsFor: aSelector))
 ]
 
 { #category : #initialization }
@@ -121,6 +121,16 @@ RBChildrenToSiblingsRefactoring >> preconditions [
 				& ((RBCondition isMetaclass: each)
 						errorMacro: 'Subclass must <1?not :>be a metaclass') not
 					& (RBCondition isImmediateSubclass: each of: parent)]
+]
+
+{ #category : #transforming }
+RBChildrenToSiblingsRefactoring >> privateTransform [
+	self
+		addSuperclass;
+		pushUpVariables;
+		pullUpMethods;
+		changeIsKindOfReferences;
+		reparentSubclasses
 ]
 
 { #category : #'private - variables' }
@@ -183,10 +193,10 @@ RBChildrenToSiblingsRefactoring >> pushUp: aSelector in: aClass [
 	source := aClass sourceCodeFor: aSelector.
 	source
 		ifNotNil: [ 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: source
-			toClass: aClass superclass
-			inProtocols: (aClass protocolsFor: aSelector)) ]
+		(RBAddMethodTransformation
+			sourceCode: source
+			in: aClass superclass
+			withProtocol: (aClass protocolsFor: aSelector)) ]
 ]
 
 { #category : #'private - methods' }
@@ -257,14 +267,4 @@ RBChildrenToSiblingsRefactoring >> subclassResponsibilityFor: aSelector in: aCla
 		ifFalse: [ methodNode arguments last stop ].
 	^ '<1s><n><t>self subclassResponsibility'
 		expandMacrosWith: (source copyFrom: 1 to: position)
-]
-
-{ #category : #transforming }
-RBChildrenToSiblingsRefactoring >> transform [
-	self
-		addSuperclass;
-		pushUpVariables;
-		pullUpMethods;
-		changeIsKindOfReferences;
-		reparentSubclasses
 ]

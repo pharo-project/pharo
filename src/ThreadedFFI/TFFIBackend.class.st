@@ -127,7 +127,11 @@ TFFIBackend >> on: anObject float64At: offset put: value [
 { #category : #'instance creation' }
 TFFIBackend >> primLoadSymbol: moduleSymbol module: module [
 
+	"The primitive is expected the module to be a utf8Encoded String."
+
 	<primitive: 'primitiveLoadSymbolFromModule'>
 
-	^ self primitiveFailed
+	^ SymbolNotFoundError
+		  symbolName: moduleSymbol
+		  module: (module ifNotNil: [ :m | m asByteArray utf8Decoded ])
 ]

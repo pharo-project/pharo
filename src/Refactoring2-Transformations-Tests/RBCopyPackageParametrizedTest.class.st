@@ -15,14 +15,14 @@ RBCopyPackageParametrizedTest class >> testParameters [
 RBCopyPackageParametrizedTest >> addMethodWithRefTo: classRefName inClass: className [
 
 	(RBAddMethodTransformation
-		sourceCode: (String streamContents: [ : stream |
-									stream << 'foo';
-										cr;
-										<< '	^ ';
-										<< classRefName ])
-		in: className asSymbol
-		withProtocols: { #accessing })
-			asRefactoring execute
+		 sourceCode: (String streamContents: [ :stream |
+				  stream
+					  << 'foo';
+					  cr;
+					  << '	^ ';
+					  << classRefName ])
+		 in: className asSymbol
+		 withProtocol: #accessing ) execute
 ]
 
 { #category : #accessing }
@@ -35,14 +35,14 @@ RBCopyPackageParametrizedTest >> createPackageNamed: packageName withClasses: aC
 
 	self packageOrganizer ensurePackage: packageName.
 
-	aCollection do: [ : className |
+	aCollection do: [ :className |
 		| refactoring |
 		refactoring := RBInsertNewClassTransformation
-						addClass: className
-						superclass: #Object
-						subclasses: #()
-						category: packageName.
-		refactoring asRefactoring execute ]
+			               addClass: className
+			               superclass: #Object
+			               subclasses: #(  )
+			               category: packageName.
+		refactoring execute ]
 ]
 
 { #category : #accessing }

@@ -61,6 +61,13 @@ RBRenamePackageRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBRenamePackageRefactoring >> privateTransform [
+
+	self renamePackage.
+	self renameManifestClass
+]
+
+{ #category : #transforming }
 RBRenamePackageRefactoring >> renameManifestClass [
 	|refactoring manifest|
 	manifest := package realPackage packageManifestOrNil.
@@ -87,11 +94,4 @@ RBRenamePackageRefactoring >> storeOn: aStream [
 		nextPutAll: ' to: #';
 		nextPutAll: newName;
 		nextPut: $)
-]
-
-{ #category : #transforming }
-RBRenamePackageRefactoring >> transform [
-
-	self renamePackage.
-	self renameManifestClass
 ]

@@ -28,8 +28,6 @@ EpLogBrowserOperationFactoryTest >> setMonitorLogAsInputEntries [
 { #category : #running }
 EpLogBrowserOperationFactoryTest >> tearDown [
 
-	self flag: #categories. "This tear down should not be needed but it currently is."
-	self packageOrganizer removePackage: classFactory packageName.
-	self packageOrganizer removePackage: classFactory defaultCategory.
+	(self packageOrganizer packages select: [ :package | package name beginsWith: classFactory packageName ]) do: [ :package | package removeFromSystem ].
 	super tearDown
 ]

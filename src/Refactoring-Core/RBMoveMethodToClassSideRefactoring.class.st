@@ -55,10 +55,10 @@ RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol: protocol [
 	aClass addMethod: rbMethod.
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: rbMethod source
-			toClass: aClass
-			inProtocols: protocol)
+		(RBAddMethodTransformation
+			sourceCode: rbMethod source
+			in: aClass
+			withProtocol: protocol)
 ]
 
 { #category : #preconditions }
@@ -93,7 +93,7 @@ RBMoveMethodToClassSideRefactoring >> generateChanges [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
 
-	self transform.
+	self privateTransform.
 	^ self changes
 ]
 
@@ -155,6 +155,23 @@ RBMoveMethodToClassSideRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBMoveMethodToClassSideRefactoring >> privateTransform [
+	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
+	newSource := self getNewInstSideSource.
+	originalProtocol := method protocolName.
+	oldClass := class.
+	self removeInstVariableReferences.
+	method := class methodFor: method selector.
+	newClass := self model classNamed: class name, ' class'.
+	newSource2 := self getNewSource.
+	rbMethod := RBClassModelFactory rbMethod for: newClass source: newSource2 selector: method selector.
+	rbMethod2 := RBClassModelFactory rbMethod for: oldClass source: newSource selector: method selector.
+	oldClass removeMethod: method selector.
+	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
+	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
+]
+
+{ #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
 
 	| rbMethod references |
@@ -196,21 +213,4 @@ RBMoveMethodToClassSideRefactoring >> temporaryName [
 	whileTrue: [ counter := counter + 1.
 		tempName := aString , counter asString ].
 	^ tempName
-]
-
-{ #category : #transforming }
-RBMoveMethodToClassSideRefactoring >> transform [
-	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
-	newSource := self getNewInstSideSource.
-	originalProtocol := method protocolName.
-	oldClass := class.
-	self removeInstVariableReferences.
-	method := class methodFor: method selector.
-	newClass := self model classNamed: class name, ' class'.
-	newSource2 := self getNewSource.
-	rbMethod := RBClassModelFactory rbMethod for: newClass source: newSource2 selector: method selector.
-	rbMethod2 := RBClassModelFactory rbMethod for: oldClass source: newSource selector: method selector.
-	oldClass removeMethod: method selector.
-	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
-	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
 ]

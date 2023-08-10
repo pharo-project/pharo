@@ -48,7 +48,7 @@ RBDeprecateClassTransformation >> buildTransformations [
 						nextPutAll: String tab;
 						nextPutAll: '^ super new' ])
 					in: (className, ' class') asSymbol
-					withProtocols: {#deprecation})
+					withProtocol: #deprecation)
 			with: (RBAddMethodTransformation
 					sourceCode: (String streamContents: [ :code | code
 						nextPutAll: 'deprecated';
@@ -56,7 +56,7 @@ RBDeprecateClassTransformation >> buildTransformations [
 						nextPutAll: String tab;
 						nextPutAll: '^ true' ])
 					in: (className, ' class') asSymbol
-					withProtocols: {#deprecation})
+					withProtocol: #deprecation)
 			with: (RBAddMethodTransformation
 					sourceCode: (String streamContents: [ :code | code
 						nextPutAll: 'systemIcon';
@@ -64,7 +64,7 @@ RBDeprecateClassTransformation >> buildTransformations [
 						nextPutAll: String tab;
 						nextPutAll: '^ Smalltalk ui icons iconNamed: #packageDelete' ])
 					in: (className, ' class') asSymbol
-					withProtocols: {#deprecation})
+					withProtocol: #deprecation)
 			with: (RBAddClassCommentTransformation
 					 comment: 'Deprecated!!! Use superclass'
 					 in: className) ]

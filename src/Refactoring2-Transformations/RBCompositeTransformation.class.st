@@ -53,12 +53,13 @@ RBCompositeTransformation >> privateTransform [
 
 	"previousTransformations can be a transformation resulting from a given configuration,
 	for example do we push up instance variable when we push up a method that uses such instance variable"
-	
-	(self previousTransformations, self transformations) do: [ :transformation |
+
+	self previousTransformations , self transformations do: [
+		:transformation |
 		transformation
 			copyOptionsFrom: self options;
 			model: self model;
-			transform ]
+			primitiveExecute ]
 ]
 
 { #category : #accessing }

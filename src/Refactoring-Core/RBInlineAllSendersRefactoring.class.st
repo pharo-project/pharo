@@ -128,6 +128,14 @@ RBInlineAllSendersRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBInlineAllSendersRefactoring >> privateTransform [
+	self
+		inlineSelfSends;
+		removeMethod;
+		checkInlinedMethods
+]
+
+{ #category : #transforming }
 RBInlineAllSendersRefactoring >> removeMethod [
 	self onError:
 			[self generateChangesFor: (RBRemoveMethodRefactoring
@@ -169,12 +177,4 @@ RBInlineAllSendersRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBInlineAllSendersRefactoring >> transform [
-	self
-		inlineSelfSends;
-		removeMethod;
-		checkInlinedMethods
 ]

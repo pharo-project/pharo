@@ -29,6 +29,6 @@ RBAddInstanceVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBAddInstanceVariableRefactoring >> transform [
+RBAddInstanceVariableRefactoring >> privateTransform [
 	class addInstanceVariable: variableName
 ]

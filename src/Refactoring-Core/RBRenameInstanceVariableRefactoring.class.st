@@ -97,6 +97,19 @@ RBRenameInstanceVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBRenameInstanceVariableRefactoring >> privateTransform [
+	renameAccessors ifTrue: [
+		self removeOldAccessors
+	].
+
+	class renameInstanceVariable: variableName to: newName around: [ self renameReferences ].
+
+	renameAccessors ifFalse: [ ^ self ].
+	self addNewAccessors.
+	self renameAccessorsReferences
+]
+
+{ #category : #transforming }
 RBRenameInstanceVariableRefactoring >> removeOldAccessors [
 	| oldAccessors |
 	oldAccessors := (class allSelectors
@@ -141,10 +154,10 @@ RBRenameInstanceVariableRefactoring >> renameAccessorsReferences [
 		do: [ :each |
 			(each selector = newName or: [ each selector asString = (newName asString , ':') ])
 				ifFalse: [ self generateChangesFor:
-								(RBAddMethodTransformRefactoring
-									addMethod: each source
-									toClass: (model classNamed: class name)
-									inProtocols: each protocols) ] ]
+								(RBAddMethodTransformation
+									sourceCode: each source
+									in: (model classNamed: class name)
+									withProtocol: each protocols) ] ]
 ]
 
 { #category : #transforming }
@@ -176,17 +189,4 @@ RBRenameInstanceVariableRefactoring >> storeOn: aStream [
 		nextPutAll: ''' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBRenameInstanceVariableRefactoring >> transform [
-	renameAccessors ifTrue: [
-		self removeOldAccessors
-	].
-
-	class renameInstanceVariable: variableName to: newName around: [ self renameReferences ].
-
-	renameAccessors ifFalse: [ ^ self ].
-	self addNewAccessors.
-	self renameAccessorsReferences
 ]

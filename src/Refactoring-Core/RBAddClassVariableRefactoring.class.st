@@ -32,6 +32,6 @@ RBAddClassVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBAddClassVariableRefactoring >> transform [
+RBAddClassVariableRefactoring >> privateTransform [
 	class addClassVariable: variableName
 ]

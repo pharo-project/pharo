@@ -22,7 +22,7 @@ RBPullUpInstanceVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBPullUpInstanceVariableRefactoring >> transform [
+RBPullUpInstanceVariableRefactoring >> privateTransform [
 	class allSubclasses do:
 			[:each |
 			(each directlyDefinesInstanceVariable: variableName)

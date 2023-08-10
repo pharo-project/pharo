@@ -111,6 +111,13 @@ RBExtractToTemporaryRefactoring >> preconditions [
 						true])
 ]
 
+{ #category : #transforming }
+RBExtractToTemporaryRefactoring >> privateTransform [
+	self
+		insertTemporary;
+		compileNewMethod
+]
+
 { #category : #'private - accessing' }
 RBExtractToTemporaryRefactoring >> selectedSource [
 
@@ -138,13 +145,6 @@ RBExtractToTemporaryRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBExtractToTemporaryRefactoring >> transform [
-	self
-		insertTemporary;
-		compileNewMethod
 ]
 
 { #category : #preconditions }

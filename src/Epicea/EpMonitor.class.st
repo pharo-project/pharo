@@ -230,12 +230,6 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> categoryRenamed: aCategoryRenamed [
-
-	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldCategoryName newName: aCategoryRenamed newCategoryName)
-]
-
-{ #category : #'announcement handling' }
 EpMonitor >> classAdded: aClassAddedAnnouncement [
 
 	self addEvent: (EpClassAddition class: aClassAddedAnnouncement classAdded)
@@ -453,9 +447,9 @@ EpMonitor >> packageRemoved: packageRemoved [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> packageRenamed: aCategoryRenamed [
+EpMonitor >> packageRenamed: aPackageRenamed [
 
-	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldName newName: aCategoryRenamed newName)
+	self addEvent: (EpPackageRename oldName: aPackageRenamed oldName newName: aPackageRenamed newName)
 ]
 
 { #category : #'announcement handling' }
@@ -468,6 +462,12 @@ EpMonitor >> packageTagAdded: aPackageTagAddition [
 EpMonitor >> packageTagRemoved: aPackageTagRemoved [
 
 	self addEvent: (EpPackageTagRemoval tagName: aPackageTagRemoved tag name packageName: aPackageTagRemoved package name)
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageTagRenamed: aPackageTagRenamed [
+
+	self addEvent: (EpPackageTagRename oldName: aPackageTagRenamed oldName newName: aPackageTagRenamed newName packageName: aPackageTagRenamed package name)
 ]
 
 { #category : #'announcement handling' }
@@ -523,12 +523,12 @@ EpMonitor >> subscribeToJobAnnouncer [
 EpMonitor >> subscribeToSystemAnnouncer [
 
 	{
-		(CategoryRenamed -> #categoryRenamed:).
 		(PackageAdded -> #packageAdded:).
 		(PackageRenamed -> #packageRenamed:).
 		(PackageRemoved -> #packageRemoved:).
 		(PackageTagAdded -> #packageTagAdded:).
 		(PackageTagRemoved -> #packageTagRemoved:).
+		(PackageTagRenamed -> #packageTagRenamed:).
 		(ClassAdded -> #behaviorAdded:).
 		(ClassRemoved -> #behaviorRemoved:).
 		(MethodAdded -> #methodAdded:).

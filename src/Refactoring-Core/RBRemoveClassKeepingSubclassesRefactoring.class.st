@@ -53,6 +53,14 @@ RBRemoveClassKeepingSubclassesRefactoring >> preconditions [
 ]
 
 { #category : #preconditions }
+RBRemoveClassKeepingSubclassesRefactoring >> privateTransform [
+	self initalizeRefactorings.
+	refactorings do: [ :ref | ref primitiveExecute ].
+	self reparentSubclasses.
+	self removeClasses
+]
+
+{ #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> pushDownClassVarsOf: class [
 	class realClass classVariables do: [ :e |
 		refactorings add: (RBPushDownClassVariableRefactoring
@@ -80,12 +88,4 @@ RBRemoveClassKeepingSubclassesRefactoring >> pushDownMethodsOf: class [
 { #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> removeClasses [
 	classNames do: [:each | self model removeClassKeepingSubclassesNamed: each]
-]
-
-{ #category : #preconditions }
-RBRemoveClassKeepingSubclassesRefactoring >> transform [
-	self initalizeRefactorings.
-	refactorings do: [ :ref | ref primitiveExecute ].
-	self reparentSubclasses.
-	self removeClasses
 ]
