@@ -156,19 +156,20 @@ RBAbstractTransformation >> execute [
 ]
 
 { #category : #accessing }
+RBAbstractTransformation >> model [
+
+	^ model
+		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
+				name: self printString;
+				yourself
+			]
+		ifNotNil: [ model ]
+]
+
+{ #category : #accessing }
 RBAbstractTransformation >> model: aRBNamespace [
 
 	model := aRBNamespace
-]
-
-{ #category : #initialize }
-RBAbstractTransformation >> newModel [
-
-	model := (RBNamespace
-			onEnvironment: self defaultEnvironment)
-			name: self printString;
-			yourself.
-	^ model
 ]
 
 { #category : #'To be removed' }
