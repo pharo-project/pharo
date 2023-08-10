@@ -7,5 +7,5 @@ Class {
 { #category : #accessing }
 RBRemoveMethodChoice >> action [
 
-	self halt
+	self subclassResponsibility 
 ]
