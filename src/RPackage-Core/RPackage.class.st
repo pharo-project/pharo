@@ -175,10 +175,9 @@ RPackage >> addClass: aClass [
 	aClass category: (self addClassTag: self name) categoryName
 ]
 
-{ #category : #'add class' }
+{ #category : #deprecated }
 RPackage >> addClassDefinition: aClass [
-	"Add the class definition to the package.
-	We assume that this method is called at the creation of the class, thus methods should be added afterward. Else they might wrongly be considered as extensions."
+	"Please do not use me, I will be removed in the future. Use #importClass: instead."
 
 	(self includesClass: aClass) ifTrue: [ ^ self ].
 	classes add: aClass instanceSide name asSymbol.
