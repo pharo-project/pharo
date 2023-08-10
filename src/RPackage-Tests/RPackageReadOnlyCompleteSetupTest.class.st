@@ -67,24 +67,25 @@ RPackageReadOnlyCompleteSetupTest >> setUp [
 
 { #category : #'tests - tag class' }
 RPackageReadOnlyCompleteSetupTest >> testAddTag [
-	self assertEmpty: p1 classTags.
+
+	self assert: p1 classTags size equals: 1. "We start with the root tag"
 	p1 addClassTag: #baz.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
-	self assert: p1 classTags size equals: 1.
+	self assert: p1 classTags size equals: 2.
 
 	p1 addClassDefinition: a1 toClassTag: #foo.
 	p1 addClassDefinition: b1 toClassTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
 	self assert: p1 classTags size equals: 2.
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #B1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesForClassTag: #foo) size equals: 2.
 
 	p1 addClassTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #B1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesForClassTag: #foo) size equals: 2
 ]
 
