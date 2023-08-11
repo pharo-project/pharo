@@ -522,23 +522,6 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 		  ifFalse: [ self packageNamed: tmpPackageName ]
 ]
 
-{ #category : #'system integration' }
-RPackageOrganizer >> packageMatchingExtensionName: aString includingClass: aClass [
-	| package categoryName |
-
-	categoryName := aString.
-	package := self packageMatchingExtensionName: categoryName.
-	[ package includesClass: aClass ]
-		whileFalse: [
-			(categoryName includes: $-)
-				ifFalse: [ self error: 'Class not categorized!' ].
-
-			categoryName := categoryName copyUpToLast: $-.
-			package := self packageMatchingExtensionName: categoryName ].
-
-	^ package
-]
-
 { #category : #accessing }
 RPackageOrganizer >> packageNamed: aSymbol [
 	^ self
@@ -861,19 +844,15 @@ RPackageOrganizer >> systemClassAddedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
-	| class newPackage newPackageTag oldPackage newPackageName oldPackageName |
+	| class newPackage newPackageName |
 	class := announcement classAffected.
 
 	newPackageName := announcement newCategory.
-	oldPackageName := announcement oldCategory.
 
-	newPackageName = oldPackageName ifTrue: [ ^ self ].
-	oldPackage := self packageMatchingExtensionName: oldPackageName includingClass: class.
+	newPackageName = announcement oldCategory ifTrue: [ ^ self ].
 	newPackage := self ensurePackageMatching: newPackageName.
 
-	newPackageTag := newPackage addClassTag: newPackageName.
-
-	newPackage moveClass: class fromPackage: oldPackage toTag: newPackageTag
+	newPackage moveClass: class toTag: (newPackage addClassTag: newPackageName)
 ]
 
 { #category : #'system integration' }
