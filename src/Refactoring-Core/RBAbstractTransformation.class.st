@@ -160,7 +160,7 @@ RBAbstractTransformation >> model [
 
 	^ model
 		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
-				name: self printString;
+				name: 'Changes for ', self class name asString;
 				yourself
 			]
 		ifNotNil: [ model ]
