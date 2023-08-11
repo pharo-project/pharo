@@ -7,7 +7,7 @@ When I gather all needed information I am calling and executing push up method r
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBPushUpMethodDriver model: aRBNamespace scopes: refactoringScopes pushUp: methods) execute
+(RBPushUpMethodDriver model: aRBNamespace scopes: refactoringScopes pushUp: methods) runRefactoring
 ```
 "
 Class {
@@ -29,6 +29,18 @@ RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes push
 		  model: aRBNamespace
 		  scopes: refactoringScopes
 		  pushUp: methodsList
+]
+
+{ #category : #resources }
+RBPushUpMethodDriver >> configureRefactoring [
+	"I'm gathering user input and creating refactoring instance"
+
+	self selectMethodsAndSuperclass.
+	refactoring := RBPullUpMethodRefactoring
+		  model: model
+		  pullUp: (methods collect: [ :each | each selector ])
+		  from: methods first origin
+		  to: superclass
 ]
 
 { #category : #initialization }
@@ -56,7 +68,7 @@ RBPushUpMethodDriver >> refactoring [
 RBPushUpMethodDriver >> runRefactoring [
 
 	| changes |
-	self refactoring.
+	self configureRefactoring.
 	changes := [
 	           [
 	           [ refactoring generateChanges ]

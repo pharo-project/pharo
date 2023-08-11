@@ -1,3 +1,6 @@
+"
+I'm a model for user interaction for the rename method refactoring.
+"
 Class {
 	#name : #RBRenameMethodDriver,
 	#superclass : #RBDriver,
@@ -36,12 +39,6 @@ RBRenameMethodDriver >> canRenameArgs [
 RBRenameMethodDriver >> command: aCommand andPostAction: aClosure [ 
 	command := aCommand. "may be not needed"
 	postAction := aClosure
-]
-
-{ #category : #initialize }
-RBRenameMethodDriver >> furtherActionFor: aReport [
-
-	aReport browse
 ]
 
 { #category : #initialize }

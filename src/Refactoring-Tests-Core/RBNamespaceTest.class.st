@@ -80,7 +80,7 @@ RBNamespaceTest >> testAllReferencesToTakesIntoAccountSuperCall [
 	self
 		assert:
 		(rbNamespace2 allReferencesTo: #justSuperSendInSubclass) size
-		equals: 1
+		equals: 2
 ]
 
 { #category : #'tests - classes' }
@@ -262,13 +262,16 @@ RBNamespaceTest >> testReparentSuperclassChange [
 	subclasses do: [:each | self assert: each superclass equals: superclass]
 ]
 
-{ #category : #'tests - classes' }
+{ #category : #'class tests' }
 RBNamespaceTest >> testRoots [
+
 	| model |
 	model := modelFactory rbNamespace new.
 	self
-		assert: (model rootClasses asSortedCollection: [:a :b | a name < b name])
+		assert:
+			(model rootClasses asSortedCollection: [ :a :b | a name < b name ])
 				asArray
-		equals: (({ProtoObject} collect: [:each | model classFor: each])
-							asSortedCollection: [:a :b | a name < b name]) asArray
+		equals:
+			(({ ProtoObject} collect: [ :each | model classFor: each ])
+				 asSortedCollection: [ :a :b | a name < b name ]) asArray
 ]

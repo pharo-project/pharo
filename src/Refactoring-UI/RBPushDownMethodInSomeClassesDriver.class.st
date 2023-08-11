@@ -8,7 +8,7 @@ When I gather all needed information I am calling and executing push down method
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBPushDownMethodDriver model: aRBNamespace scopes: refactoringScopes pushDown: methods) execute
+(RBPushDownMethodDriver model: aRBNamespace scopes: refactoringScopes pushDown: methods) runRefactoring
 ```
 "
 Class {
@@ -19,6 +19,16 @@ Class {
 	],
 	#category : #'Refactoring-UI-Drivers'
 }
+
+{ #category : #resources }
+RBPushDownMethodInSomeClassesDriver >> configureRefactoring [
+
+	refactoring :=  RBPushDownMethodRefactoring
+		model: model
+		pushDown: (methods collect: [ :each | each selector ])
+		from: class
+		in: classes.
+]
 
 { #category : #resources }
 RBPushDownMethodInSomeClassesDriver >> refactoring [
@@ -39,7 +49,7 @@ RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 	classes := self selectClasses.
 	classes ifNil: [ ^ self ].
 	
-	self refactoring.
+	self configureRefactoring.
 	changes := [
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError

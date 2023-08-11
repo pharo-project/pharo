@@ -766,6 +766,15 @@ RBAbstractClass >> typeOfClassVariable: aSymbol [
 	^model classNamed: #Object
 ]
 
+{ #category : #testing }
+RBAbstractClass >> whichClassIncludesSelector: aSelector [
+
+	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
+	^ self superclass isNil
+		  ifFalse: [ self superclass whichClassIncludesSelector: aSelector ]
+		  ifTrue: [ nil ]
+]
+
 { #category : #'method accessing' }
 RBAbstractClass >> whichSelectorsReferToClass: aRBClass [
 
