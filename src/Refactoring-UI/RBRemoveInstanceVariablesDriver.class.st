@@ -2,7 +2,7 @@
 I'm a model for user interaction for the remove instance variable refactoring.
 "
 Class {
-	#name : #RBRemoveInstanceVariableDriver,
+	#name : #RBRemoveInstanceVariablesDriver,
 	#superclass : #RBDriver,
 	#instVars : [
 		'class',
@@ -13,19 +13,23 @@ Class {
 }
 
 { #category : #resources }
-RBRemoveInstanceVariableDriver >> configureRefactoring [
+RBRemoveInstanceVariablesDriver >> configureRefactoring [
 
-	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
+	refactoring := RBCompositeRefactoring new
+							model: model; 
+							refactorings: (variables collect: [:each | 
+									RBRemoveInstanceVariableRefactoring model: model remove: each from: class]);
+								yourself 
 ]
 
 { #category : #resources }
-RBRemoveInstanceVariableDriver >> refactoring [
+RBRemoveInstanceVariablesDriver >> refactoring [
 
 	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
 ]
 
 { #category : #execution }
-RBRemoveInstanceVariableDriver >> runRefactoring [
+RBRemoveInstanceVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
 	[
@@ -52,9 +56,10 @@ RBRemoveInstanceVariableDriver >> runRefactoring [
 ]
 
 { #category : #initialization }
-RBRemoveInstanceVariableDriver >> scopes: refactoringScopes variable: aVariable for: aClass [
+RBRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollection for: aClass [
 	
 	scopes := refactoringScopes.
-	variables := {aVariable}.
+	model := self refactoringScopeOn: scopes first.
+	variables := aCollection.
 	class := aClass
 ]

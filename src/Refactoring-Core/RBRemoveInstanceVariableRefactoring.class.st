@@ -49,6 +49,8 @@ RBRemoveInstanceVariableRefactoring >> preconditions [
 
 { #category : #transforming }
 RBRemoveInstanceVariableRefactoring >> privateTransform [
+	
+	
 	class removeInstanceVariable: variableName
 ]
 
