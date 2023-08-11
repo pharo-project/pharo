@@ -522,23 +522,6 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 		  ifFalse: [ self packageNamed: tmpPackageName ]
 ]
 
-{ #category : #'system integration' }
-RPackageOrganizer >> packageMatchingExtensionName: aString includingClass: aClass [
-	| package categoryName |
-
-	categoryName := aString.
-	package := self packageMatchingExtensionName: categoryName.
-	[ package includesClass: aClass ]
-		whileFalse: [
-			(categoryName includes: $-)
-				ifFalse: [ self error: 'Class not categorized!' ].
-
-			categoryName := categoryName copyUpToLast: $-.
-			package := self packageMatchingExtensionName: categoryName ].
-
-	^ package
-]
-
 { #category : #accessing }
 RPackageOrganizer >> packageNamed: aSymbol [
 	^ self
@@ -861,19 +844,15 @@ RPackageOrganizer >> systemClassAddedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
-	| class newPackage newPackageTag oldPackage newPackageName oldPackageName |
+	| class newPackage newPackageName |
 	class := announcement classAffected.
 
 	newPackageName := announcement newCategory.
-	oldPackageName := announcement oldCategory.
 
-	newPackageName = oldPackageName ifTrue: [ ^ self ].
-	oldPackage := self packageMatchingExtensionName: oldPackageName includingClass: class.
+	newPackageName = announcement oldCategory ifTrue: [ ^ self ].
 	newPackage := self ensurePackageMatching: newPackageName.
 
-	newPackageTag := newPackage addClassTag: newPackageName.
-
-	newPackage moveClass: class fromPackage: oldPackage toTag: newPackageTag
+	newPackage moveClass: class toTag: (newPackage addClassTag: newPackageName)
 ]
 
 { #category : #'system integration' }
@@ -885,13 +864,11 @@ RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 
 { #category : #'system integration' }
 RPackageOrganizer >> systemMethodAddedActionFrom: ann [
+
 	| method |
-
 	"If the method origin is not the one of the event, we do not care about that method"
-
 	method := ann method.
-	method origin = ann methodClass
-		ifFalse: [ ^ self ].
+	method origin = ann methodClass ifFalse: [ ^ self ].
 
 	self addMethod: method
 ]

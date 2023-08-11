@@ -7,7 +7,7 @@ When I gather all needed information I am calling and executing deprecate method
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBDeprecateMethodDriver model: aRBNamespace deprecateMethod: aSelector in: aClass) execute
+(RBDeprecateMethodDriver model: aRBNamespace deprecateMethod: aSelector in: aClass) runRefactoring
 ```
 "
 Class {

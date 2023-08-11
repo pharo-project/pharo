@@ -18,7 +18,9 @@ Class {
 		'scopeLabel',
 		'scopeDropList',
 		'buttonOk',
-		'buttonCancel'
+		'buttonCancel',
+		'compositeChange',
+		'refactoring'
 	],
 	#category : #'Refactoring-UI-UI'
 }
@@ -48,6 +50,10 @@ StRefactoringPreviewPresenter >> accept [
 		
 		self closeWindow ].
 	[
+	"the following behavior should not be kept in the UI. 
+	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
+	May be this should be in the refactoring."
+	
 	selectedChanges do: [ :change |
 			RBRefactoryChangeManager instance
 				performChange: change;
@@ -67,7 +73,10 @@ StRefactoringPreviewPresenter >> buildDiffFor: aChange [
 
 { #category : #initialization }
 StRefactoringPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollection [
-
+	
+	compositeChange := aCompositeChange.
+	"we keep the composite because we want to use it for performing changes later on."
+	
 	changes := aCompositeChange collect: [ :each | each whatToDisplayIn: self].
 	changes := changes flattened.
 	scopes := aCollection.
@@ -173,6 +182,11 @@ StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: self title;
 		initialExtent: 700 @ 500
+]
+
+{ #category : #accessing }
+StRefactoringPreviewPresenter >> refactoring: aRBRemoveMethodDriver [ 
+	refactoring := aRBRemoveMethodDriver
 ]
 
 { #category : #update }
