@@ -22,8 +22,9 @@ Class {
 
 { #category : #utilities }
 MCConfiguration class >> changesIn: aPackage from: oldInfo to: newInfo on: aStream [
+	
 	| printBlock newVersion |
-	(newInfo = oldInfo)
+	newInfo = oldInfo
 		ifTrue: [^self].
 	aStream cr; nextPutAll: '----------------- ', aPackage name, ' ------------------'; cr.
 
@@ -47,7 +48,7 @@ MCConfiguration class >> changesIn: aPackage from: oldInfo to: newInfo on: aStre
 	(newVersion info hasAncestor: oldInfo)
 		ifTrue: [(newVersion info allAncestorsOnPathTo: oldInfo)
 			reverseDo: printBlock].
-	newVersion info in: printBlock.
+	printBlock value: newVersion info.
 	aStream flush
 ]
 
