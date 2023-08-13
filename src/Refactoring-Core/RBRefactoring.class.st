@@ -129,17 +129,6 @@ RBRefactoring >> generateChangesFor: aRefactoring [
 	aRefactoring primitiveExecute
 ]
 
-{ #category : #transforming }
-RBRefactoring >> model [
-
-	^ model
-		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
-				name: 'Changes for ', self class name asString ;
-				yourself
-			]
-		ifNotNil: [ model ]
-]
-
 { #category : #private }
 RBRefactoring >> onError: aBlock do: errorBlock [
 	^aBlock on: self class preconditionSignal

@@ -89,7 +89,7 @@ RBAbstractTransformation class >> refactoringOptions [
 { #category : #accessing }
 RBAbstractTransformation >> changes [
 
-	^ model changes
+	^ self model changes
 ]
 
 { #category : #'condition definitions' }
@@ -156,19 +156,20 @@ RBAbstractTransformation >> execute [
 ]
 
 { #category : #accessing }
+RBAbstractTransformation >> model [
+
+	^ model
+		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
+				name: 'Changes for ', self class name asString;
+				yourself
+			]
+		ifNotNil: [ model ]
+]
+
+{ #category : #accessing }
 RBAbstractTransformation >> model: aRBNamespace [
 
 	model := aRBNamespace
-]
-
-{ #category : #initialize }
-RBAbstractTransformation >> newModel [
-
-	model := (RBNamespace
-			onEnvironment: self defaultEnvironment)
-			name: self printString;
-			yourself.
-	^ model
 ]
 
 { #category : #'To be removed' }
@@ -244,7 +245,7 @@ RBAbstractTransformation >> poolVariableNamesFor: aClass [
 
 { #category : #accessing }
 RBAbstractTransformation >> poolVariableNamesIn: poolName [
-	^(model classNamed: poolName) classPool keys
+	^(self model classNamed: poolName) classPool keys
 ]
 
 { #category : #preconditions }
