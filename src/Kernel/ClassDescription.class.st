@@ -919,11 +919,11 @@ ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
 	Does nothing if the protocol does not exists."
 
+	| protocol |
 	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
-
-	(self ensureProtocol: aProtocol) in: [ :protocol |
-		protocol methodSelectors do: [ :sel | self removeSelector: sel ].
-		self removeProtocolIfEmpty: protocol ]
+	protocol := self ensureProtocol: aProtocol.
+	protocol methodSelectors do: [ :sel | self removeSelector: sel ].
+	self removeProtocolIfEmpty: protocol 
 ]
 
 { #category : #protocols }
