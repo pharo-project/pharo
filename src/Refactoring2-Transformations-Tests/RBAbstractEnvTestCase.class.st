@@ -346,23 +346,6 @@ m
 ]
 
 { #category : #'mocking helpers' }
-RBAbstractEnvTestCase >> modelWithOnlyRealClasses: aColOfClasses [
-
-	| classEnvironment classes |
-	classes := aColOfClasses
-		           inject: OrderedCollection new
-		           into: [ :sum :each |
-			           self environmentOfTest at: each ifPresent: [ :class |
-				           sum
-					           add: class;
-					           add: class class ].
-			           sum ].
-	classEnvironment := RBNamespace classes: classes.
-	classEnvironment name: 'Class'.
-	^ classEnvironment
-]
-
-{ #category : #'mocking helpers' }
 RBAbstractEnvTestCase >> modelWithoutRealClasses: aColOfClasses [
 
 	| newModel classEnvironment classes |

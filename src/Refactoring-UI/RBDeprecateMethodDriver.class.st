@@ -41,12 +41,6 @@ RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollec
 	self selectorToReplaceDeprecatedSelector.
 ]
 
-{ #category : #utilities }
-RBDeprecateMethodDriver >> refactoringScopeOn: aScope [
-
-	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
-]
-
 { #category : #execution }
 RBDeprecateMethodDriver >> runRefactoring [
 

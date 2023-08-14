@@ -41,6 +41,12 @@ RBDriver >> openPreviewWithChanges: changes [
 		openModal
 ]
 
+{ #category : #utilities }
+RBDriver >> refactoringScopeOn: aScope [
+
+	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
+]
+
 { #category : #execution }
 RBDriver >> runRefactoring [
 

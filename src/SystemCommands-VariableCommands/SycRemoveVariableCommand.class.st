@@ -10,35 +10,3 @@ SycRemoveVariableCommand class >> sourceCodeMenuActivation [
 
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.5 for: ClySourceCodeContext
 ]
-
-{ #category : #accessing }
-SycRemoveVariableCommand >> defaultMenuIconName [
-	^#removeIcon
-]
-
-{ #category : #accessing }
-SycRemoveVariableCommand >> defaultMenuItemName [
-	^'Remove'
-]
-
-{ #category : #execution }
-SycRemoveVariableCommand >> execute [
-
-	variables first isClassVariable
-		ifFalse: [
-			(RBRemoveInstanceVariableDriver new
-				 scopes: toolContext refactoringScopes
-				 variable: variables first name
-				 for: variables first definingClass) runRefactoring ]
-		ifTrue: [
-			(RBRemoveSharedVariableDriver new
-				 scopes: toolContext refactoringScopes
-				 variable: variables first name
-				 for: variables first definingClass) runRefactoring ]
-]
-
-{ #category : #testing }
-SycRemoveVariableCommand >> isComplexRefactoring [
-
-	^false
-]
