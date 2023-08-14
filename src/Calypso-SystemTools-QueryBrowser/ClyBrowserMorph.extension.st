@@ -4,14 +4,22 @@ Extension { #name : #ClyBrowserMorph }
 ClyBrowserMorph >> browseImplementorsOf: aSymbol inNameResolver: aNameResolver [
 	| classBinding classToBrowse |
 	aSymbol first isUppercase ifTrue: [
+		aNameResolver 
+			ifNil: [ classToBrowse := self class environment at: aSymbol.
+						^ { ClyFullBrowserMorph openOnClass: classToBrowse.
+						#BrowseClassWithoutNameResolver} ]
+			ifNotNil: [ 
 		classBinding := aNameResolver bindingOf: aSymbol.
+	   
 		classBinding ifNotNil: [
 			classToBrowse := classBinding definingClass ifNil: [ classBinding value ].
 			classToBrowse isClassOrTrait ifFalse: [ classToBrowse := classToBrowse class ].
-			^self spawnBrowser: ClyFullBrowserMorph withState: [ :browser |
-				browser selectClass: classToBrowse]]].
+			self spawnBrowser: ClyFullBrowserMorph withState: [ :browser |
+				browser selectClass: classToBrowse].
+			^ #NormalBrowseClass ] ] ].
 
-	self spawnQueryBrowserOn: (ClyMessageImplementorsQuery of: aSymbol)
+	self spawnQueryBrowserOn: (ClyMessageImplementorsQuery of: aSymbol).
+	^ #NormalImplementorBrowse
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
@@ -25,6 +33,8 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 
 	| classBinding |
 	aSymbol isSymbol and: [ aSymbol first isUppercase ifTrue: [
+		anEnvironment 
+			ifNil: [ ^self spawnQueryBrowserOn: (ClyClassReferencesQuery of: (self class environment at: aSymbol ))].
 		classBinding := anEnvironment bindingOf: aSymbol.
 		classBinding ifNotNil: [
 			^self spawnQueryBrowserOn: (ClyClassReferencesQuery of: classBinding)]]].
