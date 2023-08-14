@@ -32,14 +32,15 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol [
 ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 
 	| classBinding |
+	self halt.
 	aSymbol isSymbol and: [ aSymbol first isUppercase ifTrue: [
 		anEnvironment 
-			ifNil: [ ^self spawnQueryBrowserOn: (ClyClassReferencesQuery of: (self class environment at: aSymbol ))].
+			ifNil: [ ^ {self spawnQueryBrowserOn: (ClyClassReferencesQuery of: (self class environment at: aSymbol ))  . #SendersWithouEnvironment} ].
 		classBinding := anEnvironment bindingOf: aSymbol.
 		classBinding ifNotNil: [
-			^self spawnQueryBrowserOn: (ClyClassReferencesQuery of: classBinding)]]].
+			^ {self spawnQueryBrowserOn: (ClyClassReferencesQuery of: classBinding) . #SendersWithEnvironment} ] ]].
 
-	self browseSendersOf: aSymbol
+	{ self browseSendersOf: aSymbol . #SendersNoIdeaWhenSent }
 ]
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
