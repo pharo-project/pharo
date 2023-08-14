@@ -4,12 +4,17 @@ Extension { #name : #ClyBrowserMorph }
 ClyBrowserMorph >> browseImplementorsOf: aSymbol inNameResolver: aNameResolver [
 	| classBinding classToBrowse |
 	aSymbol first isUppercase ifTrue: [
+		aNameResolver 
+			ifNil: [ classToBrowse := self class environment at: aSymbol.
+						^ self spawnBrowser: ClyFullBrowserMorph withState: [ :browser | browser selectClass: classToBrowse]]
+			ifNotNil: [ 
 		classBinding := aNameResolver bindingOf: aSymbol.
+	   
 		classBinding ifNotNil: [
 			classToBrowse := classBinding definingClass ifNil: [ classBinding value ].
 			classToBrowse isClassOrTrait ifFalse: [ classToBrowse := classToBrowse class ].
 			^self spawnBrowser: ClyFullBrowserMorph withState: [ :browser |
-				browser selectClass: classToBrowse]]].
+				browser selectClass: classToBrowse] ] ] ].
 
 	self spawnQueryBrowserOn: (ClyMessageImplementorsQuery of: aSymbol)
 ]
@@ -25,6 +30,8 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 
 	| classBinding |
 	aSymbol isSymbol and: [ aSymbol first isUppercase ifTrue: [
+		anEnvironment 
+			ifNil: [ ^self spawnQueryBrowserOn: (ClyClassReferencesQuery of: (self class environment at: aSymbol ))].
 		classBinding := anEnvironment bindingOf: aSymbol.
 		classBinding ifNotNil: [
 			^self spawnQueryBrowserOn: (ClyClassReferencesQuery of: classBinding)]]].
