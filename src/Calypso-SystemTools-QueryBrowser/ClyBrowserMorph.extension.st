@@ -32,7 +32,6 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol [
 ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 
 	| classBinding |
-	self halt.
 	aSymbol isSymbol and: [ aSymbol first isUppercase ifTrue: [
 		anEnvironment 
 			ifNil: [ ^ {self spawnQueryBrowserOn: (ClyClassReferencesQuery of: (self class environment at: aSymbol ))  . #SendersWithouEnvironment} ].
