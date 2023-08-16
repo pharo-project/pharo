@@ -59,7 +59,7 @@ RBRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 ]
 
 { #category : #preconditions }
-RBRenameMethodRefactoring >> applicabilityConditions [
+RBRenameMethodRefactoring >> applicabilityPreconditions [
 
 	^ self newNameDoesNotRequireRefactoringPreconditions not & (RBCondition
 		   withBlock: [ oldSelector numArgs = newSelector numArgs ]
@@ -77,9 +77,9 @@ RBRenameMethodRefactoring >> breakingChangeConditions [
 RBRenameMethodRefactoring >> generateChanges [
 
 	
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
+			  self applicabilityPreconditions errorString ].
 	self breakingChangeConditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].

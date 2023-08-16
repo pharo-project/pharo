@@ -41,9 +41,9 @@ RBAddParameterTransformation >> addParameterToMethod: aSelector in: aClass newSe
 ]
 
 { #category : #adding }
-RBAddParameterTransformation >> applicabilityConditions [ 
+RBAddParameterTransformation >> applicabilityPreconditions [ 
 	
-	^ super applicabilityConditions & 
+	^ super applicabilityPreconditions & 
 		 (RBCondition withBlock:
 			[ oldSelector numArgs < newSelector numArgs
 				ifFalse:

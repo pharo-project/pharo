@@ -46,7 +46,7 @@ RBRenameTemporaryVariableTransformation class >> rename: oldName to: newName in:
 ]
 
 { #category : #preconditions }
-RBRenameTemporaryVariableTransformation >> applicabilityConditions [ 
+RBRenameTemporaryVariableTransformation >> applicabilityPreconditions [ 
 	"check whether variable exists?
 	 test instance variables as well"
 

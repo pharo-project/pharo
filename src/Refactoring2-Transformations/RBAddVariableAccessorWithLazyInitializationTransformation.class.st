@@ -49,9 +49,9 @@ RBAddVariableAccessorWithLazyInitializationTransformation class >> variable: aVa
 ]
 
 { #category : #preconditions }
-RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityConditions [ 
+RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityPreconditions [ 
 
-	^ super applicabilityConditions &
+	^ super applicabilityPreconditions &
 	(RBCondition withBlock: [
 		self verifyInitializationExpressionOf: self defaultValue.
 		true ])

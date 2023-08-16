@@ -91,7 +91,7 @@ RBRenameVariableTransformation class >> renameInstanceVarible: aVariableName to:
 ]
 
 { #category : #preconditions }
-RBRenameVariableTransformation >> applicabilityConditions [
+RBRenameVariableTransformation >> applicabilityPreconditions [
 
 	class := self model classObjectFor: className.
 

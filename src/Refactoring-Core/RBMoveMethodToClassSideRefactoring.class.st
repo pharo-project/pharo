@@ -62,7 +62,7 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 ]
 
 { #category : #preconditions }
-RBMoveMethodToClassSideRefactoring >> applicabilityConditions [
+RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 
 	^ (RBCondition isMetaclass: class) not
 ]
@@ -86,9 +86,9 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 { #category : #refactoring }
 RBMoveMethodToClassSideRefactoring >> generateChanges [
 	
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
+			  self applicabilityPreconditions errorString ].
 	self breakingChangeConditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
@@ -151,7 +151,7 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangeConditions
 ]
 
 { #category : #transforming }

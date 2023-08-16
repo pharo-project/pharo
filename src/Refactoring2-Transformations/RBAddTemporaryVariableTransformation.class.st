@@ -59,7 +59,7 @@ RBAddTemporaryVariableTransformation class >> variable: aString inMethod: aSelec
 ]
 
 { #category : #preconditions }
-RBAddTemporaryVariableTransformation >> applicabilityConditions [
+RBAddTemporaryVariableTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition
 		   withBlock: [ self definingClass isNotNil ]

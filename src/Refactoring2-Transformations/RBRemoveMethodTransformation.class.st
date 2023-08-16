@@ -54,7 +54,7 @@ RBRemoveMethodTransformation class >> selectors: aCollection from: aClassName [
 ]
 
 { #category : #preconditions }
-RBRemoveMethodTransformation >> applicabilityConditions [
+RBRemoveMethodTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		& (RBCondition withBlock: [ self checkSuperMethods. true ])

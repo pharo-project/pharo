@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBAddVariableTransformation >> applicabilityConditions [
+RBAddVariableTransformation >> applicabilityPreconditions [
 
 	class := self definingClass.
 

@@ -43,7 +43,7 @@ RBRemoveProtocolTransformation class >> protocol: aString inClass: aClassName [
 ]
 
 { #category : #preconditions }
-RBRemoveProtocolTransformation >> applicabilityConditions [
+RBRemoveProtocolTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [

@@ -49,7 +49,7 @@ RBAddMessageSendTransformation class >> model: aRBModel messageSend: aString inM
 ]
 
 { #category : #preconditions }
-RBAddMessageSendTransformation >> applicabilityConditions [
+RBAddMessageSendTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]

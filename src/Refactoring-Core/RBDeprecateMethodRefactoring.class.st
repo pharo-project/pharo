@@ -78,7 +78,7 @@ RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSele
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodRefactoring >> applicabilityConditions [
+RBDeprecateMethodRefactoring >> applicabilityPreconditions [
 
 	^ RBCondition definesSelector: oldSelector in: class
 ]
@@ -124,9 +124,9 @@ RBDeprecateMethodRefactoring >> generateChanges [
 	self inputValidation check  ifFalse: [
 		RBInputValidationFailedError signal:
 			self inputValidation errorString ].
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
+			  self applicabilityPreconditions errorString ].
 	self breakingChangeConditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
@@ -155,7 +155,7 @@ RBDeprecateMethodRefactoring >> newSelector: aString [
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangeConditions
 ]
 
 { #category : #transforming }

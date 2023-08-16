@@ -17,7 +17,7 @@ RBRemoveSharedVariableRefactoring class >> remove: variable from: class [
 ]
 
 { #category : #preconditions }
-RBRemoveSharedVariableRefactoring >> applicabilityConditions [
+RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
 	^ ( RBCondition isMetaclass: class ) not
 		& ( RBCondition definesClassVariable: variableName in: class )
@@ -35,9 +35,9 @@ RBRemoveSharedVariableRefactoring >> breakingChangeConditions [
 { #category : #actions }
 RBRemoveSharedVariableRefactoring >> generateChanges [
 	
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
+			  self applicabilityPreconditions errorString ].
 	self breakingChangeConditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangeConditions errorString ].
@@ -49,7 +49,7 @@ RBRemoveSharedVariableRefactoring >> generateChanges [
 { #category : #preconditions }
 RBRemoveSharedVariableRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions 
+	^ self applicabilityPreconditions & self breakingChangeConditions 
 ]
 
 { #category : #transforming }

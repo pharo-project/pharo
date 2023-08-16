@@ -63,7 +63,7 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 ]
 
 { #category : #preconditions }
-RBRemoveClassTransformation >> applicabilityConditions [ 
+RBRemoveClassTransformation >> applicabilityPreconditions [ 
 
 	^ className 
 			inject: RBCondition true 
