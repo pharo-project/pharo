@@ -112,7 +112,7 @@ RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBTemporaryToInstanceVariableTransformation >> breakingChangeConditions [
+RBTemporaryToInstanceVariableTransformation >> breakingChangePreconditions [
 
 	^ RBCondition withBlock: [
 		  (class allSubclasses anySatisfy: [ :cls |
@@ -153,7 +153,7 @@ RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector
 { #category : #preconditions }
 RBTemporaryToInstanceVariableTransformation >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : #executing }

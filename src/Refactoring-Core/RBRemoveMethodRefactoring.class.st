@@ -38,7 +38,7 @@ RBRemoveMethodRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> breakingChangeConditions [
+RBRemoveMethodRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition withBlock: [
 			   self checkSuperMethods.
@@ -127,9 +127,9 @@ RBRemoveMethodRefactoring >> generateChanges [
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 	^ self removeMethodChanges 
 ]
 
@@ -162,7 +162,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangeConditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : #transforming }

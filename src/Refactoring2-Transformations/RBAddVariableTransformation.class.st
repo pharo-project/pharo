@@ -37,7 +37,7 @@ RBAddVariableTransformation >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBAddVariableTransformation >> breakingChangeConditions [ 
+RBAddVariableTransformation >> breakingChangePreconditions [ 
 
 	^ (RBCondition
 			   hierarchyOf: class

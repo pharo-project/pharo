@@ -21,7 +21,7 @@ RBRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBRemoveInstanceVariableRefactoring >> breakingChangeConditions [ 
+RBRemoveInstanceVariableRefactoring >> breakingChangePreconditions [ 
 
 	^ (RBCondition hierarchyOf: class referencesInstanceVariable: variableName) not
 	
@@ -33,9 +33,9 @@ RBRemoveInstanceVariableRefactoring >> generateChanges [
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
 	^ self changes
@@ -44,7 +44,7 @@ RBRemoveInstanceVariableRefactoring >> generateChanges [
 { #category : #preconditions }
 RBRemoveInstanceVariableRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangeConditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : #transforming }

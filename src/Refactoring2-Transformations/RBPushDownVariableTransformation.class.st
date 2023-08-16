@@ -35,7 +35,7 @@ RBPushDownVariableTransformation >> applicabilityPreconditionsForInstanceVariabl
 ]
 
 { #category : #preconditions }
-RBPushDownVariableTransformation >> breakingChangeConditionsForClassVariable [
+RBPushDownVariableTransformation >> breakingChangePreconditionsForClassVariable [
 
 	^ RBCondition withBlock: [
 		  | numSubclassesAccessing |
@@ -53,7 +53,7 @@ RBPushDownVariableTransformation >> breakingChangeConditionsForClassVariable [
 ]
 
 { #category : #preconditions }
-RBPushDownVariableTransformation >> breakingChangeConditionsForInstanceVariable [
+RBPushDownVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
 
 	^ RBCondition
 		  accessesInstanceVariable: variableName

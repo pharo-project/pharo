@@ -84,7 +84,7 @@ RBDeprecateMethodRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodRefactoring >> breakingChangeConditions [
+RBDeprecateMethodRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition canUnderstand: newSelector in: class) & (RBCondition
 		   withBlock: [
@@ -127,9 +127,9 @@ RBDeprecateMethodRefactoring >> generateChanges [
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
 	^ self changes
@@ -155,7 +155,7 @@ RBDeprecateMethodRefactoring >> newSelector: aString [
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : #transforming }

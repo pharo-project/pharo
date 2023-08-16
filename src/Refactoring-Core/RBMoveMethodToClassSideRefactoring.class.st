@@ -68,7 +68,7 @@ RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBMoveMethodToClassSideRefactoring >> breakingChangeConditions [
+RBMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition definesSelector: method selector in: class classSide)
 		  not
@@ -89,9 +89,9 @@ RBMoveMethodToClassSideRefactoring >> generateChanges [
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
 	^ self changes
@@ -151,7 +151,7 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : #transforming }

@@ -18,7 +18,7 @@ RBCompositeRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBCompositeRefactoring >> breakingChangeConditions [ 
+RBCompositeRefactoring >> breakingChangePreconditions [ 
 
 	^ RBCondition true 
 ]
@@ -29,9 +29,9 @@ RBCompositeRefactoring >> generateChanges [
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
 	^ self changes
@@ -40,7 +40,7 @@ RBCompositeRefactoring >> generateChanges [
 { #category : #preconditions }
 RBCompositeRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangeConditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : #preconditions }

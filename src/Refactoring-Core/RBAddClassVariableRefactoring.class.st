@@ -18,7 +18,7 @@ RBAddClassVariableRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBAddClassVariableRefactoring >> breakingChangeConditions [
+RBAddClassVariableRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition
 		   hierarchyOf: class
@@ -28,7 +28,7 @@ RBAddClassVariableRefactoring >> breakingChangeConditions [
 { #category : #preconditions }
 RBAddClassVariableRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : #transforming }

@@ -79,7 +79,7 @@ RBRemoveClassTransformation >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBRemoveClassTransformation >> breakingChangeConditions [
+RBRemoveClassTransformation >> breakingChangePreconditions [
 
 	^ self preconditionHasNoReferences: className
 ]
