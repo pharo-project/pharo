@@ -94,7 +94,7 @@ RBRenameMethodDriver >> runRefactoring [
 		refactoring renameMap: newMessage renameMap.
 		refactoring newNameDoesNotRequireRefactoringPreconditions check.
 		changes := refactoring generateChanges.
-		self openPreviewWithChanges: { changes }
+		self openPreviewWithChanges: changes
 		"arg postAction value." ]
 			on: RBApplicabilityChecksFailedError
 			do: [ :err | ^ RBRefactoringError signal: err messageText ] ]

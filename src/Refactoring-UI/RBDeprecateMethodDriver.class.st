@@ -70,7 +70,7 @@ RBDeprecateMethodDriver >> runRefactoring [
 			                   RBRefactoringWarning signal: err messageText.
 			                   "If user answers no, error is being propagated."
 			                   err resume ].
-	self openPreviewWithChanges: { compositeChange }
+	self openPreviewWithChanges: compositeChange
 ]
 
 { #category : #'ui - requests' }
