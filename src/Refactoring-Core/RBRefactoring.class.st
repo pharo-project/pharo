@@ -126,6 +126,7 @@ RBRefactoring >> generateChangesFor: aRefactoring [
 
 	"Execute the argument but passing the receiver options to that refactoring"
 	aRefactoring copyOptionsFrom: self options.
+	aRefactoring model: self model.
 	aRefactoring primitiveExecute
 ]
 
