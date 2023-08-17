@@ -1,3 +1,8 @@
+"
+I am a command that is used for removing variables.
+
+My responsibility is to delegate removal execution to the remove variable driver.
+"
 Class {
 	#name : #SycRemoveVariablesCommand,
 	#superclass : #SycRefactorVariableCommand,
