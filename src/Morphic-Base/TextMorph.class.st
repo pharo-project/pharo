@@ -983,7 +983,7 @@ TextMorph >> installEditorToReplace: priorEditor [
 
 	| stateArray |
 	priorEditor ifNotNil: [stateArray := priorEditor stateArray].
-	editor := self editorClass forTextArea: self.
+	editor := self editorClass forTextArea: (RubEditingArea new setTextWith: self contents; yourself).
 	priorEditor ifNotNil: [editor stateArrayPut: stateArray].
 	self selectionChanged.
 	^ editor
@@ -1754,7 +1754,8 @@ TextMorph >> updateFromParagraph [
 	editor ifNotNil:
 			[oldEditor := editor.
 			sel := editor selectionInterval.
-			editor storeSelectionInParagraph].
+			self flag: #noideaAPI.
+			"editor storeSelectionInParagraph"].
 	text := paragraph text.
 	paragraph textStyle = textStyle
 		ifTrue: [self fit]
