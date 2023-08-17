@@ -130,7 +130,6 @@ RPackageIncrementalTest >> testClassAddition [
 
 	| p a1 |
 	p := self createNewPackageNamed: self p1Name.
-	p register.
 	a1 := self createNewClassNamed: #A1InPAckageP1.
 	self assertEmpty: p definedClasses.
 	p importClass: a1.
@@ -144,7 +143,6 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 
 	| p a1 b1 |
 	p := self createNewPackageNamed: self p1Name.
-	p register.
 	a1 := self createNewClassNamed: #A1InPAckageP1.
 	b1 := self createNewClassNamed: #B1InPAckageP1.
 	self assertEmpty: p definedClasses.
@@ -170,7 +168,6 @@ RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 
 	| p a1 b1 |
 	p := self createNewPackageNamed: self p1Name.
-	p register.
 
 	a1 := self createNewClassNamed: #A1InPAckageP1 inPackage: p.
 	b1 := self createNewClassNamed: #B1InPAckageP1 inPackage: p.
@@ -339,7 +336,6 @@ RPackageIncrementalTest >> testImportClassNoDuplicate [
 
 	| p a1 b1 |
 	p := self createNewPackageNamed: self p1Name.
-	p register.
 	a1 := self createNewClassNamed: #A1InPackageP1.
 	self assertEmpty: p definedClasses.
 	p importClass: a1.
@@ -358,8 +354,7 @@ RPackageIncrementalTest >> testIncludeClass [
 	| p1 p2 a2 |
 	p1 := self createNewPackageNamed: self p1Name.
 	p2 := self createNewPackageNamed: self p2Name.
-	p1 register.
-	p2 register.
+
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1'.
 
@@ -626,7 +621,6 @@ RPackageIncrementalTest >> testUniqueClassInDefinedClassesUsingAddClassDefinitio
 
 	| p a1 |
 	p := self createNewPackageNamed: self p1Name.
-	p register.
 	a1 := self createNewClassNamed: #A1InPAckageP1.
 	self assertEmpty: p definedClasses.
 	p importClass: a1.
