@@ -9,5 +9,7 @@ Class {
 
 { #category : #'code-critics' }
 ManifestSUnitCore class >> ruleStringConcatenationRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#ClassFactoryForTestCase #cleanUpChangeSetForClassNames: #false)) #'2021-12-05T23:07:46.009058+01:00') )
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#ClassFactoryForTestCase #cleanUpChangeSetForClasses: #false)) #'2023-08-17T13:09:48.43551+02:00') )
 ]
