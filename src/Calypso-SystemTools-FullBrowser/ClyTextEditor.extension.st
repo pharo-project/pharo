@@ -3,7 +3,7 @@ Extension { #name : #ClyTextEditor }
 { #category : #'*Calypso-SystemTools-FullBrowser' }
 ClyTextEditor >> browseFullClass [
 	"self lineSelectAndEmptyCheck: [^ self]."
-
+	
 	self evaluateSelectionAndDo: [ :result |
 			| classToBrowse |
 			result isClass ifTrue: [ self browser browseClassNamed: result name. ^ self ].
@@ -14,6 +14,9 @@ ClyTextEditor >> browseFullClass [
 									ifNil: [ classToBrowse := result class instanceSide name ]
 									ifNotNil: [ classToBrowse := classToBrowse name ]
 								]
-				ifFalse: [ classToBrowse := result class instanceSide name ].
+				ifFalse: [ 
+					result isSymbol
+						ifTrue: [ ^ self implementorsOf: result ]
+						ifFalse: [ classToBrowse := result class instanceSide name ] ].
 			self browser browseClassNamed: classToBrowse  ]]
 ]
