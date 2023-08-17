@@ -89,7 +89,7 @@ RBMoveMethodTransformation >> addSelfReturn [
 ]
 
 { #category : #preconditions }
-RBMoveMethodTransformation >> applicabilityConditions [
+RBMoveMethodTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition definesSelector: selector in: class)
 	  & (RBCondition withBlock: [

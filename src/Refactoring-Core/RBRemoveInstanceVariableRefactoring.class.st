@@ -15,13 +15,13 @@ RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 ]
 
 { #category : #preconditions }
-RBRemoveInstanceVariableRefactoring >> applicabilityConditions [
+RBRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ RBCondition directlyDefinesInstanceVariable: variableName asString in: class
 ]
 
 { #category : #preconditions }
-RBRemoveInstanceVariableRefactoring >> breakingChangeConditions [ 
+RBRemoveInstanceVariableRefactoring >> breakingChangePreconditions [ 
 
 	^ (RBCondition hierarchyOf: class referencesInstanceVariable: variableName) not
 	
@@ -30,12 +30,12 @@ RBRemoveInstanceVariableRefactoring >> breakingChangeConditions [
 { #category : #preconditions }
 RBRemoveInstanceVariableRefactoring >> generateChanges [
 	
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
 	^ self changes
@@ -44,7 +44,7 @@ RBRemoveInstanceVariableRefactoring >> generateChanges [
 { #category : #preconditions }
 RBRemoveInstanceVariableRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : #transforming }

@@ -59,7 +59,7 @@ RBAddTemporaryVariableTransformation class >> variable: aString inMethod: aSelec
 ]
 
 { #category : #preconditions }
-RBAddTemporaryVariableTransformation >> applicabilityConditions [
+RBAddTemporaryVariableTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition
 		   withBlock: [ self definingClass isNotNil ]
@@ -86,7 +86,7 @@ RBAddTemporaryVariableTransformation >> privateTransform [
 		nodeInInterval := methodTree bestNodeFor: interval.
 		nodeInInterval isSequence ifTrue: [ parseTree := nodeInInterval ] ].
 
-	self flag: #skippingConditions.
+	self flag: #skippingPreconditions.
 	(parseTree allTemporaryVariables includes: variableName) ifTrue: [ ^ self ].
 	
 	parseTree addTemporaryNamed: variableName.
@@ -94,7 +94,7 @@ RBAddTemporaryVariableTransformation >> privateTransform [
 ]
 
 { #category : #preconditions }
-RBAddTemporaryVariableTransformation >> skippingConditions [
+RBAddTemporaryVariableTransformation >> skippingPreconditions [
 
 	^ RBCondition
 		  withBlock: [

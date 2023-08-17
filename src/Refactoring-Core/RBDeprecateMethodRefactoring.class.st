@@ -78,13 +78,13 @@ RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSele
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodRefactoring >> applicabilityConditions [
+RBDeprecateMethodRefactoring >> applicabilityPreconditions [
 
 	^ RBCondition definesSelector: oldSelector in: class
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodRefactoring >> breakingChangeConditions [
+RBDeprecateMethodRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition canUnderstand: newSelector in: class) & (RBCondition
 		   withBlock: [
@@ -124,12 +124,12 @@ RBDeprecateMethodRefactoring >> generateChanges [
 	self inputValidation check  ifFalse: [
 		RBInputValidationFailedError signal:
 			self inputValidation errorString ].
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
 	^ self changes
@@ -155,7 +155,7 @@ RBDeprecateMethodRefactoring >> newSelector: aString [
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : #transforming }

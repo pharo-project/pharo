@@ -28,7 +28,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBRemoveDirectAccessToVariableTransformation >> applicabilityConditions [ 
+RBRemoveDirectAccessToVariableTransformation >> applicabilityPreconditions [ 
 
 	class := self model classObjectFor: className.
 

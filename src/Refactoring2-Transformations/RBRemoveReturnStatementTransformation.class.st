@@ -48,7 +48,7 @@ RBRemoveReturnStatementTransformation class >> return: anExpression inMethod: aS
 ]
 
 { #category : #preconditions }
-RBRemoveReturnStatementTransformation >> applicabilityConditions [
+RBRemoveReturnStatementTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]

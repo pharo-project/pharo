@@ -41,7 +41,7 @@ RBPushDownMethodTransformation >> allClasses [
 ]
 
 { #category : #preconditions }
-RBPushDownMethodTransformation >> applicabilityConditions [ 
+RBPushDownMethodTransformation >> applicabilityPreconditions [ 
 
 	| condition |
 	condition := selectors

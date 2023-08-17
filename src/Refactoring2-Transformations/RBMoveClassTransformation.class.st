@@ -43,7 +43,7 @@ RBMoveClassTransformation class >> move: aClassName to: aCategoryName [
 ]
 
 { #category : #preconditions }
-RBMoveClassTransformation >> applicabilityConditions [
+RBMoveClassTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [

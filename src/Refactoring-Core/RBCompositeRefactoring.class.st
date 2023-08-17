@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : #preconditions }
-RBCompositeRefactoring >> applicabilityConditions [
+RBCompositeRefactoring >> applicabilityPreconditions [
 
 	^ RBCondition true 
 ]
 
 { #category : #preconditions }
-RBCompositeRefactoring >> breakingChangeConditions [ 
+RBCompositeRefactoring >> breakingChangePreconditions [ 
 
 	^ RBCondition true 
 ]
@@ -26,12 +26,12 @@ RBCompositeRefactoring >> breakingChangeConditions [
 { #category : #preconditions }
 RBCompositeRefactoring >> generateChanges [
 	
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
 	^ self changes
@@ -40,7 +40,7 @@ RBCompositeRefactoring >> generateChanges [
 { #category : #preconditions }
 RBCompositeRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : #preconditions }

@@ -47,7 +47,7 @@ RBInlineMethodTransformation >> addTemporary: sourceNode assignedTo: replacement
 ]
 
 { #category : #preconditions }
-RBInlineMethodTransformation >> applicabilityConditions [
+RBInlineMethodTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition definesSelector: sourceSelector in: class)
 	  & (RBCondition withBlock: [

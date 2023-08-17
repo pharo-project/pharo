@@ -29,7 +29,7 @@ RBInlineTemporaryTransformation class >> model: aRBNamespace inline: anInterval 
 ]
 
 { #category : #preconditions }
-RBInlineTemporaryTransformation >> applicabilityConditions [ 
+RBInlineTemporaryTransformation >> applicabilityPreconditions [ 
 
 	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition withBlock:

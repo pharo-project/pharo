@@ -63,7 +63,7 @@ RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 ]
 
 { #category : #preconditions }
-RBAddSubtreeTransformation >> applicabilityConditions [ 
+RBAddSubtreeTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&

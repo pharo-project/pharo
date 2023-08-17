@@ -36,7 +36,7 @@ RBExtractToTemporaryTransformation class >> model: aRBNamespace extract: anInter
 ]
 
 { #category : #preconditions }
-RBExtractToTemporaryTransformation >> applicabilityConditions [ 
+RBExtractToTemporaryTransformation >> applicabilityPreconditions [ 
 	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
 			& (RBCondition withBlock:

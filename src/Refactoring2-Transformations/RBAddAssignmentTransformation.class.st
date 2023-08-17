@@ -52,7 +52,7 @@ RBAddAssignmentTransformation class >> variable: aVariableName value: anExpressi
 ]
 
 { #category : #preconditions }
-RBAddAssignmentTransformation >> applicabilityConditions [
+RBAddAssignmentTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]

@@ -47,7 +47,7 @@ RBAddReturnStatementTransformation class >> return: aString inMethod: aSelector 
 ]
 
 { #category : #preconditions }
-RBAddReturnStatementTransformation >> applicabilityConditions [
+RBAddReturnStatementTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]

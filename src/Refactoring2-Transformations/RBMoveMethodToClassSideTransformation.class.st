@@ -38,7 +38,7 @@ RBMoveMethodToClassSideTransformation >> addMethod: rbMethod to: aClass toProtoc
 ]
 
 { #category : #refactoring }
-RBMoveMethodToClassSideTransformation >> applicabilityConditions [
+RBMoveMethodToClassSideTransformation >> applicabilityPreconditions [
 	^ (RBCondition
 			definesSelector: method selector
 			in: class classSide) not

@@ -50,7 +50,7 @@ RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector in
 ]
 
 { #category : #preconditions }
-RBMethodProtocolTransformation >> applicabilityConditions [
+RBMethodProtocolTransformation >> applicabilityPreconditions [
 
 	^ self classExist
 	  & (RBCondition definesSelector: selector in: self definingClass)
