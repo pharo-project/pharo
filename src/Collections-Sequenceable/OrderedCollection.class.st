@@ -269,6 +269,13 @@ OrderedCollection >> addLast: newObject [
 	^array at: lastIndex put: newObject
 ]
 
+{ #category : 'private' }
+OrderedCollection >> addNoSort: newObject [
+	"Add newObject to the end of the receiver. If the receiver is sorted, assume that this is the correct position--do not check sort order. Answer newObject."
+
+	^ self addLast: newObject
+]
+
 { #category : 'converting' }
 OrderedCollection >> asArray [
 	"Convert an OrderedCollection into an Array."
@@ -352,7 +359,7 @@ OrderedCollection >> collect: aBlock [
 	"(#(1 2 3) asOrderedCollection collect: [ :v | 10 ]) asArray >>> #(10 10 10)"
 
 	| newCollection |
-	newCollection := self species new: self size.
+	newCollection := self copyForTransform: self size.
 	firstIndex to: lastIndex do:
 		[:index |
 		newCollection addLast: (aBlock value: (array at: index))].
@@ -364,7 +371,7 @@ OrderedCollection >> collect: aBlock from: fromIndex to: toIndex [
 	"Override superclass in order to use addLast:, not at:put:."
 	| result |
 	self ensureBoundsFrom: fromIndex to: toIndex.
-	result := self species new: toIndex - fromIndex + 1.
+	result := self copyForTransform: toIndex - fromIndex + 1.
 	firstIndex + fromIndex - 1 to: firstIndex + toIndex - 1 do:
 		[:index | result addLast: (aBlock value: (array at: index))].
 	^ result
@@ -376,7 +383,7 @@ OrderedCollection >> collect: collectBlock thenSelect: selectBlock [
 
     | newCollection newElement |
 
-    newCollection := self copyEmpty.
+    newCollection := self copyForTransform.
     firstIndex to: lastIndex do: [ :index |
 		newElement := collectBlock value: (array at: index).
 		(selectBlock value: newElement)
@@ -411,6 +418,21 @@ OrderedCollection >> copyEmpty [
 ]
 
 { #category : 'copying' }
+OrderedCollection >> copyForTransform [
+	"As #copyForTransform, but using the default size for a new collection."
+
+	^self species new
+]
+
+{ #category : #copying }
+OrderedCollection >> copyForTransform: copySize [
+	"Answer a 'copy' of the receiver suitable for holding the output of a #collect: or similar, with sufficient capacity for <copySize> elements, but which contains no elements.
+	When transforming the elements of a SortedCollection, the result may no longer be sorted, or indeed sortable, so we provide a hook for it to override and return an OrderedCollection."
+
+	^self species new: copySize
+]
+
+{ #category : #copying }
 OrderedCollection >> copyFrom: startIndex to: endIndex [
 	"Answer a copy of the receiver that contains elements from position
 	startIndex to endIndex."
@@ -475,12 +497,6 @@ OrderedCollection >> ensureBoundsFrom: fromIndex to: toIndex [
 		ifTrue: [^self errorSubscriptBounds: fromIndex].
 	(toIndex + firstIndex - 1 > lastIndex)
 		ifTrue: [^self errorSubscriptBounds: toIndex]
-]
-
-{ #category : 'private' }
-OrderedCollection >> errorConditionNotSatisfied [
-
-	self error: 'no element satisfies condition'
 ]
 
 { #category : 'private' }
@@ -653,7 +669,7 @@ OrderedCollection >> reject: rejectBlock [
 
 	firstIndex to: lastIndex do: [ :index |
 		(rejectBlock value: (element := array at: index))
-			ifFalse: [ newCollection addLast: element ]].
+			ifFalse: [ newCollection addNoSort: element ]].
 
 	^ newCollection
 ]
@@ -664,7 +680,7 @@ OrderedCollection >> reject: rejectBlock thenCollect: collectBlock [
 
 	| newCollection |
 
-    newCollection := self copyEmpty.
+    newCollection := self copyForTransform.
 
     firstIndex to: lastIndex do: [ :index |
 		| element |
@@ -836,7 +852,7 @@ OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
 	"#(2 3 4 'fred') asOrderedCollection reversed >>> #('fred' 4 3 2) asOrderedCollection"
 	| newCol |
-	newCol := self copyEmpty.
+	newCol := self copyForTransform: self size.
 	self reverseDo:
 		[:elem | newCol addLast: elem].
 	^ newCol
@@ -852,7 +868,7 @@ OrderedCollection >> select: selectBlock [
 
 	firstIndex to: lastIndex do: [ :index |
 		(selectBlock value: (element := array at: index))
-			ifTrue: [ newCollection addLast: element ]].
+			ifTrue: [ newCollection addNoSort: element ]].
 
 	^ newCollection
 ]
@@ -863,7 +879,7 @@ OrderedCollection >> select: selectBlock thenCollect: collectBlock [
 
 	| newCollection element |
 
-    newCollection := self copyEmpty.
+    newCollection := self copyForTransform.
 
     firstIndex to: lastIndex do: [ :index |
 		element := array at: index.
@@ -913,7 +929,7 @@ OrderedCollection >> with: otherCollection collect: twoArgBlock [
 	corresponding elements from this collection and otherCollection."
 	| result |
 	otherCollection size = self size ifFalse: [self error: 'otherCollection must be the same size'].
-	result := self species new: self size.
+	result := self copyForTransform: self size.
 	1 to: self size do:
 		[:index | result addLast: (twoArgBlock value: (self at: index)
 									value: (otherCollection at: index))].
@@ -925,7 +941,7 @@ OrderedCollection >> withIndexCollect: elementAndIndexBlock [
 	"Just like with:collect: except that the iteration index supplies the second argument to the block. Override superclass in order to use addLast:, not at:put:."
 
 	| newCollection |
-	newCollection := self species new: self size.
+	newCollection := self copyForTransform: self size.
 	firstIndex to: lastIndex do:
 		[:index |
 		newCollection addLast: (elementAndIndexBlock
@@ -935,7 +951,7 @@ OrderedCollection >> withIndexCollect: elementAndIndexBlock [
 ]
 
 { #category : 'enumerating' }
-OrderedCollection >> withIndexSelect: elementAndIndexBlock select: selectBlock [
+OrderedCollection >> withIndexSelect: elementAndIndexBlock [
 	"Optimized version of SequenceableCollection>>#withIndexSelect: "
 
 	"(#('We' 'love' 'pharo!') asOrderedCollection withIndexSelect: [:value :index | value size - 1 <= index]) >>> (OrderedCollection with: 'We')"
@@ -943,7 +959,7 @@ OrderedCollection >> withIndexSelect: elementAndIndexBlock select: selectBlock [
 	| newCollection element |
 	newCollection := self copyEmpty.
 	firstIndex to: lastIndex do: [ :index |
-		(selectBlock value: (element := array at: index) value: index)
-			ifTrue: [ newCollection addLast: element ] ].
+		(elementAndIndexBlock value: (element := array at: index) value: index)
+			ifTrue: [ newCollection addNoSort: element ] ].
 	^ newCollection
 ]

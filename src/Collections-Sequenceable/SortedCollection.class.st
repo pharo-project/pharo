@@ -118,7 +118,7 @@ SortedCollection >> add: newObject [
 SortedCollection >> addAll: aCollection [
 	aCollection size > (self size // 3)
 		ifTrue:
-			[aCollection do: [:each | self addLast: each].
+			[aCollection do: [:each | self addNoSort: each].
 			self reSort]
 		ifFalse: [aCollection do: [:each | self add: each]].
 	^ aCollection
@@ -127,6 +127,18 @@ SortedCollection >> addAll: aCollection [
 { #category : 'adding' }
 SortedCollection >> addFirst: newObject [
 	self shouldNotImplement
+]
+
+{ #category : 'adding' }
+SortedCollection >> addLast: newObject [
+	self shouldNotImplement
+]
+
+{ #category : 'private' }
+SortedCollection >> addNoSort: anObject [
+	"Add newObject to the end of the receiver. Assume that this is the correct position--do not check sort order. Answer newObject."
+
+	^ super addLast: anObject
 ]
 
 { #category : 'accessing' }
@@ -153,6 +165,18 @@ SortedCollection >> copyEmpty [
 	"Answer a copy of the receiver without any of the receiver's elements."
 
 	^self species sortBlock: sortBlock
+]
+
+{ #category : #copying }
+SortedCollection >> copyForTransform [
+
+	^ OrderedCollection new
+]
+
+{ #category : #copying }
+SortedCollection >> copyForTransform: copySize [
+
+	^ OrderedCollection new: copySize
 ]
 
 { #category : 'private' }
