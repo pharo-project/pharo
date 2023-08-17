@@ -70,13 +70,7 @@ RBPushUpMethodDriver >> runRefactoring [
 	| changes |
 	self configureRefactoring.
 	changes := [
-	           [
 	           [ refactoring generateChanges ]
-		           on: RBInputValidationFailedError
-		           do: [ :err |
-			           self selectMethodsAndSuperclass.
-			           refactoring superclass: superclass.
-			           err resume ] ]
 		           on: RBApplicabilityChecksFailedError
 		           do: [ :err |
 		           ^ RBRefactoringError signal: err messageText ] ]
