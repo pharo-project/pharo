@@ -36,7 +36,7 @@ RBRemoveInstanceVariablesDriver >> runRefactoring [
 		[ 
 			| changes |
 			changes := refactoring generateChanges.
-			self openPreviewWithChanges: { changes } ]
+			self openPreviewWithChanges: changes ]
 		           on: RBApplicabilityChecksFailedError
 		           do: [ :err |
 		           		^ RBRefactoringError signal: err messageText ] ]

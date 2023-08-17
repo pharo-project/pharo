@@ -40,7 +40,7 @@ RBRemoveMethodDriver >> refactoring [
 { #category : #execution }
 RBRemoveMethodDriver >> removeMethodChanges [ 
 
-	self openPreviewWithChanges: { refactoring removeMethodChanges }
+	self openPreviewWithChanges: refactoring removeMethodChanges
 
 ]
 
@@ -54,7 +54,7 @@ RBRemoveMethodDriver >> runRefactoring [
 	senders := refactoring senders.
 
 	senders size = 0
-		ifTrue: [ self openPreviewWithChanges: { refactoring generateChanges } ]
+		ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
 		ifFalse: [ 
 		
 		select := SpSelectDialog new 

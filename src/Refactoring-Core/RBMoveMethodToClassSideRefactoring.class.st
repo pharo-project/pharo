@@ -156,7 +156,8 @@ RBMoveMethodToClassSideRefactoring >> preconditions [
 
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> privateTransform [
-	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
+
+| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
 	originalProtocol := method protocolName.
 	oldClass := class.

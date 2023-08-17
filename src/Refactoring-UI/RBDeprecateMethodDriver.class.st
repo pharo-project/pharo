@@ -41,29 +41,27 @@ RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollec
 	self selectorToReplaceDeprecatedSelector.
 ]
 
+{ #category : #accessing }
+RBDeprecateMethodDriver >> refactoring [
+	^ refactoring
+]
+
 { #category : #execution }
 RBDeprecateMethodDriver >> runRefactoring [
 
 	| compositeChange |
 	compositeChange := [
-	                   [
 	                   [ 
 							[ | isValid |
 							"the user pressed cancel"
 							useInsteadSelector ifNil: [ ^ self ].
 							refactoring newSelector: useInsteadSelector.
-							isValid := refactoring inputValidation check.
+							isValid := refactoring applicabilityPreconditions check.
 							isValid ifFalse: [ self selectorToReplaceDeprecatedSelector ].
 							isValid ] whileFalse.
 							
 							refactoring generateChanges 
 							]
-		                   on: RBInputValidationFailedError
-		                   do: [ :err |
-									"normally this should not be needed"
-			                   self selectorToReplaceDeprecatedSelector.
-			                   refactoring newSelector: useInsteadSelector.
-			                   err resume ] ]
 		                   on: RBApplicabilityChecksFailedError
 		                   do: [ :err |
 		                   ^ RBRefactoringError signal: err messageText ] ]

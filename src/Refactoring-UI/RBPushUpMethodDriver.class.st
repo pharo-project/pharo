@@ -70,13 +70,7 @@ RBPushUpMethodDriver >> runRefactoring [
 	| changes |
 	self configureRefactoring.
 	changes := [
-	           [
 	           [ refactoring generateChanges ]
-		           on: RBInputValidationFailedError
-		           do: [ :err |
-			           self selectMethodsAndSuperclass.
-			           refactoring superclass: superclass.
-			           err resume ] ]
 		           on: RBApplicabilityChecksFailedError
 		           do: [ :err |
 		           ^ RBRefactoringError signal: err messageText ] ]
@@ -85,7 +79,7 @@ RBPushUpMethodDriver >> runRefactoring [
 			           RBRefactoringWarning signal: err messageText.
 			           "If user answers no, error is being propagated."
 			           err resume ].
-	self openPreviewWithChanges: { changes }
+	self openPreviewWithChanges: changes
 ]
 
 { #category : #'initialization - data' }
