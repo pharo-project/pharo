@@ -40,7 +40,7 @@ RBRemoveMethodDriver >> refactoring [
 { #category : #execution }
 RBRemoveMethodDriver >> removeMethodChanges [ 
 
-	self openPreviewWithChanges: { refactoring removeMethodChanges }
+	self openPreviewWithChanges: refactoring removeMethodChanges
 
 ]
 
