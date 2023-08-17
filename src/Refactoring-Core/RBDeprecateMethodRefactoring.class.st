@@ -80,7 +80,12 @@ RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSele
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> applicabilityPreconditions [
 
-	^ RBCondition definesSelector: oldSelector in: class
+	^ (RBCondition
+		   withBlock: [
+		   newSelector isEmptyOrNil or: [ newSelector = oldSelector ] ]
+		   errorString:
+		   'The new selectors cannot be an empty string or same as the old selector.') not
+		& (RBCondition definesSelector: oldSelector in: class)
 ]
 
 { #category : #preconditions }
@@ -121,9 +126,6 @@ RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: new
 { #category : #execution }
 RBDeprecateMethodRefactoring >> generateChanges [
 
-	self inputValidation check  ifFalse: [
-		RBInputValidationFailedError signal:
-			self inputValidation errorString ].
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
@@ -133,17 +135,6 @@ RBDeprecateMethodRefactoring >> generateChanges [
 
 	self privateTransform.
 	^ self changes
-]
-
-{ #category : #preconditions }
-RBDeprecateMethodRefactoring >> inputValidation [
-
-	^ (RBCondition
-		   withBlock: [
-			   newSelector isEmptyOrNil  or: [
-				   newSelector = oldSelector ]]
-		   errorString:
-		   'The new selectors cannot be an empty string or same as the old selector.') not
 ]
 
 { #category : #accessing }
