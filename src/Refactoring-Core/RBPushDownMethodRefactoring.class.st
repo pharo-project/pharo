@@ -84,7 +84,15 @@ RBPushDownMethodRefactoring >> classes: aCollection [
 { #category : #actions }
 RBPushDownMethodRefactoring >> generateChanges [
 
-	self primitiveExecute.
+	self applicabilityPreconditions check ifFalse: [
+		RBApplicabilityChecksFailedError signal:
+			self applicabilityPreconditions errorString ].
+
+	self breakingChangePreconditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangePreconditions errorString ].
+
+	self privateTransform.
 
 	^ self changes
 ]
