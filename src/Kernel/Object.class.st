@@ -1727,13 +1727,13 @@ Object >> printStringLimitedTo: limit [
 
 { #category : #printing }
 Object >> printStringLimitedTo: limit using: printBlock [
-	"Answer a String whose characters are a description of the receiver
-	produced by given printBlock. It ensures the result will be not bigger than given limit.
-	Given that the '[..]' is itself four characters long, limit should be at least 5."
+	"Answer a String whose characters are a description of the receiver produced by
+	the given printBlock. It ensures the result is not longer than the given limit.
+	Since '[…]' is three characters long, the limit should be at least 4."
 	| limitedString |
 	limitedString := String streamContents: printBlock limitedTo: limit + 1.
 	limitedString size <= limit ifTrue: [^ limitedString].
-	^ (limitedString truncateTo: limit - 4), '[..]'
+	^ (limitedString truncateTo: limit - 3), '[…]'
 ]
 
 { #category : #streaming }
