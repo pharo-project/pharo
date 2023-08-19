@@ -226,11 +226,14 @@ RPackage >> addMethod: aCompiledMethod [
 
 { #category : #private }
 RPackage >> basicAddClassTag: tagName [
-	| packageTag |
 
+	| packageTag |
 	packageTag := RPackageTag package: self name: tagName.
 	classTags add: packageTag.
-	packageTag ensureSystemCategory.
+
+	self flag: #package. "The next lines should be removed once the system organizer and categories are not in the system anymore"
+	(self organizer includesCategory: packageTag categoryName)
+		ifFalse: [ self organizer addCategory: packageTag categoryName ].
 
 	^ packageTag
 ]

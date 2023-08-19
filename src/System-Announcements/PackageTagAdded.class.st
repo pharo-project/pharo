@@ -10,5 +10,5 @@ Class {
 { #category : #'class initialization' }
 PackageTagAdded class >> initialize [
 
-	self deprecatedAliases: { 'ClassTagAdded' }
+	self deprecatedAliases: { #ClassTagAdded. #CategoryAdded }
 ]

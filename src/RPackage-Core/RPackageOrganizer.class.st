@@ -167,7 +167,7 @@ RPackageOrganizer >> addCategory: catString [
 
 	categoryMap at: catString asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
 
-	SystemAnnouncer uniqueInstance classCategoryAdded: catString
+	(self ensurePackageMatching: catString) addClassTag: catString
 ]
 
 { #category : #private }
@@ -432,9 +432,7 @@ RPackageOrganizer >> hasTag: aTag inPackage: aPackage [
 RPackageOrganizer >> includesCategory: aString [
 	"Tests if a category is already included."
 
-	^ self categories
-		  ifNil: [ false ]
-		  ifNotNil: [ :categories | categories includes: aString ]
+	^ self categories includes: aString
 ]
 
 { #category : #initialization }
@@ -611,7 +609,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	anAnnouncer unsubscribe: self.
 
 	anAnnouncer weak
-		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
@@ -827,12 +824,6 @@ RPackageOrganizer >> superclassOrder: category [
 	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
 	classes := behaviors select: [ :each | each isBehavior ].
 	^ Class superclassOrder: classes
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
-
-	(self ensurePackageMatching: ann categoryName) addClassTag: ann categoryName asSymbol
 ]
 
 { #category : #'system integration' }

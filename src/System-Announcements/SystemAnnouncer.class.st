@@ -85,12 +85,6 @@ SystemAnnouncer >> classAdded: aClass inCategory: aCategoryName [
 ]
 
 { #category : #triggering }
-SystemAnnouncer >> classCategoryAdded: aClassCategoryName [
-
-	self announce: (CategoryAdded categoryName: aClassCategoryName)
-]
-
-{ #category : #triggering }
 SystemAnnouncer >> classCommented: aClass [
 	"A class with the given name was commented in the system."
 

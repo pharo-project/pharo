@@ -57,13 +57,6 @@ RPackageTag >> classes [
 ]
 
 { #category : #accessing }
-RPackageTag >> ensureSystemCategory [
-	"We should not hardcode the global variable but ask the package organizer for the organization."
-
-	self organizer addCategory: self categoryName
-]
-
-{ #category : #accessing }
 RPackageTag >> environment [
 
 	^ self package environment
