@@ -51,7 +51,7 @@ RBRemoveAssignmentTransformation class >> variable: aVariableName value: anExpre
 ]
 
 { #category : #preconditions }
-RBRemoveAssignmentTransformation >> applicabilityConditions [
+RBRemoveAssignmentTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]

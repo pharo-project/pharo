@@ -53,7 +53,7 @@ RBTransformation class >> initializeRefactoringOptions [
 ]
 
 { #category : #preconditions }
-RBTransformation >> applicabilityConditions [ 
+RBTransformation >> applicabilityPreconditions [ 
 	
 	^ self trueCondition 
 ]
@@ -102,16 +102,10 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : #accessing }
-RBTransformation >> model [
-
-	^ model ifNil: [ model := self newModel ]
-]
-
 { #category : #preconditions }
 RBTransformation >> preconditions [
 
-	^ self applicabilityConditions 
+	^ self applicabilityPreconditions 
 ]
 
 { #category : #accessing }

@@ -116,9 +116,10 @@ MCVersionInfo >> loadAncestorsAndStepChildren [
 	"Unused in MCVersionInfo, used only in MCLazyVersionInfo."
 
 	"It is there to allow a certain customisation with lazy stuff without kernel dependencies on LRUCache"
-
-	(MCRepositoryGroup default
-		in: [ :r | r versionWithInfo: self ifNone: [  ] ])
+	| r |
+	r := MCRepositoryGroup default.
+	r versionWithInfo: self ifNone: [ ].
+	r
 		ifNotNil:
 			[ :aVersion | 
 			self setAncestors: aVersion info ancestors.

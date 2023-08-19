@@ -21,6 +21,8 @@ Class {
 
 { #category : #singleton }
 NoChangesLog class >> install [
+
+	self reset.
 	DefaultInstance := self new
 ]
 

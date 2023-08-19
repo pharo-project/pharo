@@ -7,7 +7,7 @@ When I gather all needed information I am calling and executing deprecate method
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBDeprecateMethodDriver model: aRBNamespace deprecateMethod: aSelector in: aClass) execute
+(RBDeprecateMethodDriver model: aRBNamespace deprecateMethod: aSelector in: aClass) runRefactoring
 ```
 "
 Class {
@@ -41,10 +41,9 @@ RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollec
 	self selectorToReplaceDeprecatedSelector.
 ]
 
-{ #category : #utilities }
-RBDeprecateMethodDriver >> refactoringScopeOn: aScope [
-
-	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
+{ #category : #accessing }
+RBDeprecateMethodDriver >> refactoring [
+	^ refactoring
 ]
 
 { #category : #execution }
@@ -52,24 +51,17 @@ RBDeprecateMethodDriver >> runRefactoring [
 
 	| compositeChange |
 	compositeChange := [
-	                   [
 	                   [ 
 							[ | isValid |
 							"the user pressed cancel"
 							useInsteadSelector ifNil: [ ^ self ].
 							refactoring newSelector: useInsteadSelector.
-							isValid := refactoring inputValidation check.
+							isValid := refactoring applicabilityPreconditions check.
 							isValid ifFalse: [ self selectorToReplaceDeprecatedSelector ].
 							isValid ] whileFalse.
 							
 							refactoring generateChanges 
 							]
-		                   on: RBInputValidationFailedError
-		                   do: [ :err |
-									"normally this should not be needed"
-			                   self selectorToReplaceDeprecatedSelector.
-			                   refactoring newSelector: useInsteadSelector.
-			                   err resume ] ]
 		                   on: RBApplicabilityChecksFailedError
 		                   do: [ :err |
 		                   ^ RBRefactoringError signal: err messageText ] ]

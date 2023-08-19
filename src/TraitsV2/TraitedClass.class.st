@@ -30,12 +30,6 @@ TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMetho
 	self propagateChangeOf: selector
 ]
 
-{ #category : #'accessing - method dictionary' }
-TraitedClass class >> addSelector: selector withMethod: compiledMethod [
-	super addSelector: selector withMethod: compiledMethod.
-	self propagateChangeOf: selector
-]
-
 { #category : #users }
 TraitedClass class >> addUser: aClass [
 
@@ -87,15 +81,6 @@ TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inPr
 
 	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
 
-	TraitChange addSelector: selector on: self
-]
-
-{ #category : #'accessing - method dictionary' }
-TraitedClass >> addSelector: selector withMethod: compiledMethod [
-	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
-
-	self localMethodDict at: selector put: compiledMethod.
-	super addSelector: selector withMethod: compiledMethod.
 	TraitChange addSelector: selector on: self
 ]
 

@@ -27,6 +27,6 @@ SycDemoteToPackageWithTagCommand >> defaultMenuItemName [
 SycDemoteToPackageWithTagCommand >> execute [
 
 	packages
-		select: [ :each | each name includes: $- ]
-		thenDo: [ :each | each demoteToTagInPackageNamed: (each name copyUpToLast: $-) ]
+		select: [ :package | package name includes: $- ]
+		thenDo: [ :package | package demoteToTagInPackage ]
 ]

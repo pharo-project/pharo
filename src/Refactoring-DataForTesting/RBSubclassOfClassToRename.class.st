@@ -20,13 +20,25 @@ RBSubclassOfClassToRename >> calls1 [
 { #category : #performing }
 RBSubclassOfClassToRename >> equallyDefinedInSubclass [
 
-	self method1 + 33
+	^ self method1 + 33
 ]
 
 { #category : #accessing }
 RBSubclassOfClassToRename >> justSuperSendInSubclass [
 
-	super justSuperSendInSubclass
+	^ super justSuperSendInSubclass
+]
+
+{ #category : #accessing }
+RBSubclassOfClassToRename >> justSuperSendInSubclassBroken [
+
+	^ super justSuperSendInSubclass + 2
+]
+
+{ #category : #accessing }
+RBSubclassOfClassToRename >> methodThatIsNotUsedForSure [
+
+	
 ]
 
 { #category : #accessing }

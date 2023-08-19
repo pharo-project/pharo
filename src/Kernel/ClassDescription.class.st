@@ -77,17 +77,7 @@ ClassDescription >> addProtocol: aProtocol [
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
-	| priorMethodOrNil oldProtocol |
-	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
-	oldProtocol := self protocolOfSelector: selector.
-
-	"If there is no old protocol, then we want to ensure the method is at least in Protocol unclassified to not have protocolless methods."
-	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self classify: selector under: nil ] ].
-
-	self addSelectorSilently: selector withMethod: compiledMethod.
-	priorMethodOrNil
-		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
+	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: nil
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -929,11 +919,11 @@ ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
 	Does nothing if the protocol does not exists."
 
+	| protocol |
 	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
-
-	(self ensureProtocol: aProtocol) in: [ :protocol |
-		protocol methodSelectors do: [ :sel | self removeSelector: sel ].
-		self removeProtocolIfEmpty: protocol ]
+	protocol := self ensureProtocol: aProtocol.
+	protocol methodSelectors do: [ :sel | self removeSelector: sel ].
+	self removeProtocolIfEmpty: protocol 
 ]
 
 { #category : #protocols }

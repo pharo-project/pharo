@@ -175,10 +175,9 @@ RPackage >> addClass: aClass [
 	aClass category: (self addClassTag: self name) categoryName
 ]
 
-{ #category : #'add class' }
+{ #category : #deprecated }
 RPackage >> addClassDefinition: aClass [
-	"Add the class definition to the package.
-	We assume that this method is called at the creation of the class, thus methods should be added afterward. Else they might wrongly be considered as extensions."
+	"Please do not use me, I will be removed in the future. Use #importClass: instead."
 
 	(self includesClass: aClass) ifTrue: [ ^ self ].
 	classes add: aClass instanceSide name asSymbol.
@@ -380,16 +379,22 @@ RPackage >> definesOrExtendsClass: aClass [
 ]
 
 { #category : #converting }
-RPackage >> demoteToTagInPackageNamed: aString [
+RPackage >> demoteToTagInPackage [
 
-	| newPackage |
-	aString = self name ifTrue: [ ^ self ].
+	| newPackage tag |
+	(self name includes: $-) ifFalse: [ self error: 'To demote a package, it name needs to contain at least one dash `-`.' ].
 
+	self flag: #package. "We need to unregister because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a #removeFromSystem at the end to avoid to have a removal system AND an unregistering system."
 	self unregister.
-	newPackage := self organizer ensurePackage: aString.
-	newPackage importPackage: self.
 
-	newPackage classes do: [ :each | SystemAnnouncer uniqueInstance classRepackaged: each from: self to: newPackage ].
+	newPackage := self organizer ensurePackage: (self name copyUpToLast: $-).
+
+	"We keep the suffix that was removed as the tag name to create."
+	tag := newPackage addClassTag: (self name withoutPrefix: newPackage name , '-').
+
+	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
+	self extensionMethods do: [ :method | newPackage addMethod: method ].
+
 	^ newPackage
 ]
 
@@ -466,12 +471,6 @@ RPackage >> extensionSelectorsForClass: aClass [
 	^ extensionSelectors at: aClass ifAbsent: [ #(  ) ]
 ]
 
-{ #category : #'class tags' }
-RPackage >> extensionsForTag: aRPackageTag [
-
-	^ self extensionMethods select: [ :extensionMethod | extensionMethod protocolName allButFirst isCategoryOf: aRPackageTag categoryName ]
-]
-
 { #category : #properties }
 RPackage >> hasProperty: aKey [
 	self propertyAt: aKey ifAbsent: [ ^ false ].
@@ -525,15 +524,6 @@ RPackage >> importDefinedMethodsOf: aClass [
 	aClass protocols
 		reject: [ :protocol | protocol isExtensionProtocol ]
 		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
-]
-
-{ #category : #private }
-RPackage >> importPackage: aPackage [
-
-	aPackage definedClasses do: [ :className | self importClass: className ].
-
-	"new rpackage inherits the extentions"
-	extensionSelectors := extensionSelectors , aPackage privateExtensionSelectors
 ]
 
 { #category : #private }
@@ -704,22 +694,15 @@ RPackage >> methodsForClass: aClass [
 ]
 
 { #category : #private }
-RPackage >> moveClass: aClass fromPackage: oldPackage toTag: aTag [
+RPackage >> moveClass: aClass toTag: aTag [
+
+	| oldPackage |
+	oldPackage := aClass package.
 
 	oldPackage removeClass: aClass.
 	self importClass: aClass inTag: aTag.
 
 	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
-]
-
-{ #category : #private }
-RPackage >> moveClass: aClass toTag: aTag [
-	"TODO: deprecate system categories / replace this with a direct call to moveClass:fromPackage:toTag:"
-
-	"This change the class category as appropriate.
-		(and by cascade, ensure systemClassRecategorizedAction: is called)."
-
-	aClass category: aTag categoryName
 ]
 
 { #category : #accessing }
@@ -840,15 +823,12 @@ RPackage >> registerClass: aClass [
 RPackage >> removeAllMethodsFromClass: aClass [
 	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
 
-	| aClassNameSymbol |
-	aClassNameSymbol := aClass originalName asSymbol.
-
 	definedSelectors removeKey: aClass ifAbsent: [  ].
 	definedSelectors removeKey: aClass classSide ifAbsent: [  ].
 	extensionSelectors removeKey: aClass ifAbsent: [  ].
 	extensionSelectors removeKey: aClass classSide ifAbsent: [  ].
 
-	self organizer unregisterExtendingPackage: self forClassName: aClassNameSymbol
+	self organizer unregisterExtendingPackage: self forClass: aClass
 ]
 
 { #category : #removing }
@@ -915,7 +895,7 @@ RPackage >> removeMethod: aCompiledMethod [
 	(self includesClass: methodClass)
 		ifTrue: [
 			definedSelectors at: methodClass ifPresent: [ :selectors |
-				selectors remove: aCompiledMethod selector ifAbsent: [ ].
+				selectors remove: aCompiledMethod selector ifAbsent: [  ].
 				selectors ifEmpty: [ definedSelectors removeKey: methodClass ] ] ]
 		ifFalse: [
 			extensionSelectors at: methodClass ifPresent: [ :selectors |
@@ -924,7 +904,7 @@ RPackage >> removeMethod: aCompiledMethod [
 
 	((extensionSelectors at: methodClass instanceSide ifAbsent: [ #(  ) ]) isEmpty and: [
 		 (extensionSelectors at: methodClass classSide ifAbsent: [ #(  ) ]) isEmpty ]) ifTrue: [
-		self organizer unregisterExtendingPackage: self forClassName: methodClass instanceSide originalName ].
+		self organizer unregisterExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
@@ -1034,6 +1014,12 @@ RPackage >> renameTo: aSymbol [
 RPackage >> reportBogusBehaviorOf: aSelector [
 
 	self traceCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'
+]
+
+{ #category : #'class tags' }
+RPackage >> rootTag [
+
+	^ self addClassTag: self rootTagName
 ]
 
 { #category : #accessing }

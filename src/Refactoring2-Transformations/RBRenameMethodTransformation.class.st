@@ -28,9 +28,9 @@ RBRenameMethodTransformation class >> renameMethod: aSelector in: aClass to: new
 ]
 
 { #category : #accessing }
-RBRenameMethodTransformation >> applicabilityConditions [ 
+RBRenameMethodTransformation >> applicabilityPreconditions [ 
 
-	^ super applicabilityConditions & 
+	^ super applicabilityPreconditions & 
 		(RBCondition 
 			withBlock: [oldSelector numArgs = newSelector numArgs]
 			errorString: newSelector printString

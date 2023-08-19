@@ -69,7 +69,7 @@ ClyBrowserToolbarItemMorph >> initialize [
 		listDirection: #leftToRight;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
-		cellInset: 4
+		cellInset: 4 scaledByDisplayScaleFactor
 ]
 
 { #category : #printing }

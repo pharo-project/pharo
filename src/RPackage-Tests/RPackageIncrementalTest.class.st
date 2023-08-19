@@ -63,29 +63,13 @@ RPackageIncrementalTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'tests - class addition removal' }
-RPackageIncrementalTest >> testAddClassDefinitionNoDuplicate [
-	| p a1 b1 |
-	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPackageP1 inCategory: self p1Name.
-	self assert: p definedClasses size equals: 0.
-	p addClassDefinition: a1.
-	self assert: p definedClasses size equals: 1.
-	b1 := self createNewClassNamed: #B1InPackageP1 inCategory: self p1Name.
-	p addClassDefinition: a1.
-	"adding the same class does not do anything - luckily"
-	self assert: p definedClasses size equals: 1.
-	p addClassDefinition: b1.
-	self assert: p definedClasses size equals: 2
-]
-
 { #category : #'tests - method addition removal' }
 RPackageIncrementalTest >> testAddRemoveMethod [
 
 	| p1 p2 p3 a2 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
+	p3 := self createNewPackageNamed: self p3Name.
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
 
@@ -115,12 +99,11 @@ RPackageIncrementalTest >> testAddRemoveMethod [
 { #category : #'tests - method addition removal' }
 RPackageIncrementalTest >> testAddRemoveSelector [
 
-	| p1 p2 p3 a2 a2Name |
-	a2Name := #A2InPackageP2.
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
-	a2 := self createNewClassNamed: a2Name inPackage: p2.
+	| p1 p2 p3 a2 |
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
+	p3 := self createNewPackageNamed: self p3Name.
+	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 
 	p2 addMethod: a2 >> (a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2').
 	p1 addMethod: a2 >> (a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1').
@@ -144,11 +127,12 @@ RPackageIncrementalTest >> testAddRemoveSelector [
 
 { #category : #'tests - class addition removal' }
 RPackageIncrementalTest >> testClassAddition [
+
 	| p a1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPAckageP1 inCategory: self p1Name.
-	self assert: p definedClasses size equals: 0.
-	p addClassDefinition: a1.
+	a1 := self createNewClassNamed: #A1InPAckageP1.
+	self assertEmpty: p definedClasses.
+	p importClass: a1.
 	self assert: p definedClasses size equals: 1.
 	self assert: (p includesClass: a1).
 	self assert: (p includesClass: a1 class)
@@ -159,12 +143,12 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 
 	| p a1 b1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPAckageP1 inCategory: self p1Name.
-	b1 := self createNewClassNamed: #B1InPAckageP1 inCategory: self p1Name.
-	self assert: p definedClasses size equals: 0.
+	a1 := self createNewClassNamed: #A1InPAckageP1.
+	b1 := self createNewClassNamed: #B1InPAckageP1.
+	self assertEmpty: p definedClasses.
 
-	p addClassDefinition: a1.
-	p addClassDefinition: b1.
+	p importClass: a1.
+	p importClass: b1.
 	self assert: p definedClasses size equals: 2.
 
 	self assert: (p includesClass: a1).
@@ -181,15 +165,12 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 
 { #category : #'tests - class addition removal' }
 RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
-	| p a1 b1|
 
+	| p a1 b1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPAckageP1 inCategory: self p1Name.
-	b1 := self createNewClassNamed: #B1InPAckageP1 inCategory: self p1Name.
-	self assert: p definedClasses size equals: 0.
 
-	p addClassDefinition: a1.
-	p addClassDefinition: b1.
+	a1 := self createNewClassNamed: #A1InPAckageP1 inPackage: p.
+	b1 := self createNewClassNamed: #B1InPAckageP1 inPackage: p.
 	self assert: p definedClasses size equals: 2.
 
 	p addClassDefinition: a1 toClassTag: 'a1-tag'.
@@ -211,17 +192,15 @@ RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 
 { #category : #'tests - class addition removal' }
 RPackageIncrementalTest >> testDefinedClassesAndDefinedClassNames [
+
 	| p a1 b1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPackageP1 inCategory: self p1Name.
-	self assert: p definedClasses size equals: 0.
-	p addClassDefinition: a1.
+	a1 := self createNewClassNamed: #A1InPackageP1 inPackage: p.
 	self assert: p definedClasses size equals: 1.
-	self assert: (p definedClasses  includes: a1).
+	self assert: (p definedClasses includes: a1).
 	self assert: (p definedClassNames includes: a1 name).
 
-	b1 := self createNewClassNamed: #B1InPackageP1 inCategory: self p1Name.
-	p addClassDefinition: b1.
+	b1 := self createNewClassNamed: #B1InPackageP1 inPackage: p.
 	self assert: p definedClasses size equals: 2.
 	self assert: (p definedClasses includes: b1).
 	self assert: (p definedClassNames includes: b1 name)
@@ -231,8 +210,8 @@ RPackageIncrementalTest >> testDefinedClassesAndDefinedClassNames [
 RPackageIncrementalTest >> testExtensionClassNames [
 
 	| p1 p2 a2 b2 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	b2 := self createNewClassNamed: #B2InPackageP2 inPackage: p2.
 	self deny: (p1 includesClass: a2).
@@ -264,9 +243,10 @@ RPackageIncrementalTest >> testExtensionClassNames [
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testExtensionClasses [
-	| p1 p2 a2  b2 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
+
+	| p1 p2 a2 b2 |
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
 
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	b2 := self createNewClassNamed: #B2InPackageP2 inPackage: p2.
@@ -274,29 +254,30 @@ RPackageIncrementalTest >> testExtensionClasses [
 	self assert: (p2 includesClass: a2).
 
 	a2 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1'.
-	p1 addMethod: (a2>>#methodPackagedInP1).
+	p1 addMethod: a2 >> #methodPackagedInP1.
 
 	self assert: p1 extendedClasses size equals: 1.
-	self assert: (p1 extendedClasses  includes: a2).
+	self assert: (p1 extendedClasses includes: a2).
 	self assert: p1 extendedClassNames size equals: 1.
-	self assert: (p1 extendedClassNames  includes: a2 name).
+	self assert: (p1 extendedClassNames includes: a2 name).
 
 	b2 class compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1'.
-	p1 addMethod: (b2 class>>#methodPackagedInP1).
+	p1 addMethod: b2 class >> #methodPackagedInP1.
 
 	self assert: p1 extendedClasses size equals: 2.
-	self assert: (p1 extendedClasses  includes: b2 class).
+	self assert: (p1 extendedClasses includes: b2 class).
 	"extensionClasses returns or metaclasses while extensionClassNames returns class names (but not metaclass names)"
 
 	self assert: p1 extendedClassNames size equals: 2.
-	self assert: (p1 extendedClassNames  includes: b2 name)
+	self assert: (p1 extendedClassNames includes: b2 name)
 ]
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testExtensionClassesWithCompiledMethod [
-	| p1 p2  a2 b2 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
+
+	| p1 p2 a2 b2 |
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	b2 := self createNewClassNamed: #B2InPackageP2 inPackage: p2.
 	self deny: (p1 includesClass: a2).
@@ -304,7 +285,7 @@ RPackageIncrementalTest >> testExtensionClassesWithCompiledMethod [
 	self assert: (p2 includesClass: b2).
 
 	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
+	p1 addMethod: a2 >> #methodDefinedInP1.
 
 	self assert: p1 extensionMethods size equals: 1.
 	self assert: p1 extensionSelectors size equals: 1.
@@ -313,7 +294,7 @@ RPackageIncrementalTest >> testExtensionClassesWithCompiledMethod [
 	"method extension class are not included in packages"
 
 	b2 compile: 'firstMethodInB2PackagedInP1 ^ 1'.
-	p1 addMethod: (b2>>#firstMethodInB2PackagedInP1).
+	p1 addMethod: b2 >> #firstMethodInB2PackagedInP1.
 
 	self assert: p1 extensionSelectors size equals: 2.
 	self assert: p1 extensionMethods size equals: 2.
@@ -321,7 +302,7 @@ RPackageIncrementalTest >> testExtensionClassesWithCompiledMethod [
 	self deny: (p1 includesClass: b2).
 
 	b2 compileSilently: 'secondMethodInB2PackagedInP1 ^ 2'.
-	p1 addMethod: (b2>>#secondMethodInB2PackagedInP1).
+	p1 addMethod: b2 >> #secondMethodInB2PackagedInP1.
 
 	self assert: p1 extensionSelectors size equals: 3.
 	self assert: p1 extensionMethods size equals: 3.
@@ -331,57 +312,78 @@ RPackageIncrementalTest >> testExtensionClassesWithCompiledMethod [
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testExtensionMethods [
-	| p1 p2 a2  b2 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
+
+	| p1 p2 a2 b2 |
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
 
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	b2 := self createNewClassNamed: #B2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
+	p1 addMethod: a2 >> #methodDefinedInP1.
 
 	self assert: p1 extensionSelectors size equals: 1.
 	self deny: (p1 includesClass: a2).
 	"method extension class are not included in packages"
 
 	b2 compileSilently: 'firstMethodInB2PackagedInP1 ^ 1'.
-	p1 addMethod: (b2>>#firstMethodInB2PackagedInP1).
+	p1 addMethod: b2 >> #firstMethodInB2PackagedInP1.
 	self assert: p1 extensionSelectors size equals: 2
+]
+
+{ #category : #'tests - class addition removal' }
+RPackageIncrementalTest >> testImportClassNoDuplicate [
+
+	| p a1 b1 |
+	p := self createNewPackageNamed: self p1Name.
+	a1 := self createNewClassNamed: #A1InPackageP1.
+	self assertEmpty: p definedClasses.
+	p importClass: a1.
+	self assert: p definedClasses size equals: 1.
+	b1 := self createNewClassNamed: #B1InPackageP1.
+	p importClass: a1.
+	"adding the same class does not do anything - luckily"
+	self assert: p definedClasses size equals: 1.
+	p importClass: b1.
+	self assert: p definedClasses size equals: 2
 ]
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testIncludeClass [
-	| p1 p2 a2  |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
+
+	| p1 p2 a2 |
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
+
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1'.
 
 	self deny: (p1 includesClass: a2).
-	p1 addMethod: (a2>>#methodPackagedInP1).
+	p1 addMethod: a2 >> #methodPackagedInP1.
 	self deny: (p1 includesClass: a2).
 	"We should declare the class explictly. Adding a method does not declare
 	the class as defined. The reason is that like that the client controls the granularity
 	and moment of class registration."
 
-	p1 addClassDefinition: a2.
+	p1 importClass: a2.
 	self assert: (p1 includesClass: a2).
 	self assert: (p1 includesClassNamed: a2 name)
 ]
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testIncludeClassMore [
-	| p1 p2 p3 a2  |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
+
+	| p1 p2 p3 a2 |
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
+	p3 := self createNewPackageNamed: self p3Name.
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addMethod: (a2>>#methodDefinedInP2).
+	p2 addMethod: a2 >> #methodDefinedInP2.
 	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
+	p1 addMethod: a2 >> #methodDefinedInP1.
 	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: (a2>>#methodDefinedInP3).
+	p3 addMethod: a2 >> #methodDefinedInP3.
 
 	self assert: (p2 includesClass: a2).
 	self deny: (p1 includesClass: a2).
@@ -392,9 +394,9 @@ RPackageIncrementalTest >> testIncludeClassMore [
 RPackageIncrementalTest >> testIncludeSelectorOfClass [
 
 	| p1 p2 p3 a2 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
+	p3 := self createNewPackageNamed: self p3Name.
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
 	p2 addMethod: a2 >> #methodDefinedInP2.
@@ -421,9 +423,9 @@ RPackageIncrementalTest >> testIncludeSelectorOfClass [
 RPackageIncrementalTest >> testIncludeSelectorOfMetaClass [
 
 	| p1 p2 p3 a2 a2class |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
+	p3 := self createNewPackageNamed: self p3Name.
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2class := a2 class.
 	a2class compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
@@ -453,9 +455,9 @@ RPackageIncrementalTest >> testIncludeSelectorOfMetaClass [
 RPackageIncrementalTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExtensions [
 
 	| p1 p2 p3 a2 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
+	p3 := self createNewPackageNamed: self p3Name.
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 
 	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
@@ -479,16 +481,17 @@ RPackageIncrementalTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExte
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testIncludesOrTouches [
-	| p1 p2 a2  |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
+
+	| p1 p2 a2 |
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
 
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	self deny: (p1 includesClass: a2).
 	self assert: (p2 includesClass: a2).
 
 	a2 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1'.
-	p1 addMethod: (a2>>#methodPackagedInP1).
+	p1 addMethod: a2 >> #methodPackagedInP1.
 
 	self assert: p1 extensionMethods size equals: 1.
 	self assert: p1 extensionSelectors size equals: 1.
@@ -499,22 +502,23 @@ RPackageIncrementalTest >> testIncludesOrTouches [
 
 { #category : #'tests - method addition removal' }
 RPackageIncrementalTest >> testMethodAddition [
+
 	| p1 a1 |
-	p1 := self createNewPackageNamed: 'P1'.
+	p1 := self createNewPackageNamed: self p1Name.
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	a1 compileSilently: 'foo ^ 10'.
-	p1 addMethod:  (a1>>#foo).
+	p1 addMethod: a1 >> #foo.
 	self assert: (p1 includesSelector: #foo ofClass: a1)
 ]
 
 { #category : #'tests - method addition removal' }
 RPackageIncrementalTest >> testMethodPackageResolution [
-	| a1Name p1 a1 |
-	a1Name := #A2InPackageP2.
-	p1 := self createNewPackageNamed: 'P1'.
-	a1 := self createNewClassNamed: a1Name inPackage: p1.
-	a1 compileSilently: 'method ^ #methodDefinedInP2'.
-	a1 class compileSilently: 'method ^ #methodDefinedInP2'.
+
+	| p1 a1 |
+	p1 := self createNewPackageNamed: self p1Name.
+	a1 := self createNewClassNamed: #A2InPackageP1 inPackage: p1.
+	a1 compileSilently: 'method ^ #methodDefinedInP1'.
+	a1 class compileSilently: 'method ^ #methodDefinedInP1'.
 
 	p1 addMethod: a1 >> #method.
 	p1 addMethod: a1 class >> #method.
@@ -525,24 +529,26 @@ RPackageIncrementalTest >> testMethodPackageResolution [
 
 { #category : #'tests - package belonging' }
 RPackageIncrementalTest >> testPackageOfClassForClassesNotDefinedInPackageButJustExtendingIt [
+
 	| p1 p2 a2 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
 
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	p1 addMethod: a2 >> #methodDefinedInP1.
 
 	self assert: a2 package equals: p2.
-	p1 extensionMethods do: [ :each | self deny: each methodClass package equals: p1 ]
-	"the package of a class which is extended inside a package p, is not p
+	p1 extensionMethods do: [ :each | "the package of a class which is extended inside a package p, is not p
 	but the package where the class was defined"
+		self deny: each methodClass package equals: p1 ]
 ]
 
 { #category : #'tests - package belonging' }
 RPackageIncrementalTest >> testPackageOfClassForDefinedClasses [
+
 	| p a1 b1 |
-	p := self createNewPackageNamed: 'P1'.
+	p := self createNewPackageNamed: self p1Name.
 	a1 := self createNewClassNamed: #A1InPAckageP1 inPackage: p.
 	b1 := self createNewClassNamed: #B1InPAckageP1 inPackage: p.
 
@@ -556,8 +562,7 @@ RPackageIncrementalTest >> testRemoveClassRemovesExtensions [
 	p1 := self createNewPackageNamed: self p1Name.
 	p2 := self createNewPackageNamed: self p2Name.
 	"the class is created but not added to the package for now"
-	a1 := self createNewClassNamed: #A1InPackageP1 inCategory: self p1Name.
-	p1 addClassDefinition: a1.
+	a1 := self createNewClassNamed: #A1InPackageP1 inPackage: p1.
 	self assert: p1 definedClasses size equals: 1.
 	a1 compileSilently: 'newlyAddedToA1 ^ #methodDefinedInP1'.
 	p2 addMethod: (a1>>#newlyAddedToA1).
@@ -578,8 +583,7 @@ RPackageIncrementalTest >> testRemoveExtensionMethodRemovesExtensionsFromRPackag
 	p1 := self createNewPackageNamed: self p1Name.
 	p2 := self createNewPackageNamed: self p2Name.
 	"the class is created but not added to the package for now"
-	a1 := self createNewClassNamed: #A1InPackageP1 inCategory: self p1Name.
-	p1 addClassDefinition: a1.
+	a1 := self createNewClassNamed: #A1InPackageP1 inPackage: p1.
 	self assert: p1 definedClasses size equals: 1.
 	a1 compileSilently: 'newlyAddedToA1 ^ #methodDefinedInP1'.
 	p2 addMethod: (a1>>#newlyAddedToA1).
@@ -596,16 +600,17 @@ RPackageIncrementalTest >> testRemoveExtensionMethodRemovesExtensionsFromRPackag
 
 { #category : #'tests - extension' }
 RPackageIncrementalTest >> testTwoClassesWithExtensions [
-	| p1 p2 a2  b2 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
+
+	| p1 p2 a2 b2 |
+	p1 := self createNewPackageNamed: self p1Name.
+	p2 := self createNewPackageNamed: self p2Name.
 
 	a2 := self createNewClassNamed: #A2InPackageP2 inPackage: p2.
 	b2 := self createNewClassNamed: #B2InPackageP2 inPackage: p2.
 	a2 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1'.
-	p1 addMethod: (a2>>#methodPackagedInP1).
+	p1 addMethod: a2 >> #methodPackagedInP1.
 	b2 class compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1'.
-	p1 addMethod: (b2 class>>#methodPackagedInP1).
+	p1 addMethod: b2 class >> #methodPackagedInP1.
 
 	self assert: p1 classes size equals: 2.
 	self assert: p2 classes size equals: 2
@@ -613,14 +618,15 @@ RPackageIncrementalTest >> testTwoClassesWithExtensions [
 
 { #category : #'tests - class addition removal' }
 RPackageIncrementalTest >> testUniqueClassInDefinedClassesUsingAddClassDefinition [
+
 	| p a1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPAckageP1 inCategory: self p1Name.
-	self assert: p definedClasses size equals: 0.
-	p addClassDefinition: a1.
+	a1 := self createNewClassNamed: #A1InPAckageP1.
+	self assertEmpty: p definedClasses.
+	p importClass: a1.
 	self assert: p definedClasses size equals: 1.
-	p addClassDefinition: a1.
+	p importClass: a1.
 	self assert: p definedClasses size equals: 1.
-	p addClassDefinition: a1 class.
+	p importClass: a1 class.
 	self assert: p definedClasses size equals: 1
 ]

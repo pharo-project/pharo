@@ -591,13 +591,14 @@ RBNamespace >> privateReferencesTo: aSelector inPackages: aColl [
 
 { #category : #private }
 RBNamespace >> privateRootClasses [
+
 	| classes |
 	classes := OrderedCollection new.
 	{ ProtoObject } do: [ :each |
 		| class |
 		class := self classFor: each.
-		(class notNil and: [ class superclass isNil ])
-			ifTrue: [ classes add: class ] ].
+		(class notNil and: [ class superclass isNil ]) ifTrue: [
+			classes add: class ] ].
 	^ classes
 ]
 

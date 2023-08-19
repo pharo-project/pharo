@@ -33,18 +33,6 @@ RPackageTag >> addClass: aClass [
 ]
 
 { #category : #private }
-RPackageTag >> asRPackage [
-	"Create a new RPackage with the same contents as this rpackage tag"
-
-	| newRPackage |
-	newRPackage := RPackage named: self categoryName organizer: self organizer.
-	self classes do: [ :className | newRPackage importClass: className ].
-	(self package extensionsForTag: self) do: [ :extensionMethod | newRPackage addMethod: extensionMethod ].
-
-	^ newRPackage
-]
-
-{ #category : #private }
 RPackageTag >> basicRenameTo: aString [
 	name := aString
 ]
@@ -186,19 +174,16 @@ RPackageTag >> printOn: aStream [
 ]
 
 { #category : #converting }
-RPackageTag >> promoteAsRPackage [
-	"This method converts this rpackage tag into an rpackage, removes the tag from the parent package with all classes included and registers the new package in the system.
-	The tag has to be removed before registering to avoid conflicts.
-	Smells like we could have an error and lose package tags! registerPackage should not fail because names Package-Tag are unique in the system."
+RPackageTag >> promoteAsPackage [
+	"This method converts this package tag into a package"
 
-	| newRPackage |
-	newRPackage := self asRPackage.
-	self classes do: [ :each | self package removeClass: each ].
-	self package removeClassTag: self name.
-	self package removeMethods: newRPackage extensionMethods.
-	self organizer registerPackage: newRPackage.
+	| newPackage |
+	self flag: #package. "We need to create and register in two steps because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a `self organizer ensurePackage: self package name , '-' , self name` to avoid to have a manual package creation AND a registration."
+	newPackage := RPackage named: self categoryName organizer: self organizer.
 
-	newRPackage classes do: [ :each | SystemAnnouncer uniqueInstance classRepackaged: each from: self package to: newRPackage ]
+	self classes do: [ :class | newPackage moveClass: class toTag: newPackage rootTag ].
+
+	self organizer registerPackage: newPackage
 ]
 
 { #category : #accessing }

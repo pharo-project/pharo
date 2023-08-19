@@ -1,54 +1,68 @@
 "
-Moves a class to a new category or package
+Moves a class to a new package or package tag
 
 Usage:
+
+```st
 | transformation |
 transformation := (RBMoveClassTransformation
-				move: #RBMoveClassTransformation
-				to: #'Refactoring2-Refactorings-Tests')
-				transform.
+	move: #RBMoveClassTransformation
+	toPackage: #'Refactoring2-Refactorings-Tests'
+	inTag: #Utilities) ""The tag is optional""
+	transform.
 (ChangesBrowser changes: transformation model changes changes) open
+```
 
 Preconditions:
 - the class must exist
-- the category or package must exist
+- the package and optional tag must exist
 "
 Class {
 	#name : #RBMoveClassTransformation,
 	#superclass : #RBClassTransformation,
 	#instVars : [
-		'oldCategory',
-		'category'
+		'packageName',
+		'tagName'
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
-RBMoveClassTransformation class >> model: aRBModel move: aClassName to: aCategoryName [
+RBMoveClassTransformation class >> move: aClassName toPackage: aPackageName [
 
 	^ self new
-		model: aRBModel;
-		move: aClassName
-		to: aCategoryName;
-		yourself
+		  className: aClassName;
+		  packageName: aPackageName;
+		  yourself
 ]
 
 { #category : #api }
-RBMoveClassTransformation class >> move: aClassName to: aCategoryName [
+RBMoveClassTransformation class >> move: aClassName toPackage: aPackageName inTag: aTagName [
 
-	^ self new
-		move: aClassName
-		to: aCategoryName;
-		yourself
+	^ (self move: aClassName toPackage: aPackageName)
+		  tagName: aTagName;
+		  yourself
 ]
 
 { #category : #preconditions }
-RBMoveClassTransformation >> applicabilityConditions [
+RBMoveClassTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [
-		   self model environment categories includes: category ]
-		   errorString: 'Category named ' , category , ' does not exist')
+			   (self model environment packageAt: self packageName ifAbsent: [ nil ])
+				   ifNil: [ false ]
+				   ifNotNil: [ :package | self tagName ifNotNil: [ :name | package hasTag: name ] ] ]
+		   errorString: 'No package named ' , self packageName , (self tagName
+				    ifNil: [ '' ]
+				    ifNotNil: [ :name | ' with tag named ' , name ]))
+]
+
+{ #category : #preconditions }
+RBMoveClassTransformation >> category [
+
+	^ self tagName
+		  ifNil: [ self packageName ]
+		  ifNotNil: [ self packageName , '-' , tagName ]
 ]
 
 { #category : #preconditions }
@@ -60,19 +74,24 @@ RBMoveClassTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #api }
-RBMoveClassTransformation >> move: aClassName to: aCategoryName [
+{ #category : #accessing }
+RBMoveClassTransformation >> packageName [
 
-	self className: aClassName.
-	category := aCategoryName
+	^ packageName
+]
+
+{ #category : #accessing }
+RBMoveClassTransformation >> packageName: anObject [
+
+	packageName := anObject
 ]
 
 { #category : #executing }
 RBMoveClassTransformation >> privateTransform [
 
-	oldCategory := self definingClass category.
-	self definingClass category: category.
-	self model category: category for: self definingClass
+	self flag: #package. "This should use the package and tag API."
+	self definingClass category: self category.
+	self model category: self category for: self definingClass
 ]
 
 { #category : #printing }
@@ -82,8 +101,26 @@ RBMoveClassTransformation >> storeOn: aStream [
 	self class storeOn: aStream.
 	aStream
 		nextPutAll: ' move: ''';
-		nextPutAll: category;
-		nextPutAll: ''' to: ';
-		nextPutAll: className.
+		nextPutAll: className;
+		nextPutAll: ''' toPackage: ''';
+		nextPutAll: packageName;
+		nextPutAll: ''''.
+	self tagName ifNotNil: [
+		aStream
+			nextPutAll: ' inTag: ''';
+			nextPutAll: tagName;
+			nextPutAll: '''' ].
 	aStream nextPut: $)
+]
+
+{ #category : #accessing }
+RBMoveClassTransformation >> tagName [
+
+	^ tagName
+]
+
+{ #category : #accessing }
+RBMoveClassTransformation >> tagName: anObject [
+
+	tagName := anObject
 ]

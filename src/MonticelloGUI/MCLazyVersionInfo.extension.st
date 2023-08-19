@@ -11,11 +11,13 @@ MCLazyVersionInfo >> loadAncestorsAndStepChildren [
 	((MCTool mcVersionCache includesKey: id)
 		ifTrue: [ MCTool mcVersionCache at: id ]
 		ifFalse:
-			[ (MCRepositoryGroup default
-				in: [ :r | r versionWithInfo: self ifNone: [  ] ])
+			[ 
+			| r | 
+			r := MCRepositoryGroup default.
+			r versionWithInfo: self ifNone: [  ].
+			r	
 				ifNil: [  ]
-				ifNotNil:
-					[ :aVersion | 
+				ifNotNil: 	[ :aVersion | 
 					MCTool mcVersionCache at: id put: aVersion.
 					aVersion ] ])
 		ifNotNil:

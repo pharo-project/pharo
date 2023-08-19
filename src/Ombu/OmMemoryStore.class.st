@@ -34,9 +34,10 @@ OmMemoryStore class >> withAllContents: aCollection [
 
 { #category : #'instance creation' }
 OmMemoryStore class >> withAllEntries: aCollection [
-	^ self new
-		in: [ :store | aCollection do: [ :entry | store newEntry: entry ] ];
-		yourself
+	| store |
+	store := self new. 
+	aCollection do: [ :entry | store newEntry: entry ].
+	^ store 
 ]
 
 { #category : #accessing }

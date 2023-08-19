@@ -42,7 +42,7 @@ RBAddProtocolTransformation class >> protocol: aString inClass: aClassName [
 ]
 
 { #category : #preconditions }
-RBAddProtocolTransformation >> applicabilityConditions [
+RBAddProtocolTransformation >> applicabilityPreconditions [
 
 	^ self classExist & self protocolExist
 ]

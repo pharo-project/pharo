@@ -1,21 +1,12 @@
 "
 I am a RBBrowserEnvironment on a set of classes.
-I contain all entities of this set.
+I containt all entities of this set.
 
-For example the following expression is an environment containing only a limited set of classes.
-All operations are related to this set. Have a look at `RBNamespaceTest`
+Example:
 
 ```
 RBClassEnvironment new forClasses: Number withAllSubclasses.
 ```
-
-With the following all the operation of the namespace are only looking at the class environment.
-```
-rbclasses := RBClassEnvironment classes: {
-			             RBClassToRename.
-			             RBSubclassOfClassToRename }.
-rbNamespace := RBNamespace onEnvironment: rbclasses.
-```	
 "
 Class {
 	#name : #RBClassEnvironment,

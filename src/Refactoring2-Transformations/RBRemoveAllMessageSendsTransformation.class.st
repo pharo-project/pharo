@@ -53,7 +53,7 @@ RBRemoveAllMessageSendsTransformation class >> model: aRBModel messageSend: aMes
 ]
 
 { #category : #preconditions }
-RBRemoveAllMessageSendsTransformation >> applicabilityConditions [
+RBRemoveAllMessageSendsTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]

@@ -36,7 +36,7 @@ RBPullUpMethodTransformation class >> pullUp: selectorCollection from: aClass to
 ]
 
 { #category : #preconditions }
-RBPullUpMethodTransformation >> applicabilityConditions [ 
+RBPullUpMethodTransformation >> applicabilityPreconditions [ 
 
 	^ (selectors 
 			inject: (RBCondition hasSuperclass: class)
