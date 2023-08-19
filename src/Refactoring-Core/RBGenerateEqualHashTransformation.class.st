@@ -71,14 +71,15 @@ RBGenerateEqualHashTransformation class >> model: aNamespace className: aClass v
 
 { #category : #transforming }
 RBGenerateEqualHashTransformation >> accessorForVariable: aString [
+
 	| refactoring |
 	refactoring := RBCreateAccessorsForVariableTransformation
-		model: self model
-		variable: aString
-		class: self theClass
-		classVariable: false.
+		               model: self model
+		               variable: aString
+		               class: self theClass
+		               classVariable: false.
 	refactoring createGetterAccessor.
-	^ refactoring getterMethod
+	^ refactoring getterMethodName
 ]
 
 { #category : #transforming }

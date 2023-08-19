@@ -45,7 +45,7 @@ RBReplaceSubtreeTransformation class >> replace: oldSourceCode to: newSourceCode
 ]
 
 { #category : #preconditions }
-RBReplaceSubtreeTransformation >> applicabilityConditions [ 
+RBReplaceSubtreeTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&

@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBPushDownVariableTransformation >> applicabilityConditionsForClassVariable [
+RBPushDownVariableTransformation >> applicabilityPreconditionsForClassVariable [
 	"it does not perform when two subclasses (and/or their subclasses) accesses this variable"
 
 	^ RBCondition
@@ -27,7 +27,7 @@ RBPushDownVariableTransformation >> applicabilityConditionsForClassVariable [
 ]
 
 { #category : #preconditions }
-RBPushDownVariableTransformation >> applicabilityConditionsForInstanceVariable [
+RBPushDownVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
 
 	^ RBCondition
 		  definesInstanceVariable: variableName
@@ -35,7 +35,7 @@ RBPushDownVariableTransformation >> applicabilityConditionsForInstanceVariable [
 ]
 
 { #category : #preconditions }
-RBPushDownVariableTransformation >> breakingChangeConditionsForClassVariable [
+RBPushDownVariableTransformation >> breakingChangePreconditionsForClassVariable [
 
 	^ RBCondition withBlock: [
 		  | numSubclassesAccessing |
@@ -53,7 +53,7 @@ RBPushDownVariableTransformation >> breakingChangeConditionsForClassVariable [
 ]
 
 { #category : #preconditions }
-RBPushDownVariableTransformation >> breakingChangeConditionsForInstanceVariable [
+RBPushDownVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
 
 	^ RBCondition
 		  accessesInstanceVariable: variableName
@@ -86,8 +86,8 @@ RBPushDownVariableTransformation >> preconditions [
 	(and/or their subclasses) access this variable"
 
 	^ isClassVariable
-		ifTrue: [ self applicabilityConditionsForClassVariable ]
-		ifFalse: [ self applicabilityConditionsForInstanceVariable ]
+		ifTrue: [ self applicabilityPreconditionsForClassVariable ]
+		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
 ]
 
 { #category : #printing }

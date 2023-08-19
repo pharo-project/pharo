@@ -23,8 +23,3 @@ SycAddClassesScopeCommand >> execute [
 	scope := RBBrowserEnvironment new forClasses: classes.
 	RefactoringSettings addScope: scope
 ]
-
-{ #category : #execution }
-SycAddClassesScopeCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext
-]

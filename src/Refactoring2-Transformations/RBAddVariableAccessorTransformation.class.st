@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBAddVariableAccessorTransformation >> applicabilityConditions [ 
+RBAddVariableAccessorTransformation >> applicabilityPreconditions [ 
 
 	class := self model classObjectFor: className.
 

@@ -62,13 +62,13 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 ]
 
 { #category : #preconditions }
-RBMoveMethodToClassSideRefactoring >> applicabilityConditions [
+RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 
 	^ (RBCondition isMetaclass: class) not
 ]
 
 { #category : #preconditions }
-RBMoveMethodToClassSideRefactoring >> breakingChangeConditions [
+RBMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition definesSelector: method selector in: class classSide)
 		  not
@@ -86,12 +86,12 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 { #category : #refactoring }
 RBMoveMethodToClassSideRefactoring >> generateChanges [
 	
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
 	^ self changes
@@ -151,12 +151,13 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> privateTransform [
-	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
+
+| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
 	originalProtocol := method protocolName.
 	oldClass := class.

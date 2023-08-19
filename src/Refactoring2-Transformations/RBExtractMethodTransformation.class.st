@@ -67,7 +67,7 @@ RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aS
 ]
 
 { #category : #preconditions }
-RBExtractMethodTransformation >> applicabilityConditions [ 
+RBExtractMethodTransformation >> applicabilityPreconditions [ 
 
 	| aSubtree |
 	aSubtree := self calculateSubtree.

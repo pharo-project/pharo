@@ -46,7 +46,7 @@ RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocol: 
 ]
 
 { #category : #preconditions }
-RBAddMethodTransformation >> applicabilityConditions [
+RBAddMethodTransformation >> applicabilityPreconditions [
 
 	rbMethod := self parserClass
 		parseMethod: sourceCode

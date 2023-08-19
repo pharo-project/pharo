@@ -57,8 +57,7 @@ RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 RPackageTestCase >> createNewPackageNamed: aName [
 
 	| pack |
-	self removePackage: aName.
-	pack := RPackage named: aName organizer: self organizer.
+	pack := self organizer ensurePackage: aName.
 	createdPackages add: pack.
 	^ pack
 ]

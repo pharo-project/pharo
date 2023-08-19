@@ -1,5 +1,8 @@
+"
+I'm a model for user interaction for the remove instance variable refactoring.
+"
 Class {
-	#name : #RBRemoveInstanceVariableDriver,
+	#name : #RBRemoveInstanceVariablesDriver,
 	#superclass : #RBDriver,
 	#instVars : [
 		'class',
@@ -9,38 +12,31 @@ Class {
 	#category : #'Refactoring-UI-Drivers'
 }
 
-{ #category : #execution }
-RBRemoveInstanceVariableDriver >> furtherActionFor: aReport [
-	
-	"Smalltalk tools messageList
-		new
-		  messages: (self halt);
-		  title: 'jlklkjljlkjkl';
-		  open."
-	
-	"for now use the report to see and not the driver state. To be reevaluated later."
-	"use system navigation to avoid to duplicate logic. 
-	Now it could be packaged in the report object.
-	Note that the report holds an environment and that we also have scopes so the message
-	list should be passed the scope when the widget will be able to handle it."
-	aReport browse
+{ #category : #resources }
+RBRemoveInstanceVariablesDriver >> configureRefactoring [
+
+	refactoring := RBCompositeRefactoring new
+							model: model; 
+							refactorings: (variables collect: [:each | 
+									RBRemoveInstanceVariableRefactoring model: model remove: each from: class]);
+								yourself 
 ]
 
 { #category : #resources }
-RBRemoveInstanceVariableDriver >> refactoring [
+RBRemoveInstanceVariablesDriver >> refactoring [
 
 	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
 ]
 
 { #category : #execution }
-RBRemoveInstanceVariableDriver >> runRefactoring [
+RBRemoveInstanceVariablesDriver >> runRefactoring [
 
-	self refactoring.
+	self configureRefactoring.
 	[
 		[ 
 			| changes |
 			changes := refactoring generateChanges.
-			self openPreviewWithChanges: { changes } ]
+			self openPreviewWithChanges: changes ]
 		           on: RBApplicabilityChecksFailedError
 		           do: [ :err |
 		           		^ RBRefactoringError signal: err messageText ] ]
@@ -60,9 +56,10 @@ RBRemoveInstanceVariableDriver >> runRefactoring [
 ]
 
 { #category : #initialization }
-RBRemoveInstanceVariableDriver >> scopes: refactoringScopes variable: aVariable for: aClass [
+RBRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollection for: aClass [
 	
 	scopes := refactoringScopes.
-	variables := {aVariable}.
+	model := self refactoringScopeOn: scopes first.
+	variables := aCollection.
 	class := aClass
 ]

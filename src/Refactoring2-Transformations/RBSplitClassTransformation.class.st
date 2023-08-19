@@ -103,7 +103,7 @@ RBSplitClassTransformation >> addInstanceVariables [
 ]
 
 { #category : #preconditions }
-RBSplitClassTransformation >> applicabilityConditions [
+RBSplitClassTransformation >> applicabilityPreconditions [
 
 	class := self definingClass.
 

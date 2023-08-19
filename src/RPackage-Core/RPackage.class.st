@@ -175,10 +175,9 @@ RPackage >> addClass: aClass [
 	aClass category: (self addClassTag: self name) categoryName
 ]
 
-{ #category : #'add class' }
+{ #category : #deprecated }
 RPackage >> addClassDefinition: aClass [
-	"Add the class definition to the package.
-	We assume that this method is called at the creation of the class, thus methods should be added afterward. Else they might wrongly be considered as extensions."
+	"Please do not use me, I will be removed in the future. Use #importClass: instead."
 
 	(self includesClass: aClass) ifTrue: [ ^ self ].
 	classes add: aClass instanceSide name asSymbol.
@@ -695,18 +694,15 @@ RPackage >> methodsForClass: aClass [
 ]
 
 { #category : #private }
-RPackage >> moveClass: aClass fromPackage: oldPackage toTag: aTag [
+RPackage >> moveClass: aClass toTag: aTag [
+
+	| oldPackage |
+	oldPackage := aClass package.
 
 	oldPackage removeClass: aClass.
 	self importClass: aClass inTag: aTag.
 
 	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
-]
-
-{ #category : #private }
-RPackage >> moveClass: aClass toTag: aTag [
-
-	^ self moveClass: aClass fromPackage: aClass package toTag: aTag
 ]
 
 { #category : #accessing }

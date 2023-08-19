@@ -126,18 +126,8 @@ RBRefactoring >> generateChangesFor: aRefactoring [
 
 	"Execute the argument but passing the receiver options to that refactoring"
 	aRefactoring copyOptionsFrom: self options.
+	aRefactoring model: self model.
 	aRefactoring primitiveExecute
-]
-
-{ #category : #transforming }
-RBRefactoring >> model [
-
-	^ model
-		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
-				name: self printString;
-				yourself
-			]
-		ifNotNil: [ model ]
 ]
 
 { #category : #private }

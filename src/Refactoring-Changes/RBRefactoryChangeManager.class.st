@@ -203,6 +203,7 @@ RBRefactoryChangeManager >> lastUndoPointer [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> performChange: aRefactoringChange [
+	
 	self ignoreChangesWhile: [ self addUndo: aRefactoringChange execute ]
 ]
 

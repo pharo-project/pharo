@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBChangeMethodNameTransformation >> applicabilityConditions [
+RBChangeMethodNameTransformation >> applicabilityPreconditions [
 		
 	^ (RBCondition definesSelector: oldSelector in: class)
 				& (RBCondition isValidMethodName: newSelector for: class).
@@ -103,7 +103,7 @@ RBChangeMethodNameTransformation >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
 	| conditions |
-	conditions := self applicabilityConditions. 
+	conditions := self applicabilityPreconditions. 
 
 	conditions := self implementors
 		inject: conditions into: [ :condition :each |

@@ -40,7 +40,7 @@ PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 							baseColor: Color transparent ].
 	outerColor := self darkBaseColorFor: aButton.
 	^ SimpleBorderStyle new
-			width: 1;
+			width: 1 scaledByDisplayScaleFactor;
 			baseColor: outerColor
 ]
 
@@ -50,7 +50,7 @@ PharoLightTheme >> configureWindowBorderFor: aWindow [
 	| aStyle |
 	aStyle := SimpleBorderStyle new
 					color: (Color lightGray);
-					width: 1.
+					width: 1 scaledByDisplayScaleFactor.
 	aWindow borderStyle: aStyle
 ]
 
@@ -93,7 +93,7 @@ PharoLightTheme >> taskbarItemDisabledFillStyleFor: aButton [
 PharoLightTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 	^ BottomBorderStyle new
 		color: (Color fromHexString: '616161');
-		width: 2;
+		width: 2 scaledByDisplayScaleFactor;
 		yourself
 ]
 
@@ -106,8 +106,8 @@ PharoLightTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 PharoLightTheme >> taskbarItemNormalBorderStyleFor: aButton [
 	^ BottomBorderStyle new
 		color: (Color fromHexString: '757575');
-		width: 2;
-		trimSize: 2;
+		width: 2 scaledByDisplayScaleFactor;
+		trimSize: 2 scaledByDisplayScaleFactor;
 		yourself
 ]
 

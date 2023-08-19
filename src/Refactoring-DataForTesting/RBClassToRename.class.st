@@ -12,7 +12,7 @@ RBClassToRename class >> justForTest [
 { #category : #performing }
 RBClassToRename >> equallyDefinedInSubclass [
 
-	self method1 + 33
+	^ self method1 + 33
 ]
 
 { #category : #performing }

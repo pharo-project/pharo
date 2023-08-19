@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBMergeInstanceVariableIntoAnotherTransformation >> applicabilityConditions [
+RBMergeInstanceVariableIntoAnotherTransformation >> applicabilityPreconditions [
 
 	class := self model classObjectFor: className.
 
