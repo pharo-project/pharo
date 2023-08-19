@@ -23,9 +23,7 @@ OCDoItSemanticScope class >> isAbstract [
 { #category : #'code evaluation' }
 OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 
-	^ [ self receiver withArgs: #() executeMethod: doItMethod ] on: UndeclaredVariableRead do: [ :ex |      
-		"Not really nice to have a dependency but let us revise it later"
-		SystemNavigation default browseAllImplementorsOf: ex signaler name ]
+	^ self receiver withArgs: #() executeMethod: doItMethod 
 ]
 
 { #category : #testing }
