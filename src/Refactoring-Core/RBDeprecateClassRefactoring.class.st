@@ -39,10 +39,10 @@ RBDeprecateClassRefactoring class >> model: aRBSmalltalk deprecate: aClass in: a
 RBDeprecateClassRefactoring >> addMethod: source to: aClass in: aProtocol [
 
 	self generateChangesFor: 
-		(RBAddMethodTransformRefactoring 
-			addMethod: source
-			toClass: aClass
-			inProtocols: aProtocol)
+		(RBAddMethodTransformation
+			sourceCode: source
+			in: aClass
+			withProtocol: aProtocol)
 ]
 
 { #category : #initialization }
@@ -131,6 +131,22 @@ RBDeprecateClassRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBDeprecateClassRefactoring >> privateTransform [
+
+	self shouldFixSubclasses
+		ifTrue: [ self renameSuperclassOfSubclasses.
+			self convertDeprecatedToSubclass ].
+
+	self renameReferences.
+
+	self shouldCopyExtensions
+		ifTrue: [ self copyExtensionMethods ].
+
+	self shouldRemoveExtensions
+		ifTrue: [ self removeExtensionMethods ]
+]
+
+{ #category : #transforming }
 RBDeprecateClassRefactoring >> removeExtensionMethods [
 
 	(self instanceSideExtensionMethodsOf: deprecatedClass)
@@ -207,20 +223,4 @@ RBDeprecateClassRefactoring >> storeOn: aStream [
 		nextPutAll: ' to: #';
 		nextPutAll: newName;
 		nextPut: $)
-]
-
-{ #category : #transforming }
-RBDeprecateClassRefactoring >> transform [
-
-	self shouldFixSubclasses
-		ifTrue: [ self renameSuperclassOfSubclasses.
-			self convertDeprecatedToSubclass ].
-
-	self renameReferences.
-
-	self shouldCopyExtensions
-		ifTrue: [ self copyExtensionMethods ].
-
-	self shouldRemoveExtensions
-		ifTrue: [ self removeExtensionMethods ]
 ]

@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBAddClassVariableRefactoring >> applicabilityConditions [
+RBAddClassVariableRefactoring >> applicabilityPreconditions [
 
 	^ (RBCondition isMetaclass: class) not
 	  & (RBCondition isValidClassVarName: variableName for: class)
@@ -18,7 +18,7 @@ RBAddClassVariableRefactoring >> applicabilityConditions [
 ]
 
 { #category : #preconditions }
-RBAddClassVariableRefactoring >> breakingChangeConditions [
+RBAddClassVariableRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition
 		   hierarchyOf: class
@@ -28,10 +28,10 @@ RBAddClassVariableRefactoring >> breakingChangeConditions [
 { #category : #preconditions }
 RBAddClassVariableRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : #transforming }
-RBAddClassVariableRefactoring >> transform [
+RBAddClassVariableRefactoring >> privateTransform [
 	class addClassVariable: variableName
 ]

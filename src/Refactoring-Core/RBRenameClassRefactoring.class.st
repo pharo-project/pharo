@@ -51,6 +51,14 @@ RBRenameClassRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBRenameClassRefactoring >> privateTransform [
+	self model
+		renameClass: class
+		to: newName
+		around: [self renameReferences]
+]
+
+{ #category : #transforming }
 RBRenameClassRefactoring >> renameReferences [
 
 	| replacer |
@@ -76,12 +84,4 @@ RBRenameClassRefactoring >> storeOn: aStream [
 		nextPutAll: ' to: #';
 		nextPutAll: newName;
 		nextPut: $)
-]
-
-{ #category : #transforming }
-RBRenameClassRefactoring >> transform [
-	self model
-		renameClass: class
-		to: newName
-		around: [self renameReferences]
 ]

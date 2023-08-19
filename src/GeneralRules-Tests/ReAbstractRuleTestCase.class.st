@@ -48,7 +48,10 @@ ReAbstractRuleTestCase >> myCritiquesOnMethod: method [
 
 { #category : #utilities }
 ReAbstractRuleTestCase >> sourceAtChritique: critique [
-	^ critique sourceAnchor in: [ :anchor | anchor entity sourceCode atAll: anchor interval ]
+
+	| anchor |
+	anchor := critique sourceAnchor.
+	^ anchor entity sourceCode atAll: anchor interval
 ]
 
 { #category : #utilities }

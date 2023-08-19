@@ -67,7 +67,7 @@ RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aS
 ]
 
 { #category : #preconditions }
-RBExtractMethodTransformation >> applicabilityConditions [ 
+RBExtractMethodTransformation >> applicabilityPreconditions [ 
 
 	| aSubtree |
 	aSubtree := self calculateSubtree.
@@ -134,7 +134,7 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemov
 				   model: self model
 				   sourceCode: newMethod newSource
 				   in: class
-				   withProtocols: { Protocol unclassified });
+				   withProtocol: Protocol unclassified);
 		  add: (RBReplaceSubtreeTransformation
 				   model: self model
 				   replace: sourceCode

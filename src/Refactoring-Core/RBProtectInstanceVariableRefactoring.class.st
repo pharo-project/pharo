@@ -47,7 +47,7 @@ RBProtectInstanceVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBProtectInstanceVariableRefactoring >> transform [
+RBProtectInstanceVariableRefactoring >> privateTransform [
 	self setOption: #inlineExpression toUse: [:ref :string | true].
 	self getterSetterMethods do: [:each | self inline: each]
 ]

@@ -1090,12 +1090,12 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 { #category : #copying }
 String >> copyUpToSubstring: aSubstring [
 
+	| index |
 	aSubstring ifEmpty: [
 		"preserve compatiblity with `readStream upToAll:`"
 		^ String new ].
-
-	^ (self findString: aSubstring)
-		in: [ :index | index > 0 ifTrue: [ self copyFrom: 1 to: index-1 ] ifFalse: [ self ] ]
+	index := (self findString: aSubstring).
+	^ index > 0 ifTrue: [ self copyFrom: 1 to: index-1 ] ifFalse: [ self ].
 ]
 
 { #category : #converting }

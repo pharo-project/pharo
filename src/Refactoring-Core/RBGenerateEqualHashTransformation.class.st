@@ -71,14 +71,15 @@ RBGenerateEqualHashTransformation class >> model: aNamespace className: aClass v
 
 { #category : #transforming }
 RBGenerateEqualHashTransformation >> accessorForVariable: aString [
+
 	| refactoring |
 	refactoring := RBCreateAccessorsForVariableTransformation
-		model: self model
-		variable: aString
-		class: self theClass
-		classVariable: false.
+		               model: self model
+		               variable: aString
+		               class: self theClass
+		               classVariable: false.
 	refactoring createGetterAccessor.
-	^ refactoring getterMethod
+	^ refactoring getterMethodName
 ]
 
 { #category : #transforming }
@@ -119,10 +120,10 @@ RBGenerateEqualHashTransformation >> compileEqual [
 		addNode: statement;
 		addReturn.
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: method formattedCode
-			toClass: self theClass
-			inProtocols: #comparing)
+		(RBAddMethodTransformation
+			sourceCode: method formattedCode
+			in: self theClass
+			withProtocol: #comparing)
 ]
 
 { #category : #transforming }
@@ -148,10 +149,10 @@ RBGenerateEqualHashTransformation >> compileHash [
 		addNode: statement;
 		addReturn.
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: method formattedCode
-			toClass: self theClass
-			inProtocols: #comparing)
+		(RBAddMethodTransformation
+			sourceCode: method formattedCode
+			in: self theClass
+			withProtocol: #comparing)
 ]
 
 { #category : #preconditions }
@@ -166,15 +167,15 @@ RBGenerateEqualHashTransformation >> preconditions [
 			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
+{ #category : #transforming }
+RBGenerateEqualHashTransformation >> privateTransform [
+	self compileHash.
+	self compileEqual
+]
+
 { #category : #accessing }
 RBGenerateEqualHashTransformation >> theClass [
 	^ (self classObjectFor: className) instanceSide
-]
-
-{ #category : #transforming }
-RBGenerateEqualHashTransformation >> transform [
-	self compileHash.
-	self compileEqual
 ]
 
 { #category : #accessing }

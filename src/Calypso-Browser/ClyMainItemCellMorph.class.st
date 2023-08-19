@@ -123,13 +123,13 @@ ClyMainItemCellMorph >> buildWithFullIndentation [
 		expansionButton := self currentExpansionButton.
 		self addMorphBack: expansionButton].
 	definitionMorph ifNotNil: [
-		definitionMorph width: 16.
+		definitionMorph width: 16 scaledByDisplayScaleFactor.
 		 self addMorphBack: definitionMorph].
 
 
 	self addMorphBack: label.
 	extraToolMorphs ifNotNil: [ extraToolMorphs do: [:each |
-			each width: 16.
+			each width: 16 scaledByDisplayScaleFactor.
 			 self addMorphBack: each  ] ]
 ]
 
@@ -185,7 +185,7 @@ ClyMainItemCellMorph >> definitionIcon: iconName [
 ClyMainItemCellMorph >> definitionMorph: aMorph [
 
 	definitionMorph := aMorph.
-	definitionMorph width: 16.
+	definitionMorph width: 16 scaledByDisplayScaleFactor.
 	^definitionMorph
 ]
 
@@ -220,7 +220,7 @@ ClyMainItemCellMorph >> expandedButton [
 ClyMainItemCellMorph >> initialize [
 	super initialize.
 	fullIndentation := false.
-	self cellInset: 2@0
+	self cellInset: (2@0) scaledByDisplayScaleFactor
 ]
 
 { #category : #accessing }

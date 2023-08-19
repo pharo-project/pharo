@@ -49,7 +49,7 @@ RBMoveTemporaryVariableDefinitionTransformation class >> variable: aString inMet
 ]
 
 { #category : #preconditions }
-RBMoveTemporaryVariableDefinitionTransformation >> applicabilityConditions [ 
+RBMoveTemporaryVariableDefinitionTransformation >> applicabilityPreconditions [ 
 
 	^ ( RBCondition
 			withBlock: [ self definingClass isNotNil ]

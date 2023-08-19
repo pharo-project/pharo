@@ -87,7 +87,7 @@ ClyBrowserSearchDialogWindow >> itemsChanged [
 { #category : #initialization }
 ClyBrowserSearchDialogWindow >> newContentMorph [
 	itemsView := ClyQueryViewMorph for: self.
-	itemsView width: 250.
+	itemsView width: 250 scaledByDisplayScaleFactor.
 
 	itemsView whenDoubleClickDo: [:ann | self ok ].
 	itemsView whenEnterKeyPressedDo: [:ann | self ok ].

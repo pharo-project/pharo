@@ -93,7 +93,7 @@ RBExpandReferencedPoolsRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBExpandReferencedPoolsRefactoring >> transform [
+RBExpandReferencedPoolsRefactoring >> privateTransform [
 	self computePoolsToMove.
 	self hasPoolsToMove
 		ifTrue:

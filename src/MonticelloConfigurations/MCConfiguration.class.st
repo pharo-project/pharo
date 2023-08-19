@@ -22,8 +22,9 @@ Class {
 
 { #category : #utilities }
 MCConfiguration class >> changesIn: aPackage from: oldInfo to: newInfo on: aStream [
+	
 	| printBlock newVersion |
-	(newInfo = oldInfo)
+	newInfo = oldInfo
 		ifTrue: [^self].
 	aStream cr; nextPutAll: '----------------- ', aPackage name, ' ------------------'; cr.
 
@@ -47,7 +48,7 @@ MCConfiguration class >> changesIn: aPackage from: oldInfo to: newInfo on: aStre
 	(newVersion info hasAncestor: oldInfo)
 		ifTrue: [(newVersion info allAncestorsOnPathTo: oldInfo)
 			reverseDo: printBlock].
-	newVersion info in: printBlock.
+	printBlock value: newVersion info.
 	aStream flush
 ]
 
@@ -410,9 +411,11 @@ MCConfiguration >> suppressMergeDialogWhile: aBlock [
 MCConfiguration >> updateFromImage [
 	self dependencies: (self dependencies collect: [:dep |
 		dep package hasWorkingCopy
-			ifTrue: [
-				dep package workingCopy in: [:wc |
-					MCVersionDependency package: wc package info: wc ancestors first]]
+			ifTrue: [ | wc |
+				wc := dep package workingCopy.
+				MCVersionDependency 
+					package: wc package 
+					info: wc ancestors first]
 			ifFalse: [dep]]).
 
 ]

@@ -6,21 +6,26 @@ Class {
 
 { #category : #tests }
 RBRemoveMethodParametrizedTest class >> testParameters [
+
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRemoveMethodRefactoring .
-					  #constructor -> #removeMethods:from: .
-					  #isComposed -> true};
-		addCase: { #rbClass -> RBRemoveMethodTransformation .
-					  #constructor -> #selector:from: .
-					  #isComposed -> false};
-		yourself
+			addCase: {
+				  (#rbClass -> RBRemoveMethodTransformation).
+				  (#constructor -> #selector:from:).
+				  (#isComposed -> false) };
+		  addCase: {
+				  (#rbClass -> RBRemoveMethodRefactoring).
+				  (#constructor -> #removeMethods:from:).
+				  (#isComposed -> true) };
+		  
+		  yourself
 ]
 
 { #category : #builder }
 RBRemoveMethodParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
-	^ (rbClass
-		perform: #model: , constructor
-		withArguments: {rbNamespace}, aParameterCollection) asRefactoring
+
+	^ rbClass
+		  perform: #model: , constructor
+		  withArguments: { rbNamespace } , aParameterCollection
 ]
 
 { #category : #builder }
@@ -63,6 +68,38 @@ RBRemoveMethodParametrizedTest >> testFailureRemoveSameMethodButSendsSuper [
 ]
 
 { #category : #tests }
+RBRemoveMethodParametrizedTest >> testJustSendsSuper [
+
+	| refactoring selectors |
+	selectors := Array with: #justSuperSendInSubclass.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArgumentsColl: selectors
+		               andOtherArgs: { #RBSubclassOfClassToRename }.
+
+	selectors do: [ :symbol |
+		self assert: ((model classNamed: #RBSubclassOfClassToRename)
+				 directlyDefinesMethod: symbol) ].
+	
+	self assert: (refactoring first justSendsSuper: #justSuperSendInSubclass)
+]
+
+{ #category : #tests }
+RBRemoveMethodParametrizedTest >> testJustSendsSuperFailing [
+
+	| refactoring selectors |
+	selectors := { #justSuperSendInSubclassBroken}.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArgumentsColl: selectors
+		               andOtherArgs: { #RBSubclassOfClassToRename }.
+	selectors do: [ :symbol |
+		self assert: ((model classNamed: #RBSubclassOfClassToRename)
+				 directlyDefinesMethod: symbol) ].
+	self deny: (refactoring first justSendsSuper: #justSuperSendInSubclassBroken)
+]
+
+{ #category : #tests }
 RBRemoveMethodParametrizedTest >> testModelRecursiveMethodThatIsNotReferencedFromOtherMethods [
 	| class otherClass |
 	class := model classNamed: #Object.
@@ -101,4 +138,40 @@ RBRemoveMethodParametrizedTest >> testRemoveMethod [
 			(( model classNamed: #RBClassDataForRefactoringTest)
 				directlyDefinesMethod: symbol)
 	]
+]
+
+{ #category : #tests }
+RBRemoveMethodParametrizedTest >> testSendersIncludesSuperCalls [
+
+	| refactoring selectors |
+	selectors := Array with: #justSuperSendInSubclass.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArgumentsColl: selectors
+		               andOtherArgs: { #RBSubclassOfClassToRename }.
+	self assert:
+		(refactoring first sendersOf: { #justSuperSendInSubclass })
+			isNotEmpty
+]
+
+{ #category : #tests }
+RBRemoveMethodParametrizedTest >> testSendersOfUnsentMessage [
+
+	| refactoring selectors rbclasses rbNamespace2|
+	 
+	rbclasses := RBClassEnvironment classes: {
+			             RBClassToRename.
+			             RBSubclassOfClassToRename }.
+	rbNamespace2 := RBNamespace onEnvironment: rbclasses.
+
+	
+	selectors := Array with: #methodThatIsNotUsedForSure.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArgumentsColl: selectors
+		               andOtherArgs: { #RBSubclassOfClassToRename }.
+	refactoring first model: rbNamespace2.
+	self assert:
+		(refactoring first sendersOf: { #methodThatIsNotUsedForSure }) size equals: 0.
+	"this is because this test method is taken into account."
 ]

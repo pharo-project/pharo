@@ -53,7 +53,7 @@ RBTransformation class >> initializeRefactoringOptions [
 ]
 
 { #category : #preconditions }
-RBTransformation >> applicabilityConditions [ 
+RBTransformation >> applicabilityPreconditions [ 
 	
 	^ self trueCondition 
 ]
@@ -61,6 +61,7 @@ RBTransformation >> applicabilityConditions [
 { #category : #converting }
 RBTransformation >> asRefactoring [
 
+	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self yourself
 ]
 
@@ -88,17 +89,6 @@ RBTransformation >> buildSelectorString: aSelector withPermuteMap: anIntegerColl
 	^stream contents
 ]
 
-{ #category : #preconditions }
-RBTransformation >> checkPreconditions [
-
-	| conditions result |
-	conditions := self preconditions.
-
-	result := conditions check.
-	result ifFalse: [ self refactoringError: conditions errorString ].
-	^ result
-]
-
 { #category : #accessing }
 RBTransformation >> copyOptionsFrom: aDictionary [
 	| dict |
@@ -112,28 +102,10 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : #accessing }
-RBTransformation >> model [
-
-	^ model ifNil: [ model := self newModel ]
-]
-
 { #category : #preconditions }
 RBTransformation >> preconditions [
 
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
-RBTransformation >> primitiveExecute [
-	"compatibility method RBRefactoring"
-	self transform
-]
-
-{ #category : #executing }
-RBTransformation >> privateTransform [
-
-	self subclassResponsibility
+	^ self applicabilityPreconditions 
 ]
 
 { #category : #accessing }
@@ -144,6 +116,9 @@ RBTransformation >> setOption: aSymbol toUse: aBlock [
 
 { #category : #transforming }
 RBTransformation >> transform [
+
+	self deprecated: 'Use primitiveExecute instead' transformWith: '`@rec transform' -> '`@rec primitiveExecute'.
+	
 	"Performs this transformation in a model,
 	 then it adds the refactoring to the manager"
 

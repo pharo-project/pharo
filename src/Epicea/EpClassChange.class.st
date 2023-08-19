@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #testing }
+EpClassChange class >> isAbstract [
+
+	^ self == EpClassChange
+]
+
+{ #category : #testing }
 EpClassChange >> doesOverride: aCodeChange [
 
 	^ aCodeChange isEpClassChange and: [

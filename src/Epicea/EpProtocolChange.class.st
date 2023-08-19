@@ -19,6 +19,12 @@ EpProtocolChange class >> behavior: aBehavior protocol: aProtocol [
 		yourself
 ]
 
+{ #category : #testing }
+EpProtocolChange class >> isAbstract [
+
+	^ self == EpProtocolChange
+]
+
 { #category : #accessing }
 EpProtocolChange >> behaviorAffected [
 	^ behavior

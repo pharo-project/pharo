@@ -63,7 +63,7 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 ]
 
 { #category : #preconditions }
-RBRemoveClassTransformation >> applicabilityConditions [ 
+RBRemoveClassTransformation >> applicabilityPreconditions [ 
 
 	^ className 
 			inject: RBCondition true 
@@ -79,7 +79,7 @@ RBRemoveClassTransformation >> applicabilityConditions [
 ]
 
 { #category : #preconditions }
-RBRemoveClassTransformation >> breakingChangeConditions [
+RBRemoveClassTransformation >> breakingChangePreconditions [
 
 	^ self preconditionHasNoReferences: className
 ]

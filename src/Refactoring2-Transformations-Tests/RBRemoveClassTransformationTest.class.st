@@ -11,14 +11,15 @@ RBRemoveClassTransformationTest class >> defaultTimeLimit [
 
 { #category : #tests }
 RBRemoveClassTransformationTest >> testRefactoring [
-	| refactoring |
-	refactoring := (RBRemoveClassTransformation className: #RBFooDummyLintRuleTest1)
-	asRefactoring.
 
-	self should:
-	[ refactoring transform ]
+	| refactoring |
+	refactoring := RBRemoveClassTransformation className:
+		               #RBFooDummyLintRuleTest1.
+
+	self
+		should: [ refactoring primitiveExecute ]
 		raise: RBRefactoringError.
 
-	self assert: (refactoring model classNamed: #RBFooDummyLintRuleTest1) isNotNil.
-
+	self assert:
+		(refactoring model classNamed: #RBFooDummyLintRuleTest1) isNotNil
 ]

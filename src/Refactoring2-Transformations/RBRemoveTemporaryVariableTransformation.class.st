@@ -47,7 +47,7 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 ]
 
 { #category : #preconditions }
-RBRemoveTemporaryVariableTransformation >> applicabilityConditions [
+RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
 	^ self classExist
 	  & (RBCondition definesSelector: selector in: self definingClass)

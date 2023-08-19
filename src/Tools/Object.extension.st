@@ -16,6 +16,7 @@ Object >> basicInspector [
 
 { #category : #'*Tools' }
 Object >> browse [
+	
 	^ Smalltalk tools browser openOnClass: self class
 ]
 

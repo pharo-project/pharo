@@ -78,13 +78,18 @@ RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSele
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodRefactoring >> applicabilityConditions [
+RBDeprecateMethodRefactoring >> applicabilityPreconditions [
 
-	^ RBCondition definesSelector: oldSelector in: class
+	^ (RBCondition
+		   withBlock: [
+		   newSelector isEmptyOrNil or: [ newSelector = oldSelector ] ]
+		   errorString:
+		   'The new selectors cannot be an empty string or same as the old selector.') not
+		& (RBCondition definesSelector: oldSelector in: class)
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodRefactoring >> breakingChangeConditions [
+RBDeprecateMethodRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition canUnderstand: newSelector in: class) & (RBCondition
 		   withBlock: [
@@ -121,29 +126,15 @@ RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: new
 { #category : #execution }
 RBDeprecateMethodRefactoring >> generateChanges [
 
-	self inputValidation check  ifFalse: [
-		RBInputValidationFailedError signal:
-			self inputValidation errorString ].
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
-	self transform.
+	self privateTransform.
 	^ self changes
-]
-
-{ #category : #preconditions }
-RBDeprecateMethodRefactoring >> inputValidation [
-
-	^ (RBCondition
-		   withBlock: [
-			   newSelector isEmptyOrNil  or: [
-				   newSelector = oldSelector ]]
-		   errorString:
-		   'The new selectors cannot be an empty string or same as the old selector.') not
 ]
 
 { #category : #accessing }
@@ -155,7 +146,23 @@ RBDeprecateMethodRefactoring >> newSelector: aString [
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
+{ #category : #transforming }
+RBDeprecateMethodRefactoring >> privateTransform [
+
+	| node parseTree method |
+	method := class methodFor: oldSelector.
+	parseTree := method parseTree.
+	node := self parserClass parseExpression: self callDeprecationMethod.
+	parseTree body addNodeFirst: node.
+
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			 sourceCode: parseTree newSource
+			 in: class
+			 withProtocol: method protocols)
 ]
 
 { #category : #printing }
@@ -171,20 +178,4 @@ RBDeprecateMethodRefactoring >> storeOn: aStream [
 		nextPutAll: ' using: #';
 		nextPutAll: newSelector.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBDeprecateMethodRefactoring >> transform [
-
-	| node parseTree method |
-	method := class methodFor: oldSelector.
-	parseTree := method parseTree.
-	node := self parserClass parseExpression: self callDeprecationMethod.
-	parseTree body addNodeFirst: node.
-
-	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			 addMethod: parseTree newSource
-			 toClass: class
-			 inProtocols: method protocols)
 ]

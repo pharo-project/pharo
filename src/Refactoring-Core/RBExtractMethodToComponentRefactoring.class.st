@@ -93,6 +93,14 @@ RBExtractMethodToComponentRefactoring >> preconditions [
 	^ self trueCondition
 ]
 
+{ #category : #transforming }
+RBExtractMethodToComponentRefactoring >> privateTransform [
+	self
+		extractMethod;
+		moveMethod;
+		inlineForwarder
+]
+
 { #category : #printing }
 RBExtractMethodToComponentRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
@@ -105,12 +113,4 @@ RBExtractMethodToComponentRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBExtractMethodToComponentRefactoring >> transform [
-	self
-		extractMethod;
-		moveMethod;
-		inlineForwarder
 ]

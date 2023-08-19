@@ -41,14 +41,24 @@ RBPushDownMethodTransformation >> allClasses [
 ]
 
 { #category : #preconditions }
-RBPushDownMethodTransformation >> applicabilityConditions [ 
+RBPushDownMethodTransformation >> applicabilityPreconditions [ 
+
+	| condition |
+	condition := selectors
+		             inject: (RBCondition true)
+		             into: [ :cond :each |
+			             cond & (RBCondition definesSelector: each in: class)].
+	^ condition 
+]
+
+{ #category : #preconditions }
+RBPushDownMethodTransformation >> breakingChangePreconditions [
 
 	| condition |
 	condition := selectors
 		             inject: (RBCondition isAbstractClass: class)
 		             into: [ :cond :each |
-			             cond & (RBCondition definesSelector: each in: class) 
-							&  (RBCondition subclassesOf: class referToSelector: each) not ].
+			             cond & (RBCondition subclassesOf: class referToSelector: each) not ].
 	^ condition 
 ]
 
@@ -82,7 +92,7 @@ RBPushDownMethodTransformation >> pushDown: aSelector [
 				model: self model
 				sourceCode: code
 				in: each
-				withProtocols: protocols ])
+				withProtocol: protocols ])
 ]
 
 { #category : #api }

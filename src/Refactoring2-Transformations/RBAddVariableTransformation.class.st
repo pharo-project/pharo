@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBAddVariableTransformation >> applicabilityConditions [
+RBAddVariableTransformation >> applicabilityPreconditions [
 
 	class := self definingClass.
 
@@ -37,7 +37,7 @@ RBAddVariableTransformation >> applicabilityConditions [
 ]
 
 { #category : #preconditions }
-RBAddVariableTransformation >> breakingChangeConditions [ 
+RBAddVariableTransformation >> breakingChangePreconditions [ 
 
 	^ (RBCondition
 			   hierarchyOf: class

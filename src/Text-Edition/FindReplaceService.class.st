@@ -26,7 +26,7 @@ FindReplaceService class >> newFor: textArea [
 
 { #category : #accessing }
 FindReplaceService >> caseSensitive [
-	^ caseSensitive ifNil: [caseSensitive := TextEditor caseSensitiveFinds]
+	^ caseSensitive ifNil: [caseSensitive := false ]
 ]
 
 { #category : #accessing }

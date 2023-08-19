@@ -67,7 +67,7 @@ RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aS
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodTransformation >> applicabilityConditions [ 
+RBDeprecateMethodTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: class)
 		& (RBCondition canUnderstand: newSelector in: class)

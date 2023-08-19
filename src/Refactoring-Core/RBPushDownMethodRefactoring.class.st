@@ -49,6 +49,31 @@ RBPushDownMethodRefactoring >> allClasses [
 	^ classes ifNil: [ class subclasses ]
 ]
 
+{ #category : #preconditions }
+RBPushDownMethodRefactoring >> applicabilityPreconditions [
+	"Check that all selectors are defined in `class`"
+
+	^ selectors
+		  inject: self trueCondition
+		  into: [ :cond :each |
+		  	cond & (RBCondition definesSelector: each in: class) ]
+]
+
+{ #category : #preconditions }
+RBPushDownMethodRefactoring >> breakingChangePreconditions [
+	"Check that that none of the subclasses of `class` refer to any of the selectors
+	that will be pushed down.
+	Also, to ensure this is in fact refactoring we should only push down methods from abstract class."
+
+	| condition |
+	condition := selectors
+		             inject: self trueCondition
+		             into: [ :cond :each |
+			             cond & (RBCondition subclassesOf: class referToSelector: each)
+				             not ].
+	^ condition & (RBCondition isAbstractClass: class)
+]
+
 { #category : #transforming }
 RBPushDownMethodRefactoring >> classes: aCollection [
 	classes := aCollection collect: [ :cls |
@@ -59,26 +84,29 @@ RBPushDownMethodRefactoring >> classes: aCollection [
 { #category : #actions }
 RBPushDownMethodRefactoring >> generateChanges [
 
-	self primitiveExecute.
+	self applicabilityPreconditions check ifFalse: [
+		RBApplicabilityChecksFailedError signal:
+			self applicabilityPreconditions errorString ].
+
+	self breakingChangePreconditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangePreconditions errorString ].
+
+	self privateTransform.
 
 	^ self changes
 ]
 
 { #category : #preconditions }
 RBPushDownMethodRefactoring >> preconditions [
-	"Check that all selectors are defined in `class` and that none of the subclasses of `class`
-	refer to any of the selectors that will be pushed down.
-	Also, to ensure this is in fact refactoring we should only push down methods from abstract class."
 
-	| condition |
-	condition := selectors
-		             inject: self trueCondition
-		             into: [ :cond :each |
-			             cond & (RBCondition definesSelector: each in: class)
-			             &
-			             (RBCondition subclassesOf: class referToSelector: each)
-				             not ].
-	^ condition & (RBCondition isAbstractClass: class)
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
+]
+
+{ #category : #transforming }
+RBPushDownMethodRefactoring >> privateTransform [
+	selectors do: [:each | self pushDown: each].
+	selectors do: [:each | class removeMethod: each]
 ]
 
 { #category : #transforming }
@@ -96,10 +124,10 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 	self allClasses do: [ :each |
 		(each directlyDefinesMethod: aSelector) ifFalse: [
 			self generateChangesFor:
-				(RBAddMethodTransformRefactoring
-					addMethod: code
-					toClass: each
-					inProtocols: protocols) ] ]
+				(RBAddMethodTransformation
+					sourceCode: code
+					in: each
+					withProtocol: protocols) ] ]
 ]
 
 { #category : #initialization }
@@ -139,10 +167,4 @@ RBPushDownMethodRefactoring >> storeOn: aStream [
 { #category : #preconditions }
 RBPushDownMethodRefactoring >> targetClass [
 	^ class
-]
-
-{ #category : #transforming }
-RBPushDownMethodRefactoring >> transform [
-	selectors do: [:each | self pushDown: each].
-	selectors do: [:each | class removeMethod: each]
 ]

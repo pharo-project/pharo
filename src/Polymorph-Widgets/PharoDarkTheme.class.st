@@ -47,7 +47,7 @@ PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 			  width: 0;
 			  baseColor: Color transparent ].
 	^ SimpleBorderStyle new
-		  width: 1;
+		  width: 1 scaledByDisplayScaleFactor;
 		  baseColor: self buttonColor
 ]
 
@@ -76,7 +76,7 @@ PharoDarkTheme >> configureWindowBorderFor: aWindow [
 	| aStyle |
 	aStyle := SimpleBorderStyle new
 		          color: self borderColor;
-		          width: 1.
+		          width: 1 scaledByDisplayScaleFactor.
 	aWindow borderStyle: aStyle
 ]
 
@@ -95,7 +95,7 @@ PharoDarkTheme >> dropListNormalListBorderStyleFor: aDropList [
 	"Return the normal borderStyle for the list of the given given drop list"
 
 	^ BorderStyle inset
-		  width: 1;
+		  width: 1 scaledByDisplayScaleFactor;
 		  baseColor: self buttonColor
 ]
 
@@ -152,7 +152,7 @@ PharoDarkTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 
 	^ BottomBorderStyle new
 		  color: Color white;
-		  width: 2;
+		  width: 2 scaledByDisplayScaleFactor;
 		  yourself
 ]
 
@@ -167,8 +167,8 @@ PharoDarkTheme >> taskbarItemNormalBorderStyleFor: aButton [
 
 	^ BottomBorderStyle new
 		  color: Color white;
-		  width: 1;
-		  trimSize: 2;
+		  width: 1 scaledByDisplayScaleFactor;
+		  trimSize: 2 scaledByDisplayScaleFactor;
 		  yourself
 ]
 

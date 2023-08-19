@@ -57,13 +57,6 @@ Class class >> hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache [
 	^ (unprocessedClasses includesAnyOf: (self allSuperclassesFor: aClass cache: cache)) not
 ]
 
-{ #category : #inquiries }
-Class class >> rootsOfTheWorld [
-	"return all classes that have a nil superclass"
-
-	^(self environment select: [:each | each isBehavior and: [each superclass isNil]]) asOrderedCollection
-]
-
 { #category : #'file in/out' }
 Class class >> superclassOrder: classes [
     "Arrange the classes in the collection, classes, in superclass order so the

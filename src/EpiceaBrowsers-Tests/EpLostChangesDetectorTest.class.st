@@ -86,9 +86,9 @@ EpLostChangesDetectorTest >> testDetectThreeChanges [
 
 	detectedLostChanges := detector lostChanges.
 	self
-		assert: (detectedLostChanges anySatisfy: [ : omEntry | omEntry content isEpCategoryChange ])
+		assert: (detectedLostChanges anySatisfy: [ : omEntry | omEntry content isEpPackageTagChange ])
 		description: 'It test that the class additions include a category registration'.
-	detectedLostClassChanges := detectedLostChanges reject: [ : omEntry | omEntry content isEpCategoryChange ].
+	detectedLostClassChanges := detectedLostChanges reject: [ : omEntry | omEntry content isEpPackageTagChange ].
 	detectedLostClassChanges do: [ :each | self assert: each content isEpClassChange ].
 
 	self assert: detectedLostClassChanges size equals: numberOfLostChanges.

@@ -23,7 +23,7 @@ OCDoItSemanticScope class >> isAbstract [
 { #category : #'code evaluation' }
 OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 
-	^self receiver withArgs: #() executeMethod: doItMethod
+	^ self receiver withArgs: #() executeMethod: doItMethod 
 ]
 
 { #category : #testing }

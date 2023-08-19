@@ -233,6 +233,16 @@ RBFindAndReplaceTransformation >> preconditions [
 	^ condition
 ]
 
+{ #category : #transforming }
+RBFindAndReplaceTransformation >> privateTransform [
+	|classes|
+	classes :=replacesAllHierarchy ifFalse: [ { class } ] ifTrue: [ class withAllSubclasses ].
+	classes do: [ :cls | (self selectorsFor: cls) do: [ :sel | |rbMethod|
+		rbMethod := cls methodFor: sel.
+		self findOccurrencesIn: rbMethod] ].
+	self inform: occurrences asString, ' occurrences were found and changed.'
+]
+
 { #category : #accessing }
 RBFindAndReplaceTransformation >> replaceArgumentsByPattern: sourceCode [
 	|newSource|
@@ -262,14 +272,4 @@ RBFindAndReplaceTransformation >> storeOn: aStream [
 		nextPutAll: ' inAllHierarchy: '.
 	replacesAllHierarchy storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBFindAndReplaceTransformation >> transform [
-	|classes|
-	classes :=replacesAllHierarchy ifFalse: [ { class } ] ifTrue: [ class withAllSubclasses ].
-	classes do: [ :cls | (self selectorsFor: cls) do: [ :sel | |rbMethod|
-		rbMethod := cls methodFor: sel.
-		self findOccurrencesIn: rbMethod] ].
-	self inform: occurrences asString, ' occurrences were found and changed.'
 ]

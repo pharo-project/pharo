@@ -101,7 +101,7 @@ RBTemporaryToInstanceVariableTransformation class >> model: aRBSmalltalk class: 
 ]
 
 { #category : #preconditions }
-RBTemporaryToInstanceVariableTransformation >> applicabilityConditions [
+RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition definesSelector: selector in: class) & (RBCondition
 		   definesInstanceVariable: temporaryVariableName asString
@@ -112,7 +112,7 @@ RBTemporaryToInstanceVariableTransformation >> applicabilityConditions [
 ]
 
 { #category : #preconditions }
-RBTemporaryToInstanceVariableTransformation >> breakingChangeConditions [
+RBTemporaryToInstanceVariableTransformation >> breakingChangePreconditions [
 
 	^ RBCondition withBlock: [
 		  (class allSubclasses anySatisfy: [ :cls |
@@ -153,7 +153,7 @@ RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector
 { #category : #preconditions }
 RBTemporaryToInstanceVariableTransformation >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : #executing }
