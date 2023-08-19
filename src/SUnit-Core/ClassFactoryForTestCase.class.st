@@ -49,26 +49,8 @@ ClassFactoryForTestCase class >> initialize [
 { #category : #cleaning }
 ClassFactoryForTestCase >> cleanUp [
 
-	| behavirosToRemove |
-	behavirosToRemove := self createdBehaviors.
-
-	behavirosToRemove do: [ :behavior | self delete: behavior ].
-
-	self
-		deletePackage;
-		cleanUpChangeSetForClasses: behavirosToRemove
-]
-
-{ #category : #cleaning }
-ClassFactoryForTestCase >> cleanUpChangeSetForClasses: classes [
-
-	self class environment at: #ChangeSet ifPresent: [ :aChangeSetClass |
-		| changeSet |
-		changeSet := aChangeSetClass current.
-		classes do: [ :class |
-			changeSet
-				removeClassChanges: class name;
-				removeClassChanges: class name , ' class' ] ]
+	self createdBehaviors copy do: [ :behavior | self delete: behavior ].
+	self deletePackage
 ]
 
 { #category : #accessing }
@@ -136,7 +118,7 @@ ClassFactoryForTestCase >> delete: aBehavior [
 
 	createdBehaviors remove: aBehavior ifAbsent: [  ].
 	aBehavior isObsolete ifTrue: [ ^ self ].
-	self class environment at: #ChangeSet ifPresent: [ aBehavior removeFromChanges ].
+	self class environment at: #ChangeSet ifPresent: [ :changeSet | changeSet current removeClassAndMetaClassChanges: aBehavior ].
 	(createdSilently includes: aBehavior)
 		ifTrue: [
 			createdSilently remove: aBehavior.
