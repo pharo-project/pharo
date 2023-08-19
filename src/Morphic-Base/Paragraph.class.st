@@ -232,9 +232,7 @@ Paragraph >> caretRect [
 { #category : #accessing }
 Paragraph >> caretWidth [
 
-	^ TextEditor dumbbellCursor
-		  ifTrue: [ 2 ]
-		  ifFalse: [ 0 ]
+	^ 0
 ]
 
 { #category : #alignment }
