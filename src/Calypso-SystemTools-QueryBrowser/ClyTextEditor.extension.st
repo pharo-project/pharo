@@ -34,7 +34,7 @@ ClyTextEditor >> implementorsOf: selectedSelector [
 ClyTextEditor >> implementorsOfIt [
 
 	| selector |
-	(selector := self selectedSelector) ifNil: [ ^ textArea flash ].
+	(selector := self selectedSelector) isNil or: [ selector ifEmpty: [ ^ textArea flash ]].
 	selector isCharacter ifTrue: [ ^ textArea flash ].
 	self implementorsOf: selector
 ]

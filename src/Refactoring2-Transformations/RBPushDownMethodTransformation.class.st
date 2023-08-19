@@ -45,10 +45,20 @@ RBPushDownMethodTransformation >> applicabilityPreconditions [
 
 	| condition |
 	condition := selectors
+		             inject: (RBCondition true)
+		             into: [ :cond :each |
+			             cond & (RBCondition definesSelector: each in: class)].
+	^ condition 
+]
+
+{ #category : #preconditions }
+RBPushDownMethodTransformation >> breakingChangePreconditions [
+
+	| condition |
+	condition := selectors
 		             inject: (RBCondition isAbstractClass: class)
 		             into: [ :cond :each |
-			             cond & (RBCondition definesSelector: each in: class) 
-							&  (RBCondition subclassesOf: class referToSelector: each) not ].
+			             cond & (RBCondition subclassesOf: class referToSelector: each) not ].
 	^ condition 
 ]
 
