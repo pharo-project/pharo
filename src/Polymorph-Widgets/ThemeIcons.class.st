@@ -111,7 +111,7 @@ ThemeIcons class >> current: aPack [
 
 { #category : #accessing }
 ThemeIcons class >> destinationPath [
-	^ 'icon-packs' asFileReference
+	^ FileLocator localDirectory / 'icon-packs'
 ]
 
 { #category : #accessing }

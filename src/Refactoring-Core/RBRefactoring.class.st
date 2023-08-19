@@ -43,6 +43,8 @@ RBRefactoring class >> preconditionSignal [
 
 { #category : #converting }
 RBRefactoring >> asRefactoring [
+
+	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self
 ]
 
@@ -67,19 +69,6 @@ RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	parseTree := aRBClass parseTreeForSelector: aSelector.
 	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^aMatcher answer
-]
-
-{ #category : #preconditions }
-RBRefactoring >> checkPreconditions [
-
-	| conditions block |
-	conditions := self preconditions.
-	conditions check ifTrue: [ ^ self ].
-	block := conditions errorBlock.
-	block
-		ifNotNil: [
-		self refactoringWarning: conditions errorString with: block ]
-		ifNil: [ self refactoringError: conditions errorString ]
 ]
 
 { #category : #private }
@@ -137,18 +126,8 @@ RBRefactoring >> generateChangesFor: aRefactoring [
 
 	"Execute the argument but passing the receiver options to that refactoring"
 	aRefactoring copyOptionsFrom: self options.
+	aRefactoring model: self model.
 	aRefactoring primitiveExecute
-]
-
-{ #category : #transforming }
-RBRefactoring >> model [
-
-	^ model
-		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
-				name: self printString;
-				yourself
-			]
-		ifNotNil: [ model ]
 ]
 
 { #category : #private }
@@ -158,13 +137,6 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 			[:ex |
 			errorBlock cull: ex.
 			ex return: nil]
-]
-
-{ #category : #private }
-RBRefactoring >> primitiveExecute [
-	
-	self checkPreconditions.
-	self transform
 ]
 
 { #category : #removing }
@@ -216,6 +188,12 @@ RBRefactoring >> setOption: aSymbol toUse: aBlock [
 	dict == self class refactoringOptions ifTrue: [dict := dict copy].
 	dict at: aSymbol put: aBlock.
 	self options: dict
+]
+
+{ #category : #transforming }
+RBRefactoring >> transform [ 
+
+	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
 ]
 
 { #category : #private }

@@ -80,6 +80,7 @@ RBRefactoryChange >> name [
 
 { #category : #initialization }
 RBRefactoryChange >> name: aString [
+	
 	name := aString
 ]
 

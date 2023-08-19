@@ -109,6 +109,24 @@ RBExtractSetUpMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBExtractSetUpMethodRefactoring >> privateTransform [
+
+	| existingSelector |
+	existingSelector := self existingSelector.
+	self nameNewMethod: #setUp.
+	existingSelector ifNil: [
+		self renameAllParameters.
+		extractedParseTree body addNodeFirst: (RBParser parseExpression: 'super setUp').
+		self generateChangesFor:
+			(RBAddMethodTransformation
+				sourceCode: extractedParseTree newSource
+				in: class
+				withProtocol: #running)].
+	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
+	class compileTree: modifiedParseTree
+]
+
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
 	^ true
 ]
@@ -119,24 +137,6 @@ RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
 	node := class parseTreeForSelector: selector.
 	^ node statements ifEmpty: [ node body start ]
 		ifNotEmpty: [ node statements first start ]
-]
-
-{ #category : #transforming }
-RBExtractSetUpMethodRefactoring >> transform [
-
-	| existingSelector |
-	existingSelector := self existingSelector.
-	self nameNewMethod: #setUp.
-	existingSelector ifNil: [
-		self renameAllParameters.
-		extractedParseTree body addNodeFirst: (RBParser parseExpression: 'super setUp').
-		self generateChangesFor:
-			(RBAddMethodTransformRefactoring
-				addMethod: extractedParseTree newSource
-				toClass: class
-				inProtocols: #running)].
-	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
-	class compileTree: modifiedParseTree
 ]
 
 { #category : #transforming }

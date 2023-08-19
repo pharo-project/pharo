@@ -14,7 +14,7 @@ RBRemoveHierarchyMethodTransformation class >> removeMethods: selectorCollection
 ]
 
 { #category : #preconditions }
-RBRemoveHierarchyMethodTransformation >> applicabilityConditions [ 
+RBRemoveHierarchyMethodTransformation >> applicabilityPreconditions [ 
 
 	^ selectors inject: self trueCondition into: [ :cond :aSelector |
 		  cond & (RBCondition definesSelector: aSelector in: class) ]
@@ -51,12 +51,6 @@ RBRemoveHierarchyMethodTransformation >> deleteSelectors [
 			self delete: aSelector in: aClass
 		 ]
 	 ]
-]
-
-{ #category : #preconditions }
-RBRemoveHierarchyMethodTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #removing }

@@ -22,7 +22,8 @@ RBPushDownInstanceVariableParametrizedTest >> testFailureNonExistantName [
 ]
 
 { #category : #tests }
-RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMetaclass [
+RBPushDownInstanceVariableParametrizedTest >> testModelPushDownOnMetaclassSide [
+
 	model defineClass: 'Object << #SomeClass package: #''Refactory-Test data'''.
 	(model metaclassNamed: #SomeClass) addInstanceVariable: 'foo'.
 	model defineClass: 'SomeClass << #Subclass package: #''Refactory-Test data'''.

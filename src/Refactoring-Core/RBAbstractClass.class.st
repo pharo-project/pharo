@@ -195,7 +195,7 @@ RBAbstractClass >> classBinding [
 	^ Smalltalk globals associationAt: self name
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - navigation' }
 RBAbstractClass >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 
@@ -440,7 +440,7 @@ RBAbstractClass >> initialize [
 	name := #'Unknown Class'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - navigation' }
 RBAbstractClass >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 
@@ -766,6 +766,15 @@ RBAbstractClass >> typeOfClassVariable: aSymbol [
 	^model classNamed: #Object
 ]
 
+{ #category : #testing }
+RBAbstractClass >> whichClassIncludesSelector: aSelector [
+
+	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
+	^ self superclass isNil
+		  ifFalse: [ self superclass whichClassIncludesSelector: aSelector ]
+		  ifTrue: [ nil ]
+]
+
 { #category : #'method accessing' }
 RBAbstractClass >> whichSelectorsReferToClass: aRBClass [
 
@@ -790,17 +799,14 @@ RBAbstractClass >> whichSelectorsReferToClass: aRBClass [
 RBAbstractClass >> whichSelectorsReferToClassVariable: aString [
 
 	| selectors |
-
 	selectors := Set new.
-	newMethods
-		ifNotNil: [ newMethods
-				do: [ :each |
-					( each refersToVariable: aString )
-						ifTrue: [ selectors add: each selector ]
-					]
-			].
-	self isDefined
-		ifTrue: [ selectors addAll: ( self existingMethodsThatReferToClassVariable: aString ) ].
+	newMethods ifNotNil: [
+		newMethods do: [ :each |
+			(each refersToVariable: aString) ifTrue: [
+				selectors add: each selector ] ] ].
+	self isDefined ifTrue: [
+		selectors addAll:
+			(self existingMethodsThatReferToClassVariable: aString) ].
 	^ selectors
 ]
 

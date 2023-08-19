@@ -59,24 +59,19 @@ RBAddTemporaryVariableTransformation class >> variable: aString inMethod: aSelec
 ]
 
 { #category : #preconditions }
-RBAddTemporaryVariableTransformation >> applicabilityConditions [
+RBAddTemporaryVariableTransformation >> applicabilityPreconditions [
 
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'No such class or trait named ', className )
-		& ( RBCondition definesSelector: selector in: self definingClass)
-		& ( RBCondition
-			withBlock: [ (self definingMethod allTemporaryVariables includes: variableName) not ]
-			errorString: 'Method named ', selector, ' already defines a temporary variable named ', variableName )
-		& ( RBCondition
-			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
-			errorString: 'Method named ', selector, ' already defines an argument named ', variableName )
-]
-
-{ #category : #preconditions }
-RBAddTemporaryVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
+	^ (RBCondition
+		   withBlock: [ self definingClass isNotNil ]
+		   errorString: 'No such class or trait named ' , className)
+	  & (RBCondition definesSelector: selector in: self definingClass)
+	  & (RBCondition
+			   withBlock: [
+				   (self definingMethod allArgumentVariables includes:
+					    variableName) not ]
+			   errorString:
+				   'Method named ' , selector
+				   , ' already defines an argument named ' , variableName)
 ]
 
 { #category : #executing }
@@ -91,8 +86,22 @@ RBAddTemporaryVariableTransformation >> privateTransform [
 		nodeInInterval := methodTree bestNodeFor: interval.
 		nodeInInterval isSequence ifTrue: [ parseTree := nodeInInterval ] ].
 
+	self flag: #skippingPreconditions.
+	(parseTree allTemporaryVariables includes: variableName) ifTrue: [ ^ self ].
+	
 	parseTree addTemporaryNamed: variableName.
 	class compileTree: methodTree
+]
+
+{ #category : #preconditions }
+RBAddTemporaryVariableTransformation >> skippingPreconditions [
+
+	^ RBCondition
+		  withBlock: [
+			  (self definingMethod allTemporaryVariables includes: variableName)
+				  not ]
+		  errorString: 'Method named ' , selector
+			  , ' already defines a temporary variable named ' , variableName
 ]
 
 { #category : #printing }

@@ -9,33 +9,41 @@ Class {
 
 { #category : #events }
 TestCaseTest >> testAnnouncement [
-	| collection oldCollection suite unitTest |
+
+	| announcements oldCollection suite unitTest result |
 	unitTest := ClassFactoryForTestCaseTest.
-	collection := OrderedCollection new.
+	announcements := Dictionary new.
 	unitTest resetAnnouncer.
 
 	self deny: unitTest shouldAnnounce.
 	self deny: unitTest new shouldAnnounce.
 
-	unitTest announcer when: TestCaseAnnouncement do: [ :ann | collection add: ann ] for: self.
+	unitTest announcer when: TestCaseAnnouncement do: [ :ann | (announcements at: ann class ifAbsentPut: [ OrderedCollection new ]) add: ann ] for: self.
 
 	self assert: unitTest shouldAnnounce.
 	self assert: unitTest new shouldAnnounce.
 
 	"We run SUnitTest"
 	suite := unitTest buildSuite.
-	suite run.
+	result := suite run.
 
-	self assert: collection size equals: suite tests size * 2.
-	self assert: (collection select: [ :c | c isKindOf: TestCaseStarted ]) size equals: collection size / 2.
-	self assert: (collection select: [ :c | c isKindOf: TestCaseEnded ]) size equals: collection size / 2.
-	self assert: (collection allSatisfy: #hasPassed).
-	self deny: (collection anySatisfy: #hasFailures).
+	self assertEmpty: result failures.
+	self assertEmpty: result errors.
 
-	oldCollection := collection copy.
+	self
+		assert: (announcements at: TestCaseStarted ifAbsent: [ self fail: 'We should have received some TestCaseStarted announcements.' ]) size
+		equals: suite tests size.
+	self
+		assert: (announcements at: TestCaseEnded ifAbsent: [ self fail: 'We should have received some TestCaseEnded announcements.' ]) size
+		equals: suite tests size.
+	self assertCollection: announcements keys hasSameElements: {
+			TestCaseStarted.
+			TestCaseEnded }.
+
+	oldCollection := announcements copy.
 	unitTest resetAnnouncer.
-	unitTest debug: #testClassCreationInDifferentCategories.
-	self assert: collection equals: oldCollection
+	unitTest debug: #testClassCreationInDifferentTags.
+	self assert: announcements equals: oldCollection
 ]
 
 { #category : #testing }

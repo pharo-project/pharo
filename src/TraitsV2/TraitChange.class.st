@@ -125,8 +125,9 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 		priorMethod := aClass methodDict at: aSelector.
 		priorProtocol := aClass protocolOfSelector: aSelector.
 
-		aClass methodDict removeKey: aSelector.
+		priorMethod removeFromPackage.
 		aClass removeFromProtocols: aSelector.
+		aClass methodDict removeKey: aSelector.
 
 		SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: aClass
 	].

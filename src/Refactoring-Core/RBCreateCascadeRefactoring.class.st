@@ -130,13 +130,13 @@ RBCreateCascadeRefactoring >> preconditions [
 		true ])
 ]
 
+{ #category : #transforming }
+RBCreateCascadeRefactoring >> privateTransform [
+	self combineMessages.
+	self compileCode
+]
+
 { #category : #accessing }
 RBCreateCascadeRefactoring >> selectedSource [
 	^  self parseTree source copyFrom: selectedInterval first to: selectedInterval last
-]
-
-{ #category : #transforming }
-RBCreateCascadeRefactoring >> transform [
-	self combineMessages.
-	self compileCode
 ]

@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #execution }
-RBOverrideMethod >> execute [
+RBOverrideMethod >> browse [
 	"This is not satisfactory because not connected to any UI element."
 	SpConfirmDialog new 
 		title: 'Impossible to refactor!';

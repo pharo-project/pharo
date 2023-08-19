@@ -133,6 +133,17 @@ RBTemporaryToInstanceVariableRefactoring >> preconditions [
 						true])
 ]
 
+{ #category : #transforming }
+RBTemporaryToInstanceVariableRefactoring >> privateTransform [
+
+	self removeTemporaryOfClass: class.
+	class allSubclasses do: [ :cls |
+		(cls definesInstanceVariable: temporaryVariableName)
+			ifTrue: [ cls removeInstanceVariable: temporaryVariableName ]
+			ifFalse: [ self removeTemporaryOfClass: cls ] ].
+	class addInstanceVariable: temporaryVariableName
+]
+
 { #category : #removing }
 RBTemporaryToInstanceVariableRefactoring >> removeTemporaryOfClass: aClass [
 	aClass selectors do: [ :aSymbol | self removeTemporaryOfMethod: aSymbol in: aClass ]
@@ -163,15 +174,4 @@ RBTemporaryToInstanceVariableRefactoring >> storeOn: aStream [
 		nextPutAll: temporaryVariableName;
 		nextPut: $'.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBTemporaryToInstanceVariableRefactoring >> transform [
-
-	self removeTemporaryOfClass: class.
-	class allSubclasses do: [ :cls |
-		(cls definesInstanceVariable: temporaryVariableName)
-			ifTrue: [ cls removeInstanceVariable: temporaryVariableName ]
-			ifFalse: [ self removeTemporaryOfClass: cls ] ].
-	class addInstanceVariable: temporaryVariableName
 ]

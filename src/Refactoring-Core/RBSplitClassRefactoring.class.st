@@ -85,7 +85,7 @@ RBSplitClassRefactoring >> abstractReferenceTo: each [
 		aClass whichSelectorsReferToInstanceVariable: each ]
 		using: replacer.
 	self generateChangesFor:
-		(RBRemoveInstanceVariableRefactoring2 remove: each from: class)
+		(RBRemoveInstanceVariableRefactoring remove: each from: class)
 ]
 
 { #category : #transforming }
@@ -148,6 +148,14 @@ RBSplitClassRefactoring >> preconditions [
 					not
 ]
 
+{ #category : #transforming }
+RBSplitClassRefactoring >> privateTransform [
+	self
+		createNewClass;
+		createReference;
+		abstractVariableReferences
+]
+
 { #category : #printing }
 RBSplitClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
@@ -162,12 +170,4 @@ RBSplitClassRefactoring >> storeOn: aStream [
 		nextPutAll: ' referenceVariableName: ''';
 		nextPutAll: referenceVariableName;
 		nextPutAll: ''')'
-]
-
-{ #category : #transforming }
-RBSplitClassRefactoring >> transform [
-	self
-		createNewClass;
-		createReference;
-		abstractVariableReferences
 ]

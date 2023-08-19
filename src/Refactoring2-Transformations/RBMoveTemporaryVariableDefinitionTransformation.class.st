@@ -49,7 +49,7 @@ RBMoveTemporaryVariableDefinitionTransformation class >> variable: aString inMet
 ]
 
 { #category : #preconditions }
-RBMoveTemporaryVariableDefinitionTransformation >> applicabilityConditions [ 
+RBMoveTemporaryVariableDefinitionTransformation >> applicabilityPreconditions [ 
 
 	^ ( RBCondition
 			withBlock: [ self definingClass isNotNil ]
@@ -67,14 +67,6 @@ RBMoveTemporaryVariableDefinitionTransformation >> applicabilityConditions [
 		& ( RBCondition
 			withBlock: [ self checkLocationsIn: (self checkAllBlocksIn: self definingBlock) ]
 			errorString: 'Variable named ', variableName, ' is used in an outside block.')
-]
-
-{ #category : #converting }
-RBMoveTemporaryVariableDefinitionTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
 ]
 
 { #category : #executing }
@@ -168,12 +160,6 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 		ifFalse: [self refactoringError: 'Variable is an argument'].
 
 	^ definingNode
-]
-
-{ #category : #preconditions }
-RBMoveTemporaryVariableDefinitionTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #printing }

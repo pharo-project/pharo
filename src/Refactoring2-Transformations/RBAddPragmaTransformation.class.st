@@ -46,7 +46,7 @@ RBAddPragmaTransformation class >> pragma: aString inMethod: aSelector inClass: 
 ]
 
 { #category : #preconditions }
-RBAddPragmaTransformation >> applicabilityConditions [
+RBAddPragmaTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]
@@ -79,12 +79,6 @@ RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClass
 	self className: aClassName.
 	selector := aSelector.
 	pragma := aString
-]
-
-{ #category : #preconditions }
-RBAddPragmaTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

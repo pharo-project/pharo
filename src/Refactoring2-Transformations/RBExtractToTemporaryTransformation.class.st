@@ -36,7 +36,7 @@ RBExtractToTemporaryTransformation class >> model: aRBNamespace extract: anInter
 ]
 
 { #category : #preconditions }
-RBExtractToTemporaryTransformation >> applicabilityConditions [ 
+RBExtractToTemporaryTransformation >> applicabilityPreconditions [ 
 	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
 			& (RBCondition withBlock:
@@ -119,12 +119,6 @@ RBExtractToTemporaryTransformation >> parseTree [
 			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 		].
 	^ parseTree doSemanticAnalysis
-]
-
-{ #category : #preconditions }
-RBExtractToTemporaryTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #accessing }

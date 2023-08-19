@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #transforming }
-RBProtocolRegexTransformation >> transform [
+RBProtocolRegexTransformation >> privateTransform [
 
 	| replacement |
 	self model allClassesDo: [ :class |
@@ -18,8 +18,8 @@ RBProtocolRegexTransformation >> transform [
 			(class realClass protocolNameOfSelector: selector) asString ifNotNil: [ :original |
 				replacement := self execute: original.
 				replacement = original ifFalse: [ self generateChangesFor:
-																(RBAddMethodTransformRefactoring
-																	addMethod: (class sourceCodeFor: selector)
-																	toClass: class
-																	inProtocols: replacement)] ] ] ]
+																(RBAddMethodTransformation
+																	sourceCode: (class sourceCodeFor: selector)
+																	in: class
+																	withProtocol: replacement)] ] ] ]
 ]

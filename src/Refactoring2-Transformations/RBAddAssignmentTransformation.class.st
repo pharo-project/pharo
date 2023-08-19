@@ -52,7 +52,7 @@ RBAddAssignmentTransformation class >> variable: aVariableName value: anExpressi
 ]
 
 { #category : #preconditions }
-RBAddAssignmentTransformation >> applicabilityConditions [
+RBAddAssignmentTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]
@@ -77,12 +77,6 @@ RBAddAssignmentTransformation >> classExist [
 		  withBlock: [ self definingClass isNotNil ]
 		  errorString:
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
-]
-
-{ #category : #preconditions }
-RBAddAssignmentTransformation >> preconditions [
-
-	^ self applicabilityConditions
 ]
 
 { #category : #executing }

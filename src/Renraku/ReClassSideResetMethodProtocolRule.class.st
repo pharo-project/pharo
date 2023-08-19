@@ -28,7 +28,7 @@ ReClassSideResetMethodProtocolRule >> critiqueFor: aMethod [
 		   by: self) refactoring: (RBMethodProtocolTransformation
 			   protocol: 'class initialization'
 			   inMethod: methodSymbol
-			   inClass: classSymbol) asRefactoring
+			   inClass: classSymbol)
 ]
 
 { #category : #accessing }

@@ -178,6 +178,17 @@ RBAbstractVariablesRefactoring >> preconditions [
 	^ self trueCondition
 ]
 
+{ #category : #transforming }
+RBAbstractVariablesRefactoring >> privateTransform [
+	self hasVariablesToAbstract
+		ifTrue:
+			[self
+				refactoringWarning: 'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
+						expandMacros].
+	self abstractInstanceVariables.
+	self abstractClassVariables
+]
+
 { #category : #'for driver' }
 RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 	| varName |
@@ -216,15 +227,4 @@ RBAbstractVariablesRefactoring >> removeDefinedClassVariables [
 		ifNone: [ nil ]) notNil ].
 	classVarReaders := classVarReaders select: selectionBlock.
 	classVarWriters := classVarWriters select: selectionBlock
-]
-
-{ #category : #transforming }
-RBAbstractVariablesRefactoring >> transform [
-	self hasVariablesToAbstract
-		ifTrue:
-			[self
-				refactoringWarning: 'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
-						expandMacros].
-	self abstractInstanceVariables.
-	self abstractClassVariables
 ]

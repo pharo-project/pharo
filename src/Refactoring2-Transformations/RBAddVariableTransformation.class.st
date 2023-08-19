@@ -21,36 +21,33 @@ Class {
 }
 
 { #category : #preconditions }
-RBAddVariableTransformation >> applicabilityConditions [
+RBAddVariableTransformation >> applicabilityPreconditions [
 
 	class := self definingClass.
 
 	^ (isClassVariable
 		   ifTrue: [
-			   (RBCondition isMetaclass: class)
+			   (RBCondition isMetaclass: class) not
 			   & (RBCondition isValidClassVarName: variableName for: class) ]
 		   ifFalse: [
-			   (RBCondition isMetaclass: class) not
-			   &
 			   (RBCondition
 				    isValidInstanceVariableName: variableName
 				    for: class) ])
-	  &
-		  (RBCondition
+	  & self isNotGlobal
+]
+
+{ #category : #preconditions }
+RBAddVariableTransformation >> breakingChangePreconditions [ 
+
+	^ (RBCondition
 			   hierarchyOf: class
-			   definesVariable: variableName asString) not & self isNotGlobal
+			   definesVariable: variableName asString) not
 ]
 
 { #category : #preconditions }
 RBAddVariableTransformation >> isNotGlobal [
 
 	^ (RBCondition isGlobal: variableName in: self model) not
-]
-
-{ #category : #preconditions }
-RBAddVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

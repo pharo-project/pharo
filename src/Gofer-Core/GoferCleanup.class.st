@@ -10,11 +10,9 @@ Class {
 { #category : #cleaning }
 GoferCleanup >> cleanup: aWorkingCopy [
 
-	| packageOrganizer |
-	packageOrganizer := self packageOrganizer.
-	aWorkingCopy packageSet systemCategories
-		select: [ :category | (packageOrganizer classesInCategory: category) isEmpty ]
-		thenDo: [ :category | packageOrganizer removeSystemCategory: category ]
+	aWorkingCopy systemPackage ifNotNil: [ :package |
+		package removeEmptyTags.
+		package isEmpty ifTrue: [ package removeFromSystem ] ]
 ]
 
 { #category : #running }

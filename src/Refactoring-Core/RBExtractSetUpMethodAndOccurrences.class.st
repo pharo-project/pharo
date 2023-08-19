@@ -70,7 +70,7 @@ RBExtractSetUpMethodAndOccurrences >> findOccurrencesClass [
 ]
 
 { #category : #transforming }
-RBExtractSetUpMethodAndOccurrences >> transform [
+RBExtractSetUpMethodAndOccurrences >> privateTransform [
 	self extractMethod.
 	self findOccurrencesOf: #setUp
 ]

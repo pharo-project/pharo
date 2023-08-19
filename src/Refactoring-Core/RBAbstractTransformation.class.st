@@ -89,7 +89,7 @@ RBAbstractTransformation class >> refactoringOptions [
 { #category : #accessing }
 RBAbstractTransformation >> changes [
 
-	^ model changes
+	^ self model changes
 ]
 
 { #category : #'condition definitions' }
@@ -100,6 +100,19 @@ RBAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 { #category : #'condition definitions' }
 RBAbstractTransformation >> checkMethodName: aName in: aClass [
 	^RBCondition checkMethodName: aName in: aClass
+]
+
+{ #category : #preconditions }
+RBAbstractTransformation >> checkPreconditions [
+
+	| conditions block |
+	conditions := self preconditions.
+	conditions check ifTrue: [ ^ self ].
+	block := conditions errorBlock.
+	block
+		ifNotNil: [
+		self refactoringWarning: conditions errorString with: block ]
+		ifNil: [ self refactoringError: conditions errorString ]
 ]
 
 { #category : #preconditions }
@@ -143,19 +156,20 @@ RBAbstractTransformation >> execute [
 ]
 
 { #category : #accessing }
+RBAbstractTransformation >> model [
+
+	^ model
+		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
+				name: 'Changes for ', self class name asString;
+				yourself
+			]
+		ifNotNil: [ model ]
+]
+
+{ #category : #accessing }
 RBAbstractTransformation >> model: aRBNamespace [
 
 	model := aRBNamespace
-]
-
-{ #category : #initialize }
-RBAbstractTransformation >> newModel [
-
-	model := (RBNamespace
-			onEnvironment: self defaultEnvironment)
-			name: self printString;
-			yourself.
-	^ model
 ]
 
 { #category : #'To be removed' }
@@ -204,9 +218,16 @@ RBAbstractTransformation >> parserClass [
 
 { #category : #transforming }
 RBAbstractTransformation >> performChanges [
+	
+	self performChanges: self changes
+]
 
+{ #category : #transforming }
+RBAbstractTransformation >> performChanges: aCompositeChange [
+	"Perform the changes contained in a composite change"
+	
 	RBRefactoryChangeManager instance
-		performChange: self changes;
+		performChange: aCompositeChange;
 		addUndoPointer: RBRefactoryChangeManager nextCounter
 ]
 
@@ -224,7 +245,7 @@ RBAbstractTransformation >> poolVariableNamesFor: aClass [
 
 { #category : #accessing }
 RBAbstractTransformation >> poolVariableNamesIn: poolName [
-	^(model classNamed: poolName) classPool keys
+	^(self model classNamed: poolName) classPool keys
 ]
 
 { #category : #preconditions }
@@ -233,10 +254,21 @@ RBAbstractTransformation >> preconditions [
 	self subclassResponsibility
 ]
 
-{ #category : #'private hook' }
-RBAbstractTransformation >> primitiveExecute [ 
+{ #category : #executing }
+RBAbstractTransformation >> primitiveExecute [
+	"compatibility method RBRefactoring"
 
-	self subclassResponsibility
+	self checkPreconditions.
+	self privateTransform
+	
+	"below executes the refactoring without prompt"
+	"RBRefactoringManager instance addRefactoring: self"
+]
+
+{ #category : #transforming }
+RBAbstractTransformation >> privateTransform [ 
+
+	self subclassResponsibility 
 ]
 
 { #category : #exceptions }
@@ -327,6 +359,7 @@ RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
 { #category : #transforming }
 RBAbstractTransformation >> transform [
 	"Do the actual operations."
+	self deprecated: 'Use primitiveExecute or privateTransform instead. Check subclasses for more details.'. 
 	
 	self subclassResponsibility
 ]

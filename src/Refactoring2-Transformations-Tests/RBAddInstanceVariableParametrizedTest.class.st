@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBAddInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddInstanceVariableRefactoring .
@@ -51,68 +51,15 @@ RBAddInstanceVariableParametrizedTest >> testAddToModel [
 		directlyDefinesInstanceVariable: 'asdf')
 ]
 
-{ #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testFailureAlreadyExistingName [
+{ #category : #tests }
+RBAddInstanceVariableParametrizedTest >> testInvalidVariableName [
 
 	self shouldFail: (self createRefactoringWithArguments:
-			 { 'class'. #RBTransformationRuleTestData }).
+			 { ''. #RBTransformationRuleTestData }).
+
 	self shouldFail: (self createRefactoringWithArguments:
-			 { 'name'. #RBTransformationRuleTestData })
-]
+			 { 'true'. #RBTransformationRuleTestData }).
 
-{ #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testFailureModelAlreadyExistingName [
-
-	self shouldFail: (self
-			 createRefactoringWithModel: model
-			 andArguments: { 'instVarName1'. #Bar })
-]
-
-{ #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testFailureModelMetaclassAlreadyExistingName [
-
-	(model metaclassNamed: #Foo) addInstanceVariable: 'instVarName1'.
-
-	self shouldFail: (self
-			 createRefactoringWithModel: model
-			 andArguments: { 'instVarName1'. #Bar })
-]
-
-{ #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testFailureNewExistingName [
-
-	| refactoring |
-	model := RBNamespace new.
-	model name: 'Add instance variable'.
-	model defineClass: 'Object << #FOOBAR
-		slots: { #asdf };
-		package: #''Refactory-Test data'''.
-
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArguments: { 'asdf'. #FOOBAR }.
-
-	self shouldFail: refactoring
-]
-
-{ #category : #'failure tests' }
-RBAddInstanceVariableParametrizedTest >> testFailureNewHierarchyExistingName [
-
-	| refactoring |
-	model := RBNamespace new.
-	model name: 'Add instance variable'.
-
-
-	model defineClass: 'Object << #FOOBAR
-		slots: { #asdf };
-		package: #''Refactory-Test data'''.
-
-	model defineClass:
-		'FOOBAR << #BARFOO package: ''Refactory-Test data'''.
-
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArguments: { 'asdf'. #BARFOO }.
-
-	self shouldFail: refactoring
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'Asdf'. #RBTransformationRuleTestData })
 ]

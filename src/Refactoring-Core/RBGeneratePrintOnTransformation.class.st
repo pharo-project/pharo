@@ -69,13 +69,8 @@ RBGeneratePrintOnTransformation >> preconditions [
 			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
-{ #category : #accessing }
-RBGeneratePrintOnTransformation >> theClass [
-	^ (self classObjectFor: className) instanceSide
-]
-
 { #category : #transforming }
-RBGeneratePrintOnTransformation >> transform [
+RBGeneratePrintOnTransformation >> privateTransform [
 	| method |
 	method := self parserClass
 		parseMethod:
@@ -91,10 +86,15 @@ RBGeneratePrintOnTransformation >> transform [
 						parseExpression:
 							('aStream nextPutAll: '' <1s>: ''; print: <1s>' expandMacrosWith: each)) ].
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: method formattedCode
-			toClass: self theClass
-			inProtocols: #printing)
+		(RBAddMethodTransformation
+			sourceCode: method formattedCode
+			in: self theClass
+			withProtocol: #printing)
+]
+
+{ #category : #accessing }
+RBGeneratePrintOnTransformation >> theClass [
+	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #accessing }

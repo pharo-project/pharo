@@ -317,11 +317,6 @@ RBBrowserEnvironment >> environment [
 ]
 
 { #category : #environments }
-RBBrowserEnvironment >> forCategories: categoryList [
-	^RBCategoryEnvironment onEnvironment: self categories: categoryList
-]
-
-{ #category : #environments }
 RBBrowserEnvironment >> forClass: aClass protocols: protocolCollection [
 	^RBProtocolEnvironment onEnvironment: self
 		class: aClass
@@ -446,7 +441,7 @@ RBBrowserEnvironment >> instVarReadersTo: instVarName in: aClass [
 
 { #category : #environments }
 RBBrowserEnvironment >> instVarRefsTo: instVarName in: aClass [
-	^RBVariableEnvironment
+	^ RBVariableEnvironment
 		on: self
 		referencesToInstanceVariable: instVarName
 		in: aClass

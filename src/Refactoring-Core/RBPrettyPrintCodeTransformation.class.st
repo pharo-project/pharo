@@ -16,7 +16,7 @@ RBPrettyPrintCodeTransformation >> preconditions [
 ]
 
 { #category : #transforming }
-RBPrettyPrintCodeTransformation >> transform [
+RBPrettyPrintCodeTransformation >> privateTransform [
 	| source tree formatted |
 	self model
 		allClassesDo: [ :class |
@@ -32,8 +32,8 @@ RBPrettyPrintCodeTransformation >> transform [
 												and: [ (self parserClass parseMethod: formatted) = tree ])
 												ifTrue:
 													[ 	self generateChangesFor:
-															(RBAddMethodTransformRefactoring
-																addMethod: formatted
-																toClass: class
-																inProtocols: (class protocolsFor: selector)) ] ] ] ] ] ]
+															(RBAddMethodTransformation
+																sourceCode: formatted
+																in: class
+																withProtocol: (class protocolsFor: selector)) ] ] ] ] ] ]
 ]

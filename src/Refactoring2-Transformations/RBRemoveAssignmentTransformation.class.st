@@ -51,7 +51,7 @@ RBRemoveAssignmentTransformation class >> variable: aVariableName value: anExpre
 ]
 
 { #category : #preconditions }
-RBRemoveAssignmentTransformation >> applicabilityConditions [
+RBRemoveAssignmentTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]
@@ -85,12 +85,6 @@ RBRemoveAssignmentTransformation >> classExist [
 		  withBlock: [ self definingClass isNotNil ]
 		  errorString:
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
-]
-
-{ #category : #preconditions }
-RBRemoveAssignmentTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

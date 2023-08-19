@@ -38,7 +38,7 @@ RBMoveMethodToClassSideTransformation >> addMethod: rbMethod to: aClass toProtoc
 ]
 
 { #category : #refactoring }
-RBMoveMethodToClassSideTransformation >> applicabilityConditions [
+RBMoveMethodToClassSideTransformation >> applicabilityPreconditions [
 	^ (RBCondition
 			definesSelector: method selector
 			in: class classSide) not
@@ -97,11 +97,6 @@ RBMoveMethodToClassSideTransformation >> parseTree [
 ]
 
 { #category : #refactoring }
-RBMoveMethodToClassSideTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
-{ #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> privateTransform [
 	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
@@ -120,17 +115,20 @@ RBMoveMethodToClassSideTransformation >> privateTransform [
 
 { #category : #refactoring }
 RBMoveMethodToClassSideTransformation >> removeInstVariableReferences [
+
 	| rbMethod references |
-	rbMethod := (class methodFor: method selector).
-	references := class instanceVariableNames select: [:e | rbMethod refersToVariable: e].
-	references do: [ :e | |replacer accessorsRefactoring|
+	rbMethod := class methodFor: method selector.
+	references := class instanceVariableNames select: [ :e |
+		              rbMethod refersToVariable: e ].
+	references do: [ :e |
+		| replacer accessorsRefactoring |
 		accessorsRefactoring := self accessorsFor: e.
-		accessorsRefactoring transform.
+		accessorsRefactoring primitiveExecute.
 		replacer := self parseTreeRewriterClass
-				variable: e
-				getter: accessorsRefactoring getterMethod
-				setter: accessorsRefactoring setterMethod.
-	   self convertMethod: method selector for: class using: replacer ]
+			            variable: e
+			            getter: accessorsRefactoring getterMethod
+			            setter: accessorsRefactoring setterMethod.
+		self convertMethod: method selector for: class using: replacer ]
 ]
 
 { #category : #refactoring }

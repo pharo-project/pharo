@@ -6,31 +6,32 @@ Class {
 
 { #category : #'tests-configuring-stream' }
 FLConfigurationTest >> testDecorateStreamFactory [
+
 	| byteConverterStream string |
-	byteConverterStream := self classFactory silentlyNewSubclassOf: DecoratorStream.
+	byteConverterStream := self classFactory silentlyMake: [ :aBuilder | aBuilder superclass: DecoratorStream ].
 	self classFactory
 		silentlyCompile: 'nextPut: anInteger
 			decoratedStream nextPut: (Character value: anInteger)'
-		in:  byteConverterStream.
-		
+		in: byteConverterStream.
+
 	string := String new: 3.
 	serializer := FLSerializer new
-		streamFactory: [ string writeStream ];
-		decorateStreamFactory: [ :stream | byteConverterStream on: stream ];
-		yourself.
-	
+		              streamFactory: [ string writeStream ];
+		              decorateStreamFactory: [ :stream | byteConverterStream on: stream ];
+		              yourself.
+
 	serializer streamFactory value
 		nextPut: $f asciiValue;
 		nextPut: $o asciiValue;
 		nextPut: $o asciiValue.
 	self assert: string equals: 'foo'.
-	
+
 	string := String new: 3.
 	serializer := FLMaterializer new
-		streamFactory: [ string writeStream ];
-		decorateStreamFactory: [ :stream | byteConverterStream on: stream ];
-		yourself.
-	
+		              streamFactory: [ string writeStream ];
+		              decorateStreamFactory: [ :stream | byteConverterStream on: stream ];
+		              yourself.
+
 	serializer streamFactory value
 		nextPut: $f asciiValue;
 		nextPut: $o asciiValue;
@@ -356,18 +357,19 @@ FLConfigurationTest >> testStreamFinalizer [
 
 { #category : #'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFinalizerDefault [
+
+	<ignoreNotImplementedSelectors: #( _log )>
 	| logClass log |
-	<ignoreNotImplementedSelectors: #(_log)>
-	logClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'log'.
+	logClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'log' ].
 	self classFactory
 		silentlyCompile: 'initialize log := OrderedCollection new' in: logClass;
-		silentlyCompile: '_log ^ log' in: logClass; 
+		silentlyCompile: '_log ^ log' in: logClass;
 		silentlyCompile: 'doesNotUnderstand: aMessage log add: aMessage selector. ^ self' in: logClass.
 	log := logClass new.
 	FLSerializer new streamFinalizer value: log.
 	self assert: log _log size equals: 1.
 	self assert: log _log first equals: #close.
-	
+
 	log := logClass new.
 	FLMaterializer new streamFinalizer value: log.
 	self assert: log _log size equals: 1.

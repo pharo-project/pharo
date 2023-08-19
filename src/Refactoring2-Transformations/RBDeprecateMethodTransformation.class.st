@@ -67,7 +67,7 @@ RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aS
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodTransformation >> applicabilityConditions [ 
+RBDeprecateMethodTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: class)
 		& (RBCondition canUnderstand: newSelector in: class)
@@ -106,12 +106,6 @@ RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass using: 
 	selector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self model classObjectFor: aClass
-]
-
-{ #category : #preconditions }
-RBDeprecateMethodTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #printing }

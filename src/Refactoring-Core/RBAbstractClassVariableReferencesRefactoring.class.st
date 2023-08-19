@@ -73,7 +73,7 @@ RBAbstractClassVariableReferencesRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBAbstractClassVariableReferencesRefactoring >> transform [
+RBAbstractClassVariableReferencesRefactoring >> privateTransform [
 	self createAccessors.
 	self abstractInstanceSideReferences.
 	self abstractClassSideReferences

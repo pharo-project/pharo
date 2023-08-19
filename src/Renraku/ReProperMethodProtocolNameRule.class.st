@@ -72,7 +72,7 @@ ReProperMethodProtocolNameRule >> critiqueFor: aMethod [
 		   by: self) refactoring: (RBMethodProtocolTransformation
 			   protocol: { proposedProtocol }
 			   inMethod: aMethod selector
-			   inClass: aMethod methodClass name) asRefactoring
+			   inClass: aMethod methodClass name)
 ]
 
 { #category : #accessing }

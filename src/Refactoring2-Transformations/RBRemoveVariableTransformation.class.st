@@ -23,35 +23,42 @@ Class {
 }
 
 { #category : #preconditions }
-RBRemoveVariableTransformation >> applicabilityConditions [ 
+RBRemoveVariableTransformation >> applicabilityPreconditions [ 
 
-	class := self definingClass instanceSide.
+	class := self definingClass.
 
 	^ isClassVariable
-		ifTrue: [ self preconditionsForClassVariable ]
-		ifFalse: [ self preconditionsForInstanceVariable ]
+		ifTrue: [ self applicabilityPreconditionsForClassVariable ]
+		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
 ]
 
 { #category : #preconditions }
-RBRemoveVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #preconditions }
-RBRemoveVariableTransformation >> preconditionsForClassVariable [
+RBRemoveVariableTransformation >> applicabilityPreconditionsForClassVariable [
 
 	^ (RBCondition isMetaclass: class) not
-		& (RBCondition definesClassVariable: variableName in: class)
-		& (RBCondition accessesClassVariable: variableName in: class showIn: self)
+	  & (RBCondition definesClassVariable: variableName in: class)
 ]
 
 { #category : #preconditions }
-RBRemoveVariableTransformation >> preconditionsForInstanceVariable [
+RBRemoveVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
 	"For now only remove an instance variable that is locally defined in a class."
 	
 	^ (RBCondition directlyDefinesInstanceVariable: variableName asString in: class)
-		& (RBCondition doesNotAccessInstanceVariable: variableName inHierarchyOf: class showIn: self)
+]
+
+{ #category : #preconditions }
+RBRemoveVariableTransformation >> breakingChangePreconditionsForClassVariable [
+
+	^ RBCondition
+		  accessesClassVariable: variableName
+		  in: class
+		  showIn: self
+]
+
+{ #category : #preconditions }
+RBRemoveVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
+
+	^ (RBCondition doesNotAccessInstanceVariable: variableName inHierarchyOf: class showIn: self)
 ]
 
 { #category : #executing }

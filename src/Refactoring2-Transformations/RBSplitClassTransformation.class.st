@@ -103,7 +103,7 @@ RBSplitClassTransformation >> addInstanceVariables [
 ]
 
 { #category : #preconditions }
-RBSplitClassTransformation >> applicabilityConditions [
+RBSplitClassTransformation >> applicabilityPreconditions [
 
 	class := self definingClass.
 
@@ -173,12 +173,6 @@ RBSplitClassTransformation >> definingClass [
 RBSplitClassTransformation >> isNotGlobal [
 
 	^ (RBCondition isGlobal: newClassName in: self model) not
-]
-
-{ #category : #preconditions }
-RBSplitClassTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #printing }

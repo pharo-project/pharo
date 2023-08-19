@@ -41,7 +41,7 @@ ClyToolbarMorph >> addNewItem: aMorph [
 	offsetX := self submorphs
 		           inject: 0
 		           into: [ :sum :each | sum + each extent x ].
-	offsetY := 5.
+	offsetY := 5 scaledByDisplayScaleFactor.
 	self addMorphBack: aMorph.
 	self computeFullBounds.
 	self minHeight: self defaultHeight.

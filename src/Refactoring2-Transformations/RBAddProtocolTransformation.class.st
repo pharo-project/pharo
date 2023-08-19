@@ -42,7 +42,7 @@ RBAddProtocolTransformation class >> protocol: aString inClass: aClassName [
 ]
 
 { #category : #preconditions }
-RBAddProtocolTransformation >> applicabilityConditions [
+RBAddProtocolTransformation >> applicabilityPreconditions [
 
 	^ self classExist & self protocolExist
 ]
@@ -53,12 +53,6 @@ RBAddProtocolTransformation >> classExist [
 	^ RBCondition
 		  withBlock: [ self definingClass isNotNil ]
 		  errorString: 'Class named ' , className , ' does not exist'
-]
-
-{ #category : #preconditions }
-RBAddProtocolTransformation >> preconditions [
-
-	^ self applicabilityConditions
 ]
 
 { #category : #executing }

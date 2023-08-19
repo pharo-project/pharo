@@ -1,3 +1,6 @@
+"
+I'm a model for user interaction for the rename method refactoring.
+"
 Class {
 	#name : #RBRenameMethodDriver,
 	#superclass : #RBDriver,
@@ -36,12 +39,6 @@ RBRenameMethodDriver >> canRenameArgs [
 RBRenameMethodDriver >> command: aCommand andPostAction: aClosure [ 
 	command := aCommand. "may be not needed"
 	postAction := aClosure
-]
-
-{ #category : #initialize }
-RBRenameMethodDriver >> furtherActionFor: aReport [
-
-	aReport runRefactoring.
 ]
 
 { #category : #initialize }
@@ -97,7 +94,7 @@ RBRenameMethodDriver >> runRefactoring [
 		refactoring renameMap: newMessage renameMap.
 		refactoring newNameDoesNotRequireRefactoringPreconditions check.
 		changes := refactoring generateChanges.
-		self openPreviewWithChanges: { changes }
+		self openPreviewWithChanges: changes
 		"arg postAction value." ]
 			on: RBApplicabilityChecksFailedError
 			do: [ :err | ^ RBRefactoringError signal: err messageText ] ]

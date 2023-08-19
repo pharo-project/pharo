@@ -20,3 +20,9 @@ CompiledMethod >> isExtension [
 CompiledMethod >> isExtensionInPackage: anRPackage [
 	^ anRPackage includesExtensionSelector: self selector ofClass: self methodClass
 ]
+
+{ #category : #'*RPackage-Core' }
+CompiledMethod >> removeFromPackage [
+
+	self isFromTrait ifFalse: [ self package ifNotNil: [ :package | package removeMethod: self ] ]
+]

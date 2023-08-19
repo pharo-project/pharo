@@ -1788,6 +1788,58 @@ SequenceableCollection >> permutationsStartingAt: anInteger do: aBlock [
 ]
 
 { #category : #enumerating }
+SequenceableCollection >> permutationsWithRepetitionOfSize: aSize subSize: sSize in: anArray do: aBlock [
+
+ 	aSize < sSize ifTrue: [ ^ self error: 'sSize cannot exceed array size' ].
+ 	sSize < 1 ifTrue: [ ^ self error: 'sizes must be positive' ].
+ 	sSize = 1
+ 		ifTrue: [
+ 			self do: [ :each |
+ 				aBlock value: (anArray
+ 						 at: aSize - sSize + 1 put: each;
+ 						 yourself) ] ]
+ 		ifFalse: [
+ 			self do: [ :each |
+ 				self
+ 					permutationsWithRepetitionOfSize: aSize
+ 					subSize: sSize - 1
+ 					in: anArray
+ 					do: [ :eachArray |
+ 						aBlock value: (eachArray
+ 								 at: aSize - sSize + 1 put: each;
+ 								 yourself) ] ] ]
+]
+
+{ #category : #enumerating }
+SequenceableCollection >> permutationsWithRepetitionsDo: aBlock [
+	" Iterate over all receiver's possible combinations of its size, including repetitions."
+
+	self permutationsWithRepetitionsOfSize: self size do: aBlock
+]
+
+{ #category : #enumerating }
+SequenceableCollection >> permutationsWithRepetitionsOfSize: aSize [
+	"Answer a <Collection> with all the possible combinations of aSize numbers including repetitions."
+   | result |
+
+   result := OrderedCollection new: aSize.
+   self 
+		permutationsWithRepetitionsOfSize: aSize
+		do: [ : each | result add: (each joinUsing: self class empty) ].
+	^ result
+]
+
+{ #category : #enumerating }
+SequenceableCollection >> permutationsWithRepetitionsOfSize: aSize do: aBlock [
+ 	"See comment in #enumerationsOfSize: "
+
+   | anArray |
+
+   anArray := Array new: aSize.
+   self permutationsWithRepetitionOfSize: aSize subSize: aSize in: anArray do: [ : each | aBlock value: each ]
+]
+
+{ #category : #enumerating }
 SequenceableCollection >> piecesCutWhere: binaryBlock [
 	"Answer substrings of the receiver derived from cutting the receiver at points where binaryBlock answers true for adjacent elements."
 	"( #(1 2 3 1 6 1 2 3 4) piecesCutWhere: [ :a :b | a = 1 and: [ b = 2]]) asArray >>> #(#(1) #(2 3 1 6 1) #(2 3 4))"

@@ -79,11 +79,11 @@ GoferOperationTest >> testCleanup [
 		package: 'GoferFoo';
 		load.
 	class := environment classNamed: #GoferFoo.
-	environment organization addCategory: #'GoferFoo-Empty'.
+	environment organization ensureTagNamed: #Empty inPackageNamed: #GoferFoo.
 	class addProtocol: #empty.
 	class class addProtocol: #empty.
 	gofer cleanup.
-	self deny: (self packageOrganizer categories includes: #'GoferFoo-Empty').
+	self deny: (self packageOrganizer hasTag: #Empty inPackage: #GoferFoo).
 	self deny: (class hasProtocol: #'GoferFoo-Empty').
 	self deny: (class class hasProtocol: #'GoferFoo-Empty')
 ]

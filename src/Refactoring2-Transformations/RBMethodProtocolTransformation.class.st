@@ -50,7 +50,7 @@ RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector in
 ]
 
 { #category : #preconditions }
-RBMethodProtocolTransformation >> applicabilityConditions [
+RBMethodProtocolTransformation >> applicabilityPreconditions [
 
 	^ self classExist
 	  & (RBCondition definesSelector: selector in: self definingClass)
@@ -68,12 +68,6 @@ RBMethodProtocolTransformation >> classExist [
 		  withBlock: [ self definingClass isNotNil ]
 		  errorString:
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
-]
-
-{ #category : #preconditions }
-RBMethodProtocolTransformation >> preconditions [
-
-	^ self applicabilityConditions
 ]
 
 { #category : #executing }

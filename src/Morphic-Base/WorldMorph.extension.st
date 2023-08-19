@@ -29,7 +29,7 @@ WorldMorph >> dispatchKeystroke: anEvent [
 
 	(self navigationKey: anEvent) ifTrue: [^self].
 
-	(anEvent commandKeyPressed and: [TextEditor cmdKeysInText])
+	anEvent commandKeyPressed
 		ifTrue: [^ self dispatchCommandKeyInWorld: aChar event: anEvent].
 
 	"It was unhandled. Remember the keystroke."

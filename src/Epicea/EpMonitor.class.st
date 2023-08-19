@@ -120,16 +120,14 @@ EpMonitor >> addEvent: anEvent newEntryDo: aBlock [
 EpMonitor >> addEvent: anEvent newEntryDo: aBlock triggerReference: triggerReference [
 
 	| newEntry |
-	newEntry := log
-		addEntryWith: anEvent
-		tags: [ :tags |
-			triggerReference isNull ifFalse: [
-				tags
-					at: EpLog triggererReferenceKey
-					put: triggerReference ].
 
-			tags at: EpLog authorKey put: self author.
-			tags at: EpLog timeKey put: self time ].
+	"During the tests, we should only log with Epicea if the test case declare it wants logging."
+	(CurrentExecutionEnvironment value isTest and: [ CurrentExecutionEnvironment value testCase shouldLogWithEpicea not ]) ifTrue: [ ^ self ].
+	newEntry := log addEntryWith: anEvent tags: [ :tags |
+		            triggerReference isNull ifFalse: [ tags at: EpLog triggererReferenceKey put: triggerReference ].
+
+		            tags at: EpLog authorKey put: self author.
+		            tags at: EpLog timeKey put: self time ].
 
 	aBlock value: newEntry
 ]
@@ -229,24 +227,6 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 				  protocol: aMethodInAnObsoleteBehavior protocolName;
 				  package: packageName;
 				  yourself))
-]
-
-{ #category : #'announcement handling' }
-EpMonitor >> categoryAdded: aCategoryAdded [
-
-	self addEvent: (EpCategoryAddition named: aCategoryAdded categoryName)
-]
-
-{ #category : #'announcement handling' }
-EpMonitor >> categoryRemoved: aPackageCategoryRemoved [
-
-	self addEvent: (EpCategoryRemoval named: aPackageCategoryRemoved categoryName)
-]
-
-{ #category : #'announcement handling' }
-EpMonitor >> categoryRenamed: aCategoryRenamed [
-
-	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldCategoryName newName: aCategoryRenamed newCategoryName)
 ]
 
 { #category : #'announcement handling' }
@@ -467,9 +447,27 @@ EpMonitor >> packageRemoved: packageRemoved [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> packageRenamed: aCategoryRenamed [
+EpMonitor >> packageRenamed: aPackageRenamed [
 
-	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldName newName: aCategoryRenamed newName)
+	self addEvent: (EpPackageRename oldName: aPackageRenamed oldName newName: aPackageRenamed newName)
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageTagAdded: aPackageTagAddition [
+
+	self addEvent: (EpPackageTagAddition tagName: aPackageTagAddition tag name packageName: aPackageTagAddition package name)
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageTagRemoved: aPackageTagRemoved [
+
+	self addEvent: (EpPackageTagRemoval tagName: aPackageTagRemoved tag name packageName: aPackageTagRemoved package name)
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageTagRenamed: aPackageTagRenamed [
+
+	self addEvent: (EpPackageTagRename oldName: aPackageTagRenamed oldName newName: aPackageTagRenamed newName packageName: aPackageTagRenamed package name)
 ]
 
 { #category : #'announcement handling' }
@@ -524,30 +522,25 @@ EpMonitor >> subscribeToJobAnnouncer [
 { #category : #private }
 EpMonitor >> subscribeToSystemAnnouncer [
 
-	{	CategoryAdded -> #categoryAdded:.
-		CategoryRemoved -> #categoryRemoved:.
-		CategoryRenamed -> #categoryRenamed:.
-		PackageAdded -> #packageAdded:.
-		PackageRenamed -> #packageRenamed:.
-		PackageRemoved -> #packageRemoved:.
-		ClassAdded-> #behaviorAdded:.
-		ClassRemoved->#behaviorRemoved:.
-		MethodAdded -> #methodAdded:.
-		MethodRemoved -> #methodRemoved:.
-		ProtocolAdded -> #protocolAdded:.
-		ProtocolRemoved -> #protocolRemoved:.
-		ClassModifiedClassDefinition -> #behaviorModified:.
-		MethodModified -> #methodModified:.
-		ClassRecategorized -> #classRecategorized:.
-		ClassRenamed -> #classRenamed:.
-		ClassCommented -> #classCommented:.
-		MethodRecategorized -> #methodRecategorized:.
-
-	} do: [ :pair |
-		systemAnnouncer weak
-			when: pair key
-			send: pair value
-			to: self ]
+	{
+		(PackageAdded -> #packageAdded:).
+		(PackageRenamed -> #packageRenamed:).
+		(PackageRemoved -> #packageRemoved:).
+		(PackageTagAdded -> #packageTagAdded:).
+		(PackageTagRemoved -> #packageTagRemoved:).
+		(PackageTagRenamed -> #packageTagRenamed:).
+		(ClassAdded -> #behaviorAdded:).
+		(ClassRemoved -> #behaviorRemoved:).
+		(MethodAdded -> #methodAdded:).
+		(MethodRemoved -> #methodRemoved:).
+		(ProtocolAdded -> #protocolAdded:).
+		(ProtocolRemoved -> #protocolRemoved:).
+		(ClassModifiedClassDefinition -> #behaviorModified:).
+		(MethodModified -> #methodModified:).
+		(ClassRecategorized -> #classRecategorized:).
+		(ClassRenamed -> #classRenamed:).
+		(ClassCommented -> #classCommented:).
+		(MethodRecategorized -> #methodRecategorized:) } do: [ :pair | systemAnnouncer weak when: pair key send: pair value to: self ]
 ]
 
 { #category : #private }

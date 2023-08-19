@@ -303,7 +303,7 @@ ShiftClassInstaller >> recategorize: aClass to: newCategory [
 
 	(oldCategory isNil or: [ oldCategory = #Unclassified ])
 		ifTrue: [
-			((installingOrganizer packageMatchingExtensionName: aClass category) ifNil: [ installingOrganizer ensurePackage: aClass category ]) importClass: aClass.
+			(installingOrganizer ensurePackageMatching: aClass category) importClass: aClass.
 			SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
 		ifFalse: [ SystemAnnouncer uniqueInstance class: aClass recategorizedFrom: oldCategory to: newCategory ]
 ]

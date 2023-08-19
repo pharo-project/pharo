@@ -70,10 +70,8 @@ Class {
 	#name : #RPackage,
 	#superclass : #Object,
 	#instVars : [
-		'classDefinedSelectors',
-		'metaclassDefinedSelectors',
-		'classExtensionSelectors',
-		'metaclassExtensionSelectors',
+		'extensionSelectors',
+		'definedSelectors',
 		'classes',
 		'name',
 		'classTags',
@@ -177,10 +175,9 @@ RPackage >> addClass: aClass [
 	aClass category: (self addClassTag: self name) categoryName
 ]
 
-{ #category : #'add class' }
+{ #category : #deprecated }
 RPackage >> addClassDefinition: aClass [
-	"Add the class definition to the package.
-	We assume that this method is called at the creation of the class, thus methods should be added afterward. Else they might wrongly be considered as extensions."
+	"Please do not use me, I will be removed in the future. Use #importClass: instead."
 
 	(self includesClass: aClass) ifTrue: [ ^ self ].
 	classes add: aClass instanceSide name asSymbol.
@@ -191,7 +188,7 @@ RPackage >> addClassDefinition: aClass [
 RPackage >> addClassDefinition: aClass toClassTag: aSymbol [
 	"Tags the class aClass with the tag aSymbol"
 
-	(self addClassTag: aSymbol) addClassNamed: aClass name
+	(self addClassTag: aSymbol) addClass: aClass
 ]
 
 { #category : #'class tags' }
@@ -218,32 +215,11 @@ RPackage >> addMethod: aCompiledMethod [
 	| methodClass |
 	methodClass := aCompiledMethod methodClass.
 	(self includesClass: methodClass)
-		ifTrue: [
-			methodClass isMeta
-				ifTrue: [
-					(metaclassDefinedSelectors
-						at: methodClass instanceSide name
-						ifAbsentPut: [ IdentitySet new ])
-						add: aCompiledMethod selector]
-				ifFalse: [
-					(classDefinedSelectors
-						at: methodClass name
-						ifAbsentPut: [ IdentitySet new ])
-						add: aCompiledMethod selector ] ]
-		ifFalse:  [
-			methodClass isMeta
-				ifTrue: [
-					(metaclassExtensionSelectors
-						at: methodClass instanceSide name
-						ifAbsentPut: [ IdentitySet new ])
-						add: aCompiledMethod selector.]
-				ifFalse: [
-					(classExtensionSelectors
-						at: methodClass name
-						ifAbsentPut: [ IdentitySet new ])
-						add: aCompiledMethod selector].
-				"we added a method extension so the receiver is an extending package of the class"
-				self organizer registerExtendingPackage: self forClass: methodClass ].
+		ifTrue: [ (definedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
+		ifFalse: [
+			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector.
+			"we added a method extension so the receiver is an extending package of the class"
+			self organizer registerExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
@@ -264,17 +240,13 @@ RPackage >> basicImportClass: aClass [
 	"Add the class definition and all the selectors which are not extensions of other packages. If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted (should I use silently or not?)."
 
 	"Question: should we check that for each extension, there is a real package behind or not?"
-	
+
 	"We first remove the potention methods in case there are extensions registered then we add the class."
+
 	self removeAllMethodsFromClass: aClass.
 	self addClassDefinition: aClass.
-	(aClass protocols
-		select: [ :protocol | self isYourClassExtension: protocol ])
-		do: [ :protocol | aClass renameProtocol: protocol as: Protocol unclassified ].
-
-	aClass protocols
-		reject: [ :protocol | protocol isExtensionProtocol ]
-		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
+	(aClass protocols select: [ :protocol | self isYourClassExtension: protocol ]) do: [ :protocol | aClass renameProtocol: protocol as: Protocol unclassified ].
+	self importDefinedMethodsOf: aClass
 ]
 
 { #category : #'class tags' }
@@ -283,11 +255,6 @@ RPackage >> basicRemoveTag: tag [
 	classTags remove: tag ifAbsent: [  ].
 
 	SystemAnnouncer announce: (PackageTagRemoved to: tag)
-]
-
-{ #category : #private }
-RPackage >> classExtensionSelectors [
-	^ classExtensionSelectors
 ]
 
 { #category : #'class tags' }
@@ -306,9 +273,10 @@ RPackage >> classTagCategoryNames [
 
 { #category : #'class tags' }
 RPackage >> classTagForClass: aClass [
-	^ self
-		classTagNamed: (self toTagName: aClass category)
-		ifAbsent: [ nil ]
+
+	^ self classTags
+		  detect: [ :tag | tag hasClass: aClass ]
+		  ifNone: [ nil ]
 ]
 
 { #category : #'class tags' }
@@ -346,13 +314,10 @@ RPackage >> classes [
 ]
 
 { #category : #'class tags' }
-RPackage >> classesForClassTag: aSymbol [
+RPackage >> classesForClassTag: aTagName [
 	"Returns the classes tagged using aSymbol"
 
-	^ (self
-		classTagNamed: (self toTagName: aSymbol)
-		ifAbsent: [ ^ #() ])
-		classes
+	^ (self classTagNamed: aTagName ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : #queries }
@@ -393,9 +358,7 @@ RPackage >> definedOrExtendedClasses [
 { #category : #accessing }
 RPackage >> definedSelectorsForClass: aClass [
 
-	^ aClass isMeta
-		ifTrue: [ metaclassDefinedSelectors at: aClass instanceSide originalName ifAbsent: [ #() ] ]
-		ifFalse: [ classDefinedSelectors at: aClass originalName ifAbsent: [ #() ] ]
+	^ definedSelectors at: aClass ifAbsent: [ #(  ) ]
 ]
 
 { #category : #testing }
@@ -416,16 +379,22 @@ RPackage >> definesOrExtendsClass: aClass [
 ]
 
 { #category : #converting }
-RPackage >> demoteToTagInPackageNamed: aString [
+RPackage >> demoteToTagInPackage [
 
-	| newPackage |
-	aString = self name ifTrue: [ ^ self ].
+	| newPackage tag |
+	(self name includes: $-) ifFalse: [ self error: 'To demote a package, it name needs to contain at least one dash `-`.' ].
 
+	self flag: #package. "We need to unregister because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a #removeFromSystem at the end to avoid to have a removal system AND an unregistering system."
 	self unregister.
-	newPackage := self class organizer packageNamed: aString ifAbsent: [ (self class named: aString organizer: self organizer) register ].
-	newPackage importPackage: self.
 
-	newPackage classes do: [ :each | SystemAnnouncer uniqueInstance classRepackaged: each from: self to: newPackage ].
+	newPackage := self organizer ensurePackage: (self name copyUpToLast: $-).
+
+	"We keep the suffix that was removed as the tag name to create."
+	tag := newPackage addClassTag: (self name withoutPrefix: newPackage name , '-').
+
+	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
+	self extensionMethods do: [ :method | newPackage addMethod: method ].
+
 	^ newPackage
 ]
 
@@ -444,18 +413,14 @@ RPackage >> environment [
 RPackage >> extendedClassNames [
 	"Return the name of the classes which are extended by the receiver package. if a metaclass is extended, just get its sole instance class name."
 
-	^ classExtensionSelectors keys union: metaclassExtensionSelectors keys
+	^ extensionSelectors keys collect: [ :class | class instanceSide name ] as: Set
 ]
 
 { #category : #accessing }
 RPackage >> extendedClasses [
 	"Return classes and metaclasses that are extended in the receiver. They represent the classes of method extensions"
 
-	^ (metaclassExtensionSelectors keys
-		   select: [ :each | self environment includesKey: each ]
-		   thenCollect: [ :each | (self environment at: each) classSide ]) union: (classExtensionSelectors keys
-			   select: [ :each | self environment includesKey: each ]
-			   thenCollect: [ :each | self environment at: each ])
+	^ extensionSelectors keys
 ]
 
 { #category : #testing }
@@ -471,14 +436,10 @@ RPackage >> extendsClass: aClass [
 RPackage >> extensionMethods [
 	"Extension methods are methods defined on classes that are not defined in the receiver"
 
-	| allExtensionMethods |
-	allExtensionMethods := OrderedCollection new.
-	classExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-		methods do: [ :selector | allExtensionMethods add: (self environment at: classSymbol) >> selector ] ].
-	metaclassExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-		methods do: [ :selector | allExtensionMethods add: (self environment at: classSymbol) classSide >> selector ] ].
-
-	^ allExtensionMethods
+	| methods |
+	methods := OrderedCollection new.
+	extensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
+	^ methods
 ]
 
 { #category : #accessing }
@@ -498,31 +459,31 @@ RPackage >> extensionProtocolsForClass: aClass [
 RPackage >> extensionSelectors [
 	"Extension methods are methods defined on classes that are not defined in the receiver"
 
-	| classSels |
-	classSels := Set new.
-	classExtensionSelectors valuesDo: [ :each | classSels addAll: each ].
-	metaclassExtensionSelectors valuesDo: [ :each | classSels addAll: each ].
-	^ classSels
+	| allSelectors |
+	allSelectors := Set new.
+	extensionSelectors keysAndValuesDo: [ :class :selectors | allSelectors addAll: selectors ].
+	^ allSelectors
 ]
 
 { #category : #accessing }
 RPackage >> extensionSelectorsForClass: aClass [
 
-	^ aClass isMeta
-		ifTrue: [ metaclassExtensionSelectors at: aClass instanceSide originalName ifAbsent: [ #() ] ]
-		ifFalse: [ classExtensionSelectors at: aClass originalName ifAbsent: [ #() ] ]
-]
-
-{ #category : #'class tags' }
-RPackage >> extensionsForTag: aRPackageTag [
-
-	^ self extensionMethods select: [ :extensionMethod | extensionMethod protocolName allButFirst isCategoryOf: aRPackageTag categoryName ]
+	^ extensionSelectors at: aClass ifAbsent: [ #(  ) ]
 ]
 
 { #category : #properties }
 RPackage >> hasProperty: aKey [
 	self propertyAt: aKey ifAbsent: [ ^ false ].
 	^ true
+]
+
+{ #category : #testing }
+RPackage >> hasTag: aTag [
+	"Takes a package tag or a package tag name as parameter and return true if I include this package tag."
+
+	^ aTag isString
+		  ifTrue: [ self classTags anySatisfy: [ :tag | tag name = aTag ] ]
+		  ifFalse: [ self classTags includes: aTag ]
 ]
 
 { #category : #accessing }
@@ -558,12 +519,11 @@ RPackage >> importClass: aClass inTag: aTag [
 ]
 
 { #category : #private }
-RPackage >> importPackage: anRPackage [
+RPackage >> importDefinedMethodsOf: aClass [
 
-	anRPackage definedClasses do: [ :className | self importClass: className ].
-	"new rpackage inherits the extentions"
-	classExtensionSelectors := classExtensionSelectors , anRPackage classExtensionSelectors.
-	metaclassExtensionSelectors := metaclassExtensionSelectors , anRPackage metaclassExtensionSelectors
+	aClass protocols
+		reject: [ :protocol | protocol isExtensionProtocol ]
+		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
 ]
 
 { #category : #private }
@@ -642,12 +602,11 @@ RPackage >> includesSystemCategory: categoryName [
 
 { #category : #initialization }
 RPackage >> initialize [
+
 	super initialize.
 	classes := IdentitySet new.
-	metaclassExtensionSelectors := IdentityDictionary new.
-	classExtensionSelectors := IdentityDictionary new.
-	classDefinedSelectors := IdentityDictionary new.
-	metaclassDefinedSelectors := IdentityDictionary new.
+	definedSelectors := IdentityDictionary new.
+	extensionSelectors := IdentityDictionary new.
 	classTags := Set new
 ]
 
@@ -707,11 +666,6 @@ RPackage >> linesOfCode [
 	^self methods inject: 0 into: [:sum :each | sum + each linesOfCode]
 ]
 
-{ #category : #private }
-RPackage >> metaclassExtensionSelectors [
-	^ metaclassExtensionSelectors
-]
-
 { #category : #'system compatibility' }
 RPackage >> methodCategoryPrefix [
 	^ '*', self name asLowercase
@@ -724,11 +678,8 @@ RPackage >> methods [
 	| methods |
 	methods := OrderedCollection new.
 
-	metaclassExtensionSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) classSide >> sel ] ].
-	classExtensionSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) >> sel ] ].
-
-	metaclassDefinedSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) classSide >> sel ] ].
-	classDefinedSelectors keysAndValuesDo: [ :key :val | val do: [ :sel | methods add: (self environment at: key) >> sel ] ].
+	extensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
+	definedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
 
 	^ methods
 ]
@@ -743,22 +694,15 @@ RPackage >> methodsForClass: aClass [
 ]
 
 { #category : #private }
-RPackage >> moveClass: aClass fromPackage: oldPackage toTag: aTag [
+RPackage >> moveClass: aClass toTag: aTag [
+
+	| oldPackage |
+	oldPackage := aClass package.
 
 	oldPackage removeClass: aClass.
 	self importClass: aClass inTag: aTag.
 
 	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
-]
-
-{ #category : #private }
-RPackage >> moveClass: aClass toTag: aTag [
-	"TODO: deprecate system categories / replace this with a direct call to moveClass:fromPackage:toTag:"
-
-	"This change the class category as appropriate.
-		(and by cascade, ensure systemClassRecategorizedAction: is called)."
-
-	aClass category: aTag categoryName
 ]
 
 { #category : #accessing }
@@ -823,6 +767,12 @@ RPackage >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
+{ #category : #private }
+RPackage >> privateExtensionSelectors [
+
+	^ extensionSelectors
+]
+
 { #category : #properties }
 RPackage >> properties [
 	^ Properties at: self ifAbsent: nil
@@ -873,14 +823,12 @@ RPackage >> registerClass: aClass [
 RPackage >> removeAllMethodsFromClass: aClass [
 	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
 
-	| aClassNameSymbol |
-	aClassNameSymbol := aClass originalName asSymbol.
-	classDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
-	classExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
-	metaclassDefinedSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
-	metaclassExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [ nil ].
+	definedSelectors removeKey: aClass ifAbsent: [  ].
+	definedSelectors removeKey: aClass classSide ifAbsent: [  ].
+	extensionSelectors removeKey: aClass ifAbsent: [  ].
+	extensionSelectors removeKey: aClass classSide ifAbsent: [  ].
 
-	self organizer unregisterExtendingPackage: self forClassName: aClassNameSymbol
+	self organizer unregisterExtendingPackage: self forClass: aClass
 ]
 
 { #category : #removing }
@@ -901,7 +849,7 @@ RPackage >> removeClass: aClass [
 RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 
 	| tag |
-	tag := self classTagNamed: (self toTagName: aSymbol) ifAbsent: [ ^ self ].
+	tag := self classTagNamed: aSymbol ifAbsent: [ ^ self ].
 	tag removeClass: aClass.
 	tag isEmpty ifTrue: [ self basicRemoveTag: tag ]
 ]
@@ -946,29 +894,17 @@ RPackage >> removeMethod: aCompiledMethod [
 	methodClass := aCompiledMethod methodClass.
 	(self includesClass: methodClass)
 		ifTrue: [
-			methodClass isMeta
-				ifTrue: [
-					metaclassDefinedSelectors at: methodClass instanceSide originalName ifPresent: [ :methods |
-						methods remove: aCompiledMethod selector ifAbsent: [  ].
-						methods ifEmpty: [ metaclassDefinedSelectors removeKey: methodClass instanceSide originalName ] ] ]
-				ifFalse: [
-					classDefinedSelectors at: methodClass originalName ifPresent: [ :methods |
-						methods remove: aCompiledMethod selector ifAbsent: [  ].
-						methods ifEmpty: [ classDefinedSelectors removeKey: methodClass originalName ] ] ] ]
+			definedSelectors at: methodClass ifPresent: [ :selectors |
+				selectors remove: aCompiledMethod selector ifAbsent: [  ].
+				selectors ifEmpty: [ definedSelectors removeKey: methodClass ] ] ]
 		ifFalse: [
-			methodClass isMeta
-				ifTrue: [
-					metaclassExtensionSelectors at: methodClass instanceSide originalName ifPresent: [ :methods |
-						methods remove: aCompiledMethod selector ifAbsent: [  ].
-						methods ifEmpty: [ metaclassExtensionSelectors removeKey: methodClass instanceSide originalName ] ] ]
-				ifFalse: [
-					classExtensionSelectors at: methodClass originalName ifPresent: [ :methods |
-						methods remove: aCompiledMethod selector ifAbsent: [  ].
-						methods ifEmpty: [ classExtensionSelectors removeKey: methodClass originalName ] ] ] ].
+			extensionSelectors at: methodClass ifPresent: [ :selectors |
+				selectors remove: aCompiledMethod selector ifAbsent: [  ].
+				selectors ifEmpty: [ extensionSelectors removeKey: methodClass ] ] ].
 
-	((metaclassExtensionSelectors at: methodClass instanceSide originalName ifAbsent: [ #(  ) ]) isEmpty and: [
-		 (classExtensionSelectors at: methodClass instanceSide originalName ifAbsent: [ #(  ) ]) isEmpty ]) ifTrue: [
-		self organizer unregisterExtendingPackage: self forClassName: methodClass instanceSide originalName ].
+	((extensionSelectors at: methodClass instanceSide ifAbsent: [ #(  ) ]) isEmpty and: [
+		 (extensionSelectors at: methodClass classSide ifAbsent: [ #(  ) ]) isEmpty ]) ifTrue: [
+		self organizer unregisterExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
@@ -1002,6 +938,16 @@ RPackage >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
+{ #category : #'class tags' }
+RPackage >> removeTag: aTag [
+
+	| tagName |
+	tagName := aTag isString
+		           ifTrue: [ aTag ]
+		           ifFalse: [ aTag name ].
+	self removeClassTag: tagName
+]
+
 { #category : #private }
 RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 
@@ -1009,6 +955,16 @@ RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 	protocols := self extensionMethods collect: [ :method | method protocol ] as: Set.
 
 	protocols do: [ :protocol | protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ]
+]
+
+{ #category : #'class tags' }
+RPackage >> renameTag: aTag to: newName [
+
+	(self hasTag: aTag) ifFalse: [ ^ self ].
+
+	(aTag isString
+		 ifTrue: [ self classTagNamed: aTag ]
+		 ifFalse: [ aTag ]) renameTo: newName
 ]
 
 { #category : #private }
@@ -1060,6 +1016,19 @@ RPackage >> reportBogusBehaviorOf: aSelector [
 	self traceCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'
 ]
 
+{ #category : #'class tags' }
+RPackage >> rootTag [
+
+	^ self addClassTag: self rootTagName
+]
+
+{ #category : #accessing }
+RPackage >> rootTagName [
+
+	self flag: #package. "In the future we should not use the name of the package because it causes bugs."
+	^ self name
+]
+
 { #category : #accessing }
 RPackage >> roots [
 	"Returns all the root classes of a package. A root class is a class whose superclass is not defined in the package.
@@ -1072,13 +1041,11 @@ RPackage >> roots [
 { #category : #accessing }
 RPackage >> selectors [
 
-	| sel |
-	sel := Set new.
-	metaclassExtensionSelectors valuesDo: [:each | sel addAll: each].
-	classExtensionSelectors valuesDo: [:each | sel addAll: each].
-	metaclassDefinedSelectors valuesDo: [:each | sel addAll: each].
-	classDefinedSelectors valuesDo: [:each | sel addAll: each].
-	^ sel
+	| allSelectors |
+	allSelectors := Set new.
+	extensionSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
+	definedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
+	^ allSelectors
 ]
 
 { #category : #accessing }
@@ -1114,7 +1081,10 @@ RPackage >> toTagName: aSymbol [
 
 	^ (aSymbol beginsWith: self name asString , '-')
 		  ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
-		  ifFalse: [ aSymbol ]
+		  ifFalse: [
+			  (aSymbol sameAs: self name)
+				  ifTrue: [ self rootTagName ]
+				  ifFalse: [ aSymbol ] ]
 ]
 
 { #category : #register }
@@ -1134,70 +1104,26 @@ RPackage >> unregisterClass: aClass [
 RPackage >> updateDefinedClassNamed: oldString withNewName: newString [
 	"this method should only be used with class names , and not metaclass names"
 
-	(oldString substrings size > 1 or: [ newString substrings size > 1 ])
-		ifTrue: [ Error signal: 'You should not use metaclass names' ].	"=> update the 'classDefinedSelectors' dictionary (replace the old key by the new one)
-       => update the 'metaclassDefinedSelectors' dictionary (replace the old key by the new one)"
+	(oldString substrings size > 1 or: [ newString substrings size > 1 ]) ifTrue: [ Error signal: 'You should not use metaclass names' ].
+
 	classes remove: oldString asSymbol.
-	classes add: newString asSymbol.	"Don't forget that class tags also register the classes names."
-	self classTags do: [ :aTag | aTag updateDefinedClassNamed: oldString withNewName: newString ].
-	self flag: #cyrille.	"what happens if this is a metaclass: it breaks the invariant of the package"	"worse so far the second block below breaks"	"the name of the method should be updateDefinedClassNamed: withNewName:"	"CD: i only use this method when a class is renamed in the system (systemClassRenamedActionFrom:). Normally we are not able to rename a metaclass in the system (?) so we should never end up in a case with metaclass names ?  "
-	(classDefinedSelectors at: oldString ifAbsent: [ nil ])
-		ifNotNil: [
-			classDefinedSelectors at: newString put: (classDefinedSelectors at: oldString).
-			classDefinedSelectors
-				removeKey: oldString
-				ifAbsent: [ self reportBogusBehaviorOf: #updateDefinedClassNamed:withNewName: ] ].
-	(metaclassDefinedSelectors at: oldString ifAbsent: [ nil ])
-		ifNotNil: [
-			metaclassDefinedSelectors at: newString put: (metaclassDefinedSelectors at: oldString).
-			metaclassDefinedSelectors
-				removeKey: oldString
-				ifAbsent: [ self reportBogusBehaviorOf: #updateDefinedClassNamed:withNewName: ] ]
+	classes add: newString asSymbol
 ]
 
 { #category : #updating }
 RPackage >> updateDefinedSelector: oldSelector inClass: aClass withNewSelector: newSelector [
 
-	aClass isMeta
-		ifTrue: [
-			(metaclassDefinedSelectors at: aClass instanceSide name asSymbol) remove: oldSelector.
-			(metaclassDefinedSelectors at: aClass instanceSide name asSymbol) add: newSelector. ]
-		ifFalse: [
-			(classDefinedSelectors  at: aClass name asSymbol) remove: oldSelector.
-			(classDefinedSelectors  at: aClass name asSymbol) add: newSelector. ]
-]
-
-{ #category : #updating }
-RPackage >> updateExtensionForClassNamed: oldString withNewName: newString [
-
-	"=> update the 'classExtensionsSelectors' dictionary (replace the old key by the new one)
-        => update the 'metaclassclassExtensionsSelectors' dictionary (replace the old key by the new one)"
-	"classes remove: oldString.
-	classes add: newString."
-
-	(metaclassExtensionSelectors at: oldString ifAbsent: [nil]) ifNotNil: [
-		metaclassExtensionSelectors at: newString put: (metaclassExtensionSelectors at: oldString).
-		metaclassExtensionSelectors removeKey: oldString  ifAbsent: [self reportBogusBehaviorOf: #updateExtensionForClassNamed:withNewName:   ]
-		].
-
-	(classExtensionSelectors at: oldString ifAbsent: [nil]) ifNotNil: [
-		classExtensionSelectors at: newString put: (classExtensionSelectors at: oldString).
-		classExtensionSelectors removeKey: oldString ifAbsent: [self reportBogusBehaviorOf: #updateExtensionForClassNamed:withNewName:   ]
-		]
+	(definedSelectors at: aClass)
+		remove: oldSelector;
+		add: newSelector
 ]
 
 { #category : #updating }
 RPackage >> updateExtensionSelector: oldSelector inClass: aClass withNewSelector: newSelector [
 
-	aClass isMeta
-		ifTrue: [
-			(metaclassExtensionSelectors at: aClass instanceSide name asSymbol) remove: oldSelector.
-			(metaclassExtensionSelectors at: aClass instanceSide name asSymbol) add: newSelector.
-			]
-		ifFalse: [
-			(classExtensionSelectors  at: aClass name asSymbol) remove: oldSelector.
-			(classExtensionSelectors  at: aClass name asSymbol) add: newSelector.
-			]
+	(extensionSelectors at: aClass)
+		remove: oldSelector;
+		add: newSelector
 ]
 
 { #category : #updating }
