@@ -1008,7 +1008,7 @@ StrikeFont >> extendMaxAsciiTo: newMax [
 
 { #category : #accessing }
 StrikeFont >> fallbackFont [
-	^ fallbackFont ifNil: [ fallbackFont := FixedFaceFont new errorFont fontSize: self height ]
+	^ fallbackFont ifNil: [ fallbackFont := FixedFaceFont new errorFont baseFont: self ]
 ]
 
 { #category : #accessing }
