@@ -280,7 +280,7 @@ ClyBrowserItem >> isSimilarTo: anotherBrowserItem [
 
 	type = anotherBrowserItem type ifFalse: [ ^false ].
 
-	^name = anotherBrowserItem name or: [ self isEqualTo: anotherBrowserItem ]
+	^(name sameContents: anotherBrowserItem name) or: [ self isEqualTo: anotherBrowserItem ]
 ]
 
 { #category : #accessing }

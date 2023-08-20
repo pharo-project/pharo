@@ -84,7 +84,7 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 
 { #category : #accessing }
 MCClassDefinition >> category [
-	^ category
+	^ category asSymbol
 ]
 
 { #category : #accessing }
