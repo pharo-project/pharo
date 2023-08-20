@@ -116,14 +116,15 @@ FreeTypeGlyphRenderer >> fixBytesForMono: aGlyphForm [
 ]
 
 { #category : #public }
-FreeTypeGlyphRenderer >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont [
+FreeTypeGlyphRenderer >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale [
 
 	| form |
 	form := self
 		renderGlyph: aCharacter
 		depth: (monoBoolean ifTrue:[1] ifFalse:[8])
 		subpixelPosition: sub
-		font: aFreeTypeFont.
+		font: aFreeTypeFont
+		scale: scale.
 	monoBoolean
 		ifTrue:[
 			form := self fixBytesForMono: form.
@@ -133,14 +134,15 @@ FreeTypeGlyphRenderer >> glyphOf: aCharacter colorValue: aColorValue mono: monoB
 ]
 
 { #category : #public }
-FreeTypeGlyphRenderer >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont [
+FreeTypeGlyphRenderer >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale [
 
 	| form |
 	form := self
 		renderGlyph: aCharacter
 		depth: (monoBoolean ifTrue:[1] ifFalse:[8])
 		subpixelPosition: sub
-		font: aFreeTypeFont.
+		font: aFreeTypeFont
+		scale: scale.
 	monoBoolean
 		ifTrue:[
 			form := self fixBytesForMono: form.
@@ -151,7 +153,7 @@ FreeTypeGlyphRenderer >> mode41GlyphOf: aCharacter colorValue: aColorValue mono:
 ]
 
 { #category : #private }
-FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: sub font: aFreeTypeFont [
+FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: sub font: aFreeTypeFont scale: scale [
 	"Glyphs are either 1 or 8 bit deep. For 32 bpp we use 8 bits, otherwise 1"
 	| em form glyph charCode slant extraWidth extraHeight boldExtra offsetX offsetY s synthBoldStrength face |
 
@@ -192,32 +194,32 @@ FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: 
 	extraWidth := extraWidth + boldExtra.
 	sub > 0 ifTrue:[ extraWidth := extraWidth + 1].
 	extraHeight := boldExtra.
-	form := GlyphForm extent: (glyph width + extraWidth + 1)@(glyph height + extraHeight+ 1) depth: depth.
+	form := GlyphForm extent: ((glyph width + extraWidth + 1)@(glyph height + extraHeight+ 1)) * scale depth: depth.
 	s := (glyph height-glyph hBearingY)  * slant.
 	s := s sign * (s abs ceiling).
 	offsetX := glyph hBearingX negated + s + (boldExtra // 2) .
 	offsetY := glyph height - glyph hBearingY + (boldExtra//2).
 	synthBoldStrength ~= 0
 		ifTrue:[face emboldenOutline: synthBoldStrength].
-	face transformOutlineAngle: 0 scalePoint: 1@1  slant: slant.
-	face translateOutlineBy: (offsetX+(sub/64))@offsetY.
+	face transformOutlineAngle: 0 scalePoint: (1@1) * scale slant: slant.
+	face translateOutlineBy: ((offsetX+(sub/64))@offsetY) * scale.
 	face renderGlyphIntoForm: form.
-	form offset: (glyph hBearingX - s - (boldExtra // 2) ) @ (glyph hBearingY + 1 + (boldExtra / 2) ceiling  ) negated.
+	form offset: ((glyph hBearingX - s - (boldExtra // 2) ) @ (glyph hBearingY + 1 + (boldExtra / 2) ceiling  ) negated) * scale.
 	"When not hinting FreeType sets the advance to the truncated linearAdvance.
 	The characters appear squashed together. Rounding is probably better, so we fix the advance here"
 	aFreeTypeFont subPixelPositioned
-		ifTrue:[ form advance: glyph roundedPixelLinearAdvance]
-		ifFalse:[ form advance: glyph advance].
-	form linearAdvance: glyph linearAdvance.
+		ifTrue:[ form advance: glyph roundedPixelLinearAdvance * scale]
+		ifFalse:[ form advance: glyph advance * scale].
+	form linearAdvance: glyph linearAdvance * scale.
 	^ form
 ]
 
 { #category : #public }
-FreeTypeGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont [
+FreeTypeGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale [
 	"The default renderer does not support sub-pixel anti-aliasing,
 	so answer an ordinary glyph"
 
-	^self mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont
+	^self mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale
 ]
 
 { #category : #private }
