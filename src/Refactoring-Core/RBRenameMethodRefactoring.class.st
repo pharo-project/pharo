@@ -125,7 +125,7 @@ RBRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
 		   'The selector name has <1?not:> changed <1?:to #' , newSelector
 		   , '>') & (RBCondition
 		   withBlock: [
-		   permutation asArray ~= (1 to: oldSelector numArgs) asArray ]
+		   permutation asArray = (1 to: oldSelector numArgs) asArray ]
 		   errorString: 'The arguments are <1?:not >permuted')
 ]
 
