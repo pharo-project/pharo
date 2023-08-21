@@ -766,12 +766,6 @@ RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 ]
 
 { #category : #'system integration' }
-RPackageOrganizer >> renameClass: class from: oldName to: newName [
-
-	(self packageOf: class) updateDefinedClassNamed: oldName withNewName: newName
-]
-
-{ #category : #'system integration' }
 RPackageOrganizer >> renamePackage: aPackage to: newName [
 
 	(self hasPackage: aPackage) ifFalse: [ ^ self ].
