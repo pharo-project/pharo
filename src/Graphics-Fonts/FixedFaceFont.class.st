@@ -10,8 +10,7 @@ Class {
 	#superclass : #AbstractFont,
 	#instVars : [
 		'baseFont',
-		'substitutionCharacter',
-		'displaySelector'
+		'substitutionCharacter'
 	],
 	#category : #'Graphics-Fonts'
 }
@@ -52,75 +51,24 @@ FixedFaceFont >> descentKern [
 ]
 
 { #category : #displaying }
-FixedFaceFont >> displayErrorOn: aCanvas length: length at: aPoint kern: kernDelta [
-	| maskedString |
-	maskedString := String new: length.
-	maskedString atAllPut: substitutionCharacter.
-	^ baseFont
-		displayString: maskedString
-		on: aCanvas
-		from: 1
-		to: length
-		at: aPoint
-		kern: kernDelta
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayErrorOn: aCanvas length: length at: aPoint kern: kernDelta baselineY: baselineY [
-	| maskedString |
-	maskedString := String new: length.
-	maskedString atAllPut: substitutionCharacter.
-	^ baseFont
-		displayString: maskedString
-		on: aCanvas
-		from: 1
-		to: length
-		at: aPoint
-		kern: kernDelta
-		baselineY: baselineY
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayPasswordOn: aCanvas length: length at: aPoint kern: kernDelta [
-	| maskedString |
-	maskedString := String new: length.
-	maskedString atAllPut: substitutionCharacter.
-	^ baseFont
-		displayString: maskedString
-		on: aCanvas
-		from: 1
-		to: length
-		at: aPoint
-		kern: kernDelta
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayPasswordOn: aCanvas length: length at: aPoint kern: kernDelta baselineY: baselineY [
-	| maskedString |
-	maskedString := String new: length.
-	maskedString atAllPut: substitutionCharacter.
-	^ baseFont
-		displayString: maskedString
-		on: aCanvas
-		from: 1
-		to: length
-		at: aPoint
-		kern: kernDelta
-		baselineY: baselineY
-]
-
-{ #category : #displaying }
 FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-	| size |
-	size := stopIndex - startIndex + 1.
-	^ self perform: displaySelector withArguments: (Array with: aDisplayContext with: size with: aPoint with: kernDelta with: aPoint y + self ascent)
+
+	^ self displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint
+		kern: kernDelta baselineY: aPoint y + self ascent
 ]
 
 { #category : #displaying }
 FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
 	| size |
 	size := stopIndex - startIndex + 1.
-	^ self perform: displaySelector withArguments: (Array with: aDisplayContext with: size with: aPoint with: kernDelta with: baselineY)
+	^ baseFont
+		displayString: (String new: size withAll: substitutionCharacter)
+		on: aDisplayContext
+		from: 1
+		to: size
+		at: aPoint
+		kern: kernDelta
+		baselineY: baselineY
 ]
 
 { #category : #displaying }
@@ -157,7 +105,6 @@ FixedFaceFont >> emphasized: emph [
 
 { #category : #initialization }
 FixedFaceFont >> errorFont [
-	displaySelector := #displayErrorOn:length:at:kern:baselineY:.
 	substitutionCharacter := $?
 ]
 
@@ -211,7 +158,6 @@ FixedFaceFont >> passwordCharacter [
 
 { #category : #initialization }
 FixedFaceFont >> passwordFont [
-	displaySelector := #displayPasswordOn:length:at:kern:baselineY:.
 	substitutionCharacter := $*
 ]
 
