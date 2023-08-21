@@ -21,15 +21,14 @@ MCOrganizationDefinition class >> categories: aCollection [
 MCOrganizationDefinition class >> packageName: aPackageName [
 
 	^ self new
-		  packageName: aPackageName;
+		  packageName: aPackageName asSymbol;
 		  yourself
 ]
 
 { #category : #'instance creation' }
 MCOrganizationDefinition class >> packageName: aPackageName tagNames: aCollection [
 
-	^ self new
-		  packageName: aPackageName;
+	^ (self packageName: aPackageName)
 		  tagNames: aCollection;
 		  yourself
 ]
@@ -116,6 +115,12 @@ MCOrganizationDefinition >> hash [
 	^ (self species hash 
 		bitXor: super hash)
 		bitXor: self categories hash
+]
+
+{ #category : #initialization }
+MCOrganizationDefinition >> initialize [
+	super initialize.
+	tagNames := #()
 ]
 
 { #category : #testing }

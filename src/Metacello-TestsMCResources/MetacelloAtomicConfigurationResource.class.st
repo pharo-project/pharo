@@ -348,43 +348,43 @@ MetacelloAtomicConfigurationResource >> setUp [
 MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFan [
     "self reset"
 
-    | reference className definitionArray |
+    | reference packageName definitionArray |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfAtomicFan-dkh.1'.
-    className := reference packageName asSymbol.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: className)).
+    packageName := reference packageName asSymbol.
+    definitionArray := {(MCOrganizationDefinition categories: (Array with: packageName)).
     (MCClassDefinition
-        name: className
+        name: packageName
         superclassName: #'Object'
-        category: className
+        category: packageName
         instVarNames: #()
         comment: '').
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         classIsMeta: true
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectClassMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline20Fan:'
         category: 'cat'
         timeStamp: ''
         source: self baseline20MethodSourceFan).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline31Fan:'
         category: 'cat'
         timeStamp: ''
         source: self baseline31MethodSourceFan).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'postLoad31baseline'
         category: 'cat'
         timeStamp: ''
@@ -410,43 +410,43 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFan [
 MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFoo [
     "self reset"
 
-    | reference className definitionArray |
+    | reference packageName definitionArray |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfAtomicFoo-dkh.1'.
-    className := reference packageName asSymbol.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: className)).
+    packageName := reference packageName asSymbol.
+    definitionArray := {(MCOrganizationDefinition categories: (Array with: packageName)).
     (MCClassDefinition
-        name: className
+        name: packageName
         superclassName: #'Object'
-        category: className
+        category: packageName
         instVarNames: #()
         comment: '').
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         classIsMeta: true
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectClassMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline20Foo:'
         category: 'cat'
         timeStamp: ''
         source: self baseline20MethodSourceFoo).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline25Foo:'
         category: 'cat'
         timeStamp: ''
         source: self baseline25MethodSourceFoo).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'version20Foo:'
         category: 'cat'
         timeStamp: ''
@@ -472,67 +472,67 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFoo [
 MetacelloAtomicConfigurationResource >> setUpConfigurationOfLinearFoo [
     "self reset"
 
-    | reference className definitionArray |
+    | reference packageName definitionArray |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfLinearFoo-dkh.1'.
-    className := reference packageName asSymbol.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: className)).
+    packageName := reference packageName asSymbol.
+    definitionArray := {(MCOrganizationDefinition categories: (Array with: packageName)).
     (MCClassDefinition
-        name: className
+        name: packageName
         superclassName: #'Object'
-        category: className
+        category: packageName
         instVarNames: #()
         comment: '').
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         classIsMeta: true
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectClassMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self linearProjectMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline20Foo:'
         category: 'cat'
         timeStamp: ''
         source: self baseline20MethodSourceFoo).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'version20Foo:'
         category: 'cat'
         timeStamp: ''
         source: self version20MethodSourceFoo).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'version50Foo:'
         category: 'cat'
         timeStamp: ''
         source: self version50MethodSourceFoo).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'version51Foo:'
         category: 'cat'
         timeStamp: ''
         source: self version51MethodSourceFoo).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline60Foo:'
         category: 'cat'
         timeStamp: ''
         source: self baseline60MethodSourceFoo).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline61Foo:'
         category: 'cat'
         timeStamp: ''
         source: self baseline61MethodSourceFoo).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline62Foo:'
         category: 'cat'
         timeStamp: ''
@@ -558,43 +558,43 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfLinearFoo [
 MetacelloAtomicConfigurationResource >> setUpConfigurationOfProjectIssue86 [
     "self reset"
 
-    | reference className definitionArray |
+    | reference packageName definitionArray |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue86-dkh.1'.
-    className := reference packageName asSymbol.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: className)).
+    packageName := reference packageName asSymbol.
+    definitionArray := {(MCOrganizationDefinition categories: (Array with: packageName)).
     (MCClassDefinition
-        name: className
+        name: packageName
         superclassName: #'Object'
-        category: className
+        category: packageName
         instVarNames: #()
         comment: '').
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         classIsMeta: true
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectClassMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self linearProjectMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline60ProjectIssue86:'
         category: 'cat'
         timeStamp: ''
         source: self baseline60MethodSourceProjectIssue86).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline61ProjectIssue86:'
         category: 'cat'
         timeStamp: ''
         source: self baseline61MethodSourceProjectIssue86).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'baseline62ProjectIssue86:'
         category: 'cat'
         timeStamp: ''
@@ -620,31 +620,31 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfProjectIssue86 [
 MetacelloAtomicConfigurationResource >> setUpConfigurationOfUmbrellaA [
     "self reset"
 
-    | reference className definitionArray |
+    | reference packageName definitionArray |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfUmbrellaA-dkh.1'.
-    className := reference packageName asSymbol.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: className)).
+    packageName := reference packageName asSymbol.
+    definitionArray := {(MCOrganizationDefinition categories: (Array with: packageName)).
     (MCClassDefinition
-        name: className
+        name: packageName
         superclassName: #'Object'
-        category: className
+        category: packageName
         instVarNames: #()
         comment: '').
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         classIsMeta: true
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectClassMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'version50Umbrella:'
         category: 'cat'
         timeStamp: ''
@@ -670,31 +670,31 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfUmbrellaA [
 MetacelloAtomicConfigurationResource >> setUpConfigurationOfUmbrellaB [
     "self reset"
 
-    | reference className definitionArray |
+    | reference packageName definitionArray |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfUmbrellaB-dkh.1'.
-    className := reference packageName asSymbol.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: className)).
+    packageName := reference packageName asSymbol.
+    definitionArray := {(MCOrganizationDefinition categories: (Array with: packageName)).
     (MCClassDefinition
-        name: className
+        name: packageName
         superclassName: #'Object'
-        category: className
+        category: packageName
         instVarNames: #()
         comment: '').
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         classIsMeta: true
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectClassMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'project'
         category: 'cat'
         timeStamp: ''
         source: self projectMethodSource).
     (MCMethodDefinition
-        className: className asString
+        className: packageName asString
         selector: 'version51Umbrella:'
         category: 'cat'
         timeStamp: ''
