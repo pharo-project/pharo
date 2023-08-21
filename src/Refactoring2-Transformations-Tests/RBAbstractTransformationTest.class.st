@@ -56,7 +56,7 @@ RBAbstractTransformationTest >> shouldFail: aRefactoring [
 
 	self proceedThroughWarning: [
 		self
-			should: [ aRefactoring primitiveExecute ]
+			should: [ aRefactoring generateChanges ]
 			raise: RBRefactoringError ]
 ]
 

@@ -52,16 +52,16 @@ RBRefactoryVariableChange >> class: aBehavior variable: aString [
 	variable := aString
 ]
 
+{ #category : #private }
+RBRefactoryVariableChange >> generateChanges [
+
+	self changeClass perform: self changeSymbol with: self changeObject
+]
+
 { #category : #comparing }
 RBRefactoryVariableChange >> hash [
 
 	^ self changeClassName hash bitXor: self variable hash
-]
-
-{ #category : #private }
-RBRefactoryVariableChange >> primitiveExecute [
-
-	self changeClass perform: self changeSymbol with: self changeObject
 ]
 
 { #category : #printing }

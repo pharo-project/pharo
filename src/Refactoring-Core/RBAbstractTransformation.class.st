@@ -151,8 +151,19 @@ RBAbstractTransformation >> emptyCondition [
 { #category : #transforming }
 RBAbstractTransformation >> execute [
 	"Check precondition, execute the transformation that produces changes and finally execute the changes"
-	self primitiveExecute.
+	self generateChanges.
 	self performChanges
+]
+
+{ #category : #executing }
+RBAbstractTransformation >> generateChanges [
+	"compatibility method RBRefactoring"
+
+	self checkPreconditions.
+	self privateTransform
+	
+	"below executes the refactoring without prompt"
+	"RBRefactoringManager instance addRefactoring: self"
 ]
 
 { #category : #accessing }
@@ -254,17 +265,6 @@ RBAbstractTransformation >> preconditions [
 	self subclassResponsibility
 ]
 
-{ #category : #executing }
-RBAbstractTransformation >> primitiveExecute [
-	"compatibility method RBRefactoring"
-
-	self checkPreconditions.
-	self privateTransform
-	
-	"below executes the refactoring without prompt"
-	"RBRefactoringManager instance addRefactoring: self"
-]
-
 { #category : #transforming }
 RBAbstractTransformation >> privateTransform [ 
 
@@ -359,7 +359,7 @@ RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
 { #category : #transforming }
 RBAbstractTransformation >> transform [
 	"Do the actual operations."
-	self deprecated: 'Use primitiveExecute or privateTransform instead. Check subclasses for more details.'. 
+	self deprecated: 'Use generateChanges or privateTransform instead. Check subclasses for more details.'. 
 	
 	self subclassResponsibility
 ]

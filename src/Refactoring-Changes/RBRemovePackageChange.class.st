@@ -22,18 +22,18 @@ RBRemovePackageChange >> asUndoOperation [
 	^ changeFactory addPackageNamed: packageName
 ]
 
-{ #category : #accessing }
-RBRemovePackageChange >> package [
-
-	^ (browserEnvironment packageAt: packageName ifAbsent: [nil])
-]
-
 { #category : #private }
-RBRemovePackageChange >> primitiveExecute [
+RBRemovePackageChange >> generateChanges [
 
 	| pkg |
 	pkg := self package.
 	pkg ifNotNil: [ pkg removeFromSystem ]
+]
+
+{ #category : #accessing }
+RBRemovePackageChange >> package [
+
+	^ (browserEnvironment packageAt: packageName ifAbsent: [nil])
 ]
 
 { #category : #removing }

@@ -10,7 +10,7 @@ RBRenameAndDeprecateClassTransformationTest >> testTransform [
 	| transformation class |
 	transformation := (RBRenameAndDeprecateClassTransformation
 		                   rename: self changeMockClass name
-		                   to: #RBRefactoringChangeMock2) primitiveExecute.
+		                   to: #RBRefactoringChangeMock2) generateChanges.
 
 	self assert: transformation model changes changes size equals: 10.
 

@@ -46,7 +46,7 @@ RBCompositeTransformation >> previousTransformations [
 	^ previousTransformations ifNil: [ previousTransformations := OrderedCollection new ]
 ]
 
-{ #category : #executing }
+{ #category : #transforming }
 RBCompositeTransformation >> privateTransform [
 	"in refactoring mode, the transformation can do its own precondition checking,
 	 therefore not needing checking from its containing transformations"
@@ -59,7 +59,7 @@ RBCompositeTransformation >> privateTransform [
 		transformation
 			copyOptionsFrom: self options;
 			model: self model;
-			primitiveExecute ]
+			generateChanges ]
 ]
 
 { #category : #accessing }

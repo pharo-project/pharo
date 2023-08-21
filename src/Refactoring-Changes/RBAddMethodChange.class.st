@@ -144,6 +144,15 @@ RBAddMethodChange >> definedSelector [
 	^ definedSelector
 ]
 
+{ #category : #private }
+RBAddMethodChange >> generateChanges [
+
+	definedSelector := self changeClass
+		                   compile: self source
+		                   classified: self protocol
+		                   notifying: self controller
+]
+
 { #category : #comparing }
 RBAddMethodChange >> hash [
 
@@ -174,15 +183,6 @@ RBAddMethodChange >> parseTree [
 		  onError: [ :str :pos | ^ nil ].
 	tree ifNotNil: [ tree doSemanticAnalysis ].
 	^ tree
-]
-
-{ #category : #private }
-RBAddMethodChange >> primitiveExecute [
-
-	definedSelector := self changeClass
-		                   compile: self source
-		                   classified: self protocol
-		                   notifying: self controller
 ]
 
 { #category : #printing }

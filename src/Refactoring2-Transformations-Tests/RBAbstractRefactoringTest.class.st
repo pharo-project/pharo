@@ -29,12 +29,12 @@ RBAbstractRefactoringTest >> createRefactoringWithModel: aRBNamespace andArgumen
 
 { #category : #parsing }
 RBAbstractRefactoringTest >> executeRefactoring: aRefactoring [
-	aRefactoring primitiveExecute
+	aRefactoring generateChanges
 ]
 
 { #category : #parsing }
 RBAbstractRefactoringTest >> executeRefactorings: aRefactoringColl [
-	aRefactoringColl do: [ :ref | ref primitiveExecute]
+	aRefactoringColl do: [ :ref | ref generateChanges]
 ]
 
 { #category : #tests }
@@ -192,7 +192,7 @@ RBAbstractRefactoringTest >> shouldFail: aRefactoring [
 
 	self proceedThroughWarning: [
 		self
-			should: [ aRefactoring primitiveExecute ]
+			should: [ aRefactoring generateChanges ]
 			raise: RBRefactoringError
 	]
 ]
