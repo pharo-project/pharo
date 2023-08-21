@@ -269,14 +269,14 @@ PBImageBuilder50 >> createInitialObjects [
 					  objectSpace backend smallIntegerMirrorOn: each ])).
 
 	PBSubStepFinishedSignal emit: 'preparing class builder'.
-	self bootstrapInterpreter evaluateCode:
-		'StrictSymbolComparison := false.'.
+	
 	PBStepStartedSignal log: 'assigned strict symbol comparison'.
 	
 	self bootstrapInterpreter evaluateCode:
 		'DangerousClassNotifier disable'.
 	self bootstrapInterpreter evaluateCode:
-		'Undeclared := Dictionary new.'.
+		'StrictSymbolComparison := false.
+		Undeclared := Dictionary new.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk := SmalltalkImage basicNew.'.
 	self bootstrapInterpreter evaluateCode:
