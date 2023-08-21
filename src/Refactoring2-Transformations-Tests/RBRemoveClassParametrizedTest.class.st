@@ -35,14 +35,6 @@ RBRemoveClassParametrizedTest >> testFailureRemoveClassWithBadNameRaisesRBRefact
 ]
 
 { #category : #'failure tests' }
-RBRemoveClassParametrizedTest >> testFailureRemoveClassWithReferencesRaisesRBRefactoringError [
-
-	self shouldWarn: (self
-			 createRefactoringWithModel: model
-			 andArguments: #( #RBBasicLintRuleTestData ))
-]
-
-{ #category : #'failure tests' }
 RBRemoveClassParametrizedTest >> testFailureRemoveClassWithSubclasses [
 
 	self shouldFail:
@@ -88,4 +80,12 @@ RBRemoveClassParametrizedTest >> testRemoveEmptySuperclass [
 
 	self assert: (model classNamed: classA) isNil.
 	self assert: (model classNamed: classB) superclass equals: (model classNamed: classC)
+]
+
+{ #category : #'failure tests' }
+RBRemoveClassParametrizedTest >> testShouldWarnWhenRemovingClassWithReferences [
+
+	self shouldWarn: (self
+			 createRefactoringWithModel: model
+			 andArguments: #( #RBBasicLintRuleTestData ))
 ]

@@ -17,7 +17,7 @@ RBRemoveClassTransformationTest >> testRefactoring [
 		               #RBFooDummyLintRuleTest1.
 
 	self
-		should: [ refactoring primitiveExecute ]
+		should: [ refactoring generateChanges ]
 		raise: RBRefactoringError.
 
 	self assert:

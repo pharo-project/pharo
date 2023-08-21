@@ -52,7 +52,7 @@ RBClassCategoryChange >> displayCategoryName [
 ]
 
 { #category : #private }
-RBClassCategoryChange >> primitiveExecute [
+RBClassCategoryChange >> generateChanges [
 
 	self changeClass category: category
 ]

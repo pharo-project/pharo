@@ -18,7 +18,7 @@ RBProtectVariableTransformationTest >> testAccessorsAlreadyExist [
 	(RBProtectVariableTransformation
 		 model: model
 		 instanceVariable: 'instVarName1'
-		 class: #Foo) primitiveExecute.
+		 class: #Foo) generateChanges.
 
 	class := model classNamed: #Foo.
 	self
@@ -47,7 +47,7 @@ RBProtectVariableTransformationTest >> testClassVariable [
 	refactoring := (RBProtectVariableTransformation
 		                classVariable: 'RecursiveSelfRule'
 		                class: #RBTransformationRuleTestData)
-		               primitiveExecute.
+		               generateChanges.
 
 	class := (refactoring model classNamed: #RBTransformationRuleTestData)
 		         classSide.
@@ -90,7 +90,7 @@ RBProtectVariableTransformationTest >> testClassVariableInModel [
 	(RBProtectVariableTransformation
 		 model: model
 		 classVariable: 'ClassVarName1'
-		 class: #Foo) primitiveExecute.
+		 class: #Foo) generateChanges.
 
 	class := (model classNamed: #Foo) classSide.
 	self
@@ -138,7 +138,7 @@ RBProtectVariableTransformationTest >> testMetaclass [
 	(RBProtectVariableTransformation
 		 model: model
 		 instanceVariable: 'foo'
-		 class: class) primitiveExecute.
+		 class: class) generateChanges.
 
 	self
 		assert: (class parseTreeForSelector: #foo1)
@@ -168,7 +168,7 @@ RBProtectVariableTransformationTest >> testRefactoring [
 	refactoring := (RBProtectVariableTransformation
 		                instanceVariable: 'builder'
 		                class: #RBTransformationRuleTestData)
-		               primitiveExecute.
+		               generateChanges.
 
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self
@@ -204,7 +204,7 @@ RBProtectVariableTransformationTest >> testTransform [
 	transformation := (RBProtectVariableTransformation
 		                   instanceVariable: 'class'
 		                   class: #RBTransformationRuleTestData)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	class := transformation model classNamed:
 		         #RBTransformationRuleTestData.
@@ -262,7 +262,7 @@ RBProtectVariableTransformationTest >> testVariableIsNotAccessed [
 	self deny: (class directlyDefinesLocalMethod: #instVar).
 	self deny: (class directlyDefinesLocalMethod: #instVar:).
 
-	transformation primitiveExecute.
+	transformation generateChanges.
 	self assert: transformation model changes changes size equals: 3.
 	"the accessors and the method using the variables"
 	self assert: (class directlyDefinesLocalMethod: #instVar).
@@ -292,7 +292,7 @@ RBProtectVariableTransformationTest >> testWithAssignment [
 	refactoring := (RBProtectVariableTransformation
 		                model: model
 		                instanceVariable: 'instVarName2'
-		                class: #Foo) primitiveExecute.
+		                class: #Foo) generateChanges.
 
 	class := model classNamed: #Foo.
 	self

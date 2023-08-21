@@ -43,10 +43,10 @@ RBCompositeRefactoring >> preconditions [
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
-{ #category : #preconditions }
+{ #category : #transforming }
 RBCompositeRefactoring >> privateTransform [
 
-	refactorings do: [ :each | each primitiveExecute ]
+	refactorings do: [ :each | each generateChanges ]
 ]
 
 { #category : #accessing }
