@@ -52,10 +52,10 @@ RBRemoveClassKeepingSubclassesRefactoring >> preconditions [
 		  "& ( self preconditionEmptyOrHasNoSubclasses: aClassOrTrait )" ]
 ]
 
-{ #category : #preconditions }
+{ #category : #transforming }
 RBRemoveClassKeepingSubclassesRefactoring >> privateTransform [
 	self initalizeRefactorings.
-	refactorings do: [ :ref | ref primitiveExecute ].
+	refactorings do: [ :ref | ref generateChanges ].
 	self reparentSubclasses.
 	self removeClasses
 ]

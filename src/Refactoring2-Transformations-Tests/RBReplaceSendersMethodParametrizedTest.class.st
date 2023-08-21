@@ -58,7 +58,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodOnlyInClass [
 				to: newSelector
 				permutation: (1 to: 1)
 				inAllClasses: false.
-	self proceedThroughWarning: [ refactoring primitiveExecute ].
+	self proceedThroughWarning: [ refactoring generateChanges ].
 	self assert: sendersNewSelector + sendersLastSelector
 		equals: (model allReferencesTo: newSelector) size
 ]
@@ -79,7 +79,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithLessArgs [
 				to: newSelector
 				permutation: #(2)
 				inAllClasses: true.
-	self proceedThroughWarning: [ refactoring primitiveExecute ].
+	self proceedThroughWarning: [ refactoring generateChanges ].
 	self assert: sendersNewSelector + sendersLastSelector
 		equals: (model allReferencesTo: newSelector) size
 ]
@@ -101,7 +101,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithMoreArgs [
 				permutation: #(-1 2 1)
 				inAllClasses: true.
 	refactoring initializers: #('OrderedCollection new: 5').
-	self proceedThroughWarning: [ refactoring primitiveExecute ].
+	self proceedThroughWarning: [ refactoring generateChanges ].
 	self assert: sendersNewSelector + sendersLastSelector
 		equals: (model allReferencesTo: newSelector) size
 ]
@@ -122,7 +122,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithSameArgs [
 				to: newSelector
 				permutation: #(2 1)
 				inAllClasses: true.
-	self proceedThroughWarning: [ refactoring primitiveExecute ].
+	self proceedThroughWarning: [ refactoring generateChanges ].
 	self assert: sendersNewSelector + sendersLastSelector
 		equals: (model allReferencesTo: newSelector) size
 ]
@@ -140,7 +140,7 @@ RBReplaceSendersMethodParametrizedTest >> testReplaceMethodInAllClasses [
 				inAllClasses: true.
 	sendersNewSelector := (refactoring model allReferencesTo: newSelector) size.
 	sendersLastSelector := (refactoring model allReferencesTo: selector) size.
-	self proceedThroughWarning: [ refactoring primitiveExecute ].
+	self proceedThroughWarning: [ refactoring generateChanges ].
 	self assert: sendersNewSelector + sendersLastSelector
 		equals: (refactoring model allReferencesTo: newSelector) size
 ]
@@ -158,7 +158,7 @@ RBReplaceSendersMethodParametrizedTest >> testReplaceMethodOnlyInClass [
 				inAllClasses: false.
 	sendersNewSelector := (refactoring model allReferencesTo: newSelector) size.
 	sendersLastSelector := ((refactoring model allReferencesTo: selector) select: [ :e | e modelClass name = 'RBBasicLintRuleTestData' ]) size.
-	self proceedThroughWarning: [ refactoring primitiveExecute ].
+	self proceedThroughWarning: [ refactoring generateChanges ].
 	self assert: sendersNewSelector + sendersLastSelector
 		equals: (refactoring model allReferencesTo: newSelector) size
 ]

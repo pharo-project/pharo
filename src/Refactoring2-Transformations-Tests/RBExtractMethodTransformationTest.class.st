@@ -20,7 +20,7 @@ RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 		                  from: #checkMethod:
 		                  to: #bar
 		                  in: #RBTransformationRuleTestData.
-	transformation primitiveExecute.
+	transformation generateChanges.
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed:
@@ -106,7 +106,7 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 						rules size == 1 ifTrue: [^rules first viewResults]'
 		                from: #openEditor
 		                to: #foo:
-		                in: #RBDummyLintRuleTest) primitiveExecute.
+		                in: #RBDummyLintRuleTest) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 2.
 
@@ -138,7 +138,7 @@ RBExtractMethodTransformationTest >> testRefactoring [
 		                   from: #checkMethod:
 		                   to: #foo:
 		                   in: #RBTransformationRuleTestData)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 2.
 
@@ -172,7 +172,7 @@ RBExtractMethodTransformationTest >> testTransform [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 		                   in: self changeMockClass name
-		                   withProtocol: #accessing ) primitiveExecute.
+		                   withProtocol: #accessing ) generateChanges.
 
 	transformation := (RBExtractMethodTransformation
 		                   model: transformation model
@@ -181,7 +181,7 @@ RBExtractMethodTransformationTest >> testTransform [
 							Transcript show: temp printString; cr'
 		                   from: #foo
 		                   to: #foobar
-		                   in: self changeMockClass name) primitiveExecute.
+		                   in: self changeMockClass name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 4.
 
@@ -213,7 +213,7 @@ RBExtractMethodTransformationTest >> testWithArgument [
 				                 in: RBTransformationRuleTestData)
 		                from: #checkMethod:
 		                to: #foo:
-		                in: #RBTransformationRuleTestData) primitiveExecute.
+		                in: #RBTransformationRuleTestData) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 2.
 
@@ -249,7 +249,7 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 		                extract: '| temp | temp := 5. temp * temp'
 		                from: #foo
 		                to: #foobar
-		                in: class) primitiveExecute.
+		                in: class) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 4.
 	self
@@ -279,7 +279,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 		                extract: (method copyFrom: 24 to: 98)
 		                from: #foo
 		                to: #foobar
-		                in: class) primitiveExecute.
+		                in: class) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 4.
 	self
@@ -303,7 +303,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 				                 in: RBTransformationRuleTestData)
 		                from: #superSends
 		                to: #foo1
-		                in: #RBTransformationRuleTestData) primitiveExecute.
+		                in: #RBTransformationRuleTestData) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 2.
 
@@ -338,7 +338,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable2 [
 				                 in: RBDummyLintRuleTest)
 		                from: #displayName
 		                to: #foo:
-		                in: #RBDummyLintRuleTest) primitiveExecute.
+		                in: #RBDummyLintRuleTest) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 2.
 

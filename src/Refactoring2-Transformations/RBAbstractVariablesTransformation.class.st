@@ -47,7 +47,7 @@ RBAbstractVariablesTransformation >> abstractClassVariable: aString [
 		                   model: self model
 		                   variable: aString
 		                   class: nonMetaClass
-		                   classVariable: true) primitiveExecute.
+		                   classVariable: true) generateChanges.
 	rewriter := self parseTreeRewriter.
 	fromClass isMeta
 		ifTrue: [
@@ -87,7 +87,7 @@ RBAbstractVariablesTransformation >> abstractInstanceVariable: aString [
 		                   model: self model
 		                   variable: aString
 		                   class: fromClass
-		                   classVariable: false) primitiveExecute.
+		                   classVariable: false) generateChanges.
 	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: aString , ' := ``@object'
@@ -123,7 +123,7 @@ RBAbstractVariablesTransformation >> abstractVariablesIn: aBRProgramNode from: f
 		                       model: self model
 		                       forMethod: tree
 		                       fromClass: fromClass
-		                       toClasses: toClasses) primitiveExecute.
+		                       toClasses: toClasses) generateChanges.
 	self computeVariablesToAbstract
 ]
 

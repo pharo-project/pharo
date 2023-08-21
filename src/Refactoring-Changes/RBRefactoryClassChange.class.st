@@ -86,9 +86,15 @@ RBRefactoryClassChange >> executeNotifying: aBlock [
 	| undo |
 	undo := self asUndoOperation.
 	undo name: self name.
-	self primitiveExecute.
+	self generateChanges.
 	aBlock value.
 	^ undo
+]
+
+{ #category : #private }
+RBRefactoryClassChange >> generateChanges [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -114,12 +120,6 @@ RBRefactoryClassChange >> methodSourceFor: aSymbol [
 RBRefactoryClassChange >> parserClass [
 
 	^ RBParser
-]
-
-{ #category : #private }
-RBRefactoryClassChange >> primitiveExecute [
-
-	^ self subclassResponsibility
 ]
 
 { #category : #printing }

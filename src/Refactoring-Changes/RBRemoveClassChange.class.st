@@ -51,17 +51,17 @@ RBRemoveClassChange >> changeString [
 	^ 'Remove ' , self displayClassName
 ]
 
+{ #category : #private }
+RBRemoveClassChange >> generateChanges [
+
+	self changeClass removeFromSystem
+]
+
 { #category : #initialization }
 RBRemoveClassChange >> initialize [
 
 	super initialize.
 	changeFactory := RBRefactoryChangeManager changeFactory
-]
-
-{ #category : #private }
-RBRemoveClassChange >> primitiveExecute [
-
-	self changeClass removeFromSystem
 ]
 
 { #category : #printing }

@@ -33,7 +33,7 @@ RBRenamePackageChange >> changePackage [
 ]
 
 { #category : #private }
-RBRenamePackageChange >> primitiveExecute [
+RBRenamePackageChange >> generateChanges [
 
 	self changePackage renameTo: newName
 ]

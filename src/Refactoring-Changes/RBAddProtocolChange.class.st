@@ -29,7 +29,7 @@ RBAddProtocolChange >> changeString [
 ]
 
 { #category : #private }
-RBAddProtocolChange >> primitiveExecute [
+RBAddProtocolChange >> generateChanges [
 
 	self changeClass addProtocol: protocol
 ]
