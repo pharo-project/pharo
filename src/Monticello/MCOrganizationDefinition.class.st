@@ -5,7 +5,9 @@ Class {
 	#name : #MCOrganizationDefinition,
 	#superclass : #MCDefinition,
 	#instVars : [
-		'categories'
+		'categories',
+		'packageName',
+		'tagNames'
 	],
 	#category : #'Monticello-Modeling'
 }
@@ -13,6 +15,23 @@ Class {
 { #category : #'instance creation' }
 MCOrganizationDefinition class >> categories: aCollection [
 	^ self new categories: aCollection
+]
+
+{ #category : #'instance creation' }
+MCOrganizationDefinition class >> packageName: aPackageName [
+
+	^ self new
+		  packageName: aPackageName;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+MCOrganizationDefinition class >> packageName: aPackageName tagNames: aCollection [
+
+	^ self new
+		  packageName: aPackageName;
+		  tagNames: aCollection;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -46,12 +65,14 @@ MCOrganizationDefinition >> basicCommonPrefix [
 
 { #category : #accessing }
 MCOrganizationDefinition >> categories [
-	^ categories
+
+	^ categories ifNil: [ { self packageName } , self tagNames collect: [ :tagName | self packageName , '-' , tagName ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #deprecated }
 MCOrganizationDefinition >> categories: aCollection [
-	"ensure the categories are sorted alphabetically, so the merge don't take it as a conflict"
+	"Do not use. This methods should be replaced by #packageName and #tagNames"
+
 	categories := aCollection sorted asArray
 ]
 
@@ -102,6 +123,18 @@ MCOrganizationDefinition >> isOrganizationDefinition [
 	^ true
 ]
 
+{ #category : #accessing }
+MCOrganizationDefinition >> packageName [
+
+	^ packageName
+]
+
+{ #category : #accessing }
+MCOrganizationDefinition >> packageName: anObject [
+
+	packageName := anObject
+]
+
 { #category : #installing }
 MCOrganizationDefinition >> postloadOver: oldDefinition [
 	"Nothing to do"
@@ -139,6 +172,19 @@ MCOrganizationDefinition >> source [
 MCOrganizationDefinition >> summary [
 
 	^ self categories asArray printString
+]
+
+{ #category : #accessing }
+MCOrganizationDefinition >> tagNames [
+
+	^ tagNames
+]
+
+{ #category : #accessing }
+MCOrganizationDefinition >> tagNames: aCollection [
+	"ensure the tags are sorted alphabetically, so the merge don't take it as a conflict"
+
+	tagNames := aCollection sorted asArray
 ]
 
 { #category : #unloading }
