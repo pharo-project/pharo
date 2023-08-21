@@ -32,11 +32,11 @@ MCOrganizationDefinition >> basicCommonPrefix [
 	"Answers the minimum common denominator on package names contained in the monticello package. 
 	 It can answer a package in the form X-Y-, with a minus at end..."
 	| stream  |
-	categories isEmpty ifTrue: [ ^ '' ].
+	self categories ifEmpty: [ ^ '' ].
 	
 	stream := String new writeStream.
-	categories first withIndexDo: [:c :index |
-		categories do: [:each |
+	self categories first withIndexDo: [:c :index |
+		self categories do: [:each |
 			(each at: index ifAbsent: []) = c 
 				ifFalse: [ ^ stream contents ] ].
 		stream nextPut: c ].
@@ -111,14 +111,11 @@ MCOrganizationDefinition >> postloadOver: oldDefinition [
 MCOrganizationDefinition >> reorderCategories: allCategories original: oldCategories [
 
 	^ allCategories
-		detect: [ :ea | categories includes: ea ]
-		ifFound: [ :first | 
-			((allCategories copyUpTo: first)
-				copyWithoutAll: oldCategories , categories) , categories
-				,
-					((allCategories copyAfter: first)
-						copyWithoutAll: oldCategories , categories) ]
-		ifNone: [ allCategories ]
+		  detect: [ :ea | self categories includes: ea ]
+		  ifFound: [ :first |
+			  ((allCategories copyUpTo: first) copyWithoutAll: oldCategories , self categories) , self categories
+			  , ((allCategories copyAfter: first) copyWithoutAll: oldCategories , self categories) ]
+		  ifNone: [ allCategories ]
 ]
 
 { #category : #accessing }
@@ -134,18 +131,18 @@ MCOrganizationDefinition >> sortKey [
 
 { #category : #accessing }
 MCOrganizationDefinition >> source [
-	^ String streamContents:
-		[:s |
-		categories do: [:ea | s nextPutAll: ea] separatedBy: [s cr]]
+
+	^ String streamContents: [ :s | self categories do: [ :ea | s nextPutAll: ea ] separatedBy: [ s cr ] ]
 ]
 
 { #category : #accessing }
 MCOrganizationDefinition >> summary [
-	^ categories asArray printString
+
+	^ self categories asArray printString
 ]
 
 { #category : #unloading }
 MCOrganizationDefinition >> unload [
 
-	categories do: [ :category | (self packageOrganizer isEmptyCategoryNamed: category) ifTrue: [ self packageOrganizer removeCategory: category ] ]
+	self categories do: [ :category | (self packageOrganizer isEmptyCategoryNamed: category) ifTrue: [ self packageOrganizer removeCategory: category ] ]
 ]
