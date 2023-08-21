@@ -286,6 +286,8 @@ PBImageBuilder50 >> createInitialObjects [
 
 	"Initialize the globals of the system. Careful: The AST interpreter will not know about these if we do not put them in the bootstrapEnvironment."
 	self bootstrapInterpreter evaluateCode:
+		'Smalltalk globals at: #StrictSymbolComparison put: false.'
+	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #Processor put: nil.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #Transcript put: nil.'.
