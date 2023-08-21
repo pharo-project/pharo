@@ -176,13 +176,6 @@ RPackage >> addClass: aClass [
 ]
 
 { #category : #'class tags' }
-RPackage >> addClassDefinition: aClass toClassTag: aSymbol [
-	"Tags the class aClass with the tag aSymbol"
-
-	(self addClassTag: aSymbol) addClass: aClass
-]
-
-{ #category : #'class tags' }
 RPackage >> addClassTag: aSymbol [
 	"Add the class tag from the receiver, if already added do nothing."
 
@@ -497,9 +490,7 @@ RPackage >> importClass: aClass inTag: aTag [
 
 		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ].
 	
-	self addClassDefinition: aClass toClassTag: (aTag isString
-			 ifTrue: [ aTag ]
-			 ifFalse: [ aTag name ])
+	(self addClassTag: (aTag isString ifTrue: [ aTag ] ifFalse: [ aTag name ])) addClass: aClass
 ]
 
 { #category : #private }
