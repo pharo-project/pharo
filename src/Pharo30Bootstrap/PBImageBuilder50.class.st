@@ -257,7 +257,6 @@ PBImageBuilder50 >> createInitialObjects [
 	PBStepFinishedSignal emit: 'initializing globals'.
 	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
 	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
-	self bootstrapEnvironment at: #StrictSymbolComparison put: objectSpace falseObject.
 
 	"We initialize the hash table sizes by hand.
 	The AST interpreter is too slow to interpret HashTableSizes>>#initialize"
