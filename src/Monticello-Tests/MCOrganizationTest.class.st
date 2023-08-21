@@ -7,11 +7,11 @@ Class {
 { #category : #tests }
 MCOrganizationTest >> testLoadAndUnload [
 
-	| category |
-	category := 'TestPackageToUnload'.
-	self packageOrganizer addCategory: category.
-	(MCOrganizationDefinition categories: { category }) unload.
-	self deny: (self packageOrganizer includesCategory: category)
+	| packageName |
+	packageName := 'TestPackageToUnload'.
+	self packageOrganizer addCategory: packageName.
+	(MCOrganizationDefinition packageName: packageName) unload.
+	self deny: (self packageOrganizer includesCategory: packageName)
 ]
 
 { #category : #tests }

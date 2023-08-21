@@ -65,7 +65,7 @@ MCOrganizationDefinition >> basicCommonPrefix [
 { #category : #accessing }
 MCOrganizationDefinition >> categories [
 
-	^ categories ifNil: [ { self packageName } , self tagNames collect: [ :tagName | self packageName , '-' , tagName ] ]
+	^ categories ifNil: [ { self packageName } , (self tagNames collect: [ :tagName | self packageName , '-' , tagName ]) ]
 ]
 
 { #category : #deprecated }

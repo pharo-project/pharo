@@ -995,7 +995,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceIV [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefIV-dkh.1'.
     className := #'BaselineOfGithubRefIV'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1034,7 +1034,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceIX [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefIX-dkh.1'.
     className := #'BaselineOfGithubRefIX'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1073,7 +1073,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceV [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefV-dkh.1'.
     className := #'BaselineOfGithubRefV'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1112,7 +1112,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceVI [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefVI-dkh.1'.
     className := #'BaselineOfGithubRefVI'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1151,7 +1151,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceVII [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefVII-dkh.1'.
     className := #'BaselineOfGithubRefVII'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1190,7 +1190,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceVIII [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefVIII-dkh.1'.
     className := #'BaselineOfGithubRefVIII'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1229,7 +1229,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXI [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefXI-dkh.1'.
     className := #'BaselineOfGithubRefXI'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1268,7 +1268,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXII [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefXII-dkh.1'.
     className := #'BaselineOfGithubRefXII'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1307,7 +1307,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXIII [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefXIII-dkh.1'.
     className := #'BaselineOfGithubRefXIII'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1346,7 +1346,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXX [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfGithubRefXX-dkh.1'.
     className := #'BaselineOfGithubRefXX'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1385,8 +1385,7 @@ MetacelloScriptingResource >> setUpBaselineIssue215 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'BaselineOfIssue215-dkh.1'.
   className := #'BaselineOfIssue215'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'BaselineOf'
@@ -1446,7 +1445,7 @@ MetacelloScriptingResource >> setUpBaselineIssue32 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfIssue32-dkh.1'.
     className := #'BaselineOfIssue32'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1506,8 +1505,7 @@ MetacelloScriptingResource >> setUpBaselineIssue399 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'BaselineOfIssue399-dkh.1'.
   className := #'BaselineOfIssue399'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'BaselineOf'
@@ -1546,8 +1544,7 @@ MetacelloScriptingResource >> setUpBaselineIssue399Cypress [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'BaselineOfIssue399Cypress-dkh.1'.
   className := #'BaselineOfIssue399Cypress'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'BaselineOf'
@@ -1593,7 +1590,7 @@ MetacelloScriptingResource >> setUpBaselineOfExternalX [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfExternalX-dkh.1'.
     className := #'BaselineOfExternalX'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1632,7 +1629,7 @@ MetacelloScriptingResource >> setUpBaselineOfExternalXX [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfExternalXX-dkh.1'.
     className := #'BaselineOfExternalXX'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1671,7 +1668,7 @@ MetacelloScriptingResource >> setUpBaselineOfExternalXXX [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'BaselineOfExternalXXX-dkh.1'.
     className := #'BaselineOfExternalXXX'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'BaselineOf'
@@ -1717,8 +1714,7 @@ MetacelloScriptingResource >> setUpConfiguration181 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'ConfigurationOfIssue181-dkh.1'.
   className := #'ConfigurationOfIssue181'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -1806,7 +1802,7 @@ MetacelloScriptingResource >> setUpConfiguration63 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfIssue63-dkh.1'.
     className := #'ConfigurationOfIssue63'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -1861,8 +1857,7 @@ MetacelloScriptingResource >> setUpConfigurationExternalRefdkh1 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'ConfigurationOfExternalRef-dkh.1'.
   className := #'ConfigurationOfExternalRef'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -1908,8 +1903,7 @@ MetacelloScriptingResource >> setUpConfigurationExternalRefdkh2: ancestors [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'ConfigurationOfExternalRef-dkh.2'.
   className := #'ConfigurationOfExternalRef'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -1964,7 +1958,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue32 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfIssue32-dkh.1'.
     className := #'ConfigurationOfIssue32'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -2019,8 +2013,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue339 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'ConfigurationOfIssue339-dkh.1'.
   className := #'ConfigurationOfIssue339'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -2063,7 +2056,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue59 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfIssue59-dkh.1'.
     className := #'ConfigurationOfIssue59'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -2118,7 +2111,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue84 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfIssue84-dkh.1'.
     className := #'ConfigurationOfIssue84'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -2177,7 +2170,7 @@ MetacelloScriptingResource >> setUpConfigurationNextedIssue84dkh1 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfNestedIssue84-dkh.1'.
     className := #'ConfigurationOfNestedIssue84'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -2232,7 +2225,7 @@ MetacelloScriptingResource >> setUpConfigurationNextedIssue84dkh2: ancestors [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfNestedIssue84-dkh.2'.
     className := #'ConfigurationOfNestedIssue84'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -2285,8 +2278,7 @@ MetacelloScriptingResource >> setUpConfigurationOfConflict [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'ConfigurationOfConflict-dkh.1'.
   className := #'ConfigurationOfConflict'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -2362,7 +2354,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalIV [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfExternalIV-dkh.1'.
     className := #'ConfigurationOfExternalIV'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -2417,7 +2409,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXX [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfExternalXX-dkh.1'.
     className := #'ConfigurationOfExternalXX'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -2463,7 +2455,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXXX [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfExternalXXX-dkh.1'.
     className := #'ConfigurationOfExternalXXX'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -2502,8 +2494,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXdkh1 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'ConfigurationOfExternalX-dkh.1'.
   className := #'ConfigurationOfExternalX'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -2556,8 +2547,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXdkh2: ancestors [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'ConfigurationOfExternalX-dkh.2'.
   className := #'ConfigurationOfExternalX'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -2624,8 +2614,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternaldkh1 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'ConfigurationOfExternal-dkh.1'.
   className := #'ConfigurationOfExternal'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -2664,8 +2653,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternaldkh2 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'ConfigurationOfExternal-dkh.2'.
   className := #'ConfigurationOfExternal'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -2711,8 +2699,7 @@ MetacelloScriptingResource >> setUpExternalCore [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'External-Core-dkh.1'.
   className := #'ExternalCore'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'Object'
@@ -2758,8 +2745,7 @@ MetacelloScriptingResource >> setUpExternalCoreX [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'External-CoreX-dkh.1'.
   className := #'ExternalCoreX'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'Object'
@@ -2805,7 +2791,7 @@ MetacelloScriptingResource >> setUpInvalidConfigurations [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfInvalidConfigurations-dkh.1'.
     className := #'ConfigurationOfInvalidConfigurations'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -2883,8 +2869,7 @@ MetacelloScriptingResource >> setUpIssue399CoreExternaldkh1 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'Issue399-Core-dkh.1'.
   className := #'Issue399External'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'Object'
@@ -2922,8 +2907,7 @@ MetacelloScriptingResource >> setUpIssue399CoreSampledkh1 [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'Issue399-Core-dkh.1'.
   className := #'Issue399Sample'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'Object'
@@ -2961,8 +2945,7 @@ MetacelloScriptingResource >> setUpIssue399CoreSampledkh2: ancestors [
   | reference className definitionArray versionInfo |
   reference := GoferVersionReference name: 'Issue399-Core-dkh.2'.
   className := #'Issue399Sample'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'Object'
@@ -2995,8 +2978,7 @@ MetacelloScriptingResource >> setUpLockConfigurations [
   reference := GoferVersionReference
     name: 'ConfigurationOfLockConfigurations-dkh.1'.
   className := #'ConfigurationOfLockConfigurations'.
-  definitionArray := {(MCOrganizationDefinition
-    categories: (Array with: reference packageName asSymbol)).
+  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
   (MCClassDefinition
     name: className
     superclassName: #'ConfigurationOf'
@@ -3080,7 +3062,7 @@ MetacelloScriptingResource >> setUpMarianosImage [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MarianosImage-dkh.1'.
     className := #'MarianosImage'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'ConfigurationOf'
@@ -3135,7 +3117,7 @@ MetacelloScriptingResource >> setUpSampleCore [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'Sample-CoreX-dkh.1'.
     className := #'SampleCoreX'.
-    definitionArray := {(MCOrganizationDefinition categories: (Array with: reference packageName asSymbol)).
+    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
     (MCClassDefinition
         name: className
         superclassName: #'Object'
