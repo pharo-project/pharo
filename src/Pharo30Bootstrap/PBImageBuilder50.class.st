@@ -255,9 +255,7 @@ PBImageBuilder50 >> createInitialObjects [
 	| characterTable |
 	"We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
 	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
-	PBStepStartedSignal log: 'global Smalltalk was initialized'.
 	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
-	PBStepStartedSignal log: 'global Undeclared was initialized'.
 	self bootstrapEnvironment at: #StrictSymbolComparison put: objectSpace falseObject.
 	PBStepStartedSignal log: 'global StrictSymbolComparison was initialized'.
 
