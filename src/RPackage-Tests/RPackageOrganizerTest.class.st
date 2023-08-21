@@ -38,18 +38,6 @@ RPackageOrganizerTest >> p3Name [
 	^ 'RPackageTestP3'
 ]
 
-{ #category : #'tests - extending' }
-RPackageOrganizerTest >> pointRectangleInGraphElement [
-
-	^ (RPackage named: #GraphElement)
-		  addClassDefinition: Point;
-		  addMethod: Point >> #x;
-		  addMethod: Point >> #rotateBy:about:;
-		  addClassDefinition: Rectangle;
-		  addMethod: self quadrangleClass >> #intersect:;
-		  yourself
-]
-
 { #category : #utilities }
 RPackageOrganizerTest >> quadrangleClass [
 	^ self organizer environment at: #QuadrangleForTesting
@@ -239,10 +227,10 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'.
 	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	p := self pointRectangleInGraphElement.
+	p := self createNewPackageNamed: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
+	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1
 ]
 
 { #category : #tests }
@@ -384,10 +372,10 @@ RPackageOrganizerTest >> testUnregistrationExtendingPackages [
 	| p |
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'.
-	p := self pointRectangleInGraphElement.
+	p := self createNewPackageNamed: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
+	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1.
 	self organizer unregisterExtendingPackage: p forClass: self quadrangleClass.
 	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass)
 ]

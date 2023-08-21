@@ -175,15 +175,6 @@ RPackage >> addClass: aClass [
 	aClass category: (self addClassTag: self name) categoryName
 ]
 
-{ #category : #deprecated }
-RPackage >> addClassDefinition: aClass [
-	"Please do not use me, I will be removed in the future. Use #importClass: instead."
-
-	(self includesClass: aClass) ifTrue: [ ^ self ].
-	classes add: aClass instanceSide.
-	self registerClass: aClass
-]
-
 { #category : #'class tags' }
 RPackage >> addClassDefinition: aClass toClassTag: aSymbol [
 	"Tags the class aClass with the tag aSymbol"
@@ -233,20 +224,6 @@ RPackage >> basicAddClassTag: tagName [
 	packageTag ensureSystemCategory.
 
 	^ packageTag
-]
-
-{ #category : #private }
-RPackage >> basicImportClass: aClass [
-	"Add the class definition and all the selectors which are not extensions of other packages. If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted (should I use silently or not?)."
-
-	"Question: should we check that for each extension, there is a real package behind or not?"
-
-	"We first remove the potention methods in case there are extensions registered then we add the class."
-
-	self removeAllMethodsFromClass: aClass.
-	self addClassDefinition: aClass.
-	(aClass protocols select: [ :protocol | self isYourClassExtension: protocol ]) do: [ :protocol | aClass renameProtocol: protocol as: Protocol unclassified ].
-	self importDefinedMethodsOf: aClass
 ]
 
 { #category : #'class tags' }
@@ -497,22 +474,32 @@ RPackage >> importClass: aClass [
 	Handle also *- convention. Methods defined in *category are not added to the package.
 	Pay attention that it will not import anything from the metaClass side"
 
-	self basicImportClass: aClass.
-	self basicImportClass: aClass classSide.
-	self addClassDefinition: aClass toClassTag: aClass category
+	self importClass: aClass inTag: aClass category
 ]
 
 { #category : #private }
 RPackage >> importClass: aClass inTag: aTag [
-	"import a class already created but not attached to a package to the receiver.
-	Handle also *- convention. Methods defined in *category are not added to the package.
-	Pay attention that it will not import anything from the metaClass side"
+	"Import a class already created but not attached to a package to the receiver. It will import the class and its methods.
 
-	self basicImportClass: aClass.
-	self basicImportClass: aClass classSide.
-	self
-		addClassDefinition:  aClass
-		toClassTag: aTag name
+	Handle also *- convention. Methods defined in *category are not added to the package.
+	
+	If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted"
+
+	"Question: should we check that for each extension, there is a real package behind or not?"
+
+	self removeAllMethodsFromClass: aClass.
+
+	classes add: aClass instanceSide.
+	self registerClass: aClass.
+
+	{ aClass . aClass classSide } do: [ :class |
+		(class protocols select: [ :protocol | self isYourClassExtension: protocol ]) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
+
+		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ].
+	
+	self addClassDefinition: aClass toClassTag: (aTag isString
+			 ifTrue: [ aTag ]
+			 ifFalse: [ aTag name ])
 ]
 
 { #category : #private }
