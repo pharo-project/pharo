@@ -257,9 +257,7 @@ PBImageBuilder50 >> createInitialObjects [
 	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
 	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
 	self bootstrapEnvironment at: #StrictSymbolComparison put: objectSpace falseObject.
-	PBStepStartedSignal log: 'global StrictSymbolComparison was initialized'.
-
-	PBStepStartedSignal log: 'Early bootstrap environment filled by hand'.
+	
 	"We initialize the hash table sizes by hand.
 	The AST interpreter is too slow to interpret HashTableSizes>>#initialize"
 	PBSubStepFinishedSignal emit: 'initializing hash table sizes'.
@@ -273,6 +271,8 @@ PBImageBuilder50 >> createInitialObjects [
 	PBSubStepFinishedSignal emit: 'preparing class builder'.
 	self bootstrapInterpreter evaluateCode:
 		'StrictSymbolComparison := false.'.
+	PBStepStartedSignal log: 'assigned strict symbol comparison'.
+	
 	self bootstrapInterpreter evaluateCode:
 		'DangerousClassNotifier disable'.
 	self bootstrapInterpreter evaluateCode:
