@@ -257,7 +257,9 @@ PBImageBuilder50 >> createInitialObjects [
 	PBStepFinishedSignal emit: 'initializing globals'.
 	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
 	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
+	self bootstrapEnvironment at: #StrictSymbolComparison put: objectSpace falseObject.
 
+	PBSubStepFinishedSignal emit: 'First bootstrap environment filled by hand'.
 	"We initialize the hash table sizes by hand.
 	The AST interpreter is too slow to interpret HashTableSizes>>#initialize"
 	PBSubStepFinishedSignal emit: 'initializing hash table sizes'.
@@ -280,13 +282,13 @@ PBImageBuilder50 >> createInitialObjects [
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk instVarAt: 1 put: SystemDictionary new.'.
 	self bootstrapInterpreter evaluateCode:
+		'Smalltalk globals at: #StrictSymbolComparison put: StrictSymbolComparison.'.
+	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #Undeclared put: Undeclared.'.
 
 	"Initialize the globals of the system. Careful: The AST interpreter will not know about these if we do not put them in the bootstrapEnvironment."
-	self bootstrapInterpreter evaluateCode:
-		'Smalltalk globals at: #StrictSymbolComparison put: StrictSymbolComparison.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #Processor put: nil.'.
 	self bootstrapInterpreter evaluateCode:
