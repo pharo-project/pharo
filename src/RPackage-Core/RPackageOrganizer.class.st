@@ -150,6 +150,7 @@ RPackageOrganizer class >> methodAdded: anEvent [
 { #category : #'class initialization' }
 RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 
+	<script>
 	self packageOrganizer unregisterInterestToSystemAnnouncement.
 	"To make sure that we do not have it twice registered"
 	self packageOrganizer registerInterestToSystemAnnouncement
@@ -603,7 +604,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
-		when: MethodModified send: #systemMethodModifiedActionFrom: to: self;
 		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
 ]
 
@@ -852,39 +852,6 @@ RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 	method origin = ann methodClass ifFalse: [ ^ self ].
 
 	self addMethod: method
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
-	"this announcement can correspond to several kind of modifications:
-		=> a method has been renamed
-		=> a method has been move to another category // SHOULD BE TREATED WITH SystemMethodRecategorizedEvent
-		(
-			-maybe from the classic category to an extending package
-			-maybe from an extending package to another extending package
-			-maybe from an extending package to a classic category
-			- maybe from a classic category to another classic category
-			)
-	"
-
-	| oldMethod newMethod methodPackage |
-	newMethod := ann newMethod.
-	oldMethod := ann oldMethod.
-	self flag: #cyrille.
-	"This is not clear that we need to do soemthing here since the method is removed and added so the other events should be handled correctly
-	We should remove this method to see if this is working."
-
-	"If the method origin is not the one of the event, we do not care about that method"
-	newMethod origin = ann methodClass ifFalse: [ ^ self ].
-
-
-	"Special case for trait methods added an override"
-	newMethod origin = oldMethod origin ifFalse: [ ^ self addMethod: newMethod ].
-
-	methodPackage := newMethod package.
-	"maybe the name of the method has changed"
-	oldMethod selector = newMethod selector ifFalse: [
-		methodPackage updateSelector: oldMethod selector inClass: oldMethod methodClass withNewSelector: newMethod selector ]
 ]
 
 { #category : #'system integration' }
