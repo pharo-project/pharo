@@ -270,8 +270,6 @@ PBImageBuilder50 >> createInitialObjects [
 
 	PBSubStepFinishedSignal emit: 'preparing class builder'.
 	
-	PBStepStartedSignal log: 'assigned strict symbol comparison'.
-	
 	self bootstrapInterpreter evaluateCode:
 		'DangerousClassNotifier disable'.
 	self bootstrapInterpreter evaluateCode:
