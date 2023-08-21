@@ -1,6 +1,13 @@
 Extension { #name : #ClassFactoryForTestCase }
 
 { #category : #'*Deprecated12' }
+ClassFactoryForTestCase >> deleteClass: aClass [
+
+	self deprecated: 'Use #delete: instead. The behavior is the same.' transformWith: '`@rcv deleteClass: `@arg' -> '`@rcv -> delete: `@arg'.
+	self delete: aClass
+]
+
+{ #category : #'*Deprecated12' }
 ClassFactoryForTestCase >> newClassInCategory: category [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
