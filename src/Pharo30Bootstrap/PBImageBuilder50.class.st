@@ -257,6 +257,7 @@ PBImageBuilder50 >> createInitialObjects [
 	PBStepFinishedSignal emit: 'initializing globals'.
 	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
 	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
+	self bootstrapEnvironment at: #StrictSymbolComparison put: objectSpace falseObject.
 
 	"We initialize the hash table sizes by hand.
 	The AST interpreter is too slow to interpret HashTableSizes>>#initialize"
@@ -568,6 +569,7 @@ PBImageBuilder50 >> initializeImage [
 	self initializeSpecialObjectArray.
 
 	self bootstrapInterpreter evaluateCode: '
+	Smalltalk at: #StrictSymbolComparison put: false.
 	Smalltalk at: #Processor put: (ProcessorScheduler basicNew).
 	(Smalltalk at: #Processor) instVarAt: 1 put: ((1 to: 80) collect: [ :i | ProcessList new ])'.
 
