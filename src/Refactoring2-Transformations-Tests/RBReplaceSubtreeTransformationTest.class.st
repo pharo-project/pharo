@@ -53,7 +53,7 @@ RBReplaceSubtreeTransformationTest >> testRefactoring [
 		                   to: '^ selector'
 		                   inMethod: #selector:from:
 		                   inClass: #RBRemoveMethodTransformation)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -78,7 +78,7 @@ RBReplaceSubtreeTransformationTest >> testTransform [
 		                   to: '^ 123'
 		                   inMethod: #one
 		                   inClass: self changeMockClass name)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -107,7 +107,7 @@ RBReplaceSubtreeTransformationTest >> testTransformOneOfManyStatements [
 		                   'self assert: (class parseTreeForSelector:  #selector:from:) body statements size = 2'
 		                   inMethod: #testRefactoring
 		                   inClass: #RBReplaceSubtreeTransformationTest)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

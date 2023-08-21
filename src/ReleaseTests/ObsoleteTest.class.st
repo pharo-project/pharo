@@ -52,7 +52,7 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 
 	testClass := classFactory make: [ :aBuilder | aBuilder sharedPools: poolClass name asString ].
 
-	classFactory deleteClass: poolClass.
+	classFactory delete: poolClass.
 	obsoletePoolName := poolClass name.
 	poolClass := nil.
 	3 timesRepeat: [ Smalltalk garbageCollect ].

@@ -17,7 +17,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 	| refactoring class |
 	refactoring := (RBRemoveDirectAccessToVariableTransformation
 		                classVariable: 'UndoSize'
-		                class: #RBRefactoryChangeManager) primitiveExecute.
+		                class: #RBRefactoryChangeManager) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 2.
 
@@ -69,7 +69,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 	(RBRemoveDirectAccessToVariableTransformation
 		 model: model
 		 instanceVariable: 'instVarName2'
-		 class: #Foo) primitiveExecute.
+		 class: #Foo) generateChanges.
 
 	class := model classNamed: #Foo.
 	self
@@ -83,7 +83,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 	| refactoring class |
 	refactoring := (RBRemoveDirectAccessToVariableTransformation
 		                instanceVariable: 'environment'
-		                class: #RBNamespace) primitiveExecute.
+		                class: #RBNamespace) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 4.
 
@@ -117,7 +117,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testTransform [
 	transformation := (RBRemoveDirectAccessToVariableTransformation
 		                   instanceVariable: 'class'
 		                   class: #RBTransformationRuleTestData)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	class := transformation model classNamed:
 		         #RBTransformationRuleTestData.

@@ -199,18 +199,15 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 		do: [ :packageName | packages at: packageName asSymbol put: (RPackage named: packageName organizer: self) ]
 		displayingProgress: 'Importing monticello packages'.
 
-	Smalltalk allClassesAndTraits do: [ :behavior | self initializeFor: behavior ] displayingProgress: 'Importing behaviors'.
+	Smalltalk allClassesAndTraits
+		do: [ :behavior | (self ensurePackageMatching: behavior category) importClass: behavior ]
+		displayingProgress: 'Importing behaviors'.
 
 	Smalltalk allClassesAndTraits
 		do: [ :behavior |
-			behavior package
-				importDefinedMethodsOf: behavior;
-				importDefinedMethodsOf: behavior classSide ]
-		displayingProgress: 'Importing defined methods'.
-
-	Smalltalk allClassesAndTraits
-		do: [ :behavior |
-			{ behavior . behavior classSide } do: [ :aBehavior |
+			{
+				behavior.
+				behavior classSide } do: [ :aBehavior |
 				aBehavior extensionProtocols do: [ :protocol |
 					(self ensurePackageMatching: protocol name allButFirst trimBoth) importProtocol: protocol forClass: aBehavior ] ] ]
 		displayingProgress: 'Importing extensions'
@@ -449,16 +446,6 @@ RPackageOrganizer >> initialize [
 	categoryMap := Dictionary new.
 
 	self defineUnpackagedClassesPackage
-]
-
-{ #category : #'initialization - data' }
-RPackageOrganizer >> initializeFor: aBehavior [
-
-	| package |
-	package := self ensurePackageMatching: aBehavior category.
-	package addClassDefinition: aBehavior.
-	package addClassDefinition: aBehavior toClassTag: aBehavior category asSymbol.
-	self registerPackage: package forClass: aBehavior
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -762,12 +749,6 @@ RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
 	package name = oldName ifTrue: [ self renamePackage: package to: newName ].
 
 	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ]
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> renameClass: class from: oldName to: newName [
-
-	(self packageOf: class) updateDefinedClassNamed: oldName withNewName: newName
 ]
 
 { #category : #'system integration' }

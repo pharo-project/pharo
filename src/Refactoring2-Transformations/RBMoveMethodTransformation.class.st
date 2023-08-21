@@ -68,7 +68,7 @@ RBMoveMethodTransformation class >> selector: aSymbol class: aClass variable: aV
 { #category : #transforming }
 RBMoveMethodTransformation >> abstractVariables [
 
-	self abstractVariablesRefactoring primitiveExecute.
+	self abstractVariablesRefactoring generateChanges.
 	parseTree := self abstractVariablesRefactoring parseTree
 ]
 

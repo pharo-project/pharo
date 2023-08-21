@@ -16,13 +16,6 @@ RBRemoveClassKeepingSubclassesParametrizedTest >> constructor [
 	^ #classNames:
 ]
 
-{ #category : #'failure tests' }
-RBRemoveClassKeepingSubclassesParametrizedTest >> testFailureRemoveClassWithReferencesRaisesRBRefactoringError [
-
-	self shouldFail: (self createRefactoringWithArguments:
-			 { #( #RBBasicLintRuleTestData ) })
-]
-
 { #category : #tests }
 RBRemoveClassKeepingSubclassesParametrizedTest >> testRemoveNotEmptySuperclass [
 
@@ -40,4 +33,11 @@ RBRemoveClassKeepingSubclassesParametrizedTest >> testRemoveNotEmptySuperclass [
 	self assert: class superclass
 		equals: (refactoring model classNamed: #RBFooLintRuleTestData1).
 	self assert: (class directlyDefinesMethod: #foo)
+]
+
+{ #category : #'failure tests' }
+RBRemoveClassKeepingSubclassesParametrizedTest >> testShouldWarnWhenRemovingClassWithReferences [
+
+	self shouldWarn: (self createRefactoringWithArguments:
+			 { #( #RBBasicLintRuleTestData ) })
 ]

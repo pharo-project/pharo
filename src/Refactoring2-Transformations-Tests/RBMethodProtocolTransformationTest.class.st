@@ -31,7 +31,7 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 	refactoring := (RBMethodProtocolTransformation
 		                protocol: 'empty protocol 2'
 		                inMethod: #someMethod
-		                inClass: #RBDummyEmptyClass) primitiveExecute.
+		                inClass: #RBDummyEmptyClass) generateChanges.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
 	self deny:
@@ -40,7 +40,7 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 	refactoring := (RBMethodProtocolTransformation
 		                protocol: 'empty protocol 1'
 		                inMethod: #someMethod
-		                inClass: #RBDummyEmptyClass) primitiveExecute.
+		                inClass: #RBDummyEmptyClass) generateChanges.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')
@@ -55,7 +55,7 @@ RBMethodProtocolTransformationTest >> testTransform [
 	transformation := (RBMethodProtocolTransformation new
 		                   protocol: 'empty protocol 2'
 		                   inMethod: #someMethod
-		                   inClass: #RBDummyEmptyClass) primitiveExecute.
+		                   inClass: #RBDummyEmptyClass) generateChanges.
 	RBRefactoryChangeManager instance performChange:
 		transformation changes.
 
@@ -65,7 +65,7 @@ RBMethodProtocolTransformationTest >> testTransform [
 	transformation := (RBMethodProtocolTransformation new
 		                   protocol: 'empty protocol 1'
 		                   inMethod: #someMethod
-		                   inClass: #RBDummyEmptyClass) primitiveExecute.
+		                   inClass: #RBDummyEmptyClass) generateChanges.
 	RBRefactoryChangeManager instance performChange:
 		transformation changes.
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')

@@ -24,15 +24,15 @@ EpRBPropagateRefactoring >> asEpiceaEvent [
 	^ EpPropagateRefactoring target: targetRefactoring asEpiceaEvent
 ]
 
+{ #category : #executing }
+EpRBPropagateRefactoring >> generateChanges [
+	targetRefactoring propagateTransformation
+]
+
 { #category : #initialization }
 EpRBPropagateRefactoring >> initializeWith: aRefactoring [
 	self initialize.
 	targetRefactoring := aRefactoring
-]
-
-{ #category : #private }
-EpRBPropagateRefactoring >> primitiveExecute [
-	targetRefactoring propagateTransformation
 ]
 
 { #category : #accessing }
