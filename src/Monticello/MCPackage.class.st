@@ -93,23 +93,17 @@ MCPackage >> printOn: aStream [
 
 { #category : #accessing }
 MCPackage >> snapshot [
-	| rPackageSet definitions categories |
+
+	| rPackageSet definitions |
 	rPackageSet := self packageSet.
 	definitions := OrderedCollection new.
-	categories := rPackageSet categoryNames asArray.
-	categories isEmpty 
-		ifFalse: [ definitions add: (MCOrganizationDefinition categories: categories) ].
-		
-	rPackageSet methods 
-		do: [:ea | definitions add: ea asMCMethodDefinition] 
-		displayingProgress: [ :ea| 'Snapshotting methods...' ].
-				
-	rPackageSet definedClasses 
-		do: [:ea | definitions addAll: ea classDefinitions] 
-		displayingProgress: [ :ea| 'Snapshotting class ', ea asString ].
-		
-	^ MCSnapshot fromDefinitions: definitions
+	rPackageSet categoryNames asArray ifNotEmpty: [ :categories | definitions add: (MCOrganizationDefinition categories: categories) ].
 
+	rPackageSet methods do: [ :ea | definitions add: ea asMCMethodDefinition ] displayingProgress: [ :ea | 'Snapshotting methods...' ].
+
+	rPackageSet definedClasses do: [ :ea | definitions addAll: ea classDefinitions ] displayingProgress: [ :ea | 'Snapshotting class ' , ea asString ].
+
+	^ MCSnapshot fromDefinitions: definitions
 ]
 
 { #category : #printing }
