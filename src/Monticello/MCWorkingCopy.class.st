@@ -772,7 +772,7 @@ MCWorkingCopy >> snapshot [
 { #category : #accessing }
 MCWorkingCopy >> systemPackage [
 
-	^ self package correspondingRPackage
+	^ self package systemPackage
 ]
 
 { #category : #accessing }

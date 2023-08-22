@@ -1043,6 +1043,12 @@ RPackage >> systemCategoryPrefix [
 	^ self name
 ]
 
+{ #category : #'class tags' }
+RPackage >> tagNames [
+
+	^ self classTags collect: [ :tag | tag name ]
+]
+
 { #category : #queries }
 RPackage >> tagsForClasses [
 	"Any class could be tagged for user purpose.
