@@ -15,6 +15,21 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 ]
 
 { #category : #'*Deprecated12' }
+RPackageOrganizer >> globalPackageOf: aClass [
+	"this method should return the 'global' parent package of aClass, that means the package holding the (possible) subcategory in which aClass is concretely defined. For example, 'Object package' returns Kernel-Object, whereas 'PackageOrganizer packageOf: Object' returns Kernel. So I guess that all use of 'packageOf' should be replaced by this method  "
+
+	"RPackageOrganizer default globalPackageOf: Object"
+
+	| classPackage |
+	self deprecated:
+		'This method will be removed in the future version of Pharo because the implementation does not seems to match the method comment and the usecases needing this method are too few.'.
+	classPackage := self packageOf: aClass.
+	^ self packages
+		  detect: [ :aRPackage | aRPackage ~= classPackage and: [ aRPackage systemCategories includes: classPackage name ] ]
+		  ifNone: [ classPackage ]
+]
+
+{ #category : #'*Deprecated12' }
 RPackageOrganizer >> includesPackage: aPackage [
 
 	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.
