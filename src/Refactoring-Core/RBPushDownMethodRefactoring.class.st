@@ -67,11 +67,11 @@ RBPushDownMethodRefactoring >> breakingChangePreconditions [
 
 	| condition |
 	condition := selectors
-		             inject: self trueCondition
+		             inject: (RBCondition isAbstractClass: class)
 		             into: [ :cond :each |
-			             cond & (RBCondition subclassesOf: class referToSelector: each)
+			             cond & (RBCondition subclassesOf: class isDoingASuperSendFor: each)
 				             not ].
-	^ condition & (RBCondition isAbstractClass: class)
+	^ condition
 ]
 
 { #category : #transforming }
