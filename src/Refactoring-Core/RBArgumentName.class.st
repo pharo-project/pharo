@@ -12,6 +12,12 @@ Class {
 }
 
 { #category : #'instance creation' }
+RBArgumentName class >> name2: aString [
+
+	^ self new name: aString
+]
+
+{ #category : #'instance creation' }
 RBArgumentName class >> name: aString [
 	^ self new
 		name: aString
