@@ -264,7 +264,7 @@ MCStWriterTest >> testNotLoadedClassMethod [
 MCStWriterTest >> testOrganizationDefinition [
 
 	| definition |
-	definition := MCOrganizationDefinition categories: self mockPackage packageSet systemCategories.
+	definition := MCOrganizationDefinition categories: { self mockPackage name asSymbol }.
 	writer visitOrganizationDefinition: definition.
 	self assertContentsOf: stream match: self expectedOrganizationDefinition.
 	self assertAllChunksAreWellFormed

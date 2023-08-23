@@ -368,11 +368,7 @@ RPackageOrganizer >> globalPackageOf: aClass [
 
 	"RPackageOrganizer default globalPackageOf: Object"
 
-	| classPackage |
-	classPackage := self packageOf: aClass.
-	^ self packages
-		detect: [ :aRPackage | aRPackage ~= classPackage and: [ aRPackage systemCategories includes: classPackage name ] ]
-		ifNone: [ classPackage ]
+	^ self packageOf: aClass
 ]
 
 { #category : #testing }
