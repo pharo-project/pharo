@@ -47,6 +47,12 @@ Class {
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
+{ #category : #displaying }
+RBDeprecateMethodTransformation class >> basicMenuItemString [
+
+	^ 'Deprecate method'
+]
+
 { #category : #api }
 RBDeprecateMethodTransformation class >> deprecateMethod: aSelector in: aClass using: newSelector [
 	^ self new

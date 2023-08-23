@@ -123,16 +123,12 @@ RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: new
 	newSelector := newSel
 ]
 
-{ #category : #execution }
+{ #category : #executing }
 RBDeprecateMethodRefactoring >> generateChanges [
 
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
-
 	self privateTransform.
 	^ self changes
 ]
