@@ -4,10 +4,9 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBDeprecateMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBDeprecateMethodRefactoring };
 		addCase: { #rbClass -> RBDeprecateMethodTransformation };
 		yourself
 ]
