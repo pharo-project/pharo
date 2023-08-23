@@ -65,17 +65,12 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 { #category : #preconditions }
 RBRemoveClassTransformation >> applicabilityPreconditions [ 
 
-	^ className 
-			inject: RBCondition true 
-			into: [ :cond :aClass |
 		| aClassOrTrait |
 		aClassOrTrait := self model classNamed: className asSymbol.
 		aClassOrTrait ifNil: [ self refactoringError: 'No such class or trait named ', className ].
-
-		cond
-			& ( (self preconditionIsNotMetaclass: aClassOrTrait)
+		^ (self preconditionIsNotMetaclass: aClassOrTrait)
 			& (self preconditionHasNoSubclasses: aClassOrTrait)
-			& (self preconditionHasNoUsers: aClassOrTrait ) ) ]
+			& (self preconditionHasNoUsers: aClassOrTrait )
 ]
 
 { #category : #preconditions }
