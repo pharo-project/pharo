@@ -362,15 +362,6 @@ RPackageOrganizer >> extendingPackagesOf: aClass [
 	^ classExtendingPackagesMapping at: aClass instanceSide ifAbsent: [ #(  ) ]
 ]
 
-{ #category : #'package - access from class' }
-RPackageOrganizer >> globalPackageOf: aClass [
-	"this method should return the 'global' parent package of aClass, that means the package holding the (possible) subcategory in which aClass is concretely defined. For example, 'Object package' returns Kernel-Object, whereas 'PackageOrganizer packageOf: Object' returns Kernel. So I guess that all use of 'packageOf' should be replaced by this method  "
-
-	"RPackageOrganizer default globalPackageOf: Object"
-
-	^ self packageOf: aClass
-]
-
 { #category : #testing }
 RPackageOrganizer >> hasPackage: aPackage [
 	"Takes a package or a package name as parameter and return true if I include this package."
