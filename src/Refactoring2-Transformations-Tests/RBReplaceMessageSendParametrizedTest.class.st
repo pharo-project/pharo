@@ -100,7 +100,7 @@ RBReplaceMessageSendParametrizedTest >> testModelReplaceMethodWithMoreArgs [
 				to: newSelector
 				permutation: #(-1 2 1)
 				inAllClasses: true.
-	refactoring initializers: #('OrderedCollection new: 5').
+	refactoring newArgs: { RBArgumentName name: 'anObject' value: 'OrderedCollection new: 5'}.
 	self proceedThroughWarning: [ refactoring generateChanges ].
 	self assert: sendersNewSelector + sendersLastSelector
 		equals: (model allReferencesTo: newSelector) size
