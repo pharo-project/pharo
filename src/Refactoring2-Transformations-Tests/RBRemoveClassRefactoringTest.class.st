@@ -10,6 +10,30 @@ RBRemoveClassRefactoringTest class >> defaultTimeLimit [
 ]
 
 { #category : #tests }
+RBRemoveClassRefactoringTest >> testCanRemoveAReferencedClassNotHavingReferenceInTheModel [
+
+	| refactoring package |
+	package := RBPackageEnvironment packageName:
+		           RBFooDummyLintRuleTest1 packageName.
+	model := RBNamespace onEnvironment: package.
+	"here the model only contains classes and there is no reference to RBTransformationDummyRuleTest1 and it is a subclass."
+	
+	refactoring := RBRemoveClassRefactoring
+		               model: model
+		               classNames: { RBTransformationDummyRuleTest1 name }.
+	"We can use a direct reference here because we want to check in particular that THIS reference is not taken 
+	into account by the preconditions (They should not escape the model by directly using Pharo metamodel."
+	
+
+	self
+		shouldnt: [ refactoring generateChanges ]
+		raise: RBRefactoringError.
+
+	self assert:
+		(refactoring model classNamed: #RBTransformationDummyRuleTest1) isNil
+]
+
+{ #category : #tests }
 RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClass [
 
 	| refactoring package |
