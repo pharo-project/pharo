@@ -82,6 +82,9 @@ RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
 	"pay attention that we are not taking into account other classes in the list
 	and would introduce references....
 	
+	
+	Before it was (aClassOrTrait realClass users copyWithoutAll: classNames) isEmpty and we should keep this logic.
+	
 	"
 
 	^ (RBCondition withBlock: [

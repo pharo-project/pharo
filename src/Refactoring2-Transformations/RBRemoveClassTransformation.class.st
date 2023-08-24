@@ -73,12 +73,6 @@ RBRemoveClassTransformation >> applicabilityPreconditions [
 ]
 
 { #category : #preconditions }
-RBRemoveClassTransformation >> breakingChangePreconditions [
-
-	^ self preconditionHasNoReferences: className
-]
-
-{ #category : #preconditions }
 RBRemoveClassTransformation >> environmentWithReferencesTo: aClass [
 
 	^ RBBrowserEnvironment new
@@ -93,25 +87,6 @@ RBRemoveClassTransformation >> environmentWithUsersOf: aTrait [
 	^ RBClassEnvironment
 		onEnvironment: RBBrowserEnvironment new
 		classes: aTrait realClass users
-]
-
-{ #category : #preconditions }
-RBRemoveClassTransformation >> preconditionHasNoReferences: aClass [
-
-	| env |
-	env := self environmentWithReferencesTo: aClass.
-	^ (RBCondition withBlock: [ env isEmpty ])
-		errorMacro: aClass , ' is referenced.<n>Browse references?';
-		errorBlock: [ self openBrowserOn: (env) ];
-		yourself
-]
-
-{ #category : #preconditions }
-RBRemoveClassTransformation >> preconditionHasNoSubclasses: aClass [
-
-	^ (RBCondition withBlock: [ aClass subclasses isEmpty ])
-		errorMacro: self class cannotRemoveTopLevelClassErrorMesssage;
-		yourself
 ]
 
 { #category : #preconditions }
