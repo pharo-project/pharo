@@ -68,6 +68,31 @@ RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: a
 ]
 
 { #category : #'instance creation' }
+RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean newArgs: anArgsCollection [
+	^ self new
+		model: aRBSmalltalk;
+		replaceCallMethod: aSelector
+			in: aClass
+			to: newSelector
+			permutation: aMap
+			inAllClasses: aBoolean
+			newArgs: anArgsCollection;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap newArgs: anArgsCollection [
+	^ self new
+		model: aRBSmalltalk;
+		replaceCallMethod: aSelector
+			in: aClass
+			to: newSelector
+			permutation: aMap
+			newArgs: anArgsCollection;
+		yourself
+]
+
+{ #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^self new
 		replaceCallMethod: aSelector
@@ -83,7 +108,28 @@ RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aCl
 		in: aClass
 		to: newSelector
 		permutation: aMap
+		inAllClasses: aBoolean 
+]
+
+{ #category : #'instance creation' }
+RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean newArgs: anArgsCollection [
+	^self new
+		replaceCallMethod: aSelector
+		in: aClass
+		to: newSelector
+		permutation: aMap
 		inAllClasses: aBoolean
+		newArgs: anArgsCollection 
+]
+
+{ #category : #'instance creation' }
+RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap newArgs: anArgsCollection [
+	^self new
+		replaceCallMethod: aSelector
+		in: aClass
+		to: newSelector
+		permutation: aMap
+		newArgs: anArgsCollection 
 ]
 
 { #category : #support }
@@ -109,15 +155,15 @@ RBReplaceMessageSendTransformation >> convertAllReferencesTo: aSymbol using: sea
 ]
 
 { #category : #accessing }
-RBReplaceMessageSendTransformation >> initializers [
+RBReplaceMessageSendTransformation >> newArgs [
 
-	^ initializers ifNil: [ initializers := {  } ]
+	^ newArgs ifNil: [ newArgs := {  } ]
 ]
 
 { #category : #accessing }
-RBReplaceMessageSendTransformation >> initializers: anObject [
+RBReplaceMessageSendTransformation >> newArgs: anArgsCollection [
 
-	initializers := anObject
+	newArgs := anArgsCollection
 ]
 
 { #category : #private }
@@ -153,7 +199,7 @@ RBReplaceMessageSendTransformation >> preconditions [
 	| conditions |
 	conditions := (RBCondition withBlock: [
 		               oldSelector numArgs < newSelector numArgs ifTrue: [
-			               oldSelector numArgs + self initializers size
+			               oldSelector numArgs + self newArgs size
 			               = newSelector numArgs ifFalse: [
 				               self refactoringError:
 					               'You don''t have the necessary initializers to replace senders.' ] ].
@@ -188,7 +234,8 @@ RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
-	permutation := aMap
+	permutation := aMap.
+	newArgs := OrderedCollection new.
 ]
 
 { #category : #initialization }
@@ -196,6 +243,23 @@ RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to
 
 	self replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap.
 	replaceInAllClasses := aBoolean
+]
+
+{ #category : #initialization }
+RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap inAllClasses: aBoolean newArgs: anArgsCollection [
+
+	self replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap newArgs: anArgsCollection.
+	replaceInAllClasses := aBoolean
+]
+
+{ #category : #initialization }
+RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap newArgs: anArgsCollection [
+
+	oldSelector := aSelector asSymbol.
+	newSelector := newSel asSymbol.
+	class := self classObjectFor: aClass.
+	permutation := aMap.
+	newArgs := anArgsCollection 
 ]
 
 { #category : #accessing }

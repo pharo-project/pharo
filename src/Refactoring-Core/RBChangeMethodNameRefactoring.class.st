@@ -78,6 +78,12 @@ RBChangeMethodNameRefactoring >> myConditions [
 	"^self subclassResponsibility"
 ]
 
+{ #category : #'instance creation' }
+RBChangeMethodNameRefactoring >> newArgs [ 
+
+	^ OrderedCollection new
+]
+
 { #category : #accessing }
 RBChangeMethodNameRefactoring >> newSelector [
 	^ newSelector
@@ -169,7 +175,8 @@ RBChangeMethodNameRefactoring >> renameMessageSends [
 			 in: class
 			 to: newSelector
 			 permutation: permutation
-			 inAllClasses: true)
+			 inAllClasses: true
+			 newArgs: self newArgs)
 ]
 
 { #category : #initialization }

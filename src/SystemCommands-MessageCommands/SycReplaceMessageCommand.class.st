@@ -25,7 +25,7 @@ SycReplaceMessageCommand >> createRefactoring [
 				   in: selectedClass
 				   to: newSelector selector
 				   permutation: newSelector permutation
-				   inAllClasses: true) initializers: newSelector newArgs values ]
+				   inAllClasses: true) newArgs: newSelector newArgs ]
 		  ifEmpty: [
 			  (self refactoringClass
 				   model: model
@@ -33,7 +33,7 @@ SycReplaceMessageCommand >> createRefactoring [
 				   in: selectedClass
 				   to: newSelector selector
 				   permutation: newSelector permutation
-				   inAllClasses: true) initializers:  newSelector newArgs ]
+				   inAllClasses: true) newArgs:  newSelector newArgs ]
 ]
 
 { #category : #accessing }
