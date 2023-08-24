@@ -78,6 +78,29 @@ RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
 ]
 
 { #category : #tests }
+RBAddParameterParametrizedTest >> testAddParameterThatReferencesABlockWithInstanceVariableReference [
+
+	| refactoring class oldSelector newSelector newArg |
+	oldSelector := ('test' , 'Foo:') asSymbol.
+	newSelector := #testFoo:bar:.
+	newArg := RBArgumentName name: 'aFoo' value: '[ :each | each + instanceVariable ]'.
+	refactoring := self createRefactoringWithArguments:
+		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg}}.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
+	self
+		assert: (class parseTreeForSelector: newSelector)
+		equals: (self parseMethod: 'testFoo: anObject bar: aFoo
+								^self class + anObject').
+	self
+		assert: (class parseTreeForSelector: #callFoo)
+		equals:
+		(self parseMethod:
+			 'callFoo ^self testFoo: 5 bar: ([ :each | each + instanceVariable ])').
+	self deny: (class directlyDefinesMethod: oldSelector)
+]
+
+{ #category : #tests }
 RBAddParameterParametrizedTest >> testAddParameterThatReferencesGlobalAndLiteral [
 
 	| refactoring class oldSelector newSelector newArg |
@@ -96,6 +119,29 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesGlobalAndLiteral
 		assert: (class parseTreeForSelector: #callFoo)
 		equals: (self parseMethod:
 				 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
+	self deny: (class directlyDefinesMethod: oldSelector)
+]
+
+{ #category : #tests }
+RBAddParameterParametrizedTest >> testAddParameterThatReferencesInstanceVariable [
+
+	| refactoring class oldSelector newSelector newArg |
+	oldSelector := ('test' , 'Foo:') asSymbol.
+	newSelector := #testFoo:bar:.
+	newArg := RBArgumentName name: 'aFoo' value: 'instanceVariable'.
+	refactoring := self createRefactoringWithArguments:
+		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg}}.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
+	self
+		assert: (class parseTreeForSelector: newSelector)
+		equals: (self parseMethod: 'testFoo: anObject bar: aFoo
+								^self class + anObject').
+	self
+		assert: (class parseTreeForSelector: #callFoo)
+		equals:
+		(self parseMethod:
+			 'callFoo ^self testFoo: 5 bar: (instanceVariable)').
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
