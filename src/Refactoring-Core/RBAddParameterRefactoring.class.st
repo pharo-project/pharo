@@ -113,31 +113,6 @@ RBAddParameterRefactoring >> newArgs [
 	^ newArgs ifNil: [ newArgs := { } ]
 ]
 
-{ #category : #private }
-RBAddParameterRefactoring >> newSelectorString [
-	| stream keywords indexNewArgs |
-	stream := WriteStream on: String new.
-	keywords := newSelector keywords.
-	indexNewArgs := 0.
-	permutation
-		doWithIndex:
-			[:each :index |
-			stream nextPutAll: (keywords at: index).
-			each < 0
-				ifTrue:
-					[ indexNewArgs := indexNewArgs - 1.
-					stream
-						nextPut: $(;
-						nextPutAll: (newArgs at: indexNewArgs * -1) value1;
-						nextPut: $)]
-				ifFalse:
-					[stream
-						nextPutAll: ' ``@arg';
-						nextPutAll: each printString].
-			stream nextPut: $ ].
-	^stream contents
-]
-
 { #category : #action }
 RBAddParameterRefactoring >> renameArgumentsIn: parseTree [
 	| newArgNames |

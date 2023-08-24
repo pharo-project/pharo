@@ -111,36 +111,11 @@ RBAddParameterTransformation >> newArgs [
 ]
 
 { #category : #adding }
-RBAddParameterTransformation >> newSelectorString [
-	| stream keywords indexNewArgs |
-	stream := WriteStream on: String new.
-	keywords := newSelector keywords.
-	indexNewArgs := 0.
-	permutation
-		doWithIndex:
-			[:each :index |
-			stream nextPutAll: (keywords at: index).
-			each < 0
-				ifTrue:
-					[ indexNewArgs := indexNewArgs - 1.
-					stream
-						nextPut: $(;
-						nextPutAll: (newArgs at: indexNewArgs * -1) value1;
-						nextPut: $)]
-				ifFalse:
-					[stream
-						nextPutAll: ' ``@arg';
-						nextPutAll: each printString].
-			stream nextPut: $ ].
-	^stream contents
-]
-
-{ #category : #adding }
 RBAddParameterTransformation >> parseTreeRewriter [
 	| rewriteRule oldString newString |
 	rewriteRule := self parseTreeRewriterClass new.
 	oldString := self buildSelectorString: oldSelector.
-	newString := self newSelectorString.
+	newString := self buildSelectorString: newSelector withPermuteMap: permutation andNewArguments: newArgs .
 	rewriteRule replace: '``@object ' , oldString
 		with: '``@object ' , newString.
 	^rewriteRule

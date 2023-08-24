@@ -103,6 +103,32 @@ RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPerm
 	^stream contents
 ]
 
+{ #category : #private }
+RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection andNewArguments: anArgumentsCollection [
+	| stream keywords |
+	aSelector numArgs == 0 ifTrue: [^aSelector asString].
+	stream := WriteStream on: String new.
+	keywords := aSelector keywords.
+	keywords with: aPermutationCollection
+		do:
+			[:each :i |
+			stream
+				nextPutAll: each.
+				i < 0
+				ifTrue:
+					[ stream
+						nextPut: $(;
+						nextPutAll: (anArgumentsCollection at: i abs) argValue;
+						nextPut: $)]
+				ifFalse:
+					[stream
+						nextPutAll: ' ``@arg';
+						nextPutAll: i asString ].
+			stream nextPut: $ .
+			].
+	^stream contents
+]
+
 { #category : #accessing }
 RBAbstractTransformation >> changes [
 

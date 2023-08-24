@@ -24,10 +24,10 @@ Class {
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'replaceInAllClasses',
-		'initializers',
 		'oldSelector',
 		'newSelector',
-		'permutation'
+		'permutation',
+		'newArgs'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -123,26 +123,7 @@ RBReplaceMessageSendTransformation >> initializers: anObject [
 { #category : #private }
 RBReplaceMessageSendTransformation >> newSelectorString [
 
-	| stream keywords |
-	stream := WriteStream on: String new.
-	permutation ifEmpty: [ stream nextPutAll: newSelector ].
-	keywords := newSelector keywords.
-	permutation
-		doWithIndex:
-			[:each :index |
-			stream nextPutAll: (keywords at: index).
-			each < 0
-				ifTrue:
-					[stream
-						nextPut: $(;
-						nextPutAll: (initializers at: each abs);
-						nextPut: $)]
-				ifFalse:
-					[stream
-						nextPutAll: ' ``@arg';
-						nextPutAll: each printString].
-			stream nextPut: $ ].
-	^stream contents
+	^ self buildSelectorString: newSelector withPermuteMap: permutation andNewArguments: newArgs
 ]
 
 { #category : #parsing }
