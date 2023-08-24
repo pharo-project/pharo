@@ -29,28 +29,6 @@ RBChangeMethodNameRefactoring class >> isAbstract [
 	^ self == RBChangeMethodNameRefactoring
 ]
 
-{ #category : #support }
-RBChangeMethodNameRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
-	(self model allReferencesTo: aSymbol in: classes)
-		do:
-			[:method |
-			self
-				convertMethod: method selector
-				for: method modelClass
-				using: searchReplacer]
-]
-
-{ #category : #support }
-RBChangeMethodNameRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
-
-	(self model allReferencesTo: aSymbol)
-		reject: [ :rbMethod | "We reject methods from trait to not recompile them in the class and duplicate the code."
-			rbMethod method
-				ifNil: [ false ]
-				ifNotNil: #isFromTrait ]
-		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
-]
-
 { #category : #preconditions }
 RBChangeMethodNameRefactoring >> doesNotOverrideExistingMethodPrecondition [
 	"Check that the new selector is not already defined in superclasses"
@@ -108,31 +86,6 @@ RBChangeMethodNameRefactoring >> newSelector [
 { #category : #accessing }
 RBChangeMethodNameRefactoring >> newSelector: aSymbol [
 	newSelector := aSymbol
-]
-
-{ #category : #accessing }
-RBChangeMethodNameRefactoring >> newSelectorString [ 
-	^ self buildSelectorString: newSelector
-				withPermuteMap: permutation
-]
-
-{ #category : #private }
-RBChangeMethodNameRefactoring >> parseTreeRewriter [
-	| rewriteRule oldString newString |
-	
-	oldString := self buildSelectorString: oldSelector.
-	newString := self newSelectorString.
-	
-	rewriteRule := self parseTreeRewriterInstance.
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
-	^rewriteRule
-]
-
-{ #category : #parsing }
-RBChangeMethodNameRefactoring >> parseTreeRewriterInstance [
-
-	^ self parseTreeRewriterClass new
 ]
 
 { #category : #accessing }
@@ -208,12 +161,15 @@ RBChangeMethodNameRefactoring >> renameMap: aColl [
 
 { #category : #transforming }
 RBChangeMethodNameRefactoring >> renameMessageSends [
-	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
-]
+	"self convertAllReferencesTo: oldSelector using: self parseTreeRewriter"
 
-{ #category : #transforming }
-RBChangeMethodNameRefactoring >> renameMessageSendsIn: classes [
-	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
+	self generateChangesFor: (RBReplaceMessageSendTransformation
+			 model: self model
+			 replaceMethod: oldSelector
+			 in: class
+			 to: newSelector
+			 permutation: permutation
+			 inAllClasses: true)
 ]
 
 { #category : #initialization }

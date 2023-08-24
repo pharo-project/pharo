@@ -21,10 +21,13 @@ All senders of this method are changed by the other.
 "
 Class {
 	#name : #RBReplaceMessageSendTransformation,
-	#superclass : #RBChangeMethodNameRefactoring,
+	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'replaceInAllClasses',
-		'initializers'
+		'initializers',
+		'oldSelector',
+		'newSelector',
+		'permutation'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -83,6 +86,28 @@ RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aCl
 		inAllClasses: aBoolean
 ]
 
+{ #category : #support }
+RBReplaceMessageSendTransformation >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
+	(self model allReferencesTo: aSymbol in: classes)
+		do:
+			[:method |
+			self
+				convertMethod: method selector
+				for: method modelClass
+				using: searchReplacer]
+]
+
+{ #category : #support }
+RBReplaceMessageSendTransformation >> convertAllReferencesTo: aSymbol using: searchReplacer [
+
+	(self model allReferencesTo: aSymbol)
+		reject: [ :rbMethod | "We reject methods from trait to not recompile them in the class and duplicate the code."
+			rbMethod method
+				ifNil: [ false ]
+				ifNotNil: [ :m | m isFromTrait ] ]
+		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
+]
+
 { #category : #accessing }
 RBReplaceMessageSendTransformation >> initializers [
 
@@ -120,6 +145,27 @@ RBReplaceMessageSendTransformation >> newSelectorString [
 	^stream contents
 ]
 
+{ #category : #parsing }
+RBReplaceMessageSendTransformation >> parseTreeRewriter [
+	| rewriteRule oldString newString |
+	
+	oldString := self buildSelectorString: oldSelector.
+	newString := self newSelectorString.
+	
+	rewriteRule := self parseTreeRewriterInstance.
+	rewriteRule replace: '``@object ' , oldString
+		with: '``@object ' , newString.
+	^rewriteRule
+]
+
+{ #category : #parsing }
+RBReplaceMessageSendTransformation >> parseTreeRewriterInstance [
+
+	^ self parseTreeRewriterClass
+		  replaceLiteral: oldSelector
+		  with: newSelector
+]
+
 { #category : #preconditions }
 RBReplaceMessageSendTransformation >> preconditions [
 
@@ -143,6 +189,16 @@ RBReplaceMessageSendTransformation >> privateTransform [
 	self replaceInAllClasses
 		ifTrue: [ self renameMessageSends ]
 		ifFalse: [ self renameMessageSendsIn: {class} ]
+]
+
+{ #category : #transforming }
+RBReplaceMessageSendTransformation >> renameMessageSends [
+	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
+]
+
+{ #category : #transforming }
+RBReplaceMessageSendTransformation >> renameMessageSendsIn: classes [
+	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
 ]
 
 { #category : #initialization }
