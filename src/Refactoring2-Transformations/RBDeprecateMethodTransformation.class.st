@@ -91,10 +91,10 @@ RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aS
 { #category : #preconditions }
 RBDeprecateMethodTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition withBlock: [ selector ~= newSelector ])
-	  & (RBCondition withBlock: [ RBCondition checkMethodName: newSelector] )
+	^ (RBCondition withBlock: [ selector ~= newSelector ]) 
+	  & (RBCondition withBlock: [ RBCondition checkMethodName: newSelector] ) 
 	  & (RBCondition definesSelector: selector in: class)
-	  & ((RBCondition canUnderstand: newSelector in: class) not)
+	  
 ]
 
 { #category : #executing }

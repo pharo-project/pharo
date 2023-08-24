@@ -51,3 +51,55 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithoutArgs [
 		assert: ((class parseTreeForSelector: oldSelector ) statements anySatisfy:
 			[ :e | e isMessage and: [ e selector = #deprecated:on:in: ] ])
 ]
+
+{ #category : #tests }
+RBDeprecateMethodParametrizedTest >> testValidateBogusNewSelector [
+
+	| refactoring oldSelector newSelector |
+
+	oldSelector := #callMethod.
+	newSelector := #'call_ crap Method'.
+	refactoring := self createRefactoringWithModel: model andArguments:
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
+
+	self deny: refactoring preconditions check
+]
+
+{ #category : #tests }
+RBDeprecateMethodParametrizedTest >> testValidateEmptyNewSelector [
+
+	| refactoring oldSelector newSelector |
+
+	oldSelector := #callMethod.
+	newSelector := ''.
+	refactoring := self createRefactoringWithModel: model andArguments:
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
+
+	self deny: refactoring preconditions check
+]
+
+{ #category : #tests }
+RBDeprecateMethodParametrizedTest >> testValidateNewSelector [
+
+	| refactoring oldSelector newSelector |
+
+	oldSelector := #callMethod.
+	newSelector := #callFoo.
+	refactoring := self createRefactoringWithModel: model andArguments:
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
+
+	self assert: refactoring preconditions check
+]
+
+{ #category : #tests }
+RBDeprecateMethodParametrizedTest >> testValidateSameNewSelector [
+
+	| refactoring oldSelector newSelector |
+
+	oldSelector := #callMethod.
+	newSelector := #callMethod.
+	refactoring := self createRefactoringWithModel: model andArguments:
+		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
+
+	self deny: refactoring preconditions check
+]
