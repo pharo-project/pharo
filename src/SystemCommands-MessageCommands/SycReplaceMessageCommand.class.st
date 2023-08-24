@@ -15,7 +15,8 @@ Class {
 SycReplaceMessageCommand >> createRefactoring [
 
 	self flag: 'TODO'. "Improve preview to add args when change the sender with empty args"
-
+	self flag: 'scope'. "Should introduce scope instead of passing a boolean".
+	
 	^ newSelector newArgs
 		  ifNotEmpty: [
 			  (self refactoringClass
@@ -24,7 +25,7 @@ SycReplaceMessageCommand >> createRefactoring [
 				   in: selectedClass
 				   to: newSelector selector
 				   permutation: newSelector permutation
-				   inAllClasses: self replaceInAllClasses) initializers: newSelector newArgs values ]
+				   inAllClasses: true) initializers: newSelector newArgs values ]
 		  ifEmpty: [
 			  (self refactoringClass
 				   model: model
@@ -32,7 +33,7 @@ SycReplaceMessageCommand >> createRefactoring [
 				   in: selectedClass
 				   to: newSelector selector
 				   permutation: newSelector permutation
-				   inAllClasses: self replaceInAllClasses) initializers:  newSelector newArgs ]
+				   inAllClasses: true) initializers:  newSelector newArgs ]
 ]
 
 { #category : #accessing }
@@ -75,9 +76,4 @@ SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
 SycReplaceMessageCommand >> refactoringClass [
 
 	^ RBReplaceMessageSendTransformation
-]
-
-{ #category : #execution }
-SycReplaceMessageCommand >> replaceInAllClasses [
-	^ self confirm: 'Do you want replace senders of method in the whole classes?'
 ]
