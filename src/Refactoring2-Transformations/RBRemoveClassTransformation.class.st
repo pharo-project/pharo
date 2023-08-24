@@ -69,8 +69,7 @@ RBRemoveClassTransformation >> applicabilityPreconditions [
 		aClassOrTrait := self model classNamed: className asSymbol.
 		aClassOrTrait ifNil: [ self refactoringError: 'No such class or trait named ', className ].
 		^ (self preconditionIsNotMetaclass: aClassOrTrait)
-			& (self preconditionHasNoSubclasses: aClassOrTrait)
-			& (self preconditionHasNoUsers: aClassOrTrait )
+			
 ]
 
 { #category : #preconditions }
@@ -118,10 +117,16 @@ RBRemoveClassTransformation >> preconditionHasNoSubclasses: aClass [
 { #category : #preconditions }
 RBRemoveClassTransformation >> preconditionHasNoUsers: aClassOrTrait [
 
-	^ (RBCondition withBlock: [ aClassOrTrait realClass users isEmpty ])
-		errorMacro: aClassOrTrait name , ' Trait is used.<n>Browse classes using it?';
-		errorBlock: [ self openBrowserOn: (self environmentWithUsersOf: aClassOrTrait) ];
-		yourself
+	^ (RBCondition withBlock: [
+			   self model
+				   allReferencesToClass: aClassOrTrait
+				   do: [ :each | false ].
+			   true ])
+		  errorMacro:
+			  aClassOrTrait name , ' Trait is used.<n>Browse classes using it?';
+		  errorBlock: [
+			  self openBrowserOn: (self environmentWithUsersOf: aClassOrTrait) ];
+		  yourself
 ]
 
 { #category : #preconditions }

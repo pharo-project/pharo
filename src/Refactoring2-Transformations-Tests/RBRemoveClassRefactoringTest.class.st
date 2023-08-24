@@ -1,0 +1,77 @@
+Class {
+	#name : #RBRemoveClassRefactoringTest,
+	#superclass : #RBAbstractTransformationTest,
+	#category : #'Refactoring2-Transformations-Tests-Test'
+}
+
+{ #category : #accessing }
+RBRemoveClassRefactoringTest class >> defaultTimeLimit [
+	^20 seconds
+]
+
+{ #category : #tests }
+RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClass [
+
+	| refactoring package |
+	package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
+	model := RBNamespace onEnvironment: package.
+	"here the model only contains classes and there is no reference to RBTransformationDummyRuleTest1 and it is a subclass."
+	refactoring := RBRemoveClassRefactoring 
+							model: model 
+							classNames: {RBTransformationDummyRuleTest1 name}.
+	"Pay attention that we need a direct reference outside of the data for testing package."
+
+	self
+		shouldnt: [ refactoring generateChanges ]
+		raise: RBRefactoringError.
+
+	self assert:
+		(refactoring model classNamed: #RBTransformationDummyRuleTest1) isNil
+]
+
+{ #category : #tests }
+RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClassWithFullEnvironment [
+
+	| refactoring |
+	model := RBNamespace onEnvironment: RBBrowserEnvironment new .
+	refactoring := RBRemoveClassRefactoring
+		               model: model
+		               classNames: { 'RBUnusedRootClass' asSymbol }.
+	"Pay attention that we do not want to create a direct reference."
+
+	self
+		shouldnt: [ refactoring generateChanges ]
+		raise: RBRefactoringError.
+
+	self assert: (refactoring model classNamed: 'RBUnusedRootClass' asSymbol) isNil
+]
+
+{ #category : #tests }
+RBRemoveClassRefactoringTest >> testRemovingASuperclassShouldNotRemoveTheClass [
+
+	| refactoring  package sup sub |
+   package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
+	model := RBNamespace onEnvironment: package.
+	refactoring := RBRemoveClassRefactoring 
+							model: model 
+							classNames: { #RBFooDummyLintRuleTest1}.
+	self halt.
+	sup := (refactoring model classNamed: #RBFooDummyLintRuleTest1).
+	sub := (refactoring model classNamed: RBFooDummyLintRuleTest1 subclasses first name).
+	self assert: sup isNotNil.
+	self assert: sub isNotNil.
+	
+	"the class is a superclass so it should not be removed."
+	self deny: refactoring preconditions check.
+	
+	"but for the real reason"
+	
+	self deny: (refactoring preconditionEmptyOrHasNoSubclasses: sup) check.
+	
+	self
+		should: [ refactoring generateChanges ]
+		raise: RBRefactoringError.
+
+	self assert:
+		(refactoring model classNamed: #RBFooDummyLintRuleTest1) isNotNil
+]

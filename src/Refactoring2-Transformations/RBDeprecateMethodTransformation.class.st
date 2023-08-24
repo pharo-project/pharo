@@ -100,17 +100,16 @@ RBDeprecateMethodTransformation >> applicabilityPreconditions [
 { #category : #executing }
 RBDeprecateMethodTransformation >> buildTransformations [
 
-	| node parseTree method start |
+	| node parseTree method |
 	method := class methodFor: selector.
 	parseTree := method parseTree.
-	start := parseTree body statements first start.
 	node := self parserClass parseExpression: self callDeprecationMethod.
-	^ OrderedCollection new add: (RBAddSubtreeTransformation
-		interval: (29 to: 29)
-		with: self callDeprecationMethod
-		from: selector
-		in: class);
-		yourself
+	parseTree body addNodeFirst: node.
+
+	^ { (RBAddMethodTransformation
+			 sourceCode: parseTree newSource
+			 in: class
+			 withProtocol: method protocols) } 
 ]
 
 { #category : #accessing }

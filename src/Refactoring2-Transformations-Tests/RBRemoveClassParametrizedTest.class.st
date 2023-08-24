@@ -6,14 +6,11 @@ Class {
 
 { #category : #tests }
 RBRemoveClassParametrizedTest class >> testParameters [
-	self flag:'some tests of transformation are broken'.
+
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRemoveClassRefactoring .
 					  #constructor -> #classNames: .
 					  #isComposed -> true};
-		"addCase: { #rbClass -> RBRemoveClassTransformation .
-					  #constructor -> #className: .
-					  #isComposed -> false};	"
 		yourself
 ]
 

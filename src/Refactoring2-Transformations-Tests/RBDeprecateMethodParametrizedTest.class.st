@@ -20,17 +20,21 @@ RBDeprecateMethodParametrizedTest >> constructor [
 RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithSameNumberOfArgs [
 
 	| refactoring class oldSelector newSelector |
-
 	oldSelector := #callMethod.
 	newSelector := #callFoo.
-	refactoring := self createRefactoringWithModel: model andArguments:
-		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               oldSelector.
+				               RBClassDataForRefactoringTest.
+				               newSelector }.
 
-	self executeRefactoring: refactoring .
+	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
-	self
-		assert: ((class parseTreeForSelector: oldSelector ) statements anySatisfy:
-			[ :e | e isMessage ifTrue: [ e selector = #deprecated:on:in: ] ])
+	self assert:
+		((class parseTreeForSelector: oldSelector) statements anySatisfy: [
+			 :e | e isMessage ifTrue: [ e selector = #deprecated:on:in: ] ]).
+	
 ]
 
 { #category : #tests }
