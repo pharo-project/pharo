@@ -123,20 +123,6 @@ RBAddParameterRefactoring >> renameArgumentsIn: parseTree [
 	] ]
 ]
 
-{ #category : #transforming }
-RBAddParameterRefactoring >> renameMessageSends [
-	"self convertAllReferencesTo: oldSelector using: self parseTreeRewriter"
-
-	self generateChangesFor: (RBReplaceMessageSendsWithInitializersTransformation
-			 model: self model
-			 replaceMethod: oldSelector
-			 in: class
-			 to: newSelector
-			 permutation: permutation
-			 newArgs: newArgs
-			 inAllClasses: true)
-]
-
 { #category : #private }
 RBAddParameterRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars [
 	| baseString index newString |
