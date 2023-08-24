@@ -49,7 +49,7 @@ RBAddParameterTransformation >> applicabilityPreconditions [
 				ifFalse:
 					[ self refactoringError: newSelector printString,
 					' doesn''t have the proper number of arguments.'].
-			self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg value1 ].
+			self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg argValue ].
 			true])
 ]
 

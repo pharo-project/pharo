@@ -25,6 +25,12 @@ RBArgumentName class >> name: aString value: anObject [
 ]
 
 { #category : #accessing }
+RBArgumentName >> argValue [
+
+	^ value
+]
+
+{ #category : #accessing }
 RBArgumentName >> canBeRemoved [
 
 	^ canBeRemoved ifNil: [ canBeRemoved := true ]
@@ -86,12 +92,6 @@ RBArgumentName >> printOn: aStream [
 { #category : #printing }
 RBArgumentName >> storeOn: aStream [
 	aStream
-]
-
-{ #category : #accessing }
-RBArgumentName >> value1 [
-
-	^ value
 ]
 
 { #category : #accessing }
