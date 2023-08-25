@@ -419,7 +419,7 @@ RPackage >> extensionMethodsForClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> extensionProtocolsForClass: aClass [
 
-	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol ]
+	^ aClass protocols select: [ :protocol | protocol isExtensionProtocolMatching: self ]
 ]
 
 { #category : #accessing }
@@ -485,12 +485,8 @@ RPackage >> importClass: aClass inTag: aTag [
 	classes add: aClass instanceSide.
 	self registerClass: aClass.
 
-	{
-		aClass.
-		aClass classSide } do: [ :class |
-		(class protocols select: [ :protocol |
-			 self flag: #package. "The next line should be factorize and other senders or #isYourClassExtension: should be updated because they are wrong."
-			 (self organizer packageForProtocol: protocol) = self ]) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
+	{ aClass . aClass classSide } do: [ :class |
+		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
 
 		class protocols
 			reject: [ :protocol | protocol isExtensionProtocol ]
@@ -567,7 +563,7 @@ RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 { #category : #'system compatibility' }
 RPackage >> includesProtocol: protocol ofClass: aClass [
 
-	^ (self isYourClassExtension: protocol) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: protocol) not ] ]
+	^ (protocol isExtensionProtocolMatching: self) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: protocol) not ] ]
 ]
 
 { #category : #testing }
@@ -618,7 +614,7 @@ RPackage >> isForeignClassExtension: protocol [
 
 	protocol ifNil: [ ^ false ].
 
-	^ protocol isExtensionProtocol and: [ (self isYourClassExtension: protocol) not ]
+	^ protocol isExtensionProtocol and: [ (protocol isExtensionProtocolMatching: self) not ]
 ]
 
 { #category : #testing }
@@ -634,12 +630,14 @@ RPackage >> isTestPackage [
 	^ (self name endsWith: '-Tests') or: [self name includesSubstring: '-Tests-']
 ]
 
-{ #category : #'system compatibility' }
+{ #category : #'*Deprecated12' }
 RPackage >> isYourClassExtension: protocol [
 
-	protocol ifNil: [ ^ false ].
+	self
+		deprecated: 'Use #isExtensionMatching: on the parameter instead because the name is much more explicit.'
+		transformWith: '`@rcv isYourClassExtension: `@arg' -> '`@arg isExtensionProtocolMatching: `@rcv'.
 
-	^ protocol name asLowercase isCategoryOf: self methodCategoryPrefix
+	^ protocol isExtensionProtocolMatching: self
 ]
 
 { #category : #queries }
