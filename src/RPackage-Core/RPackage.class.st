@@ -485,12 +485,21 @@ RPackage >> importClass: aClass inTag: aTag [
 	classes add: aClass instanceSide.
 	self registerClass: aClass.
 
-	{ aClass . aClass classSide } do: [ :class |
-		(class protocols select: [ :protocol | self isYourClassExtension: protocol ]) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
+	{
+		aClass.
+		aClass classSide } do: [ :class |
+		(class protocols select: [ :protocol |
+			 self flag: #package. "The next line should be factorize and other senders or #isYourClassExtension: should be updated because they are wrong."
+			 (self organizer hasPackageForProtocol: protocol name) and: [ (self organizer packageMatchingExtensionName: protocol name) = self ] ]) do: [ :protocol |
+			class renameProtocol: protocol as: Protocol unclassified ].
 
-		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ].
-	
-	(self addClassTag: (aTag isString ifTrue: [ aTag ] ifFalse: [ aTag name ])) addClass: aClass
+		class protocols
+			reject: [ :protocol | protocol isExtensionProtocol ]
+			thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ].
+
+	(self addClassTag: (aTag isString
+			  ifTrue: [ aTag ]
+			  ifFalse: [ aTag name ])) addClass: aClass
 ]
 
 { #category : #private }
