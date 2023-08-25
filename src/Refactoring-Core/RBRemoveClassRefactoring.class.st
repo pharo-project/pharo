@@ -71,19 +71,9 @@ RBRemoveClassRefactoring >> preconditionHasNoReferences: aClass [
 
 { #category : #preconditions }
 RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
-	"pay attention that we are not taking into account other classes in the list
-	and would introduce references....
-	
-	
-	Before it was (aClassOrTrait realClass users copyWithoutAll: classNames) isEmpty and we should keep this logic.
-	
-	"
 
 	^ (RBCondition withBlock: [
-			   self model
-				   allReferencesToClass: aClassOrTrait
-				   do: [ :each | false ].
-			   true ])
+				(self refactoringAwareUsesOf: aClassOrTrait) isEmpty ])
 		  errorMacro:
 			  aClassOrTrait name , ' Trait is used.<n>Browse classes using it?';
 		  errorBlock: [
@@ -105,7 +95,7 @@ RBRemoveClassRefactoring >> preconditions [
 		  aClassOrTrait ifNil: [
 			  self refactoringError: 'No such class or trait' ].
 		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
-		   & (self preconditionHasNoReferences: each)
+		   & (self preconditionHasNoReferences: aClassOrTrait)
 		   & (self preconditionEmptyOrHasNoSubclasses: aClassOrTrait)
 		   & (self preconditionHasNoUsers: aClassOrTrait)) ] 
 ]
@@ -121,7 +111,16 @@ RBRemoveClassRefactoring >> privateTransform [
 RBRemoveClassRefactoring >> refactoringAwareReferencesTo: aClass [
 	"Return the references to the class taking into account that some references may be created by other classes that should be removed by the refactoring."
 	
-	^ (self model classesReferencingClass: aClass) copyWithoutAll: classNames
+^ ((self model classesReferencingClass: aClass) 
+		collect: [ :each | each name ]) copyWithoutAll: classNames
+]
+
+{ #category : #preconditions }
+RBRemoveClassRefactoring >> refactoringAwareUsesOf: aClass [
+	"Return the 'symbol use' to the class taking into account that some uses may be created by other classes that should be removed by the refactoring."
+	
+^ ((self model allReferencesTo: aClass name)
+		collect: [ :each | each methodClass name ]) copyWithoutAll: classNames
 ]
 
 { #category : #transforming }
