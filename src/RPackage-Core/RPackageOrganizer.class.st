@@ -831,28 +831,28 @@ RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 
-	| method oldPackage newPackage |
+	| method |
 	method := ann method ifNil: [ ^ self ].
 
 	method origin = ann methodClass ifFalse: [ ^ self ]. "Methods from traits are not treated"
 
 	ann methodClass package ifNil: [ ^ self ]. "Classes that are not packages are not treated"
 
-	ann newProtocol
-		ifNil: [ "If the new protocol is nil it means we are removing the method and this will be managed by the method removal" ^ self ]
-		ifNotNil: [ :newProtocol |
-			newPackage := newProtocol isExtensionProtocol
-				              ifTrue: [ self ensurePackageOfExtensionProtocol: newProtocol ]
-				              ifFalse: [ method methodClass package ] ].
+	"If the new protocol is nil it means we are removing the method and this will be managed by the method removal"
+	ann newProtocol ifNotNil: [ :newProtocol |
+		| oldPackage newPackage |
+		newPackage := newProtocol isExtensionProtocol
+			              ifTrue: [ self ensurePackageOfExtensionProtocol: newProtocol ]
+			              ifFalse: [ method methodClass package ].
 
-	oldPackage := method package.
+		oldPackage := (self packageForProtocol: ann oldProtocol) ifNil: [ method methodClass package ].
 
-	oldPackage = newPackage ifTrue: [ ^ self ].
+		oldPackage = newPackage ifTrue: [ ^ self ].
 
-	oldPackage removeMethod: method.
-	newPackage addMethod: method.
+		oldPackage removeMethod: method.
+		newPackage addMethod: method.
 
-	SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage
+		SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage ]
 ]
 
 { #category : #accessing }
