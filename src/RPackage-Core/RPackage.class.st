@@ -507,7 +507,7 @@ RPackage >> includesClass: aClass [
 RPackage >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ self definedClass anySatisfy: [ :class | class name = aSymbol ]
+	^ self definedClasses anySatisfy: [ :class | class name = aSymbol ]
 ]
 
 { #category : #testing }
