@@ -66,6 +66,23 @@ RBNamespaceTest >> testAllReferencesToClassDo [
 ]
 
 { #category : #'tests - on environment' }
+RBNamespaceTest >> testAllReferencesToClassDoMore [
+
+	| model packageenv selectors |
+	packageenv := RBPackageEnvironment packageNames: {
+			           RBFooDummyLintRuleTest1 packageName.
+			           'Refactoring2-Transformations-Tests' }.
+	"The second package has references to the leaf subclass we want to remove and this is part of the test."
+	model := RBNamespace onEnvironment: packageenv.
+	
+	selectors := OrderedCollection new.
+	(model allReferencesToClass: (model classFor: RBFooDummyLintRuleTest1) do:[ :each | selectors add: each selector]).
+	self
+		assert: selectors asArray
+		equals: #(#testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment #testCanRemoveUnreferencedClass #testCanRemoveReferencedClass #testCanRemoveSuperclass #testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere #testCanRemoveAReferencedClassNotHavingReferenceInTheModel #testRemovingASuperclassShouldNotRemoveTheClass)
+]
+
+{ #category : #'tests - on environment' }
 RBNamespaceTest >> testAllReferencesToClassDoWithoutReferencesInTheSpecifiedModel [
 
 	| model packageenv count |
@@ -114,6 +131,22 @@ RBNamespaceTest >> testAllReferencesToTakesIntoAccountSuperCall [
 		assert:
 		(rbNamespace2 allReferencesTo: #justSuperSendInSubclass) size
 		equals: 2
+]
+
+{ #category : #'tests - on environment' }
+RBNamespaceTest >> testClassesReferencingClass [
+
+	| model packageenv classes |
+	packageenv := RBPackageEnvironment packageNames: {
+			           RBFooDummyLintRuleTest1 packageName.
+			           'Refactoring2-Transformations-Tests' }.
+	"The second package has references to the leaf subclass we want to remove and this is part of the test."
+	model := RBNamespace onEnvironment: packageenv.
+	
+	classes := model classesReferencingClass: (model classFor: RBFooDummyLintRuleTest1).
+	self
+		assert: (classes asArray collect: [ :each | each name ]) 
+		equals:  #(#RBRemoveClassRefactoringTest #RBRemoveClassParametrizedTest #RBRemoveClassTransformationTest)
 ]
 
 { #category : #'tests - classes' }

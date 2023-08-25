@@ -209,6 +209,12 @@ RBClass >> isMeta [
 	^false
 ]
 
+{ #category : #'self evaluating' }
+RBClass >> isSelfEvaluating [
+
+	^ true
+]
+
 { #category : #testing }
 RBClass >> isSharedPool [
 
