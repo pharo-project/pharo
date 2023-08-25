@@ -12,8 +12,7 @@ Class {
 		'classes',
 		'definedClasses',
 		'extensionMethods',
-		'methods',
-		'systemCategories'
+		'methods'
 	],
 	#classInstVars : [
 		'cacheActive',
@@ -197,11 +196,6 @@ RPackageSet >> packageName [
 { #category : #accessing }
 RPackageSet >> packages [
 	^packages
-]
-
-{ #category : #'system compatibility' }
-RPackageSet >> systemCategories [
-	^ systemCategories ifNil: [ systemCategories := (self packages flatCollect: #systemCategories as: Set) asArray ]
 ]
 
 { #category : #accessing }
