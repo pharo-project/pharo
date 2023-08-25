@@ -830,40 +830,29 @@ RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 
 { #category : #'system integration' }
 RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
-	"a protocol has been renamed
-	a method has been removed. // WILL BE TREATED WITH SystemMethodRemovedAnnouncement
-	a method has been moved to another category
-		-maybe from the classic category to an extending package
-		-maybe from an extending package to another extending package
-		-maybe from an extending package to a classic category
-		- maybe from a classic category to another classic category.
-	Get out of here if my organizer has no package for the class! (Anonymous classes)"
 
-	| oldProtocol newProtocol method methodPackage destinationPackage |
+	| method oldPackage newPackage |
 	method := ann method ifNil: [ ^ self ].
-	method origin = ann methodClass ifFalse: [ ^ self ].
-	(self packageOf: ann methodClass instanceSide) ifNil: [ ^ self ].
 
-	newProtocol := ann newProtocol ifNil: [ ^ self ].
+	method origin = ann methodClass ifFalse: [ ^ self ]. "Methods from traits are not treated"
 
-	oldProtocol := ann oldProtocol.
+	ann methodClass package ifNil: [ ^ self ]. "Classes that are not packages are not treated"
 
-	methodPackage := method package.
-	(oldProtocol isNotNil and: [ newProtocol name sameAs: oldProtocol name ]) ifTrue: [ ^ self ].
+	ann newProtocol
+		ifNil: [ "If the new protocol is nil it means we are removing the method and this will be managed by the method removal" ^ self ]
+		ifNotNil: [ :newProtocol |
+			newPackage := newProtocol isExtensionProtocol
+				              ifTrue: [ self ensurePackageOfExtensionProtocol: newProtocol ]
+				              ifFalse: [ method methodClass package ] ].
 
-	destinationPackage := newProtocol isExtensionProtocol
-		                      ifTrue: [ self ensurePackageOfExtensionProtocol: newProtocol ]
-		                      ifFalse: [ method methodClass package ].
+	oldPackage := method package.
 
-	methodPackage := (self packageForProtocol: oldProtocol) ifNil: [ method methodClass package ].
+	oldPackage = newPackage ifTrue: [ ^ self ].
 
-	methodPackage = destinationPackage ifTrue: [ ^ self ].
+	oldPackage removeMethod: method.
+	newPackage addMethod: method.
 
-	(methodPackage methods includes: method) ifTrue: [ methodPackage removeMethod: method ].
-
-	destinationPackage addMethod: method.
-
-	SystemAnnouncer uniqueInstance methodRepackaged: method from: methodPackage to: destinationPackage
+	SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage
 ]
 
 { #category : #accessing }
