@@ -457,34 +457,10 @@ RPackageOrganizer >> packageForProtocol: aProtocol [
 	Else return the package matching the protocol. The priority is given to a package with the same name as the protocol or a package whose is a prefix of the protocol followed by a dash.
 	I work in a case insensitive way."
 
-	| protocolName |
-
 	"If the protocol is nil or isnt an extension protocol then we have the package since it's the same as the class."
 	(aProtocol isNil or: [ aProtocol isExtensionProtocol not ]) ifTrue: [ ^ nil ].
 
-	protocolName := aProtocol name copyWithout: $*.
-
-	"If we have a package with the same name than the protocol, we have a match."
-	self packages
-		detect: [ :package | package name sameAs: protocolName ]
-		ifFound: [ :package | ^ package ].
-
-	"If we don't have an exact match, we check if the protocol begins by the name of a package followed by a dash.
-	In case we have multiple matches, we keep the longest version"
-	^ (self packages select: [ :package | protocolName beginsWith: package name asString , '-' caseSensitive: false ])
-		  ifEmpty: [ nil ]
-		  ifNotEmpty: [ :matchingPackages | matchingPackages detectMax: [ :package | package name size ] ]
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> packageForProtocol: aProtocolName inClass: aClass [
-	"According aProtocolName is an extension protocol, will look for a matching package. If no matching package is found ,  return nil. If aProtocolName is not an extension protocol, return the parent package of aClass"
-
-	aProtocolName ifNil: [ ^ aClass package ].
-
-	^ aProtocolName first = $*
-		  ifTrue: [ self packageMatchingExtensionName: aProtocolName allButFirst ]
-		  ifFalse: [ aClass package ]
+	^ self packageMatchingExtensionName: (aProtocol name copyWithout: $*)
 ]
 
 { #category : #'system integration' }
