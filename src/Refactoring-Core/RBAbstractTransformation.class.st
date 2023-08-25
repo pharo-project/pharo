@@ -117,6 +117,7 @@ RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPerm
 				i < 0
 				ifTrue:
 					[ stream
+						nextPut: Character space;
 						nextPut: $(;
 						nextPutAll: (anArgumentsCollection at: i abs) argValue;
 						nextPut: $)]
@@ -124,7 +125,7 @@ RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPerm
 					[stream
 						nextPutAll: ' ``@arg';
 						nextPutAll: i asString ].
-			stream nextPut: $ .
+			stream nextPut: Character space.
 			].
 	^stream contents
 ]
