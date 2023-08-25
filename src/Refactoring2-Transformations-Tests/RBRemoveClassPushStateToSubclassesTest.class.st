@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveClassPushStateToSubclassesTest,
 	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #tests }
