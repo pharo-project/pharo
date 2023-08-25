@@ -870,26 +870,22 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	method origin = ann methodClass ifFalse: [ ^ self ].
 	(self packageOf: ann methodClass instanceSide) ifNil: [ ^ self ].
 
-	newProtocol := ann newProtocol
-		               ifNotNil: [ :protocol | protocol name ]
-		               ifNil: [ ^ self ].
+	newProtocol := ann newProtocol ifNil: [ ^ self ].
 
-	oldProtocol := ann oldProtocol
-		               ifNotNil: [ :protocol | protocol name ]
-		               ifNil: [ '' ].
+	oldProtocol := ann oldProtocol.
 
 	methodPackage := method package.
-	(newProtocol sameAs: oldProtocol) ifTrue: [ ^ self ].
+	(oldProtocol isNotNil and: [ newProtocol name sameAs: oldProtocol name ]) ifTrue: [ ^ self ].
 
-	destinationPackage := (self hasPackageForProtocol: newProtocol)
-		                      ifTrue: [ self packageForProtocol: newProtocol inClass: method methodClass ]
+	destinationPackage := (self hasPackageForProtocol: newProtocol name)
+		                      ifTrue: [ self packageForProtocol: newProtocol name inClass: method methodClass ]
 		                      ifFalse: [
-			                      (newProtocol beginsWith: '*')
-				                      ifTrue: [ self ensurePackage: newProtocol allButFirst capitalized ]
+			                      (newProtocol name beginsWith: '*')
+				                      ifTrue: [ self ensurePackage: newProtocol name allButFirst capitalized ]
 				                      ifFalse: [ method methodClass package ] ].
 
-	methodPackage := (self hasPackageForProtocol: oldProtocol)
-		                 ifTrue: [ self packageForProtocol: oldProtocol inClass: method methodClass ]
+	methodPackage := (oldProtocol isNotNil and: [ self hasPackageForProtocol: oldProtocol name ])
+		                 ifTrue: [ self packageForProtocol: oldProtocol name inClass: method methodClass ]
 		                 ifFalse: [ method methodClass package ].
 
 	methodPackage = destinationPackage ifTrue: [ ^ self ].
