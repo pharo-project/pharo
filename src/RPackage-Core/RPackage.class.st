@@ -1042,12 +1042,6 @@ RPackage >> selectorsForClass: aClass [
 ]
 
 { #category : #'system compatibility' }
-RPackage >> systemCategories [
-
-	^ self organizer categories select: [:cat | self includesSystemCategory: cat]
-]
-
-{ #category : #'system compatibility' }
 RPackage >> systemCategoryPrefix [
 	^ self name
 ]
