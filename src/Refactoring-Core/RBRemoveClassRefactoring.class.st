@@ -51,11 +51,9 @@ RBRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses: aClass [
 	^ (RBCondition hasSubclasses: aClass excluding: classNames) not
 		|
-			((RBCondition isEmptyClass: aClass)
-				&
-					((RBCondition withBlock: [ aClass superclass notNil ])
-						errorMacro: 'Cannot remove top level class<n>when it has subclasses';
-						yourself))
+		(RBCondition isEmptyClass: aClass)
+			
+					
 ]
 
 { #category : #preconditions }
@@ -87,6 +85,14 @@ RBRemoveClassRefactoring >> preconditionIsNotMetaclass: aClass [
 ]
 
 { #category : #preconditions }
+RBRemoveClassRefactoring >> preconditionNoTopClasses: aClass [
+
+	^ RBCondition 
+		withBlock: [ aClass superclass notNil ]
+		errorString: 'Cannot remove top level class<n>when it has subclasses'
+]
+
+{ #category : #preconditions }
 RBRemoveClassRefactoring >> preconditions [
 
 	^ classNames inject: self trueCondition into: [ :sum :each |
@@ -94,7 +100,8 @@ RBRemoveClassRefactoring >> preconditions [
 		  aClassOrTrait := self model classNamed: each asSymbol.
 		  aClassOrTrait ifNil: [
 			  self refactoringError: 'No such class or trait' ].
-		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
+		  sum & ((self preconditionNoTopClasses: aClassOrTrait) 
+			& (self preconditionIsNotMetaclass: aClassOrTrait)
 		   & (self preconditionHasNoReferences: aClassOrTrait)
 		   & (self preconditionEmptyOrHasNoSubclasses: aClassOrTrait)
 		   & (self preconditionHasNoUsers: aClassOrTrait)) ] 
