@@ -33,8 +33,8 @@ RBRemoveClassRefactoringTest >> testCanRemoveAReferencedClassNotHavingReferenceI
 		(refactoring model classNamed: #RBTransformationDummyRuleTest1) isNil
 ]
 
-{ #category : #tests }
-RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClass [
+{ #category : #'tests environment' }
+RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere [
 
 	| refactoring package |
 	package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
@@ -42,7 +42,7 @@ RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClass [
 	"here the model only contains classes and there is no reference to RBTransformationDummyRuleTest1 and it is a subclass."
 	refactoring := RBRemoveClassRefactoring 
 							model: model 
-							classNames: {RBTransformationDummyRuleTest1 name}.
+							classNames: { RBTransformationDummyRuleTest1 name }.
 	"Pay attention that we need a direct reference outside of the data for testing package."
 
 	self
@@ -53,7 +53,7 @@ RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClass [
 		(refactoring model classNamed: #RBTransformationDummyRuleTest1) isNil
 ]
 
-{ #category : #tests }
+{ #category : #'tests environment' }
 RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClassWithFullEnvironment [
 
 	| refactoring |
@@ -79,7 +79,6 @@ RBRemoveClassRefactoringTest >> testRemovingASuperclassShouldNotRemoveTheClass [
 	refactoring := RBRemoveClassRefactoring 
 							model: model 
 							classNames: { #RBFooDummyLintRuleTest1}.
-	self halt.
 	sup := (refactoring model classNamed: #RBFooDummyLintRuleTest1).
 	sub := (refactoring model classNamed: RBFooDummyLintRuleTest1 subclasses first name).
 	self assert: sup isNotNil.

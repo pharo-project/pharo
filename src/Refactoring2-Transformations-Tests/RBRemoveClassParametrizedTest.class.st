@@ -40,27 +40,47 @@ RBRemoveClassParametrizedTest >> testFailureRemoveClassWithSubclasses [
 
 { #category : #tests }
 RBRemoveClassParametrizedTest >> testRemoveAClassAndTheirSubclass [
-	|aRefactoringColl|
+
+	| aRefactoringColl |
 
 	aRefactoringColl := self createRefactoringWithModel: model
 		andArguments: {#RBSharedPoolForTestData2 . #RBSharedPoolForTestData1 }.
 
 	self executeRefactorings: aRefactoringColl.
 
-	self assert: (model classNamed: #RBSharedPoolForTestData2) isNil.
-	self assert: (model classNamed: #RBSharedPoolForTestData1) isNil
+	self deny: (model includesClassNamed: #RBSharedPoolForTestData2).
+	self deny: (model includesClassNamed: #RBSharedPoolForTestData1)
+]
+
+{ #category : #tests }
+RBRemoveClassParametrizedTest >> testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment [
+	"This test verifies that the preconditions do not escape the metamodel."
+
+	| aRefactoringColl package |
+	package := RBPackageEnvironment packageName:
+		           RBFooDummyLintRuleTest1 packageName.
+	model := RBNamespace onEnvironment: package.
+	
+	aRefactoringColl := self createRefactoringWithModel: model
+		andArguments: {RBFooDummyLintRuleTest1 name . RBFooDummyLintRuleTest1 subclasses first name }.
+
+	self executeRefactorings: aRefactoringColl.
+
+	self deny: (model includesClassNamed: RBFooDummyLintRuleTest1 name).
+	self deny: (model includesClassNamed: RBFooDummyLintRuleTest1 subclasses first name)
 ]
 
 { #category : #tests }
 RBRemoveClassParametrizedTest >> testRemoveClassesWithReferencesBetweenThem [
-	|aRefactoringColl|
+
+	| aRefactoringColl |
 	aRefactoringColl := self createRefactoringWithModel: model
 		andArguments: { #RBSharedPoolForTestData2 . #RBRemoveClassParametrizedTest }.
 
 	self executeRefactorings: aRefactoringColl.
 
-	self assert: (model classNamed: #RBRemoveClassParametrizedTest) isNil.
-	self assert: (model classNamed: #RBSharedPoolForTestData2) isNil
+	self deny: (model includesClassNamed: #RBRemoveClassParametrizedTest).
+	self deny: (model includesClassNamed: #RBSharedPoolForTestData2)
 ]
 
 { #category : #tests }
@@ -70,12 +90,11 @@ RBRemoveClassParametrizedTest >> testRemoveEmptySuperclass [
 	classA := ('RBFoo' , 'LintRuleTestData1') asSymbol.
 	classB := ('RBTransformation' , 'RuleTestData1') asSymbol.
 	classC := #RBLintRuleTestData.
-	aRefactoringColl := self createRefactoringWithModel: model
-		andArguments: {classA}.
+	aRefactoringColl := self createRefactoringWithModel: model andArguments: {classA}.
 
 	self executeRefactorings: aRefactoringColl.
 
-	self assert: (model classNamed: classA) isNil.
+	self deny: (model includesClassNamed: classA).
 	self assert: (model classNamed: classB) superclass equals: (model classNamed: classC)
 ]
 

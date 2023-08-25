@@ -49,6 +49,39 @@ RBNamespaceTest >> testAllImplementorsOnClassSubset [
 ]
 
 { #category : #'tests - on environment' }
+RBNamespaceTest >> testAllReferencesToClassDo [
+
+	| model packageenv count |
+	packageenv := RBPackageEnvironment packageNames: {
+			           RBFooDummyLintRuleTest1 packageName.
+			           'Refactoring2-Transformations-Tests' }.
+	"The second package has references to the leaf subclass we want to remove and this is part of the test."
+	model := RBNamespace onEnvironment: packageenv.
+	
+	count := 0.
+	(model allReferencesToClass: (model classFor: RBFooDummyLintRuleTest1) do:[ :each | count := count + 1]).
+	self
+		assert: count
+		equals: 7.	
+]
+
+{ #category : #'tests - on environment' }
+RBNamespaceTest >> testAllReferencesToClassDoWithoutReferencesInTheSpecifiedModel [
+
+	| model packageenv count |
+	packageenv := RBPackageEnvironment packageNames: {
+			           RBFooDummyLintRuleTest1 packageName		            }.
+
+	model := RBNamespace onEnvironment: packageenv.
+	
+	count := 0.
+	(model allReferencesToClass: (model classFor: RBFooDummyLintRuleTest1) do:[ :each | count := count + 1]).
+	self
+		assert: count
+		equals: 0.	
+]
+
+{ #category : #'tests - on environment' }
 RBNamespaceTest >> testAllReferencesToOnClassSubset [
 
 	| rbclasses rbNamespace2 |
