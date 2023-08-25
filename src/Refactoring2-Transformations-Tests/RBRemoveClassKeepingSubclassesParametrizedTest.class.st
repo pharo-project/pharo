@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RBRemoveClassKeepingSubclassesParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRemoveClassKeepingSubclassesRefactoring };
+		addCase: { #rbClass -> RBRemoveClassPushingStateToSubclassesRefactoring };
 		yourself
 ]
 

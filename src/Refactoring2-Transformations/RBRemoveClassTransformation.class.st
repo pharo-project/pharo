@@ -1,18 +1,28 @@
 "
-Removes a class from the image.
+Removes a potential non empty class (to your own risk) and reparent its children to the superclass to avoid fully breaking the subclasses.
 
-Usage:
-| transformation |
-transformation := (RBRemoveClassTransformation
+## Usage:
+
+```
+(RBRemoveClassTransformation
 	className: #RBRemoveClassTransformationTest)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+	execute.
+```
 
-Preconditions:
+To get the changes
+
+```
+| transf | 
+transf := (RBRemoveClassTransformation
+	className: #RBRemoveClassTransformationTest)
+	generateChanges.
+(StRefactoringPreviewPresenter changes: transf scopes: {RBBrowserEnvironment new}) open
+```
+
+To view changes check `StRefactoringPreviewPresenter changes: aCompositeRefactoring scopes: scopes
+
+## Preconditions:
 - class must exist
-- class to be removed should not be referenced
-- class to be removed must not have subclasses
-- if it is a trait, it should not be used
 
 "
 Class {
@@ -70,23 +80,6 @@ RBRemoveClassTransformation >> applicabilityPreconditions [
 		aClassOrTrait ifNil: [ self refactoringError: 'No such class or trait named ', className ].
 		^ (self preconditionIsNotMetaclass: aClassOrTrait)
 			
-]
-
-{ #category : #preconditions }
-RBRemoveClassTransformation >> environmentWithReferencesTo: aClass [
-
-	^ RBBrowserEnvironment new
-		referencesTo: (self environment
-			associationAt: aClass
-			ifAbsent: [ aClass ])
-]
-
-{ #category : #preconditions }
-RBRemoveClassTransformation >> environmentWithUsersOf: aTrait [
-
-	^ RBClassEnvironment
-		onEnvironment: RBBrowserEnvironment new
-		classes: aTrait realClass users
 ]
 
 { #category : #preconditions }
