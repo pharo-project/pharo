@@ -19,6 +19,95 @@ WindowsResolver >> cache [
 ]
 
 { #category : #origins }
+WindowsResolver >> getWindowsMusicFolderPath [
+	"Answer the windows music folder path.
+	This is obtained through the Windows API if FFI is present, otherwise it is a guess !"
+
+	| tfExternalFunctionClass tfBasicType fun buff |
+	tfExternalFunctionClass := Smalltalk globals at: #TFExternalFunction ifAbsent: [ ^ self guessWindowsMusicFolderPath ].
+	tfBasicType := Smalltalk globals at: #TFBasicType.
+
+	fun := tfExternalFunctionClass
+		       name: 'SHGetFolderPathA'
+		       moduleName: 'shfolder.dll'
+		       parameterTypes: {
+				       tfBasicType slong.
+				       tfBasicType slong.
+				       tfBasicType slong.
+				       tfBasicType slong.
+				       tfBasicType pointer }
+		       returnType: tfBasicType slong.
+
+	buff := ByteArray new: 1024.
+
+	[ TFSameThreadRunner uniqueInstance invokeFunction: fun withArguments: { 0. 16r000d. 0. 0. buff } ]
+		on: Error
+		do: [ :e | "will get error if ffiplugin is missing" ^ self guessWindowsMusicFolderPath ].
+
+	^ (buff copyFrom: 1 to: (buff indexOf: 0) - 1) asString
+]
+
+{ #category : #origins }
+WindowsResolver >> getWindowsVideosFolderPath [
+	"Answer the windows videos folder path.
+	This is obtained through the Windows API if FFI is present, otherwise it is a guess !"
+
+	| tfExternalFunctionClass tfBasicType fun buff |
+	tfExternalFunctionClass := Smalltalk globals at: #TFExternalFunction ifAbsent: [ ^ self guessWindowsVideosFolderPath ].
+	tfBasicType := Smalltalk globals at: #TFBasicType.
+
+	fun := tfExternalFunctionClass
+		       name: 'SHGetFolderPathA'
+		       moduleName: 'shfolder.dll'
+		       parameterTypes: {
+				       tfBasicType slong.
+				       tfBasicType slong.
+				       tfBasicType slong.
+				       tfBasicType slong.
+				       tfBasicType pointer }
+		       returnType: tfBasicType slong.
+
+	buff := ByteArray new: 1024.
+
+	[ TFSameThreadRunner uniqueInstance invokeFunction: fun withArguments: { 0. 16r000e. 0. 0. buff } ]
+		on: Error
+		do: [ :e | "will get error if ffiplugin is missing" ^ self guessWindowsVideosFolderPath ].
+
+	^ (buff copyFrom: 1 to: (buff indexOf: 0) - 1) asString
+]
+
+{ #category : #origins }
+WindowsResolver >> guessWindowsMusicFolderPath [
+	"Guess the location of the Windows music folder"
+	| possibilities |
+
+	possibilities := Set new.
+	'cdefghijklmnopqrstuvwxyz' do: [ : drive |
+		#('Music' 'My Music') do:[:path | | d |
+			(d := (FileLocator driveNamed: drive asSymbol) resolve: path) exists
+				ifTrue: [ possibilities add: d ] ] ].
+	possibilities := possibilities asSortedCollection: [:a :b | a entry creationTime >= b  entry creationTime].
+	possibilities ifNotEmpty:[ ^ possibilities first fullName ].
+	^ nil
+]
+
+{ #category : #origins }
+WindowsResolver >> guessWindowsVideosFolderPath [
+	"Guess the location of the Windows videos folder"
+
+	| possibilities |
+
+	possibilities := Set new.
+	'cdefghijklmnopqrstuvwxyz' do: [ : drive |
+		#('Videos' 'My Videos') do:[:path | | d |
+			(d := (FileLocator driveNamed: drive asSymbol) resolve: path) exists
+				ifTrue: [ possibilities add: d ] ] ].
+	possibilities := possibilities asSortedCollection: [:a :b | a entry creationTime >= b  entry creationTime].
+	possibilities ifNotEmpty:[ ^ possibilities first fullName ].
+	^ nil
+]
+
+{ #category : #origins }
 WindowsResolver >> home [
 	"Value of the $USERPROFILE environment variable."
 
@@ -27,9 +116,9 @@ WindowsResolver >> home [
 
 { #category : #origins }
 WindowsResolver >> music [
-	"Value of the $CSIDL_MYMUSIC environment variable."
+	"Use SHGetFolderPathA to get the folder path in Windows"
 
-	^ self directoryFromEnvVariableNamed: 'CSIDL_MYMUSIC'
+	^ self getWindowsMusicFolderPath
 ]
 
 { #category : #origins }
@@ -45,7 +134,7 @@ WindowsResolver >> temp [
 
 { #category : #origins }
 WindowsResolver >> videos [
-	"Value of the $CSIDL_COMMON_VIDEO environment variable."
+	"Use SHGetFolderPathA to get the folder path in Windows"
 
-	^ self directoryFromEnvVariableNamed: 'CSIDL_COMMON_VIDEO'
+	^ self getWindowsVideosFolderPath
 ]
