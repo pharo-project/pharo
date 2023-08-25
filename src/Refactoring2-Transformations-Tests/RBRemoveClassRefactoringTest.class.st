@@ -160,6 +160,30 @@ RBRemoveClassRefactoringTest >> testPreconditionNotEmptyClass [
 ]
 
 { #category : #tests }
+RBRemoveClassRefactoringTest >> testRemovingANonEmptyLeafClassISAllowed [
+
+	| refactoring  package sup |
+   package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
+	model := RBNamespace onEnvironment: package.
+	refactoring := RBRemoveClassRefactoring 
+							model: model 
+							classNames: { #MyClassNonEmptyLeafUnused}.
+	sup := (refactoring model classNamed: #MyClassNonEmptyLeafUnused).
+	self assert: sup isNotNil.
+	self deny: sup isEmptyClass.
+	
+	self assert: (refactoring preconditionEmptyOrHasNoSubclasses: sup) check.
+	"It is not empty but it is a leaf so this is ok
+	"
+	self
+		shouldnt: [ refactoring generateChanges ]
+		raise: RBRefactoringError.
+
+	self deny:
+		(refactoring model includesClassNamed: #MyClassNonEmptyLeafUnused) 
+]
+
+{ #category : #tests }
 RBRemoveClassRefactoringTest >> testRemovingASuperclassShouldNotRemoveTheClass [
 
 	| refactoring  package sup sub |

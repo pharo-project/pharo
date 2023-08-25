@@ -203,6 +203,14 @@ RBClass >> instanceSide [
 ]
 
 { #category : #testing }
+RBClass >> isEmptyClass [
+
+	^ self classVariableNames isEmpty and: [
+				  self instanceVariableNames isEmpty and: [
+					  self selectors isEmpty]]
+]
+
+{ #category : #testing }
 RBClass >> isMeta [
 
 	^false
