@@ -70,31 +70,6 @@ RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClassWithFullEnvironmen
 	self assert: (refactoring model classNamed: 'RBUnusedRootClass' asSymbol) isNil
 ]
 
-{ #category : #tests }
-RBRemoveClassRefactoringTest >> testPreconditionHasNoReferences [
-	<skip>
-	| refactoring  package sup sub |
-	self skip.
-   package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
-	model := RBNamespace onEnvironment: package.
-	refactoring := RBRemoveClassRefactoring 
-							model: model 
-							classNames: { #RBFooDummyLintRuleTest1 }.
-	sup := (refactoring model classNamed: #RBFooDummyLintRuleTest1).
-	sub := (refactoring model classNamed: RBFooDummyLintRuleTest1 subclasses first name).
-	self assert: sup isNotNil.
-	self assert: sub isNotNil.
-	
-	"the class is a superclass so it should not be removed."
-	self deny: refactoring preconditions check.
-	
-	self deny: (refactoring preconditionEmptyOrHasNoSubclasses: sup) check.
-	
-
-	self assert:
-		(refactoring model classNamed: #RBFooDummyLintRuleTest1) isNotNil
-]
-
 { #category : #'tests preconditions' }
 RBRemoveClassRefactoringTest >> testPreconditionHasNoReferencesWithClassesWithReferencesBetweenThem [
 
@@ -160,7 +135,7 @@ RBRemoveClassRefactoringTest >> testPreconditionNotEmptyClass [
 ]
 
 { #category : #tests }
-RBRemoveClassRefactoringTest >> testRemovingANonEmptyLeafClassISAllowed [
+RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassIsAllowed [
 
 	| refactoring  package sup |
    package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
@@ -184,30 +159,33 @@ RBRemoveClassRefactoringTest >> testRemovingANonEmptyLeafClassISAllowed [
 ]
 
 { #category : #tests }
-RBRemoveClassRefactoringTest >> testRemovingASuperclassShouldNotRemoveTheClass [
+RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassReparent [
 
-	| refactoring  package sup sub |
+	| refactoring  package class subclasses superRoot |
    package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
 	model := RBNamespace onEnvironment: package.
 	refactoring := RBRemoveClassRefactoring 
 							model: model 
-							classNames: { #RBFooDummyLintRuleTest1}.
-	sup := (refactoring model classNamed: #RBFooDummyLintRuleTest1).
-	sub := (refactoring model classNamed: RBFooDummyLintRuleTest1 subclasses first name).
-	self assert: sup isNotNil.
-	self assert: sub isNotNil.
-	
-	"the class is a superclass so it should not be removed."
-	self deny: refactoring preconditions check.
-	
-	"but for the real reason"
-	
-	self deny: (refactoring preconditionEmptyOrHasNoSubclasses: sup) check.
-	
+							classNames: { #MyClassB}.
+	class := (refactoring model classNamed: #MyClassB).
+	superRoot := class superclass.
+	self assert: class isNotNil.
+	self assert: class isEmptyClass.
+	subclasses := class subclasses.
+
+	self assert: (refactoring preconditionEmptyOrHasNoSubclasses: class) check.
+	"It is empty but it has subclasses so this is ok they will be reparented
+	"
+
 	self
-		should: [ refactoring generateChanges ]
+		shouldnt: [ refactoring generateChanges ]
 		raise: RBRefactoringError.
 
-	self assert:
-		(refactoring model classNamed: #RBFooDummyLintRuleTest1) isNotNil
+	self deny:
+		(refactoring model includesClassNamed: #MyClassB).
+		
+	subclasses do: [ :each | 
+			self assert: (refactoring model includesClassNamed: each name).
+			self assert: superRoot equals: each superclass.
+		]
 ]

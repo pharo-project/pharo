@@ -79,7 +79,7 @@ RBNamespaceTest >> testAllReferencesToClassDoMore [
 	(model allReferencesToClass: (model classFor: RBFooDummyLintRuleTest1) do:[ :each | selectors add: each selector]).
 	self
 		assert: selectors asArray
-		equals: #(#testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment #testCanRemoveUnreferencedClass #testCanRemoveReferencedClass #testCanRemoveSuperclass #testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere #testCanRemoveAReferencedClassNotHavingReferenceInTheModel #testRemovingASuperclassShouldNotRemoveTheClass)
+		equals: #(#testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment #testCanRemoveUnreferencedClass #testCanRemoveReferencedClass #testCanRemoveSuperclass #testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere #testCanRemoveAReferencedClassNotHavingReferenceInTheModel)
 ]
 
 { #category : #'tests - on environment' }
