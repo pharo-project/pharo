@@ -72,7 +72,6 @@ RBClass >> addProtocolNamed: aString [
 RBClass >> allClassVariableNames [
 
 	| sprClass |
-
 	sprClass := self superclass.
 	^ sprClass
 		ifNil: [ self classVariableNames ]

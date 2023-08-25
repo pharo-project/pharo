@@ -47,7 +47,7 @@ RBRemoveClassKeepingSubclassesRefactoring >> preconditions [
 		  aClassOrTrait ifNil: [
 			  self refactoringError: 'No such class or trait' ].
 		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
-		   & (self preconditionHasNoReferences: each)
+		   & (self preconditionHasNoReferences: aClassOrTrait)
 		   & (self preconditionHasNoUsers: aClassOrTrait))
 		  "& ( self preconditionEmptyOrHasNoSubclasses: aClassOrTrait )" ]
 ]

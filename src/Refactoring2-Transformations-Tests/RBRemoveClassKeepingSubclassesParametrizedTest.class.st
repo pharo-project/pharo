@@ -17,22 +17,28 @@ RBRemoveClassKeepingSubclassesParametrizedTest >> constructor [
 ]
 
 { #category : #tests }
-RBRemoveClassKeepingSubclassesParametrizedTest >> testRemoveNotEmptySuperclass [
+RBRemoveClassKeepingSubclassesParametrizedTest >> testRemoveNotEmptySuperclassPushDownInstanceVariables [
 
-	| refactoring class removedClass subclass |
+	| refactoring subclass removedClassName subclassName |
 
-	removedClass := ('RBTransformation' , 'RuleTestData1') asSymbol.
-	subclass := ('RBTransformation' , 'RuleTestData2') asSymbol.
-	refactoring := self createRefactoringWithArguments: { {removedClass} }.
-	class := refactoring model classNamed: subclass.
-	self deny: (class directlyDefinesMethod: #foo).
+	removedClassName := ('RBTransformation' , 'RuleTestData1') asSymbol.
+	subclassName := ('RBTransformation' , 'RuleTestData2') asSymbol.
+	refactoring := self createRefactoringWithArguments: { {removedClassName} }.
+	subclass := refactoring model classNamed: subclassName.
+	self deny: (subclass directlyDefinesMethod: #foo).
 
 	self executeRefactoring: refactoring.
 
-	self assert: (refactoring model classNamed: removedClass) isNil.
-	self assert: class superclass
+	self deny: (refactoring model includesClassNamed: removedClassName).
+	self 
+		assert: subclass superclass
 		equals: (refactoring model classNamed: #RBFooLintRuleTestData1).
-	self assert: (class directlyDefinesMethod: #foo)
+		
+	self assert: (subclass directlyDefinesMethod: #foo).
+	self assert: (subclass directlyDefinesInstanceVariable: #foo).
+	self assert: (subclass directlyDefinesClassVariable: #A).
+	
+	
 ]
 
 { #category : #'failure tests' }
