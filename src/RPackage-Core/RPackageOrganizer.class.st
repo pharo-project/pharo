@@ -458,8 +458,9 @@ RPackageOrganizer >> packageForProtocol: aProtocol [
 	I work in a case insensitive way."
 
 	| protocolName |
-	"If the protocol is not an extension protocol then we have the package since it's the same as the class."
-	(aProtocol isNil or: [ aProtocol isExtensionProtocol ]) ifFalse: [ ^ nil ].
+
+	"If the protocol is nil or isnt an extension protocol then we have the package since it's the same as the class."
+	(aProtocol isNil or: [ aProtocol isExtensionProtocol not ]) ifTrue: [ ^ nil ].
 
 	protocolName := aProtocol name copyWithout: $*.
 
