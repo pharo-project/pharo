@@ -95,19 +95,12 @@ RBAbstractTransformation >> buildSelectorString: aSelector [
 
 { #category : #private }
 RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection [
-	| stream keywords |
+
 	aSelector numArgs == 0 ifTrue: [^aSelector asString].
-	stream := WriteStream on: String new.
-	keywords := aSelector keywords.
-	keywords with: aPermutationCollection
-		do:
-			[:each :i |
-			stream
-				nextPutAll: each;
-				nextPutAll: ' ``@arg';
-				nextPutAll: i printString;
-				nextPut: $ ].
-	^stream contents
+	^ self 
+		buildSelectorString: aSelector
+		withPermuteMap: aPermutationCollection 
+		andNewArguments: #()
 ]
 
 { #category : #private }
