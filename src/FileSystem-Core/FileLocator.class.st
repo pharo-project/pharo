@@ -278,6 +278,12 @@ FileLocator class >> localDirectory [
 	^ self origin: #localDirectory
 ]
 
+{ #category : #accessing }
+FileLocator class >> music [
+
+	^ self origin: #music
+]
+
 { #category : #'instance creation' }
 FileLocator class >> origin: aSymbol [
 	^ self origin: aSymbol path: Path workingDirectory
@@ -347,6 +353,12 @@ FileLocator class >> userData [
 { #category : #'mac-origins' }
 FileLocator class >> userLibrary [
 	^ self origin: #userLibrary
+]
+
+{ #category : #origins }
+FileLocator class >> videos [
+
+	^ self origin: #videos
 ]
 
 { #category : #origins }

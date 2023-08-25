@@ -26,6 +26,13 @@ WindowsResolver >> home [
 ]
 
 { #category : #origins }
+WindowsResolver >> music [
+	"Value of the $CSIDL_MYMUSIC environment variable."
+
+	^ self directoryFromEnvVariableNamed: 'CSIDL_MYMUSIC'
+]
+
+{ #category : #origins }
 WindowsResolver >> preferences [
 	^ self directoryFromEnvVariableNamed: 'APPDATA' or: [ self home ]
 ]
@@ -34,4 +41,11 @@ WindowsResolver >> preferences [
 WindowsResolver >> temp [
 
 	^ self resolveString: Smalltalk os getTempPath
+]
+
+{ #category : #origins }
+WindowsResolver >> videos [
+	"Value of the $CSIDL_COMMON_VIDEO environment variable."
+
+	^ self directoryFromEnvVariableNamed: 'CSIDL_COMMON_VIDEO'
 ]

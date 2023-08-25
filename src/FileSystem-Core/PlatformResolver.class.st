@@ -81,6 +81,13 @@ PlatformResolver >> home [
 ]
 
 { #category : #origins }
+PlatformResolver >> music [
+	<origin>
+
+	^ self home / 'Music'
+]
+
+{ #category : #origins }
 PlatformResolver >> preferences [
 	<origin>
 	^ self subclassResponsibility

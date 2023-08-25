@@ -259,6 +259,13 @@ FileLocatorTest >> testMoveTo [
 	]
 ]
 
+{ #category : #'resolution tests' }
+FileLocatorTest >> testMusicDirectory [
+
+	locator := FileLocator music.
+	self assert: locator resolve equals: FileLocator music resolve
+]
+
 { #category : #'compatibility tests' }
 FileLocatorTest >> testOriginBasename [
 	locator := FileLocator image.
@@ -329,6 +336,13 @@ FileLocatorTest >> testResolveString [
 FileLocatorTest >> testSlash [
 	locator := FileLocator image / 'griffle'.
 	self assert: locator equals: (FileLocator image / 'griffle')
+]
+
+{ #category : #'resolution tests' }
+FileLocatorTest >> testVideosDirectory [
+
+	locator := FileLocator videos.
+	self assert: locator resolve equals: FileLocator videos resolve
 ]
 
 { #category : #'compatibility tests' }
