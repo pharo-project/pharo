@@ -166,11 +166,6 @@ RBChangeMethodNameTransformation >> renameMap: aColl [
 ]
 
 { #category : #support }
-RBChangeMethodNameTransformation >> renameMessageSendsIn: classes [
-	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
-]
-
-{ #category : #support }
 RBChangeMethodNameTransformation >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
@@ -181,4 +176,9 @@ RBChangeMethodNameTransformation >> renameMethod: aSelector in: aClass to: newSe
 { #category : #support }
 RBChangeMethodNameTransformation >> replaceMessageSends [
 	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
+]
+
+{ #category : #support }
+RBChangeMethodNameTransformation >> replaceMessageSendsIn: classes [
+	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
 ]
