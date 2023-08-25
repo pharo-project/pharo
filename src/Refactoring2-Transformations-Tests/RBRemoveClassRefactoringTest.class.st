@@ -71,6 +71,50 @@ RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClassWithFullEnvironmen
 ]
 
 { #category : #tests }
+RBRemoveClassRefactoringTest >> testPreconditionHasNoReferences [
+
+	| refactoring  package sup sub |
+   package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
+	model := RBNamespace onEnvironment: package.
+	refactoring := RBRemoveClassRefactoring 
+							model: model 
+							classNames: { #RBFooDummyLintRuleTest1}.
+	sup := (refactoring model classNamed: #RBFooDummyLintRuleTest1).
+	sub := (refactoring model classNamed: RBFooDummyLintRuleTest1 subclasses first name).
+	self assert: sup isNotNil.
+	self assert: sub isNotNil.
+	
+	"the class is a superclass so it should not be removed."
+	self deny: refactoring preconditions check.
+	
+	"but for the real reason"
+	
+	self deny: (refactoring preconditionEmptyOrHasNoSubclasses: sup) check.
+	
+	self
+		should: [ refactoring generateChanges ]
+		raise: RBRefactoringError.
+
+	self assert:
+		(refactoring model classNamed: #RBFooDummyLintRuleTest1) isNotNil
+]
+
+{ #category : #tests }
+RBRemoveClassRefactoringTest >> testPreconditionHasNoReferencesWithClassesWithReferencesBetweenThem [
+
+	| refact classes |
+	classes := RBClassEnvironment classes: { RBSharedPoolForTestData2 . RBRemoveClassParametrizedTest}.
+	model := RBNamespace onEnvironment: classes.
+	
+	refact := RBRemoveClassRefactoring 
+					model: model 
+					classNames: { (model classNamed: #RBSharedPoolForTestData2) . (model classNamed: #RBRemoveClassParametrizedTest) }.
+	"RBSharedPoolForTestData2 refers to RBRemoveClassParametrizedTest and nobody else refers to them!"
+	
+	self assert: (refact preconditionHasNoReferences: (refact model classNamed: #RBSharedPoolForTestData2)) check.
+]
+
+{ #category : #tests }
 RBRemoveClassRefactoringTest >> testRemovingASuperclassShouldNotRemoveTheClass [
 
 	| refactoring  package sup sub |

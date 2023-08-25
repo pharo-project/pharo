@@ -41,18 +41,10 @@ RBRemoveClassRefactoring >> classNames: aClassNameCollection [
 ]
 
 { #category : #preconditions }
-RBRemoveClassRefactoring >> environmentWithReferencesTo: aClass [
-	^ RBBrowserEnvironment new
-		referencesTo: (Smalltalk globals
-			associationAt: aClass
-			ifAbsent: [ aClass ])
-]
-
-{ #category : #preconditions }
-RBRemoveClassRefactoring >> environmentWithUsersOf: aTrait [
+RBRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 	^ RBClassEnvironment
 		onEnvironment: RBBrowserEnvironment new
-		classes: aTrait realClass users
+		classes: (self model classesReferencingClass: aClassable)
 ]
 
 { #category : #preconditions }
@@ -68,12 +60,12 @@ RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses: aClass [
 
 { #category : #preconditions }
 RBRemoveClassRefactoring >> preconditionHasNoReferences: aClass [
-
-	| env |
-	env := self environmentWithReferencesTo: aClass.
-	^ (RBCondition withBlock: [ (env classNames copyWithoutAll: classNames) isEmpty ])
-			errorMacro: aClass , ' is referenced.<n>Browse references?';
-			errorBlock: [ self openBrowserOn: env ];
+	
+	| referencingClassNames |
+	referencingClassNames := (self refactoringAwareReferencesTo: aClass).
+	^ (RBCondition withBlock: [ referencingClassNames isEmpty ])
+			errorMacro: aClass name , ' is referenced.<n>Browse references?';
+			errorBlock: [ self openBrowserOn: (RBClassEnvironment classes: referencingClassNames) ];
 			yourself
 ]
 
@@ -123,6 +115,13 @@ RBRemoveClassRefactoring >> privateTransform [
 	self
 		reparentSubclasses;
 		removeClasses
+]
+
+{ #category : #preconditions }
+RBRemoveClassRefactoring >> refactoringAwareReferencesTo: aClass [
+	"Return the references to the class taking into account that some references may be created by other classes that should be removed by the refactoring."
+	
+	^ (self model classesReferencingClass: aClass) copyWithoutAll: classNames
 ]
 
 { #category : #transforming }
