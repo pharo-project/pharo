@@ -176,14 +176,14 @@ RPackageOrganizer >> addMethod: method [
 	"we have to register the method in the parent RPackage of the class.
 	to do that, we first have to look if the method is an extension from an external package:"
 
-	| package protocol |
+	| package protocolName |
 	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
 	method methodClass package name = RPackage defaultPackageName ifTrue: [ ^ self ].
 
-	protocol := method protocolName.
-	package := (self hasPackageForProtocol: protocol)
-		            ifTrue: [ self packageForProtocol: protocol inClass: method methodClass ]
-		            ifFalse: [ self ensurePackage: (protocol copyWithout: $*) ].
+	protocolName := method protocolName.
+	package := (self hasPackageForProtocol: method protocol)
+		            ifTrue: [ self packageForProtocol: protocolName inClass: method methodClass ]
+		            ifFalse: [ self ensurePackage: (protocolName copyWithout: $*) ].
 
 	package addMethod: method
 ]
@@ -398,12 +398,12 @@ RPackageOrganizer >> hasPackageExactlyMatchingExtensionName: anExtensionName [
 ]
 
 { #category : #'system integration' }
-RPackageOrganizer >> hasPackageForProtocol: aProtocolName [
+RPackageOrganizer >> hasPackageForProtocol: aProtocol [
 
 	"If the protocol is not an extension protocol then we have the package since it's the same as the class."
-	(aProtocolName beginsWith: '*') ifFalse: [ ^ true ].
+	aProtocol isExtensionProtocol ifFalse: [ ^ true ].
 
-	^ self hasPackageMatchingExtensionName: (aProtocolName copyWithout: $*)
+	^ self hasPackageMatchingExtensionName: (aProtocol name copyWithout: $*)
 ]
 
 { #category : #'system integration' }
@@ -877,14 +877,14 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	methodPackage := method package.
 	(oldProtocol isNotNil and: [ newProtocol name sameAs: oldProtocol name ]) ifTrue: [ ^ self ].
 
-	destinationPackage := (self hasPackageForProtocol: newProtocol name)
+	destinationPackage := (self hasPackageForProtocol: newProtocol)
 		                      ifTrue: [ self packageForProtocol: newProtocol name inClass: method methodClass ]
 		                      ifFalse: [
-			                      (newProtocol name beginsWith: '*')
+			                      newProtocol isExtensionProtocol
 				                      ifTrue: [ self ensurePackage: newProtocol name allButFirst capitalized ]
 				                      ifFalse: [ method methodClass package ] ].
 
-	methodPackage := (oldProtocol isNotNil and: [ self hasPackageForProtocol: oldProtocol name ])
+	methodPackage := (oldProtocol isNotNil and: [ self hasPackageForProtocol: oldProtocol ])
 		                 ifTrue: [ self packageForProtocol: oldProtocol name inClass: method methodClass ]
 		                 ifFalse: [ method methodClass package ].
 
