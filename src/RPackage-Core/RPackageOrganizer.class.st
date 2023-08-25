@@ -394,11 +394,15 @@ RPackageOrganizer >> hasPackageForProtocol: aProtocol [
 	protocolName := aProtocol name copyWithout: $*.
 
 	"If we have a package with the same name than the protocol, we have a match."
-	(packages keys anySatisfy: [ :packageName | packageName sameAs: protocolName ]) ifTrue: [ ^ true ].
+	self packages
+		detect: [ :package | package name sameAs: protocolName ]
+		ifFound: [ :package | ^ true ].
 
 	"If we don't have an exact match, we check if the protocol begins by the name of a package followed by a dash"
-	packages keysDo: [ :packageName | (protocolName beginsWith: packageName asString , '-' caseSensitive: false) ifTrue: [ ^ true ] ].
-	^ false
+	^ self packages
+		  detect: [ :package | protocolName beginsWith: package name asString , '-' caseSensitive: false ]
+		  ifFound: [ :package | true ]
+		  ifNone: [ false ]
 ]
 
 { #category : #testing }
@@ -459,6 +463,31 @@ RPackageOrganizer >> orderedTraitsIn: category [
 	traits := behaviors select: [ :each | each isTrait ].
 	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
 	^ traits asArray
+]
+
+{ #category : #'system integration' }
+RPackageOrganizer >> packageForProtocol: aProtocol [
+	"Return nil if the protocol is not an extension of if there is no package matching the name.
+	
+	Else return the package matching the protocol. The priority is given to a package with the same name as the protocol or a package whose is a prefix of the protocol followed by a dash.
+	I work in a case insensitive way."
+
+	| protocolName |
+	"If the protocol is not an extension protocol then we have the package since it's the same as the class."
+	(aProtocol isNil or: [ aProtocol isExtensionProtocol ]) ifFalse: [ ^ nil ].
+
+	protocolName := aProtocol name copyWithout: $*.
+
+	"If we have a package with the same name than the protocol, we have a match."
+	self packages
+		detect: [ :package | package name sameAs: protocolName ]
+		ifFound: [ :package | ^ package ].
+
+	"If we don't have an exact match, we check if the protocol begins by the name of a package followed by a dash.
+	In case we have multiple matches, we keep the longest version"
+	^ (self packages select: [ :package | protocolName beginsWith: package name asString , '-' caseSensitive: false ])
+		  ifEmpty: [ nil ]
+		  ifNotEmpty: [ :matchingPackages | matchingPackages detectMax: [ :package | package name size ] ]
 ]
 
 { #category : #'system integration' }

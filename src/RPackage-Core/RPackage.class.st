@@ -490,8 +490,7 @@ RPackage >> importClass: aClass inTag: aTag [
 		aClass classSide } do: [ :class |
 		(class protocols select: [ :protocol |
 			 self flag: #package. "The next line should be factorize and other senders or #isYourClassExtension: should be updated because they are wrong."
-			 (self organizer hasPackageForProtocol: protocol) and: [ (self organizer packageMatchingExtensionName: protocol name allButFirst) = self ] ]) do: [ :protocol |
-			class renameProtocol: protocol as: Protocol unclassified ].
+			 (self organizer packageForProtocol: protocol) = self ]) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
 
 		class protocols
 			reject: [ :protocol | protocol isExtensionProtocol ]
