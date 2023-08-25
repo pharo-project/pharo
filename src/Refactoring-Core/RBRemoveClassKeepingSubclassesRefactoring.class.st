@@ -62,27 +62,27 @@ RBRemoveClassKeepingSubclassesRefactoring >> privateTransform [
 
 { #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> pushDownClassVarsOf: class [
-	class realClass classVariables do: [ :e |
+	class classVariableNames do: [ :e |
 		refactorings add: (RBPushDownClassVariableRefactoring
-		variable: e key
+		variable: e
 		class: class).
 	]
 ]
 
 { #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> pushDownInstVarsOf: class [
-	class realClass instVarNames
+	class instanceVariableNames
 		do: [ :e |
 			refactorings
 				add:
 					(RBPushDownInstanceVariableRefactoring
-						variable: e asString
+						variable: e
 						class: class) ]
 ]
 
 { #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> pushDownMethodsOf: class [
-	refactorings add: (RBPushDownMethodRefactoring pushDown: class realClass selectors from: class)
+	refactorings add: (RBPushDownMethodRefactoring pushDown: class selectors from: class)
 ]
 
 { #category : #preconditions }
