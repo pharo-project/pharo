@@ -59,6 +59,13 @@ UnixResolver >> userData [
 	^ self directoryFromEnvVariableNamed: 'XDG_DATA_HOME' or: [ self home / '.local' / 'share' ]
 ]
 
+{ #category : #origins }
+UnixResolver >> videos [
+	<origin>
+
+	^ self home / 'Videos'
+]
+
 { #category : #helpers }
 UnixResolver >> xdgParseUserDirLine: aStream [
 	"Format is XDG_xxx_DIR=""$HOME/yyy"", where yyy is a shell-escaped homedir-relative path, or XDG_xxx_DIR=""/yyy"", where /yyy is an absolute path. No other format is supported."

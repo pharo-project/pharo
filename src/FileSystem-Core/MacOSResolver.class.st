@@ -60,3 +60,10 @@ MacOSResolver >> userLibrary [
 	<origin>
 	^  self home / 'Library'
 ]
+
+{ #category : #origins }
+MacOSResolver >> videos [
+	<origin>
+
+	^ self home / 'Movies'
+]
