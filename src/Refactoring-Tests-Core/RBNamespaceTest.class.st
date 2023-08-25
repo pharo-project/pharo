@@ -235,6 +235,24 @@ RBNamespaceTest >> testModelImplementorsSenders [
 	self assert: found
 ]
 
+{ #category : #'class tests' }
+RBNamespaceTest >> testPopulateModel [
+
+	| newModel |
+	newModel := RBNamespace onEnvironment: RBClassEnvironment new.
+	
+	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassA) classDefinitionString.
+	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassB) classDefinitionString.
+	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassC) classDefinitionString.
+	newModel name: 'Test'.
+	
+	
+	self assert: (newModel classNamed: #MyClassA) name equals: 'MyClassA'.
+	self assert: (newModel classNamed: #MyClassB) superclass name equals: 'MyClassA'.
+	self assert: (newModel classNamed: #MyClassC) superclass name equals: 'MyClassA'.
+
+]
+
 { #category : #'tests - classes' }
 RBNamespaceTest >> testRedefineClassChange [
 	| st |

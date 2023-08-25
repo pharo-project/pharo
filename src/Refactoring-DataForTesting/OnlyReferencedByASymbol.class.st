@@ -1,5 +1,5 @@
 Class {
 	#name : #OnlyReferencedByASymbol,
 	#superclass : #Object,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-SymbolUses'
 }

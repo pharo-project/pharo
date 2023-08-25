@@ -1,7 +1,7 @@
 Class {
 	#name : #OnlyReferencing,
 	#superclass : #Object,
-	#category : #'Refactoring-DataForTesting'
+	#category : #'Refactoring-DataForTesting-SymbolUses'
 }
 
 { #category : #dull }
