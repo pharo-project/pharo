@@ -385,36 +385,19 @@ RPackageOrganizer >> hasPackage: aPackage [
 ]
 
 { #category : #'system integration' }
-RPackageOrganizer >> hasPackageExactlyMatchingExtensionName: anExtensionName [
-
-	| extension |
-	extension := anExtensionName asSymbol.
-	"fast version"
-	(self hasPackage: extension) ifTrue: [ ^ true ].
-
-	"slow version ignoring case"
-	packages keysDo: [ :aSymbol | (aSymbol sameAs: extension) ifTrue: [ ^ true ] ].
-	^ false
-]
-
-{ #category : #'system integration' }
 RPackageOrganizer >> hasPackageForProtocol: aProtocol [
 
+	| protocolName |
 	"If the protocol is not an extension protocol then we have the package since it's the same as the class."
 	aProtocol isExtensionProtocol ifFalse: [ ^ true ].
 
-	^ self hasPackageMatchingExtensionName: (aProtocol name copyWithout: $*)
-]
+	protocolName := aProtocol name copyWithout: $*.
 
-{ #category : #'system integration' }
-RPackageOrganizer >> hasPackageMatchingExtensionName: anExtensionName [
+	"If we have a package with the same name than the protocol, we have a match."
+	(packages keys anySatisfy: [ :packageName | packageName sameAs: protocolName ]) ifTrue: [ ^ true ].
 
-	(self hasPackageExactlyMatchingExtensionName: anExtensionName)
-		ifTrue: [ ^true ].
-
-	packages keysDo: [ :aSymbol |
-		(anExtensionName beginsWith: aSymbol asString, '-' caseSensitive: false)
-			ifTrue: [ ^ true]].
+	"If we don't have an exact match, we check if the protocol begins by the name of a package followed by a dash"
+	packages keysDo: [ :packageName | (protocolName beginsWith: packageName asString , '-' caseSensitive: false) ifTrue: [ ^ true ] ].
 	^ false
 ]
 
