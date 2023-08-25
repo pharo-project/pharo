@@ -18,7 +18,7 @@ This class went over 4 internal representations implementation.
 	This was not good since we want to have defined classes without methods. 
 	- third: 4 dictionaries + definedClasses
 	This was not good because it was way too complex
-	- Thourth: 2 dictionaries + tags including the classes
+	- Fourth: 2 dictionaries + tags including the classes
 	The is the idea of the first iteration but the code got cleaned and it is now way easier to implement
 
 Originally I wanted to avoid to have a defined class list and I wanted to avoid to have to declare the class as defined. But this is not really good since
@@ -507,7 +507,7 @@ RPackage >> includesClass: aClass [
 RPackage >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ self definedClassNames includes: aSymbol
+	^ self definedClass anySatisfy: [ :class | class name = aSymbol ]
 ]
 
 { #category : #testing }
