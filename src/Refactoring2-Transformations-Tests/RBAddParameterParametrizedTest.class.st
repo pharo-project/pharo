@@ -214,17 +214,18 @@ RBAddParameterParametrizedTest >> testAddTwoParameters [
 ]
 
 { #category : #'failure tests' }
-RBAddParameterParametrizedTest >> testFailureBadInitializationCode [
+RBAddParameterParametrizedTest >> testFailureBadDefaultValueForNewArgument [
 
 	| newArg |
-	newArg := RBArgumentName name: 'anObject' value: 'foo:'.
+	newArg := RBArgumentName name: 'anObject' value: 'brokenExpression:'.
 	self shouldFail: (self createRefactoringWithArguments: {
 				 #name.
 				 RBLintRuleTestData.
 				 #name:.
 				 #( -1 ).
 				 { newArg } }).
-	newArg := RBArgumentName name: 'anObject' value: 'foo'.
+	
+	newArg := RBArgumentName name: 'anObject' value: 'undefinedVariable'.
 	self shouldFail: (self createRefactoringWithArguments: {
 				 #name.
 				 RBLintRuleTestData.
