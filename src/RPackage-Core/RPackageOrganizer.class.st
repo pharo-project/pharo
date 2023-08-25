@@ -176,14 +176,14 @@ RPackageOrganizer >> addMethod: method [
 	"we have to register the method in the parent RPackage of the class.
 	to do that, we first have to look if the method is an extension from an external package:"
 
-	| package protocolName |
+	| package protocol |
 	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
 	method methodClass package name = RPackage defaultPackageName ifTrue: [ ^ self ].
 
-	protocolName := method protocolName.
-	package := (self hasPackageForProtocol: method protocol)
-		            ifTrue: [ self packageForProtocol: protocolName inClass: method methodClass ]
-		            ifFalse: [ self ensurePackage: (protocolName copyWithout: $*) ].
+	protocol := method protocol.
+	package := protocol isExtensionProtocol
+		           ifTrue: [ (self packageForProtocol: protocol) ifNil: [ self ensurePackage: (protocol name copyWithoutFirst: $*) ] ]
+		           ifFalse: [ method methodClass package ].
 
 	package addMethod: method
 ]
