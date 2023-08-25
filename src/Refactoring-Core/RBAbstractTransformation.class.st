@@ -87,6 +87,13 @@ RBAbstractTransformation class >> refactoringOptions [
 ]
 
 { #category : #private }
+RBAbstractTransformation >> buildSelectorString: aSelector [
+	aSelector numArgs = 0 ifTrue: [^aSelector].
+	^self buildSelectorString: aSelector
+		withPermuteMap: (1 to: aSelector numArgs)
+]
+
+{ #category : #private }
 RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection [
 	| stream keywords |
 	aSelector numArgs == 0 ifTrue: [^aSelector asString].

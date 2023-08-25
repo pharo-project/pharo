@@ -18,13 +18,6 @@ RBMethodRefactoring class >> isAbstract [
 	^ self == RBMethodRefactoring
 ]
 
-{ #category : #private }
-RBMethodRefactoring >> buildSelectorString: aSelector [
-	aSelector numArgs = 0 ifTrue: [^aSelector].
-	^self buildSelectorString: aSelector
-		withPermuteMap: (1 to: aSelector numArgs)
-]
-
 { #category : #accessing }
 RBMethodRefactoring >> methodClass [
 	^ class
