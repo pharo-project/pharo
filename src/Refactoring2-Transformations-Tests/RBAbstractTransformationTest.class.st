@@ -37,27 +37,10 @@ RBAbstractTransformationTest >> performAndUndoChange: aChange do: aBlock [
 ]
 
 { #category : #running }
-RBAbstractTransformationTest >> proceedThroughWarning: aBlock [
-
-	aBlock
-		on: RBRefactoringWarning
-		do: [ :ex | ex resume ]
-]
-
-{ #category : #running }
 RBAbstractTransformationTest >> setUp [
 
 	super setUp.
 	model := RBNamespace new
-]
-
-{ #category : #running }
-RBAbstractTransformationTest >> shouldFail: aRefactoring [
-
-	self proceedThroughWarning: [
-		self
-			should: [ aRefactoring generateChanges ]
-			raise: RBRefactoringError ]
 ]
 
 { #category : #tests }
