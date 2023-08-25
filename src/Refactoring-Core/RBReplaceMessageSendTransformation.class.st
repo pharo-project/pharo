@@ -214,13 +214,8 @@ RBReplaceMessageSendTransformation >> preconditions [
 { #category : #transforming }
 RBReplaceMessageSendTransformation >> privateTransform [
 	self replaceInAllClasses
-		ifTrue: [ self renameMessageSends ]
+		ifTrue: [ self replaceMessageSends ]
 		ifFalse: [ self renameMessageSendsIn: {class} ]
-]
-
-{ #category : #transforming }
-RBReplaceMessageSendTransformation >> renameMessageSends [
-	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
 ]
 
 { #category : #transforming }
@@ -265,4 +260,9 @@ RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to
 { #category : #accessing }
 RBReplaceMessageSendTransformation >> replaceInAllClasses [
 	^ replaceInAllClasses ifNil: [ replaceInAllClasses := false ]
+]
+
+{ #category : #transforming }
+RBReplaceMessageSendTransformation >> replaceMessageSends [
+	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
 ]

@@ -115,7 +115,7 @@ RBChangeMethodNameRefactoring >> preconditions [
 { #category : #transforming }
 RBChangeMethodNameRefactoring >> privateTransform [
 	self renameImplementors.
-	self renameMessageSends.
+	self replaceMessageSends.
 	self removeRenamedImplementors
 ]
 
@@ -165,20 +165,6 @@ RBChangeMethodNameRefactoring >> renameMap: aColl [
 	renameMap := aColl
 ]
 
-{ #category : #transforming }
-RBChangeMethodNameRefactoring >> renameMessageSends [
-	"self convertAllReferencesTo: oldSelector using: self parseTreeRewriter"
-
-	self generateChangesFor: (RBReplaceMessageSendTransformation
-			 model: self model
-			 replaceMethod: oldSelector
-			 in: class
-			 to: newSelector
-			 permutation: permutation
-			 inAllClasses: true
-			 newArgs: self newArgs)
-]
-
 { #category : #initialization }
 RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass [
 	"Watch out this is for partial configuration of the refactoring"
@@ -194,4 +180,17 @@ RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel p
 	self renameMethod: aSelector asSymbol in: aClass.
 	newSelector := newSel asSymbol.
 	permutation := aMap
+]
+
+{ #category : #transforming }
+RBChangeMethodNameRefactoring >> replaceMessageSends [
+
+	self generateChangesFor: (RBReplaceMessageSendTransformation
+			 model: self model
+			 replaceMethod: oldSelector
+			 in: class
+			 to: newSelector
+			 permutation: permutation
+			 inAllClasses: true
+			 newArgs: self newArgs)
 ]

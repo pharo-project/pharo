@@ -115,7 +115,7 @@ RBChangeMethodNameTransformation >> preconditions [
 { #category : #support }
 RBChangeMethodNameTransformation >> privateTransform [
 	self renameImplementors.
-	self renameMessageSends.
+	self replaceMessageSends.
 	self removeRenamedImplementors
 ]
 
@@ -166,11 +166,6 @@ RBChangeMethodNameTransformation >> renameMap: aColl [
 ]
 
 { #category : #support }
-RBChangeMethodNameTransformation >> renameMessageSends [
-	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
-]
-
-{ #category : #support }
 RBChangeMethodNameTransformation >> renameMessageSendsIn: classes [
 	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
 ]
@@ -181,4 +176,9 @@ RBChangeMethodNameTransformation >> renameMethod: aSelector in: aClass to: newSe
 	newSelector := newSel asSymbol.
 	class := self model classObjectFor: aClass.
 	permutation := aMap
+]
+
+{ #category : #support }
+RBChangeMethodNameTransformation >> replaceMessageSends [
+	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
 ]
