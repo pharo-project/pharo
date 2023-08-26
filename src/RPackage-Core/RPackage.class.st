@@ -1,31 +1,25 @@
 "
-A RPackage is a new implementation of package. Note that it does not touch classes but it is just a layer on top of classes therefore removing a method from a package does not change the underlying class. 
+A RPackage is a new implementation of package.
 
 
 Instance Variables
-	classDefinedSelectors:		Dictionary
-	classExtensionSelectors:		Dictionary
-	metaclassDefinedSelectors:		Dictionary
-	metaclassExtensionSelectors:		Dictionary
-	packageName:		String
-	classes: OrderedCollection of Symbols
-	classTags: is a mapping from tags to classNames
-
-The reason we use four dictionaries is that this way we only store #Point in both as the class and the metaclass are involved. We do not have to with Point_class problem when comparing defined and extended classes. The idea is taken from the RBSelectorEnvironment. 					
-		
-Class Invariant one:
-	Classes should not contain metaclass name, but only class names
+	definedSelectors:		Dictionary The list of defined selectors in the package mapped by classes (excludes the extension selectors)
+	extensionSelectors:		Dictionary The list of extension selectors in the package mapped by classes
+	name:		String is the name of the package
+	classTags: Collection is the list of tags in the package
+	organizer: RPackageOrganizer is the organizer in which the package in included		
 	
-	
-
 Implementation notes 
 ====================
-This class went over 3 internal representations implementation. 
+This class went over 4 internal representations implementation. 
 	- first: 	a list of class + two dictionaries: class * methods
 	This was not good since we add to go all the time over the list of classes.
 	- second: 4 dictionaries class * selectors 
 	This was not good since we want to have defined classes without methods. 
 	- third: 4 dictionaries + definedClasses
+	This was not good because it was way too complex
+	- Fourth: 2 dictionaries + tags including the classes
+	The is the idea of the first iteration but the code got cleaned and it is now way easier to implement
 
 Originally I wanted to avoid to have a defined class list and I wanted to avoid to have to declare the class as defined. But this is not really good since
 	- we will want to know if a class definition (without method for example is defined in a given package)
@@ -58,13 +52,6 @@ Todo
 ====
 	Next: 
 	- finish 
-	- build up a synchronizer that import PackageInfo.
-	
-
-	
-
-	
-
 "
 Class {
 	#name : #RPackage,
@@ -72,7 +59,6 @@ Class {
 	#instVars : [
 		'extensionSelectors',
 		'definedSelectors',
-		'classes',
 		'name',
 		'classTags',
 		'organizer'
@@ -302,13 +288,13 @@ RPackage >> classesTaggedWith: aSymbol [
 RPackage >> definedClassNames [
 	"Return the class names having methods defined in the receiver."
 
-	^ classes collect: [ :class | class name ]
+	^ self definedClasses collect: [ :class | class name ]
 ]
 
 { #category : #accessing }
 RPackage >> definedClasses [
 
-	^ classes
+	^ self classTags flatCollect: [ :tag | tag classes ]
 ]
 
 { #category : #accessing }
@@ -481,20 +467,16 @@ RPackage >> importClass: aClass inTag: aTag [
 	"Question: should we check that for each extension, there is a real package behind or not?"
 
 	self removeAllMethodsFromClass: aClass.
+	
+	(self addClassTag: (aTag isString ifTrue: [ aTag ] ifFalse: [ aTag name ])) addClass: aClass instanceSide.
 
-	classes add: aClass instanceSide.
+	"Maybe this should go in the PackageTag during the addition of the class"
 	self registerClass: aClass.
 
 	{ aClass . aClass classSide } do: [ :class |
 		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
 
-		class protocols
-			reject: [ :protocol | protocol isExtensionProtocol ]
-			thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ].
-
-	(self addClassTag: (aTag isString
-			  ifTrue: [ aTag ]
-			  ifFalse: [ aTag name ])) addClass: aClass
+		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ]
 ]
 
 { #category : #private }
@@ -518,14 +500,14 @@ RPackage >> importProtocol: aProtocol forClass: aClass [
 RPackage >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ classes includes: aClass instanceSide
+	^ self definedClasses includes: aClass instanceSide
 ]
 
 { #category : #testing }
 RPackage >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ classes anySatisfy: [ :class | class name = aSymbol ]
+	^ self definedClasses anySatisfy: [ :class | class name = aSymbol ]
 ]
 
 { #category : #testing }
@@ -583,7 +565,6 @@ RPackage >> includesSystemCategory: categoryName [
 RPackage >> initialize [
 
 	super initialize.
-	classes := IdentitySet new.
 	definedSelectors := IdentityDictionary new.
 	extensionSelectors := IdentityDictionary new.
 	classTags := Set new
@@ -800,11 +781,11 @@ RPackage >> removeClass: aClass [
 	"First I remove all the methods of the class from myself."
 	self removeAllMethodsFromClass: aClass.
 
-	"Then I remove the class from myself."
-	(classes remove: aClass ifAbsent: [ nil ]) ifNotNil: [ self unregisterClass: aClass ].
+	"Then I unregister it from the tags"
+	(self classTags select: [ :eachTag | eachTag includesClass: aClass ]) do: [ :eachTag | self removeClassDefinition: aClass fromClassTag: eachTag name ].
 
-	"Lastly I unregister it from the tags"
-	(self classTags select: [ :eachTag | eachTag includesClass: aClass ]) do: [ :eachTag | self removeClassDefinition: aClass fromClassTag: eachTag name ]
+	"Lastly I remove the class from the organizer. Maybe this should go in the PackageTag during the removal."
+	self unregisterClass: aClass
 ]
 
 { #category : #'class tags' }
