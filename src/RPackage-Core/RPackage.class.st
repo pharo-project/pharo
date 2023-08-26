@@ -419,7 +419,7 @@ RPackage >> extensionMethodsForClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> extensionProtocolsForClass: aClass [
 
-	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol ]
+	^ aClass protocols select: [ :protocol | protocol isExtensionProtocolMatching: self ]
 ]
 
 { #category : #accessing }
@@ -485,13 +485,8 @@ RPackage >> importClass: aClass inTag: aTag [
 	classes add: aClass instanceSide.
 	self registerClass: aClass.
 
-	{
-		aClass.
-		aClass classSide } do: [ :class |
-		(class protocols select: [ :protocol |
-			 self flag: #package. "The next line should be factorize and other senders or #isYourClassExtension: should be updated because they are wrong."
-			 (self organizer hasPackageForProtocol: protocol name) and: [ (self organizer packageMatchingExtensionName: protocol name allButFirst) = self ] ]) do: [ :protocol |
-			class renameProtocol: protocol as: Protocol unclassified ].
+	{ aClass . aClass classSide } do: [ :class |
+		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
 
 		class protocols
 			reject: [ :protocol | protocol isExtensionProtocol ]
@@ -568,7 +563,7 @@ RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 { #category : #'system compatibility' }
 RPackage >> includesProtocol: protocol ofClass: aClass [
 
-	^ (self isYourClassExtension: protocol) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: protocol) not ] ]
+	^ (protocol isExtensionProtocolMatching: self) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: protocol) not ] ]
 ]
 
 { #category : #testing }
@@ -619,7 +614,7 @@ RPackage >> isForeignClassExtension: protocol [
 
 	protocol ifNil: [ ^ false ].
 
-	^ protocol isExtensionProtocol and: [ (self isYourClassExtension: protocol) not ]
+	^ protocol isExtensionProtocol and: [ (protocol isExtensionProtocolMatching: self) not ]
 ]
 
 { #category : #testing }
@@ -633,14 +628,6 @@ RPackage >> isTestPackage [
 	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
 
 	^ (self name endsWith: '-Tests') or: [self name includesSubstring: '-Tests-']
-]
-
-{ #category : #'system compatibility' }
-RPackage >> isYourClassExtension: protocol [
-
-	protocol ifNil: [ ^ false ].
-
-	^ protocol name asLowercase isCategoryOf: self methodCategoryPrefix
 ]
 
 { #category : #queries }

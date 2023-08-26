@@ -449,7 +449,7 @@ RBCondition class >> reservedNames [
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> subclassesOf: aClass referToSelector: aSelector [
+RBCondition class >> subclassesOf: aClass isDoingASuperSendFor: aSelector [
 
 	^ self new
 		  block: [
@@ -459,7 +459,7 @@ RBCondition class >> subclassesOf: aClass referToSelector: aSelector [
 					  tree := each parseTreeForSelector: sel.
 					  tree notNil and: [ tree superMessages includes: aSelector ] ] ] ]
 		  errorString:
-			  '<1?:no:a> subclass of ' , aClass printString , ' refers to '
+			  '<1?:no:a> subclass of ' , aClass printString , ' is doing a super send using '
 			  , aSelector printString
 ]
 

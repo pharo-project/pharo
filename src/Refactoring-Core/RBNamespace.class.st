@@ -303,6 +303,15 @@ RBNamespace >> classObjectFor: anObject [
 	^ anObject
 ]
 
+{ #category : #'as yet unclassified' }
+RBNamespace >> classesReferencingClass: aRBClass [ 
+
+	| classes |
+	classes := Set new. 
+	self allReferencesToClass: aRBClass do: [ :meth | classes add: meth methodClass ].
+	^ classes
+]
+
 { #category : #changes }
 RBNamespace >> comment: aString in: aClass [
 	^ changes comment: aString in: aClass

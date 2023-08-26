@@ -49,6 +49,56 @@ RBNamespaceTest >> testAllImplementorsOnClassSubset [
 ]
 
 { #category : #'tests - on environment' }
+RBNamespaceTest >> testAllReferencesToClassDo [
+
+	| model packageenv count |
+	packageenv := RBPackageEnvironment packageNames: {
+			           RBFooDummyLintRuleTest1 packageName.
+			           'Refactoring2-Transformations-Tests' }.
+	"The second package has references to the leaf subclass we want to remove and this is part of the test."
+	model := RBNamespace onEnvironment: packageenv.
+	
+	count := 0.
+	(model allReferencesToClass: (model classFor: RBFooDummyLintRuleTest1) do:[ :each | count := count + 1]).
+	self
+		assert: count
+		equals: 10.	
+]
+
+{ #category : #'tests - on environment' }
+RBNamespaceTest >> testAllReferencesToClassDoMore [
+
+	| model packageenv selectors |
+	packageenv := RBPackageEnvironment packageNames: {
+			           RBFooDummyLintRuleTest1 packageName.
+			           'Refactoring2-Transformations-Tests' }.
+	"The second package has references to the leaf subclass we want to remove and this is part of the test."
+	model := RBNamespace onEnvironment: packageenv.
+	
+	selectors := OrderedCollection new.
+	(model allReferencesToClass: (model classFor: RBFooDummyLintRuleTest1) do:[ :each | selectors add: each selector]).
+	self
+		assert: selectors asArray
+		equals: #(#testCanRemoveUnreferencedClass #testCanRemoveReferencedClass #testCanRemoveSuperclass #testRemovingAnEmptyNonLeafClassIsAllowed #testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere #testRemoveAClassAndTheirSubclass #testRemovingAnEmptyNonLeafClassReparent #testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment #testPreconditionNotEmptyClass #testCanRemoveAReferencedClassNotHavingReferenceInTheModel)
+]
+
+{ #category : #'tests - on environment' }
+RBNamespaceTest >> testAllReferencesToClassDoWithoutReferencesInTheSpecifiedModel [
+
+	| model packageenv count |
+	packageenv := RBPackageEnvironment packageNames: {
+			           RBFooDummyLintRuleTest1 packageName		            }.
+
+	model := RBNamespace onEnvironment: packageenv.
+	
+	count := 0.
+	(model allReferencesToClass: (model classFor: RBFooDummyLintRuleTest1) do:[ :each | count := count + 1]).
+	self
+		assert: count
+		equals: 0.	
+]
+
+{ #category : #'tests - on environment' }
 RBNamespaceTest >> testAllReferencesToOnClassSubset [
 
 	| rbclasses rbNamespace2 |
@@ -81,6 +131,22 @@ RBNamespaceTest >> testAllReferencesToTakesIntoAccountSuperCall [
 		assert:
 		(rbNamespace2 allReferencesTo: #justSuperSendInSubclass) size
 		equals: 2
+]
+
+{ #category : #'tests - on environment' }
+RBNamespaceTest >> testClassesReferencingClass [
+
+	| model packageenv classes |
+	packageenv := RBPackageEnvironment packageNames: {
+			           RBFooDummyLintRuleTest1 packageName.
+			           'Refactoring2-Transformations-Tests' }.
+	"The second package has references to the leaf subclass we want to remove and this is part of the test."
+	model := RBNamespace onEnvironment: packageenv.
+	
+	classes := model classesReferencingClass: (model classFor: RBFooDummyLintRuleTest1).
+	self
+		assert: (classes asArray collect: [ :each | each name ]) 
+		equals:  #(#RBRemoveClassRefactoringTest #RBRemoveClassTransformationTest)
 ]
 
 { #category : #'tests - classes' }
@@ -167,6 +233,24 @@ RBNamespaceTest >> testModelImplementorsSenders [
 					[	self
 						assert: (refs includesSelector: each selector in: each modelClass realClass)]].
 	self assert: found
+]
+
+{ #category : #'class tests' }
+RBNamespaceTest >> testPopulateModel [
+
+	| newModel |
+	newModel := RBNamespace onEnvironment: RBClassEnvironment new.
+	
+	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassA) classDefinitionString.
+	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassB) classDefinitionString.
+	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassC) classDefinitionString.
+	newModel name: 'Test'.
+	
+	
+	self assert: (newModel classNamed: #MyClassA) name equals: 'MyClassA'.
+	self assert: (newModel classNamed: #MyClassB) superclass name equals: 'MyClassA'.
+	self assert: (newModel classNamed: #MyClassC) superclass name equals: 'MyClassA'.
+
 ]
 
 { #category : #'tests - classes' }

@@ -2,7 +2,7 @@ Class {
 	#name : #RBClassDataForRefactoringTest,
 	#superclass : #Object,
 	#instVars : [
-		'temporaryVariable'
+		'instanceVariable'
 	],
 	#category : #'Refactoring-DataForTesting-FatClasses'
 }
@@ -609,7 +609,7 @@ RBClassDataForRefactoringTest >> usesAdd [
 
 { #category : #lint }
 RBClassDataForRefactoringTest >> variableAssignedLiteral [
-	temporaryVariable := #()
+	instanceVariable := #()
 ]
 
 { #category : #lint }
