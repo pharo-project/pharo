@@ -45,7 +45,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
 		ifFalse: [
 			"If protocol changed and someone is from different package, I need to throw a method recategorized"
-			SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol.
+			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
