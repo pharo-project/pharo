@@ -524,7 +524,7 @@ RBBrowserEnvironment >> label [
 	^ label ifNil: [ self defaultLabel ] ifNotNil: [ label ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 RBBrowserEnvironment >> label: aString [
 	label := aString
 ]

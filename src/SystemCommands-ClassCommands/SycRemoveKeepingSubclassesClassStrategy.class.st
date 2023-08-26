@@ -12,7 +12,7 @@ SycRemoveKeepingSubclassesClassStrategy class >> canExecuteWithReferences: hasRe
 { #category : #execution }
 SycRemoveKeepingSubclassesClassStrategy >> execute: aSycRemoveClassCommand [
 
-	aSycRemoveClassCommand executeRefactoringsAs: RBRemoveClassKeepingSubclassesRefactoring
+	aSycRemoveClassCommand executeRefactoringsAs: RBRemoveClassPushingStateToSubclassesRefactoring
 ]
 
 { #category : #testing }

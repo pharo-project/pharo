@@ -72,7 +72,6 @@ RBClass >> addProtocolNamed: aString [
 RBClass >> allClassVariableNames [
 
 	| sprClass |
-
 	sprClass := self superclass.
 	^ sprClass
 		ifNil: [ self classVariableNames ]
@@ -204,9 +203,23 @@ RBClass >> instanceSide [
 ]
 
 { #category : #testing }
+RBClass >> isEmptyClass [
+
+	^ self classVariableNames isEmpty and: [
+				  self instanceVariableNames isEmpty and: [
+					  self selectors isEmpty]]
+]
+
+{ #category : #testing }
 RBClass >> isMeta [
 
 	^false
+]
+
+{ #category : #'self evaluating' }
+RBClass >> isSelfEvaluating [
+
+	^ true
 ]
 
 { #category : #testing }
