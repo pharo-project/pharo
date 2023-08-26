@@ -774,8 +774,8 @@ ClassDescription >> notifyRepackage: compiledMethod oldProtocol: oldProtocol new
 	| oldPackage newPackage |
 	newProtocol = oldProtocol ifTrue: [ ^ self ].
 
-	newPackage := self packageOrganizer packageForProtocol: newProtocol name inClass: self.
-	oldPackage := self packageOrganizer packageForProtocol: oldProtocol name inClass: self.
+	newPackage := (self packageOrganizer packageForProtocol: newProtocol) ifNil: [ self package ].
+	oldPackage := (self packageOrganizer packageForProtocol: oldProtocol) ifNil: [ self package ].
 
 	"Announce recategorization"
 	newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ].
