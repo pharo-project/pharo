@@ -210,11 +210,11 @@ RPackage >> addMethod: aCompiledMethod [
 
 { #category : #private }
 RPackage >> basicAddClassTag: tagName [
-	| packageTag |
 
+	| packageTag |
 	packageTag := RPackageTag package: self name: tagName.
 	classTags add: packageTag.
-	packageTag ensureSystemCategory.
+	self organizer addCategory: packageTag categoryName.
 
 	^ packageTag
 ]
@@ -700,15 +700,6 @@ RPackage >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
 	name := aSymbol asSymbol
-]
-
-{ #category : #accessing }
-RPackage >> orderedClasses [
-
-	| tmp |
-	tmp := self definedClasses asArray sort: [:a :b | a name <= b name].
-	tmp := tmp, (self extendedClasses asArray sort: [:a :b | a name <= b name]).
-	^tmp collect: [:e | e instanceSide ]
 ]
 
 { #category : #private }
