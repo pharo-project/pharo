@@ -51,7 +51,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingInst
 ]
 
 { #category : #'failure tests' }
-RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadInitializationCode [
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadDefaultValueForNewArgument [
 
 	self shouldFail: (self createRefactoringWithArguments: {
 				 'Foo1'.

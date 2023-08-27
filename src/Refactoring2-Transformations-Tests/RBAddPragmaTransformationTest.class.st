@@ -54,7 +54,7 @@ RBAddPragmaTransformationTest >> testRefactoring [
 		                pragma: '<pragmaForTesting: 56>'
 		                inMethod: #methodBefore
 		                inClass: #RBAddPragmaTransformationTest)
-		               primitiveExecute.
+		               generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -71,7 +71,7 @@ RBAddPragmaTransformationTest >> testTransform [
 	transformation := (RBAddPragmaTransformation new
 		                   pragma: '<pragmaForTesting: 56>'
 		                   inMethod: #methodBefore
-		                   inClass: self class name) primitiveExecute.
+		                   inClass: self class name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

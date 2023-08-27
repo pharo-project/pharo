@@ -100,6 +100,16 @@ RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
 ]
 
 { #category : #'*Deprecated12' }
+RPackage >> isYourClassExtension: protocol [
+
+	self
+		deprecated: 'Use #isExtensionMatching: on the parameter instead because the name is much more explicit.'
+		transformWith: '`@rcv isYourClassExtension: `@arg' -> '`@arg isExtensionProtocolMatching: `@rcv'.
+
+	^ protocol isExtensionProtocolMatching: self
+]
+
+{ #category : #'*Deprecated12' }
 RPackage >> metaclassDefinedSlicesDo: aBlock [
 	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
 

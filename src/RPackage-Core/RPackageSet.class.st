@@ -12,8 +12,7 @@ Class {
 		'classes',
 		'definedClasses',
 		'extensionMethods',
-		'methods',
-		'systemCategories'
+		'methods'
 	],
 	#classInstVars : [
 		'cacheActive',
@@ -122,21 +121,9 @@ RPackageSet >> extensionMethods [
 		(self packages flatCollect: [ :p | p extensionMethods ] as: Set) asArray ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> extensionProtocolsForClass: aClass [
-
-	^ aClass protocols select: [ :protocol | self isYourClassExtension: protocol ]
-]
-
 { #category : #testing }
 RPackageSet >> includesClass: aClass [
 	^self packages anySatisfy: [ :each | each includesClass: aClass ]
-]
-
-{ #category : #'system compatibility' }
-RPackageSet >> includesProtocol: protocol ofClass: aClass [
-
-	^ (self isYourClassExtension: protocol) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: protocol) not ] ]
 ]
 
 { #category : #'system compatibility' }
@@ -153,22 +140,6 @@ RPackageSet >> initialize: aString [
 	packages := (self organizer packageNamed: aString ifAbsent: [ nil ])
 		            ifNotNil: [ :package | { package } ]
 		            ifNil: [ {  } ]
-]
-
-{ #category : #'system compatibility' }
-RPackageSet >> isForeignClassExtension: protocol [
-
-	protocol ifNil: [ ^ false ].
-
-	^ protocol isExtensionProtocol and: [ (self isYourClassExtension: protocol) not ]
-]
-
-{ #category : #'system compatibility' }
-RPackageSet >> isYourClassExtension: protocol [
-
-	protocol ifNil: [ ^ false ].
-
-	^ protocol name asLowercase isCategoryOf: self methodCategoryPrefix
 ]
 
 { #category : #'system compatibility' }
@@ -197,11 +168,6 @@ RPackageSet >> packageName [
 { #category : #accessing }
 RPackageSet >> packages [
 	^packages
-]
-
-{ #category : #'system compatibility' }
-RPackageSet >> systemCategories [
-	^ systemCategories ifNil: [ systemCategories := (self packages flatCollect: #systemCategories as: Set) asArray ]
 ]
 
 { #category : #accessing }

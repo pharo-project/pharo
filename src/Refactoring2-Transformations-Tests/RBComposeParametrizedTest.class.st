@@ -36,7 +36,7 @@ RBComposeParametrizedTest >> shouldFail: refactoringColl [
 
 	self proceedThroughWarning: [
 		self should: [ refactoringColl do: [ :ref |
-				ref primitiveExecute ] ] raise: RBRefactoringError ]
+				ref generateChanges ] ] raise: RBRefactoringError ]
 ]
 
 { #category : #asserting }

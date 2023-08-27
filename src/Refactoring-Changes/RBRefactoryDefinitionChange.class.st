@@ -115,6 +115,14 @@ RBRefactoryDefinitionChange >> fillOutDefinition: aDictionary [
 	self subclassResponsibility
 ]
 
+{ #category : #private }
+RBRefactoryDefinitionChange >> generateChanges [
+
+	definedClass := self definitionClass environment
+		                defineClass: self definition
+		                withController: self controller
+]
+
 { #category : #comparing }
 RBRefactoryDefinitionChange >> hash [
 
@@ -131,14 +139,6 @@ RBRefactoryDefinitionChange >> namesIn: aString [
 		token := scanner next.
 		token isIdentifier ifTrue: [ names add: token value ] ].
 	^ names asArray
-]
-
-{ #category : #private }
-RBRefactoryDefinitionChange >> primitiveExecute [
-
-	definedClass := self definitionClass environment
-		                defineClass: self definition
-		                withController: self controller
 ]
 
 { #category : #printing }

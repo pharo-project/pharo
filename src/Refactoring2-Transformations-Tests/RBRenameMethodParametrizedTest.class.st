@@ -18,12 +18,6 @@ RBRenameMethodParametrizedTest >> constructor [
 ]
 
 { #category : #'failure tests' }
-RBRenameMethodParametrizedTest >> testFailureExistingSelector [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #checkClass: . RBBasicLintRuleTestData . #runOnEnvironment: . (1 to: 1) })
-]
-
-{ #category : #'failure tests' }
 RBRenameMethodParametrizedTest >> testFailureWithNonCorrectNumberOfArgs [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #checkClass: . RBBasicLintRuleTestData . #checkClass . (1 to: 1) })
@@ -75,7 +69,7 @@ RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 	refactoring := self createRefactoringWithArguments:
 		{ ('demoRenameMethod:' , 'PermuteArgs:') asSymbol . RBClassDataForRefactoringTest .
 		('demoRenameMethod:' , 'PermuteArgs:') asSymbol . #(2 1) }.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self
 		assert:
@@ -99,7 +93,7 @@ RBRenameMethodParametrizedTest >> testRenamePermuteArgs [
 	refactoring := self createRefactoringWithArguments:
 		{ ('rename:' , 'two:') asSymbol . RBClassDataForRefactoringTest .
 		('rename:' , 'two:') asSymbol . #(2 1 ) }.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	
 	self 
