@@ -867,7 +867,7 @@ StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopI
 				destX := destX + (rightX - leftX + kernDelta).
 				 ]
 			ifFalse:
-				[fallbackFont displayString: aString on: aBitBlt from: charIndex to: charIndex at: destX@destY kern: kernDelta baselineY: baselineY.
+				[fallbackFont displayString: aString on: aBitBlt from: charIndex to: charIndex at: destX @ aPoint y kern: kernDelta baselineY: baselineY.
 				destX := destX + (fallbackFont widthOf: char) + kernDelta.
 				charIndex := charIndex + 1]]].
 	^ Array
