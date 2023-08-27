@@ -172,6 +172,13 @@ FreeTypeFont >> displayString: aString on: aDisplayContext from: startIndex to: 
 
 { #category : #displaying }
 FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
+
+	^ self displayString: aString on: aBitBlt from: startIndex to: stopIndex
+		at: aPoint kern: kernDelta baselineY: baselineY scale: 1
+]
+
+{ #category : #displaying }
+FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	| glyph  depth foreColorVal foreColorAlpha originalColorMap clr subPixelPosition widthAndKernedWidth char nextChar floatDestX  destX destY offset gammaTable gammaInverseTable useRule41 |
 
 	useRule41 := FreeTypeSettings current useSubPixelAntiAliasing and: [aBitBlt destForm depth >= 8].
@@ -207,7 +214,8 @@ FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopInde
 			glyphOf: char
 			destDepth: depth
 			colorValue: foreColorVal
-			subpixelPosition: subPixelPosition.
+			subpixelPosition: subPixelPosition
+			scale: scale.
 		aBitBlt sourceForm: glyph.
 		offset := glyph offset.
 		aBitBlt destX: destX + offset x.
@@ -230,7 +238,7 @@ FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopInde
 			widthAndKernedWidthOfLeft: char
 			right: nextChar
 			into: widthAndKernedWidth.
-		floatDestX := floatDestX + (widthAndKernedWidth at: 2) + kernDelta.
+		floatDestX := floatDestX + (((widthAndKernedWidth at: 2) + kernDelta) * scale).
 		destX := floatDestX ].
 	aBitBlt colorMap: originalColorMap.
 	^ destX @ destY
@@ -345,21 +353,40 @@ FreeTypeFont >> getWidthOf: aCharacter [
 { #category : #'glyph lookup' }
 FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
 
-	^FreeTypeCache current
-		atFont: self
-		charCode: aCharacter asUnicode asInteger
-		type: ((1+sub) << 32) + aColorValue
-		ifAbsentPut: [
-			FreeTypeGlyphRenderer current
-				glyphOf: aCharacter
-				colorValue: aColorValue
-				mono: monoBoolean
-				subpixelPosition: sub
-				font: self]
+	^ self glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: 1
+]
+
+{ #category : #'glyph lookup' }
+FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: scale [
+
+	| glyphBlock |
+
+	glyphBlock := [
+		FreeTypeGlyphRenderer current
+			glyphOf: aCharacter
+			colorValue: aColorValue
+			mono: monoBoolean
+			subpixelPosition: sub
+			font: self
+			scale: scale ].
+	^ scale = 1
+		ifTrue: [
+			FreeTypeCache current
+				atFont: self
+				charCode: aCharacter asUnicode asInteger
+				type: ((1+sub) << 32) + aColorValue
+				ifAbsentPut: glyphBlock ]
+		ifFalse: [ glyphBlock value ]
 ]
 
 { #category : #'glyph lookup' }
 FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue subpixelPosition: sub [
+
+	^ self glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue subpixelPosition: sub scale: 1
+]
+
+{ #category : #'glyph lookup' }
+FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue subpixelPosition: sub scale: scale [
 	"sub can be between 0 and 63 and denotes the sub-pixel position of the glyph"
 	| validSub |
 	validSub := self isSubPixelPositioned
@@ -371,7 +398,8 @@ FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue
 				subGlyphOf: aCharacter
 				colorValue: aColorValue
 				mono: FreeTypeSettings current monoHinting
-				subpixelPosition: validSub]
+				subpixelPosition: validSub
+				scale: scale]
 		ifFalse:[
 			(destDepth >= 8 and:[FreeTypeSettings current useSubPixelAntiAliasing])
 				ifTrue:[
@@ -379,13 +407,15 @@ FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue
 						mode41GlyphOf: aCharacter
 						colorValue: aColorValue
 						mono: FreeTypeSettings current monoHinting
-						subpixelPosition: validSub]
+						subpixelPosition: validSub
+						scale: scale]
 				ifFalse:[
 					self
 						glyphOf: aCharacter
 						colorValue: aColorValue
 						mono: FreeTypeSettings current monoHinting
-						subpixelPosition: validSub]]
+						subpixelPosition: validSub
+						scale: scale]]
 ]
 
 { #category : #testing }
@@ -607,20 +637,26 @@ FreeTypeFont >> minAscii [
 ]
 
 { #category : #'glyph lookup' }
-FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
+FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: scale [
 
-	| |
-	^FreeTypeCache current
-		atFont: self
-		charCode: aCharacter asUnicode asInteger
-		type: (FreeTypeCacheGlyph + sub)
-		ifAbsentPut: [
-			FreeTypeGlyphRenderer current
-				mode41GlyphOf: aCharacter
-				colorValue: aColorValue
-				mono: monoBoolean
-				subpixelPosition: sub
-				font: self]
+	| glyphBlock |
+
+	glyphBlock := [
+		FreeTypeGlyphRenderer current
+			mode41GlyphOf: aCharacter
+			colorValue: aColorValue
+			mono: monoBoolean
+			subpixelPosition: sub
+			font: self
+			scale: scale ].
+	^ scale = 1
+		ifTrue: [
+			FreeTypeCache current
+				atFont: self
+				charCode: aCharacter asUnicode asInteger
+				type: (FreeTypeCacheGlyph + sub)
+				ifAbsentPut: glyphBlock ]
+		ifFalse: [ glyphBlock value ]
 ]
 
 { #category : #accessing }
@@ -747,19 +783,26 @@ FreeTypeFont >> strikeoutTop [
 ]
 
 { #category : #'glyph lookup' }
-FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
+FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: scale [
 
-	^FreeTypeCache current
-		atFont: self
-		charCode: aCharacter asUnicode asInteger
-		type: FreeTypeCacheGlyphLCD + sub
-		ifAbsentPut: [
-			FreeTypeGlyphRenderer current
-				subGlyphOf: aCharacter
-				colorValue: aColorValue
-				mono: monoBoolean
-				subpixelPosition: sub
-				font: self]
+	| glyphBlock |
+
+	glyphBlock := [
+		FreeTypeGlyphRenderer current
+			subGlyphOf: aCharacter
+			colorValue: aColorValue
+			mono: monoBoolean
+			subpixelPosition: sub
+			font: self
+			scale: scale ].
+	^ scale = 1
+		ifTrue: [
+			FreeTypeCache current
+				atFont: self
+				charCode: aCharacter asUnicode asInteger
+				type: FreeTypeCacheGlyphLCD + sub
+				ifAbsentPut: glyphBlock ]
+		ifFalse: [ glyphBlock value ]
 ]
 
 { #category : #testing }

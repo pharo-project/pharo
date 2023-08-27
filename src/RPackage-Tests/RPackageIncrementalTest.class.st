@@ -173,8 +173,8 @@ RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 	b1 := self createNewClassNamed: #B1InPAckageP1 inPackage: p.
 	self assert: p definedClasses size equals: 2.
 
-	p addClassDefinition: a1 toClassTag: 'a1-tag'.
-	p addClassDefinition: b1 toClassTag: 'b1-tag'.
+	p importClass: a1 inTag: 'a1-tag'.
+	p importClass: b1 inTag: 'b1-tag'.
 	self assert: p classTags size equals: 2.
 
 	self assert: (p includesClass: a1).

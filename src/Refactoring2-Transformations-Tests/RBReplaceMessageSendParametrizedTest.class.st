@@ -1,18 +1,18 @@
 Class {
-	#name : #RBReplaceSendersMethodParametrizedTest,
+	#name : #RBReplaceMessageSendParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
 	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
 { #category : #tests }
-RBReplaceSendersMethodParametrizedTest class >> testParameters [
+RBReplaceMessageSendParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBReplaceMessageSendTransformation };
 		yourself
 ]
 
 { #category : #'failure tests' }
-RBReplaceSendersMethodParametrizedTest >> testFailureIncompleteInitializers [
+RBReplaceMessageSendParametrizedTest >> testFailureIncompleteInitializers [
 	"please note that this strange way to create symbol is because some tests are counting symbol
 	and rewriting the code in a bad way so for now do not change them."
 	
@@ -27,7 +27,7 @@ RBReplaceSendersMethodParametrizedTest >> testFailureIncompleteInitializers [
 ]
 
 { #category : #'failure tests' }
-RBReplaceSendersMethodParametrizedTest >> testFailureNotUnderstandNewSelector [
+RBReplaceMessageSendParametrizedTest >> testFailureNotUnderstandNewSelector [
 	self shouldFail: (rbClass
 			replaceCallMethod: #checkClass:
 			in: RBBasicLintRuleTestData
@@ -36,7 +36,7 @@ RBReplaceSendersMethodParametrizedTest >> testFailureNotUnderstandNewSelector [
 ]
 
 { #category : #'failure tests' }
-RBReplaceSendersMethodParametrizedTest >> testFailureNotUnderstandSelector [
+RBReplaceMessageSendParametrizedTest >> testFailureNotUnderstandSelector [
 	self shouldFail: (rbClass
 			replaceCallMethod: #checkClass123:
 			in: RBBasicLintRuleTestData
@@ -45,7 +45,7 @@ RBReplaceSendersMethodParametrizedTest >> testFailureNotUnderstandSelector [
 ]
 
 { #category : #tests }
-RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodOnlyInClass [
+RBReplaceMessageSendParametrizedTest >> testModelReplaceMethodOnlyInClass [
 	| refactoring sendersNewSelector sendersLastSelector selector newSelector |
 	selector := ('result', 'Class:') asSymbol.
 	newSelector := ('method', 'Block:') asSymbol.
@@ -64,7 +64,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodOnlyInClass [
 ]
 
 { #category : #tests }
-RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithLessArgs [
+RBReplaceMessageSendParametrizedTest >> testModelReplaceMethodWithLessArgs [
 	| refactoring sendersNewSelector sendersLastSelector selector newSelector |
 	selector := ('called:', 'on:') asSymbol.
 	"please note that this strange way to create symbol is because some tests are counting symbol
@@ -85,7 +85,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithLessArgs [
 ]
 
 { #category : #tests }
-RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithMoreArgs [
+RBReplaceMessageSendParametrizedTest >> testModelReplaceMethodWithMoreArgs [
 	| refactoring sendersNewSelector sendersLastSelector selector newSelector |
 	selector := ('called:', 'on:') asSymbol.
 	"please note that this strange way to create symbol is because some tests are counting symbol
@@ -100,14 +100,14 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithMoreArgs [
 				to: newSelector
 				permutation: #(-1 2 1)
 				inAllClasses: true.
-	refactoring initializers: #('OrderedCollection new: 5').
+	refactoring newArgs: { RBArgumentName name: 'anObject' value: 'OrderedCollection new: 5'}.
 	self proceedThroughWarning: [ refactoring generateChanges ].
 	self assert: sendersNewSelector + sendersLastSelector
 		equals: (model allReferencesTo: newSelector) size
 ]
 
 { #category : #tests }
-RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithSameArgs [
+RBReplaceMessageSendParametrizedTest >> testModelReplaceMethodWithSameArgs [
 	| refactoring sendersNewSelector sendersLastSelector selector newSelector |
 	selector := ('called:', 'on:') asSymbol.
 	"please note that this strange way to create symbol is because some tests are counting symbol
@@ -128,7 +128,7 @@ RBReplaceSendersMethodParametrizedTest >> testModelReplaceMethodWithSameArgs [
 ]
 
 { #category : #tests }
-RBReplaceSendersMethodParametrizedTest >> testReplaceMethodInAllClasses [
+RBReplaceMessageSendParametrizedTest >> testReplaceMethodInAllClasses [
 	| refactoring sendersNewSelector sendersLastSelector selector newSelector |
 	selector := ('an', 'InstVar:') asSymbol.
 	newSelector := ('new', 'ResultClass:') asSymbol.
@@ -146,7 +146,7 @@ RBReplaceSendersMethodParametrizedTest >> testReplaceMethodInAllClasses [
 ]
 
 { #category : #tests }
-RBReplaceSendersMethodParametrizedTest >> testReplaceMethodOnlyInClass [
+RBReplaceMessageSendParametrizedTest >> testReplaceMethodOnlyInClass [
 	| refactoring sendersNewSelector sendersLastSelector selector newSelector |
 	selector := ('result', 'Class:') asSymbol.
 	newSelector := ('method', 'Block:') asSymbol.

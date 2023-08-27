@@ -93,6 +93,13 @@ RBClassTest >> testHierarchy [
 ]
 
 { #category : #'tests - navigation' }
+RBClassTest >> testIsEmptyClass [
+	
+	self deny: objectClass isEmptyClass.
+	self assert: (rbNamespace classNamed: #MyClassB) isEmptyClass
+]
+
+{ #category : #'tests - navigation' }
 RBClassTest >> testIsInstanceSide [
 
 	self deny: objectClass instanceSide isMeta.

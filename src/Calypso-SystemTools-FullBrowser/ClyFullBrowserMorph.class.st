@@ -871,3 +871,12 @@ ClyFullBrowserMorph >> updateDefaultPackageFilter [
 
 	DefaultPackageFilter := packageView filterField getText ifEmpty: [ nil ]
 ]
+
+{ #category : #updating }
+ClyFullBrowserMorph >> updateMethodEditorAfterPackageRemoval [
+	"A package was removed from the receiver, update the method editor accordingly"
+	
+	self tabManager tools
+		detect: [ :aTool | aTool class = ClyClassCreationToolMorph ]
+		ifFound: [ : methodEditor | methodEditor resetStateForRemoval ].
+]

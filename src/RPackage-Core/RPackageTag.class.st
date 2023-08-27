@@ -14,15 +14,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-RPackageTag class >> new [
-	self error: 'Use #package:name:'
-]
-
-{ #category : #'instance creation' }
 RPackageTag class >> package: aPackage name: aString [
-	^ self basicNew
-		initializePackage: aPackage name: aString;
-		yourself
+
+	^ self new
+		  package: aPackage;
+		  name: aString;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -57,41 +54,15 @@ RPackageTag >> classes [
 ]
 
 { #category : #accessing }
-RPackageTag >> ensureSystemCategory [
-	"We should not hardcode the global variable but ask the package organizer for the organization."
-
-	self organizer addCategory: self categoryName
-]
-
-{ #category : #accessing }
 RPackageTag >> environment [
 
 	^ self package environment
 ]
 
-{ #category : #accessing }
-RPackageTag >> extendedClasses [
-	^ #()
-]
-
-{ #category : #accessing }
-RPackageTag >> extensionCategoriesForClass: aClass [
-
-	self
-		deprecated: 'Use #extensionProtocolsForClass: instead.'
-		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
-	^ self extensionProtocolsForClass: aClass
-]
-
-{ #category : #accessing }
-RPackageTag >> extensionProtocolsForClass: aClass [
-
-	^ self package extensionProtocolsForClass: aClass
-]
-
 { #category : #testing }
 RPackageTag >> hasClass: aClass [
-	^  self hasClassNamed: aClass name
+
+	^ self hasClassNamed: aClass name
 ]
 
 { #category : #testing }
@@ -104,30 +75,11 @@ RPackageTag >> includesClass: aClass [
 	^ self hasClassNamed: aClass name
 ]
 
-{ #category : #testing }
-RPackageTag >> includesProtocol: protocol ofClass: aClass [
-
-	^ self package includesProtocol: protocol ofClass: aClass
-]
-
-{ #category : #testing }
-RPackageTag >> includesSelector: aSelector ofClass: aClass [
-
-	^ self package includesSelector: aSelector ofClass: aClass
-]
-
 { #category : #initialization }
 RPackageTag >> initialize [
 
 	super initialize.
 	classes := IdentitySet new
-]
-
-{ #category : #initialization }
-RPackageTag >> initializePackage: aPackage name: aString [
-	package := aPackage.
-	name := aString.
-	self initialize
 ]
 
 { #category : #testing }
@@ -146,8 +98,9 @@ RPackageTag >> name [
 ]
 
 { #category : #accessing }
-RPackageTag >> orderedClasses [
-	^ self package orderedClasses select:[:c | c category = self categoryName]
+RPackageTag >> name: aSymbol [
+
+	name := aSymbol
 ]
 
 { #category : #accessing }
@@ -158,6 +111,12 @@ RPackageTag >> organizer [
 { #category : #accessing }
 RPackageTag >> package [
 	^ package
+]
+
+{ #category : #accessing }
+RPackageTag >> package: anObject [
+
+	package := anObject
 ]
 
 { #category : #accessing }
