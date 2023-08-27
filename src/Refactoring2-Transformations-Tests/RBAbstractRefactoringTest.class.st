@@ -71,11 +71,6 @@ RBAbstractRefactoringTest >> parserClass [
 	^ RBParser
 ]
 
-{ #category : #actions }
-RBAbstractRefactoringTest >> proceedThroughWarning: aBlock [
-	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]
-]
-
 { #category : #accessing }
 RBAbstractRefactoringTest >> rbClass: anObject [
 
@@ -185,23 +180,6 @@ RBAbstractRefactoringTest >> setupVariableTypesFor: aRefactoring toReturn: anObj
 	options := aRefactoring options copy.
 	options at: #variableTypes put: [:ref :ignore1 :ignore2 | anObject].
 	aRefactoring options: options
-]
-
-{ #category : #actions }
-RBAbstractRefactoringTest >> shouldFail: aRefactoring [
-
-	self proceedThroughWarning: [
-		self
-			should: [ aRefactoring generateChanges ]
-			raise: RBRefactoringError
-	]
-]
-
-{ #category : #actions }
-RBAbstractRefactoringTest >> shouldWarn: aRefactoringColl [
-	self
-		should: [ self executeRefactoring: aRefactoringColl ]
-		raise: RBRefactoringWarning
 ]
 
 { #category : #actions }

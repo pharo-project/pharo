@@ -84,6 +84,13 @@ Protocol >> isExtensionProtocol [
 ]
 
 { #category : #testing }
+Protocol >> isExtensionProtocolMatching: aPackage [
+	"Return true if I am an extension protocol linked to the package as parameter"
+
+	^ (aPackage organizer packageForProtocol: self) = aPackage
+]
+
+{ #category : #testing }
 Protocol >> isUnclassifiedProtocol [
 
 	^ self name = self class unclassified

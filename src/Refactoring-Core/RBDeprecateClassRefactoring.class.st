@@ -56,7 +56,7 @@ RBDeprecateClassRefactoring >> className: aName newName: aNewName [
 RBDeprecateClassRefactoring >> classSideExtensionMethodsOf: anRBClass [
 
 	^ anRBClass realClass classSide localMethods
-		select: #isExtension
+		select: [ :m | m isExtension ]
 		thenCollect: [ :each | anRBClass classSide methodFor: each selector ]
 ]
 

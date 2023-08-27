@@ -194,6 +194,7 @@ TestRunner >> buildClasses [
 		changeListSelection: #classAt:put:
 		menu: #classMenu:
 		keystroke: nil;
+		bindKeyCombination: PharoShortcuts current selectAllShortcut toAction: [ self selectAllUnitTests ];
 		yourself
 ]
 
@@ -254,6 +255,7 @@ TestRunner >> buildPackages [
 		changeListSelection: #packageAt:put:
 		menu: #packageMenu:
 		keystroke: nil;
+		bindKeyCombination: PharoShortcuts current selectAllShortcut toAction: [ self selectAllPackages ];
 		yourself
 ]
 
