@@ -302,19 +302,11 @@ RubCharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceSt
 { #category : #scanning }
 RubCharacterScanner >> scanMultiCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
 
-	| ascii f nextDestX maxAscii floatDestX widthAndKernedWidth nextChar atEndOfRun |
+	| ascii nextDestX maxAscii floatDestX widthAndKernedWidth nextChar atEndOfRun |
 	lastIndex := startIndex.
 	lastIndex > stopIndex ifTrue: [lastIndex := stopIndex. ^ stops endOfRun].
 	font ifNil: [font := TextStyle defaultFont fontArray at: 1].
-	font isFontSet ifTrue: [
-		f := [font fontArray at: 1]
-			on: Exception do: [:ex | nil].
-		f ifNil: [ f := font fontArray at: 1].
-		maxAscii := f maxAscii.
-		spaceWidth := f widthOf: Character space.
-	] ifFalse: [
-		maxAscii := font maxAscii.
-	].
+	maxAscii := font maxAscii.
 	floatDestX := destX.
 	widthAndKernedWidth := Array new: 2.
 	atEndOfRun := false.
