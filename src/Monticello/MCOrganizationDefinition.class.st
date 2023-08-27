@@ -5,7 +5,9 @@ Class {
 	#name : #MCOrganizationDefinition,
 	#superclass : #MCDefinition,
 	#instVars : [
-		'categories'
+		'categories',
+		'packageName',
+		'tagNames'
 	],
 	#category : #'Monticello-Modeling'
 }
@@ -13,6 +15,22 @@ Class {
 { #category : #'instance creation' }
 MCOrganizationDefinition class >> categories: aCollection [
 	^ self new categories: aCollection
+]
+
+{ #category : #'instance creation' }
+MCOrganizationDefinition class >> packageName: aPackageName [
+
+	^ self new
+		  packageName: aPackageName asSymbol;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+MCOrganizationDefinition class >> packageName: aPackageName tagNames: aCollection [
+
+	^ (self packageName: aPackageName)
+		  tagNames: aCollection;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -32,11 +50,11 @@ MCOrganizationDefinition >> basicCommonPrefix [
 	"Answers the minimum common denominator on package names contained in the monticello package. 
 	 It can answer a package in the form X-Y-, with a minus at end..."
 	| stream  |
-	categories isEmpty ifTrue: [ ^ '' ].
+	self categories ifEmpty: [ ^ '' ].
 	
 	stream := String new writeStream.
-	categories first withIndexDo: [:c :index |
-		categories do: [:each |
+	self categories first withIndexDo: [:c :index |
+		self categories do: [:each |
 			(each at: index ifAbsent: []) = c 
 				ifFalse: [ ^ stream contents ] ].
 		stream nextPut: c ].
@@ -46,12 +64,14 @@ MCOrganizationDefinition >> basicCommonPrefix [
 
 { #category : #accessing }
 MCOrganizationDefinition >> categories [
-	^ categories
+
+	^ categories ifNil: [ { self packageName } , (self tagNames collect: [ :tagName | self packageName , '-' , tagName ]) ]
 ]
 
-{ #category : #accessing }
+{ #category : #deprecated }
 MCOrganizationDefinition >> categories: aCollection [
-	"ensure the categories are sorted alphabetically, so the merge don't take it as a conflict"
+	"Do not use. This methods should be replaced by #packageName and #tagNames"
+
 	categories := aCollection sorted asArray
 ]
 
@@ -97,9 +117,27 @@ MCOrganizationDefinition >> hash [
 		bitXor: self categories hash
 ]
 
+{ #category : #initialization }
+MCOrganizationDefinition >> initialize [
+	super initialize.
+	tagNames := #()
+]
+
 { #category : #testing }
 MCOrganizationDefinition >> isOrganizationDefinition [
 	^ true
+]
+
+{ #category : #accessing }
+MCOrganizationDefinition >> packageName [
+
+	^ packageName
+]
+
+{ #category : #accessing }
+MCOrganizationDefinition >> packageName: anObject [
+
+	packageName := anObject
 ]
 
 { #category : #installing }
@@ -111,14 +149,11 @@ MCOrganizationDefinition >> postloadOver: oldDefinition [
 MCOrganizationDefinition >> reorderCategories: allCategories original: oldCategories [
 
 	^ allCategories
-		detect: [ :ea | categories includes: ea ]
-		ifFound: [ :first | 
-			((allCategories copyUpTo: first)
-				copyWithoutAll: oldCategories , categories) , categories
-				,
-					((allCategories copyAfter: first)
-						copyWithoutAll: oldCategories , categories) ]
-		ifNone: [ allCategories ]
+		  detect: [ :ea | self categories includes: ea ]
+		  ifFound: [ :first |
+			  ((allCategories copyUpTo: first) copyWithoutAll: oldCategories , self categories) , self categories
+			  , ((allCategories copyAfter: first) copyWithoutAll: oldCategories , self categories) ]
+		  ifNone: [ allCategories ]
 ]
 
 { #category : #accessing }
@@ -134,18 +169,31 @@ MCOrganizationDefinition >> sortKey [
 
 { #category : #accessing }
 MCOrganizationDefinition >> source [
-	^ String streamContents:
-		[:s |
-		categories do: [:ea | s nextPutAll: ea] separatedBy: [s cr]]
+
+	^ String streamContents: [ :s | self categories do: [ :ea | s nextPutAll: ea ] separatedBy: [ s cr ] ]
 ]
 
 { #category : #accessing }
 MCOrganizationDefinition >> summary [
-	^ categories asArray printString
+
+	^ self categories asArray printString
+]
+
+{ #category : #accessing }
+MCOrganizationDefinition >> tagNames [
+
+	^ tagNames
+]
+
+{ #category : #accessing }
+MCOrganizationDefinition >> tagNames: aCollection [
+	"ensure the tags are sorted alphabetically, so the merge don't take it as a conflict"
+
+	tagNames := aCollection sorted asArray
 ]
 
 { #category : #unloading }
 MCOrganizationDefinition >> unload [
 
-	categories do: [ :category | (self packageOrganizer isEmptyCategoryNamed: category) ifTrue: [ self packageOrganizer removeCategory: category ] ]
+	self categories do: [ :category | (self packageOrganizer isEmptyCategoryNamed: category) ifTrue: [ self packageOrganizer removeCategory: category ] ]
 ]

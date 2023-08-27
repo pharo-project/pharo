@@ -48,14 +48,6 @@ RBRefactoring >> asRefactoring [
 	^ self
 ]
 
-{ #category : #utilities }
-RBRefactoring >> associationForClassVariable: aName in: aClass ifAbsent: aBlock [
-	"Return the class variable association of class aClass"
-
-	^aClass realClass classPool associationAt: aName asSymbol
-		ifAbsent: [aClass realClass classPool associationAt: aName asString ifAbsent: aBlock]
-]
-
 { #category : #testing }
 RBRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
