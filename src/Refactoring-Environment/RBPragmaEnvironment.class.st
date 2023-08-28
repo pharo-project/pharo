@@ -67,6 +67,12 @@ RBPragmaEnvironment >> includesClass: aClass [
 ]
 
 { #category : #testing }
+RBPragmaEnvironment >> includesPackage: aPackage [
+
+	^ (environment includesPackage: aPackage) and: [ (self classesInPackage: aPackage) isNotEmpty ]
+]
+
+{ #category : #testing }
 RBPragmaEnvironment >> includesPragma: aPragma [
 	^ (keywords includes: aPragma selector) and: [ condition value: aPragma ]
 ]
@@ -94,11 +100,6 @@ RBPragmaEnvironment >> initialize [
 { #category : #initialization }
 RBPragmaEnvironment >> keywords: aCollection [
 	keywords addAll: aCollection
-]
-
-{ #category : #testing }
-RBPragmaEnvironment >> packages [
-	^ (self methods collect: [:each | each package]) asSet
 ]
 
 { #category : #copying }

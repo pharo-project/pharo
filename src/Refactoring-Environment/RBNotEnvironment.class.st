@@ -55,12 +55,6 @@ RBNotEnvironment >> not [
 	^environment
 ]
 
-{ #category : #accessing }
-RBNotEnvironment >> packages [
-	^ self rootEnvironment packages
-		select: [ :package | self includesPackage: package ]
-]
-
 { #category : #printing }
 RBNotEnvironment >> storeOn: aStream [
 	environment storeOn: aStream.

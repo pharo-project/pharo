@@ -180,11 +180,6 @@ RBClassEnvironment >> metaClassSelectorDictionary [
 				yourself ]
 ]
 
-{ #category : #accessing }
-RBClassEnvironment >> packages [
-	^ self classes collect: [:each | each package]
-]
-
 { #category : #copying }
 RBClassEnvironment >> postCopy [
 	super postCopy.

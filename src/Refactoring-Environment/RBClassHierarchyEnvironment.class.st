@@ -67,8 +67,3 @@ RBClassHierarchyEnvironment >> includesClass: aClass [
 		[ (class inheritsFrom: aClass) or:
 			[ aClass inheritsFrom: class ] ]) and: [super includesClass: aClass]
 ]
-
-{ #category : #accessing }
-RBClassHierarchyEnvironment >> packages [
-	^ self classes collect: [:each | each package]
-]

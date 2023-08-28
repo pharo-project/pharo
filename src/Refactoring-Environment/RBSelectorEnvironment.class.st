@@ -229,6 +229,13 @@ RBSelectorEnvironment >> includesClass: aClass [
 ]
 
 { #category : #testing }
+RBSelectorEnvironment >> includesPackage: aPackage [
+
+	^ (super includesPackage: aPackage) and: [
+		  (self classesInPackage: aPackage) anySatisfy: [ :class | (self includesClass: class) or: [ self includesClass: class class ] ] ]
+]
+
+{ #category : #testing }
 RBSelectorEnvironment >> includesProtocol: aProtocol in: aClass [
 
 	^ (super includesProtocol: aProtocol in: aClass) and: [
@@ -264,24 +271,6 @@ RBSelectorEnvironment >> on: aDictionary [
 		class isMeta
 			ifTrue: [ metaClassSelectors at: class soleInstance name put: selectors asIdentitySet ]
 			ifFalse: [ classSelectors at: class name put: selectors asIdentitySet ] ]
-]
-
-{ #category : #accessing }
-RBSelectorEnvironment >> packages [
-	"Check that packages have really class and selector included."
-
-	| pSet |
-	pSet := Set new.
-	self classes
-		do: [ :each |
-			each packages
-				do: [ :p |
-					self
-						selectorsForClass: each
-						do: [ :s |
-							(p includesSelector: s ofClass: each)
-								ifTrue: [ pSet add: p ] ] ] ].
-	^ pSet
 ]
 
 { #category : #copying }

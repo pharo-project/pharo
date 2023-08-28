@@ -266,6 +266,12 @@ RBBrowserEnvironment >> classesDo: aBlock [
 			ifTrue: [aBlock value: each ] ]
 ]
 
+{ #category : #accessing }
+RBBrowserEnvironment >> classesInPackage: aPackage [
+
+	^ aPackage definedClasses select: [ :class | (self includesClass: class) or: [ self includesClass: class class ] ]
+]
+
 { #category : #cleaning }
 RBBrowserEnvironment >> cleanGarbageInCache [
 
@@ -594,9 +600,7 @@ RBBrowserEnvironment >> packageAt: aName ifAbsent: absentBlock [
 { #category : #'accessing - packages' }
 RBBrowserEnvironment >> packages [
 
-	^ self packageOrganizer packages
-		select: [ :package |
-			self includesCategory: package name ]
+	^ self packageOrganizer packages select: [ :package | self includesPackage: package ]
 ]
 
 { #category : #'accessing - packages' }

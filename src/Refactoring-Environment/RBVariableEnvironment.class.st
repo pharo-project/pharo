@@ -320,6 +320,12 @@ RBVariableEnvironment >> includesClass: aClass [
 ]
 
 { #category : #testing }
+RBVariableEnvironment >> includesPackage: aPackage [
+
+	^ (self classesInPackage: aPackage) isNotEmpty
+]
+
+{ #category : #testing }
 RBVariableEnvironment >> includesProtocol: aProtocol in: aClass [
 
 	^ (self selectorsFor: aProtocol in: aClass) isNotEmpty
@@ -415,11 +421,6 @@ RBVariableEnvironment >> isVariableEnvironment [
 RBVariableEnvironment >> numberVariables [
 	^self accessorMethods inject: 0
 		into: [:sum :each | sum + ((self perform: each) inject: 0 into: [:s :e | s + e size])]
-]
-
-{ #category : #accessing }
-RBVariableEnvironment >> packages [
-	^ self classes collect: [:each | each package]
 ]
 
 { #category : #copying }
