@@ -637,11 +637,8 @@ LogicalFont >> findRealFont [
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> fontArray [
-	| real |
-	real := self realFont.
-	^real isFontSet
-		ifTrue: [real fontArray]
-		ifFalse: [{self}]
+
+	^ { self }
 ]
 
 { #category : #accessing }
