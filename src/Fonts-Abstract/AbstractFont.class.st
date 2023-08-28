@@ -173,6 +173,12 @@ AbstractFont >> installOn: aDisplayContext foregroundColor: foregroundColor back
 	^ self subclassResponsibility
 ]
 
+{ #category : #testing }
+AbstractFont >> isFontSet [
+
+	^ false
+]
+
 { #category : #accessing }
 AbstractFont >> isRegular [
 
