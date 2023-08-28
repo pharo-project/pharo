@@ -348,7 +348,7 @@ RPackageOrganizer >> ensurePackageOfExtensionProtocol: aProtocol [
 { #category : #registration }
 RPackageOrganizer >> ensureTagNamed: aTagName inPackageNamed: aPackageName [
 
-	^ (self ensurePackage: aPackageName) addClassTag: aTagName
+	^ (self ensurePackage: aPackageName) ensureTag: aTagName
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -778,7 +778,7 @@ RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 	package := self ensurePackageMatching: ann categoryName.
 
 	"We extract the tag name from the category"
-	package addClassTag: (package toTagName: ann categoryName)
+	package ensureTag: (package toTagName: ann categoryName)
 ]
 
 { #category : #'system integration' }
@@ -798,7 +798,7 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 	newCategoryName = announcement oldCategory ifTrue: [ ^ self ].
 	newPackage := self ensurePackageMatching: newCategoryName.
 
-	newPackage moveClass: class toTag: (newPackage addClassTag: (newPackage toTagName: newCategoryName))
+	newPackage moveClass: class toTag: (newPackage ensureTag: (newPackage toTagName: newCategoryName))
 ]
 
 { #category : #'system integration' }

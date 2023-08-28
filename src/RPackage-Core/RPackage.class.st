@@ -158,21 +158,7 @@ RPackage >> addClass: aClass [
 		- change the class category as appropriate.
 			(and by cascade, ensure systemClassRecategorizedAction: is called)."
 
-	aClass category: (self addClassTag: self name) categoryName
-]
-
-{ #category : #'class tags' }
-RPackage >> addClassTag: tagName [
-	"Add the class tag from the receiver, if already added do nothing."
-
-	^ self classTagNamed: tagName ifAbsent: [
-		  | newTag |
-		  self name = tagName ifFalse: [
-			  self flag: #package. "We are giving nil as first tag name because currently there is a bug that we cannot have a package that has the same name as a package and tag. So we first want to ensure we do not have a package of the same name. When this limitation will be removed in the future we should directly give the package name and the tag name without going through the nil."
-			  self organizer validateCanBeAddedPackageName: self name , '-' , tagName tagName: nil ].
-		  newTag := self basicAddClassTag: tagName.
-		  SystemAnnouncer announce: (PackageTagAdded to: newTag).
-		  ^ newTag ]
+	aClass category: self rootTag categoryName
 ]
 
 { #category : #'add method - compiled method' }
@@ -332,7 +318,7 @@ RPackage >> demoteToTagInPackage [
 	newPackage := self organizer ensurePackage: (self name copyUpToLast: $-).
 
 	"We keep the suffix that was removed as the tag name to create."
-	tag := newPackage addClassTag: (self name withoutPrefix: newPackage name , '-').
+	tag := newPackage ensureTag: (self name withoutPrefix: newPackage name , '-').
 
 	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
 	self extensionMethods do: [ :method | newPackage addMethod: method ].
@@ -343,6 +329,22 @@ RPackage >> demoteToTagInPackage [
 { #category : #properties }
 RPackage >> ensureProperties [
 	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
+]
+
+{ #category : #'class tags' }
+RPackage >> ensureTag: aTag [
+
+	| tagName newTag |
+	tagName := aTag isString ifTrue: [ aTag ] ifFalse: [ aTag name ].
+
+	(self hasTag: aTag) ifTrue: [ ^ self classTagNamed: tagName ].
+
+	self name = tagName ifFalse: [
+		self flag: #package. "We are giving nil as first tag name because currently there is a bug that we cannot have a package that has the same name as a package and tag. So we first want to ensure we do not have a package of the same name. When this limitation will be removed in the future we should directly give the package name and the tag name without going through the nil."
+		self organizer validateCanBeAddedPackageName: self name , '-' , tagName tagName: nil ].
+	newTag := self basicAddClassTag: tagName.
+	SystemAnnouncer announce: (PackageTagAdded to: newTag).
+	^ newTag
 ]
 
 { #category : #accessing }
@@ -423,9 +425,9 @@ RPackage >> hasProperty: aKey [
 RPackage >> hasTag: aTag [
 	"Takes a package tag or a package tag name as parameter and return true if I include this package tag."
 
-	^ aTag isString
-		  ifTrue: [ self classTags anySatisfy: [ :tag | tag name = aTag ] ]
-		  ifFalse: [ self classTags includes: aTag ]
+	^ self tagNames includes: (aTag isString
+			   ifTrue: [ aTag ]
+			   ifFalse: [ aTag name ])
 ]
 
 { #category : #accessing }
@@ -458,7 +460,7 @@ RPackage >> importClass: aClass inTag: aTag [
 
 	self removeAllMethodsFromClass: aClass.
 	
-	(self addClassTag: (aTag isString ifTrue: [ aTag ] ifFalse: [ aTag name ])) addClass: aClass instanceSide.
+	(self ensureTag: aTag) addClass: aClass instanceSide.
 
 	"Maybe this should go in the PackageTag during the addition of the class"
 	self registerClass: aClass.
@@ -940,7 +942,7 @@ RPackage >> renameTo: aSymbol [
 { #category : #'class tags' }
 RPackage >> rootTag [
 
-	^ self addClassTag: self rootTagName
+	^ self ensureTag: self rootTagName
 ]
 
 { #category : #accessing }
@@ -981,6 +983,11 @@ RPackage >> selectorsForClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> systemCategoryPrefix [
 	^ self name
+]
+
+{ #category : #'class tags' }
+RPackage >> tagNames [
+	^ self classTags collect: [ :tag | tag name ]
 ]
 
 { #category : #queries }

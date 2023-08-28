@@ -64,7 +64,7 @@ ClyTaggedClassGroup >> renameClassTagTo: newTag [
 	self classes do: [ :class | class packageTag: newTag ].
 
 	classQuery scope packagesDo: [ :package |
-		(package tagsForClasses includes: newTag) ifFalse: [ package addClassTag: newTag ].
+		package ensureTag: newTag.
 		package removeTag: self tag ]
 ]
 

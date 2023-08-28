@@ -175,7 +175,7 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
 	| package1 |
 	self flag: #package. "This is a limitiation of the system organizer. I hope to kill this limitiation before p12 release."
 	package1 := self createNewPackageNamed: 'P1'.
-	package1 addClassTag: #T1.
+	package1 ensureTag: #T1.
 
 	self should: [ self createNewPackageNamed: 'P1-T1' ] raise: Error
 ]
@@ -188,7 +188,7 @@ RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 	package1 := self createNewPackageNamed: 'P1-T1'.
 
 	package2 := self createNewPackageNamed: 'P1'.
-	self should: [ package2 addClassTag: #T1 ] raise: Error
+	self should: [ package2 ensureTag: #T1 ] raise: Error
 ]
 
 { #category : #tests }
@@ -246,8 +246,8 @@ RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 	"This one will be empty"
 	package4 := (self createNewPackageNamed: #Test4).
 
-	tag1 := package3 addClassTag: #Tag1.
-	tag2 := package3 addClassTag: #Tag2.
+	tag1 := package3 ensureTag: #Tag1.
+	tag2 := package3 ensureTag: #Tag2.
 
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
 	class compile: 'extension ^ 1' classified: '*Test2'.

@@ -1,6 +1,13 @@
 Extension { #name : #RPackage }
 
 { #category : #'*Deprecated12' }
+RPackage >> addClassTag: tagName [
+
+	self deprecated: 'Use #ensureTag: instead' transformWith: '`@rcv addClassTag: `@arg' -> '`@rcv ensureTag: `@arg'.
+	^ self ensureTag: tagName
+]
+
+{ #category : #'*Deprecated12' }
 RPackage >> basicRemoveTag: tag [
 
 	self deprecated: 'Use #removeTag: instead.' transformWith: '`@rcv removeClassTag: `@arg' -> '`@rcv removeTag: `@arg'.
