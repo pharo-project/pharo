@@ -100,7 +100,7 @@ RPackageTag >> name [
 { #category : #accessing }
 RPackageTag >> name: aSymbol [
 
-	name := aSymbol
+	name := aSymbol asSymbol
 ]
 
 { #category : #accessing }

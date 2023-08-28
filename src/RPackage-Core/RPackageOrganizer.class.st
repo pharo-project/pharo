@@ -774,7 +774,11 @@ RPackageOrganizer >> superclassOrder: category [
 { #category : #'system integration' }
 RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 
-	(self ensurePackageMatching: ann categoryName) addClassTag: ann categoryName asSymbol
+	| package |
+	package := self ensurePackageMatching: ann categoryName.
+
+	"We extract the tag name from the category"
+	package addClassTag: (package toTagName: ann categoryName)
 ]
 
 { #category : #'system integration' }
@@ -786,15 +790,15 @@ RPackageOrganizer >> systemClassAddedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
-	| class newPackage newPackageName |
+	| class newPackage newCategoryName |
 	class := announcement classAffected.
 
-	newPackageName := announcement newCategory.
+	newCategoryName := announcement newCategory.
 
-	newPackageName = announcement oldCategory ifTrue: [ ^ self ].
-	newPackage := self ensurePackageMatching: newPackageName.
+	newCategoryName = announcement oldCategory ifTrue: [ ^ self ].
+	newPackage := self ensurePackageMatching: newCategoryName.
 
-	newPackage moveClass: class toTag: (newPackage addClassTag: newPackageName)
+	newPackage moveClass: class toTag: (newPackage addClassTag: (newPackage toTagName: newCategoryName))
 ]
 
 { #category : #'system integration' }
