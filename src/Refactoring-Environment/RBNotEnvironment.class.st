@@ -28,11 +28,6 @@ RBNotEnvironment >> includesClass: aClass [
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesPackage: aRPackage [
-	^ (environment includesPackage: aRPackage) not
-]
-
-{ #category : #testing }
 RBNotEnvironment >> includesProtocol: aProtocol in: aClass [
 
 	(aClass hasProtocol: aProtocol) ifFalse: [ ^ false ].

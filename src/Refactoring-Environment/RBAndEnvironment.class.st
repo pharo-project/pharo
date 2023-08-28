@@ -60,12 +60,6 @@ RBAndEnvironment >> includesClass: aClass [
 ]
 
 { #category : #testing }
-RBAndEnvironment >> includesPackage: aPackage [
-
-	^ (environment includesPackage: aPackage) and: [ self andedEnvironment includesPackage: aPackage ]
-]
-
-{ #category : #testing }
 RBAndEnvironment >> includesProtocol: aProtocol in: aClass [
 
 	^ (environment includesProtocol: aProtocol in: aClass) and: [ self andedEnvironment includesProtocol: aProtocol in: aClass ]
