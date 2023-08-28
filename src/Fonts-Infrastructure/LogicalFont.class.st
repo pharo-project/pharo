@@ -637,8 +637,11 @@ LogicalFont >> findRealFont [
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> fontArray [
-
-	^ { self }
+	| real |
+	real := self realFont.
+	^real isFontSet
+		ifTrue: [real fontArray]
+		ifFalse: [{self}]
 ]
 
 { #category : #accessing }
@@ -768,7 +771,7 @@ LogicalFont >> linearWidthOf: aCharacter [
 { #category : #accessing }
 LogicalFont >> maxAscii [
 	"???
-	what to do if realFont happens to be a StrikeFont?"
+	what to do if realFont happens to be a StrikeFontSet?"
 	^SmallInteger maxVal
 ]
 
