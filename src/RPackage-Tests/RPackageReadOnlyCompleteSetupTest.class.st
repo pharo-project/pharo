@@ -307,11 +307,11 @@ RPackageReadOnlyCompleteSetupTest >> testRemoveTag [
 	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesForClassTag: #foo) size equals: 2.
 
-	p1 removeClassTag: #bar.
+	p1 removeTag: #bar.
 	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesForClassTag: #foo) size equals: 2.
 
-	p1 removeClassTag: #foo.
+	p1 removeTag: #foo.
 	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesForClassTag: #foo) size equals: 0
 ]

@@ -1,6 +1,13 @@
 Extension { #name : #RPackage }
 
 { #category : #'*Deprecated12' }
+RPackage >> basicRemoveTag: tag [
+
+	self deprecated: 'Use #removeTag: instead.' transformWith: '`@rcv removeClassTag: `@arg' -> '`@rcv removeTag: `@arg'.
+	self removeTag: tag
+]
+
+{ #category : #'*Deprecated12' }
 RPackage >> classDefinedSlicesDo: aBlock [
 
 	self deprecated:
@@ -138,4 +145,11 @@ RPackage >> removeClassNamed: aClassName [
 
 	self deprecated: 'Use #removeClass: with a real class instead.'.
 	^ self removeClass: (self organizer environment at: aClassName)
+]
+
+{ #category : #'*Deprecated12' }
+RPackage >> removeClassTag: aSymbol [
+
+	self deprecated: 'Use #removeTag: instead.' transformWith: '`@rcv removeClassTag: `@arg' -> '`@rcv removeTag: `@arg'.
+	self removeTag: aSymbol
 ]

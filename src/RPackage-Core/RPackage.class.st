@@ -206,14 +206,6 @@ RPackage >> basicAddClassTag: tagName [
 ]
 
 { #category : #'class tags' }
-RPackage >> basicRemoveTag: tag [
-
-	classTags remove: tag ifAbsent: [  ].
-
-	SystemAnnouncer announce: (PackageTagRemoved to: tag)
-]
-
-{ #category : #'class tags' }
 RPackage >> classNamesForClassTag: aSymbol [
 	"Returns the classes tagged using aSymbol"
 
@@ -794,22 +786,13 @@ RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 	| tag |
 	tag := self classTagNamed: aSymbol ifAbsent: [ ^ self ].
 	tag removeClass: aClass.
-	tag isEmpty ifTrue: [ self basicRemoveTag: tag ]
-]
-
-{ #category : #'class tags' }
-RPackage >> removeClassTag: aSymbol [
-	"Remove the class tag from the receiver."
-
-	self basicRemoveTag: (self
-		classTagNamed:  (self toTagName: aSymbol)
-		ifAbsent: [ ^ self ])
+	tag isEmpty ifTrue: [ self removeTag: tag ]
 ]
 
 { #category : #'class tags' }
 RPackage >> removeEmptyTags [
 
-	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeClassTag: emptyTag name ]
+	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeTag: emptyTag ]
 ]
 
 { #category : #removing }
@@ -884,11 +867,14 @@ RPackage >> removeProperty: propName ifAbsent: aBlock [
 { #category : #'class tags' }
 RPackage >> removeTag: aTag [
 
-	| tagName |
-	tagName := aTag isString
-		           ifTrue: [ aTag ]
-		           ifFalse: [ aTag name ].
-	self removeClassTag: tagName
+	| tag |
+	tag := aTag isString
+		       ifTrue: [ self classTagNamed: aTag ifAbsent: [ ^ self ] ]
+		       ifFalse: [ aTag ].
+
+	classTags remove: tag ifAbsent: [ ^ self ].
+
+	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
 { #category : #private }
@@ -951,12 +937,6 @@ RPackage >> renameTo: aSymbol [
 		basicUnregisterPackageNamed: oldName;
 		basicRegisterPackage: self.
 	SystemAnnouncer uniqueInstance announce: (PackageRenamed to: self oldName: oldName newName: newName)
-]
-
-{ #category : #private }
-RPackage >> reportBogusBehaviorOf: aSelector [
-
-	self traceCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'
 ]
 
 { #category : #'class tags' }

@@ -55,8 +55,7 @@ ClyTaggedClassGroup >> importClass: aClass [
 ClyTaggedClassGroup >> removeWithClasses [
 
 	super removeWithClasses.
-	classQuery scope packagesDo: [ :each |
-		each removeClassTag: self tag]
+	classQuery scope packagesDo: [ :each | each removeTag: self tag ]
 ]
 
 { #category : #operations }
@@ -66,7 +65,7 @@ ClyTaggedClassGroup >> renameClassTagTo: newTag [
 
 	classQuery scope packagesDo: [ :package |
 		(package tagsForClasses includes: newTag) ifFalse: [ package addClassTag: newTag ].
-		package removeClassTag: self tag ]
+		package removeTag: self tag ]
 ]
 
 { #category : #accessing }
