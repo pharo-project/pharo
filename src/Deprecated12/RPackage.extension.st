@@ -49,6 +49,15 @@ RPackage >> classNamesAndExtensionSelectorsDo: aBlock [
 ]
 
 { #category : #'*Deprecated12' }
+RPackage >> classNamesForClassTag: aSymbol [
+	"Returns the classes tagged using aSymbol"
+
+	self deprecated: 'This method is too specific and will be remove in future versions of Pharo. If you are using it you can inline the method'.
+
+	^ (self classTagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classNames
+]
+
+{ #category : #'*Deprecated12' }
 RPackage >> definedClassesDo: aBlock [
 
 	self deprecated:

@@ -101,16 +101,16 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagNames [
 	p1 importClass: b1 inTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
 	self assert: p1 classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
-	self assert: ((p1 classNamesForClassTag: #foo) includes: #A1DefinedInP1).
-	self assert: ((p1 classNamesForClassTag: #foo) includes: #B1DefinedInP1).
-	self assert: (p1 classNamesForClassTag: #foo) size equals: 2.
+	self assert: ((p1 classTagNamed: #foo) classNames includes: #A1DefinedInP1).
+	self assert: ((p1 classTagNamed: #foo) classNames includes: #B1DefinedInP1).
+	self assert: (p1 classTagNamed: #foo) classNames size equals: 2.
 
 	p1 ensureTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: ((p1 classNamesForClassTag: #foo) includes: #A1DefinedInP1).
-	self assert: ((p1 classNamesForClassTag: #foo) includes: #B1DefinedInP1).
-	self assert: (p1 classNamesForClassTag: #foo) size equals: 2
+	self assert: ((p1 classTagNamed: #foo) classNames includes: #A1DefinedInP1).
+	self assert: ((p1 classTagNamed: #foo) classNames includes: #B1DefinedInP1).
+	self assert: (p1 classTagNamed: #foo) classNames size equals: 2
 ]
 
 { #category : #'tests - tag class' }

@@ -178,15 +178,6 @@ RPackage >> addMethod: aCompiledMethod [
 ]
 
 { #category : #'class tags' }
-RPackage >> classNamesForClassTag: aSymbol [
-	"Returns the classes tagged using aSymbol"
-
-	^ (self
-		classTagNamed: aSymbol
-		ifAbsent: [ ^ #() ]) classNames
-]
-
-{ #category : #'class tags' }
 RPackage >> classTagCategoryNames [
 	^ (Set with: self packageName), (self classTags collect: [:each | each categoryName])
 ]
