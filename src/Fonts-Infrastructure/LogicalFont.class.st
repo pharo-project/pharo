@@ -771,7 +771,7 @@ LogicalFont >> linearWidthOf: aCharacter [
 { #category : #accessing }
 LogicalFont >> maxAscii [
 	"???
-	what to do if realFont happens to be a StrikeFontSet?"
+	what to do if realFont happens to be a StrikeFont?"
 	^SmallInteger maxVal
 ]
 
