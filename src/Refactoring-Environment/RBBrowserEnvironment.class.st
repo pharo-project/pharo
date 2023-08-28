@@ -393,11 +393,6 @@ RBBrowserEnvironment >> implementorsOf: aSelector [
 ]
 
 { #category : #testing }
-RBBrowserEnvironment >> includesCategory: aCategory [
-	^ true
-]
-
-{ #category : #testing }
 RBBrowserEnvironment >> includesClass: aClass [
 	^ true
 ]

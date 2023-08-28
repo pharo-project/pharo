@@ -306,11 +306,6 @@ RBVariableEnvironment >> flushCachesFor: aClass [
 ]
 
 { #category : #testing }
-RBVariableEnvironment >> includesCategory: aCategory [
-	^(self classNamesFor: aCategory) isNotEmpty
-]
-
-{ #category : #testing }
 RBVariableEnvironment >> includesClass: aClass [
 	(super includesClass: aClass) ifFalse: [^false].
 	(instanceVariables includesKey: aClass name) ifTrue: [^true].

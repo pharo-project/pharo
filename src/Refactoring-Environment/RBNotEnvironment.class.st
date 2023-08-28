@@ -22,11 +22,6 @@ RBNotEnvironment >> description [
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesCategory: aCategory [
-	^(self classNamesFor: aCategory) isNotEmpty
-]
-
-{ #category : #testing }
 RBNotEnvironment >> includesClass: aClass [
 	(environment includesClass: aClass) ifFalse: [^true].
 	^false

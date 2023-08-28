@@ -46,11 +46,6 @@ RBAndEnvironment >> definesClass: aClass [
 ]
 
 { #category : #testing }
-RBAndEnvironment >> includesCategory: aCategory [
-	^(self classNamesFor: aCategory) isNotEmpty
-]
-
-{ #category : #testing }
 RBAndEnvironment >> includesClass: aClass [
 	| doesntHaveSelectors |
 	(environment includesClass: aClass) ifFalse: [^false].
