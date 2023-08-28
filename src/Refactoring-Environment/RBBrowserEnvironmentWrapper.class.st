@@ -69,12 +69,6 @@ RBBrowserEnvironmentWrapper >> environment [
 ]
 
 { #category : #testing }
-RBBrowserEnvironmentWrapper >> includesCategory: aCategory [
-
-	^ environment includesCategory: aCategory
-]
-
-{ #category : #testing }
 RBBrowserEnvironmentWrapper >> includesClass: aClass [
 	^environment includesClass: aClass
 ]

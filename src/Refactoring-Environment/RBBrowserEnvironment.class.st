@@ -191,11 +191,6 @@ RBBrowserEnvironment >> cachedResultOf: aQuery [
 	^self queryCache at: aQuery ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
-RBBrowserEnvironment >> categories [
-	^ self systemDictionary organization categories select: [ :each | self includesCategory: each ]
-]
-
 { #category : #'accessing - classes' }
 RBBrowserEnvironment >> classNames [
 	| names |
@@ -588,13 +583,10 @@ RBBrowserEnvironment >> packageAt: aName [
 
 { #category : #'accessing - packages' }
 RBBrowserEnvironment >> packageAt: aName ifAbsent: absentBlock [
-	| package |
-	package := self packageOrganizer
-		packageNamed: aName ifAbsent: absentBlock.
 
-	^ (self includesCategory: aName)
-		ifTrue: [ package ]
-		ifFalse: absentBlock
+	^ self packages
+		  detect: [ :package | package name sameAs: aName ]
+		  ifNone: absentBlock
 ]
 
 { #category : #'accessing - packages' }

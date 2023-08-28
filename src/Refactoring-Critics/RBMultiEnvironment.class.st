@@ -37,11 +37,6 @@ RBMultiEnvironment >> environments [
 ]
 
 { #category : #testing }
-RBMultiEnvironment >> includesCategory: aCategory [
-	^ (super includesCategory: aCategory) and: [ environmentDictionaries anySatisfy: [ :env | env includesCategory: aCategory ] ]
-]
-
-{ #category : #testing }
 RBMultiEnvironment >> includesClass: aClass [
 	^ (super includesClass: aClass) and: [ environmentDictionaries anySatisfy: [ :env | env includesClass: aClass ] ]
 ]

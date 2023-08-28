@@ -214,15 +214,6 @@ RBSelectorEnvironment >> defaultLabel [
 ]
 
 { #category : #testing }
-RBSelectorEnvironment >> includesCategory: aCategory [
-	^(super includesCategory: aCategory) and:
-			[(self classNamesFor: aCategory) anySatisfy:
-					[:className |
-					(classSelectors includesKey: className)
-						or: [metaClassSelectors includesKey: className]]]
-]
-
-{ #category : #testing }
 RBSelectorEnvironment >> includesClass: aClass [
 	^(self privateSelectorsForClass: aClass) isNotEmpty
 		and: [super includesClass: aClass]

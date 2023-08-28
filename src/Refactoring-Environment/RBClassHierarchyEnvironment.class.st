@@ -51,17 +51,6 @@ RBClassHierarchyEnvironment >> definesClass: aClass [
 ]
 
 { #category : #testing }
-RBClassHierarchyEnvironment >> includesCategory: aCategory [
-	^ (super includesCategory: aCategory) and: [
-		(environment classNamesFor: aCategory)
-			inject: false into: [ :bool :each |
-				bool or: [
-					| aClass |
-					aClass := self systemDictionary at: each ifAbsent: [ nil ].
-					aClass == class or: [ aClass class == class ] ] ] ]
-]
-
-{ #category : #testing }
 RBClassHierarchyEnvironment >> includesClass: aClass [
 	^ (aClass == class or:
 		[ (class inheritsFrom: aClass) or:
