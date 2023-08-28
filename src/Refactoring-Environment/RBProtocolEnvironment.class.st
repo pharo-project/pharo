@@ -89,13 +89,6 @@ RBProtocolEnvironment >> includesClass: aClass [
 ]
 
 { #category : #testing }
-RBProtocolEnvironment >> includesPackage: aPackage [
-
-	^ (super includesPackage: aPackage) and: [
-		  (environment classesInPackage: aPackage) anySatisfy: [ :aClass | (self includesClass: aClass) or: [ self includesClass: aClass class ] ] ]
-]
-
-{ #category : #testing }
 RBProtocolEnvironment >> includesProtocol: aProtocol in: aClass [
 
 	^ aClass == class and: [ (super includesProtocol: aProtocol in: aClass) and: [ protocols includes: aProtocol name ] ]

@@ -220,13 +220,6 @@ RBSelectorEnvironment >> includesClass: aClass [
 ]
 
 { #category : #testing }
-RBSelectorEnvironment >> includesPackage: aPackage [
-
-	^ (super includesPackage: aPackage) and: [
-		  (self classesInPackage: aPackage) anySatisfy: [ :class | (self includesClass: class) or: [ self includesClass: class class ] ] ]
-]
-
-{ #category : #testing }
 RBSelectorEnvironment >> includesProtocol: aProtocol in: aClass [
 
 	^ (super includesProtocol: aProtocol in: aClass) and: [

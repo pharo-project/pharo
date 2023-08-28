@@ -315,12 +315,6 @@ RBVariableEnvironment >> includesClass: aClass [
 ]
 
 { #category : #testing }
-RBVariableEnvironment >> includesPackage: aPackage [
-
-	^ (self classesInPackage: aPackage) isNotEmpty
-]
-
-{ #category : #testing }
 RBVariableEnvironment >> includesProtocol: aProtocol in: aClass [
 
 	^ (self selectorsFor: aProtocol in: aClass) isNotEmpty

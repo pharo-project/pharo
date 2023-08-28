@@ -62,12 +62,6 @@ RBPragmaEnvironment >> includesClass: aClass [
 ]
 
 { #category : #testing }
-RBPragmaEnvironment >> includesPackage: aPackage [
-
-	^ (environment includesPackage: aPackage) and: [ (self classesInPackage: aPackage) isNotEmpty ]
-]
-
-{ #category : #testing }
 RBPragmaEnvironment >> includesPragma: aPragma [
 	^ (keywords includes: aPragma selector) and: [ condition value: aPragma ]
 ]

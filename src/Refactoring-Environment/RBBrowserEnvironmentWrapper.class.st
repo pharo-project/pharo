@@ -76,8 +76,7 @@ RBBrowserEnvironmentWrapper >> includesClass: aClass [
 { #category : #testing }
 RBBrowserEnvironmentWrapper >> includesPackage: aPackage [
 
-	^ (super includesPackage: aPackage) and: [
-		  (environment classesInPackage: aPackage) anySatisfy: [ :class | (self includesClass: class) or: [ self includesClass: class class ] ] ]
+	^ (super includesPackage: aPackage) and: [ (self classesInPackage: aPackage) isNotEmpty ]
 ]
 
 { #category : #testing }
