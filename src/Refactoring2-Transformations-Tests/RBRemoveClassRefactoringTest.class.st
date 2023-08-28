@@ -90,12 +90,12 @@ RBRemoveClassRefactoringTest >> testFailureRemoveClassWithBadNameRaisesRBRefacto
 RBRemoveClassRefactoringTest >> testPreconditionHasNoReferencesWithClassesWithReferencesBetweenThem [
 
 	| refact classes |
-	classes := RBClassEnvironment classes: { RBSharedPoolForTestData2 . RBRemoveClassParametrizedTest}.
+	classes := RBClassEnvironment classes: { RBSharedPoolForTestData2 . RBRemoveClassRefactoringTest }.
 	model := RBNamespace onEnvironment: classes.
 	
 	refact := RBRemoveClassRefactoring 
 					model: model 
-					classNames: { #RBSharedPoolForTestData2 . #RBRemoveClassParametrizedTest }.
+					classNames: { #RBSharedPoolForTestData2 . #RBRemoveClassRefactoringTest }.
 	"RBSharedPoolForTestData2 refers to RBRemoveClassParametrizedTest and nobody else refers to them!"
 	
 	self assert: (refact preconditionHasNoReferences: (refact model classNamed: #RBSharedPoolForTestData2)) check.

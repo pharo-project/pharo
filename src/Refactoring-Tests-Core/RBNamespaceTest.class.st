@@ -79,7 +79,7 @@ RBNamespaceTest >> testAllReferencesToClassDoMore [
 	(model allReferencesToClass: (model classFor: RBFooDummyLintRuleTest1) do:[ :each | selectors add: each selector]).
 	self
 		assert: selectors asArray
-		equals: #(#testCanRemoveUnreferencedClass #testCanRemoveReferencedClass #testCanRemoveSuperclass #testRemovingAnEmptyNonLeafClassIsAllowed #testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere #testRemoveAClassAndTheirSubclass #testRemovingAnEmptyNonLeafClassReparent #testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment #testPreconditionNotEmptyClass #testCanRemoveAReferencedClassNotHavingReferenceInTheModel)
+		equals: #(#testCanRemoveAReferencedClassNotHavingReferenceInTheModel #testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere #testRemoveAClassAndTheirSubclass #testRemovingAnEmptyNonLeafClassReparent #testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment #testPreconditionNotEmptyClass #testRemovingAnEmptyNonLeafClassIsAllowed #testCanRemoveUnreferencedClass #testCanRemoveSuperclass #testCanRemoveReferencedClass)
 ]
 
 { #category : #'tests - on environment' }
@@ -146,7 +146,7 @@ RBNamespaceTest >> testClassesReferencingClass [
 	classes := model classesReferencingClass: (model classFor: RBFooDummyLintRuleTest1).
 	self
 		assert: (classes asArray collect: [ :each | each name ]) 
-		equals:  #(#RBRemoveClassRefactoringTest #RBRemoveClassTransformationTest)
+		equals: #(#RBRemoveClassTransformationTest #RBRemoveClassRefactoringTest)
 ]
 
 { #category : #'tests - classes' }
