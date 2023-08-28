@@ -177,17 +177,6 @@ RPackage >> addMethod: aCompiledMethod [
 	^ aCompiledMethod
 ]
 
-{ #category : #private }
-RPackage >> basicAddClassTag: tagName [
-
-	| packageTag |
-	packageTag := RPackageTag package: self name: tagName.
-	classTags add: packageTag.
-	self organizer addCategory: packageTag categoryName.
-
-	^ packageTag
-]
-
 { #category : #'class tags' }
 RPackage >> classNamesForClassTag: aSymbol [
 	"Returns the classes tagged using aSymbol"
@@ -335,14 +324,22 @@ RPackage >> ensureProperties [
 RPackage >> ensureTag: aTag [
 
 	| tagName newTag |
-	tagName := aTag isString ifTrue: [ aTag ] ifFalse: [ aTag name ].
+	tagName := aTag isString
+		           ifTrue: [ aTag ]
+		           ifFalse: [ aTag name ].
 
 	(self hasTag: aTag) ifTrue: [ ^ self classTagNamed: tagName ].
 
-	self name = tagName ifFalse: [
-		self flag: #package. "We are giving nil as first tag name because currently there is a bug that we cannot have a package that has the same name as a package and tag. So we first want to ensure we do not have a package of the same name. When this limitation will be removed in the future we should directly give the package name and the tag name without going through the nil."
-		self organizer validateCanBeAddedPackageName: self name , '-' , tagName tagName: nil ].
-	newTag := self basicAddClassTag: tagName.
+
+	self flag: #package. "We are checking because currently there is a bug that we cannot have a package that has the same name as a package and tag. So we first want to ensure we do not have a package of the same name. When this limitation will be removed in the future we should remove the next check."
+	self name = tagName ifFalse: [ self organizer validateCanBeAddedPackageName: self name , '-' , tagName tagName: nil ].
+
+	newTag := RPackageTag package: self name: tagName.
+	classTags add: newTag.
+
+	self flag: #package. "Next line should go with the system organizer"
+	self organizer addCategory: newTag categoryName.
+
 	SystemAnnouncer announce: (PackageTagAdded to: newTag).
 	^ newTag
 ]
