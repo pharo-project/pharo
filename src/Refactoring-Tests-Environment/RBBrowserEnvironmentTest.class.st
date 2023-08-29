@@ -32,15 +32,6 @@ RBBrowserEnvironmentTest class >> packageNamesUnderTest [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> categoriesFor: anEnvironment [
-	| allCategories |
-	allCategories := IdentitySet withAll: universalEnvironment categories.
-	allCategories removeAll: anEnvironment categories.
-	anEnvironment not categories do: [ :each | allCategories remove: each ifAbsent: [  ] ].
-	allCategories do: [ :each | self assertEmpty: (universalEnvironment classNamesFor: each) ]
-]
-
-{ #category : #private }
 RBBrowserEnvironmentTest >> classNamesFor: anEnvironment [
 	| classNames allClassNames |
 	classNames := IdentitySet new
@@ -106,6 +97,16 @@ RBBrowserEnvironmentTest >> numberSelectorsFor: aBrowserEnvironment [
 	self assert: (aBrowserEnvironment & aBrowserEnvironment not) numberSelectors equals: 0.
 	self assert: (universalEnvironment & aBrowserEnvironment) numberSelectors equals: numberSelectors.
 	self assert: (aBrowserEnvironment & universalEnvironment) numberSelectors equals: numberSelectors
+]
+
+{ #category : #private }
+RBBrowserEnvironmentTest >> packagesFor: anEnvironment [
+
+	| allPackages |
+	allPackages := IdentitySet withAll: universalEnvironment packages.
+	allPackages removeAll: anEnvironment packages.
+	anEnvironment not packages do: [ :package | allPackages remove: package ifAbsent: [  ] ].
+	allPackages do: [ :package | self assertEmpty: (universalEnvironment classesInPackage: package) ]
 ]
 
 { #category : #private }
@@ -522,7 +523,7 @@ RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
 	self storeStringFor: aBrowserEnvironment.
 	self classNamesFor: aBrowserEnvironment.
 	self copyFor: aBrowserEnvironment.
-	self categoriesFor: aBrowserEnvironment.
+	self packagesFor: aBrowserEnvironment.
 	self protocolsFor: aBrowserEnvironment.
 	self classesFor: aBrowserEnvironment.
 	self keysFor: aBrowserEnvironment.

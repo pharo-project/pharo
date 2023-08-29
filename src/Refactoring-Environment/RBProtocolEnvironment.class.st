@@ -84,17 +84,6 @@ RBProtocolEnvironment >> description [
 ]
 
 { #category : #testing }
-RBProtocolEnvironment >> includesCategory: aCategory [
-	^ (super includesCategory: aCategory) and: [
-		(environment classNamesFor: aCategory)
-			inject: false into: [ :bool :each |
-				bool or: [
-					| aClass |
-					aClass := self systemDictionary at: each ifAbsent: [ nil ].
-					aClass == class or: [ aClass class == class ] ] ] ]
-]
-
-{ #category : #testing }
 RBProtocolEnvironment >> includesClass: aClass [
 	^ aClass == class and: [super includesClass: aClass]
 ]
@@ -115,11 +104,6 @@ RBProtocolEnvironment >> includesSelector: aSelector in: aClass [
 { #category : #testing }
 RBProtocolEnvironment >> isEmpty [
 	^protocols isEmpty
-]
-
-{ #category : #testing }
-RBProtocolEnvironment >> packages [
-	^ self methods collect: [ :m | m package ]
 ]
 
 { #category : #copying }

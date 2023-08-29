@@ -126,12 +126,6 @@ RPackageSet >> includesClass: aClass [
 	^self packages anySatisfy: [ :each | each includesClass: aClass ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> includesSystemCategory: categoryName [
-	^self packages anySatisfy: [ :each |
-		each includesSystemCategory: categoryName ]
-]
-
 { #category : #initialization }
 RPackageSet >> initialize: aString [
 

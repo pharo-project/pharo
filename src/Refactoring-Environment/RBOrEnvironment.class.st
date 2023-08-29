@@ -37,12 +37,6 @@ RBOrEnvironment >> definesClass: aClass [
 ]
 
 { #category : #testing }
-RBOrEnvironment >> includesCategory: aCategory [
-	^ (environment includesCategory: aCategory)
-		or: [ self orEnvironment includesCategory: aCategory ]
-]
-
-{ #category : #testing }
 RBOrEnvironment >> includesClass: aClass [
 	(environment includesClass: aClass) ifTrue: [ ^ true ].
 	(self orEnvironment includesClass: aClass) ifTrue: [ ^ true ].
@@ -87,11 +81,6 @@ RBOrEnvironment >> orEnvironment [
 { #category : #accessing }
 RBOrEnvironment >> orEnvironment: aBrowserEnvironment [
 	 otherEnvironment := aBrowserEnvironment
-]
-
-{ #category : #accessing }
-RBOrEnvironment >> packages [
-	^ environment packages | self orEnvironment packages
 ]
 
 { #category : #accessing }

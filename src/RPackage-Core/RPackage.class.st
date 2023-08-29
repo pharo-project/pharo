@@ -555,12 +555,6 @@ RPackage >> includesSelector: aSelector ofClass: aClass [
 	^ (self includesDefinedSelector: aSelector ofClass: aClass) or: [ self includesExtensionSelector: aSelector ofClass: aClass ]
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> includesSystemCategory: categoryName [
-
-	^ categoryName isCategoryOf: self systemCategoryPrefix
-]
-
 { #category : #initialization }
 RPackage >> initialize [
 
