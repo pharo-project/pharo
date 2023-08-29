@@ -58,10 +58,7 @@ ClassDescription >> packageName [
 ClassDescription >> packageTag [
 	"Package tags are sub categories of packages to have a better organization of the packages. I return my package tag or nil if the class is uncategorized."
 
-	| packageTag |
-	packageTag := (self package classTagForClass: self) ifNil: [ ^ nil ].
-	packageTag isRoot ifTrue: [ ^ nil ].
-	^ packageTag
+	^ self package classTagForClass: self
 ]
 
 { #category : #'*RPackage-Core' }
@@ -88,7 +85,8 @@ ClassDescription >> packages [
 { #category : #'*RPackage-Core' }
 ClassDescription >> removePackageTag [
 
-	self packageTag ifNotNil: [ :tag |
-		tag removeClass: self.
-		self package addClass: self ]
+	self packageTag isRoot ifTrue: [ "Cannot remove root tag" ^ self ].
+
+	self packageTag removeClass: self.
+	self package addClass: self
 ]
