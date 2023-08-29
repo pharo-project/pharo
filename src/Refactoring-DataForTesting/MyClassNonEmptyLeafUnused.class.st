@@ -11,7 +11,14 @@ Class {
 	#category : #'Refactoring-DataForTesting-StaticModel'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
+MyClassNonEmptyLeafUnused >> initialize [
+
+	<ignoreUnusedVariables: #( instVarName1222 #instVarName23333 )>
+	super initialize
+]
+
+{ #category : #'dummy methods' }
 MyClassNonEmptyLeafUnused >> methodForThePleasureOfIt [
 
 	^ 666
