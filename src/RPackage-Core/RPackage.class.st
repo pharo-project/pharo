@@ -158,24 +158,7 @@ RPackage >> addClass: aClass [
 		- change the class category as appropriate.
 			(and by cascade, ensure systemClassRecategorizedAction: is called)."
 
-	aClass category: (self addClassTag: self name) categoryName
-]
-
-{ #category : #'class tags' }
-RPackage >> addClassTag: aSymbol [
-	"Add the class tag from the receiver, if already added do nothing."
-
-	| tagName newTag |
-	"strip package name if needed"
-	tagName := self toTagName: aSymbol.
-
-	^ self classTagNamed: tagName ifAbsent: [
-		  self name = tagName ifFalse: [
-			  self flag: #package. "We are giving nil as first tag name because currently there is a bug that we cannot have a package that has the same name as a package and tag. So we first want to ensure we do not have a package of the same name. When this limitation will be removed in the future we should directly give the package name and the tag name without going through the nil."
-			  self organizer validateCanBeAddedPackageName: self name , '-' , tagName tagName: nil ].
-		  newTag := self basicAddClassTag: tagName.
-		  SystemAnnouncer announce: (PackageTagAdded to: newTag).
-		  ^ newTag ]
+	aClass category: self rootTag categoryName
 ]
 
 { #category : #'add method - compiled method' }
@@ -192,34 +175,6 @@ RPackage >> addMethod: aCompiledMethod [
 			self organizer registerExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
-]
-
-{ #category : #private }
-RPackage >> basicAddClassTag: tagName [
-
-	| packageTag |
-	packageTag := RPackageTag package: self name: tagName.
-	classTags add: packageTag.
-	self organizer addCategory: packageTag categoryName.
-
-	^ packageTag
-]
-
-{ #category : #'class tags' }
-RPackage >> basicRemoveTag: tag [
-
-	classTags remove: tag ifAbsent: [  ].
-
-	SystemAnnouncer announce: (PackageTagRemoved to: tag)
-]
-
-{ #category : #'class tags' }
-RPackage >> classNamesForClassTag: aSymbol [
-	"Returns the classes tagged using aSymbol"
-
-	^ (self
-		classTagNamed: aSymbol
-		ifAbsent: [ ^ #() ]) classNames
 ]
 
 { #category : #'class tags' }
@@ -343,7 +298,7 @@ RPackage >> demoteToTagInPackage [
 	newPackage := self organizer ensurePackage: (self name copyUpToLast: $-).
 
 	"We keep the suffix that was removed as the tag name to create."
-	tag := newPackage addClassTag: (self name withoutPrefix: newPackage name , '-').
+	tag := newPackage ensureTag: (self name withoutPrefix: newPackage name , '-').
 
 	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
 	self extensionMethods do: [ :method | newPackage addMethod: method ].
@@ -354,6 +309,30 @@ RPackage >> demoteToTagInPackage [
 { #category : #properties }
 RPackage >> ensureProperties [
 	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
+]
+
+{ #category : #'class tags' }
+RPackage >> ensureTag: aTag [
+
+	| tagName newTag |
+	tagName := aTag isString
+		           ifTrue: [ aTag ]
+		           ifFalse: [ aTag name ].
+
+	(self hasTag: aTag) ifTrue: [ ^ self classTagNamed: tagName ].
+
+
+	self flag: #package. "We are checking because currently there is a bug that we cannot have a package that has the same name as a package and tag. So we first want to ensure we do not have a package of the same name. When this limitation will be removed in the future we should remove the next check."
+	self name = tagName ifFalse: [ self organizer validateCanBeAddedPackageName: self name , '-' , tagName tagName: nil ].
+
+	newTag := RPackageTag package: self name: tagName.
+	classTags add: newTag.
+
+	self flag: #package. "Next line should go with the system organizer"
+	self organizer addCategory: newTag categoryName.
+
+	SystemAnnouncer announce: (PackageTagAdded to: newTag).
+	^ newTag
 ]
 
 { #category : #accessing }
@@ -434,9 +413,9 @@ RPackage >> hasProperty: aKey [
 RPackage >> hasTag: aTag [
 	"Takes a package tag or a package tag name as parameter and return true if I include this package tag."
 
-	^ aTag isString
-		  ifTrue: [ self classTags anySatisfy: [ :tag | tag name = aTag ] ]
-		  ifFalse: [ self classTags includes: aTag ]
+	^ self tagNames includes: (aTag isString
+			   ifTrue: [ aTag ]
+			   ifFalse: [ aTag name ])
 ]
 
 { #category : #accessing }
@@ -453,7 +432,8 @@ RPackage >> importClass: aClass [
 	Handle also *- convention. Methods defined in *category are not added to the package.
 	Pay attention that it will not import anything from the metaClass side"
 
-	self importClass: aClass inTag: aClass category
+	self flag: #package. "Do not rely on the category here in the future"
+	self importClass: aClass inTag: (self toTagName: aClass category)
 ]
 
 { #category : #private }
@@ -468,7 +448,7 @@ RPackage >> importClass: aClass inTag: aTag [
 
 	self removeAllMethodsFromClass: aClass.
 	
-	(self addClassTag: (aTag isString ifTrue: [ aTag ] ifFalse: [ aTag name ])) addClass: aClass instanceSide.
+	(self ensureTag: aTag) addClass: aClass instanceSide.
 
 	"Maybe this should go in the PackageTag during the addition of the class"
 	self registerClass: aClass.
@@ -553,12 +533,6 @@ RPackage >> includesSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 
 	^ (self includesDefinedSelector: aSelector ofClass: aClass) or: [ self includesExtensionSelector: aSelector ofClass: aClass ]
-]
-
-{ #category : #'system compatibility' }
-RPackage >> includesSystemCategory: categoryName [
-
-	^ categoryName isCategoryOf: self systemCategoryPrefix
 ]
 
 { #category : #initialization }
@@ -794,22 +768,13 @@ RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 	| tag |
 	tag := self classTagNamed: aSymbol ifAbsent: [ ^ self ].
 	tag removeClass: aClass.
-	tag isEmpty ifTrue: [ self basicRemoveTag: tag ]
-]
-
-{ #category : #'class tags' }
-RPackage >> removeClassTag: aSymbol [
-	"Remove the class tag from the receiver."
-
-	self basicRemoveTag: (self
-		classTagNamed:  (self toTagName: aSymbol)
-		ifAbsent: [ ^ self ])
+	tag isEmpty ifTrue: [ self removeTag: tag ]
 ]
 
 { #category : #'class tags' }
 RPackage >> removeEmptyTags [
 
-	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeClassTag: emptyTag name ]
+	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeTag: emptyTag ]
 ]
 
 { #category : #removing }
@@ -884,11 +849,14 @@ RPackage >> removeProperty: propName ifAbsent: aBlock [
 { #category : #'class tags' }
 RPackage >> removeTag: aTag [
 
-	| tagName |
-	tagName := aTag isString
-		           ifTrue: [ aTag ]
-		           ifFalse: [ aTag name ].
-	self removeClassTag: tagName
+	| tag |
+	tag := aTag isString
+		       ifTrue: [ self classTagNamed: aTag ifAbsent: [ ^ self ] ]
+		       ifFalse: [ aTag ].
+
+	classTags remove: tag ifAbsent: [ ^ self ].
+
+	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
 { #category : #private }
@@ -953,16 +921,10 @@ RPackage >> renameTo: aSymbol [
 	SystemAnnouncer uniqueInstance announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
-{ #category : #private }
-RPackage >> reportBogusBehaviorOf: aSelector [
-
-	self traceCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'
-]
-
 { #category : #'class tags' }
 RPackage >> rootTag [
 
-	^ self addClassTag: self rootTagName
+	^ self ensureTag: self rootTagName
 ]
 
 { #category : #accessing }
@@ -1003,6 +965,11 @@ RPackage >> selectorsForClass: aClass [
 { #category : #'system compatibility' }
 RPackage >> systemCategoryPrefix [
 	^ self name
+]
+
+{ #category : #'class tags' }
+RPackage >> tagNames [
+	^ self classTags collect: [ :tag | tag name ]
 ]
 
 { #category : #queries }
