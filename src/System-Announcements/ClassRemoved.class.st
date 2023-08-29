@@ -81,12 +81,6 @@ ClassRemoved >> classRemoved: aClass [
 ]
 
 { #category : #accessing }
-ClassRemoved >> classTagAffected [
-
-	^ self packageAffected toTagName: self categoryName
-]
-
-{ #category : #accessing }
 ClassRemoved >> packageAffected [
 
 	^ self packageTag package

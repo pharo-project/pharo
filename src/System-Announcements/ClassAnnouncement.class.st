@@ -38,11 +38,6 @@ ClassAnnouncement >> classAffected [
 ]
 
 { #category : #accessing }
-ClassAnnouncement >> classTagAffected [
-	^self packageAffected toTagName: self classAffected category
-]
-
-{ #category : #accessing }
 ClassAnnouncement >> packageAffected [
 	^self classAffected package
 ]
