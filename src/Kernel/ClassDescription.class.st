@@ -70,6 +70,8 @@ ClassDescription >> addProtocol: aProtocol [
 
 	protocols := protocols copyWith: protocol.
 
+	"In case the protocol is an extension protocol, we want to ensure we have an associated package."
+	self packageOrganizer ensurePackageOfExtensionProtocol: protocol.
 	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
 	^ protocol
 ]

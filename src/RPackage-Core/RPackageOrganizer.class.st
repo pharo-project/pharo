@@ -556,7 +556,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
-		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
 ]
@@ -788,13 +787,6 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 	newPackage := self ensurePackageMatching: newPackageName.
 
 	newPackage moveClass: class toTag: (newPackage addClassTag: newPackageName)
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
-	"when a class is reorganized, we have to check if an extension has not been added"
-
-	ann classReorganized extensionProtocols do: [ :protocol | self ensurePackageOfExtensionProtocol: protocol ]
 ]
 
 { #category : #'system integration' }
