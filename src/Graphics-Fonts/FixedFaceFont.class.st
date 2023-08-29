@@ -48,13 +48,6 @@ FixedFaceFont >> descentKern [
 ]
 
 { #category : #displaying }
-FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-
-	^ self displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint
-		kern: kernDelta baselineY: aPoint y + self ascent
-]
-
-{ #category : #displaying }
 FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
 	| size |
 	size := stopIndex - startIndex + 1.

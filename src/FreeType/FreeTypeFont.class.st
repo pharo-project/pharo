@@ -159,18 +159,6 @@ FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to:
 ]
 
 { #category : #displaying }
-FreeTypeFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-
-	^self displayString: aString
-		on: aDisplayContext
-		from: startIndex
-		to: stopIndex
-		at: aPoint
-		kern: kernDelta
-		baselineY: aPoint y  + self ascent
-]
-
-{ #category : #displaying }
 FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
 
 	^ self displayString: aString on: aBitBlt from: startIndex to: stopIndex
