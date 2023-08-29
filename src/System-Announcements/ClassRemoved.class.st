@@ -57,12 +57,6 @@ ClassRemoved >> affectsMethodsInProtocol: protocol [
 ]
 
 { #category : #accessing }
-ClassRemoved >> categoryName [
-
-	^ self packageTagAffected categoryName
-]
-
-{ #category : #accessing }
 ClassRemoved >> classAffected [
 	^self classRemoved
 ]
@@ -84,4 +78,16 @@ ClassRemoved >> classRemoved: aClass [
 ClassRemoved >> packageAffected [
 
 	^ self packageTag package
+]
+
+{ #category : #accessing }
+ClassRemoved >> packageTag [
+
+	^ packageTag
+]
+
+{ #category : #accessing }
+ClassRemoved >> packageTag: anObject [
+
+	packageTag := anObject
 ]
