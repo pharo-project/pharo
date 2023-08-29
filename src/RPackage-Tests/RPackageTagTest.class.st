@@ -25,7 +25,7 @@ RPackageTagTest >> testAddClass [
 
 	package2 := self createNewPackageNamed: #Test2.
 
-	(package2 addClassTag: #TAG) addClass: class.
+	(package2 ensureTag: #TAG) addClass: class.
 
 	self deny: (package1 includesClass: class).
 	self assert: (package2 includesClass: class).
@@ -46,7 +46,7 @@ RPackageTagTest >> testAddClassFromTag [
 
 	package2 := self createNewPackageNamed: #Test2.
 
-	(package2 addClassTag: #TAG2) addClass: class.
+	(package2 ensureTag: #TAG2) addClass: class.
 
 	self deny: (package1 includesClass: class).
 	self assert: (package2 includesClass: class).
