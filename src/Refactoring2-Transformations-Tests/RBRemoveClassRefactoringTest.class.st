@@ -96,7 +96,7 @@ RBRemoveClassRefactoringTest >> testPreconditionHasNoReferencesWithClassesWithRe
 	refact := RBRemoveClassRefactoring 
 					model: model 
 					classNames: { #RBSharedPoolForTestData2 . #RBRemoveClassRefactoringTest }.
-	"RBSharedPoolForTestData2 refers to RBRemoveClassParametrizedTest and nobody else refers to them!"
+	"RBSharedPoolForTestData2 refers to RBRemoveClassRefactoringTest and nobody else refers to them!"
 	
 	self assert: (refact preconditionHasNoReferences: (refact model classNamed: #RBSharedPoolForTestData2)) check.
 ]
