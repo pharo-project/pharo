@@ -16,5 +16,5 @@ ClyUntaggedClassesQuery >> description [
 { #category : #testing }
 ClyUntaggedClassesQuery >> selectsClass: aClass [
 
-	^ aClass packageTag isNil
+	^ aClass packageTag isRoot
 ]
