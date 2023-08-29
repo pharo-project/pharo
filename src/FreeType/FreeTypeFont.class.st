@@ -159,13 +159,6 @@ FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to:
 ]
 
 { #category : #displaying }
-FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
-
-	^ self displayString: aString on: aBitBlt from: startIndex to: stopIndex
-		at: aPoint kern: kernDelta baselineY: baselineY scale: 1
-]
-
-{ #category : #displaying }
 FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	| glyph  depth foreColorVal foreColorAlpha originalColorMap clr subPixelPosition widthAndKernedWidth char nextChar floatDestX  destX destY offset gammaTable gammaInverseTable useRule41 |
 
@@ -476,11 +469,9 @@ FreeTypeFont >> initialize: aFont [
 ]
 
 { #category : #displaying }
-FreeTypeFont >> installOn: aBitBlt foregroundColor: foreColor backgroundColor: backColor [
+FreeTypeFont >> installOn: aBitBlt foregroundColor: foreColor backgroundColor: backColor scale: scale [
 
-	| |
-	"fcolor := foreColor pixelValueForDepth: 32."
-	aBitBlt installFreeTypeFont: self foregroundColor: foreColor backgroundColor: backColor
+	aBitBlt installFreeTypeFont: self foregroundColor: foreColor backgroundColor: backColor scale: scale
 ]
 
 { #category : #testing }

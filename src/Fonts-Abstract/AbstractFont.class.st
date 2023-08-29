@@ -142,6 +142,13 @@ AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: 
 
 { #category : #displaying }
 AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
+
+	^ self displayString: aString on: aDisplayContext from: startIndex to: stopIndex
+		at: aPoint kern: kernDelta baselineY: baselineY scale: 1
+]
+
+{ #category : #displaying }
+AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	"Draw the given string from startIndex to stopIndex at aPoint on the (already prepared) display context."
 
 	^self subclassResponsibility
@@ -170,6 +177,12 @@ AbstractFont >> height [
 
 { #category : #displaying }
 AbstractFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [
+
+	^ self installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: 1
+]
+
+{ #category : #displaying }
+AbstractFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	"Install the receiver on the given DisplayContext (either BitBlt or Canvas) for further drawing operations."
 
 	^ self subclassResponsibility
