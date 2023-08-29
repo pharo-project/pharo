@@ -48,6 +48,12 @@ ClassAnnouncement >> packageAffected [
 ]
 
 { #category : #accessing }
+ClassAnnouncement >> packageTagAffected [
+
+	^ self classAffected packageTag
+]
+
+{ #category : #accessing }
 ClassAnnouncement >> packagesAffected [
 	^{self packageAffected}
 ]
