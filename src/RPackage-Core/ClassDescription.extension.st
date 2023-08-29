@@ -56,7 +56,7 @@ ClassDescription >> packageName [
 
 { #category : #'*RPackage-Core' }
 ClassDescription >> packageTag [
-	"Package tags are sub categories of packages to have a better organization of the packages. I return my package tag or nil if the class is uncategorized."
+	"Package tags are sub categories of packages to have a better organization of the packages."
 
 	^ self package classTagForClass: self
 ]
