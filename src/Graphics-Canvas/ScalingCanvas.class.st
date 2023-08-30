@@ -41,12 +41,41 @@ ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 ]
 
 { #category : #private }
+ScalingCanvas >> allocateForm: extentPoint [
+
+	^ formCanvas allocateForm: extentPoint
+]
+
+{ #category : #private }
 ScalingCanvas >> apply: aBlock [
 
 	FreeTypeSettings current forceNonSubPixelDuring: [
 		formCanvas transformBy: (MatrixTransform2x3 withScale: scale)
 			clippingTo: formCanvas clipRect
 			during: aBlock ]
+]
+
+{ #category : #accessing }
+ScalingCanvas >> clipRect [
+
+	^ formCanvas clipRect scaleBy: scale reciprocal
+]
+
+{ #category : #accessing }
+ScalingCanvas >> contentsOfArea: aRectangle into: aForm [
+
+	| contentsForm |
+
+	contentsForm := aForm blankCopyOf: aForm boundingBox scaledBy: scale.
+	formCanvas contentsOfArea: (aRectangle scaleBy: scale) into: contentsForm.
+	(contentsForm scaledToSize: aForm extent) contentsOfArea: aForm boundingBox into: aForm.
+	^ aForm
+]
+
+{ #category : #copying }
+ScalingCanvas >> copyClipRect: newClipRect [
+
+	^ self class formCanvas: (formCanvas copyClipRect: (newClipRect scaleBy: scale)) scale: scale
 ]
 
 { #category : #private }
