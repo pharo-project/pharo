@@ -183,14 +183,6 @@ RPackage >> classTagCategoryNames [
 ]
 
 { #category : #'class tags' }
-RPackage >> classTagForClass: aClass [
-
-	^ self classTags
-		  detect: [ :tag | tag hasClass: aClass ]
-		  ifNone: [ nil ]
-]
-
-{ #category : #'class tags' }
 RPackage >> classTagNamed: aSymbol [
 
 	^ classTags detect: [ :each | each name = aSymbol ]
@@ -970,6 +962,14 @@ RPackage >> systemCategoryPrefix [
 { #category : #'class tags' }
 RPackage >> tagNames [
 	^ self classTags collect: [ :tag | tag name ]
+]
+
+{ #category : #'class tags' }
+RPackage >> tagOf: aClass [
+
+	^ self classTags
+		  detect: [ :tag | tag hasClass: aClass ]
+		  ifNone: [ nil ]
 ]
 
 { #category : #queries }
