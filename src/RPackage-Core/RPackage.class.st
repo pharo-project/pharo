@@ -55,13 +55,12 @@ Todo
 "
 Class {
 	#name : #RPackage,
-	#superclass : #Object,
+	#superclass : #AbstractPackage,
 	#instVars : [
 		'extensionSelectors',
 		'definedSelectors',
 		'name',
-		'classTags',
-		'organizer'
+		'classTags'
 	],
 	#classVars : [
 		'PackageGlobalOrganizer',
@@ -634,19 +633,6 @@ RPackage >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
 	name := aSymbol asSymbol
-]
-
-{ #category : #private }
-RPackage >> organizer [
-
-	self flag: #package.
-	^ organizer ifNil: [ self class organizer ]
-]
-
-{ #category : #accessing }
-RPackage >> organizer: anObject [
-
-	organizer := anObject
 ]
 
 { #category : #accessing }

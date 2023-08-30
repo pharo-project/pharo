@@ -317,7 +317,7 @@ RPackageOrganizer >> debuggingName: aString [
 { #category : #initialization }
 RPackageOrganizer >> defineUnpackagedClassesPackage [
 
-	^ self ensurePackage: RPackage defaultPackageName
+	^ self ensurePackage: (UnpackagedPackage organizer: self)
 ]
 
 { #category : #registration }
