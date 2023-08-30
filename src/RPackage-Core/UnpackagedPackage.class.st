@@ -15,6 +15,18 @@ UnpackagedPackage class >> organizer: aPackageOrganizer [
 		  yourself
 ]
 
+{ #category : #unpackaged }
+UnpackagedPackage class >> unpackagedPackageName [
+
+	^ #_UnpackagedPackage
+]
+
+{ #category : #accessing }
+UnpackagedPackage >> definedClasses [
+
+	^ #(  )
+]
+
 { #category : #'reflective operations' }
 UnpackagedPackage >> doesNotUnderstand: aMessage [
 	('Fowarded ' , aMessage selector) traceCr. 
@@ -22,4 +34,16 @@ UnpackagedPackage >> doesNotUnderstand: aMessage [
 	^ (wrapped ifNil: [ wrapped := RPackage named: RPackage defaultPackageName organizer: self organizer ])
 		  perform: aMessage selector
 		  withArguments: aMessage arguments
+]
+
+{ #category : #accessing }
+UnpackagedPackage >> extendedClasses [
+
+	^ #(  )
+]
+
+{ #category : #accessing }
+UnpackagedPackage >> name [
+
+	^ self class unpackagedPackageName
 ]

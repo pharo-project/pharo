@@ -71,7 +71,9 @@ Class {
 
 { #category : #constants }
 RPackage class >> defaultPackageName [
-	^ #'_UnpackagedPackage'
+
+	self flag: #package. "This method should be deprecated"
+	^ UnpackagedPackage unpackagedPackageName
 ]
 
 { #category : #'class initialization' }
@@ -640,12 +642,6 @@ RPackage >> packageManifestOrNil [
 	^ self definedClasses
 		detect: [ :each | each isManifest ]
 		ifNone: [ nil ]
-]
-
-{ #category : #accessing }
-RPackage >> packageName [
-
-	^ name
 ]
 
 { #category : #'system compatibility' }

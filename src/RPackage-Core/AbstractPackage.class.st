@@ -7,6 +7,12 @@ Class {
 	#category : #'RPackage-Core-Base'
 }
 
+{ #category : #accessing }
+AbstractPackage >> name [
+
+	^ self subclassResponsibility
+]
+
 { #category : #private }
 AbstractPackage >> organizer [
 
@@ -18,4 +24,11 @@ AbstractPackage >> organizer [
 AbstractPackage >> organizer: anObject [
 
 	organizer := anObject
+]
+
+{ #category : #accessing }
+AbstractPackage >> packageName [
+
+	self flag: #package. "Deprecate and call #name instead."
+	^ self name
 ]
