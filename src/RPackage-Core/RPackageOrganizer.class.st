@@ -404,7 +404,6 @@ RPackageOrganizer >> initialize [
 	classExtendingPackagesMapping := IdentityDictionary new.
 	debuggingName := ''.
 	categoryMap := Dictionary new.
-
 	self defineUnpackagedClassesPackage
 ]
 

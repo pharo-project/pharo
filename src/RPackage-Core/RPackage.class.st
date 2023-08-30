@@ -384,10 +384,7 @@ RPackage >> extensionProtocolsForClass: aClass [
 RPackage >> extensionSelectors [
 	"Extension methods are methods defined on classes that are not defined in the receiver"
 
-	| allSelectors |
-	allSelectors := Set new.
-	extensionSelectors keysAndValuesDo: [ :class :selectors | allSelectors addAll: selectors ].
-	^ allSelectors
+	^ extensionSelectors values flattened
 ]
 
 { #category : #accessing }
@@ -550,32 +547,12 @@ RPackage >> isDeprecated [
 		ifNotNil: [ :manifest | manifest isDeprecated ]
 ]
 
-{ #category : #testing }
-RPackage >> isEmpty [
-
-	self name = self class defaultPackageName ifTrue: [ ^ false ].
-	^ self classes isEmpty and: [ self extensionSelectors isEmpty ]
-]
-
 { #category : #'system compatibility' }
 RPackage >> isForeignClassExtension: protocol [
 
 	protocol ifNil: [ ^ false ].
 
 	^ protocol isExtensionProtocol and: [ (protocol isExtensionProtocolMatching: self) not ]
-]
-
-{ #category : #testing }
-RPackage >> isTestPackage [
-	"1. Test package ends with suffix -Tests. Suffix is case sensitive.
-	 2. Or test package contains '-Tests-' in middle.
-	Some examples: "
-	"(RPackage named: 'MockPackage-Tests') isTestPackage >>> true"
-	"(RPackage named: 'MockPackage-tests') isTestPackage >>> false"
-	"(RPackage named: 'MockPackage') isTestPackage >>> false"
-	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
-
-	^ (self name endsWith: '-Tests') or: [self name includesSubstring: '-Tests-']
 ]
 
 { #category : #queries }
@@ -745,12 +722,6 @@ RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 	tag isEmpty ifTrue: [ self removeTag: tag ]
 ]
 
-{ #category : #'class tags' }
-RPackage >> removeEmptyTags [
-
-	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeTag: emptyTag ]
-]
-
 { #category : #removing }
 RPackage >> removeFromSystem [
 
@@ -902,13 +873,6 @@ RPackage >> rootTag [
 ]
 
 { #category : #accessing }
-RPackage >> rootTagName [
-
-	self flag: #package. "In the future we should not use the name of the package because it causes bugs."
-	^ self name
-]
-
-{ #category : #accessing }
 RPackage >> roots [
 	"Returns all the root classes of a package. A root class is a class whose superclass is not defined in the package.
 	Root classes are potentially root of inheritance trees defined in a package."
@@ -922,7 +886,7 @@ RPackage >> selectors [
 
 	| allSelectors |
 	allSelectors := Set new.
-	extensionSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
+	allSelectors addAll: self extensionSelectors.
 	definedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
 	^ allSelectors
 ]
