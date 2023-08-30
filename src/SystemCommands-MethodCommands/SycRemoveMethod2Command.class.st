@@ -37,8 +37,8 @@ SycRemoveMethod2Command >> execute [
 	
 	(RBRemoveMethodDriver new
 				 scopes: toolContext refactoringScopes
-				 method: methods first
-				for: methods first methodClass ) runRefactoring
+				 methods: methods
+				 for: methods first methodClass ) runRefactoring
 ]
 
 { #category : #initialization }
