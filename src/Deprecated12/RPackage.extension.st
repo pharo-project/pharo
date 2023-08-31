@@ -58,6 +58,13 @@ RPackage >> classNamesForClassTag: aSymbol [
 ]
 
 { #category : #'*Deprecated12' }
+RPackage >> classTagForClass: aClass [
+
+	self deprecated: 'Use #tagOf: instead' transformWith: '`@rcv classTagForClass: `@arg' -> '`@rcv tagOf: `@arg'.
+	^ self tagOf: aClass
+]
+
+{ #category : #'*Deprecated12' }
 RPackage >> definedClassesDo: aBlock [
 
 	self deprecated:

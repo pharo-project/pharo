@@ -58,7 +58,7 @@ ClassDescription >> packageName [
 ClassDescription >> packageTag [
 	"Package tags are sub categories of packages to have a better organization of the packages."
 
-	^ self package classTagForClass: self
+	^ self package tagOf: self
 ]
 
 { #category : #'*RPackage-Core' }

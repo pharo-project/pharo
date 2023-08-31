@@ -62,7 +62,7 @@ RPackageTag >> environment [
 { #category : #testing }
 RPackageTag >> hasClass: aClass [
 
-	^ self hasClassNamed: aClass name
+	^ self classes includes: aClass instanceSide
 ]
 
 { #category : #testing }
