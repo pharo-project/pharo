@@ -515,13 +515,10 @@ LogicalFont >> displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3 [
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-	^self realFont displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta
-]
+LogicalFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 
-{ #category : #'forwarded to realFont' }
-LogicalFont >> displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7 [
-	^self realFont displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7
+	^ self realFont displayString: aString on: aDisplayContext from: startIndex to: stopIndex
+		at: aPoint kern: kernDelta baselineY: baselineY scale: scale
 ]
 
 { #category : #'forwarded to realFont' }
@@ -697,8 +694,9 @@ LogicalFont >> initialize: aFont [
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> installOn: a foregroundColor: b backgroundColor: c [
-	^self realFont installOn: a foregroundColor: b backgroundColor: c
+LogicalFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
+
+	^ self realFont installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale
 ]
 
 { #category : #testing }
