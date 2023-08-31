@@ -53,6 +53,24 @@ RPackageTraitTest >> setUp [
 ]
 
 { #category : #tests }
+RPackageTraitTest >> testMethodOverridingTraitMethodIsKnowByPackage [
+	"Regression test for a bug where adding a method to a class that overrides a method from a trait was not know by the package of the class"
+
+	| a2 |
+	a2 := self createNewClassNamed: #A2DefinedInP1 inPackage: p1.
+
+	a2 setTraitComposition: t1 asTraitComposition.
+
+	self deny: (p1 includesDefinedSelector: #traitMethodDefinedInP1 ofClass: a2).
+	self assert: (a2 >> #traitMethodDefinedInP1) isFromTrait.
+
+	a2 compile: 'traitMethodDefinedInP1 "Override in the class"'.
+
+	self assert: (p1 includesDefinedSelector: #traitMethodDefinedInP1 ofClass: a2).
+	self deny: (a2 >> #traitMethodDefinedInP1) isFromTrait
+]
+
+{ #category : #tests }
 RPackageTraitTest >> testPackageOfClassMethodFromTraitExtensionIsExtendingPackage [
 	"The package of a method defined in atrait but package in another package than the extended trait is the
 	package containing the extension."
