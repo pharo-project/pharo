@@ -43,8 +43,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ self environmentAnnouncer methodAdded: compiledMethod ]
-		ifFalse: [
-			"If protocol changed and someone is from different package, I need to throw a method recategorized"
+		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			newProtocol = oldProtocol ifFalse: [ self environmentAnnouncer methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
 			self environmentAnnouncer methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]

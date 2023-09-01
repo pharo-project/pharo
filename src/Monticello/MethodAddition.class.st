@@ -13,7 +13,8 @@ Class {
 		'compiledMethod',
 		'priorMethod',
 		'protocolName',
-		'priorProtocol'
+		'priorProtocol',
+		'priorOrigin'
 	],
 	#category : #'Monticello-Loading'
 }
@@ -50,6 +51,7 @@ MethodAddition >> createCompiledMethod [
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
+	priorOrigin := compiledMethod origin.
 	priorProtocol := myClass protocolOfSelector: selector
 ]
 
@@ -63,11 +65,12 @@ MethodAddition >> installMethod [
 MethodAddition >> notifyObservers [
 
 	myClass environmentAnnouncer suspendAllWhile: [ myClass classify: selector under: protocolName ].
-	priorMethod
-		ifNil: [ myClass environmentAnnouncer methodAdded: compiledMethod configuredWith: [ :event | event propertyAt: #eventSource put: #Monticello ] ]
-		ifNotNil: [
+	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
+		ifTrue: [ myClass environmentAnnouncer methodAdded: compiledMethod configuredWith: [ :event | event propertyAt: #eventSource put: #Monticello ] ]
+		ifFalse: [
 			myClass environmentAnnouncer methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
 			priorProtocol name = protocolName ifFalse: [ myClass environmentAnnouncer methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
+
 	"The following code doesn't seem to do anything."
 	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
 ]
