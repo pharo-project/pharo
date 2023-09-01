@@ -277,7 +277,7 @@ ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSource:
 
 { #category : #private }
 ClassFactoryForTestCase >> silentlyDo: aBlock [
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
+	^ self environment announcer suspendAllWhile: aBlock
 ]
 
 { #category : #creating }

@@ -831,6 +831,12 @@ Object >> enclosedElement [
 	Only SetElement instance or its subclasses allowed to answer something different than receiver itself"
 ]
 
+{ #category : #accessing }
+Object >> environmentAnnouncer [
+
+	^ self class environmentAnnouncer
+]
+
 { #category : #'error handling' }
 Object >> error [
 	"Throw a generic Error exception."

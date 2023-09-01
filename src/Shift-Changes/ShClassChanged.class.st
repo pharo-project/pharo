@@ -10,8 +10,8 @@ Class {
 
 { #category : #announcing }
 ShClassChanged >> announceChanges [
-	SystemAnnouncer uniqueInstance classDefinitionChangedFrom: oldClass to: builder newClass.
-	SystemAnnouncer uniqueInstance classModificationAppliedTo: builder newClass
+	self environmentAnnouncer classDefinitionChangedFrom: oldClass to: builder newClass.
+	self environmentAnnouncer classModificationAppliedTo: builder newClass
 ]
 
 { #category : #announcing }

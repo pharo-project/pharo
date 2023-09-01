@@ -168,7 +168,7 @@ RPackageOrganizer >> addCategory: catString [
 
 	categoryMap at: catString asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
 
-	SystemAnnouncer uniqueInstance classCategoryAdded: catString
+	self environmentAnnouncer classCategoryAdded: catString
 ]
 
 { #category : #private }
@@ -190,7 +190,8 @@ RPackageOrganizer >> addMethod: method [
 
 { #category : #'system integration' }
 RPackageOrganizer >> announcer [
-	^SystemAnnouncer uniqueInstance private
+
+	^ self environment announcer private
 ]
 
 { #category : #'initialization - data' }
@@ -359,6 +360,12 @@ RPackageOrganizer >> environment [
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> environment: aSystemDictionary [
 	 environment := aSystemDictionary
+]
+
+{ #category : #accessing }
+RPackageOrganizer >> environmentAnnouncer [
+
+	^ self environment announcer
 ]
 
 { #category : #'package - access from class' }
@@ -586,7 +593,7 @@ RPackageOrganizer >> registerPackage: aPackage [
 	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
 	aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
 
-	SystemAnnouncer announce: (PackageAdded to: aPackage).
+	self environmentAnnouncer announce: (PackageAdded to: aPackage).
 
 	^ aPackage
 ]
@@ -669,7 +676,7 @@ RPackageOrganizer >> removePackage: aPackage [
 	self basicUnregisterPackageNamed: package name.
 	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
 	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
-	SystemAnnouncer announce: (PackageRemoved to: package).
+	self environmentAnnouncer announce: (PackageRemoved to: package).
 
 	^ package
 ]
@@ -753,7 +760,7 @@ RPackageOrganizer >> stopNotification [
 
 	"pay attention that we can break the system using this method"
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self environmentAnnouncer unsubscribe: self.
 
 	self class environment at: #MCWorkingCopy ifPresent: [:wc |
 		wc removeDependent: self]
@@ -843,7 +850,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		oldPackage removeMethod: method.
 		newPackage addMethod: method.
 
-		SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage ]
+		self environmentAnnouncer methodRepackaged: method from: oldPackage to: newPackage ]
 ]
 
 { #category : #accessing }
@@ -860,7 +867,7 @@ RPackageOrganizer >> testPackages [
 
 { #category : #initialization }
 RPackageOrganizer >> unregister [
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self environmentAnnouncer unsubscribe: self
 ]
 
 { #category : #'private - registration' }
@@ -873,7 +880,7 @@ RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
 RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 	"self unregisterInterestToSystemAnnouncement"
 
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self environmentAnnouncer unsubscribe: self
 ]
 
 { #category : #'private - registration' }

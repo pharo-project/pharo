@@ -129,7 +129,7 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 		aClass removeFromProtocols: aSelector.
 		aClass methodDict removeKey: aSelector.
 
-		SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: aClass
+		self environmentAnnouncer methodRemoved: priorMethod protocol: priorProtocol origin: aClass
 	].
 
 	"The change is propagated as a removal"

@@ -170,10 +170,10 @@ RPackageTag >> renameTo: newTagName [
 	oldName = categoryName ifTrue: [ ^ self ].
 
 	self basicRenameTo: newTagName.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
+	self environmentAnnouncer suspendAllWhile: [
 		self classes do: [ :each | each category: categoryName ].
 		self organizer renameCategory: oldName toBe: categoryName ].
-	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: tagName newName: newTagName)
+	self environmentAnnouncer announce: (PackageTagRenamed to: self oldName: tagName newName: newTagName)
 ]
 
 { #category : #accessing }
@@ -184,7 +184,7 @@ RPackageTag >> renameTo: aString category: categoryName [
 	oldName = categoryName ifTrue: [ ^ self ].
 
 	self basicRenameTo: aString.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
+	self environmentAnnouncer suspendAllWhile: [
 		self classes do: [ :each | each category: categoryName ].
 		self organizer renameCategory: oldName toBe: categoryName ]
 ]

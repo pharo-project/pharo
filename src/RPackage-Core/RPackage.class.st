@@ -323,7 +323,7 @@ RPackage >> ensureTag: aTag [
 	self flag: #package. "Next line should go with the system organizer"
 	self organizer addCategory: newTag categoryName.
 
-	SystemAnnouncer announce: (PackageTagAdded to: newTag).
+	self environmentAnnouncer announce: (PackageTagAdded to: newTag).
 	^ newTag
 ]
 
@@ -620,7 +620,7 @@ RPackage >> moveClass: aClass toTag: aTag [
 	oldPackage removeClass: aClass.
 	self importClass: aClass inTag: aTag.
 
-	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
+	self environmentAnnouncer classRepackaged: aClass from: oldPackage to: self
 ]
 
 { #category : #accessing }
@@ -848,7 +848,7 @@ RPackage >> removeTag: aTag [
 
 	classTags remove: tag ifAbsent: [ ^ self ].
 
-	SystemAnnouncer announce: (PackageTagRemoved to: tag)
+	self environmentAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
 { #category : #private }
@@ -902,7 +902,7 @@ RPackage >> renameTo: aSymbol [
 		                    add: self name;
 		                    difference: { newName }.
 	self name: aSymbol.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
+	self environmentAnnouncer suspendAllWhile: [
 		self definedClasses do: [ :each | each category: newName , (each category allButFirst: oldName size) ].
 		oldCategoryNames do: [ :each | self organizer removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
@@ -910,7 +910,7 @@ RPackage >> renameTo: aSymbol [
 	self organizer
 		basicUnregisterPackageNamed: oldName;
 		basicRegisterPackage: self.
-	SystemAnnouncer uniqueInstance announce: (PackageRenamed to: self oldName: oldName newName: newName)
+	self environmentAnnouncer announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
 { #category : #'class tags' }

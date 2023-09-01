@@ -10,8 +10,8 @@ Class {
 
 { #category : #announcing }
 ShMetaclassChanged >> announceChanges [
-	SystemAnnouncer uniqueInstance classDefinitionChangedFrom: oldClass class to: builder newMetaclass.
-	SystemAnnouncer uniqueInstance classModificationAppliedTo: builder newMetaclass
+	self environmentAnnouncer classDefinitionChangedFrom: oldClass class to: builder newMetaclass.
+	self environmentAnnouncer classModificationAppliedTo: builder newMetaclass
 ]
 
 { #category : #accessing }

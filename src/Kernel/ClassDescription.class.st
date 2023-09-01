@@ -34,7 +34,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorOrigin := method origin ].
 
 	oldProtocol := self protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
+	self environmentAnnouncer prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
@@ -42,11 +42,11 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
+		ifTrue: [ self environmentAnnouncer methodAdded: compiledMethod ]
 		ifFalse: [
 			"If protocol changed and someone is from different package, I need to throw a method recategorized"
-			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
+			newProtocol = oldProtocol ifFalse: [ self environmentAnnouncer methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
+			self environmentAnnouncer methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : #'instance variables' }
@@ -70,7 +70,7 @@ ClassDescription >> addProtocol: aProtocol [
 
 	protocols := protocols copyWith: protocol.
 
-	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
+	self environmentAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
 	^ protocol
 ]
 
@@ -341,7 +341,7 @@ ClassDescription >> compileSilently: sourceCode classified: protocolName [
 ClassDescription >> compileSilently: sourceCode classified: protocolName notifying: requestor [
 	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list."
 
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
+	^ self environmentAnnouncer suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
 ]
 
 { #category : #copying }
@@ -765,7 +765,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
 
-	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
+	self compiledMethodAt: selector ifPresent: [ :method | self environmentAnnouncer methodRecategorized: method oldProtocol: oldProtocol ]
 ]
 
 { #category : #private }
@@ -924,7 +924,7 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames.
 	protocols := protocols copyWithout: protocol.
-	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol)
+	self environmentAnnouncer announce: (ProtocolRemoved in: self protocol: protocol)
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -941,7 +941,7 @@ ClassDescription >> removeSelector: selector [
 	self removeFromProtocols: selector.
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin
+	self environmentAnnouncer methodRemoved: priorMethod protocol: priorProtocol origin: origin
 ]
 
 { #category : #'instance variables' }

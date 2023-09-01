@@ -619,6 +619,12 @@ Behavior >> environment [
 	^Smalltalk globals
 ]
 
+{ #category : #accessing }
+Behavior >> environmentAnnouncer [
+
+	^ self environment announcer
+]
+
 { #category : #testing }
 Behavior >> findOriginClassOf: aMethod [
 
@@ -1369,7 +1375,7 @@ Behavior >> removeSelector: aSelector [
 Behavior >> removeSelectorSilently: selector [
 	"Remove selector without sending system change notifications"
 
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [self removeSelector: selector]
+	^ self environmentAnnouncer suspendAllWhile: [ self removeSelector: selector ]
 ]
 
 { #category : #cleanup }

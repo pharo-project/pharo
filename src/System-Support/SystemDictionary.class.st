@@ -26,7 +26,8 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
-		'pseudoVariables'
+		'pseudoVariables',
+		'announcer'
 	],
 	#category : #'System-Support-Utilities'
 }
@@ -92,6 +93,19 @@ SystemDictionary >> allTraitsDo: aBlock [
 	"Evaluate the argument, aBlock, for each trait in the system."
 
 	^ self traitNames do: [ :name | aBlock value: (self at: name) ]
+]
+
+{ #category : #accessing }
+SystemDictionary >> announcer [
+
+	self flag: #announcer. "When the MM will use this instance for all announcements related to code changes, we should have a new instead of using the unique instance."
+	^ announcer ifNil: [ announcer := SystemAnnouncer uniqueInstance ]
+]
+
+{ #category : #accessing }
+SystemDictionary >> announcer: anObject [
+
+	announcer := anObject
 ]
 
 { #category : #'accessing - dictionary access' }
@@ -398,12 +412,12 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	self add: oldref. "Old association preserves old refs"
 	SessionManager default renamedClass: aClass from: oldName to: newName.
 	self flushClassNameCache.
-	SystemAnnouncer uniqueInstance
+	self environmentAnnouncer
 		classRenamed: aClass
 		from: oldName
 		to: newName
 		inCategory: category.
-	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: newName ]
+	aClass subclassesDo: [ :subclass | self environmentAnnouncer classParentOf: subclass renamedFrom: oldName to: newName ]
 ]
 
 { #category : #renaming }

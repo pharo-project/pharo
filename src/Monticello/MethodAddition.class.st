@@ -55,28 +55,21 @@ MethodAddition >> createCompiledMethod [
 
 { #category : #operations }
 MethodAddition >> installMethod [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod ]
+
+	myClass environmentAnnouncer suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod ]
 ]
 
 { #category : #notifying }
 MethodAddition >> notifyObservers [
-	SystemAnnouncer uniqueInstance 
-		suspendAllWhile: [myClass classify: selector under: protocolName].
-	priorMethod 
-		ifNil: [ SystemAnnouncer uniqueInstance
-				methodAdded: compiledMethod
-				configuredWith: [ :event | 
-					event
-						propertyAt: #eventSource
-						put: #Monticello ] ]
-		ifNotNil: [
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
-			priorProtocol name = protocolName ifFalse: [
-       			SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
-	"The following code doesn't seem to do anything."
-	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide.
 
+	myClass environmentAnnouncer suspendAllWhile: [ myClass classify: selector under: protocolName ].
+	priorMethod
+		ifNil: [ myClass environmentAnnouncer methodAdded: compiledMethod configuredWith: [ :event | event propertyAt: #eventSource put: #Monticello ] ]
+		ifNotNil: [
+			myClass environmentAnnouncer methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
+			priorProtocol name = protocolName ifFalse: [ myClass environmentAnnouncer methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
+	"The following code doesn't seem to do anything."
+	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
 ]
 
 { #category : #accessing }
