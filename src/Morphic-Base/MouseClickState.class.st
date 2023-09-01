@@ -316,9 +316,11 @@ MouseClickState >> handleEvent: evt from: aHand [
 		^false].
 
 	clickState == #firstClickUp ifTrue:[
-		(timedOut or: [localEvt isMouseDown and: [isDrag]]) ifTrue:[
-			"timed out after mouseUp, or second click down far away from first click
-			either way breaks the possibility of a double-click - signal timeout and pass the event"
+		(timedOut or: [localEvt isMouseDown and: [
+				isDrag or: [localEvt buttons ~= firstClickDown buttons]]]) 
+		ifTrue:[
+			"timed out after mouseUp, or the mouse has moved, or this click is of a different button.
+			Can no longer have a double-click - signal timeout and pass the event"
 			aHand resetClickState.
 			self doubleClickTimeout. "***"
 			^true].
