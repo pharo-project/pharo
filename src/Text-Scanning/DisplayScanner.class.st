@@ -130,7 +130,6 @@ DisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 	leftInRun <= 0 ifTrue: [ self setStopConditions ].
 	leftMargin := (line leftMarginForAlignment: alignment) + offset x.
 	destX := leftMargin.
-	self fillTextBackground.
 	lastDisplayableIndex := lastIndex := line first.
 	nowLeftInRun := leftInRun <= 0
 		ifTrue: [ text runLengthFor: lastIndex ]
@@ -186,11 +185,6 @@ DisplayScanner >> endOfRun [
 	"differ reset of stopConditions and font AFTER the dispaly of last scanned string"
 	stopConditionsMustBeReset := true.
 	^ false
-]
-
-{ #category : #displaying }
-DisplayScanner >> fillTextBackground [
-	self subclassResponsibility
 ]
 
 { #category : #'stop conditions' }

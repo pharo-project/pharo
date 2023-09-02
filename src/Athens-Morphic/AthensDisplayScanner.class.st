@@ -28,11 +28,6 @@ AthensDisplayScanner >> displayString: string from: startIndex to: stopIndex at:
 			canvas drawString: string from: startIndex to: stopIndex ]
 ]
 
-{ #category : #displaying }
-AthensDisplayScanner >> fillTextBackground [
-
-]
-
 { #category : #initialization }
 AthensDisplayScanner >> initWithParagraph: aParagraph andCanvas: anAthensCanvas [
 	self text: aParagraph text textStyle: aParagraph textStyle.

@@ -133,11 +133,6 @@ RubDisplayScanner >> endOfRun [
 	^ false
 ]
 
-{ #category : #displaying }
-RubDisplayScanner >> fillTextBackground [
-
-]
-
 { #category : #'multilingual scanning' }
 RubDisplayScanner >> isBreakableAt: index in: sourceString [
 

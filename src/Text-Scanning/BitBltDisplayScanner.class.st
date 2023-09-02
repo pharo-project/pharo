@@ -48,11 +48,6 @@ BitBltDisplayScanner >> displayString: string from: startIndex to: stopIndex at:
         ifTrue: [ font displayStrikeoutOn: bitBlt from: top to: endPoint ]
 ]
 
-{ #category : #displaying }
-BitBltDisplayScanner >> fillTextBackground [
-
-]
-
 { #category : #private }
 BitBltDisplayScanner >> setDestForm: df [
 	bitBlt setDestForm: df
