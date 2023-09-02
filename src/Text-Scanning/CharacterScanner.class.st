@@ -305,11 +305,6 @@ CharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceStrin
 ]
 
 { #category : #scanning }
-CharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
-	^sourceString scanCharactersFrom: startIndex to: stopIndex with: self rightX: rightX font: font
-]
-
-{ #category : #scanning }
 CharacterScanner >> scanKernableByteCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX [
 "this is a scanning method for
 single byte characters in a ByteString
