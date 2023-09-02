@@ -15,11 +15,6 @@ AthensDisplayScanner class >> for: aParagraph on: anAthensCanvas [
 	^ self new initWithParagraph: aParagraph andCanvas: anAthensCanvas; yourself
 ]
 
-{ #category : #'instance creation' }
-AthensDisplayScanner class >> on: anAthensCanvas [
-	^ self new initWith: anAthensCanvas; yourself
-]
-
 { #category : #displaying }
 AthensDisplayScanner >> displayString: string from: startIndex to: stopIndex at: aPoint [
 	canvas pathTransform
