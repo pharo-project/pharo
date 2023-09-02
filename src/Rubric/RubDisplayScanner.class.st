@@ -187,11 +187,6 @@ RubDisplayScanner >> presentationText: t [
 ]
 
 { #category : #'stop conditions' }
-RubDisplayScanner >> setDestForm: df [
-	bitBlt setDestForm: df
-]
-
-{ #category : #'stop conditions' }
 RubDisplayScanner >> setFont [
 	foregroundColor := self defaultTextColor.
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"

@@ -49,11 +49,6 @@ BitBltDisplayScanner >> displayString: string from: startIndex to: stopIndex at:
 ]
 
 { #category : #private }
-BitBltDisplayScanner >> setDestForm: df [
-	bitBlt setDestForm: df
-]
-
-{ #category : #private }
 BitBltDisplayScanner >> setFont [
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
 	font installOn: bitBlt foregroundColor: foregroundColor backgroundColor: Color transparent
