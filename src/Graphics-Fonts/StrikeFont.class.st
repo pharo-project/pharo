@@ -1170,12 +1170,6 @@ StrikeFont >> heightOf: aCharacter [
 ]
 
 { #category : #displaying }
-StrikeFont >> installOn: aDisplayContext [
-
-	^aDisplayContext installStrikeFont: self
-]
-
-{ #category : #displaying }
 StrikeFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	^aDisplayContext
 		installStrikeFont: self
