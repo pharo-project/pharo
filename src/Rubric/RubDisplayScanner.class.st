@@ -180,12 +180,6 @@ RubDisplayScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
-{ #category : #private }
-RubDisplayScanner >> presentationText: t [
-
-	text := t
-]
-
 { #category : #'stop conditions' }
 RubDisplayScanner >> setFont [
 	foregroundColor := self defaultTextColor.
