@@ -84,14 +84,3 @@ BitBltDisplayScanner >> setPort: aBitBlt [
 	bitBlt sourceX: 0; width: 0.	"Init BitBlt so that the first call to a primitive will not fail"
 	bitBlt sourceForm: nil. "Make sure font installation won't be confused"
 ]
-
-{ #category : #private }
-BitBltDisplayScanner >> text: t textStyle: ts foreground: foreColor background: backColor fillBlt: blt ignoreColorChanges: shadowMode [
-	text := t.
-	textStyle := ts.
-	foregroundColor := defaultTextColor := foreColor.
-	(backgroundColor := backColor) isTransparent ifFalse:
-		[fillBlt := blt.
-		fillBlt fillColor: backgroundColor].
-	ignoreColorChanges := shadowMode
-]

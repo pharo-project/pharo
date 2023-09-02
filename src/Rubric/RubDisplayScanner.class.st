@@ -262,14 +262,12 @@ RubDisplayScanner >> tab [
 ]
 
 { #category : #private }
-RubDisplayScanner >> text: t textStyle: ts foreground: foreColor background: backColor fillBlt: blt ignoreColorChanges: shadowMode [
+RubDisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
 	foregroundColor := foreColor.
-	(backgroundColor := backColor) isTransparent ifFalse:
-		[fillBlt := blt.
-		fillBlt fillColor: backgroundColor].
-	ignoreColorChanges := shadowMode
+	backgroundColor := Color transparent.
+	ignoreColorChanges := false
 ]
 
 { #category : #private }

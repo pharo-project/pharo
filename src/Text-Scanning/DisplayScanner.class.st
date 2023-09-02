@@ -256,12 +256,12 @@ DisplayScanner >> tab [
 ]
 
 { #category : #private }
-DisplayScanner >> text: t textStyle: ts foreground: foreColor background: backColor fillBlt: blt ignoreColorChanges: shadowMode [
+DisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
 	foregroundColor := defaultTextColor := foreColor.
-	backgroundColor := backColor.
-	ignoreColorChanges := shadowMode
+	backgroundColor := Color transparent.
+	ignoreColorChanges := false
 ]
 
 { #category : #'text attributes' }
