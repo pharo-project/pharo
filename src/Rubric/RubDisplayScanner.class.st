@@ -19,11 +19,6 @@ RubDisplayScanner class >> defaultFont [
 	^ TextStyle defaultFont
 ]
 
-{ #category : #private }
-RubDisplayScanner >> backgroundColor: aColor [
-	backgroundColor := aColor
-]
-
 { #category : #'stop conditions' }
 RubDisplayScanner >> cr [
 	"When a carriage return is encountered, simply increment the pointer

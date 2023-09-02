@@ -72,11 +72,6 @@ RubCharacterScanner >> addKern: kernDelta [
 	kern := kern + kernDelta
 ]
 
-{ #category : #private }
-RubCharacterScanner >> backgroundColor: ignored [
-	"Overridden in DisplayScanner"
-]
-
 { #category : #scanning }
 RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
 	"Primitive. This is the inner loop of text display--but see
