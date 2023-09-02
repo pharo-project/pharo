@@ -7,7 +7,6 @@ Class {
 		'runX',
 		'foregroundColor',
 		'backgroundColor',
-		'fillBlt',
 		'lineHeight',
 		'morphicOffset',
 		'defaultTextColor'
@@ -79,10 +78,6 @@ RubDisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 	leftInRun <= 0 ifTrue: [self setStopConditions].
 	leftMargin := (line leftMarginForAlignment: alignment) + offset x.
 	destX := runX := leftMargin.
-	fillBlt == nil ifFalse:
-		["Not right"
-		fillBlt destX: line left destY: lineY
-			width: line width height: lineHeight; copyBits].
 	lastIndex := line first.
 	leftInRun <= 0
 		ifTrue: [nowLeftInRun := text runLengthFor: lastIndex]
@@ -146,10 +141,7 @@ RubDisplayScanner >> endOfRun [
 
 { #category : #displaying }
 RubDisplayScanner >> fillTextBackground [
-	fillBlt == nil ifFalse:
-		["Not right"
-		fillBlt destX: line left destY: lineY
-			width: line width left height: line lineHeight; copyBits]
+
 ]
 
 { #category : #'multilingual scanning' }
@@ -197,15 +189,6 @@ RubDisplayScanner >> placeEmbeddedObject: anchoredMorph [
 			fillColor: Color white
 	].
 	^ true
-]
-
-{ #category : #'stop conditions' }
-RubDisplayScanner >> plainTab [
-	| nextDestX |
- 	nextDestX := super plainTab.
-	fillBlt == nil ifFalse:
-		[fillBlt destX: destX destY: destY width: nextDestX - destX height: font height; copyBits].
-	^nextDestX
 ]
 
 { #category : #private }

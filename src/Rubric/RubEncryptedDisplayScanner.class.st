@@ -17,10 +17,6 @@ RubEncryptedDisplayScanner >> displayLine: textLine offset: offset leftInRun: le
 	leftInRun <= 0 ifTrue: [self setStopConditions].
 	leftMargin := (line leftMarginForAlignment: alignment) + offset x.
 	destX := runX := leftMargin.
-	fillBlt == nil ifFalse:
-		["Not right"
-		fillBlt destX: line left destY: lineY
-			width: line width left height: lineHeight; copyBits].
 	lastIndex := line first.
 	leftInRun <= 0
 		ifTrue: [nowLeftInRun := text runLengthFor: lastIndex]

@@ -17,8 +17,7 @@ Class {
 	#name : #BitBltDisplayScanner,
 	#superclass : #DisplayScanner,
 	#instVars : [
-		'bitBlt',
-		'fillBlt'
+		'bitBlt'
 	],
 	#category : #'Text-Scanning-Base'
 }
@@ -51,19 +50,7 @@ BitBltDisplayScanner >> displayString: string from: startIndex to: stopIndex at:
 
 { #category : #displaying }
 BitBltDisplayScanner >> fillTextBackground [
-	fillBlt ifNotNil:
-		["Not right"
-		fillBlt destX: line left destY: lineY
-			width: line width left height: line lineHeight; copyBits]
-]
 
-{ #category : #'stop conditions' }
-BitBltDisplayScanner >> plainTab [
-	| nextDestX |
- 	nextDestX := super plainTab.
-	fillBlt ifNotNil:
-		[fillBlt destX: destX destY: destY width: nextDestX - destX height: font height; copyBits].
-	^nextDestX
 ]
 
 { #category : #private }
