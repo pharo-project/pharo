@@ -104,8 +104,6 @@ Class {
 	#instVars : [
 		'destX',
 		'lastIndex',
-		'xTable',
-		'map',
 		'destY',
 		'stopConditions',
 		'text',
@@ -449,8 +447,6 @@ a font that does not do character-pair kerning"
 CharacterScanner >> setActualFont: aFont [
 	"Set the basal font to an isolated font reference."
 
-	xTable := aFont xTable.
-	map := aFont characterToGlyphMap.
 	font := aFont
 ]
 
