@@ -53,7 +53,6 @@ Class {
 	#instVars : [
 		'lineY',
 		'foregroundColor',
-		'backgroundColor',
 		'defaultTextColor',
 		'morphicOffset',
 		'lastDisplayableIndex',
@@ -252,8 +251,7 @@ DisplayScanner >> tab [
 DisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
-	foregroundColor := defaultTextColor := foreColor.
-	backgroundColor := Color transparent
+	foregroundColor := defaultTextColor := foreColor
 ]
 
 { #category : #'text attributes' }

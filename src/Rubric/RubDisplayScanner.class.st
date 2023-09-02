@@ -6,7 +6,6 @@ Class {
 		'lineY',
 		'runX',
 		'foregroundColor',
-		'backgroundColor',
 		'lineHeight',
 		'morphicOffset',
 		'defaultTextColor'
@@ -241,8 +240,7 @@ RubDisplayScanner >> tab [
 RubDisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
-	foregroundColor := foreColor.
-	backgroundColor := Color transparent
+	foregroundColor := foreColor
 ]
 
 { #category : #private }

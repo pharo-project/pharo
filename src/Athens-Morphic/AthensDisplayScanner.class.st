@@ -30,7 +30,7 @@ AthensDisplayScanner >> displayString: string from: startIndex to: stopIndex at:
 
 { #category : #displaying }
 AthensDisplayScanner >> fillTextBackground [
-	backgroundColor ifNotNil: [ canvas drawShape: (line left @ lineY extent: line width @ line lineHeight) ]
+
 ]
 
 { #category : #initialization }
