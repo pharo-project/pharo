@@ -86,12 +86,6 @@ BitBlt >> installFont: aFont foregroundColor: foregroundColor backgroundColor: b
 ]
 
 { #category : #'*Graphics-Fonts' }
-BitBlt >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor [
-
-	^ self installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: 1
-]
-
-{ #category : #'*Graphics-Fonts' }
 BitBlt >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	| lastSourceDepth targetColor |
 	sourceForm ifNotNil:[lastSourceDepth := sourceForm depth].
