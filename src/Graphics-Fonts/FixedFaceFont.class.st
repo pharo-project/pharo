@@ -62,33 +62,6 @@ FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to:
 		scale: scale
 ]
 
-{ #category : #displaying }
-FixedFaceFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta from: fromFont [
-	| destPoint |
-	destPoint := self
-				displayString: aString
-				on: aBitBlt
-				from: startIndex
-				to: stopIndex
-				at: aPoint
-				kern: kernDelta.
-	^ Array with: stopIndex + 1 with: destPoint
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta from: fromFont baselineY: baselineY [
-	| destPoint |
-	destPoint := self
-				displayString: aString
-				on: aBitBlt
-				from: startIndex
-				to: stopIndex
-				at: aPoint
-				kern: kernDelta
-				baselineY: baselineY.
-	^ Array with: stopIndex + 1 with: destPoint
-]
-
 { #category : #accessing }
 FixedFaceFont >> emphasized: emph [
 	^self class new baseFont: (baseFont emphasized: emph)
