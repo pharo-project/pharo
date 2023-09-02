@@ -34,11 +34,6 @@ AthensDisplayScanner >> initWithParagraph: aParagraph andCanvas: anAthensCanvas 
 	canvas := anAthensCanvas
 ]
 
-{ #category : #initialization }
-AthensDisplayScanner >> initialize [
-	super initialize
-]
-
 { #category : #displaying }
 AthensDisplayScanner >> setFont [
 	super setFont.
