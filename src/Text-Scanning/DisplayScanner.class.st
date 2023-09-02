@@ -56,7 +56,6 @@ Class {
 		'backgroundColor',
 		'defaultTextColor',
 		'morphicOffset',
-		'ignoreColorChanges',
 		'lastDisplayableIndex',
 		'stopConditionsMustBeReset'
 	],
@@ -195,12 +194,6 @@ DisplayScanner >> fillTextBackground [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
-DisplayScanner >> initialize [
-	super initialize.
-	ignoreColorChanges := false
-]
-
 { #category : #'stop conditions' }
 DisplayScanner >> paddedSpace [
 	"Each space is a stop condition when the alignment is right justified.
@@ -260,12 +253,10 @@ DisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
 	foregroundColor := defaultTextColor := foreColor.
-	backgroundColor := Color transparent.
-	ignoreColorChanges := false
+	backgroundColor := Color transparent
 ]
 
 { #category : #'text attributes' }
 DisplayScanner >> textColor: textColor [
-	ignoreColorChanges ifTrue: [^ self].
 	foregroundColor := textColor
 ]

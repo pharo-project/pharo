@@ -10,7 +10,6 @@ Class {
 		'fillBlt',
 		'lineHeight',
 		'morphicOffset',
-		'ignoreColorChanges',
 		'defaultTextColor'
 	],
 	#category : #'Rubric-TextScanning'
@@ -23,7 +22,6 @@ RubDisplayScanner class >> defaultFont [
 
 { #category : #private }
 RubDisplayScanner >> backgroundColor: aColor [
-	ignoreColorChanges ifTrue: [^ self].
 	backgroundColor := aColor
 ]
 
@@ -266,12 +264,10 @@ RubDisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
 	foregroundColor := foreColor.
-	backgroundColor := Color transparent.
-	ignoreColorChanges := false
+	backgroundColor := Color transparent
 ]
 
 { #category : #private }
 RubDisplayScanner >> textColor: textColor [
-	ignoreColorChanges ifTrue: [^ self].
 	foregroundColor := textColor
 ]
