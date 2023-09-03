@@ -27,7 +27,7 @@ ReClassNotCategorizedRule >> basicCheck: aClass [
 
 	aClass isMeta ifTrue: [ ^ false ].
 
-	^ aClass packageTag isNil and: [ aClass package classTags size > 1 ]
+	^ aClass packageTag isRoot and: [ aClass package classTags size > 1 ]
 ]
 
 { #category : #accessing }

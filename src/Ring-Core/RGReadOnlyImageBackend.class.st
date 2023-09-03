@@ -298,7 +298,7 @@ RGReadOnlyImageBackend >> superclassFor: anRGBehavior [
 { #category : #behavior }
 RGReadOnlyImageBackend >> tagsForClass: anRGBehavior do: aBlock [
 
-	(self realBehaviorFor: anRGBehavior) packageTagName ifNotNil: [ :tag | aBlock value: tag ]
+	(self realBehaviorFor: anRGBehavior) packageTag isRoot ifFalse: [ aBlock value: (self realBehaviorFor: anRGBehavior) packageTagName ]
 ]
 
 { #category : #method }

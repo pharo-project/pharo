@@ -318,7 +318,7 @@ MCWorkingCopy class >> workingCopiesForPackage: aPackage do: aBlock [
 		select: [ :workingCopy |
 			workingCopy systemPackage
 				ifNil: [ false ]
-				ifNotNil: [ :package | package includesSystemCategory: aPackage name ] ]
+				ifNotNil: [ :package | package = aPackage ] ]
 		thenDo: aBlock
 ]
 

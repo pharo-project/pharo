@@ -62,7 +62,7 @@ RPackageTag >> environment [
 { #category : #testing }
 RPackageTag >> hasClass: aClass [
 
-	^ self hasClassNamed: aClass name
+	^ self classes includes: aClass instanceSide
 ]
 
 { #category : #testing }
@@ -100,7 +100,7 @@ RPackageTag >> name [
 { #category : #accessing }
 RPackageTag >> name: aSymbol [
 
-	name := aSymbol
+	name := aSymbol asSymbol
 ]
 
 { #category : #accessing }
@@ -153,11 +153,10 @@ RPackageTag >> removeClass: aClass [
 
 { #category : #accessing }
 RPackageTag >> removeFromPackage [
-	self
-		assert: self isEmpty
-		description: 'Package tag is not empty'.
 
-	self package basicRemoveTag: self
+	self assert: self isEmpty description: 'Package tag is not empty'.
+
+	self package removeTag: self
 ]
 
 { #category : #accessing }

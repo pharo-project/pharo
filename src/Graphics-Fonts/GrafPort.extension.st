@@ -7,8 +7,8 @@ GrafPort >> installStrikeFont: aStrikeFont [
 ]
 
 { #category : #'*Graphics-Fonts' }
-GrafPort >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor [
-	super installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor.
+GrafPort >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
+	super installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale.
 	aStrikeFont glyphs depth = 1 ifTrue: [
 		alpha := foregroundColor privateAlpha.
 		"dynamically switch between blend modes to support translucent text"
