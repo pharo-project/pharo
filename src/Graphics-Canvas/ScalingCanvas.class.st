@@ -55,6 +55,13 @@ ScalingCanvas >> apply: aBlock [
 			during: aBlock ]
 ]
 
+{ #category : #'drawing - support' }
+ScalingCanvas >> clipBy: aRectangle during: aBlock [
+
+	formCanvas clipBy: (aRectangle scaleBy: scale) during: [ :transformedFormCanvas |
+		aBlock value: (self class formCanvas: transformedFormCanvas scale: scale) ]
+]
+
 { #category : #accessing }
 ScalingCanvas >> clipRect [
 
