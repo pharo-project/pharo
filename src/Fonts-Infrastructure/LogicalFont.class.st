@@ -510,8 +510,10 @@ LogicalFont >> descentKern [
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3 [
-	^self realFont displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3
+LogicalFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
+
+	^ self realFont displayStrikeoutOn: aDisplayContext from: baselineStartPoint
+		to: baselineEndPoint scale: scale
 ]
 
 { #category : #'forwarded to realFont' }
@@ -522,8 +524,10 @@ LogicalFont >> displayString: aString on: aDisplayContext from: startIndex to: s
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> displayUnderlineOn: aGrafPort from: aPoint to: aPoint3 [
-	^self realFont displayUnderlineOn: aGrafPort from: aPoint to: aPoint3
+LogicalFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
+
+	^ self realFont displayUnderlineOn: aDisplayContext from: baselineStartPoint
+		to: baselineEndPoint scale: scale
 ]
 
 { #category : #emphasis }
