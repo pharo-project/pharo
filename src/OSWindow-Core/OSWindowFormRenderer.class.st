@@ -8,10 +8,23 @@ Class {
 	#name : #OSWindowFormRenderer,
 	#superclass : #OSWindowRenderer,
 	#instVars : [
-		'form'
+		'form',
+		'canvasBlock'
 	],
 	#category : #'OSWindow-Core-Renderer'
 }
+
+{ #category : #accessing }
+OSWindowFormRenderer >> canvasBlock [
+
+	^ canvasBlock ifNil: [ [ :canvas | canvas ] ]
+]
+
+{ #category : #accessing }
+OSWindowFormRenderer >> canvasBlock: anObject [
+
+	canvasBlock := anObject
+]
 
 { #category : #'morphic integration' }
 OSWindowFormRenderer >> deferUpdatesWhile: aBlock [
@@ -39,7 +52,7 @@ OSWindowFormRenderer >> form: anObject [
 
 { #category : #accessing }
 OSWindowFormRenderer >> getCanvas [
-	^ form getCanvas
+	^ self canvasBlock value: form getCanvas
 ]
 
 { #category : #size }

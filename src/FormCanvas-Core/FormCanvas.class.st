@@ -211,7 +211,13 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex at: aPoint font
 
 { #category : #'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c [
-	| font portRect |
+
+	^ self drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: 1
+]
+
+{ #category : #'drawing - text' }
+FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: scale [
+	| font portRect point |
 	port colorMap: nil.
 	portRect := port clipRect.
 	port clipByX1: bounds left + origin x
@@ -222,9 +228,12 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	port combinationRule: Form paint.
 	font installOn: port
 		foregroundColor: c
-		backgroundColor: Color transparent.
+		backgroundColor: Color transparent
+		scale: scale.
+	point := bounds topLeft + origin.
 	font displayString: aString asString on: port
-		from: firstIndex to: lastIndex at: (bounds topLeft + origin) kern: 0.
+		from: firstIndex to: lastIndex at: point kern: 0
+		baselineY: point y + (font ascent * scale) scale: scale.
 	port clipRect: portRect
 ]
 
