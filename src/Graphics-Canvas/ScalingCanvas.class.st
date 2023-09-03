@@ -85,6 +85,16 @@ ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect fon
 		font: fontOrNil color: c scale: scale
 ]
 
+{ #category : #'drawing - text' }
+ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
+
+	formCanvas drawString: s from: firstIndex to: lastIndex in: (boundsRect scaleBy: scale)
+		font: fontOrNil color: c
+		underline: underline underlineColor: uc
+		strikethrough: strikethrough strikethroughColor: sc
+		scale: scale
+]
+
 { #category : #initialization }
 ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 
