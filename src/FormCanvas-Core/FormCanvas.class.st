@@ -252,7 +252,7 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 		].
 	strikethrough ifTrue: [
 		font installOn: port
-			foregroundColor: uc
+			foregroundColor: sc
 			backgroundColor: Color transparent;
 			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
 	].
