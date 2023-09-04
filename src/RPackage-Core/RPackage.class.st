@@ -150,7 +150,7 @@ RPackage >> actualClassTags [
 	^classTags
 ]
 
-{ #category : #'add class' }
+{ #category : #'adding-removing' }
 RPackage >> addClass: aClass [
 	"TODO: deprecate system category / replace this with a direct call to moveClass:fromPackage:toTag:"
 
@@ -162,7 +162,7 @@ RPackage >> addClass: aClass [
 	aClass category: self rootTag categoryName
 ]
 
-{ #category : #'add method - compiled method' }
+{ #category : #'adding-removing' }
 RPackage >> addMethod: aCompiledMethod [
 	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
 
@@ -233,27 +233,24 @@ RPackage >> classesTaggedWith: aSymbol [
 ]
 
 { #category : #accessing }
-RPackage >> definedClassNames [
-	"Return the class names having methods defined in the receiver."
-
-	^ self definedClasses collect: [ :class | class name ]
-]
-
-{ #category : #accessing }
 RPackage >> definedClasses [
 
 	^ self classTags flatCollect: [ :tag | tag classes ]
 ]
 
 { #category : #accessing }
-RPackage >> definedMethodsForClass: aClass [
+RPackage >> definedMethods [
 
-	^ (self definedSelectorsForClass: aClass) asOrderedCollection collect: [ :each | aClass >> each ]
+	| methods |
+	methods := OrderedCollection new.
+	definedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
+	^ methods
 ]
 
 { #category : #accessing }
-RPackage >> definedOrExtendedClasses [
-	^ self definedClasses | self extendedClasses
+RPackage >> definedSelectors [
+
+	^ definedSelectors values flattened
 ]
 
 { #category : #accessing }
@@ -329,19 +326,6 @@ RPackage >> ensureTag: aTag [
 ]
 
 { #category : #accessing }
-RPackage >> environment [
-
-	^ self organizer environment
-]
-
-{ #category : #accessing }
-RPackage >> extendedClassNames [
-	"Return the name of the classes which are extended by the receiver package. if a metaclass is extended, just get its sole instance class name."
-
-	^ extensionSelectors keys collect: [ :class | class instanceSide name ] as: Set
-]
-
-{ #category : #accessing }
 RPackage >> extendedClasses [
 	"Return classes and metaclasses that are extended in the receiver. They represent the classes of method extensions"
 
@@ -365,13 +349,6 @@ RPackage >> extensionMethods [
 	methods := OrderedCollection new.
 	extensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
 	^ methods
-]
-
-{ #category : #accessing }
-RPackage >> extensionMethodsForClass: aClass [
-	"Change the set of extensions selectors to an Array to avoid compiled methods collisions in the resulting set."
-
-	^ (self extensionSelectorsForClass: aClass) asArray collect: [ :each | aClass >> each ]
 ]
 
 { #category : #'system compatibility' }
@@ -406,14 +383,6 @@ RPackage >> hasTag: aTag [
 	^ self tagNames includes: (aTag isString
 			   ifTrue: [ aTag ]
 			   ifFalse: [ aTag name ])
-]
-
-{ #category : #accessing }
-RPackage >> hierarchyRoots [
-	"Returns all the hiearchy roots (by opposition to single classes inheriting from class outside the package) of a package"
-
-	^ self definedClasses
-		select: [ :each | (each superclass isNil or: [ each superclass package ~~ self ]) and: [ each hasSubclasses ] ]
 ]
 
 { #category : #private }
@@ -493,13 +462,6 @@ RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
 ]
 
 { #category : #testing }
-RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
-
-	^ (self definedSelectorsForClass: aClass) includes: aSelector asSymbol
-]
-
-{ #category : #testing }
 RPackage >> includesExtensionSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
 
@@ -567,28 +529,6 @@ RPackage >> methodCategoryPrefix [
 	^ '*', self name asLowercase
 ]
 
-{ #category : #accessing }
-RPackage >> methods [
-	"Return all the methods defined in this package. Including extension methods (i.e., methods defined on a class that is not defined by me)"
-
-	| methods |
-	methods := OrderedCollection new.
-
-	extensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
-	definedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
-
-	^ methods
-]
-
-{ #category : #accessing }
-RPackage >> methodsForClass: aClass [
-	"Returns all compiled methods for a class in the receiver without distinction of extensions or not"
-
-	^ (self includesClass: aClass)
-		ifFalse: [self extensionMethodsForClass: aClass]
-		ifTrue: [self definedMethodsForClass: aClass]
-]
-
 { #category : #private }
 RPackage >> moveClass: aClass toTag: aTag [
 
@@ -612,13 +552,6 @@ RPackage >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
 	name := aSymbol asSymbol
-]
-
-{ #category : #accessing }
-RPackage >> packageManifestOrNil [
-	^ self definedClasses
-		detect: [ :each | each isManifest ]
-		ifNone: [ nil ]
 ]
 
 { #category : #'system compatibility' }
@@ -739,7 +672,7 @@ RPackage >> removeFromSystem [
 	self unregister
 ]
 
-{ #category : #'add method - compiled method' }
+{ #category : #'adding-removing' }
 RPackage >> removeMethod: aCompiledMethod [
 	"Remove the method to the receiver as a defined method."
 
@@ -762,7 +695,7 @@ RPackage >> removeMethod: aCompiledMethod [
 	^ aCompiledMethod
 ]
 
-{ #category : #'add method - compiled method' }
+{ #category : #'adding-removing' }
 RPackage >> removeMethods: aCollection [
 	aCollection do: [ :each | self removeMethod: each ]
 ]
@@ -870,34 +803,6 @@ RPackage >> renameTo: aSymbol [
 RPackage >> rootTag [
 
 	^ self ensureTag: self rootTagName
-]
-
-{ #category : #accessing }
-RPackage >> roots [
-	"Returns all the root classes of a package. A root class is a class whose superclass is not defined in the package.
-	Root classes are potentially root of inheritance trees defined in a package."
-
-	^ self definedClasses
-		select: [ :each | each superclass isNil or: [ each superclass package ~~ self ] ]
-]
-
-{ #category : #accessing }
-RPackage >> selectors [
-
-	| allSelectors |
-	allSelectors := Set new.
-	allSelectors addAll: self extensionSelectors.
-	definedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
-	^ allSelectors
-]
-
-{ #category : #accessing }
-RPackage >> selectorsForClass: aClass [
-	"Returns all selectors for a class in the receiver without distinction of extensions or not"
-
-	^ (self includesClass: aClass)
-		ifFalse: [self extensionSelectorsForClass: aClass]
-		ifTrue: [self definedSelectorsForClass: aClass]
 ]
 
 { #category : #'system compatibility' }

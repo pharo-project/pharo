@@ -20,9 +20,58 @@ AbstractPackage >> classes [
 ]
 
 { #category : #accessing }
+AbstractPackage >> definedClassNames [
+	"Return the class names having methods defined in the receiver."
+
+	^ self definedClasses collect: [ :class | class name ]
+]
+
+{ #category : #accessing }
 AbstractPackage >> definedClasses [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractPackage >> definedMethods [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractPackage >> definedMethodsForClass: aClass [
+
+	^ (self definedSelectorsForClass: aClass) asOrderedCollection collect: [ :each | aClass >> each ]
+]
+
+{ #category : #accessing }
+AbstractPackage >> definedOrExtendedClasses [
+	^ self definedClasses | self extendedClasses
+]
+
+{ #category : #accessing }
+AbstractPackage >> definedSelectors [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractPackage >> definedSelectorsForClass: aClass [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractPackage >> environment [
+
+	^ self organizer environment
+]
+
+{ #category : #accessing }
+AbstractPackage >> extendedClassNames [
+	"Return the name of the classes which are extended by the receiver package. if a metaclass is extended, just get its sole instance class name."
+
+	^ self extendedClasses collect: [ :class | class instanceSide name ] as: Set
 ]
 
 { #category : #accessing }
@@ -32,9 +81,42 @@ AbstractPackage >> extendedClasses [
 ]
 
 { #category : #accessing }
+AbstractPackage >> extensionMethods [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractPackage >> extensionMethodsForClass: aClass [
+	"Change the set of extensions selectors to an Array to avoid compiled methods collisions in the resulting set."
+
+	^ (self extensionSelectorsForClass: aClass) asArray collect: [ :each | aClass >> each ]
+]
+
+{ #category : #accessing }
 AbstractPackage >> extensionSelectors [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractPackage >> extensionSelectorsForClass: aClass [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractPackage >> hierarchyRoots [
+	"Returns all the hiearchy roots (by opposition to single classes inheriting from class outside the package) of a package"
+
+	^ self definedClasses select: [ :each | (each superclass isNil or: [ each superclass package ~~ self ]) and: [ each hasSubclasses ] ]
+]
+
+{ #category : #testing }
+AbstractPackage >> includesDefinedSelector: aSelector ofClass: aClass [
+	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
+
+	^ (self definedSelectorsForClass: aClass) includes: aSelector asSymbol
 ]
 
 { #category : #testing }
@@ -57,6 +139,22 @@ AbstractPackage >> isTestPackage [
 ]
 
 { #category : #accessing }
+AbstractPackage >> methods [
+	"Return all the methods defined in this package. Including extension methods (i.e., methods defined on a class that is not defined by me)"
+
+	^ self definedMethods , self extensionMethods
+]
+
+{ #category : #accessing }
+AbstractPackage >> methodsForClass: aClass [
+	"Returns all compiled methods for a class in the receiver without distinction of extensions or not"
+
+	^ (self includesClass: aClass)
+		ifFalse: [self extensionMethodsForClass: aClass]
+		ifTrue: [self definedMethodsForClass: aClass]
+]
+
+{ #category : #accessing }
 AbstractPackage >> name [
 
 	^ self subclassResponsibility
@@ -73,6 +171,13 @@ AbstractPackage >> organizer [
 AbstractPackage >> organizer: anObject [
 
 	organizer := anObject
+]
+
+{ #category : #accessing }
+AbstractPackage >> packageManifestOrNil [
+	^ self definedClasses
+		detect: [ :each | each isManifest ]
+		ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -117,6 +222,32 @@ AbstractPackage >> rootTagName [
 
 	self flag: #package. "In the future we should not use the name of the package because it causes bugs."
 	^ self name
+]
+
+{ #category : #accessing }
+AbstractPackage >> roots [
+	"Returns all the root classes of a package. A root class is a class whose superclass is not defined in the package.
+	Root classes are potentially root of inheritance trees defined in a package."
+
+	^ self definedClasses
+		select: [ :each | each superclass isNil or: [ each superclass package ~~ self ] ]
+]
+
+{ #category : #accessing }
+AbstractPackage >> selectors [
+
+	^ self definedSelectors asSet
+		  addAll: self extensionSelectors;
+		  yourself
+]
+
+{ #category : #accessing }
+AbstractPackage >> selectorsForClass: aClass [
+	"Returns all selectors for a class in the receiver without distinction of extensions or not"
+
+	^ (self includesClass: aClass)
+		ifFalse: [self extensionSelectorsForClass: aClass]
+		ifTrue: [self definedSelectorsForClass: aClass]
 ]
 
 { #category : #'class tags' }

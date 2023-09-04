@@ -40,6 +40,24 @@ UnpackagedPackage >> definedClasses [
 	^ #(  )
 ]
 
+{ #category : #accessing }
+UnpackagedPackage >> definedMethods [
+
+	^ #(  )
+]
+
+{ #category : #accessing }
+UnpackagedPackage >> definedSelectors [
+
+	^ #(  )
+]
+
+{ #category : #accessing }
+UnpackagedPackage >> definedSelectorsForClass: aClass [
+
+	^ #(  )
+]
+
 { #category : #'reflective operations' }
 UnpackagedPackage >> doesNotUnderstand: aMessage [
 	('Fowarded ' , aMessage selector) traceCr. 
@@ -56,7 +74,19 @@ UnpackagedPackage >> extendedClasses [
 ]
 
 { #category : #accessing }
+UnpackagedPackage >> extensionMethods [
+
+	^ #(  )
+]
+
+{ #category : #accessing }
 UnpackagedPackage >> extensionSelectors [
+
+	^ #(  )
+]
+
+{ #category : #accessing }
+UnpackagedPackage >> extensionSelectorsForClass: aClass [
 
 	^ #(  )
 ]
