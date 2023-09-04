@@ -136,12 +136,6 @@ RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
 		aNewOrganizer unregister]
 ]
 
-{ #category : #comparing }
-RPackage >> <= aRPackage [
-
-	^ self name <= aRPackage name
-]
-
 { #category : #'adding-removing' }
 RPackage >> addClass: aClass [
 	"TODO: deprecate system category / replace this with a direct call to moveClass:fromPackage:toTag:"
@@ -335,15 +329,6 @@ RPackage >> hasProperty: aKey [
 	^ true
 ]
 
-{ #category : #testing }
-RPackage >> hasTag: aTag [
-	"Takes a package tag or a package tag name as parameter and return true if I include this package tag."
-
-	^ self tagNames includes: (aTag isString
-			   ifTrue: [ aTag ]
-			   ifFalse: [ aTag name ])
-]
-
 { #category : #private }
 RPackage >> importClass: aClass [
 	"import a class already created but not attached to a package to the receiver.
@@ -519,14 +504,6 @@ RPackage >> packages [
 	^ self classTags
 ]
 
-{ #category : #printing }
-RPackage >> printOn: aStream [
-	super printOn: aStream.
-	aStream nextPut: $(.
-	aStream nextPutAll: self name.
-	aStream nextPut: $)
-]
-
 { #category : #private }
 RPackage >> privateExtensionSelectors [
 
@@ -591,7 +568,7 @@ RPackage >> removeAllMethodsFromClass: aClass [
 	self organizer unregisterExtendingPackage: self forClass: aClass
 ]
 
-{ #category : #removing }
+{ #category : #'adding-removing' }
 RPackage >> removeClass: aClass [
 	"I remove the class, methods and potential empty tags from myself."
 
@@ -599,18 +576,14 @@ RPackage >> removeClass: aClass [
 	self removeAllMethodsFromClass: aClass.
 
 	"Then I unregister it from the tags"
-	(self classTags select: [ :eachTag | eachTag includesClass: aClass ]) do: [ :eachTag | self removeClassDefinition: aClass fromClassTag: eachTag name ].
+	self classTags
+		detect: [ :tag | tag includesClass: aClass ]
+		ifFound: [ :tag |
+			tag removeClass: aClass.
+			tag isEmpty ifTrue: [ self removeTag: tag ] ].
 
 	"Lastly I remove the class from the organizer. Maybe this should go in the PackageTag during the removal."
 	self unregisterClass: aClass
-]
-
-{ #category : #'class tags' }
-RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
-
-	self classTagNamed: aSymbol ifPresent: [ :tag |
-		tag removeClass: aClass.
-		tag isEmpty ifTrue: [ self removeTag: tag ] ]
 ]
 
 { #category : #'adding-removing' }
@@ -699,16 +672,6 @@ RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 	protocols do: [ :protocol | protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ]
 ]
 
-{ #category : #'class tags' }
-RPackage >> renameTag: aTag to: newName [
-
-	(self hasTag: aTag) ifFalse: [ ^ self ].
-
-	(aTag isString
-		 ifTrue: [ self classTagNamed: aTag ]
-		 ifFalse: [ aTag ]) renameTo: newName
-]
-
 { #category : #private }
 RPackage >> renameTagsPrefixedWith: oldName to: newName [
 	| oldPrefix newPrefix |
@@ -761,11 +724,6 @@ RPackage >> rootTag [
 { #category : #'system compatibility' }
 RPackage >> systemCategoryPrefix [
 	^ self name
-]
-
-{ #category : #'class tags' }
-RPackage >> tagNames [
-	^ self classTags collect: [ :tag | tag name ]
 ]
 
 { #category : #'class tags' }

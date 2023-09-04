@@ -7,6 +7,12 @@ Class {
 	#category : #'RPackage-Core-Base'
 }
 
+{ #category : #comparing }
+AbstractPackage >> <= aRPackage [
+
+	^ self name <= aRPackage name
+]
+
 { #category : #'adding-removing' }
 AbstractPackage >> addClass: aClass [
 
@@ -159,6 +165,15 @@ AbstractPackage >> extensionSelectorsForClass: aClass [
 	^ self subclassResponsibility
 ]
 
+{ #category : #testing }
+AbstractPackage >> hasTag: aTag [
+	"Takes a package tag or a package tag name as parameter and return true if I include this package tag."
+
+	^ self tagNames includes: (aTag isString
+			   ifTrue: [ aTag ]
+			   ifFalse: [ aTag name ])
+]
+
 { #category : #accessing }
 AbstractPackage >> hierarchyRoots [
 	"Returns all the hiearchy roots (by opposition to single classes inheriting from class outside the package) of a package"
@@ -241,6 +256,14 @@ AbstractPackage >> packageName [
 	^ self name
 ]
 
+{ #category : #printing }
+AbstractPackage >> printOn: aStream [
+	super printOn: aStream.
+	aStream nextPut: $(.
+	aStream nextPutAll: self name.
+	aStream nextPut: $)
+]
+
 { #category : #'adding-removing' }
 AbstractPackage >> removeClass: aClass [
 
@@ -274,6 +297,16 @@ AbstractPackage >> removeMethods: aCollection [
 AbstractPackage >> removeTag: aTag [
 
 	self subclassResponsibility
+]
+
+{ #category : #'class tags' }
+AbstractPackage >> renameTag: aTag to: newName [
+
+	(self hasTag: aTag) ifFalse: [ ^ self ].
+
+	(aTag isString
+		 ifTrue: [ self classTagNamed: aTag ]
+		 ifFalse: [ aTag ]) renameTo: newName
 ]
 
 { #category : #accessing }
@@ -313,6 +346,11 @@ AbstractPackage >> selectorsForClass: aClass [
 	^ (self includesClass: aClass)
 		ifFalse: [self extensionSelectorsForClass: aClass]
 		ifTrue: [self definedSelectorsForClass: aClass]
+]
+
+{ #category : #'class tags' }
+AbstractPackage >> tagNames [
+	^ self classTags collect: [ :tag | tag name ]
 ]
 
 { #category : #'class tags' }
