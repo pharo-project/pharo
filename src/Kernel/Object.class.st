@@ -368,7 +368,7 @@ Object >> asString [
 { #category : #converting }
 Object >> asSymbol [
 	"Answer a symbol that represents the receiver."
-	^ self asString asSymbol
+	^ self
 ]
 
 
