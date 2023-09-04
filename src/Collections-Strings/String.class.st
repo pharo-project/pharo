@@ -510,7 +510,7 @@ String >> = aString [
 
 	" 'def' = 'abc' >>> false"
 
-	(StrictSymbolComparison and: [ aString isSymbol ]) ifTrue: [ ^ false ].
+	(Symbol strictComparison and: [ aString isSymbol ]) ifTrue: [ ^ false ].
 	(aString isString and: [ self size = aString size ]) ifFalse: [ ^ false ].
 	^ (self compare: self with: aString) = 0
 ]
