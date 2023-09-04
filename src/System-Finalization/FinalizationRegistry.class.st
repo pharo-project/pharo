@@ -89,6 +89,19 @@ FinalizationRegistry >> add: anObject finalizer: finalizer [
 	^ anObject
 ]
 
+{ #category : #adding }
+FinalizationRegistry >> ephemeronAtKey: aKey [
+	| current |
+	current := ephemeronListHead.
+	[ current notNil ] whileTrue: [
+		current key == aKey
+			ifTrue: [ ^ current ].
+		current := current next
+	].
+	"Not found"
+	^ nil
+]
+
 { #category : #finalization }
 FinalizationRegistry >> errorHandler [
 	
@@ -141,17 +154,10 @@ FinalizationRegistry >> isEmpty [
 	^ ephemeronListHead next isNil
 ]
 
-{ #category : #adding }
-FinalizationRegistry >> ephemeronAtKey: aKey [
-	| current |
-	current := ephemeronListHead.
-	[ current notNil ] whileTrue: [
-		current key == aKey
-			ifTrue: [ ^ current ].
-		current := current next
-	].
-	"Not found"
-	^ nil
+{ #category : #accessing }
+FinalizationRegistry >> keys [
+
+	^ ephemeronListHead keys
 ]
 
 { #category : #copying }
@@ -191,4 +197,16 @@ FinalizationRegistry >> removeEphemeron: anEphemeron [
 FinalizationRegistry >> size [
 
 	^ ephemeronListHead size - 1 "The head does not count"
+]
+
+{ #category : #accessing }
+FinalizationRegistry >> values [
+
+	^ ephemeronListHead values
+]
+
+{ #category : #enumerating }
+FinalizationRegistry >> valuesDo: aBlock [
+
+	^ self values do: aBlock
 ]
