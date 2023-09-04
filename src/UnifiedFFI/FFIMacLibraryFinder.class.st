@@ -36,6 +36,7 @@ FFIMacLibraryFinder >> findFramework: aName [
 FFIMacLibraryFinder >> knownPaths [
 
 	^ #(
+	'/opt/homebrew/lib'
 	'/usr/lib'
 	'/usr/local/lib'
 	)

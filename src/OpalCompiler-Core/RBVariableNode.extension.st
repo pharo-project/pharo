@@ -11,8 +11,8 @@ RBVariableNode >> binding: aSemVar [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBVariableNode >> isClean [
-	^ (self isInstanceVariable | self isSelfVariable | self isSuperVariable) not
+RBVariableNode >> isAccessingSelf [
+	^ self isInstanceVariable or: [ self isSelfVariable or: [self isSuperVariable]]
 ]
 
 { #category : #'*OpalCompiler-Core' }

@@ -27,7 +27,11 @@ Class {
 		'scale',
 		'nDigits',
 		'lastNonZero',
-		'failBlock'
+		'failBlock',
+		'maxExponent'
+	],
+	#classVars : [
+		'MaxExponent'
 	],
 	#category : #'NumberParser-Base'
 }
@@ -39,6 +43,18 @@ NumberParser class >> isNumber: aStringOrStream [
 	stream := aStringOrStream readStream.
 	self parse: stream onError: [ ^ false ].
 	^ stream atEnd
+]
+
+{ #category : #accessing }
+NumberParser class >> maxExponent [ 
+
+	^ MaxExponent ifNil: [ MaxExponent := 10000 ]
+]
+
+{ #category : #accessing }
+NumberParser class >> maxExponent: aValue [
+
+	MaxExponent := aValue
 ]
 
 { #category : #'instance creation' }
@@ -59,6 +75,19 @@ NumberParser class >> parse: aStringOrStream onError: failBlock [
 		on: aStringOrStream;
 		failBlock: failBlock;
 		nextNumber
+]
+
+{ #category : #accessing }
+NumberParser class >> settingsOn: aBuilder [
+
+	<systemsettings>
+
+	(aBuilder setting: #maxExponent)
+		parent: #compiler;
+		default: 10000;
+		label: 'Max Exponent when parsing numbers';
+		description: 'This is the max exponent to parse when parsing numbers in the shape of 1e22. It is the absolute value';
+		target: self
 ]
 
 { #category : #'instance creation' }
@@ -179,6 +208,18 @@ NumberParser >> makeScaledDecimalWithNumberOfNonZeroFractionDigits: numberOfNonZ
 	neg
 		ifTrue: [decimalFraction := decimalFraction negated].
 	^decimalFraction asScaledDecimal: scale
+]
+
+{ #category : #accessing }
+NumberParser >> maxExponent [
+
+	^ maxExponent ifNil: [ self class maxExponent ]
+]
+
+{ #category : #accessing }
+NumberParser >> maxExponent: aValue [
+
+	maxExponent  := aValue
 ]
 
 { #category : #'private - parsing - large int' }
@@ -462,12 +503,21 @@ NumberParser >> readExponent [
 	epos := eneg not
 		and: [ self allowPlusSignInExponent and: [ sourceStream peekFor: $+ ] ].
 	exponent := self nextUnsignedIntegerOrNilBase: 10.
+		
 	exponent
 		ifNil: [
 			"Oops, there was no digit after the exponent letter.Ungobble the letter"
 			exponent := 0.
 			sourceStream skip: ((eneg or: [ epos ]) ifTrue: [ -2 ] ifFalse: [ -1 ]).
 			^ false ].
+		
+	"If the exponent is bigger than our max exponent, we return an error".
+	exponent > self maxExponent
+		ifTrue: [ 
+				self expected: 'Exponent is larger than ' , self maxExponent printString , ' (Check Settings)'.
+				exponent := 0.
+				^ false ].
+		
 	eneg ifTrue: [ exponent := exponent negated ].
 	^ true
 ]

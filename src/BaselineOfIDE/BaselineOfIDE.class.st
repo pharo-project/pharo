@@ -201,6 +201,7 @@ BaselineOfIDE >> baseline: spec [
 		self microdown: spec.
 		self beautifulComments: spec.
 		self documentBrowserCore: spec.
+		self welcomeBrowser: spec.
 		self roassal3: spec.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
@@ -266,13 +267,28 @@ BaselineOfIDE >> loadIceberg [
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 
+	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
+		| credentials |
+		credentials := (Smalltalk classNamed: #IceTokenCredentials) new
+			               username:
+				               (Smalltalk os environment
+					                at: #GITHUB_USER
+					                ifAbsent: [ self error: 'Github token was found but not the github user associated to this token.' ]);
+			               token: token;
+			               host: 'github.com';
+			               yourself.
+
+		(Smalltalk classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
+		'Using authentification for Github API' traceCr ].
+
 	self registerPharo.
-	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').
+	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #( 'SpecCore' ).
 	self registerProject: 'NewTools'.
 	self registerProject: 'Roassal3'.
 	self registerProject: 'Microdown'.
 	self registerProject: 'BeautifulComments'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
+	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
 ]
 
@@ -447,4 +463,11 @@ BaselineOfIDE >> specCode: spec [
 			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
+]
+
+{ #category : #baselines }
+BaselineOfIDE >> welcomeBrowser: spec [
+
+	spec baseline: 'WelcomeBrowser' with: [
+		spec repository: (self class environment at: #BaselineOfPharo) welcomeBrowserRepository ]
 ]

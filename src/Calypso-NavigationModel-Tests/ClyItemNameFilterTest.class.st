@@ -18,10 +18,28 @@ ClyItemNameFilterTest >> testComparisonWithAnotherFilter [
 ]
 
 { #category : #tests }
-ClyItemNameFilterTest >> testFilterObjectWithName [
+ClyItemNameFilterTest >> testFilterClassWithName [
 
 	filter := ClyItemNameFilter substringPattern: 'ject'. "Object"
 
 	self assert: (filter matches: Object).
 	self deny: (filter matches: Array)
+]
+
+{ #category : #tests }
+ClyItemNameFilterTest >> testFilterMethodWithSelector [
+
+	filter := ClyItemNameFilter substringPattern: 'collect'.
+
+	self assert: (filter matches: Collection >> #collect:).
+	self deny: (filter matches: Collection >> #add:)
+]
+
+{ #category : #tests }
+ClyItemNameFilterTest >> testFilterPackageWithName [
+
+	filter := ClyItemNameFilter substringPattern: 'kernel'.
+
+	self assert: (filter matches: (RPackage organizer packageNamed: #Kernel)).
+	self deny: (filter matches: (RPackage organizer packageNamed: #Jobs))
 ]

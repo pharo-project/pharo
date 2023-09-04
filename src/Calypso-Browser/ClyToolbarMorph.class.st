@@ -61,7 +61,7 @@ ClyToolbarMorph >> browser: anObject [
 
 { #category : #initialization }
 ClyToolbarMorph >> defaultHeight [
-	^30
+	^ 30 * self currentWorld displayScaleFactor
 ]
 
 { #category : #initialization }

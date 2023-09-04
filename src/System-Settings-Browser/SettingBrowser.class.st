@@ -225,7 +225,7 @@ SettingBrowser class >> forKeywords: aCollectionOfKeywords [
 { #category : #accessing }
 SettingBrowser class >> initialExtent [
 	"Initial extent of the SettingBrowser window"
-	^ 900@600
+	^ (900@600) scaledByDisplayScaleFactor
 ]
 
 { #category : #'world menu' }
