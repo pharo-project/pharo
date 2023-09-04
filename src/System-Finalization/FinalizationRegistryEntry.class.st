@@ -96,7 +96,13 @@ FinalizationRegistryEntry >> includes: anObject [
 { #category : #enumerating }
 FinalizationRegistryEntry >> keys [
 
+	"Base case, last entry in the list"
 	next ifNil: [ ^ { key } ].
+
+	"The head is empty, so check that"
+	key ifNil: [ ^ next keys ].
+	
+	"Otherwise, this is the recursive case"
 	^ { key }, next keys
 ]
 
@@ -152,4 +158,17 @@ FinalizationRegistryEntry >> size [
 
 	next ifNil: [ ^ 1 ].
 	^ 1 + next size
+]
+
+{ #category : #enumerating }
+FinalizationRegistryEntry >> values [
+
+	"Base case, last entry in the list"
+	next ifNil: [ ^ { value } ].
+
+	"The head is empty, so check that"
+	key ifNil: [ ^ next values ].
+
+	"Otherwise, this is the recursive case"
+	^ { value }, next values
 ]
