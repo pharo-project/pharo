@@ -322,18 +322,13 @@ RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
 	self assert: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 
 	"now when we remove a class" "from an existing tags list"
-	p1 removeClassDefinition: a1 fromClassTag: #foo.
+	p1 removeClass: a1.
 	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
 	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assertEmpty: (p1 classesForClassTag: #foo).
 
-	"from a nonexisting tag list"
-	p1 removeClassDefinition: b1 fromClassTag: #taz.
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-
 	"with a class not registered to a tag list"
-	p1 removeClassDefinition: self class fromClassTag: #foo.
+	p1 removeClass: self class.
 	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
 	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assertEmpty: (p1 classesForClassTag: #foo)
