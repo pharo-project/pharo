@@ -7,6 +7,47 @@ Class {
 	#category : #'RPackage-Core-Base'
 }
 
+{ #category : #'adding-removing' }
+AbstractPackage >> addClass: aClass [
+
+	self subclassResponsibility
+]
+
+{ #category : #'adding-removing' }
+AbstractPackage >> addMethod: aCompiledMethod [
+
+	self subclassResponsibility
+]
+
+{ #category : #'class tags' }
+AbstractPackage >> classTagCategoryNames [
+
+	^ (Set with: self name) , (self classTags collect: [ :each | each categoryName ])
+]
+
+{ #category : #'class tags' }
+AbstractPackage >> classTagNamed: aSymbol [
+
+	^ self classTags detect: [ :each | each name = aSymbol ]
+]
+
+{ #category : #'class tags' }
+AbstractPackage >> classTagNamed: aSymbol ifAbsent: aBlock [
+
+	^ self classTags
+		  detect: [ :each | each name = aSymbol ]
+		  ifNone: aBlock
+]
+
+{ #category : #'class tags' }
+AbstractPackage >> classTagNamed: aSymbol ifPresent: aBlock [
+
+	^ self classTags
+		  detect: [ :each | each name = aSymbol ]
+		  ifFound: [ :tag | aBlock cull: tag ]
+		  ifNone: [ nil ]
+]
+
 { #category : #'class tags' }
 AbstractPackage >> classTags [
 
@@ -17,6 +58,13 @@ AbstractPackage >> classTags [
 AbstractPackage >> classes [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #'class tags' }
+AbstractPackage >> classesForClassTag: aTagName [
+	"Returns the classes tagged using aSymbol"
+
+	^ (self classTagNamed: aTagName ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : #accessing }
@@ -59,6 +107,12 @@ AbstractPackage >> definedSelectors [
 AbstractPackage >> definedSelectorsForClass: aClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #'class tags' }
+AbstractPackage >> ensureTag: aTag [
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -187,7 +241,7 @@ AbstractPackage >> packageName [
 	^ self name
 ]
 
-{ #category : #removing }
+{ #category : #'adding-removing' }
 AbstractPackage >> removeClass: aClass [
 
 	self subclassResponsibility
@@ -199,13 +253,24 @@ AbstractPackage >> removeEmptyTags [
 	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeTag: emptyTag ]
 ]
 
-{ #category : #removing }
+{ #category : #'adding-removing' }
+AbstractPackage >> removeFromSystem [
+
+	self subclassResponsibility
+]
+
+{ #category : #'adding-removing' }
 AbstractPackage >> removeMethod: aCompiledMethod [
 
 	self subclassResponsibility
 ]
 
-{ #category : #removing }
+{ #category : #'adding-removing' }
+AbstractPackage >> removeMethods: aCollection [
+	aCollection do: [ :each | self removeMethod: each ]
+]
+
+{ #category : #'adding-removing' }
 AbstractPackage >> removeTag: aTag [
 
 	self subclassResponsibility

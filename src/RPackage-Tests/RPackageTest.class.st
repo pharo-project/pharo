@@ -17,18 +17,6 @@ RPackageTest >> tearDown [
 ]
 
 { #category : #tests }
-RPackageTest >> testActualClassTags [
-
-	| packageWithoutClassTags packageWithClassTags |
-	packageWithoutClassTags := self packageOrganizer packageOf: StartupAction.
-	self denyEmpty: packageWithoutClassTags classTags.
-	self assertEmpty: packageWithoutClassTags actualClassTags.
-
-	packageWithClassTags := self packageOrganizer packageOf: Object.
-	self assert: packageWithClassTags actualClassTags equals: packageWithClassTags classTags
-]
-
-{ #category : #tests }
 RPackageTest >> testAddClass [
 
 	| package1 package2 class done |

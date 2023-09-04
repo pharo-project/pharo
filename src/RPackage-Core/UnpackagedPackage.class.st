@@ -22,6 +22,18 @@ UnpackagedPackage class >> unpackagedPackageName [
 	^ #_UnpackagedPackage
 ]
 
+{ #category : #'adding-removing' }
+UnpackagedPackage >> addClass: aClass [
+
+	
+]
+
+{ #category : #'adding-removing' }
+UnpackagedPackage >> addMethod: aCompiledMethod [
+
+	
+]
+
 { #category : #'class tags' }
 UnpackagedPackage >> classTags [
 
@@ -67,6 +79,13 @@ UnpackagedPackage >> doesNotUnderstand: aMessage [
 		  withArguments: aMessage arguments
 ]
 
+{ #category : #'class tags' }
+UnpackagedPackage >> ensureTag: aTag [
+	"We only have one tag in the unpackaged package and we do not want more"
+
+	
+]
+
 { #category : #accessing }
 UnpackagedPackage >> extendedClasses [
 
@@ -110,27 +129,25 @@ UnpackagedPackage >> name [
 	^ self class unpackagedPackageName
 ]
 
-{ #category : #removing }
+{ #category : #'adding-removing' }
 UnpackagedPackage >> removeClass: aClass [
 	"Do nothing"
 
 	
 ]
 
-{ #category : #removing }
-UnpackagedPackage >> removeEmptyTags [
+{ #category : #'adding-removing' }
+UnpackagedPackage >> removeFromSystem [
+	"We do not want to remove this package"
 
 	
 ]
 
-{ #category : #removing }
+{ #category : #'adding-removing' }
 UnpackagedPackage >> removeMethod: aCompiledMethod [
-	"Do nothing"
-
-	
 ]
 
-{ #category : #removing }
+{ #category : #'adding-removing' }
 UnpackagedPackage >> removeTag: aTag [
 
 	

@@ -142,14 +142,6 @@ RPackage >> <= aRPackage [
 	^ self name <= aRPackage name
 ]
 
-{ #category : #'class tags' }
-RPackage >> actualClassTags [
-
-	(classTags size = 1 and: [classTags anyOne isRoot]) ifTrue: [ ^#() ].
-
-	^classTags
-]
-
 { #category : #'adding-removing' }
 RPackage >> addClass: aClass [
 	"TODO: deprecate system category / replace this with a direct call to moveClass:fromPackage:toTag:"
@@ -179,32 +171,6 @@ RPackage >> addMethod: aCompiledMethod [
 ]
 
 { #category : #'class tags' }
-RPackage >> classTagCategoryNames [
-	^ (Set with: self packageName), (self classTags collect: [:each | each categoryName])
-]
-
-{ #category : #'class tags' }
-RPackage >> classTagNamed: aSymbol [
-
-	^ classTags detect: [ :each | each name = aSymbol ]
-]
-
-{ #category : #'class tags' }
-RPackage >> classTagNamed: aSymbol ifAbsent: aBlock [
-	^ classTags
-		detect: [ :each | each name = aSymbol ]
-		ifNone: aBlock
-]
-
-{ #category : #'class tags' }
-RPackage >> classTagNamed: aSymbol ifPresent: aBlock [
-	^ classTags
-		detect: [ :each | each name = aSymbol ]
-		ifFound: [ :tag | aBlock cull: tag ]
-		ifNone: [ nil ]
-]
-
-{ #category : #'class tags' }
 RPackage >> classTags [
 	"Returns the tags of the receiver"
 
@@ -215,13 +181,6 @@ RPackage >> classTags [
 RPackage >> classes [
 	"Return all the classes"
 	^ self definedClasses, self extendedClasses
-]
-
-{ #category : #'class tags' }
-RPackage >> classesForClassTag: aTagName [
-	"Returns the classes tagged using aSymbol"
-
-	^ (self classTagNamed: aTagName ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : #queries }
@@ -649,13 +608,12 @@ RPackage >> removeClass: aClass [
 { #category : #'class tags' }
 RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 
-	| tag |
-	tag := self classTagNamed: aSymbol ifAbsent: [ ^ self ].
-	tag removeClass: aClass.
-	tag isEmpty ifTrue: [ self removeTag: tag ]
+	self classTagNamed: aSymbol ifPresent: [ :tag |
+		tag removeClass: aClass.
+		tag isEmpty ifTrue: [ self removeTag: tag ] ]
 ]
 
-{ #category : #removing }
+{ #category : #'adding-removing' }
 RPackage >> removeFromSystem [
 
 	| categories |
@@ -695,11 +653,6 @@ RPackage >> removeMethod: aCompiledMethod [
 	^ aCompiledMethod
 ]
 
-{ #category : #'adding-removing' }
-RPackage >> removeMethods: aCollection [
-	aCollection do: [ :each | self removeMethod: each ]
-]
-
 { #category : #properties }
 RPackage >> removePropertiesIfEmpty [
 	^ Properties at: self ifPresent: [ :dict |
@@ -724,7 +677,7 @@ RPackage >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
-{ #category : #'class tags' }
+{ #category : #'adding-removing' }
 RPackage >> removeTag: aTag [
 
 	| tag |

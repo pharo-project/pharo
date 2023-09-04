@@ -1,6 +1,15 @@
 Extension { #name : #RPackage }
 
 { #category : #'*Deprecated12' }
+RPackage >> actualClassTags [
+
+	self deprecated: 'If you want to do those checks you should inline them in your code since this is too specific.'.
+	(self classTags size = 1 and: [ self classTags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
+
+	^ self classTags
+]
+
+{ #category : #'*Deprecated12' }
 RPackage >> addClassTag: tagName [
 
 	self deprecated: 'Use #ensureTag: instead' transformWith: '`@rcv addClassTag: `@arg' -> '`@rcv ensureTag: `@arg'.
@@ -79,22 +88,6 @@ RPackage >> extensionCategoriesForClass: aClass [
 		deprecated: 'Use #extensionProtocolsForClass: instead.'
 		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
 	^ self extensionProtocolsForClass: aClass
-]
-
-{ #category : #'*Deprecated12' }
-RPackage >> includesDefinedSelector: aSelector ofClassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
-
-	self deprecated: 'Use #includesDefinedSelector:ofClass: with the class directly'.
-	^ self includesDefinedSelector: aSelector ofClass: (self environment at: aClassName)
-]
-
-{ #category : #'*Deprecated12' }
-RPackage >> includesDefinedSelector: aSelector ofMetaclassName: aClassName [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
-
-	self deprecated: 'Use #includesDefinedSelector:ofClass: with the class side of the class directly'.
-	^ self includesDefinedSelector: aSelector ofClass: (self environment at: aClassName) class
 ]
 
 { #category : #'*Deprecated12' }
