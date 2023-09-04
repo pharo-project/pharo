@@ -256,7 +256,6 @@ PBImageBuilder50 >> createInitialObjects [
 	"We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
 	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
 	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
-	self bootstrapEnvironment at: #StrictSymbolComparison put: objectSpace falseObject.
 	
 	"We initialize the hash table sizes by hand.
 	The AST interpreter is too slow to interpret HashTableSizes>>#initialize"
@@ -273,14 +272,11 @@ PBImageBuilder50 >> createInitialObjects [
 	self bootstrapInterpreter evaluateCode:
 		'DangerousClassNotifier disable'.
 	self bootstrapInterpreter evaluateCode:
-		'StrictSymbolComparison := false.
 		Undeclared := Dictionary new.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk := SmalltalkImage basicNew.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk instVarAt: 1 put: SystemDictionary new.'.
-	self bootstrapInterpreter evaluateCode:
-		'Smalltalk globals at: #StrictSymbolComparison put: StrictSymbolComparison.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
 	self bootstrapInterpreter evaluateCode:
@@ -571,7 +567,6 @@ PBImageBuilder50 >> initializeImage [
 	self initializeSpecialObjectArray.
 
 	self bootstrapInterpreter evaluateCode: '
-	Smalltalk at: #StrictSymbolComparison put: false.
 	Smalltalk at: #Processor put: (ProcessorScheduler basicNew).
 	(Smalltalk at: #Processor) instVarAt: 1 put: ((1 to: 80) collect: [ :i | ProcessList new ])'.
 
