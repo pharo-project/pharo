@@ -835,7 +835,7 @@ StrikeFont >> displayLine: aString at: aPoint [
 ]
 
 { #category : #displaying }
-StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
+StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	| nextWide destX glyphInfo char charIndex |
 	destX := aPoint x.
 	charIndex := startIndex.
@@ -848,12 +848,13 @@ StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopI
 			to: nextWide -1
 			at: destX @ aPoint y
 			strikeFont: self
-			kern: kernDelta) x.
+			kern: kernDelta
+			scale: scale) x.
 			charIndex := nextWide].
 		nextWide > stopIndex ifFalse: [
 			char := aString at: charIndex.
-			fallbackFont displayString: aString on: aBitBlt from: charIndex to: charIndex at: destX @ aPoint y kern: kernDelta baselineY: baselineY.
-			destX := destX + (fallbackFont widthOf: char) + kernDelta.
+			fallbackFont displayString: aString on: aBitBlt from: charIndex to: charIndex at: destX @ aPoint y kern: kernDelta baselineY: baselineY scale: scale.
+			destX := destX + (((fallbackFont widthOf: char) + kernDelta) * scale).
 			charIndex := charIndex + 1]].
 	^ Array
 		with: charIndex
@@ -861,24 +862,7 @@ StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopI
 ]
 
 { #category : #displaying }
-StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-	"Draw the given string from startIndex to stopIndex
-	at aPoint on the (already prepared) BitBlt."
-
-		"Somewhat of a hack:
-	The scanner seem to only pass in runs of either all ASCII or all non-ASCII characters. If all characters are ascii, then it's safe to use basic rendering-method."
-	(aString hasWideCharacterFrom: startIndex to: stopIndex) ifTrue:  [^ self displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: aPoint y + self ascent.].
-
-	^ aBitBlt displayString: aString
-			from: startIndex
-			to: stopIndex
-			at: aPoint
-			strikeFont: self
-			kern: kernDelta
-]
-
-{ #category : #displaying }
-StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
+StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	"Draw the given string from startIndex to stopIndex
 	at aPoint on the (already prepared) BitBlt."
 
@@ -890,7 +874,8 @@ StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex 
 						to: stopIndex
 						at: aPoint
 						kern: kernDelta
-						baselineY: baselineY.].
+						baselineY: baselineY
+						scale: scale].
 
 	^ aBitBlt displayString: aString
 			from: startIndex
@@ -898,6 +883,7 @@ StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex 
 			at: aPoint
 			strikeFont: self
 			kern: kernDelta
+			scale: scale
 ]
 
 { #category : #emphasis }
@@ -1190,11 +1176,12 @@ StrikeFont >> installOn: aDisplayContext [
 ]
 
 { #category : #displaying }
-StrikeFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [
+StrikeFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	^aDisplayContext
 		installStrikeFont: self
 		foregroundColor: foregroundColor
 		backgroundColor: backgroundColor
+		scale: scale
 ]
 
 { #category : #emphasis }

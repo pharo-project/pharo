@@ -24,7 +24,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 
 	validExceptions := #( OSKeySymbols SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData
 	                      RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject FLFullBasicSerializationTest
-	                      SHRBStyleAttributionTest SHRBMockSharedPoolStyler ).
+	                      SHRBStyleAttributionTest SHRBMockSharedPoolStyler MyClassNonEmptyLeafUnused ).
 
 	remaining := classes asOrderedCollection reject: [ :each | validExceptions includes: each name ].
 	self assert: remaining isEmpty description: 'the following classes have unused class variables and should be cleaned: ' , remaining asString

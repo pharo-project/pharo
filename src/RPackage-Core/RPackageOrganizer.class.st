@@ -341,7 +341,7 @@ RPackageOrganizer >> ensurePackageOfExtensionProtocol: aProtocol [
 { #category : #registration }
 RPackageOrganizer >> ensureTagNamed: aTagName inPackageNamed: aPackageName [
 
-	^ (self ensurePackage: aPackageName) addClassTag: aTagName
+	^ (self ensurePackage: aPackageName) ensureTag: aTagName
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -628,7 +628,7 @@ RPackageOrganizer >> removeCategory: aCategory [
 	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
 		package name = category
 			ifTrue: [ self removePackage: package ]
-			ifFalse: [ package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | package removeClassTag: tag name ] ] ]
+			ifFalse: [ package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | package removeTag: tag ] ] ]
 ]
 
 { #category : #'system integration' }
@@ -766,7 +766,11 @@ RPackageOrganizer >> superclassOrder: category [
 { #category : #'system integration' }
 RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
 
-	(self ensurePackageMatching: ann categoryName) addClassTag: ann categoryName asSymbol
+	| package |
+	package := self ensurePackageMatching: ann categoryName.
+
+	"We extract the tag name from the category"
+	package ensureTag: (package toTagName: ann categoryName)
 ]
 
 { #category : #'system integration' }
@@ -778,15 +782,15 @@ RPackageOrganizer >> systemClassAddedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
-	| class newPackage newPackageName |
+	| class newPackage newCategoryName |
 	class := announcement classAffected.
 
-	newPackageName := announcement newCategory.
+	newCategoryName := announcement newCategory.
 
-	newPackageName = announcement oldCategory ifTrue: [ ^ self ].
-	newPackage := self ensurePackageMatching: newPackageName.
+	newCategoryName = announcement oldCategory ifTrue: [ ^ self ].
+	newPackage := self ensurePackageMatching: newCategoryName.
 
-	newPackage moveClass: class toTag: (newPackage addClassTag: newPackageName)
+	newPackage moveClass: class toTag: (newPackage ensureTag: (newPackage toTagName: newCategoryName))
 ]
 
 { #category : #'system integration' }

@@ -286,8 +286,8 @@ RPackageTest >> testRemoveEmptyTags [
 	| package class tag1 tag2 |
 	package := self createNewPackageNamed: #Test1.
 
-	tag1 := package addClassTag: #Tag1.
-	tag2 := package addClassTag: #Tag2.
+	tag1 := package ensureTag: #Tag1.
+	tag2 := package ensureTag: #Tag2.
 
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-Tag1'.
 

@@ -1,7 +1,9 @@
 Extension { #name : #BitBlt }
 
 { #category : #'*Graphics-Fonts' }
-BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta [
+BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale [
+
+	| xTable |
 
 	destY := aPoint y.
 	destX := aPoint x.
@@ -9,9 +11,12 @@ BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint 
 	"the following are not really needed, but theBitBlt primitive will fail if not set"
 	sourceX ifNil: [sourceX := 100].
 	width ifNil: [width := 100].
+	xTable := font xTable.
+	scale = 1 ifFalse: [
+		xTable := xTable collect: [ :x | x * scale ] ].
 
 	self primDisplayString: aString from: startIndex to: stopIndex
-			map: font characterToGlyphMap xTable: font xTable
+			map: font characterToGlyphMap xTable: xTable
 			kern: kernDelta.
 	^ destX@destY
 ]
@@ -46,7 +51,7 @@ BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint kern:
 ]
 
 { #category : #'*Graphics-Fonts' }
-BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta [
+BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale [
 	"If required, do a second pass with new rule and colorMap.
 	This happens when #installStrikeFont:foregroundColor:backgroundColor: sets rule 37 (rgbMul).
 	the desired effect is to do two bitblt calls. The first one is with rule 37 and special colormap.
@@ -58,18 +63,18 @@ BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint strik
 	"If combinationRule is rgbMul, we might need the special two-pass technique for component alpha blending.
 	If not, do it simply"
 	combinationRule = 37 "rgbMul" ifFalse: [
-		^self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta ].
+		^self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale ].
 
 	"We need to do a second pass. The colormap set is for use in the second pass."
 	secondPassMap := colorMap.
 	colorMap := sourceForm depth ~= destForm depth
 		ifTrue: [ self cachedFontColormapFrom: sourceForm depth to: destForm depth ].
-	answer := self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta.
+	answer := self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale.
 	colorMap := secondPassMap.
 	secondPassMap ifNotNil: [
 		prevRule := combinationRule.
 		combinationRule := 20. "rgbAdd"
-		self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta.
+		self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale.
 		combinationRule := prevRule ].
 	^answer
 ]
@@ -82,14 +87,22 @@ BitBlt >> installFont: aFont foregroundColor: foregroundColor backgroundColor: b
 
 { #category : #'*Graphics-Fonts' }
 BitBlt >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor [
+
+	^ self installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: 1
+]
+
+{ #category : #'*Graphics-Fonts' }
+BitBlt >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	| lastSourceDepth targetColor |
 	sourceForm ifNotNil:[lastSourceDepth := sourceForm depth].
 	sourceForm := aStrikeFont glyphs.
+	scale = 1 ifFalse: [
+		sourceForm := sourceForm scaledToSize: sourceForm extent * scale ].
 
 	"Ignore any halftone pattern since we use a color map approach here"
 	halftoneForm := nil.
 	sourceY := 0.
-	height := aStrikeFont height.
+	height := aStrikeFont height * scale.
 
 	sourceForm depth = 1 ifTrue: [
 		self combinationRule: Form paint.
