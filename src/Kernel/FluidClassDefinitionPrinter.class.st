@@ -313,7 +313,7 @@ FluidClassDefinitionPrinter >> packageOn: s [
 		crtab;
 		nextPutAll: 'package: ';
 		nextPut: $';
-		nextPutAll: ((forClass packageOrganizer packageOfClassNamed: forClass name)
+		nextPutAll: (forClass package
 				 ifNotNil: [ :package | package name ]
 				 ifNil: [ RPackage defaultPackageName ]);
 		nextPut: $'

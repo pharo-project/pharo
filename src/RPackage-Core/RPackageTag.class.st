@@ -72,7 +72,8 @@ RPackageTag >> hasClassNamed: aSymbol [
 
 { #category : #testing }
 RPackageTag >> includesClass: aClass [
-	^ self hasClassNamed: aClass name
+
+	^ self classes includes: aClass instanceSide
 ]
 
 { #category : #initialization }
