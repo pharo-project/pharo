@@ -266,7 +266,7 @@ Symbol class >> streamSpecies [
 { #category : #setting }
 Symbol class >> strictComparison [
 
-	^ StrictComparison ifNil: [ StrictComparison := false ]
+	^ StrictComparison ifNil: [ false ]
 ]
 
 { #category : #setting }
