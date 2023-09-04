@@ -27,8 +27,7 @@ MethodAddition >> compile [
 
 	self
 		createCompiledMethod;
-		installMethod;
-		notifyObservers.
+		installMethod.
 	^ selector
 ]
 
@@ -57,14 +56,15 @@ MethodAddition >> createCompiledMethod [
 
 { #category : #operations }
 MethodAddition >> installMethod [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod ]
-]
+	"For now we redo all the code of the installation to add the #eventSource property. This needs to change and I see two ways at that:
+	- Remove the use of this property
+	- Catch the announcement from the method doing the installation in the image and add the property
+	
+	The reason I want to change this is because I already found bugs in this code that were fixed in the Kernel but not here and that caused bugs for some users. "
 
-{ #category : #notifying }
-MethodAddition >> notifyObservers [
-
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass classify: selector under: protocolName ].
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		myClass addSelector: selector withMethod: compiledMethod.
+		myClass classify: selector under: protocolName ].
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod configuredWith: [ :event | event propertyAt: #eventSource put: #Monticello ] ]
 		ifFalse: [

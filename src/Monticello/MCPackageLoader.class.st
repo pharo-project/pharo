@@ -74,7 +74,6 @@ MCPackageLoader >> basicLoad [
 
 { #category : #private }
 MCPackageLoader >> basicLoadDefinitions [
-
 	"FIXME. Do a separate pass on loading class definitions as the very first thing.
 	This is a workaround for a problem with the so-called 'atomic' loading (you wish!)
 	which isn't atomic at all but mixes compilation of methods with reshapes of classes.
@@ -86,16 +85,17 @@ MCPackageLoader >> basicLoadDefinitions [
 	an extra pass ensures that methods are compiled against their new class definitions."
 
 	additions do: [ :each | self loadClassDefinition: each ] displayingProgress: 'Loading classes...'.
-	additions do: [ :each | self tryToLoad: each           ] displayingProgress: 'Compiling methods...'.
-	removals  do: [ :each | each unload                    ] displayingProgress: 'Cleaning up...'.
-	
+	additions do: [ :each | self tryToLoad: each ] displayingProgress: 'Compiling methods...'.
+	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
+
 	self shouldWarnAboutErrors ifTrue: [ self warnAboutErrors ].
 	errorDefinitions do: [ :each | each addMethodAdditionTo: methodAdditions ] displayingProgress: 'Reloading erroneous definitions...'.
-	
-	methodAdditions do: [ :each | each installMethod ].
-	methodAdditions do: [ :each | each notifyObservers ].
-	additions       do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'.
-	
+
+	"During a Monticello loading we want the announcements to happen at the end of the methods loading in order to have all classes of the package loaded before executing the class initializations.
+	So we suspend the announcements during the loading and we send them all at the end."
+	(SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ methodAdditions do: [ :method | method installMethod ] ]) do: [ :storedAnnouncement |
+		SystemAnnouncer announce: storedAnnouncement ].
+	additions do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'
 ]
 
 { #category : #private }
