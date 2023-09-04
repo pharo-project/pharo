@@ -35,17 +35,17 @@ TClyGenerateTestClass >> isValidClass: inputClass [
 
 { #category : #action }
 TClyGenerateTestClass >> newTestClassCategoryFor: aClass [
+
 	| tag |
-	tag := aClass package classTagForClass: aClass.
-	^ String
-		streamContents: [ :s |
-			s
-				nextPutAll: aClass package name;
-				nextPutAll: '-Tests'.
-			tag isRoot
-				ifFalse: [ s
-						nextPut: $-;
-						nextPutAll: tag name ] ]
+	tag := aClass packageTag.
+	^ String streamContents: [ :s |
+		  s
+			  nextPutAll: aClass package name;
+			  nextPutAll: '-Tests'.
+		  tag isRoot ifFalse: [
+			  s
+				  nextPut: $-;
+				  nextPutAll: tag name ] ]
 ]
 
 { #category : #accessing }

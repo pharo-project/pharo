@@ -63,7 +63,7 @@ RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 ]
 
 { #category : #preconditions }
-RBAddSubtreeTransformation >> applicabilityConditions [ 
+RBAddSubtreeTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&
@@ -81,12 +81,6 @@ RBAddSubtreeTransformation >> interval: anInterval with: aString from: aSelector
 	selector := aSelector.
 	interval := anInterval.
 	sourceCode := aString
-]
-
-{ #category : #preconditions }
-RBAddSubtreeTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

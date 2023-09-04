@@ -44,8 +44,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			self notifyRepackage: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol.
-
+			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
@@ -77,17 +76,7 @@ ClassDescription >> addProtocol: aProtocol [
 { #category : #'accessing - method dictionary' }
 ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
-	| priorMethodOrNil oldProtocol |
-	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
-	oldProtocol := self protocolOfSelector: selector.
-
-	"If there is no old protocol, then we want to ensure the method is at least in Protocol unclassified to not have protocolless methods."
-	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self classify: selector under: nil ] ].
-
-	self addSelectorSilently: selector withMethod: compiledMethod.
-	priorMethodOrNil
-		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
+	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: nil
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -267,7 +256,7 @@ ClassDescription >> classify: selector under: aProtocol [
 	
 	"If we try to classify the method as an extension of its own package, just unclassify the method to avoid any weird state where the method could be considered as an extension or not depending on the interpretation."
 	(self isProtocolExtensionFromTheSamePackage: aProtocol) ifTrue: [
-		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		ExtensionPointsOwningPackageNotification signalFor: self packageName.
 		^ self classify: selector under: Protocol unclassified ].
 
 	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
@@ -779,21 +768,6 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 ]
 
 { #category : #private }
-ClassDescription >> notifyRepackage: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol [
-
-	| oldPackage newPackage |
-	newProtocol = oldProtocol ifTrue: [ ^ self ].
-
-	newPackage := self packageOrganizer packageForProtocol: newProtocol name inClass: self.
-	oldPackage := self packageOrganizer packageForProtocol: oldProtocol name inClass: self.
-
-	"Announce recategorization"
-	newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ].
-
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
-]
-
-{ #category : #private }
 ClassDescription >> numberOfMethods [
 	"count all methods that are local (not comming from a trait)"
 	| num |
@@ -929,11 +903,11 @@ ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
 	Does nothing if the protocol does not exists."
 
+	| protocol |
 	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
-
-	(self ensureProtocol: aProtocol) in: [ :protocol |
-		protocol methodSelectors do: [ :sel | self removeSelector: sel ].
-		self removeProtocolIfEmpty: protocol ]
+	protocol := self ensureProtocol: aProtocol.
+	protocol methodSelectors do: [ :sel | self removeSelector: sel ].
+	self removeProtocolIfEmpty: protocol 
 ]
 
 { #category : #protocols }
@@ -961,8 +935,9 @@ ClassDescription >> removeSelector: selector [
 	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := priorMethod origin.
 	priorProtocol := self protocolOfSelector: selector.
-	self removeFromProtocols: selector.
 
+	priorMethod removeFromPackage.
+	self removeFromProtocols: selector.
 	super removeSelector: selector.
 
 	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin
@@ -984,7 +959,7 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 	
 	"We should not be able to have a protocol that is an extension of the same class so let's skip the rename."
 	(self isProtocolExtensionFromTheSamePackage: aNewProtocol) ifTrue: [ 
-		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		ExtensionPointsOwningPackageNotification signalFor: self packageName.
 		^ self ].
 
 		oldProtocol := self ensureProtocol: anOldProtocol.

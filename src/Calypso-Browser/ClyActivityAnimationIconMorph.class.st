@@ -49,7 +49,7 @@ ClyActivityAnimationIconMorph >> initialize [
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
 		listDirection: #leftToRight;
-		cellInset: 2.
+		cellInset: 2 scaledByDisplayScaleFactor.
 	progress := 1.
 	progressIconMorph := self currentIcon asMorph.
 	self addMorphBack: progressIconMorph.

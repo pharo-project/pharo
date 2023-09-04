@@ -46,7 +46,7 @@ RBRenameTemporaryVariableTransformation class >> rename: oldName to: newName in:
 ]
 
 { #category : #preconditions }
-RBRenameTemporaryVariableTransformation >> applicabilityConditions [ 
+RBRenameTemporaryVariableTransformation >> applicabilityPreconditions [ 
 	"check whether variable exists?
 	 test instance variables as well"
 
@@ -87,14 +87,6 @@ RBRenameTemporaryVariableTransformation >> class: aClass selector: aSelector ren
 	selector := aSelector.
 	variableName := anOldSymbol.
 	newVariableName := aNewSymbol
-]
-
-{ #category : #preconditions }
-RBRenameTemporaryVariableTransformation >> preconditions [
-	"check whether variable exists?
-	 test instance variables as well"
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

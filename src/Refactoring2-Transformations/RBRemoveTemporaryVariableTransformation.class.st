@@ -47,7 +47,7 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 ]
 
 { #category : #preconditions }
-RBRemoveTemporaryVariableTransformation >> applicabilityConditions [
+RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
 	^ self classExist
 	  & (RBCondition definesSelector: selector in: self definingClass)
@@ -70,12 +70,6 @@ RBRemoveTemporaryVariableTransformation >> classExist [
 	^ RBCondition
 		  withBlock: [ self definingClass isNotNil ]
 		  errorString: 'No such class or trait named ' , className asString
-]
-
-{ #category : #preconditions }
-RBRemoveTemporaryVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

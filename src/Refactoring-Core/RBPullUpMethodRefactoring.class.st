@@ -235,10 +235,10 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 				toClasses: subclasses.
 	self generateChangesFor: refactoring.
 	subclasses do: [:each | 	self generateChangesFor:
-										(RBAddMethodTransformRefactoring
-											addMethod: oldSource
-											toClass: each
-											inProtocols: oldProtocol)]
+										(RBAddMethodTransformation
+											sourceCode: oldSource
+											in: each
+											withProtocol: oldProtocol)]
 ]
 
 { #category : #transforming }
@@ -249,7 +249,7 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 { #category : #actions }
 RBPullUpMethodRefactoring >> generateChanges [
 
-	self primitiveExecute.
+	super generateChanges.
 
 	^ self changes
 ]
@@ -268,6 +268,15 @@ RBPullUpMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBPullUpMethodRefactoring >> privateTransform [
+	self
+		copyDownMethods;
+		pullUpMethods;
+		removePulledUpMethods;
+		removeDuplicateMethods
+]
+
+{ #category : #transforming }
 RBPullUpMethodRefactoring >> pullUp: aSelector [
 	| source refactoring |
 	source := class sourceCodeFor: aSelector.
@@ -279,10 +288,10 @@ RBPullUpMethodRefactoring >> pullUp: aSelector [
 				toClasses: (Array with: targetSuperclass).
 	self generateChangesFor: refactoring.
 	self generateChangesFor:
-		(RBAddMethodTransformRefactoring
-			addMethod: source
-			toClass: targetSuperclass 
-			inProtocols: (class protocolsFor: aSelector))
+		(RBAddMethodTransformation
+			sourceCode: source
+			in: targetSuperclass 
+			withProtocol: (class protocolsFor: aSelector))
 ]
 
 { #category : #initialization }
@@ -380,13 +389,4 @@ RBPullUpMethodRefactoring >> superClass: anObject [
 { #category : #initialization }
 RBPullUpMethodRefactoring >> targetClass [
 	^ class
-]
-
-{ #category : #transforming }
-RBPullUpMethodRefactoring >> transform [
-	self
-		copyDownMethods;
-		pullUpMethods;
-		removePulledUpMethods;
-		removeDuplicateMethods
 ]

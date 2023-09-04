@@ -59,7 +59,7 @@ RBRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 ]
 
 { #category : #preconditions }
-RBRenameMethodRefactoring >> applicabilityConditions [
+RBRenameMethodRefactoring >> applicabilityPreconditions [
 
 	^ self newNameDoesNotRequireRefactoringPreconditions not & (RBCondition
 		   withBlock: [ oldSelector numArgs = newSelector numArgs ]
@@ -68,7 +68,7 @@ RBRenameMethodRefactoring >> applicabilityConditions [
 ]
 
 { #category : #preconditions }
-RBRenameMethodRefactoring >> breakingChangeConditions [
+RBRenameMethodRefactoring >> breakingChangePreconditions [
 
 	^ self doesNotOverrideExistingMethodPrecondition 
 ]
@@ -77,14 +77,14 @@ RBRenameMethodRefactoring >> breakingChangeConditions [
 RBRenameMethodRefactoring >> generateChanges [
 
 	
-	self applicabilityConditions check ifFalse: [
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
-	self transform.
+	self privateTransform.
 	^ self changes
 ]
 
@@ -125,7 +125,7 @@ RBRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
 		   'The selector name has <1?not:> changed <1?:to #' , newSelector
 		   , '>') & (RBCondition
 		   withBlock: [
-		   permutation asArray ~= (1 to: oldSelector numArgs) asArray ]
+		   permutation asArray = (1 to: oldSelector numArgs) asArray ]
 		   errorString: 'The arguments are <1?:not >permuted')
 ]
 

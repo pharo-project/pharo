@@ -145,6 +145,17 @@ ClyClassCreationToolMorph >> printContext [
 ]
 
 { #category : #initialization }
+ClyClassCreationToolMorph >> resetStateForRemoval [
+	" A package was removed from the receiver's browser, update the receiver's text "
+
+	self package: nil.
+	textModel setInitialText: self classTemplate.
+	textMorph hasEditingConflicts: false.
+	textMorph changed.
+
+]
+
+{ #category : #initialization }
 ClyClassCreationToolMorph >> setUpModelFromContext [
 	super setUpModelFromContext.
 

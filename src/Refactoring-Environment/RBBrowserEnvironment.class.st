@@ -191,27 +191,12 @@ RBBrowserEnvironment >> cachedResultOf: aQuery [
 	^self queryCache at: aQuery ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
-RBBrowserEnvironment >> categories [
-	^ self systemDictionary organization categories select: [ :each | self includesCategory: each ]
-]
-
 { #category : #'accessing - classes' }
 RBBrowserEnvironment >> classNames [
 	| names |
 	names := IdentitySet new: 4096.
 	self classesDo: [ :each | names add: each instanceSide name ].
 	^ names
-]
-
-{ #category : #accessing }
-RBBrowserEnvironment >> classNamesFor: aCategoryName [
-	^ (self systemDictionary organization listAtCategoryNamed: aCategoryName) select: [ :each |
-		| class |
-		class := self systemDictionary at: each ifAbsent: [ nil ].
-		class notNil
-			and: [ (self includesClass: class)
-			or: [ self includesClass: class class ] ] ]
 ]
 
 { #category : #environments }
@@ -266,6 +251,12 @@ RBBrowserEnvironment >> classesDo: aBlock [
 			ifTrue: [aBlock value: each ] ]
 ]
 
+{ #category : #accessing }
+RBBrowserEnvironment >> classesInPackage: aPackage [
+
+	^ aPackage definedClasses select: [ :class | (self includesClass: class) or: [ self includesClass: class class ] ]
+]
+
 { #category : #cleaning }
 RBBrowserEnvironment >> cleanGarbageInCache [
 
@@ -314,11 +305,6 @@ RBBrowserEnvironment >> descriptionUntil: aNumber [
 { #category : #private }
 RBBrowserEnvironment >> environment [
 	^ self
-]
-
-{ #category : #environments }
-RBBrowserEnvironment >> forCategories: categoryList [
-	^RBCategoryEnvironment onEnvironment: self categories: categoryList
 ]
 
 { #category : #environments }
@@ -394,11 +380,6 @@ RBBrowserEnvironment >> implementorsMatching: aString [
 { #category : #environments }
 RBBrowserEnvironment >> implementorsOf: aSelector [
 	^RBSelectorEnvironment implementorsOf: aSelector in: self
-]
-
-{ #category : #testing }
-RBBrowserEnvironment >> includesCategory: aCategory [
-	^ true
 ]
 
 { #category : #testing }
@@ -529,7 +510,7 @@ RBBrowserEnvironment >> label [
 	^ label ifNil: [ self defaultLabel ] ifNotNil: [ label ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 RBBrowserEnvironment >> label: aString [
 	label := aString
 ]
@@ -587,21 +568,16 @@ RBBrowserEnvironment >> packageAt: aName [
 
 { #category : #'accessing - packages' }
 RBBrowserEnvironment >> packageAt: aName ifAbsent: absentBlock [
-	| package |
-	package := self packageOrganizer
-		packageNamed: aName ifAbsent: absentBlock.
 
-	^ (self includesCategory: aName)
-		ifTrue: [ package ]
-		ifFalse: absentBlock
+	^ self packages
+		  detect: [ :package | package name sameAs: aName ]
+		  ifNone: absentBlock
 ]
 
 { #category : #'accessing - packages' }
 RBBrowserEnvironment >> packages [
 
-	^ self packageOrganizer packages
-		select: [ :package |
-			self includesCategory: package name ]
+	^ self packageOrganizer packages select: [ :package | self includesPackage: package ]
 ]
 
 { #category : #'accessing - packages' }

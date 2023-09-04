@@ -73,7 +73,7 @@ RBInsertNewClassTransformation >> addClass: aName superclass: superclassName sub
 ]
 
 { #category : #preconditions }
-RBInsertNewClassTransformation >> applicabilityConditions [
+RBInsertNewClassTransformation >> applicabilityPreconditions [
 	"Superclass and subclasses shouldn't be metaclasses.
 	Each subclass should be immediate subclass of superclass."
 
@@ -106,14 +106,6 @@ RBInsertNewClassTransformation >> isNotGlobal [
 RBInsertNewClassTransformation >> isValidClassName [
 
 	^ RBCondition isValidClassName: className
-]
-
-{ #category : #preconditions }
-RBInsertNewClassTransformation >> preconditions [
-	"Superclass and subclasses shouldn't be metaclasses.
-	Each subclass should be immediate subclass of superclass."
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

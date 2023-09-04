@@ -104,6 +104,17 @@ RBRemoveSenderRefactoring >> preconditions [
 					true])
 ]
 
+{ #category : #transforming }
+RBRemoveSenderRefactoring >> privateTransform [
+	self inlineParseTree.
+	self renameConflictingTemporaries.
+	self renameSelfReferences.
+	self
+		renameConflictingTemporaries;
+		insertInlinedMethod;
+		compileMethod
+]
+
 { #category : #removing }
 RBRemoveSenderRefactoring >> remove: anInterval inMethod: aSelector forClass: aClass [
 	sourceSelector := aSelector.
@@ -123,15 +134,4 @@ RBRemoveSenderRefactoring >> storeOn: aStream [
 		nextPutAll: ' forClass: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBRemoveSenderRefactoring >> transform [
-	self inlineParseTree.
-	self renameConflictingTemporaries.
-	self renameSelfReferences.
-	self
-		renameConflictingTemporaries;
-		insertInlinedMethod;
-		compileMethod
 ]

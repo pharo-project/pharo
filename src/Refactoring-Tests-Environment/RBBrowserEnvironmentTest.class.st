@@ -32,15 +32,6 @@ RBBrowserEnvironmentTest class >> packageNamesUnderTest [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> categoriesFor: anEnvironment [
-	| allCategories |
-	allCategories := IdentitySet withAll: universalEnvironment categories.
-	allCategories removeAll: anEnvironment categories.
-	anEnvironment not categories do: [ :each | allCategories remove: each ifAbsent: [  ] ].
-	allCategories do: [ :each | self assertEmpty: (universalEnvironment classNamesFor: each) ]
-]
-
-{ #category : #private }
 RBBrowserEnvironmentTest >> classNamesFor: anEnvironment [
 	| classNames allClassNames |
 	classNames := IdentitySet new
@@ -109,6 +100,16 @@ RBBrowserEnvironmentTest >> numberSelectorsFor: aBrowserEnvironment [
 ]
 
 { #category : #private }
+RBBrowserEnvironmentTest >> packagesFor: anEnvironment [
+
+	| allPackages |
+	allPackages := IdentitySet withAll: universalEnvironment packages.
+	allPackages removeAll: anEnvironment packages.
+	anEnvironment not packages do: [ :package | allPackages remove: package ifAbsent: [  ] ].
+	allPackages do: [ :package | self assertEmpty: (universalEnvironment classesInPackage: package) ]
+]
+
+{ #category : #private }
 RBBrowserEnvironmentTest >> protocolsFor: aBrowserEnvironment [
 
 	aBrowserEnvironment classesAndSelectorsDo: [ :class :selector |
@@ -174,17 +175,6 @@ RBBrowserEnvironmentTest >> testAndEnvironmentWithStoreOn [
 { #category : #'tests - environments' }
 RBBrowserEnvironmentTest >> testBrowserEnvironment [
 	self universalTestFor: RBBrowserEnvironment new
-]
-
-{ #category : #'tests - environments' }
-RBBrowserEnvironmentTest >> testCategoryEnvironment [
-	| aCategoryEnvironment |
-	self skip: 'Use RBPackageEnvironment instead.'.
-	aCategoryEnvironment := RBCategoryEnvironment
-				onEnvironment: RBBrowserEnvironment new
-				categories: #(#'Kernel-Objects').
-	self universalTestFor: aCategoryEnvironment.
-	self assert: (aCategoryEnvironment implementorsOf: #printString) numberSelectors equals: 1
 ]
 
 { #category : #'tests - environments' }
@@ -533,7 +523,7 @@ RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
 	self storeStringFor: aBrowserEnvironment.
 	self classNamesFor: aBrowserEnvironment.
 	self copyFor: aBrowserEnvironment.
-	self categoriesFor: aBrowserEnvironment.
+	self packagesFor: aBrowserEnvironment.
 	self protocolsFor: aBrowserEnvironment.
 	self classesFor: aBrowserEnvironment.
 	self keysFor: aBrowserEnvironment.

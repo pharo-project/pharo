@@ -45,7 +45,7 @@ RBReplaceSubtreeTransformation class >> replace: oldSourceCode to: newSourceCode
 ]
 
 { #category : #preconditions }
-RBReplaceSubtreeTransformation >> applicabilityConditions [ 
+RBReplaceSubtreeTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&
@@ -72,11 +72,6 @@ RBReplaceSubtreeTransformation >> applicabilityConditions [
 						onError:
 							[ :string :pos | self refactoringError: 'Invalid source to add - ' , string ].
 					true ])
-]
-
-{ #category : #preconditions }
-RBReplaceSubtreeTransformation >> preconditions [
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

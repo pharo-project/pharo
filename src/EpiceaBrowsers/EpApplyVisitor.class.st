@@ -35,24 +35,6 @@ EpApplyVisitor >> visitBehaviorNameChange: aClassRenameChange [
 ]
 
 { #category : #visitor }
-EpApplyVisitor >> visitCategoryAddition: aPackageCreated [
-	environment organization addCategory: aPackageCreated categoryName
-]
-
-{ #category : #visitor }
-EpApplyVisitor >> visitCategoryRemoval: aPackageRemoved [
-	environment organization removeCategory: aPackageRemoved categoryName
-]
-
-{ #category : #visitor }
-EpApplyVisitor >> visitCategoryRename: aChange [
-
-	environment organization
-		renameCategory: aChange oldCategoryName
-		toBe: aChange newCategoryName
-]
-
-{ #category : #visitor }
 EpApplyVisitor >> visitClassAddition: aClassCreation [
 	(self compiler evaluate: aClassCreation classAdded definitionSource) fluidInstall.
 	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) fluidInstall.
@@ -115,13 +97,37 @@ EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 { #category : #visitor }
 EpApplyVisitor >> visitPackageAddition: aPackageAddition [
 
-	self packageOrganizer registerPackageNamed: aPackageAddition packageName
+	self packageOrganizer ensurePackage: aPackageAddition packageName
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitPackageRemoval: aPackageRemoval [
 
 	self packageOrganizer removePackage: aPackageRemoval packageName
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitPackageRename: aPackageRename [
+
+	environment organization renamePackage: aPackageRename oldPackageName to: aPackageRename newPackageName
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	environment organization ensureTagNamed: aPackageTagAddition tagName inPackageNamed: aPackageTagAddition packageName
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	environment organization removeTag: aPackageTagRemoval tagName fromPackage: aPackageTagRemoval packageName
+]
+
+{ #category : #visitor }
+EpApplyVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	environment organization renameTag: aPackageTagRename oldTagName to: aPackageTagRename newTagName inPackage: aPackageTagRename packageName
 ]
 
 { #category : #visitor }

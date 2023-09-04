@@ -590,25 +590,24 @@ ClyFullBrowserMorph >> restrictMethodVisibilityBy: aClassScope [
 
 { #category : #navigation }
 ClyFullBrowserMorph >> selectClass: aClass [
+
 	| foundItems classDefinition |
 	self changeStateBy: [
 		self switchToMetaLevelScope: aClass metaLevelScope.
 		foundItems := classView findItemsWith: { aClass instanceSide }.
-		foundItems ifNotEmpty: [
-			"we want ensure that selected package is the package of found class.
+		foundItems ifNotEmpty: [ "we want ensure that selected package is the package of found class.
 			If it is not then we will select required package"
 			classDefinition := foundItems anyOne systemDefinition.
-			(self isPackageSelected: classDefinition definingPackage)
-				ifTrue: [ ^self classSelection selectItems: foundItems ]].
+			(self isPackageSelected: classDefinition definingPackage) ifTrue: [ ^ self classSelection selectItems: foundItems ] ].
 
-		aClass packageTagName
-			ifNil: [ self selectPackage: aClass package]
-			ifNotNil: [ :tag | self selectPackage: aClass package atClassTag: tag ].
-		self packageSelection isEmpty ifTrue: [ ^self ].
+		aClass packageTag isRoot
+			ifTrue: [ self selectPackage: aClass package ]
+			ifFalse: [ self selectPackage: aClass package atClassTag: aClass packageTagName ].
+
+		self packageSelection isEmpty ifTrue: [ ^ self ].
 
 		self showsFullClassHierarchy ifTrue: [ self switchToFullClassHierarchyOf: aClass ].
-		self classSelection selectItemsWith: { aClass instanceSide }
-	]
+		self classSelection selectItemsWith: { aClass instanceSide } ]
 ]
 
 { #category : #navigation }
@@ -723,15 +722,14 @@ ClyFullBrowserMorph >> showsFullClassHierarchy [
 ClyFullBrowserMorph >> silentlySelectPackageOfSelectedClass [
 
 	| selectedClass |
-
-	self classSelection isEmpty ifTrue: [ ^self ].
+	self classSelection isEmpty ifTrue: [ ^ self ].
 
 	selectedClass := self classSelection lastSelectedItem actualObject.
 
 	packageView ignoreNavigationDuring: [
-		selectedClass packageTagName
-			ifNil: [ self selectPackage: selectedClass package]
-			ifNotNil: [ :tag | self selectPackage: selectedClass package atClassTag: tag ] ]
+		selectedClass packageTag isRoot
+			ifTrue: [ self selectPackage: selectedClass package ]
+			ifFalse: [ self selectPackage: selectedClass package atClassTag: selectedClass packageTagName ] ]
 ]
 
 { #category : #navigation }
@@ -870,4 +868,13 @@ ClyFullBrowserMorph >> switchToVariables [
 ClyFullBrowserMorph >> updateDefaultPackageFilter [
 
 	DefaultPackageFilter := packageView filterField getText ifEmpty: [ nil ]
+]
+
+{ #category : #updating }
+ClyFullBrowserMorph >> updateMethodEditorAfterPackageRemoval [
+	"A package was removed from the receiver, update the method editor accordingly"
+	
+	self tabManager tools
+		detect: [ :aTool | aTool class = ClyClassCreationToolMorph ]
+		ifFound: [ : methodEditor | methodEditor resetStateForRemoval ].
 ]

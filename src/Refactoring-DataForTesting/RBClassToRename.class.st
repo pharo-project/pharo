@@ -10,6 +10,18 @@ RBClassToRename class >> justForTest [
 ]
 
 { #category : #performing }
+RBClassToRename >> equallyDefinedInSubclass [
+
+	^ self method1 + 33
+]
+
+{ #category : #performing }
+RBClassToRename >> justSuperSendInSubclass [
+
+	^ self method1 + 33
+]
+
+{ #category : #performing }
 RBClassToRename >> method1 [
 	^self method2
 ]

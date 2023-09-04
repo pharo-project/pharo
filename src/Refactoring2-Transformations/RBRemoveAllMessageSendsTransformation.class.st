@@ -53,7 +53,7 @@ RBRemoveAllMessageSendsTransformation class >> model: aRBModel messageSend: aMes
 ]
 
 { #category : #preconditions }
-RBRemoveAllMessageSendsTransformation >> applicabilityConditions [
+RBRemoveAllMessageSendsTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]
@@ -87,12 +87,6 @@ RBRemoveAllMessageSendsTransformation >> messageSend: aMessageSend inMethod: aSe
 	message := aMessageSend
 ]
 
-{ #category : #preconditions }
-RBRemoveAllMessageSendsTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
 { #category : #executing }
 RBRemoveAllMessageSendsTransformation >> privateTransform [
 
@@ -122,11 +116,4 @@ RBRemoveAllMessageSendsTransformation >> storeOn: aStream [
 		nextPutAll: ''' inClass: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #executing }
-RBRemoveAllMessageSendsTransformation >> transform [
-
-	self checkPreconditions.
-	self privateTransform
 ]

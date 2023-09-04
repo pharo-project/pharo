@@ -40,7 +40,7 @@ MetacelloAtomicMonticelloResource >> setUpDependency [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: (Array
-				with: (MCOrganizationDefinition categories: (Array with: reference packageName asSymbol))
+				with: (MCOrganizationDefinition packageName: reference packageName)
 				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol instVarNames: #() comment: '')))
 		dependencies: (Array 
 				with: (MCVersionDependency 
@@ -70,7 +70,7 @@ MetacelloAtomicMonticelloResource >> setUpMonticelloRepository [
 				author: reference author
 				ancestors: #())
 			snapshot: (MCSnapshot fromDefinitions: (Array
-				with: (MCOrganizationDefinition categories: (Array with: reference packageName asSymbol))
+				with: (MCOrganizationDefinition packageName: reference packageName)
 				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: superclassName category: reference packageName asSymbol instVarNames: #() comment: '')))
 			dependencies: #()) ]
 ]
@@ -92,7 +92,7 @@ MetacelloAtomicMonticelloResource >> setUpNewerDependency [
 				author: reference author
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: (Array
-				with: (MCOrganizationDefinition categories: (Array with: reference packageName asSymbol))
+				with: (MCOrganizationDefinition packageName: reference packageName)
 				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol instVarNames: #() comment: '')))
 		dependencies: (Array 
 				with: (MCVersionDependency 

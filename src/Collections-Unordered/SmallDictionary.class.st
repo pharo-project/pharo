@@ -359,9 +359,12 @@ SmallDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 	I use findElementOrNil: to avoid looking up the key twice."
 	| index |
 	index := self findIndexForKey: key.
-	(index = 0)
+	index = 0
 		ifTrue:  [ self at: key put: initBlocktOrValue value]
-		ifFalse: [ (values at: index) in: [ :val | values at: index put: (updateBlock value: val) ] ]
+		ifFalse: [ 
+					| val |
+					val := (values at: index).
+					values at: index put: (updateBlock value: val) ]
 ]
 
 { #category : #accessing }

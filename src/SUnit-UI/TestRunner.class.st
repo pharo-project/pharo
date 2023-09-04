@@ -194,6 +194,7 @@ TestRunner >> buildClasses [
 		changeListSelection: #classAt:put:
 		menu: #classMenu:
 		keystroke: nil;
+		bindKeyCombination: PharoShortcuts current selectAllShortcut toAction: [ self selectAllUnitTests ];
 		yourself
 ]
 
@@ -254,6 +255,7 @@ TestRunner >> buildPackages [
 		changeListSelection: #packageAt:put:
 		menu: #packageMenu:
 		keystroke: nil;
+		bindKeyCombination: PharoShortcuts current selectAllShortcut toAction: [ self selectAllPackages ];
 		yourself
 ]
 
@@ -458,12 +460,7 @@ TestRunner >> errorSelected: anInteger [
 TestRunner >> errorTestSuites [
 	^ errorList
 		collect: [ :each |
-			self classForTestSuite new
-				in: [ :suite |
-							suite
-								addTest: each;
-								name: (self label: 'Error' forSuite: suite) ];
-				yourself ]
+			self suiteForTest: each  named: 'Error' ]
 ]
 
 { #category : #actions }
@@ -535,12 +532,7 @@ TestRunner >> failureMenu: aMenu [
 TestRunner >> failureTestSuites [
 	^ failedList
 		collect: [ :each |
-			self classForTestSuite new
-				in: [ :suite |
-							suite
-								addTest: each;
-								name: (self label: 'Failure' forSuite: suite) ];
-				yourself ]
+			self suiteForTest: each  named: 'Failures' ]
 ]
 
 { #category : #actions }
@@ -679,7 +671,7 @@ TestRunner >> initialize [
 	super initialize.
 	failedList := errorList := Array new.
 	SystemAnnouncer uniqueInstance weak
-		when: ClassAdded, CategoryAdded, ClassRemoved, CategoryRemoved, ClassRenamed, CategoryRenamed, ClassRecategorized
+		when: ClassAdded, PackageTagAnnouncement, ClassRemoved, ClassRenamed, ClassRecategorized
 			send: #update
 			to: self.
 	self update; resetResult
@@ -1106,14 +1098,24 @@ TestRunner >> storeResultIntoTestCases [
 { #category : #accessing }
 TestRunner >> suiteForAllSelected [
 	"Return the suite for all the selected test case classes"
-
-	^ self classForTestSuite new
-		in: [ :suite |
-			classesSelected
-				do: [ :each |
+	| suite | 
+	suite := self classForTestSuite new.	
+	classesSelected
+		do: [ :each |
 					each isAbstract
 						ifFalse: [ each addToSuiteFromSelectors: suite ] ].
-			suite name: (self label: 'Test' forSuite: suite) ]
+	suite name: (self label: 'Test' forSuite: suite).
+	^ suite
+]
+
+{ #category : #private }
+TestRunner >> suiteForTest: aTest named: aString [
+	| suite |
+	suite := self classForTestSuite new.
+	suite
+		addTest: aTest;
+		name: (self label: 'Error' forSuite: suite).
+	^ suite
 ]
 
 { #category : #updating }

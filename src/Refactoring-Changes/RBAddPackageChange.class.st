@@ -27,7 +27,7 @@ RBAddPackageChange >> asUndoOperation [
 ]
 
 { #category : #private }
-RBAddPackageChange >> primitiveExecute [
+RBAddPackageChange >> generateChanges [
 
 	self packageOrganizer ensurePackage: packageName
 ]

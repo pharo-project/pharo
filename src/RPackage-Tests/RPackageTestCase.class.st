@@ -49,7 +49,7 @@ RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 
 	| cls |
 	cls := self createNewClassNamed: aName inCategory: p name.
-	p addClassDefinition: cls.
+	p importClass: cls.
 	^ cls
 ]
 
@@ -57,8 +57,7 @@ RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 RPackageTestCase >> createNewPackageNamed: aName [
 
 	| pack |
-	self removePackage: aName.
-	pack := RPackage named: aName organizer: self organizer.
+	pack := self organizer ensurePackage: aName.
 	createdPackages add: pack.
 	^ pack
 ]
@@ -89,7 +88,7 @@ RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 
 	| cls |
 	cls := self createNewTraitNamed: aName.
-	p addClassDefinition: cls.
+	p importClass: cls.
 	^ cls
 ]
 

@@ -45,7 +45,7 @@ RBRemoveSubtreeTransformation class >> model: aRBModel code: aString from: aSele
 ]
 
 { #category : #preconditions }
-RBRemoveSubtreeTransformation >> applicabilityConditions [ 
+RBRemoveSubtreeTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&
@@ -72,12 +72,6 @@ RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
 	self className: aClassName.
 	selector := aSelector.
 	sourceCode := aString
-]
-
-{ #category : #preconditions }
-RBRemoveSubtreeTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

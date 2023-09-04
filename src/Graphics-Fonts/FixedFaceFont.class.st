@@ -1,17 +1,13 @@
 "
 I am a font for special purpose like password or fallback.
 I can show same form whenever someone requests any character.
-
-Variable displaySelector is future use to show a form dynamically.
-(Although it would be unnecessary...)
 "
 Class {
 	#name : #FixedFaceFont,
 	#superclass : #AbstractFont,
 	#instVars : [
 		'baseFont',
-		'substitutionCharacter',
-		'displaySelector'
+		'substitutionCharacter'
 	],
 	#category : #'Graphics-Fonts'
 }
@@ -52,75 +48,18 @@ FixedFaceFont >> descentKern [
 ]
 
 { #category : #displaying }
-FixedFaceFont >> displayErrorOn: aCanvas length: length at: aPoint kern: kernDelta [
-	| maskedString |
-	maskedString := String new: length.
-	maskedString atAllPut: substitutionCharacter.
+FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
+	| size |
+	size := stopIndex - startIndex + 1.
 	^ baseFont
-		displayString: maskedString
-		on: aCanvas
+		displayString: (String new: size withAll: substitutionCharacter)
+		on: aDisplayContext
 		from: 1
-		to: length
-		at: aPoint
-		kern: kernDelta
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayErrorOn: aCanvas length: length at: aPoint kern: kernDelta baselineY: baselineY [
-	| maskedString |
-	maskedString := String new: length.
-	maskedString atAllPut: substitutionCharacter.
-	^ baseFont
-		displayString: maskedString
-		on: aCanvas
-		from: 1
-		to: length
+		to: size
 		at: aPoint
 		kern: kernDelta
 		baselineY: baselineY
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayPasswordOn: aCanvas length: length at: aPoint kern: kernDelta [
-	| maskedString |
-	maskedString := String new: length.
-	maskedString atAllPut: substitutionCharacter.
-	^ baseFont
-		displayString: maskedString
-		on: aCanvas
-		from: 1
-		to: length
-		at: aPoint
-		kern: kernDelta
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayPasswordOn: aCanvas length: length at: aPoint kern: kernDelta baselineY: baselineY [
-	| maskedString |
-	maskedString := String new: length.
-	maskedString atAllPut: substitutionCharacter.
-	^ baseFont
-		displayString: maskedString
-		on: aCanvas
-		from: 1
-		to: length
-		at: aPoint
-		kern: kernDelta
-		baselineY: baselineY
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-	| size |
-	size := stopIndex - startIndex + 1.
-	^ self perform: displaySelector withArguments: (Array with: aDisplayContext with: size with: aPoint with: kernDelta with: aPoint y + self ascent)
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
-	| size |
-	size := stopIndex - startIndex + 1.
-	^ self perform: displaySelector withArguments: (Array with: aDisplayContext with: size with: aPoint with: kernDelta with: baselineY)
+		scale: scale
 ]
 
 { #category : #displaying }
@@ -157,7 +96,6 @@ FixedFaceFont >> emphasized: emph [
 
 { #category : #initialization }
 FixedFaceFont >> errorFont [
-	displaySelector := #displayErrorOn:length:at:kern:baselineY:.
 	substitutionCharacter := $?
 ]
 
@@ -190,8 +128,8 @@ FixedFaceFont >> initialize [
 ]
 
 { #category : #displaying }
-FixedFaceFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [
-	^baseFont installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor
+FixedFaceFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
+	^baseFont installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale
 ]
 
 { #category : #accessing }
@@ -211,7 +149,6 @@ FixedFaceFont >> passwordCharacter [
 
 { #category : #initialization }
 FixedFaceFont >> passwordFont [
-	displaySelector := #displayPasswordOn:length:at:kern:baselineY:.
 	substitutionCharacter := $*
 ]
 

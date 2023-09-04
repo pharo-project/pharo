@@ -41,7 +41,7 @@ RBRenameClassTransformation class >> rename: aClassName to: aNewClassName [
 ]
 
 { #category : #preconditions }
-RBRenameClassTransformation >> applicabilityConditions [
+RBRenameClassTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition withBlock: [
 		   self definingClass notNil and: [ self definingClass isMeta not ] ])
@@ -92,12 +92,6 @@ RBRenameClassTransformation >> isNotGlobal [
 RBRenameClassTransformation >> isValidClassName [
 
 	^ RBCondition isValidClassName: newClassName
-]
-
-{ #category : #preconditions }
-RBRenameClassTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

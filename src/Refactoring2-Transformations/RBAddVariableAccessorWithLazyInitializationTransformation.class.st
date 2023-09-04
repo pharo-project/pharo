@@ -49,9 +49,9 @@ RBAddVariableAccessorWithLazyInitializationTransformation class >> variable: aVa
 ]
 
 { #category : #preconditions }
-RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityConditions [ 
+RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityPreconditions [ 
 
-	^ super applicabilityConditions &
+	^ super applicabilityPreconditions &
 	(RBCondition withBlock: [
 		self verifyInitializationExpressionOf: self defaultValue.
 		true ])
@@ -115,11 +115,6 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterMethod 
 { #category : #accessing }
 RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [
 	^ self safeMethodNameFor: self definingClass basedOn: variableName asString
-]
-
-{ #category : #preconditions }
-RBAddVariableAccessorWithLazyInitializationTransformation >> preconditions [
-	^ self applicabilityConditions 
 ]
 
 { #category : #printing }

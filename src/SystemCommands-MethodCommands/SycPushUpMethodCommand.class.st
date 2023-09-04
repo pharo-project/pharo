@@ -32,7 +32,7 @@ SycPushUpMethodCommand >> executeRefactorings [
 	(RBPushUpMethodDriver
 		 model: model
 		 scopes: refactoringScopes
-		 pushUp: methods) execute
+		 pushUp: methods) runRefactoring
 ]
 
 { #category : #testing }

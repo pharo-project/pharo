@@ -95,6 +95,13 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> preconditions [
 					true])
 ]
 
+{ #category : #transforming }
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> privateTransform [
+	definingNode removeTemporaryNamed: name.
+	blockNodes do: [:each | each body addTemporaryNamed: name].
+	class compileTree: parseTree
+]
+
 { #category : #printing }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
@@ -122,13 +129,6 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> subblocksIn: aParseTr
 	^ searcher
 		executeTree: aParseTree
 		initialAnswer: OrderedCollection new
-]
-
-{ #category : #transforming }
-RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> transform [
-	definingNode removeTemporaryNamed: name.
-	blockNodes do: [:each | each body addTemporaryNamed: name].
-	class compileTree: parseTree
 ]
 
 { #category : #transforming }

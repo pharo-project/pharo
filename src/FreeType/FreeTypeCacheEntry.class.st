@@ -8,6 +8,7 @@ Class {
 		'font',
 		'charCode',
 		'type',
+		'scale',
 		'object',
 		'previousLink'
 	],
@@ -23,7 +24,8 @@ FreeTypeCacheEntry >> = aFreeTypeCacheEntry [
 	^font = aFreeTypeCacheEntry font and: [
 		charCode = aFreeTypeCacheEntry charCode
 			and: [type = aFreeTypeCacheEntry type
-				and:[object = aFreeTypeCacheEntry object]]]
+				and: [scale = aFreeTypeCacheEntry scale
+					and:[object = aFreeTypeCacheEntry object]]]]
 ]
 
 { #category : #accessing }
@@ -86,6 +88,18 @@ FreeTypeCacheEntry >> previousLink: anObject [
 	"Set the value of previousLink"
 
 	previousLink := anObject
+]
+
+{ #category : #accessing }
+FreeTypeCacheEntry >> scale [
+
+	^ scale
+]
+
+{ #category : #accessing }
+FreeTypeCacheEntry >> scale: anObject [
+
+	scale := anObject
 ]
 
 { #category : #accessing }

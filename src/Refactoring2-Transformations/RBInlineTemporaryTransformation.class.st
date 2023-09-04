@@ -29,7 +29,7 @@ RBInlineTemporaryTransformation class >> model: aRBNamespace inline: anInterval 
 ]
 
 { #category : #preconditions }
-RBInlineTemporaryTransformation >> applicabilityConditions [ 
+RBInlineTemporaryTransformation >> applicabilityPreconditions [ 
 
 	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition withBlock:
@@ -59,11 +59,6 @@ RBInlineTemporaryTransformation >> inline: anInterval from: aSelector in: aClass
 	class := self model classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval
-]
-
-{ #category : #preconditions }
-RBInlineTemporaryTransformation >> preconditions [
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

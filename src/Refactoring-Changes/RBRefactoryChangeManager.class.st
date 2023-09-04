@@ -147,18 +147,17 @@ RBRefactoryChangeManager >> clearUndoRedoList [
 
 { #category : #initialization }
 RBRefactoryChangeManager >> connectToChanges [
+
 	SystemAnnouncer uniqueInstance weak
-		when: CategoryAdded,
-			CategoryRemoved,
-			CategoryRenamed,
-			ClassAdded,
-			ClassModifiedClassDefinition,
-			ClassRemoved,
-			ClassRenamed,
-			MethodAdded,
-			MethodModified,
-			MethodRemoved,
-			ProtocolAnnouncement
+		when: PackageTagAnnouncement,
+				ClassAdded,
+				ClassModifiedClassDefinition,
+				ClassRemoved,
+				ClassRenamed,
+				MethodAdded,
+				MethodModified,
+				MethodRemoved, 
+				ProtocolAnnouncement
 		send: #update:
 		to: self
 ]
@@ -204,6 +203,7 @@ RBRefactoryChangeManager >> lastUndoPointer [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> performChange: aRefactoringChange [
+	
 	self ignoreChangesWhile: [ self addUndo: aRefactoringChange execute ]
 ]
 

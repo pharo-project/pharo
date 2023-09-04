@@ -41,6 +41,14 @@ RBPushDownClassVariableRefactoring >> preconditions [
 					true])
 ]
 
+{ #category : #transforming }
+RBPushDownClassVariableRefactoring >> privateTransform [
+
+	class removeClassVariable: variableName.
+	destinationClass ifNil: [ ^ self ].
+	destinationClass addClassVariable: variableName
+]
+
 { #category : #preconditions }
 RBPushDownClassVariableRefactoring >> signalMultipleReferenceError [
 	self signalReferenceError: ('Multiple subclasses reference <1s>'
@@ -69,12 +77,4 @@ RBPushDownClassVariableRefactoring >> signalStillReferencedError [
 	self signalReferenceError: ('<1p> has references to <2s>'
 				expandMacrosWith: class
 				with: variableName)
-]
-
-{ #category : #transforming }
-RBPushDownClassVariableRefactoring >> transform [
-
-	class removeClassVariable: variableName.
-	destinationClass ifNil: [ ^ self ].
-	destinationClass addClassVariable: variableName
 ]

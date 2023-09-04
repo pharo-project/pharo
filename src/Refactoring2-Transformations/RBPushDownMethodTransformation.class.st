@@ -41,23 +41,32 @@ RBPushDownMethodTransformation >> allClasses [
 ]
 
 { #category : #preconditions }
-RBPushDownMethodTransformation >> applicabilityConditions [ 
+RBPushDownMethodTransformation >> applicabilityPreconditions [ 
 
+	| condition |
+	condition := selectors
+		             inject: (RBCondition true)
+		             into: [ :cond :each |
+			             cond & (RBCondition definesSelector: each in: class)].
+	^ condition 
+]
+
+{ #category : #preconditions }
+RBPushDownMethodTransformation >> breakingChangePreconditions [
+	"Check that that none of the subclasses of `class` is doing a supercall to any of the selectors
+	that will be pushed down.
+	
+	Also, to ensure that an instance of the class is not sent a message which is pushed down,  forces that 
+	we can only push down methods from abstract class. 
+	This should be controlled via a flag on the ui.
+	"
+	
 	| condition |
 	condition := selectors
 		             inject: (RBCondition isAbstractClass: class)
 		             into: [ :cond :each |
-			             cond & (RBCondition definesSelector: each in: class) 
-							&  (RBCondition subclassesOf: class referToSelector: each) not ].
+			             cond & (RBCondition subclassesOf: class isDoingASuperSendFor: each) not ].
 	^ condition 
-]
-
-{ #category : #converting }
-RBPushDownMethodTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
 ]
 
 { #category : #executing }
@@ -71,12 +80,6 @@ RBPushDownMethodTransformation >> classes: aCollection [
 	classes := aCollection collect: [ :cls |
 		self model classObjectFor: cls.
 	]
-]
-
-{ #category : #preconditions }
-RBPushDownMethodTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #transforming }
@@ -96,7 +99,7 @@ RBPushDownMethodTransformation >> pushDown: aSelector [
 				model: self model
 				sourceCode: code
 				in: each
-				withProtocols: protocols ])
+				withProtocol: protocols ])
 ]
 
 { #category : #api }

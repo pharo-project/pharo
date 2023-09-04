@@ -216,8 +216,8 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior defaultPackageName: aSymbol [
 
 	| packageName |
-	packageName := ((self packageOrganizer packageForProtocol: aMethodInAnObsoleteBehavior protocolName inClass: aMethodInAnObsoleteBehavior methodClass) ifNil: [
-		                aMethodInAnObsoleteBehavior methodClass package ]) name.
+	packageName := ((self packageOrganizer packageForProtocol: aMethodInAnObsoleteBehavior protocol) ifNil: [ aMethodInAnObsoleteBehavior methodClass package ])
+		               name.
 
 	"If the method is local, (belongs to the class being removed) then the package was wrong,  and we fix it"
 	packageName = RPackage defaultPackageName ifTrue: [ packageName := aSymbol ].
@@ -227,24 +227,6 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 				  protocol: aMethodInAnObsoleteBehavior protocolName;
 				  package: packageName;
 				  yourself))
-]
-
-{ #category : #'announcement handling' }
-EpMonitor >> categoryAdded: aCategoryAdded [
-
-	self addEvent: (EpCategoryAddition named: aCategoryAdded categoryName)
-]
-
-{ #category : #'announcement handling' }
-EpMonitor >> categoryRemoved: aPackageCategoryRemoved [
-
-	self addEvent: (EpCategoryRemoval named: aPackageCategoryRemoved categoryName)
-]
-
-{ #category : #'announcement handling' }
-EpMonitor >> categoryRenamed: aCategoryRenamed [
-
-	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldCategoryName newName: aCategoryRenamed newCategoryName)
 ]
 
 { #category : #'announcement handling' }
@@ -446,9 +428,7 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 
 	self addEvent: (EpMethodRemoval method: (aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
 				  protocol: aMethodRemovedAnnouncement protocol name;
-				  package:
-					  ((self packageOrganizer packageForProtocol: aMethodRemovedAnnouncement protocol name inClass: aMethodRemovedAnnouncement methodAffected methodClass)
-						   ifNil: [ aMethodRemovedAnnouncement methodAffected methodClass package ]) name;
+				  package: ((self packageOrganizer packageForProtocol: aMethodRemovedAnnouncement protocol) ifNil: [ aMethodRemovedAnnouncement methodClass package ]) name;
 				  yourself))
 ]
 
@@ -465,9 +445,27 @@ EpMonitor >> packageRemoved: packageRemoved [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> packageRenamed: aCategoryRenamed [
+EpMonitor >> packageRenamed: aPackageRenamed [
 
-	self addEvent: (EpCategoryRename oldName: aCategoryRenamed oldName newName: aCategoryRenamed newName)
+	self addEvent: (EpPackageRename oldName: aPackageRenamed oldName newName: aPackageRenamed newName)
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageTagAdded: aPackageTagAddition [
+
+	self addEvent: (EpPackageTagAddition tagName: aPackageTagAddition tag name packageName: aPackageTagAddition package name)
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageTagRemoved: aPackageTagRemoved [
+
+	self addEvent: (EpPackageTagRemoval tagName: aPackageTagRemoved tag name packageName: aPackageTagRemoved package name)
+]
+
+{ #category : #'announcement handling' }
+EpMonitor >> packageTagRenamed: aPackageTagRenamed [
+
+	self addEvent: (EpPackageTagRename oldName: aPackageTagRenamed oldName newName: aPackageTagRenamed newName packageName: aPackageTagRenamed package name)
 ]
 
 { #category : #'announcement handling' }
@@ -522,30 +520,25 @@ EpMonitor >> subscribeToJobAnnouncer [
 { #category : #private }
 EpMonitor >> subscribeToSystemAnnouncer [
 
-	{	CategoryAdded -> #categoryAdded:.
-		CategoryRemoved -> #categoryRemoved:.
-		CategoryRenamed -> #categoryRenamed:.
-		PackageAdded -> #packageAdded:.
-		PackageRenamed -> #packageRenamed:.
-		PackageRemoved -> #packageRemoved:.
-		ClassAdded-> #behaviorAdded:.
-		ClassRemoved->#behaviorRemoved:.
-		MethodAdded -> #methodAdded:.
-		MethodRemoved -> #methodRemoved:.
-		ProtocolAdded -> #protocolAdded:.
-		ProtocolRemoved -> #protocolRemoved:.
-		ClassModifiedClassDefinition -> #behaviorModified:.
-		MethodModified -> #methodModified:.
-		ClassRecategorized -> #classRecategorized:.
-		ClassRenamed -> #classRenamed:.
-		ClassCommented -> #classCommented:.
-		MethodRecategorized -> #methodRecategorized:.
-
-	} do: [ :pair |
-		systemAnnouncer weak
-			when: pair key
-			send: pair value
-			to: self ]
+	{
+		(PackageAdded -> #packageAdded:).
+		(PackageRenamed -> #packageRenamed:).
+		(PackageRemoved -> #packageRemoved:).
+		(PackageTagAdded -> #packageTagAdded:).
+		(PackageTagRemoved -> #packageTagRemoved:).
+		(PackageTagRenamed -> #packageTagRenamed:).
+		(ClassAdded -> #behaviorAdded:).
+		(ClassRemoved -> #behaviorRemoved:).
+		(MethodAdded -> #methodAdded:).
+		(MethodRemoved -> #methodRemoved:).
+		(ProtocolAdded -> #protocolAdded:).
+		(ProtocolRemoved -> #protocolRemoved:).
+		(ClassModifiedClassDefinition -> #behaviorModified:).
+		(MethodModified -> #methodModified:).
+		(ClassRecategorized -> #classRecategorized:).
+		(ClassRenamed -> #classRenamed:).
+		(ClassCommented -> #classCommented:).
+		(MethodRecategorized -> #methodRecategorized:) } do: [ :pair | systemAnnouncer weak when: pair key send: pair value to: self ]
 ]
 
 { #category : #private }

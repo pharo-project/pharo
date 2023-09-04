@@ -176,8 +176,8 @@ ClyQueryViewMorph >> addColumn: columnId [
 { #category : #controlling }
 ClyQueryViewMorph >> adoptForDialog [
 	(self areItemsLoaded and: [self itemCount < 10])
-		ifTrue: [ self height: 100 ]
-		ifFalse: [ self height: 300; enableFilterUsing: ClyRegexPattern new]
+		ifTrue: [ self height: 100 scaledByDisplayScaleFactor ]
+		ifFalse: [ self height: 300 scaledByDisplayScaleFactor; enableFilterUsing: ClyRegexPattern new]
 ]
 
 { #category : #controlling }

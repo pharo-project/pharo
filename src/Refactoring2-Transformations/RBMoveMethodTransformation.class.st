@@ -67,7 +67,8 @@ RBMoveMethodTransformation class >> selector: aSymbol class: aClass variable: aV
 
 { #category : #transforming }
 RBMoveMethodTransformation >> abstractVariables [
-	self abstractVariablesRefactoring transform.
+
+	self abstractVariablesRefactoring generateChanges.
 	parseTree := self abstractVariablesRefactoring parseTree
 ]
 
@@ -85,6 +86,22 @@ RBMoveMethodTransformation >> abstractVariablesRefactoring [
 RBMoveMethodTransformation >> addSelfReturn [
 	self hasOnlySelfReturns ifTrue: [^self].
 	parseTree addSelfReturn
+]
+
+{ #category : #preconditions }
+RBMoveMethodTransformation >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition withBlock: [
+			   self buildParseTree.
+			   self checkForPrimitiveMethod.
+			   self checkForSuperReferences.
+			   self checkAssignmentsToVariable.
+			   self getClassesToMoveTo.
+			   self getArgumentNameForSelf.
+			   self checkTemporaryVariableNames.
+			   self getNewMethodName.
+			   true ])
 ]
 
 { #category : #transforming }
@@ -325,21 +342,6 @@ RBMoveMethodTransformation >> isMovingToInstVar [
 RBMoveMethodTransformation >> needsToReplaceSelfReferences [
 	^self hasSelfReferences
 		or: [self abstractVariablesRefactoring hasVariablesToAbstract]
-]
-
-{ #category : #transforming }
-RBMoveMethodTransformation >> preconditions [
-	^ (RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self buildParseTree.
-					self checkForPrimitiveMethod.
-					self checkForSuperReferences.
-					self checkAssignmentsToVariable.
-					self getClassesToMoveTo.
-					self getArgumentNameForSelf.
-					self checkTemporaryVariableNames.
-					self getNewMethodName.
-					true])
 ]
 
 { #category : #executing }

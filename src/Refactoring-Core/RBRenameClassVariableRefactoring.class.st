@@ -51,6 +51,14 @@ RBRenameClassVariableRefactoring >> preconditions [
 			& (RBCondition isGlobal: newName asString in: self model) not
 ]
 
+{ #category : #transforming }
+RBRenameClassVariableRefactoring >> privateTransform [
+	class
+		renameClassVariable: variableName
+		to: newName
+		around: [self renameReferences]
+]
+
 { #category : #initialization }
 RBRenameClassVariableRefactoring >> rename: aVarName to: aName in: aClass [
 	self variable: aVarName class: aClass.
@@ -82,12 +90,4 @@ RBRenameClassVariableRefactoring >> storeOn: aStream [
 		nextPutAll: ''' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBRenameClassVariableRefactoring >> transform [
-	class
-		renameClassVariable: variableName
-		to: newName
-		around: [self renameReferences]
 ]

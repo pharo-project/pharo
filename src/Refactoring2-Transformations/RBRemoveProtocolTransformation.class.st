@@ -43,7 +43,7 @@ RBRemoveProtocolTransformation class >> protocol: aString inClass: aClassName [
 ]
 
 { #category : #preconditions }
-RBRemoveProtocolTransformation >> applicabilityConditions [
+RBRemoveProtocolTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [
@@ -63,12 +63,6 @@ RBRemoveProtocolTransformation >> classExist [
 	^ RBCondition
 		  withBlock: [ self definingClass isNotNil ]
 		  errorString: 'Class named ' , className , ' does not exist' 
-]
-
-{ #category : #preconditions }
-RBRemoveProtocolTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

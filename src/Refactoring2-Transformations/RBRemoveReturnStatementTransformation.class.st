@@ -48,7 +48,7 @@ RBRemoveReturnStatementTransformation class >> return: anExpression inMethod: aS
 ]
 
 { #category : #preconditions }
-RBRemoveReturnStatementTransformation >> applicabilityConditions [
+RBRemoveReturnStatementTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]
@@ -68,12 +68,6 @@ RBRemoveReturnStatementTransformation >> classExist [
 		  withBlock: [ self definingClass isNotNil ]
 		  errorString:
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
-]
-
-{ #category : #preconditions }
-RBRemoveReturnStatementTransformation >> preconditions [
-
-	^ self applicabilityConditions 
 ]
 
 { #category : #executing }

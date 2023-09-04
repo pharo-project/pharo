@@ -14,21 +14,33 @@ The changes that will be applied to the system are collected as refactoring chan
 
 Example: 
 This creates a new namespace on the default environment (all system classes):
+
+```
  model := RBNamespace onEnvironment: RBBrowserEnvironment new.
+```
 
 This creates a Refactoring operation for adding a class, with me as the namespace model:
+
+```
     refactoring := RBAddClassRefactoring
         model: model
         addClass: #SomeClass
         superclass: #Object
         subclasses: {}
         category: #Category.
+```
 
 This will do a ""dry run"", only collect the changes of this refactoring:
+
+```
     refactoring primitiveExecute.
+```
 
 Now can ask me for this list of changes:
+
+```
    model changes.
+```
 this acutally gives a composite refactory change that holds a list of all single refacoring changes.
 
 Note, some of my methods for querying method senders and implementors don't work well for Trait methods, because we don't have yet modeling classes for Traits and some refactoring operations don't support refactorings on trait methods.
@@ -289,6 +301,15 @@ RBNamespace >> classObjectFor: anObject [
 	anObject isString
 		ifTrue: [ ^ self classNamed: anObject asSymbol ].
 	^ anObject
+]
+
+{ #category : #'accessing - classes' }
+RBNamespace >> classesReferencingClass: aRBClass [ 
+
+	| classes |
+	classes := Set new. 
+	self allReferencesToClass: aRBClass do: [ :meth | classes add: meth methodClass ].
+	^ classes
 ]
 
 { #category : #changes }
@@ -579,13 +600,14 @@ RBNamespace >> privateReferencesTo: aSelector inPackages: aColl [
 
 { #category : #private }
 RBNamespace >> privateRootClasses [
+
 	| classes |
 	classes := OrderedCollection new.
-	Class rootsOfTheWorld do: [ :each |
+	{ ProtoObject } do: [ :each |
 		| class |
 		class := self classFor: each.
-		(class notNil and: [ class superclass isNil ])
-			ifTrue: [ classes add: class ] ].
+		(class notNil and: [ class superclass isNil ]) ifTrue: [
+			classes add: class ] ].
 	^ classes
 ]
 

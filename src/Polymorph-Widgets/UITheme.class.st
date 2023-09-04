@@ -414,7 +414,7 @@ UITheme >> buttonLabelForText: aTextOrString [
 				t := TextMorph new newContents: aTextOrString.
 				t
 					extent: t optimalExtent;
-					margins: (Margin left: 0 right: 0 top: 0 bottom: 1);
+					margins: (Margin left: 0 right: 0 top: 0 bottom: 1 scaledByDisplayScaleFactor);
 					lock]
 ]
 
@@ -422,12 +422,13 @@ UITheme >> buttonLabelForText: aTextOrString [
 UITheme >> buttonLabelInsetFor: aButton [
 	"Answer the inset to use for a button's label."
 
-	|left right|
+	|left top right bottom|
 	^aButton wantsRoundedCorners
-		ifTrue: [left := ((aButton roundedCorners includesAnyOf: #(1 2)) ifTrue: [8] ifFalse: [4]).
-				right := ((aButton roundedCorners includesAnyOf: #(3 4)) ifTrue: [8] ifFalse: [4]).
-				Margin left: left top: 2 right: right bottom: 2]
-		ifFalse: [3@2]
+		ifTrue: [left := ((aButton roundedCorners includesAnyOf: #(1 2)) ifTrue: [8] ifFalse: [4]) scaledByDisplayScaleFactor.
+				right := ((aButton roundedCorners includesAnyOf: #(3 4)) ifTrue: [8] ifFalse: [4]) scaledByDisplayScaleFactor.
+				top := bottom := 2 scaledByDisplayScaleFactor.
+				Margin left: left top: top right: right bottom: bottom]
+		ifFalse: [(3@2) scaledByDisplayScaleFactor]
 ]
 
 { #category : #defaults }
@@ -441,7 +442,7 @@ UITheme >> buttonMinHeight [
 UITheme >> buttonMinWidth [
 	"Answer the minumum width of a button for this theme."
 
-	^24
+	^24 scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles - buttons' }
@@ -600,7 +601,7 @@ UITheme >> checkboxButtonNormalBorderStyleFor: aChecboxButton [
 	"Return the normal checkbox button borderStyle for the given button."
 
 	^BorderStyle simple
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: Color transparent
 ]
 
@@ -901,7 +902,7 @@ UITheme >> configureWindowBorderFor: aWindow [
 
 	aWindow roundedCorners: #(1 2 3 4).
 	aWindow borderStyle: (BorderStyle
-		width: 1 color: Color lightGray)
+		width: 1 scaledByDisplayScaleFactor color: Color lightGray)
 ]
 
 { #category : #'border-styles' }
@@ -963,7 +964,7 @@ UITheme >> configureWindowLabelAreaFrameFor: aWindow [
 		cellPositioning: #topCenter;
 		hResizing: #spaceFill;
 		wrapCentering: #topLeft;
-		layoutInset: (Margin left: 0 top: windowBorderWidth right: 0 bottom: 1).
+		layoutInset: (Margin left: 0 top: windowBorderWidth right: 0 bottom: 1 scaledByDisplayScaleFactor).
 	frame := LayoutFrame identity bottomFraction: 0 ; topOffset: aWindow labelHeight negated.
 	aWindow labelArea layoutFrame: frame
 ]
@@ -988,7 +989,7 @@ UITheme >> controlButtonDisabledFillStyleFor: aButton [
 UITheme >> controlButtonLabelInsetFor: aButton [
 	"Answer the inset to use for a control button's label."
 
-	^2
+	^2 scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles - buttons' }
@@ -1563,7 +1564,7 @@ UITheme >> drawTextAdornmentFor: aPluggableTextMorph color: aColor on: aCanvas [
 
 	|bounds size fillStyle|
 	bounds := aPluggableTextMorph innerBounds.
-	size := 25.
+	size := 25 scaledByDisplayScaleFactor.
 	fillStyle := (GradientFillStyle ramp: {
 			0.0->(self backgroundColor alpha: 0.01).
 			0.8->aColor.
@@ -1594,7 +1595,7 @@ UITheme >> drawWindowDiffuseDropShadowFor: aSystemWindow on: aCanvas [
 	or := self windowActiveDropShadowOffsetRectangleFor: aSystemWindow.
 	o := or bottom.
 	(aSystemWindow roundedCorners includesAnyOf: #(2 3))
-		ifTrue: [o := o + 2].
+		ifTrue: [o := o + 2 scaledByDisplayScaleFactor].
 	b := aSystemWindow bounds expandBy: or.
 	gc := {Color black alpha: 0.6. Color transparent}.
 	r := b topLeft extent: o asPoint.
@@ -1666,25 +1667,25 @@ UITheme >> drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas [
 	(aSystemWindow owner notNil and: [aSystemWindow owner isHandMorph])
 		ifTrue: [^self]. "skip if being dragged"
 	blOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 2])
-		ifTrue: [7] ifFalse: [1].
+		ifTrue: [7 scaledByDisplayScaleFactor] ifFalse: [1 scaledByDisplayScaleFactor].
 	brOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 3])
-		ifTrue: [7] ifFalse: [1].
+		ifTrue: [7 scaledByDisplayScaleFactor] ifFalse: [1 scaledByDisplayScaleFactor].
 	trOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 4])
-		ifTrue: [7] ifFalse: [1].
+		ifTrue: [7 scaledByDisplayScaleFactor] ifFalse: [1 scaledByDisplayScaleFactor].
 	aCanvas
 		fillRectangle: (aSystemWindow bounds bottomLeft + (blOffset @ 0)
-						corner: aSystemWindow bounds bottomRight - (brOffset @ -1))
+						corner: aSystemWindow bounds bottomRight - (brOffset @ -1 scaledByDisplayScaleFactor))
 		fillStyle: aSystemWindow shadowColor;
 		fillRectangle: (aSystemWindow bounds topRight + (0 @ trOffset)
-						corner: aSystemWindow bounds bottomRight + (1 @ brOffset negated))
+						corner: aSystemWindow bounds bottomRight + (1 scaledByDisplayScaleFactor @ brOffset negated))
 		fillStyle: aSystemWindow shadowColor.
 	aCanvas
 		clipBy: (aSystemWindow bounds bottomRight - brOffset
-			corner: aSystemWindow bounds bottomRight + (1@1))
+			corner: aSystemWindow bounds bottomRight + (1@1) scaledByDisplayScaleFactor)
 			during: [:c | ((RoundedBorderStyle new
 							baseColor: aSystemWindow shadowColor;
-							width: 1) cornerRadius: brOffset - 1)
-							frameRectangle: (aSystemWindow bounds translateBy: 1)
+							width: 1 scaledByDisplayScaleFactor) cornerRadius: brOffset - 1 scaledByDisplayScaleFactor)
+							frameRectangle: (aSystemWindow bounds translateBy: 1 scaledByDisplayScaleFactor)
 							on: c]
 ]
 
@@ -1695,7 +1696,7 @@ UITheme >> dropListButtonLabelFor: aDropList [
 	^AlphaImageMorph new
 		image: (ScrollBarMorph
 			arrowOfDirection: #bottom
-			size: aDropList buttonWidth - 3
+			size: aDropList buttonWidth - 3 scaledByDisplayScaleFactor
 			color: aDropList paneColor darker);
 		enabled: aDropList enabled
 ]
@@ -1704,7 +1705,7 @@ UITheme >> dropListButtonLabelFor: aDropList [
 UITheme >> dropListControlButtonWidth [
 	"Answer the width of a drop list control button for this theme."
 
-	^ 18
+	^ 18 scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles' }
@@ -1735,8 +1736,8 @@ UITheme >> dropListFocusIndicatorCornerRadiusFor: aDropList [
 	for the drop list for themes that support this."
 
 	^aDropList wantsRoundedCorners
-		ifTrue: [7]
-		ifFalse: [2]
+		ifTrue: [7 scaledByDisplayScaleFactor]
+		ifFalse: [2 scaledByDisplayScaleFactor]
 ]
 
 { #category : #defaults }
@@ -1750,7 +1751,7 @@ UITheme >> dropListFont [
 UITheme >> dropListInsetFor: aDropList [
 	"Answer the inset to use for drop-list layout."
 
-	^ Margin left: 6 top: 0 right: 0 bottom: 0
+	^ Margin left: 6 scaledByDisplayScaleFactor top: 0 right: 0 bottom: 0
 ]
 
 { #category : #'border-styles' }
@@ -1772,7 +1773,7 @@ UITheme >> dropListNormalListBorderStyleFor: aDropList [
 	"Return the normal borderStyle for the list of the given given drop list"
 
 	^BorderStyle inset
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: aDropList paneColor
 ]
 
@@ -1816,7 +1817,7 @@ UITheme >> errorPopperBackgroundColor [
 UITheme >> expanderTitleControlButtonWidth [
 	"Answer the width of an expander title control button for this theme."
 
-	^20
+	^20 scaledByDisplayScaleFactor
 ]
 
 { #category : #defaults }
@@ -1871,8 +1872,8 @@ UITheme >> focusIndicatorCornerRadiusFor: aMorph [
 	for the morph for themes that support this."
 
 	^aMorph wantsRoundedCorners
-		ifTrue: [6]
-		ifFalse: [2]
+		ifTrue: [6 scaledByDisplayScaleFactor]
+		ifFalse: [2 scaledByDisplayScaleFactor]
 ]
 
 { #category : #'morph creation' }
@@ -1927,7 +1928,7 @@ UITheme >> groupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a group panel."
 
 	^ SimpleBorderStyle new
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: ((self baseColorFor: aGroupPanel))
 ]
 
@@ -2079,7 +2080,7 @@ UITheme >> listNormalBorderStyleFor: aList [
 	"Return the normal borderStyle for the given list"
 
 	^BorderStyle simple
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: aList paneColor
 ]
 
@@ -2452,7 +2453,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 		cornerStyle: (self textEntryCornerStyleIn: aThemedMorph);
 		hResizing: #spaceFill;
 		vResizing: #rigid;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		setBalloonText: helpText;
 		entryCompletion: anEntryCompletion.
 	^pt
@@ -2702,7 +2703,7 @@ UITheme >> newColumnIn: aThemedMorph for: controls [
 		vResizing: #spaceFill;
 		fillStyle: Color transparent; "non pane color tracking"
 		changeTableLayout;
-		cellInset: 8;
+		cellInset: 8 scaledByDisplayScaleFactor;
 		cellPositioning: #leftCenter.
 	controls do: [:m | answer addMorphBack: m].
 	^answer
@@ -2796,7 +2797,7 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 	^ BorderedMorph new
 		fillStyle: Color transparent;
 		borderStyle: (SimpleBorderStyle new
-			 width: 1;
+			 width: 1 scaledByDisplayScaleFactor;
 			baseColor: (self baseSelectionColorFor: aMorph));
 		bounds: aMorph focusBounds
 ]
@@ -3069,7 +3070,7 @@ UITheme >> newListIn: aThemedMorph for: aModel list: listSelector selected: getS
 		autoDeselect: false;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		color: Color white;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		getEnabledSelector: enabledSel;
@@ -3093,7 +3094,7 @@ UITheme >> newListIn: aThemedMorph for: aModel list: listSelector selected: getS
 		autoDeselect: false;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		color: Color white;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		getIconSelector: iconSelector;
@@ -3143,7 +3144,7 @@ UITheme >> newMorphListIn: aThemedMorph for: aModel list: listSelector getSelect
 		autoDeselect: false;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		color: Color white;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		getEnabledSelector: enabledSel;
@@ -3204,8 +3205,8 @@ UITheme >> newPanelIn: aThemedMorph [
 
 	^PanelMorph new
 		changeTableLayout;
-		layoutInset: 4;
-		cellInset: 8;
+		layoutInset: 4 scaledByDisplayScaleFactor;
+		cellInset: 8 scaledByDisplayScaleFactor;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		yourself
 ]
@@ -3253,7 +3254,7 @@ UITheme >> newRowIn: aThemedMorph for: controls [
 		fillStyle: Color transparent; "non pane color tracking"
 		changeTableLayout;
 		listDirection: #leftToRight;
-		cellInset: 8;
+		cellInset: 8 scaledByDisplayScaleFactor;
 		cellPositioning: #center.
 	controls do: [:m | answer addMorphBack: m].
 	^answer
@@ -3296,8 +3297,8 @@ UITheme >> newSeparatorIn: aThemedMorph [
 
 	^SeparatorMorph new
 		fillStyle: Color transparent;
-		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1);
-		extent: 2@2;
+		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1 scaledByDisplayScaleFactor);
+		extent: (2@2) scaledByDisplayScaleFactor;
 		hResizing: #spaceFill
 ]
 
@@ -3316,7 +3317,7 @@ UITheme >> newSliderIn: aThemedMorph for: aModel getValue: getSel setValue: setS
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap;
 		setBalloonText: helpText;
-		minHeight: 16
+		minHeight: 16 scaledByDisplayScaleFactor
 ]
 
 { #category : #'morph creation' }
@@ -3405,8 +3406,8 @@ UITheme >> newTaskbarThumbnailIn: aThemedMorph for: aWindow [
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
 		changeTableLayout;
-		layoutInset: 8;
-		cellInset: 4;
+		layoutInset: 8 scaledByDisplayScaleFactor;
+		cellInset: 4 scaledByDisplayScaleFactor;
 		addMorphBack: thumb;
 		addMorphBack: ((self
 			buttonLabelForText: (aWindow labelString truncateWithElipsisTo: 50))
@@ -3435,7 +3436,7 @@ UITheme >> newTextEditorIn: aThemedMorph for: aModel getText: getSel setText: se
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		removeProperty: #theme
 ]
 
@@ -3508,7 +3509,7 @@ UITheme >> newTitleIn: aThemedMorph label: aString for: control [
 		self newLabelIn: aThemedMorph label: aString.
 		control})
 		cellPositioning: #leftCenter;
-		cellInset: 2
+		cellInset: 2 scaledByDisplayScaleFactor
 ]
 
 { #category : #'morph creation' }
@@ -3529,7 +3530,7 @@ UITheme >> newToolSpacerIn: aThemedMorph [
 	^Morph new
 		borderWidth: 0;
 		color: Color transparent;
-		extent: 3@3
+		extent: (3@3) scaledByDisplayScaleFactor
 ]
 
 { #category : #'morph creation' }
@@ -3538,8 +3539,8 @@ UITheme >> newToolbarHandleIn: aThemedMorph [
 
 	^PanelMorph new
 		fillStyle: Color transparent; "non pane color tracking"
-		borderStyle: (BorderStyle raised baseColor: Color blue; width: 1);
-		extent: 4@3;
+		borderStyle: (BorderStyle raised baseColor: Color blue; width: 1 scaledByDisplayScaleFactor);
+		extent: (4@3) scaledByDisplayScaleFactor;
 		vResizing: #spaceFill
 ]
 
@@ -3550,7 +3551,7 @@ UITheme >> newToolbarIn: aThemedMorph [
 	|bar|
 	bar := PanelMorph new
 		changeTableLayout;
-		layoutInset: 0@1;
+		layoutInset: (0@1) scaledByDisplayScaleFactor;
 		listDirection: #leftToRight;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap.
@@ -3604,7 +3605,7 @@ UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getS
 		keystroke: nil;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		"color: Color white;"
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		autoDeselect: false;
@@ -3617,8 +3618,8 @@ UITheme >> newVerticalSeparatorIn: aThemedMorph [
 
 	^SeparatorMorph new
 		fillStyle: Color transparent;
-		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1);
-		extent: 2@2;
+		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1 scaledByDisplayScaleFactor);
+		extent: (2@2) scaledByDisplayScaleFactor;
 		vResizing: #spaceFill
 ]
 
@@ -3718,7 +3719,7 @@ UITheme >> plainGroupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a plain group panel."
 
 	^SimpleBorderStyle new
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: Color transparent
 ]
 
@@ -3753,7 +3754,7 @@ UITheme >> progressBarBorderStyleFor: aProgressBar [
 	|c|
 	c := self progressBarColorFor: aProgressBar.
 	^BorderStyle simple
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: c
 ]
 
@@ -3944,7 +3945,7 @@ UITheme >> scrollPaneNormalBorderStyleFor: aScrollPane [
 	"Return the normal borderStyle for the given scroll pane."
 
 	^BorderStyle simple
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: aScrollPane paneColor
 ]
 
@@ -4117,7 +4118,7 @@ UITheme >> scrollbarNormalThumbBorderStyleFor: aScrollbar [
 	"Return the normal thumb borderStyle for the given scrollbar."
 
 	^ BorderStyle simple
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: Color transparent
 ]
 
@@ -4301,7 +4302,7 @@ UITheme >> sliderNormalBorderStyleFor: aSlider [
 	"Return the normal slider borderStyle for the given text editor."
 
 	^BorderStyle inset
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: aSlider paneColor
 ]
 
@@ -4387,7 +4388,10 @@ UITheme >> tabGroupCornerStyleIn: aThemedMorph [
 { #category : #defaults }
 UITheme >> tabLabelInsetFor: aButton [
 	"Answer the inset to use for a tab label."
-	^ Margin left: 8 top: 2 right: 8 bottom: 2
+	| left top right bottom |
+	left := right := 8 scaledByDisplayScaleFactor.
+	top := bottom := 2 scaledByDisplayScaleFactor.
+	^ Margin left: left top: top right: right bottom: bottom
 ]
 
 { #category : #'border-styles' }
@@ -4418,7 +4422,7 @@ UITheme >> tabLabelSelectedFillStyleFor: aTabLabel [
 { #category : #'border-styles' }
 UITheme >> tabPanelBorderStyleFor: aTabGroup [
 	^ Pharo3TabPanelBorderStyle new
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: ((self darkBaseColorFor: aTabGroup));
 		tabSelector: aTabGroup tabSelectorMorph
 ]
@@ -4434,7 +4438,7 @@ UITheme >> tabSelectorCellInsetFor: aTabSelector [
 UITheme >> tabSelectorMorphMinExtentFor: aTabSelectorMorph [
 	"Answer the min extent of the given tab selector."
 
-	^aTabSelectorMorph basicMinExtent + (8 @ 1)
+	^aTabSelectorMorph basicMinExtent + (8 @ 1) scaledByDisplayScaleFactor
 ]
 
 { #category : #'fill-styles' }
@@ -4753,7 +4757,9 @@ UITheme >> treeLineColorsFrom: aColor [
 UITheme >> treeLineDashes [
 	"Answer the dash lengths to use for the tree lines."
 
-	^#(1 1)
+	| length |
+	length := 1 scaledByDisplayScaleFactor.
+	^ { length. length }
 ]
 
 { #category : #defaults }
@@ -4990,7 +4996,7 @@ UITheme >> windowDiffuseDropShadowOffsetRectangleFor: aSystemWindow [
 	of the the active window bounds for the drop shadow area
 	when the difuse style is used."
 
-	^8@4 corner: 8@10
+	^ (8@4) scaledByDisplayScaleFactor corner: (8@10) scaledByDisplayScaleFactor
 ]
 
 { #category : #'fill-styles' }
@@ -5144,7 +5150,7 @@ UITheme >> windowPaneBorderStyleFor: aMorph in: aSystemWindow [
 
 	^BorderStyle simple
 		color: aSystemWindow paneColor;
-		width: (aMorph borderWidth = 0 ifTrue: [0] ifFalse: [1])
+		width: (aMorph borderWidth = 0 ifTrue: [0] ifFalse: [1 scaledByDisplayScaleFactor])
 ]
 
 { #category : #'border-styles' }

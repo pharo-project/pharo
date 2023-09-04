@@ -140,7 +140,7 @@ FluidClassDefinitionPrinter >> expandedDefinitionString [
 		  self sharedVariablesOn: s.
 		  self sharedPoolsOn: s.
 
-		  (forClass package classTagForClass: forClass) ifNotNil: [ :t |
+		  forClass packageTag ifNotNil: [ :t |
 			  | tag |
 			  tag := t name.
 			  tag = forClass package name
@@ -215,7 +215,7 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 		self slotsOn: s.
 		s crtab.
 
-		(forClass package classTagForClass: forClass) ifNotNil: [:t |
+		forClass packageTag ifNotNil: [:t |
 							tag := t name.
 							tag = forClass package name
 								ifFalse:  [
@@ -307,12 +307,15 @@ FluidClassDefinitionPrinter >> msgAndClassNameOn: s [
 
 { #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> packageOn: s [
+	"The code to get the package name is not nice but it is possible we are asking the definition to a class that was uninstalled from the system and in that case it does not know its package anymore. And some code in the image expect to have the package of the class with the same name instead."
 
 	s
 		crtab;
-	 	nextPutAll: 'package: ';
+		nextPutAll: 'package: ';
 		nextPut: $';
-		nextPutAll: forClass package packageName;
+		nextPutAll: ((forClass packageOrganizer packageOfClassNamed: forClass name)
+				 ifNotNil: [ :package | package name ]
+				 ifNil: [ RPackage defaultPackageName ]);
 		nextPut: $'
 ]
 
@@ -398,7 +401,7 @@ FluidClassDefinitionPrinter >> slotsOn: s [
 FluidClassDefinitionPrinter >> tagOn: s [
 
 	| tag |
-	(forClass package classTagForClass: forClass) ifNotNil: [ :t |
+	forClass packageTag ifNotNil: [ :t |
 		tag := t name.
 		tag = forClass package name ifFalse: [
 			s crtab.

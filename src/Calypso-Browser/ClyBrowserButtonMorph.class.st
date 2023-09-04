@@ -32,7 +32,7 @@ ClyBrowserButtonMorph >> handlesMouseOver: evt [
 ClyBrowserButtonMorph >> initialize [
 	super initialize.
 	self
-		layoutInset: 4@0
+		layoutInset: (4@0) scaledByDisplayScaleFactor
 ]
 
 { #category : #installing }

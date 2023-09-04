@@ -10,5 +10,5 @@ Class {
 { #category : #'class initialization' }
 PackageTagRemoved class >> initialize [
 
-	self deprecatedAliases: { 'ClassTagRemoved' }
+	self deprecatedAliases: { #ClassTagRemoved . #CategoryRemoved }
 ]

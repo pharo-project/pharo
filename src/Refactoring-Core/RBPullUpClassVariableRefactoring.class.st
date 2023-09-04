@@ -12,6 +12,14 @@ RBPullUpClassVariableRefactoring >> preconditions [
 	^(RBCondition isMetaclass: class) not
 ]
 
+{ #category : #transforming }
+RBPullUpClassVariableRefactoring >> privateTransform [
+	| subclass |
+	subclass := self subclassDefiningVariable.
+	subclass removeClassVariable: variableName.
+	class addClassVariable: variableName
+]
+
 { #category : #'private - accessing' }
 RBPullUpClassVariableRefactoring >> subclassDefiningVariable [
 	| subclasses |
@@ -21,12 +29,4 @@ RBPullUpClassVariableRefactoring >> subclassDefiningVariable [
 	subclasses size > 1
 		ifTrue: [ self refactoringError: 'Multiple subclasses define ' , variableName ].
 	^ subclasses asArray first
-]
-
-{ #category : #transforming }
-RBPullUpClassVariableRefactoring >> transform [
-	| subclass |
-	subclass := self subclassDefiningVariable.
-	subclass removeClassVariable: variableName.
-	class addClassVariable: variableName
 ]

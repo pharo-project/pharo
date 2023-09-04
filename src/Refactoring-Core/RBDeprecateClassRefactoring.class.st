@@ -39,10 +39,10 @@ RBDeprecateClassRefactoring class >> model: aRBSmalltalk deprecate: aClass in: a
 RBDeprecateClassRefactoring >> addMethod: source to: aClass in: aProtocol [
 
 	self generateChangesFor: 
-		(RBAddMethodTransformRefactoring 
-			addMethod: source
-			toClass: aClass
-			inProtocols: aProtocol)
+		(RBAddMethodTransformation
+			sourceCode: source
+			in: aClass
+			withProtocol: aProtocol)
 ]
 
 { #category : #initialization }
@@ -56,7 +56,7 @@ RBDeprecateClassRefactoring >> className: aName newName: aNewName [
 RBDeprecateClassRefactoring >> classSideExtensionMethodsOf: anRBClass [
 
 	^ anRBClass realClass classSide localMethods
-		select: #isExtension
+		select: [ :m | m isExtension ]
 		thenCollect: [ :each | anRBClass classSide methodFor: each selector ]
 ]
 
@@ -128,6 +128,22 @@ RBDeprecateClassRefactoring >> preconditions [
 			& (RBCondition isValidClassName: newName)
 			& (RBCondition isGlobal: newName in: self model)) |
 			(RBCondition withBlock: [ self refactoringError: newName , ' is not a valid class name'])
+]
+
+{ #category : #transforming }
+RBDeprecateClassRefactoring >> privateTransform [
+
+	self shouldFixSubclasses
+		ifTrue: [ self renameSuperclassOfSubclasses.
+			self convertDeprecatedToSubclass ].
+
+	self renameReferences.
+
+	self shouldCopyExtensions
+		ifTrue: [ self copyExtensionMethods ].
+
+	self shouldRemoveExtensions
+		ifTrue: [ self removeExtensionMethods ]
 ]
 
 { #category : #transforming }
@@ -207,20 +223,4 @@ RBDeprecateClassRefactoring >> storeOn: aStream [
 		nextPutAll: ' to: #';
 		nextPutAll: newName;
 		nextPut: $)
-]
-
-{ #category : #transforming }
-RBDeprecateClassRefactoring >> transform [
-
-	self shouldFixSubclasses
-		ifTrue: [ self renameSuperclassOfSubclasses.
-			self convertDeprecatedToSubclass ].
-
-	self renameReferences.
-
-	self shouldCopyExtensions
-		ifTrue: [ self copyExtensionMethods ].
-
-	self shouldRemoveExtensions
-		ifTrue: [ self removeExtensionMethods ]
 ]

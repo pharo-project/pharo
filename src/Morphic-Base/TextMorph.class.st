@@ -606,7 +606,7 @@ TextMorph >> editor [
 TextMorph >> editorClass [
 	"Answer the class used to create the receiver's editor"
 
-	^TextEditor
+	^RubTextEditor
 ]
 
 { #category : #accessing }
@@ -983,7 +983,7 @@ TextMorph >> installEditorToReplace: priorEditor [
 
 	| stateArray |
 	priorEditor ifNotNil: [stateArray := priorEditor stateArray].
-	editor := self editorClass forMorph: self.
+	editor := self editorClass forTextArea: (RubEditingArea new setTextWith: self contents; yourself).
 	priorEditor ifNotNil: [editor stateArrayPut: stateArray].
 	self selectionChanged.
 	^ editor
@@ -1102,9 +1102,7 @@ TextMorph >> manageCursor [
 		ifTrue: [^ self
 				resetBlinkCursor;
 				stopBlinking].
-	TextEditor blinkingCursor
-		ifTrue: [self startBlinking]
-		ifFalse: [self ensureCursor]
+	self startBlinking
 ]
 
 { #category : #accessing }
@@ -1756,7 +1754,8 @@ TextMorph >> updateFromParagraph [
 	editor ifNotNil:
 			[oldEditor := editor.
 			sel := editor selectionInterval.
-			editor storeSelectionInParagraph].
+			self flag: #noideaAPI.
+			"editor storeSelectionInParagraph"].
 	text := paragraph text.
 	paragraph textStyle = textStyle
 		ifTrue: [self fit]

@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #preconditions }
-RBChangeMethodNameTransformation >> applicabilityConditions [
+RBChangeMethodNameTransformation >> applicabilityPreconditions [
 		
 	^ (RBCondition definesSelector: oldSelector in: class)
 				& (RBCondition isValidMethodName: newSelector for: class).
@@ -103,7 +103,7 @@ RBChangeMethodNameTransformation >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
 	| conditions |
-	conditions := self applicabilityConditions. 
+	conditions := self applicabilityPreconditions. 
 
 	conditions := self implementors
 		inject: conditions into: [ :condition :each |
@@ -115,7 +115,7 @@ RBChangeMethodNameTransformation >> preconditions [
 { #category : #support }
 RBChangeMethodNameTransformation >> privateTransform [
 	self renameImplementors.
-	self renameMessageSends.
+	self replaceMessageSends.
 	self removeRenamedImplementors
 ]
 
@@ -166,19 +166,19 @@ RBChangeMethodNameTransformation >> renameMap: aColl [
 ]
 
 { #category : #support }
-RBChangeMethodNameTransformation >> renameMessageSends [
-	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
-]
-
-{ #category : #support }
-RBChangeMethodNameTransformation >> renameMessageSendsIn: classes [
-	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
-]
-
-{ #category : #support }
 RBChangeMethodNameTransformation >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self model classObjectFor: aClass.
 	permutation := aMap
+]
+
+{ #category : #support }
+RBChangeMethodNameTransformation >> replaceMessageSends [
+	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
+]
+
+{ #category : #support }
+RBChangeMethodNameTransformation >> replaceMessageSendsIn: classes [
+	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
 ]

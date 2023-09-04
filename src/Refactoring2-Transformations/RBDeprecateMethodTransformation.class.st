@@ -47,6 +47,12 @@ Class {
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
+{ #category : #displaying }
+RBDeprecateMethodTransformation class >> basicMenuItemString [
+
+	^ 'Deprecate method'
+]
+
 { #category : #api }
 RBDeprecateMethodTransformation class >> deprecateMethod: aSelector in: aClass using: newSelector [
 	^ self new
@@ -54,6 +60,22 @@ RBDeprecateMethodTransformation class >> deprecateMethod: aSelector in: aClass u
 		in: aClass
 		using: newSelector;
 		yourself
+]
+
+{ #category : #testing }
+RBDeprecateMethodTransformation class >> isTransformation [
+
+	^ true
+]
+
+{ #category : #api }
+RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aSelector in: aClass [
+	"partial initialized refactoring"
+	
+	^ self new
+		  model: aRBSmalltalk;
+		  deprecateMethod: aSelector in: aClass;
+		  yourself
 ]
 
 { #category : #api }
@@ -67,51 +89,56 @@ RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aS
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodTransformation >> applicabilityConditions [ 
+RBDeprecateMethodTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-		& (RBCondition canUnderstand: newSelector in: class)
-		& (RBCondition
-							withBlock: [selector numArgs = newSelector numArgs or: [ newSelector numArgs = 0 ]]
-							errorString: 'The new selectors should have the same number of arguments as the old one, or not have them at all')
+	^ (RBCondition withBlock: [ selector ~= newSelector ]) 
+	  & (RBCondition withBlock: [ RBCondition checkMethodName: newSelector] ) 
+	  & (RBCondition definesSelector: selector in: class)
+	  
 ]
 
 { #category : #executing }
 RBDeprecateMethodTransformation >> buildTransformations [
-	| node parseTree method start |
 
+	| node parseTree method |
 	method := class methodFor: selector.
 	parseTree := method parseTree.
-	start := parseTree body statements first start.
 	node := self parserClass parseExpression: self callDeprecationMethod.
-	^ OrderedCollection new add: (RBAddSubtreeTransformation
-		interval: (29 to: 29)
-		with: self callDeprecationMethod
-		from: selector
-		in: class);
-		yourself
+	parseTree body addNodeFirst: node.
+
+	^ { (RBAddMethodTransformation
+			 sourceCode: parseTree newSource
+			 in: class
+			 withProtocol: method protocols) } 
 ]
 
 { #category : #accessing }
 RBDeprecateMethodTransformation >> callDeprecationMethod [
 
 	^ 'self
-		deprecated: ''Use ' , newSelector storeString , ' instead''
+		deprecated: ''Use ' , newSelector asString , ' instead of current one''
 		on: 	''' , Date today asString , '''
 		in: ''' , SystemVersion current imageVersionString , ''''
 ]
 
 { #category : #api }
-RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass using: newSel [
+RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass [
+	"partial initialization"
+	
 	selector := aSelector asSymbol.
-	newSelector := newSel asSymbol.
 	class := self model classObjectFor: aClass
 ]
 
-{ #category : #preconditions }
-RBDeprecateMethodTransformation >> preconditions [
+{ #category : #api }
+RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass using: newSel [
+	self deprecateMethod: aSelector in: aClass.
+	newSelector := newSel asSymbol.
+]
 
-	^ self applicabilityConditions 
+{ #category : #api }
+RBDeprecateMethodTransformation >> newSelector: aSymbol [
+
+	newSelector := aSymbol
 ]
 
 { #category : #printing }

@@ -49,20 +49,23 @@ ClassDescription >> packageFromOrganizer: anOrganizer [
 ]
 
 { #category : #'*RPackage-Core' }
-ClassDescription >> packageTag [
-	"Package tags are sub categories of packages to have a better organization of the packages. I return my package tag or nil if the class is uncategorized."
+ClassDescription >> packageName [
 
-	| packageTag |
-	packageTag := (self package classTagForClass: self) ifNil: [ ^ nil ].
-	packageTag isRoot ifTrue: [ ^ nil ].
-	^ packageTag
+	^ self package ifNotNil: [ :package | package name ]
+]
+
+{ #category : #'*RPackage-Core' }
+ClassDescription >> packageTag [
+	"Package tags are sub categories of packages to have a better organization of the packages."
+
+	^ self package tagOf: self
 ]
 
 { #category : #'*RPackage-Core' }
 ClassDescription >> packageTag: aSymbol [
 
 	self flag: #package. "In the future this method should work with a real package tag also."
-	(self package addClassTag: aSymbol) addClass: self
+	(self package ensureTag: aSymbol) addClass: self
 ]
 
 { #category : #'*RPackage-Core' }
@@ -82,7 +85,8 @@ ClassDescription >> packages [
 { #category : #'*RPackage-Core' }
 ClassDescription >> removePackageTag [
 
-	self packageTag ifNotNil: [ :tag |
-		tag removeClass: self.
-		self package addClass: self ]
+	self packageTag isRoot ifTrue: [ "Cannot remove root tag" ^ self ].
+
+	self packageTag removeClass: self.
+	self package addClass: self
 ]

@@ -7,6 +7,12 @@ Class {
 	#category : #'Epicea-Model'
 }
 
+{ #category : #testing }
+EpBehaviorChange class >> isAbstract [
+
+	^ self == EpBehaviorChange
+]
+
 { #category : #comparing }
 EpBehaviorChange >> = other [
 

@@ -57,6 +57,7 @@ SycRefactoringPreviewPresenter class >> title [
 { #category : #controlling }
 SycRefactoringPreviewPresenter >> accept [
 	self okToChange ifFalse: [ ^ self ].
+	
 	[ self pickedChanges do: [ :change |
 		RBRefactoryChangeManager instance
 			performChange: change;
@@ -163,7 +164,7 @@ SycRefactoringPreviewPresenter >> generateChanges [
 	rbEnvironment := self activeRBEnvironment.
 	changes do: [ :each |
 		each model environment: rbEnvironment.
-		each primitiveExecute ]
+		each generateChanges ]
 ]
 
 { #category : #initialization }

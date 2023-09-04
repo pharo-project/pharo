@@ -27,8 +27,9 @@ MCPackage >> = other [
 
 { #category : #accessing }
 MCPackage >> correspondingRPackage [
+	"Use #systemPackage instead"
 
-	^ self environment organization packageNamed: self name asSymbol ifAbsent: [ nil ]
+	^ self systemPackage
 ]
 
 { #category : #printing }
@@ -93,23 +94,15 @@ MCPackage >> printOn: aStream [
 
 { #category : #accessing }
 MCPackage >> snapshot [
-	| rPackageSet definitions categories |
-	rPackageSet := self packageSet.
-	definitions := OrderedCollection new.
-	categories := rPackageSet categoryNames asArray.
-	categories isEmpty 
-		ifFalse: [ definitions add: (MCOrganizationDefinition categories: categories) ].
-		
-	rPackageSet methods 
-		do: [:ea | definitions add: ea asMCMethodDefinition] 
-		displayingProgress: [ :ea| 'Snapshotting methods...' ].
-				
-	rPackageSet definedClasses 
-		do: [:ea | definitions addAll: ea classDefinitions] 
-		displayingProgress: [ :ea| 'Snapshotting class ', ea asString ].
-		
-	^ MCSnapshot fromDefinitions: definitions
 
+	^ MCSnapshot fromDefinitions: (self systemPackage
+			   ifNil: [ #(  ) ]
+			   ifNotNil: [ :systemPackage |
+				   OrderedCollection new
+					   add: systemPackage asMCOrganizationDefinition;
+					   addAll: (systemPackage methods collect: [ :method | method asMCMethodDefinition ]);
+					   addAll: (systemPackage definedClasses flatCollect: [ :class | class classDefinitions ]);
+					   yourself ])
 ]
 
 { #category : #printing }
@@ -117,6 +110,13 @@ MCPackage >> storeOn: aStream [
 	aStream
 		nextPutAll: 'MCPackage';
 		space; nextPutAll: 'named: '; store: name.
+]
+
+{ #category : #accessing }
+MCPackage >> systemPackage [
+	"Return the corresponding system package. Return nil if no package in the system has this name."
+
+	^ self environment organization packageNamed: self name ifAbsent: [ nil ]
 ]
 
 { #category : #'working copies' }

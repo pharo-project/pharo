@@ -9,15 +9,13 @@ RBRemoveProtocolTransformationTest >> testRefactoring [
 
 	| refactoring |
 	refactoring := (RBAddProtocolTransformation
-						protocol: 'transforming'
-						inClass: #RBDummyEmptyClass)
-						transform.
+		                protocol: 'transforming'
+		                inClass: #RBDummyEmptyClass) generateChanges.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
 	refactoring := (RBRemoveProtocolTransformation
-						protocol: 'transforming'
-						inClass: #RBDummyEmptyClass)
-						asRefactoring transform.
+		                protocol: 'transforming'
+		                inClass: #RBDummyEmptyClass) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1
 ]
@@ -27,15 +25,13 @@ RBRemoveProtocolTransformationTest >> testTransform [
 
 	| transformation |
 	transformation := (RBAddProtocolTransformation
-							protocol: 'transforming'
-							inClass: #RBDummyEmptyClass)
-							transform.
+		                   protocol: 'transforming'
+		                   inClass: #RBDummyEmptyClass) generateChanges.
 
 	transformation := (RBRemoveProtocolTransformation
-							model: transformation model
-							protocol: 'transforming'
-							inClass: #RBDummyEmptyClass)
-							transform.
+		                   model: transformation model
+		                   protocol: 'transforming'
+		                   inClass: #RBDummyEmptyClass) generateChanges.
 
 	self assert: transformation model changes changes size equals: 2
 ]

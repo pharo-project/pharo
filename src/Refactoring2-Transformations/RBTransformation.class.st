@@ -13,9 +13,6 @@ My main API is
 Class {
 	#name : #RBTransformation,
 	#superclass : #RBAbstractTransformation,
-	#instVars : [
-		'preconditionChecking'
-	],
 	#category : #'Refactoring2-Transformations-Model'
 }
 
@@ -55,46 +52,17 @@ RBTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
 
+{ #category : #preconditions }
+RBTransformation >> applicabilityPreconditions [ 
+	
+	^ self trueCondition 
+]
+
 { #category : #converting }
 RBTransformation >> asRefactoring [
 
-	self preconditionChecking: true.
+	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self yourself
-]
-
-{ #category : #private }
-RBTransformation >> buildSelectorString: aSelector [
-	aSelector numArgs = 0 ifTrue: [^aSelector].
-	^self buildSelectorString: aSelector
-		withPermuteMap: (1 to: aSelector numArgs)
-]
-
-{ #category : #private }
-RBTransformation >> buildSelectorString: aSelector withPermuteMap: anIntegerCollection [
-	| stream keywords |
-	aSelector numArgs == 0 ifTrue: [^aSelector asString].
-	stream := WriteStream on: String new.
-	keywords := aSelector keywords.
-	keywords with: anIntegerCollection
-		do:
-			[:each :i |
-			stream
-				nextPutAll: each;
-				nextPutAll: ' ``@arg';
-				nextPutAll: i printString;
-				nextPut: $ ].
-	^stream contents
-]
-
-{ #category : #preconditions }
-RBTransformation >> checkPreconditions [
-
-	| conditions result |
-	conditions := self preconditions.
-
-	result := conditions check.
-	result ifFalse: [ self refactoringError: conditions errorString ].
-	^ result
 ]
 
 { #category : #accessing }
@@ -110,47 +78,10 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : #initialization }
-RBTransformation >> initialize [
-	super initialize.
-	preconditionChecking := false
-]
-
-{ #category : #accessing }
-RBTransformation >> model [
-
-	^ model ifNil: [ model := self newModel ]
-]
-
-{ #category : #preconditions }
-RBTransformation >> preconditionChecking [
-
-	^ preconditionChecking
-]
-
-{ #category : #preconditions }
-RBTransformation >> preconditionChecking: aBoolean [
-
-	preconditionChecking := aBoolean
-]
-
 { #category : #preconditions }
 RBTransformation >> preconditions [
-	"By default everything is ok so precondition is true"
-	
-	^ self trueCondition
-]
 
-{ #category : #executing }
-RBTransformation >> primitiveExecute [
-	"compatibility method RBRefactoring"
-	self transform
-]
-
-{ #category : #executing }
-RBTransformation >> privateTransform [
-
-	self subclassResponsibility
+	^ self applicabilityPreconditions 
 ]
 
 { #category : #accessing }
@@ -159,12 +90,15 @@ RBTransformation >> setOption: aSymbol toUse: aBlock [
 	self options at: aSymbol put: aBlock
 ]
 
-{ #category : #executing }
+{ #category : #transforming }
 RBTransformation >> transform [
+
+	self deprecated: 'Use generateChanges instead' transformWith: '`@rec transform' -> '`@rec generateChanges'.
+	
 	"Performs this transformation in a model,
 	 then it adds the refactoring to the manager"
 
-	self preconditionChecking ifTrue: [ self checkPreconditions ].
+	self checkPreconditions.
 	self privateTransform
 
 	"below executes the refactoring without prompt"

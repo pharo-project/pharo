@@ -44,16 +44,16 @@ RBRemoveMethodChange >> changeString [
 		with: selector
 ]
 
+{ #category : #private }
+RBRemoveMethodChange >> generateChanges [
+
+	^ self changeClass removeSelector: selector
+]
+
 { #category : #comparing }
 RBRemoveMethodChange >> hash [
 
 	^ selector hash
-]
-
-{ #category : #private }
-RBRemoveMethodChange >> primitiveExecute [
-
-	^ self changeClass removeSelector: selector
 ]
 
 { #category : #printing }

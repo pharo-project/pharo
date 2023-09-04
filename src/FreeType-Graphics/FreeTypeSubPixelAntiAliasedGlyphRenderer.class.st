@@ -17,7 +17,7 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer class >> initialize [
 ]
 
 { #category : #rendering }
-FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm [
+FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm baseExtent: baseExtent baseOffset: baseOffset baseAdvance: baseAdvance baseLinearAdvance: baseLinearAdvance scale: scale [
 	"aGlyphForm should be 3x stretched 8 bit GlyphForm"
 	| w h s answer rowstart bytes word littleEndian shift v a colorVal i
 	  prevG prevB r g b nextR nextG  filters rfilter gfilter bfilter
@@ -31,11 +31,11 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm [
 	bytes := aGlyphForm bits.
 	w := aGlyphForm width.
 	h := aGlyphForm height.
-	answer := aGlyphForm class extent: ((aGlyphForm width / 3) ceiling + 2)@h depth: 32.
+	answer := aGlyphForm class extent: (((baseExtent x / 3) ceiling + 2) @ baseExtent y) * scale depth: 32.
 	answer
-		offset: (aGlyphForm offset x / 3) rounded@(aGlyphForm offset y);
-		advance: (aGlyphForm advance / 3) rounded;
-		linearAdvance: aGlyphForm linearAdvance.
+		offset: ((baseOffset x / 3) rounded@(baseOffset y)) * scale;
+		advance: (baseAdvance / 3) rounded * scale;
+		linearAdvance: baseLinearAdvance * scale.
 	s := w + 3 >> 2.
 	littleEndian := aGlyphForm isLittleEndian.
 	0 to: h - 1 do: [:y |
@@ -98,9 +98,9 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm [
 ]
 
 { #category : #rendering }
-FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderStretchedGlyph: aCharacter depth: depth subpixelPosition: sub font: aFreeTypeFont [
+FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderAndFilterStretchedGlyph: aCharacter depth: depth subpixelPosition: sub font: aFreeTypeFont scale: scale [
 	"Glyphs are either 1 or 8 bit deep. For 32 bpp we use 8 bits, otherwise 1"
-	| em form glyph scaleX charCode slant extraWidth s offsetX offsetY synthBoldStrength boldExtra extraHeight face |
+	| em form glyph scaleX charCode slant extraWidth s offsetX offsetY synthBoldStrength boldExtra extraHeight face baseExtent baseOffset baseAdvance baseLinearAdvance |
 
 	charCode := aCharacter asUnicode asInteger.
 	(aFreeTypeFont face charmaps includes:'unic')
@@ -137,48 +137,50 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderStretchedGlyph: aCharacter dep
 	synthBoldStrength ~= 0
 		ifTrue:[face emboldenOutline: synthBoldStrength].
 	boldExtra := 4 * synthBoldStrength abs ceiling.
-	face transformOutlineAngle: 0 scalePoint: scaleX@1  slant: slant.
+	face transformOutlineAngle: 0 scalePoint: (scaleX@1) * scale slant: slant.
 	extraWidth := (glyph height * slant) abs ceiling.
 	extraWidth := extraWidth + boldExtra.
 	sub > 0 ifTrue:[ extraWidth := extraWidth + 3].
 	extraHeight := boldExtra.
+	baseExtent := ((glyph width + extraWidth "+ 6" + 1 + 2)*scaleX)@(glyph height +extraHeight + 1).
 	form := GlyphForm
-		extent: ((glyph width + extraWidth "+ 6" + 1 + 2)*scaleX)@(glyph height +extraHeight + 1)
+		extent: baseExtent * scale
 		depth: depth.
 	s := (glyph height-glyph hBearingY)  * slant.
 	s := s sign * (s abs ceiling).
 	offsetX := (glyph hBearingX negated + s + (boldExtra // 2) + 1) * scaleX .
 	offsetY := glyph height - glyph hBearingY + (boldExtra//2).
-	face translateOutlineBy: (offsetX+(sub*scaleX/64))@offsetY.
+	face translateOutlineBy: ((offsetX+(sub*scaleX/64))@offsetY) * scale.
 	face renderGlyphIntoForm: form.
-	form offset: ((glyph hBearingX - s - 1 - (boldExtra // 2)) * scaleX)@ (glyph hBearingY + 1 + (boldExtra / 2) ceiling) negated.
+	baseOffset := ((glyph hBearingX - s - 1 - (boldExtra // 2)) * scaleX)@ (glyph hBearingY + 1 + (boldExtra / 2) ceiling) negated.
 	"When not hinting FreeType sets the advance to the truncated linearAdvance.
 	The characters appear squashed together. Rounding is probably better, so we fix the advance here"
-	aFreeTypeFont subPixelPositioned
-		ifTrue:[ form advance: glyph roundedPixelLinearAdvance * (scaleX@1)]
-		ifFalse:[ form advance: glyph advance x * scaleX@glyph advance y].
-	form linearAdvance: glyph linearAdvance.
-	^form
+	baseAdvance := aFreeTypeFont subPixelPositioned
+		ifTrue:[ glyph roundedPixelLinearAdvance * (scaleX@1)]
+		ifFalse:[ glyph advance x * scaleX@glyph advance y].
+	baseLinearAdvance := glyph linearAdvance.
+	^ self filter: form baseExtent: baseExtent baseOffset: baseOffset baseAdvance: baseAdvance baseLinearAdvance: baseLinearAdvance scale: scale
 ]
 
 { #category : #rendering }
-FreeTypeSubPixelAntiAliasedGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont [
+FreeTypeSubPixelAntiAliasedGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale [
 
 	| form |
 	monoBoolean
 		ifFalse:[
 			form := self
-				renderStretchedGlyph: aCharacter
+				renderAndFilterStretchedGlyph: aCharacter
 				depth: 8
 				subpixelPosition: sub
-				font: aFreeTypeFont.
-			form := self filter: form]
+				font: aFreeTypeFont
+				scale: scale]
 		ifTrue:[
 			form := self
 				renderGlyph: aCharacter
 				depth: 1
 				subpixelPosition: sub
-				font: aFreeTypeFont.
+				font: aFreeTypeFont
+				scale: scale.
 			form := self fixBytesForMono: form.
 			form := form asFormOfDepth: 32].
 	^form
