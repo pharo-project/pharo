@@ -61,12 +61,8 @@ MetacelloIssueTestCase >> projectWith: projectAttributes [
 
 { #category : #running }
 MetacelloIssueTestCase >> runCase [
-	| original |
-	original := MetacelloPlatform current bypassGoferLoadUpdateCategories.
-	[ 
-	MetacelloPlatform current bypassGoferLoadUpdateCategories: true.
-	^ MetacelloPlatform current suspendSystemUpdateEventsDuring: [ super runCase ] ]
-		ensure: [ MetacelloPlatform current bypassGoferLoadUpdateCategories: original ]
+
+	^ MetacelloPlatform current suspendSystemUpdateEventsDuring: [ super runCase ]
 ]
 
 { #category : #running }
