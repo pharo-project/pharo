@@ -11,7 +11,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		#packages,
-		#classMapping
+		#classMapping,
+		#shouldComputeMessageSendDependencies
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }
@@ -239,7 +240,8 @@ DAPackageRelationGraph >> computeStaticDependencies: aPackage [
 	self addReferenceDependencies: aPackage.
 	self addPoolDictionaryDependencies: aPackage.
 	self addTraitDependencies: aPackage.
-	self addMessageSendDependencies: aPackage
+	self shouldComputeMessageSendDependencies 
+		ifTrue: [ self addMessageSendDependencies: aPackage ]
 ]
 
 { #category : #accessing }
@@ -452,6 +454,18 @@ DAPackageRelationGraph >> seenPackagesWithFilter: aFilter [
 { #category : #actions }
 DAPackageRelationGraph >> seenPackagesWithoutExtension [
 	^ self packages select: [ :each | each isSeen ]
+]
+
+{ #category : #accessing }
+DAPackageRelationGraph >> shouldComputeMessageSendDependencies [
+
+	^ shouldComputeMessageSendDependencies ifNil: [ true ]
+]
+
+{ #category : #accessing }
+DAPackageRelationGraph >> shouldComputeMessageSendDependencies: aBoolean [
+
+	shouldComputeMessageSendDependencies := aBoolean
 ]
 
 { #category : #accessing }

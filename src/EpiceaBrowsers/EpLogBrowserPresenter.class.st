@@ -552,7 +552,7 @@ EpLogBrowserPresenter >> initializePresenters [
 
 { #category : #initialization }
 EpLogBrowserPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter initialExtent: 550 @ 700
+	aWindowPresenter initialExtent: (550 @ 700) scaledByDisplayScaleFactor
 ]
 
 { #category : #'menu - operations' }

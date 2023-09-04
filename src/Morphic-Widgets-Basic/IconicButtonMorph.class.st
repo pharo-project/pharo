@@ -81,7 +81,7 @@ IconicButtonMorph >> extent: newExtent [
 { #category : #accessing }
 IconicButtonMorph >> extraBorder [
 
-	^ 6
+	^ 6 * self currentWorld displayScaleFactor
 ]
 
 { #category : #accessing }

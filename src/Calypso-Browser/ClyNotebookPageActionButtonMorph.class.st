@@ -52,7 +52,7 @@ ClyNotebookPageActionButtonMorph >> forAction: anAction [
 		passiveEnabledOverDownFillStyle: (self theme buttonPressedFillStyleFor: self);
 		addUpAction: [ anAction action value ];
 		setBalloonText: anAction label;
-		extent: 16@16.
+		extent: 16@16 * self currentWorld displayScaleFactor.
 
 	icon := anAction icon.
 

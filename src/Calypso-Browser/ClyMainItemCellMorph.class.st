@@ -60,7 +60,7 @@ ClyMainItemCellMorph >> addBarForFullIndentation [
 	mainItemsCount := 0.
 	absentItemsCount := mainItemsCount - submorphs size.
 
-	requiredWidth := absentItemsCount * 16 + (self itemDepth * 8).
+	requiredWidth := (absentItemsCount * 16 + (self itemDepth * 8)) * self currentWorld displayScaleFactor.
 	requiredWidth = 0 ifTrue: [ ^self ].
 
 	self addMorphBack: (self emptyBarWithWidth: requiredWidth)
@@ -74,7 +74,7 @@ ClyMainItemCellMorph >> addBarForLabelIndentation [
 	mainItemsCount := placeForExpansionRequired ifTrue: [ 2 ] ifFalse: [ 1 ].
 	absentItemsCount := mainItemsCount - submorphs size.
 
-	requiredWidth := absentItemsCount * 16 + (self itemDepth * 8).
+	requiredWidth := (absentItemsCount * 16 + (self itemDepth * 8)) * self currentWorld displayScaleFactor.
 	requiredWidth = 0 ifTrue: [ ^self ].
 
 	self addMorphBack: (self emptyBarWithWidth: requiredWidth)
@@ -141,13 +141,13 @@ ClyMainItemCellMorph >> buildWithLabelIndentation [
 		expansionButton := self currentExpansionButton.
 		self addMorphBack: expansionButton].
 	definitionMorph ifNotNil: [
-		definitionMorph width: 16.
+		definitionMorph width: 16 * self currentWorld displayScaleFactor.
 		 self addMorphBack: definitionMorph].
 
 	self addBarForLabelIndentation.
 	self addMorphBack: label.
 	extraToolMorphs ifNotNil: [ extraToolMorphs do: [:each |
-			each width: 16.
+			each width: 16 * self currentWorld displayScaleFactor.
 			 self addMorphBack: each  ] ]
 ]
 
