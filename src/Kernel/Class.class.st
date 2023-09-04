@@ -257,7 +257,7 @@ Class >> category [
 	(latter is much more expensive)"
 
 	| result |
-	self basicCategory ifNotNil: [ :symbol | ((self packageOrganizer listAtCategoryNamed: symbol) includes: self name) ifTrue: [ ^ symbol ] ].
+	self basicCategory ifNotNil: [ :symbol | ^ symbol ].
 	result := (self environment organization categoryOfBehavior: self)
 		          ifNil: [ #Unclassified ]
 		          ifNotNil: [ :value | value ].
