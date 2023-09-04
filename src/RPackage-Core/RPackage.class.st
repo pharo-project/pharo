@@ -961,6 +961,7 @@ RPackage >> systemCategoryPrefix [
 
 { #category : #'class tags' }
 RPackage >> tagNames [
+
 	^ self classTags collect: [ :tag | tag name ]
 ]
 
