@@ -56,21 +56,3 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackag
 	def category: def tags first. "fix tags to do not contain package names"
 	^ def
 ]
-
-{ #category : #'*Ring-Monticello' }
-MCClassDefinition >> ring2LayoutType [
-
-	^ (Dictionary newFrom: {
-		#compiledMethod -> RGCompiledMethodLayout.
-		#bytes -> RGByteLayout.
-		#immediate -> RGImmediateLayout.
-		#words -> RGWordLayout.
-		#week -> RGWeakLayout.
-		#variable -> RGVariableLayout.
-		#ephemeron -> RGEphemeronLayout.
-		#normal -> RGFixedLayout.
-		#weak -> RGWeakLayout.
-		#DoubleByteLayout -> RGDoubleByteLayout.
-		#DoubleWordLayout -> RGDoubleWordLayout
-	}) at: type
-]

@@ -35,9 +35,3 @@ Object >> markAsRingResolved [
 
 	"do nothing"
 ]
-
-{ #category : #'*Ring-Core' }
-Object >> orDefaultForUnresolved [
-
-	^ self
-]

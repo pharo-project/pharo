@@ -46,18 +46,18 @@ ProfilerResultsPresenter >> doItNode [
 ProfilerResultsPresenter >> handleProfilingFinished [
 
 	| doItNode |
-	UIManager default defer: [
+	self defer: [
 		self enabled: true.
 
-		viewModel showLeavesOnly ifFalse: [
-			"select do it node and expand tree"
+		viewModel showLeavesOnly ifFalse: [ "select do it node and expand tree"
 			doItNode := self doItNode.
 			doItNode
-				ifNil: [ 	self inform: 'The excecution time was too short! No measurements taken' ]
+				ifNil: [
+					self inform:
+						'The excecution time was too short! No measurements taken' ]
 				ifNotNil: [
 					treeTable selectPath: doItNode path scrollToSelection: true.
-					viewModel setTallyRoot: doItNode ]
-		].
+					viewModel setTallyRoot: doItNode ] ].
 		viewModel announcer announce:
 			ProfilingResultsDisplayedAnnouncement new ]
 ]
