@@ -365,6 +365,13 @@ Object >> asString [
 	^ self printString
 ]
 
+{ #category : #converting }
+Object >> asSymbol [
+	"Answer a symbol that represents the receiver."
+	^ self asString asSymbol
+]
+
+
 { #category : #asserting }
 Object >> assert: aBlock [
 	"Throw an assertion error if aBlock does not evaluates to true.
