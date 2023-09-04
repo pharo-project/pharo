@@ -256,13 +256,6 @@ RPackageOrganizer >> categoryOfBehavior: behavior [
 	^ nil
 ]
 
-{ #category : #'private - registration' }
-RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
-
-	(self packages anySatisfy: [ :package | packageName isCategoryOf: package packageName ]) ifFalse: [
-		(RPackage named: packageName capitalized organizer: self) register ]
-]
-
 { #category : #'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> classesInCategory: category [
 
@@ -804,7 +797,7 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	"when a class is reorganized, we have to check if an extension has not been added"
 
-	ann classReorganized extensionProtocols do: [ :protocol | self checkPackageExistsOrRegister: protocol name allButFirst ]
+	ann classReorganized extensionProtocols do: [ :protocol | self ensurePackageOfExtensionProtocol: protocol ]
 ]
 
 { #category : #'system integration' }

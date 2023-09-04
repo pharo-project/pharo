@@ -13,7 +13,8 @@ Class {
 		'compiledMethod',
 		'priorMethod',
 		'protocolName',
-		'priorProtocol'
+		'priorProtocol',
+		'priorOrigin'
 	],
 	#category : #'Monticello-Loading'
 }
@@ -50,6 +51,7 @@ MethodAddition >> createCompiledMethod [
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
+	priorOrigin := compiledMethod origin.
 	priorProtocol := myClass protocolOfSelector: selector
 ]
 
@@ -61,22 +63,15 @@ MethodAddition >> installMethod [
 
 { #category : #notifying }
 MethodAddition >> notifyObservers [
-	SystemAnnouncer uniqueInstance 
-		suspendAllWhile: [myClass classify: selector under: protocolName].
-	priorMethod 
-		ifNil: [ SystemAnnouncer uniqueInstance
-				methodAdded: compiledMethod
-				configuredWith: [ :event | 
-					event
-						propertyAt: #eventSource
-						put: #Monticello ] ]
-		ifNotNil: [
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
-			priorProtocol name = protocolName ifFalse: [
-       			SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
-	"The following code doesn't seem to do anything."
-	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide.
 
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass classify: selector under: protocolName ].
+	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
+		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod configuredWith: [ :event | event propertyAt: #eventSource put: #Monticello ] ]
+		ifFalse: [
+			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
+			priorProtocol name = protocolName ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
+	"The following code doesn't seem to do anything."
+	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
 ]
 
 { #category : #accessing }
