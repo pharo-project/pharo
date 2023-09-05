@@ -1196,7 +1196,7 @@ FileReferenceTest >> testVersionNumberForExtension [
 ]
 
 { #category : #tests }
-FileReferenceTest >> testWithExtentionAddsExtension [
+FileReferenceTest >> testWithExtensionAddsExtension [
 	| ref result |
 	ref := filesystem * 'plonk'.
 	result := ref withExtension: 'griffle'.
@@ -1205,7 +1205,7 @@ FileReferenceTest >> testWithExtentionAddsExtension [
 ]
 
 { #category : #tests }
-FileReferenceTest >> testWithExtentionReplacesExtension [
+FileReferenceTest >> testWithExtensionReplacesExtension [
 	| ref result |
 	ref := filesystem * 'plonk.griffle'.
 	result := ref withExtension: 'nurp'.
