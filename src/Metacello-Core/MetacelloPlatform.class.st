@@ -2,8 +2,7 @@ Class {
 	#name : #MetacelloPlatform,
 	#superclass : #Object,
 	#instVars : [
-		'bypassProgressBars',
-		'bypassGoferLoadUpdateCategories'
+		'bypassProgressBars'
 	],
 	#classVars : [
 		'Current'
@@ -46,18 +45,6 @@ MetacelloPlatform >> authorName: aString [
 	"Used by SmalltalkCI"
 
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-MetacelloPlatform >> bypassGoferLoadUpdateCategories [
-
-	bypassGoferLoadUpdateCategories == nil ifTrue: [ bypassGoferLoadUpdateCategories := false ].
-	^ bypassGoferLoadUpdateCategories
-]
-
-{ #category : #accessing }
-MetacelloPlatform >> bypassGoferLoadUpdateCategories: anObject [
-	bypassGoferLoadUpdateCategories := anObject
 ]
 
 { #category : #accessing }
