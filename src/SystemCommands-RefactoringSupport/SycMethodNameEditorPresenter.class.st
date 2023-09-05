@@ -154,7 +154,7 @@ SycMethodNameEditorPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
 	aString isEmptyOrNil
-		ifFalse: [ self uiManager alert: aString ]
+		ifFalse: [ self inform: aString ]
 ]
 
 { #category : #accessing }
@@ -276,7 +276,7 @@ SycMethodNameEditorPresenter >> downButton [
 { #category : #action }
 SycMethodNameEditorPresenter >> getDefaultValue [
 
-	^ self uiManager
+	^ self
 		  request: 'Enter default value for argument'
 		  initialAnswer: 'nil'
 ]
@@ -284,7 +284,7 @@ SycMethodNameEditorPresenter >> getDefaultValue [
 { #category : #action }
 SycMethodNameEditorPresenter >> getNewKeywordName [
 
-	^ self uiManager
+	^ self
 		  request: 'Enter name for new keyword'
 		  initialAnswer: 'arg'
 ]
@@ -417,7 +417,7 @@ SycMethodNameEditorPresenter >> renameArgument: anItem [
 
 	| argName selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
-	argName := self uiManager
+	argName := self 
 		request: 'Enter default name of argument' initialAnswer: anItem.
 	argName ifNil: [ CmdCommandAborted signal ].
 	(self invalidArgNames includes: argName) ifTrue: [
@@ -448,6 +448,16 @@ SycMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 			presenter
 				beOk;
 				close ]
+]
+
+{ #category : #action }
+SycMethodNameEditorPresenter >> request: aString initialAnswer: aSecondString [
+
+	^ self application newRequest
+			title: 'Information needed';
+			label: aString;
+			text: aSecondString;
+			openModal
 ]
 
 { #category : #'accessing - ui' }
