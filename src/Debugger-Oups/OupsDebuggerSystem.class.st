@@ -134,16 +134,27 @@ OupsDebuggerSystem >> spawnNewUIProcess [
 
 { #category : #helpers }
 OupsDebuggerSystem >> spawnNewUIProcessIfNecessary: aDebugRequest [
+	"If aDebugRequest is about debugging the UI process, we must create a new UI process to take its place. Because the debugged process will be suspended at some point, and suspending the UI process means freezing the UI of the image.
+	Additionally, if the UI process is waiting for something other than a Delay, it may well be waiting for the very operation we are about to debug, causing a deadlock."
 
-	"If aDebugRequest is about debugging the UI process, we must create a new UI process to take its place. Because the debugged process will be suspended at some point, and suspending the UI process means freezing the UI of the image"
-
-	aDebugRequest debugSession isAboutUIProcess ifTrue: [
-		self spawnNewUIProcess ]
+	(aDebugRequest debugSession isAboutUIProcess or: [
+		 self uiProcessIsBlocked ]) ifTrue: [ self spawnNewUIProcess ]
 ]
 
 { #category : #helpers }
 OupsDebuggerSystem >> suspendDebuggedProcess: aDebugRequest [
 	aDebugRequest process suspend
+]
+
+{ #category : #helpers }
+OupsDebuggerSystem >> uiProcessIsBlocked [
+	"Answer whether the UI process is blocked in a way that may not resume promptly.
+	Allow Delays of any sort, but not any other cause of Semaphore wait."
+
+	| uiProcess |
+	uiProcess := UIManager default uiProcess.
+	(uiProcess suspendingList isKindOf: Semaphore) ifFalse: [ ^ false ].
+	^ uiProcess suspendedContext homeMethod ~= (Delay >> #wait)
 ]
 
 { #category : #'open debugger' }
