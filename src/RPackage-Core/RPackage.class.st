@@ -716,19 +716,14 @@ RPackage >> removeClass: aClass [
 	self removeAllMethodsFromClass: aClass.
 
 	"Then I unregister it from the tags"
-	(self classTags select: [ :eachTag | eachTag includesClass: aClass ]) do: [ :eachTag | self removeClassDefinition: aClass fromClassTag: eachTag name ].
+	self classTags
+		detect: [ :tag | tag includesClass: aClass ]
+		ifFound: [ :tag |
+			tag removeClass: aClass.
+			tag isEmpty ifTrue: [ self removeTag: tag ] ].
 
 	"Lastly I remove the class from the organizer. Maybe this should go in the PackageTag during the removal."
 	self unregisterClass: aClass
-]
-
-{ #category : #'class tags' }
-RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
-
-	| tag |
-	tag := self classTagNamed: aSymbol ifAbsent: [ ^ self ].
-	tag removeClass: aClass.
-	tag isEmpty ifTrue: [ self removeTag: tag ]
 ]
 
 { #category : #'class tags' }
