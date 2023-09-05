@@ -20,7 +20,7 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExist
 	"test that when we create a MCPackage and that a category of this name already exists, no package is created"
 
 	| tmpPackage |
-	testingEnvironment organization addCategory: 'Zork'.
+	self organizer ensurePackage: 'Zork'.
 	tmpPackage := self organizer packageNamed: #Zork.
 	MCWorkingCopy ensureForPackageNamed: #Zork packageOrganizer: self organizer.
 	self assert: tmpPackage identicalTo: (self organizer packageNamed: #Zork)

@@ -125,16 +125,6 @@ MCStReader >> readStream [
 ]
 
 { #category : #reading }
-MCStReader >> systemOrganizationFromRecords: changeRecords [
-
-	| categories |
-	categories := changeRecords
-		              select: [ :ea | 'SystemOrganization*' match: ea string ]
-		              thenCollect: [ :ea | self categoryFromDoIt: ea string ].
-	^ categories ifNotEmpty: [ MCOrganizationDefinition categories: categories asArray ]
-]
-
-{ #category : #reading }
 MCStReader >> typeOfSubclass: aSymbol [
 	| layoutClass |
 	layoutClass := ObjectLayout layoutForSubclassDefiningSymbol: aSymbol.
