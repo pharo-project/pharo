@@ -25,7 +25,7 @@ MCSystemCategoryParser >> addDefinitionsTo: aCollection [
 		ifNotNil: [
 			| category |
 			category := self category.
-			definition tagNames: (definition tagName copyWith: ((category beginsWith: definition packageName , '-')
+			definition tagNames: (definition tagNames copyWith: ((category beginsWith: definition packageName , '-')
 						  ifTrue: [ category withoutPrefix: definition packageName , '-' ]
 						  ifFalse: [ category ])) ]
 ]
