@@ -257,10 +257,23 @@ Class >> category [
 	(latter is much more expensive)"
 
 	| result |
-	self basicCategory ifNotNil: [ :symbol | ((self packageOrganizer listAtCategoryNamed: symbol) includes: self name) ifTrue: [ ^ symbol ] ].
+	self basicCategory ifNotNil: [ :symbol |
+		((self packageOrganizer listAtCategoryNamed: symbol) includes: self name)
+			ifFalse: [
+				Stdio stdout
+					nextPutAll: 'MISSING CLASS IN CATEGORY - ';
+					nextPutAll: self printString;
+					nextPutAll: ' is not present in its own category : ';
+					nextPutAll: symbol;
+					lf ]
+			ifTrue: [ ^ symbol ] ].
 	result := (self environment organization categoryOfBehavior: self)
 		          ifNil: [ #Unclassified ]
 		          ifNotNil: [ :value | value ].
+	Stdio stdout
+		nextPutAll: 'Final category: ';
+		nextPutAll: result;
+		lf.
 	self basicCategory: result.
 
 	^ result
