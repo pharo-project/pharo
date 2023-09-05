@@ -29,32 +29,11 @@ WeakAnnouncerTest >> benchManyWeakGuys [
 	^ time
 ]
 
-{ #category : #benchmarks }
-WeakAnnouncerTest >> benchWeakSubscriptionDynamic [
-	"Run me to see how expensive #becomeForward: is (compared to #benchWeakSubscriptionStatic )"
 
-	| object ann |
+{ #category : #utilities }
+WeakAnnouncerTest >> longTestCase [
 
-	object := Object new.
-	ann := Announcer new.
-
-	^[
-		1000 timesRepeat: [ (ann when: Announcement send: #value to: object) makeWeak ].
-	] timeToRun
-]
-
-{ #category : #benchmarks }
-WeakAnnouncerTest >> benchWeakSubscriptionStatic [
-	"Run me to see how cheap object creation is (compared to #benchWeakSubscriptionDynamic ) "
-
-	| object ann |
-
-	object := Object new.
-	ann := Announcer new.
-
-	^[
-		1000 timesRepeat: [ (ann weak when: Announcement send: #value to: object)  ].
-	] timeToRun
+	self timeLimit: 60 seconds
 ]
 
 { #category : #tests }
@@ -164,11 +143,4 @@ WeakAnnouncerTest >> testWeakSubscription [
 	subscription := (announcer when: AnnouncementMockA send: #value to: obj) makeWeak.
 
 	self assert: obj identicalTo: subscription subscriber
-]
-
-{ #category : #tests }
-WeakAnnouncerTest >> testWeakSubscriptionRelease [
-	"This test shows the a problem with weak registrations not garbage collected in Spur.
-	 See https://pharo.manuscript.com/f/cases/17537 for more details."
-	self benchManyWeakGuys
 ]
