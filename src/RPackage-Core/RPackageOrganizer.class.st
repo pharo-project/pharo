@@ -223,9 +223,9 @@ RPackageOrganizer >> basicRegisterPackage: aPackage [
 
 { #category : #'private - registration' }
 RPackageOrganizer >> basicUnregisterPackageNamed: aPackageName [
-	"Unregister the specified package from the list of registered packages. Raise the RPackageUnregistered announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
+	"Unregister the specified package from the list of registered packages. Raise the PackageRemoved announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
-	^ packages removeKey: aPackageName ifAbsent: [ self reportExtraRemovalOf: aPackageName ]
+	^ packages removeKey: aPackageName ifAbsent: [  ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -720,18 +720,6 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 	(self hasPackage: aPackage) ifFalse: [ ^ self ].
 
 	(self ensurePackage: aPackage) renameTag: aTag to: newName
-]
-
-{ #category : #private }
-RPackageOrganizer >> reportBogusBehaviorOf: aSelector [
-
-	self traceCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'
-]
-
-{ #category : #private }
-RPackageOrganizer >> reportExtraRemovalOf: aPackageOrClass [
-
-	self traceCr: 'The class ' , aPackageOrClass printString , ' is removed twice'
 ]
 
 { #category : #registration }

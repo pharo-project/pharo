@@ -136,11 +136,6 @@ RPackageSet >> initialize: aString [
 		            ifNil: [ {  } ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> methodCategoryPrefix [
-	^ '*', self packageName asLowercase
-]
-
 { #category : #accessing }
 RPackageSet >> methods [
 	^ methods ifNil: [ methods := (self packages flatCollect: [ :p | p methods ]) ]

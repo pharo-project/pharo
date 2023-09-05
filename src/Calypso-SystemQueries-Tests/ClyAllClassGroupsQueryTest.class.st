@@ -33,8 +33,13 @@ ClyAllClassGroupsQueryTest >> testFromSinglePackage [
 
 	self queryFromScope: ClyPackageScope of: ClyClass7WithTag1FromP5Mock package.
 
-	self assert: (resultItems collect: #class as: Set) equals: { ClyNoTagClassGroup. ClyTaggedClassGroup. ClyClassGroup} asSet.
+	self assertCollection: (resultItems collect: #class) hasSameElements: {
+			ClyNoTagClassGroup.
+			ClyTaggedClassGroup.
+			ClyClassGroup }.
 	self
-		assert: (resultItems select:[:each | each class = ClyTaggedClassGroup] thenCollect: [:group | group tag]) asSet
-		equals: ClyClass7WithTag1FromP5Mock package tagsForClasses asSet
+		assertCollection: (resultItems
+				 select: [ :each | each class = ClyTaggedClassGroup ]
+				 thenCollect: [ :group | group tag ])
+		hasSameElements: ClyClass7WithTag1FromP5Mock package tagsForClasses
 ]
