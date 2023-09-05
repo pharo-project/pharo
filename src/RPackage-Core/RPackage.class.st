@@ -718,9 +718,7 @@ RPackage >> removeClass: aClass [
 	"Then I unregister it from the tags"
 	self classTags
 		detect: [ :tag | tag includesClass: aClass ]
-		ifFound: [ :tag |
-			tag removeClass: aClass.
-			tag isEmpty ifTrue: [ self removeTag: tag ] ].
+		ifFound: [ :tag | tag removeClass: aClass ].
 
 	"Lastly I remove the class from the organizer. Maybe this should go in the PackageTag during the removal."
 	self unregisterClass: aClass

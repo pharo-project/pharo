@@ -88,3 +88,20 @@ RPackageTagTest >> testPromoteAsPackage [
 	self assert: (package2 classes includes: class).
 	self deny: (package1 classes includes: class)
 ]
+
+{ #category : #tests }
+RPackageTagTest >> testRemoveClassRemoveTagIfEmpty [
+
+	| package tag class |
+	package := self createNewPackageNamed: #Test1.
+	tag := package ensureTag: #TAG.
+	class := self createNewClassNamed: 'TestClass' inCategory: package name , '-TAG'.
+
+	self assert: (tag includesClass: class).
+	self assert: (package hasTag: tag).
+
+	tag removeClass: class.
+
+	self deny: (tag includesClass: class).
+	self deny: (package hasTag: tag)
+]

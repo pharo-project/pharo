@@ -148,7 +148,10 @@ RPackageTag >> promoteAsPackage [
 { #category : #accessing }
 RPackageTag >> removeClass: aClass [
 
-	^ classes remove: aClass ifAbsent: [  ]
+	| oldObject |
+	oldObject := classes remove: aClass ifAbsent: [  ].
+	self isEmpty ifTrue: [ self removeFromPackage ].
+	^ oldObject
 ]
 
 { #category : #accessing }
