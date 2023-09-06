@@ -21,9 +21,9 @@ Class {
 }
 
 { #category : #removing }
-RBRemoveHierarchyMethodRefactoring class >> removeMethods: selectorCollection from: aClass [
+RBRemoveHierarchyMethodRefactoring class >> removeMethod: aSelector from: aClass [
 	^ self new
-		removeMethods: selectorCollection from: aClass
+		removeMethod: aSelector from: aClass
 ]
 
 { #category : #transforming }
@@ -42,23 +42,20 @@ RBRemoveHierarchyMethodRefactoring >> delete: aSelector in: aClass [
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> deleteSelectorInSubclasses [
 	class withAllSubclasses do:
-		[ :each | each implements: selectors ]
+		[ :each | each implements: selector ]
 ]
 
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> deleteSelectors [
-	selectors do: [ :selector |
-		class withAllSubclasses do: [ :aClass |
-			self delete: selector in: aClass
-		 ]
-	 ]
+
+	class withAllSubclasses do: [ :aClass |
+		self delete: selector in: aClass ]
 ]
 
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> preconditions [
 
-	^ selectors inject: self trueCondition into: [ :cond :selector |
-		  cond & (RBCondition definesSelector: selector in: class) ]
+	^ RBCondition definesSelector: selector in: class
 ]
 
 { #category : #transforming }
@@ -67,9 +64,9 @@ RBRemoveHierarchyMethodRefactoring >> privateTransform [
 ]
 
 { #category : #removing }
-RBRemoveHierarchyMethodRefactoring >> removeMethods: selectorCollection from: aClass [
+RBRemoveHierarchyMethodRefactoring >> removeMethod: aSelector from: aClass [
 	class := self classObjectFor: aClass.
-	selectors := selectorCollection
+	selector := aSelector
 ]
 
 { #category : #printing }
@@ -77,7 +74,7 @@ RBRemoveHierarchyMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' removeMethods: '.
-	selectors asArray storeOn: aStream.
+	selector storeOn: aStream.
 	aStream nextPutAll: ' from: '.
 	class storeOn: aStream.
 	aStream nextPut: $)

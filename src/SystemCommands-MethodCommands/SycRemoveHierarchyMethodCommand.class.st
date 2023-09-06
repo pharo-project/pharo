@@ -10,10 +10,13 @@ Class {
 
 { #category : #converting }
 SycRemoveHierarchyMethodCommand >> asRefactorings [
+
 	| refactoring |
-	refactoring :=  RBRemoveHierarchyMethodRefactoring
-		removeMethods: (methods collect: [:each | each selector])
-		from: methods first origin.
+	refactoring := RBCompositeRefactoring new refactorings:
+		               (methods collect: [ :method |
+			                RBRemoveHierarchyMethodRefactoring
+				                removeMethod: method selector
+				                from: method origin ]).
 	^ OrderedCollection with: refactoring
 ]
 
