@@ -227,8 +227,10 @@ BlockClosure >> ensure: aBlock [
 	 implemented as a primitive.  Primitive 198 always fails.  The VM uses prim
 	 198 in a context's method as the mark for an ensure:/ifCurtailed: activation."
 
-	| complete returnValue |
+	| handler complete returnValue |
 	<primitive: 198>
+	"The handler should be in the first temporary to find it easily and support more complex unwind methods"
+	handler := aBlock.
 	returnValue := self valueNoContextSwitch.
 	complete ifNil:[
 		complete := true.
@@ -321,8 +323,10 @@ BlockClosure >> ifCurtailed: aBlock [
 	 not evaluate aBlock.  N.B.  This method is *not* implemented as a
 	 primitive.  Primitive 198 always fails.  The VM uses prim 198 in a
 	 context's method as the mark for an ensure:/ifCurtailed: activation."
-	| complete result |
+	| handler complete result |
 	<primitive: 198>
+	"The handler should be in the first temporary to find it easily and support more complex unwind methods"
+	handler := aBlock.
 	result := self valueNoContextSwitch.
 	complete := true.
 	^result
