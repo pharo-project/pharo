@@ -217,7 +217,13 @@ MCPackageLoader >> sorterForItems: aCollection [
 
 { #category : #private }
 MCPackageLoader >> tryToLoad: aDefinition [
-	[aDefinition addMethodAdditionTo: methodAdditions] on: Error do: [errorDefinitions add: aDefinition].
+	"Here we are only interested by method definition. We want to avoid recompilating classes or traits for example."
+
+	aDefinition isMethodDefinition ifFalse: [ ^ self ].
+
+	[ aDefinition addMethodAdditionTo: methodAdditions ]
+		on: Error
+		do: [ errorDefinitions add: aDefinition ]
 ]
 
 { #category : #public }
