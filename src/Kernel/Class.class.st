@@ -64,7 +64,7 @@ Class class >> hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache [
 	^ (unprocessedClasses includesAnyOf: (self allSuperclassesFor: aClass cache: cache)) not
 ]
 
-{ #category : #'identifying obsoletes' }
+{ #category : #'class initialization' }
 Class class >> initialize [
 
 	ObsoleteClasses := WeakIdentitySet new
