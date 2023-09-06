@@ -15,7 +15,7 @@ Class {
 	#name : #RBRemoveHierarchyMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selectors'
+		'selector'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -27,11 +27,11 @@ RBRemoveHierarchyMethodRefactoring class >> removeMethods: selectorCollection fr
 ]
 
 { #category : #transforming }
-RBRemoveHierarchyMethodRefactoring >> delete: selector in: aClass [
-	 (aClass realClass includesSelector: selector) ifTrue: [
+RBRemoveHierarchyMethodRefactoring >> delete: aSelector in: aClass [
+	 (aClass realClass includesSelector: aSelector) ifTrue: [
 		 [self generateChangesFor: (RBRemoveMethodRefactoring
 									model: self model
-									removeMethods: { selector }
+									removeMethod: aSelector
 									from: aClass) ]
 		on: RBRefactoringWarning
 			do: [ :ex | ( self confirm:

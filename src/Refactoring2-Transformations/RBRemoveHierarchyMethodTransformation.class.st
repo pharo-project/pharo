@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #removing }
-RBRemoveHierarchyMethodTransformation class >> removeMethods: selectorCollection from: aClass [
+RBRemoveHierarchyMethodTransformation class >> removeMethod: selectorCollection from: aClass [
 	^ self new
-		removeMethods: selectorCollection from: aClass
+		removeMethod: selectorCollection from: aClass
 ]
 
 { #category : #preconditions }
@@ -54,7 +54,7 @@ RBRemoveHierarchyMethodTransformation >> deleteSelectors [
 ]
 
 { #category : #removing }
-RBRemoveHierarchyMethodTransformation >> removeMethods: selectorCollection from: aClass [
+RBRemoveHierarchyMethodTransformation >> removeMethod: selectorCollection from: aClass [
 	class := self model classObjectFor: aClass.
 	selectors := selectorCollection
 ]
