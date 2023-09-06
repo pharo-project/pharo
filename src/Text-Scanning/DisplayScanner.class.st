@@ -53,10 +53,8 @@ Class {
 	#instVars : [
 		'lineY',
 		'foregroundColor',
-		'backgroundColor',
 		'defaultTextColor',
 		'morphicOffset',
-		'ignoreColorChanges',
 		'lastDisplayableIndex',
 		'stopConditionsMustBeReset'
 	],
@@ -132,7 +130,6 @@ DisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 	leftInRun <= 0 ifTrue: [ self setStopConditions ].
 	leftMargin := (line leftMarginForAlignment: alignment) + offset x.
 	destX := leftMargin.
-	self fillTextBackground.
 	lastDisplayableIndex := lastIndex := line first.
 	nowLeftInRun := leftInRun <= 0
 		ifTrue: [ text runLengthFor: lastIndex ]
@@ -190,17 +187,6 @@ DisplayScanner >> endOfRun [
 	^ false
 ]
 
-{ #category : #displaying }
-DisplayScanner >> fillTextBackground [
-	self subclassResponsibility
-]
-
-{ #category : #initialization }
-DisplayScanner >> initialize [
-	super initialize.
-	ignoreColorChanges := false
-]
-
 { #category : #'stop conditions' }
 DisplayScanner >> paddedSpace [
 	"Each space is a stop condition when the alignment is right justified.
@@ -256,16 +242,13 @@ DisplayScanner >> tab [
 ]
 
 { #category : #private }
-DisplayScanner >> text: t textStyle: ts foreground: foreColor background: backColor fillBlt: blt ignoreColorChanges: shadowMode [
+DisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
-	foregroundColor := defaultTextColor := foreColor.
-	backgroundColor := backColor.
-	ignoreColorChanges := shadowMode
+	foregroundColor := defaultTextColor := foreColor
 ]
 
 { #category : #'text attributes' }
 DisplayScanner >> textColor: textColor [
-	ignoreColorChanges ifTrue: [^ self].
 	foregroundColor := textColor
 ]
