@@ -33,6 +33,14 @@ RBRemoveMethodsRefactoring class >> selectors: aSelectorsCollection from: aClass
 ]
 
 { #category : #preconditions }
+RBRemoveMethodsRefactoring >> applicabilityPreconditions [ 
+
+	^ selectors
+			inject: self trueCondition
+			into: [ :cond :sel | cond & (RBCondition definesSelector: sel in: class) ]
+]
+
+{ #category : #preconditions }
 RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 
 	refactorings do: [ :ref | ref checkSuperMethods ].
