@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRemoveMethodParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
@@ -8,12 +8,8 @@ Class {
 RBRemoveMethodParametrizedTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
-		  addCase: {
-				  (#rbClass -> RBRemoveMethodTransformation).
-				  (#constructor -> #selector:from:) };
-		  addCase: {
-				  (#rbClass -> RBRemoveMethodRefactoring).
-				  (#constructor -> #selector:from:) } 
+		  addCase: { (#rbClass -> RBRemoveMethodRefactoring) };
+		  addCase: { (#rbClass -> RBRemoveMethodTransformation) };
 		  yourself
 ]
 
@@ -21,7 +17,7 @@ RBRemoveMethodParametrizedTest class >> testParameters [
 RBRemoveMethodParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
 
 	^ rbClass
-		  perform: #model: , constructor
+		  perform: #model: , #selector:from:
 		  withArguments: { rbNamespace } , aParameterCollection
 ]
 
