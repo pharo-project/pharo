@@ -22,9 +22,9 @@ Class {
 }
 
 { #category : #removing }
-RBRemoveHierarchyMethodRefactoring class >> removeMethods: aSelectorsCollection from: aClass [ 
+RBRemoveHierarchyMethodRefactoring class >> selectors: aSelectorsCollection from: aClass [ 
 	
-	^ self new removeMethods: aSelectorsCollection from: aClass
+	^ self new selectors: aSelectorsCollection from: aClass
 ]
 
 { #category : #preconditions }
@@ -56,7 +56,7 @@ RBRemoveHierarchyMethodRefactoring >> initializeRefactorings [
 ]
 
 { #category : #removing }
-RBRemoveHierarchyMethodRefactoring >> removeMethods: aSelectorsCollection from: aClass [
+RBRemoveHierarchyMethodRefactoring >> selectors: aSelectorsCollection from: aClass [
 
 	class := self classObjectFor: aClass.
 	selectors := aSelectorsCollection.

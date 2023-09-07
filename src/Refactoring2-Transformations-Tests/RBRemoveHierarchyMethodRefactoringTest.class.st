@@ -8,7 +8,7 @@ Class {
 RBRemoveHierarchyMethodRefactoringTest >> testFailureRemoveNonExistantMethod [
 
 	self shouldFail: (RBRemoveHierarchyMethodRefactoring
-			 removeMethods: #( #nonExistingMethod )
+			 selectors: #( #nonExistingMethod )
 			 from: RBBasicLintRuleTestData)
 ]
 
@@ -16,7 +16,7 @@ RBRemoveHierarchyMethodRefactoringTest >> testFailureRemoveNonExistantMethod [
 RBRemoveHierarchyMethodRefactoringTest >> testFailureRemoveReferenced [
 
 	self shouldWarn: (RBRemoveHierarchyMethodRefactoring
-				 removeMethods: #( #checkClass: )
+				 selectors: #( #checkClass: )
 				 from: RBBasicLintRuleTestData)
 ]
 
@@ -24,7 +24,7 @@ RBRemoveHierarchyMethodRefactoringTest >> testFailureRemoveReferenced [
 RBRemoveHierarchyMethodRefactoringTest >> testRemoveMethod [
 	| refactoring selectors |
 	selectors := Array with: 'msg4' asSymbol.
-	refactoring := RBRemoveHierarchyMethodRefactoring removeMethods: selectors from: RBSharedPoolForTestData.
+	refactoring := RBRemoveHierarchyMethodRefactoring selectors: selectors from: RBSharedPoolForTestData.
 	self assert: ((refactoring model classNamed: #RBSharedPoolForTestData) directlyDefinesMethod: selectors first).
 	self assert: ((refactoring model classNamed: #RBSharedPoolForTestData1) directlyDefinesMethod: selectors first).
 	self assert: ((refactoring model classNamed: #RBSharedPoolForTestData2) directlyDefinesMethod: selectors first).

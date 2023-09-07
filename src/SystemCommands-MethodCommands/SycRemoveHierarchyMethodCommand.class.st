@@ -13,7 +13,7 @@ SycRemoveHierarchyMethodCommand >> asRefactorings [
 
 	| refactoring |
 	refactoring := RBRemoveHierarchyMethodRefactoring
-				      		removeMethods: (methods collect: [:each | each selector])
+				      		selectors: (methods collect: [:each | each selector])
 							from: methods first origin.
 	^ OrderedCollection with: refactoring
 ]
