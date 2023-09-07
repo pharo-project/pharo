@@ -9,7 +9,7 @@ RBRemoveMethodRefactoringTest >> testFailureRemoveReferenced [
 
 	self shouldWarn: (RBRemoveMethodRefactoring
 			 model: model
-			 removeMethod: #checkClass:
+			 selector: #checkClass:
 			 from: #RBBasicLintRuleTestData)
 ]
 
@@ -19,7 +19,7 @@ RBRemoveMethodRefactoringTest >> testFailureRemoveSameMethodButSendsSuper [
 	<expectedFailure>
 	self shouldWarn: (RBRemoveMethodRefactoring
 			 model: model
-			 removeMethod: #new
+			 selector: #new
 			 from: #'RBBasicLintRuleTestData class')
 ]
 
@@ -30,7 +30,7 @@ RBRemoveMethodRefactoringTest >> testJustSendsSuper [
 	selector := #justSuperSendInSubclass.
 	refactoring := RBRemoveMethodRefactoring
 		               model: model
-		               removeMethod: selector
+		               selector: selector
 		               from: #RBSubclassOfClassToRename.
 
 	self assert: ((model classNamed: #RBSubclassOfClassToRename)
@@ -46,7 +46,7 @@ RBRemoveMethodRefactoringTest >> testJustSendsSuperFailing [
 	selector := #justSuperSendInSubclassBroken.
 	refactoring := RBRemoveMethodRefactoring
 		               model: model
-		               removeMethod: selector
+		               selector: selector
 		               from: #RBSubclassOfClassToRename.
 
 	self assert: ((model classNamed: #RBSubclassOfClassToRename)
@@ -74,7 +74,7 @@ RBRemoveMethodRefactoringTest >> testModelRecursiveMethodThatIsNotReferencedFrom
 
 	(RBRemoveMethodRefactoring
 		model: model
-		removeMethod: selector
+		selector: selector
 		from: #Object) generateChanges.
 
 	self deny: (class definesMethod: selector)
@@ -86,7 +86,7 @@ RBRemoveMethodRefactoringTest >> testSendersIncludesSuperCalls [
 	| refactoring |
 	refactoring := RBRemoveMethodRefactoring
 		               model: model
-		               removeMethod: #justSuperSendInSubclass
+		               selector: #justSuperSendInSubclass
 		               from: #RBSubclassOfClassToRename.
 	self assert:
 		(refactoring sendersOf: #justSuperSendInSubclass) isNotEmpty
@@ -103,7 +103,7 @@ RBRemoveMethodRefactoringTest >> testSendersOfUnsentMessage [
 
 	refactoring := RBRemoveMethodRefactoring
 		               model: model
-		               removeMethod: #methodThatIsNotUsedForSure
+		               selector: #methodThatIsNotUsedForSure
 		               from: #RBSubclassOfClassToRename.
 	refactoring model: rbNamespace2.
 	self

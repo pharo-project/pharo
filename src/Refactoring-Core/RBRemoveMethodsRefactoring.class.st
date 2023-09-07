@@ -37,7 +37,7 @@ RBRemoveMethodsRefactoring >> methods: aCollection from: aClass [
 	refactorings := aCollection collect: [ :method |
 							RBRemoveMethodRefactoring
 								model: model
-								removeMethod: method
+								selector: method
 								from: aClass ]
 ]
 

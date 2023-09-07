@@ -13,7 +13,7 @@ RBRemoveMethodParametrizedTest class >> testParameters [
 				  (#constructor -> #selector:from:) };
 		  addCase: {
 				  (#rbClass -> RBRemoveMethodRefactoring).
-				  (#constructor -> #removeMethod:from:) } 
+				  (#constructor -> #selector:from:) } 
 		  yourself
 ]
 

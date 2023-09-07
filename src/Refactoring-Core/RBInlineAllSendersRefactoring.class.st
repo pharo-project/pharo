@@ -140,7 +140,7 @@ RBInlineAllSendersRefactoring >> removeMethod [
 	self onError:
 			[self generateChangesFor: (RBRemoveMethodRefactoring
 						model: self model
-						removeMethod: selector
+						selector: selector
 						from: class)]
 		do: []
 ]

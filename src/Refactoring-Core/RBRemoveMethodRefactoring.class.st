@@ -13,19 +13,19 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRemoveMethodRefactoring class >> model: aRBNamespace removeMethod: aSelector from: aClass [
+RBRemoveMethodRefactoring class >> model: aRBNamespace selector: aSelector from: aClass [
 
 	^ self new
 		  model: aRBNamespace;
-		  removeMethod: aSelector from: aClass;
+		  selector: aSelector from: aClass;
 		  yourself
 ]
 
 { #category : #'instance creation' }
-RBRemoveMethodRefactoring class >> removeMethod: aSelector from: aClass [
+RBRemoveMethodRefactoring class >> selector: aSelector from: aClass [
 
 	^ self new
-		removeMethod: aSelector from: aClass
+		selector: aSelector from: aClass
 ]
 
 { #category : #preconditions }
@@ -166,13 +166,6 @@ RBRemoveMethodRefactoring >> privateTransform [
 	class removeMethod: selector
 ]
 
-{ #category : #initialization }
-RBRemoveMethodRefactoring >> removeMethod: aSelector from: aClass [
-
-	class := self classObjectFor: aClass.
-	selector := aSelector
-]
-
 { #category : #actions }
 RBRemoveMethodRefactoring >> removeMethodChanges [
 
@@ -183,6 +176,13 @@ RBRemoveMethodRefactoring >> removeMethodChanges [
 { #category : #accessing }
 RBRemoveMethodRefactoring >> selector [
 	^ selector
+]
+
+{ #category : #initialization }
+RBRemoveMethodRefactoring >> selector: aSelector from: aClass [
+
+	class := self classObjectFor: aClass.
+	selector := aSelector
 ]
 
 { #category : #preconditions }
