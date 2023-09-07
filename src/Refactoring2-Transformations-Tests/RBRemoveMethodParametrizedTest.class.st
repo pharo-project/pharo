@@ -8,15 +8,12 @@ Class {
 RBRemoveMethodParametrizedTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
-			addCase: {
+		  addCase: {
 				  (#rbClass -> RBRemoveMethodTransformation).
-				  (#constructor -> #selector:from:).
-				  (#isComposed -> false) };
+				  (#constructor -> #selector:from:) };
 		  addCase: {
 				  (#rbClass -> RBRemoveMethodRefactoring).
-				  (#constructor -> #removeMethods:from:).
-				  (#isComposed -> true) };
-		  
+				  (#constructor -> #removeMethod:from:) } 
 		  yourself
 ]
 
@@ -33,29 +30,23 @@ RBRemoveMethodParametrizedTest >> testFailureRemoveNonExistingMethod [
 
 	self shouldFail: (self
 			 createRefactoringWithModel: model
-			 andArgumentsColl: #( #nonExistingMethod )
-			 andOtherArgs: { #RBBasicLintRuleTestData })
+			 andArguments: #( #nonExistingMethod #RBBasicLintRuleTestData ))
 ]
 
 { #category : #tests }
 RBRemoveMethodParametrizedTest >> testRemoveMethod [
-	| refactoring selectors |
-	selectors := Array with: 'selectorNotReferenced' asSymbol.
+	| refactoring selector |
+	selector := 'selectorNotReferenced' asSymbol.
 	refactoring := self createRefactoringWithModel: model
-		andArgumentsColl: selectors
-		andOtherArgs: { #RBClassDataForRefactoringTest }.
+		andArguments: { selector . #RBClassDataForRefactoringTest }.
 
-	selectors do: [ :symbol |
-		self assert:
-			(( model classNamed: #RBClassDataForRefactoringTest)
-				directlyDefinesMethod: symbol).
-	].
+	self assert:
+		(( model classNamed: #RBClassDataForRefactoringTest)
+			directlyDefinesMethod: selector).
 
-	self executeRefactorings: refactoring.
+	self executeRefactoring: refactoring.
 
-	selectors do: [ :symbol |
-		self deny:
-			(( model classNamed: #RBClassDataForRefactoringTest)
-				directlyDefinesMethod: symbol)
-	]
+	self deny:
+		(( model classNamed: #RBClassDataForRefactoringTest)
+			directlyDefinesMethod: selector)
 ]
