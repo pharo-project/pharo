@@ -1,0 +1,113 @@
+Class {
+	#name : #RBRemoveMethodRefactoringTest,
+	#superclass : #RBAbstractTransformationTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+}
+
+{ #category : #'failure tests' }
+RBRemoveMethodRefactoringTest >> testFailureRemoveReferenced [
+
+	self shouldWarn: (RBRemoveMethodRefactoring
+			 model: model
+			 removeMethod: #checkClass:
+			 from: #RBBasicLintRuleTestData)
+]
+
+{ #category : #'failure tests' }
+RBRemoveMethodRefactoringTest >> testFailureRemoveSameMethodButSendsSuper [
+
+	<expectedFailure>
+	self shouldWarn: (RBRemoveMethodRefactoring
+			 model: model
+			 removeMethod: #new
+			 from: #'RBBasicLintRuleTestData class')
+]
+
+{ #category : #tests }
+RBRemoveMethodRefactoringTest >> testJustSendsSuper [
+
+	| refactoring selector |
+	selector := #justSuperSendInSubclass.
+	refactoring := RBRemoveMethodRefactoring
+		               model: model
+		               removeMethod: selector
+		               from: #RBSubclassOfClassToRename.
+
+	self assert: ((model classNamed: #RBSubclassOfClassToRename)
+			 directlyDefinesMethod: selector).
+
+	self assert: (refactoring justSendsSuper: selector)
+]
+
+{ #category : #tests }
+RBRemoveMethodRefactoringTest >> testJustSendsSuperFailing [
+
+	| refactoring selector |
+	selector := #justSuperSendInSubclassBroken.
+	refactoring := RBRemoveMethodRefactoring
+		               model: model
+		               removeMethod: selector
+		               from: #RBSubclassOfClassToRename.
+
+	self assert: ((model classNamed: #RBSubclassOfClassToRename)
+			 directlyDefinesMethod: selector).
+	self deny: (refactoring justSendsSuper: selector)
+]
+
+{ #category : #tests }
+RBRemoveMethodRefactoringTest >> testModelRecursiveMethodThatIsNotReferencedFromOtherMethods [
+
+	| class otherClass selector |
+	class := model classNamed: #Object.
+	class
+		compile: 'someMethodThatIsNotReferenced ^2'
+		classified: #( #accessing ).
+	selector := 'someMethodThatIsNotReferenced' asSymbol.
+
+	self assert: (class definesMethod: selector).
+	otherClass := model metaclassNamed: self class superclass name.
+	otherClass
+		compile:
+		'someMethodThatIsNotReferenced ^3 someMethodThatIsNotReferenced'
+		classified: #( #accessing ).
+	model removeClassNamed: self class name.
+
+	(RBRemoveMethodRefactoring
+		model: model
+		removeMethod: selector
+		from: #Object) generateChanges.
+
+	self deny: (class definesMethod: selector)
+]
+
+{ #category : #tests }
+RBRemoveMethodRefactoringTest >> testSendersIncludesSuperCalls [
+
+	| refactoring |
+	refactoring := RBRemoveMethodRefactoring
+		               model: model
+		               removeMethod: #justSuperSendInSubclass
+		               from: #RBSubclassOfClassToRename.
+	self assert:
+		(refactoring sendersOf: #justSuperSendInSubclass) isNotEmpty
+]
+
+{ #category : #tests }
+RBRemoveMethodRefactoringTest >> testSendersOfUnsentMessage [
+
+	| refactoring rbclasses rbNamespace2 |
+	rbclasses := RBClassEnvironment classes: {
+			             RBClassToRename.
+			             RBSubclassOfClassToRename }.
+	rbNamespace2 := RBNamespace onEnvironment: rbclasses.
+
+	refactoring := RBRemoveMethodRefactoring
+		               model: model
+		               removeMethod: #methodThatIsNotUsedForSure
+		               from: #RBSubclassOfClassToRename.
+	refactoring model: rbNamespace2.
+	self
+		assert: (refactoring sendersOf: #methodThatIsNotUsedForSure) size
+		equals: 0
+	"this is because this test method is taken into account."
+]
