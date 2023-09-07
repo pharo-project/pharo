@@ -85,10 +85,10 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> checkReferencesToAnyOf: aSelectorCollection [
+RBRemoveMethodRefactoring >> checkReferencesToAnyOf: aSelector [
 
 	| occurrences |
-	occurrences := self sendersOf: aSelectorCollection.
+	occurrences := self sendersOf: aSelector.
 	occurrences ifEmpty: [ ^ self ].
 	^ self checkBrowseOccurrences: occurrences
 ]
@@ -205,15 +205,9 @@ RBRemoveMethodRefactoring >> sendersExcluding: aSelectorsCollection [
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> sendersOf: aCollection [
-
-	| occurrences |
-	occurrences := OrderedCollection new.
-	aCollection do: [ :each |
-		self model allReferencesTo: each do: [ :aRBMethod |
-			(aCollection includes: aRBMethod selector) ifFalse: [
-				occurrences add: each -> aRBMethod ] ] ].
-	^ occurrences
+RBRemoveMethodRefactoring >> sendersOf: aSelector [
+	
+	^ self model allReferencesTo: aSelector
 ]
 
 { #category : #printing }
