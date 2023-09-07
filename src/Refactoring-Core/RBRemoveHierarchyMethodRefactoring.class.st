@@ -13,9 +13,10 @@ Script
 "
 Class {
 	#name : #RBRemoveHierarchyMethodRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#superclass : #RBCompositeRefactoring,
 	#instVars : [
-		'selectors'
+		'selectors',
+		'class'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -28,45 +29,31 @@ RBRemoveHierarchyMethodRefactoring class >> removeMethods: aSelectorsCollection 
 
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> delete: aSelectorsCollection in: aClass [
-	
+
 	| containingMethods |
-	containingMethods := aSelectorsCollection select: [ :sel | aClass realClass includesSelector: sel ].
-	
+	containingMethods := aSelectorsCollection select: [ :sel |
+		                     aClass realClass includesSelector: sel ].
 	containingMethods ifNotEmpty: [
-		 [self generateChangesFor: (RBRemoveMethodsRefactoring
-									model: self model
-									methods: containingMethods 
-									from: aClass) ]
-		on: RBRefactoringWarning
-			do: [ :ex | ( self confirm:
-				(ex messageText copyReplaceAll: 'Browse references?' with: 'Remove anyway?') )
-				ifTrue:[ ex resume ] ] ]
+		refactorings add: (RBRemoveMethodsRefactoring
+				 model: self model
+				 methods: containingMethods
+				 from: aClass) ]
 ]
 
 { #category : #transforming }
-RBRemoveHierarchyMethodRefactoring >> deleteSelectors [
+RBRemoveHierarchyMethodRefactoring >> initializeRefactorings [
 
 	class withAllSubclasses do: [ :aClass |
 		self delete: selectors in: aClass ]
-]
-
-{ #category : #preconditions }
-RBRemoveHierarchyMethodRefactoring >> preconditions [
-
-	^ selectors inject: self trueCondition into: [ :cond :selector |
-		  cond & (RBCondition definesSelector: selector in: class) ]
-]
-
-{ #category : #transforming }
-RBRemoveHierarchyMethodRefactoring >> privateTransform [
-	self deleteSelectors
 ]
 
 { #category : #removing }
 RBRemoveHierarchyMethodRefactoring >> removeMethods: aSelectorsCollection from: aClass [
 
 	class := self classObjectFor: aClass.
-	selectors := aSelectorsCollection
+	selectors := aSelectorsCollection.
+	refactorings := OrderedCollection new.
+	self initializeRefactorings 
 ]
 
 { #category : #printing }
