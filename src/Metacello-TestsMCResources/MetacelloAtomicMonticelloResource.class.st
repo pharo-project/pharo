@@ -41,7 +41,7 @@ MetacelloAtomicMonticelloResource >> setUpDependency [
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: (Array
 				with: (MCOrganizationDefinition packageName: reference packageName)
-				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol instVarNames: #() comment: '')))
+				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol instVarNames: #())))
 		dependencies: (Array 
 				with: (MCVersionDependency 
 						package: (MCPackage new name: 'GoferBarDependency') 
@@ -71,7 +71,7 @@ MetacelloAtomicMonticelloResource >> setUpMonticelloRepository [
 				ancestors: #())
 			snapshot: (MCSnapshot fromDefinitions: (Array
 				with: (MCOrganizationDefinition packageName: reference packageName)
-				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: superclassName category: reference packageName asSymbol instVarNames: #() comment: '')))
+				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: superclassName category: reference packageName asSymbol instVarNames: #())))
 			dependencies: #()) ]
 ]
 
@@ -93,7 +93,7 @@ MetacelloAtomicMonticelloResource >> setUpNewerDependency [
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: (Array
 				with: (MCOrganizationDefinition packageName: reference packageName)
-				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol instVarNames: #() comment: '')))
+				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol instVarNames: #())))
 		dependencies: (Array 
 				with: (MCVersionDependency 
 						package: (MCPackage new name: 'GoferBarDependency') 

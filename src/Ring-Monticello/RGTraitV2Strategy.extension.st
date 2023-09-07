@@ -15,8 +15,8 @@ RGTraitV2Strategy >> asMCDefinition [
 		   classVarNames: self classVarNames
 		   poolDictionaryNames: self sharedPoolNames
 		   classInstVarNames: self metaclass instVarNames
-		   type: self mcType
-		   comment: self comment content)
+		   type: self mcType)
+		  comment: self comment content;
 		  commentStamp: self comment stamp;
 		  yourself
 ]

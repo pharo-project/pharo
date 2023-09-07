@@ -79,8 +79,8 @@ MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment
 			  classVarNames: (classPropertiesDict at: 'classvars' ifAbsent: [ #(  ) ])
 			  poolDictionaryNames: (classPropertiesDict at: 'pools' ifAbsent: [ #(  ) ])
 			  classInstVarNames: (classPropertiesDict at: 'classinstvars' ifAbsent: [ #(  ) ])
-			  type: (classPropertiesDict at: 'type' ifAbsent: [ 'normal' ]) asSymbol
-			  comment: classComment)
+			  type: (classPropertiesDict at: 'type' ifAbsent: [ 'normal' ]) asSymbol)
+			 comment: classComment;
 			 commentStamp: (classPropertiesDict at: 'commentStamp' ifAbsent: [ '' ]);
 			 yourself)
 ]

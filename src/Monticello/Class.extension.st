@@ -25,8 +25,7 @@ Class >> asClassDefinition [
 				   classVarNames: (self classVariables collect: [ :each | each definitionString ])
 				   poolDictionaryNames: self sharedPoolNames
 				   classInstVarNames: (self class localSlots collect: [ :each | each definitionString ])
-				   type: self mcType
-				   comment: self comment ]
+				   type: self mcType ]
 		   ifFalse: [
 			   MCClassDefinition
 				   name: self name
@@ -40,8 +39,8 @@ Class >> asClassDefinition [
 				   classVarNames: self classVarNames
 				   poolDictionaryNames: self sharedPoolNames
 				   classInstVarNames: (self class localSlots collect: [ :each | each name ])
-				   type: self mcType
-				   comment: self comment ])
+				   type: self mcType ])
+		  comment: self comment;
 		  commentStamp: self commentStamp;
 		  yourself
 ]

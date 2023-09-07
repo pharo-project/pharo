@@ -16,7 +16,6 @@ MCSortingTest >> classNamed: aSymbol [
 		superclassName: #Object
 		category: ''
 		instVarNames: #()
-		comment: ''
 ]
 
 { #category : #building }

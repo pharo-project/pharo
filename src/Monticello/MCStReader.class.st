@@ -63,8 +63,8 @@ MCStReader >> classDefinitionFrom: aRingClass [
 		   classVarNames: ((tokens at: lastIndex - 4) findTokens: ' ')
 		   poolDictionaryNames: ((tokens at: lastIndex - 2) findTokens: ' ')
 		   classInstVarNames: (self classInstVarNamesFor: aRingClass)
-		   type: (self typeOfSubclass: (tokens at: 2))
-		   comment: (self commentFor: aRingClass))
+		   type: (self typeOfSubclass: (tokens at: 2)))
+		  comment: (self commentFor: aRingClass);
 		  commentStamp: (self commentStampFor: aRingClass);
 		  yourself
 ]

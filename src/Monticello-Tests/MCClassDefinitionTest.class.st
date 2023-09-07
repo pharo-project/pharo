@@ -113,8 +113,8 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 		         classVarNames: #( cVarB )
 		         poolDictionaryNames: #( PoolA )
 		         classInstVarNames: #( ciVarA )
-		         type: #typeA
-		         comment: 'A comment')
+		         type: #typeA)
+		        comment: 'A comment';
 		        commentStamp: 'A';
 		        yourself.
 
@@ -189,8 +189,8 @@ MCClassDefinitionTest >> testValidTraitComposition [
 		      classVarNames: #(  )
 		      poolDictionaryNames: #(  )
 		      classInstVarNames: #(  )
-		      type: #normal
-		      comment: (self commentForClass: className))
+		      type: #normal)
+		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
 	d load.
@@ -216,8 +216,8 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 		      classVarNames: #(  )
 		      poolDictionaryNames: #(  )
 		      classInstVarNames: #(  )
-		      type: #normal
-		      comment: (self commentForClass: className))
+		      type: #normal)
+		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
 	d load.
@@ -243,8 +243,8 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 		      classVarNames: #(  )
 		      poolDictionaryNames: #(  )
 		      classInstVarNames: #(  )
-		      type: #normal
-		      comment: (self commentForClass: className))
+		      type: #normal)
+		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
 	d load.
@@ -272,8 +272,8 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 		      classVarNames: #(  )
 		      poolDictionaryNames: #(  )
 		      classInstVarNames: #(  )
-		      type: #normal
-		      comment: (self commentForClass: className))
+		      type: #normal)
+		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
 	d load.

@@ -1000,8 +1000,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceIV [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1039,8 +1038,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceIX [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1078,8 +1076,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceV [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1117,8 +1114,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceVI [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1156,8 +1152,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceVII [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1195,8 +1190,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceVIII [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1234,8 +1228,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXI [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1273,8 +1266,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXII [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1312,8 +1304,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXIII [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1351,8 +1342,7 @@ MetacelloScriptingResource >> setUpBaselineGithubReferenceXX [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1390,8 +1380,7 @@ MetacelloScriptingResource >> setUpBaselineIssue215 [
     name: className
     superclassName: #'BaselineOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -1450,8 +1439,7 @@ MetacelloScriptingResource >> setUpBaselineIssue32 [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1510,8 +1498,7 @@ MetacelloScriptingResource >> setUpBaselineIssue399 [
     name: className
     superclassName: #'BaselineOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -1549,8 +1536,7 @@ MetacelloScriptingResource >> setUpBaselineIssue399Cypress [
     name: className
     superclassName: #'BaselineOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -1595,8 +1581,7 @@ MetacelloScriptingResource >> setUpBaselineOfExternalX [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1634,8 +1619,7 @@ MetacelloScriptingResource >> setUpBaselineOfExternalXX [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1673,8 +1657,7 @@ MetacelloScriptingResource >> setUpBaselineOfExternalXXX [
         name: className
         superclassName: #'BaselineOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1719,8 +1702,7 @@ MetacelloScriptingResource >> setUpConfiguration181 [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -1807,8 +1789,7 @@ MetacelloScriptingResource >> setUpConfiguration63 [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -1862,8 +1843,7 @@ MetacelloScriptingResource >> setUpConfigurationExternalRefdkh1 [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -1908,8 +1888,7 @@ MetacelloScriptingResource >> setUpConfigurationExternalRefdkh2: ancestors [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -1963,8 +1942,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue32 [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -2018,8 +1996,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue339 [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -2061,8 +2038,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue59 [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -2116,8 +2092,7 @@ MetacelloScriptingResource >> setUpConfigurationIssue84 [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -2175,8 +2150,7 @@ MetacelloScriptingResource >> setUpConfigurationNextedIssue84dkh1 [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -2230,8 +2204,7 @@ MetacelloScriptingResource >> setUpConfigurationNextedIssue84dkh2: ancestors [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -2283,8 +2256,7 @@ MetacelloScriptingResource >> setUpConfigurationOfConflict [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -2359,8 +2331,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalIV [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -2414,8 +2385,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXX [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -2460,8 +2430,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXXX [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -2499,8 +2468,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXdkh1 [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -2552,8 +2520,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalXdkh2: ancestors [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -2619,8 +2586,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternaldkh1 [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -2658,8 +2624,7 @@ MetacelloScriptingResource >> setUpConfigurationOfExternaldkh2 [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -2704,8 +2669,7 @@ MetacelloScriptingResource >> setUpExternalCore [
     name: className
     superclassName: #'Object'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: true
@@ -2750,8 +2714,7 @@ MetacelloScriptingResource >> setUpExternalCoreX [
     name: className
     superclassName: #'Object'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: true
@@ -2796,8 +2759,7 @@ MetacelloScriptingResource >> setUpInvalidConfigurations [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -2874,8 +2836,7 @@ MetacelloScriptingResource >> setUpIssue399CoreExternaldkh1 [
     name: className
     superclassName: #'Object'
     category: reference packageName
-    instVarNames: #()
-    comment: '')}.
+    instVarNames: #())}.
   externalRepository
     basicStoreVersion:
       (MCVersion new
@@ -2912,8 +2873,7 @@ MetacelloScriptingResource >> setUpIssue399CoreSampledkh1 [
     name: className
     superclassName: #'Object'
     category: reference packageName
-    instVarNames: #()
-    comment: '')}.
+    instVarNames: #())}.
   sampleRepository
     basicStoreVersion:
       (MCVersion new
@@ -2950,8 +2910,7 @@ MetacelloScriptingResource >> setUpIssue399CoreSampledkh2: ancestors [
     name: className
     superclassName: #'Object'
     category: reference packageName
-    instVarNames: #()
-    comment: '')}.
+    instVarNames: #())}.
   sampleRepository
     basicStoreVersion:
       (MCVersion new
@@ -2983,8 +2942,7 @@ MetacelloScriptingResource >> setUpLockConfigurations [
     name: className
     superclassName: #'ConfigurationOf'
     category: reference packageName
-    instVarNames: #()
-    comment: '').
+    instVarNames: #()).
   (MCMethodDefinition
     className: className asString
     classIsMeta: false
@@ -3067,8 +3025,7 @@ MetacelloScriptingResource >> setUpMarianosImage [
         name: className
         superclassName: #'ConfigurationOf'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: false
@@ -3122,8 +3079,7 @@ MetacelloScriptingResource >> setUpSampleCore [
         name: className
         superclassName: #'Object'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -3135,8 +3091,7 @@ MetacelloScriptingResource >> setUpSampleCore [
         name: #'Object'
         superclassName: #'ProtoObject'
         category: reference packageName
-        instVarNames: #()
-        comment: '').
+        instVarNames: #()).
     (MCMethodDefinition
         className: 'Object'
         classIsMeta: true
