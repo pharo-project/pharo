@@ -108,8 +108,8 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 		         superclassName: 'SuperA'
 		         traitComposition: '{}'
 		         classTraitComposition: '{}'
-		         category: 'CategoryA'
-		         instVarNames: #( iVarA ))
+		         category: 'CategoryA')
+		        instVarNames: #( iVarA );
 		        classVarNames: #( cVarB );
 		        poolDictionaryNames: #( PoolA );
 		        classInstVarNames: #( ciVarA );
@@ -184,8 +184,7 @@ MCClassDefinitionTest >> testValidTraitComposition [
 		      superclassName: 'Object'
 		      traitComposition: '{MCTraitMock1}'
 		      classTraitComposition: '{}'
-		      category: self mockCategoryName
-		      instVarNames: #(  ))
+		      category: self mockCategoryName)
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -207,8 +206,7 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 		      superclassName: 'Object'
 		      traitComposition: 'MCTraitMock1'
 		      classTraitComposition: '{}'
-		      category: self mockCategoryName
-		      instVarNames: #(  ))
+		      category: self mockCategoryName)
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -230,8 +228,7 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 		      superclassName: 'Object'
 		      traitComposition: 'MCTraitMock1 + MCTraitMock2'
 		      classTraitComposition: '{}'
-		      category: self mockCategoryName
-		      instVarNames: #(  ))
+		      category: self mockCategoryName)
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -255,8 +252,7 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 		      superclassName: 'Object'
 		      traitComposition: 'MCTraitMock1 - {#c1}'
 		      classTraitComposition: '{}'
-		      category: self mockCategoryName
-		      instVarNames: #(  ))
+		      category: self mockCategoryName)
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.

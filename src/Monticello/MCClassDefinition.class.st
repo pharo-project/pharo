@@ -19,7 +19,7 @@ Class {
 }
 
 { #category : #obsolete }
-MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString instVarNames: ivarArray [
+MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString [
 
 	^ self
 		  name: nameString
@@ -27,11 +27,10 @@ MCClassDefinition class >> name: nameString superclassName: superclassString cat
 		  traitComposition: '{}'
 		  classTraitComposition: '{}'
 		  category: categoryString
-		  instVarNames: ivarArray
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray [
+MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString [
 
 	^ self new
 		  initializeWithName: nameString
@@ -39,7 +38,6 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		  traitComposition: traitCompositionString
 		  classTraitComposition: classTraitCompositionString
 		  category: categoryString
-		  instVarNames: ivarArray
 ]
 
 { #category : #'instance creation' }
@@ -50,8 +48,8 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		   superclassName: superclassString
 		   traitComposition: traitCompositionString
 		   classTraitComposition: classTraitCompositionString
-		   category: categoryString
-		   instVarNames: ivarArray)
+		   category: categoryString)
+		  instVarNames: ivarArray;
 		  classVarNames: cvarArray;
 		  poolDictionaryNames: poolArray;
 		  classInstVarNames: civarArray;
@@ -316,7 +314,7 @@ MCClassDefinition >> initialize [
 ]
 
 { #category : #initialization }
-MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray [
+MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString [
 
 	name := nameString asSymbol.
 	superclassName := superclassString
@@ -324,14 +322,18 @@ MCClassDefinition >> initializeWithName: nameString superclassName: superclassSt
 		                  ifNotNil: [ superclassString asSymbol ].
 	traitComposition := traitCompositionString.
 	classTraitComposition := classTraitCompositionString.
-	category := categoryString.
-
-	self addVariables: ivarArray ofType: MCInstanceVariableDefinition
+	category := categoryString
 ]
 
 { #category : #accessing }
 MCClassDefinition >> instVarNames [
 	^ self selectVariables: #isInstanceVariable
+]
+
+{ #category : #accessing }
+MCClassDefinition >> instVarNames: ivarArray [
+
+	self addVariables: ivarArray ofType: MCInstanceVariableDefinition
 ]
 
 { #category : #printing }

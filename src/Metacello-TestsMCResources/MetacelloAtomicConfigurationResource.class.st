@@ -355,8 +355,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFan [
     (MCClassDefinition
         name: packageName
         superclassName: #'Object'
-        category: packageName
-        instVarNames: #()).
+        category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -416,8 +415,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFoo [
     (MCClassDefinition
         name: packageName
         superclassName: #'Object'
-        category: packageName
-        instVarNames: #()).
+        category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -477,8 +475,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfLinearFoo [
     (MCClassDefinition
         name: packageName
         superclassName: #'Object'
-        category: packageName
-        instVarNames: #()).
+        category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -562,8 +559,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfProjectIssue86 [
     (MCClassDefinition
         name: packageName
         superclassName: #'Object'
-        category: packageName
-        instVarNames: #()).
+        category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -623,8 +619,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfUmbrellaA [
     (MCClassDefinition
         name: packageName
         superclassName: #'Object'
-        category: packageName
-        instVarNames: #()).
+        category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -672,8 +667,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfUmbrellaB [
     (MCClassDefinition
         name: packageName
         superclassName: #'Object'
-        category: packageName
-        instVarNames: #()).
+        category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true

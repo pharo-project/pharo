@@ -79,8 +79,7 @@ MCTestCase >> mockClass: className super: superclassName [
 		   superclassName: superclassName
 		   traitComposition: '{}'
 		   classTraitComposition: '{}'
-		   category: self mockCategoryName
-		   instVarNames: #(  ))
+		   category: self mockCategoryName)
 		  comment: (self commentForClass: className);
 		  commentStamp: (self commentStampForClass: className);
 		  yourself

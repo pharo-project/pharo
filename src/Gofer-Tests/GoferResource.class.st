@@ -48,7 +48,7 @@ GoferResource >> setUpMonticelloRepository [
 				ancestors: #())
 			snapshot: (MCSnapshot fromDefinitions: (Array
 				with: (MCOrganizationDefinition packageName: reference packageName)
-				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol instVarNames: #())))
+				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol)))
 			dependencies: #()) ]
 ]
 
