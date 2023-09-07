@@ -76,8 +76,8 @@ MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment
 			  classTraitComposition: (classPropertiesDict at: 'classtraitcomposition' ifAbsent: [ '{}' ])
 			  category: categoryName
 			  instVarNames: (classPropertiesDict at: 'instvars' ifAbsent: [ #(  ) ])
-			  classVarNames: (classPropertiesDict at: 'classvars' ifAbsent: [ #(  ) ])
-			  poolDictionaryNames: (classPropertiesDict at: 'pools' ifAbsent: [ #(  ) ]))
+			  classVarNames: (classPropertiesDict at: 'classvars' ifAbsent: [ #(  ) ]))
+			 poolDictionaryNames: (classPropertiesDict at: 'pools' ifAbsent: [ #(  ) ]);
 			 classInstVarNames: (classPropertiesDict at: 'classinstvars' ifAbsent: [ #(  ) ]);
 			 type: (classPropertiesDict at: 'type' ifAbsent: [ #normal ]) asSymbol;
 			 comment: classComment;

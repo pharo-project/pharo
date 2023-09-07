@@ -110,8 +110,8 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 		         classTraitComposition: '{}'
 		         category: 'CategoryA'
 		         instVarNames: #( iVarA )
-		         classVarNames: #( cVarB )
-		         poolDictionaryNames: #( PoolA ))
+		         classVarNames: #( cVarB ))
+		        poolDictionaryNames: #( PoolA );
 		        classInstVarNames: #( ciVarA );
 		        type: #typeA;
 		        comment: 'A comment';
@@ -186,8 +186,7 @@ MCClassDefinitionTest >> testValidTraitComposition [
 		      classTraitComposition: '{}'
 		      category: self mockCategoryName
 		      instVarNames: #(  )
-		      classVarNames: #(  )
-		      poolDictionaryNames: #(  ))
+		      classVarNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -211,8 +210,7 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 		      classTraitComposition: '{}'
 		      category: self mockCategoryName
 		      instVarNames: #(  )
-		      classVarNames: #(  )
-		      poolDictionaryNames: #(  ))
+		      classVarNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -236,8 +234,7 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 		      classTraitComposition: '{}'
 		      category: self mockCategoryName
 		      instVarNames: #(  )
-		      classVarNames: #(  )
-		      poolDictionaryNames: #(  ))
+		      classVarNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -263,8 +260,7 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 		      classTraitComposition: '{}'
 		      category: self mockCategoryName
 		      instVarNames: #(  )
-		      classVarNames: #(  )
-		      poolDictionaryNames: #(  ))
+		      classVarNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
