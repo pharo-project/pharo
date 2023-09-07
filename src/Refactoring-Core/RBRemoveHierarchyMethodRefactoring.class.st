@@ -44,7 +44,7 @@ RBRemoveHierarchyMethodRefactoring >> delete: aSelectorsCollection in: aClass [
 	containingMethods ifNotEmpty: [
 		refactorings add: (RBRemoveMethodsRefactoring
 				 model: self model
-				 methods: containingMethods
+				 selectors: containingMethods
 				 from: aClass) ]
 ]
 

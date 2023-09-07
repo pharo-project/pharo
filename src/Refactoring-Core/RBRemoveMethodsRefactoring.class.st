@@ -8,15 +8,27 @@ My preconditions verify that methods to be removed are not referenced anywhere. 
 Class {
 	#name : #RBRemoveMethodsRefactoring,
 	#superclass : #RBCompositeRefactoring,
+	#instVars : [
+		'selectors',
+		'class'
+	],
 	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
-RBRemoveMethodsRefactoring class >> model: aRBNamespace methods: aSelectorsCollection from: aClass [
+RBRemoveMethodsRefactoring class >> model: aRBNamespace selectors: aSelectorsCollection from: aClass [
 
 	^ self new
 		model: aRBNamespace;
-		methods: aSelectorsCollection 
+		selectors: aSelectorsCollection 
+		from: aClass
+]
+
+{ #category : #'instance creation' }
+RBRemoveMethodsRefactoring class >> selectors: aSelectorsCollection from: aClass [
+
+	^ self new
+		selectors: aSelectorsCollection 
 		from: aClass
 ]
 
@@ -31,16 +43,6 @@ RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 		  'Some of the methods have senders outside of the methods being removed'
 ]
 
-{ #category : #accessing }
-RBRemoveMethodsRefactoring >> methods: aCollection from: aClass [
-
-	refactorings := aCollection collect: [ :method |
-							RBRemoveMethodRefactoring
-								model: model
-								selector: method
-								from: aClass ]
-]
-
 { #category : #removing }
 RBRemoveMethodsRefactoring >> removeMethodChanges [
 
@@ -51,23 +53,23 @@ RBRemoveMethodsRefactoring >> removeMethodChanges [
 { #category : #accessing }
 RBRemoveMethodsRefactoring >> selectors [
 	
-	^ refactorings collect: [ :ref | ref selector ]
+	^ selectors 
 ]
 
 { #category : #accessing }
-RBRemoveMethodsRefactoring >> selectors: aCollection [
+RBRemoveMethodsRefactoring >> selectors: aCollection from: aClass [
 
-	refactorings := aCollection collect: [ :selector |
-							RBRemoveMethodTransformation
+	selectors := aCollection.
+	class := self model classFor: aClass.
+	refactorings := aCollection collect: [ :method |
+							RBRemoveMethodRefactoring
 								model: model
-								selector: selector
-								from: selector origin ]
+								selector: method
+								from: aClass ]
 ]
 
 { #category : #private }
 RBRemoveMethodsRefactoring >> senders [
 	
-	| selectors |
-	selectors := refactorings collect: [ :ref | ref selector ].
 	^ (refactorings collect: [ :ref | ref sendersExcluding: selectors ]) flattened
 ]

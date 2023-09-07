@@ -27,7 +27,7 @@ RBRemoveMethodDriver >> configureRefactoring [
 
 	refactoring := RBRemoveMethodsRefactoring
 		               model: model
-		               methods: (methods collect: [ :each | each selector ])
+		               selectors: (methods collect: [ :each | each selector ])
 		               from: class
 ]
 
