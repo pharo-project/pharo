@@ -12,7 +12,7 @@ Script
 ```
 "
 Class {
-	#name : #RBRemoveHierarchyMethodRefactoring,
+	#name : #RBRemoveMethodsInHierarchyRefactoring,
 	#superclass : #RBCompositeRefactoring,
 	#instVars : [
 		'selectors',
@@ -22,13 +22,13 @@ Class {
 }
 
 { #category : #removing }
-RBRemoveHierarchyMethodRefactoring class >> selectors: aSelectorsCollection from: aClass [ 
+RBRemoveMethodsInHierarchyRefactoring class >> selectors: aSelectorsCollection from: aClass [ 
 	
 	^ self new selectors: aSelectorsCollection from: aClass
 ]
 
 { #category : #preconditions }
-RBRemoveHierarchyMethodRefactoring >> applicabilityPreconditions [ 
+RBRemoveMethodsInHierarchyRefactoring >> applicabilityPreconditions [ 
 
 	^ selectors
 			inject: self trueCondition
@@ -36,7 +36,7 @@ RBRemoveHierarchyMethodRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : #transforming }
-RBRemoveHierarchyMethodRefactoring >> delete: aSelectorsCollection in: aClass [
+RBRemoveMethodsInHierarchyRefactoring >> delete: aSelectorsCollection in: aClass [
 
 	| containingMethods |
 	containingMethods := aSelectorsCollection select: [ :sel |
@@ -49,14 +49,14 @@ RBRemoveHierarchyMethodRefactoring >> delete: aSelectorsCollection in: aClass [
 ]
 
 { #category : #transforming }
-RBRemoveHierarchyMethodRefactoring >> initializeRefactorings [
+RBRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
 
 	class withAllSubclasses do: [ :aClass |
 		self delete: selectors in: aClass ]
 ]
 
 { #category : #removing }
-RBRemoveHierarchyMethodRefactoring >> selectors: aSelectorsCollection from: aClass [
+RBRemoveMethodsInHierarchyRefactoring >> selectors: aSelectorsCollection from: aClass [
 
 	class := self classObjectFor: aClass.
 	selectors := aSelectorsCollection.
@@ -65,7 +65,7 @@ RBRemoveHierarchyMethodRefactoring >> selectors: aSelectorsCollection from: aCla
 ]
 
 { #category : #printing }
-RBRemoveHierarchyMethodRefactoring >> storeOn: aStream [
+RBRemoveMethodsInHierarchyRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' removeMethods: '.

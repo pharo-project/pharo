@@ -1,7 +1,7 @@
-Extension { #name : #SycRemoveHierarchyMethodCommand }
+Extension { #name : #SycRemoveMethodsInHierarchyCommand }
 
 { #category : #'*Calypso-SystemTools-Core' }
-SycRemoveHierarchyMethodCommand class >> methodContextMenuActivation [
+SycRemoveMethodsInHierarchyCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 
 	^ SycMethodMenuActivation byRootGroupItemOrder: 100 for: ClyMethod asCalypsoItemContext

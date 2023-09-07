@@ -3,31 +3,31 @@ I am a command to remove given methods and the ones in the subclasses.
 
 "
 Class {
-	#name : #SycRemoveHierarchyMethodCommand,
+	#name : #SycRemoveMethodsInHierarchyCommand,
 	#superclass : #SysRefactoringMethodCommand,
 	#category : #'SystemCommands-MethodCommands'
 }
 
 { #category : #converting }
-SycRemoveHierarchyMethodCommand >> asRefactorings [
+SycRemoveMethodsInHierarchyCommand >> asRefactorings [
 
 	| refactoring |
-	refactoring := RBRemoveHierarchyMethodRefactoring
+	refactoring := RBRemoveMethodsInHierarchyRefactoring
 				      		selectors: (methods collect: [:each | each selector])
 							from: methods first origin.
 	^ OrderedCollection with: refactoring
 ]
 
 { #category : #accessing }
-SycRemoveHierarchyMethodCommand >> defaultMenuIconName [
+SycRemoveMethodsInHierarchyCommand >> defaultMenuIconName [
 	^ #remove
 ]
 
 { #category : #accessing }
-SycRemoveHierarchyMethodCommand >> defaultMenuItemName [
+SycRemoveMethodsInHierarchyCommand >> defaultMenuItemName [
 	^'Remove and the ones in subclasses'
 ]
 
 { #category : #initialization }
-SycRemoveHierarchyMethodCommand >> setUpModelFromContext: aToolContext [
+SycRemoveMethodsInHierarchyCommand >> setUpModelFromContext: aToolContext [
 ]

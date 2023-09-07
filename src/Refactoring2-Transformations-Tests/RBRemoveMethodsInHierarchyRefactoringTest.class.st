@@ -1,30 +1,30 @@
 Class {
-	#name : #RBRemoveHierarchyMethodRefactoringTest,
+	#name : #RBRemoveMethodsInHierarchyRefactoringTest,
 	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
 { #category : #'failure tests' }
-RBRemoveHierarchyMethodRefactoringTest >> testFailureRemoveNonExistantMethod [
+RBRemoveMethodsInHierarchyRefactoringTest >> testFailureRemoveNonExistantMethod [
 
-	self shouldFail: (RBRemoveHierarchyMethodRefactoring
+	self shouldFail: (RBRemoveMethodsInHierarchyRefactoring
 			 selectors: #( #nonExistingMethod )
 			 from: RBBasicLintRuleTestData)
 ]
 
 { #category : #'failure tests' }
-RBRemoveHierarchyMethodRefactoringTest >> testFailureRemoveReferenced [
+RBRemoveMethodsInHierarchyRefactoringTest >> testFailureRemoveReferenced [
 
-	self shouldWarn: (RBRemoveHierarchyMethodRefactoring
+	self shouldWarn: (RBRemoveMethodsInHierarchyRefactoring
 				 selectors: #( #checkClass: )
 				 from: RBBasicLintRuleTestData)
 ]
 
 { #category : #tests }
-RBRemoveHierarchyMethodRefactoringTest >> testRemoveMethod [
+RBRemoveMethodsInHierarchyRefactoringTest >> testRemoveMethod [
 	| refactoring selectors |
 	selectors := Array with: 'msg4' asSymbol.
-	refactoring := RBRemoveHierarchyMethodRefactoring selectors: selectors from: RBSharedPoolForTestData.
+	refactoring := RBRemoveMethodsInHierarchyRefactoring selectors: selectors from: RBSharedPoolForTestData.
 	self assert: ((refactoring model classNamed: #RBSharedPoolForTestData) directlyDefinesMethod: selectors first).
 	self assert: ((refactoring model classNamed: #RBSharedPoolForTestData1) directlyDefinesMethod: selectors first).
 	self assert: ((refactoring model classNamed: #RBSharedPoolForTestData2) directlyDefinesMethod: selectors first).
