@@ -10,13 +10,6 @@ Class {
 	#category : #'System-Hashing-Core'
 }
 
-{ #category : #'instance creation' }
-ThirtyTwoBitRegister class >> new [
-	"Answer a new instance whose initial contents is zero."
-
-	^ super new load: 0
-]
-
 { #category : #'accumulator ops' }
 ThirtyTwoBitRegister >> += aThirtTwoBitRegister [
 	"Replace my contents with the sum of the given register and my current contents."
@@ -32,7 +25,7 @@ ThirtyTwoBitRegister >> asByteArray [
 	^ ByteArray with: (low bitAnd: 16rFF) with: (low bitShift: -8) with: (hi bitAnd: 16rFF) with: (hi bitShift: -8)
 ]
 
-{ #category : #accessing }
+{ #category : #converting }
 ThirtyTwoBitRegister >> asInteger [
 	"Answer the integer value of my current contents."
 
@@ -77,20 +70,6 @@ ThirtyTwoBitRegister >> byteAt: anInteger [
 	anInteger = 4 ifTrue: [^ low bitAnd: 16rFF]
 ]
 
-{ #category : #copying }
-ThirtyTwoBitRegister >> copy [
-	"Use the clone primitive for speed."
-
-	<primitive: 148>
-	^ super copy
-]
-
-{ #category : #accessing }
-ThirtyTwoBitRegister >> hi [
-
-	^ hi
-]
-
 { #category : #'accumulator ops' }
 ThirtyTwoBitRegister >> leftRotateBy: bits [
 	"Rotate my contents left by the given number of bits, retaining exactly 32 bits."
@@ -130,20 +109,6 @@ ThirtyTwoBitRegister >> loadFrom: aByteArray at: index [
 
 	hi := ((aByteArray at: index) bitShift: 8) + ( aByteArray at: index + 1).
 	low := ((aByteArray at: index + 2) bitShift: 8) + ( aByteArray at: index + 3)
-]
-
-{ #category : #accessing }
-ThirtyTwoBitRegister >> low [
-
-	^ low
-]
-
-{ #category : #printing }
-ThirtyTwoBitRegister >> printOn: aStream [
-	"Print my contents in hex with a leading 'R' to show that it is a register object being printed."
-
-	aStream nextPutAll: 'R:'.
-	self asInteger storeOn: aStream base: 16
 ]
 
 { #category : #accessing }

@@ -1,16 +1,16 @@
 Class {
-	#name : #BitRegisterTestSuite,
+	#name : #BitRegisterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'reg1',
 		'reg2',
 		'result'
 	],
-	#category : #'System-Hashing-Tests'
+	#category : #'System-Hashing-Tests-Registers'
 }
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterAddition [
+BitRegisterTest >> testSixtyFourBitRegisterAddition [
 
 	reg1 := SixtyFourBitRegister new load: 0.
 	reg2 := SixtyFourBitRegister new load: 1.
@@ -23,7 +23,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterAddition [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterAdditionOverflow [
+BitRegisterTest >> testSixtyFourBitRegisterAdditionOverflow [
 
 	| byteArray |
 	byteArray := #[18 52 86 120].
@@ -33,7 +33,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterAdditionOverflow [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterAnd [
+BitRegisterTest >> testSixtyFourBitRegisterAnd [
 
 	reg1 := SixtyFourBitRegister new load: 16rFFFF0000.
 	reg2 := SixtyFourBitRegister new load: 16r0000FFFF.
@@ -44,7 +44,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterAnd [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterAsByteArray [
+BitRegisterTest >> testSixtyFourBitRegisterAsByteArray [
 
 	| reg byteArray |
 	reg := SixtyFourBitRegister new load: 1311768465173141112.
@@ -56,7 +56,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterAsByteArray [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterByteAt [
+BitRegisterTest >> testSixtyFourBitRegisterByteAt [
 
     | byteArray register |
     byteArray := #[18 52 86 120 154 188 222 240].
@@ -81,7 +81,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterByteAt [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterInversion [
+BitRegisterTest >> testSixtyFourBitRegisterInversion [
 
 	reg1 := SixtyFourBitRegister new load: 16rFFFFFFFF00000000.
 	reg1 bitInvert.
@@ -91,7 +91,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterInversion [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterLeftRotateBy2 [
+BitRegisterTest >> testSixtyFourBitRegisterLeftRotateBy2 [
 
 	| initial rotated |
 	
@@ -108,7 +108,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterLeftRotateBy2 [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterLeftRotateBy3 [
+BitRegisterTest >> testSixtyFourBitRegisterLeftRotateBy3 [
 
 	| initial rotated |
 	
@@ -125,13 +125,13 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterLeftRotateBy3 [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterLeftRotateBySimple [
+BitRegisterTest >> testSixtyFourBitRegisterLeftRotateBySimple [
 
 	| byteArray initial rotated |
-	
+
 	initial := 2r11.
 	rotated := 2r1100. "Left-rotated by 2 bits"
-	
+
 	byteArray := #[ 0 0 0 0 0 0 0 3 ].
 	reg1 := SixtyFourBitRegister new loadFrom: byteArray at: 1.
 	reg1 leftRotateBy: 2.
@@ -139,11 +139,10 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterLeftRotateBySimple [
 	self 
 		assert: reg1 asInteger 
 		equals: rotated.
-
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterLoadFromCorrectByteOrder [
+BitRegisterTest >> testSixtyFourBitRegisterLoadFromCorrectByteOrder [
 
 	| byteArray |
 	byteArray := #[18 52 86 120 154 188 222 240].
@@ -153,7 +152,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterLoadFromCorrectByteOrder [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterLoadFromReverseByteOrder [
+BitRegisterTest >> testSixtyFourBitRegisterLoadFromReverseByteOrder [
 
 	| byteArray |
 	byteArray := #[240 222 188 154 120 86 52 18].
@@ -163,7 +162,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterLoadFromReverseByteOrder [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterOr [
+BitRegisterTest >> testSixtyFourBitRegisterOr [
 
 	reg1 := SixtyFourBitRegister new load: 16rFFFFFFFF00000000.
 	reg2 := SixtyFourBitRegister new load: 16r00000000FFFFFFFF.
@@ -174,7 +173,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterOr [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testSixtyFourBitRegisterXor [
+BitRegisterTest >> testSixtyFourBitRegisterXor [
 
 	reg1 := SixtyFourBitRegister new load: 16rFFFFFFFF00000000.
 	reg2 := SixtyFourBitRegister new load: 16r00000000FFFFFFFF.
@@ -185,7 +184,7 @@ BitRegisterTestSuite >> testSixtyFourBitRegisterXor [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testThirtyTwoBitRegisterAddition [
+BitRegisterTest >> testThirtyTwoBitRegisterAddition [
 
 	reg1 := ThirtyTwoBitRegister new load: 0.
 	reg2 := ThirtyTwoBitRegister new load: 1.
@@ -198,7 +197,7 @@ BitRegisterTestSuite >> testThirtyTwoBitRegisterAddition [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testThirtyTwoBitRegisterAdditionOverflow [
+BitRegisterTest >> testThirtyTwoBitRegisterAdditionOverflow [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFFFFFF.
 	reg2 := ThirtyTwoBitRegister new load: 1.
@@ -211,7 +210,7 @@ BitRegisterTestSuite >> testThirtyTwoBitRegisterAdditionOverflow [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testThirtyTwoBitRegisterAnd [
+BitRegisterTest >> testThirtyTwoBitRegisterAnd [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFF0000.
 	reg2 := ThirtyTwoBitRegister new load: 16r0000FFFF.
@@ -222,7 +221,7 @@ BitRegisterTestSuite >> testThirtyTwoBitRegisterAnd [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testThirtyTwoBitRegisterInversion [
+BitRegisterTest >> testThirtyTwoBitRegisterInversion [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFF0000.
 	reg1 bitInvert.
@@ -232,7 +231,7 @@ BitRegisterTestSuite >> testThirtyTwoBitRegisterInversion [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testThirtyTwoBitRegisterLoadFromCorrectByteOrder [
+BitRegisterTest >> testThirtyTwoBitRegisterLoadFromCorrectByteOrder [
 
 	| byteArray |
 	byteArray := #[18 52 86 120].
@@ -242,7 +241,7 @@ BitRegisterTestSuite >> testThirtyTwoBitRegisterLoadFromCorrectByteOrder [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testThirtyTwoBitRegisterLoadFromReverseByteOrder [
+BitRegisterTest >> testThirtyTwoBitRegisterLoadFromReverseByteOrder [
 
 	| byteArray |
 	byteArray := #[120 86 52 18].
@@ -252,7 +251,7 @@ BitRegisterTestSuite >> testThirtyTwoBitRegisterLoadFromReverseByteOrder [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testThirtyTwoBitRegisterOr [
+BitRegisterTest >> testThirtyTwoBitRegisterOr [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFF0000.
 	reg2 := ThirtyTwoBitRegister new load: 16r0000FFFF.
@@ -263,7 +262,7 @@ BitRegisterTestSuite >> testThirtyTwoBitRegisterOr [
 ]
 
 { #category : #tests }
-BitRegisterTestSuite >> testThirtyTwoBitRegisterXor [
+BitRegisterTest >> testThirtyTwoBitRegisterXor [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFF0000.
 	reg2 := ThirtyTwoBitRegister new load: 16r0000FFFF.

@@ -13,6 +13,20 @@ Class {
 	#category : #'System-Hashing-Core'
 }
 
+{ #category : #'instance creation' }
+FixedBitWidthRegister class >> new [
+	"Answer a new instance whose initial contents is zero."
+
+	^ super new load: 0
+]
+
+{ #category : #converting }
+FixedBitWidthRegister >> asInteger [
+	"Answer the integer value of my current contents."
+	
+	self subclassResponsibility
+]
+
 { #category : #'accumulator ops' }
 FixedBitWidthRegister >> bitAnd: aBitRegister [
     "Replace my contents with the bitwise AND of the given register and my current contents."
