@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveMethodRefactoringTest,
 	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #'failure tests' }
