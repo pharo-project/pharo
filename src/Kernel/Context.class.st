@@ -2266,16 +2266,16 @@ Context >> unwindBlock [
 Context >> unwindComplete [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 
-	"The complete flag is in the antepenultimate temporary"
-	^ self tempAt: self numTemps - 1
+	"The complete flag is in the second temporary"
+	^ self tempAt: self numArgs + 2
 ]
 
 { #category : #'special context access' }
 Context >> unwindComplete: aBoolean [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 
-	"The complete flag is in the antepenultimate temporary"
-	self tempAt: self numTemps - 1 put: aBoolean
+	"The complete flag is in the second temporary"
+	self tempAt: self numArgs + 2 put: aBoolean
 ]
 
 { #category : #'private - exceptions' }
