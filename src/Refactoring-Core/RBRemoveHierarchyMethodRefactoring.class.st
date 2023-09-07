@@ -27,6 +27,14 @@ RBRemoveHierarchyMethodRefactoring class >> removeMethods: aSelectorsCollection 
 	^ self new removeMethods: aSelectorsCollection from: aClass
 ]
 
+{ #category : #preconditions }
+RBRemoveHierarchyMethodRefactoring >> applicabilityPreconditions [ 
+
+	^ selectors
+			inject: self trueCondition
+			into: [ :cond :sel | cond & (RBCondition definesSelector: sel in: class) ]
+]
+
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> delete: aSelectorsCollection in: aClass [
 
