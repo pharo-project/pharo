@@ -13,31 +13,33 @@ Class >> asClassDefinition [
 
 	^ (self needsSlotClassDefinition
 		   ifTrue: [
-			   MCClassDefinition
-				   name: self name
-				   superclassName: (self superclass
-						    ifNil: [ nil asString ]
-						    ifNotNil: [ self superclass name ])
-				   traitComposition: self traitCompositionString
-				   classTraitComposition: self class traitCompositionString
-				   category: self category
-				   instVarNames: (self localSlots collect: [ :each | each definitionString ])
-				   classVarNames: (self classVariables collect: [ :each | each definitionString ])
-				   poolDictionaryNames: self sharedPoolNames
-				   classInstVarNames: (self class localSlots collect: [ :each | each definitionString ]) ]
+			   (MCClassDefinition
+				    name: self name
+				    superclassName: (self superclass
+						     ifNil: [ nil asString ]
+						     ifNotNil: [ self superclass name ])
+				    traitComposition: self traitCompositionString
+				    classTraitComposition: self class traitCompositionString
+				    category: self category
+				    instVarNames: (self localSlots collect: [ :each | each definitionString ])
+				    classVarNames: (self classVariables collect: [ :each | each definitionString ])
+				    poolDictionaryNames: self sharedPoolNames)
+				   classInstVarNames: (self class localSlots collect: [ :each | each definitionString ]);
+				   yourself ]
 		   ifFalse: [
-			   MCClassDefinition
-				   name: self name
-				   superclassName: (self superclass
-						    ifNil: [ nil asString ]
-						    ifNotNil: [ self superclass name ])
-				   traitComposition: self traitCompositionString
-				   classTraitComposition: self class traitCompositionString
-				   category: self category
-				   instVarNames: (self localSlots collect: [ :each | each name ])
-				   classVarNames: self classVarNames
-				   poolDictionaryNames: self sharedPoolNames
-				   classInstVarNames: (self class localSlots collect: [ :each | each name ]) ])
+			   (MCClassDefinition
+				    name: self name
+				    superclassName: (self superclass
+						     ifNil: [ nil asString ]
+						     ifNotNil: [ self superclass name ])
+				    traitComposition: self traitCompositionString
+				    classTraitComposition: self class traitCompositionString
+				    category: self category
+				    instVarNames: (self localSlots collect: [ :each | each name ])
+				    classVarNames: self classVarNames
+				    poolDictionaryNames: self sharedPoolNames)
+				   classInstVarNames: (self class localSlots collect: [ :each | each name ]);
+				   yourself ])
 		  type: self mcType;
 		  comment: self comment;
 		  commentStamp: self commentStamp;

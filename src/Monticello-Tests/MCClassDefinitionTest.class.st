@@ -111,8 +111,8 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 		         category: 'CategoryA'
 		         instVarNames: #( iVarA )
 		         classVarNames: #( cVarB )
-		         poolDictionaryNames: #( PoolA )
-		         classInstVarNames: #( ciVarA ))
+		         poolDictionaryNames: #( PoolA ))
+		        classInstVarNames: #( ciVarA );
 		        type: #typeA;
 		        comment: 'A comment';
 		        commentStamp: 'A';
@@ -187,8 +187,7 @@ MCClassDefinitionTest >> testValidTraitComposition [
 		      category: self mockCategoryName
 		      instVarNames: #(  )
 		      classVarNames: #(  )
-		      poolDictionaryNames: #(  )
-		      classInstVarNames: #(  ))
+		      poolDictionaryNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -213,8 +212,7 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 		      category: self mockCategoryName
 		      instVarNames: #(  )
 		      classVarNames: #(  )
-		      poolDictionaryNames: #(  )
-		      classInstVarNames: #(  ))
+		      poolDictionaryNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -239,8 +237,7 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 		      category: self mockCategoryName
 		      instVarNames: #(  )
 		      classVarNames: #(  )
-		      poolDictionaryNames: #(  )
-		      classInstVarNames: #(  ))
+		      poolDictionaryNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -267,8 +264,7 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 		      category: self mockCategoryName
 		      instVarNames: #(  )
 		      classVarNames: #(  )
-		      poolDictionaryNames: #(  )
-		      classInstVarNames: #(  ))
+		      poolDictionaryNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.

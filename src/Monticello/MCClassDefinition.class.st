@@ -30,11 +30,10 @@ MCClassDefinition class >> name: nameString superclassName: superclassString cat
 		  instVarNames: ivarArray
 		  classVarNames: ''
 		  poolDictionaryNames: ''
-		  classInstVarNames: ''
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray [
+MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray [
 
 	^ self new
 		  initializeWithName: nameString
@@ -45,7 +44,6 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		  instVarNames: ivarArray
 		  classVarNames: cvarArray
 		  poolDictionaryNames: poolArray
-		  classInstVarNames: civarArray
 ]
 
 { #category : #'instance creation' }
@@ -59,8 +57,8 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		   category: categoryString
 		   instVarNames: ivarArray
 		   classVarNames: cvarArray
-		   poolDictionaryNames: poolArray
-		   classInstVarNames: civarArray)
+		   poolDictionaryNames: poolArray)
+		  classInstVarNames: civarArray;
 		  type: typeSymbol;
 		  comment: commentString;
 		  commentStamp: stampString;
@@ -115,6 +113,12 @@ MCClassDefinition >> classDefinitionString [
 { #category : #accessing }
 MCClassDefinition >> classInstVarNames [
 	^ self selectVariables: #isClassInstanceVariable
+]
+
+{ #category : #accessing }
+MCClassDefinition >> classInstVarNames: civarArray [
+
+	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition
 ]
 
 { #category : #printing }
@@ -310,7 +314,7 @@ MCClassDefinition >> initialize [
 ]
 
 { #category : #initialization }
-MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray [
+MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray [
 
 	name := nameString asSymbol.
 	superclassName := superclassString
@@ -322,28 +326,7 @@ MCClassDefinition >> initializeWithName: nameString superclassName: superclassSt
 
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
 	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition.
-	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition.
-	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition
-]
-
-{ #category : #initialization }
-MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol [
-
-	name := nameString asSymbol.
-	superclassName := superclassString
-		                  ifNil: [ #nil ]
-		                  ifNotNil: [ superclassString asSymbol ].
-	traitComposition := traitCompositionString.
-	classTraitComposition := classTraitCompositionString.
-	category := categoryString.
-	type := (#( #CompiledMethod #CompiledBlock #CompiledCode ) includes: name)
-		        ifTrue: [ #compiledMethod ]
-		        ifFalse: [ typeSymbol ].
-
-	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition.
-	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition.
-	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition
+	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition
 ]
 
 { #category : #accessing }
