@@ -9,8 +9,8 @@ RGClassStrategy >> asMCDefinition [
 				    ifNil: [ 'nil' ]
 				    ifNotNil: [ :aSuperclass | aSuperclass name ])
 		   traitComposition: self owner traitCompositionString
-		   classTraitComposition: self owner metaclass traitCompositionString
-		   category: self owner category)
+		   classTraitComposition: self owner metaclass traitCompositionString)
+		  category: self owner category;
 		  instVarNames: self instVarNames;
 		  classVarNames: self owner classVarNames;
 		  poolDictionaryNames: self owner sharedPoolNames;

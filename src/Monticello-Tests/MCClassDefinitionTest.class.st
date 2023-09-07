@@ -107,8 +107,8 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 		         name: 'ClassA'
 		         superclassName: 'SuperA'
 		         traitComposition: '{}'
-		         classTraitComposition: '{}'
-		         category: 'CategoryA')
+		         classTraitComposition: '{}')
+		        category: 'CategoryA';
 		        instVarNames: #( iVarA );
 		        classVarNames: #( cVarB );
 		        poolDictionaryNames: #( PoolA );
@@ -183,8 +183,8 @@ MCClassDefinitionTest >> testValidTraitComposition [
 		      name: className
 		      superclassName: 'Object'
 		      traitComposition: '{MCTraitMock1}'
-		      classTraitComposition: '{}'
-		      category: self mockCategoryName)
+		      classTraitComposition: '{}')
+		     category: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -205,8 +205,8 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 		      name: className
 		      superclassName: 'Object'
 		      traitComposition: 'MCTraitMock1'
-		      classTraitComposition: '{}'
-		      category: self mockCategoryName)
+		      classTraitComposition: '{}')
+		     category: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -227,8 +227,8 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 		      name: className
 		      superclassName: 'Object'
 		      traitComposition: 'MCTraitMock1 + MCTraitMock2'
-		      classTraitComposition: '{}'
-		      category: self mockCategoryName)
+		      classTraitComposition: '{}')
+		     category: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -251,8 +251,8 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 		      name: className
 		      superclassName: 'Object'
 		      traitComposition: 'MCTraitMock1 - {#c1}'
-		      classTraitComposition: '{}'
-		      category: self mockCategoryName)
+		      classTraitComposition: '{}')
+		     category: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.

@@ -21,23 +21,23 @@ Class {
 { #category : #obsolete }
 MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString [
 
-	^ self
-		  name: nameString
-		  superclassName: superclassString
-		  traitComposition: '{}'
-		  classTraitComposition: '{}'
-		  category: categoryString
+	^ (self
+		   name: nameString
+		   superclassName: superclassString
+		   traitComposition: '{}'
+		   classTraitComposition: '{}')
+		  category: categoryString;
+		  yourself
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString [
+MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString [
 
 	^ self new
 		  initializeWithName: nameString
 		  superclassName: superclassString
 		  traitComposition: traitCompositionString
 		  classTraitComposition: classTraitCompositionString
-		  category: categoryString
 ]
 
 { #category : #'instance creation' }
@@ -47,8 +47,8 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		   name: nameString
 		   superclassName: superclassString
 		   traitComposition: traitCompositionString
-		   classTraitComposition: classTraitCompositionString
-		   category: categoryString)
+		   classTraitComposition: classTraitCompositionString)
+		  category: categoryString;
 		  instVarNames: ivarArray;
 		  classVarNames: cvarArray;
 		  poolDictionaryNames: poolArray;
@@ -93,8 +93,9 @@ MCClassDefinition >> category [
 ]
 
 { #category : #accessing }
-MCClassDefinition >> category: anObject [
-	category := anObject
+MCClassDefinition >> category: categoryString [
+
+	category := categoryString
 ]
 
 { #category : #accessing }
@@ -314,15 +315,14 @@ MCClassDefinition >> initialize [
 ]
 
 { #category : #initialization }
-MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString [
+MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString [
 
 	name := nameString asSymbol.
 	superclassName := superclassString
 		                  ifNil: [ #nil ]
 		                  ifNotNil: [ superclassString asSymbol ].
 	traitComposition := traitCompositionString.
-	classTraitComposition := classTraitCompositionString.
-	category := categoryString
+	classTraitComposition := classTraitCompositionString
 ]
 
 { #category : #accessing }
