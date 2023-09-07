@@ -40,7 +40,7 @@ RBRemoveMethodRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition withBlock: [
 		   self checkSuperMethods.
-		   true ])
+		   true ]) & (RBCondition withBlock: self senders isEmpty)
 ]
 
 { #category : #preconditions }
