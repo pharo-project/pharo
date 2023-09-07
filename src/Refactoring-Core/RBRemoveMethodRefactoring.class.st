@@ -7,7 +7,8 @@ Class {
 	#name : #RBRemoveMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector'
+		'selector',
+		'transformation'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -26,13 +27,6 @@ RBRemoveMethodRefactoring class >> selector: aSelector from: aClass [
 
 	^ self new
 		selector: aSelector from: aClass
-]
-
-{ #category : #preconditions }
-RBRemoveMethodRefactoring >> applicabilityPreconditions [
-
-	^ RBCondition definesSelector: selector in: class
-	 
 ]
 
 { #category : #preconditions }
@@ -116,12 +110,12 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 		ifFalse: [self checkReferencesToAnyOf: selector].
 ]
 
-{ #category : #actions }
+{ #category : #executing }
 RBRemoveMethodRefactoring >> generateChanges [
 	
-	self applicabilityPreconditions check ifFalse: [
+	transformation applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityPreconditions errorString ].
+			  transformation applicabilityPreconditions errorString ].
 	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangePreconditions errorString ].
@@ -157,13 +151,15 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangePreconditions 
+	transformation checkPreconditions.
+
+	^ self breakingChangePreconditions 
 ]
 
 { #category : #transforming }
 RBRemoveMethodRefactoring >> privateTransform [
 	 
-	class removeMethod: selector
+	transformation privateTransform
 ]
 
 { #category : #actions }
@@ -182,7 +178,11 @@ RBRemoveMethodRefactoring >> selector [
 RBRemoveMethodRefactoring >> selector: aSelector from: aClass [
 
 	class := self classObjectFor: aClass.
-	selector := aSelector
+	selector := aSelector.
+	transformation := RBRemoveMethodTransformation
+		                  model: self model
+		                  selector: selector
+		                  from: aClass
 ]
 
 { #category : #preconditions }
