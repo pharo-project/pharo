@@ -23,13 +23,12 @@ RBRemoveMethodsRefactoring class >> model: aRBNamespace methods: aSelectorsColle
 { #category : #preconditions }
 RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 
-	^ refactorings
-		inject: 
-			(RBCondition
-			   withBlock: [ self senders isEmpty ]
-			   errorString:
-			   'Some of the methods have senders outside of the methods being removed')
-	  	into: [ :cond :ref | cond & ref breakingChangePreconditions ]
+	refactorings do: [ :ref | ref checkSuperMethods ].
+
+	^ RBCondition
+		  withBlock: [ self senders isEmpty ]
+		  errorString:
+		  'Some of the methods have senders outside of the methods being removed'
 ]
 
 { #category : #accessing }
