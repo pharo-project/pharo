@@ -22,22 +22,21 @@ Class {
 MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString instVarNames: ivarArray comment: commentString [
 
 	^ self
-		name: nameString
-		superclassName: superclassString
-		traitComposition: '{}'
-		classTraitComposition: '{}'
-		category: categoryString
-		instVarNames: ivarArray
-		classVarNames: ''
-		poolDictionaryNames: ''
-		classInstVarNames: ''
-		type: #normal
-		comment: commentString
-		commentStamp: nil
+		  name: nameString
+		  superclassName: superclassString
+		  traitComposition: '{}'
+		  classTraitComposition: '{}'
+		  category: categoryString
+		  instVarNames: ivarArray
+		  classVarNames: ''
+		  poolDictionaryNames: ''
+		  classInstVarNames: ''
+		  type: #normal
+		  comment: commentString
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString [
 
 	^ self new
 		initializeWithName: nameString
@@ -51,7 +50,25 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		classInstVarNames: civarArray
 		type: typeSymbol
 		comment: commentString
-		commentStamp: stampString
+]
+
+{ #category : #'instance creation' }
+MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+
+	^ (self new
+		   initializeWithName: nameString
+		   superclassName: superclassString
+		   traitComposition: traitCompositionString
+		   classTraitComposition: classTraitCompositionString
+		   category: categoryString
+		   instVarNames: ivarArray
+		   classVarNames: cvarArray
+		   poolDictionaryNames: poolArray
+		   classInstVarNames: civarArray
+		   type: typeSymbol
+		   comment: commentString)
+		  commentStamp: stampString;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -85,6 +102,11 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 { #category : #accessing }
 MCClassDefinition >> category [
 	^ category
+]
+
+{ #category : #accessing }
+MCClassDefinition >> category: anObject [
+	category := anObject
 ]
 
 { #category : #accessing }
@@ -126,6 +148,11 @@ MCClassDefinition >> classTraitComposition [
 ]
 
 { #category : #accessing }
+MCClassDefinition >> classTraitComposition: anObject [
+	classTraitComposition := anObject
+]
+
+{ #category : #accessing }
 MCClassDefinition >> classTraitCompositionCompiled [
 		^(Smalltalk compiler evaluate: self classTraitCompositionString) asTraitComposition 
 ]
@@ -163,13 +190,18 @@ MCClassDefinition >> commentStamp [
 	^ commentStamp
 ]
 
+{ #category : #accessing }
+MCClassDefinition >> commentStamp: anObject [
+	commentStamp := anObject
+]
+
 { #category : #installing }
 MCClassDefinition >> createClass [
 	| superClass |
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
 	name = #Context
 		ifTrue: [ Context comment = comment 
-						ifFalse: [ Context comment: comment stamp: commentStamp ].
+						ifFalse: [ Context comment: comment stamp: self commentStamp ].
 					^ self ].
 
 	superClass := superclassName = #nil
@@ -186,7 +218,7 @@ MCClassDefinition >> createClass [
 				classSlots: self classInstanceVariables;
 				traitComposition: self traitCompositionCompiled;
 				classTraitComposition: self classTraitCompositionCompiled;
-				comment: comment stamp: commentStamp;
+				comment: comment stamp: self commentStamp;
 				category: category;
 				environment: superClass environment ] ]
 		on: Warning , DuplicatedVariableError
@@ -265,8 +297,15 @@ MCClassDefinition >> hash [
 	^ hash
 ]
 
+{ #category : #initialization }
+MCClassDefinition >> initialize [
+
+	super initialize.
+	commentStamp := self defaultCommentStamp
+]
+
 { #category : #initializing }
-MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampStringOrNil [
+MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString [
 
 	name := nameString asSymbol.
 	superclassName := superclassString
@@ -279,7 +318,6 @@ MCClassDefinition >> initializeWithName: nameString superclassName: superclassSt
 		ifTrue: [ #compiledMethod ]
 		ifFalse: [ typeSymbol ].
 	comment := commentString withInternalLineEndings.
-	commentStamp := stampStringOrNil ifNil: [ self defaultCommentStamp ].
 	variables := OrderedCollection new.
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
 	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition.
@@ -333,6 +371,11 @@ MCClassDefinition >> kindOfSubclass [
 { #category : #installing }
 MCClassDefinition >> load [
 	self createClass
+]
+
+{ #category : #accessing }
+MCClassDefinition >> name: anObject [
+	name := anObject
 ]
 
 { #category : #installing }
@@ -518,8 +561,18 @@ MCClassDefinition >> superclassName [
 ]
 
 { #category : #accessing }
+MCClassDefinition >> superclassName: anObject [
+	superclassName := anObject
+]
+
+{ #category : #accessing }
 MCClassDefinition >> traitComposition [
 	^traitComposition
+]
+
+{ #category : #accessing }
+MCClassDefinition >> traitComposition: anObject [
+	traitComposition := anObject
 ]
 
 { #category : #accessing }
