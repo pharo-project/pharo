@@ -77,21 +77,3 @@ RBRemoveMethodTransformation >> selector: aSelector from: aClassName [
 	self className: aClassName.
 	selector := aSelector
 ]
-
-{ #category : #preconditions }
-RBRemoveMethodTransformation >> senders [
-
-	^ self sendersOf: { selector }
-]
-
-{ #category : #preconditions }
-RBRemoveMethodTransformation >> sendersOf: aCollection [
-	"This method expects a collection of selectors to have the same API than the corresponding refactoring. This should be revisited in the future."
-	| occurrences |
-	occurrences := OrderedCollection new.
-	aCollection do: [ :each |
-		self model allReferencesTo: each do: [ :aRBMethod |
-			selector = aRBMethod selector ifFalse: [
-				occurrences add: each -> aRBMethod ] ] ].
-	^ occurrences
-]
