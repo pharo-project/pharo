@@ -3,13 +3,10 @@ Extension { #name : #RGTraitV2Strategy }
 { #category : #'*Ring-Monticello' }
 RGTraitV2Strategy >> asMCDefinition [
 
-	^ (MCClassDefinition
-		   name: self name
-		   superclassName: (self superclass
-				    ifNil: [ 'nil' ]
-				    ifNotNil: [ :aSuperclass | aSuperclass name ])
-		   traitComposition: self owner traitCompositionString
-		   classTraitComposition: self owner metaclass traitCompositionString)
+	^ (MCClassDefinition named: self name)
+		  superclassName: (self superclass ifNotNil: [ :aSuperclass | aSuperclass name ]);
+		  traitComposition: self owner traitCompositionString;
+		  classTraitComposition: self owner metaclass traitCompositionString;
 		  category: self category;
 		  instVarNames: self instVarNames;
 		  classVarNames: self classVarNames;

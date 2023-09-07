@@ -39,7 +39,7 @@ MetacelloAlternateResource >> setUpMonticelloRepository [
 				ancestors: #())
 			snapshot: (MCSnapshot fromDefinitions: (Array
 				with: (MCOrganizationDefinition packageName: reference packageName)
-				with: (MCClassDefinition name: reference packageName asSymbol superclassName: #Object category: reference packageName asSymbol)))
+				with: (MCClassDefinition named: reference packageName asSymbol category: reference packageName asSymbol)))
 			dependencies: #()) ]
 ]
 

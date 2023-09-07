@@ -74,11 +74,8 @@ MCTestCase >> mockCategoryName [
 { #category : #mocks }
 MCTestCase >> mockClass: className super: superclassName [
 
-	^ (MCClassDefinition
-		   name: className
-		   superclassName: superclassName
-		   traitComposition: '{}'
-		   classTraitComposition: '{}')
+	^ (MCClassDefinition named: className)
+		  superclassName: superclassName;
 		  category: self mockCategoryName;
 		  comment: (self commentForClass: className);
 		  commentStamp: (self commentStampForClass: className);

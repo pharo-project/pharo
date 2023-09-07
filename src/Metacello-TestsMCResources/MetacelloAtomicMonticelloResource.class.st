@@ -41,7 +41,7 @@ MetacelloAtomicMonticelloResource >> setUpDependency [
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: (Array
 				with: (MCOrganizationDefinition packageName: reference packageName)
-				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol)))
+				with: (MCClassDefinition named: (reference packageName copyWithout: $-) category: reference packageName asSymbol)))
 		dependencies: (Array 
 				with: (MCVersionDependency 
 						package: (MCPackage new name: 'GoferBarDependency') 
@@ -56,23 +56,26 @@ MetacelloAtomicMonticelloResource >> setUpMonticelloRepository [
 	"This method builds a fake repository with the version references from #buildReferences."
 
 	monticelloRepository := MCDictionaryRepository new.
-	versionReferences do: [ :assoc | | reference superclassName |
+	versionReferences do: [ :assoc |
+		| reference superclassName |
 		reference := assoc key.
 		superclassName := assoc value.
 		monticelloRepository basicStoreVersion: (MCVersion new
-			setPackage:  (MCPackage new name: reference packageName)
-			info: (MCVersionInfo
-				name: reference name
-				id: UUID new
-				message: 'This is a mock version'
-				date: Date today
-				time: Time now
-				author: reference author
-				ancestors: #())
-			snapshot: (MCSnapshot fromDefinitions: (Array
-				with: (MCOrganizationDefinition packageName: reference packageName)
-				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: superclassName category: reference packageName asSymbol)))
-			dependencies: #()) ]
+				 setPackage: (MCPackage new name: reference packageName)
+				 info: (MCVersionInfo
+						  name: reference name
+						  id: UUID new
+						  message: 'This is a mock version'
+						  date: Date today
+						  time: Time now
+						  author: reference author
+						  ancestors: #(  ))
+				 snapshot: (MCSnapshot fromDefinitions: {
+							  (MCOrganizationDefinition packageName: reference packageName).
+							  ((MCClassDefinition named: (reference packageName copyWithout: $-) asSymbol category: reference packageName asSymbol)
+								   superclassName: superclassName;
+								   yourself) })
+				 dependencies: #(  )) ]
 ]
 
 { #category : #running }
@@ -93,7 +96,7 @@ MetacelloAtomicMonticelloResource >> setUpNewerDependency [
 				ancestors: #())
 		snapshot: (MCSnapshot fromDefinitions: (Array
 				with: (MCOrganizationDefinition packageName: reference packageName)
-				with: (MCClassDefinition name: (reference packageName copyWithout: $-) asSymbol superclassName: #Object category: reference packageName asSymbol)))
+				with: (MCClassDefinition named: (reference packageName copyWithout: $-) asSymbol category: reference packageName asSymbol)))
 		dependencies: (Array 
 				with: (MCVersionDependency 
 						package: (MCPackage new name: 'GoferBarDependency') 

@@ -352,10 +352,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFan [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfAtomicFan-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -412,10 +409,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfAtomicFoo [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfAtomicFoo-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -472,10 +466,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfLinearFoo [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfLinearFoo-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -556,10 +547,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfProjectIssue86 [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue86-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -616,10 +604,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfUmbrellaA [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfUmbrellaA-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -664,10 +649,7 @@ MetacelloAtomicConfigurationResource >> setUpConfigurationOfUmbrellaB [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfUmbrellaB-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true

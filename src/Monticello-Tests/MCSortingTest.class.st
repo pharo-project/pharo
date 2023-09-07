@@ -12,7 +12,7 @@ MCSortingTest class >> isUnitTest [
 { #category : #building }
 MCSortingTest >> classNamed: aSymbol [
 
-	^ MCClassDefinition name: aSymbol superclassName: #Object category: ''
+	^ MCClassDefinition named: aSymbol
 ]
 
 { #category : #building }

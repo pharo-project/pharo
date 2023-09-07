@@ -990,817 +990,760 @@ MetacelloScriptingResource >> setUp [
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceIV [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefIV-dkh.1'.
-    className := #'BaselineOfGithubRefIV'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'configurationGithubReferenceX:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'configurationGithubReferenceX:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefIV-dkh.1'.
+	className := #BaselineOfGithubRefIV.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationGithubReferenceX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationGithubReferenceX:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceIX [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefIX-dkh.1'.
-    className := #'BaselineOfGithubRefIX'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'configurationGithubReferenceIV:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'configurationGithubReferenceIV:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefIX-dkh.1'.
+	className := #BaselineOfGithubRefIX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationGithubReferenceIV:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationGithubReferenceIV:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceV [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefV-dkh.1'.
-    className := #'BaselineOfGithubRefV'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'configurationGithubReferenceXX:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'configurationGithubReferenceXX:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefV-dkh.1'.
+	className := #BaselineOfGithubRefV.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationGithubReferenceXX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationGithubReferenceXX:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceVI [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefVI-dkh.1'.
-    className := #'BaselineOfGithubRefVI'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'configurationGithubReferenceXXX:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'configurationGithubReferenceXXX:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefVI-dkh.1'.
+	className := #BaselineOfGithubRefVI.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationGithubReferenceXXX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationGithubReferenceXXX:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceVII [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefVII-dkh.1'.
-    className := #'BaselineOfGithubRefVII'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'baselineGithubReferenceIV:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'baselineGithubReferenceIV:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefVII-dkh.1'.
+	className := #BaselineOfGithubRefVII.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'baselineGithubReferenceIV:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineGithubReferenceIV:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceVIII [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefVIII-dkh.1'.
-    className := #'BaselineOfGithubRefVIII'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'baselineGithubReferenceV:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'baselineGithubReferenceV:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefVIII-dkh.1'.
+	className := #BaselineOfGithubRefVIII.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'baselineGithubReferenceV:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineGithubReferenceV:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceXI [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefXI-dkh.1'.
-    className := #'BaselineOfGithubRefXI'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'configurationGithubReferenceV:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'configurationGithubReferenceV:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefXI-dkh.1'.
+	className := #BaselineOfGithubRefXI.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationGithubReferenceV:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationGithubReferenceV:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceXII [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefXII-dkh.1'.
-    className := #'BaselineOfGithubRefXII'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'baselineGithubReferenceVI:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'baselineGithubReferenceVI:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefXII-dkh.1'.
+	className := #BaselineOfGithubRefXII.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'baselineGithubReferenceVI:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineGithubReferenceVI:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceXIII [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefXIII-dkh.1'.
-    className := #'BaselineOfGithubRefXIII'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'baselineGithubReferenceVII:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'baselineGithubReferenceVII:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefXIII-dkh.1'.
+	className := #BaselineOfGithubRefXIII.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'baselineGithubReferenceVII:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineGithubReferenceVII:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpBaselineGithubReferenceXX [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfGithubRefXX-dkh.1'.
-    className := #'BaselineOfGithubRefXX'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'baselineGithubReferenceXX:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'baselineGithubReferenceXX:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfGithubRefXX-dkh.1'.
+	className := #BaselineOfGithubRefXX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'baselineGithubReferenceXX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineGithubReferenceXX:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 215' }
 MetacelloScriptingResource >> setUpBaselineIssue215 [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'BaselineOfIssue215-dkh.1'.
-  className := #'BaselineOfIssue215'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'BaselineOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'postloadDoIt'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'postloadDoIt') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'preloadDoIt'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'preloadDoIt') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'baselineIssue215:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'baselineIssue215:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'customProjectAttributes'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-  configurationRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfIssue215-dkh.1'.
+	className := #BaselineOfIssue215.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'postloadDoIt'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #postloadDoIt) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'preloadDoIt'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #preloadDoIt) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'baselineIssue215:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineIssue215:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 32' }
 MetacelloScriptingResource >> setUpBaselineIssue32 [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfIssue32-dkh.1'.
-    className := #'BaselineOfIssue32'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'postloadDoIt'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'postloadDoIt') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'preloadDoIt'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'preloadDoIt') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'baselineIssue32:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'baselineIssue32:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfIssue32-dkh.1'.
+	className := #BaselineOfIssue32.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'postloadDoIt'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #postloadDoIt) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'preloadDoIt'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #preloadDoIt) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'baselineIssue32:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineIssue32:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 399' }
 MetacelloScriptingResource >> setUpBaselineIssue399 [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'BaselineOfIssue399-dkh.1'.
-  className := #'BaselineOfIssue399'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'BaselineOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'baselineIssue399:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'baselineIssue399:') asString)}.
-  externalRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfIssue399-dkh.1'.
+	className := #BaselineOfIssue399.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'baselineIssue399:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineIssue399:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 399' }
 MetacelloScriptingResource >> setUpBaselineIssue399Cypress [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'BaselineOfIssue399Cypress-dkh.1'.
-  className := #'BaselineOfIssue399Cypress'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'BaselineOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'baselineIssue399:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'baselineIssue399:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'projectClass'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'projectClass') asString)}.
-  externalRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfIssue399Cypress-dkh.1'.
+	className := #BaselineOfIssue399Cypress.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'baselineIssue399:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineIssue399:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'projectClass'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #projectClass) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - external' }
 MetacelloScriptingResource >> setUpBaselineOfExternalX [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfExternalX-dkh.1'.
-    className := #'BaselineOfExternalX'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'externalBaselineX:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'externalBaselineX:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfExternalX-dkh.1'.
+	className := #BaselineOfExternalX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'externalBaselineX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #externalBaselineX:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - external' }
 MetacelloScriptingResource >> setUpBaselineOfExternalXX [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfExternalXX-dkh.1'.
-    className := #'BaselineOfExternalXX'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'externalBaselineXX:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'externalBaselineXX:') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfExternalXX-dkh.1'.
+	className := #BaselineOfExternalXX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'externalBaselineXX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #externalBaselineXX:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - external' }
 MetacelloScriptingResource >> setUpBaselineOfExternalXXX [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'BaselineOfExternalXXX-dkh.1'.
-    className := #'BaselineOfExternalXXX'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'BaselineOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'externalBaselineXXX:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'externalBaselineXXX:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    externalRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'BaselineOfExternalXXX-dkh.1'.
+	className := #BaselineOfExternalXXX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'externalBaselineXXX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #externalBaselineXXX:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 63' }
 MetacelloScriptingResource >> setUpConfiguration181 [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'ConfigurationOfIssue181-dkh.1'.
-  className := #'ConfigurationOfIssue181'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configuration091Issue181:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configuration091Issue181:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configuration092Issue181:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configuration092Issue181:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configuration093Issue185:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configuration093Issue185:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configuration094Issue185:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configuration094Issue185:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configuration095Issue185:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configuration095Issue185:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configuration096Issue185:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configuration096Issue185:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configuration097Issue185:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configuration097Issue185:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configuration098Issue215:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configuration098Issue215:') asString)}.
-  configurationRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfIssue181-dkh.1'.
+	className := #ConfigurationOfIssue181.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration091Issue181:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration091Issue181:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration092Issue181:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration092Issue181:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration093Issue185:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration093Issue185:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration094Issue185:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration094Issue185:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration095Issue185:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration095Issue185:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration096Issue185:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration096Issue185:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration097Issue185:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration097Issue185:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration098Issue215:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration098Issue215:) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 63' }
 MetacelloScriptingResource >> setUpConfiguration63 [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfIssue63-dkh.1'.
-    className := #'ConfigurationOfIssue63'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'configuration091Issue63:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'configuration091Issue63:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'configuration092Issue63:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'configuration092Issue63:') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfIssue63-dkh.1'.
+	className := #ConfigurationOfIssue63.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration091Issue63:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration091Issue63:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configuration092Issue63:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configuration092Issue63:) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
@@ -1814,290 +1757,272 @@ MetacelloScriptingResource >> setUpConfigurationExternalRef [
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpConfigurationExternalRefdkh1 [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'ConfigurationOfExternalRef-dkh.1'.
-  className := #'ConfigurationOfExternalRef'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configurationExternalRef090:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configurationExternalRef090:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configurationExternalRef091:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configurationExternalRef091:') asString)}.
-  externalRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfExternalRef-dkh.1'.
+	className := #ConfigurationOfExternalRef.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationExternalRef090:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationExternalRef090:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationExternalRef091:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationExternalRef091:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline pragma - github reference' }
 MetacelloScriptingResource >> setUpConfigurationExternalRefdkh2: ancestors [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'ConfigurationOfExternalRef-dkh.2'.
-  className := #'ConfigurationOfExternalRef'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configurationExternalRef090:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configurationExternalRef090:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configurationExternalRef091:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configurationExternalRef091:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'configurationExternalRef092:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'configurationExternalRef092:') asString)}.
-  externalRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: ancestors)
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfExternalRef-dkh.2'.
+	className := #ConfigurationOfExternalRef.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationExternalRef090:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationExternalRef090:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationExternalRef091:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationExternalRef091:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'configurationExternalRef092:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #configurationExternalRef092:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: ancestors)
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 32' }
 MetacelloScriptingResource >> setUpConfigurationIssue32 [
-    "see https://github.com/dalehenrich/metacello-work/issues/32"
+	"see https://github.com/dalehenrich/metacello-work/issues/32"
 
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfIssue32-dkh.1'.
-    className := #'ConfigurationOfIssue32'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'version10Issue47:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'version10Issue47:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'version09Issue32:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'version09Issue32:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfIssue32-dkh.1'.
+	className := #ConfigurationOfIssue32.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'version10Issue47:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version10Issue47:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'version09Issue32:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version09Issue32:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 339' }
 MetacelloScriptingResource >> setUpConfigurationIssue339 [
-  "see https://github.com/dalehenrich/metacello-work/issues/339"
+	"see https://github.com/dalehenrich/metacello-work/issues/339"
 
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'ConfigurationOfIssue339-dkh.1'.
-  className := #'ConfigurationOfIssue339'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'version100Issue339:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'version100Issue339:') asString)}.
-  configurationRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfIssue339-dkh.1'.
+	className := #ConfigurationOfIssue339.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'version100Issue339:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version100Issue339:) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 59' }
 MetacelloScriptingResource >> setUpConfigurationIssue59 [
-    "see https://github.com/dalehenrich/metacello-work/issues/59"
+	"see https://github.com/dalehenrich/metacello-work/issues/59"
 
-    "Use MetacelloVersionNumber instead of MetacelloSematicVersionNumber"
+	"Use MetacelloVersionNumber instead of MetacelloSematicVersionNumber"
 
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfIssue59-dkh.1'.
-    className := #'ConfigurationOfIssue59'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'version10Issue59:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'version10Issue59:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'versionNumberClass'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'versionNumberClass') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfIssue59-dkh.1'.
+	className := #ConfigurationOfIssue59.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'version10Issue59:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version10Issue59:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionNumberClass'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionNumberClass) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 84' }
 MetacelloScriptingResource >> setUpConfigurationIssue84 [
-    "see https://github.com/dalehenrich/metacello-work/issues/84"
+	"see https://github.com/dalehenrich/metacello-work/issues/84"
 
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfIssue84-dkh.1'.
-    className := #'ConfigurationOfIssue84'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'version10Issue84:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'version10Issue84:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfIssue84-dkh.1'.
+	className := #ConfigurationOfIssue84.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'version10Issue84:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version10Issue84:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 84' }
@@ -2113,226 +2038,214 @@ MetacelloScriptingResource >> setUpConfigurationNextedIssue84 [
 
 { #category : #'issue 84' }
 MetacelloScriptingResource >> setUpConfigurationNextedIssue84dkh1 [
-    "see https://github.com/dalehenrich/metacello-work/issues/84"
+	"see https://github.com/dalehenrich/metacello-work/issues/84"
 
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfNestedIssue84-dkh.1'.
-    className := #'ConfigurationOfNestedIssue84'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'version10NestedIssue84:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'version10NestedIssue84:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'versionNumberClass'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'versionNumberClass') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfNestedIssue84-dkh.1'.
+	className := #ConfigurationOfNestedIssue84.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'version10NestedIssue84:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version10NestedIssue84:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionNumberClass'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionNumberClass) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 84' }
 MetacelloScriptingResource >> setUpConfigurationNextedIssue84dkh2: ancestors [
-    "see https://github.com/dalehenrich/metacello-work/issues/84"
+	"see https://github.com/dalehenrich/metacello-work/issues/84"
 
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfNestedIssue84-dkh.2'.
-    className := #'ConfigurationOfNestedIssue84'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'version10NestedIssue84:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'version10NestedIssue84:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'versionNumberClass'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'versionNumberClass') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: ancestors)
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfNestedIssue84-dkh.2'.
+	className := #ConfigurationOfNestedIssue84.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'version10NestedIssue84:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version10NestedIssue84:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionNumberClass'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionNumberClass) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: ancestors)
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline:with:' }
 MetacelloScriptingResource >> setUpConfigurationOfConflict [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'ConfigurationOfConflict-dkh.1'.
-  className := #'ConfigurationOfConflict'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'conflictOf20:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'conflictOf20:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'conflictOf21:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'conflictOf21:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'conflictOf10:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'conflictOf10:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'conflictOf11:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'conflictOf11:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'conflictOf12:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'conflictOf12:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'customProjectAttributes'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-  configurationRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfConflict-dkh.1'.
+	className := #ConfigurationOfConflict.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'conflictOf20:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #conflictOf20:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'conflictOf21:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #conflictOf21:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'conflictOf10:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #conflictOf10:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'conflictOf11:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #conflictOf11:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'conflictOf12:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #conflictOf12:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'external configurations' }
 MetacelloScriptingResource >> setUpConfigurationOfExternalIV [
-    "see https://github.com/dalehenrich/metacello-work/issues/6"
+	"see https://github.com/dalehenrich/metacello-work/issues/6"
 
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfExternalIV-dkh.1'.
-    className := #'ConfigurationOfExternalIV'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'versionOfIV:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'versionOfIV:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfExternalIV-dkh.1'.
+	className := #ConfigurationOfExternalIV.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfIV:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfIV:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'external configurations' }
@@ -2346,280 +2259,262 @@ MetacelloScriptingResource >> setUpConfigurationOfExternalX [
 
 { #category : #'baseline:with:' }
 MetacelloScriptingResource >> setUpConfigurationOfExternalXX [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfExternalXX-dkh.1'.
-    className := #'ConfigurationOfExternalXX'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'versionOfXX:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'versionOfXX:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfExternalXX-dkh.1'.
+	className := #ConfigurationOfExternalXX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfXX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfXX:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'external configurations' }
 MetacelloScriptingResource >> setUpConfigurationOfExternalXXX [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfExternalXXX-dkh.1'.
-    className := #'ConfigurationOfExternalXXX'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'versionOfXXX:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'versionOfXXX:') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfExternalXXX-dkh.1'.
+	className := #ConfigurationOfExternalXXX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfXXX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfXXX:) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'external configurations' }
 MetacelloScriptingResource >> setUpConfigurationOfExternalXdkh1 [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'ConfigurationOfExternalX-dkh.1'.
-  className := #'ConfigurationOfExternalX'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'stableVersionOfX:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'stableVersionOfX:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'versionOfX090:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'versionOfX090:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'customProjectAttributes'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-  configurationRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfExternalX-dkh.1'.
+	className := #ConfigurationOfExternalX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'stableVersionOfX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #stableVersionOfX:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfX090:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfX090:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'external configurations' }
 MetacelloScriptingResource >> setUpConfigurationOfExternalXdkh2: ancestors [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'ConfigurationOfExternalX-dkh.2'.
-  className := #'ConfigurationOfExternalX'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'stableVersionOfX:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'stableVersionOfX:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'unstableVersionOfX:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'unstableVersionOfX:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'versionOfX090:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'versionOfX090:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'versionOfX091:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'versionOfX091:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'customProjectAttributes'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-  configurationRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: ancestors)
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfExternalX-dkh.2'.
+	className := #ConfigurationOfExternalX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'stableVersionOfX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #stableVersionOfX:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'unstableVersionOfX:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #unstableVersionOfX:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfX090:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfX090:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfX091:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfX091:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: ancestors)
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'external configurations' }
 MetacelloScriptingResource >> setUpConfigurationOfExternaldkh1 [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'ConfigurationOfExternal-dkh.1'.
-  className := #'ConfigurationOfExternal'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'versionOfExternal090:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'versionOfExternal090:') asString)}.
-  externalRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfExternal-dkh.1'.
+	className := #ConfigurationOfExternal.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfExternal090:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfExternal090:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'external configurations' }
 MetacelloScriptingResource >> setUpConfigurationOfExternaldkh2 [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'ConfigurationOfExternal-dkh.2'.
-  className := #'ConfigurationOfExternal'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'versionOfExternal090:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'versionOfExternal090:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'versionOfExternal091:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'versionOfExternal091:') asString)}.
-  externalRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfExternal-dkh.2'.
+	className := #ConfigurationOfExternal.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfExternal090:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfExternal090:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfExternal091:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfExternal091:) asString) }.
+	externalRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'external core' }
@@ -2630,10 +2525,7 @@ MetacelloScriptingResource >> setUpExternalCore [
   reference := GoferVersionReference name: 'External-Core-dkh.1'.
   className := #'ExternalCore'.
   definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'Object'
-    category: reference packageName).
+  (MCClassDefinition named: className category: reference packageName).
   (MCMethodDefinition
     className: className asString
     classIsMeta: true
@@ -2674,10 +2566,7 @@ MetacelloScriptingResource >> setUpExternalCoreX [
   reference := GoferVersionReference name: 'External-CoreX-dkh.1'.
   className := #'ExternalCoreX'.
   definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'Object'
-    category: reference packageName).
+  (MCClassDefinition named: className category: reference packageName).
   (MCMethodDefinition
     className: className asString
     classIsMeta: true
@@ -2712,60 +2601,57 @@ MetacelloScriptingResource >> setUpExternalCoreX [
 
 { #category : #'invalid configurations' }
 MetacelloScriptingResource >> setUpInvalidConfigurations [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'ConfigurationOfInvalidConfigurations-dkh.1'.
-    className := #'ConfigurationOfInvalidConfigurations'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'invalidConfiguration10:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'invalidConfiguration10:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'invalidConfiguration20:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'invalidConfiguration20:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'invalidConfiguration30:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'invalidConfiguration30:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfInvalidConfigurations-dkh.1'.
+	className := #ConfigurationOfInvalidConfigurations.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'invalidConfiguration10:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #invalidConfiguration10:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'invalidConfiguration20:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #invalidConfiguration20:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'invalidConfiguration30:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #invalidConfiguration30:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 399' }
@@ -2794,10 +2680,7 @@ MetacelloScriptingResource >> setUpIssue399CoreExternaldkh1 [
   reference := GoferVersionReference name: 'Issue399-Core-dkh.1'.
   className := #'Issue399External'.
   definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'Object'
-    category: reference packageName)}.
+  (MCClassDefinition named: className category: reference packageName)}.
   externalRepository
     basicStoreVersion:
       (MCVersion new
@@ -2818,201 +2701,184 @@ MetacelloScriptingResource >> setUpIssue399CoreExternaldkh1 [
 
 { #category : #'issue 399' }
 MetacelloScriptingResource >> setUpIssue399CoreSampledkh1 [
-  "two packages with same name and version number, but a different class created."
+	"two packages with same name and version number, but a different class created."
 
-  "this on goes into the sample repository"
+	"this on goes into the sample repository"
 
-  "add first package to the package cache, then load a baseline in repo with other package"
+	"add first package to the package cache, then load a baseline in repo with other package"
 
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'Issue399-Core-dkh.1'.
-  className := #'Issue399Sample'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'Object'
-    category: reference packageName)}.
-  sampleRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'Issue399-Core-dkh.1'.
+	className := #Issue399Sample.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   (MCClassDefinition named: className category: reference packageName) }.
+	sampleRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'issue 399' }
 MetacelloScriptingResource >> setUpIssue399CoreSampledkh2: ancestors [
-  "two packages with same name and version number, but a different class created."
+	"two packages with same name and version number, but a different class created."
 
-  "this on goes into the sample repository"
+	"this on goes into the sample repository"
 
-  "add first package to the package cache, then load a baseline in repo with other package"
+	"add first package to the package cache, then load a baseline in repo with other package"
 
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference name: 'Issue399-Core-dkh.2'.
-  className := #'Issue399Sample'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'Object'
-    category: reference packageName)}.
-  sampleRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: ancestors)
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'Issue399-Core-dkh.2'.
+	className := #Issue399Sample.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   (MCClassDefinition named: className category: reference packageName) }.
+	sampleRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: ancestors)
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #locking }
 MetacelloScriptingResource >> setUpLockConfigurations [
-  "self reset"
+	"self reset"
 
-  | reference className definitionArray versionInfo |
-  reference := GoferVersionReference
-    name: 'ConfigurationOfLockConfigurations-dkh.1'.
-  className := #'ConfigurationOfLockConfigurations'.
-  definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-  (MCClassDefinition
-    name: className
-    superclassName: #'ConfigurationOf'
-    category: reference packageName).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'lockConfiguration10:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'lockConfiguration10:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'lockConfiguration11:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'lockConfiguration11:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'lockConfiguration12:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'lockConfiguration12:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'lockConfiguration13:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'lockConfiguration13:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'lockConfiguration14:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'lockConfiguration14:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'lockConfiguration15:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'lockConfiguration15:') asString).
-  (MCMethodDefinition
-    className: className asString
-    classIsMeta: false
-    selector: 'customProjectAttributes'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-  configurationRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (versionInfo := MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #()).
-  ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'ConfigurationOfLockConfigurations-dkh.1'.
+	className := #ConfigurationOfLockConfigurations.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'lockConfiguration10:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #lockConfiguration10:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'lockConfiguration11:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #lockConfiguration11:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'lockConfiguration12:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #lockConfiguration12:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'lockConfiguration13:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #lockConfiguration13:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'lockConfiguration14:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #lockConfiguration14:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'lockConfiguration15:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #lockConfiguration15:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'baseline:with:' }
 MetacelloScriptingResource >> setUpMarianosImage [
-    "className: test case
+	"className: test case
 	seehttps://github.com/dalehenrich/metacello-work/issues/24"
 
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'MarianosImage-dkh.1'.
-    className := #'MarianosImage'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'ConfigurationOf'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'versionOfMariano:'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'versionOfMariano:') asString).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: false
-        selector: 'customProjectAttributes'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'customProjectAttributes') asString)}.
-    configurationRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'MarianosImage-dkh.1'.
+	className := #MarianosImage.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   ((MCClassDefinition named: className category: reference packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'versionOfMariano:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #versionOfMariano:) asString).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: false
+			                    selector: 'customProjectAttributes'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #customProjectAttributes) asString) }.
+	configurationRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #running }
@@ -3026,50 +2892,44 @@ MetacelloScriptingResource >> setUpRepositories [
 
 { #category : #'sample repository' }
 MetacelloScriptingResource >> setUpSampleCore [
-    "self reset"
+	"self reset"
 
-    | reference className definitionArray versionInfo |
-    reference := GoferVersionReference name: 'Sample-CoreX-dkh.1'.
-    className := #'SampleCoreX'.
-    definitionArray := {(MCOrganizationDefinition packageName: reference packageName).
-    (MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: className asString
-        classIsMeta: true
-        selector: 'sampleAuthorName'
-        category: 'cat'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'sampleAuthorName') asString).
-    (MCClassDefinition
-        name: #'Object'
-        superclassName: #'ProtoObject'
-        category: reference packageName).
-    (MCMethodDefinition
-        className: 'Object'
-        classIsMeta: true
-        selector: 'isSample'
-        category: '*sample-core'
-        timeStamp: ''
-        source: (self class sourceCodeAt: #'isSample') asString)}.
-    sampleRepository
-        basicStoreVersion:
-            (MCVersion new
-                setPackage: (MCPackage new name: reference packageName)
-                info:
-                    (versionInfo := MCVersionInfo
-                        name: reference name
-                        id: UUID new
-                        message: 'This is a mock version'
-                        date: Date today
-                        time: Time now
-                        author: reference author
-                        ancestors: #())
-                snapshot: (MCSnapshot fromDefinitions: definitionArray)
-                dependencies: #()).
-    ^ versionInfo
+	| reference className definitionArray versionInfo |
+	reference := GoferVersionReference name: 'Sample-CoreX-dkh.1'.
+	className := #SampleCoreX.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: reference packageName).
+		                   (MCClassDefinition named: className category: reference packageName).
+		                   (MCMethodDefinition
+			                    className: className asString
+			                    classIsMeta: true
+			                    selector: 'sampleAuthorName'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #sampleAuthorName) asString).
+		                   ((MCClassDefinition named: #Object category: reference packageName)
+			                    superclassName: #ProtoObject;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: 'Object'
+			                    classIsMeta: true
+			                    selector: 'isSample'
+			                    category: '*sample-core'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #isSample) asString) }.
+	sampleRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (versionInfo := MCVersionInfo
+					                 name: reference name
+					                 id: UUID new
+					                 message: 'This is a mock version'
+					                 date: Date today
+					                 time: Time now
+					                 author: reference author
+					                 ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  )).
+	^ versionInfo
 ]
 
 { #category : #'external configurations' }

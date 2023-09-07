@@ -11,37 +11,30 @@ Class >> asClassDefinition [
 	This is produces by definitionString on slot while x is produced simnply by invoking name.
 	"
 
-	^ (self needsSlotClassDefinition
-		   ifTrue: [
-			   (MCClassDefinition
-				    name: self name
-				    superclassName: (self superclass
-						     ifNil: [ nil asString ]
-						     ifNotNil: [ self superclass name ])
-				    traitComposition: self traitCompositionString
-				    classTraitComposition: self class traitCompositionString)
-				   instVarNames: (self localSlots collect: [ :each | each definitionString ]);
-				   classVarNames: (self classVariables collect: [ :each | each definitionString ]);
-				   classInstVarNames: (self class localSlots collect: [ :each | each definitionString ]);
-				   yourself ]
-		   ifFalse: [
-			   (MCClassDefinition
-				    name: self name
-				    superclassName: (self superclass
-						     ifNil: [ nil asString ]
-						     ifNotNil: [ self superclass name ])
-				    traitComposition: self traitCompositionString
-				    classTraitComposition: self class traitCompositionString)
-				   instVarNames: (self localSlots collect: [ :each | each name ]);
-				   classVarNames: self classVarNames;
-				   classInstVarNames: (self class localSlots collect: [ :each | each name ]);
-				   yourself ])
-		  category: self category;
-		  poolDictionaryNames: self sharedPoolNames;
-		  type: self mcType;
-		  comment: self comment;
-		  commentStamp: self commentStamp;
-		  yourself
+	| definition |
+	definition := (MCClassDefinition named: self name)
+		              superclassName: (self superclass ifNotNil: [ self superclass name ]);
+		              traitComposition: self traitCompositionString;
+		              classTraitComposition: self class traitCompositionString;
+		              category: self category;
+		              poolDictionaryNames: self sharedPoolNames;
+		              type: self mcType;
+		              comment: self comment;
+		              commentStamp: self commentStamp;
+		              yourself.
+	self needsSlotClassDefinition
+		ifTrue: [
+			definition
+				instVarNames: (self localSlots collect: [ :each | each definitionString ]);
+				classVarNames: (self classVariables collect: [ :each | each definitionString ]);
+				classInstVarNames: (self class localSlots collect: [ :each | each definitionString ]) ]
+		ifFalse: [
+			definition
+				instVarNames: (self localSlots collect: [ :each | each name ]);
+				classVarNames: self classVarNames;
+				classInstVarNames: (self class localSlots collect: [ :each | each name ]) ].
+
+	^ definition
 ]
 
 { #category : #'*Monticello' }

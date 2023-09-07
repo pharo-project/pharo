@@ -1245,7 +1245,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFan [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -1313,7 +1313,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFeaux [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -1357,7 +1357,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFix [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -1406,10 +1406,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFoo [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfFoo-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: false
@@ -1492,7 +1489,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfFum [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -1534,10 +1531,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfMetacelloExampledkh1 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfMetacelloExample-dkh.1'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -1589,10 +1583,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectConfigIssue283dkh1 
   reference := GoferVersionReference
     name: 'ConfigurationOfProjectConfigIssue283-dkh.1'.
   className := reference packageName asSymbol.
-  definitionArray := {(MCClassDefinition
-    name: className
-    superclassName: #'Object'
-    category: className).
+  definitionArray := {(MCClassDefinition named: className category: className).
   (MCMethodDefinition
     className: className asString
     classIsMeta: true
@@ -1645,7 +1636,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFee [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -1688,10 +1679,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFie [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectFie-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -1755,7 +1743,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFoe [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -1798,10 +1786,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectFum [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectFum-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -1847,7 +1832,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectInfinite [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -1900,7 +1885,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue115dkh1 [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -1951,7 +1936,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue115dkh2: ances
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -2022,10 +2007,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh1 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue119-dkh.1'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2078,10 +2060,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh2: ances
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue119-dkh.2'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2134,10 +2113,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh3: ances
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue119-dkh.3'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2190,10 +2166,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh4: ances
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue119-dkh.4'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2246,10 +2219,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh5: ances
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue119-dkh.5'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2326,10 +2296,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh6: ances
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue119-dkh.6'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2442,10 +2409,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue119dkh7: ances
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue119-dkh.7'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2497,10 +2461,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue125 [
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue125-dkh.1'.
     packageName := reference packageName asSymbol.
     definitionArray := {(MCOrganizationDefinition packageName: packageName).
-    (MCClassDefinition
-        name: packageName
-        superclassName: #'Object'
-        category: packageName).
+    (MCClassDefinition named: packageName category: packageName).
     (MCMethodDefinition
         className: packageName asString
         classIsMeta: true
@@ -2568,7 +2529,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue136dkh1 [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -2619,7 +2580,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue136dkh2: ances
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -2683,10 +2644,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue154dkh1 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'ConfigurationOfMetacelloProjectIssue154-dkh.1'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2781,10 +2739,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue171dkh1 [
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue171-dkh.1'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2835,10 +2790,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue171dkh2: ances
     | reference className definitionArray versionInfo |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectIssue171-dkh.2'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -2900,10 +2852,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue283dkh1 [
   reference := GoferVersionReference
     name: 'ConfigurationOfProjectIssue283-dkh.1'.
   className := reference packageName asSymbol.
-  definitionArray := {(MCClassDefinition
-    name: className
-    superclassName: #'Object'
-    category: className).
+  definitionArray := {(MCClassDefinition named: className  category: className).
   (MCMethodDefinition
     className: className asString
     classIsMeta: true
@@ -2961,10 +2910,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue283dkh2: ances
   reference := GoferVersionReference
     name: 'ConfigurationOfProjectIssue283-dkh.2'.
   className := reference packageName asSymbol.
-  definitionArray := {(MCClassDefinition
-    name: className
-    superclassName: #'Object'
-    category: className).
+  definitionArray := {(MCClassDefinition named: className category: className).
   (MCMethodDefinition
     className: className asString
     classIsMeta: true
@@ -3029,7 +2975,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectIssue95 [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -3073,7 +3019,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectLoop [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -3115,10 +3061,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfProjectToolBox [
     | reference className definitionArray |
     reference := GoferVersionReference name: 'MetacelloTestConfigurationOfProjectToolBox-dkh.1'.
     className := reference packageName asSymbol.
-    definitionArray := {(MCClassDefinition
-        name: className
-        superclassName: #'Object'
-        category: className).
+    definitionArray := {(MCClassDefinition named: className category: className).
     (MCMethodDefinition
         className: className asString
         classIsMeta: true
@@ -3404,7 +3347,7 @@ MetacelloConfigurationResource >> setUpConfigurationOfSymbolic [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -3465,199 +3408,184 @@ MetacelloConfigurationResource >> setUpConfigurationOfSymbolic [
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> setUpIssue156BaselineOfGoo [
-  "https://github.com/dalehenrich/metacello-work/issues/156"
+	"https://github.com/dalehenrich/metacello-work/issues/156"
 
-  "self reset"
+	"self reset"
 
-  | reference packageName definitionArray |
-  reference := GoferVersionReference name: 'BaselineOfGoo-dkh.1'.
-  packageName := reference packageName asSymbol.
-  definitionArray := {(MCOrganizationDefinition packageName: packageName).
-  (MCClassDefinition
-    name: packageName
-    superclassName: #'BaselineOf'
-    category: packageName).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'baselineGooIssue156Baseline:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'baselineGooIssue156Baseline:') asString)}.
-  monticelloRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #())
+	| reference packageName definitionArray |
+	reference := GoferVersionReference name: 'BaselineOfGoo-dkh.1'.
+	packageName := reference packageName asSymbol.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: packageName).
+		                   ((MCClassDefinition named: packageName category: packageName)
+			                    superclassName: #BaselineOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'baselineGooIssue156Baseline:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineGooIssue156Baseline:) asString) }.
+	monticelloRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (MCVersionInfo
+					  name: reference name
+					  id: UUID new
+					  message: 'This is a mock version'
+					  date: Date today
+					  time: Time now
+					  author: reference author
+					  ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  ))
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> setUpIssue156ConfigurationOfGoo [
-  "https://github.com/dalehenrich/metacello-work/issues/156"
+	"https://github.com/dalehenrich/metacello-work/issues/156"
 
-  "self reset"
+	"self reset"
 
-  | reference packageName definitionArray |
-  reference := GoferVersionReference name: 'ConfigurationOfGoo-dkh.1'.
-  packageName := reference packageName asSymbol.
-  definitionArray := {(MCOrganizationDefinition packageName: packageName).
-  (MCClassDefinition
-    name: packageName
-    superclassName: #'ConfigurationOf'
-    category: packageName).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'baselineGoo300Issue156Configuration:'
-    category: 'cat'
-    timeStamp: ''
-    source:
-      (self class sourceCodeAt: #'baselineGoo300Issue156Configuration:') asString).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'baselineGoo400Issue156Configuration:'
-    category: 'cat'
-    timeStamp: ''
-    source:
-      (self class sourceCodeAt: #'baselineGoo400Issue156Configuration:') asString).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'baselineGoo500Issue156Configuration:'
-    category: 'cat'
-    timeStamp: ''
-    source:
-      (self class sourceCodeAt: #'baselineGoo500Issue156Configuration:') asString)}.
-  monticelloRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #())
+	| reference packageName definitionArray |
+	reference := GoferVersionReference name: 'ConfigurationOfGoo-dkh.1'.
+	packageName := reference packageName asSymbol.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: packageName).
+		                   ((MCClassDefinition named: packageName category: packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'baselineGoo300Issue156Configuration:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineGoo300Issue156Configuration:) asString).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'baselineGoo400Issue156Configuration:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineGoo400Issue156Configuration:) asString).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'baselineGoo500Issue156Configuration:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #baselineGoo500Issue156Configuration:) asString) }.
+	monticelloRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (MCVersionInfo
+					  name: reference name
+					  id: UUID new
+					  message: 'This is a mock version'
+					  date: Date today
+					  time: Time now
+					  author: reference author
+					  ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  ))
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> setUpIssue156ConfigurationOfProjectGoo [
-  "https://github.com/dalehenrich/metacello-work/issues/156"
+	"https://github.com/dalehenrich/metacello-work/issues/156"
 
-  "self reset"
+	"self reset"
 
-  | reference packageName definitionArray |
-  reference := GoferVersionReference name: 'ConfigurationOfProjectGoo-dkh.1'.
-  packageName := reference packageName asSymbol.
-  definitionArray := {(MCOrganizationDefinition packageName: packageName).
-  (MCClassDefinition
-    name: packageName
-    superclassName: #'ConfigurationOf'
-    category: packageName).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'version10Issue156:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'version10Issue156:') asString).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'version11Issue156:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'version11Issue156:') asString).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'version20Issue156:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'version20Issue156:') asString).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'version30Issue156:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'version30Issue156:') asString)}.
-  monticelloRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #())
+	| reference packageName definitionArray |
+	reference := GoferVersionReference name: 'ConfigurationOfProjectGoo-dkh.1'.
+	packageName := reference packageName asSymbol.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: packageName).
+		                   ((MCClassDefinition named: packageName category: packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'version10Issue156:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version10Issue156:) asString).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'version11Issue156:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version11Issue156:) asString).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'version20Issue156:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version20Issue156:) asString).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'version30Issue156:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version30Issue156:) asString) }.
+	monticelloRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (MCVersionInfo
+					  name: reference name
+					  id: UUID new
+					  message: 'This is a mock version'
+					  date: Date today
+					  time: Time now
+					  author: reference author
+					  ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  ))
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloConfigurationResource >> setUpIssue156ConfigurationOfProjectSoo [
-  "self reset"
+	"self reset"
 
-  | reference packageName definitionArray |
-  reference := GoferVersionReference name: 'ConfigurationOfProjectSoo-dkh.1'.
-  packageName := reference packageName asSymbol.
-  definitionArray := {(MCOrganizationDefinition packageName: packageName).
-  (MCClassDefinition
-    name: packageName
-    superclassName: #'ConfigurationOf'
-    category: packageName).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'version10Issue156:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'version10Issue156:') asString).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'version11Issue156:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'version11Issue156:') asString).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'version20Issue156:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'version20Issue156:') asString).
-  (MCMethodDefinition
-    className: packageName asString
-    selector: 'version30Issue156:'
-    category: 'cat'
-    timeStamp: ''
-    source: (self class sourceCodeAt: #'version30Issue156:') asString)}.
-  monticelloRepository
-    basicStoreVersion:
-      (MCVersion new
-        setPackage: (MCPackage new name: reference packageName)
-        info:
-          (MCVersionInfo
-            name: reference name
-            id: UUID new
-            message: 'This is a mock version'
-            date: Date today
-            time: Time now
-            author: reference author
-            ancestors: #())
-        snapshot: (MCSnapshot fromDefinitions: definitionArray)
-        dependencies: #())
+	| reference packageName definitionArray |
+	reference := GoferVersionReference name: 'ConfigurationOfProjectSoo-dkh.1'.
+	packageName := reference packageName asSymbol.
+	definitionArray := {
+		                   (MCOrganizationDefinition packageName: packageName).
+		                   ((MCClassDefinition named: packageName category: packageName)
+			                    superclassName: #ConfigurationOf;
+			                    yourself).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'version10Issue156:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version10Issue156:) asString).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'version11Issue156:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version11Issue156:) asString).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'version20Issue156:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version20Issue156:) asString).
+		                   (MCMethodDefinition
+			                    className: packageName asString
+			                    selector: 'version30Issue156:'
+			                    category: 'cat'
+			                    timeStamp: ''
+			                    source: (self class sourceCodeAt: #version30Issue156:) asString) }.
+	monticelloRepository basicStoreVersion: (MCVersion new
+			 setPackage: (MCPackage new name: reference packageName)
+			 info: (MCVersionInfo
+					  name: reference name
+					  id: UUID new
+					  message: 'This is a mock version'
+					  date: Date today
+					  time: Time now
+					  author: reference author
+					  ancestors: #(  ))
+			 snapshot: (MCSnapshot fromDefinitions: definitionArray)
+			 dependencies: #(  ))
 ]
 
 { #category : #'Issue 77' }
@@ -3679,7 +3607,7 @@ MetacelloConfigurationResource >> setUpIssue77B [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -3723,7 +3651,7 @@ MetacelloConfigurationResource >> setUpIssue77C [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true
@@ -3773,7 +3701,7 @@ MetacelloConfigurationResource >> setUpIssue77D [
 	packageName := reference packageName asSymbol.
 	definitionArray := {
 					MCOrganizationDefinition packageName: packageName.
-					MCClassDefinition name: packageName superclassName: #Object category: packageName.
+					MCClassDefinition named: packageName category: packageName.
 					MCMethodDefinition 
 						className: packageName asString
 						classIsMeta: true

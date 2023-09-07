@@ -53,11 +53,10 @@ MCStReader >> classDefinitionFrom: aRingClass [
 	traitCompositionString isEmpty ifTrue: [ traitCompositionString := '{}' ].
 	classTraitCompositionString isEmpty ifTrue: [ classTraitCompositionString := '{}' ].
 	lastIndex := tokens size.
-	^ (MCClassDefinition
-		   name: (tokens at: 3)
-		   superclassName: (tokens at: 1)
-		   traitComposition: traitCompositionString
-		   classTraitComposition: classTraitCompositionString)
+	^ (MCClassDefinition named: (tokens at: 3))
+		  superclassName: (tokens at: 1);
+		  traitComposition: traitCompositionString;
+		  classTraitComposition: classTraitCompositionString;
 		  category: (tokens at: lastIndex);
 		  instVarNames: ((tokens at: lastIndex - 6) findTokens: ' ');
 		  classVarNames: ((tokens at: lastIndex - 4) findTokens: ' ');

@@ -103,11 +103,8 @@ MCClassDefinitionTest >> testEquals [
 MCClassDefinitionTest >> testEqualsSensitivity [
 
 	| defA defB |
-	defA := (MCClassDefinition
-		         name: 'ClassA'
-		         superclassName: 'SuperA'
-		         traitComposition: '{}'
-		         classTraitComposition: '{}')
+	defA := (MCClassDefinition named: 'ClassA')
+		        superclassName: 'SuperA';
 		        category: 'CategoryA';
 		        instVarNames: #( iVarA );
 		        classVarNames: #( cVarB );
@@ -115,7 +112,6 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 		        classInstVarNames: #( ciVarA );
 		        type: #typeA;
 		        comment: 'A comment';
-		        commentStamp: 'A';
 		        yourself.
 
 	defB := defA copy name: 'ClassB'.
@@ -139,8 +135,6 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 	defB := defA copy type: 'typeB'.
 	self deny: defA equals: defB.
 	defB := defA copy comment: 'B comment'.
-	self deny: defA equals: defB.
-	defB := defA copy commentStamp: 'B'.
 	self deny: defA equals: defB
 ]
 
@@ -179,11 +173,8 @@ MCClassDefinitionTest >> testValidTraitComposition [
 
 	| d className cls |
 	className := 'MCMockClassC'.
-	d := (MCClassDefinition
-		      name: className
-		      superclassName: 'Object'
-		      traitComposition: '{MCTraitMock1}'
-		      classTraitComposition: '{}')
+	d := (MCClassDefinition named: className)
+		     traitComposition: '{MCTraitMock1}';
 		     category: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
@@ -201,11 +192,8 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 
 	| d className cls |
 	className := 'MCMockClassC'.
-	d := (MCClassDefinition
-		      name: className
-		      superclassName: 'Object'
-		      traitComposition: 'MCTraitMock1'
-		      classTraitComposition: '{}')
+	d := (MCClassDefinition named: className)
+		     traitComposition: 'MCTraitMock1';
 		     category: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
@@ -223,11 +211,8 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 
 	| d className cls |
 	className := 'MCMockClassC'.
-	d := (MCClassDefinition
-		      name: className
-		      superclassName: 'Object'
-		      traitComposition: 'MCTraitMock1 + MCTraitMock2'
-		      classTraitComposition: '{}')
+	d := (MCClassDefinition named: className)
+		     traitComposition: 'MCTraitMock1 + MCTraitMock2';
 		     category: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
@@ -247,11 +232,8 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 
 	| d className cls |
 	className := 'MCMockClassC'.
-	d := (MCClassDefinition
-		      name: className
-		      superclassName: 'Object'
-		      traitComposition: 'MCTraitMock1 - {#c1}'
-		      classTraitComposition: '{}')
+	d := (MCClassDefinition named: className)
+		     traitComposition: 'MCTraitMock1 - {#c1}';
 		     category: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);

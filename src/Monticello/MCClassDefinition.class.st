@@ -18,37 +18,14 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
-{ #category : #obsolete }
-MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString [
-
-	^ (self
-		   name: nameString
-		   superclassName: superclassString
-		   traitComposition: '{}'
-		   classTraitComposition: '{}')
-		  category: categoryString;
-		  yourself
-]
-
-{ #category : #'instance creation' }
-MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString [
-
-	^ self new
-		  initializeWithName: nameString
-		  superclassName: superclassString
-		  traitComposition: traitCompositionString
-		  classTraitComposition: classTraitCompositionString
-]
-
-{ #category : #'instance creation' }
+{ #category : #deprecated }
 MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+	"Do not use this method! This method will be deprecated one Tonel will not use it anymore."
 
-	^ (self
-		   name: nameString
-		   superclassName: superclassString
-		   traitComposition: traitCompositionString
-		   classTraitComposition: classTraitCompositionString)
-		  category: categoryString;
+	^ (self named: nameString category: categoryString)
+		  superclassName: superclassString;
+		  traitComposition: traitCompositionString;
+		  classTraitComposition: classTraitCompositionString;
 		  instVarNames: ivarArray;
 		  classVarNames: cvarArray;
 		  poolDictionaryNames: poolArray;
@@ -56,6 +33,22 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		  type: typeSymbol;
 		  comment: commentString;
 		  commentStamp: stampString;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+MCClassDefinition class >> named: nameString [
+
+	^ self new
+		  name: nameString;
+		  yourself
+]
+
+{ #category : #obsolete }
+MCClassDefinition class >> named: nameString category: categoryString [
+
+	^ (self named: nameString)
+		  category: categoryString;
 		  yourself
 ]
 
@@ -143,8 +136,9 @@ MCClassDefinition >> classTraitComposition [
 ]
 
 { #category : #accessing }
-MCClassDefinition >> classTraitComposition: anObject [
-	classTraitComposition := anObject
+MCClassDefinition >> classTraitComposition: classTraitCompositionString [
+
+	classTraitComposition := classTraitCompositionString
 ]
 
 { #category : #accessing }
@@ -308,21 +302,14 @@ MCClassDefinition >> hash [
 MCClassDefinition >> initialize [
 
 	super initialize.
+	category := ''.
+	superclassName := #Object.
+	traitComposition := '{}'.
+	classTraitComposition := '{}'.
 	type := #normal.
 	comment := ''.
 	commentStamp := self defaultCommentStamp.
 	variables := OrderedCollection new
-]
-
-{ #category : #initialization }
-MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString [
-
-	name := nameString asSymbol.
-	superclassName := superclassString
-		                  ifNil: [ #nil ]
-		                  ifNotNil: [ superclassString asSymbol ].
-	traitComposition := traitCompositionString.
-	classTraitComposition := classTraitCompositionString
 ]
 
 { #category : #accessing }
@@ -382,7 +369,7 @@ MCClassDefinition >> load [
 { #category : #accessing }
 MCClassDefinition >> name: anObject [
 
-	name := anObject.
+	name := anObject asSymbol.
 	self type: type
 ]
 
@@ -403,6 +390,13 @@ MCClassDefinition >> poolDictionaries [
 MCClassDefinition >> poolDictionaryNames: poolArray [
 
 	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition
+]
+
+{ #category : #copying }
+MCClassDefinition >> postCopy [
+
+	super postCopy.
+	variables := variables copy
 ]
 
 { #category : #annotations }
@@ -575,8 +569,11 @@ MCClassDefinition >> superclassName [
 ]
 
 { #category : #accessing }
-MCClassDefinition >> superclassName: anObject [
-	superclassName := anObject
+MCClassDefinition >> superclassName: superclassString [
+
+	superclassName := superclassString
+		                  ifNil: [ #nil ]
+		                  ifNotNil: [ superclassString asSymbol ]
 ]
 
 { #category : #accessing }
@@ -585,8 +582,9 @@ MCClassDefinition >> traitComposition [
 ]
 
 { #category : #accessing }
-MCClassDefinition >> traitComposition: anObject [
-	traitComposition := anObject
+MCClassDefinition >> traitComposition: traitCompositionString [
+
+	traitComposition := traitCompositionString
 ]
 
 { #category : #accessing }
