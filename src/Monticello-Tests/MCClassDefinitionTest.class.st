@@ -109,8 +109,8 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 		         traitComposition: '{}'
 		         classTraitComposition: '{}'
 		         category: 'CategoryA'
-		         instVarNames: #( iVarA )
-		         classVarNames: #( cVarB ))
+		         instVarNames: #( iVarA ))
+		        classVarNames: #( cVarB );
 		        poolDictionaryNames: #( PoolA );
 		        classInstVarNames: #( ciVarA );
 		        type: #typeA;
@@ -185,8 +185,7 @@ MCClassDefinitionTest >> testValidTraitComposition [
 		      traitComposition: '{MCTraitMock1}'
 		      classTraitComposition: '{}'
 		      category: self mockCategoryName
-		      instVarNames: #(  )
-		      classVarNames: #(  ))
+		      instVarNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -209,8 +208,7 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 		      traitComposition: 'MCTraitMock1'
 		      classTraitComposition: '{}'
 		      category: self mockCategoryName
-		      instVarNames: #(  )
-		      classVarNames: #(  ))
+		      instVarNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -233,8 +231,7 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 		      traitComposition: 'MCTraitMock1 + MCTraitMock2'
 		      classTraitComposition: '{}'
 		      category: self mockCategoryName
-		      instVarNames: #(  )
-		      classVarNames: #(  ))
+		      instVarNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -259,8 +256,7 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 		      traitComposition: 'MCTraitMock1 - {#c1}'
 		      classTraitComposition: '{}'
 		      category: self mockCategoryName
-		      instVarNames: #(  )
-		      classVarNames: #(  ))
+		      instVarNames: #(  ))
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.

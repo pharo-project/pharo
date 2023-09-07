@@ -11,8 +11,8 @@ RGClassStrategy >> asMCDefinition [
 		   traitComposition: self owner traitCompositionString
 		   classTraitComposition: self owner metaclass traitCompositionString
 		   category: self owner category
-		   instVarNames: self instVarNames
-		   classVarNames: self owner classVarNames)
+		   instVarNames: self instVarNames)
+		  classVarNames: self owner classVarNames;
 		  poolDictionaryNames: self owner sharedPoolNames;
 		  classInstVarNames: self owner metaclass instVarNames;
 		  type: self mcType;

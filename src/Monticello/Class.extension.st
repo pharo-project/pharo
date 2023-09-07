@@ -21,8 +21,8 @@ Class >> asClassDefinition [
 				    traitComposition: self traitCompositionString
 				    classTraitComposition: self class traitCompositionString
 				    category: self category
-				    instVarNames: (self localSlots collect: [ :each | each definitionString ])
-				    classVarNames: (self classVariables collect: [ :each | each definitionString ]))
+				    instVarNames: (self localSlots collect: [ :each | each definitionString ]))
+				   classVarNames: (self classVariables collect: [ :each | each definitionString ]);
 				   classInstVarNames: (self class localSlots collect: [ :each | each definitionString ]);
 				   yourself ]
 		   ifFalse: [
@@ -34,8 +34,8 @@ Class >> asClassDefinition [
 				    traitComposition: self traitCompositionString
 				    classTraitComposition: self class traitCompositionString
 				    category: self category
-				    instVarNames: (self localSlots collect: [ :each | each name ])
-				    classVarNames: self classVarNames)
+				    instVarNames: (self localSlots collect: [ :each | each name ]))
+				   classVarNames: self classVarNames;
 				   classInstVarNames: (self class localSlots collect: [ :each | each name ]);
 				   yourself ])
 		  poolDictionaryNames: self sharedPoolNames;

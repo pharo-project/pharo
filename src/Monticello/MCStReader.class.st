@@ -59,8 +59,8 @@ MCStReader >> classDefinitionFrom: aRingClass [
 		   traitComposition: traitCompositionString
 		   classTraitComposition: classTraitCompositionString
 		   category: (tokens at: lastIndex)
-		   instVarNames: ((tokens at: lastIndex - 6) findTokens: ' ')
-		   classVarNames: ((tokens at: lastIndex - 4) findTokens: ' '))
+		   instVarNames: ((tokens at: lastIndex - 6) findTokens: ' '))
+		  classVarNames: ((tokens at: lastIndex - 4) findTokens: ' ');
 		  poolDictionaryNames: ((tokens at: lastIndex - 2) findTokens: ' ');
 		  classInstVarNames: (self classInstVarNamesFor: aRingClass);
 		  type: (self typeOfSubclass: (tokens at: 2));
