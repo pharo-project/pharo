@@ -64,11 +64,11 @@ RBRemoveMethodRefactoring >> checkBrowseAllOccurrences: anCollectionOfOccurrence
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> checkBrowseOccurrenceOf: selector in: aRBMethod [
+RBRemoveMethodRefactoring >> checkBrowseOccurrenceOf: aSelector in: aRBMethod [
 	self
 		refactoringWarning:
-			('Possible call to <2s> in <1p><n>Browse references?' expandMacrosWith: aRBMethod modelClass with: selector)
-		with: [ self openBrowserOn: (RBBrowserEnvironment new referencesTo: selector) ]
+			('Possible call to <2s> in <1p><n>Browse references?' expandMacrosWith: aRBMethod modelClass with: aSelector)
+		with: [ self openBrowserOn: (RBBrowserEnvironment new referencesTo: aSelector) ]
 ]
 
 { #category : #preconditions }
