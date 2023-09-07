@@ -18,16 +18,16 @@ RBRemoveMethodDriver >> browseSenders [
 
 	StMessageBrowserPresenter  
 		browse: (senders collect: [ :each | each value methodClass realClass >> each value selector ]) 
-		asSendersOf: refactoring selector 
+		asSendersOf: refactoring selectors
 	"this does not work for multiple selectors remove."
 ]
 
 { #category : #resources }
 RBRemoveMethodDriver >> configureRefactoring [
 
-	refactoring := RBRemoveMethodRefactoring
+	refactoring := RBRemoveMethodsRefactoring
 		               model: model
-		               removeMethods: (methods collect: [ :each | each selector ])
+		               methods: (methods collect: [ :each | each selector ])
 		               from: class
 ]
 
@@ -53,12 +53,12 @@ RBRemoveMethodDriver >> runRefactoring [
 	[
 	senders := refactoring senders.
 
-	senders size = 0
+	senders isEmpty
 		ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
 		ifFalse: [ 
 		
 		select := SpSelectDialog new 
-			title: 'There are ', senders size asString,  ' methods calling ', refactoring selector;
+			title: 'There are ', senders size asString,  ' methods calling method(s) you want to delete';
 			label: 'Select a strategy';
 			items: (RBRemoveMethodChoice subclasses collect: [ :each | each  new driver: self]);
 			display: [ :each | each description ];
@@ -81,6 +81,7 @@ RBRemoveMethodDriver >> runRefactoring [
 RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod for: aClass [
 	
 	scopes := refactoringScopes.
+	model := self refactoringScopeOn: scopes first.
 	methods := {aMethod}.
 	class := aClass
 ]
@@ -89,6 +90,7 @@ RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod for: aClass [
 RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods for: aClass [
 	
 	scopes := refactoringScopes.
+	model := self refactoringScopeOn: scopes first.
 	methods := aMethods.
 	class := aClass
 ]
