@@ -31,11 +31,10 @@ MCClassDefinition class >> name: nameString superclassName: superclassString cat
 		  classVarNames: ''
 		  poolDictionaryNames: ''
 		  classInstVarNames: ''
-		  type: #normal
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol [
+MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray [
 
 	^ self new
 		  initializeWithName: nameString
@@ -47,14 +46,13 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		  classVarNames: cvarArray
 		  poolDictionaryNames: poolArray
 		  classInstVarNames: civarArray
-		  type: typeSymbol
 ]
 
 { #category : #'instance creation' }
 MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
 
-	^ (self new
-		   initializeWithName: nameString
+	^ (self
+		   name: nameString
 		   superclassName: superclassString
 		   traitComposition: traitCompositionString
 		   classTraitComposition: classTraitCompositionString
@@ -62,8 +60,8 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		   instVarNames: ivarArray
 		   classVarNames: cvarArray
 		   poolDictionaryNames: poolArray
-		   classInstVarNames: civarArray
-		   type: typeSymbol)
+		   classInstVarNames: civarArray)
+		  type: typeSymbol;
 		  comment: commentString;
 		  commentStamp: stampString;
 		  yourself
@@ -305,9 +303,27 @@ MCClassDefinition >> hash [
 MCClassDefinition >> initialize [
 
 	super initialize.
+	type := #normal.
 	comment := ''.
 	commentStamp := self defaultCommentStamp.
 	variables := OrderedCollection new
+]
+
+{ #category : #initialization }
+MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray [
+
+	name := nameString asSymbol.
+	superclassName := superclassString
+		                  ifNil: [ #nil ]
+		                  ifNotNil: [ superclassString asSymbol ].
+	traitComposition := traitCompositionString.
+	classTraitComposition := classTraitCompositionString.
+	category := categoryString.
+
+	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
+	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition.
+	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition.
+	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition
 ]
 
 { #category : #initialization }
@@ -380,7 +396,9 @@ MCClassDefinition >> load [
 
 { #category : #accessing }
 MCClassDefinition >> name: anObject [
-	name := anObject
+
+	name := anObject.
+	self type: type
 ]
 
 { #category : #installing }
@@ -593,6 +611,14 @@ MCClassDefinition >> traitCompositionString [
 { #category : #accessing }
 MCClassDefinition >> type [
 	^ type
+]
+
+{ #category : #accessing }
+MCClassDefinition >> type: aSymbol [
+
+	type := (#( #CompiledMethod #CompiledBlock #CompiledCode ) includes: name)
+		        ifTrue: [ #compiledMethod ]
+		        ifFalse: [ aSymbol ]
 ]
 
 { #category : #installing }

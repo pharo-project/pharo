@@ -14,8 +14,8 @@ RGClassStrategy >> asMCDefinition [
 		   instVarNames: self instVarNames
 		   classVarNames: self owner classVarNames
 		   poolDictionaryNames: self owner sharedPoolNames
-		   classInstVarNames: self owner metaclass instVarNames
-		   type: self mcType)
+		   classInstVarNames: self owner metaclass instVarNames)
+		  type: self mcType;
 		  comment: self owner comment content;
 		  commentStamp: self owner comment stamp;
 		  yourself

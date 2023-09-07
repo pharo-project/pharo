@@ -83,8 +83,7 @@ MCTestCase >> mockClass: className super: superclassName [
 		   instVarNames: #(  )
 		   classVarNames: #(  )
 		   poolDictionaryNames: #(  )
-		   classInstVarNames: #(  )
-		   type: #normal)
+		   classInstVarNames: #(  ))
 		  comment: (self commentForClass: className);
 		  commentStamp: (self commentStampForClass: className);
 		  yourself
