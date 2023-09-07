@@ -6,11 +6,7 @@ This class is primarily meant for use by the SecureHashAlgorithm class.
 "
 Class {
 	#name : #ThirtyTwoBitRegister,
-	#superclass : #Object,
-	#instVars : [
-		'hi',
-		'low'
-	],
+	#superclass : #FixedBitWidthRegister,
 	#category : #'System-Hashing-Core'
 }
 
@@ -54,14 +50,6 @@ ThirtyTwoBitRegister >> asReverseInteger [
 ]
 
 { #category : #'accumulator ops' }
-ThirtyTwoBitRegister >> bitAnd: aThirtTwoBitRegister [
-	"Replace my contents with the bitwise AND of the given register and my current contents."
-
-	hi := hi bitAnd: aThirtTwoBitRegister hi.
-	low := low bitAnd: aThirtTwoBitRegister low
-]
-
-{ #category : #'accumulator ops' }
 ThirtyTwoBitRegister >> bitInvert [
 	"Replace my contents with the bitwise inverse my current contents."
 
@@ -70,25 +58,9 @@ ThirtyTwoBitRegister >> bitInvert [
 ]
 
 { #category : #'accumulator ops' }
-ThirtyTwoBitRegister >> bitOr: aThirtTwoBitRegister [
-	"Replace my contents with the bitwise OR of the given register and my current contents."
-
-	hi := hi bitOr: aThirtTwoBitRegister hi.
-	low := low bitOr: aThirtTwoBitRegister low
-]
-
-{ #category : #'accumulator ops' }
 ThirtyTwoBitRegister >> bitShift: anInteger [
 	"Replace my contents with the bitShift of anInteger."
 	self load: (self asInteger bitShift: anInteger)
-]
-
-{ #category : #'accumulator ops' }
-ThirtyTwoBitRegister >> bitXor: aThirtTwoBitRegister [
-	"Replace my contents with the bitwise exclusive OR of the given register and my current contents."
-
-	hi := hi bitXor: aThirtTwoBitRegister hi.
-	low := low bitXor: aThirtTwoBitRegister low
 ]
 
 { #category : #accessing }
