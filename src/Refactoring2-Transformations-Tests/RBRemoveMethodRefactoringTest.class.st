@@ -106,8 +106,6 @@ RBRemoveMethodRefactoringTest >> testSendersOfUnsentMessage [
 		               selector: #methodThatIsNotUsedForSure
 		               from: #RBSubclassOfClassToRename.
 	refactoring model: rbNamespace2.
-	self
-		assert: (refactoring sendersOf: #methodThatIsNotUsedForSure) size
-		equals: 0
+	self assertEmpty: (refactoring sendersOf: #methodThatIsNotUsedForSure)
 	"this is because this test method is taken into account."
 ]
