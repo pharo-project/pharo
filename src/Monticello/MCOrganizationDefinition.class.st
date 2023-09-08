@@ -66,9 +66,12 @@ MCOrganizationDefinition >> basicCommonPrefix [
 MCOrganizationDefinition >> categories [
 
 	^ categories ifNil: [
-		  { self packageName } , (self tagNames
-			   reject: [ :tagName | tagName = self packageName ]
-			   thenCollect: [ :tagName | self packageName , '-' , tagName ]) ]
+		  self packageName
+			  ifNil: [ {  } ]
+			  ifNotNil: [ :package |
+				  { package } , (self tagNames
+					   reject: [ :tagName | tagName = package ]
+					   thenCollect: [ :tagName | package , '-' , tagName ]) ] ]
 ]
 
 { #category : #deprecated }
@@ -146,17 +149,6 @@ MCOrganizationDefinition >> packageName: anObject [
 { #category : #installing }
 MCOrganizationDefinition >> postloadOver: oldDefinition [
 	"Nothing to do"
-]
-
-{ #category : #private }
-MCOrganizationDefinition >> reorderCategories: allCategories original: oldCategories [
-
-	^ allCategories
-		  detect: [ :ea | self categories includes: ea ]
-		  ifFound: [ :first |
-			  ((allCategories copyUpTo: first) copyWithoutAll: oldCategories , self categories) , self categories
-			  , ((allCategories copyAfter: first) copyWithoutAll: oldCategories , self categories) ]
-		  ifNone: [ allCategories ]
 ]
 
 { #category : #accessing }

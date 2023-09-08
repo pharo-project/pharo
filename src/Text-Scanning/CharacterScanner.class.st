@@ -104,8 +104,6 @@ Class {
 	#instVars : [
 		'destX',
 		'lastIndex',
-		'xTable',
-		'map',
 		'destY',
 		'stopConditions',
 		'text',
@@ -272,20 +270,6 @@ CharacterScanner >> leadingTab [
 	^ true
 ]
 
-{ #category : #scanning }
-CharacterScanner >> measureString: aString inFont: aFont from: startIndex to: stopIndex [
-	"Measure aString width in given font aFont.
-	The string shall not include line breaking, tab or other control character."
-	destX := destY := lastIndex := 0.
-	pendingKernX := 0.
-	font := aFont.
-	kern := 0 - font baseKern.
-	spaceWidth := font widthOf: Space.
-	stopConditions := MeasuringStopConditions.
-	self scanCharactersFrom: startIndex to: stopIndex in: aString rightX: 999999.
-	^destX
-]
-
 { #category : #private }
 CharacterScanner >> placeEmbeddedObject: anchoredMorph [
 	"Place the anchoredMorph or return false if it cannot be placed"
@@ -317,11 +301,6 @@ a font that does not do character-pair kerning"
 
 { #category : #scanning }
 CharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX [
-	^sourceString scanCharactersFrom: startIndex to: stopIndex with: self rightX: rightX font: font
-]
-
-{ #category : #scanning }
-CharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
 	^sourceString scanCharactersFrom: startIndex to: stopIndex with: self rightX: rightX font: font
 ]
 
@@ -449,8 +428,6 @@ a font that does not do character-pair kerning"
 CharacterScanner >> setActualFont: aFont [
 	"Set the basal font to an isolated font reference."
 
-	xTable := aFont xTable.
-	map := aFont characterToGlyphMap.
 	font := aFont
 ]
 

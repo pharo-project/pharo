@@ -7,7 +7,11 @@ I add a number of facilities to those in ClassDescription:
 
 My instances describe the representation and behavior of objects. I add more comprehensive programming support facilities to the basic attributes of Behavior and the descriptive facilities of ClassDescription.
 
-The slot 'subclasses' is a redundant structure.  It is never used during execution, but is used by the development system to simplify or speed certain operations.  
+The slot 'subclasses' is a redundant structure.  It is never used during execution, but is used by the development system to simplify or speed certain operations.
+
+When a class is removed from the system, we keep the instance in case it is still referenced. In that case, we declare the class as Obsolete.
+In order to know if a class is obsolete or not, we save the instances in a weak identity set called ObsoleteClasses. When the class is not referenced anymore, the GC will collect the class and remove it totally from the system.
+Note: In the past we saved this information in the properties of the class but this is slower than the current solution. Maybe we could speed up the properties management.
 "
 Class {
 	#name : #Class,
@@ -20,6 +24,9 @@ Class {
 		'environment',
 		'category',
 		'commentSourcePointer'
+	],
+	#classVars : [
+		'ObsoleteClasses'
 	],
 	#category : #'Kernel-Classes'
 }
@@ -57,6 +64,12 @@ Class class >> hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache [
 	^ (unprocessedClasses includesAnyOf: (self allSuperclassesFor: aClass cache: cache)) not
 ]
 
+{ #category : #'class initialization' }
+Class class >> initialize [
+
+	ObsoleteClasses := WeakIdentitySet new
+]
+
 { #category : #'file in/out' }
 Class class >> superclassOrder: classes [
     "Arrange the classes in the collection, classes, in superclass order so the
@@ -78,6 +91,12 @@ Class class >> superclassOrder: classes [
             all addLast: nextClass.
             unprocessedClasses remove: nextClass].
     ^all
+]
+
+{ #category : #accessing }
+Class class >> unclassifiedCategory [
+
+	^ #Unclassified
 ]
 
 { #category : #'class variables' }
@@ -841,7 +860,7 @@ Class >> isClassOrTrait [
 Class >> isObsolete [
 	"Return true if the receiver is obsolete."
 
-	^ self propertyAt: #obsolete ifAbsent: false
+	^ ObsoleteClasses includes: self
 ]
 
 { #category : #'self evaluating' }
@@ -905,7 +924,7 @@ Class >> obsolete [
 	self classPool: nil.
 	self sharedPools: nil.
 	self hasClassSide ifTrue: [ self classSide obsolete].
-	self propertyAt: #obsolete put: true.
+	ObsoleteClasses add: self.
 	super obsolete
 ]
 
