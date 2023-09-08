@@ -49,7 +49,7 @@ MCMock subclass: #MCMockClassA
 	poolDictionaries: ''''
 	category: ''MonticelloMocks''!
 
-!MCMockClassA commentStamp: '''' prior: 0!
+!MCMockClassA commentStamp: ''<historical>'' prior: 0!
 This is a mock class. The Monticello tests manipulated it to simulate a developer modifying code in the image.!
 '
 ]
@@ -66,7 +66,7 @@ MCMock subclass: #MCMockClassB
 MCMockClassB class
 	instanceVariableNames: ''ciVar''!
 
-!MCMockClassB commentStamp: '''' prior: 0!
+!MCMockClassB commentStamp: ''<historical>'' prior: 0!
 This comment has a bang!! Bang!! Bang!!!
 '
 ]
