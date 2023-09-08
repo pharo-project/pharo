@@ -196,7 +196,7 @@ ShiftClassInstaller >> make [
 	self fixSlotScope: newClass.
 	self fixSlotScope: newClass class.
 
-	self recategorize: newClass to: builder category.
+	self recategorize: newClass to: builder category asSymbol.
 	self comment: newClass.
 
 	self notifyChanges.
@@ -295,7 +295,7 @@ ShiftClassInstaller >> recategorize: aClass to: newCategory [
 
 	| oldCategory |
 	oldCategory := oldClass ifNotNil: [ oldClass basicCategory ].
-	oldCategory == newCategory asSymbol ifTrue: [ ^ self ].
+	oldCategory == newCategory ifTrue: [ ^ self ].
 
 	self installingEnvironment organization ifNotNil: [ :systemOrganizer |
 		systemOrganizer classify: aClass name under: newCategory.
