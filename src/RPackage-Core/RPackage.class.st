@@ -456,7 +456,7 @@ RPackage >> importProtocol: aProtocol forClass: aClass [
 RPackage >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ self definedClasses includes: aClass instanceSide
+	^ self classTags anySatisfy: [ :tag | tag includesClass: aClass ]
 ]
 
 { #category : #testing }
