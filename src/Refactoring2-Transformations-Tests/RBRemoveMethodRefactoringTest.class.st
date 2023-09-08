@@ -88,8 +88,7 @@ RBRemoveMethodRefactoringTest >> testSendersIncludesSuperCalls [
 		               model: model
 		               selector: #justSuperSendInSubclass
 		               from: #RBSubclassOfClassToRename.
-	self assert:
-		(refactoring sendersOf: #justSuperSendInSubclass) isNotEmpty
+	self denyEmpty: (refactoring sendersOf: #justSuperSendInSubclass)
 ]
 
 { #category : #tests }
