@@ -72,7 +72,9 @@ RPackageTag >> hasClassNamed: aSymbol [
 
 { #category : #testing }
 RPackageTag >> includesClass: aClass [
-	^ self hasClassNamed: aClass name
+	"To deprecate in favor of #hasClass:"
+
+	^ self hasClass: aClass
 ]
 
 { #category : #initialization }
