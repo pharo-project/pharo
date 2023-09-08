@@ -50,9 +50,16 @@ ClyJumpToTestClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyJumpToTestClassCommand >> execute [
+
+	self systemEnvironment 
+		classNamed: (self testClassNameFor: targetClass)
+		ifAbsent: [
+			(self confirm: 'Do you want to create a test class for: ' , targetClass asString )
+				ifFalse: [ ^ self ] ].
+
 	[ browser selectClass: (self testClassFor: targetClass) ]
 		on: ClyInvalidClassForTestClassGeneration
-		do: [ :ex | self inform: 'Cannot generate test class for ' , ex baseClass printString , '.' ]
+		do: [ : ex | self inform: 'Cannot generate test class for ' , ex baseClass printString , '.' ]
 ]
 
 { #category : #execution }
