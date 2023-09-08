@@ -356,39 +356,39 @@ OrderedCollection >> collect: aBlock [
 	collection. Override superclass in order to use addLast:, not at:put:."
 
 	"(#(1 2 3) asOrderedCollection collect: [ :v | v * 10 ]) asArray >>> #(10 20 30)"
+
 	"(#(1 2 3) asOrderedCollection collect: [ :v | 10 ]) asArray >>> #(10 10 10)"
 
 	| newCollection |
-	newCollection := self copyForTransform: self size.
-	firstIndex to: lastIndex do:
-		[:index |
-		newCollection addLast: (aBlock value: (array at: index))].
+	newCollection := self speciesForTransform new: self size.
+	firstIndex to: lastIndex do: [ :index |
+	newCollection addLast: (aBlock value: (array at: index)) ].
 	^ newCollection
 ]
 
 { #category : 'enumerating' }
 OrderedCollection >> collect: aBlock from: fromIndex to: toIndex [
 	"Override superclass in order to use addLast:, not at:put:."
+
 	| result |
 	self ensureBoundsFrom: fromIndex to: toIndex.
-	result := self copyForTransform: toIndex - fromIndex + 1.
-	firstIndex + fromIndex - 1 to: firstIndex + toIndex - 1 do:
-		[:index | result addLast: (aBlock value: (array at: index))].
+	result := self speciesForTransform new: toIndex - fromIndex + 1.
+	firstIndex + fromIndex - 1 to: firstIndex + toIndex - 1 do: [ :index |
+	result addLast: (aBlock value: (array at: index)) ].
 	^ result
 ]
 
 { #category : 'enumerating' }
 OrderedCollection >> collect: collectBlock thenSelect: selectBlock [
-    "Optimized version Collection>>#collect:thenSelect:"
+	"Optimized version Collection>>#collect:thenSelect:"
 
-    | newCollection newElement |
-
-    newCollection := self copyForTransform.
-    firstIndex to: lastIndex do: [ :index |
+	| newCollection newElement |
+	newCollection := self speciesForTransform new.
+	firstIndex to: lastIndex do: [ :index |
 		newElement := collectBlock value: (array at: index).
-		(selectBlock value: newElement)
-			ifTrue: [ newCollection addLast: newElement ]].
-    ^ newCollection
+		(selectBlock value: newElement) ifTrue: [
+			newCollection addLast: newElement ] ].
+	^ newCollection
 ]
 
 { #category : 'private' }
@@ -418,21 +418,6 @@ OrderedCollection >> copyEmpty [
 ]
 
 { #category : 'copying' }
-OrderedCollection >> copyForTransform [
-	"As #copyForTransform, but using the default size for a new collection."
-
-	^self species new
-]
-
-{ #category : #copying }
-OrderedCollection >> copyForTransform: copySize [
-	"Answer a 'copy' of the receiver suitable for holding the output of a #collect: or similar, with sufficient capacity for <copySize> elements, but which contains no elements.
-	When transforming the elements of a SortedCollection, the result may no longer be sorted, or indeed sortable, so we provide a hook for it to override and return an OrderedCollection."
-
-	^self species new: copySize
-]
-
-{ #category : #copying }
 OrderedCollection >> copyFrom: startIndex to: endIndex [
 	"Answer a copy of the receiver that contains elements from position
 	startIndex to endIndex."
@@ -676,19 +661,18 @@ OrderedCollection >> reject: rejectBlock [
 
 { #category : 'enumerating' }
 OrderedCollection >> reject: rejectBlock thenCollect: collectBlock [
-    " Optimized version of Collection>>#reject:thenCollect: "
+	" Optimized version of Collection>>#reject:thenCollect: "
 
 	| newCollection |
+	newCollection := self speciesForTransform new.
 
-    newCollection := self copyForTransform.
-
-    firstIndex to: lastIndex do: [ :index |
+	firstIndex to: lastIndex do: [ :index |
 		| element |
 		element := array at: index.
-		(rejectBlock value: element)
-			ifFalse: [ newCollection addLast: (collectBlock value: element) ]].
+		(rejectBlock value: element) ifFalse: [
+			newCollection addLast: (collectBlock value: element) ] ].
 
-    ^ newCollection
+	^ newCollection
 ]
 
 { #category : 'removing' }
@@ -850,11 +834,12 @@ OrderedCollection >> reverseDo: aBlock [
 { #category : 'converting' }
 OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
+
 	"#(2 3 4 'fred') asOrderedCollection reversed >>> #('fred' 4 3 2) asOrderedCollection"
+
 	| newCol |
-	newCol := self copyForTransform: self size.
-	self reverseDo:
-		[:elem | newCol addLast: elem].
+	newCol := self speciesForTransform new: self size.
+	self reverseDo: [ :elem | newCol addLast: elem ].
 	^ newCol
 ]
 
@@ -875,18 +860,17 @@ OrderedCollection >> select: selectBlock [
 
 { #category : 'enumerating' }
 OrderedCollection >> select: selectBlock thenCollect: collectBlock [
-    " Optimized version Collection>>#select:thenCollect: "
+	" Optimized version Collection>>#select:thenCollect: "
 
 	| newCollection element |
+	newCollection := self speciesForTransform new.
 
-    newCollection := self copyForTransform.
-
-    firstIndex to: lastIndex do: [ :index |
+	firstIndex to: lastIndex do: [ :index |
 		element := array at: index.
-		(selectBlock value: element)
-			ifTrue: [ newCollection addLast: (collectBlock value: element) ]].
+		(selectBlock value: element) ifTrue: [
+			newCollection addLast: (collectBlock value: element) ] ].
 
-    ^ newCollection
+	^ newCollection
 ]
 
 { #category : 'private' }
@@ -923,16 +907,26 @@ OrderedCollection >> sort: aSortBlock [
 		by: aSortBlock
 ]
 
+{ #category : 'private' }
+OrderedCollection >> speciesForTransform [
+	"Answer the preferred class for a transformation of the receiver (the output of a #collect: or similar). This may differ from the regular #species, as the transformed elements may no longer be compatible with the receiver in some way. For example, when transforming the elements of a SortedCollection, the result may no longer be sorted, or indeed sortable."
+
+	^ self species
+]
+
 { #category : 'enumerating' }
 OrderedCollection >> with: otherCollection collect: twoArgBlock [
 	"Collect and return the result of evaluating twoArgBlock with
 	corresponding elements from this collection and otherCollection."
+
 	| result |
-	otherCollection size = self size ifFalse: [self error: 'otherCollection must be the same size'].
-	result := self copyForTransform: self size.
-	1 to: self size do:
-		[:index | result addLast: (twoArgBlock value: (self at: index)
-									value: (otherCollection at: index))].
+	otherCollection size = self size ifFalse: [
+		self error: 'otherCollection must be the same size' ].
+	result := self speciesForTransform new: self size.
+	1 to: self size do: [ :index |
+		result addLast: (twoArgBlock
+				 value: (self at: index)
+				 value: (otherCollection at: index)) ].
 	^ result
 ]
 
@@ -941,12 +935,11 @@ OrderedCollection >> withIndexCollect: elementAndIndexBlock [
 	"Just like with:collect: except that the iteration index supplies the second argument to the block. Override superclass in order to use addLast:, not at:put:."
 
 	| newCollection |
-	newCollection := self copyForTransform: self size.
-	firstIndex to: lastIndex do:
-		[:index |
+	newCollection := self speciesForTransform new: self size.
+	firstIndex to: lastIndex do: [ :index |
 		newCollection addLast: (elementAndIndexBlock
-			value: (array at: index)
-			value: index - firstIndex + 1)].
+				 value: (array at: index)
+				 value: index - firstIndex + 1) ].
 	^ newCollection
 ]
 

@@ -167,18 +167,6 @@ SortedCollection >> copyEmpty [
 	^self species sortBlock: sortBlock
 ]
 
-{ #category : #copying }
-SortedCollection >> copyForTransform [
-
-	^ OrderedCollection new
-]
-
-{ #category : #copying }
-SortedCollection >> copyForTransform: copySize [
-
-	^ OrderedCollection new: copySize
-]
-
 { #category : 'private' }
 SortedCollection >> defaultSort: i to: j [
 	"Sort elements i through j of self to be nondescending according to
@@ -382,4 +370,10 @@ SortedCollection >> sortBlock: aBlock [
 	sortBlock := aBlock.
 	"sortBlocks with side effects may not work right"
 	self size > 0 ifTrue: [self reSort]
+]
+
+{ #category : 'private' }
+SortedCollection >> speciesForTransform [
+
+	^ OrderedCollection
 ]
