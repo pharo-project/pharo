@@ -53,9 +53,9 @@ RBRemoveMethodDriver >> runRefactoring [
 	[
 	senders := refactoring senders.
 
-	senders isEmpty
-		ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
-		ifFalse: [ 
+	senders
+		ifEmpty: [ self openPreviewWithChanges: refactoring generateChanges ]
+		ifNotEmpty: [ 
 		
 		select := SpSelectDialog new 
 			title: 'There are ', senders size asString,  ' methods calling method(s) you want to delete';
