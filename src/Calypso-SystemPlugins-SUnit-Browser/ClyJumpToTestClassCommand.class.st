@@ -59,7 +59,7 @@ ClyJumpToTestClassCommand >> execute [
 
 	[ browser selectClass: (self testClassFor: targetClass) ]
 		on: ClyInvalidClassForTestClassGeneration
-		do: [ : ex | self inform: 'Cannot generate test class for ' , ex baseClass printString , '.' ]
+		do: [ :ex | self inform: 'Cannot generate test class for ' , ex baseClass printString , '.' ]
 ]
 
 { #category : #execution }
