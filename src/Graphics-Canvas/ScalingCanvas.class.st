@@ -5,6 +5,9 @@ Class {
 		'formCanvas',
 		'scale'
 	],
+	#classVars : [
+		'FormMapping'
+	],
 	#category : #'Graphics-Canvas-Canvases'
 }
 
@@ -16,7 +19,8 @@ ScalingCanvas class >> example [
 	scale := 2.
 	(morph := MenuMorph new)
 		addTitle: 'Lorem ipsum'.
-	(morph add: 'Dolor sit amet' target: nil selector: #yourself) keyText: 'x'.
+	(morph add: 'Dolor sit amet' target: nil selector: #yourself) keyText: 'x';
+		icon: (self iconNamed: #smallConfiguration).
 	(morph add: 'Consectetur adipiscing elit' target: nil selector: #yourself) keyText: 'y'.
 	morph addLine.
 	(morph add: 'Sed do eiusmod' target: nil selector: #yourself) keyText: 'z'.
@@ -38,6 +42,26 @@ ScalingCanvas class >> example [
 ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 
 	^ self new formCanvas: formCanvas scale: scale
+]
+
+{ #category : #'class initialization' }
+ScalingCanvas class >> initialize [
+
+	| theme icons iconsScale2 |
+
+	FormMapping := IdentityDictionary new.
+
+	theme := Smalltalk ui theme.
+	(theme formsForScale: 1) keysAndValuesDo: [ :formName :formScale1 |
+		FormMapping at: formScale1 put: ((theme formsForScale: 2) at: formName) ].
+
+	icons := Smalltalk ui icons.
+	icons scale = 1 ifFalse: [ ^ self ].
+	(iconsScale2 := ThemeIcons named: icons name)
+		loadIconsFromUrlUsingScale: 2.
+	icons allIconNames do: [ :iconName |
+		iconsScale2 icons at: iconName ifPresent: [ :formScale2 |
+			FormMapping at: (icons iconNamed: iconName) put: formScale2 ] ]
 ]
 
 { #category : #private }
@@ -108,6 +132,15 @@ ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 	formCanvas := initialFormCanvas.
 	scale := initialScale.
 
+]
+
+{ #category : #private }
+ScalingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
+
+	(scale = 2 and: [ FormMapping includesKey: aForm ]) ifTrue: [
+		formCanvas image: (FormMapping at: aForm) at: aPoint * scale sourceRect: (sourceRect scaleBy: scale) rule: rule.
+		^ self ].
+	super image: aForm at: aPoint sourceRect: sourceRect rule: rule
 ]
 
 { #category : #drawing }
