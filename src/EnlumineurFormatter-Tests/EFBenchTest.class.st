@@ -11,7 +11,7 @@ Class {
 EFBenchTest >> basicMethod [
 	[[[[[ [ 
 		[ :y :z |
-		[ :x | 1 to: 10 do: [:i | Transcript show:i ; cr ;cr] ]]]
+		[ :x | 1 to: 10 do: [:i | i traceCr. String empty traceCr] ]]]
  ]]]]]
 ]
 
@@ -19,7 +19,7 @@ EFBenchTest >> basicMethod [
 EFBenchTest >> basicMethod2 [
 	<sampleInstance>
 	
-	1 to: 10 do: [:i | Transcript show:i ; cr ;cr]
+	1 to: 10 do: [ : i | i traceCr. String empty traceCr ]
 ]
 
 { #category : #resources }
