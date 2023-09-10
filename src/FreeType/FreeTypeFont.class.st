@@ -143,7 +143,7 @@ FreeTypeFont >> descentKern [
 ]
 
 { #category : #displaying }
-FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint [
+FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
 	| top bottom strikeoutThickness s e |
 
 	"the strikeout size/position for TrueType fonts should really come from the TT_OS2 table.
@@ -153,28 +153,9 @@ FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to:
 	top := ((self face ascender / 4) * self pixelSize / self face unitsPerEm) negated - (strikeoutThickness/2).
 	top := top rounded.
 	bottom := top + strikeoutThickness ceiling.
-	s := baselineStartPoint + (0@top).
-	e := baselineEndPoint + (0@bottom).
+	s := baselineStartPoint + (0@(top * scale)).
+	e := baselineEndPoint + (0@(bottom * scale)).
 	self displayLineGlyphOn: aDisplayContext from: s to: e
-]
-
-{ #category : #displaying }
-FreeTypeFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-
-	^self displayString: aString
-		on: aDisplayContext
-		from: startIndex
-		to: stopIndex
-		at: aPoint
-		kern: kernDelta
-		baselineY: aPoint y  + self ascent
-]
-
-{ #category : #displaying }
-FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
-
-	^ self displayString: aString on: aBitBlt from: startIndex to: stopIndex
-		at: aPoint kern: kernDelta baselineY: baselineY scale: 1
 ]
 
 { #category : #displaying }
@@ -245,15 +226,15 @@ FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopInde
 ]
 
 { #category : #displaying }
-FreeTypeFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint [
+FreeTypeFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
 	| underlineTop underlineBottom underlineThickness s e |
 
 	underlineThickness := (self face underlineThickness * self pixelSize / self face unitsPerEm).
 	underlineTop := (self face underlinePosition * self pixelSize / self face unitsPerEm) negated - (underlineThickness/2).
 	underlineTop := underlineTop rounded + 1.  "needs the +1 , possibly because glyph origins are moved down by 1 so that their baselines line up with strike fonts"
 	underlineBottom := underlineTop + underlineThickness ceiling.
-	s := baselineStartPoint + (0@underlineTop).
-	e := baselineEndPoint + (0@(underlineBottom)).
+	s := baselineStartPoint + (0@(underlineTop * scale)).
+	e := baselineEndPoint + (0@(underlineBottom * scale)).
 	self displayLineGlyphOn: aDisplayContext from: s to: e
 ]
 
@@ -359,24 +340,19 @@ FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean su
 { #category : #'glyph lookup' }
 FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: scale [
 
-	| glyphBlock |
-
-	glyphBlock := [
-		FreeTypeGlyphRenderer current
-			glyphOf: aCharacter
-			colorValue: aColorValue
-			mono: monoBoolean
-			subpixelPosition: sub
-			font: self
-			scale: scale ].
-	^ scale = 1
-		ifTrue: [
-			FreeTypeCache current
-				atFont: self
-				charCode: aCharacter asUnicode asInteger
-				type: ((1+sub) << 32) + aColorValue
-				ifAbsentPut: glyphBlock ]
-		ifFalse: [ glyphBlock value ]
+	^ FreeTypeCache current
+		atFont: self
+		charCode: aCharacter asUnicode asInteger
+		type: ((1+sub) << 32) + aColorValue
+		scale: scale
+		ifAbsentPut: [
+			FreeTypeGlyphRenderer current
+				glyphOf: aCharacter
+				colorValue: aColorValue
+				mono: monoBoolean
+				subpixelPosition: sub
+				font: self
+				scale: scale ]
 ]
 
 { #category : #'glyph lookup' }
@@ -481,6 +457,7 @@ FreeTypeFont >> hintedWidthOf: aCharacter [
 		atFont: self
 		charCode: charCode
 		type: FreeTypeCacheWidth
+		scale: 1
 		ifAbsentPut: [self getWidthOf: aCharacter].
 	^answer
 ]
@@ -492,11 +469,9 @@ FreeTypeFont >> initialize: aFont [
 ]
 
 { #category : #displaying }
-FreeTypeFont >> installOn: aBitBlt foregroundColor: foreColor backgroundColor: backColor [
+FreeTypeFont >> installOn: aBitBlt foregroundColor: foreColor backgroundColor: backColor scale: scale [
 
-	| |
-	"fcolor := foreColor pixelValueForDepth: 32."
-	aBitBlt installFreeTypeFont: self foregroundColor: foreColor backgroundColor: backColor
+	aBitBlt installFreeTypeFont: self foregroundColor: foreColor backgroundColor: backColor scale: scale
 ]
 
 { #category : #testing }
@@ -620,6 +595,7 @@ FreeTypeFont >> linearWidthOf: aCharacter [
 		atFont: self
 		charCode: charCode
 		type: FreeTypeCacheLinearWidth
+		scale: 1
 		ifAbsentPut: [self getLinearWidthOf: aCharacter].
 	^answer
 ]
@@ -639,24 +615,19 @@ FreeTypeFont >> minAscii [
 { #category : #'glyph lookup' }
 FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: scale [
 
-	| glyphBlock |
-
-	glyphBlock := [
-		FreeTypeGlyphRenderer current
-			mode41GlyphOf: aCharacter
-			colorValue: aColorValue
-			mono: monoBoolean
-			subpixelPosition: sub
-			font: self
-			scale: scale ].
-	^ scale = 1
-		ifTrue: [
-			FreeTypeCache current
-				atFont: self
-				charCode: aCharacter asUnicode asInteger
-				type: (FreeTypeCacheGlyph + sub)
-				ifAbsentPut: glyphBlock ]
-		ifFalse: [ glyphBlock value ]
+	^ FreeTypeCache current
+		atFont: self
+		charCode: aCharacter asUnicode asInteger
+		type: (FreeTypeCacheGlyph + sub)
+		scale: scale
+		ifAbsentPut: [
+			FreeTypeGlyphRenderer current
+				mode41GlyphOf: aCharacter
+				colorValue: aColorValue
+				mono: monoBoolean
+				subpixelPosition: sub
+				font: self
+				scale: scale ]
 ]
 
 { #category : #accessing }
@@ -785,24 +756,19 @@ FreeTypeFont >> strikeoutTop [
 { #category : #'glyph lookup' }
 FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: scale [
 
-	| glyphBlock |
-
-	glyphBlock := [
-		FreeTypeGlyphRenderer current
-			subGlyphOf: aCharacter
-			colorValue: aColorValue
-			mono: monoBoolean
-			subpixelPosition: sub
-			font: self
-			scale: scale ].
-	^ scale = 1
-		ifTrue: [
-			FreeTypeCache current
-				atFont: self
-				charCode: aCharacter asUnicode asInteger
-				type: FreeTypeCacheGlyphLCD + sub
-				ifAbsentPut: glyphBlock ]
-		ifFalse: [ glyphBlock value ]
+	^ FreeTypeCache current
+		atFont: self
+		charCode: aCharacter asUnicode asInteger
+		type: FreeTypeCacheGlyphLCD + sub
+		scale: scale
+		ifAbsentPut: [
+			FreeTypeGlyphRenderer current
+				subGlyphOf: aCharacter
+				colorValue: aColorValue
+				mono: monoBoolean
+				subpixelPosition: sub
+				font: self
+				scale: scale ]
 ]
 
 { #category : #testing }

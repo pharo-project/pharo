@@ -58,9 +58,10 @@ EpDashboardPresenter >> createNewSessionLog [
 	| fileNameOrNil sessionStore |
 	sessionStore := self monitor sessionStore.
 
-	fileNameOrNil := UIManager default
-		request: 'Enter a file name (without extension) for the new log.'
-		initialAnswer: sessionStore nextStoreName.
+	fileNameOrNil := self application newRequest
+		title: 'Enter a file name (without extension) for the new log.';
+		text: sessionStore nextStoreName;
+		openModal.
 	fileNameOrNil ifNil: [ ^ self ].
 
 	(self monitor sessionStore existsStoreNamed: fileNameOrNil)

@@ -211,6 +211,7 @@ SystemDictionary >> forgetClass: aClass [
 	self flag: #package. "Unify categories and packages to have only one removal to do and not two."
 	self organization removeBehavior: aClass.
 	self organization removeClass: aClass.
+	aClass basicCategory: Class unclassifiedCategory.
 	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]

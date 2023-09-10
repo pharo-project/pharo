@@ -132,20 +132,6 @@ RBClassEnvironment >> definesClass: aClass [
 ]
 
 { #category : #testing }
-RBClassEnvironment >> includesCategory: aCategory [
-	^ (super includesCategory: aCategory) and: [
-		(environment classNamesFor: aCategory)
-			inject: false
-			into: [ :bool :each |
-				bool or: [
-					| class |
-					class := self systemDictionary at: each ifAbsent: [ nil ].
-					class notNil
-						and: [ (self includesClass: class)
-						or: [ self includesClass: class class ]]]]]
-]
-
-{ #category : #testing }
 RBClassEnvironment >> includesClass: aClass [
 	^(aClass isMeta
 		ifTrue: [metaClasses includes: aClass soleInstance name]
@@ -178,11 +164,6 @@ RBClassEnvironment >> metaClassSelectorDictionary [
 			answer
 				at: class put: (self systemDictionary at: class) class selectors;
 				yourself ]
-]
-
-{ #category : #accessing }
-RBClassEnvironment >> packages [
-	^ self classes collect: [:each | each package]
 ]
 
 { #category : #copying }

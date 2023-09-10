@@ -57,11 +57,6 @@ RBPragmaEnvironment >> defaultLabel [
 ]
 
 { #category : #testing }
-RBPragmaEnvironment >> includesCategory: aCategory [
-	^ (environment includesCategory: aCategory) and: [ (self classNamesFor: aCategory) notEmpty ]
-]
-
-{ #category : #testing }
 RBPragmaEnvironment >> includesClass: aClass [
 	^ (environment includesClass: aClass) and: [ aClass selectors anySatisfy: [ :each | self includesSelector: each in: aClass ] ]
 ]
@@ -94,11 +89,6 @@ RBPragmaEnvironment >> initialize [
 { #category : #initialization }
 RBPragmaEnvironment >> keywords: aCollection [
 	keywords addAll: aCollection
-]
-
-{ #category : #testing }
-RBPragmaEnvironment >> packages [
-	^ (self methods collect: [:each | each package]) asSet
 ]
 
 { #category : #copying }

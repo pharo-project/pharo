@@ -26,10 +26,9 @@ GoferLoad >> defaultModel [
 
 { #category : #running }
 GoferLoad >> execute [
-	self model hasVersions
-		ifTrue: [ self model load ].
-	self updateRepositories.
-	self updateCategories
+
+	self model hasVersions ifTrue: [ self model load ].
+	self updateRepositories
 ]
 
 { #category : #initialization }
@@ -38,22 +37,6 @@ GoferLoad >> initializeOn: aGofer [
 	aGofer resolved
 		do: [ :each | self addResolved: each ]
 		displayingProgress: 'Loading Versions'
-]
-
-{ #category : #private }
-GoferLoad >> updateCategories [
-	"This method makes sure that the categories are ordered in load-order and as specified in the packages."
-
-	| categories |
-	categories := OrderedCollection new.
-	self versions do: [ :version |
-		version snapshot definitions do: [ :definition |
-			definition isOrganizationDefinition ifTrue: [
-				definition categories do: [ :category |
-					(categories includes: category)
-						ifFalse: [ categories addLast: category ] ] ] ] ].
-	(MCOrganizationDefinition categories: categories)
-		postloadOver: nil
 ]
 
 { #category : #private }

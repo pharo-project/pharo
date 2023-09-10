@@ -6,11 +6,8 @@ Class {
 		'lineY',
 		'runX',
 		'foregroundColor',
-		'backgroundColor',
-		'fillBlt',
 		'lineHeight',
 		'morphicOffset',
-		'ignoreColorChanges',
 		'defaultTextColor'
 	],
 	#category : #'Rubric-TextScanning'
@@ -19,12 +16,6 @@ Class {
 { #category : #queries }
 RubDisplayScanner class >> defaultFont [
 	^ TextStyle defaultFont
-]
-
-{ #category : #private }
-RubDisplayScanner >> backgroundColor: aColor [
-	ignoreColorChanges ifTrue: [^ self].
-	backgroundColor := aColor
 ]
 
 { #category : #'stop conditions' }
@@ -81,10 +72,6 @@ RubDisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 	leftInRun <= 0 ifTrue: [self setStopConditions].
 	leftMargin := (line leftMarginForAlignment: alignment) + offset x.
 	destX := runX := leftMargin.
-	fillBlt == nil ifFalse:
-		["Not right"
-		fillBlt destX: line left destY: lineY
-			width: line width height: lineHeight; copyBits].
 	lastIndex := line first.
 	leftInRun <= 0
 		ifTrue: [nowLeftInRun := text runLengthFor: lastIndex]
@@ -146,14 +133,6 @@ RubDisplayScanner >> endOfRun [
 	^ false
 ]
 
-{ #category : #displaying }
-RubDisplayScanner >> fillTextBackground [
-	fillBlt == nil ifFalse:
-		["Not right"
-		fillBlt destX: line left destY: lineY
-			width: line width left height: line lineHeight; copyBits]
-]
-
 { #category : #'multilingual scanning' }
 RubDisplayScanner >> isBreakableAt: index in: sourceString [
 
@@ -202,26 +181,6 @@ RubDisplayScanner >> placeEmbeddedObject: anchoredMorph [
 ]
 
 { #category : #'stop conditions' }
-RubDisplayScanner >> plainTab [
-	| nextDestX |
- 	nextDestX := super plainTab.
-	fillBlt == nil ifFalse:
-		[fillBlt destX: destX destY: destY width: nextDestX - destX height: font height; copyBits].
-	^nextDestX
-]
-
-{ #category : #private }
-RubDisplayScanner >> presentationText: t [
-
-	text := t
-]
-
-{ #category : #'stop conditions' }
-RubDisplayScanner >> setDestForm: df [
-	bitBlt setDestForm: df
-]
-
-{ #category : #'stop conditions' }
 RubDisplayScanner >> setFont [
 	foregroundColor := self defaultTextColor.
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
@@ -262,18 +221,13 @@ RubDisplayScanner >> tab [
 ]
 
 { #category : #private }
-RubDisplayScanner >> text: t textStyle: ts foreground: foreColor background: backColor fillBlt: blt ignoreColorChanges: shadowMode [
+RubDisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
-	foregroundColor := foreColor.
-	(backgroundColor := backColor) isTransparent ifFalse:
-		[fillBlt := blt.
-		fillBlt fillColor: backgroundColor].
-	ignoreColorChanges := shadowMode
+	foregroundColor := foreColor
 ]
 
 { #category : #private }
 RubDisplayScanner >> textColor: textColor [
-	ignoreColorChanges ifTrue: [^ self].
 	foregroundColor := textColor
 ]

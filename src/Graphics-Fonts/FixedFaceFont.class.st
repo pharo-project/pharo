@@ -48,14 +48,7 @@ FixedFaceFont >> descentKern [
 ]
 
 { #category : #displaying }
-FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-
-	^ self displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint
-		kern: kernDelta baselineY: aPoint y + self ascent
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
+FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	| size |
 	size := stopIndex - startIndex + 1.
 	^ baseFont
@@ -66,6 +59,7 @@ FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to:
 		at: aPoint
 		kern: kernDelta
 		baselineY: baselineY
+		scale: scale
 ]
 
 { #category : #displaying }
@@ -134,8 +128,8 @@ FixedFaceFont >> initialize [
 ]
 
 { #category : #displaying }
-FixedFaceFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [
-	^baseFont installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor
+FixedFaceFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
+	^baseFont installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale
 ]
 
 { #category : #accessing }

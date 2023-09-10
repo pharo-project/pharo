@@ -196,7 +196,7 @@ ShiftClassInstaller >> make [
 	self fixSlotScope: newClass.
 	self fixSlotScope: newClass class.
 
-	self recategorize: newClass to: builder category.
+	self recategorize: newClass to: builder category asSymbol.
 	self comment: newClass.
 
 	self notifyChanges.
@@ -300,6 +300,7 @@ ShiftClassInstaller >> recategorize: aClass to: newCategory [
 	self flag: #package. "Here we are classifying the class in the SystemOrganizer and also in the package organizer in case of the creation. In the future the SystemORganizer should vanish and only the package organizer should do something."
 	installingOrganizer := self installingEnvironment organization.
 	installingOrganizer classify: aClass name under: newCategory.
+	aClass basicCategory: newCategory.
 
 	(oldCategory isNil or: [ oldCategory = #Unclassified ])
 		ifTrue: [

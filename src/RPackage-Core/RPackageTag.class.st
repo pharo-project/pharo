@@ -62,7 +62,7 @@ RPackageTag >> environment [
 { #category : #testing }
 RPackageTag >> hasClass: aClass [
 
-	^ self hasClassNamed: aClass name
+	^ self classes includes: aClass instanceSide
 ]
 
 { #category : #testing }
@@ -72,7 +72,9 @@ RPackageTag >> hasClassNamed: aSymbol [
 
 { #category : #testing }
 RPackageTag >> includesClass: aClass [
-	^ self hasClassNamed: aClass name
+	"To deprecate in favor of #hasClass:"
+
+	^ self hasClass: aClass
 ]
 
 { #category : #initialization }
@@ -100,7 +102,7 @@ RPackageTag >> name [
 { #category : #accessing }
 RPackageTag >> name: aSymbol [
 
-	name := aSymbol
+	name := aSymbol asSymbol
 ]
 
 { #category : #accessing }
@@ -148,16 +150,18 @@ RPackageTag >> promoteAsPackage [
 { #category : #accessing }
 RPackageTag >> removeClass: aClass [
 
-	^ classes remove: aClass ifAbsent: [  ]
+	| oldObject |
+	oldObject := classes remove: aClass ifAbsent: [  ].
+	self isEmpty ifTrue: [ self removeFromPackage ].
+	^ oldObject
 ]
 
 { #category : #accessing }
 RPackageTag >> removeFromPackage [
-	self
-		assert: self isEmpty
-		description: 'Package tag is not empty'.
 
-	self package basicRemoveTag: self
+	self assert: self isEmpty description: 'Package tag is not empty'.
+
+	self package removeTag: self
 ]
 
 { #category : #accessing }

@@ -167,7 +167,7 @@ RBAddClassChange >> fillOutDefinition: aDictionary [
 
 	category := (aDictionary
 		at: '`#category'
-		ifAbsent: [ #Unclassified ])
+		ifAbsent: [ Class unclassifiedCategory ])
 			asSymbol
 ]
 

@@ -306,11 +306,6 @@ RBVariableEnvironment >> flushCachesFor: aClass [
 ]
 
 { #category : #testing }
-RBVariableEnvironment >> includesCategory: aCategory [
-	^(self classNamesFor: aCategory) isNotEmpty
-]
-
-{ #category : #testing }
 RBVariableEnvironment >> includesClass: aClass [
 	(super includesClass: aClass) ifFalse: [^false].
 	(instanceVariables includesKey: aClass name) ifTrue: [^true].
@@ -415,11 +410,6 @@ RBVariableEnvironment >> isVariableEnvironment [
 RBVariableEnvironment >> numberVariables [
 	^self accessorMethods inject: 0
 		into: [:sum :each | sum + ((self perform: each) inject: 0 into: [:s :e | s + e size])]
-]
-
-{ #category : #accessing }
-RBVariableEnvironment >> packages [
-	^ self classes collect: [:each | each package]
 ]
 
 { #category : #copying }

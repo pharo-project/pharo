@@ -324,6 +324,12 @@ RBBasicLintRuleTestData >> newResultClass: aClass [
 ]
 
 { #category : #accessing }
+RBBasicLintRuleTestData >> onlyReferenceToSomeDemoMethod [
+
+	^ self onlyReferenceToSomeDemoMethod 
+]
+
+{ #category : #accessing }
 RBBasicLintRuleTestData >> problemCount [
 	^result problemCount
 ]
