@@ -211,7 +211,13 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex at: aPoint font
 
 { #category : #'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c [
-	| font portRect |
+
+	^ self drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: 1
+]
+
+{ #category : #'drawing - text' }
+FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: scale [
+	| font portRect point |
 	port colorMap: nil.
 	portRect := port clipRect.
 	port clipByX1: bounds left + origin x
@@ -222,15 +228,24 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	port combinationRule: Form paint.
 	font installOn: port
 		foregroundColor: c
-		backgroundColor: Color transparent.
+		backgroundColor: Color transparent
+		scale: scale.
+	point := bounds topLeft + origin.
 	font displayString: aString asString on: port
-		from: firstIndex to: lastIndex at: (bounds topLeft + origin) kern: 0.
+		from: firstIndex to: lastIndex at: point kern: 0
+		baselineY: point y + (font ascent * scale) scale: scale.
 	port clipRect: portRect
 ]
 
 { #category : #'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
-	| font portRect endPoint |
+
+	^ self drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc scale: 1
+]
+
+{ #category : #'drawing - text' }
+FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc scale: scale [
+	| font portRect endPoint point |
 	port colorMap: nil.
 	portRect := port clipRect.
 	port clipByX1: bounds left + origin x
@@ -241,20 +256,25 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	port combinationRule: Form paint.
 	font installOn: port
 		foregroundColor: c
-		backgroundColor: Color transparent.
+		backgroundColor: Color transparent
+		scale: scale.
+	point := bounds topLeft + origin.
 	endPoint := font displayString: aString asString on: port
-		from: firstIndex to: lastIndex at: (bounds topLeft + origin) kern: 0.
+		from: firstIndex to: lastIndex at: point kern: 0
+		baselineY: point y + (font ascent * scale) scale: scale.
 	underline ifTrue:[
 		font installOn: port
 			foregroundColor: uc
-			backgroundColor: Color transparent;
-			displayUnderlineOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
+			backgroundColor: Color transparent
+			scale: scale;
+			displayUnderlineOn: port from: (bounds topLeft + origin + (0@(font ascent * scale))) to: endPoint scale: scale.
 		].
 	strikethrough ifTrue: [
 		font installOn: port
 			foregroundColor: sc
-			backgroundColor: Color transparent;
-			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
+			backgroundColor: Color transparent
+			scale: scale;
+			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@(font ascent * scale))) to: endPoint scale: scale.
 	].
 
 	port clipRect: portRect
