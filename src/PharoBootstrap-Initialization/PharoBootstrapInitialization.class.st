@@ -60,6 +60,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Slot initialize.
 	RPackage initialize.
 	Behavior initialize.
+	Class initialize.
 
 	UIManager default: NonInteractiveUIManager new.
 

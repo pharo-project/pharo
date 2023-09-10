@@ -72,7 +72,9 @@ RPackageTag >> hasClassNamed: aSymbol [
 
 { #category : #testing }
 RPackageTag >> includesClass: aClass [
-	^ self hasClassNamed: aClass name
+	"To deprecate in favor of #hasClass:"
+
+	^ self hasClass: aClass
 ]
 
 { #category : #initialization }
@@ -148,7 +150,10 @@ RPackageTag >> promoteAsPackage [
 { #category : #accessing }
 RPackageTag >> removeClass: aClass [
 
-	^ classes remove: aClass ifAbsent: [  ]
+	| oldObject |
+	oldObject := classes remove: aClass ifAbsent: [  ].
+	self isEmpty ifTrue: [ self removeFromPackage ].
+	^ oldObject
 ]
 
 { #category : #accessing }

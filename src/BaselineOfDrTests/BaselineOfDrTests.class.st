@@ -26,6 +26,13 @@ BaselineOfDrTests >> baseline: spec [
 			spec package: 'DrTests-RottenGreenTestsFinder' with: [ spec requires: #('rotten-tests-finder') ]. ]
 ]
 
+{ #category : #actions }
+BaselineOfDrTests >> postload: loader package: packageSpec [
+	
+	Smalltalk tools register: DrTests as: #testRunner.
+
+]
+
 { #category : #baselines }
 BaselineOfDrTests >> rottenTestsFinder: spec [
 	

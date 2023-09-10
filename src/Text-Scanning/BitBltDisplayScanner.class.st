@@ -17,8 +17,7 @@ Class {
 	#name : #BitBltDisplayScanner,
 	#superclass : #DisplayScanner,
 	#instVars : [
-		'bitBlt',
-		'fillBlt'
+		'bitBlt'
 	],
 	#category : #'Text-Scanning-Base'
 }
@@ -49,28 +48,6 @@ BitBltDisplayScanner >> displayString: string from: startIndex to: stopIndex at:
         ifTrue: [ font displayStrikeoutOn: bitBlt from: top to: endPoint ]
 ]
 
-{ #category : #displaying }
-BitBltDisplayScanner >> fillTextBackground [
-	fillBlt ifNotNil:
-		["Not right"
-		fillBlt destX: line left destY: lineY
-			width: line width left height: line lineHeight; copyBits]
-]
-
-{ #category : #'stop conditions' }
-BitBltDisplayScanner >> plainTab [
-	| nextDestX |
- 	nextDestX := super plainTab.
-	fillBlt ifNotNil:
-		[fillBlt destX: destX destY: destY width: nextDestX - destX height: font height; copyBits].
-	^nextDestX
-]
-
-{ #category : #private }
-BitBltDisplayScanner >> setDestForm: df [
-	bitBlt setDestForm: df
-]
-
 { #category : #private }
 BitBltDisplayScanner >> setFont [
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
@@ -83,15 +60,4 @@ BitBltDisplayScanner >> setPort: aBitBlt [
 	bitBlt := aBitBlt.
 	bitBlt sourceX: 0; width: 0.	"Init BitBlt so that the first call to a primitive will not fail"
 	bitBlt sourceForm: nil. "Make sure font installation won't be confused"
-]
-
-{ #category : #private }
-BitBltDisplayScanner >> text: t textStyle: ts foreground: foreColor background: backColor fillBlt: blt ignoreColorChanges: shadowMode [
-	text := t.
-	textStyle := ts.
-	foregroundColor := defaultTextColor := foreColor.
-	(backgroundColor := backColor) isTransparent ifFalse:
-		[fillBlt := blt.
-		fillBlt fillColor: backgroundColor].
-	ignoreColorChanges := shadowMode
 ]

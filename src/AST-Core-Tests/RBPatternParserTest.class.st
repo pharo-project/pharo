@@ -49,6 +49,28 @@ RBPatternParserTest >> testParseFaultyPatternBlock [
 ]
 
 { #category : #'tests - parsing' }
+RBPatternParserTest >> testPatternNotStringExpression [
+	| searchPattern tree |
+	searchPattern := RBPatternParser parseExpression: '`{ :node | node isString }'.
+
+	tree := self parseExpression: 'a = a1'.
+
+	self deny: (searchPattern match: tree inContext: Dictionary new).
+
+]
+
+{ #category : #'tests - parsing' }
+RBPatternParserTest >> testPatternStringExpression [
+	| searchPattern tree |
+	searchPattern := RBPatternParser parseExpression: '`{ :node | node isString }'.
+
+	tree := self parseExpression: '''justAString'''.
+
+	self assert: (searchPattern match: tree inContext: Dictionary new).
+
+]
+
+{ #category : #'tests - parsing' }
 RBPatternParserTest >> testPatternVariable [
 	| searchPattern |
 	searchPattern := RBPatternParser parseExpression: '`a'.
