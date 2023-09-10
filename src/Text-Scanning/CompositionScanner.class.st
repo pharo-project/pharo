@@ -202,6 +202,12 @@ CompositionScanner >> rightX [
 	^spaceX
 ]
 
+{ #category : #accessing }
+CompositionScanner >> scale [
+
+	^ 1
+]
+
 { #category : #'text attributes' }
 CompositionScanner >> setActualFont: aFont [
 

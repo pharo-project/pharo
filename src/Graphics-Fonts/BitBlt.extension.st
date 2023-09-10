@@ -17,7 +17,7 @@ BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint 
 
 	self primDisplayString: aString from: startIndex to: stopIndex
 			map: font characterToGlyphMap xTable: xTable
-			kern: kernDelta.
+			kern: kernDelta * scale.
 	^ destX@destY
 ]
 
