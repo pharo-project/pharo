@@ -115,3 +115,16 @@ ScalingCanvas >> paragraph: paragraph bounds: bounds color: c [
 
 	formCanvas paragraph: paragraph bounds: (bounds scaleBy: scale) color: c scale: scale
 ]
+
+{ #category : #'drawing - support' }
+ScalingCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
+
+	aDisplayTransform isPureTranslation ifTrue: [
+		aBlock value: (self class
+			formCanvas: (formCanvas
+				copyOffset: aDisplayTransform offset negated truncated * scale
+				clipRect: (aClipRect scaleBy: scale))
+			scale: scale).
+		^ self ].
+	super transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize
+]
