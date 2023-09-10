@@ -128,3 +128,17 @@ ScalingCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aB
 		^ self ].
 	super transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize
 ]
+
+{ #category : #other }
+ScalingCanvas >> translateBy: aPoint clippingTo: aRect during: aBlock [
+
+	formCanvas translateBy: aPoint * scale clippingTo: (aRect scaleBy: scale) during: [ :transformedFormCanvas |
+		aBlock value: (self class formCanvas: transformedFormCanvas scale: scale) ]
+]
+
+{ #category : #'drawing - support' }
+ScalingCanvas >> translateBy: delta during: aBlock [
+
+	formCanvas translateBy: delta * scale during: [ :transformedFormCanvas |
+		aBlock value: (self class formCanvas: transformedFormCanvas scale: scale) ]
+]
