@@ -497,10 +497,17 @@ FormCanvas >> origin [
 { #category : #drawing }
 FormCanvas >> paragraph: para bounds: bounds color: c [
 
+	^ self paragraph: para bounds: bounds color: c scale: 1
+]
+
+{ #category : #drawing }
+FormCanvas >> paragraph: para bounds: bounds color: c scale: scale [
+
 	| scanner |
 	self setPaintColor: c.
 	scanner := (port clippedBy: (bounds translateBy: origin)) displayScannerFor: para
 		foreground: c.
+	scanner scale: scale.
 	para displayOn: (self copyClipRect: bounds) using: scanner at: origin+ bounds topLeft
 ]
 

@@ -109,3 +109,9 @@ ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 	scale := initialScale.
 
 ]
+
+{ #category : #drawing }
+ScalingCanvas >> paragraph: paragraph bounds: bounds color: c [
+
+	formCanvas paragraph: paragraph bounds: (bounds scaleBy: scale) color: c scale: scale
+]
