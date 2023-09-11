@@ -7,17 +7,12 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
-{ #category : #'instance creation api' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString [
-
-	^ self new initializeWithName: classNameString traitComposition: traitCompositionString
-]
-
 { #category : #deprecated }
 MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
 	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
-	^ (self new initializeWithName: classNameString traitComposition: traitCompositionString)
+	^ (self named: classNameString)
+		  traitComposition: traitCompositionString;
 		  category: categoryString;
 		  instVarNames: ivarArray;
 		  classInstVarNames: civarArray;
@@ -96,13 +91,6 @@ MCTraitDefinition >> hash [
 	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
 	^ hash
 
-]
-
-{ #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString [
-
-	name := classNameString asSymbol.
-	traitComposition := traitCompositionString
 ]
 
 { #category : #printing }
