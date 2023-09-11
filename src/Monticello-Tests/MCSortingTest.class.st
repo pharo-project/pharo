@@ -11,12 +11,8 @@ MCSortingTest class >> isUnitTest [
 
 { #category : #building }
 MCSortingTest >> classNamed: aSymbol [
-	^ MCClassDefinition
-		name: aSymbol
-		superclassName: #Object
-		category: ''
-		instVarNames: #()
-		comment: ''
+
+	^ MCClassDefinition named: aSymbol
 ]
 
 { #category : #building }

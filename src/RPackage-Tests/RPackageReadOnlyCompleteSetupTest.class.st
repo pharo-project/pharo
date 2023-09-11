@@ -70,16 +70,16 @@ RPackageReadOnlyCompleteSetupTest >> testAddTag [
 	p1 importClass: b1 inTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
 	self assert: p1 classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
 
 	p1 ensureTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2
 ]
 
 { #category : #'tests - tag class' }
@@ -112,17 +112,17 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagsToAClass [
 	self assert: p1 classTags size equals: 1. "We start with the root tag"
 
 	p1 importClass: a1 inTag: #foo.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 1.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
 
 	p1 importClass: b1 inTag: #foo.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
 
 	p1 importClass: b1 inTag: #zork.
-	self assert: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 1.
-	self assert: (p1 classesForClassTag: #zork) size equals: 1
+	self assert: (((p1 classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
+	self assert: (p1 classesTaggedWith: #zork) size equals: 1
 ]
 
 { #category : #'tests - compiled method' }
@@ -293,20 +293,20 @@ RPackageReadOnlyCompleteSetupTest >> testRemoveTag [
 	self assert: p1 classTags size equals: 1. "We start with the root tag"
 
 	p1 importClass: a1 inTag: #foo.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 1.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
 
 	p1 importClass: b1 inTag: #foo.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
 
 	p1 removeTag: #bar.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
 
 	p1 removeTag: #foo.
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 0
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 0
 ]
 
 { #category : #'tests - tag class' }
@@ -315,23 +315,23 @@ RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
 	p1 importClass: a1 inTag: #foo.
 	p1 importClass: b1 inTag: #foo.
 	p1 importClass: b1 inTag: #zork.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 1.
-	self deny: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
+	self deny: (((p1 classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 
 	"now when we remove a class" "from an existing tags list"
 	p1 removeClass: a1.
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assertEmpty: (p1 classesForClassTag: #foo).
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assertEmpty: (p1 classesTaggedWith: #foo).
 
 	"with a class not registered to a tag list"
 	p1 removeClass: self class.
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assertEmpty: (p1 classesForClassTag: #foo)
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assertEmpty: (p1 classesTaggedWith: #foo)
 ]
 
 { #category : #'tests - situation' }

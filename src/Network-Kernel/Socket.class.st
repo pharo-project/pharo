@@ -450,7 +450,18 @@ Socket >> address [
 
 { #category : #'initialize - destroy' }
 Socket >> bindTo: anAddress port: aPort [
-	^self primSocket: socketHandle bindTo: anAddress port: aPort
+	"Bind to the local port <aPort>, on the interface specified by <anAddress>
+	(`SocketAddress zero` specifies all interfaces).
+	Primarily used to prepare to listen for incoming connections with #listen[WithBacklog:]."
+
+	self primSocket: socketHandle bindTo: anAddress port: aPort
+]
+
+{ #category : #'initialize - destroy' }
+Socket >> bindToPort: aPort [
+	"Bind to the local port <aPort>, often in order to listen for incoming connections."
+
+	self bindTo: SocketAddress zero port: aPort
 ]
 
 { #category : #'private - errors' }
@@ -738,37 +749,52 @@ Socket >> isWaitingForConnection [
 ]
 
 { #category : #'connection open/close' }
+Socket >> listen [
+	"Listen for a connection (after binding to a port using #bindTo:port:).
+	If this method succeeds, you must wait for a connection attempt with #waitForConnectionFor:,
+	then #accept may be used to establish a new connection"
+
+	self listenWithBacklog: 1
+]
+
+{ #category : #'connection open/close' }
 Socket >> listenOn: port [
-	"Listen for a connection on the given port. This operation will return immediately; follow it with waitForConnectionUntil: to wait until a connection is established."
 
-	| status |
-	status := self primSocketConnectionStatus: socketHandle.
-	(status == Unconnected)
-		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before listening for a new connection'].
-
-	self primSocket: socketHandle listenOn: port
+	self
+		bindToPort: port;
+		listen
 ]
 
 { #category : #'connection open/close' }
 Socket >> listenOn: portNumber backlogSize: backlog [
-	"Listen for a connection on the given port.
-	If this method succeeds, #accept may be used to establish a new connection"
-	| status |
-	status := self primSocketConnectionStatus: socketHandle.
-	(status == Unconnected)
-		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before listening for a new connection'].
-	self primSocket: socketHandle listenOn: portNumber backlogSize: backlog
+
+	self
+		bindToPort: portNumber;
+		listenWithBacklog: backlog
 ]
 
 { #category : #'connection open/close' }
 Socket >> listenOn: portNumber backlogSize: backlog interface: ifAddr [
-	"Listen for a connection on the given port.
-	If this method succeeds, #accept may be used to establish a new connection"
+
+	self
+		bindTo: ifAddr port: portNumber;
+		listenWithBacklog: backlog
+]
+
+{ #category : #'connection open/close' }
+Socket >> listenWithBacklog: anIntegerBacklog [
+	"Listen for a connection, allowing <anIntegerBacklog> connections to be queued by the OS.
+	Must already be bound to a port using #bindTo:port:.
+	If this method succeeds, you must wait for a connection attempt with #waitForConnectionFor:,
+	then #accept may be used to establish a new connection"
+
 	| status |
 	status := self primSocketConnectionStatus: socketHandle.
-	(status == Unconnected)
-		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before listening for a new connection'].
-	self primSocket: socketHandle listenOn: portNumber backlogSize: backlog interface: ifAddr
+	status == Unconnected ifFalse: [
+		InvalidSocketStatusException signal:
+			'Socket status must Unconnected before listening for a new connection' ].
+
+	self primSocket: socketHandle listenWithBacklog: anIntegerBacklog
 ]
 
 { #category : #accessing }
@@ -871,30 +897,6 @@ Socket >> primSocket: socketID getOption: aString [
 
 	<primitive: 'primitiveSocketGetOptions' module: 'SocketPlugin'>
 	^ SocketError signal: self socketErrorMessage
-]
-
-{ #category : #primitives }
-Socket >> primSocket: socketID listenOn: port [
-	"Listen for a connection on the given port. This is an asynchronous call; query the socket status to discover if and when the connection is actually completed."
-
-	<primitive: 'primitiveSocketListenWithOrWithoutBacklog' module: 'SocketPlugin'>
-	^ SocketError signal: self socketErrorMessage
-]
-
-{ #category : #primitives }
-Socket >> primSocket: aHandle listenOn: portNumber backlogSize: backlog [
-	"Primitive. Set up the socket to listen on the given port.
-	Will be used in conjunction with #accept only."
-	<primitive: 'primitiveSocketListenWithOrWithoutBacklog' module: 'SocketPlugin'>
-	self destroy. "Accept not supported so clean up"
-]
-
-{ #category : #primitives }
-Socket >> primSocket: aHandle listenOn: portNumber backlogSize: backlog interface: ifAddr [
-	"Primitive. Set up the socket to listen on the given port.
-	Will be used in conjunction with #accept only."
-	<primitive: 'primitiveSocketListenOnPortBacklogInterface' module: 'SocketPlugin'>
-	self destroy. "Accept not supported so clean up"
 ]
 
 { #category : #'primitives - ipv6' }

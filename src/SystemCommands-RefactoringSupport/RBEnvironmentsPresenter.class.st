@@ -154,10 +154,10 @@ RBEnvironmentsPresenter >> remove: anItem [
 RBEnvironmentsPresenter >> selectAnotherScopeWhitout: anItem [
 	| anotherScope list |
 	list := RefactoringSettings scopeList copyWithout: anItem.
-	anotherScope := UIManager default
-			chooseFrom: (list collect: #shortDescription)
-			values: list
-			title: 'Select another scope (RBEnvironment)'.
+	anotherScope := self application newSelect
+			display: [ :each | each shortDescription];
+			items: list;
+			title: 'Select another scope (RBEnvironment)'; openModal.
 	^ anotherScope
 ]
 

@@ -63,11 +63,6 @@ Class {
 	#category : #'Text-Scanning'
 }
 
-{ #category : #testing }
-CompositionScanner >> canComputeDefaultLineHeight [
-	^ rightMargin notNil
-]
-
 { #category : #'stop conditions' }
 CompositionScanner >> columnBreak [
 
@@ -119,17 +114,6 @@ CompositionScanner >> composeFrom: startIndex inRectangle: lineRectangle
 		baseline: baseline + textStyle leading
 ]
 
-{ #category : #scanning }
-CompositionScanner >> computeDefaultLineHeight [
-	"Compute the default line height for a potentially empty text"
-
-	^ rightMargin notNil
-		ifTrue: [ lastIndex := 1.
-			self setFont.
-			lineHeight + textStyle leading ]
-		ifFalse: [ textStyle lineGrid ]
-]
-
 { #category : #'stop conditions' }
 CompositionScanner >> cr [
 	"Answer true. Set up values for the text line interval currently being
@@ -165,11 +149,6 @@ CompositionScanner >> crossedX [
 	"Neither internal nor trailing spaces -- almost never happens."
 	self advanceIfFirstCharOfLine.
 	^self wrapHere
-]
-
-{ #category : #accessing }
-CompositionScanner >> doesTheLineBreaksAfterLastChar [
-	^nextIndexAfterLineBreak > text size
 ]
 
 { #category : #'stop conditions' }
@@ -221,6 +200,12 @@ CompositionScanner >> rightX [
 	is terminated by a carriage return. Handy for sizing menus and lists."
 
 	^spaceX
+]
+
+{ #category : #accessing }
+CompositionScanner >> scale [
+
+	^ 1
 ]
 
 { #category : #'text attributes' }

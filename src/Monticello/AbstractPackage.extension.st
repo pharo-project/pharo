@@ -1,5 +1,11 @@
 Extension { #name : #AbstractPackage }
 
+{ #category : #'*Monticello' }
+RPackage >> asMCOrganizationDefinition [
+
+	^ MCOrganizationDefinition packageName: self name tagNames: self tagNames
+]
+
 { #category : #'*Monticello-RPackage' }
 AbstractPackage >> isDirty [
 

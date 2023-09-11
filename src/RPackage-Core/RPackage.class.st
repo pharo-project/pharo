@@ -177,12 +177,11 @@ RPackage >> classes [
 	^ self definedClasses, self extendedClasses
 ]
 
-{ #category : #queries }
+{ #category : #'class tags' }
 RPackage >> classesTaggedWith: aSymbol [
-	"Any class could be tagged for user purpose.
-	This method select all classes which are tagged by given symbol"
+	"Returns the classes tagged using aSymbol"
 
-	^(self classTagNamed: aSymbol) classes
+	^ (self classTagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : #accessing }
@@ -363,14 +362,6 @@ RPackage >> importClass: aClass inTag: aTag [
 ]
 
 { #category : #private }
-RPackage >> importDefinedMethodsOf: aClass [
-
-	aClass protocols
-		reject: [ :protocol | protocol isExtensionProtocol ]
-		thenDo: [ :protocol | self importProtocol: protocol forClass: aClass ]
-]
-
-{ #category : #private }
 RPackage >> importProtocol: aProtocol forClass: aClass [
 	"import all the local methods of a protocol as defined in the receiver."
 
@@ -383,7 +374,7 @@ RPackage >> importProtocol: aProtocol forClass: aClass [
 RPackage >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ self definedClasses includes: aClass instanceSide
+	^ self classTags anySatisfy: [ :tag | tag includesClass: aClass ]
 ]
 
 { #category : #testing }
@@ -421,7 +412,10 @@ RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 { #category : #'system compatibility' }
 RPackage >> includesProtocol: protocol ofClass: aClass [
 
-	^ (protocol isExtensionProtocolMatching: self) or: [ (self includesClass: aClass) and: [ (self isForeignClassExtension: protocol) not ] ]
+	(protocol isExtensionProtocolMatching: self) ifTrue: [ ^ true ].
+
+
+	^ (self includesClass: aClass) and: [ protocol isExtensionProtocol not ]
 ]
 
 { #category : #testing }
@@ -453,24 +447,11 @@ RPackage >> isDeprecated [
 		ifNotNil: [ :manifest | manifest isDeprecated ]
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> isForeignClassExtension: protocol [
-
-	protocol ifNil: [ ^ false ].
-
-	^ protocol isExtensionProtocol and: [ (protocol isExtensionProtocolMatching: self) not ]
-]
-
-{ #category : #queries }
+{ #category : #accessing }
 RPackage >> linesOfCode [
 	"An approximate measure of lines of code.
 	Includes comments, but excludes blank lines."
 	^self methods inject: 0 into: [:sum :each | sum + each linesOfCode]
-]
-
-{ #category : #'system compatibility' }
-RPackage >> methodCategoryPrefix [
-	^ '*', self name asLowercase
 ]
 
 { #category : #private }
@@ -502,12 +483,6 @@ RPackage >> name: aSymbol [
 RPackage >> packages [
 	"Compatibility with monticello and old PackageInfo"
 	^ self classTags
-]
-
-{ #category : #private }
-RPackage >> privateExtensionSelectors [
-
-	^ extensionSelectors
 ]
 
 { #category : #properties }
@@ -578,9 +553,7 @@ RPackage >> removeClass: aClass [
 	"Then I unregister it from the tags"
 	self classTags
 		detect: [ :tag | tag includesClass: aClass ]
-		ifFound: [ :tag |
-			tag removeClass: aClass.
-			tag isEmpty ifTrue: [ self removeTag: tag ] ].
+		ifFound: [ :tag | tag removeClass: aClass ].
 
 	"Lastly I remove the class from the organizer. Maybe this should go in the PackageTag during the removal."
 	self unregisterClass: aClass
@@ -721,25 +694,12 @@ RPackage >> rootTag [
 	^ self ensureTag: self rootTagName
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> systemCategoryPrefix [
-	^ self name
-]
-
 { #category : #'class tags' }
 RPackage >> tagOf: aClass [
 
 	^ self classTags
 		  detect: [ :tag | tag hasClass: aClass ]
 		  ifNone: [ nil ]
-]
-
-{ #category : #queries }
-RPackage >> tagsForClasses [
-	"Any class could be tagged for user purpose.
-	Now we implement it on top of RPackageTag"
-
-	^self classTags reject: [:each | each isRoot] thenCollect: [:each | each name]
 ]
 
 { #category : #private }

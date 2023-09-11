@@ -64,30 +64,29 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment: classComment [
-  | categoryName className |
-  className := classPropertiesDict at: 'name'.
-  categoryName := classPropertiesDict
-    at: 'category'
-    ifAbsent: [ self packageNameFromPackageDirectory ].
-  self validateClassCategory: categoryName for: className.
-  definitions
-    add:
-      (MCClassDefinition
-        name: className
-        superclassName: (classPropertiesDict at: 'super')
-        traitComposition: (classPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
-        classTraitComposition: (classPropertiesDict at: 'classtraitcomposition' ifAbsent: [ '{}' ])
-        category: categoryName
-        instVarNames: (classPropertiesDict at: 'instvars' ifAbsent: [ #() ])
-        classVarNames: (classPropertiesDict at: 'classvars' ifAbsent: [ #() ])
-        poolDictionaryNames: (classPropertiesDict at: 'pools' ifAbsent: [ #() ])
-        classInstVarNames:
-          (classPropertiesDict at: 'classinstvars' ifAbsent: [ #() ])
-        type: (classPropertiesDict at: 'type' ifAbsent: [ 'normal' ]) asSymbol
-        comment: classComment
-        commentStamp: (classPropertiesDict at: 'commentStamp' ifAbsent: [ '' ]))
 
+	| categoryName className definition |
+	className := classPropertiesDict at: 'name'.
+	categoryName := classPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ].
+	self validateClassCategory: categoryName for: className.
 
+	definition := (MCClassDefinition named: className)
+		              superclassName: (classPropertiesDict at: 'super');
+		              category: categoryName;
+		              comment: classComment;
+		              yourself.
+
+	classPropertiesDict
+		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: 'classtraitcomposition' ifPresent: [ :composition | definition classTraitComposition: composition ];
+		at: 'instvars' ifPresent: [ :instVars | definition instVarNames: instVars ];
+		at: 'classvars' ifPresent: [ :classVars | definition classVarNames: classVars ];
+		at: 'pools' ifPresent: [ :pools | definition poolDictionaryNames: pools ];
+		at: 'classinstvars' ifPresent: [ :classInstVars | definition classInstVarNames: classInstVars ];
+		at: 'type' ifPresent: [ :type | definition type: type ];
+		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+
+	definitions add: definition
 ]
 
 { #category : #utilities }

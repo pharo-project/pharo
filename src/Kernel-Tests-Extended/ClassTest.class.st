@@ -606,5 +606,6 @@ ClassTest >> testclassVariables [
 
 { #category : #'tests - class creation' }
 ClassTest >> unclassifiedCategory [
-	^#Unclassified
+
+	^ Class unclassifiedCategory
 ]
