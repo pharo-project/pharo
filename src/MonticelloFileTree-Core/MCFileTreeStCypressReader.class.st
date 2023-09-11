@@ -192,8 +192,7 @@ MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment
 		               name: (traitPropertiesDict at: 'name')
 		               traitComposition: (traitPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
 		               category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ])
-		               instVarNames: (traitPropertiesDict at: 'instvars' ifAbsent: [ #(  ) ])
-		               classInstVarNames: '')
+		               instVarNames: (traitPropertiesDict at: 'instvars' ifAbsent: [ #(  ) ]))
 		              comment: traitComment;
 		              yourself.
 

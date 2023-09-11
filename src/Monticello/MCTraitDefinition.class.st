@@ -8,14 +8,13 @@ Class {
 }
 
 { #category : #'instance creation api' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray [
+MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray [
 
 	^ self new
 		  initializeWithName: classNameString
 		  traitComposition: traitCompositionString
 		  category: categoryString
 		  instVarNames: ivarArray
-		  classInstVarNames: civarArray
 ]
 
 { #category : #deprecated }
@@ -26,8 +25,8 @@ MCTraitDefinition class >> name: classNameString traitComposition: traitComposit
 		   initializeWithName: classNameString
 		   traitComposition: traitCompositionString
 		   category: categoryString
-		   instVarNames: ivarArray
-		   classInstVarNames: civarArray)
+		   instVarNames: ivarArray)
+		  classInstVarNames: civarArray;
 		  comment: commentString;
 		  commentStamp: commentStamp;
 		  classTraitComposition: classTraitCompositionString;
@@ -106,7 +105,7 @@ MCTraitDefinition >> hash [
 ]
 
 { #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray [
+MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray [
 
 	name := classNameString asSymbol.
 	traitComposition := traitCompositionString.

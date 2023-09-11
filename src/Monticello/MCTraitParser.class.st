@@ -70,8 +70,7 @@ MCTraitParser >> addDefinitionsTo: aCollection [
 		              name: traitName
 		              traitComposition: traitCompositionString
 		              category: categoryString
-		              instVarNames: slotsArray
-		              classInstVarNames: ''.
+		              instVarNames: slotsArray.
 
 	aCollection add: definition
 ]

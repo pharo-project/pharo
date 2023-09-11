@@ -12,19 +12,21 @@ Trait >> asClassDefinition [
 	| definition |
 	definition := self needsSlotClassDefinition
 		              ifTrue: [
-			              MCTraitDefinition
-				              name: self name
-				              traitComposition: self traitCompositionString
-				              category: self category
-				              instVarNames: (self localSlots collect: [ :each | each definitionString ])
-				              classInstVarNames: (self classSide localSlots collect: [ :each | each definitionString ]) ]
+			              (MCTraitDefinition
+				               name: self name
+				               traitComposition: self traitCompositionString
+				               category: self category
+				               instVarNames: (self localSlots collect: [ :each | each definitionString ]))
+				              classInstVarNames: (self classSide localSlots collect: [ :each | each definitionString ]);
+				              yourself ]
 		              ifFalse: [
-			              MCTraitDefinition
-				              name: self name
-				              traitComposition: self traitCompositionString
-				              category: self category
-				              instVarNames: (self localSlots collect: [ :each | each name ])
-				              classInstVarNames: (self class localSlots collect: [ :each | each name ]) ].
+			              (MCTraitDefinition
+				               name: self name
+				               traitComposition: self traitCompositionString
+				               category: self category
+				               instVarNames: (self localSlots collect: [ :each | each name ]))
+				              classInstVarNames: (self class localSlots collect: [ :each | each name ]);
+				              yourself ].
 
 	definition
 		classTraitComposition: self class traitCompositionString;
