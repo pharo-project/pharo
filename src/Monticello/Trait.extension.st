@@ -8,34 +8,31 @@ Trait >> asClassDefinition [
 				
 	This is produces by definitionString on slot while x is produced simnply by invoking name.
 	"
-	| classTraitCompositionToUse |
-	classTraitCompositionToUse := self class traitCompositionString.
 
-	^ self needsSlotClassDefinition
-		ifTrue: [ 
-			MCTraitDefinition
-				name: self name
-				traitComposition: self traitCompositionString
-				category: self category 
-				instVarNames: (self localSlots collect: [:each |each definitionString])
-				classInstVarNames: (self classSide localSlots collect: [:each |each definitionString])
-				classTraitComposition: classTraitCompositionToUse
-				comment: self comment
-				commentStamp: self commentStamp ]
-		 ifFalse: [  
-			MCTraitDefinition
-				name: self name
-				traitComposition: self traitCompositionString
-				category: self category 
-				instVarNames: (self localSlots collect: [ :each | each name ])
-				classInstVarNames: (self class localSlots collect: [ :each | each name ])
-				classTraitComposition: classTraitCompositionToUse
-				comment: self comment
-				commentStamp: self commentStamp
-				]
-		
-	
-		
+	| definition |
+	definition := self needsSlotClassDefinition
+		              ifTrue: [
+			              MCTraitDefinition
+				              name: self name
+				              traitComposition: self traitCompositionString
+				              category: self category
+				              instVarNames: (self localSlots collect: [ :each | each definitionString ])
+				              classInstVarNames: (self classSide localSlots collect: [ :each | each definitionString ])
+				              comment: self comment ]
+		              ifFalse: [
+			              MCTraitDefinition
+				              name: self name
+				              traitComposition: self traitCompositionString
+				              category: self category
+				              instVarNames: (self localSlots collect: [ :each | each name ])
+				              classInstVarNames: (self class localSlots collect: [ :each | each name ])
+				              comment: self comment ].
+
+	definition
+		classTraitComposition: self class traitCompositionString;
+		commentStamp: self commentStamp.
+
+	^ definition
 ]
 
 { #category : #'*Monticello' }

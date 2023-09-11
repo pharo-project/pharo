@@ -20,7 +20,7 @@ Class {
 
 { #category : #deprecated }
 MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
-	"Do not use this method! This method will be deprecated one Tonel will not use it anymore."
+	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
 	^ (self named: nameString)
 		  category: categoryString;

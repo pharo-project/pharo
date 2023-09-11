@@ -186,23 +186,22 @@ MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment: traitComment [
-    definitions
-        add:
-            (MCTraitDefinition
-                name: (traitPropertiesDict at: 'name')
-                traitComposition: (traitPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
-                category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ])
-					instVarNames: (traitPropertiesDict at: 'instvars' ifAbsent: [ #() ])
-					classInstVarNames: ''
-					classTraitComposition: nil
-					comment: traitComment
-					commentStamp: (traitPropertiesDict at: 'commentStamp' ifAbsent: [ '' ])).
-    traitPropertiesDict at: 'classtraitcomposition' ifPresent: [:classTraitComposition |
-        definitions
-             add:
-                (MCClassTraitDefinition
-                    baseTraitName: (traitPropertiesDict at: 'name')
-                    classTraitComposition: classTraitComposition)].
+
+	| definition |
+	definition := MCTraitDefinition
+		              name: (traitPropertiesDict at: 'name')
+		              traitComposition: (traitPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
+		              category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ])
+		              instVarNames: (traitPropertiesDict at: 'instvars' ifAbsent: [ #(  ) ])
+		              classInstVarNames: ''
+		              comment: traitComment.
+
+	traitPropertiesDict at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+
+	definitions add: definition.
+
+	traitPropertiesDict at: 'classtraitcomposition' ifPresent: [ :classTraitComposition |
+		definitions add: (MCClassTraitDefinition baseTraitName: (traitPropertiesDict at: 'name') classTraitComposition: classTraitComposition) ]
 ]
 
 { #category : #accessing }

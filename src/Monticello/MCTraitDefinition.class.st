@@ -7,21 +7,9 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString comment: commentString commentStamp: aString5 [
-
-	^ self new
-		  initializeWithName: classNameString
-		  traitComposition: traitCompositionString
-		  category: categoryString
-		  instVarNames: ''
-		  classInstVarNames: ''
-		  comment: commentString
-		  commentStamp: aString5
-]
-
-{ #category : #'instance creation api' }
+{ #category : #deprecated }
 MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
+	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
 	^ (self new
 		   initializeWithName: classNameString
@@ -29,10 +17,22 @@ MCTraitDefinition class >> name: classNameString traitComposition: traitComposit
 		   category: categoryString
 		   instVarNames: ivarArray
 		   classInstVarNames: civarArray
-		   comment: commentString
-		   commentStamp: commentStamp)
+		   comment: commentString)
+		  commentStamp: commentStamp;
 		  classTraitComposition: classTraitCompositionString;
 		  yourself
+]
+
+{ #category : #'instance creation api' }
+MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray comment: commentString [
+
+	^ self new
+		  initializeWithName: classNameString
+		  traitComposition: traitCompositionString
+		  category: categoryString
+		  instVarNames: ivarArray
+		  classInstVarNames: civarArray
+		  comment: commentString
 ]
 
 { #category : #comparing }
@@ -107,14 +107,13 @@ MCTraitDefinition >> hash [
 ]
 
 { #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray comment: commentString commentStamp: commentStampString [
+MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray comment: commentString [
 
 	name := classNameString asSymbol.
 	traitComposition := traitCompositionString.
 	category := categoryString.
 	comment := commentString withInternalLineEndings.
 	variables := OrderedCollection new.
-	commentStamp := commentStampString ifNil: [ self defaultCommentStamp ].
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition
 ]
 
