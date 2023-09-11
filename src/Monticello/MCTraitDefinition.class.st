@@ -8,24 +8,17 @@ Class {
 }
 
 { #category : #'instance creation api' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray [
+MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString [
 
-	^ self new
-		  initializeWithName: classNameString
-		  traitComposition: traitCompositionString
-		  category: categoryString
-		  instVarNames: ivarArray
+	^ self new initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString
 ]
 
 { #category : #deprecated }
 MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
 	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
-	^ (self new
-		   initializeWithName: classNameString
-		   traitComposition: traitCompositionString
-		   category: categoryString
-		   instVarNames: ivarArray)
+	^ (self new initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString)
+		  instVarNames: ivarArray;
 		  classInstVarNames: civarArray;
 		  comment: commentString;
 		  commentStamp: commentStamp;
@@ -105,13 +98,12 @@ MCTraitDefinition >> hash [
 ]
 
 { #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray [
+MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString [
 
 	name := classNameString asSymbol.
 	traitComposition := traitCompositionString.
 	category := categoryString.
-	variables := OrderedCollection new.
-	self addVariables: ivarArray ofType: MCInstanceVariableDefinition
+	variables := OrderedCollection new
 ]
 
 { #category : #printing }
