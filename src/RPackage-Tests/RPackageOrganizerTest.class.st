@@ -17,12 +17,6 @@ RPackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
 	self environment at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
 ]
 
-{ #category : #utilities }
-RPackageOrganizerTest class >> removePackageIfExist: aName [
-
-	self packageOrganizer basicUnregisterPackageNamed: aName asSymbol
-]
-
 { #category : #tests }
 RPackageOrganizerTest >> p1Name [
 	^ 'RPackageTestP1'
@@ -192,7 +186,7 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	self organizer basicRegisterPackage: p2.
 	self organizer basicRegisterPackage: p3.
 	self assert: self organizer packageNames size equals: 4.
-	self organizer basicUnregisterPackageNamed: p3 name.
+	self organizer basicUnregisterPackage: p3.
 	self assert: self organizer packageNames size equals: 3
 ]
 
@@ -330,7 +324,7 @@ RPackageOrganizerTest >> testTestPackages [
 ]
 
 { #category : #tests }
-RPackageOrganizerTest >> testUnregisterBasedOnNames [
+RPackageOrganizerTest >> testUnregister [
 
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
@@ -339,9 +333,9 @@ RPackageOrganizerTest >> testUnregisterBasedOnNames [
 
 	self assert: self organizer packageNames size equals: 4.
 
-	{p1 . p2 . p3} do: [:each |
-		(self organizer basicUnregisterPackageNamed: each name).
-		self deny: (self organizer packageNames includes: each name) ].
+	{p1 . p2 . p3} do: [:package |
+		(self organizer basicUnregisterPackage: package).
+		self deny: (self organizer packageNames includes: package name) ].
 
 	self assert: self organizer packageNames size equals: 1
 ]
