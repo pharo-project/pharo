@@ -218,14 +218,17 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 RPackageOrganizer >> basicRegisterPackage: aPackage [
 	"A new package is now available and declared in the receiver. Note that it is a low level implementation method since it does not deal with package contained information and does not update the related mapping tables."
 
-	^ packages add: aPackage
+	(self hasPackage: aPackage) ifTrue: [ ^ aPackage ].
+
+	packages := packages copyWith: aPackage.
+	^ aPackage
 ]
 
 { #category : #'private - registration' }
 RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the PackageRemoved announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
-	^ packages remove: aPackage ifAbsent: [  ]
+	^ packages copyWithout: aPackage
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -394,7 +397,7 @@ RPackageOrganizer >> includesCategory: aString [
 RPackageOrganizer >> initialize [
 
 	super initialize.
-	packages := Set new.
+	packages := Array new.
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
 	debuggingName := ''.
