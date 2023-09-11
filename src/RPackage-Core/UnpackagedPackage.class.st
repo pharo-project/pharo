@@ -1,8 +1,12 @@
+"
+I represent the package of unpackaged classes. (Null object pattern)
+
+I will return empty collection for everything we can ask me and I'll be returned if we ask the package of an unpackaged class.
+"
 Class {
 	#name : #UnpackagedPackage,
 	#superclass : #AbstractPackage,
 	#instVars : [
-		'wrapped',
 		'rootTag'
 	],
 	#category : #'RPackage-Core-Base'
@@ -70,15 +74,6 @@ UnpackagedPackage >> definedSelectorsForClass: aClass [
 	^ #(  )
 ]
 
-{ #category : #'reflective operations' }
-UnpackagedPackage >> doesNotUnderstand: aMessage [
-	('Fowarded ' , aMessage selector) traceCr. 
-
-	^ (wrapped ifNil: [ wrapped := RPackage named: RPackage defaultPackageName organizer: self organizer ])
-		  perform: aMessage selector
-		  withArguments: aMessage arguments
-]
-
 { #category : #'class tags' }
 UnpackagedPackage >> ensureTag: aTag [
 	"We only have one tag in the unpackaged package and we do not want more"
@@ -110,6 +105,12 @@ UnpackagedPackage >> extensionSelectorsForClass: aClass [
 	^ #(  )
 ]
 
+{ #category : #operations }
+UnpackagedPackage >> importClass: aClass [
+
+	
+]
+
 { #category : #initialization }
 UnpackagedPackage >> initialize [
 
@@ -127,6 +128,12 @@ UnpackagedPackage >> isDefault [
 UnpackagedPackage >> isEmpty [
 
 	^ false
+]
+
+{ #category : #private }
+UnpackagedPackage >> moveClass: aClass toTag: aTag [
+
+	self error: 'It should not be possible to move a method to the UnpackagedPackage.'
 ]
 
 { #category : #accessing }

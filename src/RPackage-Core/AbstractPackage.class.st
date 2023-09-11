@@ -1,3 +1,8 @@
+"
+I am an abstract class to define the API a package should have in the package management of Pharo.
+
+I exist in order to have a null object pattern with UnpackagedPackage and Package.
+"
 Class {
 	#name : #AbstractPackage,
 	#superclass : #Object,
@@ -207,6 +212,12 @@ AbstractPackage >> hierarchyRoots [
 	^ self definedClasses select: [ :each | (each superclass isNil or: [ each superclass package ~~ self ]) and: [ each hasSubclasses ] ]
 ]
 
+{ #category : #private }
+AbstractPackage >> importClass: aClass [
+
+	self subclassResponsibility
+]
+
 { #category : #testing }
 AbstractPackage >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
@@ -284,6 +295,12 @@ AbstractPackage >> methodsForClass: aClass [
 	^ (self includesClass: aClass)
 		ifFalse: [self extensionMethodsForClass: aClass]
 		ifTrue: [self definedMethodsForClass: aClass]
+]
+
+{ #category : #private }
+AbstractPackage >> moveClass: aClass toTag: aTag [
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
