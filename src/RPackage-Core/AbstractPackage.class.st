@@ -67,10 +67,10 @@ AbstractPackage >> classes [
 ]
 
 { #category : #'class tags' }
-AbstractPackage >> classesForClassTag: aTagName [
+AbstractPackage >> classesTaggedWith: aSymbol [
 	"Returns the classes tagged using aSymbol"
 
-	^ (self classTagNamed: aTagName ifAbsent: [ ^ #(  ) ]) classes
+	^ (self classTagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : #accessing }
@@ -113,6 +113,26 @@ AbstractPackage >> definedSelectors [
 AbstractPackage >> definedSelectorsForClass: aClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #converting }
+AbstractPackage >> demoteToTagInPackage [
+
+	| newPackage tag |
+	(self name includes: $-) ifFalse: [ self error: 'To demote a package, it name needs to contain at least one dash `-`.' ].
+
+	self flag: #package. "We need to unregister because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a #removeFromSystem at the end to avoid to have a removal system AND an unregistering system."
+	self unregister.
+
+	newPackage := self organizer ensurePackage: (self name copyUpToLast: $-).
+
+	"We keep the suffix that was removed as the tag name to create."
+	tag := newPackage ensureTag: (self name withoutPrefix: newPackage name , '-').
+
+	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
+	self extensionMethods do: [ :method | newPackage addMethod: method ].
+
+	^ newPackage
 ]
 
 { #category : #'class tags' }
@@ -205,6 +225,13 @@ AbstractPackage >> isTestPackage [
 	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
 
 	^ (self name endsWith: '-Tests') or: [self name includesSubstring: '-Tests-']
+]
+
+{ #category : #accessing }
+AbstractPackage >> linesOfCode [
+	"An approximate measure of lines of code.
+	Includes comments, but excludes blank lines."
+	^self methods inject: 0 into: [:sum :each | sum + each linesOfCode]
 ]
 
 { #category : #accessing }
