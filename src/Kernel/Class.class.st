@@ -295,13 +295,13 @@ Class >> category: aString [
 
 	| oldCategory |
 	oldCategory := self basicCategory.
+	oldCategory = aString ifTrue: [ ^ self ].
 	aString isString
 		ifTrue: [
 			self basicCategory: aString asSymbol.
 			self packageOrganizer classify: self name under: self basicCategory ]
-		ifFalse: [self errorCategoryName].
-	SystemAnnouncer uniqueInstance
-		class: self recategorizedFrom: oldCategory to: self basicCategory
+		ifFalse: [ self errorCategoryName ].
+	SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self basicCategory
 ]
 
 { #category : #'subclass creation - variableByte' }
