@@ -17,19 +17,18 @@ Trait >> asClassDefinition [
 				              traitComposition: self traitCompositionString
 				              category: self category
 				              instVarNames: (self localSlots collect: [ :each | each definitionString ])
-				              classInstVarNames: (self classSide localSlots collect: [ :each | each definitionString ])
-				              comment: self comment ]
+				              classInstVarNames: (self classSide localSlots collect: [ :each | each definitionString ]) ]
 		              ifFalse: [
 			              MCTraitDefinition
 				              name: self name
 				              traitComposition: self traitCompositionString
 				              category: self category
 				              instVarNames: (self localSlots collect: [ :each | each name ])
-				              classInstVarNames: (self class localSlots collect: [ :each | each name ])
-				              comment: self comment ].
+				              classInstVarNames: (self class localSlots collect: [ :each | each name ]) ].
 
 	definition
 		classTraitComposition: self class traitCompositionString;
+		comment: self comment;
 		commentStamp: self commentStamp.
 
 	^ definition
