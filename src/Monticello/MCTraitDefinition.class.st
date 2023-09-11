@@ -8,16 +8,17 @@ Class {
 }
 
 { #category : #'instance creation api' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString [
+MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString [
 
-	^ self new initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString
+	^ self new initializeWithName: classNameString traitComposition: traitCompositionString
 ]
 
 { #category : #deprecated }
 MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
 	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
-	^ (self new initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString)
+	^ (self new initializeWithName: classNameString traitComposition: traitCompositionString)
+		  category: categoryString;
 		  instVarNames: ivarArray;
 		  classInstVarNames: civarArray;
 		  comment: commentString;
@@ -98,12 +99,10 @@ MCTraitDefinition >> hash [
 ]
 
 { #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString [
+MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString [
 
 	name := classNameString asSymbol.
-	traitComposition := traitCompositionString.
-	category := categoryString.
-	variables := OrderedCollection new
+	traitComposition := traitCompositionString
 ]
 
 { #category : #printing }

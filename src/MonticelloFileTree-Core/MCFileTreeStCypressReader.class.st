@@ -188,10 +188,8 @@ MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment: traitComment [
 
 	| definition |
-	definition := (MCTraitDefinition
-		               name: (traitPropertiesDict at: 'name')
-		               traitComposition: (traitPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
-		               category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ]))
+	definition := (MCTraitDefinition name: (traitPropertiesDict at: 'name') traitComposition: (traitPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ]))
+		              category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ]);
 		              comment: traitComment;
 		              yourself.
 

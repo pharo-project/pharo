@@ -66,7 +66,8 @@ MCTraitParser >> addDefinitionsTo: aCollection [
 			                  argumentNode source copyFrom: argumentNode sourceInterval first to: argumentNode sourceInterval last ]
 		                  ifNil: [ 'Unclassified' ].
 
-	definition := (MCTraitDefinition name: traitName traitComposition: traitCompositionString category: categoryString)
+	definition := (MCTraitDefinition name: traitName traitComposition: traitCompositionString)
+		              category: categoryString;
 		              instVarNames: slotsArray;
 		              yourself.
 
