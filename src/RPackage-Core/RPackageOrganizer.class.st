@@ -105,11 +105,11 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'classPackageMapping',
-		'packages',
 		'classExtendingPackagesMapping',
 		'debuggingName',
 		'environment',
-		'categoryMap'
+		'categoryMap',
+		'packages'
 	],
 	#category : #'RPackage-Core-Base'
 }
@@ -218,14 +218,14 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 RPackageOrganizer >> basicRegisterPackage: aPackage [
 	"A new package is now available and declared in the receiver. Note that it is a low level implementation method since it does not deal with package contained information and does not update the related mapping tables."
 
-	^ packages at: aPackage name asSymbol put: aPackage
+	^ packages add: aPackage
 ]
 
 { #category : #'private - registration' }
 RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the PackageRemoved announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
-	^ packages removeKey: aPackage name ifAbsent: [  ]
+	^ packages remove: aPackage ifAbsent: [  ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -366,7 +366,10 @@ RPackageOrganizer >> hasPackage: aPackage [
 	"Takes a package or a package name as parameter and return true if I include this package."
 
 	^ aPackage isString
-		  ifTrue: [ packages includesKey: aPackage asSymbol ]
+		  ifTrue: [
+			  | packageSymbol |
+			  packageSymbol := aPackage asSymbol.
+			  self packages anySatisfy: [ :package | package name = packageSymbol ] ]
 		  ifFalse: [ self packages includes: aPackage ]
 ]
 
@@ -391,8 +394,7 @@ RPackageOrganizer >> includesCategory: aString [
 RPackageOrganizer >> initialize [
 
 	super initialize.
-
-	packages := IdentityDictionary new.
+	packages := Set new.
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
 	debuggingName := ''.
@@ -474,23 +476,27 @@ RPackageOrganizer >> packageNamed: aSymbol [
 { #category : #accessing }
 RPackageOrganizer >> packageNamed: aSymbol ifAbsent: errorBlock [
 
-	^ packages at: aSymbol asSymbol ifAbsent: errorBlock
+	| packageSymbol |
+	packageSymbol := aSymbol asSymbol.
+	^ self packages
+		  detect: [ :package | package name = packageSymbol ]
+		  ifNone: errorBlock
 ]
 
-{ #category : #private }
-RPackageOrganizer >> packageNamedIgnoreCase: aSymbol ifAbsent: aBlock [
-	"In case of extensions, I can need to take a package ignoring name"
-	self packagesDo: [  :each |
-		(each name sameAs: aSymbol)
-			ifTrue: [  ^ each  ]  ].
+{ #category : #accessing }
+RPackageOrganizer >> packageNamedIgnoreCase: aSymbol ifAbsent: errorBlock [
 
-	^ aBlock value
+	| packageSymbol |
+	packageSymbol := aSymbol asSymbol.
+	^ self packages
+		  detect: [ :package | package name sameAs: packageSymbol ]
+		  ifNone: errorBlock
 ]
 
 { #category : #'package - names-cache' }
 RPackageOrganizer >> packageNames [
 
-	^ packages keys
+	^ self packages collect: [ :package | package name ]
 ]
 
 { #category : #'package - names-cache' }
@@ -517,7 +523,7 @@ RPackageOrganizer >> packageOfClassNamed: aName [
 { #category : #accessing }
 RPackageOrganizer >> packages [
 
-	^ packages values
+	^ packages
 ]
 
 { #category : #accessing }
