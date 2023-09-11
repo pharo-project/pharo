@@ -174,6 +174,12 @@ AbstractPackage >> extensionMethodsForClass: aClass [
 ]
 
 { #category : #accessing }
+AbstractPackage >> extensionProtocolsForClass: aClass [
+
+	^ aClass protocols select: [ :protocol | protocol isExtensionProtocolMatching: self ]
+]
+
+{ #category : #accessing }
 AbstractPackage >> extensionSelectors [
 
 	^ self subclassResponsibility
@@ -202,10 +208,40 @@ AbstractPackage >> hierarchyRoots [
 ]
 
 { #category : #testing }
+AbstractPackage >> includesClass: aClass [
+	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
+
+	^ self classTags anySatisfy: [ :tag | tag includesClass: aClass ]
+]
+
+{ #category : #testing }
 AbstractPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
 
 	^ (self definedSelectorsForClass: aClass) includes: aSelector asSymbol
+]
+
+{ #category : #testing }
+AbstractPackage >> includesProtocol: protocol ofClass: aClass [
+
+	(protocol isExtensionProtocolMatching: self) ifTrue: [ ^ true ].
+
+
+	^ (self includesClass: aClass) and: [ protocol isExtensionProtocol not ]
+]
+
+{ #category : #testing }
+AbstractPackage >> isDefault [
+	"Return whether the receiver is the default package, i.e. the one used when nothing else is specified."
+
+	^ false
+]
+
+{ #category : #testing }
+AbstractPackage >> isDeprecated [
+	^ self packageManifestOrNil
+		ifNil: [ ^ false ]
+		ifNotNil: [ :manifest | manifest isDeprecated ]
 ]
 
 { #category : #testing }
@@ -283,12 +319,24 @@ AbstractPackage >> packageName [
 	^ self name
 ]
 
+{ #category : #'system compatibility' }
+AbstractPackage >> packages [
+	"Compatibility with monticello and old PackageInfo"
+	self flag: #package. "To remove.."
+	^ self classTags
+]
+
 { #category : #printing }
 AbstractPackage >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	aStream nextPutAll: self name.
 	aStream nextPut: $)
+]
+
+{ #category : #'private - register' }
+AbstractPackage >> register [
+	self organizer registerPackage: self
 ]
 
 { #category : #'adding-removing' }
@@ -334,6 +382,12 @@ AbstractPackage >> renameTag: aTag to: newName [
 	(aTag isString
 		 ifTrue: [ self classTagNamed: aTag ]
 		 ifFalse: [ aTag ]) renameTo: newName
+]
+
+{ #category : #operations }
+AbstractPackage >> renameTo: aName [
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -384,4 +438,10 @@ AbstractPackage >> tagNames [
 AbstractPackage >> tagOf: aClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #'private - register' }
+AbstractPackage >> unregister [
+
+	self organizer removePackage: self
 ]

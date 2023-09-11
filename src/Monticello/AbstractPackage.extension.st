@@ -1,7 +1,7 @@
 Extension { #name : #AbstractPackage }
 
 { #category : #'*Monticello' }
-RPackage >> asMCOrganizationDefinition [
+AbstractPackage >> asMCOrganizationDefinition [
 
 	^ MCOrganizationDefinition packageName: self name tagNames: self tagNames
 ]

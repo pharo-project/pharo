@@ -118,6 +118,12 @@ UnpackagedPackage >> initialize [
 ]
 
 { #category : #testing }
+UnpackagedPackage >> isDefault [
+
+	^ true
+]
+
+{ #category : #testing }
 UnpackagedPackage >> isEmpty [
 
 	^ false
@@ -149,6 +155,13 @@ UnpackagedPackage >> removeMethod: aCompiledMethod [
 
 { #category : #'adding-removing' }
 UnpackagedPackage >> removeTag: aTag [
+
+	
+]
+
+{ #category : #operations }
+UnpackagedPackage >> renameTo: aName [
+	"Cannot rename undefined package."
 
 	
 ]

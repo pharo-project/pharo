@@ -1,67 +1,54 @@
-Extension { #name : #RPackage }
+Extension { #name : #AbstractPackage }
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage class >> convertToCalypsoBrowserItem: aPackage [
+AbstractPackage class >> convertToCalypsoBrowserItem: aPackage [
 
 	^ClyBrowserItem named: aPackage name with: aPackage
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
+AbstractPackage class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
 	^ anEnvironmentPlugin
 		decorateBrowserItem: aBrowserItem
 		ofPackage: aBrowserItem actualObject
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage class >> defaultSortFunctionForCalypso [
+AbstractPackage class >> defaultSortFunctionForCalypso [
 	^ClySortByNameFunction ascending
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage >> definesOverridesOf: aMethod [
-
-	(self definesOverridesOf: aMethod in: definedSelectors) ifTrue: [ ^ true ].
-	(self definesOverridesOf: aMethod in: extensionSelectors) ifTrue: [ ^ true ].
-
-	^ false
-]
-
-{ #category : #'*Calypso-SystemQueries' }
-RPackage >> definesOverridesOf: aMethod in: classAndSelectors [
+AbstractPackage >> definesOverridesOf: aMethod [
 
 	| methodClass selector |
 	methodClass := aMethod origin.
 	selector := aMethod selector.
 
-	classAndSelectors keysAndValuesDo: [ :class :selectors | ((selectors includes: selector) and: [ class inheritsFrom: methodClass ]) ifTrue: [ ^ true ] ].
+	self classes
+		select: [ :class | class inheritsFrom: methodClass ]
+		thenDo: [ :class | ((self selectorsForClass: class) includes: selector) ifTrue: [ ^ true ] ].
 	^ false
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage >> importClasses: classCollection [
+AbstractPackage >> importClasses: classCollection [
 	classCollection do: [ :each | self addClass: each ]
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage >> isAboutPackage: aPackage [
-
-	^self == aPackage
-]
-
-{ #category : #'*Calypso-SystemQueries' }
-RPackage class >> itemsSortOrderForCalypso [
+AbstractPackage class >> itemsSortOrderForCalypso [
 	^10
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage class >> prepareClassGroupQueryFrom: aPackage in: aNavigationEnvironment [
+AbstractPackage class >> prepareClassGroupQueryFrom: aPackage in: aNavigationEnvironment [
 	^ ClyAllClassGroupsQuery
 		sortedFrom: (ClyPackageScope of: aPackage in: aNavigationEnvironment)
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
+AbstractPackage class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 	^{
 		ClyAllClassesQuery from: ClyPackageScope ofAll: packages in: aNavigationEnvironment.
 		ClyAllClassesQuery from: ClyPackageExtensionScope ofAll: packages in: aNavigationEnvironment
@@ -69,7 +56,7 @@ RPackage class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage >> tagsForClasses [
+AbstractPackage >> tagsForClasses [
 	"Any class could be tagged for user purpose.
 	Now we implement it on top of RPackageTag"
 

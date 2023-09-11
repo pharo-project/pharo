@@ -283,12 +283,6 @@ RPackage >> extensionMethods [
 	^ methods
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> extensionProtocolsForClass: aClass [
-
-	^ aClass protocols select: [ :protocol | protocol isExtensionProtocolMatching: self ]
-]
-
 { #category : #accessing }
 RPackage >> extensionSelectors [
 	"Extension methods are methods defined on classes that are not defined in the receiver"
@@ -351,13 +345,6 @@ RPackage >> importProtocol: aProtocol forClass: aClass [
 ]
 
 { #category : #testing }
-RPackage >> includesClass: aClass [
-	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
-
-	^ self classTags anySatisfy: [ :tag | tag includesClass: aClass ]
-]
-
-{ #category : #testing }
 RPackage >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
@@ -389,15 +376,6 @@ RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> includesProtocol: protocol ofClass: aClass [
-
-	(protocol isExtensionProtocolMatching: self) ifTrue: [ ^ true ].
-
-
-	^ (self includesClass: aClass) and: [ protocol isExtensionProtocol not ]
-]
-
 { #category : #testing }
 RPackage >> includesSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
@@ -412,19 +390,6 @@ RPackage >> initialize [
 	definedSelectors := IdentityDictionary new.
 	extensionSelectors := IdentityDictionary new.
 	classTags := Set new
-]
-
-{ #category : #testing }
-RPackage >> isDefault [
-	"Return whether the receiver is the default package, i.e. the one used when nothing else is specified."
-	^ self name = self class defaultPackageName
-]
-
-{ #category : #testing }
-RPackage >> isDeprecated [
-	^ self packageManifestOrNil
-		ifNil: [ ^ false ]
-		ifNotNil: [ :manifest | manifest isDeprecated ]
 ]
 
 { #category : #private }
@@ -450,12 +415,6 @@ RPackage >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
 	name := aSymbol asSymbol
-]
-
-{ #category : #'system compatibility' }
-RPackage >> packages [
-	"Compatibility with monticello and old PackageInfo"
-	^ self classTags
 ]
 
 { #category : #properties }
@@ -490,11 +449,6 @@ RPackage >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
 		put: propValue
-]
-
-{ #category : #register }
-RPackage >> register [
-	self organizer registerPackage: self
 ]
 
 { #category : #'private - register' }
@@ -684,12 +638,6 @@ RPackage >> toTagName: aSymbol [
 			  (aSymbol sameAs: self name)
 				  ifTrue: [ self rootTagName ]
 				  ifFalse: [ aSymbol ] ]
-]
-
-{ #category : #register }
-RPackage >> unregister [
-
-	self organizer removePackage: self
 ]
 
 { #category : #'private - register' }

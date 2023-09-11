@@ -114,7 +114,6 @@ ClyExtensionLastSortedClassResult >> isQueryScopeDefinesClass: aClass [
 
 	| classPackage |
 	classPackage := aClass package.
-	buildingQuery scope packagesDo: [ :each |
-		(each isAboutPackage: classPackage) ifTrue: [ ^true ]].
-	^false
+	buildingQuery scope packagesDo: [ :package | package == classPackage ifTrue: [ ^ true ] ].
+	^ false
 ]
