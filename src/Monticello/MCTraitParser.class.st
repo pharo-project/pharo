@@ -18,33 +18,20 @@ MCTraitParser >> addDefinitionsTo: aCollection [
 	| node compositionIndex categoryIndex slotsIndex traitName traitCompositionString slotsArray argumentNode categoryString definition |
 	node := RBParser parseExpression: source.
 
-	node selector
-		caseOf: {
-				([ #named: ] -> [
-				 compositionIndex := nil.
-				 slotsIndex := nil.
-				 categoryIndex := nil ]).
-				([ #named:uses: ] -> [
-				 compositionIndex := 2.
-				 slotsIndex := nil.
-				 categoryIndex := nil ]).
-				([ #named:uses:category: ] -> [
-				 compositionIndex := 2.
-				 slotsIndex := nil.
-				 categoryIndex := 3 ]).
-				([ #named:uses:package: ] -> [
-				 compositionIndex := 2.
-				 slotsIndex := nil.
-				 categoryIndex := 3 ]).
-				([ #named:uses:slots:category: ] -> [
-				 compositionIndex := 2.
-				 slotsIndex := 3.
-				 categoryIndex := 4 ]).
-				([ #named:uses:slots:package: ] -> [
-				 compositionIndex := 2.
-				 slotsIndex := 3.
-				 categoryIndex := 4 ]) }
-		otherwise: [ self error: 'Unknown trait building selector' ].
+	node selector caseOf: { 
+		[#named:] -> [ 
+			compositionIndex := nil. slotsIndex := nil. categoryIndex := nil ].
+		[#named:uses:] -> [ 
+			compositionIndex := 2. slotsIndex := nil. categoryIndex := nil ].
+		[#named:uses:category:] -> [ 
+			compositionIndex := 2. slotsIndex := nil. categoryIndex := 3 ].
+		[#named:uses:package:] -> [ 
+			compositionIndex := 2. slotsIndex := nil. categoryIndex := 3 ].
+		[#named:uses:slots:category:] -> [ 
+			compositionIndex := 2. slotsIndex := 3. categoryIndex := 4 ].
+		[#named:uses:slots:package:] -> [ 
+			compositionIndex := 2. slotsIndex := 3. categoryIndex := 4 ]
+	} otherwise: [ self error: 'Unknown trait building selector' ].
 
 	traitName := node arguments first value.
 
