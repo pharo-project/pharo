@@ -86,7 +86,7 @@ ClyMethodEditorToolMorph >> currentEditedAST [
 { #category : #operations }
 ClyMethodEditorToolMorph >> editProtocolOf: aMethod [
 
-	self applyChangesBy: [ aMethod protocol: methodProtocol ]
+	self applyChangesBy: [ methodProtocol ifNotNil: [ :protocolName | aMethod protocol: protocolName ] ]
 ]
 
 { #category : #accessing }

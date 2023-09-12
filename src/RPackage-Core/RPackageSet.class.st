@@ -126,12 +126,6 @@ RPackageSet >> includesClass: aClass [
 	^self packages anySatisfy: [ :each | each includesClass: aClass ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> includesSystemCategory: categoryName [
-	^self packages anySatisfy: [ :each |
-		each includesSystemCategory: categoryName ]
-]
-
 { #category : #initialization }
 RPackageSet >> initialize: aString [
 
@@ -140,11 +134,6 @@ RPackageSet >> initialize: aString [
 	packages := (self organizer packageNamed: aString ifAbsent: [ nil ])
 		            ifNotNil: [ :package | { package } ]
 		            ifNil: [ {  } ]
-]
-
-{ #category : #'system compatibility' }
-RPackageSet >> methodCategoryPrefix [
-	^ '*', self packageName asLowercase
 ]
 
 { #category : #accessing }

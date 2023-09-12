@@ -46,7 +46,7 @@ ProfilerResultsPresenter >> doItNode [
 ProfilerResultsPresenter >> handleProfilingFinished [
 
 	| doItNode |
-	UIManager default defer: [
+	self defer: [
 		self enabled: true.
 
 		viewModel showLeavesOnly ifFalse: [

@@ -1,6 +1,20 @@
 Extension { #name : #RPackage }
 
 { #category : #'*Deprecated12' }
+RPackage >> addClassTag: tagName [
+
+	self deprecated: 'Use #ensureTag: instead' transformWith: '`@rcv addClassTag: `@arg' -> '`@rcv ensureTag: `@arg'.
+	^ self ensureTag: tagName
+]
+
+{ #category : #'*Deprecated12' }
+RPackage >> basicRemoveTag: tag [
+
+	self deprecated: 'Use #removeTag: instead.' transformWith: '`@rcv removeClassTag: `@arg' -> '`@rcv removeTag: `@arg'.
+	self removeTag: tag
+]
+
+{ #category : #'*Deprecated12' }
 RPackage >> classDefinedSlicesDo: aBlock [
 
 	self deprecated:
@@ -32,6 +46,29 @@ RPackage >> classNamesAndExtensionSelectorsDo: aBlock [
 		'The API of RPackage is been cleaned and this method is not generic enough to stay in RPackage. You can look at the implementation of this method to know how to reproduce its behavior.'.
 	self extendedClasses do: [ :class |
 		(self extensionSelectorsForClass: class) ifNotEmpty: [ :selectors | selectors do: [ :selector | aBlock value: class name value: selector ] ] ]
+]
+
+{ #category : #'*Deprecated12' }
+RPackage >> classNamesForClassTag: aSymbol [
+	"Returns the classes tagged using aSymbol"
+
+	self deprecated: 'This method is too specific and will be remove in future versions of Pharo. If you are using it you can inline the method'.
+
+	^ (self classTagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classNames
+]
+
+{ #category : #'*Deprecated12' }
+RPackage >> classTagForClass: aClass [
+
+	self deprecated: 'Use #tagOf: instead' transformWith: '`@rcv classTagForClass: `@arg' -> '`@rcv tagOf: `@arg'.
+	^ self tagOf: aClass
+]
+
+{ #category : #'*Deprecated12' }
+RPackage >> classesForClassTag: aTagName [
+
+	self deprecated: 'Use #classesTaggedWith: instead.' transformWith: '`@rcv classesForClassTag: `@arg' -> '`@rcv classesTaggedWith: `@arg'.
+	^ self classesTaggedWith: aTagName
 ]
 
 { #category : #'*Deprecated12' }
@@ -138,4 +175,11 @@ RPackage >> removeClassNamed: aClassName [
 
 	self deprecated: 'Use #removeClass: with a real class instead.'.
 	^ self removeClass: (self organizer environment at: aClassName)
+]
+
+{ #category : #'*Deprecated12' }
+RPackage >> removeClassTag: aSymbol [
+
+	self deprecated: 'Use #removeTag: instead.' transformWith: '`@rcv removeClassTag: `@arg' -> '`@rcv removeTag: `@arg'.
+	self removeTag: aSymbol
 ]

@@ -18,40 +18,31 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
-{ #category : #obsolete }
-MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString instVarNames: ivarArray comment: commentString [
+{ #category : #deprecated }
+MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
-	^ self
-		name: nameString
-		superclassName: superclassString
-		traitComposition: '{}'
-		classTraitComposition: '{}'
-		category: categoryString
-		instVarNames: ivarArray
-		classVarNames: ''
-		poolDictionaryNames: ''
-		classInstVarNames: ''
-		type: #normal
-		comment: commentString
-		commentStamp: nil
+	^ (self named: nameString)
+		  category: categoryString;
+		  superclassName: superclassString;
+		  traitComposition: traitCompositionString;
+		  classTraitComposition: classTraitCompositionString;
+		  instVarNames: ivarArray;
+		  classVarNames: cvarArray;
+		  poolDictionaryNames: poolArray;
+		  classInstVarNames: civarArray;
+		  type: typeSymbol;
+		  comment: commentString;
+		  commentStamp: stampString;
+		  yourself
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+MCClassDefinition class >> named: nameString [
 
 	^ self new
-		initializeWithName: nameString
-		superclassName: superclassString
-		traitComposition: traitCompositionString
-		classTraitComposition: classTraitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		classVarNames: cvarArray
-		poolDictionaryNames: poolArray
-		classInstVarNames: civarArray
-		type: typeSymbol
-		comment: commentString
-		commentStamp: stampString
+		  name: nameString;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -77,7 +68,7 @@ MCClassDefinition >> actualClass [
 	^ Smalltalk globals classNamed: self className
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 MCClassDefinition >> addVariables: aCollection ofType: aClass [
 	variables addAll: (aCollection collect: [:var | aClass name: var asString]).
 ]
@@ -85,6 +76,12 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 { #category : #accessing }
 MCClassDefinition >> category [
 	^ category
+]
+
+{ #category : #accessing }
+MCClassDefinition >> category: categoryString [
+
+	category := categoryString
 ]
 
 { #category : #accessing }
@@ -97,6 +94,12 @@ MCClassDefinition >> classDefinitionString [
 { #category : #accessing }
 MCClassDefinition >> classInstVarNames [
 	^ self selectVariables: #isClassInstanceVariable
+]
+
+{ #category : #accessing }
+MCClassDefinition >> classInstVarNames: civarArray [
+
+	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition
 ]
 
 { #category : #printing }
@@ -126,6 +129,12 @@ MCClassDefinition >> classTraitComposition [
 ]
 
 { #category : #accessing }
+MCClassDefinition >> classTraitComposition: classTraitCompositionString [
+
+	classTraitComposition := classTraitCompositionString
+]
+
+{ #category : #accessing }
 MCClassDefinition >> classTraitCompositionCompiled [
 		^(Smalltalk compiler evaluate: self classTraitCompositionString) asTraitComposition 
 ]
@@ -138,6 +147,12 @@ MCClassDefinition >> classTraitCompositionString [
 { #category : #accessing }
 MCClassDefinition >> classVarNames [
 	^(self selectVariables: #isClassVariable) asArray sort
+]
+
+{ #category : #accessing }
+MCClassDefinition >> classVarNames: cvarArray [
+
+	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition
 ]
 
 { #category : #printing }
@@ -159,8 +174,19 @@ MCClassDefinition >> comment [
 ]
 
 { #category : #accessing }
+MCClassDefinition >> comment: aString [
+
+	comment := aString withInternalLineEndings
+]
+
+{ #category : #accessing }
 MCClassDefinition >> commentStamp [
 	^ commentStamp
+]
+
+{ #category : #accessing }
+MCClassDefinition >> commentStamp: anObject [
+	commentStamp := anObject
 ]
 
 { #category : #installing }
@@ -169,7 +195,7 @@ MCClassDefinition >> createClass [
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
 	name = #Context
 		ifTrue: [ Context comment = comment 
-						ifFalse: [ Context comment: comment stamp: commentStamp ].
+						ifFalse: [ Context comment: comment stamp: self commentStamp ].
 					^ self ].
 
 	superClass := superclassName = #nil
@@ -186,7 +212,7 @@ MCClassDefinition >> createClass [
 				classSlots: self classInstanceVariables;
 				traitComposition: self traitCompositionCompiled;
 				classTraitComposition: self classTraitCompositionCompiled;
-				comment: comment stamp: commentStamp;
+				comment: comment stamp: self commentStamp;
 				category: category;
 				environment: superClass environment ] ]
 		on: Warning , DuplicatedVariableError
@@ -206,7 +232,7 @@ MCClassDefinition >> createVariableFromString: aString [
 			UndefinedSlot named: slotName ast: ast  ]
 ]
 
-{ #category : #initializing }
+{ #category : #accessing }
 MCClassDefinition >> defaultCommentStamp [
 	^ String new
 
@@ -265,31 +291,29 @@ MCClassDefinition >> hash [
 	^ hash
 ]
 
-{ #category : #initializing }
-MCClassDefinition >> initializeWithName: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampStringOrNil [
+{ #category : #initialization }
+MCClassDefinition >> initialize [
 
-	name := nameString asSymbol.
-	superclassName := superclassString
-		                  ifNil: [ #nil ]
-		                  ifNotNil: [ superclassString asSymbol ].
-	traitComposition := traitCompositionString.
-	classTraitComposition := classTraitCompositionString.
-	category := categoryString.
-	 type := (#(#CompiledMethod #CompiledBlock #CompiledCode) includes: name)
-		ifTrue: [ #compiledMethod ]
-		ifFalse: [ typeSymbol ].
-	comment := commentString withInternalLineEndings.
-	commentStamp := stampStringOrNil ifNil: [ self defaultCommentStamp ].
-	variables := OrderedCollection new.
-	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition.
-	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition.
-	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition
+	super initialize.
+	category := ''.
+	superclassName := #Object.
+	traitComposition := '{}'.
+	classTraitComposition := '{}'.
+	type := #normal.
+	comment := ''.
+	commentStamp := self defaultCommentStamp.
+	variables := OrderedCollection new
 ]
 
 { #category : #accessing }
 MCClassDefinition >> instVarNames [
 	^ self selectVariables: #isInstanceVariable
+]
+
+{ #category : #accessing }
+MCClassDefinition >> instVarNames: ivarArray [
+
+	self addVariables: ivarArray ofType: MCInstanceVariableDefinition
 ]
 
 { #category : #printing }
@@ -335,6 +359,13 @@ MCClassDefinition >> load [
 	self createClass
 ]
 
+{ #category : #accessing }
+MCClassDefinition >> name: anObject [
+
+	name := anObject asSymbol.
+	self type: type
+]
+
 { #category : #installing }
 MCClassDefinition >> needsSlotClassDefinition [
 	"this checks if any ivar or class var is using more than just standard definitions.
@@ -346,6 +377,19 @@ MCClassDefinition >> needsSlotClassDefinition [
 { #category : #accessing }
 MCClassDefinition >> poolDictionaries [
 	^ self selectVariables: #isPoolImport
+]
+
+{ #category : #accessing }
+MCClassDefinition >> poolDictionaryNames: poolArray [
+
+	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition
+]
+
+{ #category : #copying }
+MCClassDefinition >> postCopy [
+
+	super postCopy.
+	variables := variables copy
 ]
 
 { #category : #annotations }
@@ -518,8 +562,22 @@ MCClassDefinition >> superclassName [
 ]
 
 { #category : #accessing }
+MCClassDefinition >> superclassName: superclassString [
+
+	superclassName := superclassString
+		                  ifNil: [ #nil ]
+		                  ifNotNil: [ superclassString asSymbol ]
+]
+
+{ #category : #accessing }
 MCClassDefinition >> traitComposition [
 	^traitComposition
+]
+
+{ #category : #accessing }
+MCClassDefinition >> traitComposition: traitCompositionString [
+
+	traitComposition := traitCompositionString
 ]
 
 { #category : #accessing }
@@ -535,6 +593,14 @@ MCClassDefinition >> traitCompositionString [
 { #category : #accessing }
 MCClassDefinition >> type [
 	^ type
+]
+
+{ #category : #accessing }
+MCClassDefinition >> type: aSymbol [
+
+	type := (#( #CompiledMethod #CompiledBlock #CompiledCode ) includes: name)
+		        ifTrue: [ #compiledMethod ]
+		        ifFalse: [ aSymbol ]
 ]
 
 { #category : #installing }

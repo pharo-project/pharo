@@ -59,5 +59,5 @@ RBAddTraitChange >> fillOutDefinition: aDictionary [
 	in the expressions defined in the definitionPatterns method!"
 
 	className := (aDictionary at: '`#traitName') asSymbol.
-	category := (aDictionary at: '`#package' ifAbsent: [ #Unclassified ]) asSymbol
+	category := (aDictionary at: '`#package' ifAbsent: [ Class unclassifiedCategory ]) asSymbol
 ]

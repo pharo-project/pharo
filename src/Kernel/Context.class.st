@@ -2257,19 +2257,25 @@ Context >> tryPrimitiveFor: aMethod receiver: aReceiver args: arguments [
 { #category : #'special context access' }
 Context >> unwindBlock [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
-	^self tempAt: 1
+
+	"The handler is in the first temporary"
+	^ self tempAt: self numArgs + 1
 ]
 
 { #category : #'special context access' }
 Context >> unwindComplete [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
-	^self tempAt: 2
+
+	"The complete flag is in the second temporary"
+	^ self tempAt: self numArgs + 2
 ]
 
 { #category : #'special context access' }
 Context >> unwindComplete: aBoolean [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
-	self tempAt: 2 put: aBoolean
+
+	"The complete flag is in the second temporary"
+	self tempAt: self numArgs + 2 put: aBoolean
 ]
 
 { #category : #'private - exceptions' }

@@ -69,18 +69,14 @@ RBBrowserEnvironmentWrapper >> environment [
 ]
 
 { #category : #testing }
-RBBrowserEnvironmentWrapper >> includesCategory: aCategory [
-	^environment includesCategory: aCategory
-]
-
-{ #category : #testing }
 RBBrowserEnvironmentWrapper >> includesClass: aClass [
 	^environment includesClass: aClass
 ]
 
 { #category : #testing }
-RBBrowserEnvironmentWrapper >> includesPackage: aRPackage [
-	^ self packages includes: aRPackage
+RBBrowserEnvironmentWrapper >> includesPackage: aPackage [
+
+	^ (super includesPackage: aPackage) and: [ (self classesInPackage: aPackage) isNotEmpty ]
 ]
 
 { #category : #testing }
@@ -120,12 +116,6 @@ RBBrowserEnvironmentWrapper >> onEnvironment: anEnvironment [
 { #category : #private }
 RBBrowserEnvironmentWrapper >> packageNames [
 	^ self packages collect: [ :each | each packageName ]
-]
-
-{ #category : #accessing }
-RBBrowserEnvironmentWrapper >> packages [
-
-	^ self subclassResponsibility
 ]
 
 { #category : #printing }
