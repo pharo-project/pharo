@@ -31,7 +31,7 @@ RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageBestMatchName [
 
 	| tmpPackage class |
 	tmpPackage := self ensureXPackage.
-	self addXMatchCategory.
+	self ensureTagYinX.
 
 	class := self createNewTraitNamed: 'NewClass' inCategory: 'XXXXX-YYYY'.
 
@@ -44,7 +44,7 @@ RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageExactName [
 
 	| tmpPackage class |
 	tmpPackage := self ensureXPackage.
-	self addXMatchCategory.
+	self ensureTagYinX.
 
 	class := self createNewTraitNamed: 'NewClass' inCategory: 'XXXXX'.
 

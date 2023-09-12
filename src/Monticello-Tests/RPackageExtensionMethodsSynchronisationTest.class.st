@@ -14,7 +14,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryB
 	| class xPackage yPackage |
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
-	self addXMatchCategory.
+	self ensureTagYinX.
 
 	self createNewClassNamed: 'NewClass' inCategory: 'XXXXX-YYYY'.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
@@ -101,10 +101,9 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryW
 	| class firstPackage secondPackage |
 	firstPackage := self ensureXPackage.
 	secondPackage := self ensureYPackage.
-	self addXMatchCategory.
+	self ensureTagYinX.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*YYYYY'.
 

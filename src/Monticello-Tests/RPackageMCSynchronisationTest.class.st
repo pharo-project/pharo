@@ -17,11 +17,6 @@ Class {
 	#category : #'Monticello-Tests-RPackage'
 }
 
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addXMatchCategory [
-	self organizer addCategory: 'XXXXX-YYYY'.
-]
-
 { #category : #setup }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
@@ -70,6 +65,12 @@ RPackageMCSynchronisationTest >> createMethodNamed: methodName inClassSideOfClas
 RPackageMCSynchronisationTest >> emptyOrganizer [ 
 
 	^ emptyOrganizer
+]
+
+{ #category : #utilities }
+RPackageMCSynchronisationTest >> ensureTagYinX [
+
+	self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
 ]
 
 { #category : #utilities }
@@ -131,30 +132,6 @@ RPackageMCSynchronisationTest >> tearDown [
 	self cleanClassesPackagesAndCategories.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	super tearDown
-]
-
-{ #category : #tests }
-RPackageMCSynchronisationTest >> testCategoryMatching [
-
-	self assert: ('Compression-Archives' isCategoryOf: 'Compression').
-	self deny: ('Compression' isCategoryOf: 'Compression-Archives').
-	self assert: ('Compression' isCategoryOf: 'Compression').
-	self assert: ('Compression-Arh' isCategoryOf: 'Compression').
-	self deny: ('XXXX' isCategoryOf: 'Compression-Archives')
-]
-
-{ #category : #tests }
-RPackageMCSynchronisationTest >> testIsDefinedAsPackageOrSubPackageInMC [
-	"test whether a given category is defined as a MC package or whether it is defined as top part of package"
-	
-	self assert: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Compression').
-	self deny: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Compression-Archives').
-	"Indeed compression-archives is a category but not a MC package"
-	
-	self assert: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Collections').
-	"#Collection is not defined as a package but as a package #'Collections-Unordered'"
-	self assert: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Collections-Unordered').
-	self deny: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Collections-Unordered-Test').
 ]
 
 { #category : #'to move to a simple RPackage test case' }

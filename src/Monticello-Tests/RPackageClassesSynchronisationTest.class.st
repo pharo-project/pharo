@@ -12,7 +12,7 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageBestMatchName 
 
 	| tmpPackage class |
 	tmpPackage := self ensureXPackage.
-	self addXMatchCategory.
+	self ensureTagYinX.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX-YYYY'.
 
@@ -25,7 +25,7 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageExactName [
 
 	| tmpPackage class |
 	tmpPackage := self ensureXPackage.
-	self addXMatchCategory.
+	self ensureTagYinX.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
@@ -69,7 +69,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassInThe
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
-	self addXMatchCategory.
+	self ensureTagYinX.
 	yPackage := self ensureYPackage.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
@@ -85,7 +85,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassInThe
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
-	self addXMatchCategory.
+	self ensureTagYinX.
 	yPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
 
