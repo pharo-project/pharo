@@ -15,6 +15,20 @@ ClyBrowserToolValidityTest >> isValidInContextOtherThan: someContexts [
 		anySatisfy: [ :ctx | tool isValidInContext: ctx ]
 ]
 
+{ #category : #accessing }
+ClyBrowserToolValidityTest >> mockPackage [
+
+	^ [ RPackageOrganizer default createPackageNamed: self mockPackageName ]
+		on: RPackageConflictError 
+		do: [ : ex |  RPackageOrganizer default packageNamed: self mockPackageName ]
+]
+
+{ #category : #accessing }
+ClyBrowserToolValidityTest >> mockPackageName [
+
+	^ 'MockPackageForTestingCalypso'.
+]
+
 { #category : #tests }
 ClyBrowserToolValidityTest >> testClassCommentToolIsNotValidWhenNotAClassContext [
 
@@ -184,6 +198,19 @@ ClyBrowserToolValidityTest >> testPackageCommmentToolIsValidWhenPackageContext [
 ]
 
 { #category : #tests }
+ClyBrowserToolValidityTest >> testPackageSelectionAfterPackageCreation [
+
+	self deleteBrowser.
+	browser := ClyFullBrowserMorph openOnPackage: self mockPackage.
+	tool := self findBrowserTool: ClyClassCreationToolMorph.
+	
+	self 
+		assertCollection: (self packageContext selectedPackageItems collect: #name)
+		equals: (Array with: self mockPackageName).
+
+]
+
+{ #category : #tests }
 ClyBrowserToolValidityTest >> testSetUpToolIsNotValidWhenNotAClassContext [
 
 	tool := self findBrowserTool: ClyTestSetUpEditorToolMorph.
@@ -208,4 +235,44 @@ ClyBrowserToolValidityTest >> testSetUpToolIsValidWhenReferencingSameClass [
 	tool := self findBrowserTool: ClyTestSetUpEditorToolMorph.
 	
 	self assert: (tool isValidInContext: self classContext).
+]
+
+{ #category : #tests }
+ClyBrowserToolValidityTest >> testWindowLabelIsUpdatedAfterPackageRemoval [
+
+	| realPackage command activator cmdContext |
+	
+	self deleteBrowser.
+	browser := ClyFullBrowserMorph openOnPackage: self mockPackage.
+	tool := self findBrowserTool: ClyClassCreationToolMorph.
+	
+	realPackage := self packageContext selectedPackageItems anyOne actualObject.
+	
+	command := SycRemovePackageCommand new
+		packages: { realPackage };
+		yourself.
+	cmdContext := browser createCommandContext. 
+
+	activator := CmdCommandActivator new 
+		command: command;
+		context: cmdContext;
+		yourself.
+
+	cmdContext executeCommand: command by: activator.
+	activator applyCommandResult.
+	self 
+		assert: browser window label 
+		equals: 'Current image'
+]
+
+{ #category : #tests }
+ClyBrowserToolValidityTest >> testWindowLabelSetAfterPackageCreation [
+
+	self deleteBrowser.
+	browser := ClyFullBrowserMorph openOnPackage: self mockPackage.
+	tool := self findBrowserTool: ClyClassCreationToolMorph.
+	
+	self 
+		assert: browser window label 
+		equals: self mockPackageName
 ]

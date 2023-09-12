@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'failure tests' }
-RBRemoveClassVariableRefactoringTest >> testFailureReferencedVariable [
+RBRemoveClassVariableRefactoringTest >> testShouldWarnWhenVariableReferenced [
 
 	self shouldWarn: (RBRemoveClassVariableRefactoring
 			 variable: #RecursiveSelfRule

@@ -7,35 +7,19 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString comment: commentString commentStamp: aString5 [ 
-
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ''
-		classTraitComposition: nil
-		classInstVarNames: ''
-		comment: commentString
-		commentStamp: aString5
-
-]
-
-{ #category : #'instance creation api' }
+{ #category : #deprecated }
 MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
+	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		classTraitComposition: classTraitCompositionString
-		classInstVarNames: civarArray
-		comment: commentString
-		commentStamp: commentStamp
-
-		
+	^ (self named: classNameString)
+		  traitComposition: traitCompositionString;
+		  category: categoryString;
+		  instVarNames: ivarArray;
+		  classInstVarNames: civarArray;
+		  comment: commentString;
+		  commentStamp: commentStamp;
+		  classTraitComposition: classTraitCompositionString;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -107,93 +91,6 @@ MCTraitDefinition >> hash [
 	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
 	^ hash
 
-]
-
-{ #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString 
-	traitComposition:  traitCompositionString
-	category:  categoryString
-	comment:  commentString  
-	commentStamp:   commentStampString [
-					
-		name := classNameString asSymbol.
-		traitComposition := traitCompositionString.
-	     category := categoryString.
-		comment := commentString withInternalLineEndings.
-		variables := OrderedCollection  new.
-		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp]
-
-]
-
-{ #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString 
-	traitComposition:  traitCompositionString
-	category:  categoryString
-	instVarNames: ivarArray
-	classInstVarNames: civarArray
-	comment:  commentString  
-	commentStamp:   commentStampString [
-					
-		name := classNameString asSymbol.
-		traitComposition := traitCompositionString.
-	    category := categoryString.
-		comment := commentString withInternalLineEndings.
-		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
-		variables := OrderedCollection  new.
-		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-		self addVariables: civarArray ofType: MCClassInstanceVariableDefinition.
-]
-
-{ #category : #initialization }
-MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classTraitComposition: classTraitCompositionString classInstVarNames: civarArray comment: commentString commentStamp: commentStampString [
-	self
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		classInstVarNames: civarArray
-		comment: commentString
-		commentStamp: commentStampString.
-
-		classTraitComposition := classTraitCompositionString
-]
-
-{ #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString 
-	traitComposition:  traitCompositionString
-	category:  categoryString
-	instVarNames: ivarArray
-	comment:  commentString  
-	commentStamp:   commentStampString [
-					
-		name := classNameString asSymbol.
-		traitComposition := traitCompositionString.
-	    category := categoryString.
-		comment := commentString withInternalLineEndings.
-		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
-		variables := OrderedCollection  new.
-		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-
-]
-
-{ #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString 
-	traitComposition:  traitCompositionString
-	classTraitComposition: aClassTraitComposition
-	category:  categoryString
-	instVarNames: ivarArray
-	comment:  commentString  
-	commentStamp:   commentStampString [
-					
-		name := classNameString asSymbol.
-		traitComposition := traitCompositionString.
-	    category := categoryString.
-		comment := commentString withInternalLineEndings.
-		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
-		variables := OrderedCollection  new.
-		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-		
-	classTraitComposition := aClassTraitComposition
 ]
 
 { #category : #printing }

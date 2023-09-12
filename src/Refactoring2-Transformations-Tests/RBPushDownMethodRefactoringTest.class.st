@@ -1,7 +1,7 @@
 Class {
 	#name : #RBPushDownMethodRefactoringTest,
 	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
 { #category : #'failure tests' }
@@ -11,15 +11,10 @@ RBPushDownMethodRefactoringTest >> testFailurePushDownMethodOnNonAbstractClass [
 	refactoring := RBPushDownMethodRefactoring
 		               pushDown: #( #isArray )
 		               from: Array.
-	"Scripting API"
-	self shouldFail: refactoring.
-	
-	"Driver API"
-	self proceedThroughWarning: [
-		self
-			should: [ refactoring generateChanges ]
-			raise: RBBreakingChangeChecksFailedWarning
-	]
+
+	self
+		should: [ refactoring generateChanges ]
+		raise: RBRefactoringWarning
 ]
 
 { #category : #'failure tests' }
@@ -43,13 +38,9 @@ RBPushDownMethodRefactoringTest >> testFailurePushDownMethodSubclassesReferToSel
 		               model: model
 		               pushDown: #( #yourself )
 		               from: (model classNamed: #Superclass).
-	"Scripting API"
-	self shouldFail: refactoring.
-	
-	"Driver API"
-	self proceedThroughWarning: [
-		self
-			should: [ refactoring generateChanges ]
-			raise: RBBreakingChangeChecksFailedWarning
-	]
+
+
+	self
+		should: [ refactoring generateChanges ]
+		raise: RBRefactoringWarning 
 ]

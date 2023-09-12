@@ -27,7 +27,7 @@ RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 		                variable: 'variable2'
 		                inMethod: #methodBefore
 		                inClass: #RBRemoveAssignmentTransformationTest)
-		               primitiveExecute.
+		               generateChanges.
 
 	self shouldFail: (RBRemoveAssignmentTransformation
 			 model: refactoring model
@@ -66,7 +66,7 @@ RBRemoveAssignmentTransformationTest >> testRefactoring [
 		                value: '1 asString'
 		                inMethod: #methodBefore
 		                inClass: #RBRemoveAssignmentTransformationTest)
-		               primitiveExecute.
+		               generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -85,7 +85,7 @@ RBRemoveAssignmentTransformationTest >> testTransform [
 		                   variable: 'variable'
 		                   value: '1 asString'
 		                   inMethod: #methodBefore
-		                   inClass: self class name) primitiveExecute.
+		                   inClass: self class name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

@@ -17,12 +17,6 @@ RPackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
 	self environment at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
 ]
 
-{ #category : #utilities }
-RPackageOrganizerTest class >> removePackageIfExist: aName [
-
-	self packageOrganizer basicUnregisterPackageNamed: aName asSymbol
-]
-
 { #category : #tests }
 RPackageOrganizerTest >> p1Name [
 	^ 'RPackageTestP1'
@@ -36,18 +30,6 @@ RPackageOrganizerTest >> p2Name [
 { #category : #tests }
 RPackageOrganizerTest >> p3Name [
 	^ 'RPackageTestP3'
-]
-
-{ #category : #'tests - extending' }
-RPackageOrganizerTest >> pointRectangleInGraphElement [
-
-	^ (RPackage named: #GraphElement)
-		  addClassDefinition: Point;
-		  addMethod: Point >> #x;
-		  addMethod: Point >> #rotateBy:about:;
-		  addClassDefinition: Rectangle;
-		  addMethod: self quadrangleClass >> #intersect:;
-		  yourself
 ]
 
 { #category : #utilities }
@@ -117,33 +99,23 @@ RPackageOrganizerTest >> testFullRegistration [
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
-
 	p1 := self createNewPackageNamed: self p1Name.
 	p2 := self createNewPackageNamed: self p2Name.
 	p3 := self createNewPackageNamed: self p3Name.
 
-	a1 :=  self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
+	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
 	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
 	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
 	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
 
-	a1 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a1>>#methodDefinedInP1).
-	a1 compileSilently: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
-	p1 addMethod: (a1>>#anotherMethodDefinedInP1).
+	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
+	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 
-	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
-
-	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addMethod: (a2>>#methodDefinedInP2).
-
-	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: (a2>>#methodDefinedInP3).
-
-	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
-	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3).
+	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , p1 name.
+	a2 compile: 'methodDefinedInP2 ^ #methodDefinedInP2'.
+	a2 compile: 'methodDefinedInP3 ^ #methodDefinedInP3' classified: '*' , p3 name.
+	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , p3 name.
 
 	self deny: (p2 includesClass: b1).
 	self assert: (p2 includesClass: b2).
@@ -187,7 +159,7 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
 	| package1 |
 	self flag: #package. "This is a limitiation of the system organizer. I hope to kill this limitiation before p12 release."
 	package1 := self createNewPackageNamed: 'P1'.
-	package1 addClassTag: #T1.
+	package1 ensureTag: #T1.
 
 	self should: [ self createNewPackageNamed: 'P1-T1' ] raise: Error
 ]
@@ -200,7 +172,7 @@ RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 	package1 := self createNewPackageNamed: 'P1-T1'.
 
 	package2 := self createNewPackageNamed: 'P1'.
-	self should: [ package2 addClassTag: #T1 ] raise: Error
+	self should: [ package2 ensureTag: #T1 ] raise: Error
 ]
 
 { #category : #tests }
@@ -214,7 +186,7 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	self organizer basicRegisterPackage: p2.
 	self organizer basicRegisterPackage: p3.
 	self assert: self organizer packageNames size equals: 4.
-	self organizer basicUnregisterPackageNamed: p3 name.
+	self organizer basicUnregisterPackage: p3.
 	self assert: self organizer packageNames size equals: 3
 ]
 
@@ -237,12 +209,11 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 
 	| p |
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
-	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'.
 	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	p := self pointRectangleInGraphElement.
+	p := self createNewPackageNamed: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
+	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1
 ]
 
 { #category : #tests }
@@ -258,8 +229,8 @@ RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 	"This one will be empty"
 	package4 := (self createNewPackageNamed: #Test4).
 
-	tag1 := package3 addClassTag: #Tag1.
-	tag2 := package3 addClassTag: #Tag2.
+	tag1 := package3 ensureTag: #Tag1.
+	tag2 := package3 ensureTag: #Tag2.
 
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
 	class compile: 'extension ^ 1' classified: '*Test2'.
@@ -307,22 +278,13 @@ RPackageOrganizerTest >> testRemovePackage [
 	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
 	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
 
-	a1 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: a1 >> #methodDefinedInP1.
-	a1 compileSilently: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
-	p1 addMethod: a1 >> #anotherMethodDefinedInP1.
+	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
+	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 
-	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: a2 >> #methodDefinedInP1.
-
-	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addMethod: a2 >> #methodDefinedInP2.
-
-	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: a2 >> #methodDefinedInP3.
-
-	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
-	p3 addMethod: a2 class >> #classSideMethodDefinedInP3.
+	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , p1 name.
+	a2 compile: 'methodDefinedInP2 ^ #methodDefinedInP2'.
+	a2 compile: 'methodDefinedInP3 ^ #methodDefinedInP3' classified: '*' , p3 name.
+	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , p3 name.
 
 	self organizer removePackage: p1.
 	self organizer removePackage: p2.
@@ -362,7 +324,7 @@ RPackageOrganizerTest >> testTestPackages [
 ]
 
 { #category : #tests }
-RPackageOrganizerTest >> testUnregisterBasedOnNames [
+RPackageOrganizerTest >> testUnregister [
 
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
@@ -371,9 +333,9 @@ RPackageOrganizerTest >> testUnregisterBasedOnNames [
 
 	self assert: self organizer packageNames size equals: 4.
 
-	{p1 . p2 . p3} do: [:each |
-		(self organizer basicUnregisterPackageNamed: each name).
-		self deny: (self organizer packageNames includes: each name) ].
+	{p1 . p2 . p3} do: [:package |
+		(self organizer basicUnregisterPackage: package).
+		self deny: (self organizer packageNames includes: package name) ].
 
 	self assert: self organizer packageNames size equals: 1
 ]
@@ -383,11 +345,10 @@ RPackageOrganizerTest >> testUnregistrationExtendingPackages [
 
 	| p |
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
-	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'.
-	p := self pointRectangleInGraphElement.
+	p := self createNewPackageNamed: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
+	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1.
 	self organizer unregisterExtendingPackage: p forClass: self quadrangleClass.
 	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass)
 ]

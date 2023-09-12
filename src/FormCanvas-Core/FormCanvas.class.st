@@ -252,7 +252,7 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 		].
 	strikethrough ifTrue: [
 		font installOn: port
-			foregroundColor: uc
+			foregroundColor: sc
 			backgroundColor: Color transparent;
 			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
 	].
@@ -480,8 +480,7 @@ FormCanvas >> paragraph: para bounds: bounds color: c [
 	| scanner |
 	self setPaintColor: c.
 	scanner := (port clippedBy: (bounds translateBy: origin)) displayScannerFor: para
-		foreground: c background: Color transparent
-		ignoreColorChanges: false.
+		foreground: c.
 	para displayOn: (self copyClipRect: bounds) using: scanner at: origin+ bounds topLeft
 ]
 

@@ -92,15 +92,11 @@ FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [
 { #category : #copying }
 FluidBuilder >> fillInstanceSideFromClass: aClass [
 
-	| tag |
-
 	slotsToBuild := aClass slots.
 	uses := aClass traitComposition.
 	self package: aClass package name.
 
-	tag := (aClass package classTagForClass: aClass).
-	tag ifNotNil: [ :s |
-		s isRoot ifFalse: [self tag: (aClass package classTagForClass: aClass) name ]]
+	aClass packageTag ifNotNil: [ :tag | tag isRoot ifFalse: [ self tag: tag name ] ]
 ]
 
 { #category : #building }

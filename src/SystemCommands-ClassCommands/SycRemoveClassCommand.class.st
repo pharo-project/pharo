@@ -16,9 +16,10 @@ SycRemoveClassCommand >> asRefactorings [
 ]
 
 { #category : #execution }
-SycRemoveClassCommand >> asRefactoringsOfClass: aClass [
-
-	^{aClass classNames: (classes collect: [:each | each name])}
+SycRemoveClassCommand >> asRefactoringsOfClass: aRefactoring [
+	"No idea why we are returning a list of a single refactoring"
+	
+	^ { aRefactoring classNames: (classes collect: [:each | each name])}
 ]
 
 { #category : #execution }

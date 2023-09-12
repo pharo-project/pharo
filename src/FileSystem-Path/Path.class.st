@@ -585,13 +585,12 @@ Path >> segments [
 
 { #category : #navigating }
 Path >> withExtension: extension [
-	| basename name |
-	basename := self basename.
-	^ (basename endsWith: extension)
-		ifTrue: [ self ]
-		ifFalse:
-			[name := basename copyUpToLast: self extensionDelimiter.
-			self withName: name extension: extension]
+
+	^ (self basename endsWith:
+		   (extension copyWithFirst: self extensionDelimiter))
+		  ifTrue: [ self ]
+		  ifFalse: [
+		  self withName: self basenameWithoutExtension extension: extension ]
 ]
 
 { #category : #private }

@@ -16,7 +16,7 @@ ReRefactoringCritique >> change [
 	"return changes provided by the refactoring"
 
 	alreadyExecuted ifFalse: [
-		refactoring primitiveExecute.
+		refactoring generateChanges.
 		alreadyExecuted := true ].
 
 	^ refactoring changes

@@ -10,5 +10,5 @@ Class {
 { #category : #preconditions }
 RBCompositeContinuingRefactoring >> privateTransform [
 
-	refactorings do: [ :each | [ each primitiveExecute] on: RBRefactoringError do: [ :ex | ] ]
+	refactorings do: [ :each | [ each generateChanges] on: RBRefactoringError do: [ :ex | ] ]
 ]

@@ -72,11 +72,6 @@ RubCharacterScanner >> addKern: kernDelta [
 	kern := kern + kernDelta
 ]
 
-{ #category : #private }
-RubCharacterScanner >> backgroundColor: ignored [
-	"Overridden in DisplayScanner"
-]
-
 { #category : #scanning }
 RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
 	"Primitive. This is the inner loop of text display--but see
@@ -208,17 +203,6 @@ RubCharacterScanner >> leadingTab [
 ]
 
 { #category : #scanning }
-RubCharacterScanner >> measureString: aString inFont: aFont from: startIndex to: stopIndex [
-	"WARNING: In order to use this method the receiver has to be set up using #initializeStringMeasurer"
-	destX := destY := lastIndex := 0.
-	baselineY := aFont ascent.
-	font := aFont.  " added Dec 03, 2004 "
-"	map := aFont characterToGlyphMap."
-	self scanCharactersFrom: startIndex to: stopIndex in: aString rightX: 999999 stopConditions: stopConditions kern: 0.
-	^destX
-]
-
-{ #category : #scanning }
 RubCharacterScanner >> nextTabXFrom: anX [
 	"Tab stops are distances from the left margin. Set the distance into the
 	argument, anX, normalized for the paragraph's left margin."
@@ -302,19 +286,11 @@ RubCharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceSt
 { #category : #scanning }
 RubCharacterScanner >> scanMultiCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
 
-	| ascii f nextDestX maxAscii floatDestX widthAndKernedWidth nextChar atEndOfRun |
+	| ascii nextDestX maxAscii floatDestX widthAndKernedWidth nextChar atEndOfRun |
 	lastIndex := startIndex.
 	lastIndex > stopIndex ifTrue: [lastIndex := stopIndex. ^ stops endOfRun].
 	font ifNil: [font := TextStyle defaultFont fontArray at: 1].
-	font isFontSet ifTrue: [
-		f := [font fontArray at: 1]
-			on: Exception do: [:ex | nil].
-		f ifNil: [ f := font fontArray at: 1].
-		maxAscii := f maxAscii.
-		spaceWidth := f widthOf: Character space.
-	] ifFalse: [
-		maxAscii := font maxAscii.
-	].
+	maxAscii := font maxAscii.
 	floatDestX := destX.
 	widthAndKernedWidth := Array new: 2.
 	atEndOfRun := false.
@@ -429,10 +405,4 @@ RubCharacterScanner >> text: t textStyle: ts [
 { #category : #private }
 RubCharacterScanner >> textColor: ignored [
 	"Overridden in DisplayScanner"
-]
-
-{ #category : #'multilingual scanning' }
-RubCharacterScanner >> widthOf: char inFont: aFont [
-
-	^ aFont widthOf: char
 ]

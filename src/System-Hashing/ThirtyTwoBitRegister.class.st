@@ -6,20 +6,9 @@ This class is primarily meant for use by the SecureHashAlgorithm class.
 "
 Class {
 	#name : #ThirtyTwoBitRegister,
-	#superclass : #Object,
-	#instVars : [
-		'hi',
-		'low'
-	],
+	#superclass : #FixedBitWidthRegister,
 	#category : #'System-Hashing-Core'
 }
-
-{ #category : #'instance creation' }
-ThirtyTwoBitRegister class >> new [
-	"Answer a new instance whose initial contents is zero."
-
-	^ super new load: 0
-]
 
 { #category : #'accumulator ops' }
 ThirtyTwoBitRegister >> += aThirtTwoBitRegister [
@@ -36,7 +25,7 @@ ThirtyTwoBitRegister >> asByteArray [
 	^ ByteArray with: (low bitAnd: 16rFF) with: (low bitShift: -8) with: (hi bitAnd: 16rFF) with: (hi bitShift: -8)
 ]
 
-{ #category : #accessing }
+{ #category : #converting }
 ThirtyTwoBitRegister >> asInteger [
 	"Answer the integer value of my current contents."
 
@@ -54,14 +43,6 @@ ThirtyTwoBitRegister >> asReverseInteger [
 ]
 
 { #category : #'accumulator ops' }
-ThirtyTwoBitRegister >> bitAnd: aThirtTwoBitRegister [
-	"Replace my contents with the bitwise AND of the given register and my current contents."
-
-	hi := hi bitAnd: aThirtTwoBitRegister hi.
-	low := low bitAnd: aThirtTwoBitRegister low
-]
-
-{ #category : #'accumulator ops' }
 ThirtyTwoBitRegister >> bitInvert [
 	"Replace my contents with the bitwise inverse my current contents."
 
@@ -70,25 +51,9 @@ ThirtyTwoBitRegister >> bitInvert [
 ]
 
 { #category : #'accumulator ops' }
-ThirtyTwoBitRegister >> bitOr: aThirtTwoBitRegister [
-	"Replace my contents with the bitwise OR of the given register and my current contents."
-
-	hi := hi bitOr: aThirtTwoBitRegister hi.
-	low := low bitOr: aThirtTwoBitRegister low
-]
-
-{ #category : #'accumulator ops' }
 ThirtyTwoBitRegister >> bitShift: anInteger [
 	"Replace my contents with the bitShift of anInteger."
 	self load: (self asInteger bitShift: anInteger)
-]
-
-{ #category : #'accumulator ops' }
-ThirtyTwoBitRegister >> bitXor: aThirtTwoBitRegister [
-	"Replace my contents with the bitwise exclusive OR of the given register and my current contents."
-
-	hi := hi bitXor: aThirtTwoBitRegister hi.
-	low := low bitXor: aThirtTwoBitRegister low
 ]
 
 { #category : #accessing }
@@ -103,20 +68,6 @@ ThirtyTwoBitRegister >> byteAt: anInteger [
 	anInteger = 2 ifTrue: [^ hi bitAnd: 16rFF].
 	anInteger = 3 ifTrue: [^ low bitShift: -8].
 	anInteger = 4 ifTrue: [^ low bitAnd: 16rFF]
-]
-
-{ #category : #copying }
-ThirtyTwoBitRegister >> copy [
-	"Use the clone primitive for speed."
-
-	<primitive: 148>
-	^ super copy
-]
-
-{ #category : #accessing }
-ThirtyTwoBitRegister >> hi [
-
-	^ hi
 ]
 
 { #category : #'accumulator ops' }
@@ -158,20 +109,6 @@ ThirtyTwoBitRegister >> loadFrom: aByteArray at: index [
 
 	hi := ((aByteArray at: index) bitShift: 8) + ( aByteArray at: index + 1).
 	low := ((aByteArray at: index + 2) bitShift: 8) + ( aByteArray at: index + 3)
-]
-
-{ #category : #accessing }
-ThirtyTwoBitRegister >> low [
-
-	^ low
-]
-
-{ #category : #printing }
-ThirtyTwoBitRegister >> printOn: aStream [
-	"Print my contents in hex with a leading 'R' to show that it is a register object being printed."
-
-	aStream nextPutAll: 'R:'.
-	self asInteger storeOn: aStream base: 16
 ]
 
 { #category : #accessing }

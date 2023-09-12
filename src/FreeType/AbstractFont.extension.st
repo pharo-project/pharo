@@ -2,11 +2,23 @@ Extension { #name : #AbstractFont }
 
 { #category : #'*FreeType-addition' }
 AbstractFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint [
+
+	^ self displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: 1
+]
+
+{ #category : #'*FreeType-addition' }
+AbstractFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
 	"display the strikeout if appropriate for the receiver"
 ]
 
 { #category : #'*FreeType-addition' }
 AbstractFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint [
+
+	^ self displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: 1
+]
+
+{ #category : #'*FreeType-addition' }
+AbstractFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
 	"display the underline if appropriate for the receiver"
 ]
 

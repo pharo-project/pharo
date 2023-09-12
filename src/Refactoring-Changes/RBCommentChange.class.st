@@ -55,7 +55,7 @@ RBCommentChange >> comment: aString [
 ]
 
 { #category : #private }
-RBCommentChange >> primitiveExecute [
+RBCommentChange >> generateChanges [
 
 	self changeClass comment: comment stamp: self changeStamp.
 	SystemAnnouncer uniqueInstance classCommented: self changeClass

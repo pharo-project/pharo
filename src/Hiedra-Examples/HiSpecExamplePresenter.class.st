@@ -77,12 +77,12 @@ HiSpecExamplePresenter >> initializeActionBar [
 	refreshButton := self newButton
 		label: 'Redraw';
 		help: 'Refresh the table (and redraw all Hiedra cells with current rendering parameters).';
-		action: [ UIManager default defer: [ self forceRefreshHiedra ] ];
+		action: [ self defer: [ self forceRefreshHiedra ] ];
 		yourself.
 	inspectButton := self newButton
 		label: 'Renderer';
 		help: ('Inspect the Hiedra renderer, that has the rendering parameters. Press on {1} button to see the effect of any change on the renderer.' format: { refreshButton label });
-		action: [ UIManager default defer: [ hiedraColumnController renderer inspect ] ];
+		action: [ self defer: [ hiedraColumnController renderer inspect ] ];
 		yourself.
 
 	actionBar := self newActionBar

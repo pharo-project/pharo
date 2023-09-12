@@ -165,7 +165,8 @@ RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 RubSmalltalkCodeMode >> formatMethodCode [
 	| source tree formatted |
 	source := self textArea text asString.
-	tree := RBParser parseMethod: source onError: [ :msg :pos | ^ self ].
+	tree := self parseSource: source.
+	tree checkFaulty: [ :msg :pos | ^self ].
 	formatted := tree formattedCodeIn: classOrMetaclass.
 	formatted = source
 		ifTrue: [ ^ self ].

@@ -41,30 +41,31 @@ MCStReader >> categoryFromDoIt: aString [
 
 { #category : #reading }
 MCStReader >> classDefinitionFrom: aRingClass [
+
 	| tokens traitCompositionString lastIndex classTraitCompositionString |
 	tokens := aRingClass definitionSource parseLiterals.
 	traitCompositionString := (aRingClass definitionSource readStream
-		match: 'uses:';
-		upToAll: 'instanceVariableNames:') trimBoth.
+		                           match: 'uses:';
+		                           upToAll: 'instanceVariableNames:') trimBoth.
 	classTraitCompositionString := (aRingClass classSide definitionSource asString readStream
-		match: 'uses:';
-		upToAll: 'instanceVariableNames:') trimBoth.
-	traitCompositionString isEmpty ifTrue: [traitCompositionString := '{}'].
-	classTraitCompositionString isEmpty ifTrue: [classTraitCompositionString := '{}'].
+		                                match: 'uses:';
+		                                upToAll: 'instanceVariableNames:') trimBoth.
+	traitCompositionString isEmpty ifTrue: [ traitCompositionString := '{}' ].
+	classTraitCompositionString isEmpty ifTrue: [ classTraitCompositionString := '{}' ].
 	lastIndex := tokens size.
-	^ MCClassDefinition
-		name: (tokens at: 3)
-		superclassName: (tokens at: 1)
-		traitComposition: traitCompositionString
-		classTraitComposition: classTraitCompositionString
-		category: (tokens at: lastIndex)
-		instVarNames: ((tokens at: lastIndex - 6) findTokens: ' ')
-		classVarNames: ((tokens at: lastIndex - 4) findTokens: ' ')
-		poolDictionaryNames: ((tokens at: lastIndex - 2) findTokens: ' ')
-		classInstVarNames: (self classInstVarNamesFor: aRingClass)
-		type: (self typeOfSubclass: (tokens at: 2))
-		comment: (self commentFor: aRingClass)
-		commentStamp: (self commentStampFor: aRingClass)
+	^ (MCClassDefinition named: (tokens at: 3))
+		  superclassName: (tokens at: 1);
+		  traitComposition: traitCompositionString;
+		  classTraitComposition: classTraitCompositionString;
+		  category: (tokens at: lastIndex);
+		  instVarNames: ((tokens at: lastIndex - 6) findTokens: ' ');
+		  classVarNames: ((tokens at: lastIndex - 4) findTokens: ' ');
+		  poolDictionaryNames: ((tokens at: lastIndex - 2) findTokens: ' ');
+		  classInstVarNames: (self classInstVarNamesFor: aRingClass);
+		  type: (self typeOfSubclass: (tokens at: 2));
+		  comment: (self commentFor: aRingClass);
+		  commentStamp: (self commentStampFor: aRingClass);
+		  yourself
 ]
 
 { #category : #reading }
@@ -122,15 +123,6 @@ MCStReader >> readStream [
 	^ ('!!
 
 ', stream contents) readStream
-]
-
-{ #category : #reading }
-MCStReader >> systemOrganizationFromRecords: changeRecords [
-	| categories |
-	categories := changeRecords
-					select: [:ea | 'SystemOrganization*' match: ea string]
-					thenCollect: [:ea | (self categoryFromDoIt: ea string)].
-	^ categories isEmpty ifFalse: [MCOrganizationDefinition categories: categories asArray]
 ]
 
 { #category : #reading }

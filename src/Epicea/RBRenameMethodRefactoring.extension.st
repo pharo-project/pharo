@@ -10,5 +10,5 @@ RBRenameMethodRefactoring >> asEpiceaEvent [
 
 { #category : #'*Epicea-Refactorings' }
 RBRenameMethodRefactoring >> propagateTransformation [
-	self renameMessageSends
+	self replaceMessageSends
 ]

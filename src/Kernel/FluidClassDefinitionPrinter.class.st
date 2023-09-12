@@ -140,7 +140,7 @@ FluidClassDefinitionPrinter >> expandedDefinitionString [
 		  self sharedVariablesOn: s.
 		  self sharedPoolsOn: s.
 
-		  (forClass package classTagForClass: forClass) ifNotNil: [ :t |
+		  forClass packageTag ifNotNil: [ :t |
 			  | tag |
 			  tag := t name.
 			  tag = forClass package name
@@ -215,7 +215,7 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 		self slotsOn: s.
 		s crtab.
 
-		(forClass package classTagForClass: forClass) ifNotNil: [:t |
+		forClass packageTag ifNotNil: [:t |
 							tag := t name.
 							tag = forClass package name
 								ifFalse:  [
@@ -401,7 +401,7 @@ FluidClassDefinitionPrinter >> slotsOn: s [
 FluidClassDefinitionPrinter >> tagOn: s [
 
 	| tag |
-	(forClass package classTagForClass: forClass) ifNotNil: [ :t |
+	forClass packageTag ifNotNil: [ :t |
 		tag := t name.
 		tag = forClass package name ifFalse: [
 			s crtab.

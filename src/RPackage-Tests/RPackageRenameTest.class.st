@@ -111,13 +111,13 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 
 	self assert: (package classTagNamed: #Core ifAbsent: [ nil ]) notNil.
 	self assert: (package classTagNamed: #Util ifAbsent: [ nil ]) notNil.
-	self assert: (package classTagForClass: class1) name equals: #Core.
-	self assert: (package classTagForClass: class2) name equals: #Util.
-	self assert: (package classTagForClass: class3) name equals: #Test1.
+	self assert: (package tagOf: class1) name equals: #Core.
+	self assert: (package tagOf: class2) name equals: #Util.
+	self assert: (package tagOf: class3) name equals: #Test1.
 	package renameTo: 'Test1-Core'.
-	self assert: (package classTagForClass: class1) name equals: #Core.
-	self assert: (package classTagForClass: class2) name equals: #Util.
-	self assert: (package classTagForClass: class3) name equals: #'Test1-Core'.
+	self assert: (package tagOf: class1) name equals: #Core.
+	self assert: (package tagOf: class2) name equals: #Util.
+	self assert: (package tagOf: class3) name equals: #'Test1-Core'.
 
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1-Core'.
 	self assert: workingCopy modified

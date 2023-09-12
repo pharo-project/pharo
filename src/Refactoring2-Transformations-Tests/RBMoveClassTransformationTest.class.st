@@ -16,7 +16,7 @@ RBMoveClassTransformationTest >> testRefactoring [
 	| transformation class |
 	self assert: self class category equals: #'Refactoring2-Transformations-Tests-Test'.
 
-	transformation := (RBMoveClassTransformation move: self class name toPackage: #'Refactoring2-Transformations' inTag: #Utilities) primitiveExecute.
+	transformation := (RBMoveClassTransformation move: self class name toPackage: #'Refactoring2-Transformations' inTag: #Utilities) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -30,7 +30,7 @@ RBMoveClassTransformationTest >> testTransform [
 	| transformation class |
 	self assert: self changeMockClass category equals: #'Refactoring-Tests-Changes'.
 
-	transformation := (RBMoveClassTransformation move: self changeMockClass name toPackage: #'Refactoring2-Transformations-Tests' inTag: 'Test') primitiveExecute.
+	transformation := (RBMoveClassTransformation move: self changeMockClass name toPackage: #'Refactoring2-Transformations-Tests' inTag: 'Test') generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

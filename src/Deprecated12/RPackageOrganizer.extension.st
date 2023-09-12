@@ -15,6 +15,14 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 ]
 
 { #category : #'*Deprecated12' }
+RPackageOrganizer >> globalPackageOf: aClass [
+
+	self deprecated:
+		'This method will be removed in the future version of Pharo because the implementation does not seems to match the old method comment and the usecases needing this method are too few.'.
+	^ self packageOf: aClass
+]
+
+{ #category : #'*Deprecated12' }
 RPackageOrganizer >> includesPackage: aPackage [
 
 	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.

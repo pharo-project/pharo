@@ -47,13 +47,13 @@ RGMonticelloTest >> testConvertingMCMethodDefinition [
 
 { #category : #testing }
 RGMonticelloTest >> testConvertingMCOrganizationDefinition [
-	| mcOrganization ringOrganization mcOrganization2 |
 
-	mcOrganization := MCOrganizationDefinition categories: {#'Ring-Definitions-Core' . #'Ring-Definitions-Core-Definitions'}.
-	mcOrganization2 := MCOrganizationDefinition categories: {#'Ring-Definitions-Core' . #'Ring-Definitions-Core-Definitions' . #'Ring-Definitions-Core-Variables'}.
+	| mcOrganization ringOrganization mcOrganization2 |
+	mcOrganization := MCOrganizationDefinition packageName: #'Ring-Definitions-Core' tagNames: { #Definitions }.
+	mcOrganization2 := MCOrganizationDefinition packageName: #'Ring-Definitions-Core' tagNames: { #Definitions. #Variables }.
 	ringOrganization := mcOrganization asRingDefinition.
 
-	self assert: (ringOrganization isOrganization).
+	self assert: ringOrganization isOrganization.
 	self deny: (ringOrganization isSameRevisionAs: mcOrganization2 asRingDefinition)
 ]
 

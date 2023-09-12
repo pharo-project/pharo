@@ -20,12 +20,6 @@ RBRemoveInstanceVariable2ParametrizedTest >> testFailureNonExistantName [
 			 { 'name1'. #RBLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
-RBRemoveInstanceVariable2ParametrizedTest >> testFailureReferencedVariable [
-
-	self shouldFail: (self createRefactoringWithArguments:  { 'name'. #RBLintRuleTestData })
-]
-
 { #category : #tests }
 RBRemoveInstanceVariable2ParametrizedTest >> testRemoveLocallyDefinedInstanceVariable [
 
@@ -69,6 +63,12 @@ RBRemoveInstanceVariable2ParametrizedTest >> testRemoveNonLocalInstanceVariableP
 	self deny: (subsubclass directlyDefinesInstanceVariable: #foo1).
 	self assert: (subsubclass definesInstanceVariable: #foo1).
 	self assert: (subclass definesInstanceVariable: #foo1)
+]
+
+{ #category : #'failure tests' }
+RBRemoveInstanceVariable2ParametrizedTest >> testShouldWarnWhenVariableReferenced [
+
+	self shouldWarn: (self createRefactoringWithArguments:  { 'name'. #RBLintRuleTestData })
 ]
 
 { #category : #tests }

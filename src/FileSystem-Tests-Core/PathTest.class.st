@@ -796,7 +796,7 @@ PathTest >> testWindowsAbsolutePathName [
 ]
 
 { #category : #tests }
-PathTest >> testWithExtentionAddsExtension [
+PathTest >> testWithExtensionAddsExtension [
 	| path result |
 	path := Path * 'plonk'.
 	result := path withExtension: 'griffle'.
@@ -804,7 +804,15 @@ PathTest >> testWithExtentionAddsExtension [
 ]
 
 { #category : #tests }
-PathTest >> testWithExtentionReplacesExtension [
+PathTest >> testWithExtensionAddsExtensionNameContainsExtension [
+	| path result |
+	path := Path * 'footxt'.
+	result := path withExtension: 'txt'.
+	self assert: result basename equals: 'footxt.txt'
+]
+
+{ #category : #tests }
+PathTest >> testWithExtensionReplacesExtension [
 	| path result |
 	path := Path * 'plonk.griffle'.
 	result := path withExtension: 'griffle'.

@@ -29,7 +29,7 @@ BitBlt >> copyBitsColor: argbColorSmallInteger alpha: argbAlphaSmallInteger gamm
 ]
 
 { #category : #'*FreeType-Graphics' }
-BitBlt >> installFreeTypeFont: aFreeTypeFont foregroundColor: foregroundColor backgroundColor: backgroundColor [
+BitBlt >> installFreeTypeFont: aFreeTypeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	"Set up the parameters.  Since the glyphs in a TTCFont is 32bit depth form, it tries to use rule=34 to get better AA result if possible."
 
 	(FreeTypeSettings current useSubPixelAntiAliasing and: [destForm depth >= 8])
@@ -50,7 +50,7 @@ BitBlt >> installFreeTypeFont: aFreeTypeFont foregroundColor: foregroundColor ba
 					self combinationRule: 34]].
 	halftoneForm := nil.
 	sourceX := sourceY := 0.
-	height := aFreeTypeFont height
+	height := aFreeTypeFont height * scale
 ]
 
 { #category : #'*FreeType-Graphics' }

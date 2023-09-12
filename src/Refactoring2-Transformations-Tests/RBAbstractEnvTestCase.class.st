@@ -363,6 +363,11 @@ RBAbstractEnvTestCase >> modelWithoutRealClasses: aColOfClasses [
 	
 ]
 
+{ #category : #actions }
+RBAbstractEnvTestCase >> proceedThroughWarning: aBlock [
+	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]
+]
+
 { #category : #mocking }
 RBAbstractEnvTestCase >> rbModelForExtractMethodTest [
 
@@ -789,6 +794,23 @@ RBAbstractEnvTestCase >> rbModelForVariableTest [
 RBAbstractEnvTestCase >> setUp [
 	super setUp.
 	testingEnvironment := Smalltalk globals
+]
+
+{ #category : #actions }
+RBAbstractEnvTestCase >> shouldFail: aRefactoring [
+
+	self proceedThroughWarning: [
+		self
+			should: [ aRefactoring generateChanges ]
+			raise: RBRefactoringError
+	]
+]
+
+{ #category : #actions }
+RBAbstractEnvTestCase >> shouldWarn: aRefactoring [
+	self
+		should: [ aRefactoring generateChanges ]
+		raise: RBRefactoringWarning
 ]
 
 { #category : #accessing }

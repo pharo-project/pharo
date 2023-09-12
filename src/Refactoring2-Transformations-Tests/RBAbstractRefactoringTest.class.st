@@ -29,12 +29,12 @@ RBAbstractRefactoringTest >> createRefactoringWithModel: aRBNamespace andArgumen
 
 { #category : #parsing }
 RBAbstractRefactoringTest >> executeRefactoring: aRefactoring [
-	aRefactoring primitiveExecute
+	aRefactoring generateChanges
 ]
 
 { #category : #parsing }
 RBAbstractRefactoringTest >> executeRefactorings: aRefactoringColl [
-	aRefactoringColl do: [ :ref | ref primitiveExecute]
+	aRefactoringColl do: [ :ref | ref generateChanges]
 ]
 
 { #category : #tests }
@@ -69,11 +69,6 @@ RBAbstractRefactoringTest >> parseMethod: aString [
 { #category : #parsing }
 RBAbstractRefactoringTest >> parserClass [
 	^ RBParser
-]
-
-{ #category : #actions }
-RBAbstractRefactoringTest >> proceedThroughWarning: aBlock [
-	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]
 ]
 
 { #category : #accessing }
@@ -185,23 +180,6 @@ RBAbstractRefactoringTest >> setupVariableTypesFor: aRefactoring toReturn: anObj
 	options := aRefactoring options copy.
 	options at: #variableTypes put: [:ref :ignore1 :ignore2 | anObject].
 	aRefactoring options: options
-]
-
-{ #category : #actions }
-RBAbstractRefactoringTest >> shouldFail: aRefactoring [
-
-	self proceedThroughWarning: [
-		self
-			should: [ aRefactoring primitiveExecute ]
-			raise: RBRefactoringError
-	]
-]
-
-{ #category : #actions }
-RBAbstractRefactoringTest >> shouldWarn: aRefactoringColl [
-	self
-		should: [ self executeRefactoring: aRefactoringColl ]
-		raise: RBRefactoringWarning
 ]
 
 { #category : #actions }

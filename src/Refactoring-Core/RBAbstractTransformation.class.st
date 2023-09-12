@@ -86,6 +86,50 @@ RBAbstractTransformation class >> refactoringOptions [
 	^ RefactoringOptions
 ]
 
+{ #category : #private }
+RBAbstractTransformation >> buildSelectorString: aSelector [
+	aSelector numArgs = 0 ifTrue: [^aSelector].
+	^self buildSelectorString: aSelector
+		withPermuteMap: (1 to: aSelector numArgs)
+]
+
+{ #category : #private }
+RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection [
+
+	aSelector numArgs == 0 ifTrue: [^aSelector asString].
+	^ self 
+		buildSelectorString: aSelector
+		withPermuteMap: aPermutationCollection 
+		andNewArguments: #()
+]
+
+{ #category : #private }
+RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection andNewArguments: anArgumentsCollection [
+	| stream keywords |
+	aSelector numArgs == 0 ifTrue: [^aSelector asString].
+	stream := WriteStream on: String new.
+	keywords := aSelector keywords.
+	keywords with: aPermutationCollection
+		do:
+			[:each :i |
+			stream
+				nextPutAll: each.
+				i < 0
+				ifTrue:
+					[ stream
+						nextPut: Character space;
+						nextPut: $(;
+						nextPutAll: (anArgumentsCollection at: i abs) argValue;
+						nextPut: $)]
+				ifFalse:
+					[stream
+						nextPutAll: ' ``@arg';
+						nextPutAll: i asString ].
+			stream nextPut: Character space.
+			].
+	^stream contents
+]
+
 { #category : #accessing }
 RBAbstractTransformation >> changes [
 
@@ -151,8 +195,19 @@ RBAbstractTransformation >> emptyCondition [
 { #category : #transforming }
 RBAbstractTransformation >> execute [
 	"Check precondition, execute the transformation that produces changes and finally execute the changes"
-	self primitiveExecute.
+	self generateChanges.
 	self performChanges
+]
+
+{ #category : #executing }
+RBAbstractTransformation >> generateChanges [
+	"compatibility method RBRefactoring"
+
+	self checkPreconditions.
+	self privateTransform
+	
+	"below executes the refactoring without prompt"
+	"RBRefactoringManager instance addRefactoring: self"
 ]
 
 { #category : #accessing }
@@ -254,17 +309,6 @@ RBAbstractTransformation >> preconditions [
 	self subclassResponsibility
 ]
 
-{ #category : #executing }
-RBAbstractTransformation >> primitiveExecute [
-	"compatibility method RBRefactoring"
-
-	self checkPreconditions.
-	self privateTransform
-	
-	"below executes the refactoring without prompt"
-	"RBRefactoringManager instance addRefactoring: self"
-]
-
 { #category : #transforming }
 RBAbstractTransformation >> privateTransform [ 
 
@@ -359,7 +403,7 @@ RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
 { #category : #transforming }
 RBAbstractTransformation >> transform [
 	"Do the actual operations."
-	self deprecated: 'Use primitiveExecute or privateTransform instead. Check subclasses for more details.'. 
+	self deprecated: 'Use generateChanges or privateTransform instead. Check subclasses for more details.'. 
 	
 	self subclassResponsibility
 ]

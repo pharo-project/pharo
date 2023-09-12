@@ -65,30 +65,6 @@ RBTransformation >> asRefactoring [
 	^ self yourself
 ]
 
-{ #category : #private }
-RBTransformation >> buildSelectorString: aSelector [
-	aSelector numArgs = 0 ifTrue: [^aSelector].
-	^self buildSelectorString: aSelector
-		withPermuteMap: (1 to: aSelector numArgs)
-]
-
-{ #category : #private }
-RBTransformation >> buildSelectorString: aSelector withPermuteMap: anIntegerCollection [
-	| stream keywords |
-	aSelector numArgs == 0 ifTrue: [^aSelector asString].
-	stream := WriteStream on: String new.
-	keywords := aSelector keywords.
-	keywords with: anIntegerCollection
-		do:
-			[:each :i |
-			stream
-				nextPutAll: each;
-				nextPutAll: ' ``@arg';
-				nextPutAll: i printString;
-				nextPut: $ ].
-	^stream contents
-]
-
 { #category : #accessing }
 RBTransformation >> copyOptionsFrom: aDictionary [
 	| dict |
@@ -117,7 +93,7 @@ RBTransformation >> setOption: aSymbol toUse: aBlock [
 { #category : #transforming }
 RBTransformation >> transform [
 
-	self deprecated: 'Use primitiveExecute instead' transformWith: '`@rec transform' -> '`@rec primitiveExecute'.
+	self deprecated: 'Use generateChanges instead' transformWith: '`@rec transform' -> '`@rec generateChanges'.
 	
 	"Performs this transformation in a model,
 	 then it adds the refactoring to the manager"

@@ -64,30 +64,29 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment: classComment [
-  | categoryName className |
-  className := classPropertiesDict at: 'name'.
-  categoryName := classPropertiesDict
-    at: 'category'
-    ifAbsent: [ self packageNameFromPackageDirectory ].
-  self validateClassCategory: categoryName for: className.
-  definitions
-    add:
-      (MCClassDefinition
-        name: className
-        superclassName: (classPropertiesDict at: 'super')
-        traitComposition: (classPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
-        classTraitComposition: (classPropertiesDict at: 'classtraitcomposition' ifAbsent: [ '{}' ])
-        category: categoryName
-        instVarNames: (classPropertiesDict at: 'instvars' ifAbsent: [ #() ])
-        classVarNames: (classPropertiesDict at: 'classvars' ifAbsent: [ #() ])
-        poolDictionaryNames: (classPropertiesDict at: 'pools' ifAbsent: [ #() ])
-        classInstVarNames:
-          (classPropertiesDict at: 'classinstvars' ifAbsent: [ #() ])
-        type: (classPropertiesDict at: 'type' ifAbsent: [ 'normal' ]) asSymbol
-        comment: classComment
-        commentStamp: (classPropertiesDict at: 'commentStamp' ifAbsent: [ '' ]))
 
+	| categoryName className definition |
+	className := classPropertiesDict at: 'name'.
+	categoryName := classPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ].
+	self validateClassCategory: categoryName for: className.
 
+	definition := (MCClassDefinition named: className)
+		              superclassName: (classPropertiesDict at: 'super');
+		              category: categoryName;
+		              comment: classComment;
+		              yourself.
+
+	classPropertiesDict
+		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: 'classtraitcomposition' ifPresent: [ :composition | definition classTraitComposition: composition ];
+		at: 'instvars' ifPresent: [ :instVars | definition instVarNames: instVars ];
+		at: 'classvars' ifPresent: [ :classVars | definition classVarNames: classVars ];
+		at: 'pools' ifPresent: [ :pools | definition poolDictionaryNames: pools ];
+		at: 'classinstvars' ifPresent: [ :classInstVars | definition classInstVarNames: classInstVars ];
+		at: 'type' ifPresent: [ :type | definition type: type ];
+		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+
+	definitions add: definition
 ]
 
 { #category : #utilities }
@@ -187,23 +186,22 @@ MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment: traitComment [
-    definitions
-        add:
-            (MCTraitDefinition
-                name: (traitPropertiesDict at: 'name')
-                traitComposition: (traitPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
-                category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ])
-					instVarNames: (traitPropertiesDict at: 'instvars' ifAbsent: [ #() ])
-					classInstVarNames: ''
-					classTraitComposition: nil
-					comment: traitComment
-					commentStamp: (traitPropertiesDict at: 'commentStamp' ifAbsent: [ '' ])).
-    traitPropertiesDict at: 'classtraitcomposition' ifPresent: [:classTraitComposition |
-        definitions
-             add:
-                (MCClassTraitDefinition
-                    baseTraitName: (traitPropertiesDict at: 'name')
-                    classTraitComposition: classTraitComposition)].
+
+	| definition |
+	definition := (MCTraitDefinition named: (traitPropertiesDict at: 'name'))
+		              category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ]);
+		              comment: traitComment;
+		              yourself.
+
+	traitPropertiesDict
+		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: 'instvars' ifPresent: [ :ivars | definition instVarNames: ivars ];
+		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+
+	definitions add: definition.
+
+	traitPropertiesDict at: 'classtraitcomposition' ifPresent: [ :classTraitComposition |
+		definitions add: (MCClassTraitDefinition baseTraitName: (traitPropertiesDict at: 'name') classTraitComposition: classTraitComposition) ]
 ]
 
 { #category : #accessing }
@@ -230,22 +228,26 @@ MCFileTreeStCypressReader >> isPropertyFile: entry [
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> loadDefinitions [
-    | entries directory |
-    definitions := OrderedCollection new.
-    directory := self fileUtils directoryFromPath: self monticelloMetaDirName relativeTo: packageDirectory.
-    (self fileUtils directoryExists: directory)
-        ifTrue: [ 
-            		entries := directory entries.
-            		self
-                			addDefinitionFromFile: (entries detect: [ :entry | entry name beginsWith: 'categories' ] ifNone: [  ])
-                			inDirectory: directory ]
-	ifFalse: [definitions add: (MCOrganizationDefinition categories: {self packageNameFromPackageDirectory }) ].
-    self addClassAndMethodDefinitionsFromDirectory: packageDirectory.
-    (self fileUtils directoryExists: directory)
-        ifTrue: [ 
-            self
-                addDefinitionFromFile: (entries detect: [ :entry | entry name beginsWith: 'initializers' ] ifNone: [  ])
-                inDirectory: directory ]
+
+	| entries directory |
+	definitions := OrderedCollection new.
+	directory := self fileUtils directoryFromPath: self monticelloMetaDirName relativeTo: packageDirectory.
+	(self fileUtils directoryExists: directory)
+		ifTrue: [
+			entries := directory entries.
+			self
+				addDefinitionFromFile: (entries
+						 detect: [ :entry | entry name beginsWith: 'categories' ]
+						 ifNone: [  ])
+				inDirectory: directory ]
+		ifFalse: [ definitions add: (MCOrganizationDefinition packageName: self packageNameFromPackageDirectory) ].
+	self addClassAndMethodDefinitionsFromDirectory: packageDirectory.
+	(self fileUtils directoryExists: directory) ifTrue: [
+		self
+			addDefinitionFromFile: (entries
+					 detect: [ :entry | entry name beginsWith: 'initializers' ]
+					 ifNone: [  ])
+			inDirectory: directory ]
 ]
 
 { #category : #accessing }
