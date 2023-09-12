@@ -11,20 +11,17 @@ Class {
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryBestMatchingNameAddMethodToTheExtendingPackage [
 	"test that when we add a method  in an extension category ( beginning with*) that enlarge a package name (for example *mondrian-accessing for Mondrian), this method is added to the corresponding extending package"
 
-	| class xPackage YPackage |
+	| class xPackage yPackage |
 	xPackage := self ensureXPackage.
-	self addYCategory.
+	yPackage := self ensureYPackage.
 	self addXMatchCategory.
 
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX-YYYY'.
-
-	YPackage := self organizer packageNamed: #YYYYY.
-
+	self createNewClassNamed: 'NewClass' inCategory: 'XXXXX-YYYY'.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
 
 	self createMethodNamed: #newMethod inClass: class inCategory: '*XXXXX-YYYY'.
 
-	self deny: (YPackage includesDefinedSelector: #newMethod ofClass: class).
+	self deny: (yPackage includesDefinedSelector: #newMethod ofClass: class).
 	self assert: (xPackage includesExtensionSelector: #newMethod ofClass: class).
 
 	self assert: (class >> #newMethod) package equals: xPackage
@@ -34,18 +31,17 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryB
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryMatchingNameAddMethodToTheExtendingPackage [
 	"test that when we add a method  in an extension category ( beginning with*) that enlarge a package name (for example *mondrian-accessing for Mondrian), this method is added to the corresponding extending package"
 
-	| class xPackage YPackage |
+	| class xPackage yPackage |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	YPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self createMethodNamed: #newMethod inClass: class inCategory: '*YYYYY-subcategory'.
 
-	self assert: (YPackage includesExtensionSelector: #newMethod ofClass: class).
+	self assert: (yPackage includesExtensionSelector: #newMethod ofClass: class).
 	self deny: (xPackage includesDefinedSelector: #newMethod ofClass: class).
 
-	self assert: (class >> #newMethod) package equals: YPackage
+	self assert: (class >> #newMethod) package equals: yPackage
 ]
 
 { #category : #testing }
@@ -87,8 +83,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 
 	| class firstPackage secondPackage |
 	firstPackage := self ensureXPackage.
-	self addYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	secondPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyYyY'.
@@ -105,10 +100,9 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryW
 
 	| class firstPackage secondPackage |
 	firstPackage := self ensureXPackage.
-	self addYCategory.
+	secondPackage := self ensureYPackage.
 	self addXMatchCategory.
 
-	secondPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 
@@ -143,10 +137,8 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 	"Move a class in package XXXXX (with extensions from YYYY) to package YYYYY."
 
 	| class secondPackage |
-	self
-		ensureXPackage;
-		addYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	self ensureXPackage.
+	secondPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*' , secondPackage name.
 
@@ -165,8 +157,7 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 
 	| class firstPackage secondPackage |
 	firstPackage := self ensureXPackage.
-	self addYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	secondPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*' , secondPackage name.
 
@@ -194,8 +185,7 @@ RPackageExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsFrom
 
 	| xPackage class yPackage |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	yPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
@@ -214,8 +204,7 @@ RPackageExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsRemo
 
 	| xPackage class yPackage |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	yPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 	self createMethodNamed: 'stubMethod2' inClass: class inCategory: '*yyyyy'.
@@ -235,8 +224,7 @@ RPackageExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodDoesNotR
 
 	| xPackage class yPackage |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	yPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 	self createMethodNamed: 'stubMethod2' inClass: class inCategory: '*yyyyy'.
@@ -256,8 +244,7 @@ RPackageExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodRemoveMe
 
 	| xPackage class yPackage |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	yPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.

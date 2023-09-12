@@ -62,8 +62,7 @@ RPackageMethodsSynchronisationTest >> testModifyMethodByMovingFromClassicCategor
 
 	| class firstPackage secondPackage |
 	firstPackage := self ensureXPackage.
-	self addYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	secondPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
 
@@ -84,8 +83,7 @@ RPackageMethodsSynchronisationTest >> testModifyMethodByMovingFromExtensionCateg
 
 	| class firstPackage secondPackage |
 	firstPackage := self ensureXPackage.
-	self addYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	secondPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
@@ -101,11 +99,8 @@ RPackageMethodsSynchronisationTest >> testModifyMethodByMovingFromExtensionCateg
 
 	| class xPackage yPackage zPackage |
 	xPackage := self ensureXPackage.
-	self
-		addYCategory;
-		addZCategory.
-	yPackage := self organizer packageNamed: #YYYYY.
-	zPackage := self organizer packageNamed: #ZZZZZ.
+	yPackage := self ensureYPackage.
+	zPackage := self ensureZPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: #newMethod inClass: class inCategory: '*yyyyy'.
 

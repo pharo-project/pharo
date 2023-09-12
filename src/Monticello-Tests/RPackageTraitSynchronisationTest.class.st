@@ -12,18 +12,17 @@ Class {
 RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMethodToThePackage [
 	"test that when a method is added to a class bu using a trait, this method is not imported in the parent package of the class"
 
-	| xPackage YPackage class trait |
+	| xPackage yPackage class trait |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	YPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'trait category'.
 
 	self assertEmpty: xPackage methods.
-	self denyEmpty: YPackage methods.
+	self denyEmpty: yPackage methods.
 	class addToComposition: trait.
-	self assert: (YPackage includesDefinedSelector: #stubMethod ofClass: trait).
+	self assert: (yPackage includesDefinedSelector: #stubMethod ofClass: trait).
 	self assertEmpty: xPackage methods
 ]
 
@@ -69,10 +68,9 @@ RPackageTraitSynchronisationTest >> testAddTraitUpdateTheOrganizerMappings [
 RPackageTraitSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemoveMethodFromTraitPackage [
 	"test that when we remove a class method coming from a trait, the method is not removed from the parent package of the trait"
 
-	| xPackage YPackage class trait |
+	| xPackage yPackage class trait |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	YPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
@@ -81,7 +79,7 @@ RPackageTraitSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemove
 	class setTraitComposition: trait asTraitComposition.
 
 	class removeSelector: #stubMethod.
-	self assert: (YPackage includesDefinedSelector: #stubMethod ofClass: trait).
+	self assert: (yPackage includesDefinedSelector: #stubMethod ofClass: trait).
 	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]
 
@@ -89,17 +87,16 @@ RPackageTraitSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemove
 RPackageTraitSynchronisationTest >> testRemoveTraitMethod [
 	"test that when we remove a method from a trait used by a class, the method is removed from the trait package normally"
 
-	| xPackage YPackage class trait |
+	| xPackage yPackage class trait |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	YPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'classic protocol'.
 	class setTraitComposition: trait asTraitComposition.
 
 	trait removeSelector: #stubMethod.
-	self deny: (YPackage includesSelector: #stubMethod ofClass: trait).
+	self deny: (yPackage includesSelector: #stubMethod ofClass: trait).
 	self deny: (xPackage includesSelector: #stubMethod ofClass: class)
 ]
 
@@ -107,10 +104,9 @@ RPackageTraitSynchronisationTest >> testRemoveTraitMethod [
 RPackageTraitSynchronisationTest >> testRemoveTraitMethodOverridenByClassDoesRemoveMethodFromClassPackage [
 	"test that when we remove a class method overriding the one from a trait, the method is removed from the class package"
 
-	| xPackage YPackage class trait |
+	| xPackage yPackage class trait |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	YPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
@@ -127,10 +123,9 @@ RPackageTraitSynchronisationTest >> testRemoveTraitMethodOverridenByClassDoesRem
 RPackageTraitSynchronisationTest >> testTraitCompositionMethodsArePackagedWithTheirTraits [
 	"test that when we remove a class method coming from a trait, the method is not removed from the parent package of the trait"
 
-	| xPackage YPackage class trait |
+	| xPackage yPackage class trait |
 	xPackage := self ensureXPackage.
-	self addYCategory.
-	YPackage := self organizer packageNamed: #YYYYY.
+	yPackage := self ensureYPackage.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
@@ -138,6 +133,6 @@ RPackageTraitSynchronisationTest >> testTraitCompositionMethodsArePackagedWithTh
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'classic protocol'.
 	class setTraitComposition: trait asTraitComposition.
 
-	self assert: (YPackage includesDefinedSelector: #stubMethod ofClass: trait).
+	self assert: (yPackage includesDefinedSelector: #stubMethod ofClass: trait).
 	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]

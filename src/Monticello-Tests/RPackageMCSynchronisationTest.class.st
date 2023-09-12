@@ -22,20 +22,6 @@ RPackageMCSynchronisationTest >> addXMatchCategory [
 	self organizer addCategory: 'XXXXX-YYYY'.
 ]
 
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addYCategory [
-
-	self organizer addCategory: 'YYYYY'.
-			
-]
-
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addZCategory [
-
-	self organizer addCategory: 'ZZZZZ'.
-			
-]
-
 { #category : #setup }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
@@ -89,7 +75,19 @@ RPackageMCSynchronisationTest >> emptyOrganizer [
 { #category : #utilities }
 RPackageMCSynchronisationTest >> ensureXPackage [
 
-	^ self organizer ensurePackage: 'XXXXX'
+	^ self organizer ensurePackage: #XXXXX
+]
+
+{ #category : #utilities }
+RPackageMCSynchronisationTest >> ensureYPackage [
+
+	^ self organizer ensurePackage: #YYYYY
+]
+
+{ #category : #utilities }
+RPackageMCSynchronisationTest >> ensureZPackage [
+
+	^ self organizer ensurePackage: #ZZZZZ
 ]
 
 { #category : #'announcer handling' }
@@ -162,13 +160,9 @@ RPackageMCSynchronisationTest >> testIsDefinedAsPackageOrSubPackageInMC [
 { #category : #'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodByMovingInSameExtensionCategory [
 
-	| ann class firstPackage secondPackage |
-	ann := nil.
+	| ann class |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
 
-	firstPackage := self ensureXPackage.
-	self addYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
@@ -183,13 +177,9 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 { #category : #'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicCategories [
 
-	| ann class firstPackage secondPackage |
-	ann := nil.
+	| ann class |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
 
-	firstPackage := self ensureXPackage.
-	self addYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic'.
@@ -205,18 +195,16 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromClassicCategoryToExtensionCategory [
 
 	| ann class firstPackage secondPackage |
-	ann := nil.
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
 
 	firstPackage := self ensureXPackage.
-	self addYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	secondPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
 
 	class classify: #stubMethod under: '*yyyyy'.
 
-	self assert: ann notNil.
+	self assert: ann isNotNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
 	self assert: ann oldPackage equals: firstPackage.
 	self assert: ann newPackage equals: secondPackage.
@@ -230,23 +218,19 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 { #category : #'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromDifferentExtensionCategories [
 
-	| ann class firstPackage secondPackage thirdPackage |
-	ann := nil.
+	| ann class secondPackage thirdPackage |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
 
-	firstPackage := self ensureXPackage.
-	self
-		addYCategory;
-		addZCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
-	thirdPackage := self organizer packageNamed: #ZZZZZ.
+	self ensureXPackage.
+	secondPackage := self ensureYPackage.
+	thirdPackage := self ensureZPackage.
 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
 	class classify: #stubMethod under: '*zzzzz'.
 
-	self assert: ann notNil.
+	self assert: ann isNotNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
 	self assert: ann oldPackage equals: secondPackage.
 	self assert: ann newPackage equals: thirdPackage
@@ -256,18 +240,16 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromExtensionCategoryToClassicCategory [
 
 	| ann class firstPackage secondPackage |
-	ann := nil.
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
 
 	firstPackage := self ensureXPackage.
-	self addYCategory.
-	secondPackage := self organizer packageNamed: #YYYYY.
+	secondPackage := self ensureYPackage.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
 	class classify: #stubMethod under: 'classic one'.
 
-	self assert: ann notNil.
+	self assert: ann isNotNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
 	self assert: ann oldPackage equals: secondPackage.
 	self assert: ann newPackage equals: firstPackage
