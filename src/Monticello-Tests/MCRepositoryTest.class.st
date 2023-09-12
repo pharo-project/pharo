@@ -64,12 +64,14 @@ MCRepositoryTest >> saveSnapshot: aSnapshot named: aString [
 
 { #category : #building }
 MCRepositoryTest >> snapshot1 [
-	^ (MCSnapshot fromDefinitions: (Array with: (MCOrganizationDefinition categories: #('y'))))
+
+	^ MCSnapshot fromDefinitions: (Array with: (MCOrganizationDefinition packageName: 'y'))
 ]
 
 { #category : #building }
 MCRepositoryTest >> snapshot2 [
-	^ (MCSnapshot fromDefinitions: (Array with: (MCOrganizationDefinition categories: #('x'))))
+
+	^ MCSnapshot fromDefinitions: (Array with: (MCOrganizationDefinition packageName: 'x'))
 ]
 
 { #category : #accessing }

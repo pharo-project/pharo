@@ -320,9 +320,10 @@ DADependencyTreePresenter >> relationGraph: anObject [
 		self relationGraph packagesName first,
 		' Manifest as manuallyResolvedDependencies not detected as a dependency! Please check :' , String cr.
 	warnings 	ifNotEmpty: [
-		UIManager default
-			alert: alertMessage , (String cr join: (warnings collect: #dependency ))
-			title: 'Potential outdated dependencies' ]
+		self application newInform
+			label: alertMessage , (String cr join: (warnings collect: #dependency ));
+			title: 'Potential outdated dependencies';
+			openModal ]
 ]
 
 { #category : #actions }

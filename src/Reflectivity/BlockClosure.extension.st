@@ -6,7 +6,9 @@ BlockClosure >> rfEnsure: aBlock [
 
 	<primitive: 198>
 	<metaLinkOptions: #( + optionDisabledLink)>
-	| returnValue complete |
+	| handler complete returnValue |
+	"The handler should be in the first temporary to find it easily and support more complex unwind methods"
+	handler := aBlock.
 	returnValue := self rfvalueNoContextSwitch.
 	complete ifNil:[
 		complete := true.

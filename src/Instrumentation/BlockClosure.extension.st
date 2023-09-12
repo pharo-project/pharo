@@ -7,9 +7,11 @@ BlockClosure >> insEnsure: aBlock [
 	instrumenting I need to use the BlockClosure>>#ensure: method but if one instruments the
 	method BlockClosure>>#ensure: I will enter to an endless loop."
 
+	| handler complete returnValue |
 	<noInstrumentation>
 	<primitive: 198>
-	| complete returnValue |
+	"The handler should be in the first temporary to find it easily and support more complex unwind methods"
+	handler := aBlock.
 	returnValue := self valueNoContextSwitch.
 	complete ifNil: [
 		complete := true.

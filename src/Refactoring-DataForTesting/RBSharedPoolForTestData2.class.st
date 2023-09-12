@@ -12,5 +12,5 @@ RBSharedPoolForTestData2 >> msg4 [
 
 { #category : #'tests - perform' }
 RBSharedPoolForTestData2 >> reference [
-	^ RBRemoveClassParametrizedTest
+	^ RBRemoveClassRefactoringTest
 ]

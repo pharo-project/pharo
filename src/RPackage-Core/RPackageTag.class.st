@@ -62,7 +62,7 @@ RPackageTag >> environment [
 { #category : #testing }
 RPackageTag >> hasClass: aClass [
 
-	^ self hasClassNamed: aClass name
+	^ self classes includes: aClass instanceSide
 ]
 
 { #category : #testing }
@@ -72,7 +72,9 @@ RPackageTag >> hasClassNamed: aSymbol [
 
 { #category : #testing }
 RPackageTag >> includesClass: aClass [
-	^ self hasClassNamed: aClass name
+	"To deprecate in favor of #hasClass:"
+
+	^ self hasClass: aClass
 ]
 
 { #category : #initialization }
@@ -100,7 +102,7 @@ RPackageTag >> name [
 { #category : #accessing }
 RPackageTag >> name: aSymbol [
 
-	name := aSymbol
+	name := aSymbol asSymbol
 ]
 
 { #category : #accessing }
@@ -148,46 +150,36 @@ RPackageTag >> promoteAsPackage [
 { #category : #accessing }
 RPackageTag >> removeClass: aClass [
 
-	^ classes remove: aClass ifAbsent: [  ]
+	| oldObject |
+	oldObject := classes remove: aClass ifAbsent: [  ].
+	self isEmpty ifTrue: [ self removeFromPackage ].
+	^ oldObject
 ]
 
 { #category : #accessing }
 RPackageTag >> removeFromPackage [
-	self
-		assert: self isEmpty
-		description: 'Package tag is not empty'.
 
-	self package basicRemoveTag: self
+	self assert: self isEmpty description: 'Package tag is not empty'.
+
+	self package removeTag: self
 ]
 
 { #category : #accessing }
 RPackageTag >> renameTo: newTagName [
 
-	| oldName categoryName tagName |
-	tagName := self name.
-	oldName := self toCategoryName: tagName.
-	categoryName := self toCategoryName: newTagName.
+	| oldCategoryName newCategoryName oldTagName |
+	oldTagName := self name.
+	oldCategoryName := self toCategoryName: oldTagName.
+	newCategoryName := self toCategoryName: newTagName.
 
-	oldName = categoryName ifTrue: [ ^ self ].
+	oldTagName = newTagName ifTrue: [ ^ self ].
 
 	self basicRenameTo: newTagName.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self classes do: [ :each | each category: categoryName ].
-		self organizer renameCategory: oldName toBe: categoryName ].
-	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: tagName newName: newTagName)
-]
-
-{ #category : #accessing }
-RPackageTag >> renameTo: aString category: categoryName [
-
-	| oldName |
-	oldName := self toCategoryName: self name.
-	oldName = categoryName ifTrue: [ ^ self ].
-
-	self basicRenameTo: aString.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self classes do: [ :each | each category: categoryName ].
-		self organizer renameCategory: oldName toBe: categoryName ]
+		self flag: #package. "This should be removed with the system organizer."
+		self classes do: [ :each | each category: newCategoryName ].
+		self organizer renameCategory: oldCategoryName toBe: newCategoryName ].
+	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 
 { #category : #accessing }

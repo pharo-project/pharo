@@ -303,7 +303,7 @@ RBNamespace >> classObjectFor: anObject [
 	^ anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - classes' }
 RBNamespace >> classesReferencingClass: aRBClass [ 
 
 	| classes |

@@ -8,34 +8,26 @@ Trait >> asClassDefinition [
 				
 	This is produces by definitionString on slot while x is produced simnply by invoking name.
 	"
-	| classTraitCompositionToUse |
-	classTraitCompositionToUse := self class traitCompositionString.
 
-	^ self needsSlotClassDefinition
-		ifTrue: [ 
-			MCTraitDefinition
-				name: self name
-				traitComposition: self traitCompositionString
-				category: self category 
-				instVarNames: (self localSlots collect: [:each |each definitionString])
-				classInstVarNames: (self classSide localSlots collect: [:each |each definitionString])
-				classTraitComposition: classTraitCompositionToUse
-				comment: self comment
-				commentStamp: self commentStamp ]
-		 ifFalse: [  
-			MCTraitDefinition
-				name: self name
-				traitComposition: self traitCompositionString
-				category: self category 
-				instVarNames: (self localSlots collect: [ :each | each name ])
-				classInstVarNames: (self class localSlots collect: [ :each | each name ])
-				classTraitComposition: classTraitCompositionToUse
-				comment: self comment
-				commentStamp: self commentStamp
-				]
-		
-	
-		
+	| definition |
+	definition := (MCTraitDefinition named: self name)
+		              traitComposition: self traitCompositionString;
+		              category: self category;
+		              classTraitComposition: self class traitCompositionString;
+		              comment: self comment;
+		              commentStamp: self commentStamp.
+
+	self needsSlotClassDefinition
+		ifTrue: [
+			definition
+				instVarNames: (self localSlots collect: [ :each | each definitionString ]);
+				classInstVarNames: (self classSide localSlots collect: [ :each | each definitionString ]) ]
+		ifFalse: [
+			definition
+				instVarNames: (self localSlots collect: [ :each | each name ]);
+				classInstVarNames: (self class localSlots collect: [ :each | each name ]) ].
+
+	^ definition
 ]
 
 { #category : #'*Monticello' }
