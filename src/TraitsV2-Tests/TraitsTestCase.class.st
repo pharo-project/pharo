@@ -78,23 +78,19 @@ TraitsTestCase >> c9 [
 	^TraitsResource current c9
 ]
 
-{ #category : #running }
-TraitsTestCase >> categoryName [
-	^self class category
-]
-
 { #category : #utilities }
 TraitsTestCase >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
-	| class |
 
+	| class |
 	class := self class classInstaller make: [ :aBuilder |
-		aBuilder name: aSymbol;
-			superclass: aClass;
-			traitComposition: aTraitComposition;
-			package: self categoryName ].
+		         aBuilder
+			         name: aSymbol;
+			         superclass: aClass;
+			         traitComposition: aTraitComposition;
+			         package: self packageName ].
 
 	self createdClassesAndTraits add: class.
-	^class
+	^ class
 ]
 
 { #category : #utilities }
@@ -105,7 +101,7 @@ TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 		aBuilder
 			name: aSymbol;
 			traitComposition: aTraitComposition;
-			package: self categoryName;
+			package: self packageName;
 			beTrait ].
 
 	self createdClassesAndTraits add: trait.
@@ -117,6 +113,12 @@ TraitsTestCase >> createdClassesAndTraits [
 	createdClassesAndTraits ifNil: [
 		createdClassesAndTraits := OrderedCollection new].
 	^createdClassesAndTraits
+]
+
+{ #category : #running }
+TraitsTestCase >> packageName [
+
+	^ self class packageName
 ]
 
 { #category : #utilities }
