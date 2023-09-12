@@ -312,9 +312,7 @@ MCWorkingCopy class >> workingCopiesForPackage: aPackage do: aBlock [
 	| packageName |
 	packageName := aPackage name.
 
-	self registry
-		select: [ :workingCopy | workingCopy packageName = packageName ]
-		thenDo: aBlock
+	self registry select: [ :workingCopy | workingCopy packageName = packageName ] thenDo: aBlock
 ]
 
 { #category : #operations }
