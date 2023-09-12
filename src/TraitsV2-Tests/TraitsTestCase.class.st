@@ -2,8 +2,7 @@ Class {
 	#name : #TraitsTestCase,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'createdClassesAndTraits',
-		'oldAnnouncer'
+		'createdClassesAndTraits'
 	],
 	#category : #'TraitsV2-Tests'
 }
@@ -126,14 +125,6 @@ TraitsTestCase >> resourceClassesAndTraits [
 	^TraitsResource current createdClassesAndTraits
 ]
 
-{ #category : #running }
-TraitsTestCase >> setUp [
-
-	super setUp.
-	oldAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil
-]
-
 { #category : #accessing }
 TraitsTestCase >> t1 [
 	^TraitsResource current t1
@@ -191,12 +182,12 @@ TraitsTestCase >> t9 [
 
 { #category : #running }
 TraitsTestCase >> tearDown [
+
 	TraitsResource reset.
-	self createdClassesAndTraits
-		do: [ :aClassOrTrait || behaviorName |
-			behaviorName := aClassOrTrait name.
-			testingEnvironment at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ]].
+	self createdClassesAndTraits do: [ :aClassOrTrait |
+		| behaviorName |
+		behaviorName := aClassOrTrait name.
+		testingEnvironment at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ] ].
 	createdClassesAndTraits := nil.
-	SystemAnnouncer announcer: oldAnnouncer.
 	super tearDown
 ]

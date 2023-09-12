@@ -49,12 +49,12 @@ TraitFileOutTest >> setUp [
 
 { #category : #running }
 TraitFileOutTest >> tearDown [
+
 	| dir |
 	dir := FileSystem workingDirectory.
-	self createdClassesAndTraits, self resourceClassesAndTraits  do: [:each |
-		(dir / each asString,'st') ensureDelete ] .
-	(dir / self packageName,'st') ensureDelete.
-	self packageOrganizer removeSystemCategory: self packageName.
+	self createdClassesAndTraits , self resourceClassesAndTraits do: [ :each | (dir / each asString , 'st') ensureDelete ].
+	(dir / self packageName , 'st') ensureDelete.
+	(self packageOrganizer packageNamed: self packageName ifAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	"Ensure cleaning of obsoletes refs"
 	ca := cb := ta := tb := tc := td := nil.
 	super tearDown
@@ -67,7 +67,7 @@ TraitFileOutTest >> testFileOutCategory [
 
 	self timeLimit: 30 seconds.
 	self packageOrganizer fileOutCategory: self packageName.
-	self packageOrganizer removeSystemCategory: self packageName.
+	(self packageOrganizer packageNamed: self packageName ifAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	self deny: (testingEnvironment keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
 
 	CodeImporter evaluateFileNamed: (self packageName , '.st').
