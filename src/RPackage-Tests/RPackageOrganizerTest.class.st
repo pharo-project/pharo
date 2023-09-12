@@ -298,6 +298,19 @@ RPackageOrganizerTest >> testRemovePackage [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testRenameUpdateTheOrganizer [
+	"test that when we rename a category, the organizer dictionary is update with this new name, so that we can access the package with this new name as key"
+
+	| package |
+	package := self createNewPackageNamed: #Test1.
+
+	self organizer renamePackage: package to: #Test2.
+	self assert: package name equals: #Test2.
+	self assert: (self organizer packageNamed: #Test2) identicalTo: package.
+	self deny: (self organizer hasPackage: #Test1)
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testTestPackageNames [
 
 	| packages |
