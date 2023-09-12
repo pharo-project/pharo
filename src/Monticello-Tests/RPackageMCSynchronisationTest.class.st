@@ -18,30 +18,8 @@ Class {
 }
 
 { #category : #utilities }
-RPackageMCSynchronisationTest >> addXCategory [
-	self organizer addCategory: 'XXXXX'.
-]
-
-{ #category : #utilities }
 RPackageMCSynchronisationTest >> addXMatchCategory [
 	self organizer addCategory: 'XXXXX-YYYY'.
-]
-
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addXYCategory [
-
-	self addXCategory.
-	self addYCategory.
-			
-]
-
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addXYZCategory [
-
-	self addXCategory.
-	self addYCategory.
-	self addZCategory.
-			
 ]
 
 { #category : #utilities }
@@ -106,6 +84,12 @@ RPackageMCSynchronisationTest >> createMethodNamed: methodName inClassSideOfClas
 RPackageMCSynchronisationTest >> emptyOrganizer [ 
 
 	^ emptyOrganizer
+]
+
+{ #category : #utilities }
+RPackageMCSynchronisationTest >> ensureXPackage [
+
+	^ self organizer ensurePackage: 'XXXXX'
 ]
 
 { #category : #'announcer handling' }
@@ -180,12 +164,11 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 
 	| ann class firstPackage secondPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
-	secondPackage := self organizer  packageNamed: #YYYYY.
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
+
+	firstPackage := self ensureXPackage.
+	self addYCategory.
+	secondPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
@@ -202,12 +185,11 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 
 	| ann class firstPackage secondPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
-	secondPackage := self organizer  packageNamed: #YYYYY.
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
+
+	firstPackage := self ensureXPackage.
+	self addYCategory.
+	secondPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic'.
@@ -224,12 +206,11 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 
 	| ann class firstPackage secondPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
-	secondPackage := self organizer  packageNamed: #YYYYY.
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
+
+	firstPackage := self ensureXPackage.
+	self addYCategory.
+	secondPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
 
@@ -251,11 +232,12 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 
 	| ann class firstPackage secondPackage thirdPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYZCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
+
+	firstPackage := self ensureXPackage.
+	self
+		addYCategory;
+		addZCategory.
 	secondPackage := self organizer packageNamed: #YYYYY.
 	thirdPackage := self organizer packageNamed: #ZZZZZ.
 
@@ -275,12 +257,11 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 
 	| ann class firstPackage secondPackage |
 	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
-	secondPackage := self organizer  packageNamed: #YYYYY.
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
+
+	firstPackage := self ensureXPackage.
+	self addYCategory.
+	secondPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
