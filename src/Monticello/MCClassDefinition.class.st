@@ -12,10 +12,10 @@ Class {
 		'type',
 		'comment',
 		'commentStamp',
-		'traitComposition',
-		'classTraitComposition',
 		'packageName',
-		'tagName'
+		'tagName',
+		'traitComposition',
+		'classTraitComposition'
 	],
 	#category : #'Monticello-Modeling'
 }
