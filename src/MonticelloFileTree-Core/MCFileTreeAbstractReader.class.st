@@ -8,7 +8,8 @@ Class {
 		'packageDirectory',
 		'packageProperties'
 	],
-	#category : #'MonticelloFileTree-Core'
+	#category : #'MonticelloFileTree-Core',
+	#package : #'MonticelloFileTree-Core'
 }
 
 { #category : #accessing }

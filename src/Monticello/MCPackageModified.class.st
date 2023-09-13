@@ -7,7 +7,9 @@ Class {
 	#instVars : [
 		'package'
 	],
-	#category : #'Monticello-Announcements'
+	#category : #'Monticello-Announcements',
+	#package : #Monticello,
+	#tag : #Announcements
 }
 
 { #category : #'instance creation' }

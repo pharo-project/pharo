@@ -8,7 +8,9 @@ Class {
 		'frontier',
 		'bag'
 	],
-	#category : #'Monticello-Versioning'
+	#category : #'Monticello-Versioning',
+	#package : #Monticello,
+	#tag : #Versioning
 }
 
 { #category : #'instance creation' }

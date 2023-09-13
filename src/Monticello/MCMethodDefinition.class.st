@@ -28,7 +28,9 @@ Class {
 		'Definitions',
 		'InitializersEnabled'
 	],
-	#category : #'Monticello-Modeling'
+	#category : #'Monticello-Modeling',
+	#package : #Monticello,
+	#tag : #Modeling
 }
 
 { #category : #initialization }

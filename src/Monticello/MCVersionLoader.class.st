@@ -7,7 +7,9 @@ Class {
 	#instVars : [
 		'versions'
 	],
-	#category : #'Monticello-Loading'
+	#category : #'Monticello-Loading',
+	#package : #Monticello,
+	#tag : #Loading
 }
 
 { #category : #'public api' }

@@ -7,7 +7,9 @@ Class {
 	#instVars : [
 		'merger'
 	],
-	#category : #'Monticello-Versioning'
+	#category : #'Monticello-Versioning',
+	#package : #Monticello,
+	#tag : #Versioning
 }
 
 { #category : #actions }

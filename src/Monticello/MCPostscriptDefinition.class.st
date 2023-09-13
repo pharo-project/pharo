@@ -4,7 +4,9 @@ A postscript evaluated after load
 Class {
 	#name : #MCPostscriptDefinition,
 	#superclass : #MCScriptDefinition,
-	#category : #'Monticello-Modeling'
+	#category : #'Monticello-Modeling',
+	#package : #Monticello,
+	#tag : #Modeling
 }
 
 { #category : #accessing }

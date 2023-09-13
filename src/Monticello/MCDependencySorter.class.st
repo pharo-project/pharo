@@ -9,7 +9,9 @@ Class {
 		'provided',
 		'orderedItems'
 	],
-	#category : #'Monticello-Loading'
+	#category : #'Monticello-Loading',
+	#package : #Monticello,
+	#tag : #Loading
 }
 
 { #category : #'instance creation' }

@@ -9,20 +9,27 @@ Class {
 		'classTraitComposition',
 		'category'
 	],
-	#category : #'Monticello-Modeling'
+	#category : #'Monticello-Modeling',
+	#package : #Monticello,
+	#tag : #Modeling
 }
 
 { #category : #'instance creation' }
-MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: classTraitCompositionString [
-	^ self baseTraitName: aString classTraitComposition: classTraitCompositionString category: nil
+MCClassTraitDefinition class >> baseTraitName: aString [
+
+	^ self new
+		  baseTraitName: aString;
+		  yourself
 ]
 
 { #category : #'instance creation' }
 MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: classTraitCompositionString category: aCategoryString [
+
 	^ self new
-		initializeWithBaseTraitName: aString
-		classTraitComposition: classTraitCompositionString
-		category: aCategoryString
+		  baseTraitName: aString;
+		  classTraitComposition: classTraitCompositionString;
+		  category: aCategoryString;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -44,12 +51,24 @@ MCClassTraitDefinition >> baseTrait [
 
 ]
 
+{ #category : #initialization }
+MCClassTraitDefinition >> baseTraitName: aTraitName [
+
+	baseTrait := aTraitName
+]
+
 { #category : #accessing }
 MCClassTraitDefinition >> category [
 	^ category ifNil: [
 		(Smalltalk classOrTraitNamed: self baseTrait)
 			ifNotNil: [ :bTrait | bTrait category ]
 			ifNil: [ self error: 'Can''t detect the category' ] ]
+]
+
+{ #category : #initialization }
+MCClassTraitDefinition >> category: aCategoryString [
+
+	category := aCategoryString
 ]
 
 { #category : #accessing }
@@ -62,6 +81,12 @@ MCClassTraitDefinition >> classTraitComposition [
 	^classTraitComposition
 
 
+]
+
+{ #category : #initialization }
+MCClassTraitDefinition >> classTraitComposition: aString [
+
+	classTraitComposition := aString
 ]
 
 { #category : #accessing }
@@ -88,19 +113,6 @@ MCClassTraitDefinition >> hash [
 	hash := String stringHash: self classTraitCompositionString initialHash: hash.
 	category ifNotNil: [ :cat | hash := String stringHash: cat initialHash: hash ].
 	^ hash
-]
-
-{ #category : #initialization }
-MCClassTraitDefinition >> initializeWithBaseTraitName: aTraitName classTraitComposition: aString [
-	baseTrait := aTraitName.
-	classTraitComposition := aString
-]
-
-{ #category : #initialization }
-MCClassTraitDefinition >> initializeWithBaseTraitName: aTraitName classTraitComposition: aString category: aCategoryString [
-	baseTrait := aTraitName.
-	classTraitComposition := aString.
-	category := aCategoryString
 ]
 
 { #category : #testing }

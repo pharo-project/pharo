@@ -12,7 +12,9 @@ Class {
 	#instVars : [
 		'source'
 	],
-	#category : #'Monticello-Chunk Format'
+	#category : #'Monticello-Chunk Format',
+	#package : #Monticello,
+	#tag : #'Chunk Format'
 }
 
 { #category : #private }

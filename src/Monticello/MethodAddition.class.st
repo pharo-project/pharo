@@ -16,7 +16,9 @@ Class {
 		'priorProtocol',
 		'priorOrigin'
 	],
-	#category : #'Monticello-Loading'
+	#category : #'Monticello-Loading',
+	#package : #Monticello,
+	#tag : #Loading
 }
 
 { #category : #compilation }

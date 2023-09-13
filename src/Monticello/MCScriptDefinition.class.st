@@ -8,7 +8,9 @@ Class {
 		'script',
 		'packageName'
 	],
-	#category : #'Monticello-Modeling'
+	#category : #'Monticello-Modeling',
+	#package : #Monticello,
+	#tag : #Modeling
 }
 
 { #category : #'instance creation' }

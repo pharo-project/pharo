@@ -4,7 +4,9 @@ A preamble evaluated before load
 Class {
 	#name : #MCPreambleDefinition,
 	#superclass : #MCScriptDefinition,
-	#category : #'Monticello-Modeling'
+	#category : #'Monticello-Modeling',
+	#package : #Monticello,
+	#tag : #Modeling
 }
 
 { #category : #accessing }

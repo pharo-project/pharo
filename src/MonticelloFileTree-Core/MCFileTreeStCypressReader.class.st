@@ -6,7 +6,8 @@ see https://github.com/CampSmalltalk/Cypress
 Class {
 	#name : #MCFileTreeStCypressReader,
 	#superclass : #MCFileTreeStSnapshotReader,
-	#category : #'MonticelloFileTree-Core'
+	#category : #'MonticelloFileTree-Core',
+	#package : #'MonticelloFileTree-Core'
 }
 
 { #category : #accessing }
@@ -199,7 +200,9 @@ MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment
 	definitions add: definition.
 
 	traitPropertiesDict at: 'classtraitcomposition' ifPresent: [ :classTraitComposition |
-		definitions add: (MCClassTraitDefinition baseTraitName: (traitPropertiesDict at: 'name') classTraitComposition: classTraitComposition) ]
+		definitions add: ((MCClassTraitDefinition baseTraitName: (traitPropertiesDict at: 'name'))
+				 classTraitComposition: classTraitComposition;
+				 yourself) ]
 ]
 
 { #category : #accessing }

@@ -8,7 +8,9 @@ Class {
 		'version',
 		'repository'
 	],
-	#category : #'Monticello-Announcements'
+	#category : #'Monticello-Announcements',
+	#package : #Monticello,
+	#tag : #Announcements
 }
 
 { #category : #'instance creation' }

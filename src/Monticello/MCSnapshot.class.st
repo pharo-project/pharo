@@ -10,7 +10,9 @@ Class {
 		'definitions',
 		'classDefinitionCache'
 	],
-	#category : #'Monticello-Base'
+	#category : #'Monticello-Base',
+	#package : #Monticello,
+	#tag : #Base
 }
 
 { #category : #'instance creation' }

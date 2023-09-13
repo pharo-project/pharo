@@ -10,7 +10,8 @@ Class {
 		'orderedClassNames',
 		'orderedTraitNames'
 	],
-	#category : #'MonticelloFileTree-Core'
+	#category : #'MonticelloFileTree-Core',
+	#package : #'MonticelloFileTree-Core'
 }
 
 { #category : #accessing }

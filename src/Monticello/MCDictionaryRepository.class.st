@@ -8,7 +8,9 @@ Class {
 		'description',
 		'dict'
 	],
-	#category : #'Monticello-Repositories'
+	#category : #'Monticello-Repositories',
+	#package : #Monticello,
+	#tag : #Repositories
 }
 
 { #category : #comparing }

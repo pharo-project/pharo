@@ -10,7 +10,8 @@ Class {
 		'classTraitDefinitions',
 		'methodDefinitions'
 	],
-	#category : #'MonticelloFileTree-Core'
+	#category : #'MonticelloFileTree-Core',
+	#package : #'MonticelloFileTree-Core'
 }
 
 { #category : #accessing }

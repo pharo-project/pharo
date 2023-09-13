@@ -8,7 +8,9 @@ Class {
 		'base',
 		'patch'
 	],
-	#category : #'Monticello-Versioning'
+	#category : #'Monticello-Versioning',
+	#package : #Monticello,
+	#tag : #Versioning
 }
 
 { #category : #'name utilities' }

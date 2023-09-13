@@ -4,5 +4,7 @@ Mocking a pool
 Class {
 	#name : #MCMockAPoolDictionary,
 	#superclass : #SharedPool,
-	#category : #'Monticello-Mocks'
+	#category : #'Monticello-Mocks',
+	#package : #Monticello,
+	#tag : #Mocks
 }

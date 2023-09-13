@@ -17,7 +17,9 @@ Class {
 		'traitComposition',
 		'classTraitComposition'
 	],
-	#category : #'Monticello-Modeling'
+	#category : #'Monticello-Modeling',
+	#package : #Monticello,
+	#tag : #Modeling
 }
 
 { #category : #deprecated }

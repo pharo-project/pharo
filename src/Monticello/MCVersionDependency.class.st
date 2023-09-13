@@ -8,7 +8,9 @@ Class {
 		'package',
 		'versionInfo'
 	],
-	#category : #'Monticello-Versioning'
+	#category : #'Monticello-Versioning',
+	#package : #Monticello,
+	#tag : #Versioning
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,9 @@ A PackageLoader doing some additional cross-package checks
 Class {
 	#name : #MCMultiPackageLoader,
 	#superclass : #MCPackageLoader,
-	#category : #'Monticello-Loading'
+	#category : #'Monticello-Loading',
+	#package : #Monticello,
+	#tag : #Loading
 }
 
 { #category : #private }

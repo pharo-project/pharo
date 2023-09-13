@@ -4,7 +4,9 @@ MCClassTraitParser identifies classTrait.
 Class {
 	#name : #MCClassTraitParser,
 	#superclass : #MCDoItParser,
-	#category : #'Monticello-Chunk Format'
+	#category : #'Monticello-Chunk Format',
+	#package : #Monticello,
+	#tag : #'Chunk Format'
 }
 
 { #category : #'factory identification hook' }
@@ -14,14 +16,14 @@ MCClassTraitParser class >> pattern [
 
 { #category : #actions }
 MCClassTraitParser >> addDefinitionsTo: aCollection [
-	| tokens  definition traitCompositionString |
+
+	| tokens definition traitCompositionString |
 	tokens := source parseLiterals.
 	traitCompositionString := (source readStream
-		match: 'uses:';
-		upToEnd) trimBoth.
-	definition := MCClassTraitDefinition
-		baseTraitName: (tokens at: 1) 
-		classTraitComposition: traitCompositionString.
+		                           match: 'uses:';
+		                           upToEnd) trimBoth.
+	definition := (MCClassTraitDefinition baseTraitName: (tokens at: 1))
+		              classTraitComposition: traitCompositionString;
+		              yourself.
 	aCollection add: definition
-
 ]

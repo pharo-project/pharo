@@ -12,7 +12,9 @@ Class {
 		'provisions',
 		'redundantAdds'
 	],
-	#category : #'Monticello-Merging'
+	#category : #'Monticello-Merging',
+	#package : #Monticello,
+	#tag : #Merging
 }
 
 { #category : #'instance creation' }

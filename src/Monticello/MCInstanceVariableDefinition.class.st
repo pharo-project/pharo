@@ -4,7 +4,9 @@ A MCInstanceVariableDefinition represents an instance variable definition.
 Class {
 	#name : #MCInstanceVariableDefinition,
 	#superclass : #MCVariableDefinition,
-	#category : #'Monticello-Modeling'
+	#category : #'Monticello-Modeling',
+	#package : #Monticello,
+	#tag : #Modeling
 }
 
 { #category : #accessing }
