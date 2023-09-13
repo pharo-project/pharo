@@ -24,16 +24,16 @@ MCTraitDefinition class >> name: classNameString traitComposition: traitComposit
 
 { #category : #comparing }
 MCTraitDefinition >> = aDefinition [
+
 	self flag: #traits. "Ugly we harcoded the super superclass method.  We will have to refactor the definition hierarchy"
-	
-	^ (aDefinition isKindOf: MCDefinition)
-		and: [(self isRevisionOf: aDefinition)
-		and: [self traitCompositionString = aDefinition traitCompositionString
-		and: [self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [category = aDefinition category
-		and: [self slotDefinitionString = aDefinition slotDefinitionString
-		and: [self classInstVarNames  = aDefinition classInstVarNames  
-		and: [comment = aDefinition comment]]]]]]]
+
+	^ (aDefinition isKindOf: MCDefinition) and: [
+		  (self isRevisionOf: aDefinition) and: [
+			  self traitCompositionString = aDefinition traitCompositionString and: [
+				  self classTraitCompositionString = aDefinition classTraitCompositionString and: [
+					  self category = aDefinition category and: [
+						  self slotDefinitionString = aDefinition slotDefinitionString and: [
+							  self classInstVarNames = aDefinition classInstVarNames and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
 { #category : #visiting }
@@ -58,22 +58,21 @@ MCTraitDefinition >> classSlotDefinitionString [
 
 { #category : #installing }
 MCTraitDefinition >> createClass [
+
 	| trait |
-	
 	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder 
-			name: name;
-			traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
-			slots: self instanceVariables;
-			package:  category;
-			beTrait ].					
+		         aBuilder
+			         name: name;
+			         traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
+			         slots: self instanceVariables;
+			         package: self category;
+			         beTrait ].
 
 
 	trait ifNotNil: [
 		trait comment: comment stamp: commentStamp.
-		self classInstanceVariables ifNotEmpty: [
-			trait classSide slots: self classInstanceVariables ]].
-	^trait
+		self classInstanceVariables ifNotEmpty: [ trait classSide slots: self classInstanceVariables ] ].
+	^ trait
 ]
 
 { #category : #testing }
@@ -85,12 +84,8 @@ MCTraitDefinition >> hasClassInstanceVariables [
 
 { #category : #comparing }
 MCTraitDefinition >> hash [
-	| hash |
-	hash := String stringHash: name initialHash: 0.
-	hash := String stringHash: self traitCompositionString initialHash: hash.
-	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
-	^ hash
 
+	^ (name hash bitXor: traitComposition hash) bitXor: self category hash
 ]
 
 { #category : #printing }
