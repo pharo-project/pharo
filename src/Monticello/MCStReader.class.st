@@ -16,9 +16,7 @@ source := String streamContents: [:aStream| |writer|
 Class {
 	#name : #MCStReader,
 	#superclass : #MCSnapshotReader,
-	#category : #'Monticello-Storing',
-	#package : #Monticello,
-	#tag : #Storing
+	#category : #'Monticello-Storing'
 }
 
 { #category : #accessing }

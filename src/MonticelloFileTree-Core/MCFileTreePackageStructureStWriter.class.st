@@ -4,8 +4,7 @@ Writer for a package structure
 Class {
 	#name : #MCFileTreePackageStructureStWriter,
 	#superclass : #MCStWriter,
-	#category : #'MonticelloFileTree-Core',
-	#package : #'MonticelloFileTree-Core'
+	#category : #'MonticelloFileTree-Core'
 }
 
 { #category : #accessing }

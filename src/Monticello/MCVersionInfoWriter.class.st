@@ -9,9 +9,7 @@ Class {
 	#instVars : [
 		'written'
 	],
-	#category : #'Monticello-Storing',
-	#package : #Monticello,
-	#tag : #Storing
+	#category : #'Monticello-Storing'
 }
 
 { #category : #testing }

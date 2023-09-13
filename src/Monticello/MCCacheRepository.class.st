@@ -14,9 +14,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #'Monticello-Repositories',
-	#package : #Monticello,
-	#tag : #Repositories
+	#category : #'Monticello-Repositories'
 }
 
 { #category : #'accessing settings' }

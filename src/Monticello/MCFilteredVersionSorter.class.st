@@ -7,9 +7,7 @@ Class {
 	#instVars : [
 		'target'
 	],
-	#category : #'Monticello-Versioning',
-	#package : #Monticello,
-	#tag : #Versioning
+	#category : #'Monticello-Versioning'
 }
 
 { #category : #adding }

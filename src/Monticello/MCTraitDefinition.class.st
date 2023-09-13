@@ -4,9 +4,7 @@ A MCTraitDefinition represents a trait.
 Class {
 	#name : #MCTraitDefinition,
 	#superclass : #MCClassDefinition,
-	#category : #'Monticello-Modeling',
-	#package : #Monticello,
-	#tag : #Modeling
+	#category : #'Monticello-Modeling'
 }
 
 { #category : #deprecated }

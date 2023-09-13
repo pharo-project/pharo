@@ -4,9 +4,7 @@ A postscript evaluated after unloading/removing
 Class {
 	#name : #MCRemovalPostscriptDefinition,
 	#superclass : #MCScriptDefinition,
-	#category : #'Monticello-Modeling',
-	#package : #Monticello,
-	#tag : #Modeling
+	#category : #'Monticello-Modeling'
 }
 
 { #category : #accessing }

@@ -4,9 +4,7 @@ A MCScriptParser identifies script and add MCScriptDefinition.
 Class {
 	#name : #MCScriptParser,
 	#superclass : #MCDoItParser,
-	#category : #'Monticello-Chunk Format',
-	#package : #Monticello,
-	#tag : #'Chunk Format'
+	#category : #'Monticello-Chunk Format'
 }
 
 { #category : #'factory identification hook' }

@@ -4,8 +4,7 @@ A writer for Smalltalk code
 Class {
 	#name : #MCFileTreeStWriter,
 	#superclass : #MCFileTreeAbstractStWriter,
-	#category : #'MonticelloFileTree-Core',
-	#package : #'MonticelloFileTree-Core'
+	#category : #'MonticelloFileTree-Core'
 }
 
 { #category : #visiting }

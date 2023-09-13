@@ -8,9 +8,7 @@ Class {
 		'suggestion',
 		'suggestedLogComment'
 	],
-	#category : #'Monticello-Versioning',
-	#package : #Monticello,
-	#tag : #Versioning
+	#category : #'Monticello-Versioning'
 }
 
 { #category : #accessing }

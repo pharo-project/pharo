@@ -4,9 +4,7 @@ The interim record of ancestry for a working copy, gets merged version added to 
 Class {
 	#name : #MCWorkingAncestry,
 	#superclass : #MCAncestry,
-	#category : #'Monticello-Versioning',
-	#package : #Monticello,
-	#tag : #Versioning
+	#category : #'Monticello-Versioning'
 }
 
 { #category : #adding }

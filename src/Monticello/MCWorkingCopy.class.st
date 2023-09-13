@@ -33,9 +33,7 @@ Class {
 	#classInstVars : [
 		'registry'
 	],
-	#category : #'Monticello-Versioning',
-	#package : #Monticello,
-	#tag : #Versioning
+	#category : #'Monticello-Versioning'
 }
 
 { #category : #accessing }

@@ -11,9 +11,7 @@ Class {
 		'packageName',
 		'tagName'
 	],
-	#category : #'Monticello-Modeling',
-	#package : #Monticello,
-	#tag : #Modeling
+	#category : #'Monticello-Modeling'
 }
 
 { #category : #'instance creation' }

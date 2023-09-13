@@ -9,9 +9,7 @@ Class {
 		'packageName',
 		'tagNames'
 	],
-	#category : #'Monticello-Modeling',
-	#package : #Monticello,
-	#tag : #Modeling
+	#category : #'Monticello-Modeling'
 }
 
 { #category : #'instance creation' }

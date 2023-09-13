@@ -8,9 +8,7 @@ Class {
 		'versionLoader',
 		'label'
 	],
-	#category : #'Monticello-Announcements',
-	#package : #Monticello,
-	#tag : #Announcements
+	#category : #'Monticello-Announcements'
 }
 
 { #category : #accessing }

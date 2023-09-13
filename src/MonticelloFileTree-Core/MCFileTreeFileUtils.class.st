@@ -7,8 +7,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'MonticelloFileTree-Core',
-	#package : #'MonticelloFileTree-Core'
+	#category : #'MonticelloFileTree-Core'
 }
 
 { #category : #utilities }

@@ -8,9 +8,7 @@ Class {
 		'ancestors',
 		'stepChildren'
 	],
-	#category : #'Monticello-Versioning',
-	#package : #Monticello,
-	#tag : #Versioning
+	#category : #'Monticello-Versioning'
 }
 
 { #category : #ancestry }

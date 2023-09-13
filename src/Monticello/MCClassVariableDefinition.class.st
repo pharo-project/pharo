@@ -4,9 +4,7 @@ A MCClassVariableDefinition represent a class variable.
 Class {
 	#name : #MCClassVariableDefinition,
 	#superclass : #MCVariableDefinition,
-	#category : #'Monticello-Modeling',
-	#package : #Monticello,
-	#tag : #Modeling
+	#category : #'Monticello-Modeling'
 }
 
 { #category : #accessing }

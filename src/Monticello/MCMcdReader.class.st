@@ -8,9 +8,7 @@ Class {
 		'baseInfo',
 		'patch'
 	],
-	#category : #'Monticello-Storing',
-	#package : #Monticello,
-	#tag : #Storing
+	#category : #'Monticello-Storing'
 }
 
 { #category : #accessing }

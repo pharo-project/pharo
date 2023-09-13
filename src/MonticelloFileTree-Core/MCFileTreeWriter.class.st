@@ -9,8 +9,7 @@ Class {
 		'packageFileDirectory',
 		'cachedPackageFileDirectoryEntries'
 	],
-	#category : #'MonticelloFileTree-Core',
-	#package : #'MonticelloFileTree-Core'
+	#category : #'MonticelloFileTree-Core'
 }
 
 { #category : #accessing }

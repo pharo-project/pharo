@@ -8,9 +8,7 @@ Class {
 		'zip',
 		'infoWriter'
 	],
-	#category : #'Monticello-Storing',
-	#package : #Monticello,
-	#tag : #Storing
+	#category : #'Monticello-Storing'
 }
 
 { #category : #writing }

@@ -4,9 +4,7 @@ Common superclass for mocks
 Class {
 	#name : #MCMock,
 	#superclass : #Object,
-	#category : #'Monticello-Mocks',
-	#package : #Monticello,
-	#tag : #Mocks
+	#category : #'Monticello-Mocks'
 }
 
 { #category : #'as yet unclassified' }

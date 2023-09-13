@@ -21,9 +21,7 @@ Class {
 		'directory',
 		'localRepository'
 	],
-	#category : #'Monticello-Base',
-	#package : #Monticello,
-	#tag : #Base
+	#category : #'Monticello-Base'
 }
 
 { #category : #'instance creation' }

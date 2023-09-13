@@ -4,8 +4,7 @@ Snapshot reader
 Class {
 	#name : #MCFileTreeStSnapshotReader,
 	#superclass : #MCFileTreeAbstractReader,
-	#category : #'MonticelloFileTree-Core',
-	#package : #'MonticelloFileTree-Core'
+	#category : #'MonticelloFileTree-Core'
 }
 
 { #category : #accessing }
