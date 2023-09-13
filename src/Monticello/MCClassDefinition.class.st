@@ -378,9 +378,9 @@ MCClassDefinition >> packageName [
 ]
 
 { #category : #accessing }
-MCClassDefinition >> packageName: anObject [
+MCClassDefinition >> packageName: aString [
 
-	packageName := anObject
+	packageName := aString ifNotNil: [ :package | package asSymbol ]
 ]
 
 { #category : #accessing }
@@ -585,9 +585,9 @@ MCClassDefinition >> tagName [
 ]
 
 { #category : #accessing }
-MCClassDefinition >> tagName: anObject [
+MCClassDefinition >> tagName: aString [
 
-	tagName := anObject
+	tagName := aString ifNotNil: [ :tag | tag asSymbol ]
 ]
 
 { #category : #accessing }
