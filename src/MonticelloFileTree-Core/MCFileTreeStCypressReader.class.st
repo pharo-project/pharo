@@ -73,13 +73,7 @@ MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment
 		              yourself.
 
 	classPropertiesDict
-		at: 'category' ifPresent: [ :category |
-			| packageName |
-			packageName := definition packageName.
-			(self verifyCategory: category matches: packageName) ifFalse: [
-					self error: 'Class category name ' , category , ' for the class ' , definition name , ' is inconsistent with the package name ' , packageName ].
-			"If the category is the package name then it means that there is not tag"
-			category = packageName ifFalse: [ definition tagName: (category withoutPrefix: packageName , '-') ] ];
+		at: 'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
 		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
 		at: 'classtraitcomposition' ifPresent: [ :composition | definition classTraitComposition: composition ];
 		at: 'instvars' ifPresent: [ :instVars | definition instVarNames: instVars ];
@@ -192,11 +186,12 @@ MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment
 
 	| definition |
 	definition := (MCTraitDefinition named: (traitPropertiesDict at: 'name'))
-		              category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ]);
+		              packageName: self packageNameFromPackageDirectory;
 		              comment: traitComment;
 		              yourself.
 
 	traitPropertiesDict
+		at: 'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
 		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
 		at: 'instvars' ifPresent: [ :ivars | definition instVarNames: ivars ];
 		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
@@ -287,6 +282,18 @@ MCFileTreeStCypressReader >> packageNameFromPackageDirectory [
     | filename2 |
     filename2 := self fileUtils directoryName: packageDirectory.
     ^ filename2 copyFrom: 1 to: (filename2 lastIndexOf: $.) - 1
+]
+
+{ #category : #utilities }
+MCFileTreeStCypressReader >> setPackageTagIn: definition fromCategory: category [
+
+	| packageName |
+	packageName := definition packageName.
+	(self verifyCategory: category matches: packageName) ifFalse: [
+		self error: 'Class category name ' , category , ' for the class ' , definition name , ' is inconsistent with the package name ' , packageName ].
+
+	"If the category is the package name then it means that there is not tag"
+	^ category = packageName ifFalse: [ definition tagName: (category withoutPrefix: packageName , '-') ]
 ]
 
 { #category : #validation }
