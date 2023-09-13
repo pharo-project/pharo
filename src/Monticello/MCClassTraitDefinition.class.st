@@ -7,7 +7,9 @@ Class {
 	#instVars : [
 		'baseTrait',
 		'classTraitComposition',
-		'category'
+		'category',
+		'packageName',
+		'tagName'
 	],
 	#category : #'Monticello-Modeling',
 	#package : #Monticello,
@@ -37,7 +39,7 @@ MCClassTraitDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ baseTrait = aDefinition baseTrait
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ category = aDefinition category ] ] ]
+		and: [ self category = aDefinition category ] ] ]
 ]
 
 { #category : #visiting }
@@ -59,10 +61,17 @@ MCClassTraitDefinition >> baseTraitName: aTraitName [
 
 { #category : #accessing }
 MCClassTraitDefinition >> category [
+
 	^ category ifNil: [
-		(Smalltalk classOrTraitNamed: self baseTrait)
-			ifNotNil: [ :bTrait | bTrait category ]
-			ifNil: [ self error: 'Can''t detect the category' ] ]
+		  self packageName
+			  ifNil: [
+				  (Smalltalk classOrTraitNamed: self baseTrait)
+					  ifNotNil: [ :bTrait | bTrait category ]
+					  ifNil: [ self error: 'Can''t detect the category' ] ]
+			  ifNotNil: [ :package |
+				  (self tagName isNil or: [ self tagName = package ])
+					  ifTrue: [ package ]
+					  ifFalse: [ package , '-' , self tagName ] ] ]
 ]
 
 { #category : #initialization }
@@ -111,7 +120,7 @@ MCClassTraitDefinition >> hash [
 	| hash |
 	hash := String stringHash: baseTrait initialHash: 0.
 	hash := String stringHash: self classTraitCompositionString initialHash: hash.
-	category ifNotNil: [ :cat | hash := String stringHash: cat initialHash: hash ].
+	self category ifNotNil: [ :cat | hash := String stringHash: cat initialHash: hash ].
 	^ hash
 ]
 
@@ -125,6 +134,18 @@ MCClassTraitDefinition >> isClassDefinition [
 { #category : #installing }
 MCClassTraitDefinition >> load [	
 	self class compiler evaluate: self definitionString
+]
+
+{ #category : #accessing }
+MCClassTraitDefinition >> packageName [
+
+	^ packageName
+]
+
+{ #category : #accessing }
+MCClassTraitDefinition >> packageName: anObject [
+
+	packageName := anObject
 ]
 
 { #category : #printing }
@@ -157,4 +178,16 @@ MCClassTraitDefinition >> source [
 MCClassTraitDefinition >> summary [
 	^self baseTrait , ' classTrait'
 
+]
+
+{ #category : #accessing }
+MCClassTraitDefinition >> tagName [
+
+	^ tagName
+]
+
+{ #category : #accessing }
+MCClassTraitDefinition >> tagName: anObject [
+
+	tagName := anObject
 ]

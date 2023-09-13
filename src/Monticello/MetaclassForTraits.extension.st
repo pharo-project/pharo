@@ -5,6 +5,7 @@ MetaclassForTraits >> asMCDefinition [
 
 	^ (MCClassTraitDefinition baseTraitName: self instanceSide name)
 		  classTraitComposition: self traitCompositionString;
-		  category: self category;
+		  packageName: self package name;
+		  tagName: self packageTag name;
 		  yourself
 ]
