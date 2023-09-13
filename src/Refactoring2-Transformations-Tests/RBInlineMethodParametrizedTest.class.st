@@ -132,13 +132,14 @@ RBInlineMethodParametrizedTest >> testInlineMethod1 [
 	self executeRefactoring: refactoring.
 
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #caller) equals: (self parseMethod: 'caller
-									| anObject anObject1 |
-									anObject := 5.
-									anObject1 := anObject + 1.
-									Transcript
-										show: anObject1 printString;
-										cr.
-									^anObject')
+
+	| anObject anObject1 |
+	anObject := 5.
+	anObject1 := anObject + 1.
+	anObject1 printString
+		traceCr;
+		cr.
+	^ anObject')
 ]
 
 { #category : #tests }
@@ -152,14 +153,15 @@ RBInlineMethodParametrizedTest >> testInlineMethod2 [
 	self executeRefactoring: refactoring.
 
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: methodName) equals: (self parseMethod: 'caller1
-								| anObject each1 anObject1 |
-								anObject := 5.
-								anObject1 := anObject + 1.
-								each1 := anObject1 printString.
-								Transcript
-									show: each1;
-									cr.
-								[:each | each printString. ^anObject] value: each1')
+
+	| anObject each1 anObject1 |
+	anObject := 5.
+	anObject1 := anObject + 1.
+	each1 := anObject1 printString.
+	each1 traceCr.
+	[ :each |
+	each printString.
+	^ anObject ] value: each1')
 ]
 
 { #category : #tests }

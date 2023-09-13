@@ -66,7 +66,7 @@ RBClassDataForRefactoringTest >> called: anObject on1: aBlock [
 { #category : #inline }
 RBClassDataForRefactoringTest >> called: anObject on: aBlock [
 	
-	anObject printString traceCr.
+	anObject printString traceCr; cr.
 	aBlock value
 ]
 
