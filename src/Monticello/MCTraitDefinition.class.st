@@ -71,7 +71,7 @@ MCTraitDefinition >> createClass [
 
 	trait ifNotNil: [
 		trait comment: comment stamp: commentStamp.
-		self classInstanceVariables ifNotEmpty: [ trait classSide slots: self classInstanceVariables ] ].
+		self classInstanceVariables ifNotEmpty: [ :vars | trait classSide slots: vars ] ].
 	^ trait
 ]
 
