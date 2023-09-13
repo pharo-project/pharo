@@ -55,7 +55,7 @@ MCTraitParser >> addDefinitionsTo: aCollection [
 
 	definition := (MCTraitDefinition named: traitName)
 		              traitComposition: traitCompositionString;
-		              category: categoryString;
+		              packageName: categoryString;
 		              instVarNames: slotsArray;
 		              yourself.
 

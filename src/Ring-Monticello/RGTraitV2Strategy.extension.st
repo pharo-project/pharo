@@ -7,7 +7,7 @@ RGTraitV2Strategy >> asMCDefinition [
 		  superclassName: (self superclass ifNotNil: [ :aSuperclass | aSuperclass name ]);
 		  traitComposition: self owner traitCompositionString;
 		  classTraitComposition: self owner metaclass traitCompositionString;
-		  category: self category;
+		  packageName: self category;
 		  instVarNames: self instVarNames;
 		  classVarNames: self classVarNames;
 		  poolDictionaryNames: self sharedPoolNames;

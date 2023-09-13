@@ -76,7 +76,7 @@ MCTestCase >> mockClass: className super: superclassName [
 
 	^ (MCClassDefinition named: className)
 		  superclassName: superclassName;
-		  category: self mockCategoryName;
+		  packageName: self mockCategoryName;
 		  comment: (self commentForClass: className);
 		  commentStamp: (self commentStampForClass: className);
 		  yourself
