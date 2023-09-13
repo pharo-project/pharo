@@ -223,11 +223,9 @@ RBNamespace >> allReferencesTo: aSymbol inPackages: aColl do: aBlock [
 { #category : #accessing }
 RBNamespace >> allReferencesToClass: aRBClass do: aBlock [
 	self allClassesDo:
-			[:each |
+			[ :each |
 			(each whichSelectorsReferToClass: aRBClass)
-				do: [:sel | aBlock value: (each methodFor: sel)].
-			(each classSide whichSelectorsReferToClass: aRBClass)
-				do: [:sel | aBlock value: (each classSide methodFor: sel)]]
+				do: [:sel | aBlock value: (each methodFor: sel)] ]
 ]
 
 { #category : #accessing }
@@ -235,9 +233,7 @@ RBNamespace >> allReferencesToClass: aRBClass inPackages: aColl do: aBlock [
 	self allClassesInPackages: aColl do:
 			[:each |
 			(each whichSelectorsReferToClass: aRBClass)
-				do: [:sel | aBlock value: (each methodFor: sel)].
-			(each classSide whichSelectorsReferToClass: aRBClass)
-				do: [:sel | aBlock value: (each classSide methodFor: sel)]]
+				do: [:sel | aBlock value: (each methodFor: sel)]]
 ]
 
 { #category : #accessing }
@@ -547,9 +543,7 @@ RBNamespace >> privateImplementorsOf: aSelector [
 	classes := Set new.
 	self allClassesDo: [ :class |
 		(class directlyDefinesLocalMethod: aSelector)
-			ifTrue: [ classes add: class ].
-		(class classSide directlyDefinesLocalMethod: aSelector)
-			ifTrue: [ classes add: class classSide ] ].
+			ifTrue: [ classes add: class ] ].
 	^ classes
 ]
 
@@ -559,9 +553,7 @@ RBNamespace >> privateImplementorsOf: aSelector in: packages [
 	classes := Set new.
 	self allClassesInPackages: packages do: [ :class |
 		(class directlyDefinesLocalMethod: aSelector)
-			ifTrue: [ classes add: class ].
-		(class classSide directlyDefinesLocalMethod: aSelector)
-			ifTrue: [ classes add: class classSide ] ].
+			ifTrue: [ classes add: class ] ].
 	^ classes
 ]
 

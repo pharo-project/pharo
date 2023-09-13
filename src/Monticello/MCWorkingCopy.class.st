@@ -277,12 +277,7 @@ MCWorkingCopy class >> unregisterForNotifications [
 { #category : #'system changes' }
 MCWorkingCopy class >> workingCopiesForClass: aClass do: aBlock [
 
-	| package |
-	package := aClass package.
-
-	self registry
-		select: [ :workingCopy | workingCopy systemPackage = package ]
-		thenDo: aBlock
+	^ self workingCopiesForPackage: aClass package do: aBlock
 ]
 
 { #category : #'system changes' }
@@ -314,12 +309,10 @@ MCWorkingCopy class >> workingCopiesForExtensionProtocol: extensionName do: aBlo
 { #category : #'system changes' }
 MCWorkingCopy class >> workingCopiesForPackage: aPackage do: aBlock [
 
-	self registry
-		select: [ :workingCopy |
-			workingCopy systemPackage
-				ifNil: [ false ]
-				ifNotNil: [ :package | package = aPackage ] ]
-		thenDo: aBlock
+	| packageName |
+	packageName := aPackage name.
+
+	self registry select: [ :workingCopy | workingCopy packageName = packageName ] thenDo: aBlock
 ]
 
 { #category : #operations }

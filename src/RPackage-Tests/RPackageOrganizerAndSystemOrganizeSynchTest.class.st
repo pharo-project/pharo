@@ -32,8 +32,20 @@ RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingCategory [
 
 	self packageOrganizer addCategory: self packageName.
 
+	self assert: (self packageOrganizer hasPackage: self packageName).
 	self assert: (self packageOrganizer packageNames includes: self packageName).
 	self assert: (self packageOrganizer includesCategory: self packageName)
+]
+
+{ #category : #tests }
+RPackageOrganizerAndSystemOrganizeSynchTest >> testAddingCategoryAlreadyExistingDoesNotCreateNowPackage [
+
+	| package |
+	self packageOrganizer addCategory: self packageName.
+	package := self packageOrganizer packageNamed: self packageName.
+
+	self packageOrganizer addCategory: self packageName.
+	self assert: package identicalTo: (self packageOrganizer packageNamed: self packageName)
 ]
 
 { #category : #tests }

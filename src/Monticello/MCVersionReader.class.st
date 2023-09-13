@@ -62,11 +62,12 @@ MCVersionReader class >> versionInfoFromStream: aStream [
 
 { #category : #accessing }
 MCVersionReader >> basicVersion [
+
 	^ MCVersion
-		package: self package
-		info: self info
-		snapshot: [ self snapshot ]
-		dependencies: self dependencies
+		  package: self package
+		  info: self info
+		  snapshot: [ self snapshot ]
+		  dependencies: self dependencies
 ]
 
 { #category : #accessing }

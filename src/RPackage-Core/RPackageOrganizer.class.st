@@ -197,7 +197,7 @@ RPackageOrganizer >> announcer [
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	aPackagesList
-		do: [ :packageName | packages at: packageName asSymbol put: (RPackage named: packageName organizer: self) ]
+		do: [ :packageName | self basicRegisterPackage: (RPackage named: packageName organizer: self) ]
 		displayingProgress: 'Importing monticello packages'.
 
 	Smalltalk allClassesAndTraits
@@ -222,10 +222,10 @@ RPackageOrganizer >> basicRegisterPackage: aPackage [
 ]
 
 { #category : #'private - registration' }
-RPackageOrganizer >> basicUnregisterPackageNamed: aPackageName [
+RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the PackageRemoved announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
-	^ packages removeKey: aPackageName ifAbsent: [  ]
+	^ packages removeKey: aPackage name ifAbsent: [  ]
 ]
 
 { #category : #'deprecated - SystemOrganizer leftovers' }
@@ -455,7 +455,7 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 
 	"if no package was found, we try to find one matching the begining of the name specified"
 	tmpPackageName := ''.
-	packages keysDo: [ :aSymbol |
+	self packageNames do: [ :aSymbol |
 		(anExtensionName beginsWith: aSymbol asString , '-' caseSensitive: false) ifTrue: [ "we keep the longest package name found"
 			aSymbol size > tmpPackageName size ifTrue: [ tmpPackageName := aSymbol ] ] ].
 
@@ -523,7 +523,7 @@ RPackageOrganizer >> packages [
 { #category : #accessing }
 RPackageOrganizer >> packagesDo: aBlock [
 
-	packages valuesDo: aBlock
+	self packages do: aBlock
 ]
 
 { #category : #printing }
@@ -659,7 +659,7 @@ RPackageOrganizer >> removePackage: aPackage [
 		           ifTrue: [ self packageNamed: aPackage ]
 		           ifFalse: [ aPackage ].
 
-	self basicUnregisterPackageNamed: package name.
+	self basicUnregisterPackage: package.
 	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
 	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
 	SystemAnnouncer announce: (PackageRemoved to: package).
@@ -830,13 +830,13 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 { #category : #accessing }
 RPackageOrganizer >> testPackageNames [
 
-	^ packages keys select: [:nameSymbol | (self packageNamed: nameSymbol) isTestPackage]
+	^ self testPackages collect: [ :package | package name ]
 ]
 
 { #category : #accessing }
 RPackageOrganizer >> testPackages [
 
-	^ packages values select: #isTestPackage
+	^ self packages select: [ :package | package isTestPackage ]
 ]
 
 { #category : #initialization }

@@ -12,6 +12,8 @@ Class {
 		'type',
 		'comment',
 		'commentStamp',
+		'packageName',
+		'tagName',
 		'traitComposition',
 		'classTraitComposition'
 	],
@@ -51,7 +53,7 @@ MCClassDefinition >> = aDefinition [
 		and: [ superclassName = aDefinition superclassName
 		and: [ self traitCompositionString = aDefinition traitCompositionString
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ category = aDefinition category
+		and: [ self category = aDefinition category
 		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
@@ -75,7 +77,12 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 
 { #category : #accessing }
 MCClassDefinition >> category [
-	^ category
+
+	^ category ifNil: [
+		  self packageName ifNotNil: [ :package |
+			  (self tagName isNil or: [ self tagName = package ])
+				  ifTrue: [ package ]
+				  ifFalse: [ package , '-' , self tagName ] ] ]
 ]
 
 { #category : #accessing }
@@ -213,7 +220,7 @@ MCClassDefinition >> createClass [
 				traitComposition: self traitCompositionCompiled;
 				classTraitComposition: self classTraitCompositionCompiled;
 				comment: comment stamp: self commentStamp;
-				category: category;
+				category: self category;
 				environment: superClass environment ] ]
 		on: Warning , DuplicatedVariableError
 		do: [ :ex | ex resume ]
@@ -277,25 +284,15 @@ MCClassDefinition >> hasTraitComposition [
 
 { #category : #comparing }
 MCClassDefinition >> hash [
-	| hash |
-	hash := String stringHash: name initialHash: 0.
-	hash := String stringHash: superclassName initialHash: hash.
-	hash := String stringHash: self traitCompositionString initialHash: hash.
-	hash := String stringHash: self classTraitComposition asString initialHash: hash.
-	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
-	hash := String stringHash: type initialHash: hash.
-	variables do: [
-		:v |
-		hash := String stringHash: v name initialHash: hash.
-	].
-	^ hash
+
+	^ (((((name hash bitXor: superclassName hash) bitXor: traitComposition hash) bitXor: classTraitComposition hash) bitXor: self category hash) bitXor: type hash)
+		  bitXor: variables hash
 ]
 
 { #category : #initialization }
 MCClassDefinition >> initialize [
 
 	super initialize.
-	category := ''.
 	superclassName := #Object.
 	traitComposition := '{}'.
 	classTraitComposition := '{}'.
@@ -372,6 +369,18 @@ MCClassDefinition >> needsSlotClassDefinition [
 	Complex vars are encoded with a string that starts with a # or one that has a space"
 	
 	^self variables anySatisfy: [:var | (var name beginsWith:'#') or: [ var name includes: Character space ]]
+]
+
+{ #category : #accessing }
+MCClassDefinition >> packageName [
+
+	^ packageName
+]
+
+{ #category : #accessing }
+MCClassDefinition >> packageName: aString [
+
+	packageName := aString ifNotNil: [ :package | package asSymbol ]
 ]
 
 { #category : #accessing }
@@ -567,6 +576,18 @@ MCClassDefinition >> superclassName: superclassString [
 	superclassName := superclassString
 		                  ifNil: [ #nil ]
 		                  ifNotNil: [ superclassString asSymbol ]
+]
+
+{ #category : #accessing }
+MCClassDefinition >> tagName [
+
+	^ tagName
+]
+
+{ #category : #accessing }
+MCClassDefinition >> tagName: aString [
+
+	tagName := aString ifNotNil: [ :tag | tag asSymbol ]
 ]
 
 { #category : #accessing }
