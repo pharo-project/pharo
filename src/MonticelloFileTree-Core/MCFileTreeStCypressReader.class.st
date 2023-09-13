@@ -293,7 +293,7 @@ MCFileTreeStCypressReader >> setPackageTagIn: definition fromCategory: category 
 		self error: 'Class category name ' , category , ' for the class ' , definition name , ' is inconsistent with the package name ' , packageName ].
 
 	"If the category is the package name then it means that there is not tag"
-	^ category = packageName ifFalse: [ definition tagName: (category withoutPrefix: packageName , '-') ]
+	category = packageName ifFalse: [ definition tagName: (category withoutPrefix: packageName , '-') ]
 ]
 
 { #category : #validation }
