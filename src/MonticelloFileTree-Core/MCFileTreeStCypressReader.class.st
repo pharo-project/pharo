@@ -65,18 +65,21 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 { #category : #utilities }
 MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment: classComment [
 
-	| categoryName className definition |
-	className := classPropertiesDict at: 'name'.
-	categoryName := classPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ].
-	self validateClassCategory: categoryName for: className.
-
-	definition := (MCClassDefinition named: className)
+	| definition |
+	definition := (MCClassDefinition named: (classPropertiesDict at: 'name'))
 		              superclassName: (classPropertiesDict at: 'super');
-		              category: categoryName;
+		              packageName: self packageNameFromPackageDirectory;
 		              comment: classComment;
 		              yourself.
 
 	classPropertiesDict
+		at: 'category' ifPresent: [ :category |
+			| packageName |
+			packageName := definition packageName.
+			(self verifyCategory: category matches: packageName) ifFalse: [
+					self error: 'Class category name ' , category , ' for the class ' , definition name , ' is inconsistent with the package name ' , packageName ].
+			"If the category is the package name then it means that there is not tag"
+			category = packageName ifFalse: [ definition tagName: (category withoutPrefix: packageName , '-') ] ];
 		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
 		at: 'classtraitcomposition' ifPresent: [ :composition | definition classTraitComposition: composition ];
 		at: 'instvars' ifPresent: [ :instVars | definition instVarNames: instVars ];
@@ -284,23 +287,6 @@ MCFileTreeStCypressReader >> packageNameFromPackageDirectory [
     | filename2 |
     filename2 := self fileUtils directoryName: packageDirectory.
     ^ filename2 copyFrom: 1 to: (filename2 lastIndexOf: $.) - 1
-]
-
-{ #category : #validation }
-MCFileTreeStCypressReader >> validateClassCategory: categoryName for: className [
-  "https://github.com/dalehenrich/filetree/issues/136"
-
-  "class category must match the package name ... guard against manual editing mistakes"
-
-  | prefix |
-  prefix := self packageNameFromPackageDirectory.
-  (self verifyCategory: categoryName matches: prefix)
-    ifTrue: [ ^ self ].
-  self
-    error:
-      'Class category name ' , categoryName printString , ' for the class '
-        , className printString , ' is inconsistent with the package name '
-        , prefix printString
 ]
 
 { #category : #validation }
