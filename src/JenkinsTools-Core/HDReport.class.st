@@ -8,16 +8,6 @@ Class {
 }
 
 { #category : #running }
-HDReport class >> runCategories: aCollectionOfStrings [
-	^ aCollectionOfStrings do: [ :each | self runCategory: each ]
-]
-
-{ #category : #running }
-HDReport class >> runCategory: aString [
-	^ self runClasses: (self packageOrganizer classesInCategory: aString) named: aString
-]
-
-{ #category : #running }
 HDReport class >> runClasses: aCollectionOfClasses named: aString [
 	self subclassResponsibility
 ]
