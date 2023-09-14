@@ -48,17 +48,6 @@ RubDisplayScanner >> defaultTextColor [
 	^ defaultTextColor
 ]
 
-{ #category : #displaying }
-RubDisplayScanner >> displayEmbeddedForm: aForm [
-
-	aForm
-		displayOn: bitBlt destForm
-		at: destX @ (lineY + line baseline - aForm height)
-		clippingBox: bitBlt clipRect
-		rule: Form blend
-		fillColor: Color white
-]
-
 { #category : #scanning }
 RubDisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 	"The call on the primitive (scanCharactersFrom:to:in:rightX:) will be interrupted according to an array of stop conditions passed to the scanner at which time the code to handle the stop condition is run and the call on the primitive continued until a stop condition returns true (which means the line has terminated).  leftInRun is the # of characters left to scan in the current run; when 0, it is time to call setStopConditions."
@@ -109,14 +98,6 @@ RubDisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 		"or: [lastIndex > runStopIndex]."
 	] whileFalse.
 	^ runStopIndex - lastIndex   "Number of characters remaining in the current run"
-]
-
-{ #category : #displaying }
-RubDisplayScanner >> displayString: string from: startIndex to: stopIndex at: aPoint [
-	font displayString: string on: bitBlt
-		from: startIndex
-		to: stopIndex
-		at: aPoint kern: kern
 ]
 
 { #category : #'stop conditions' }
