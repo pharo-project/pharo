@@ -196,32 +196,34 @@ MCClassDefinition >> commentStamp: anObject [
 
 { #category : #installing }
 MCClassDefinition >> createClass [
+
 	| superClass |
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
-	name = #Context
-		ifTrue: [ Context comment = comment 
-						ifFalse: [ Context comment: comment stamp: self commentStamp ].
-					^ self ].
+	name = #Context ifTrue: [
+		Context comment = comment ifFalse: [ Context comment: comment stamp: self commentStamp ].
+		^ self ].
 
-	superClass := superclassName = #nil
-		ifFalse: [ Smalltalk globals at: superclassName ].
-	^ [ Smalltalk classInstaller
-		make: [ :builder | 
-			builder
-				superclass: superClass;
-				name: name;
-				layoutClass: (ObjectLayout layoutForType: type);
-				slots: self instanceVariables;
-				sharedVariables: self classVariables;
-				sharedPools: self sharedPoolsString;
-				classSlots: self classInstanceVariables;
-				traitComposition: self traitCompositionCompiled;
-				classTraitComposition: self classTraitCompositionCompiled;
-				comment: comment stamp: self commentStamp;
-				category: self category;
-				environment: superClass environment ] ]
-		on: Warning , DuplicatedVariableError
-		do: [ :ex | ex resume ]
+	superClass := superclassName = #nil ifFalse: [ Smalltalk globals at: superclassName ].
+	^ [
+	  Smalltalk classInstaller make: [ :builder |
+		  Stdio stdout
+			  nextPutAll: 'Type of ' , name asString , ' is ' , type asString;
+			  lf.
+		  builder
+			  superclass: superClass;
+			  name: name;
+			  layoutClass: (ObjectLayout layoutForType: type);
+			  slots: self instanceVariables;
+			  sharedVariables: self classVariables;
+			  sharedPools: self sharedPoolsString;
+			  classSlots: self classInstanceVariables;
+			  traitComposition: self traitCompositionCompiled;
+			  classTraitComposition: self classTraitCompositionCompiled;
+			  comment: comment stamp: self commentStamp;
+			  category: self category;
+			  environment: superClass environment ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex | ex resume ]
 ]
 
 { #category : #installing }
@@ -619,7 +621,10 @@ MCClassDefinition >> type: aSymbol [
 
 	type := (#( #CompiledMethod #CompiledBlock #CompiledCode ) includes: name)
 		        ifTrue: [ #compiledMethod ]
-		        ifFalse: [ aSymbol ]
+		        ifFalse: [ aSymbol ].
+	Stdio stdout
+		nextPutAll: 'Type of ' , (name ifNil: [ 'nil' ]) asString , ' is ' , type asString;
+		lf
 ]
 
 { #category : #installing }
