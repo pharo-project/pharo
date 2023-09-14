@@ -85,7 +85,6 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 	reached, then return stops at: 257. Optional.
 	See Object documentation whatIsAPrimitive."
 	| ascii nextDestX char floatDestX widthAndKernedWidth nextChar atEndOfRun |
-	<primitive: 103>
 	lastIndex := startIndex.
 	floatDestX := destX.
 	widthAndKernedWidth := Array new: 2.
