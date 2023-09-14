@@ -86,6 +86,50 @@ RBAbstractTransformation class >> refactoringOptions [
 	^ RefactoringOptions
 ]
 
+{ #category : #private }
+RBAbstractTransformation >> buildSelectorString: aSelector [
+	aSelector numArgs = 0 ifTrue: [^aSelector].
+	^self buildSelectorString: aSelector
+		withPermuteMap: (1 to: aSelector numArgs)
+]
+
+{ #category : #private }
+RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection [
+
+	aSelector numArgs == 0 ifTrue: [^aSelector asString].
+	^ self 
+		buildSelectorString: aSelector
+		withPermuteMap: aPermutationCollection 
+		andNewArguments: #()
+]
+
+{ #category : #private }
+RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection andNewArguments: anArgumentsCollection [
+	| stream keywords |
+	aSelector numArgs == 0 ifTrue: [^aSelector asString].
+	stream := WriteStream on: String new.
+	keywords := aSelector keywords.
+	keywords with: aPermutationCollection
+		do:
+			[:each :i |
+			stream
+				nextPutAll: each.
+				i < 0
+				ifTrue:
+					[ stream
+						nextPut: Character space;
+						nextPut: $(;
+						nextPutAll: (anArgumentsCollection at: i abs) argValue;
+						nextPut: $)]
+				ifFalse:
+					[stream
+						nextPutAll: ' ``@arg';
+						nextPutAll: i asString ].
+			stream nextPut: Character space.
+			].
+	^stream contents
+]
+
 { #category : #accessing }
 RBAbstractTransformation >> changes [
 

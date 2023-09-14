@@ -27,29 +27,40 @@ RPackageTraitTest >> setUp [
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 
 	"a1 defines two normal = local methods"
-	a1 compileSilently: 'localMethodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: a1 >> #localMethodDefinedInP1.
-	a1 compileSilently: 'anotherLocalMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
-	p1 addMethod: a1 >> #anotherLocalMethodDefinedInP1.
+	a1 compile: 'localMethodDefinedInP1 ^ #methodDefinedInP1'.
+	a1 compile: 'anotherLocalMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 
 	t1 := self createNewTraitNamed: #TraitInPackageP1 inPackage: p1.
-	t1 compileSilently: 'traitMethodDefinedInP1 ^ #traitMethodDefinedInP1'.
-	p1 addMethod: t1 >> #traitMethodDefinedInP1.
+	t1 compile: 'traitMethodDefinedInP1 ^ #traitMethodDefinedInP1'.
 
-	"P6 defines a new method extension on T1 (packaged in p4)"
-	t1 compileSilently: 'traitMethodExtendedFromP3 ^ #traitMethodExtendedFromP3' classified: '*' , self p3Name.
-	p3 addMethod: t1 >> #traitMethodExtendedFromP3.
+	"P3 defines a new method extension on T1 (packaged in p1)"
+	t1 compile: 'traitMethodExtendedFromP3 ^ #traitMethodExtendedFromP3' classified: '*' , self p3Name.
 
 	t2 := self createNewTraitNamed: #TraitInPackageP2 inPackage: p2.
-	t2 compileSilently: 'traitMethodDefinedInP2 ^ #traitMethodDefinedInP2'.
+	t2 compile: 'traitMethodDefinedInP2 ^ #traitMethodDefinedInP2'.
 
-	p2 addMethod: t2 >> #traitMethodDefinedInP2.
-
-	"Here P4 extends T2 from P5 with a new method"
-	t2 compileSilently: 'traitMethodExtendedFromP1 ^ #traitMethodExtendedFromP1' classified: '*' , self p1Name.
-	p1 addMethod: t2 >> #traitMethodExtendedFromP1.
+	"Here P1 extends T2 from P2 with a new method"
+	t2 compile: 'traitMethodExtendedFromP1 ^ #traitMethodExtendedFromP1' classified: '*' , self p1Name.
 
 	a1 setTraitComposition: (t1 + t2) asTraitComposition
+]
+
+{ #category : #tests }
+RPackageTraitTest >> testMethodOverridingTraitMethodIsKnowByPackage [
+	"Regression test for a bug where adding a method to a class that overrides a method from a trait was not know by the package of the class"
+
+	| a2 |
+	a2 := self createNewClassNamed: #A2DefinedInP1 inPackage: p1.
+
+	a2 setTraitComposition: t1 asTraitComposition.
+
+	self deny: (p1 includesDefinedSelector: #traitMethodDefinedInP1 ofClass: a2).
+	self assert: (a2 >> #traitMethodDefinedInP1) isFromTrait.
+
+	a2 compile: 'traitMethodDefinedInP1 "Override in the class"'.
+
+	self assert: (p1 includesDefinedSelector: #traitMethodDefinedInP1 ofClass: a2).
+	self deny: (a2 >> #traitMethodDefinedInP1) isFromTrait
 ]
 
 { #category : #tests }

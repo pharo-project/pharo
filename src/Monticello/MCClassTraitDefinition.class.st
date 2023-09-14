@@ -7,22 +7,29 @@ Class {
 	#instVars : [
 		'baseTrait',
 		'classTraitComposition',
-		'category'
+		'category',
+		'packageName',
+		'tagName'
 	],
 	#category : #'Monticello-Modeling'
 }
 
 { #category : #'instance creation' }
-MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: classTraitCompositionString [
-	^ self baseTraitName: aString classTraitComposition: classTraitCompositionString category: nil
+MCClassTraitDefinition class >> baseTraitName: aString [
+
+	^ self new
+		  baseTraitName: aString;
+		  yourself
 ]
 
 { #category : #'instance creation' }
 MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: classTraitCompositionString category: aCategoryString [
+
 	^ self new
-		initializeWithBaseTraitName: aString
-		classTraitComposition: classTraitCompositionString
-		category: aCategoryString
+		  baseTraitName: aString;
+		  classTraitComposition: classTraitCompositionString;
+		  category: aCategoryString;
+		  yourself
 ]
 
 { #category : #comparing }
@@ -30,7 +37,7 @@ MCClassTraitDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ baseTrait = aDefinition baseTrait
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ category = aDefinition category ] ] ]
+		and: [ self category = aDefinition category ] ] ]
 ]
 
 { #category : #visiting }
@@ -44,12 +51,31 @@ MCClassTraitDefinition >> baseTrait [
 
 ]
 
+{ #category : #initialization }
+MCClassTraitDefinition >> baseTraitName: aTraitName [
+
+	baseTrait := aTraitName
+]
+
 { #category : #accessing }
 MCClassTraitDefinition >> category [
+
 	^ category ifNil: [
-		(Smalltalk classOrTraitNamed: self baseTrait)
-			ifNotNil: [ :bTrait | bTrait category ]
-			ifNil: [ self error: 'Can''t detect the category' ] ]
+		  self packageName
+			  ifNil: [
+				  (Smalltalk classOrTraitNamed: self baseTrait)
+					  ifNotNil: [ :bTrait | bTrait category ]
+					  ifNil: [ self error: 'Can''t detect the category' ] ]
+			  ifNotNil: [ :package |
+				  (self tagName isNil or: [ self tagName = package ])
+					  ifTrue: [ package ]
+					  ifFalse: [ package , '-' , self tagName ] ] ]
+]
+
+{ #category : #initialization }
+MCClassTraitDefinition >> category: aCategoryString [
+
+	category := aCategoryString
 ]
 
 { #category : #accessing }
@@ -62,6 +88,12 @@ MCClassTraitDefinition >> classTraitComposition [
 	^classTraitComposition
 
 
+]
+
+{ #category : #initialization }
+MCClassTraitDefinition >> classTraitComposition: aString [
+
+	classTraitComposition := aString
 ]
 
 { #category : #accessing }
@@ -86,21 +118,8 @@ MCClassTraitDefinition >> hash [
 	| hash |
 	hash := String stringHash: baseTrait initialHash: 0.
 	hash := String stringHash: self classTraitCompositionString initialHash: hash.
-	category ifNotNil: [ :cat | hash := String stringHash: cat initialHash: hash ].
+	self category ifNotNil: [ :cat | hash := String stringHash: cat initialHash: hash ].
 	^ hash
-]
-
-{ #category : #initialization }
-MCClassTraitDefinition >> initializeWithBaseTraitName: aTraitName classTraitComposition: aString [
-	baseTrait := aTraitName.
-	classTraitComposition := aString
-]
-
-{ #category : #initialization }
-MCClassTraitDefinition >> initializeWithBaseTraitName: aTraitName classTraitComposition: aString category: aCategoryString [
-	baseTrait := aTraitName.
-	classTraitComposition := aString.
-	category := aCategoryString
 ]
 
 { #category : #testing }
@@ -113,6 +132,18 @@ MCClassTraitDefinition >> isClassDefinition [
 { #category : #installing }
 MCClassTraitDefinition >> load [	
 	self class compiler evaluate: self definitionString
+]
+
+{ #category : #accessing }
+MCClassTraitDefinition >> packageName [
+
+	^ packageName
+]
+
+{ #category : #accessing }
+MCClassTraitDefinition >> packageName: anObject [
+
+	packageName := anObject
 ]
 
 { #category : #printing }
@@ -145,4 +176,16 @@ MCClassTraitDefinition >> source [
 MCClassTraitDefinition >> summary [
 	^self baseTrait , ' classTrait'
 
+]
+
+{ #category : #accessing }
+MCClassTraitDefinition >> tagName [
+
+	^ tagName
+]
+
+{ #category : #accessing }
+MCClassTraitDefinition >> tagName: anObject [
+
+	tagName := anObject
 ]

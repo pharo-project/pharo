@@ -22,19 +22,9 @@ RBNotEnvironment >> description [
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesCategory: aCategory [
-	^(self classNamesFor: aCategory) isNotEmpty
-]
-
-{ #category : #testing }
 RBNotEnvironment >> includesClass: aClass [
 	(environment includesClass: aClass) ifFalse: [^true].
 	^false
-]
-
-{ #category : #testing }
-RBNotEnvironment >> includesPackage: aRPackage [
-	^ (environment includesPackage: aRPackage) not
 ]
 
 { #category : #testing }
@@ -53,12 +43,6 @@ RBNotEnvironment >> includesSelector: aSelector in: aClass [
 { #category : #environments }
 RBNotEnvironment >> not [
 	^environment
-]
-
-{ #category : #accessing }
-RBNotEnvironment >> packages [
-	^ self rootEnvironment packages
-		select: [ :package | self includesPackage: package ]
 ]
 
 { #category : #printing }

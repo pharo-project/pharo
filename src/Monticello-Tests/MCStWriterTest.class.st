@@ -49,7 +49,7 @@ MCMock subclass: #MCMockClassA
 	poolDictionaries: ''''
 	category: ''MonticelloMocks''!
 
-!MCMockClassA commentStamp: '''' prior: 0!
+!MCMockClassA commentStamp: ''<historical>'' prior: 0!
 This is a mock class. The Monticello tests manipulated it to simulate a developer modifying code in the image.!
 '
 ]
@@ -66,7 +66,7 @@ MCMock subclass: #MCMockClassB
 MCMockClassB class
 	instanceVariableNames: ''ciVar''!
 
-!MCMockClassB commentStamp: '''' prior: 0!
+!MCMockClassB commentStamp: ''<historical>'' prior: 0!
 This comment has a bang!! Bang!! Bang!!!
 '
 ]
@@ -160,17 +160,20 @@ MCStWriterTest >> setUp [
 
 { #category : #testing }
 MCStWriterTest >> testClassDefinitionA [
-	writer visitClassDefinition: (self mockClassA asClassDefinition).
+
+	writer visitClassDefinition: self mockClassA asClassDefinition.
+	self assert: stream contents equals: self expectedClassDefinitionA.
 	self assertContentsOf: stream match: self expectedClassDefinitionA.
 	stream := ChunkReadStream on: stream contents readStream.
-	2 timesRepeat: [self assertChunkIsWellFormed: stream next]
+	2 timesRepeat: [ self assertChunkIsWellFormed: stream next ]
 ]
 
 { #category : #testing }
 MCStWriterTest >> testClassDefinitionB [
-	writer visitClassDefinition: (self mockClassB asClassDefinition).
-	self assertContentsOf: stream match: self expectedClassDefinitionB.
-	
+
+	writer visitClassDefinition: self mockClassB asClassDefinition.
+	self assert: stream contents equals: self expectedClassDefinitionB.
+	self assertContentsOf: stream match: self expectedClassDefinitionB
 ]
 
 { #category : #testing }
@@ -264,7 +267,7 @@ MCStWriterTest >> testNotLoadedClassMethod [
 MCStWriterTest >> testOrganizationDefinition [
 
 	| definition |
-	definition := MCOrganizationDefinition categories: self mockPackage packageSet systemCategories.
+	definition := self mockPackage systemPackage asMCOrganizationDefinition.
 	writer visitOrganizationDefinition: definition.
 	self assertContentsOf: stream match: self expectedOrganizationDefinition.
 	self assertAllChunksAreWellFormed

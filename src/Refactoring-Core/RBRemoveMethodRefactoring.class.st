@@ -7,42 +7,34 @@ Class {
 	#name : #RBRemoveMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selectors'
+		'selector',
+		'transformation'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
-RBRemoveMethodRefactoring class >> model: aRBNamespace removeMethods: selectorCollection from: aClass [
+RBRemoveMethodRefactoring class >> model: aRBNamespace selector: aSelector from: aClass [
 
 	^ self new
 		  model: aRBNamespace;
-		  removeMethods: selectorCollection from: aClass;
+		  selector: aSelector from: aClass;
 		  yourself
 ]
 
 { #category : #'instance creation' }
-RBRemoveMethodRefactoring class >> removeMethods: selectorCollection from: aClass [
+RBRemoveMethodRefactoring class >> selector: aSelector from: aClass [
+
 	^ self new
-		removeMethods: selectorCollection from: aClass
-]
-
-{ #category : #preconditions }
-RBRemoveMethodRefactoring >> applicabilityPreconditions [
-
-	^ (selectors
-		   inject: self trueCondition
-		   into: [ :cond :each |
-		   cond & (RBCondition definesSelector: each in: class) ])
-	 
+		selector: aSelector from: aClass
 ]
 
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition withBlock: [
-			   self checkSuperMethods.
-			   true ])
+		   self checkSuperMethods.
+		   true ]) & (RBCondition withBlock: [ self senders isEmpty ] errorString: 'Cannot remove method because it has senders')
 ]
 
 { #category : #preconditions }
@@ -72,11 +64,11 @@ RBRemoveMethodRefactoring >> checkBrowseAllOccurrences: anCollectionOfOccurrence
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> checkBrowseOccurrenceOf: selector in: aRBMethod [
+RBRemoveMethodRefactoring >> checkBrowseOccurrenceOf: aSelector in: aRBMethod [
 	self
 		refactoringWarning:
-			('Possible call to <2s> in <1p><n>Browse references?' expandMacrosWith: aRBMethod modelClass with: selector)
-		with: [ self openBrowserOn: (RBBrowserEnvironment new referencesTo: selector) ]
+			('Possible call to <2s> in <1p><n>Browse references?' expandMacrosWith: aRBMethod modelClass with: aSelector)
+		with: [ self openBrowserOn: (RBBrowserEnvironment new referencesTo: aSelector) ]
 ]
 
 { #category : #preconditions }
@@ -87,10 +79,10 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> checkReferencesToAnyOf: aSelectorCollection [
+RBRemoveMethodRefactoring >> checkReferencesToAnyOf: aSelector [
 
 	| occurrences |
-	occurrences := self sendersOf: aSelectorCollection.
+	occurrences := self sendersOf: aSelector.
 	occurrences ifEmpty: [ ^ self ].
 	^ self checkBrowseOccurrences: occurrences
 ]
@@ -106,27 +98,24 @@ RBRemoveMethodRefactoring >> checkReferencesToSuperSendsToAnyOf: superMessages [
 
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> checkSuperMethods [
-	| superMessages nonSupers |
-	nonSupers := OrderedCollection new.
-	superMessages := OrderedCollection new.
-	(selectors reject: [:each | self justSendsSuper: each]) do:
-			[:each |
-			(self superclassEquivalentlyDefines: each)
-				ifTrue:
-					[(class parseTreeForSelector: each) superMessages isEmpty
-						ifFalse: [superMessages add: each]]
-				ifFalse: [nonSupers add: each]].
-	nonSupers isEmpty & superMessages isEmpty ifTrue: [^self].
-	self checkReferencesToAnyOf: nonSupers.
-	self checkReferencesToSuperSendsToAnyOf: superMessages
+
+
+	(self justSendsSuper: selector) ifFalse: [ ^ self ].
+	
+	(self superclassEquivalentlyDefines: selector)
+		ifTrue:
+			[(class parseTreeForSelector: selector) superMessages ifNotEmpty:
+					[self checkReferencesToSuperSendsToAnyOf: selector]]
+
+		ifFalse: [self checkReferencesToAnyOf: selector].
 ]
 
-{ #category : #actions }
+{ #category : #executing }
 RBRemoveMethodRefactoring >> generateChanges [
 	
-	self applicabilityPreconditions check ifFalse: [
+	transformation applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityPreconditions errorString ].
+			  transformation applicabilityPreconditions errorString ].
 	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangePreconditions errorString ].
@@ -162,12 +151,15 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangePreconditions 
+	transformation checkPreconditions.
+
+	^ self breakingChangePreconditions 
 ]
 
 { #category : #transforming }
 RBRemoveMethodRefactoring >> privateTransform [
-	selectors do: [:each | class removeMethod: each]
+	 
+	transformation privateTransform
 ]
 
 { #category : #actions }
@@ -177,33 +169,45 @@ RBRemoveMethodRefactoring >> removeMethodChanges [
 	^ self changes
 ]
 
-{ #category : #initialization }
-RBRemoveMethodRefactoring >> removeMethods: selectorCollection from: aClass [
-	class := self classObjectFor: aClass.
-	selectors := selectorCollection
-]
-
 { #category : #accessing }
 RBRemoveMethodRefactoring >> selector [
-	^ selectors first
+	^ selector
+]
+
+{ #category : #initialization }
+RBRemoveMethodRefactoring >> selector: aSelector from: aClass [
+
+	class := self classObjectFor: aClass.
+	selector := aSelector.
+	transformation := RBRemoveMethodTransformation
+		                  model: self model
+		                  selector: selector
+		                  from: aClass
 ]
 
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> senders [
 
-	^ self sendersOf: selectors
+	^ self sendersExcluding: { selector }
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> sendersOf: aCollection [
+RBRemoveMethodRefactoring >> sendersExcluding: aSelectorsCollection [
 
 	| occurrences |
 	occurrences := OrderedCollection new.
-	aCollection do: [ :each |
-		self model allReferencesTo: each do: [ :aRBMethod |
-			(aCollection includes: aRBMethod selector) ifFalse: [
-				occurrences add: each -> aRBMethod ] ] ].
+	self 
+		model allReferencesTo: selector
+		do: [ :aRBMethod | 
+			(aSelectorsCollection includes: aRBMethod selector) ifFalse: [
+				occurrences add: selector -> aRBMethod ]].
 	^ occurrences
+]
+
+{ #category : #preconditions }
+RBRemoveMethodRefactoring >> sendersOf: aSelector [
+	
+	^ self model allReferencesTo: aSelector
 ]
 
 { #category : #printing }
@@ -211,7 +215,7 @@ RBRemoveMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' removeMethods: '.
-	selectors asArray storeOn: aStream.
+	selector storeOn: aStream.
 	aStream nextPutAll: ' from: '.
 	class storeOn: aStream.
 	aStream nextPut: $)

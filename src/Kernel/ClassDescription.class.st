@@ -44,8 +44,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			self notifyRepackage: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol.
-
+			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
@@ -766,21 +765,6 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 	 the method recategorized announce"
 
 	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
-]
-
-{ #category : #private }
-ClassDescription >> notifyRepackage: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol [
-
-	| oldPackage newPackage |
-	newProtocol = oldProtocol ifTrue: [ ^ self ].
-
-	newPackage := self packageOrganizer packageForProtocol: newProtocol name inClass: self.
-	oldPackage := self packageOrganizer packageForProtocol: oldProtocol name inClass: self.
-
-	"Announce recategorization"
-	newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ].
-
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
 { #category : #private }

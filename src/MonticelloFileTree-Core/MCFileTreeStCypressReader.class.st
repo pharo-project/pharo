@@ -64,30 +64,26 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment: classComment [
-  | categoryName className |
-  className := classPropertiesDict at: 'name'.
-  categoryName := classPropertiesDict
-    at: 'category'
-    ifAbsent: [ self packageNameFromPackageDirectory ].
-  self validateClassCategory: categoryName for: className.
-  definitions
-    add:
-      (MCClassDefinition
-        name: className
-        superclassName: (classPropertiesDict at: 'super')
-        traitComposition: (classPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
-        classTraitComposition: (classPropertiesDict at: 'classtraitcomposition' ifAbsent: [ '{}' ])
-        category: categoryName
-        instVarNames: (classPropertiesDict at: 'instvars' ifAbsent: [ #() ])
-        classVarNames: (classPropertiesDict at: 'classvars' ifAbsent: [ #() ])
-        poolDictionaryNames: (classPropertiesDict at: 'pools' ifAbsent: [ #() ])
-        classInstVarNames:
-          (classPropertiesDict at: 'classinstvars' ifAbsent: [ #() ])
-        type: (classPropertiesDict at: 'type' ifAbsent: [ 'normal' ]) asSymbol
-        comment: classComment
-        commentStamp: (classPropertiesDict at: 'commentStamp' ifAbsent: [ '' ]))
 
+	| definition |
+	definition := (MCClassDefinition named: (classPropertiesDict at: 'name'))
+		              superclassName: (classPropertiesDict at: 'super');
+		              packageName: self packageNameFromPackageDirectory;
+		              comment: classComment;
+		              yourself.
 
+	classPropertiesDict
+		at: 'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
+		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: 'classtraitcomposition' ifPresent: [ :composition | definition classTraitComposition: composition ];
+		at: 'instvars' ifPresent: [ :instVars | definition instVarNames: instVars ];
+		at: 'classvars' ifPresent: [ :classVars | definition classVarNames: classVars ];
+		at: 'pools' ifPresent: [ :pools | definition poolDictionaryNames: pools ];
+		at: 'classinstvars' ifPresent: [ :classInstVars | definition classInstVarNames: classInstVars ];
+		at: 'type' ifPresent: [ :type | definition type: type ];
+		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+
+	definitions add: definition
 ]
 
 { #category : #utilities }
@@ -187,23 +183,25 @@ MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment: traitComment [
-    definitions
-        add:
-            (MCTraitDefinition
-                name: (traitPropertiesDict at: 'name')
-                traitComposition: (traitPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
-                category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ])
-					instVarNames: (traitPropertiesDict at: 'instvars' ifAbsent: [ #() ])
-					classInstVarNames: ''
-					classTraitComposition: nil
-					comment: traitComment
-					commentStamp: (traitPropertiesDict at: 'commentStamp' ifAbsent: [ '' ])).
-    traitPropertiesDict at: 'classtraitcomposition' ifPresent: [:classTraitComposition |
-        definitions
-             add:
-                (MCClassTraitDefinition
-                    baseTraitName: (traitPropertiesDict at: 'name')
-                    classTraitComposition: classTraitComposition)].
+
+	| definition |
+	definition := (MCTraitDefinition named: (traitPropertiesDict at: 'name'))
+		              packageName: self packageNameFromPackageDirectory;
+		              comment: traitComment;
+		              yourself.
+
+	traitPropertiesDict
+		at: 'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
+		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: 'instvars' ifPresent: [ :ivars | definition instVarNames: ivars ];
+		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+
+	definitions add: definition.
+
+	traitPropertiesDict at: 'classtraitcomposition' ifPresent: [ :classTraitComposition |
+		definitions add: ((MCClassTraitDefinition baseTraitName: (traitPropertiesDict at: 'name'))
+				 classTraitComposition: classTraitComposition;
+				 yourself) ]
 ]
 
 { #category : #accessing }
@@ -288,21 +286,16 @@ MCFileTreeStCypressReader >> packageNameFromPackageDirectory [
     ^ filename2 copyFrom: 1 to: (filename2 lastIndexOf: $.) - 1
 ]
 
-{ #category : #validation }
-MCFileTreeStCypressReader >> validateClassCategory: categoryName for: className [
-  "https://github.com/dalehenrich/filetree/issues/136"
+{ #category : #utilities }
+MCFileTreeStCypressReader >> setPackageTagIn: definition fromCategory: category [
 
-  "class category must match the package name ... guard against manual editing mistakes"
+	| packageName |
+	packageName := definition packageName.
+	(self verifyCategory: category matches: packageName) ifFalse: [
+		self error: 'Class category name ' , category , ' for the class ' , definition name , ' is inconsistent with the package name ' , packageName ].
 
-  | prefix |
-  prefix := self packageNameFromPackageDirectory.
-  (self verifyCategory: categoryName matches: prefix)
-    ifTrue: [ ^ self ].
-  self
-    error:
-      'Class category name ' , categoryName printString , ' for the class '
-        , className printString , ' is inconsistent with the package name '
-        , prefix printString
+	"If the category is the package name then it means that there is not tag"
+	category = packageName ifFalse: [ definition tagName: (category withoutPrefix: packageName , '-') ]
 ]
 
 { #category : #validation }

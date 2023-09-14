@@ -42,7 +42,7 @@ SycAddNewClassTagCommand >> defaultMenuItemName [
 { #category : #execution }
 SycAddNewClassTagCommand >> execute [
 
-	package addClassTag: tagName
+	package ensureTag: tagName
 ]
 
 { #category : #accessing }

@@ -421,17 +421,14 @@ StMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 				close ]
 ]
 
-{ #category : #'to be pushed to presenter' }
-StMethodNameEditorPresenter >> request: aString initialAnswer: initialAnswer [
+{ #category : #action }
+StMethodNameEditorPresenter >> request: aString initialAnswer: aSecondString [
 
-	^ 	self application newRequest
-		title: aString;
-		text: initialAnswer;
-		acceptLabel: 'Accept';
-		cancelLabel: 'Cancel';
-		onAccept: [ :dialog | self inform: dialog presenter text ];
-		openDialog
-
+	^ self application newRequest
+			title: 'Information needed';
+			label: aString;
+			text: aSecondString;
+			openModal
 ]
 
 { #category : #'accessing - ui' }

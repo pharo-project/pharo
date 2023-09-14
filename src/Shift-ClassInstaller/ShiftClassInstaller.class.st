@@ -196,7 +196,7 @@ ShiftClassInstaller >> make [
 	self fixSlotScope: newClass.
 	self fixSlotScope: newClass class.
 
-	self recategorize: newClass to: builder category.
+	self recategorize: newClass to: builder category asSymbol.
 	self comment: newClass.
 
 	self notifyChanges.
@@ -292,15 +292,16 @@ ShiftClassInstaller >> oldClass: anObject [
 
 { #category : #notifications }
 ShiftClassInstaller >> recategorize: aClass to: newCategory [
+
 	| oldCategory |
-	oldCategory := oldClass ifNotNil:[oldClass basicCategory].
-	oldCategory == newCategory asSymbol
-		ifTrue: [ ^ self ].
+	oldCategory := oldClass ifNotNil: [ oldClass basicCategory ].
+	oldCategory == newCategory ifTrue: [ ^ self ].
 
-	self installingEnvironment organization
-		ifNotNil: [ :systemOrganizer | systemOrganizer classify: aClass name under: newCategory ].
+	self installingEnvironment organization ifNotNil: [ :systemOrganizer |
+		systemOrganizer classify: aClass name under: newCategory.
+		aClass basicCategory: newCategory ].
 
-	(oldCategory isNil or:[ oldCategory = #Unclassified])
+	(oldCategory isNil or: [ oldCategory = Class unclassifiedCategory ])
 		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
 		ifFalse: [ SystemAnnouncer uniqueInstance class: aClass recategorizedFrom: oldCategory to: newCategory ]
 ]

@@ -142,11 +142,11 @@ MCSnapshotTest >> testTraitWithClassTraitCompositionHasCorrectTraitComposition [
 MCSnapshotTest >> testTraitWithClassTraitCompositionHasTraitComposition [
 
 	| definitions def |
-	definitions :=  self createSnapshotWithTraitWithClassSideTraits definitions.
-	def := self lookupTrait: #T3 in: definitions.
+	definitions := self createSnapshotWithTraitWithClassSideTraits definitions.
+	"This could use #lookupTrait:in: when this issue will be fixed: https://github.com/pharo-project/pharo/issues/14605
 	
-	self assert: def hasClassTraitComposition.
+	The problem is that since MCClassTraitDefinition returns true, we can get a MCClassTraitDefinition instead of a MCTraitDefinition"
+	def := definitions detect: [ :aDef | (aDef isKindOf: MCTraitDefinition) and: [ aDef className = #T3 ] ].
 
-
-
+	self assert: def hasClassTraitComposition
 ]

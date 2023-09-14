@@ -28,8 +28,10 @@ SycDeprecateMessageCommand >> applyResultInContext: aContext [
 
 { #category : #accessing }
 SycDeprecateMessageCommand >> defaultMenuItemName [
-
-	^ 'Deprecate'
+	"This is not really good since this is the job of the driver to invoke the refactoring 
+	but we are transitionning"
+	
+	^ RBDeprecateMethodTransformation menuItemString
 ]
 
 { #category : #execution }
