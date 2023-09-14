@@ -19,7 +19,7 @@ RPackageTestCase >> allWorkingCopies [
 { #category : #utilities }
 RPackageTestCase >> createMockTestPackages [
 
-	^ self namesOfMockTestPackages collect: [:pName | self createNewPackageNamed: pName]
+	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self organizer ensurePackage: pName ]
 ]
 
 { #category : #utilities }
@@ -36,12 +36,6 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 
 	^ self createNewClassNamed: aName inCategory: p name
-]
-
-{ #category : #utilities }
-RPackageTestCase >> createNewPackageNamed: aName [
-
-	^ self organizer ensurePackage: aName
 ]
 
 { #category : #utilities }

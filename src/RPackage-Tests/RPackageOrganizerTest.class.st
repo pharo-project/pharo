@@ -41,7 +41,7 @@ RPackageOrganizerTest >> quadrangleClass [
 RPackageOrganizerTest >> testAccessingPackage [
 
 	| p1 |
-	p1 := self createNewPackageNamed: 'P1'.
+	p1 := self organizer ensurePackage: 'P1'.
 	self assert: (self organizer packageNamed: #P1) equals: p1.
 	self should: [ self organizer packageNamed: #P22 ] raise: Error
 ]
@@ -64,7 +64,7 @@ RPackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
 RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
 	| p1 |
-	p1 := self createNewPackageNamed: self p1Name.
+	p1 := self organizer ensurePackage: self p1Name.
 	self createNewClassNamed: #MyPoint inPackage: p1.
 	self assert: self organizer packageNames size equals: 2.
 	self assert: self organizer packages size equals: 2.
@@ -82,8 +82,8 @@ RPackageOrganizerTest >> testEmpty [
 RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 
 	| p1 p2 c1 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
+	p1 := self organizer ensurePackage: 'P1'.
+	p2 := self organizer ensurePackage: 'P2'.
 
 	c1 := self createNewClassNamed: #C1 inPackage: p2.
 
@@ -99,9 +99,9 @@ RPackageOrganizerTest >> testFullRegistration [
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
-	p1 := self createNewPackageNamed: self p1Name.
-	p2 := self createNewPackageNamed: self p2Name.
-	p3 := self createNewPackageNamed: self p3Name.
+	p1 := self organizer ensurePackage: self p1Name.
+	p2 := self organizer ensurePackage: self p2Name.
+	p3 := self organizer ensurePackage: self p3Name.
 
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
@@ -149,7 +149,7 @@ RPackageOrganizerTest >> testHasPackage [
 { #category : #tests }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
-	self createNewPackageNamed: 'P1'.
+	self organizer ensurePackage: 'P1'.
 	self should: [ (RPackage named: 'P1') register ] raise: Error
 ]
 
@@ -158,10 +158,10 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
 
 	| package1 |
 	self flag: #package. "This is a limitiation of the system organizer. I hope to kill this limitiation before p12 release."
-	package1 := self createNewPackageNamed: 'P1'.
+	package1 := self organizer ensurePackage: 'P1'.
 	package1 ensureTag: #T1.
 
-	self should: [ self createNewPackageNamed: 'P1-T1' ] raise: Error
+	self should: [ self organizer ensurePackage: 'P1-T1' ] raise: Error
 ]
 
 { #category : #tests }
@@ -169,18 +169,19 @@ RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 
 	| package1 package2 |
 	self flag: #package. "This is a limitiation of the system organizer. I hope to kill this limitiation before p12 release."
-	package1 := self createNewPackageNamed: 'P1-T1'.
+	package1 := self organizer ensurePackage: 'P1-T1'.
 
-	package2 := self createNewPackageNamed: 'P1'.
+	package2 := self organizer ensurePackage: 'P1'.
 	self should: [ package2 ensureTag: #T1 ] raise: Error
 ]
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
+
 	| p1 p2 p3 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
+	p1 := self organizer ensurePackage: 'P1'.
+	p2 := self organizer ensurePackage: 'P2'.
+	p3 := self organizer ensurePackage: 'P3'.
 
 	self organizer basicRegisterPackage: p1.
 	self organizer basicRegisterPackage: p2.
@@ -194,12 +195,15 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 RPackageOrganizerTest >> testRegisteredPackages [
 
 	| p1 p2 p3 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
+	p1 := self organizer ensurePackage: 'P1'.
+	p2 := self organizer ensurePackage: 'P2'.
+	p3 := self organizer ensurePackage: 'P3'.
 
 	self assert: self organizer packageNames size equals: 4. "We also have the default package."
-	{ p1 . p2 . p3 } do: [ :package |
+	{
+		p1.
+		p2.
+		p3 } do: [ :package |
 		self assert: (self organizer packageNames includes: package name).
 		self assert: (self organizer packages includes: package) ]
 ]
@@ -210,7 +214,7 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	| p |
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
 	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	p := self createNewPackageNamed: 'P1'.
+	p := self organizer ensurePackage: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
 	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1
@@ -221,20 +225,20 @@ RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 
 	| organizer package1 package2 package3 package4 class tag1 tag2 |
 	"This one will contain a class"
-	package1 := (self createNewPackageNamed: #Test1).
+	package1 := self organizer ensurePackage: #Test1.
 	"This one will contain an extension method"
-	package2 := (self createNewPackageNamed: #Test2).
+	package2 := self organizer ensurePackage: #Test2.
 	"This one will contain a tag with a class and an empty tag"
-	package3 := (self createNewPackageNamed: #Test3).
+	package3 := self organizer ensurePackage: #Test3.
 	"This one will be empty"
-	package4 := (self createNewPackageNamed: #Test4).
+	package4 := self organizer ensurePackage: #Test4.
 
 	tag1 := package3 ensureTag: #Tag1.
 	tag2 := package3 ensureTag: #Tag2.
 
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
 	class compile: 'extension ^ 1' classified: '*Test2'.
-	
+
 	class := self createNewClassNamed: 'TestClass2' inCategory: 'Test3-Tag1'.
 
 	self flag: #package. "Use the organizer provided by the tests later."
@@ -268,9 +272,9 @@ RPackageOrganizerTest >> testRemovePackage [
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
-	p1 := self createNewPackageNamed: self p1Name.
-	p2 := self createNewPackageNamed: self p2Name.
-	p3 := self createNewPackageNamed: self p3Name.
+	p1 := self organizer ensurePackage: self p1Name.
+	p2 := self organizer ensurePackage: self p2Name.
+	p3 := self organizer ensurePackage: self p3Name.
 
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
@@ -302,7 +306,7 @@ RPackageOrganizerTest >> testRenameUpdateTheOrganizer [
 	"test that when we rename a category, the organizer dictionary is update with this new name, so that we can access the package with this new name as key"
 
 	| package |
-	package := self createNewPackageNamed: #Test1.
+	package := self organizer ensurePackage: #Test1.
 
 	self organizer renamePackage: package to: #Test2.
 	self assert: package name equals: #Test2.
@@ -340,14 +344,17 @@ RPackageOrganizerTest >> testTestPackages [
 RPackageOrganizerTest >> testUnregister [
 
 	| p1 p2 p3 |
-	p1 := self createNewPackageNamed: 'P1'.
-	p2 := self createNewPackageNamed: 'P2'.
-	p3 := self createNewPackageNamed: 'P3'.
+	p1 := self organizer ensurePackage: 'P1'.
+	p2 := self organizer ensurePackage: 'P2'.
+	p3 := self organizer ensurePackage: 'P3'.
 
 	self assert: self organizer packageNames size equals: 4.
 
-	{p1 . p2 . p3} do: [:package |
-		(self organizer basicUnregisterPackage: package).
+	{
+		p1.
+		p2.
+		p3 } do: [ :package |
+		self organizer basicUnregisterPackage: package.
 		self deny: (self organizer packageNames includes: package name) ].
 
 	self assert: self organizer packageNames size equals: 1
@@ -358,7 +365,7 @@ RPackageOrganizerTest >> testUnregistrationExtendingPackages [
 
 	| p |
 	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
-	p := self createNewPackageNamed: 'P1'.
+	p := self organizer ensurePackage: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
 	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1.

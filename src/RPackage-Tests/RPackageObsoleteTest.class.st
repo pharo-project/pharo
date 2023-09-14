@@ -32,7 +32,7 @@ RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
 RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 
 	| pack method foo |
-	pack := self createNewPackageNamed: 'P1'.
+	pack := self organizer ensurePackage: 'P1'.
 	foo := self createNewClassNamed: #FooForTest inPackage: pack.
 	foo compile: 'bar ^42'.
 	method := foo >> #bar.
@@ -45,7 +45,7 @@ RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 RPackageObsoleteTest >> testMethodPackageOfRemovedClass [
 
 	| pack method foo |
-	pack := self createNewPackageNamed: 'P1'.
+	pack := self organizer ensurePackage: 'P1'.
 	foo := self createNewClassNamed: #FooForTest2 inPackage: pack.
 	foo compile: 'bar ^42'.
 	method := foo >> #bar.

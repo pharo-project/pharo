@@ -20,9 +20,9 @@ RPackageTraitTest >> setUp [
 
 	super setUp.
 
-	p1 := self createNewPackageNamed: self p1Name.
-	p2 := self createNewPackageNamed: self p2Name.
-	p3 := self createNewPackageNamed: self p3Name.
+	p1 := self organizer ensurePackage: self p1Name.
+	p2 := self organizer ensurePackage: self p2Name.
+	p3 := self organizer ensurePackage: self p3Name.
 
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 
