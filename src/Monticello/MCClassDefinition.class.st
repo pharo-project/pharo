@@ -299,6 +299,17 @@ MCClassDefinition >> initialize [
 	variables := OrderedCollection new
 ]
 
+{ #category : #introspection }
+MCClassDefinition >> instVarNamed: aString put: aValue [
+
+	self flag: #package. "temporary hack until Tonel is fixed"
+	super
+		instVarNamed: (aString = 'category'
+				 ifTrue: [ 'packageName' ]
+				 ifFalse: [ aString ])
+		put: aValue
+]
+
 { #category : #accessing }
 MCClassDefinition >> instVarNames [
 	^ self selectVariables: #isInstanceVariable
