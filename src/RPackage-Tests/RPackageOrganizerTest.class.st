@@ -17,6 +17,12 @@ RPackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
 	self environment at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
 ]
 
+{ #category : #utilities }
+RPackageOrganizerTest >> createMockTestPackages [
+
+	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self organizer ensurePackage: pName ]
+]
+
 { #category : #tests }
 RPackageOrganizerTest >> p1Name [
 	^ 'RPackageTestP1'

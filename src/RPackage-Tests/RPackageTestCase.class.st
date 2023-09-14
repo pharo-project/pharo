@@ -17,12 +17,6 @@ RPackageTestCase >> allWorkingCopies [
 ]
 
 { #category : #utilities }
-RPackageTestCase >> createMockTestPackages [
-
-	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self organizer ensurePackage: pName ]
-]
-
-{ #category : #utilities }
 RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 
 	^ self class classInstaller make: [ :aClassBuilder |
@@ -53,12 +47,6 @@ RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 
 	^ self createNewTraitNamed: aName inCategory: p name
-]
-
-{ #category : #utilities }
-RPackageTestCase >> namesOfMockTestPackages [
-
-	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package')
 ]
 
 { #category : #accessing }

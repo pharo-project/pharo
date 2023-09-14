@@ -230,21 +230,18 @@ RPackageTest >> testHierarchyRoots [
 { #category : #tests }
 RPackageTest >> testIsTestPackage [
 
-	|packages |
-	packages := self createMockTestPackages.
-	"Happy case: test package 'MockPackage-Tests' must contain -Tests suffix."
-	self assert: packages first isTestPackage equals: true.
+	| package |
+	package := self organizer ensurePackage: 'MockPackage-Tests'.
+	self assert: package isTestPackage. "Happy case: test package 'MockPackage-Tests' must contain -Tests suffix."
 
-	"Package 'MockPackage-tests' is not test package, since it has lowercase suffix."
-	self assert: packages second isTestPackage  equals: false.
+	package := self organizer ensurePackage: 'MockPackage-tests'.
+	self deny: package isTestPackage. "Package 'MockPackage-tests' is not test package, since it has lowercase suffix."
 
-	"Happy case: regular package 'MockPackage' without -Tests suffix is not a test package."
-	self assert: packages third isTestPackage  equals: false.
+	package := self organizer ensurePackage: 'MockPackage'.
+	self deny: package isTestPackage. "Happy case: regular package 'MockPackage' without -Tests suffix is not a test package."
 
-	"Package 'MockPackage-Tests-Package' containting -Tests- in middle, so it is test package."
-	self assert: packages fourth isTestPackage equals: true.
-
-	"cleanup of inst.vars should be done in tearDown"
+	package := self organizer ensurePackage: 'MockPackage-Tests-Package'.
+	self assert: package isTestPackage "Package 'MockPackage-Tests-Package' containting -Tests- in middle, so it is test package."
 ]
 
 { #category : #'tests - MC' }
