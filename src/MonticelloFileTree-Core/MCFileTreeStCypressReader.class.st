@@ -199,7 +199,9 @@ MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment
 	definitions add: definition.
 
 	traitPropertiesDict at: 'classtraitcomposition' ifPresent: [ :classTraitComposition |
-		definitions add: (MCClassTraitDefinition baseTraitName: (traitPropertiesDict at: 'name') classTraitComposition: classTraitComposition) ]
+		definitions add: ((MCClassTraitDefinition baseTraitName: (traitPropertiesDict at: 'name'))
+				 classTraitComposition: classTraitComposition;
+				 yourself) ]
 ]
 
 { #category : #accessing }
