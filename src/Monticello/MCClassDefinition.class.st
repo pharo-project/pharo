@@ -8,10 +8,10 @@ Class {
 		'name',
 		'superclassName',
 		'variables',
+		'packageName',
 		'type',
 		'comment',
 		'commentStamp',
-		'packageName',
 		'tagName',
 		'traitComposition',
 		'classTraitComposition'
@@ -206,9 +206,6 @@ MCClassDefinition >> createClass [
 	superClass := superclassName = #nil ifFalse: [ Smalltalk globals at: superclassName ].
 	^ [
 	  Smalltalk classInstaller make: [ :builder |
-		  Stdio stdout
-			  nextPutAll: 'Type of ' , name asString , ' is ' , type asString;
-			  lf.
 		  builder
 			  superclass: superClass;
 			  name: name;
@@ -621,10 +618,7 @@ MCClassDefinition >> type: aSymbol [
 
 	type := (#( #CompiledMethod #CompiledBlock #CompiledCode ) includes: name)
 		        ifTrue: [ #compiledMethod ]
-		        ifFalse: [ aSymbol ].
-	Stdio stdout
-		nextPutAll: 'Type of ' , (name ifNil: [ 'nil' ]) asString , ' is ' , type asString;
-		lf
+		        ifFalse: [ aSymbol ]
 ]
 
 { #category : #installing }
