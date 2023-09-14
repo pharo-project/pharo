@@ -134,6 +134,19 @@ ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 
 ]
 
+{ #category : #'drawing - rectangles' }
+ScalingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
+
+	borderWidth = 0 ifTrue: [
+		| maxCorner scaledRectangle |
+		maxCorner := (1 << 31 - 1) asPoint - formCanvas origin.
+		scaledRectangle := Rectangle origin: r origin * scale corner: (r corner * scale min: maxCorner).
+		formCanvas frameAndFillRectangle: scaledRectangle fillColor: fillColor
+			borderWidth: borderWidth borderColor: borderColor.
+		^ self ].
+	super frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor
+]
+
 { #category : #private }
 ScalingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 
