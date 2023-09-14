@@ -37,30 +37,10 @@ RPackageIncrementalTest >> p3Name [
 	^ 'RPackageTestP3'
 ]
 
-{ #category : #utilities }
-RPackageIncrementalTest >> removeClassNamedIfExists: aClassNameSymbol [
-	testingEnvironment at: aClassNameSymbol asSymbol ifPresent: [:c| c removeFromSystem]
-]
-
 { #category : #running }
 RPackageIncrementalTest >> setUp [
 	super setUp.
 	Author fullName ifNil: [Author fullName: 'RPackage']
-]
-
-{ #category : #running }
-RPackageIncrementalTest >> tearDown [
-
-	createdPackages do: [ :package | self removePackage: package ].
-	"just remove package from package organizer dictionary"
-
-	createdPackages do: [ :each |
-		self allWorkingCopies
-			detect: [ :mcPackage | mcPackage packageName = each packageName asString ]
-			ifFound: [ :mcPackage | mcPackage unregister ].
-		each extendedClasses do: [ :extendedClass | self organizer unregisterExtendingPackage: each forClass: extendedClass ] ].
-	"all ***extending*** classes the packages are also unregistered from PackageOrganizer"
-	super tearDown
 ]
 
 { #category : #'tests - method addition removal' }
@@ -130,7 +110,7 @@ RPackageIncrementalTest >> testClassAddition [
 
 	| p a1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPAckageP1.
+	a1 := self createNewClassNamed: #A1InPAckageP1 inCategory: self p2Name.
 	self assertEmpty: p definedClasses.
 	p importClass: a1.
 	self assert: p definedClasses size equals: 1.
@@ -143,8 +123,8 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 
 	| p a1 b1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPAckageP1.
-	b1 := self createNewClassNamed: #B1InPAckageP1.
+	a1 := self createNewClassNamed: #A1InPAckageP1 inCategory: self p2Name.
+	b1 := self createNewClassNamed: #B1InPAckageP1 inCategory: self p2Name.
 	self assertEmpty: p definedClasses.
 
 	p importClass: a1.
@@ -329,11 +309,11 @@ RPackageIncrementalTest >> testImportClassNoDuplicate [
 
 	| p a1 b1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPackageP1.
+	a1 := self createNewClassNamed: #A1InPackageP1 inCategory: self p2Name.
 	self assertEmpty: p definedClasses.
 	p importClass: a1.
 	self assert: p definedClasses size equals: 1.
-	b1 := self createNewClassNamed: #B1InPackageP1.
+	b1 := self createNewClassNamed: #B1InPackageP1 inCategory: self p2Name.
 	p importClass: a1.
 	"adding the same class does not do anything - luckily"
 	self assert: p definedClasses size equals: 1.
@@ -593,7 +573,7 @@ RPackageIncrementalTest >> testUniqueClassInDefinedClassesUsingAddClassDefinitio
 
 	| p a1 |
 	p := self createNewPackageNamed: self p1Name.
-	a1 := self createNewClassNamed: #A1InPAckageP1.
+	a1 := self createNewClassNamed: #A1InPAckageP1 inCategory: self p2Name.
 	self assertEmpty: p definedClasses.
 	p importClass: a1.
 	self assert: p definedClasses size equals: 1.

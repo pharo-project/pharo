@@ -3,10 +3,8 @@ Common superclass for RPackage related tests
 "
 Class {
 	#name : #RPackageTestCase,
-	#superclass : #AbstractEnvironmentTestCase,
+	#superclass : #TestCase,
 	#instVars : [
-		'createdClasses',
-		'createdPackages',
 		'testEnvironment'
 	],
 	#category : #'RPackage-Tests'
@@ -25,71 +23,42 @@ RPackageTestCase >> createMockTestPackages [
 ]
 
 { #category : #utilities }
-RPackageTestCase >> createNewClassNamed: aName [
-	^ self createNewClassNamed: aName inCategory: 'RPackageTest'
-]
-
-{ #category : #utilities }
 RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 
-	| cls |
-	cls := self class classInstaller make: [ :aClassBuilder |
-		       aClassBuilder
-			       name: aName;
-			       installingEnvironment: testEnvironment;
-			       package: cat ].
-
-	createdClasses add: cls.
-	createdPackages add: cls package.
-	^ cls
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: cat ]
 ]
 
 { #category : #utilities }
 RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 
-	| cls |
-	cls := self createNewClassNamed: aName inCategory: p name.
-	p importClass: cls.
-	^ cls
+	^ self createNewClassNamed: aName inCategory: p name
 ]
 
 { #category : #utilities }
 RPackageTestCase >> createNewPackageNamed: aName [
 
-	| pack |
-	pack := self organizer ensurePackage: aName.
-	createdPackages add: pack.
-	^ pack
-]
-
-{ #category : #utilities }
-RPackageTestCase >> createNewTraitNamed: aName [
-	^ self createNewTraitNamed: aName inCategory: 'RPackageTest'
+	^ self organizer ensurePackage: aName
 ]
 
 { #category : #utilities }
 RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 
-	| cls |
-	cls := self class classInstaller make: [ :aBuilder |
-		       aBuilder
-			       name: aName;
-			       package: cat;
-			       installingEnvironment: testEnvironment;
-			       beTrait ].
-
-	createdClasses add: cls.
-	createdPackages add: cls package.
-	^ cls
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: aName;
+			  package: cat;
+			  installingEnvironment: testEnvironment;
+			  beTrait ]
 ]
 
 { #category : #utilities }
 RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 
-	| cls |
-	cls := self createNewTraitNamed: aName.
-	p importClass: cls.
-	^ cls
+	^ self createNewTraitNamed: aName inCategory: p name
 ]
 
 { #category : #utilities }
@@ -124,17 +93,11 @@ RPackageTestCase >> runCase [
 ]
 
 { #category : #running }
-RPackageTestCase >> setUp [
-
-	super setUp.
-	createdClasses := Set new.
-	createdPackages := Set new
-]
-
-{ #category : #running }
 RPackageTestCase >> tearDown [
 
-	createdClasses do: [ :cls | cls removeFromSystem ].
-
+	self organizer packages do: [ :package |
+		self allWorkingCopies
+			detect: [ :mcPackage | mcPackage packageName = package packageName asString ]
+			ifFound: [ :mcPackage | mcPackage unregister ] ].
 	super tearDown
 ]
