@@ -8,7 +8,6 @@ Class {
 		'name',
 		'superclassName',
 		'variables',
-		'category',
 		'type',
 		'comment',
 		'commentStamp',
@@ -78,17 +77,16 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 { #category : #accessing }
 MCClassDefinition >> category [
 
-	^ category ifNil: [
-		  self packageName ifNotNil: [ :package |
-			  (self tagName isNil or: [ self tagName = package ])
-				  ifTrue: [ package ]
-				  ifFalse: [ package , '-' , self tagName ] ] ]
+	^ self packageName ifNotNil: [ :package |
+		  (self tagName isNil or: [ self tagName = package ])
+			  ifTrue: [ package ]
+			  ifFalse: [ package , '-' , self tagName ] ]
 ]
 
 { #category : #accessing }
 MCClassDefinition >> category: categoryString [
 
-	category := categoryString
+	self packageName: categoryString
 ]
 
 { #category : #accessing }
