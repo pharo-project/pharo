@@ -356,11 +356,11 @@ RBTransformationsTest >> testRenameClassTransform [
 	| transformation class newClassName oldClassName |
 	newClassName := #RBNewDummyClassName.
 	oldClassName := RBClassToRename name asSymbol.
-	transformation := (RBRenameClassTransformation
+	transformation := (RBRenameClassRefactoring
 		                   rename: oldClassName
 		                   to: newClassName) generateChanges.
 
-	self assert: transformation model changes changes size equals: 10.
+	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: newClassName.
 	self
