@@ -34,7 +34,7 @@ RPackageTest >> testAddClass [
 	| package1 package2 class done |
 	package1 := self organizer ensurePackage: #Test1.
 	done := 0.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
+	class := self newClassNamed: 'TestClass' in: package1 tag: 'TAG'.
 
 
 	self assert: (package1 includesClass: class).
@@ -58,7 +58,7 @@ RPackageTest >> testAddClassFromTag [
 
 	| package1 package2 class |
 	package1 := self organizer ensurePackage: #Test1.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
+	class := self newClassNamed: 'TestClass' in: package1 tag: 'TAG'.
 
 	self assert: (package1 includesClass: class).
 
@@ -78,8 +78,8 @@ RPackageTest >> testAllUnsentMessages [
 	| package class1 class2 |
 	package := self organizer ensurePackage: #Test1.
 
-	class1 := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
-	class2 := self createNewClassNamed: 'TestClassOther' inCategory: 'Test1-TAG'.
+	class1 := self newClassNamed: 'TestClass' in: package tag: 'TAG'.
+	class2 := self newClassNamed: 'TestClassOther' in: package tag: 'TAG'.
 
 	class1
 		compile: 'nonexistingMethodName1 42';
@@ -118,7 +118,7 @@ RPackageTest >> testDemoteToRPackageNamed [
 
 	| package1 package2 class |
 	package1 := self organizer ensurePackage: #'Test1-TAG1'.
-	class := self createNewClassNamed: 'TestClass' inPackage: package1.
+	class := self newClassNamed: 'TestClass' in: package1.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	package1 demoteToTagInPackage.
@@ -136,7 +136,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 	| package1 package2 packageExisting class |
 	package1 := self organizer ensurePackage: #'Test1-TAG1'.
 	packageExisting := self organizer ensurePackage: #Test1.
-	class := self createNewClassNamed: 'TestClass' inPackage: package1.
+	class := self newClassNamed: 'TestClass' in: package1.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	package1 demoteToTagInPackage.
@@ -167,7 +167,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 
 	| package1 package2 class |
 	package1 := self organizer ensurePackage: #'Test1-TAG1-X1'.
-	class := self createNewClassNamed: 'TestClass' inPackage: package1.
+	class := self newClassNamed: 'TestClass' in: package1.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	package1 demoteToTagInPackage.
@@ -184,10 +184,10 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 
 	| packageOriginal packageDemoted class classOther |
 	packageOriginal := self organizer ensurePackage: #'Test1-TAG1'.
-	class := self createNewClassNamed: 'TestClass' inPackage: packageOriginal.
+	class := self newClassNamed: 'TestClass' in: packageOriginal.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	classOther := self createNewClassNamed: 'TestClassOther' inCategory: 'XXXX'.
+	classOther := self newClassNamed: 'TestClassOther' in: 'XXXX'.
 	classOther compile: 'bar ^42' classified: #'*Test1-TAG1'.
 
 	packageOriginal demoteToTagInPackage.
@@ -286,7 +286,7 @@ RPackageTest >> testRemoveEmptyTags [
 	tag1 := package ensureTag: #Tag1.
 	tag2 := package ensureTag: #Tag2.
 
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-Tag1'.
+	class := self newClassNamed: 'TestClass' inTag: tag1.
 
 	self assert: (tag1 includesClass: class).
 	self deny: tag1 isEmpty.
@@ -310,8 +310,8 @@ RPackageTest >> testRenamePackageAlsoRenameAllExtensionProtocols [
 	p2 := self organizer ensurePackage: #Test2.
 	p3 := self organizer ensurePackage: #Test3.
 
-	classInY := self createNewClassNamed: 'ClassInYPackage' inPackage: p2.
-	classInZ := self createNewClassNamed: 'ClassInZPackage' inPackage: p3.
+	classInY := self newClassNamed: 'ClassInYPackage' in: p2.
+	classInZ := self newClassNamed: 'ClassInZPackage' in: p3.
 
 	classInY compile: #extensionFromXInClassInY classified: '*' , p1 name.
 	classInY compile: #longNameExtensionFromXInClassInY classified: '*' , p1 name , '-subcategory'.

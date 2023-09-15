@@ -25,11 +25,11 @@ RPackageCompleteSetupButForModificationTest >> setUp [
 	p2 := self organizer ensurePackage: self p2Name.
 	p3 := self organizer ensurePackage: self p3Name.
 
-	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
-	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
-	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
-	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
-	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
+	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
+	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
+	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
+	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.

@@ -70,7 +70,7 @@ RPackageMCSynchronisationTest >> emptyOrganizer [
 { #category : #utilities }
 RPackageMCSynchronisationTest >> ensureTagYinX [
 
-	self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
+	^ self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
 ]
 
 { #category : #utilities }
@@ -140,7 +140,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 	| ann class |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
 
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
@@ -157,7 +157,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 	| ann class |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
 
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic'.
 
@@ -176,7 +176,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 
 	firstPackage := self ensureXPackage.
 	secondPackage := self ensureYPackage.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
 
 	class classify: #stubMethod under: '*yyyyy'.
@@ -202,7 +202,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	secondPackage := self ensureYPackage.
 	thirdPackage := self ensureZPackage.
 
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
 	class classify: #stubMethod under: '*zzzzz'.
@@ -221,7 +221,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 
 	firstPackage := self ensureXPackage.
 	secondPackage := self ensureYPackage.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
 	class classify: #stubMethod under: 'classic one'.

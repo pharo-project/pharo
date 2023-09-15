@@ -17,36 +17,66 @@ RPackageTestCase >> allWorkingCopies [
 ]
 
 { #category : #utilities }
-RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
+RPackageTestCase >> newClassNamed: aName in: aPackage [
 
 	^ self class classInstaller make: [ :aClassBuilder |
 		  aClassBuilder
 			  name: aName;
 			  installingEnvironment: testEnvironment;
-			  package: cat ]
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]) ]
 ]
 
 { #category : #utilities }
-RPackageTestCase >> createNewClassNamed: aName inPackage: p [
+RPackageTestCase >> newClassNamed: aName in: aPackage tag: aTag [
 
-	^ self createNewClassNamed: aName inCategory: p name
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]);
+			  tag: (aTag isString
+					   ifTrue: [ aTag ]
+					   ifFalse: [ aTag name ]) ]
 ]
 
 { #category : #utilities }
-RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
+RPackageTestCase >> newClassNamed: aName inTag: aTag [
+
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: aTag package name;
+			  tag: aTag name ]
+]
+
+{ #category : #utilities }
+RPackageTestCase >> newTraitNamed: aName in: aPackage [
 
 	^ self class classInstaller make: [ :aBuilder |
 		  aBuilder
 			  name: aName;
-			  package: cat;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]);
 			  installingEnvironment: testEnvironment;
 			  beTrait ]
 ]
 
 { #category : #utilities }
-RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
+RPackageTestCase >> newTraitNamed: aName inTag: aTag [
 
-	^ self createNewTraitNamed: aName inCategory: p name
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: aName;
+			  package: aTag package name;
+			  tag: aTag name;
+			  installingEnvironment: testEnvironment;
+			  beTrait ]
 ]
 
 { #category : #accessing }

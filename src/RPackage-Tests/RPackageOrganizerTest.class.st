@@ -71,7 +71,7 @@ RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
 	| p1 |
 	p1 := self organizer ensurePackage: self p1Name.
-	self createNewClassNamed: #MyPoint inPackage: p1.
+	self newClassNamed: #MyPoint in: p1.
 	self assert: self organizer packageNames size equals: 2.
 	self assert: self organizer packages size equals: 2.
 	self assert: (self organizer packageNamed: self p1Name) definedClasses size equals: 1
@@ -91,7 +91,7 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 	p1 := self organizer ensurePackage: 'P1'.
 	p2 := self organizer ensurePackage: 'P2'.
 
-	c1 := self createNewClassNamed: #C1 inPackage: p2.
+	c1 := self newClassNamed: #C1 in: p2.
 
 	c1 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*p1-something'.
 	self organizer addMethod: c1 >> #methodPackagedInP1.
@@ -109,11 +109,11 @@ RPackageOrganizerTest >> testFullRegistration [
 	p2 := self organizer ensurePackage: self p2Name.
 	p3 := self organizer ensurePackage: self p3Name.
 
-	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
-	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
-	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
-	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
-	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
+	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
+	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
+	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
+	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
@@ -218,7 +218,7 @@ RPackageOrganizerTest >> testRegisteredPackages [
 RPackageOrganizerTest >> testRegistrationExtendingPackages [
 
 	| p |
-	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
+	self newClassNamed: 'QuadrangleForTesting' in: self class package.
 	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
 	p := self organizer ensurePackage: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
@@ -242,10 +242,10 @@ RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 	tag1 := package3 ensureTag: #Tag1.
 	tag2 := package3 ensureTag: #Tag2.
 
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
+	class := self newClassNamed: 'TestClass' in: 'Test1'.
 	class compile: 'extension ^ 1' classified: '*Test2'.
 
-	class := self createNewClassNamed: 'TestClass2' inCategory: 'Test3-Tag1'.
+	class := self newClassNamed: 'TestClass2' inTag: tag1.
 
 	self flag: #package. "Use the organizer provided by the tests later."
 	organizer := package1 organizer.
@@ -282,11 +282,11 @@ RPackageOrganizerTest >> testRemovePackage [
 	p2 := self organizer ensurePackage: self p2Name.
 	p3 := self organizer ensurePackage: self p3Name.
 
-	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
-	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
-	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
-	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
-	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
+	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
+	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
+	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
+	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
@@ -370,7 +370,7 @@ RPackageOrganizerTest >> testUnregister [
 RPackageOrganizerTest >> testUnregistrationExtendingPackages [
 
 	| p |
-	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
+	self newClassNamed: 'QuadrangleForTesting' in: self class package.
 	p := self organizer ensurePackage: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).

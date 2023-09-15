@@ -15,8 +15,8 @@ RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMetho
 	| xPackage yPackage class trait |
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
-	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	trait := self newTraitNamed: 'NewTrait' in: yPackage.
+	class := self newClassNamed: 'NewClass' in: xPackage.
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'trait category'.
 
 	self assertEmpty: xPackage methods.
@@ -29,39 +29,39 @@ RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMetho
 { #category : #'tests - operations on traits' }
 RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageBestMatchName [
 
-	| tmpPackage class |
-	tmpPackage := self ensureXPackage.
-	self ensureTagYinX.
+	| xPackage tag class |
+	tag := self ensureTagYinX.
+	xPackage := tag package.
 
-	class := self createNewTraitNamed: 'NewClass' inCategory: 'XXXXX-YYYY'.
+	class := self newTraitNamed: 'NewClass' inTag: tag.
 
-	self assert: (tmpPackage definesClass: class).
-	self assert: tmpPackage equals: class package
+	self assert: (xPackage definesClass: class).
+	self assert: xPackage equals: class package
 ]
 
 { #category : #'tests - operations on traits' }
 RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageExactName [
 
-	| tmpPackage class |
-	tmpPackage := self ensureXPackage.
+	| xPackage class |
+	xPackage := self ensureXPackage.
 	self ensureTagYinX.
 
-	class := self createNewTraitNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self newTraitNamed: 'NewClass' in: xPackage.
 
-	self assert: (tmpPackage definesClass: class).
-	self assert: tmpPackage equals: class package
+	self assert: (xPackage definesClass: class).
+	self assert: xPackage equals: class package
 ]
 
 { #category : #'tests - operations on traits' }
 RPackageTraitSynchronisationTest >> testAddTraitUpdateTheOrganizerMappings [
 	"test that when we add a Trait, the organizer 'classPackageMapping' dictionary is updated, so that the trait is linked to its package and so that we can access its owning package"
 
-	| tmpPackage class |
-	tmpPackage := self ensureXPackage.
+	| xPackage class |
+	xPackage := self ensureXPackage.
 
-	class := self createNewTraitNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self newTraitNamed: 'NewClass' in: xPackage.
 
-	self assert: class package equals: tmpPackage
+	self assert: class package equals: xPackage
 ]
 
 { #category : #'tests - operations on methods' }
@@ -72,8 +72,8 @@ RPackageTraitSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemove
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
+	class := self newClassNamed: 'NewClass' in: xPackage.
+	trait := self newTraitNamed: 'NewTrait' in: yPackage.
 
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'classic protocol'.
 	class setTraitComposition: trait asTraitComposition.
@@ -90,8 +90,8 @@ RPackageTraitSynchronisationTest >> testRemoveTraitMethod [
 	| xPackage yPackage class trait |
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
+	class := self newClassNamed: 'NewClass' in: xPackage.
+	trait := self newTraitNamed: 'NewTrait' in: yPackage.
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'classic protocol'.
 	class setTraitComposition: trait asTraitComposition.
 
@@ -108,8 +108,8 @@ RPackageTraitSynchronisationTest >> testRemoveTraitMethodOverridenByClassDoesRem
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
+	class := self newClassNamed: 'NewClass' in: xPackage.
+	trait := self newTraitNamed: 'NewTrait' in: yPackage.
 
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'classic protocol'.
 	class setTraitComposition: trait asTraitComposition.
@@ -127,8 +127,8 @@ RPackageTraitSynchronisationTest >> testTraitCompositionMethodsArePackagedWithTh
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	trait := self createNewTraitNamed: 'NewTrait' inCategory: 'YYYYY'.
+	class := self newClassNamed: 'NewClass' in: xPackage.
+	trait := self newTraitNamed: 'NewTrait' in: yPackage.
 
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'classic protocol'.
 	class setTraitComposition: trait asTraitComposition.
