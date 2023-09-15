@@ -1,6 +1,6 @@
 Class {
-	#name : #MCWorkingCopyTest,
-	#superclass : #MCTestCase,
+	#name : 'MCWorkingCopyTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'workingCopy',
 		'repositoryGroup',
@@ -8,10 +8,12 @@ Class {
 		'versions2',
 		'savedName'
 	],
-	#category : #'Monticello-Tests-Base'
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCWorkingCopyTest >> assertNameWhenSavingTo: aRepository is: aString [
 	| name |
 	name := nil.
@@ -23,7 +25,7 @@ MCWorkingCopyTest >> assertNameWhenSavingTo: aRepository is: aString [
 	self assert: name equals: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCWorkingCopyTest >> assertNumberWhenSavingTo: aRepository is: aNumber [
 	| name |
 	name := nil.
@@ -35,40 +37,40 @@ MCWorkingCopyTest >> assertNumberWhenSavingTo: aRepository is: aNumber [
 	self assert: name equals: self packageName , '-' , Author fullName , '.' , aNumber asString
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCWorkingCopyTest >> basicMerge: aVersion [
 	aVersion merge
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWorkingCopyTest >> description [
 	^ self class name
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCWorkingCopyTest >> load: aVersion [
 	aVersion load
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCWorkingCopyTest >> merge: aVersion [
 	[[self basicMerge: aVersion]
 		on: MCMergeResolutionRequest do: [:n | n merge ]]
 			on: MCNoChangesException do: [:n | ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCWorkingCopyTest >> packageName [
 	^ self mockPackage name
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCWorkingCopyTest >> runCase [
 
 	MCCacheRepository uniqueInstance useDirectory: FileSystem memory / 'test' during: [ super runCase ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCWorkingCopyTest >> setUp [
 
 	| repos1 repos2 |
@@ -90,7 +92,7 @@ MCWorkingCopyTest >> setUp [
 	Author fullName: 'abc'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCWorkingCopyTest >> snapshot [
 	| version |
 	[version := workingCopy newVersionIn: workingCopy repositoryGroup]
@@ -100,7 +102,7 @@ MCWorkingCopyTest >> snapshot [
 	^ version
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCWorkingCopyTest >> tearDown [
 
 	workingCopy unregister.
@@ -109,7 +111,7 @@ MCWorkingCopyTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testAncestorMerge [
 	| base revA revB revC |
 
@@ -125,7 +127,7 @@ MCWorkingCopyTest >> testAncestorMerge [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testBackport [
 	| inst base final backported ancestry |
 	inst := self mockInstanceA.
@@ -161,7 +163,7 @@ MCWorkingCopyTest >> testBackport [
 	self assert: ancestry stepChildren first equals: backported info
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testDoubleRepeatedMerge [
 	| base motherA1 motherA2 motherB1 motherB2 inst |
 	base := self snapshot.
@@ -189,7 +191,7 @@ MCWorkingCopyTest >> testDoubleRepeatedMerge [
 	self assert: inst d equals: 'd1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testMergeIntoImageWithNoChanges [
 	| base revB revA1 |
 	self change: #a toReturn: 'a'.
@@ -208,7 +210,7 @@ MCWorkingCopyTest >> testMergeIntoImageWithNoChanges [
 	self assert: workingCopy ancestors size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testMergeIntoUnmodifiedImage [
 	| base revA |
 	base := self snapshot.
@@ -222,7 +224,7 @@ MCWorkingCopyTest >> testMergeIntoUnmodifiedImage [
 	self assert: workingCopy ancestors size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testNaming [
 	| repos version |
 
@@ -248,7 +250,7 @@ MCWorkingCopyTest >> testNaming [
 	self assertNameWhenSavingTo: repos is: 'foo2-abc.41'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testOptimizedLoad [
 	| inst base diffy |
 	inst := self mockInstanceA.
@@ -264,7 +266,7 @@ MCWorkingCopyTest >> testOptimizedLoad [
 	self assert: inst one equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testRedundantMerge [
 	| base |
 	base := self snapshot.
@@ -272,7 +274,7 @@ MCWorkingCopyTest >> testRedundantMerge [
 	self merge: base
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testRepeatedMerge [
 	| base mother1 mother2 inst |
 	base := self snapshot.
@@ -297,7 +299,7 @@ MCWorkingCopyTest >> testRepeatedMerge [
 	self assert: inst two equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testRepositoryFallback [
 	| version |
 	version := self snapshot.
@@ -309,7 +311,7 @@ MCWorkingCopyTest >> testRepositoryFallback [
 	self should: [ repositoryGroup versionWithInfo: version info ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testSelectiveBackport [
 	| inst base intermediate final |
 	inst := self mockInstanceA.
@@ -334,7 +336,7 @@ MCWorkingCopyTest >> testSelectiveBackport [
 	self assert: workingCopy ancestry stepChildren first equals: final info
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testSimpleMerge [
 	| mother base inst |
 	inst := self mockInstanceA.
@@ -352,7 +354,7 @@ MCWorkingCopyTest >> testSimpleMerge [
 	self assert: inst two equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyTest >> testSnapshotAndLoad [
 	| base inst |
 	inst := self mockInstanceA.
