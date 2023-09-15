@@ -3,12 +3,14 @@ SUnit tests for RPackage trait synchronization
 
 "
 Class {
-	#name : #RPackageTraitSynchronisationTest,
-	#superclass : #RPackageMCSynchronisationTest,
-	#category : #'Monticello-Tests-RPackage'
+	#name : 'RPackageTraitSynchronisationTest',
+	#superclass : 'RPackageMCSynchronisationTest',
+	#category : 'Monticello-Tests-RPackage',
+	#package : 'Monticello-Tests',
+	#tag : 'RPackage'
 }
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMethodToThePackage [
 	"test that when a method is added to a class bu using a trait, this method is not imported in the parent package of the class"
 
@@ -26,7 +28,7 @@ RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMetho
 	self assertEmpty: xPackage methods
 ]
 
-{ #category : #'tests - operations on traits' }
+{ #category : 'tests - operations on traits' }
 RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageBestMatchName [
 
 	| xPackage tag class |
@@ -39,7 +41,7 @@ RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageBestMatchName [
 	self assert: xPackage equals: class package
 ]
 
-{ #category : #'tests - operations on traits' }
+{ #category : 'tests - operations on traits' }
 RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageExactName [
 
 	| xPackage class |
@@ -52,7 +54,7 @@ RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageExactName [
 	self assert: xPackage equals: class package
 ]
 
-{ #category : #'tests - operations on traits' }
+{ #category : 'tests - operations on traits' }
 RPackageTraitSynchronisationTest >> testAddTraitUpdateTheOrganizerMappings [
 	"test that when we add a Trait, the organizer 'classPackageMapping' dictionary is updated, so that the trait is linked to its package and so that we can access its owning package"
 
@@ -64,7 +66,7 @@ RPackageTraitSynchronisationTest >> testAddTraitUpdateTheOrganizerMappings [
 	self assert: class package equals: xPackage
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageTraitSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemoveMethodFromTraitPackage [
 	"test that when we remove a class method coming from a trait, the method is not removed from the parent package of the trait"
 
@@ -83,7 +85,7 @@ RPackageTraitSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemove
 	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageTraitSynchronisationTest >> testRemoveTraitMethod [
 	"test that when we remove a method from a trait used by a class, the method is removed from the trait package normally"
 
@@ -100,7 +102,7 @@ RPackageTraitSynchronisationTest >> testRemoveTraitMethod [
 	self deny: (xPackage includesSelector: #stubMethod ofClass: class)
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageTraitSynchronisationTest >> testRemoveTraitMethodOverridenByClassDoesRemoveMethodFromClassPackage [
 	"test that when we remove a class method overriding the one from a trait, the method is removed from the class package"
 
@@ -119,7 +121,7 @@ RPackageTraitSynchronisationTest >> testRemoveTraitMethodOverridenByClassDoesRem
 	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageTraitSynchronisationTest >> testTraitCompositionMethodsArePackagedWithTheirTraits [
 	"test that when we remove a class method coming from a trait, the method is not removed from the parent package of the trait"
 

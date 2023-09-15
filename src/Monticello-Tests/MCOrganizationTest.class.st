@@ -1,10 +1,12 @@
 Class {
-	#name : #MCOrganizationTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCOrganizationTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCOrganizationTest >> testLoadAndUnload [
 
 	| packageName |

@@ -194,6 +194,12 @@ RubCompositionScanner >> rightX [
 	^ destX
 ]
 
+{ #category : #accessing }
+RubCompositionScanner >> scale [
+
+	^ 1
+]
+
 { #category : #scanning }
 RubCompositionScanner >> setActualFont: aFont [
 	"Keep track of max height and ascent for auto lineheight"

@@ -2,12 +2,14 @@
 SUnit tests for RPackage extension methods
 "
 Class {
-	#name : #RPackageExtensionMethodsSynchronisationTest,
-	#superclass : #RPackageMCSynchronisationTest,
-	#category : #'Monticello-Tests-RPackage'
+	#name : 'RPackageExtensionMethodsSynchronisationTest',
+	#superclass : 'RPackageMCSynchronisationTest',
+	#category : 'Monticello-Tests-RPackage',
+	#package : 'Monticello-Tests',
+	#tag : 'RPackage'
 }
 
-{ #category : #'we are not sure' }
+{ #category : 'we are not sure' }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryBestMatchingNameAddMethodToTheExtendingPackage [
 	"test that when we add a method  in an extension category ( beginning with*) that enlarge a package name (for example *mondrian-accessing for Mondrian), this method is added to the corresponding extending package"
 
@@ -27,7 +29,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryB
 	self assert: (class >> #newMethod) package equals: xPackage
 ]
 
-{ #category : #'we are not sure' }
+{ #category : 'we are not sure' }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryMatchingNameAddMethodToTheExtendingPackage [
 	"test that when we add a method  in an extension category ( beginning with*) that enlarge a package name (for example *mondrian-accessing for Mondrian), this method is added to the corresponding extending package"
 
@@ -44,7 +46,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryM
 	self assert: (class >> #newMethod) package equals: yPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackage [
 	"test that when we add a method  in an extension category ( beginning with *)that does not refer to an existing categorya new package with the name of this category is added, and that the method is added to this new package"
 
@@ -60,7 +62,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 	self assert: (self organizer hasPackage: #SomethingDifferentNothingToDoWithWhatWeHave)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackageAndInstallsMethodInIt [
 	"test that when we add a method  in an extension category ( beginning with *)that does not refer to an existing categorya new package with the name of this category is added, and that the method is added to this new package"
 
@@ -77,7 +79,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 	self assert: (class >> #newMethod) package equals: (self organizer packageNamed: #SomethingDifferentNothingToDoWithWhatWeHave)
 ]
 
-{ #category : #'we are not sure' }
+{ #category : 'we are not sure' }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotRespectingCaseAddMethodToTheExtendingPackage [
 	"test that when we add a method  in an extension category ( beginning with *)thae does not match the case of the corresponding package (for example *packagea for PackageA), this method is added to the corresponding extending package"
 
@@ -94,7 +96,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 	self assert: (class >> #stubMethod) package equals: yPackage
 ]
 
-{ #category : #'we are not sure' }
+{ #category : 'we are not sure' }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryWithExactMatchAddMethodToTheExtendingPackage [
 	"test that when we add a method to a  class in an extension category ( beginning with *), this method is added to the corresponding extending package"
 
@@ -113,7 +115,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryW
 	self assert: (class >> #stubMethod) package equals: yPackage
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testModifyMethodByChangingCode [
 	"test that when we modify the code of a method, everything work well: NOTHING SHOULD HAPPEN REGARDING THE PACKAGING"
 
@@ -131,7 +133,7 @@ RPackageExtensionMethodsSynchronisationTest >> testModifyMethodByChangingCode [
 	self assert: (class >> #stubMethod) package equals: xPackage
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensionsOnClass [
 	"Move a class in package XXXXX (with extensions from YYYY) to package YYYYY."
 
@@ -150,7 +152,7 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 	self assert: (class >> #stubMethod) package equals: yPackage
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensionsOnClassAndBack [
 	"Move a class in package XXXXX (with extensions from YYYY) to package YYYYY."
 
@@ -178,7 +180,7 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsFromMetaAndInstanceSideUpdateOrganizerExtensionsMapping [
 	"test that In a class (from the meta  and the instance side ), when we remove all the method extended by the same external package, the class get unregistered from the classExtendingPackagesMapping of the organizer "
 
@@ -197,7 +199,7 @@ RPackageExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsFrom
 	self deny: ((self organizer extendingPackagesOf: class classSide) includes: yPackage)
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsRemoveTheClassFromExtendedClasses [
 	"test that In a class, when we remove all the method extended by the same external package, the class get unregistered from the extended classes of the external package "
 
@@ -217,7 +219,7 @@ RPackageExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsRemo
 	self deny: (yPackage extendsClass: class classSide)
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodDoesNotRemoveExtendingPackage [
 	"test that when we remove a method that is an extension from an external package, the package is not removed from the the class extending packages if another extension still exist"
 
@@ -237,7 +239,7 @@ RPackageExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodDoesNotR
 	self assert: (yPackage extendsClass: class classSide)
 ]
 
-{ #category : #'tests - operations on methods' }
+{ #category : 'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodRemoveMethodFromItsPackage [
 	"test that when we remove a method that is an extension from an external package, the method is removed from this package"
 

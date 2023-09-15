@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'baseTrait',
 		'classTraitComposition',
-		'category',
 		'packageName',
 		'tagName'
 	],
@@ -60,22 +59,21 @@ MCClassTraitDefinition >> baseTraitName: aTraitName [
 { #category : #accessing }
 MCClassTraitDefinition >> category [
 
-	^ category ifNil: [
-		  self packageName
-			  ifNil: [
-				  (Smalltalk classOrTraitNamed: self baseTrait)
-					  ifNotNil: [ :bTrait | bTrait category ]
-					  ifNil: [ self error: 'Can''t detect the category' ] ]
-			  ifNotNil: [ :package |
-				  (self tagName isNil or: [ self tagName = package ])
-					  ifTrue: [ package ]
-					  ifFalse: [ package , '-' , self tagName ] ] ]
+	^ self packageName
+		  ifNil: [
+			  (Smalltalk classOrTraitNamed: self baseTrait)
+				  ifNotNil: [ :bTrait | bTrait category ]
+				  ifNil: [ self error: 'Can''t detect the category' ] ]
+		  ifNotNil: [ :package |
+			  (self tagName isNil or: [ self tagName = package ])
+				  ifTrue: [ package ]
+				  ifFalse: [ package , '-' , self tagName ] ]
 ]
 
 { #category : #initialization }
 MCClassTraitDefinition >> category: aCategoryString [
 
-	category := aCategoryString
+	self packageName: aCategoryString
 ]
 
 { #category : #accessing }

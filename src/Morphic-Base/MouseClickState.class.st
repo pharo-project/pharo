@@ -279,6 +279,7 @@ MouseClickState >> handleEvent: evt from: aHand [
 			^true].
 		localEvt isMouseUp ifTrue:[
 
+			"If timedOut or the client's not interested in dbl clicks get outta here"
 			(timedOut or:[doubleClickSelector isNil]) ifTrue:[
 				self click.
 				aHand resetClickState.
@@ -289,7 +290,6 @@ MouseClickState >> handleEvent: evt from: aHand [
 			We will handle a click now."
 			clickState := #firstClickUp.
 			firstClickUp := evt copy.
-			"If timedOut or the client's not interested in dbl clicks get outta here"
 			aHand queuePendingEvent: firstClickUp.
 
 			self click.
@@ -316,8 +316,11 @@ MouseClickState >> handleEvent: evt from: aHand [
 		^false].
 
 	clickState == #firstClickUp ifTrue:[
-		(timedOut) ifTrue:[
-			"timed out after mouseUp - signal timeout and pass the event"
+		(timedOut or: [localEvt isMouseDown and: [
+				isDrag or: [localEvt buttons ~= firstClickDown buttons]]]) 
+		ifTrue:[
+			"timed out after mouseUp, or the mouse has moved, or this click is of a different button.
+			Can no longer have a double-click - signal timeout and pass the event"
 			aHand resetClickState.
 			self doubleClickTimeout. "***"
 			^true].
