@@ -107,9 +107,8 @@ RPackageTestCase >> runCase [
 { #category : #running }
 RPackageTestCase >> tearDown [
 
-	self organizer packages do: [ :package |
-		self allWorkingCopies
-			detect: [ :mcPackage | mcPackage packageName = package packageName asString ]
-			ifFound: [ :mcPackage | mcPackage unregister ] ].
+	self organizer packages do: [ :package | package removeFromSystem ].
+	"Most classes should be removed with the above line but some might be unpackaged"
+	self organizer environment allClasses do: [ :class | class removeFromSystem ].
 	super tearDown
 ]

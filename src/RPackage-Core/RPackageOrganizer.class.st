@@ -502,7 +502,7 @@ RPackageOrganizer >> packageNamesDo: aBlock [
 { #category : #'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
-	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self packageNamed: RPackage defaultPackageName ]
+	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self defineUnpackagedClassesPackage ]
 ]
 
 { #category : #'package - access from class' }
@@ -597,7 +597,7 @@ RPackageOrganizer >> removeBehavior: behavior [
 
 	| behaviorName |
 	behaviorName := behavior isBehavior
-		                ifTrue: [ behavior name ]
+		                ifTrue: [ behavior originalName ]
 		                ifFalse: [ behavior ].
 
 	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ classes remove: behaviorName ] ]

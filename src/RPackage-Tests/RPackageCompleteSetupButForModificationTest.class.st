@@ -57,19 +57,19 @@ RPackageCompleteSetupButForModificationTest >> testAddMethod [
 RPackageCompleteSetupButForModificationTest >> testBasicRemoveClass [
 	"we remove a class we check that it is not in the package anymore"
 
-	|  size |
+	| size |
 	size := p1 definedClasses size.
 	self assert: size equals: 2.
 	self assert: (p1 includesClass: a1).
 	self assert: (p1 includesClass: a1 class).
 	p1 removeClass: a1.
-	self assert: p1 definedClasses size equals: (size - 1).
+	self assert: p1 definedClasses size equals: size - 1.
 	self assert: (p1 includesClass: b1).
 	self assert: (p1 includesClass: b1 class).
 	self deny: (p1 includesClass: a1).
 	self deny: (p1 includesClass: a1 class).
 	p1 removeClass: b1.
-	self assert: p1 definedClasses size equals: (size - 2).
+	self assert: p1 definedClasses size equals: size - 2.
 	self deny: (p1 includesClass: b1).
 	self deny: (p1 includesClass: b1 class)
 ]
