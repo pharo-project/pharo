@@ -8,11 +8,10 @@ Class {
 		'name',
 		'superclassName',
 		'variables',
-		'category',
+		'packageName',
 		'type',
 		'comment',
 		'commentStamp',
-		'packageName',
 		'tagName',
 		'traitComposition',
 		'classTraitComposition'
@@ -78,17 +77,16 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 { #category : #accessing }
 MCClassDefinition >> category [
 
-	^ category ifNil: [
-		  self packageName ifNotNil: [ :package |
-			  (self tagName isNil or: [ self tagName = package ])
-				  ifTrue: [ package ]
-				  ifFalse: [ package , '-' , self tagName ] ] ]
+	^ self packageName ifNotNil: [ :package |
+		  (self tagName isNil or: [ self tagName = package ])
+			  ifTrue: [ package ]
+			  ifFalse: [ package , '-' , self tagName ] ]
 ]
 
 { #category : #accessing }
 MCClassDefinition >> category: categoryString [
 
-	category := categoryString
+	self packageName: categoryString
 ]
 
 { #category : #accessing }
@@ -198,32 +196,31 @@ MCClassDefinition >> commentStamp: anObject [
 
 { #category : #installing }
 MCClassDefinition >> createClass [
+
 	| superClass |
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
-	name = #Context
-		ifTrue: [ Context comment = comment 
-						ifFalse: [ Context comment: comment stamp: self commentStamp ].
-					^ self ].
+	name = #Context ifTrue: [
+		Context comment = comment ifFalse: [ Context comment: comment stamp: self commentStamp ].
+		^ self ].
 
-	superClass := superclassName = #nil
-		ifFalse: [ Smalltalk globals at: superclassName ].
-	^ [ Smalltalk classInstaller
-		make: [ :builder | 
-			builder
-				superclass: superClass;
-				name: name;
-				layoutClass: (ObjectLayout layoutForType: type);
-				slots: self instanceVariables;
-				sharedVariables: self classVariables;
-				sharedPools: self sharedPoolsString;
-				classSlots: self classInstanceVariables;
-				traitComposition: self traitCompositionCompiled;
-				classTraitComposition: self classTraitCompositionCompiled;
-				comment: comment stamp: self commentStamp;
-				category: self category;
-				environment: superClass environment ] ]
-		on: Warning , DuplicatedVariableError
-		do: [ :ex | ex resume ]
+	superClass := superclassName = #nil ifFalse: [ Smalltalk globals at: superclassName ].
+	^ [
+	  Smalltalk classInstaller make: [ :builder |
+		  builder
+			  superclass: superClass;
+			  name: name;
+			  layoutClass: (ObjectLayout layoutForType: type);
+			  slots: self instanceVariables;
+			  sharedVariables: self classVariables;
+			  sharedPools: self sharedPoolsString;
+			  classSlots: self classInstanceVariables;
+			  traitComposition: self traitCompositionCompiled;
+			  classTraitComposition: self classTraitCompositionCompiled;
+			  comment: comment stamp: self commentStamp;
+			  category: self category;
+			  environment: superClass environment ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex | ex resume ]
 ]
 
 { #category : #installing }
@@ -300,6 +297,17 @@ MCClassDefinition >> initialize [
 	comment := ''.
 	commentStamp := self defaultCommentStamp.
 	variables := OrderedCollection new
+]
+
+{ #category : #introspection }
+MCClassDefinition >> instVarNamed: aString put: aValue [
+
+	self flag: #package. "temporary hack until Tonel is fixed"
+	super
+		instVarNamed: (aString = 'category'
+				 ifTrue: [ 'packageName' ]
+				 ifFalse: [ aString ])
+		put: aValue
 ]
 
 { #category : #accessing }

@@ -237,9 +237,9 @@ RubParagraph >> drawOn: aCanvas using: aDisplayScanner at: aPosition [
 	self drawingEnabled
 		ifFalse: [ ^ self ].
 	visibleRectangle := aCanvas clipRect.
-	offset := (aPosition - self position) truncated.
+	offset := (aPosition - (self position * aDisplayScanner scale)) truncated.
 	leftInRun := 0.
-	(self lineIndexForPoint: visibleRectangle topLeft) to: (self lineIndexForPoint: visibleRectangle bottomRight) do: [ :i |
+	(self lineIndexForPoint: visibleRectangle topLeft scale: aDisplayScanner scale) to: (self lineIndexForPoint: visibleRectangle bottomRight scale: aDisplayScanner scale) do: [ :i |
 		line := self lines at: i.
 		line first <= line last
 			ifTrue: [ leftInRun := aDisplayScanner displayLine: line offset: offset leftInRun: leftInRun ] ]
@@ -380,8 +380,14 @@ RubParagraph >> lastNonBlankCharacterBlockInLine: aLine [
 
 { #category : #querying }
 RubParagraph >> lineIndexForPoint: aPoint [
+
+	^ self lineIndexForPoint: aPoint scale: 1
+]
+
+{ #category : #querying }
+RubParagraph >> lineIndexForPoint: aPoint scale: scale [
 	"Answer the index of the line in which to select the character nearest to aPoint."
-	^ self composer lineIndexForPoint: aPoint
+	^ self composer lineIndexForPoint: aPoint scale: scale
 ]
 
 { #category : #querying }
