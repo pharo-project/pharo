@@ -44,7 +44,7 @@ Class >> asRingDefinition [
 
 	| ring |
 	ring := (RGClassDefinition named: self name)
-		category: self category;
+		category: self basicCategory;
 		superclassName: (self superclass
 			ifNil: [ nil printString ]
 			ifNotNil: [ self superclass name ]);

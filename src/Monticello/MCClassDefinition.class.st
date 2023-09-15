@@ -8,10 +8,11 @@ Class {
 		'name',
 		'superclassName',
 		'variables',
-		'category',
+		'packageName',
 		'type',
 		'comment',
 		'commentStamp',
+		'tagName',
 		'traitComposition',
 		'classTraitComposition'
 	],
@@ -20,7 +21,7 @@ Class {
 
 { #category : #deprecated }
 MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
-	"Do not use this method! This method will be deprecated one Tonel will not use it anymore."
+	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
 	^ (self named: nameString)
 		  category: categoryString;
@@ -51,7 +52,7 @@ MCClassDefinition >> = aDefinition [
 		and: [ superclassName = aDefinition superclassName
 		and: [ self traitCompositionString = aDefinition traitCompositionString
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ category = aDefinition category
+		and: [ self category = aDefinition category
 		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
@@ -75,13 +76,17 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 
 { #category : #accessing }
 MCClassDefinition >> category [
-	^ category
+
+	^ self packageName ifNotNil: [ :package |
+		  (self tagName isNil or: [ self tagName = package ])
+			  ifTrue: [ package ]
+			  ifFalse: [ package , '-' , self tagName ] ]
 ]
 
 { #category : #accessing }
 MCClassDefinition >> category: categoryString [
 
-	category := categoryString
+	self packageName: categoryString
 ]
 
 { #category : #accessing }
@@ -191,32 +196,31 @@ MCClassDefinition >> commentStamp: anObject [
 
 { #category : #installing }
 MCClassDefinition >> createClass [
+
 	| superClass |
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
-	name = #Context
-		ifTrue: [ Context comment = comment 
-						ifFalse: [ Context comment: comment stamp: self commentStamp ].
-					^ self ].
+	name = #Context ifTrue: [
+		Context comment = comment ifFalse: [ Context comment: comment stamp: self commentStamp ].
+		^ self ].
 
-	superClass := superclassName = #nil
-		ifFalse: [ Smalltalk globals at: superclassName ].
-	^ [ Smalltalk classInstaller
-		make: [ :builder | 
-			builder
-				superclass: superClass;
-				name: name;
-				layoutClass: (ObjectLayout layoutForType: type);
-				slots: self instanceVariables;
-				sharedVariables: self classVariables;
-				sharedPools: self sharedPoolsString;
-				classSlots: self classInstanceVariables;
-				traitComposition: self traitCompositionCompiled;
-				classTraitComposition: self classTraitCompositionCompiled;
-				comment: comment stamp: self commentStamp;
-				category: category;
-				environment: superClass environment ] ]
-		on: Warning , DuplicatedVariableError
-		do: [ :ex | ex resume ]
+	superClass := superclassName = #nil ifFalse: [ Smalltalk globals at: superclassName ].
+	^ [
+	  Smalltalk classInstaller make: [ :builder |
+		  builder
+			  superclass: superClass;
+			  name: name;
+			  layoutClass: (ObjectLayout layoutForType: type);
+			  slots: self instanceVariables;
+			  sharedVariables: self classVariables;
+			  sharedPools: self sharedPoolsString;
+			  classSlots: self classInstanceVariables;
+			  traitComposition: self traitCompositionCompiled;
+			  classTraitComposition: self classTraitCompositionCompiled;
+			  comment: comment stamp: self commentStamp;
+			  category: self category;
+			  environment: superClass environment ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex | ex resume ]
 ]
 
 { #category : #installing }
@@ -277,25 +281,15 @@ MCClassDefinition >> hasTraitComposition [
 
 { #category : #comparing }
 MCClassDefinition >> hash [
-	| hash |
-	hash := String stringHash: name initialHash: 0.
-	hash := String stringHash: superclassName initialHash: hash.
-	hash := String stringHash: self traitCompositionString initialHash: hash.
-	hash := String stringHash: self classTraitComposition asString initialHash: hash.
-	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
-	hash := String stringHash: type initialHash: hash.
-	variables do: [
-		:v |
-		hash := String stringHash: v name initialHash: hash.
-	].
-	^ hash
+
+	^ (((((name hash bitXor: superclassName hash) bitXor: traitComposition hash) bitXor: classTraitComposition hash) bitXor: self category hash) bitXor: type hash)
+		  bitXor: variables hash
 ]
 
 { #category : #initialization }
 MCClassDefinition >> initialize [
 
 	super initialize.
-	category := ''.
 	superclassName := #Object.
 	traitComposition := '{}'.
 	classTraitComposition := '{}'.
@@ -303,6 +297,17 @@ MCClassDefinition >> initialize [
 	comment := ''.
 	commentStamp := self defaultCommentStamp.
 	variables := OrderedCollection new
+]
+
+{ #category : #introspection }
+MCClassDefinition >> instVarNamed: aString put: aValue [
+
+	self flag: #package. "temporary hack until Tonel is fixed"
+	super
+		instVarNamed: (aString = 'category'
+				 ifTrue: [ 'packageName' ]
+				 ifFalse: [ aString ])
+		put: aValue
 ]
 
 { #category : #accessing }
@@ -372,6 +377,18 @@ MCClassDefinition >> needsSlotClassDefinition [
 	Complex vars are encoded with a string that starts with a # or one that has a space"
 	
 	^self variables anySatisfy: [:var | (var name beginsWith:'#') or: [ var name includes: Character space ]]
+]
+
+{ #category : #accessing }
+MCClassDefinition >> packageName [
+
+	^ packageName
+]
+
+{ #category : #accessing }
+MCClassDefinition >> packageName: aString [
+
+	packageName := aString ifNotNil: [ :package | package asSymbol ]
 ]
 
 { #category : #accessing }
@@ -567,6 +584,18 @@ MCClassDefinition >> superclassName: superclassString [
 	superclassName := superclassString
 		                  ifNil: [ #nil ]
 		                  ifNotNil: [ superclassString asSymbol ]
+]
+
+{ #category : #accessing }
+MCClassDefinition >> tagName [
+
+	^ tagName
+]
+
+{ #category : #accessing }
+MCClassDefinition >> tagName: aString [
+
+	tagName := aString ifNotNil: [ :tag | tag asSymbol ]
 ]
 
 { #category : #accessing }

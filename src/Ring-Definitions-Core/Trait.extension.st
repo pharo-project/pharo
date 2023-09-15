@@ -8,7 +8,7 @@ Trait >> asRingDefinition [
 
 	| ring |
 	ring := (RGTraitDefinition named: self name)
-		        category: self category;
+		        category: self basicCategory;
 		        superclassName: #Trait;
 		        traitCompositionSource: self traitCompositionString;
 		        comment: self comment;

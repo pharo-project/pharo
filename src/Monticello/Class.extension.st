@@ -16,12 +16,17 @@ Class >> asClassDefinition [
 		              superclassName: (self superclass ifNotNil: [ self superclass name ]);
 		              traitComposition: self traitCompositionString;
 		              classTraitComposition: self class traitCompositionString;
-		              category: self category;
+		              packageName: self package name;
 		              poolDictionaryNames: self sharedPoolNames;
 		              type: self mcType;
 		              comment: self comment;
 		              commentStamp: self commentStamp;
 		              yourself.
+
+	"We do not export the tag if this is the root."
+	self packageTag ifNotNil: [ :tag | tag isRoot ifFalse: [ definition tagName: tag name ] ].
+
+
 	self needsSlotClassDefinition
 		ifTrue: [
 			definition

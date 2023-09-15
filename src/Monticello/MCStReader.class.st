@@ -50,14 +50,14 @@ MCStReader >> classDefinitionFrom: aRingClass [
 	classTraitCompositionString := (aRingClass classSide definitionSource asString readStream
 		                                match: 'uses:';
 		                                upToAll: 'instanceVariableNames:') trimBoth.
-	traitCompositionString isEmpty ifTrue: [ traitCompositionString := '{}' ].
-	classTraitCompositionString isEmpty ifTrue: [ classTraitCompositionString := '{}' ].
+	traitCompositionString ifEmpty: [ traitCompositionString := '{}' ].
+	classTraitCompositionString ifEmpty: [ classTraitCompositionString := '{}' ].
 	lastIndex := tokens size.
 	^ (MCClassDefinition named: (tokens at: 3))
 		  superclassName: (tokens at: 1);
 		  traitComposition: traitCompositionString;
 		  classTraitComposition: classTraitCompositionString;
-		  category: (tokens at: lastIndex);
+		  packageName: (tokens at: lastIndex);
 		  instVarNames: ((tokens at: lastIndex - 6) findTokens: ' ');
 		  classVarNames: ((tokens at: lastIndex - 4) findTokens: ' ');
 		  poolDictionaryNames: ((tokens at: lastIndex - 2) findTokens: ' ');

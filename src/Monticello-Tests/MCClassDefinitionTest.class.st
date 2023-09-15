@@ -105,7 +105,7 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 	| defA defB |
 	defA := (MCClassDefinition named: 'ClassA')
 		        superclassName: 'SuperA';
-		        category: 'CategoryA';
+		        packageName: 'PackageA';
 		        instVarNames: #( iVarA );
 		        classVarNames: #( cVarB );
 		        poolDictionaryNames: #( PoolA );
@@ -117,6 +117,8 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 	defB := defA copy name: 'ClassB'.
 	self deny: defA equals: defB.
 	defB := defA copy superclassName: 'SuperB'.
+	self deny: defA equals: defB.
+	defB := defA copy packageName: 'PackageB'.
 	self deny: defA equals: defB.
 	defB := defA copy traitComposition: 'T'.
 	self deny: defA equals: defB.
@@ -175,7 +177,7 @@ MCClassDefinitionTest >> testValidTraitComposition [
 	className := 'MCMockClassC'.
 	d := (MCClassDefinition named: className)
 		     traitComposition: '{MCTraitMock1}';
-		     category: self mockCategoryName;
+		     packageName: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -194,7 +196,7 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 	className := 'MCMockClassC'.
 	d := (MCClassDefinition named: className)
 		     traitComposition: 'MCTraitMock1';
-		     category: self mockCategoryName;
+		     packageName: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -213,7 +215,7 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 	className := 'MCMockClassC'.
 	d := (MCClassDefinition named: className)
 		     traitComposition: 'MCTraitMock1 + MCTraitMock2';
-		     category: self mockCategoryName;
+		     packageName: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
@@ -234,7 +236,7 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 	className := 'MCMockClassC'.
 	d := (MCClassDefinition named: className)
 		     traitComposition: 'MCTraitMock1 - {#c1}';
-		     category: self mockCategoryName;
+		     packageName: self mockCategoryName;
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.

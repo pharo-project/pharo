@@ -105,9 +105,9 @@ RPackageTestCase >> organizer [
 ]
 
 { #category : #utilities }
-RPackageTestCase >> removePackage: aName [
+RPackageTestCase >> removePackage: aPackage [
 
-	self organizer basicUnregisterPackageNamed: aName
+	self organizer basicUnregisterPackage: aPackage
 ]
 
 { #category : #running }

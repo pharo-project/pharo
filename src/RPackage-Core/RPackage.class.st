@@ -831,26 +831,6 @@ RPackage >> renameTag: aTag to: newName [
 		 ifFalse: [ aTag ]) renameTo: newName
 ]
 
-{ #category : #private }
-RPackage >> renameTagsPrefixedWith: oldName to: newName [
-	| oldPrefix newPrefix |
-
-	oldName ifNil: [ ^ self ].
-
-	self
-		classTagNamed: oldName
-		ifPresent: [ :tag | tag renameTo: newName category: newName ].
-
-	oldPrefix := oldName, '-'.
-	newPrefix := newName, '-'.
-	(self classTags
-		select: [ :each | each categoryName beginsWith: oldPrefix ])
-		do: [ :each |
-			each
-				renameTo: each name
-				category: newPrefix, (each name) ]
-]
-
 { #category : #register }
 RPackage >> renameTo: aSymbol [
 	"Rename a package with a different name, provided as a symbol"
@@ -862,15 +842,15 @@ RPackage >> renameTo: aSymbol [
 	oldCategoryNames := (self classTags collect: [ :each | each categoryName ] as: Set)
 		                    add: self name;
 		                    difference: { newName }.
+	self organizer basicUnregisterPackage: self.
 	self name: aSymbol.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self definedClasses do: [ :each | each category: newName , (each category allButFirst: oldName size) ].
 		oldCategoryNames do: [ :each | self organizer removeCategory: each ] ].
-	self renameTagsPrefixedWith: oldName to: newName.
+	self flag: #package. "For now, the root tag has the name of the package, thus, renaming the package means that we need to rename the root tag. In the future I want to update the root tag name to be fix and not depend on the name of the package. When that happens, we'll be able to remove the next line."
+	self classTagNamed: oldName ifPresent: [ :tag | tag renameTo: newName ].
 	self renameExtensionsPrefixedWith: oldName to: newName.
-	self organizer
-		basicUnregisterPackageNamed: oldName;
-		basicRegisterPackage: self.
+	self organizer basicRegisterPackage: self.
 	SystemAnnouncer uniqueInstance announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
 

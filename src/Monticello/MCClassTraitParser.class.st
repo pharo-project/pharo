@@ -14,14 +14,14 @@ MCClassTraitParser class >> pattern [
 
 { #category : #actions }
 MCClassTraitParser >> addDefinitionsTo: aCollection [
-	| tokens  definition traitCompositionString |
+
+	| tokens definition traitCompositionString |
 	tokens := source parseLiterals.
 	traitCompositionString := (source readStream
-		match: 'uses:';
-		upToEnd) trimBoth.
-	definition := MCClassTraitDefinition
-		baseTraitName: (tokens at: 1) 
-		classTraitComposition: traitCompositionString.
+		                           match: 'uses:';
+		                           upToEnd) trimBoth.
+	definition := (MCClassTraitDefinition baseTraitName: (tokens at: 1))
+		              classTraitComposition: traitCompositionString;
+		              yourself.
 	aCollection add: definition
-
 ]
