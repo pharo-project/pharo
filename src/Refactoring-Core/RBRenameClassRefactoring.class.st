@@ -35,43 +35,72 @@ RBRenameClassRefactoring class >> rename: aClassName to: aNewName [
 		newName: aNewName
 ]
 
+{ #category : #preconditions }
+RBRenameClassRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition withBlock: [
+		   class notNil and: [ class isMeta not ] ])
+	  & self isValidClassName & self isNotGlobal
+]
+
 { #category : #initialization }
 RBRenameClassRefactoring >> className: aName newName: aNewName [
+
 	className := aName asSymbol.
 	class := self model classNamed: className.
 	newName := aNewName asSymbol
 ]
 
 { #category : #preconditions }
+RBRenameClassRefactoring >> isNotGlobal [
+
+	^ (RBCondition isGlobal: newName in: self model) not
+]
+
+{ #category : #preconditions }
+RBRenameClassRefactoring >> isValidClassName [
+
+	^ RBCondition isValidClassName: newName
+]
+
+{ #category : #preconditions }
 RBRenameClassRefactoring >> preconditions [
-	^((RBCondition withBlock: [class notNil and: [class isMeta not]])
-			& (RBCondition isValidClassName: newName)
-			& (RBCondition isGlobal: newName in: self model) not) |
-			(RBCondition withBlock: [ self refactoringError: newName , ' is not a valid class name'])
+
+	^ self applicabilityPreconditions 
 ]
 
 { #category : #transforming }
 RBRenameClassRefactoring >> privateTransform [
+
 	self model
 		renameClass: class
 		to: newName
-		around: [self renameReferences]
+		around: [ self renameReferences ]
 ]
 
 { #category : #transforming }
 RBRenameClassRefactoring >> renameReferences [
 
 	| replacer |
-	replacer := (self parseTreeRewriterClass replaceLiteral: className with: newName)
+	replacer := (self parseTreeRewriterClass
+		             replaceLiteral: className
+		             with: newName)
 		            replace: className with: newName;
-		            replaceArgument: newName withValueFrom: [ :aNode | self refactoringError: newName , ' already exists within the reference scope' ];
+		            replaceArgument: newName withValueFrom: [ :aNode |
+			            self refactoringError:
+					            newName , ' already exists within the reference scope' ];
 		            yourself.
 	self model allReferencesToClass: class do: [ :method |
 		(method modelClass hierarchyDefinesVariable: newName) ifTrue: [
-			self refactoringError: newName , ' is already defined in hierarchy of ' , method modelClass printString ].
-		(method method
-			 ifNil: [ false ]
-			 ifNotNil: #isFromTrait) ifFalse: [ self convertMethod: method selector for: method modelClass using: replacer ] ]
+			self refactoringError:
+				newName , ' is already defined in hierarchy of '
+				, method modelClass printString ].
+		(method method ifNil: [ false ] ifNotNil: [ :m | m isFromTrait ])
+			ifFalse: [
+				self
+					convertMethod: method selector
+					for: method modelClass
+					using: replacer ] ]
 ]
 
 { #category : #printing }
