@@ -41,14 +41,6 @@ SycRemoveMethod2Command >> execute [
 				 methods: methods) runRefactoring
 ]
 
-{ #category : 'initialization' }
-SycRemoveMethod2Command >> initialize [
-	
-	super initialize.
-
-	removeStrategy := SycSilentlyRemoveMethodStrategy new
-]
-
 { #category : 'execution' }
 SycRemoveMethod2Command >> isComplexRefactoring [ 
 
@@ -61,14 +53,4 @@ SycRemoveMethod2Command >> prepareFullExecutionInContext: aToolContext [
 	toolContext := aToolContext.
 	"(RBRemoveMethodDriver new scopes: aToolContext refactoringScopes methods: methods for: aToolContext lastSelectedClass) runRefactoring"
 
-]
-
-{ #category : 'accessing' }
-SycRemoveMethod2Command >> removeStrategy [
-	^ removeStrategy
-]
-
-{ #category : 'accessing' }
-SycRemoveMethod2Command >> removeStrategy: anObject [
-	removeStrategy := anObject
 ]
