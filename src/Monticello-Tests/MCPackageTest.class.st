@@ -1,10 +1,12 @@
 Class {
-	#name : #MCPackageTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCPackageTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageTest >> aMethodRemoved: anEvent [
 	"Force cleaning of the protocol."
 
@@ -12,14 +14,14 @@ MCPackageTest >> aMethodRemoved: anEvent [
 		anEvent methodClass removeProtocolIfEmpty: self mockExtensionProtocol ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCPackageTest >> tearDown [
 	self mockSnapshot install.
 	MCDataStream initialize. "MCMockClassG ends up in the DataStream TypeMap -- we need to reset"
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCPackageTest >> testUnload [
 
 	| mock |
@@ -33,7 +35,7 @@ MCPackageTest >> testUnload [
 			 ifNone: [  ]) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCPackageTest >> testUnloadWithAdditionalTracking [
 	"This is to test against another entity removing the extension protocol as well."
 

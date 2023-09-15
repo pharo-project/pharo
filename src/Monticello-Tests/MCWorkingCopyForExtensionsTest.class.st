@@ -1,10 +1,12 @@
 Class {
-	#name : #MCWorkingCopyForExtensionsTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCWorkingCopyForExtensionsTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MCWorkingCopyForExtensionsTest >> tearDown [
 	'ATestPackage' asPackage removeFromSystem.
 	'AnotherTestPackage' asPackage removeFromSystem.
@@ -19,7 +21,7 @@ MCWorkingCopyForExtensionsTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyForExtensionsTest >> testAddingExtensionMethodNotMatchingPackage [
 
 	| aClass |

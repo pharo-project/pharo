@@ -8,16 +8,18 @@ Look for example at:
 and try to uncomment it
 "
 Class {
-	#name : #RPackageMCSynchronisationTest,
-	#superclass : #RPackageTestCase,
+	#name : 'RPackageMCSynchronisationTest',
+	#superclass : 'RPackageTestCase',
 	#instVars : [
 		'emptyOrganizer',
 		'oldAnnouncer'
 	],
-	#category : #'Monticello-Tests-RPackage'
+	#category : 'Monticello-Tests-RPackage',
+	#package : 'Monticello-Tests',
+	#tag : 'RPackage'
 }
 
-{ #category : #setup }
+{ #category : 'setup' }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
 	self organizer environment
@@ -49,62 +51,62 @@ RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 			ifFound: [ :mCPackage | mCPackage unregister ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageMCSynchronisationTest >> createMethodNamed: methodName inClass: aClass inCategory: aCategoryName [ 
 
 	^ aClass compile: (methodName, ' ^nil') classified: aCategoryName.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageMCSynchronisationTest >> createMethodNamed: methodName inClassSideOfClass: aClass inCategory: aCategoryName [ 
 
 	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageMCSynchronisationTest >> emptyOrganizer [ 
 
 	^ emptyOrganizer
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageMCSynchronisationTest >> ensureTagYinX [
 
 	self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageMCSynchronisationTest >> ensureXPackage [
 
 	^ self organizer ensurePackage: #XXXXX
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageMCSynchronisationTest >> ensureYPackage [
 
 	^ self organizer ensurePackage: #YYYYY
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageMCSynchronisationTest >> ensureZPackage [
 
 	^ self organizer ensurePackage: #ZZZZZ
 ]
 
-{ #category : #'announcer handling' }
+{ #category : 'announcer handling' }
 RPackageMCSynchronisationTest >> initializeAnnouncers [
 
 	oldAnnouncer := MCWorkingCopy announcer.
 	MCWorkingCopy announcer: SystemAnnouncer uniqueInstance
 ]
 
-{ #category : #'announcer handling' }
+{ #category : 'announcer handling' }
 RPackageMCSynchronisationTest >> restoreAnnouncers [
 
 	MCWorkingCopy announcer: oldAnnouncer
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageMCSynchronisationTest >> runCase [
 
 	[
@@ -112,7 +114,7 @@ RPackageMCSynchronisationTest >> runCase [
 	super runCase ] ensure: [ self restoreAnnouncers ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageMCSynchronisationTest >> setUp [
 
 	super setUp.
@@ -125,7 +127,7 @@ RPackageMCSynchronisationTest >> setUp [
 	Author fullName ifNil: [ Author fullName: 'Tester' ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageMCSynchronisationTest >> tearDown [
 
 	MCWorkingCopy removeDependent: self emptyOrganizer.
@@ -134,7 +136,7 @@ RPackageMCSynchronisationTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodByMovingInSameExtensionCategory [
 
 	| ann class |
@@ -151,7 +153,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 	self assert: ann isNil
 ]
 
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicCategories [
 
 	| ann class |
@@ -168,7 +170,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 	self assert: ann isNil
 ]
 
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromClassicCategoryToExtensionCategory [
 
 	| ann class firstPackage secondPackage |
@@ -192,7 +194,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	self assert: ann isNil
 ]
 
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromDifferentExtensionCategories [
 
 	| ann class secondPackage thirdPackage |
@@ -213,7 +215,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	self assert: ann newPackage equals: thirdPackage
 ]
 
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromExtensionCategoryToClassicCategory [
 
 	| ann class firstPackage secondPackage |
