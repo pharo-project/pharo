@@ -142,6 +142,14 @@ ProcessorScheduler >> backgroundProcess [
 	^ BackgroundProcess
 ]
 
+{ #category : #querying }
+ProcessorScheduler >> findProcessForContext: aContext [
+	 
+	^ Process allInstances 
+		detect: [ : process | process hasContext: aContext ]
+		ifNone: [  thisProcess ]
+]
+
 { #category : #'priority names' }
 ProcessorScheduler >> highIOPriority [
 	"Answer the priority at which the most time critical input/output
