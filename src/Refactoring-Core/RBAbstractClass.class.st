@@ -163,6 +163,11 @@ RBAbstractClass >> allSuperclassesUntil: aClass [
 	^supers
 ]
 
+{ #category : 'accessing' }
+RBAbstractClass >> binding [
+	^ Smalltalk globals associationAt: self name
+]
+
 { #category : 'method accessing' }
 RBAbstractClass >> bindingOf: aString [
 	^self realClass classPool associationAt: aString asSymbol
@@ -194,7 +199,8 @@ RBAbstractClass >> checkSelector: aSelector using: aMatcher [
 
 { #category : 'accessing' }
 RBAbstractClass >> classBinding [
-	^ Smalltalk globals associationAt: self name
+	self deprecated: 'Use binding' transformWith: '`@receiver classBinding' -> '`@receiver binding'.
+	^ self binding 
 ]
 
 { #category : 'accessing - navigation' }
@@ -791,7 +797,7 @@ RBAbstractClass >> whichSelectorsReferToClass: aRBClass [
 					]
 			].
 	( self isDefined and: [ aRBClass isDefined ] )
-		ifTrue: [ selectors addAll: ( self existingMethodsThatReferTo: aRBClass classBinding ).
+		ifTrue: [ selectors addAll: ( self existingMethodsThatReferTo: aRBClass binding ).
 			selectors addAll: ( self existingMethodsThatReferTo: aRBClass name )
 			].
 	^ selectors
