@@ -1,10 +1,12 @@
 Class {
-	#name : #FLSerializerConvenienceMethodsTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Configuration'
+	#name : 'FLSerializerConvenienceMethodsTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Configuration',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Configuration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSerializerConvenienceMethodsTest >> testSerializeOn [
 	| object byteArray materialized |
 	object := FLPair new
@@ -22,7 +24,7 @@ FLSerializerConvenienceMethodsTest >> testSerializeOn [
 	self assert: object equals: materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSerializerConvenienceMethodsTest >> testSerializeToByteArray [
 	| object byteArray materialized |
 	object := FLPair new
@@ -37,7 +39,7 @@ FLSerializerConvenienceMethodsTest >> testSerializeToByteArray [
 	self assert: object equals: materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSerializerConvenienceMethodsTest >> testToFileNamed [
 	| object filePath materialized |
 	object := FLPair new

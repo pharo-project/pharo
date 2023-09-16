@@ -2,11 +2,13 @@
 I test the serialization of classes and traits as *external* objects, i.e. the classes or traits have to be present in the image at materialization time.
 "
 Trait {
-	#name : #FLTGlobalClassOrTraitSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLTGlobalClassOrTraitSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testClassSideMethodNotFoundAfterRemoval [
 	"Tests that serializer does not tolarate when the method was removed between serialization and materialization"
 	
@@ -26,7 +28,7 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideMethodNotFoundAfterRemova
 		description: 'Should raise an error when method is not present.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testClassSideMethodPreservesIdentity [
 	"Tests that serialization of a method in the class-side of a class or trait preserves identity"
 	
@@ -38,7 +40,7 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideMethodPreservesIdentity [
 	self assertSerializationIdentityOf: classOrTrait classSide >> #you
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testClassSideObsolete [
 	"Tests that serializer does not serialize as global the class-side of an obsolete class or trait."
 	
@@ -53,14 +55,14 @@ FLTGlobalClassOrTraitSerializationTest >> testClassSideObsolete [
 		description: 'Should raise an error when serializing as global an obsolete class or trait.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testClassSidePreservesIdentity [
 	"Tests that serialization of the class side preserves identity"
 	
 	self assertSerializationIdentityOf: self newClassOrTrait classSide
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testMethodNotFoundAfterRemoval [
 	"Tests that serializer does not tolarate when the method was removed between serialization and materialization"
 	
@@ -80,7 +82,7 @@ FLTGlobalClassOrTraitSerializationTest >> testMethodNotFoundAfterRemoval [
 		description: 'Should raise an error when method is not present.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testMethodPreservesIdentity [
 	"Tests that serialization of a method in a class or trait preserves identity"
 	
@@ -92,7 +94,7 @@ FLTGlobalClassOrTraitSerializationTest >> testMethodPreservesIdentity [
 	self assertSerializationIdentityOf: classOrTrait >> #you
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRemoval [
 	"Tests that serializer does not tolarate when the class was removed between serialization and materialization"
 	
@@ -105,7 +107,7 @@ FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRemoval [
 	self should: [self materialized] raise: FLClassNotFound.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRename [
 	"Tests that serializer does not tolarate when the class was renamed between serialization and materialization"
 
@@ -118,7 +120,7 @@ FLTGlobalClassOrTraitSerializationTest >> testNotFoundAfterRename [
 	self should: [ self materialized ] raise: FLClassNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testObsolete [
 	"Tests that serializer does not serialize as global an obsolete class or trait."
 	
@@ -133,7 +135,7 @@ FLTGlobalClassOrTraitSerializationTest >> testObsolete [
 		description: 'Should raise an error when serializing as global an obsolete class or trait.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTGlobalClassOrTraitSerializationTest >> testPreservesIdentity [
 	"Tests that serialization of the class or trait preserves identity"
 	
