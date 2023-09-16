@@ -4,12 +4,14 @@ I am ShouldNotImplement, an exception signaled when a method was implemented but
 This can happen when an implementation is inherited.
 "
 Class {
-	#name : #ShouldNotImplement,
-	#superclass : #SelectorException,
-	#category : #'Kernel-Exceptions'
+	#name : 'ShouldNotImplement',
+	#superclass : 'SelectorException',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ShouldNotImplement >> standardMessageText [
 	"Generate a standard textual description"
 

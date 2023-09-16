@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosureTest }
+Extension { #name : 'BlockClosureTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 BlockClosureTest >> testBenchFor [
 	| benchmarkResult duration minimumIterations |
 	duration := 500 milliSeconds.
@@ -13,7 +13,7 @@ BlockClosureTest >> testBenchFor [
 	self assert: benchmarkResult period < (duration / minimumIterations)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 BlockClosureTest >> testBenchForException [
 
 	"benchFor: expects a duration. Check that the bencher does not go in an infinite loop if the wakeup thread fails."
@@ -21,7 +21,7 @@ BlockClosureTest >> testBenchForException [
 	self should: [ [ 100 factorial ] benchFor: 1 ] raise: Error
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 BlockClosureTest >> testCannotReturn [
 
 	| block p |
@@ -33,19 +33,19 @@ BlockClosureTest >> testCannotReturn [
 		self assert: err home equals: block home ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 BlockClosureTest >> testRunSimulated [
 	self assert: (Context runSimulated: aBlock) class equals: Rectangle
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 BlockClosureTest >> testSourceNodeOptimized [
 	| block |
 	block := [ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ].
 	self assert: block sourceNode printString equals: 'RBBlockNode([ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ])'
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 BlockClosureTest >> testTallyInstructions [
 
 	| expected |
@@ -58,7 +58,7 @@ BlockClosureTest >> testTallyInstructions [
 		equals: expected
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 BlockClosureTest >> testTallyMethods [
 	self assert: (Context tallyMethods: aBlock) size equals: 7
 ]

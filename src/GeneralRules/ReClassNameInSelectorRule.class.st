@@ -4,24 +4,26 @@ This smell arises when the class name is found in a selector. This is redundant 
 For example, #openHierarchyBrowserFrom: is a redundant name for HierarchyBrowser.
 "
 Class {
-	#name : #ReClassNameInSelectorRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReClassNameInSelectorRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReClassNameInSelectorRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassNameInSelectorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ClassNameInSelectorRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassNameInSelectorRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| className classNameIndex |
 	(aMethod methodClass isMeta) ifFalse: [ ^ self ].
@@ -38,7 +40,7 @@ ReClassNameInSelectorRule >> check: aMethod forCritiquesDo: aCriticBlock [
 			yourself) ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassNameInSelectorRule >> critiqueFor: aMethod withInterval: anInterval [
 
 	^ ReTrivialCritique
@@ -48,17 +50,17 @@ ReClassNameInSelectorRule >> critiqueFor: aMethod withInterval: anInterval [
 		by: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassNameInSelectorRule >> group [
 	^ 'Style'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassNameInSelectorRule >> name [
 	^ 'Redundant class name in selector'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassNameInSelectorRule >> rationale [
 	^ 'Checks for the class name in a selector. This is redundant since to call the you must already refer to the class name. For example, openHierarchyBrowserFrom: is a redundant name for HierarchyBrowser. Avoiding selector including class name gives a chance to have more polymorphic methods.'
 ]

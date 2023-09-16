@@ -4,24 +4,26 @@ Checks that methods who should always contain a super message send, actually con
 The list of methods that should contain super message sends is in #superMessages.
 "
 Class {
-	#name : #ReMissingSuperSendsRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReMissingSuperSendsRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReMissingSuperSendsRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMissingSuperSendsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'MissingSuperSendsRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReMissingSuperSendsRule >> basicCheck: aMethod [
 
 	| definer superMethod |
@@ -41,20 +43,20 @@ ReMissingSuperSendsRule >> basicCheck: aMethod [
 	^ (superMethod sendsSelector: #subclassResponsibility) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMissingSuperSendsRule >> group [
 
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMissingSuperSendsRule >> methodsRequiringSuper [
 
 	^ #( #release #postCopy #postBuildWith: #preBuildWith: #postOpenWith:
 	     #noticeOfWindowClose: #initialize )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMissingSuperSendsRule >> name [
 
 	^ 'Missing super sends in selected methods.'

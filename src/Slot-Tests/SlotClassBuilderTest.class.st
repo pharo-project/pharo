@@ -1,25 +1,27 @@
 Class {
-	#name : #SlotClassBuilderTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'SlotClassBuilderTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'aClass',
 		'anotherClass',
 		'yetAnotherClass'
 	],
-	#category : #'Slot-Tests-ClassBuilder'
+	#category : 'Slot-Tests-ClassBuilder',
+	#package : 'Slot-Tests',
+	#tag : 'ClassBuilder'
 }
 
-{ #category : #'helpers-names' }
+{ #category : 'helpers-names' }
 SlotClassBuilderTest >> aClassName [
 	^ #SlotTestsClassA
 ]
 
-{ #category : #'helpers-names' }
+{ #category : 'helpers-names' }
 SlotClassBuilderTest >> anotherClassName [
 	^ #SlotTestsClassB
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SlotClassBuilderTest >> assertTraitIntegrity [
 	self assert: TOne traitUsers isHealthy.
 	self assert: TOne classTrait traitUsers isHealthy.
@@ -27,7 +29,7 @@ SlotClassBuilderTest >> assertTraitIntegrity [
 	self assert: TTwo classTrait traitUsers isHealthy
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SlotClassBuilderTest >> cleanUpTrait: trait [
 	"During development some tests might invalidate the trait internal state.
 	To avoid follow-up failures we reset the trait state here as good as possible."
@@ -36,17 +38,17 @@ SlotClassBuilderTest >> cleanUpTrait: trait [
 	trait classTrait traitUsers removeAll
 ]
 
-{ #category : #'helpers-names' }
+{ #category : 'helpers-names' }
 SlotClassBuilderTest >> layoutClasses [
 	^ { ByteLayout. WordLayout. FixedLayout. VariableLayout. WeakLayout }
 ]
 
-{ #category : #'helpers-names' }
+{ #category : 'helpers-names' }
 SlotClassBuilderTest >> layoutClassesWithSlots [
 	^ { FixedLayout. VariableLayout. WeakLayout }
 ]
 
-{ #category : #'helpers-building' }
+{ #category : 'helpers-building' }
 SlotClassBuilderTest >> make: anUnaryBlock [
 	"I build a class for testing, providing basic default values, but eventually customized by the received unary block."
 
@@ -59,12 +61,12 @@ SlotClassBuilderTest >> make: anUnaryBlock [
 		  anUnaryBlock value: builder ]
 ]
 
-{ #category : #'helpers-building' }
+{ #category : 'helpers-building' }
 SlotClassBuilderTest >> makeWithLayout: aClassLayout [
 	^self makeWithLayout: aClassLayout andSlots: {}
 ]
 
-{ #category : #'helpers-building' }
+{ #category : 'helpers-building' }
 SlotClassBuilderTest >> makeWithLayout: aClassLayout andSlots: someSlots [
 	"
 	I create a class using the Slot class builder given a class layout and a collection of slots.
@@ -77,12 +79,12 @@ SlotClassBuilderTest >> makeWithLayout: aClassLayout andSlots: someSlots [
 		]
 ]
 
-{ #category : #'helpers-names' }
+{ #category : 'helpers-names' }
 SlotClassBuilderTest >> slotTestPackageName [
 	^ 'SlotTestsTmp'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SlotClassBuilderTest >> tearDown [
 	"We remove the classes that could have been created during test run"
 
@@ -104,12 +106,12 @@ SlotClassBuilderTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'helpers-names' }
+{ #category : 'helpers-names' }
 SlotClassBuilderTest >> yetAnotherClassName [
 	^ #SlotTestsClassC
 ]
 
-{ #category : #'helpers-names' }
+{ #category : 'helpers-names' }
 SlotClassBuilderTest >> yetYetAnotherClassName [
 	^ #SlotTestsClassD
 ]
