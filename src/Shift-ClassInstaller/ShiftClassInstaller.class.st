@@ -303,7 +303,7 @@ ShiftClassInstaller >> recategorize: aClass to: newCategory [
 		systemOrganizer classify: aClass name under: newCategory.
 		aClass basicCategory: newCategory ].
 
-	oldCategory = Class unclassifiedCategory
+	(oldCategory isNil or: [ oldCategory = Class unclassifiedCategory ])
 		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
 		ifFalse: [ SystemAnnouncer uniqueInstance class: aClass recategorizedFrom: oldCategory to: newCategory ]
 ]
