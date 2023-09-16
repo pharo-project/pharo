@@ -1,6 +1,6 @@
-Extension { #name : #ZnUrl }
+Extension { #name : 'ZnUrl' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 ZnUrl >> asFileReferenceWithRelativePath [
 	"Convert the receiver into a new FileReference object accepting relative paths.
 	This works for filetree (a special pharo format).
@@ -24,7 +24,7 @@ ZnUrl >> asFileReferenceWithRelativePath [
 		asFileReference
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 ZnUrl >> location [
 	"Returns the URL location string without username and password"
 	^ String streamContents: [ :stream |

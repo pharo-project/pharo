@@ -1,6 +1,6 @@
-Extension { #name : #HashedCollection }
+Extension { #name : 'HashedCollection' }
 
-{ #category : #'*Monticello-Storing' }
+{ #category : '*Monticello-Storing' }
 HashedCollection >> comeFullyUpOnReload: smartRefStream [
 	"Symbols have new hashes in this image."
 

@@ -2,26 +2,28 @@
 A mock definition used for testing purposes
 "
 Class {
-	#name : #MCMockDefinition,
-	#superclass : #MCDefinition,
+	#name : 'MCMockDefinition',
+	#superclass : 'MCDefinition',
 	#instVars : [
 		'token'
 	],
-	#category : #'Monticello-Mocks'
+	#category : 'Monticello-Mocks',
+	#package : 'Monticello',
+	#tag : 'Mocks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDefinition class >> token: aString [
 
 	^ self new token: aString
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 MCMockDefinition class >> wantsChangeSetLogging [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMockDefinition >> = definition [
 	self == definition
 		ifTrue: [ ^ true ].
@@ -30,43 +32,43 @@ MCMockDefinition >> = definition [
 	^definition token = token
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MCMockDefinition >> asString [
 
 	^ token
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMockDefinition >> description [
 
 	^ token first
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMockDefinition >> hash [
 
 	^ token hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCMockDefinition >> printString [
 
 	^ token
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCMockDefinition >> summary [
 
 	^ token
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDefinition >> token [
 
 	^ token
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDefinition >> token: aString [
 
 	token := aString

@@ -1,6 +1,6 @@
-Extension { #name : #RPackageOrganizer }
+Extension { #name : 'RPackageOrganizer' }
 
-{ #category : #'*Monticello-RPackage' }
+{ #category : '*Monticello-RPackage' }
 RPackageOrganizer >> isDefinedAsPackageOrSubPackageInMC: aSymbol [
 	"a category has been added. "
 

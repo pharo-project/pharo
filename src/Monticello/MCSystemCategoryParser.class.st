@@ -2,17 +2,19 @@
 A MCSystemCategoryParser extracts or set a category/protocol to the corresponding MCOrganizationDefinition.
 "
 Class {
-	#name : #MCSystemCategoryParser,
-	#superclass : #MCDoItParser,
-	#category : #'Monticello-Chunk Format'
+	#name : 'MCSystemCategoryParser',
+	#superclass : 'MCDoItParser',
+	#category : 'Monticello-Chunk Format',
+	#package : 'Monticello',
+	#tag : 'Chunk Format'
 }
 
-{ #category : #'factory identification hook' }
+{ #category : 'factory identification hook' }
 MCSystemCategoryParser class >> pattern [
 	^ 'SystemOrganization*'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCSystemCategoryParser >> addDefinitionsTo: aCollection [
 
 	| definition |
@@ -30,7 +32,7 @@ MCSystemCategoryParser >> addDefinitionsTo: aCollection [
 						  ifFalse: [ category ])) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSystemCategoryParser >> category [
 
 	| tokens |
