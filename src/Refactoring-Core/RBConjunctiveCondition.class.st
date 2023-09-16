@@ -22,17 +22,19 @@ check
 ```
 "
 Class {
-	#name : #RBConjunctiveCondition,
-	#superclass : #RBAbstractCondition,
+	#name : 'RBConjunctiveCondition',
+	#superclass : 'RBAbstractCondition',
 	#instVars : [
 		'left',
 		'right',
 		'failed'
 	],
-	#category : #'Refactoring-Core-Conditions'
+	#category : 'Refactoring-Core-Conditions',
+	#package : 'Refactoring-Core',
+	#tag : 'Conditions'
 }
 
-{ #category : #checking }
+{ #category : 'checking' }
 RBConjunctiveCondition >> check [
 	left check
 		ifFalse:
@@ -45,7 +47,7 @@ RBConjunctiveCondition >> check [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBConjunctiveCondition >> errorBlockFor: aBoolean [
 	^aBoolean
 		ifTrue: [nil]
@@ -53,42 +55,42 @@ RBConjunctiveCondition >> errorBlockFor: aBoolean [
 			[failed = #leftFailed ifTrue: [left errorBlock] ifFalse: [right errorBlock]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBConjunctiveCondition >> errorMacro [
 
 	^ errorMacro ifNil: [ self longMacro ] ifNotNil: [ super errorMacro ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBConjunctiveCondition >> errorStringFor: aBoolean [
 	^ aBoolean
 		  ifTrue: [ self neitherFailed ]
 		  ifFalse: [ self perform: failed ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBConjunctiveCondition >> left: aCondition right: aCondition2 [
 	left := aCondition.
 	right := aCondition2.
 	failed := #unknownFailed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBConjunctiveCondition >> leftFailed [
 	^left errorStringFor: false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBConjunctiveCondition >> longMacro [
 	^'(' , left errorMacro , ') <1?AND:OR> (' , right errorMacro , ')'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBConjunctiveCondition >> neitherFailed [
 	^(left errorStringFor: true) , ' AND ' , (right errorStringFor: true)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBConjunctiveCondition >> printOn: aStream [
 	aStream
 		print: left;
@@ -96,12 +98,12 @@ RBConjunctiveCondition >> printOn: aStream [
 		print: right
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBConjunctiveCondition >> rightFailed [
 	^right errorStringFor: false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBConjunctiveCondition >> unknownFailed [
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)
 ]
