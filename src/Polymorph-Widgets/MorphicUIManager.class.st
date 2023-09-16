@@ -280,7 +280,8 @@ MorphicUIManager >> currentWorld [
 
 { #category : #private }
 MorphicUIManager >> deactivate [
-	activeTranscript := Transcript.
+
+	activeTranscript := Smalltalk tools transcript.
 	SystemProgressMorph disable.
 
 	self triggerEvent: #aboutToLeaveWorld.

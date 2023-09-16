@@ -134,7 +134,7 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascadedMessage
 
 	self assert: ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: (#called:, #on:) asSymbol)
 		equals: (self parseMethod: 'called: anObject on: aBlock
-			Transcript show: anObject printString.
+			anObject printString traceCr.
 			aBlock value')
 ]
 
