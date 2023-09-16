@@ -60,7 +60,7 @@ MCOrganizationDefinition >> description [
 { #category : 'private' }
 MCOrganizationDefinition >> fullDescription [
 
-	self tagNames ifEmpty: [ ^ self packageName ].
+	self tagNames ifNil: [ ^ self packageName ].
 
 	^ String streamContents: [ :stream |
 		  | first |
