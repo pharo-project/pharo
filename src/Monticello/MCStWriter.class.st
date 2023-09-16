@@ -79,9 +79,9 @@ MCStWriter >> visitMethodDefinition: definition [
 ]
 
 { #category : 'visiting' }
-MCStWriter >> visitOrganizationDefinition: defintion [
-	defintion categories do: [:cat | self writeCategory: cat].
+MCStWriter >> visitOrganizationDefinition: definition [
 
+	self writePackage: definition packageName tags: (definition tagNames ifNil: [ #(  ) ])
 ]
 
 { #category : 'visiting' }
@@ -94,13 +94,6 @@ MCStWriter >> visitScriptDefinition: definition [
 MCStWriter >> visitTraitDefinition: definition [
 	self writeClassDefinition: definition.
 	definition hasComment ifTrue: [self writeClassComment: definition].
-]
-
-{ #category : 'writing' }
-MCStWriter >> writeCategory: categoryName [
-	stream
-		nextChunkPut: 'SystemOrganization addCategory: ', categoryName printString;
-		cr
 ]
 
 { #category : 'writing' }

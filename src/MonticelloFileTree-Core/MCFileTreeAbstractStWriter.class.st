@@ -108,7 +108,7 @@ MCFileTreeAbstractStWriter >> visitOrganizationDefinition: definition [
 		writeInDirectoryName: self monticelloMetaDirName
 		fileName: 'categories'
 		extension: '.st'
-		visit: [ stWriter writePackage: definition packageName tags: (definition tagNames ifNil: [ #(  ) ]) ]
+		visit: [ stWriter visitOrganizationDefinition: definition ]
 ]
 
 { #category : 'visiting' }
