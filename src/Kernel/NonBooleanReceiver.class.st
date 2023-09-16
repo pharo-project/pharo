@@ -15,41 +15,43 @@ If you really need to use optimized constructs, you can enable Opal compiler and
 		- call from this method by Object>>#mustBeBooleanInMagic:""
 "
 Class {
-	#name : #NonBooleanReceiver,
-	#superclass : #Error,
+	#name : 'NonBooleanReceiver',
+	#superclass : 'Error',
 	#instVars : [
 		'object'
 	],
 	#classVars : [
 		'MustBeBooleanHandler'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'must-be-boolean-mop' }
+{ #category : 'must-be-boolean-mop' }
 NonBooleanReceiver class >> mustBeBooleanHandler [
 
 	^ MustBeBooleanHandler
 ]
 
-{ #category : #'must-be-boolean-mop' }
+{ #category : 'must-be-boolean-mop' }
 NonBooleanReceiver class >> mustBeBooleanHandler: aHandler [
 
 	MustBeBooleanHandler := aHandler
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NonBooleanReceiver >> isResumable [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NonBooleanReceiver >> object [
 	^object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NonBooleanReceiver >> object: anObject [
 	object := anObject
 ]

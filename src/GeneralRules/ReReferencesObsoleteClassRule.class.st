@@ -3,36 +3,38 @@ You are referencing a class that is obsolete, that is, it has been removed
 
 "
 Class {
-	#name : #ReReferencesObsoleteClassRule,
-	#superclass : #ReNodeBasedRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReReferencesObsoleteClassRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReReferencesObsoleteClassRule >> basicCheck: aNode [
  	^ aNode isGlobalVariable
  			and: [ aNode variable isGlobalClassNameBinding
  				and: [ aNode variable value isObsolete ] ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReReferencesObsoleteClassRule >> critiqueFor: aNode [
 	^ (super critiqueFor: aNode)
 		  tinyHint: aNode name;
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReferencesObsoleteClassRule >> group [
 	^ 'Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReferencesObsoleteClassRule >> name [
 	^ 'References an obsolete class'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReferencesObsoleteClassRule >> severity [
 	^ #error
 ]

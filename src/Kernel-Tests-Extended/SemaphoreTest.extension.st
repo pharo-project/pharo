@@ -1,6 +1,6 @@
-Extension { #name : #SemaphoreTest }
+Extension { #name : 'SemaphoreTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 SemaphoreTest >> testWaitAndWaitTimeoutTogether [
 	| semaphore value waitProcess waitTimeoutProcess |
 	semaphore := Semaphore new.

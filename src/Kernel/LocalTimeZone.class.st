@@ -4,22 +4,24 @@ I am the local time zone which will use the system's current time offset dynamic
 This is the default timezone.
 "
 Class {
-	#name : #LocalTimeZone,
-	#superclass : #AbstractTimeZone,
+	#name : 'LocalTimeZone',
+	#superclass : 'AbstractTimeZone',
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : #'Kernel-Chronology'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocalTimeZone >> abbreviation [
 	^ String streamContents: [ :s |
 		s nextPutAll: 'LT'; print: self offset hours; nextPut: $:.
 		s nextPutAll: (self offset minutes printPaddedWith: $0 to: 2) ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LocalTimeZone >> asFixedTimeZone [
 	"Convert this dynamic timezone to one with a fixed offset."
 	^ TimeZone
@@ -28,17 +30,17 @@ LocalTimeZone >> asFixedTimeZone [
 		abbreviation: self abbreviation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocalTimeZone >> name [
 	^ 'Local Time'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocalTimeZone >> offset [
 	^ self primOffset minutes
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 LocalTimeZone >> primOffset [
 	"The offset from UTC in minutes, with positive offsets being towards the east.
 	(San Francisco is in UTC -07*60 and Paris is in UTC +02*60 (daylight savings is not in effect)."

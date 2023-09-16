@@ -2,12 +2,14 @@
 I am an error thrown if Time expands outside a 24 hour range.
 "
 Class {
-	#name : #TimeError,
-	#superclass : #Error,
-	#category : #'Kernel-Chronology'
+	#name : 'TimeError',
+	#superclass : 'Error',
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
-{ #category : #validation }
+{ #category : 'validation' }
 TimeError class >> validateSeconds: seconds andNanos: nano [
 	"Signal an error if seconds are outside 24 hours, or nano is larger than a second"
 	(seconds between: 0 and: "24*60*60-1" 86399)

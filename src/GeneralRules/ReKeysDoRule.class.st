@@ -9,24 +9,26 @@ Dictionary>>keys
 This array can be quite large and using the keysDo: does not create such intermediate collection.
 "
 Class {
-	#name : #ReKeysDoRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReKeysDoRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReKeysDoRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'keysDoRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReKeysDoRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReKeysDoRule >> initialize [
 	super initialize.
 	self
@@ -34,12 +36,12 @@ ReKeysDoRule >> initialize [
 		replace: '``@object values do: ``@block' with: '``@object valuesDo: ``@block'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReKeysDoRule >> name [
 	^ 'keys do: -> keysDo: and valuesDo:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReKeysDoRule >> rationale [
 	^ 'The use of keysDo:/valuesDo: means one intermediate collection created less'
 ]

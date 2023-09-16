@@ -4,17 +4,19 @@ I represent positive integers of more than 30 bits (ie, >= 1073741824).  These v
 Note that the bit manipulation primitives, bitAnd:, bitShift:, etc., = and ~= run without failure (and therefore fast) if the value fits in 32 bits.  This is a great help to the simulator.
 "
 Class {
-	#name : #LargePositiveInteger,
-	#superclass : #LargeInteger,
-	#type : #bytes,
-	#category : #'Kernel-Numbers'
+	#name : 'LargePositiveInteger',
+	#superclass : 'LargeInteger',
+	#type : 'bytes',
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargePositiveInteger >> abs [
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 LargePositiveInteger >> bitAt: anInteger [
 	"Optimize super algorithm to avoid long bit operations.
 	Instead work on digits which are known to be SmallInteger and fast.
@@ -27,7 +29,7 @@ LargePositiveInteger >> bitAt: anInteger [
 	^(self byteAt: digitIndex) bitAt: bitIndex
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 LargePositiveInteger >> hashMultiply [
 	"This is a multiplication of hashes by 1664525 mod 2^28 written to avoid overflowing into large integers.
 	 The primitive is able to perform the operation with modulo arihmetic.
@@ -42,7 +44,7 @@ LargePositiveInteger >> hashMultiply [
 	^(self bitAnd: 16rFFFFFFF) hashMultiply
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 LargePositiveInteger >> highBit [
 	"Answer the index of the high order bit of the receiver, or zero if the
 	receiver is zero. Raise an error if the receiver is negative, since
@@ -52,7 +54,7 @@ LargePositiveInteger >> highBit [
 	^ self highBitOfMagnitude
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargePositiveInteger >> mightBeASquare [
 	"In base 16, a square number can end only with 0,1,4 or 9 and
 	- in case 0, only 0,1,4,9 can precede it,
@@ -77,20 +79,20 @@ LargePositiveInteger >> mightBeASquare [
 		or: [ (lsb bitAnd: 16r7F) = 16 ]]]]	"10 or 90"
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargePositiveInteger >> negated [
 	^ (self copyto: (LargeNegativeInteger new: self bytesCount))
 		normalize  "Need to normalize to catch SmallInteger minVal"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargePositiveInteger >> negative [
 	"Answer whether the receiver is mathematically negative."
 
 	^ false
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LargePositiveInteger >> normalize [
 	"Check for leading zeroes and return shortened copy if so"
 	| sLen val len oldLen |
@@ -119,7 +121,7 @@ LargePositiveInteger >> normalize [
 		ifFalse: [^ self]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargePositiveInteger >> positive [
 	"Answer whether the receiver is positive or equal to 0. (ST-80 protocol).
 	See also strictlyPositive"
@@ -127,7 +129,7 @@ LargePositiveInteger >> positive [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LargePositiveInteger >> printOn: aStream base: b [
 	"Append a representation of this number in base b on aStream.
 	In order to reduce cost of LargePositiveInteger ops, split the number in approximately two equal parts in number of digits."
@@ -160,21 +162,21 @@ LargePositiveInteger >> printOn: aStream base: b [
 	tail printOn: aStream base: b nDigits: halfDigits
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargePositiveInteger >> sign [
 	"Optimization. Answer 1 since receiver is greater than 0."
 
 	^ 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargePositiveInteger >> signBit [
 	"Optimization."
 
 	^0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargePositiveInteger >> strictlyPositive [
 	"Answer whether the receiver is mathematically positive."
 

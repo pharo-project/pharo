@@ -2,29 +2,31 @@
 DelayWaitTimeout is a special kind of Delay used in waitTimeoutMSecs: to avoid signaling the underlying semaphore when the wait times out.
 "
 Class {
-	#name : #DelayWaitTimeout,
-	#superclass : #Delay,
+	#name : 'DelayWaitTimeout',
+	#superclass : 'Delay',
 	#instVars : [
 		'process',
 		'expired'
 	],
-	#category : #'Kernel-Delays'
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DelayWaitTimeout >> isExpired [
 	"Did this timeout fire before the associated semaphore was signaled?"
 	^expired
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DelayWaitTimeout >> setDelay: anInteger forSemaphore: aSemaphore [
 	super setDelay: anInteger forSemaphore: aSemaphore.
 	process := Processor activeProcess.
 	expired := false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DelayWaitTimeout >> timingPrioritySignalExpired [
 	"Release the given process from the semaphore it is waiting on.
 	This method relies on running at highest priority so that it cannot be preempted
@@ -37,7 +39,7 @@ DelayWaitTimeout >> timingPrioritySignalExpired [
 		]
 ]
 
-{ #category : #waiting }
+{ #category : 'waiting' }
 DelayWaitTimeout >> wait [
 	"Wait until either the semaphore is signaled or the delay times out"
 	[self schedule.
@@ -51,7 +53,7 @@ DelayWaitTimeout >> wait [
 	^self isExpired
 ]
 
-{ #category : #waiting }
+{ #category : 'waiting' }
 DelayWaitTimeout >> waitOnCompletion: completionBlock onTimeout: timeoutBlock [
 	"Wait until either the semaphore is signaled or the delay times out.
 	If the delay times out execute timeoutBlock, otherwise if the semaphore is signaled execute completionBlock.

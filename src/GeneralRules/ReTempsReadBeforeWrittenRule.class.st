@@ -14,24 +14,26 @@ be exected.
 NOTE: This rule detects *many* false positives.
 "
 Class {
-	#name : #ReTempsReadBeforeWrittenRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReTempsReadBeforeWrittenRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReTempsReadBeforeWrittenRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempsReadBeforeWrittenRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'TempsReadBeforeWrittenRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReTempsReadBeforeWrittenRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	(self findReadsBeforeWrittenTemporariesIn: aMethod) ifNotEmpty: [
@@ -44,19 +46,19 @@ ReTempsReadBeforeWrittenRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				 yourself) ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReTempsReadBeforeWrittenRule >> findReadsBeforeWrittenTemporariesIn: aMethod [
 
 	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn:
 		   aMethod ast) array select: #isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempsReadBeforeWrittenRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempsReadBeforeWrittenRule >> name [
 
 	^ 'Temporaries may be read before written'
