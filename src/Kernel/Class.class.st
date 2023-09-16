@@ -280,9 +280,9 @@ Class >> category [
 		symbol = Class unclassifiedCategory ifTrue: [ ^ symbol ].
 
 		((self packageOrganizer listAtCategoryNamed: symbol) includes: self name) ifTrue: [ ^ symbol ] ].
-	result := (self environment organization categoryOfBehavior: self)
-		          ifNil: [ #Unclassified ]
-		          ifNotNil: [ :value | value ].
+
+	result := (self packageOrganizer categoryOfBehavior: self) ifNil: [ #Unclassified ].
+
 	self basicCategory: result.
 
 	^ result
