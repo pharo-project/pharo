@@ -137,7 +137,7 @@ MCOrganizationDefinition >> tagNames: aCollection [
 
 	| tags |
 	tags := aCollection.
-	tags remove: self packageName ifAbsent: [ "do nothing here" ].
+	tags := tags \ { self packageName }.
 	tagNames := tags sorted asArray
 ]
 
