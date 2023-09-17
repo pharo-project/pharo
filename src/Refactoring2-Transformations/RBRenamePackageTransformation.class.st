@@ -76,7 +76,7 @@ RBRenamePackageTransformation >> renameManifestClass [
 	| manifest |
 	manifest := package realPackage packageManifestOrNil.
 	manifest ifNotNil: [
-	transformations add: ( RBRenameClassTransformation
+	transformations add: ( RBRenameClassRefactoring
 		model: self model
 		rename: manifest name
 		to: (self manifestClassNameFor: newName)) ]

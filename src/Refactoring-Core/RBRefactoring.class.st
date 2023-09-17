@@ -25,39 +25,37 @@ A RBRefactoringManager  is used to collect the executed refactorings and provide
 
 "
 Class {
-	#name : 'RBRefactoring',
-	#superclass : 'RBAbstractTransformation',
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#name : #RBRefactoring,
+	#superclass : #RBAbstractTransformation,
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 RBRefactoring class >> isAbstract [
 
 	^ self == RBRefactoring
 ]
 
-{ #category : 'accessing signal' }
+{ #category : #'accessing signal' }
 RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 RBRefactoring >> asRefactoring [
 
 	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RBRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString
 ]
 
-{ #category : 'support' }
+{ #category : #support }
 RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	| parseTree |
 	parseTree := aRBClass parseTreeForSelector: aSelector.
@@ -65,7 +63,7 @@ RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	^aMatcher answer
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RBRefactoring >> classObjectFor: anObject [
 
 	(anObject isBehavior or: [ anObject isTrait ]) ifTrue: [
@@ -75,7 +73,7 @@ RBRefactoring >> classObjectFor: anObject [
 	^ anObject
 ]
 
-{ #category : 'support' }
+{ #category : #support }
 RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 	self model allReferencesToClass: aRBClass
 		do:
@@ -86,7 +84,7 @@ RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 				using: searchReplacer]
 ]
 
-{ #category : 'support' }
+{ #category : #support }
 RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 	classSet do:
 			[:aClass |
@@ -98,7 +96,7 @@ RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 						using: searchReplacer]]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBRefactoring >> copyOptionsFrom: aDictionary [
 	| dict |
 	dict := self options.
@@ -113,7 +111,7 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBRefactoring >> generateChangesFor: aRefactoring [
 	"I will generate changes and save them in the model, BUT I will not apply them!
 	Use me when a refactorings is composed of multiple other refactorings"
@@ -124,7 +122,7 @@ RBRefactoring >> generateChangesFor: aRefactoring [
 	aRefactoring generateChanges
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RBRefactoring >> onError: aBlock do: errorBlock [
 	^aBlock on: self class preconditionSignal
 		do:
@@ -133,7 +131,7 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 			ex return: nil]
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 RBRefactoring >> removeReturnsOf: parseTree [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -143,7 +141,7 @@ RBRefactoring >> removeReturnsOf: parseTree [
 	^ parseTree
 ]
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
@@ -163,7 +161,7 @@ RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	^ newString asSymbol
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: aString [
 	| baseString i newString |
 	newString := baseString := aString.
@@ -175,7 +173,7 @@ RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: a
 	^ newString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBRefactoring >> setOption: aSymbol toUse: aBlock [
 	| dict |
 	dict := self options.
@@ -184,13 +182,13 @@ RBRefactoring >> setOption: aSymbol toUse: aBlock [
 	self options: dict
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBRefactoring >> transform [ 
 
 	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RBRefactoring >> uniqueMethodNameFor: anInteger [
 	| before after index name |
 	before := 'a'.
@@ -204,7 +202,7 @@ RBRefactoring >> uniqueMethodNameFor: anInteger [
 	^name asSymbol
 ]
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 RBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [
 	| matcher block |
 	matcher := self parseTreeSearcher.

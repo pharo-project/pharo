@@ -47,14 +47,12 @@ RBDataTest >> testExample
 
 "
 Class {
-	#name : 'RBExtractSetUpMethodRefactoring',
-	#superclass : 'RBExtractMethodRefactoring',
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#name : #RBExtractSetUpMethodRefactoring,
+	#superclass : #RBExtractMethodRefactoring,
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 	| node outsideVars removeAssigned |
 	removeAssigned := variableNames copy.
@@ -70,7 +68,7 @@ RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 	self updateTemporariesInExtractedMethodFor: variableNames
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 
 	((RBReadBeforeWrittenTester isVariable: varName
@@ -87,7 +85,7 @@ RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 		variable: varName)
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 	| args |
 	args := parameters collect: [ :parm | RBVariableNode named: parm ].
@@ -95,7 +93,7 @@ RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: '#callToSetUp' in: modifiedParseTree
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBExtractSetUpMethodRefactoring >> preconditions [
 	^(RBCondition definesSelector: selector in: class) &
 	(self requestExistingSelector ifNil: [ (RBCondition definesSelector: #setUp in: class) not ]
@@ -110,7 +108,7 @@ RBExtractSetUpMethodRefactoring >> preconditions [
 			true])
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> privateTransform [
 
 	| existingSelector |
@@ -128,12 +126,12 @@ RBExtractSetUpMethodRefactoring >> privateTransform [
 	class compileTree: modifiedParseTree
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
 	^ true
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
 	| node |
 	node := class parseTreeForSelector: selector.
@@ -141,6 +139,6 @@ RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
 		ifNotEmpty: [ node statements first start ]
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> updateTemporariesInExtractedMethodFor: variableNames [
 ]

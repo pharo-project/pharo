@@ -6,18 +6,16 @@ My preconditions verify that methods to be removed are not referenced anywhere. 
 
 "
 Class {
-	#name : 'RBRemoveMethodsRefactoring',
-	#superclass : 'RBCompositeRefactoring',
+	#name : #RBRemoveMethodsRefactoring,
+	#superclass : #RBCompositeRefactoring,
 	#instVars : [
 		'selectors',
 		'class'
 	],
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBRemoveMethodsRefactoring class >> model: aRBNamespace selectors: aSelectorsCollection from: aClass [
 
 	^ self new
@@ -26,7 +24,7 @@ RBRemoveMethodsRefactoring class >> model: aRBNamespace selectors: aSelectorsCol
 		from: aClass
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBRemoveMethodsRefactoring class >> selectors: aSelectorsCollection from: aClass [
 
 	^ self new
@@ -34,7 +32,7 @@ RBRemoveMethodsRefactoring class >> selectors: aSelectorsCollection from: aClass
 		from: aClass
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBRemoveMethodsRefactoring >> applicabilityPreconditions [ 
 
 	^ selectors
@@ -42,7 +40,7 @@ RBRemoveMethodsRefactoring >> applicabilityPreconditions [
 			into: [ :cond :sel | cond & (RBCondition definesSelector: sel in: class) ]
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 
 	refactorings do: [ :ref | ref checkSuperMethods ].
@@ -53,20 +51,20 @@ RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 		  'Some of the methods have senders outside of the methods being removed'
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 RBRemoveMethodsRefactoring >> removeMethodChanges [
 
 	refactorings do: [ :ref | ref privateTransform ].
 	^ self changes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBRemoveMethodsRefactoring >> selectors [
 	
 	^ selectors 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBRemoveMethodsRefactoring >> selectors: aCollection from: aClass [
 
 	selectors := aCollection.
@@ -78,7 +76,7 @@ RBRemoveMethodsRefactoring >> selectors: aCollection from: aClass [
 								from: aClass ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RBRemoveMethodsRefactoring >> senders [
 	
 	^ (refactorings collect: [ :ref | ref sendersExcluding: selectors ]) flattened

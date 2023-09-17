@@ -27,39 +27,37 @@ printOn: aStream
 ```
 "
 Class {
-	#name : 'RBGeneratePrintOnTransformation',
-	#superclass : 'RBClassRefactoring',
+	#name : #RBGeneratePrintOnTransformation,
+	#superclass : #RBClassRefactoring,
 	#instVars : [
 		'variables'
 	],
-	#category : 'Refactoring-Core-Transformation',
-	#package : 'Refactoring-Core',
-	#tag : 'Transformation'
+	#category : #'Refactoring-Core-Transformation'
 }
 
-{ #category : 'displaying' }
+{ #category : #displaying }
 RBGeneratePrintOnTransformation class >> basicMenuItemString [
 
 	^ 'Generate printOn:'
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBGeneratePrintOnTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RBGeneratePrintOnTransformation class >> isTransformation [
 
 	^ true
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBGeneratePrintOnTransformation class >> model: aNamespace className: aClass variables: anArray [
 	^ (self model: aNamespace className: aClass) variables: anArray
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBGeneratePrintOnTransformation >> preconditions [
 	"Checks that the class actually defines all the variables that will be part of the printOn:."
 
@@ -71,7 +69,7 @@ RBGeneratePrintOnTransformation >> preconditions [
 			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBGeneratePrintOnTransformation >> privateTransform [
 	| method |
 	method := self parserClass
@@ -94,12 +92,12 @@ RBGeneratePrintOnTransformation >> privateTransform [
 			withProtocol: #printing)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBGeneratePrintOnTransformation >> theClass [
 	^ (self classObjectFor: className) instanceSide
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBGeneratePrintOnTransformation >> variables: anArray [
 	variables := anArray
 ]

@@ -22,19 +22,17 @@ My preconditions also verify that `RBAddMethodTransformRefactoring` precondition
 
 "
 Class {
-	#name : 'RBAddMethodRefactoring',
-	#superclass : 'RBMethodRefactoring',
+	#name : #RBAddMethodRefactoring,
+	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'transformation',
 		'source',
 		'protocol'
 	],
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBAddMethodRefactoring class >> model: aRBSmalltalk sourceCode: aString in: aClass withProtocol: aProtocol [
 	^ self new
 		model: aRBSmalltalk;
@@ -44,7 +42,7 @@ RBAddMethodRefactoring class >> model: aRBSmalltalk sourceCode: aString in: aCla
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocol: aProtocol [
 	^ self new
 		sourceCode: aString
@@ -52,7 +50,7 @@ RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocol: aPr
 		withProtocol: aProtocol
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBAddMethodRefactoring >> preconditions [
 
 	transformation checkPreconditions.
@@ -60,13 +58,13 @@ RBAddMethodRefactoring >> preconditions [
 	^ (RBCondition canUnderstand: transformation selector in: class) not
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBAddMethodRefactoring >> privateTransform [
 
 	transformation privateTransform
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocol: aProtocol [
 	class := self classObjectFor: aClass.
 	source := aString.
@@ -78,7 +76,7 @@ RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocol: aProtocol
 								withProtocol: aProtocol 
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
