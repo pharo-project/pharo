@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 Class >> asFullRingDefinition [
 	"A behavior is converted to a ring class including its variables, methods, direct superclass, direct subclasses and the package in which is loaded.
 	Active methods are generated and each knows its package as well.
@@ -37,14 +37,14 @@ Class >> asFullRingDefinition [
 	^ rgClass
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 Class >> asRingDefinition [
 	"A behavior is converted to a ring class. Only the receiver and its variables (instance, class, pools) are converted.
 	Methods, superclasses, subclasses are not generated"
 
 	| ring |
 	ring := (RGClassDefinition named: self name)
-		category: self basicCategory;
+		category: self category;
 		superclassName: (self superclass
 			ifNil: [ nil printString ]
 			ifNotNil: [ self superclass name ]);
@@ -64,7 +64,7 @@ Class >> asRingDefinition [
 	^ ring
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 Class >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoolean withSubclasses: subsBoolean withPackageKeys: packageKeys in: aRGSlice [
 	| rgClass rgMethod rgSuper rgSub subs |
 	rgClass := self asRingDefinition.
@@ -113,7 +113,7 @@ Class >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoo
 	^ rgClass
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 Class >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoolean withSubclasses: subsBoolean withPackages: packsBoolean [
 	"Retrieves a ring class/trait based on the receiver.
 	The data loaded in the class/trait (active methods, superclasses, subclasses and packages) is requested by the users.

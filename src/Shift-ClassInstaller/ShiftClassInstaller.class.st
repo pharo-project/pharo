@@ -296,7 +296,7 @@ ShiftClassInstaller >> oldClass: anObject [
 ShiftClassInstaller >> recategorize: aClass to: newCategory [
 
 	| oldCategory |
-	oldCategory := oldClass ifNotNil: [ oldClass basicCategory ].
+	oldCategory := oldClass ifNotNil: [ oldClass category ].
 	oldCategory == newCategory ifTrue: [ ^ self ].
 
 	self installingEnvironment organization ifNotNil: [ :systemOrganizer |

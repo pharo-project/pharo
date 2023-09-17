@@ -1,6 +1,6 @@
-Extension { #name : #StChangesBrowserPresenter }
+Extension { #name : 'StChangesBrowserPresenter' }
 
-{ #category : #'*Epicea-Triggering' }
+{ #category : '*Epicea-Triggering' }
 StChangesBrowserPresenter >> asEpiceaEvent [
 
 	self flag: #pharoTodo. "This is a workaround for a problem found by RewriteTool"
@@ -12,7 +12,7 @@ StChangesBrowserPresenter >> asEpiceaEvent [
 		  ifFalse: [ self changes anyOne asEpiceaEvent ]
 ]
 
-{ #category : #'*Epicea-Triggering' }
+{ #category : '*Epicea-Triggering' }
 StChangesBrowserPresenter >> isEpiceaInterestingJobOwner [
 
 	^ true

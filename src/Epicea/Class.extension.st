@@ -1,11 +1,11 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*Epicea' }
+{ #category : '*Epicea' }
 Class >> asEpiceaRingDefinition [
 
 	| ring |
 	ring := (RGClassDefinition named: self name)
-		        category: self basicCategory;
+		        category: self category;
 		        superclassName: self superclass asString;
 		        "Note it's nil for ProtoObject"traitCompositionSource:
 			        self traitCompositionString;
