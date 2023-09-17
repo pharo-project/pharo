@@ -11,24 +11,22 @@ method
 
 "
 Class {
-	#name : 'RBMoveMethodToClassRefactoring',
-	#superclass : 'RBMethodRefactoring',
+	#name : #RBMoveMethodToClassRefactoring,
+	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'method'
 	],
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBMoveMethodToClassRefactoring class >> method: aMethod class: aClass [
 	^ self new
 		method: aMethod class: aClass;
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod class: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -36,7 +34,7 @@ RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 		yourself
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 
 	| classModel |
@@ -47,18 +45,18 @@ RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 	^classModel
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBMoveMethodToClassRefactoring >> method: aMethod class: aClass [
 	method := aMethod.
 	class := self classObjectFor: aClass
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBMoveMethodToClassRefactoring >> preconditions [
 	^(RBCondition definesSelector: method selector in: class) not
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBMoveMethodToClassRefactoring >> privateTransform [
 	| oldClass newClass rbMethod originalProtocol |
 	oldClass := self classModelOf: method methodClass.
@@ -74,7 +72,7 @@ RBMoveMethodToClassRefactoring >> privateTransform [
 			withProtocol: originalProtocol)
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 RBMoveMethodToClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

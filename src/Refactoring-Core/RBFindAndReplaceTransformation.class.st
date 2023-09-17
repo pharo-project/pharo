@@ -40,8 +40,8 @@ MyClassB >> dummyMethod
 ```
 "
 Class {
-	#name : 'RBFindAndReplaceTransformation',
-	#superclass : 'RBMethodRefactoring',
+	#name : #RBFindAndReplaceTransformation,
+	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'method',
 		'selector',
@@ -49,18 +49,16 @@ Class {
 		'matchNodes',
 		'occurrences'
 	],
-	#category : 'Refactoring-Core-Transformation-Simple',
-	#package : 'Refactoring-Core',
-	#tag : 'Transformation-Simple'
+	#category : #'Refactoring-Core-Transformation-Simple'
 }
 
-{ #category : 'displaying' }
+{ #category : #displaying }
 RBFindAndReplaceTransformation class >> basicMenuItemString [
 
 	^ 'Find and Replace'
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBFindAndReplaceTransformation class >> find: aMethod of: aClass inWholeHierarchy: aBoolean [
 
 	^ self new
@@ -70,12 +68,12 @@ RBFindAndReplaceTransformation class >> find: aMethod of: aClass inWholeHierarch
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBFindAndReplaceTransformation class >> isTransformation [ 
 	^ true
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBFindAndReplaceTransformation class >> model: aModel find: aMethod of: aClass inWholeHierarchy: aBoolean [
 	^ self new
 		model: aModel;
@@ -85,7 +83,7 @@ RBFindAndReplaceTransformation class >> model: aModel find: aMethod of: aClass i
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> argumentsOf: aDictionary [
 	"Return the arguments values of a method ocurrence"
 
@@ -100,7 +98,7 @@ RBFindAndReplaceTransformation >> argumentsOf: aDictionary [
 	^ args
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> extract: occurrence of: rbMethod [
 	[|refactoring |
 	refactoring := self extractMethodRefactoring.
@@ -112,7 +110,7 @@ RBFindAndReplaceTransformation >> extract: occurrence of: rbMethod [
 	self generateChangesFor: refactoring ] on: Exception do: [ :e | e ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> extractMethodRefactoring [
 	^ RBExtractMethodRefactoring new
 			setOption: #useExistingMethod
@@ -121,7 +119,7 @@ RBFindAndReplaceTransformation >> extractMethodRefactoring [
 			yourself
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBFindAndReplaceTransformation >> find: aSelector of: aClass inWholeHierarchy: aBoolean [
 
 	class := self classObjectFor: aClass.
@@ -129,7 +127,7 @@ RBFindAndReplaceTransformation >> find: aSelector of: aClass inWholeHierarchy: a
 	replacesAllHierarchy := aBoolean
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> findOccurrencesIn: rbMethod [
 	|methodNode sourceCode flag |
 	flag := false.
@@ -161,13 +159,13 @@ RBFindAndReplaceTransformation >> findOccurrencesIn: rbMethod [
 							^ self]]]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBFindAndReplaceTransformation >> initialize [
 	super initialize.
 	occurrences := 0
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> matchNodes [
 
 	^ matchNodes ifNil: [
@@ -190,18 +188,18 @@ RBFindAndReplaceTransformation >> matchNodes [
 		  matchNodes ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> method [
 	^ method ifNil: [ method := class methodFor: selector ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> methodNode [
 
 	^ self method ast copy
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> nodesOf: methodNode [
 	|visitor node|
 	visitor := RBCombinatorVisitor new.
@@ -210,12 +208,12 @@ RBFindAndReplaceTransformation >> nodesOf: methodNode [
 	^ visitor combinations
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> patternParserClass [
 	^ RBPatternParser
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBFindAndReplaceTransformation >> preconditions [
 
 	| condition rbMethod |
@@ -235,7 +233,7 @@ RBFindAndReplaceTransformation >> preconditions [
 	^ condition
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBFindAndReplaceTransformation >> privateTransform [
 	|classes|
 	classes :=replacesAllHierarchy ifFalse: [ { class } ] ifTrue: [ class withAllSubclasses ].
@@ -245,7 +243,7 @@ RBFindAndReplaceTransformation >> privateTransform [
 	self inform: occurrences asString, ' occurrences were found and changed.'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> replaceArgumentsByPattern: sourceCode [
 	|newSource|
 	newSource := sourceCode copyWithRegex: 'tempMatch*' matchesReplacedWith: '`@tempMatch' .
@@ -253,17 +251,17 @@ RBFindAndReplaceTransformation >> replaceArgumentsByPattern: sourceCode [
 	^ newSource
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBFindAndReplaceTransformation >> selectorsFor: cls [
 	^ cls selectors copyWithout: selector
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceTransformation >> startLimitOf: sourceCode [
 	^ self method ast body statements first start
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 RBFindAndReplaceTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

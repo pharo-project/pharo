@@ -7,43 +7,41 @@ Checking this conditions holds true, if my condition is false.
 
 "
 Class {
-	#name : 'RBNegationCondition',
-	#superclass : 'RBAbstractCondition',
+	#name : #RBNegationCondition,
+	#superclass : #RBAbstractCondition,
 	#instVars : [
 		'condition'
 	],
-	#category : 'Refactoring-Core-Conditions',
-	#package : 'Refactoring-Core',
-	#tag : 'Conditions'
+	#category : #'Refactoring-Core-Conditions'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBNegationCondition class >> on: aCondition [
 	^self new condition: aCondition
 ]
 
-{ #category : 'checking' }
+{ #category : #checking }
 RBNegationCondition >> check [
 	^condition check not
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBNegationCondition >> condition: aCondition [
 	condition := aCondition.
 	self errorMacro: condition errorMacro
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RBNegationCondition >> errorBlockFor: aBoolean [
 	^condition errorBlockFor: aBoolean not
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RBNegationCondition >> errorStringFor: aBoolean [
 	^condition errorStringFor: aBoolean not
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 RBNegationCondition >> printOn: aStream [
 	aStream nextPutAll: 'NOT ';
 		print: condition

@@ -54,14 +54,12 @@ RBTest >> testExample4
 ```
 "
 Class {
-	#name : 'RBFindAndReplaceSetUpTransformation',
-	#superclass : 'RBFindAndReplaceTransformation',
-	#category : 'Refactoring-Core-Transformation-Simple',
-	#package : 'Refactoring-Core',
-	#tag : 'Transformation-Simple'
+	#name : #RBFindAndReplaceSetUpTransformation,
+	#superclass : #RBFindAndReplaceTransformation,
+	#category : #'Refactoring-Core-Transformation-Simple'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBFindAndReplaceSetUpTransformation class >> model: aModel of: aClass inWholeHierarchy: aBoolean [
 	^ self new
 		model: aModel;
@@ -70,7 +68,7 @@ RBFindAndReplaceSetUpTransformation class >> model: aModel of: aClass inWholeHie
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBFindAndReplaceSetUpTransformation class >> of: aClass inWholeHierarchy: aBoolean [
 	^ self new
 		of: aClass
@@ -78,7 +76,7 @@ RBFindAndReplaceSetUpTransformation class >> of: aClass inWholeHierarchy: aBoole
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceSetUpTransformation >> extractMethodRefactoring [
 	^ RBExtractSetUpMethodRefactoring new
 			setOption: #useExistingMethod
@@ -90,7 +88,7 @@ RBFindAndReplaceSetUpTransformation >> extractMethodRefactoring [
 			yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceSetUpTransformation >> methodNode [
 	| node |
 	node := super methodNode.
@@ -98,7 +96,7 @@ RBFindAndReplaceSetUpTransformation >> methodNode [
 	^ node
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceSetUpTransformation >> nodesOf: methodNode [
 	| combinations limit |
 
@@ -108,19 +106,19 @@ RBFindAndReplaceSetUpTransformation >> nodesOf: methodNode [
 		combinations select: [ :e | e first <= limit ] ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBFindAndReplaceSetUpTransformation >> of: aClass inWholeHierarchy: aBoolean [
 	class := self classObjectFor: aClass.
 	selector := #setUp.
 	replacesAllHierarchy := aBoolean
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBFindAndReplaceSetUpTransformation >> selectorsFor: cls [
 	^ (cls selectors select: [:e | e isTestSelector]) copyWithout: selector
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBFindAndReplaceSetUpTransformation >> startLimitOf: sourceCode [
 	^ ((self parserClass parseMethod: sourceCode) body statements first start)
 ]

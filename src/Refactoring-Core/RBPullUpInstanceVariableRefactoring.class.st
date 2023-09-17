@@ -2,14 +2,12 @@
 I am a refactoring for moving a instance  variable up to the superclass.
 "
 Class {
-	#name : 'RBPullUpInstanceVariableRefactoring',
-	#superclass : 'RBVariableRefactoring',
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#name : #RBPullUpInstanceVariableRefactoring,
+	#superclass : #RBVariableRefactoring,
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBPullUpInstanceVariableRefactoring >> preconditions [
 	^RBCondition withBlock:
 			[(class hierarchyDefinesInstanceVariable: variableName)
@@ -23,7 +21,7 @@ RBPullUpInstanceVariableRefactoring >> preconditions [
 			true]
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBPullUpInstanceVariableRefactoring >> privateTransform [
 	class allSubclasses do:
 			[:each |

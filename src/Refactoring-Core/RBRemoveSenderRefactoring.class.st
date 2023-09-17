@@ -41,14 +41,12 @@ RBRefactoryTestDataApp >> caller1
 
 "
 Class {
-	#name : 'RBRemoveSenderRefactoring',
-	#superclass : 'RBInlineMethodFromComponentRefactoring',
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#name : #RBRemoveSenderRefactoring,
+	#superclass : #RBInlineMethodFromComponentRefactoring,
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBRemoveSenderRefactoring class >> model: aRBSmalltalk remove: anInterval inMethod: aSelector forClass: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -58,7 +56,7 @@ RBRemoveSenderRefactoring class >> model: aRBSmalltalk remove: anInterval inMeth
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forClass: aClass [
 	^ self new
 		remove: anInterval
@@ -66,14 +64,14 @@ RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forCla
 		forClass: aClass
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBRemoveSenderRefactoring >> findSelectedMessage [
 	super findSelectedMessage.
 	sourceMessage isDirectlyUsed
 		ifTrue: [ self refactoringError: 'The sender is directly used' ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBRemoveSenderRefactoring >> inlineParseTree [
 
 	| aSymbol |
@@ -84,13 +82,13 @@ RBRemoveSenderRefactoring >> inlineParseTree [
 		body: ( RBSequenceNode statements: #())]
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBRemoveSenderRefactoring >> nameOfTheClassOfTheMethodToInline [
 
 	^ 'Object'
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBRemoveSenderRefactoring >> preconditions [
 	^ (RBCondition withBlock: [class ifNil:
 			[self refactoringError: 'Invalid class name']. true]) &
@@ -106,7 +104,7 @@ RBRemoveSenderRefactoring >> preconditions [
 					true])
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBRemoveSenderRefactoring >> privateTransform [
 	self inlineParseTree.
 	self renameConflictingTemporaries.
@@ -117,14 +115,14 @@ RBRemoveSenderRefactoring >> privateTransform [
 		compileMethod
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 RBRemoveSenderRefactoring >> remove: anInterval inMethod: aSelector forClass: aClass [
 	sourceSelector := aSelector.
 	class := self classObjectFor: aClass.
 	sourceInterval := anInterval
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 RBRemoveSenderRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

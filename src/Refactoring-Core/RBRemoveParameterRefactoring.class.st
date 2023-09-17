@@ -7,18 +7,16 @@ Any sender of the prior selector will be changed to the new.
 If the method contains more than one argument, I request the user to choose one of the arguments.
 "
 Class {
-	#name : 'RBRemoveParameterRefactoring',
-	#superclass : 'RBChangeMethodNameRefactoring',
+	#name : #RBRemoveParameterRefactoring,
+	#superclass : #RBChangeMethodNameRefactoring,
 	#instVars : [
 		'parameterIndex',
 		'argument'
 	],
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBRemoveParameterRefactoring class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
@@ -28,7 +26,7 @@ RBRemoveParameterRefactoring class >> model: aRBSmalltalk removeParameter: aStri
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		removeParameter: aString
@@ -36,7 +34,7 @@ RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass select
 		selector: aSelector
 ]
 
-{ #category : 'validating' }
+{ #category : #validating }
 RBRemoveParameterRefactoring >> applyValidations [
 
 	| tree |
@@ -57,7 +55,7 @@ RBRemoveParameterRefactoring >> applyValidations [
 			'Cannot remove parameters of infix selectors' ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RBRemoveParameterRefactoring >> computeNewSelector [
 	| keywords |
 
@@ -68,14 +66,14 @@ RBRemoveParameterRefactoring >> computeNewSelector [
 	^ (String streamContents: [ :str | keywords do: [ :each | str nextPutAll: each ] ]) asSymbol
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBRemoveParameterRefactoring >> getNewSelector [
 	self applyValidations.
 	permutation := (1 to: oldSelector numArgs) copyWithout: parameterIndex.
 	^ newSelector ifNil: [ newSelector := self computeNewSelector ]
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
 
 	| tree |
@@ -85,7 +83,7 @@ RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
 	^ tree references: ( tree argumentNames at: parameterIndex )
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBRemoveParameterRefactoring >> myConditions [
 	| imps |
 	imps := self model allImplementorsOf: oldSelector.
@@ -98,19 +96,19 @@ RBRemoveParameterRefactoring >> myConditions [
 						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBRemoveParameterRefactoring >> newSelector: aSelector [
 	newSelector := aSelector
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.
 	argument := aString
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 RBRemoveParameterRefactoring >> storeOn: aStream [
 
 	aStream nextPut: $(.

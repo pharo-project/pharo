@@ -5,8 +5,8 @@ All references to the temporary variable in this method are replaced by the valu
 The initialization and declaration of this variable will be removed. You need to select the variable and its initial assignment code to apply this refactoring.
 "
 Class {
-	#name : 'RBInlineTemporaryRefactoring',
-	#superclass : 'RBMethodRefactoring',
+	#name : #RBInlineTemporaryRefactoring,
+	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'sourceInterval',
 		'selector',
@@ -14,12 +14,10 @@ Class {
 		'assignmentNode',
 		'definingNode'
 	],
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBInlineTemporaryRefactoring class >> inline: anInterval from: aSelector in: aClass [
 	^ self new
 		inline: anInterval
@@ -27,7 +25,7 @@ RBInlineTemporaryRefactoring class >> inline: anInterval from: aSelector in: aCl
 		in: aClass
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -37,12 +35,12 @@ RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval fro
 		yourself
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineTemporaryRefactoring >> compileMethod [
 	class compileTree: sourceTree
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
 	| searcher |
 	searcher := self parseTreeSearcher.
@@ -52,14 +50,14 @@ RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
 	^ (searcher executeTree: definingNode initialAnswer: 0) == 1
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBInlineTemporaryRefactoring >> preconditions [
 	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition withBlock:
@@ -67,7 +65,7 @@ RBInlineTemporaryRefactoring >> preconditions [
 					true])
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineTemporaryRefactoring >> privateTransform [
 	self
 		replaceAssignment;
@@ -75,14 +73,14 @@ RBInlineTemporaryRefactoring >> privateTransform [
 		compileMethod
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineTemporaryRefactoring >> replaceAssignment [
 	assignmentNode parent isSequence
 		ifTrue: [assignmentNode parent removeNode: assignmentNode]
 		ifFalse: [assignmentNode replaceWith: assignmentNode value]
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineTemporaryRefactoring >> replaceReferences [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -92,7 +90,7 @@ RBInlineTemporaryRefactoring >> replaceReferences [
 	rewriter executeTree: definingNode
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 RBInlineTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -106,7 +104,7 @@ RBInlineTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBInlineTemporaryRefactoring >> verifySelectedInterval [
 
 	sourceTree := class parseTreeForSelector: selector.

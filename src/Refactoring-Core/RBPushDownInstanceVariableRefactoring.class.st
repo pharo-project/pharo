@@ -4,14 +4,12 @@ I am a refactoring for moving a instance variable down to my subclasses.
 My precondition verifies that the moved variable is not referenced in the methods of the original class.
 "
 Class {
-	#name : 'RBPushDownInstanceVariableRefactoring',
-	#superclass : 'RBVariableRefactoring',
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#name : #RBPushDownInstanceVariableRefactoring,
+	#superclass : #RBVariableRefactoring,
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBPushDownInstanceVariableRefactoring >> preconditions [
 
 	| references |
@@ -26,7 +24,7 @@ RBPushDownInstanceVariableRefactoring >> preconditions [
 	^ ( RBCondition definesInstanceVariable: variableName in: class ) & references not
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBPushDownInstanceVariableRefactoring >> privateTransform [
 	class removeInstanceVariable: variableName.
 	class subclasses do: [:each | each addInstanceVariable: variableName]

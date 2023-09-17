@@ -4,14 +4,12 @@ I am a refactoring for adding new class variables.
 My precondition verifies that the variable name is valid, not yet used in the whole hierarchy and not a global name.
 "
 Class {
-	#name : 'RBAddClassVariableRefactoring',
-	#superclass : 'RBVariableRefactoring',
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#name : #RBAddClassVariableRefactoring,
+	#superclass : #RBVariableRefactoring,
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBAddClassVariableRefactoring >> applicabilityPreconditions [
 
 	^ (RBCondition isMetaclass: class) not
@@ -19,7 +17,7 @@ RBAddClassVariableRefactoring >> applicabilityPreconditions [
 	  & (RBCondition isGlobal: variableName in: self model) not
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBAddClassVariableRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition
@@ -27,13 +25,13 @@ RBAddClassVariableRefactoring >> breakingChangePreconditions [
 		   definesVariable: variableName asString) not
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBAddClassVariableRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBAddClassVariableRefactoring >> privateTransform [
 	class addClassVariable: variableName
 ]

@@ -4,48 +4,46 @@ It just adds class side method `isAbstract` to the selected class, and as such c
 So it is behavior preserving but we prefer to stress the fact that we have no warranty that the class is really abstract.
 "
 Class {
-	#name : 'RBMakeClassAbstractTransformation',
-	#superclass : 'RBClassRefactoring',
+	#name : #RBMakeClassAbstractTransformation,
+	#superclass : #RBClassRefactoring,
 	#instVars : [
 		'targetClass'
 	],
-	#category : 'Refactoring-Core-Transformation',
-	#package : 'Refactoring-Core',
-	#tag : 'Transformation'
+	#category : #'Refactoring-Core-Transformation'
 }
 
-{ #category : 'displaying' }
+{ #category : #displaying }
 RBMakeClassAbstractTransformation class >> basicMenuItemString [
 
 	^ 'Make abstract'
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBMakeClassAbstractTransformation class >> class: targetClass [
 
 	^ self new class: targetClass
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RBMakeClassAbstractTransformation class >> isTransformation [
 
 	^ true
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBMakeClassAbstractTransformation >> class: class [
 
 	targetClass := class
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBMakeClassAbstractTransformation >> preconditions [
 	"We cannot validate that the class is actually not used and not receiving a message new."
 	
 	^ self skippingPreconditions
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBMakeClassAbstractTransformation >> privateTransform [
 
 	(RBAddMethodTransformation
@@ -56,7 +54,7 @@ RBMakeClassAbstractTransformation >> privateTransform [
 		 withProtocol: #testing) execute
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBMakeClassAbstractTransformation >> skippingPreconditions [
 	"We cannot validate that the class is actually not used and not receiving a message new."
 	

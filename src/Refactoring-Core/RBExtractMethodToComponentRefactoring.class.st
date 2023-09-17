@@ -7,19 +7,17 @@ Based on the instance variable you chosed for this method I will guess the class
 
 "
 Class {
-	#name : 'RBExtractMethodToComponentRefactoring',
-	#superclass : 'RBMethodRefactoring',
+	#name : #RBExtractMethodToComponentRefactoring,
+	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'selector',
 		'extractionInterval',
 		'extractedMethodSelector'
 	],
-	#category : 'Refactoring-Core-Refactorings-Unused',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings-Unused'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBExtractMethodToComponentRefactoring class >> extract: anInterval from: aSelector in: aClass [
 	^ self new
 		extract: anInterval
@@ -27,7 +25,7 @@ RBExtractMethodToComponentRefactoring class >> extract: anInterval from: aSelect
 		in: aClass
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBExtractMethodToComponentRefactoring class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -37,14 +35,14 @@ RBExtractMethodToComponentRefactoring class >> model: aRBSmalltalk extract: anIn
 		yourself
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBExtractMethodToComponentRefactoring >> extract: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	extractionInterval := anInterval
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractMethodToComponentRefactoring >> extractMethod [
 	| refactoring |
 	refactoring := RBExtractMethodRefactoring
@@ -63,7 +61,7 @@ RBExtractMethodToComponentRefactoring >> extractMethod [
 	self generateChangesFor: refactoring
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractMethodToComponentRefactoring >> inlineForwarder [
 	| refactoring |
 	refactoring := RBInlineAllSendersRefactoring
@@ -74,7 +72,7 @@ RBExtractMethodToComponentRefactoring >> inlineForwarder [
 	self generateChangesFor: refactoring
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractMethodToComponentRefactoring >> moveMethod [
 
 	| variable refactoring |
@@ -89,13 +87,13 @@ RBExtractMethodToComponentRefactoring >> moveMethod [
 	self generateChangesFor: refactoring
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBExtractMethodToComponentRefactoring >> preconditions [
 
 	^ self trueCondition
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBExtractMethodToComponentRefactoring >> privateTransform [
 	self
 		extractMethod;
@@ -103,7 +101,7 @@ RBExtractMethodToComponentRefactoring >> privateTransform [
 		inlineForwarder
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 RBExtractMethodToComponentRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

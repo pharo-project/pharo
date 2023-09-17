@@ -6,14 +6,12 @@ where this implementation is taken from or choose one if there are move than one
 If the method implementation has some direct variable references, accessor for this variable are created (just as by the generate accessor refactoring).
 "
 Class {
-	#name : 'RBInlineMethodFromComponentRefactoring',
-	#superclass : 'RBInlineMethodRefactoring',
-	#category : 'Refactoring-Core-Refactorings-Unused',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings-Unused'
+	#name : #RBInlineMethodFromComponentRefactoring,
+	#superclass : #RBInlineMethodRefactoring,
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> abstractVariableReferences [
 	| refactoring |
 	refactoring := RBAbstractVariablesRefactoring
@@ -25,14 +23,14 @@ RBInlineMethodFromComponentRefactoring >> abstractVariableReferences [
 	inlineParseTree := refactoring parseTree
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> addArgumentToSelector: aSymbol [
 	^aSymbol isInfix
 		ifTrue: [#value:value:]
 		ifFalse: [(aSymbol , 'value:') asSymbol]
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> addSelfReferenceToInlineParseTree [
 	| variableName rewriter newArguments |
 
@@ -48,7 +46,7 @@ RBInlineMethodFromComponentRefactoring >> addSelfReferenceToInlineParseTree [
 	sourceMessage receiver replaceWith: (RBVariableNode named: variableName)
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> addSelfReferenceToSourceMessage [
 	| newArguments |
 
@@ -57,7 +55,7 @@ RBInlineMethodFromComponentRefactoring >> addSelfReferenceToSourceMessage [
 	sourceMessage renameSelector: (self addArgumentToSelector: sourceMessage selector) andArguments: newArguments
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> checkSuperMessages [
 	inlineParseTree superMessages isEmpty
 		ifFalse:
@@ -65,7 +63,7 @@ RBInlineMethodFromComponentRefactoring >> checkSuperMessages [
 				refactoringError: 'Cannot inline method since it sends a super message']
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
 
 	| imps |
@@ -80,7 +78,7 @@ RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
 	^ classOfTheMethodToInline
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
 
 	sourceParseTree := class parseTreeForSelector: sourceSelector.
@@ -94,7 +92,7 @@ RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
 		ifFalse: [ self refactoringError: 'The selection doesn''t appear to be a message send' ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RBInlineMethodFromComponentRefactoring >> isOverridden [
 	| selector|
 	selector := self inlineSelector.
@@ -104,13 +102,13 @@ RBInlineMethodFromComponentRefactoring >> isOverridden [
 	^ false
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> nameOfTheClassOfTheMethodToInline [
 
 	^ self classOfTheMethodToInline instanceSide name
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> newNameForSelf [
 
 	| variableName index originalName nonMetaClass |
@@ -130,20 +128,20 @@ RBInlineMethodFromComponentRefactoring >> newNameForSelf [
 	^ variableName
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> privateTransform [
 	self abstractVariableReferences.
 	self renameSelfReferences.
 	super privateTransform
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> renameSelfReferences [
 	self addSelfReferenceToSourceMessage.
 	self addSelfReferenceToInlineParseTree
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> safeVariableNameBasedOn: aString [
 	"Creates an unused variable name containing aString"
 

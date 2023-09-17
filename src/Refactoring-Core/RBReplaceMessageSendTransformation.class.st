@@ -20,8 +20,8 @@ All senders of this method are changed by the other.
 ```
 "
 Class {
-	#name : 'RBReplaceMessageSendTransformation',
-	#superclass : 'RBMethodRefactoring',
+	#name : #RBReplaceMessageSendTransformation,
+	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'replaceInAllClasses',
 		'oldSelector',
@@ -29,24 +29,22 @@ Class {
 		'permutation',
 		'newArgs'
 	],
-	#category : 'Refactoring-Core-Refactorings',
-	#package : 'Refactoring-Core',
-	#tag : 'Refactorings'
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : 'displaying' }
+{ #category : #displaying }
 RBReplaceMessageSendTransformation class >> basicMenuItemString [
 
 	^ 'Replace senders'
 ]
 
-{ #category : 'displaying' }
+{ #category : #displaying }
 RBReplaceMessageSendTransformation class >> isTransformation [ 
 
 	^ true
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^ self new
 		model: aRBSmalltalk;
@@ -57,7 +55,7 @@ RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: a
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
 	^ self new
 		model: aRBSmalltalk;
@@ -69,7 +67,7 @@ RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: a
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean newArgs: anArgsCollection [
 	^ self new
 		model: aRBSmalltalk;
@@ -82,7 +80,7 @@ RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: a
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap newArgs: anArgsCollection [
 	^ self new
 		model: aRBSmalltalk;
@@ -94,7 +92,7 @@ RBReplaceMessageSendTransformation class >> model: aRBSmalltalk replaceMethod: a
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^self new
 		replaceCallMethod: aSelector
@@ -103,7 +101,7 @@ RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aCl
 		permutation: aMap
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
 	^self new
 		replaceCallMethod: aSelector
@@ -113,7 +111,7 @@ RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aCl
 		inAllClasses: aBoolean 
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean newArgs: anArgsCollection [
 	^self new
 		replaceCallMethod: aSelector
@@ -124,7 +122,7 @@ RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aCl
 		newArgs: anArgsCollection 
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap newArgs: anArgsCollection [
 	^self new
 		replaceCallMethod: aSelector
@@ -134,7 +132,7 @@ RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aCl
 		newArgs: anArgsCollection 
 ]
 
-{ #category : 'support' }
+{ #category : #support }
 RBReplaceMessageSendTransformation >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
 	(self model allReferencesTo: aSymbol in: classes)
 		do:
@@ -145,7 +143,7 @@ RBReplaceMessageSendTransformation >> convertAllReferencesTo: aSymbol of: classe
 				using: searchReplacer]
 ]
 
-{ #category : 'support' }
+{ #category : #support }
 RBReplaceMessageSendTransformation >> convertAllReferencesTo: aSymbol using: searchReplacer [
 
 	(self model allReferencesTo: aSymbol)
@@ -156,25 +154,25 @@ RBReplaceMessageSendTransformation >> convertAllReferencesTo: aSymbol using: sea
 		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBReplaceMessageSendTransformation >> newArgs [
 
 	^ newArgs ifNil: [ newArgs := {  } ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBReplaceMessageSendTransformation >> newArgs: anArgsCollection [
 
 	newArgs := anArgsCollection
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RBReplaceMessageSendTransformation >> newSelectorString [
 
 	^ self buildSelectorString: newSelector withPermuteMap: permutation andNewArguments: newArgs
 ]
 
-{ #category : 'parsing' }
+{ #category : #parsing }
 RBReplaceMessageSendTransformation >> parseTreeRewriter [
 	| rewriteRule oldString newString |
 	
@@ -187,7 +185,7 @@ RBReplaceMessageSendTransformation >> parseTreeRewriter [
 	^rewriteRule
 ]
 
-{ #category : 'parsing' }
+{ #category : #parsing }
 RBReplaceMessageSendTransformation >> parseTreeRewriterInstance [
 
 	^ self parseTreeRewriterClass
@@ -195,7 +193,7 @@ RBReplaceMessageSendTransformation >> parseTreeRewriterInstance [
 		  with: newSelector
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBReplaceMessageSendTransformation >> preconditions [
 
 	| conditions |
@@ -213,14 +211,14 @@ RBReplaceMessageSendTransformation >> preconditions [
 	^ conditions
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBReplaceMessageSendTransformation >> privateTransform [
 	self replaceInAllClasses
 		ifTrue: [ self replaceMessageSends ]
 		ifFalse: [ self replaceMessageSendsIn: {class} ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap [
 
 	oldSelector := aSelector asSymbol.
@@ -230,21 +228,21 @@ RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to
 	newArgs := OrderedCollection new.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap inAllClasses: aBoolean [
 
 	self replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap.
 	replaceInAllClasses := aBoolean
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap inAllClasses: aBoolean newArgs: anArgsCollection [
 
 	self replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap newArgs: anArgsCollection.
 	replaceInAllClasses := aBoolean
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap newArgs: anArgsCollection [
 
 	oldSelector := aSelector asSymbol.
@@ -254,17 +252,17 @@ RBReplaceMessageSendTransformation >> replaceCallMethod: aSelector in: aClass to
 	newArgs := anArgsCollection 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RBReplaceMessageSendTransformation >> replaceInAllClasses [
 	^ replaceInAllClasses ifNil: [ replaceInAllClasses := false ]
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBReplaceMessageSendTransformation >> replaceMessageSends [
 	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RBReplaceMessageSendTransformation >> replaceMessageSendsIn: classes [
 	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
 ]
