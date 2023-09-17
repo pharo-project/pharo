@@ -209,9 +209,9 @@ MCStWriter >> writeMethodSource: definition [
 MCStWriter >> writePackage: packageName tags: aCollection [
 
 	stream
-		nextChunkPut: ('{1} do: [ :tag | (self packageOrganizer ensurePackage: #{2}) ensureTag: tag ]' format: {
-						 aCollection printString.
-						 packageName });
+		nextChunkPut: ('self packageOrganizer ensurePackage: #{1} withTags: {2}' format: {
+						 packageName.
+						 aCollection printString });
 		cr
 ]
 

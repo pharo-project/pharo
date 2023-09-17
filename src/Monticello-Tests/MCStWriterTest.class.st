@@ -124,7 +124,7 @@ MCMethodDeclaration className: #MCMockClassD selector: #one category: #''''as ye
 
 { #category : 'data' }
 MCStWriterTest >> expectedOrganizationDefinition [
-	^ 'SystemOrganization addCategory: #MonticelloMocks!
+	^ 'self packageOrganizer ensurePackage: #MonticelloMocks withTags: #()!
 '
 ]
 
