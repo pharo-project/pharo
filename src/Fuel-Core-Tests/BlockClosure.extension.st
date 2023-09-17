@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosure }
+Extension { #name : 'BlockClosure' }
 
-{ #category : #'*Fuel-Core-Tests' }
+{ #category : '*Fuel-Core-Tests' }
 BlockClosure >> assertWellMaterializedInto: aBlockClosure in: aTestCase [
 
 	aTestCase assert: self ~~ aBlockClosure.
@@ -20,7 +20,7 @@ BlockClosure >> assertWellMaterializedInto: aBlockClosure in: aTestCase [
 			]
 ]
 
-{ #category : #'*Fuel-Core-Tests' }
+{ #category : '*Fuel-Core-Tests' }
 BlockClosure >> isEqualRegardlessTrailerTo: anObject [
 	^ self = anObject
 ]

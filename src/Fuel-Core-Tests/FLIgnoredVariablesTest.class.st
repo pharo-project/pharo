@@ -2,12 +2,14 @@
 SUnit tests for serialization with ignored variables
 "
 Class {
-	#name : #FLIgnoredVariablesTest,
-	#superclass : #FLClassSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLIgnoredVariablesTest',
+	#superclass : 'FLClassSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLIgnoredVariablesTest >> testAllVariablesIgnored [
 
 	| anObject result aClass |
@@ -24,7 +26,7 @@ FLIgnoredVariablesTest >> testAllVariablesIgnored [
 	self assert: (result instVarAt: 2) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLIgnoredVariablesTest >> testIgnoredValueIsNotMaterialized [
 
 	| anObject materialized aClass |
@@ -40,7 +42,7 @@ FLIgnoredVariablesTest >> testIgnoredValueIsNotMaterialized [
 	self deny: (materialized instVarAt: 1) identicalTo: #A
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLIgnoredVariablesTest >> testOneIgnoredVariable [
 
 	| anObject result aClass |
@@ -59,7 +61,7 @@ FLIgnoredVariablesTest >> testOneIgnoredVariable [
 	self assert: $C equals: (result instVarAt: 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLIgnoredVariablesTest >> testTwoIgnoredVariables [
 
 	| anObject result aClass |

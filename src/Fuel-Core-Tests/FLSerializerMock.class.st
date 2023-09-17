@@ -4,31 +4,33 @@ I am a mock used to simlify testing.
 A mock is an object that simulates the behavior of a real object or component in a controlled manner. It is used in unit testing to isolate the code being tested from its dependencies, allowing the code to be tested in isolation.
 "
 Class {
-	#name : #FLSerializerMock,
-	#superclass : #FLSerializer,
-	#category : #'Fuel-Core-Tests-Support-Mocks'
+	#name : 'FLSerializerMock',
+	#superclass : 'FLSerializer',
+	#category : 'Fuel-Core-Tests-Support-Mocks',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Support-Mocks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializerMock >> at: aKey [
 	^ map at: aKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializerMock >> at: aKey ifAbsent: aBlock [
 	^ map
 		at: aKey
 		ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializerMock >> at: aKey put: anObject [
 	map
 		at: aKey
 		put: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializerMock >> environment: anObject [
 	"For tests only, allow overriding the object"
 	map
@@ -37,7 +39,7 @@ FLSerializerMock >> environment: anObject [
 	super environment: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializerMock >> filePath: aString [
 	"For tests only, allow stream factory to be overridden, because
 	we set the factory during set up"
@@ -48,7 +50,7 @@ FLSerializerMock >> filePath: aString [
 	super filePath: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializerMock >> object: anObject [
 	"For tests only, allow overriding the object"
 	map
@@ -57,7 +59,7 @@ FLSerializerMock >> object: anObject [
 	super object: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLSerializerMock >> streamFactoryForFilePath: aString [
 	^ [ FLFilePoolTestResource current writeStreamForFilePath: aString ]
 ]

@@ -2,16 +2,18 @@
 I test the serialization of an entire class or trait, in the cases in which they *are not* present in the image at materialization time.
 "
 Trait {
-	#name : #FLTCreateClassOrTraitSerializationTest,
-	#category : #'Fuel-Core-Tests-FullSerialization'
+	#name : 'FLTCreateClassOrTraitSerializationTest',
+	#category : 'Fuel-Core-Tests-FullSerialization',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'FullSerialization'
 }
 
-{ #category : #'class-factory' }
+{ #category : 'class-factory' }
 FLTCreateClassOrTraitSerializationTest >> newAnonymousClassOrTrait [
 	^ self explicitRequirement
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterialize: aClass [
 
 	| materialized wasSilent |
@@ -25,7 +27,7 @@ FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterialize:
 	^ materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterializeAll: objects [
 
 	| classesOrTraits materialized silent |
@@ -45,7 +47,7 @@ FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterializeA
 	^ materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testAnonymousBehaviorIsSerializable [
 	| classOrTrait |
 	classOrTrait := self newAnonymousClassOrTrait.
@@ -57,7 +59,7 @@ FLTCreateClassOrTraitSerializationTest >> testAnonymousBehaviorIsSerializable [
 		raise: FLClassNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCompiledMethodClassBinding [
 	"The class binding of each CM has to point to a correct Association, which should not be added to Smalltalk globals."
 	
@@ -78,7 +80,7 @@ FLTCreateClassOrTraitSerializationTest >> testCompiledMethodClassBinding [
 	self deny: (self environmentOfTest includesKey: className asSymbol)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateBasic [
 	"Tests materialization a class or trait not defined in the image."
 
@@ -103,7 +105,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateBasic [
     self deny: (self environmentOfTest includesKey: name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithClassSideMethod [
 	"Tests materialization of a class-side method in a class or trait not defined in the image."
 
@@ -123,7 +125,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithClassSideMethod [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) class perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithClassTrait [
 	"Tests materialization of a class not defined in the image, with a class trait"
 	
@@ -144,7 +146,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithClassTrait [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) class perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithComment [
 	"Tests materialization of the comment of a class or trait not defined in the image."
 	
@@ -158,7 +160,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithComment [
 	self assert: 'test stamp' = materializedClassOrTrait commentStamp
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithExternalTrait [
 	"Tests materialization of a class not defined in the image, with a trait"
 	
@@ -179,7 +181,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithExternalTrait [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithInstance [
 	"Tests materialization of an internal class or trait together with an object using it."
 	
@@ -200,7 +202,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithInstance [
 	self assert: 42 equals: (materializedObjects second perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithInternalTrait [
 	"Tests materialization of a class not defined in the image, with a trait, both internally serialized"
 	
@@ -225,7 +227,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithInternalTrait [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithMethod [
 	"Tests materialization of a compiled method in a class not defined in the image."
 	
@@ -245,7 +247,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithMethod [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) perform: #fortyTwo).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithTraitOnClassSide [
 	"Tests materialization of a class not defined in the image, with a trait added to its class side"
 	
