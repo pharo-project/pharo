@@ -1,5 +1,5 @@
 "
-A MCSystemCategoryParser extracts or set a category/protocol to the corresponding MCOrganizationDefinition.
+A MCSystemCategoryParser extracts or set a category/protocol to the corresponding MCOrganizationDefinition with the old definition
 "
 Class {
 	#name : 'MCSystemCategoryParser',

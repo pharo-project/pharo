@@ -45,10 +45,7 @@ MCOrganizationDefinition >> categories [
 
 	^ self packageName
 		  ifNil: [ {  } ]
-		  ifNotNil: [ :package |
-			  { package } , (self tagNames
-				   reject: [ :tagName | tagName = package ]
-				   thenCollect: [ :tagName | package , '-' , tagName ]) ]
+		  ifNotNil: [ :package | { package } , (self tagNames collect: [ :tagName | package , '-' , tagName ]) ]
 ]
 
 { #category : 'accessing' }
@@ -138,7 +135,10 @@ MCOrganizationDefinition >> tagNames [
 MCOrganizationDefinition >> tagNames: aCollection [
 	"ensure the tags are sorted alphabetically, so the merge don't take it as a conflict"
 
-	tagNames := aCollection sorted asArray
+	| tags |
+	tags := aCollection.
+	tags remove: self packageName ifAbsent: [ "do nothing here" ].
+	tagNames := tags sorted asArray
 ]
 
 { #category : 'unloading' }
