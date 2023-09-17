@@ -34,12 +34,14 @@ Foo >> foo
 ```
 "
 Class {
-	#name : #RBMergeInstanceVariableIntoAnother,
-	#superclass : #RBRenameInstanceVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBMergeInstanceVariableIntoAnother',
+	#superclass : 'RBRenameInstanceVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBMergeInstanceVariableIntoAnother >> preconditions [
 	^ (RBCondition
 		withBlock: [ (variableName = newName)
@@ -49,7 +51,7 @@ RBMergeInstanceVariableIntoAnother >> preconditions [
 			& (RBCondition definesInstanceVariable: newName in: class)
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBMergeInstanceVariableIntoAnother >> privateTransform [
 	renameAccessors ifTrue: [
 		self removeOldAccessors
@@ -62,7 +64,7 @@ RBMergeInstanceVariableIntoAnother >> privateTransform [
 	self renameAccessorsReferences
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBMergeInstanceVariableIntoAnother >> renameVariable [
 	model
 		renameInstanceVariable: variableName

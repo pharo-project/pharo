@@ -1,10 +1,12 @@
 Class {
-	#name : #ExampleSlotWithStateTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-Examples'
+	#name : 'ExampleSlotWithStateTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-Examples',
+	#package : 'Slot-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExampleSlotWithStateTest >> testExampleClassSide [
 	" can we install a slot on the class side?"
 	| slot |
@@ -14,7 +16,7 @@ ExampleSlotWithStateTest >> testExampleClassSide [
 	self assert: slot class equals: ExampleSlotWithState
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExampleSlotWithStateTest >> testExampleSlotWithState [
 	| slot |
 	<ignoreNotImplementedSelectors: #(slot1: slot1)>
@@ -31,7 +33,7 @@ ExampleSlotWithStateTest >> testExampleSlotWithState [
 	self assert: aClass new slot1 equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExampleSlotWithStateTest >> testExampleTwoSlotWithState [
 	" add two, remove one"
 	aClass := self make: [ :builder | builder

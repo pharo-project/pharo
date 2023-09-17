@@ -2,15 +2,17 @@
 A test mock for a class with recursive substitution
 "
 Class {
-	#name : #FLClassWithRecursiveSubstitution,
-	#superclass : #Object,
+	#name : 'FLClassWithRecursiveSubstitution',
+	#superclass : 'Object',
 	#instVars : [
 		'index'
 	],
-	#category : #'Fuel-Core-Tests-Support-Mocks'
+	#category : 'Fuel-Core-Tests-Support-Mocks',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Support-Mocks'
 }
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 FLClassWithRecursiveSubstitution >> fuelAccept: aGeneralMapper [
 
 	^ index < 10
@@ -23,12 +25,12 @@ FLClassWithRecursiveSubstitution >> fuelAccept: aGeneralMapper [
 			super fuelAccept: aGeneralMapper ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLClassWithRecursiveSubstitution >> index [
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLClassWithRecursiveSubstitution >> index: anObject [
 	index := anObject
 ]

@@ -2,23 +2,25 @@
 Checks for any unary ""accessing"" methods without explicit return statements.
 "
 Class {
-	#name : #ReUnaryAccessingMethodWithoutReturnRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReUnaryAccessingMethodWithoutReturnRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReUnaryAccessingMethodWithoutReturnRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnaryAccessingMethodWithoutReturnRule class >> uniqueIdentifierName [
 
 	^ 'UnaryAccessingMethodWithoutReturnRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReUnaryAccessingMethodWithoutReturnRule >> basicCheck: aMethod [
 
 	(aMethod numArgs > 0 or: [ aMethod isAbstract ]) ifTrue: [ ^ false ].
@@ -26,12 +28,12 @@ ReUnaryAccessingMethodWithoutReturnRule >> basicCheck: aMethod [
 	^ aMethod ast allChildren noneSatisfy: [ :each | each isReturn ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnaryAccessingMethodWithoutReturnRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnaryAccessingMethodWithoutReturnRule >> name [
 	^ 'Unary "accessing" method without explicit return'
 ]

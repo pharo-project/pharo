@@ -2,19 +2,21 @@
 Checks for methods that appear to be modifying a collection that is owned by another object. Such modifications can cause problems especially if other variables are modified when the collection is modified. For example, CompositePart must set the containers of all its parts when adding a new component.
 "
 Class {
-	#name : #ReCollectionMessagesToExternalObjectRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReCollectionMessagesToExternalObjectRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCollectionMessagesToExternalObjectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'CollectionMessagesToExternalObjectRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingDict [
 	| collectionGetter collectionOwner |
 	collectionGetter := mappingDict at: '`@collectionGetter:'.
@@ -27,12 +29,12 @@ ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingD
 	^ (aNode scope lookupVar: collectionOwner name) scope ~= Smalltalk globals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCollectionMessagesToExternalObjectRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReCollectionMessagesToExternalObjectRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -43,7 +45,7 @@ ReCollectionMessagesToExternalObjectRule >> initialize [
 		)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCollectionMessagesToExternalObjectRule >> name [
 	^ 'Sends add:/remove: to external collection'
 ]

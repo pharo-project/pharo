@@ -1,16 +1,18 @@
 Class {
-	#name : #MCMethodDefinitionTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCMethodDefinitionTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MCMethodDefinitionTest >> extensionPackageName [
 
 	^ 'MonticelloTestsFirstExtensionMockPackage'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinitionTest >> mockClass [
 
 	^ self class classInstaller make: [ :builder |
@@ -19,19 +21,19 @@ MCMethodDefinitionTest >> mockClass [
 			  package: self mockPackageName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinitionTest >> mockPackageName [
 
 	^ 'MonticelloTestsMockPackage'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCMethodDefinitionTest >> secondExtensionPackageName [
 
 	^ 'MonticelloTestsSecondExtensionMockPackage-override'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCMethodDefinitionTest >> tearDown [
 
 	{ self secondExtensionPackageName . self extensionPackageName . self mockPackageName }
@@ -39,7 +41,7 @@ MCMethodDefinitionTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinitionTest >> testCannotLoad [
 
 	| definition |
@@ -52,7 +54,7 @@ MCMethodDefinitionTest >> testCannotLoad [
 	self assertEmpty: (SystemNavigation new allImplementorsOf: #kjahs87)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinitionTest >> testComparison [
 	|d1 d2 d3 d4 d5 |
 	d1 := self mockMethod: #one class: 'A' source: '1' meta: false.
@@ -70,7 +72,7 @@ MCMethodDefinitionTest >> testComparison [
 	self assert: (d4 isSameRevisionAs: d5).
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinitionTest >> testLoadAndUnload [
 
 	| definition mockClass mockClassInstance |
@@ -89,7 +91,7 @@ MCMethodDefinitionTest >> testLoadAndUnload [
 	self deny: (mockClassInstance respondsTo: #one)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinitionTest >> testMethodDefinitionWithEmptyProtocolIsClassifiedAsAsYetUnclassified [
 
 	| methodDef |
@@ -104,7 +106,7 @@ MCMethodDefinitionTest >> testMethodDefinitionWithEmptyProtocolIsClassifiedAsAsY
 	self assert: methodDef protocol equals: Protocol unclassified
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
 
 	| definition mockClass mockClassInstance |
@@ -122,7 +124,7 @@ MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
 	self assert: (mockClass >> #override) protocolName equals: '*' , self extensionPackageName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinitionTest >> testRevertOldMethod [
 
 	| definition changeRecord mockClass |
@@ -136,7 +138,7 @@ MCMethodDefinitionTest >> testRevertOldMethod [
 	changeRecord fileIn
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinitionTest >> testRevertOverrideMethod [
 
 	| definition mockClass mockClassInstance |

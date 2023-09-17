@@ -13,15 +13,17 @@ It can be forced to update by executing:
 	ReImplementedNotSentRule reset
 "
 Class {
-	#name : #ReImplementedNotSentRule,
-	#superclass : #ReAbstractRule,
+	#name : 'ReImplementedNotSentRule',
+	#superclass : 'ReAbstractRule',
 	#classInstVars : [
 		'allMessages'
 	],
-	#category : #'GeneralRules-Migrated'
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReImplementedNotSentRule class >> allMessages [
 	"return all 'message sends' in the system and cache them"
 
@@ -31,22 +33,22 @@ ReImplementedNotSentRule class >> allMessages [
 		  allMessages ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReImplementedNotSentRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ReImplementedNotSentRule class >> cleanUp [
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReImplementedNotSentRule class >> enabled [
 	^ enabled ifNil: [ enabled := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReImplementedNotSentRule class >> enabled: aBoolean [
 	super enabled: aBoolean.
 	self reset.
@@ -55,7 +57,7 @@ ReImplementedNotSentRule class >> enabled: aBoolean [
 		ifFalse: [ self unsubscribe ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ReImplementedNotSentRule class >> initialize [
 	"we do not want to register if the rule is disabled"
 	self enabled ifFalse: [ ^self ].
@@ -65,30 +67,30 @@ ReImplementedNotSentRule class >> initialize [
 		registerToolClassNamed: self name
 ]
 
-{ #category : #'system announcements' }
+{ #category : 'system announcements' }
 ReImplementedNotSentRule class >> methodAdded: anAnnouncement [
 
 	self allMessages addAll: anAnnouncement methodAdded messages
 ]
 
-{ #category : #'system announcements' }
+{ #category : 'system announcements' }
 ReImplementedNotSentRule class >> methodModified: anAnnouncement [
 
 	self allMessages addAll: anAnnouncement newMethod messages
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ReImplementedNotSentRule class >> reset [
 	<script>
 	allMessages := nil
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ReImplementedNotSentRule class >> shutDown [
 	self reset
 ]
 
-{ #category : #announcement }
+{ #category : 'announcement' }
 ReImplementedNotSentRule class >> subscribe [
 	<systemEventRegistration>
 	self unsubscribe.
@@ -98,20 +100,20 @@ ReImplementedNotSentRule class >> subscribe [
 		when: MethodModified send: #methodModified: to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReImplementedNotSentRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ImplementedNotSentRule'
 ]
 
-{ #category : #announcement }
+{ #category : 'announcement' }
 ReImplementedNotSentRule class >> unsubscribe [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReImplementedNotSentRule >> basicCheck: aMethod [
 	"Check if there are any senders. Furthermore methods with pragmas are likely to be sent through reflection, thus do not report those."
 
@@ -134,17 +136,17 @@ ReImplementedNotSentRule >> basicCheck: aMethod [
 			  ifFalse: [ false ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReImplementedNotSentRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReImplementedNotSentRule >> name [
 	^ 'Methods implemented but not sent'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReImplementedNotSentRule >> severity [
 	^ #information
 ]

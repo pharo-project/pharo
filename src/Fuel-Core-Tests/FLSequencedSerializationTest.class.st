@@ -1,10 +1,12 @@
 Class {
-	#name : #FLSequencedSerializationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-FullSerialization'
+	#name : 'FLSequencedSerializationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-FullSerialization',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'FullSerialization'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSequencedSerializationTest >> assertSequencedSerializationEqualityOf: aCollectionToSerialize [	
 	| materializedCollection |
 	self serializer
@@ -16,12 +18,12 @@ FLSequencedSerializationTest >> assertSequencedSerializationEqualityOf: aCollect
 	self assertCollection: aCollectionToSerialize hasSameElements: materializedCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLSequencedSerializationTest >> setUpStreamStrategy [
 	streamStrategy := FLByteArrayStreamStrategy new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSequencedSerializationTest >> testComplexObjects [
 	self assertSequencedSerializationEqualityOf: {
 		Class.
@@ -33,7 +35,7 @@ FLSequencedSerializationTest >> testComplexObjects [
 		Smalltalk globals }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSequencedSerializationTest >> testPrimitiveObjects [
 	self assertSequencedSerializationEqualityOf: (1 to: 50) asOrderedCollection.
 ]

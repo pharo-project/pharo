@@ -85,7 +85,6 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 	reached, then return stops at: 257. Optional.
 	See Object documentation whatIsAPrimitive."
 	| ascii nextDestX char floatDestX widthAndKernedWidth nextChar atEndOfRun |
-	<primitive: 103>
 	lastIndex := startIndex.
 	floatDestX := destX.
 	widthAndKernedWidth := Array new: 2.
@@ -116,14 +115,14 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 				widthAndKernedWidthOfLeft: char
 				right: nextChar
 				into: widthAndKernedWidth.
-			nextDestX := floatDestX + (widthAndKernedWidth at: 1).
+			nextDestX := floatDestX + ((widthAndKernedWidth at: 1) * self scale).
 			"note crossing of right component side, unless we would end up on the first position
 			again (endless loop, if line is to narrow to hold this current character)"
 			nextDestX > rightX ifTrue: [firstDestX ~= destX ifTrue:[ ^stops crossedX]].
-			floatDestX := floatDestX + kernDelta + (widthAndKernedWidth at: 2).
+			floatDestX := floatDestX + (kernDelta * self scale) + ((widthAndKernedWidth at: 2) * self scale).
 			atEndOfRun
 				ifTrue:[
-					pendingKernX := (widthAndKernedWidth at: 2) - (widthAndKernedWidth at: 1).
+					pendingKernX := ((widthAndKernedWidth at: 2) * self scale) - ((widthAndKernedWidth at: 1) * self scale).
 					floatDestX := floatDestX - pendingKernX].
 			destX := floatDestX.
 			lastIndex := lastIndex + 1].
@@ -210,8 +209,8 @@ RubCharacterScanner >> nextTabXFrom: anX [
 	| normalizedX tabX mx |
 	mx := 9999.
 	normalizedX := anX - leftMargin.
-	tabX := self tabWidth.
-	[ tabX <= normalizedX and: [ tabX < mx ] ] whileTrue: [ tabX := tabX + self tabWidth ].
+	tabX := self tabWidth * self scale.
+	[ tabX <= normalizedX and: [ tabX < mx ] ] whileTrue: [ tabX := tabX + (self tabWidth * self scale) ].
 	^ tabX < mx
 		ifTrue: [ leftMargin + tabX min: rightMargin ]
 		ifFalse: [ rightMargin ]
@@ -224,7 +223,7 @@ RubCharacterScanner >> placeEmbeddedObject: anchoredMorph [
 	| w |
 	"Workaround: The following should really use #textAnchorType"
 	anchoredMorph relativeTextAnchorPosition ifNotNil:[^true].
-	destX := destX + (w := anchoredMorph width).
+	destX := destX + (w := anchoredMorph width * self scale).
 	(destX > rightMargin and: [(leftMargin + w) <= rightMargin])
 		ifTrue: ["Won't fit, but would on next line"
 				^ false].
@@ -239,7 +238,7 @@ RubCharacterScanner >> plainTab [
 	"This is the basic method of adjusting destX for a tab."
 	destX := (alignment = self justified and: [self leadingTab not])
 		ifTrue:		"embedded tabs in justified text are weird"
-			[destX + (self tabWidth - (line justifiedTabDeltaFor: spaceCount)) max: destX]
+			[destX + ((self tabWidth * self scale) - ((line justifiedTabDeltaFor: spaceCount) * self scale)) max: destX]
 		ifFalse:
 			[self nextTabXFrom: destX].
 	pendingKernX := 0.
@@ -253,6 +252,12 @@ RubCharacterScanner >> registerBreakableIndex [
 	The default implementation here does nothing."
 
 	^ false
+]
+
+{ #category : #accessing }
+RubCharacterScanner >> scale [
+
+	self subclassResponsibility
 ]
 
 { #category : #scanning }
@@ -316,12 +321,12 @@ RubCharacterScanner >> scanMultiCharactersFrom: startIndex to: stopIndex in: sou
 			widthAndKernedWidthOfLeft: (sourceString at: lastIndex)
 			right: nextChar
 			into: widthAndKernedWidth.
-		nextDestX := floatDestX + (widthAndKernedWidth at: 1).
+		nextDestX := floatDestX + ((widthAndKernedWidth at: 1) * self scale).
 		nextDestX > rightX ifTrue: [destX ~= firstDestX ifTrue: [^stops crossedX]].
-		floatDestX := floatDestX + kernDelta + (widthAndKernedWidth at: 2).
+		floatDestX := floatDestX + (kernDelta * self scale) + ((widthAndKernedWidth at: 2) * self scale).
 		atEndOfRun
 			ifTrue:[
-				pendingKernX := (widthAndKernedWidth at: 2) - (widthAndKernedWidth at: 1).
+				pendingKernX := ((widthAndKernedWidth at: 2) * self scale) - ((widthAndKernedWidth at: 1) * self scale).
 				floatDestX := floatDestX - pendingKernX].
 		destX := floatDestX .
 		lastIndex := lastIndex + 1.
@@ -375,9 +380,9 @@ RubCharacterScanner >> setFont [
 					We still want kerning between chars of the same
 					font, but of different color. So add any pending kern to destX"
 					destX := destX + (pendingKernX ifNil: [ 0 ]) ].
-			destX := destX + priorFont descentKern ].
+			destX := destX + (priorFont descentKern * self scale) ].
 	pendingKernX := 0.	"clear any pending kern so there is no danger of it being added twice"
-	destX := destX - font descentKern.	"NOTE: next statement should be removed when clipping works"
+	destX := destX - (font descentKern * self scale). "NOTE: next statement should be removed when clipping works"
 	leftMargin ifNotNil: [ destX := destX max: leftMargin ].
 	kern := kern - font baseKern.	"Install various parameters from the font."
 	spaceWidth := font widthOf: Character space.	"	map := font characterToGlyphMap."

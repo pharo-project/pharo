@@ -315,7 +315,7 @@ RBTransformationsTest >> testRemoveMessageSendTransform [
 	class := transformation model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: (#called:, #on:) asSymbol)
 			equals:  (self parseMethod: 'called: anObject on: aBlock
-	Transcript show: anObject printString.
+	anObject printString traceCr.
 	aBlock value')
 ]
 

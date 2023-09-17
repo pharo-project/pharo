@@ -1,6 +1,6 @@
-Extension { #name : #MCServerRegistry }
+Extension { #name : 'MCServerRegistry' }
 
-{ #category : #'*Monticello-Tests' }
+{ #category : '*Monticello-Tests' }
 MCServerRegistry >> removeCredentialsFor: aString [ 
 
 	registry removeKey: aString.

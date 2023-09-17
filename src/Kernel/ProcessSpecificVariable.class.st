@@ -10,28 +10,30 @@ Also subclasses could provide specific logic for installing variables into new p
 
 "
 Class {
-	#name : #ProcessSpecificVariable,
-	#superclass : #Object,
+	#name : 'ProcessSpecificVariable',
+	#superclass : 'Object',
 	#instVars : [
 		'index'
 	],
 	#classInstVars : [
 		'soleInstance'
 	],
-	#category : #'Kernel-Processes'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ProcessSpecificVariable class >> initialize [
 	self resetSoleInstance
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificVariable class >> isInheritable [
 	^false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProcessSpecificVariable class >> new [
 	| instance |
 	instance := super new.
@@ -39,39 +41,39 @@ ProcessSpecificVariable class >> new [
 	^ instance
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ProcessSpecificVariable class >> resetSoleInstance [
 	soleInstance := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessSpecificVariable class >> soleInstance [
 	^ soleInstance ifNil: [ soleInstance := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessSpecificVariable class >> value [
 	"Answer the current value for this variable in the current context."
 	^ self soleInstance value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessSpecificVariable >> default [
 	"Answer the default value for the variable. The default for the default value is nil."
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessSpecificVariable >> index [
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessSpecificVariable >> index: anInteger [
 	index := anInteger
 ]
 
-{ #category : #inheriting }
+{ #category : 'inheriting' }
 ProcessSpecificVariable >> installValue: anObject intoForked: newProcess from: ownerProcess [
 "
 	In subclasses you can override this method to implement specific variable inheritance logic
@@ -79,18 +81,18 @@ ProcessSpecificVariable >> installValue: anObject intoForked: newProcess from: o
 	newProcess psValueAt: index put: anObject
 ]
 
-{ #category : #inheriting }
+{ #category : 'inheriting' }
 ProcessSpecificVariable >> isInheritable [
 	^self class isInheritable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessSpecificVariable >> value [
 
 	^ (Processor activeProcess psValueAt: index) ifNil: [ self default ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessSpecificVariable >> valueOrNil [
 	"a faster version, which doesn't using ifAbsent: to avoid using block closure"
 	^ Processor activeProcess psValueAt: index

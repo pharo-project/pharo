@@ -19,15 +19,17 @@ The logic behind my class name and methods:
 Not all exceptions are errors. But by default the absence of any handler for signaled exception is considered as an error. Therefore #defaultAction for Exception raises an error, an UnhandledError. And because exception should be able to specify default action for UnhandledError it implements #unhandledErrorAction
 "
 Class {
-	#name : #UnhandledError,
-	#superclass : #UnhandledException,
+	#name : 'UnhandledError',
+	#superclass : 'UnhandledException',
 	#instVars : [
 		'exception'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 UnhandledError class >> signalForException: anError [
 
 	^ self new
@@ -35,24 +37,24 @@ UnhandledError class >> signalForException: anError [
 		signal
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 UnhandledError >> defaultAction [
 	^ exception unhandledErrorAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnhandledError >> exception [
 
 	^ exception
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnhandledError >> exception: anError [
 
 	exception := anError
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UnhandledError >> isResumable [
 
 	"UnhandledError can be signaled for more than non-resumable Errors.

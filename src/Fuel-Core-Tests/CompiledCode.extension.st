@@ -1,6 +1,6 @@
-Extension { #name : #CompiledCode }
+Extension { #name : 'CompiledCode' }
 
-{ #category : #'*Fuel-Core-Tests' }
+{ #category : '*Fuel-Core-Tests' }
 CompiledCode >> isEqualRegardlessTrailerTo: anObject [
 	^ self = anObject
 ]

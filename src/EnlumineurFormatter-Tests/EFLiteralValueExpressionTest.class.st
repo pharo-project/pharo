@@ -23,7 +23,7 @@ EFLiteralValueExpressionTest >> testNoExtraSpaces [
 EFLiteralValueExpressionTest >> testNotLitteral [
 
 	| expr source |
-	expr := RBLiteralValueNode value: Transcript. 
+	expr := RBLiteralValueNode value: Object.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals: '''<an unprintable nonliteral value>'''

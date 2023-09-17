@@ -706,7 +706,8 @@ TestCase >> expectedFailures [
 
 { #category : #running }
 TestCase >> failureLog [
-	^Transcript
+
+	^ Smalltalk tools transcript
 ]
 
 { #category : #private }

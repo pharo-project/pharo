@@ -4,24 +4,26 @@ Sending messages with a common literal (e.g. ""Object self"") or an uppercase se
 Notice, problems of this kind will most likely also cause RBSentNotImplementedRule to be invoked, because one should not use such method names in the first place.
 "
 Class {
-	#name : #ReUncommonMessageSendRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReUncommonMessageSendRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReUncommonMessageSendRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUncommonMessageSendRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'UncommonMessageSendRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReUncommonMessageSendRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemSelectors |
 	problemSelectors :=
@@ -32,18 +34,18 @@ ReUncommonMessageSendRule >> check: aMethod forCritiquesDo: aCriticBlock [
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUncommonMessageSendRule >> commonLiterals [
 
 	^ #(#self #super #thisContext #true #false #nil)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUncommonMessageSendRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUncommonMessageSendRule >> name [
 	^ 'Uncommon message send'
 ]

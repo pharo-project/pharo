@@ -1,36 +1,38 @@
 Class {
-	#name : #SlotAnnouncementsTest,
-	#superclass : #SlotClassBuilderTest,
+	#name : 'SlotAnnouncementsTest',
+	#superclass : 'SlotClassBuilderTest',
 	#instVars : [
 		'announcement',
 		'collectedAnnouncements'
 	],
-	#category : #'Slot-Tests-ClassBuilder'
+	#category : 'Slot-Tests-ClassBuilder',
+	#package : 'Slot-Tests',
+	#tag : 'ClassBuilder'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SlotAnnouncementsTest >> collectedAnnouncementClasses [
 	^ collectedAnnouncements collect: [:each | each class]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SlotAnnouncementsTest >> collectedAnnouncements [
 	^ collectedAnnouncements
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> createClass [
 
 	^ self createClassWithLayout: FixedLayout
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> createClassWithLayout: aLayoutClass [
 
 	^ self createClassWithLayout: aLayoutClass traitComposition: #()
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> createClassWithLayout: aLayoutClass traitComposition: aTraitComposition [
 
 	^ self class classInstaller make: [ :aClassBuilder |
@@ -41,20 +43,20 @@ SlotAnnouncementsTest >> createClassWithLayout: aLayoutClass traitComposition: a
 			package: self slotTestPackageName ]
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> createClassWithTraitComposition: aTraitComposition [
 
 	^ self createClassWithLayout: FixedLayout traitComposition: aTraitComposition
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SlotAnnouncementsTest >> setUp [
 	super setUp.
 
 	collectedAnnouncements := OrderedCollection new
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SlotAnnouncementsTest >> subscribeOn: anAnnouncement [
 
 	SystemAnnouncer uniqueInstance weak
@@ -63,14 +65,14 @@ SlotAnnouncementsTest >> subscribeOn: anAnnouncement [
 		to: collectedAnnouncements
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SlotAnnouncementsTest >> tearDown [
 
 	SystemAnnouncer uniqueInstance unsubscribe: collectedAnnouncements.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotAnnouncementsTest >> testChangeInSharedPoolShouldAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -92,7 +94,7 @@ SlotAnnouncementsTest >> testChangeInSharedPoolShouldAnnounceClassModified [
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotAnnouncementsTest >> testChangeInSharedVariablesAndSharedPoolsShouldAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -115,7 +117,7 @@ SlotAnnouncementsTest >> testChangeInSharedVariablesAndSharedPoolsShouldAnnounce
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotAnnouncementsTest >> testChangeInSharedVariablesShouldAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -137,7 +139,7 @@ SlotAnnouncementsTest >> testChangeInSharedVariablesShouldAnnounceClassModified 
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -166,7 +168,7 @@ SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified
 	self assert: self collectedAnnouncements first newClassDefinition equals: anotherClass
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testClassAddedToNewPackageShouldAnnouncePackageAdded [
 
 	self subscribeOn: PackageAdded.
@@ -180,7 +182,7 @@ SlotAnnouncementsTest >> testClassAddedToNewPackageShouldAnnouncePackageAdded [
 	self assert: self collectedAnnouncements size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotAnnouncementsTest >> testClassCreationShouldAnnounceClassAdded [
 
 	self subscribeOn: ClassAdded.
@@ -192,7 +194,7 @@ SlotAnnouncementsTest >> testClassCreationShouldAnnounceClassAdded [
 	self assert: self collectedAnnouncements first classAdded equals: aClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotAnnouncementsTest >> testClassRecategorizationShouldAnnounceClassModified [
 
 	self subscribeOn: ClassRecategorized.
@@ -207,7 +209,7 @@ SlotAnnouncementsTest >> testClassRecategorizationShouldAnnounceClassModified [
 	self assert: announcement classRecategorized identicalTo: anotherClass
 ]
 
-{ #category : #'tests - comments' }
+{ #category : 'tests - comments' }
 SlotAnnouncementsTest >> testCreateAndChangeWithCommentDoesAnnounceBoth [
 
 	| classCommented |
@@ -240,7 +242,7 @@ SlotAnnouncementsTest >> testCreateAndChangeWithCommentDoesAnnounceBoth [
 	self assert: classCommented newStamp equals: nil "why nil?"
 ]
 
-{ #category : #'tests - comments' }
+{ #category : 'tests - comments' }
 SlotAnnouncementsTest >> testCreateAndChangeWithoutCommentDoesNotAnnounce [
 	self subscribeOn: ClassCommented.
 
@@ -255,7 +257,7 @@ SlotAnnouncementsTest >> testCreateAndChangeWithoutCommentDoesNotAnnounce [
 	self assertEmpty: self collectedAnnouncements
 ]
 
-{ #category : #'tests - comments' }
+{ #category : 'tests - comments' }
 SlotAnnouncementsTest >> testCreateWithCommentDoesAnnounce [
 
 	| classCommented |
@@ -277,7 +279,7 @@ SlotAnnouncementsTest >> testCreateWithCommentDoesAnnounce [
 	self assert: classCommented newStamp equals: nil  "why nil?"
 ]
 
-{ #category : #'tests - comments' }
+{ #category : 'tests - comments' }
 SlotAnnouncementsTest >> testEmptyCommentDoesNotAnnounce [
 	self subscribeOn: ClassCommented.
 
@@ -297,7 +299,7 @@ SlotAnnouncementsTest >> testEmptyCommentDoesNotAnnounce [
 	self assertEmpty: self collectedAnnouncements
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testFixedClassWhenTraitCompositionChangedShouldAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -314,7 +316,7 @@ SlotAnnouncementsTest >> testFixedClassWhenTraitCompositionChangedShouldAnnounce
 	self assert: (announcement newClassDefinition traitComposition syntacticallyEquals: TOne asTraitComposition)
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testFixedClassWithTraitCreatedShouldntAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -327,7 +329,7 @@ SlotAnnouncementsTest >> testFixedClassWithTraitCreatedShouldntAnnounceClassModi
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotAnnouncementsTest >> testLayoutChangeShouldAnnounceClassModified [
 
 	| classAdded classModified addedFormat |
@@ -347,7 +349,7 @@ SlotAnnouncementsTest >> testLayoutChangeShouldAnnounceClassModified [
 	self assert: announcement newClassDefinition format equals: classModified format
 ]
 
-{ #category : #'tests - comments' }
+{ #category : 'tests - comments' }
 SlotAnnouncementsTest >> testSameCommentDoesNotAnnounce [
 
 	self subscribeOn: ClassCommented.
@@ -365,7 +367,7 @@ SlotAnnouncementsTest >> testSameCommentDoesNotAnnounce [
 	self assert: self collectedAnnouncements size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotAnnouncementsTest >> testSlotAdditionShouldAnnounceClassModified [
 
 	| classAdded classModified addedInstanceNames |
@@ -384,7 +386,7 @@ SlotAnnouncementsTest >> testSlotAdditionShouldAnnounceClassModified [
 	self assert: announcement oldClassDefinition allInstVarNames equals: addedInstanceNames
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testVariableByteClassWhenTraitCompositionChangedShouldAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -401,7 +403,7 @@ SlotAnnouncementsTest >> testVariableByteClassWhenTraitCompositionChangedShouldA
 	self assert: (announcement newClassDefinition traitComposition syntacticallyEquals: TOne asTraitComposition)
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testVariableByteClassWithTraitCreatedShouldntAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -416,7 +418,7 @@ SlotAnnouncementsTest >> testVariableByteClassWithTraitCreatedShouldntAnnounceCl
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition)
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testVariableClassWhenTraitCompositionChangedShouldAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -435,7 +437,7 @@ SlotAnnouncementsTest >> testVariableClassWhenTraitCompositionChangedShouldAnnou
 	self assert: (announcement newClassDefinition traitComposition syntacticallyEquals: TOne asTraitComposition)
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testVariableClassWithTraitCreatedShouldntAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -449,7 +451,7 @@ SlotAnnouncementsTest >> testVariableClassWithTraitCreatedShouldntAnnounceClassM
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition)
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testVariableWordClassWhenTraitCompositionChangedShouldAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -468,7 +470,7 @@ SlotAnnouncementsTest >> testVariableWordClassWhenTraitCompositionChangedShouldA
 	self assert: (announcement newClassDefinition traitComposition syntacticallyEquals: TOne asTraitComposition)
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testVariableWordClassWithTraitCreatedShouldntAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -483,7 +485,7 @@ SlotAnnouncementsTest >> testVariableWordClassWithTraitCreatedShouldntAnnounceCl
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition)
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testWeakClassWhenTraitCompositionChangedShouldAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -501,7 +503,7 @@ SlotAnnouncementsTest >> testWeakClassWhenTraitCompositionChangedShouldAnnounceC
 	self assert: (announcement newClassDefinition traitComposition syntacticallyEquals: TOne asTraitComposition)
 ]
 
-{ #category : #'tests - integration' }
+{ #category : 'tests - integration' }
 SlotAnnouncementsTest >> testWeakClassWithTraitCreatedShouldntAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.

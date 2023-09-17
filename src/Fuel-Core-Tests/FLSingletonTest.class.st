@@ -2,18 +2,20 @@
 SUnit tests for fuel serialization of singletons
 "
 Class {
-	#name : #FLSingletonTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLSingletonTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FLSingletonTest >> setUp [
 	super setUp.
 	FLSingletonMock reset
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSingletonTest >> testSingletonMaterialization [
 	| singleton materialized |
 	singleton := FLSingletonMock instance.
@@ -28,7 +30,7 @@ FLSingletonTest >> testSingletonMaterialization [
 	FLSingletonMock reset	"cannot do this in tearDown because that's used by some helper methods"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSingletonTest >> testSingletonMaterializationEnforced [
 	| singleton materialized |
 	singleton := FLSingletonMockEnforced instance.
@@ -43,7 +45,7 @@ FLSingletonTest >> testSingletonMaterializationEnforced [
 	FLSingletonMock reset	"cannot do this in tearDown because that's used by some helper methods"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSingletonTest >> testSingletonMaterializationEnforcedNoInstance [
 	| singleton materialized |
 	singleton := FLSingletonMockEnforced instance.

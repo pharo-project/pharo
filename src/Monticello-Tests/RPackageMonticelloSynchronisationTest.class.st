@@ -2,12 +2,14 @@
 SUnit tests for RPackage Monticello synchronization
 "
 Class {
-	#name : #RPackageMonticelloSynchronisationTest,
-	#superclass : #RPackageMCSynchronisationTest,
-	#category : #'Monticello-Tests-RPackage'
+	#name : 'RPackageMonticelloSynchronisationTest',
+	#superclass : 'RPackageMCSynchronisationTest',
+	#category : 'Monticello-Tests-RPackage',
+	#package : 'Monticello-Tests',
+	#tag : 'RPackage'
 }
 
-{ #category : #'tests - operations on MCPackages' }
+{ #category : 'tests - operations on MCPackages' }
 RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
 	"test that when we create a MCPackage, a corresponding package is created"
 
@@ -15,7 +17,7 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
 	self assert: (self organizer hasPackage: #Zork)
 ]
 
-{ #category : #'tests - operations on MCPackages' }
+{ #category : 'tests - operations on MCPackages' }
 RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExistingDoesNotCreateAPackage [
 	"test that when we create a MCPackage and that a category of this name already exists, no package is created"
 
@@ -26,7 +28,7 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExist
 	self assert: tmpPackage identicalTo: (self organizer packageNamed: #Zork)
 ]
 
-{ #category : #'tests - operations on MCPackages' }
+{ #category : 'tests - operations on MCPackages' }
 RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 	"test that when we remove a MC Package, the corresponding RPackage is removed from the organizer"
 
@@ -36,7 +38,7 @@ RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 	self deny: (self organizer hasPackage: #XXXXX)
 ]
 
-{ #category : #'tests - operations on MCPackages' }
+{ #category : 'tests - operations on MCPackages' }
 RPackageMonticelloSynchronisationTest >> testUnregisterMCPackageKeepsRPackage [
 	"test that when we remove a MC Package, the corresponding RPackage is removed from the organizer"
 

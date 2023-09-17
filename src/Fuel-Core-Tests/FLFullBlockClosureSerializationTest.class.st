@@ -1,10 +1,12 @@
 Class {
-	#name : #FLFullBlockClosureSerializationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-FullSerialization'
+	#name : 'FLFullBlockClosureSerializationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-FullSerialization',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'FullSerialization'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodes [
 	"Raise an error when materializing a clean closure whose method has changed bytecodes.
 	Send #yourself to prevent ConstantBlockClosure optmization."
@@ -31,7 +33,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodes 
 	self materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesConstant [
 	"Raise an error when materializing a constant closure whose method has changed bytecodes."
 
@@ -56,7 +58,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesC
 	self materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesNonClean [
 	"Raise an error when materializing a non-clean closure whose method has changed bytecodes."
 
@@ -80,7 +82,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesN
 	self materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConstant [
 	"Raise an error when materializing a constant closure whose method has changed bytecodes.
 	In constant closure, the closure is replaced by the literal, so when
@@ -107,7 +109,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConsta
 	self materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBlockClosureSerializationTest >> testBlockClosureRemoved [
 	"Raise an error when materializing a closure whose method was removed.
 	Send #yourself to prevent ConstantBlockClosure optmization."
@@ -132,7 +134,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureRemoved [
 	self materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBlockClosureSerializationTest >> testBlockClosureRemovedConstant [
 	"Raise an error when materializing a closure whose method was removed."
 
@@ -155,7 +157,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureRemovedConstant [
 	self materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBlockClosureSerializationTest >> testBlockClosureRemovedNonClean [
 	"Raise an error when materializing a non-clean closure whose method was removed."
 
