@@ -276,14 +276,14 @@ Class >> category [
 	category name stored in the ivar is still correct and only if this fails look it up
 	(latter is much more expensive)"
 
-	| result |
-	self basicCategory ifNotNil: [ :symbol |
-		symbol = Class unclassifiedCategory ifTrue: [ ^ symbol ].
+	| result cat |
+	cat := self basicCategory.
 
-		((self packageOrganizer listAtCategoryNamed: symbol) includes: self name) ifTrue: [ ^ symbol ] ].
+	cat = Class unclassifiedCategory ifTrue: [ ^ cat ].
 
+	"The next lines are only useful anymore because of a problem in Fuel that should be resolved in not too long. Then we will be able to just return #basicCategory in this whole method"
+	((self packageOrganizer listAtCategoryNamed: cat) includes: self name) ifTrue: [ ^ cat ].
 	result := (self packageOrganizer categoryOfBehavior: self) ifNil: [ #Unclassified ].
-
 	self basicCategory: result.
 
 	^ result
