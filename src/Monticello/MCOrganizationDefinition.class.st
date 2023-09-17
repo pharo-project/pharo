@@ -5,7 +5,6 @@ Class {
 	#name : 'MCOrganizationDefinition',
 	#superclass : 'MCDefinition',
 	#instVars : [
-		'categories',
 		'packageName',
 		'tagNames'
 	],
