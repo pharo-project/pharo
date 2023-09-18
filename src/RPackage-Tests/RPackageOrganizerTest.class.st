@@ -80,6 +80,21 @@ RPackageOrganizerTest >> testEmpty [
 ]
 
 { #category : 'tests' }
+RPackageOrganizerTest >> testEnsurePackageManagesDifferentCase [
+
+	| package1 package2 |
+	package1 := self organizer ensurePackage: #Package1.
+	package2 := self organizer ensurePackage: #PaCkaGe1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package1"
+	self assert: package1 identicalTo: package2.
+	self assert: package2 name equals: #Package1.
+	self assert: (self organizer packageNamed: #Package1) identicalTo: package1.
+	self assert: (self organizer packageNamed: #PaCKaGe1) identicalTo: package1.
+	self assert: (self organizer packageNamed: #PackagE1) identicalTo: package1
+]
+
+{ #category : 'tests' }
 RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 
 	| p1 p2 c1 |
@@ -145,6 +160,68 @@ RPackageOrganizerTest >> testHasPackage [
 	self assert: (organizer hasPackage: package).
 
 	self deny: (organizer hasPackage: packageFromOtherOrganizer)
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testHasPackageCaseInsensitive [
+
+	self organizer ensurePackage: #Package1.
+
+	self assert: (self organizer hasPackage: #Package1).
+	self assert: (self organizer hasPackage: #PackaGe1).
+	self deny: (self organizer hasPackage: #Packae1)
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamed [
+
+	| package |
+	package := self organizer ensurePackage: #Package1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package"
+	self assert: package name equals: #Package1.
+	self assert: (self organizer packageNamed: #Package1) identicalTo: package
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamedIfAbsent [
+
+	| package |
+	package := self organizer ensurePackage: #Package1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package"
+	self assert: package name equals: #Package1.
+	self assert: (self organizer packageNamed: #Package1 ifAbsent: [ self fail ]) identicalTo: package.
+	self assert: (self organizer packageNamed: #Package ifAbsent: [ true ])
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamedIfPresent [
+
+	| package |
+	package := self organizer ensurePackage: #Package1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package"
+	self assert: package name equals: #Package1.
+	self assert: (self organizer packageNamed: #Package1 ifPresent: [ :package | package name ]) equals: package name.
+	self assert: (self organizer packageNamed: #Package ifPresent: [ :package | self fail ]) isNil
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamedWithDifferentCase [
+
+	| package |
+	package := self organizer ensurePackage: #Package1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package"
+	self assert: package name equals: #Package1.
+	self assert: (self organizer packageNamed: #PacKAge1) identicalTo: package
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamedWithoutMatchingPackage [
+
+	self should: [ self organizer packageNamed: #PacKAge1 ] raise: NotFound
 ]
 
 { #category : 'tests' }

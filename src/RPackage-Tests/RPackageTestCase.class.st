@@ -96,7 +96,7 @@ RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 { #category : 'utilities' }
 RPackageTestCase >> namesOfMockTestPackages [
 
-	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package')
+	^ #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package')
 ]
 
 { #category : 'accessing' }

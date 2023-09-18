@@ -230,6 +230,13 @@ RPackageOrganizer >> defineUnpackagedClassesPackage [
 { #category : 'registration' }
 RPackageOrganizer >> ensurePackage: aPackage [
 
+	| packageName |
+	packageName := aPackage isString
+		               ifTrue: [ aPackage ]
+		               ifFalse: [ aPackage name ].
+
+	(self hasPackage: aPackage) ifTrue: [ ^ self packageNamed: packageName ].
+
 	^ aPackage isString
 		  ifTrue: [ self packageNamed: aPackage ifAbsent: [ self registerPackage: (RPackage named: aPackage organizer: self) ] ]
 		  ifFalse: [
@@ -288,7 +295,9 @@ RPackageOrganizer >> hasPackage: aPackage [
 	"Takes a package or a package name as parameter and return true if I include this package."
 
 	^ aPackage isString
-		  ifTrue: [ packages includesKey: aPackage asSymbol ]
+		  ifTrue: [
+			  self packageNamed: aPackage asSymbol ifAbsent: [ ^ false ].
+			  ^ true ]
 		  ifFalse: [ self packages includes: aPackage ]
 ]
 
@@ -333,7 +342,7 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 
 	| tmpPackageName |
 	"we first look if their is a package matching exactly the name specified"
-	(self packageNamedIgnoreCase: anExtensionName ifAbsent: [ nil ]) ifNotNil: [ :package | ^ package ].
+	(self packageNamed: anExtensionName ifAbsent: [ nil ]) ifNotNil: [ :package | ^ package ].
 
 	"if no package was found, we try to find one matching the begining of the name specified"
 	tmpPackageName := ''.
@@ -355,18 +364,23 @@ RPackageOrganizer >> packageNamed: aSymbol [
 
 { #category : 'accessing' }
 RPackageOrganizer >> packageNamed: aSymbol ifAbsent: errorBlock [
+	"We first look at the fast solution then we try the case insensitive way because we do not care about the case in this package manager."
 
-	^ packages at: aSymbol asSymbol ifAbsent: errorBlock
+	^ packages at: aSymbol asSymbol ifAbsent: [
+		  self packagesDo: [ :each | (each name sameAs: aSymbol) ifTrue: [ ^ each ] ].
+		  errorBlock value ]
 ]
 
-{ #category : 'private' }
-RPackageOrganizer >> packageNamedIgnoreCase: aSymbol ifAbsent: aBlock [
-	"In case of extensions, I can need to take a package ignoring name"
-	self packagesDo: [  :each |
-		(each name sameAs: aSymbol)
-			ifTrue: [  ^ each  ]  ].
+{ #category : 'accessing' }
+RPackageOrganizer >> packageNamed: aSymbol ifPresent: aBlock [
+	"We first look at the fast solution then we try the case insensitive way because we do not care about the case in this package manager."
 
-	^ aBlock value
+	^ packages
+		  at: aSymbol asSymbol
+		  ifPresent: aBlock
+		  ifAbsent: [
+			  self packagesDo: [ :each | (each name sameAs: aSymbol) ifTrue: [ ^ aBlock cull: each ] ].
+			  nil ]
 ]
 
 { #category : 'package - names-cache' }
@@ -449,7 +463,6 @@ RPackageOrganizer >> registerPackage: aPackage [
 
 	(self packageNamed: aPackage name ifAbsent: [ nil ]) ifNotNil: [
 		RPackageConflictError signal: ('Package can not be added because it conflicts with package a package of the same name.' format: { aPackage name }) ].
-
 
 	self basicRegisterPackage: aPackage.
 	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
