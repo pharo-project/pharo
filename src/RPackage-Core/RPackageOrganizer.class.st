@@ -406,15 +406,6 @@ RPackageOrganizer >> initialize [
 ]
 
 { #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> isEmptyCategoryNamed: categoryName [
-
-	^ categoryMap
-		  at: categoryName
-		  ifPresent: [ :classes | classes isEmpty ]
-		  ifAbsent: [ false ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> listAtCategoryNamed: categoryName [
 	"Answer the array of elements associated with the name, categoryName."
 
