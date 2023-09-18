@@ -259,12 +259,6 @@ RPackageOrganizer >> categoryOfBehavior: behavior [
 ]
 
 { #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> classesInCategory: category [
-
-	^ (self listAtCategoryNamed: category) collect: [ :className | self environment at: className ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> classify: behaviorName under: categoryName [
 	"Store the argument, element, in the category named heading."
 

@@ -8,6 +8,15 @@ RPackageOrganizer >> categoryOfElement: behaviorName [
 ]
 
 { #category : '*Deprecated12' }
+RPackageOrganizer >> classesInCategory: category [
+
+	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
+	(self tagForCategory: category) ifNotNil: [ :tag | ^ tag classes asArray ].
+
+	^ #(  )
+]
+
+{ #category : '*Deprecated12' }
 RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 
 	self deprecated: 'Use #ensurePackage: instead.' transformWith: '`@rcv ensureExistAndRegisterPackageNamed: `@arg' -> '`@rcv ensurePackage: `@arg'.
@@ -65,6 +74,15 @@ RPackageOrganizer >> removeEmptyPackages [
 
 	self deprecated: 'Use #removeEmptyPackagesAndTags instead' transformWith: '`@rcv removeEmptyPackages' -> '`@rcv removeEmptyPackagesAndTags'.
 	self removeEmptyPackagesAndTags
+]
+
+{ #category : '*Deprecated12' }
+RPackageOrganizer >> tagForCategory: category [
+
+	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
+		package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | ^ tag ] ].
+
+	^ nil
 ]
 
 { #category : '*Deprecated12' }
