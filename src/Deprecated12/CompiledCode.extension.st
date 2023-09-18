@@ -1,6 +1,6 @@
-Extension { #name : #CompiledCode }
+Extension { #name : 'CompiledCode' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 CompiledCode >> packageFromOrganizer: anRPackageOrganizer [
 
 	self

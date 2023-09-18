@@ -1,13 +1,13 @@
-Extension { #name : #RBRefactoring }
+Extension { #name : 'RBRefactoring' }
 
-{ #category : #'*Epicea-Refactorings' }
+{ #category : '*Epicea-Refactorings' }
 RBRefactoring >> asEpiceaEvent [
 	^ (EpGenericRefactoring canAccept: self)
 		ifTrue: [ EpGenericRefactoring for: self ]
 		ifFalse: [ EpUnknownRefactoring for: self ]
 ]
 
-{ #category : #'*Epicea-Refactorings' }
+{ #category : '*Epicea-Refactorings' }
 RBRefactoring >> propagateTransformation [
 	"Perform the *secondary transformation* of the refactoring. Refactorings perform a main
 	transformations and optionally a secondary transformations.

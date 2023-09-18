@@ -1,6 +1,6 @@
-Extension { #name : #MCWorkingCopy }
+Extension { #name : 'MCWorkingCopy' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 MCWorkingCopy class >> allManagers [
 
 	self deprecated: 'Use #allWorkingCopies instead' transformWith: '`@rcv allManagers' -> '`@rcv allWorkingCopies'.

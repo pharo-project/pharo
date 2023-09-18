@@ -1,6 +1,6 @@
-Extension { #name : #PositionableStream }
+Extension { #name : 'PositionableStream' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 PositionableStream >> untilEnd: aBlock displayingProgress: aString [
 	self deprecated: 'This method will be removed in Pharo 13. You can inline the code if you need it.'.
 	aString
@@ -12,7 +12,7 @@ PositionableStream >> untilEnd: aBlock displayingProgress: aString [
 				aBlock value]]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 PositionableStream >> untilEndWithFork: aBlock displayingProgress: aString [
 	| sem done result |
 	self deprecated: 'This method will be removed in Pharo 13. You can inline the code if you need it.'.

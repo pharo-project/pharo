@@ -91,7 +91,7 @@ ShiftClassBuilder >> build [
 	self createClass.
 
 	self oldClass ifNotNil: [
-		self newClass basicCategory: self oldClass basicCategory.
+		self newClass basicCategory: self oldClass category.
 		self copyProtocols.
 		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 

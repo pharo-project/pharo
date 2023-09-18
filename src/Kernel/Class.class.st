@@ -208,11 +208,6 @@ Class >> applyDeprecation [
 ]
 
 { #category : 'accessing' }
-Class >> basicCategory [
-	^category
-]
-
-{ #category : 'accessing' }
 Class >> basicCategory: aSymbol [
 	category := aSymbol
 ]
@@ -272,21 +267,9 @@ Class >> bindingOf: varName [
 
 { #category : 'organization' }
 Class >> category [
-	"Answer the system organization category for the receiver. First check whether the
-	category name stored in the ivar is still correct and only if this fails look it up
-	(latter is much more expensive)"
+	"Answer the system organization category for the receiver."
 
-	| result cat |
-	cat := self basicCategory.
-
-	cat = Class unclassifiedCategory ifTrue: [ ^ cat ].
-
-	"The next lines are only useful anymore because of a problem in Fuel that should be resolved in not too long. Then we will be able to just return #basicCategory in this whole method"
-	((self packageOrganizer listAtCategoryNamed: cat) includes: self name) ifTrue: [ ^ cat ].
-	result := (self packageOrganizer categoryOfBehavior: self) ifNil: [ #Unclassified ].
-	self basicCategory: result.
-
-	^ result
+	^ category
 ]
 
 { #category : 'organization' }
@@ -295,14 +278,14 @@ Class >> category: aString [
 	any previous categorization."
 
 	| oldCategory |
-	oldCategory := self basicCategory.
+	oldCategory := self category.
 	oldCategory = aString ifTrue: [ ^ self ].
 	aString isString
 		ifTrue: [
 			self basicCategory: aString asSymbol.
-			self packageOrganizer classify: self name under: self basicCategory ]
+			self packageOrganizer classify: self name under: self category ]
 		ifFalse: [ self errorCategoryName ].
-	SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self basicCategory
+	SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category
 ]
 
 { #category : 'subclass creation - variableByte' }
