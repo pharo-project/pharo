@@ -732,11 +732,6 @@ RPackage >> removeEmptyTags [
 { #category : 'removing' }
 RPackage >> removeFromSystem [
 
-	| categories |
-	categories := (self classTags collect: [ :each | each categoryName ] as: Set)
-		              add: self name;
-		              yourself.
-
 	self definedClasses do: #removeFromSystem.
 	self extensionMethods do: #removeFromSystem.
 

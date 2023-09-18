@@ -183,9 +183,7 @@ RPackageOrganizer >> announcer [
 { #category : 'initialization - data' }
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
-	aPackagesList
-		do: [ :packageName | self basicRegisterPackage: (RPackage named: packageName organizer: self) ]
-		displayingProgress: 'Importing monticello packages'.
+	aPackagesList do: [ :packageName | self ensurePackage: packageName ] displayingProgress: 'Importing monticello packages'.
 
 	Smalltalk allClassesAndTraits
 		do: [ :behavior | (self ensurePackageMatching: behavior category) importClass: behavior ]
