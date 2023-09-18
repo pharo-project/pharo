@@ -1,6 +1,6 @@
-Extension { #name : #MetaclassForTraits }
+Extension { #name : 'MetaclassForTraits' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 MetaclassForTraits >> asMCDefinition [
 
 	^ (MCClassTraitDefinition baseTraitName: self instanceSide name)

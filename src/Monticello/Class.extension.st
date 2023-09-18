@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 Class >> asClassDefinition [
 	"we use a very ugly hack to encode complex slots as string with MC... later MC should model Slots directly"
 
@@ -42,7 +42,7 @@ Class >> asClassDefinition [
 	^ definition
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 Class >> classDefinitions [
 	^ { self asClassDefinition }
 ]

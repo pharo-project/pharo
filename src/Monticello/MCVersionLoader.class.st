@@ -2,22 +2,24 @@
 A MCVersionLoader is responsible for loading a given version. 
 "
 Class {
-	#name : #MCVersionLoader,
-	#superclass : #Object,
+	#name : 'MCVersionLoader',
+	#superclass : 'Object',
 	#instVars : [
 		'versions'
 	],
-	#category : #'Monticello-Loading'
+	#category : 'Monticello-Loading',
+	#package : 'Monticello',
+	#tag : 'Loading'
 }
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 MCVersionLoader class >> loadVersion: aVersion [
 	self new
 		addVersion: aVersion;
 		load
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCVersionLoader >> addDependency: aDependency [
 	| dep |
 	aDependency isCurrent ifTrue: [^ self].
@@ -28,14 +30,14 @@ MCVersionLoader >> addDependency: aDependency [
 		ifNotNil: [(versions includes: dep) ifFalse: [self addVersion: dep]]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCVersionLoader >> addVersion: aVersion [
 	aVersion dependencies do: [ :ea | self addDependency: ea].
 	versions add: aVersion.
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCVersionLoader >> announceLoad: aString do: aBlock [
 	| returnValue |
 	returnValue := nil.
@@ -45,7 +47,7 @@ MCVersionLoader >> announceLoad: aString do: aBlock [
 	^ returnValue
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCVersionLoader >> announceLoadStart: aString [
 	SystemAnnouncer announce: (MCVersionLoaderStarted new
 		versionLoader: self;
@@ -53,7 +55,7 @@ MCVersionLoader >> announceLoadStart: aString [
 		yourself)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCVersionLoader >> announceLoadStop: aString [
 	SystemAnnouncer announce: (MCVersionLoaderStopped new
 		versionLoader: self;
@@ -61,7 +63,7 @@ MCVersionLoader >> announceLoadStop: aString [
 		yourself)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCVersionLoader >> basicLoadWithNameLike: aString [
 	| loader |
 	
@@ -80,7 +82,7 @@ MCVersionLoader >> basicLoadWithNameLike: aString [
 	versions do: [:ea | ea workingCopy loaded: ea]
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 MCVersionLoader >> checkForModificationsIfCancel: cancelBlock ifMerge: mergeBlock [
 	| modifications |
 	
@@ -92,13 +94,13 @@ MCVersionLoader >> checkForModificationsIfCancel: cancelBlock ifMerge: mergeBloc
 	^ self warnAboutLosingChangesTo: modifications ifCancel: cancelBlock ifMerge: mergeBlock
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 MCVersionLoader >> checkIfDepIsOlder: aDependency [
 	^ aDependency isOlder not 
 		or: [self confirm: 'load older dependency ', aDependency versionInfo name , '?']
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 MCVersionLoader >> confirmMissingDependency: aDependency [
 	| name |
 	name := aDependency versionInfo name.
@@ -106,37 +108,37 @@ MCVersionLoader >> confirmMissingDependency: aDependency [
 		ifFalse: [self error: 'Can''t find dependency ', name]
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 MCVersionLoader >> depAgeIsOk: aDependency [
 	^ aDependency isOlder not 
 		or: [self confirm: 'load older dependency ', aDependency versionInfo name , '?']
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCVersionLoader >> ensurePackage: mcPackage [ 
 	self packageOrganizer ensurePackage: mcPackage name 
 		
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionLoader >> hasLocalModifications [
 	^ self localModifications isEmpty not
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionLoader >> hasVersions [
 
 	^ versions isEmpty not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCVersionLoader >> initialize [
 	super initialize.
 	versions := OrderedCollection new
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCVersionLoader >> load [
 	RPackageSet withCacheDo: [   
 		| version |
@@ -147,19 +149,19 @@ MCVersionLoader >> load [
 				run ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCVersionLoader >> loadWithNameLike: aString [
 	" this is THE central entrypoint for all loading (gopher, metacello, monticello, ...) "
 	^ self announceLoad: aString do: [ self basicLoadWithNameLike: aString ]
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 MCVersionLoader >> localModifications [
 	^ versions select: [:ea | ea package workingCopy modified].
 	
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCVersionLoader >> mergeVersions [
 	|merger|
 	merger :=  MCVersionMerger new.
@@ -167,7 +169,7 @@ MCVersionLoader >> mergeVersions [
 	merger merge.
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 MCVersionLoader >> warnAboutLosingChangesTo: versionCollection ifCancel: cancelBlock ifMerge: mergeBlock [
 	
 	| result |

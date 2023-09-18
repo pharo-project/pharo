@@ -2,17 +2,19 @@
 A MCTraitParser extracts an MCTraitDefinition from the source.
 "
 Class {
-	#name : #MCTraitParser,
-	#superclass : #MCDoItParser,
-	#category : #'Monticello-Chunk Format'
+	#name : 'MCTraitParser',
+	#superclass : 'MCDoItParser',
+	#category : 'Monticello-Chunk Format',
+	#package : 'Monticello',
+	#tag : 'Chunk Format'
 }
 
-{ #category : #'factory identification hook' }
+{ #category : 'factory identification hook' }
 MCTraitParser class >> pattern [
 	^ 'Trait named:*'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCTraitParser >> addDefinitionsTo: aCollection [
 
 	| node compositionIndex categoryIndex slotsIndex traitName traitCompositionString slotsArray argumentNode categoryString definition |

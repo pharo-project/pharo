@@ -4,22 +4,23 @@ Reader for Cypress format
 see https://github.com/CampSmalltalk/Cypress
 "
 Class {
-	#name : #MCFileTreeStCypressReader,
-	#superclass : #MCFileTreeStSnapshotReader,
-	#category : #'MonticelloFileTree-Core'
+	#name : 'MCFileTreeStCypressReader',
+	#superclass : 'MCFileTreeStSnapshotReader',
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader class >> extension [
     ^ 'package'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader class >> monticelloMetaDirName [
     ^ MCFileTreeStCypressWriter monticelloMetaDirName
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromDirectory: aDirectory [
     aDirectory entries
         do: [ :entry | 
@@ -31,7 +32,7 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromDirectory: aDirecto
                 ifTrue: [ self addExtensionClassAndMethodDefinitionsFromEntry: entry ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 	| classDirectory classPropertiesDict classComment entries methodPropertiesDict |
 	classDirectory := self fileUtils directoryFromEntry: classEntry.
@@ -62,7 +63,7 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 		in: entries
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment: classComment [
 
 	| definition |
@@ -86,7 +87,7 @@ MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment
 	definitions add: definition
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addExtensionClassAndMethodDefinitionsFromEntry: classEntry [
 	| classDirectory classPropertiesDict methodPropertiesDict entries |
 	classDirectory := self fileUtils directoryFromEntry: classEntry.
@@ -110,7 +111,7 @@ MCFileTreeStCypressReader >> addExtensionClassAndMethodDefinitionsFromEntry: cla
 		extensionMethod: true
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodProperties: methodProperties in: entries [
   ^ self
     addMethodDefinitionsForClass: className
@@ -119,7 +120,7 @@ MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodPrope
     extensionMethod: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodProperties: methodProperties in: entries extensionMethod: extensionMethod [
 	entries
 		do: [ :entry | 
@@ -149,7 +150,7 @@ MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodPrope
 												source: source) ] ] ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 	| classDirectory classPropertiesDict classComment entries methodPropertiesDict |
 	classDirectory := self fileUtils directoryFromEntry: classEntry.
@@ -181,7 +182,7 @@ MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 		in: entries
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment: traitComment [
 
 	| definition |
@@ -204,7 +205,7 @@ MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment
 				 yourself) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader >> basicVersion [
     self hasMonticelloMetadata
         ifTrue: [ ^ super basicVersion ].
@@ -216,17 +217,17 @@ MCFileTreeStCypressReader >> basicVersion [
         yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeStCypressReader >> isMethodPropertyFile: entry [
 	^ entry name = 'methodProperties.ston' or: [ entry name = 'methodProperties.json']
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeStCypressReader >> isPropertyFile: entry [
 	^ entry name = 'properties.ston' or: [ entry name = 'properties.json']
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> loadDefinitions [
 
 	| entries directory |
@@ -250,14 +251,14 @@ MCFileTreeStCypressReader >> loadDefinitions [
 			inDirectory: directory ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader >> loadPackage [
     self hasMonticelloMetadata
         ifTrue: [ ^ super loadPackage ].
     package := MCPackage named: self packageNameFromPackageDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader >> loadVersionInfo [
   self hasMonticelloMetadata
     ifTrue: [ ^ info := self extractInfoFrom: (self parseMember: 'version') ].
@@ -273,20 +274,20 @@ MCFileTreeStCypressReader >> loadVersionInfo [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> methodSelectorFor: source [
     ^ Object compilerClass new parseSelector: source
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader >> packageNameFromPackageDirectory [
     | filename2 |
     filename2 := self fileUtils directoryName: packageDirectory.
     ^ filename2 copyFrom: 1 to: (filename2 lastIndexOf: $.) - 1
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> setPackageTagIn: definition fromCategory: category [
 
 	| packageName |
@@ -298,7 +299,7 @@ MCFileTreeStCypressReader >> setPackageTagIn: definition fromCategory: category 
 	category = packageName ifFalse: [ definition tagName: (category withoutPrefix: packageName , '-') ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MCFileTreeStCypressReader >> validateExtensionMethodCategory: categoryName for: className selector: selector [
   "https://github.com/dalehenrich/filetree/issues/136"
 
@@ -325,7 +326,7 @@ MCFileTreeStCypressReader >> validateExtensionMethodCategory: categoryName for: 
 
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MCFileTreeStCypressReader >> verifyCategory: categoryName matches: basicPackageName [
   "https://github.com/dalehenrich/filetree/issues/136"
 

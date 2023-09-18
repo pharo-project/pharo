@@ -15,29 +15,31 @@ The convenience method #bootstrapDefault will create an instance with the defaul
   MonticelloBootstrap bootstrapDefault
 "
 Class {
-	#name : #MonticelloBootstrap,
-	#superclass : #Object,
+	#name : 'MonticelloBootstrap',
+	#superclass : 'Object',
 	#instVars : [
 		'directory',
 		'localRepository'
 	],
-	#category : #'Monticello-Base'
+	#category : 'Monticello-Base',
+	#package : 'Monticello',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MonticelloBootstrap class >> bootstrapDefault [
 
 	(self inDirectory: self defaultDirectory)
 		bootstrap
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MonticelloBootstrap class >> defaultDirectory [
 
 	^ FileLocator localDirectory / 'package-cache'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MonticelloBootstrap class >> inDirectory: aDirectory [
 
 	^ self new
@@ -45,7 +47,7 @@ MonticelloBootstrap class >> inDirectory: aDirectory [
 		yourself
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> bootstrap [
 
 	self createWorkingCopies.
@@ -55,13 +57,13 @@ MonticelloBootstrap >> bootstrap [
 
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MonticelloBootstrap >> bootstrapVersionsExcept: aBlock [
 
 	^ self bootstrapVersionsSatisfying: [ :arg | (aBlock value: arg) not ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MonticelloBootstrap >> bootstrapVersionsSatisfying: aBlock [
 
 	^ RPackageOrganizer default packages
@@ -69,7 +71,7 @@ MonticelloBootstrap >> bootstrapVersionsSatisfying: aBlock [
 		thenCollect: [ :rpackage | self fileNameForPackageNamed: rpackage name ]
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> createWorkingCopies [
 	"For each of the packages inside the image, excepted by the Unpackaged package, create a monticello working copy.
 	This is achieved by creating an instance of a working copy and snapshotting it. This generates and registers the working copy automatically."
@@ -79,13 +81,13 @@ MonticelloBootstrap >> createWorkingCopies [
 		(MCWorkingCopy ensureForPackageNamed: packageName) snapshot ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MonticelloBootstrap >> directory: aDirectory [
 
 	directory := aDirectory
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MonticelloBootstrap >> fileNameForPackageNamed: name [
 
 	| versionInfos |
@@ -100,13 +102,13 @@ MonticelloBootstrap >> fileNameForPackageNamed: name [
 	^ versionInfos anyOne basename
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadBootstrapPackageNamed: aName [
 
 	self loadBootstrapPackagesNamed: { aName }
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadBootstrapPackages [
 
 	MCCacheRepository cacheDirectory: directory.
@@ -125,20 +127,20 @@ MonticelloBootstrap >> loadBootstrapPackages [
 	self loadBootstrapPackageNamed: 'Monticello'
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadBootstrapPackagesNamed: aCollectionOfNames [
 
 	(self bootstrapVersionsSatisfying: [ :package | aCollectionOfNames includes: package name ])
 		do: [ :version | self loadPackageVersion: version ].
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadPackageNamed: aName [
 
 	self loadPackagesNamed: { aName }
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadPackageVersion: aFileName [
 	
 	[ 	SystemNotification signal: ('Loading ', aFileName asString).
@@ -150,7 +152,7 @@ MonticelloBootstrap >> loadPackageVersion: aFileName [
 		warning resume: true ]
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadPackagesNamed: aCollectionOfNames [
 
 	aCollectionOfNames do: [ :name | | filename |
@@ -158,7 +160,7 @@ MonticelloBootstrap >> loadPackagesNamed: aCollectionOfNames [
 		self loadPackageVersion: filename ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MonticelloBootstrap >> localRepository [
 
 	^ localRepository ifNil: [

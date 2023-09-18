@@ -2,15 +2,17 @@
 Common superclass for Monticello readers
 "
 Class {
-	#name : #MCReader,
-	#superclass : #Object,
+	#name : 'MCReader',
+	#superclass : 'Object',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Monticello-Storing'
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCReader class >> canReadFileNamed: fileName [
 	| ext |
 	ext := (self extension beginsWith: '.')
@@ -19,22 +21,22 @@ MCReader class >> canReadFileNamed: fileName [
 	^ (fileName endsWith: ext)	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCReader class >> concreteSubclasses [
 	^ self allSubclasses reject: [:c | c isAbstract]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCReader class >> isAbstract [
 	^ (self respondsTo: #extension) not
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCReader class >> on: aStream [
 	^ self new stream: aStream
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCReader class >> on: aStream name: aFileName [
 	| class |
 	class := self readerClassForFileNamed: aFileName.
@@ -43,21 +45,21 @@ MCReader class >> on: aStream name: aFileName [
 		ifNotNil: [class on: aStream]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCReader class >> readerClassForFileNamed: fileName [
 	^ self concreteSubclasses
 		detect: [:c | c canReadFileNamed: fileName]
 		ifNone: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCReader >> stream [
 	stream closed ifTrue: [ stream open ].
 	^ stream
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCReader >> stream: aStream [
 	stream := aStream
 ]

@@ -2,18 +2,20 @@
 A class trait definition
 "
 Class {
-	#name : #MCClassTraitDefinition,
-	#superclass : #MCDefinition,
+	#name : 'MCClassTraitDefinition',
+	#superclass : 'MCDefinition',
 	#instVars : [
 		'baseTrait',
 		'classTraitComposition',
 		'packageName',
 		'tagName'
 	],
-	#category : #'Monticello-Modeling'
+	#category : 'Monticello-Modeling',
+	#package : 'Monticello',
+	#tag : 'Modeling'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCClassTraitDefinition class >> baseTraitName: aString [
 
 	^ self new
@@ -21,7 +23,7 @@ MCClassTraitDefinition class >> baseTraitName: aString [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: classTraitCompositionString category: aCategoryString [
 
 	^ self new
@@ -31,7 +33,7 @@ MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: cl
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCClassTraitDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ baseTrait = aDefinition baseTrait
@@ -39,24 +41,24 @@ MCClassTraitDefinition >> = aDefinition [
 		and: [ self category = aDefinition category ] ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCClassTraitDefinition >> accept: aVisitor [
 	^ aVisitor visitClassTraitDefinition: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> baseTrait [
 	^baseTrait
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCClassTraitDefinition >> baseTraitName: aTraitName [
 
 	baseTrait := aTraitName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> category [
 
 	^ self packageName
@@ -70,48 +72,48 @@ MCClassTraitDefinition >> category [
 				  ifFalse: [ package , '-' , self tagName ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCClassTraitDefinition >> category: aCategoryString [
 
 	self packageName: aCategoryString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> className [
 	^self baseTrait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> classTraitComposition [
 	^classTraitComposition
 
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCClassTraitDefinition >> classTraitComposition: aString [
 
 	classTraitComposition := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> classTraitCompositionString [
 	^ self classTraitComposition ifNil: [ '{}' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> definitionString [
 	^self baseTrait , ' classTrait
 	uses: ' , self classTraitCompositionString.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> description [
 	^ Array with: baseTrait with: classTraitComposition
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCClassTraitDefinition >> hash [
 	| hash |
 	hash := String stringHash: baseTrait initialHash: 0.
@@ -120,31 +122,31 @@ MCClassTraitDefinition >> hash [
 	^ hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCClassTraitDefinition >> isClassDefinition [
 	"Traits are treated the same like classes."
 	
 	^ true
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassTraitDefinition >> load [	
 	self class compiler evaluate: self definitionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> packageName [
 
 	^ packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> packageName: anObject [
 
 	packageName := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassTraitDefinition >> printDefinitionOn: stream [
 	stream
 		nextPutAll: self baseTrait;
@@ -155,34 +157,34 @@ MCClassTraitDefinition >> printDefinitionOn: stream [
 		nextPutAll: self classTraitCompositionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> requirements [
 	^ { baseTrait }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> sortKey [
 	^ self baseTrait , '.classTrait'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> source [
 	^self definitionString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassTraitDefinition >> summary [
 	^self baseTrait , ' classTrait'
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> tagName [
 
 	^ tagName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassTraitDefinition >> tagName: anObject [
 
 	tagName := anObject
