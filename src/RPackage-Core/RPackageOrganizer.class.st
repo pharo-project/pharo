@@ -371,13 +371,6 @@ RPackageOrganizer >> initialize [
 	self defineUnpackagedClassesPackage
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> listAtCategoryNamed: categoryName [
-	"Answer the array of elements associated with the name, categoryName."
-
-	^ (categoryMap at: categoryName ifAbsent: [ Array new ]) asArray
-]
-
 { #category : 'system integration' }
 RPackageOrganizer >> packageForProtocol: aProtocol [
 	"Return nil if the protocol is not an extension of if there is no package matching the name.

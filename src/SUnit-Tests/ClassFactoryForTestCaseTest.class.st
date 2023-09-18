@@ -90,7 +90,7 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 			         sharedVariablesFromString: 'X Y';
 			         tag: factory defaultTagPostfix ].
 	self assert: (self environment allClasses includes: class).
-	self assert: (self organization listAtCategoryNamed: factory defaultCategory) equals: { class name }.
+	self assert: class category equals: factory packageName , '-' , factory defaultTagPostfix.
 	self assert: class instVarNames equals: #( a b c ).
 	self assert: class classPool keys asSet equals: #( X Y ) asSet
 ]

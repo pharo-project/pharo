@@ -83,6 +83,14 @@ RPackageOrganizer >> isEmptyCategoryNamed: categoryName [
 ]
 
 { #category : '*Deprecated12' }
+RPackageOrganizer >> listAtCategoryNamed: categoryName [
+	"Answer the array of elements associated with the name, categoryName."
+
+	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
+	^ (self tagForCategory: categoryName) classNames
+]
+
+{ #category : '*Deprecated12' }
 RPackageOrganizer >> packageExactlyMatchingExtensionName: anExtensionName [
 	"only look for a package for which the name match 'anExtensionName', making no difference about case. Return nil if no package is found"
 
