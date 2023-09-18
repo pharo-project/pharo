@@ -2,22 +2,24 @@
 I am announced when existing package tag is removed
 "
 Class {
-	#name : #PackageTagRenamed,
-	#superclass : #PackageTagAnnouncement,
+	#name : 'PackageTagRenamed',
+	#superclass : 'PackageTagAnnouncement',
 	#instVars : [
 		'oldName',
 		'newName'
 	],
-	#category : #'System-Announcements-System-Packages'
+	#category : 'System-Announcements-System-Packages',
+	#package : 'System-Announcements',
+	#tag : 'System-Packages'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 PackageTagRenamed class >> initialize [
 
 	self deprecatedAliases: { #ClassTagRenamed . #CategoryRenamed }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PackageTagRenamed class >> to: aPackageTag oldName: aSymbol newName: anotherSymbol [
 
 	^ (self to: aPackageTag)
@@ -26,23 +28,23 @@ PackageTagRenamed class >> to: aPackageTag oldName: aSymbol newName: anotherSymb
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTagRenamed >> newName [
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTagRenamed >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTagRenamed >> oldName [
 
 	^ oldName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTagRenamed >> oldName: anObject [
 
 	oldName := anObject

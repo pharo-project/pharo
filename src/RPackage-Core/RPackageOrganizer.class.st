@@ -153,15 +153,6 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 	self default unregisterInterestToSystemAnnouncement
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> addCategory: catString [
-	"Add a new category named catString"
-
-	categoryMap at: catString asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
-
-	SystemAnnouncer uniqueInstance classCategoryAdded: catString
-]
-
 { #category : 'private' }
 RPackageOrganizer >> addMethod: method [
 	"we have to register the method in the parent RPackage of the class.
@@ -219,63 +210,12 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	^ packages removeKey: aPackage name ifAbsent: [  ]
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categoryOfBehavior: behavior [
-	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
-
-	| behaviorName |
-	behaviorName := behavior isBehavior
-		                ifTrue: [ behavior name ]
-		                ifFalse: [ behavior ].
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ ^ category ] ].
-
-	^ nil
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> classify: behaviorName under: categoryName [
-	"Store the argument, element, in the category named heading."
-
-	categoryName ifNil: [ self error: 'Category cannot be nil.' ].
-
-	categoryMap
-		at: categoryName
-		ifPresent: [ :classes |
-		(classes includes: behaviorName) ifTrue: [ ^ self ] ]
-		ifAbsent: [ self addCategory: categoryName ].
-
-	(self categoryOfBehavior: behaviorName) ifNotNil: [ :oldCategory |
-		oldCategory = categoryName ifTrue: [ ^ self ].
-		self removeBehavior: behaviorName ].
-
-	(categoryMap at: categoryName) add: behaviorName
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> classifyAll: aCollection under: categoryName [
-
-	aCollection do: [ :element | self classify: element under: categoryName ]
-]
-
 { #category : 'registration' }
 RPackageOrganizer >> createPackageNamed: aString [
 
 	self validatePackageDoesNotExist: aString.
 
 	^ self ensurePackage: aString
-]
-
-{ #category : 'private - testing' }
-RPackageOrganizer >> debuggingName [
-
-	^ debuggingName
-]
-
-{ #category : 'private - testing' }
-RPackageOrganizer >> debuggingName: aString [
-
-	debuggingName := aString
 ]
 
 { #category : 'initialization' }
@@ -365,8 +305,6 @@ RPackageOrganizer >> initialize [
 	packages := IdentityDictionary new.
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
-	debuggingName := ''.
-	categoryMap := Dictionary new.
 
 	self defineUnpackagedClassesPackage
 ]
@@ -467,13 +405,6 @@ RPackageOrganizer >> packagesDo: aBlock [
 	self packages do: aBlock
 ]
 
-{ #category : 'printing' }
-RPackageOrganizer >> printOn: aStream [
-
-	super printOn: aStream.
-	debuggingName ifNotNil: [aStream nextPutAll: debuggingName ]
-]
-
 { #category : 'initialization' }
 RPackageOrganizer >> register [
 
@@ -494,7 +425,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	anAnnouncer unsubscribe: self.
 
 	anAnnouncer weak
-		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
@@ -530,40 +460,6 @@ RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 
 	(aPackage includesClass: aClass) ifFalse: [ self error: aPackage name , ' does not includes the class ' , aClass name ].
 	^ classPackageMapping at: aClass instanceSide put: aPackage
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeBehavior: behavior [
-	"Remove the behavior from all categories. I can take a Behavior or a Behavior name as argument."
-
-	| behaviorName |
-	behaviorName := behavior isBehavior
-		                ifTrue: [ behavior name ]
-		                ifFalse: [ behavior ].
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ classes remove: behaviorName ] ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeCategory: aCategory [
-	"Remove the category named, cat. Create an error notificiation if the
-	category has any elements in it."
-
-	| category |
-	category := aCategory asSymbol.
-
-	categoryMap
-		at: category
-		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'Cannot remove non-empty category ' , category , '. Present classes: ' , classes printString ] ]
-		ifAbsent: [ ^ self ].
-
-	categoryMap removeKey: category.
-
-	"Now that we managed the SystemOrganizer, let's update the package organizer."
-	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
-		package name = category
-			ifTrue: [ self removePackage: package ]
-			ifFalse: [ package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | package removeTag: tag ] ] ]
 ]
 
 { #category : 'system integration' }
@@ -609,28 +505,6 @@ RPackageOrganizer >> removeTag: aTag fromPackage: aPackage [
 	(self ensurePackage: aPackage) removeTag: aTag
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
-	"Rename a category. No action if new name already exists, or if old name does not exist."
-
-	| oldName newName package |
-	oldName := oldCatString asSymbol.
-	newName := newCatString asSymbol.
-
-	categoryMap at: newName ifPresent: [ "new name exists, so no action" ^ self ].
-
-	categoryMap at: oldName ifPresent: [ :classes |
-		categoryMap
-			at: newName put: classes;
-			removeKey: oldName ].
-
-	"We do it in all cases because we have a few cases where a category was not created but a package was. It's bugs but since categories will vanish there is no reason to care too much."
-	package := self ensurePackageMatching: oldName.
-	package name = oldName ifTrue: [ self renamePackage: package to: newName ].
-
-	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ]
-]
-
 { #category : 'system integration' }
 RPackageOrganizer >> renamePackage: aPackage to: newName [
 
@@ -663,16 +537,6 @@ RPackageOrganizer >> stopNotification [
 
 	self class environment at: #MCWorkingCopy ifPresent: [:wc |
 		wc removeDependent: self]
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
-
-	| package |
-	package := self ensurePackageMatching: ann categoryName.
-
-	"We extract the tag name from the category"
-	package ensureTag: (package toTagName: ann categoryName)
 ]
 
 { #category : 'system integration' }

@@ -210,8 +210,6 @@ SystemDictionary >> forgetClass: aClass [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
-	self flag: #package. "Unify categories and packages to have only one removal to do and not two."
-	self organization removeBehavior: aClass.
 	self organization removeClass: aClass.
 	aClass basicCategory: Class unclassifiedCategory.
 	SessionManager default unregisterClassNamed: aClass name.
@@ -390,22 +388,19 @@ SystemDictionary >> renameClass: aClass from: oldName [
 SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	"Rename the class, aClass, to have the title newName."
 
-	| oldref category |
-	self flag: #package. "When the category thing will be removed, we should remove the category update"
-	category := aClass category.
-	self organization classify: newName under: category.
-	self organization removeBehavior: oldName.
+	| oldref |
 	oldref := self associationAt: oldName.
 	self removeKey: oldName.
 	oldref key: newName.
 	self add: oldref. "Old association preserves old refs"
 	SessionManager default renamedClass: aClass from: oldName to: newName.
 	self flushClassNameCache.
+	self flag: #package. "There is no need to give the category"
 	SystemAnnouncer uniqueInstance
 		classRenamed: aClass
 		from: oldName
 		to: newName
-		inCategory: category.
+		inCategory: aClass category.
 	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: newName ]
 ]
 

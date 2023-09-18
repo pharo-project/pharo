@@ -97,7 +97,6 @@ RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefault [
 	| current empty |
 	current := self packageOrganizer.
 	empty := RPackageOrganizer new.
-	empty debuggingName: 'empty from PackageWithDoTest'.
 	RPackage withOrganizer: empty do: [
 		self
 			assert: (self organizerAnnouncer hasSubscriber: empty)

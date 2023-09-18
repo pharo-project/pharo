@@ -179,8 +179,7 @@ RPackageTag >> renameTo: newTagName [
 	self basicRenameTo: newTagName.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self flag: #package. "This should be removed with the system organizer."
-		self classes do: [ :each | each category: newCategoryName ].
-		self organizer renameCategory: oldCategoryName toBe: newCategoryName ].
+		self classes do: [ :each | each category: newCategoryName ] ].
 	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 

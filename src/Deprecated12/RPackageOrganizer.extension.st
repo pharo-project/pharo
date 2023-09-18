@@ -110,8 +110,8 @@ RPackageOrganizer >> registerPackageNamed: aString [
 { #category : '*Deprecated12' }
 RPackageOrganizer >> removeElement: behaviorName [
 
-	self deprecated: 'Use #removeBehavior: instead' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv removeBehavior: `@arg'.
-	^ self removeBehavior: behaviorName
+	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
+	self error.
 ]
 
 { #category : '*Deprecated12' }
