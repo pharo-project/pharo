@@ -254,9 +254,10 @@ PBImageBuilder50 >> createInitialObjects [
 
 	| characterTable |
 	"We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
+	PBStepFinishedSignal emit: 'initializing globals'.
 	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
 	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
-	
+
 	"We initialize the hash table sizes by hand.
 	The AST interpreter is too slow to interpret HashTableSizes>>#initialize"
 	PBSubStepFinishedSignal emit: 'initializing hash table sizes'.
