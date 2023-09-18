@@ -156,24 +156,30 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 { #category : 'tests' }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
+	"In the past we could not have package-tag with the same name than a package but now it is possible"
 
-	| package1 |
-	self flag: #package. "This is a limitiation of the system organizer. I hope to kill this limitiation before p12 release."
+	| package1 package2 tag |
 	package1 := self createNewPackageNamed: 'P1'.
-	package1 ensureTag: #T1.
+	tag := package1 ensureTag: #T1.
 
-	self should: [ self createNewPackageNamed: 'P1-T1' ] raise: Error
+	package2 := self createNewPackageNamed: #'P1-T1'.
+
+	self assert: package2 name equals: #'P1-T1'.
+	self assert: package1 name equals: #P1.
+	self assert: tag name equals: #T1
 ]
 
 { #category : 'tests' }
 RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 
-	| package1 package2 |
-	self flag: #package. "This is a limitiation of the system organizer. I hope to kill this limitiation before p12 release."
-	package1 := self createNewPackageNamed: 'P1-T1'.
+	| package1 package2 tag |
+	package1 := self createNewPackageNamed: #P1.
+	package2 := self createNewPackageNamed: #'P1-T1'.
+	tag := package1 ensureTag: #T1.
 
-	package2 := self createNewPackageNamed: 'P1'.
-	self should: [ package2 ensureTag: #T1 ] raise: Error
+	self assert: package2 name equals: #'P1-T1'.
+	self assert: package1 name equals: #P1.
+	self assert: tag name equals: #T1
 ]
 
 { #category : 'tests' }

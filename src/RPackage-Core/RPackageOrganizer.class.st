@@ -447,7 +447,9 @@ RPackageOrganizer >> registerInterestToSystemAnnouncement [
 RPackageOrganizer >> registerPackage: aPackage [
 	"A new package is now available and declared in the receiver. "
 
-	self validateCanBeAddedPackageName: aPackage name tagName: nil.
+	(self packageNamed: aPackage name ifAbsent: [ nil ]) ifNotNil: [
+		RPackageConflictError signal: ('Package can not be added because it conflicts with package a package of the same name.' format: { aPackage name }) ].
+
 
 	self basicRegisterPackage: aPackage.
 	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
@@ -643,23 +645,6 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 
 	self flag: #package. "When RPackage will be simplified we should not have to check the package but it is required for now"
 	^ (classPackageMapping at: aClass instanceSide ifAbsent: [ ^ self ]) = aPackage ifTrue: [ classPackageMapping removeKey: aClass instanceSide ]
-]
-
-{ #category : 'private' }
-RPackageOrganizer >> validateCanBeAddedPackageName: packageName tagName: tagName [
-
-	| package |
-	package := self packageNamed: packageName ifAbsent: [
-		           (packageName includes: $-) ifFalse: [ ^ self ].
-
-		           ^ self validateCanBeAddedPackageName: (packageName copyUpToLast: $-) tagName: (packageName copyAfterLast: $-) , (tagName
-				              ifNotNil: [ '-' , tagName ]
-				              ifNil: [ '' ]) ].
-
-	(tagName isEmptyOrNil or: [ package includesClassTagNamed: tagName ]) ifTrue: [
-		RPackageConflictError signal: ('Package/Tag can not be added because it conflicts with package {1} tag {2}' format: {
-					 packageName.
-					 tagName }) ]
 ]
 
 { #category : 'registration' }
