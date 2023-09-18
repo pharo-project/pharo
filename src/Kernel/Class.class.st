@@ -280,11 +280,7 @@ Class >> category: aString [
 	| oldCategory |
 	oldCategory := self category.
 	oldCategory = aString ifTrue: [ ^ self ].
-	aString isString
-		ifTrue: [
-			self basicCategory: aString asSymbol.
-			self packageOrganizer classify: self name under: self category ]
-		ifFalse: [ self errorCategoryName ].
+	self basicCategory: aString asSymbol.
 	SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category
 ]
 

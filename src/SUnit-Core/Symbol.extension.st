@@ -1,6 +1,6 @@
-Extension { #name : #Symbol }
+Extension { #name : 'Symbol' }
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 Symbol >> asTestSelector [
 
 	"Converts a method selector into a test selector in form of #testOriginalSelector"
@@ -17,7 +17,7 @@ Symbol >> asTestSelector [
 	^ (#test, (((self copyReplaceAll: ':' with: ' ') substrings collect: #capitalized) joinUsing: '')) asSymbol
 ]
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 Symbol >> isTestSelector [
 
 	^ self isUnary and: [

@@ -299,9 +299,7 @@ ShiftClassInstaller >> recategorize: aClass to: newCategory [
 	oldCategory := oldClass ifNotNil: [ oldClass category ].
 	oldCategory == newCategory ifTrue: [ ^ self ].
 
-	self installingEnvironment organization ifNotNil: [ :systemOrganizer |
-		systemOrganizer classify: aClass name under: newCategory.
-		aClass basicCategory: newCategory ].
+	self installingEnvironment organization ifNotNil: [ :systemOrganizer | aClass basicCategory: newCategory ].
 
 	(oldCategory isNil or: [ oldCategory = Class unclassifiedCategory ])
 		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]

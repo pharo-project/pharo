@@ -2,19 +2,20 @@
 SUnit tests for RPackage tags
 "
 Class {
-	#name : #RPackageTagTest,
-	#superclass : #RPackageTestCase,
-	#category : #'RPackage-Tests'
+	#name : 'RPackageTagTest',
+	#superclass : 'RPackageTestCase',
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageTagTest >> tearDown [
 
 	#( TestClass TestClassOther ) do: [ :each | testEnvironment at: each ifPresent: #removeFromSystem ].
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTagTest >> testAddClass [
 
 	| package1 package2 class |
@@ -33,7 +34,7 @@ RPackageTagTest >> testAddClass [
 	self assert: ((package2 classTagNamed: #TAG) includesClass: class)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTagTest >> testAddClassFromTag [
 
 	| package1 package2 class |
@@ -54,7 +55,7 @@ RPackageTagTest >> testAddClassFromTag [
 	self assert: ((package2 classTagNamed: #TAG2) includesClass: class)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTagTest >> testHasClass [
 
 	| package class tag |
@@ -71,7 +72,7 @@ RPackageTagTest >> testHasClass [
 	self deny: (tag hasClass: self class)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTagTest >> testPromoteAsPackage [
 
 	| package1 package2 class tag1 |
@@ -89,7 +90,7 @@ RPackageTagTest >> testPromoteAsPackage [
 	self deny: (package1 classes includes: class)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTagTest >> testRemoveClassRemoveTagIfEmpty [
 
 	| package tag class |

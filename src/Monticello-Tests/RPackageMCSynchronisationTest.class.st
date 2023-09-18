@@ -31,19 +31,7 @@ RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 		removeClassNamed: 'NewTrait';
 		removeClassNamed: 'ClassInYPackage';
 		removeClassNamed: 'ClassInZPackage'.
-	self organizer
-		removeCategory: 'Zork';
-		removeCategory: 'XXXXX';
-		removeCategory: 'XXXXX-YYYY';
-		removeCategory: 'XXXX';
-		removeCategory: 'YYYYY';
-		removeCategory: 'ZZZZZ';
-		removeCategory: 'FooPackage-Core';
-		removeCategory: 'FooPackage-Other';
-		removeCategory: 'FooPackage';
-		removeCategory: 'OriginalCategory';
-		removeCategory: 'NewCategoryName';
-		removeCategory: 'Y'.
+
 	#( 'OriginalCategory' 'XXXXX' 'XXXX' 'YYYYY' 'YYYY' 'Yyyyy' 'YyYyY' 'Y' 'ZZZZZ' 'Zzzzz' 'FooPackage-Core' 'FooPackage-Other' 'FooPackage' 'Zork' ) do: [
 		:packageName |
 		self allWorkingCopies
@@ -119,9 +107,7 @@ RPackageMCSynchronisationTest >> setUp [
 
 	super setUp.
 
-	emptyOrganizer := self organizer
-		                  debuggingName: 'MCSynchronisation Package Organizer';
-		                  yourself.
+	emptyOrganizer := self organizer.
 	emptyOrganizer ensurePackage: 'as yet unclassified'.
 
 	Author fullName ifNil: [ Author fullName: 'Tester' ]

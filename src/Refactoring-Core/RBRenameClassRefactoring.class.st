@@ -11,16 +11,18 @@ Example
 	(RBRenameClassRefactoring rename: 'RBRenameClassRefactoring' to: 'RBRenameClassRefactoring2') execute
 "
 Class {
-	#name : #RBRenameClassRefactoring,
-	#superclass : #RBClassRefactoring,
+	#name : 'RBRenameClassRefactoring',
+	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'newName',
 		'class'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewName [
 	^ self new
 		model: aRBSmalltalk;
@@ -28,14 +30,14 @@ RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewNam
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameClassRefactoring class >> rename: aClassName to: aNewName [
 	^ self new
 		className: aClassName
 		newName: aNewName
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameClassRefactoring >> applicabilityPreconditions [
 
 	^ (RBCondition withBlock: [
@@ -43,7 +45,7 @@ RBRenameClassRefactoring >> applicabilityPreconditions [
 	  & self isValidClassName & self isNotGlobal
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRenameClassRefactoring >> className: aName newName: aNewName [
 
 	className := aName asSymbol.
@@ -51,32 +53,32 @@ RBRenameClassRefactoring >> className: aName newName: aNewName [
 	newName := aNewName asSymbol
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameClassRefactoring >> isNotGlobal [
 
 	^ (RBCondition isGlobal: newName in: self model) not
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameClassRefactoring >> isValidClassName [
 
 	^ RBCondition isValidClassName: newName
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameClassRefactoring >> preconditions [
 
 	self prepareForExecution.
 	^ self applicabilityPreconditions 
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameClassRefactoring >> prepareForExecution [
 
 	class := self model classNamed: className
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRenameClassRefactoring >> privateTransform [
 
 	self model
@@ -85,7 +87,7 @@ RBRenameClassRefactoring >> privateTransform [
 		around: [ self renameReferences ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRenameClassRefactoring >> renameReferences [
 
 	| replacer |
@@ -105,7 +107,7 @@ RBRenameClassRefactoring >> renameReferences [
 			 ifNotNil: [ :m | m isFromTrait]) ifFalse: [ self convertMethod: method selector for: method modelClass using: replacer ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

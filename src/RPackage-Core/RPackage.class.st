@@ -314,9 +314,6 @@ RPackage >> ensureTag: aTag [
 	newTag := RPackageTag package: self name: tagName.
 	classTags add: newTag.
 
-	self flag: #package. "Next line should go with the system organizer"
-	self organizer addCategory: newTag categoryName.
-
 	SystemAnnouncer announce: (PackageTagAdded to: newTag).
 	^ newTag
 ]
@@ -743,9 +740,6 @@ RPackage >> removeFromSystem [
 	self definedClasses do: #removeFromSystem.
 	self extensionMethods do: #removeFromSystem.
 
-	"This is probably not the best place to unregister from the SystemOrganizer but later it's harder to find the categories. 
-	But anyway, SystemOrganizer should be removed in the next few months and we will be able to remove this code."
-	categories do: [ :category | self organizer removeCategory: category ].
 	self unregister
 ]
 
@@ -846,9 +840,7 @@ RPackage >> renameTo: aSymbol [
 		                    difference: { newName }.
 	self organizer basicUnregisterPackage: self.
 	self name: aSymbol.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self definedClasses do: [ :each | each category: newName , (each category allButFirst: oldName size) ].
-		oldCategoryNames do: [ :each | self organizer removeCategory: each ] ].
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ self definedClasses do: [ :each | each category: newName , (each category allButFirst: oldName size) ] ].
 	self flag: #package. "For now, the root tag has the name of the package, thus, renaming the package means that we need to rename the root tag. In the future I want to update the root tag name to be fix and not depend on the name of the package. When that happens, we'll be able to remove the next line."
 	self classTagNamed: oldName ifPresent: [ :tag | tag renameTo: newName ].
 	self renameExtensionsPrefixedWith: oldName to: newName.

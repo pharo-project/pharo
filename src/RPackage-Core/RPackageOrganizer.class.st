@@ -107,9 +107,7 @@ Class {
 		'classPackageMapping',
 		'packages',
 		'classExtendingPackagesMapping',
-		'debuggingName',
-		'environment',
-		'categoryMap'
+		'environment'
 	],
 	#category : 'RPackage-Core-Base',
 	#package : 'RPackage-Core',
@@ -138,17 +136,6 @@ RPackageOrganizer class >> isPackageDefinedForClass: aClass [
 	^ (self default packageOf: aClass) notNil
 ]
 
-{ #category : 'private' }
-RPackageOrganizer class >> methodAdded: anEvent [
-	"precondition: package exist, class exist"
-
-	| methodCategory |
-	methodCategory := anEvent protocol.
-	(methodCategory isEmptyOrNil or: [ methodCategory first ~= $* ]) ifFalse: [
-		(self isPackageDefinedForClass: anEvent methodClass) ifFalse: [
-			RPackage new named: (self packageOrganizer categoryOfBehavior: anEvent methodClass instanceSide) ] ]
-]
-
 { #category : 'class initialization' }
 RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 
@@ -164,13 +151,11 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 	self default unregisterInterestToSystemAnnouncement
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> addCategory: catString [
-	"Add a new category named catString"
+{ #category : 'adding' }
+RPackageOrganizer >> addCategory: aCategory [
 
-	categoryMap at: catString asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
-
-	SystemAnnouncer uniqueInstance classCategoryAdded: catString
+	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
+	self ensurePackageMatching: aCategory
 ]
 
 { #category : 'private' }
@@ -230,83 +215,12 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	^ packages removeKey: aPackage name ifAbsent: [  ]
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categories [
-
-	^ categoryMap keys
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categoriesMatching: matchString [
-	"Return all matching categories"
-
-	self categories ifNil: [ ^ #(  ) ].
-	^ self categories select: [ :c | matchString match: c ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categoryOfBehavior: behavior [
-	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
-
-	| behaviorName |
-	behaviorName := behavior isBehavior
-		                ifTrue: [ behavior name ]
-		                ifFalse: [ behavior ].
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ ^ category ] ].
-
-	^ nil
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> classesInCategory: category [
-
-	^ (self listAtCategoryNamed: category) collect: [ :className | self environment at: className ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> classify: behaviorName under: categoryName [
-	"Store the argument, element, in the category named heading."
-
-	categoryName ifNil: [ self error: 'Category cannot be nil.' ].
-
-	categoryMap
-		at: categoryName
-		ifPresent: [ :classes |
-		(classes includes: behaviorName) ifTrue: [ ^ self ] ]
-		ifAbsent: [ self addCategory: categoryName ].
-
-	(self categoryOfBehavior: behaviorName) ifNotNil: [ :oldCategory |
-		oldCategory = categoryName ifTrue: [ ^ self ].
-		self removeBehavior: behaviorName ].
-
-	(categoryMap at: categoryName) add: behaviorName
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> classifyAll: aCollection under: categoryName [
-
-	aCollection do: [ :element | self classify: element under: categoryName ]
-]
-
 { #category : 'registration' }
 RPackageOrganizer >> createPackageNamed: aString [
 
 	self validatePackageDoesNotExist: aString.
 
 	^ self ensurePackage: aString
-]
-
-{ #category : 'private - testing' }
-RPackageOrganizer >> debuggingName [
-
-	^ debuggingName
-]
-
-{ #category : 'private - testing' }
-RPackageOrganizer >> debuggingName: aString [
-
-	debuggingName := aString
 ]
 
 { #category : 'initialization' }
@@ -388,15 +302,6 @@ RPackageOrganizer >> hasTag: aTag inPackage: aPackage [
 	^ (self ensurePackage: aPackage) hasTag: aTag
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> includesCategory: aString [
-	"Tests if a category is already included."
-
-	^ self categories
-		  ifNil: [ false ]
-		  ifNotNil: [ :categories | categories includes: aString ]
-]
-
 { #category : 'initialization' }
 RPackageOrganizer >> initialize [
 
@@ -405,39 +310,8 @@ RPackageOrganizer >> initialize [
 	packages := IdentityDictionary new.
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
-	debuggingName := ''.
-	categoryMap := Dictionary new.
 
 	self defineUnpackagedClassesPackage
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> isEmptyCategoryNamed: categoryName [
-
-	^ categoryMap
-		  at: categoryName
-		  ifPresent: [ :classes | classes isEmpty ]
-		  ifAbsent: [ false ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> listAtCategoryNamed: categoryName [
-	"Answer the array of elements associated with the name, categoryName."
-
-	^ (categoryMap at: categoryName ifAbsent: [ Array new ]) asArray
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> orderedTraitsIn: category [
-	"Answer an OrderedCollection containing references to the traits in the
-	category whose name is the argument, category (a string). The traits
-	are ordered so they can be filed in."
-
-	| behaviors traits |
-	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
-	traits := behaviors select: [ :each | each isTrait ].
-	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
-	^ traits asArray
 ]
 
 { #category : 'system integration' }
@@ -536,13 +410,6 @@ RPackageOrganizer >> packagesDo: aBlock [
 	self packages do: aBlock
 ]
 
-{ #category : 'printing' }
-RPackageOrganizer >> printOn: aStream [
-
-	super printOn: aStream.
-	debuggingName ifNotNil: [aStream nextPutAll: debuggingName ]
-]
-
 { #category : 'initialization' }
 RPackageOrganizer >> register [
 
@@ -563,7 +430,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	anAnnouncer unsubscribe: self.
 
 	anAnnouncer weak
-		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
@@ -601,47 +467,6 @@ RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 	^ classPackageMapping at: aClass instanceSide put: aPackage
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeBehavior: behavior [
-	"Remove the behavior from all categories. I can take a Behavior or a Behavior name as argument."
-
-	| behaviorName |
-	behaviorName := behavior isBehavior
-		                ifTrue: [ behavior name ]
-		                ifFalse: [ behavior ].
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ classes remove: behaviorName ] ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeCategoriesMatching: matchString [
-	"Remove all matching categories with their classes"
-
-	(self categoriesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeCategory: aCategory [
-	"Remove the category named, cat. Create an error notificiation if the
-	category has any elements in it."
-
-	| category |
-	category := aCategory asSymbol.
-
-	categoryMap
-		at: category
-		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'Cannot remove non-empty category ' , category , '. Present classes: ' , classes printString ] ]
-		ifAbsent: [ ^ self ].
-
-	categoryMap removeKey: category.
-
-	"Now that we managed the SystemOrganizer, let's update the package organizer."
-	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
-		package name = category
-			ifTrue: [ self removePackage: package ]
-			ifFalse: [ package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | package removeTag: tag ] ] ]
-]
-
 { #category : 'system integration' }
 RPackageOrganizer >> removeClass: class [
 	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
@@ -677,43 +502,12 @@ RPackageOrganizer >> removePackage: aPackage [
 	^ package
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeSystemCategory: category [
-	"remove all the classes and traits associated with the category"
-
-	(self orderedTraitsIn: category) , (self superclassOrder: category) reverseDo: [ :each | each removeFromSystem ].
-
-	self removeCategory: category
-]
-
 { #category : 'system integration' }
 RPackageOrganizer >> removeTag: aTag fromPackage: aPackage [
 
 	(self hasPackage: aPackage) ifFalse: [ ^ self "no need to remove the tag if the package is not there." ].
 
 	(self ensurePackage: aPackage) removeTag: aTag
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
-	"Rename a category. No action if new name already exists, or if old name does not exist."
-
-	| oldName newName package |
-	oldName := oldCatString asSymbol.
-	newName := newCatString asSymbol.
-
-	categoryMap at: newName ifPresent: [ "new name exists, so no action" ^ self ].
-
-	categoryMap at: oldName ifPresent: [ :classes |
-		categoryMap
-			at: newName put: classes;
-			removeKey: oldName ].
-
-	"We do it in all cases because we have a few cases where a category was not created but a package was. It's bugs but since categories will vanish there is no reason to care too much."
-	package := self ensurePackageMatching: oldName.
-	package name = oldName ifTrue: [ self renamePackage: package to: newName ].
-
-	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ]
 ]
 
 { #category : 'system integration' }
@@ -748,28 +542,6 @@ RPackageOrganizer >> stopNotification [
 
 	self class environment at: #MCWorkingCopy ifPresent: [:wc |
 		wc removeDependent: self]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> superclassOrder: category [
-	"Answer an OrderedCollection containing references to the classes in the
-	category whose name is the argument, category (a string). The classes
-	are ordered with superclasses first so they can be filed in."
-
-	| behaviors classes |
-	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
-	classes := behaviors select: [ :each | each isBehavior ].
-	^ Class superclassOrder: classes
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
-
-	| package |
-	package := self ensurePackageMatching: ann categoryName.
-
-	"We extract the tag name from the category"
-	package ensureTag: (package toTagName: ann categoryName)
 ]
 
 { #category : 'system integration' }

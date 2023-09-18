@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 ClassDescription >> isTestCase [
 	^false
 ]

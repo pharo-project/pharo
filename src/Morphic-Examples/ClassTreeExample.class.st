@@ -3,27 +3,29 @@ ClassTreeExample new openOn: Object
 
 "
 Class {
-	#name : #ClassTreeExample,
-	#superclass : #MorphTreeModel,
+	#name : 'ClassTreeExample',
+	#superclass : 'MorphTreeModel',
 	#instVars : [
 		'rootClass'
 	],
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 ClassTreeExample class >> example [
 
 	ClassTreeExample new openOn: Object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeExample >> keyStroke: anEvent from: aTreeMorph [
 	self selectedNode
 		ifNotNil: [:current | current keyStroke: anEvent from: aTreeMorph]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeExample >> menu: menu shifted: b [
 	"Set up the menu to apply to the receiver's,
 	honoring the #shifted boolean"
@@ -39,12 +41,12 @@ ClassTreeExample >> menu: menu shifted: b [
 	^ menu
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassTreeExample >> open [
 	^ self openOn: Object
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassTreeExample >> openOn: aClass [
 	| window |
 	self rootClass: aClass.
@@ -58,27 +60,27 @@ ClassTreeExample >> openOn: aClass [
 	^ window
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeExample >> rootClass [
 	^ rootClass ifNil: [rootClass := Object]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeExample >> rootClass: aClass [
 	 rootClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeExample >> rootItems [
 	^ OrderedCollection with: self rootClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeExample >> rootNodeClassFromItem: anItem [
 	^ ClassTreeNodeExample
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 ClassTreeExample >> treeMorph [
 	| treeMorph |
 	treeMorph := (MorphTreeMorph on: self)
