@@ -338,6 +338,14 @@ SymbolTest >> testCopyNotSame [
 ]
 
 { #category : #tests }
+SymbolTest >> testCullCull [
+
+	self assert: (#asNumber cull: '1' cull: 2) equals: 1.
+	self assert: (#at: cull: #(2) cull: 1) equals: 2.
+	self assert: (#correctAgainst:continuedFrom: cull: 'test' cull: #('nest')) size equals: 1.
+]
+
+{ #category : #tests }
 SymbolTest >> testDisplayString [
 
 	| actual |
@@ -524,6 +532,14 @@ SymbolTest >> testUncapitalized [
 	lc := #mElViN.
 	self assert: uc uncapitalized equals: lc.
 	self assert: lc uncapitalized equals: lc
+]
+
+{ #category : #tests }
+SymbolTest >> testValueWithArguments [
+
+	self assert: (#asNumber valueWithArguments: #('1')) equals: 1.
+	self assert: (#at: valueWithArguments: #(#(2) 1)) equals: 2.
+	self assert: (#beginsWith:caseSensitive: valueWithArguments: #('Test' 'te' true)) equals: false
 ]
 
 { #category : #requirements }
