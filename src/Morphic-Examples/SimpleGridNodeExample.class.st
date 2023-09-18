@@ -2,23 +2,25 @@
 Example for a simple grid node
 "
 Class {
-	#name : #SimpleGridNodeExample,
-	#superclass : #MorphTreeNodeModel,
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#name : 'SimpleGridNodeExample',
+	#superclass : 'MorphTreeNodeModel',
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridNodeExample >> age [
 	^ self item age
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridNodeExample >> age: anInteger [
 	self item age: anInteger.
 	self changed: #age
 ]
 
-{ #category : #'accessing - morphs' }
+{ #category : 'accessing - morphs' }
 SimpleGridNodeExample >> ageMorph [
 	^ (self theme
 		newTextEntryIn: self
@@ -30,18 +32,18 @@ SimpleGridNodeExample >> ageMorph [
 		help: nil) color: Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridNodeExample >> firstName [
 	^ self item firstName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridNodeExample >> firstName: aString [
 	self item firstName: aString.
 	self changed: #firstName
 ]
 
-{ #category : #'accessing - morphs' }
+{ #category : 'accessing - morphs' }
 SimpleGridNodeExample >> firstNameMorph [
 	^ (self theme
 		newTextEntryIn: self
@@ -53,18 +55,18 @@ SimpleGridNodeExample >> firstNameMorph [
 		help: nil) color: Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridNodeExample >> married [
 	^ self item married
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridNodeExample >> married: aBoolean [
 	self item married: aBoolean.
 	self changed: #married
 ]
 
-{ #category : #'accessing - morphs' }
+{ #category : 'accessing - morphs' }
 SimpleGridNodeExample >> marriedMorph [
 	^ ( self theme
 			newCheckboxIn: self
@@ -76,18 +78,18 @@ SimpleGridNodeExample >> marriedMorph [
 			help: nil) color: Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridNodeExample >> secondName [
 	^ self item secondName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridNodeExample >> secondName: aString [
 	self item secondName: aString.
 	self changed: #secondName
 ]
 
-{ #category : #'accessing - morphs' }
+{ #category : 'accessing - morphs' }
 SimpleGridNodeExample >> secondNameMorph [
 	^ (self theme
 		newTextEntryIn: self
