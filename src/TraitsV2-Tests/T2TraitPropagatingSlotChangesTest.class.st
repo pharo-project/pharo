@@ -2,12 +2,13 @@
 Unit test for correct propogation of slot changes for traits
 "
 Class {
-	#name : #T2TraitPropagatingSlotChangesTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitPropagatingSlotChangesTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitPropagatingSlotChangesTest >> testAddingSlotToTrait [
 	| t1 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -24,7 +25,7 @@ T2TraitPropagatingSlotChangesTest >> testAddingSlotToTrait [
 	self assertCollection: (c1 allSlots collect: [:each | each name]) hasSameElements: #(aSlot)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitPropagatingSlotChangesTest >> testRemovingSlotToTrait [
 	| t1 c1 |
 	t1 := self newTrait: #T1 with: #(aSlot) uses: {}.
