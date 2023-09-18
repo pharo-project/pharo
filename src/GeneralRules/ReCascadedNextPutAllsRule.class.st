@@ -11,24 +11,26 @@ String streamContents: [ :s|
 		s nextPutAll: '---' ].
 "
 Class {
-	#name : #ReCascadedNextPutAllsRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReCascadedNextPutAllsRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCascadedNextPutAllsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'CascadedNextPutAllsRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCascadedNextPutAllsRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReCascadedNextPutAllsRule >> initialize [
 	super initialize.
 	self
@@ -36,12 +38,12 @@ ReCascadedNextPutAllsRule >> initialize [
 		replace: '``@rcvr show: ``@object1 , ``@object2' with: '``@rcvr show: ``@object1; show: ``@object2'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCascadedNextPutAllsRule >> name [
 	^ 'Use cascaded nextPutAll:''s instead of #, in #nextPutAll:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCascadedNextPutAllsRule >> rationale [
 	^ 'Use cascaded nextPutAll:''s instead of #, in #nextPutAll:.'
 ]

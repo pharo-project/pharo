@@ -152,7 +152,7 @@ EpLogNodeGraphPresenter >> rowHeight [
 
 { #category : #private }
 EpLogNodeGraphPresenter >> selectDirectory [
-	(UIManager default chooseDirectoryFrom: self directory)
+	(self application selectDirectoryTitle: self directory)
 		ifNotNil: [ :selectedDirectory | self directory: selectedDirectory ]
 ]
 

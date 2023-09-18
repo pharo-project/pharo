@@ -1,13 +1,15 @@
 Class {
-	#name : #MCSnapshotTest,
-	#superclass : #MCTestCase,
+	#name : 'MCSnapshotTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'snapshot'
 	],
-	#category : #'Monticello-Tests-Snapshots'
+	#category : 'Monticello-Tests-Snapshots',
+	#package : 'Monticello-Tests',
+	#tag : 'Snapshots'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 
 	| t1 t2 |
@@ -35,7 +37,7 @@ MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 	^ (MCWorkingCopy forPackageNamed: 'Monticello-Snapshot-Mock') snapshot
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCSnapshotTest >> createSnapshotWithTraitWithClassSideTraits [
 
 	| t1 t2 t3 |
@@ -64,25 +66,25 @@ MCSnapshotTest >> createSnapshotWithTraitWithClassSideTraits [
 	^ (MCWorkingCopy forPackageNamed: 'Monticello-Snapshot-Mock') snapshot
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCSnapshotTest >> lookupClass: aName in: definitions [
 	^ definitions
 		detect: [ :aDef | aDef isClassDefinition and: [ aDef className = aName ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCSnapshotTest >> lookupTrait: aName in: definitions [ 
 
 	^ definitions detect: [ :aDef | aDef isTraitDefinition and: [ aDef className = aName ] ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCSnapshotTest >> setUp [
 	super setUp.
 	snapshot :=  self mockSnapshot.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCSnapshotTest >> tearDown [ 
 
 	| package |
@@ -91,7 +93,7 @@ MCSnapshotTest >> tearDown [
 	super tearDown.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testClassWithClassTraitCompositionHasCorrectTraitComposition [
 
 	| definitions def |
@@ -103,7 +105,7 @@ MCSnapshotTest >> testClassWithClassTraitCompositionHasCorrectTraitComposition [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testClassWithClassTraitCompositionHasTraitComposition [
 
 	| definitions def |
@@ -116,7 +118,7 @@ MCSnapshotTest >> testClassWithClassTraitCompositionHasTraitComposition [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testCreation [
 	|d|
 	d :=  self mockSnapshot definitions.
@@ -126,7 +128,7 @@ MCSnapshotTest >> testCreation [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testTraitWithClassTraitCompositionHasCorrectTraitComposition [
 
 	| definitions def |
@@ -138,15 +140,15 @@ MCSnapshotTest >> testTraitWithClassTraitCompositionHasCorrectTraitComposition [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testTraitWithClassTraitCompositionHasTraitComposition [
 
 	| definitions def |
-	definitions :=  self createSnapshotWithTraitWithClassSideTraits definitions.
-	def := self lookupTrait: #T3 in: definitions.
+	definitions := self createSnapshotWithTraitWithClassSideTraits definitions.
+	"This could use #lookupTrait:in: when this issue will be fixed: https://github.com/pharo-project/pharo/issues/14605
 	
-	self assert: def hasClassTraitComposition.
+	The problem is that since MCClassTraitDefinition returns true, we can get a MCClassTraitDefinition instead of a MCTraitDefinition"
+	def := definitions detect: [ :aDef | (aDef isKindOf: MCTraitDefinition) and: [ aDef className = #T3 ] ].
 
-
-
+	self assert: def hasClassTraitComposition
 ]

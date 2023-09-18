@@ -1,6 +1,6 @@
-Extension { #name : #FixedLayout }
+Extension { #name : 'FixedLayout' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 FixedLayout class >> mcTypeSymbol [ 
 	^ #normal
 ]

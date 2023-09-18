@@ -275,7 +275,8 @@ MCConfiguration >> loadVersions: aCollection [
 
 { #category : #accessing }
 MCConfiguration >> log [
-	^log ifNil: [Transcript]
+
+	^ log ifNil: [ Smalltalk tools transcript ]
 ]
 
 { #category : #accessing }

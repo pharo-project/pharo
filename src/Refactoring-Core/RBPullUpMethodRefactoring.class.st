@@ -249,7 +249,7 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 { #category : #actions }
 RBPullUpMethodRefactoring >> generateChanges [
 
-	self primitiveExecute.
+	super generateChanges.
 
 	^ self changes
 ]

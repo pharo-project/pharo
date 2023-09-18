@@ -20,18 +20,18 @@ RBRefactoryPackageChange >> executeNotifying: aBlock [
 	| undo |
 	undo := self asUndoOperation.
 	undo name: self name.
-	self primitiveExecute.
+	self generateChanges.
 	aBlock value.
 	^ undo
+]
+
+{ #category : #private }
+RBRefactoryPackageChange >> generateChanges [
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
 RBRefactoryPackageChange >> initialize [
 	super initialize.
 	browserEnvironment := RBBrowserEnvironment default
-]
-
-{ #category : #private }
-RBRefactoryPackageChange >> primitiveExecute [
-	self subclassResponsibility
 ]

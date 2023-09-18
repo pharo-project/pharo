@@ -11,7 +11,7 @@ RBRefactoringBrowserTest class >> isAbstract [
 
 { #category : #private }
 RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [
-	aRefactoring primitiveExecute.
+	aRefactoring generateChanges.
 	self parserClass parseExpression: aRefactoring storeString
 ]
 

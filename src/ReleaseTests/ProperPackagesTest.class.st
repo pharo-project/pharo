@@ -39,7 +39,7 @@ ProperPackagesTest >> testProperManifestCategorization [
 	|violations|
 	violations := OrderedCollection new.
 	PackageManifest allSubclassesDo: [:each |
- 	   ((each package classesForClassTag: 'Manifest') includes: each)
+ 	   ((each package classesTaggedWith: 'Manifest') includes: each)
   	      ifFalse: [ violations add: each ]
 	].
 

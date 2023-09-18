@@ -11,27 +11,29 @@ FloatPrintPolicy
 	during: [ Float pi printString ]
 "
 Class {
-	#name : #FloatPrintPolicy,
-	#superclass : #DynamicVariable,
+	#name : 'FloatPrintPolicy',
+	#superclass : 'DynamicVariable',
 	#instVars : [
 		'default'
 	],
-	#category : #'Kernel-Numbers'
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 FloatPrintPolicy class >> absPrint: float on: stream base: base [
 	"I delegate Float printing to the current dynamic value of myself"
 
 	self value absPrint: float on: stream base: base
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FloatPrintPolicy >> default [
 	^ default
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FloatPrintPolicy >> initialize [
 	default := ExactFloatPrintPolicy new
 ]

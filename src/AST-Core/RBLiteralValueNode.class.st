@@ -67,6 +67,12 @@ RBLiteralValueNode >> evaluateForReceiver: aReceicer [
 	^ value
 ]
 
+{ #category : #testing }
+RBLiteralValueNode >> isString [
+
+	^ value isString and: [ value isSymbol not ]
+]
+
 { #category : #accessing }
 RBLiteralValueNode >> sourceText [
 

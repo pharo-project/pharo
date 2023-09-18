@@ -22,6 +22,11 @@ SycMockRBRefactoring >> environment: anEnvironement [
 ]
 
 { #category : #accessing }
+SycMockRBRefactoring >> generateChanges [
+	^self
+]
+
+{ #category : #accessing }
 SycMockRBRefactoring >> model [
 	^ self
 ]
@@ -29,11 +34,6 @@ SycMockRBRefactoring >> model [
 { #category : #accessing }
 SycMockRBRefactoring >> model: aRBNamespace [
 	^ self
-]
-
-{ #category : #accessing }
-SycMockRBRefactoring >> primitiveExecute [
-	^self
 ]
 
 { #category : #accessing }

@@ -27,17 +27,19 @@ If you use the compiler, you need to do nothing special anymore! All methods com
 
 "
 Class {
-	#name : #CompiledMethodTrailer,
-	#superclass : #Object,
-	#category : #'Kernel-Methods'
+	#name : 'CompiledMethodTrailer',
+	#superclass : 'Object',
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #kinds }
+{ #category : 'kinds' }
 CompiledMethodTrailer class >> empty [
 	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledMethodTrailer class >> isDeprecated [
 	^ true
 ]

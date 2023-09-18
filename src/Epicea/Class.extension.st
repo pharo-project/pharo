@@ -5,7 +5,7 @@ Class >> asEpiceaRingDefinition [
 
 	| ring |
 	ring := (RGClassDefinition named: self name)
-		        category: self category;
+		        category: self basicCategory;
 		        superclassName: self superclass asString;
 		        "Note it's nil for ProtoObject"traitCompositionSource:
 			        self traitCompositionString;

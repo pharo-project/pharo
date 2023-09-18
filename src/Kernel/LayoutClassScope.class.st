@@ -2,16 +2,18 @@
 I am layout scope for classes.
 "
 Class {
-	#name : #LayoutClassScope,
-	#superclass : #AbstractLayoutScope,
-	#type : #variable,
+	#name : 'LayoutClassScope',
+	#superclass : 'AbstractLayoutScope',
+	#type : 'variable',
 	#instVars : [
 		'parentScope'
 	],
-	#category : #'Kernel-Layout'
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LayoutClassScope >> = other [
 	super = other
 		ifFalse: [ ^ false ].
@@ -26,13 +28,13 @@ LayoutClassScope >> = other [
 	^ self parentScope = other parentScope
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 LayoutClassScope >> allSlotsDo: aBlock [
 	parentScope allSlotsDo: aBlock.
 	self do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutClassScope >> allVisibleSlots [
 	| result |
 	result := parentScope allVisibleSlots.
@@ -42,18 +44,18 @@ LayoutClassScope >> allVisibleSlots [
 	^ result
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 LayoutClassScope >> do: aBlock [
 	1 to: self size do: [ :index |
 		aBlock value: (self at: index) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutClassScope >> fieldSize [
 	^ parentScope fieldSize + self ownFieldSize
 ]
 
-{ #category : #flattening }
+{ #category : 'flattening' }
 LayoutClassScope >> flattenIn: aCollection [
 
 	parentScope flattenIn: aCollection.
@@ -61,7 +63,7 @@ LayoutClassScope >> flattenIn: aCollection [
 	^ aCollection
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 LayoutClassScope >> hasBindingThatBeginsWith: aString [
 	"Answer true if there is a Slot name that begins with aString, false otherwise"
 
@@ -71,7 +73,7 @@ LayoutClassScope >> hasBindingThatBeginsWith: aString [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LayoutClassScope >> hasFields [
 	self do: [ :slot |
 		slot size > 0
@@ -79,14 +81,14 @@ LayoutClassScope >> hasFields [
 	^ parentScope hasFields
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LayoutClassScope >> hasSlots [
 	self size > 0
 		ifTrue: [ ^ true ].
 	^ parentScope hasSlots
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LayoutClassScope >> hash [
 	| hash |
 	hash := super hash.
@@ -95,13 +97,13 @@ LayoutClassScope >> hash [
 	^ hash + self parentScope hash hashMultiply
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LayoutClassScope >> ifNotEmpty: aBlock [
 	"This scope is not empty so we evaluate the block"
 	aBlock value: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutClassScope >> ownFieldSize [
 	|result|
 	result := 0.
@@ -109,31 +111,31 @@ LayoutClassScope >> ownFieldSize [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutClassScope >> parentScope [
 	^ parentScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutClassScope >> parentScope: aLayoutScope [
 	parentScope := aLayoutScope
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 LayoutClassScope >> postCopy [
 	parentScope := parentScope copy.
 	1 to: self size do: [ :index |
 		self at: index put: (self at: index) copy ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LayoutClassScope >> printOn: aStream [
 
 	super printOn: aStream.
 	self allVisibleSlots printElementsOn: aStream
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 LayoutClassScope >> reverseDo: aBlock [
 	|size|
 	size := self size.
@@ -141,7 +143,7 @@ LayoutClassScope >> reverseDo: aBlock [
 		aBlock value: (self at: (1 + size - index)) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutClassScope >> slots [
 	| result |
 	result := OrderedCollection new.
@@ -149,7 +151,7 @@ LayoutClassScope >> slots [
 	^ result asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutClassScope >> visibleSlots [
 	| result |
 	result := OrderedCollection new.
@@ -159,7 +161,7 @@ LayoutClassScope >> visibleSlots [
 	^ result asArray
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 LayoutClassScope >> withIndexDo: elementAndIndexBlock [
 	"Just like do: except that the iteration index supplies the second argument to the block"
 	1 to: self size do:

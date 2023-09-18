@@ -1,10 +1,12 @@
 Class {
-	#name : #FLBinaryFileStreamBasicSerializationTest,
-	#superclass : #FLBasicSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLBinaryFileStreamBasicSerializationTest',
+	#superclass : 'FLBasicSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FLBinaryFileStreamBasicSerializationTest >> setUpStreamStrategy [
 	streamStrategy := FLBinaryFileStreamStrategy new
 ]

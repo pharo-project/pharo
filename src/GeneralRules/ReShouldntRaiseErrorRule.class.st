@@ -33,24 +33,26 @@ internal error message that shadows the real error. Using Error as argument for
 be avoided.
 "
 Class {
-	#name : #ReShouldntRaiseErrorRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReShouldntRaiseErrorRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReShouldntRaiseErrorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ShouldntRaiseErrorRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReShouldntRaiseErrorRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReShouldntRaiseErrorRule >> initialize [
 	super initialize.
 	self
@@ -58,12 +60,12 @@ ReShouldntRaiseErrorRule >> initialize [
 		replace: 'self shouldnt: [ `@statements ] raise: Exception' with: '`@statements'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReShouldntRaiseErrorRule >> name [
 	^ 'Do not use  `shouldnt: [ ... ] raise: Error` '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReShouldntRaiseErrorRule >> rationale [
 	^ 'Replaces `shouldnt: [ ... ] raise: Error` with  `[ ... ]`'
 ]

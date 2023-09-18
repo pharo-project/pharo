@@ -2,7 +2,7 @@ Class {
 	#name : #RBClassDataForRefactoringTest,
 	#superclass : #Object,
 	#instVars : [
-		'temporaryVariable'
+		'instanceVariable'
 	],
 	#category : #'Refactoring-DataForTesting-FatClasses'
 }
@@ -59,17 +59,14 @@ RBClassDataForRefactoringTest >> callMethod [
 RBClassDataForRefactoringTest >> called: anObject on1: aBlock [
 	| each |
 	each := anObject printString.
-	Transcript
-		show: each;
-		cr.
+	each traceCr.
 	aBlock value: each
 ]
 
 { #category : #inline }
 RBClassDataForRefactoringTest >> called: anObject on: aBlock [
-	Transcript
-		show: anObject printString;
-		cr.
+	
+	anObject printString traceCr; cr.
 	aBlock value
 ]
 
@@ -516,12 +513,9 @@ RBClassDataForRefactoringTest >> sendsDifferentSuper [
 
 { #category : #lint }
 RBClassDataForRefactoringTest >> sizeCheck [
-	self isEmpty
-		ifFalse: [self do:
-					[:each |
-					Transcript
-						show: each;
-						cr]]
+
+	self isEmpty 
+		ifFalse: [ self do: [ :each | each traceCr ] ]
 ]
 
 { #category : #lint }
@@ -609,7 +603,7 @@ RBClassDataForRefactoringTest >> usesAdd [
 
 { #category : #lint }
 RBClassDataForRefactoringTest >> variableAssignedLiteral [
-	temporaryVariable := #()
+	instanceVariable := #()
 ]
 
 { #category : #lint }

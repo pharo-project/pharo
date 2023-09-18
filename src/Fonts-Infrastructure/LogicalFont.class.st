@@ -510,23 +510,24 @@ LogicalFont >> descentKern [
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3 [
-	^self realFont displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3
+LogicalFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
+
+	^ self realFont displayStrikeoutOn: aDisplayContext from: baselineStartPoint
+		to: baselineEndPoint scale: scale
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-	^self realFont displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta
+LogicalFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
+
+	^ self realFont displayString: aString on: aDisplayContext from: startIndex to: stopIndex
+		at: aPoint kern: kernDelta baselineY: baselineY scale: scale
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7 [
-	^self realFont displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7
-]
+LogicalFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
 
-{ #category : #'forwarded to realFont' }
-LogicalFont >> displayUnderlineOn: aGrafPort from: aPoint to: aPoint3 [
-	^self realFont displayUnderlineOn: aGrafPort from: aPoint to: aPoint3
+	^ self realFont displayUnderlineOn: aDisplayContext from: baselineStartPoint
+		to: baselineEndPoint scale: scale
 ]
 
 { #category : #emphasis }
@@ -637,11 +638,8 @@ LogicalFont >> findRealFont [
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> fontArray [
-	| real |
-	real := self realFont.
-	^real isFontSet
-		ifTrue: [real fontArray]
-		ifFalse: [{self}]
+
+	^ { self }
 ]
 
 { #category : #accessing }
@@ -700,8 +698,9 @@ LogicalFont >> initialize: aFont [
 ]
 
 { #category : #'forwarded to realFont' }
-LogicalFont >> installOn: a foregroundColor: b backgroundColor: c [
-	^self realFont installOn: a foregroundColor: b backgroundColor: c
+LogicalFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
+
+	^ self realFont installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale
 ]
 
 { #category : #testing }
@@ -771,7 +770,7 @@ LogicalFont >> linearWidthOf: aCharacter [
 { #category : #accessing }
 LogicalFont >> maxAscii [
 	"???
-	what to do if realFont happens to be a StrikeFontSet?"
+	what to do if realFont happens to be a StrikeFont?"
 	^SmallInteger maxVal
 ]
 

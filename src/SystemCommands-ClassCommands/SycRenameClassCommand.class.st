@@ -29,7 +29,7 @@ SycRenameClassCommand >> defaultMenuItemName [
 SycRenameClassCommand >> execute [
 
 	| refactoring |
-	refactoring := RBRenameClassTransformation
+	refactoring := RBRenameClassRefactoring
 		rename: targetClass name
 		to: newName.
 	refactoring execute

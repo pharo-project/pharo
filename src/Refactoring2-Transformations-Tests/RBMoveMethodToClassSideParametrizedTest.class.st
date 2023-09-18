@@ -35,23 +35,6 @@ RBMoveMethodToClassSideParametrizedTest >> testFailureClassIsNotMeta [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
-RBMoveMethodToClassSideParametrizedTest >> testFailureExistsMethodInClassSide [
-
-	| method someClass className refactoring |
-	className := RBClassDataForRefactoringTest.
-	method := className >> ('threeElement' , 'Point') asSymbol.
-	refactoring := self createRefactoringWithArguments: {
-			               method.
-			               className }.
-	model := refactoring model.
-	someClass := model classNamed: className name , ' class'.
-	someClass
-		compile: 'threeElementPoint ^ self new'
-		classified: { #example }.
-	self shouldFail: refactoring
-]
-
 { #category : #tests }
 RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSide [
 	| method someClass className refactoring |

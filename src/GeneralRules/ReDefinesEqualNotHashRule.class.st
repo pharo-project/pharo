@@ -12,34 +12,36 @@ One pattern proposed by Kent Beck in Best Smalltalk Practices is to define hash 
 		^ (self title hash bitXor: self title hash		
 "
 Class {
-	#name : #ReDefinesEqualNotHashRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReDefinesEqualNotHashRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReDefinesEqualNotHashRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDefinesEqualNotHashRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'DefinesEqualNotHashRule'
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ReDefinesEqualNotHashRule >> basicCheck: aClass [
 	^ (aClass includesSelector: #=) and: [ (aClass includesSelector: #hash) not ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDefinesEqualNotHashRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDefinesEqualNotHashRule >> name [
 	^ 'Defines = but not hash'
 ]

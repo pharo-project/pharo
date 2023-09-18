@@ -552,6 +552,12 @@ RGMethodDefinition >> protocolAtPointer [
 		ifFalse:[ nil ]
 ]
 
+{ #category : #'backward compatibility' }
+RGMethodDefinition >> protocolName [
+
+	^ self protocol
+]
+
 { #category : #operations }
 RGMethodDefinition >> recompile [
 	self method recompile

@@ -38,10 +38,10 @@ RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock1
-							Transcript
-								show: anObject printString;
-								cr.
-								aBlock1 value').
+	anObject printString
+		traceCr;
+		cr.
+	aBlock1 value').
 	self assert: (class parseTreeForSelector: #caller) equals: (self parseMethod: 'caller
 							| anObject |
 							anObject := 5.
@@ -64,16 +64,38 @@ RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock
-							Transcript
-								show: anObject printString;
-								cr.
-								aBlock value').
+	
+	anObject printString traceCr; cr.
+	aBlock value').
 	self assert: (class parseTreeForSelector: #caller) equals: (self parseMethod: 'caller
 							| anObject |
 							anObject := 5.
 							self
 								called: anObject + 1
 								bar: #(1.0) on: [^anObject]').
+	self deny: (class directlyDefinesMethod: oldSelector)
+]
+
+{ #category : #tests }
+RBAddParameterParametrizedTest >> testAddParameterThatReferencesABlockWithInstanceVariableReference [
+
+	| refactoring class oldSelector newSelector newArg |
+	oldSelector := ('test' , 'Foo:') asSymbol.
+	newSelector := #testFoo:bar:.
+	newArg := RBArgumentName name: 'aFoo' value: '[ :each | each + instanceVariable ]'.
+	refactoring := self createRefactoringWithArguments:
+		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg}}.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
+	self
+		assert: (class parseTreeForSelector: newSelector)
+		equals: (self parseMethod: 'testFoo: anObject bar: aFoo
+								^self class + anObject').
+	self
+		assert: (class parseTreeForSelector: #callFoo)
+		equals:
+		(self parseMethod:
+			 'callFoo ^self testFoo: 5 bar: ([ :each | each + instanceVariable ])').
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
@@ -96,6 +118,29 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesGlobalAndLiteral
 		assert: (class parseTreeForSelector: #callFoo)
 		equals: (self parseMethod:
 				 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
+	self deny: (class directlyDefinesMethod: oldSelector)
+]
+
+{ #category : #tests }
+RBAddParameterParametrizedTest >> testAddParameterThatReferencesInstanceVariable [
+
+	| refactoring class oldSelector newSelector newArg |
+	oldSelector := ('test' , 'Foo:') asSymbol.
+	newSelector := #testFoo:bar:.
+	newArg := RBArgumentName name: 'aFoo' value: 'instanceVariable'.
+	refactoring := self createRefactoringWithArguments:
+		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg}}.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
+	self
+		assert: (class parseTreeForSelector: newSelector)
+		equals: (self parseMethod: 'testFoo: anObject bar: aFoo
+								^self class + anObject').
+	self
+		assert: (class parseTreeForSelector: #callFoo)
+		equals:
+		(self parseMethod:
+			 'callFoo ^self testFoo: 5 bar: (instanceVariable)').
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
@@ -168,17 +213,18 @@ RBAddParameterParametrizedTest >> testAddTwoParameters [
 ]
 
 { #category : #'failure tests' }
-RBAddParameterParametrizedTest >> testFailureBadInitializationCode [
+RBAddParameterParametrizedTest >> testFailureBadDefaultValueForNewArgument [
 
 	| newArg |
-	newArg := RBArgumentName name: 'anObject' value: 'foo:'.
+	newArg := RBArgumentName name: 'anObject' value: 'brokenExpression:'.
 	self shouldFail: (self createRefactoringWithArguments: {
 				 #name.
 				 RBLintRuleTestData.
 				 #name:.
 				 #( -1 ).
 				 { newArg } }).
-	newArg := RBArgumentName name: 'anObject' value: 'foo'.
+	
+	newArg := RBArgumentName name: 'anObject' value: 'undefinedVariable'.
 	self shouldFail: (self createRefactoringWithArguments: {
 				 #name.
 				 RBLintRuleTestData.

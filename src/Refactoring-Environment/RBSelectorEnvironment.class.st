@@ -214,15 +214,6 @@ RBSelectorEnvironment >> defaultLabel [
 ]
 
 { #category : #testing }
-RBSelectorEnvironment >> includesCategory: aCategory [
-	^(super includesCategory: aCategory) and:
-			[(self classNamesFor: aCategory) anySatisfy:
-					[:className |
-					(classSelectors includesKey: className)
-						or: [metaClassSelectors includesKey: className]]]
-]
-
-{ #category : #testing }
 RBSelectorEnvironment >> includesClass: aClass [
 	^(self privateSelectorsForClass: aClass) isNotEmpty
 		and: [super includesClass: aClass]
@@ -264,24 +255,6 @@ RBSelectorEnvironment >> on: aDictionary [
 		class isMeta
 			ifTrue: [ metaClassSelectors at: class soleInstance name put: selectors asIdentitySet ]
 			ifFalse: [ classSelectors at: class name put: selectors asIdentitySet ] ]
-]
-
-{ #category : #accessing }
-RBSelectorEnvironment >> packages [
-	"Check that packages have really class and selector included."
-
-	| pSet |
-	pSet := Set new.
-	self classes
-		do: [ :each |
-			each packages
-				do: [ :p |
-					self
-						selectorsForClass: each
-						do: [ :s |
-							(p includesSelector: s ofClass: each)
-								ifTrue: [ pSet add: p ] ] ] ].
-	^ pSet
 ]
 
 { #category : #copying }

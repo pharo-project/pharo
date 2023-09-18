@@ -17,7 +17,7 @@ RBTransformationsTest >> testAddClassTransform [
 	| transformation class |
 	transformation := (RBAddClassCommentTransformation
 		                   comment: 'New comment for class'
-		                   in: self changeMockClass name) primitiveExecute.
+		                   in: self changeMockClass name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -33,7 +33,7 @@ RBTransformationsTest >> testAddMethodCommentTransform [
 		                   comment: 'New comment for method'
 		                   inMethod: #one
 		                   inClass: self changeMockClass name)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -51,7 +51,7 @@ RBTransformationsTest >> testAddMethodTransform [
 	transformation := (RBAddMethodTransformation
 		                   sourceCode: 'printString1 ^super printString'
 		                   in: self changeMockClass name
-		                   withProtocol: #accessing ) primitiveExecute.
+		                   withProtocol: #accessing ) generateChanges.
 
 	class := transformation model classNamed: self changeMockClass name.
 	self
@@ -65,7 +65,7 @@ RBTransformationsTest >> testAddProtocolTransform [
 	| transformation |
 	transformation := (RBAddProtocolTransformation new
 		                   protocol: 'transforming'
-		                   inClass: #RBDummyEmptyClass) primitiveExecute.
+		                   inClass: #RBDummyEmptyClass) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1
 ]
@@ -78,7 +78,7 @@ RBTransformationsTest >> testAddTemporaryVariableTransform [
 		                   variable: 'variable'
 		                   inMethod: #one
 		                   inClass: self changeMockClass name)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -97,7 +97,7 @@ RBTransformationsTest >> testAddVariableAccessorTransform [
 	transformation := (RBAddVariableAccessorTransformation
 		                   instanceVariable: 'instVar'
 		                   class: self changeMockClass name)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 2.
 
@@ -118,7 +118,7 @@ RBTransformationsTest >> testAddVariableTransform [
 	transformation := (RBAddVariableTransformation
 		                   instanceVariable: 'asdf'
 		                   class: self changeMockClass name)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -147,7 +147,7 @@ RBTransformationsTest >> testCompositeTransform [
 					                    in: newClassName
 					                    withProtocol: #accessing );
 			                   yourself).
-	transformation primitiveExecute.
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 3.
 
@@ -178,7 +178,7 @@ RBTransformationsTest >> testCustomTransform [
 		                  (aModel classNamed: newClassName)
 			                  addInstanceVariable: 'asdf' ].
 
-	transformation primitiveExecute.
+	transformation generateChanges.
 	self assert: transformation model changes changes size equals: 3.
 
 	class := transformation model classNamed:
@@ -191,7 +191,7 @@ RBTransformationsTest >> testDeprecateClassTransform [
 
 	| transformation class |
 	transformation := (RBDeprecateClassTransformation class:
-		                   self changeMockClass name) primitiveExecute.
+		                   self changeMockClass name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 4.
 
@@ -237,7 +237,7 @@ RBTransformationsTest >> testMoveInstanceVariableToClassTransform [
 	self assert: (oldClass directlyDefinesInstanceVariable: 'asdf').
 	self deny: (newClass directlyDefinesInstanceVariable: 'asdf').
 
-	transformation primitiveExecute.
+	transformation generateChanges.
 	self assert: transformation model changes changes size equals: 3.
 
 	oldClass := transformation model classNamed: #FOOBAR.
@@ -253,7 +253,7 @@ RBTransformationsTest >> testPullUpVariableTransform [
 	| transformation |
 	transformation := (RBPullUpVariableTransformation
 		                   instanceVariable: 'result'
-		                   class: #RBDummyLintRuleTest) primitiveExecute.
+		                   class: #RBDummyLintRuleTest) generateChanges.
 
 	self assert:
 		((transformation model classNamed: #RBDummyLintRuleTest)
@@ -273,7 +273,7 @@ RBTransformationsTest >> testPushDownVariableTransform [
 	| transformation |
 	transformation := (RBPushDownVariableTransformation
 		                   instanceVariable: 'foo1'
-		                   class: #RBDummyLintRuleTest) primitiveExecute.
+		                   class: #RBDummyLintRuleTest) generateChanges.
 
 	(transformation model classNamed: #RBDummyLintRuleTest) subclasses
 		do: [ :each |
@@ -285,7 +285,7 @@ RBTransformationsTest >> testRemoveClassTransform [
 
 	| transformation newClass superclass |
 	transformation := (RBRemoveClassTransformation className:
-		                   self changeMockClass name) primitiveExecute.
+		                   self changeMockClass name) generateChanges.
 	self assert: transformation model changes changes size equals: 1.
 	newClass := transformation model classNamed:
 		            self changeMockClass name asSymbol.
@@ -308,14 +308,14 @@ RBTransformationsTest >> testRemoveMessageSendTransform [
 		messageSend: #cr
 		inMethod: (#called:, #on:) asSymbol
 		inClass: #RBClassDataForRefactoringTest)
-		primitiveExecute.
+		generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: (#called:, #on:) asSymbol)
 			equals:  (self parseMethod: 'called: anObject on: aBlock
-	Transcript show: anObject printString.
+	anObject printString traceCr.
 	aBlock value')
 ]
 
@@ -325,7 +325,7 @@ RBTransformationsTest >> testRemoveMethodTransform [
 	| transformation class |
 	transformation := (RBRemoveMethodTransformation
 		                   selector: #one
-		                   from: self changeMockClass name) primitiveExecute.
+		                   from: self changeMockClass name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -341,7 +341,7 @@ RBTransformationsTest >> testRemoveVariableTransform [
 	transformation := (RBRemoveVariableTransformation
 		                   instanceVariable: 'instVar'
 		                   class: self changeMockClass name)
-		                  primitiveExecute.
+		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -356,11 +356,11 @@ RBTransformationsTest >> testRenameClassTransform [
 	| transformation class newClassName oldClassName |
 	newClassName := #RBNewDummyClassName.
 	oldClassName := RBClassToRename name asSymbol.
-	transformation := (RBRenameClassTransformation
+	transformation := (RBRenameClassRefactoring
 		                   rename: oldClassName
-		                   to: newClassName) primitiveExecute.
+		                   to: newClassName) generateChanges.
 
-	self assert: transformation model changes changes size equals: 10.
+	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: newClassName.
 	self
@@ -397,14 +397,14 @@ RBTransformationsTest >> testRenameTemporaryTransform [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 		                   in: self changeMockClass name
-		                   withProtocol: #accessing ) primitiveExecute.
+		                   withProtocol: #accessing ) generateChanges.
 
 	transformation := (RBRenameTemporaryVariableTransformation
 		                   model: transformation model
 		                   rename: #temp
 		                   to: #temp2
 		                   in: self changeMockClass name
-		                   selector: #foo) primitiveExecute.
+		                   selector: #foo) generateChanges.
 
 	self assert: transformation model changes changes size equals: 2.
 
@@ -426,7 +426,7 @@ RBTransformationsTest >> testRenameVariableTransform [
 		                   rename: 'classBlock'
 		                   to: 'asdf'
 		                   in: #RBBasicLintRuleTestData
-		                   classVariable: false) primitiveExecute.
+		                   classVariable: false) generateChanges.
 
 	class := transformation model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').

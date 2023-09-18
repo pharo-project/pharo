@@ -2,43 +2,45 @@
 Layout scopes reify how classes extend the layout of their superclass.
 "
 Class {
-	#name : #AbstractLayoutScope,
-	#superclass : #Object,
-	#category : #'Kernel-Layout'
+	#name : 'AbstractLayoutScope',
+	#superclass : 'Object',
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayoutScope class >> isAbstract [
 
 	^ self == AbstractLayoutScope
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractLayoutScope >> = other [
 	^ self class = other class
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 AbstractLayoutScope >> allSlotsDo: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayoutScope >> allVisibleSlots [
 	^ self subclassResponsibility
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 AbstractLayoutScope >> extend [
 	^ self extend: { }
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 AbstractLayoutScope >> extend: someSlots [
 	^ self extend: someSlots as: LayoutClassScope
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 AbstractLayoutScope >> extend: someSlots as: type [
 	| scope fieldIndex  |
 	scope := type new: someSlots size.
@@ -54,53 +56,53 @@ AbstractLayoutScope >> extend: someSlots as: type [
 	^ scope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayoutScope >> fieldSize [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayoutScope >> firstFieldIndex [
 	^ self fieldSize + 1
 ]
 
-{ #category : #flattening }
+{ #category : 'flattening' }
 AbstractLayoutScope >> flatten [
 
 	^ self flattenIn: OrderedCollection new
 ]
 
-{ #category : #flattening }
+{ #category : 'flattening' }
 AbstractLayoutScope >> flattenIn: aCollection [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayoutScope >> hasBindingThatBeginsWith: arg1 [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayoutScope >> hasFields [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayoutScope >> hasSlots [
 	self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractLayoutScope >> hash [
 	^ self class hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayoutScope >> ifNotEmpty: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 AbstractLayoutScope >> indexOf: anElement [
 	"Answer the index of the first occurrence of anElement within the
 	receiver. If the receiver does not contain anElement, answer 0."
@@ -108,7 +110,7 @@ AbstractLayoutScope >> indexOf: anElement [
 	^ self indexOf: anElement ifAbsent: 0
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 AbstractLayoutScope >> indexOf: anElement ifAbsent: exceptionBlock [
 	"Answer the index of the first occurrence of anElement within the
 	receiver. If the receiver does not contain anElement, answer the
@@ -120,12 +122,12 @@ AbstractLayoutScope >> indexOf: anElement ifAbsent: exceptionBlock [
 	^ exceptionBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayoutScope >> ownFieldSize [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayoutScope >> resolveSlot: aName [
 	^ self
 		resolveSlot: aName
@@ -133,19 +135,19 @@ AbstractLayoutScope >> resolveSlot: aName [
 		ifNone: [ SlotNotFound signalForName: aName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayoutScope >> resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock [
 	self allSlotsDo: [ :slot |
 		slot name = aName ifTrue: [ ^ foundBlock cull: slot ]].
 	^ exceptionBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayoutScope >> visibleSlotNames [
 	^self visibleSlots collect: [:each | each name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayoutScope >> visibleSlots [
 	self subclassResponsibility
 ]

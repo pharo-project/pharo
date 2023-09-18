@@ -1,10 +1,12 @@
 Class {
-	#name : #MCAnnouncementTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCAnnouncementTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCAnnouncementTest >> testMCVersionSaved [
 	| announcements version repository |
 	version := self mockVersion.

@@ -1,6 +1,6 @@
 Class {
-	#name : #MCWorkingCopyManagementTest,
-	#superclass : #MCTestCase,
+	#name : 'MCWorkingCopyManagementTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'package2',
 		'package1',
@@ -8,10 +8,12 @@ Class {
 		'mcPackage2',
 		'classToRemove'
 	],
-	#category : #'Monticello-Tests-Base'
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MCWorkingCopyManagementTest >> setUp [
 
 	super setUp.
@@ -21,7 +23,7 @@ MCWorkingCopyManagementTest >> setUp [
 	mcPackage2 := package2 mcPackage
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCWorkingCopyManagementTest >> tearDown [
 
 	classToRemove ifNotNil: [ classToRemove removeFromSystem ].
@@ -34,7 +36,7 @@ MCWorkingCopyManagementTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyManagementTest >> testClassAdded [
 
 	self assert: package1 mcWorkingCopy modified not.
@@ -51,7 +53,7 @@ MCWorkingCopyManagementTest >> testClassAdded [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyManagementTest >> testClassRemoved [
 	
 	classToRemove := self class classInstaller make: [ :aBuilder | 
@@ -72,7 +74,7 @@ MCWorkingCopyManagementTest >> testClassRemoved [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCWorkingCopyManagementTest >> testWorkingCopiesForExtensionProtocolDo [
 	"Consider the following package structure:
 		Renraku

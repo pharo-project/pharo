@@ -2,8 +2,7 @@ Class {
 	#name : #TraitsTestCase,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'createdClassesAndTraits',
-		'oldAnnouncer'
+		'createdClassesAndTraits'
 	],
 	#category : #'TraitsV2-Tests'
 }
@@ -78,23 +77,19 @@ TraitsTestCase >> c9 [
 	^TraitsResource current c9
 ]
 
-{ #category : #running }
-TraitsTestCase >> categoryName [
-	^self class category
-]
-
 { #category : #utilities }
 TraitsTestCase >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
-	| class |
 
+	| class |
 	class := self class classInstaller make: [ :aBuilder |
-		aBuilder name: aSymbol;
-			superclass: aClass;
-			traitComposition: aTraitComposition;
-			package: self categoryName ].
+		         aBuilder
+			         name: aSymbol;
+			         superclass: aClass;
+			         traitComposition: aTraitComposition;
+			         package: self packageName ].
 
 	self createdClassesAndTraits add: class.
-	^class
+	^ class
 ]
 
 { #category : #utilities }
@@ -105,7 +100,7 @@ TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 		aBuilder
 			name: aSymbol;
 			traitComposition: aTraitComposition;
-			package: self categoryName;
+			package: self packageName;
 			beTrait ].
 
 	self createdClassesAndTraits add: trait.
@@ -119,17 +114,15 @@ TraitsTestCase >> createdClassesAndTraits [
 	^createdClassesAndTraits
 ]
 
+{ #category : #running }
+TraitsTestCase >> packageName [
+
+	^ self class packageName
+]
+
 { #category : #utilities }
 TraitsTestCase >> resourceClassesAndTraits [
 	^TraitsResource current createdClassesAndTraits
-]
-
-{ #category : #running }
-TraitsTestCase >> setUp [
-
-	super setUp.
-	oldAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil
 ]
 
 { #category : #accessing }
@@ -189,12 +182,12 @@ TraitsTestCase >> t9 [
 
 { #category : #running }
 TraitsTestCase >> tearDown [
+
 	TraitsResource reset.
-	self createdClassesAndTraits
-		do: [ :aClassOrTrait || behaviorName |
-			behaviorName := aClassOrTrait name.
-			testingEnvironment at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ]].
+	self createdClassesAndTraits do: [ :aClassOrTrait |
+		| behaviorName |
+		behaviorName := aClassOrTrait name.
+		testingEnvironment at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ] ].
 	createdClassesAndTraits := nil.
-	SystemAnnouncer announcer: oldAnnouncer.
 	super tearDown
 ]

@@ -393,8 +393,7 @@ StrikeFont class >> setupDefaultFallbackFont [
 StrikeFont class >> shutDown [
 	"StrikeFont shutDown"
 	"Deallocate synthetically derived copies of base fonts to save space"
-	self allSubInstancesDo: [ :sf | sf reset ].
-	StrikeFontSet allSubInstancesDo: [ :sf | sf reset ]
+	self allSubInstancesDo: [ :sf | sf reset ]
 ]
 
 { #category : #'character shapes' }
@@ -707,30 +706,6 @@ StrikeFont >> characterToGlyphMap: anArray [
 	characterToGlyphMap := anArray
 ]
 
-{ #category : #displaying }
-StrikeFont >> characters: anInterval in: sourceString displayAt: aPoint clippedBy: clippingRectangle rule: ruleInteger fillColor: aForm kernDelta: kernDelta on: aBitBlt [
-	"Simple, slow, primitive method for displaying a line of characters.
-	No wrap-around is provided."
-	| destPoint |
-	destPoint := aPoint.
-	anInterval do:
-		[ :i | | rightX sourceRect leftX ascii |
-		self flag: #yoDisplay.
-		"if the char is not supported, fall back to the specified fontset."
-		ascii := (sourceString at: i) charCode.
-		(ascii < minAscii or: [ ascii > maxAscii ]) ifTrue: [ ascii := maxAscii ].
-		leftX := xTable at: ascii + 1.
-		rightX := xTable at: ascii + 2.
-		sourceRect := leftX @ 0 extent: (rightX - leftX) @ self height.
-		aBitBlt
-			copyFrom: sourceRect
-			in: glyphs
-			to: destPoint.
-		destPoint := destPoint + ((rightX - leftX + kernDelta) @ 0)
-		"destPoint printString displayAt: 0@(i*20)" ].
-	^ destPoint
-]
-
 { #category : #testing }
 StrikeFont >> checkCharacter: character [
 	"Answer a Character that is within the ascii range of the receiver--either
@@ -822,22 +797,8 @@ StrikeFont >> displayChar: ascii form: charForm [
 ]
 
 { #category : #displaying }
-StrikeFont >> displayLine: aString at: aPoint [
-	"Display the characters in aString, starting at position aPoint."
-
-	self characters: (1 to: aString size)
-		in: aString
-		displayAt: aPoint
-		clippedBy: Display boundingBox
-		rule: Form over
-		fillColor: nil
-		kernDelta: 0
-		on: (BitBlt toForm: Display)
-]
-
-{ #category : #displaying }
-StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
-	| nextWide destX leftX rightX glyphInfo char destY gfont charIndex |
+StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
+	| nextWide destX glyphInfo char charIndex |
 	destX := aPoint x.
 	charIndex := startIndex.
 	glyphInfo := Array new: 5.
@@ -849,51 +810,21 @@ StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopI
 			to: nextWide -1
 			at: destX @ aPoint y
 			strikeFont: self
-			kern: kernDelta) x.
+			kern: kernDelta
+			scale: scale) x.
 			charIndex := nextWide].
 		nextWide > stopIndex ifFalse: [
-		char := aString at: charIndex.
-		(self hasGlyphOf: char)
-			ifTrue:
-				[ self
-					glyphInfoOf: char
-					into: glyphInfo.
-				leftX := glyphInfo at: 2.
-				rightX := glyphInfo at: 3.
-				destY := glyphInfo at: 4.
-				gfont := glyphInfo at: 5.
-				(gfont == aBitBlt lastFont) ifFalse: [gfont installOn: aBitBlt].
-				aBitBlt displayGlyph: (glyphInfo at: 1) at: (destX @ (baselineY - destY)) left: leftX right: rightX font: self.
-				destX := destX + (rightX - leftX + kernDelta).
-				 ]
-			ifFalse:
-				[fallbackFont displayString: aString on: aBitBlt from: charIndex to: charIndex at: destX@destY kern: kernDelta baselineY: baselineY.
-				destX := destX + (fallbackFont widthOf: char) + kernDelta.
-				charIndex := charIndex + 1]]].
+			char := aString at: charIndex.
+			fallbackFont displayString: aString on: aBitBlt from: charIndex to: charIndex at: destX @ aPoint y kern: kernDelta baselineY: baselineY scale: scale.
+			destX := destX + (((fallbackFont widthOf: char) + kernDelta) * scale).
+			charIndex := charIndex + 1]].
 	^ Array
 		with: charIndex
 		with: aPoint + (destX @ 0)
 ]
 
 { #category : #displaying }
-StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-	"Draw the given string from startIndex to stopIndex
-	at aPoint on the (already prepared) BitBlt."
-
-		"Somewhat of a hack:
-	The scanner seem to only pass in runs of either all ASCII or all non-ASCII characters. If all characters are ascii, then it's safe to use basic rendering-method."
-	(aString hasWideCharacterFrom: startIndex to: stopIndex) ifTrue:  [^ self displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: aPoint y + self ascent.].
-
-	^ aBitBlt displayString: aString
-			from: startIndex
-			to: stopIndex
-			at: aPoint
-			strikeFont: self
-			kern: kernDelta
-]
-
-{ #category : #displaying }
-StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
+StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	"Draw the given string from startIndex to stopIndex
 	at aPoint on the (already prepared) BitBlt."
 
@@ -905,7 +836,8 @@ StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex 
 						to: stopIndex
 						at: aPoint
 						kern: kernDelta
-						baselineY: baselineY.].
+						baselineY: baselineY
+						scale: scale].
 
 	^ aBitBlt displayString: aString
 			from: startIndex
@@ -913,6 +845,7 @@ StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex 
 			at: aPoint
 			strikeFont: self
 			kern: kernDelta
+			scale: scale
 ]
 
 { #category : #emphasis }
@@ -1008,7 +941,7 @@ StrikeFont >> extendMaxAsciiTo: newMax [
 
 { #category : #accessing }
 StrikeFont >> fallbackFont [
-	^ fallbackFont ifNil: [ fallbackFont := FixedFaceFont new errorFont fontSize: self height ]
+	^ fallbackFont ifNil: [ fallbackFont := FixedFaceFont new errorFont baseFont: self ]
 ]
 
 { #category : #accessing }
@@ -1199,17 +1132,12 @@ StrikeFont >> heightOf: aCharacter [
 ]
 
 { #category : #displaying }
-StrikeFont >> installOn: aDisplayContext [
-
-	^aDisplayContext installStrikeFont: self
-]
-
-{ #category : #displaying }
-StrikeFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [
+StrikeFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	^aDisplayContext
 		installStrikeFont: self
 		foregroundColor: foregroundColor
 		backgroundColor: backgroundColor
+		scale: scale
 ]
 
 { #category : #emphasis }

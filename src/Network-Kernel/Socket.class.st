@@ -86,13 +86,9 @@ Socket class >> loopbackTest [
 	"100 timesRepeat: [Socket loopbackTest]"
 
 	| sock1 sock2 bytesToSend sendBuf receiveBuf done bytesSent bytesReceived t extraBytes packetsSent packetsRead |
-	Transcript
-		cr;
-		show: 'starting loopback test';
-		cr.
-	Transcript
-		show: '---------- Connecting ----------';
-		cr.
+	'
+starting loopback test' traceCr.
+	'---------- Connecting ----------' traceCr.
 	self initializeNetwork.
 	sock1 := self new.
 	sock2 := self new.
@@ -102,9 +98,7 @@ Socket class >> loopbackTest [
 	sock2 waitForConnectionFor: self standardTimeout.
 	sock1 isConnected ifFalse: [self error: 'sock1 not connected'].
 	sock2 isConnected ifFalse: [self error: 'sock2 not connected'].
-	Transcript
-		show: 'connection established';
-		cr.
+	'connection established' traceCr.
 	bytesToSend := 5000000.
 	sendBuf := String new: 5000 withAll: $x.
 	receiveBuf := String new: 50000.
@@ -121,35 +115,23 @@ Socket class >> loopbackTest [
 									[packetsRead := packetsRead + 1.
 									bytesReceived := bytesReceived + (sock2 receiveDataInto: receiveBuf)].
 							done := bytesSent >= bytesToSend and: [bytesReceived = bytesSent]]].
-	Transcript
-		show: 'closing connection';
-		cr.
+	'closing connection' traceCr.
 	sock1 waitForSendDoneFor: self standardTimeout.
 	sock1 close.
 	sock2 waitForDisconnectionFor: self standardTimeout.
 	extraBytes := sock2 discardReceivedData.
 	extraBytes > 0
-		ifTrue:
-			[Transcript
-				show: ' *** received ' , extraBytes size printString , ' extra bytes ***';
-				cr].
+		ifTrue: [ ' *** received ' , extraBytes size printString , ' extra bytes ***' traceCr ].
 	sock2 close.
 	sock1 waitForDisconnectionFor: self standardTimeout.
 	sock1 isUnconnectedOrInvalid ifFalse: [self error: 'sock1 not closed'].
 	sock2 isUnconnectedOrInvalid ifFalse: [self error: 'sock2 not closed'].
-	Transcript
-		show: '---------- Connection Closed ----------';
-		cr.
+	'---------- Connection Closed ----------' traceCr.
 	sock1 destroy.
 	sock2 destroy.
-	Transcript
-		show: 'loopback test done; time = ' , t printString;
-		cr.
-	Transcript
-		show: (bytesToSend asFloat / t roundTo: 0.01) printString
-					, '* 1000 bytes/sec';
-		cr.
-	Transcript endEntry
+	('loopback test done; time = ' , t printString) traceCr.
+	((bytesToSend asFloat / t roundTo: 0.01) printString , '* 1000 bytes/sec') traceCr.
+	Smalltalk tools transcript endEntry.
 ]
 
 { #category : #utilities }
@@ -316,46 +298,34 @@ Socket class >> sendTest [
 	"Socket sendTest"
 
 	| sock bytesToSend sendBuf bytesSent t serverName serverAddr |
-	Transcript
-		cr;
-		show: 'starting send test';
-		cr.
+	'
+starting send test' traceCr.
 	self initializeNetwork.
 	serverName := UIManager default request: 'What is the destination server?' initialAnswer: 'create.ucsb.edu'.
 	serverAddr := NetNameResolver addressForName: serverName timeout: 10.
 	serverAddr
 		ifNil: [ ^ self inform: 'Could not find an address for ' , serverName ].
 	sock := self new.
-	Transcript
-		show: '---------- Connecting ----------';
-		cr.
+	'---------- Connecting ----------' traceCr.
 	sock connectTo: serverAddr port: 9.
 	sock isConnected
 		ifFalse: [
 			sock destroy.
 			^ self inform: 'could not connect' ].
-	Transcript
-		show: 'connection established; sending data';
-		cr.
+	'connection established; sending data' traceCr.
 	bytesToSend := 1000000.
 	sendBuf := String new: 64 * 1024 withAll: $x.
 	bytesSent := 0.
-	t := Time
-		millisecondsToRun: [
-			[ bytesSent < bytesToSend ]
-				whileTrue: [
-					sock sendDone
-						ifTrue: [ bytesSent := bytesSent + (sock sendSomeData: sendBuf) ] ] ].
+	t := Time millisecondsToRun: [
+		[ bytesSent < bytesToSend ] whileTrue: [
+			sock sendDone
+				ifTrue: [ bytesSent := bytesSent + (sock sendSomeData: sendBuf) ] ] ].
 	sock waitForSendDoneFor: self standardTimeout.
 	sock destroy.
-	Transcript
-		show: '---------- Connection Closed ----------';
-		cr;
-		show: 'send test done; time = ' , t printString;
-		cr;
-		show: (bytesToSend asFloat / t roundTo: 0.01) printString , ' * 1000 bytes/sec';
-		cr;
-		endEntry
+	'---------- Connection Closed ----------' traceCr.
+	('send test done; time = ' , t printString) traceCr.
+	((bytesToSend asFloat / t roundTo: 0.01) printString , ' * 1000 bytes/sec') traceCr.
+	Smalltalk tools transcript endEntry.
 ]
 
 { #category : #utilities }
@@ -450,7 +420,18 @@ Socket >> address [
 
 { #category : #'initialize - destroy' }
 Socket >> bindTo: anAddress port: aPort [
-	^self primSocket: socketHandle bindTo: anAddress port: aPort
+	"Bind to the local port <aPort>, on the interface specified by <anAddress>
+	(`SocketAddress zero` specifies all interfaces).
+	Primarily used to prepare to listen for incoming connections with #listen[WithBacklog:]."
+
+	self primSocket: socketHandle bindTo: anAddress port: aPort
+]
+
+{ #category : #'initialize - destroy' }
+Socket >> bindToPort: aPort [
+	"Bind to the local port <aPort>, often in order to listen for incoming connections."
+
+	self bindTo: SocketAddress zero port: aPort
 ]
 
 { #category : #'private - errors' }
@@ -738,37 +719,52 @@ Socket >> isWaitingForConnection [
 ]
 
 { #category : #'connection open/close' }
+Socket >> listen [
+	"Listen for a connection (after binding to a port using #bindTo:port:).
+	If this method succeeds, you must wait for a connection attempt with #waitForConnectionFor:,
+	then #accept may be used to establish a new connection"
+
+	self listenWithBacklog: 1
+]
+
+{ #category : #'connection open/close' }
 Socket >> listenOn: port [
-	"Listen for a connection on the given port. This operation will return immediately; follow it with waitForConnectionUntil: to wait until a connection is established."
 
-	| status |
-	status := self primSocketConnectionStatus: socketHandle.
-	(status == Unconnected)
-		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before listening for a new connection'].
-
-	self primSocket: socketHandle listenOn: port
+	self
+		bindToPort: port;
+		listen
 ]
 
 { #category : #'connection open/close' }
 Socket >> listenOn: portNumber backlogSize: backlog [
-	"Listen for a connection on the given port.
-	If this method succeeds, #accept may be used to establish a new connection"
-	| status |
-	status := self primSocketConnectionStatus: socketHandle.
-	(status == Unconnected)
-		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before listening for a new connection'].
-	self primSocket: socketHandle listenOn: portNumber backlogSize: backlog
+
+	self
+		bindToPort: portNumber;
+		listenWithBacklog: backlog
 ]
 
 { #category : #'connection open/close' }
 Socket >> listenOn: portNumber backlogSize: backlog interface: ifAddr [
-	"Listen for a connection on the given port.
-	If this method succeeds, #accept may be used to establish a new connection"
+
+	self
+		bindTo: ifAddr port: portNumber;
+		listenWithBacklog: backlog
+]
+
+{ #category : #'connection open/close' }
+Socket >> listenWithBacklog: anIntegerBacklog [
+	"Listen for a connection, allowing <anIntegerBacklog> connections to be queued by the OS.
+	Must already be bound to a port using #bindTo:port:.
+	If this method succeeds, you must wait for a connection attempt with #waitForConnectionFor:,
+	then #accept may be used to establish a new connection"
+
 	| status |
 	status := self primSocketConnectionStatus: socketHandle.
-	(status == Unconnected)
-		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before listening for a new connection'].
-	self primSocket: socketHandle listenOn: portNumber backlogSize: backlog interface: ifAddr
+	status == Unconnected ifFalse: [
+		InvalidSocketStatusException signal:
+			'Socket status must Unconnected before listening for a new connection' ].
+
+	self primSocket: socketHandle listenWithBacklog: anIntegerBacklog
 ]
 
 { #category : #accessing }
@@ -871,30 +867,6 @@ Socket >> primSocket: socketID getOption: aString [
 
 	<primitive: 'primitiveSocketGetOptions' module: 'SocketPlugin'>
 	^ SocketError signal: self socketErrorMessage
-]
-
-{ #category : #primitives }
-Socket >> primSocket: socketID listenOn: port [
-	"Listen for a connection on the given port. This is an asynchronous call; query the socket status to discover if and when the connection is actually completed."
-
-	<primitive: 'primitiveSocketListenWithOrWithoutBacklog' module: 'SocketPlugin'>
-	^ SocketError signal: self socketErrorMessage
-]
-
-{ #category : #primitives }
-Socket >> primSocket: aHandle listenOn: portNumber backlogSize: backlog [
-	"Primitive. Set up the socket to listen on the given port.
-	Will be used in conjunction with #accept only."
-	<primitive: 'primitiveSocketListenWithOrWithoutBacklog' module: 'SocketPlugin'>
-	self destroy. "Accept not supported so clean up"
-]
-
-{ #category : #primitives }
-Socket >> primSocket: aHandle listenOn: portNumber backlogSize: backlog interface: ifAddr [
-	"Primitive. Set up the socket to listen on the given port.
-	Will be used in conjunction with #accept only."
-	<primitive: 'primitiveSocketListenOnPortBacklogInterface' module: 'SocketPlugin'>
-	self destroy. "Accept not supported so clean up"
 ]
 
 { #category : #'primitives - ipv6' }

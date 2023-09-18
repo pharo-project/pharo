@@ -1,10 +1,12 @@
 Class {
-	#name : #FLSerializerTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Configuration'
+	#name : 'FLSerializerTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Configuration',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Configuration'
 }
 
-{ #category : #'tests-configuring-materialization' }
+{ #category : 'tests-configuring-materialization' }
 FLSerializerTest >> testAddPostMaterializationAction [
 	| block |
 	block := [ :x | 1 + 2 ].
@@ -14,7 +16,7 @@ FLSerializerTest >> testAddPostMaterializationAction [
 	self assert: self serializer postMaterializationActions anyOne compiledBlock equals: block compiledBlock
 ]
 
-{ #category : #'tests-configuring-materialization' }
+{ #category : 'tests-configuring-materialization' }
 FLSerializerTest >> testAddPostMaterializationActionCanAcceptThreeArguments [
 	{
 		[].
@@ -31,7 +33,7 @@ FLSerializerTest >> testAddPostMaterializationActionCanAcceptThreeArguments [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-materialization' }
+{ #category : 'tests-configuring-materialization' }
 FLSerializerTest >> testAddPostMaterializationActionMustBeBlock [
 	{
 		Object.
@@ -49,7 +51,7 @@ FLSerializerTest >> testAddPostMaterializationActionMustBeBlock [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-materialization' }
+{ #category : 'tests-configuring-materialization' }
 FLSerializerTest >> testAddPostMaterializationActionMustBeCleanBlock [
 	self
 		should: [ self serializer addPostMaterializationAction: [ self ] ]
@@ -60,7 +62,7 @@ FLSerializerTest >> testAddPostMaterializationActionMustBeCleanBlock [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-materialization' }
+{ #category : 'tests-configuring-materialization' }
 FLSerializerTest >> testAddPreMaterializationAction [
 	| block |
 	block := [ :x | 1 + 2 ].
@@ -70,7 +72,7 @@ FLSerializerTest >> testAddPreMaterializationAction [
 	self assert: self serializer preMaterializationActions anyOne compiledBlock equals: block compiledBlock
 ]
 
-{ #category : #'tests-configuring-materialization' }
+{ #category : 'tests-configuring-materialization' }
 FLSerializerTest >> testAddPreMaterializationActionCanAcceptTwoArguments [
 	{
 		[].
@@ -86,7 +88,7 @@ FLSerializerTest >> testAddPreMaterializationActionCanAcceptTwoArguments [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-materialization' }
+{ #category : 'tests-configuring-materialization' }
 FLSerializerTest >> testAddPreMaterializationActionMustBeBlock [
 	{
 		Object.
@@ -104,7 +106,7 @@ FLSerializerTest >> testAddPreMaterializationActionMustBeBlock [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-materialization' }
+{ #category : 'tests-configuring-materialization' }
 FLSerializerTest >> testAddPreMaterializationActionMustBeCleanBlock [
 	self
 		should: [ self serializer addPreMaterializationAction: [ self ] ]
@@ -115,7 +117,7 @@ FLSerializerTest >> testAddPreMaterializationActionMustBeCleanBlock [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-materialization' }
+{ #category : 'tests-configuring-materialization' }
 FLSerializerTest >> testAtPutAdditionalObject [
 	self assert: self serializer additionalObjects isEmpty.
 	
@@ -127,7 +129,7 @@ FLSerializerTest >> testAtPutAdditionalObject [
 	self assert: (self serializer additionalObjects at: #foo) identicalTo: Class
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testEnableLimitObjectsException [
 	self deny: self serializer isLimitObjectsExceptionEnabled.
 	
@@ -135,7 +137,7 @@ FLSerializerTest >> testEnableLimitObjectsException [
 	self assert: self serializer isLimitObjectsExceptionEnabled
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeAllBehaviors [
 	| behaviors |
 	behaviors := { Object. Object. Array. self classFactory silentlyNewTrait }.
@@ -145,7 +147,7 @@ FLSerializerTest >> testFullySerializeAllBehaviors [
 	self assertCollection: self serializer behaviorsToSerialize  hasSameElements: behaviors asSet
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeAllBehaviorsMustBeCollection [
 	{
 		Object.
@@ -162,7 +164,7 @@ FLSerializerTest >> testFullySerializeAllBehaviorsMustBeCollection [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeAllMethods [
 	| methods |
 	methods := { Object>>#=. Object>>#=. Object>>#at: }.
@@ -172,7 +174,7 @@ FLSerializerTest >> testFullySerializeAllMethods [
 	self assertCollection: self serializer methodsToSerialize hasSameElements: methods asSet
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeAllMethodsMustBeCollection [
 	{
 		Object.
@@ -189,7 +191,7 @@ FLSerializerTest >> testFullySerializeAllMethodsMustBeCollection [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeBehavior [
 	self serializer fullySerializeBehavior: Object.
 	
@@ -197,7 +199,7 @@ FLSerializerTest >> testFullySerializeBehavior [
 	self assert: self serializer behaviorsToSerialize anyOne identicalTo: Object
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeBehaviorMustBeBehavior [
 	{
 		Object new.
@@ -217,7 +219,7 @@ FLSerializerTest >> testFullySerializeBehaviorMustBeBehavior [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeBehaviorUsesSet [
 	self serializer
 		fullySerializeBehavior: Object;
@@ -226,7 +228,7 @@ FLSerializerTest >> testFullySerializeBehaviorUsesSet [
 	self assert: self serializer behaviorsToSerialize size equals: 1
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeMethod [
 	self serializer fullySerializeMethod: Object>>#=.
 	
@@ -234,7 +236,7 @@ FLSerializerTest >> testFullySerializeMethod [
 	self assert: self serializer methodsToSerialize anyOne identicalTo: Object>>#=
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeMethodMustBeMethod [
 	{
 		Object new.
@@ -250,7 +252,7 @@ FLSerializerTest >> testFullySerializeMethodMustBeMethod [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testFullySerializeMethodUsesSet [
 	self serializer
 		fullySerializeMethod: Object>>#=;
@@ -259,7 +261,7 @@ FLSerializerTest >> testFullySerializeMethodUsesSet [
 	self assert: self serializer methodsToSerialize size equals: 1
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testLimitDepthTo [
 	self deny: self serializer hasDepthLimit.
 
@@ -273,7 +275,7 @@ FLSerializerTest >> testLimitDepthTo [
 	self assert: self serializer hasDepthLimit
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testLimitObjectsTo [
 	self deny: self serializer hasObjectsLimit.
 
@@ -287,7 +289,7 @@ FLSerializerTest >> testLimitObjectsTo [
 	self assert: self serializer hasObjectsLimit
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testLookUpAllInGlobalsMustBeCollection [
 	{
 		Object.
@@ -304,9 +306,12 @@ FLSerializerTest >> testLookUpAllInGlobalsMustBeCollection [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testLookUpInGlobalsMustBeGlobal [
 	| value |
+	"Ensure that we do not use the system environment for this test"
+	self testingEnvironment: FLSystemGlobalsTestResource current globals.
+	
 	value := Object new.
 	self serializer lookUpInGlobals: value.
 	self
@@ -316,6 +321,7 @@ FLSerializerTest >> testLookUpInGlobalsMustBeGlobal [
 	self environmentOfTest
 		at: #aGlobal
 		put: value.
+	addedGlobals add: #aGlobal.
 	serializer := FLSerializer new
 		streamFactory: [ ByteArray new writeStream ];
 		object: Object new;
@@ -336,7 +342,7 @@ FLSerializerTest >> testLookUpInGlobalsMustBeGlobal [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testLookUpInGlobalsObjectKey [
 	| object marge |
 	object := Object new.
@@ -344,6 +350,7 @@ FLSerializerTest >> testLookUpInGlobalsObjectKey [
 	self environmentOfTest
 		at: object
 		put: marge.
+	addedGlobals add: object.
 	self serializer lookUpInGlobals: object.
 
 	self assert: (self serializer globals includesKey: object).
@@ -351,7 +358,7 @@ FLSerializerTest >> testLookUpInGlobalsObjectKey [
 	self deny: (self serializer globals includesKey: marge)
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testLookUpInGlobalsPassingValue [
 	| object1 object2 |
 	object1 := Object new.
@@ -359,6 +366,7 @@ FLSerializerTest >> testLookUpInGlobalsPassingValue [
 	self environmentOfTest
 		at: object1
 		put: object2.
+	addedGlobals add: object1.
 	self serializer lookUpInGlobals: object2.
 	
 	self assert: (self serializer globals includesKey: object1).
@@ -366,13 +374,14 @@ FLSerializerTest >> testLookUpInGlobalsPassingValue [
 	self deny: (self serializer globals includesKey: object2)
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testLookUpInGlobalsSymbolKey [
 	| object |
 	object := Object new.
 	self environmentOfTest
 		at: #aGlobal
 		put: object.
+	addedGlobals add: #aGlobal.
 	self serializer lookUpInGlobals: #aGlobal.
 	
 	self assert: (self serializer globals includesKey: #aGlobal).
@@ -380,7 +389,7 @@ FLSerializerTest >> testLookUpInGlobalsSymbolKey [
 	self deny: (self serializer globals includesKey: object)
 ]
 
-{ #category : #'tests-configuring-globals' }
+{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testLookupAllInGlobals [
 	| globals global1 global2 marge |
 	global1 := Object new.
@@ -403,7 +412,7 @@ FLSerializerTest >> testLookupAllInGlobals [
 		self assert: (self serializer globals includesAssociation: assoc) ]
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testObject [
 	| object |
 	object := Object new.
@@ -411,7 +420,7 @@ FLSerializerTest >> testObject [
 	self assert: self serializer object identicalTo: object
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testObjectCollection [
 	| array |
 	array := Array new: 0.
@@ -422,7 +431,7 @@ FLSerializerTest >> testObjectCollection [
 	self assert: self serializer hasMultipleObjects
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testObjectCollectionMustBeCollection [
 	{
 		Object new.
@@ -446,7 +455,7 @@ FLSerializerTest >> testObjectCollectionMustBeCollection [
 			raise: FLConfigurationError ]
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testObjectCollectionWhenAlreadySet [
 	serializer := FLSerializer new
 		objectCollection: (Array new: 0);
@@ -457,7 +466,7 @@ FLSerializerTest >> testObjectCollectionWhenAlreadySet [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testObjectWhenAlreadySet [
 	serializer := FLSerializer new
 		object: Object new;
@@ -468,7 +477,7 @@ FLSerializerTest >> testObjectWhenAlreadySet [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testWhenSubstituteBy [
 	| condition substitute substitution |
 	condition := [ :x | x - 3 ].
@@ -487,7 +496,7 @@ FLSerializerTest >> testWhenSubstituteBy [
 	self assert: substitution value compiledBlock identicalTo: substitute compiledBlock
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testWhenSubstituteByMustAcceptSingleArgument [
 	{
 		[].
@@ -515,7 +524,7 @@ FLSerializerTest >> testWhenSubstituteByMustAcceptSingleArgument [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLSerializerTest >> testWhenSubstituteByMustBeBlocks [
 	{
 		Object -> [ :x ].

@@ -29,7 +29,7 @@ RBRemoveProtocolChange >> changeString [
 ]
 
 { #category : #private }
-RBRemoveProtocolChange >> primitiveExecute [
+RBRemoveProtocolChange >> generateChanges [
 
 	self changeClass removeProtocolIfEmpty: protocol
 ]

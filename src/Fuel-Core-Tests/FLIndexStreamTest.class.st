@@ -2,24 +2,26 @@
 SUnit tests for index streams
 "
 Class {
-	#name : #FLIndexStreamTest,
-	#superclass : #TestCase,
-	#category : #'Fuel-Core-Tests-Streams'
+	#name : 'FLIndexStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Fuel-Core-Tests-Streams',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Streams'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FLIndexStreamTest >> indexStreamOn: aStream digits: aNumberOfDigits [
 	^ FLIndexStream 
 		on: aStream
 		digits: aNumberOfDigits
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLIndexStreamTest >> testCreation [
 	self indexStreamOn: #() writeStream digits: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLIndexStreamTest >> testNextIndex [
 	| indexes indexStream targetStream |
 	indexes := #(0 1 128 255).
@@ -33,7 +35,7 @@ FLIndexStreamTest >> testNextIndex [
 	indexes do: [ :x | self assert: indexStream nextIndex equals: x ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLIndexStreamTest >> testNextIndexPut [
 
 	| indexStream targetStream |

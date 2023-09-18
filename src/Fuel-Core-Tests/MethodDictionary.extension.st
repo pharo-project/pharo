@@ -1,6 +1,6 @@
-Extension { #name : #MethodDictionary }
+Extension { #name : 'MethodDictionary' }
 
-{ #category : #'*Fuel-Core-Tests' }
+{ #category : '*Fuel-Core-Tests' }
 MethodDictionary >> isEqualRegardlessMethodsTrailerTo: aMethodDictionary [
 
 	"Two dictionaries are equal if

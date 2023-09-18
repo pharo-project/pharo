@@ -53,7 +53,7 @@ TestAsserter class >> classForTestSuite [
 
 { #category : #logging }
 TestAsserter class >> failureLog [
-	^Transcript
+	^ Smalltalk tools transcript
 ]
 
 { #category : #logging }

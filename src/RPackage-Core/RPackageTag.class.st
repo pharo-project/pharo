@@ -3,169 +3,132 @@ I'm a class tag for an RPackage.
 Class tags can be any kind of metadata the user needs, but they are for now equivalent to class categories. 
 "
 Class {
-	#name : #RPackageTag,
-	#superclass : #Object,
+	#name : 'RPackageTag',
+	#superclass : 'Object',
 	#instVars : [
 		'package',
 		'name',
 		'classes'
 	],
-	#category : #'RPackage-Core-Base'
+	#category : 'RPackage-Core-Base',
+	#package : 'RPackage-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
-RPackageTag class >> new [
-	self error: 'Use #package:name:'
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RPackageTag class >> package: aPackage name: aString [
-	^ self basicNew
-		initializePackage: aPackage name: aString;
-		yourself
+
+	^ self new
+		  package: aPackage;
+		  name: aString;
+		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> addClass: aClass [
 
 	aClass category = self categoryName ifFalse: [ aClass category: self categoryName ].
 	classes add: aClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageTag >> basicRenameTo: aString [
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> categoryName [
 	"Answer this tag as a SystemCategory.
     That would be RPackage, '-', RPackageTag, unless tag is root (same name as RPackage)"
 	^ self toCategoryName: self name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> classNames [
 
 	^ self classes collect: [ :class | class name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> classes [
 
 	^ classes
 ]
 
-{ #category : #accessing }
-RPackageTag >> ensureSystemCategory [
-	"We should not hardcode the global variable but ask the package organizer for the organization."
-
-	self organizer addCategory: self categoryName
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> environment [
 
 	^ self package environment
 ]
 
-{ #category : #accessing }
-RPackageTag >> extendedClasses [
-	^ #()
-]
-
-{ #category : #accessing }
-RPackageTag >> extensionCategoriesForClass: aClass [
-
-	self
-		deprecated: 'Use #extensionProtocolsForClass: instead.'
-		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
-	^ self extensionProtocolsForClass: aClass
-]
-
-{ #category : #accessing }
-RPackageTag >> extensionProtocolsForClass: aClass [
-
-	^ self package extensionProtocolsForClass: aClass
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageTag >> hasClass: aClass [
-	^  self hasClassNamed: aClass name
+
+	^ self classes includes: aClass instanceSide
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageTag >> hasClassNamed: aSymbol [
 	^ self classNames includes: aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageTag >> includesClass: aClass [
-	^ self hasClassNamed: aClass name
+	"To deprecate in favor of #hasClass:"
+
+	^ self hasClass: aClass
 ]
 
-{ #category : #testing }
-RPackageTag >> includesProtocol: protocol ofClass: aClass [
-
-	^ self package includesProtocol: protocol ofClass: aClass
-]
-
-{ #category : #testing }
-RPackageTag >> includesSelector: aSelector ofClass: aClass [
-
-	^ self package includesSelector: aSelector ofClass: aClass
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 RPackageTag >> initialize [
 
 	super initialize.
 	classes := IdentitySet new
 ]
 
-{ #category : #initialization }
-RPackageTag >> initializePackage: aPackage name: aString [
-	package := aPackage.
-	name := aString.
-	self initialize
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageTag >> isEmpty [
 	^ self classNames isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageTag >> isRoot [
 	^ self name = self packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> name [
 	^ name
 ]
 
-{ #category : #accessing }
-RPackageTag >> orderedClasses [
-	^ self package orderedClasses select:[:c | c category = self categoryName]
+{ #category : 'accessing' }
+RPackageTag >> name: aSymbol [
+
+	name := aSymbol asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> organizer [
 	^ self package organizer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RPackageTag >> package: anObject [
+
+	package := anObject
+]
+
+{ #category : 'accessing' }
 RPackageTag >> packageName [
 	^ self package name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RPackageTag >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -173,7 +136,7 @@ RPackageTag >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RPackageTag >> promoteAsPackage [
 	"This method converts this package tag into a package"
 
@@ -186,58 +149,48 @@ RPackageTag >> promoteAsPackage [
 	self organizer registerPackage: newPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> removeClass: aClass [
 
-	^ classes remove: aClass ifAbsent: [  ]
+	| oldObject |
+	oldObject := classes remove: aClass ifAbsent: [  ].
+	self isEmpty ifTrue: [ self removeFromPackage ].
+	^ oldObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> removeFromPackage [
-	self
-		assert: self isEmpty
-		description: 'Package tag is not empty'.
 
-	self package basicRemoveTag: self
+	self assert: self isEmpty description: 'Package tag is not empty'.
+
+	self package removeTag: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> renameTo: newTagName [
 
-	| oldName categoryName tagName |
-	tagName := self name.
-	oldName := self toCategoryName: tagName.
-	categoryName := self toCategoryName: newTagName.
+	| oldCategoryName newCategoryName oldTagName |
+	oldTagName := self name.
+	oldCategoryName := self toCategoryName: oldTagName.
+	newCategoryName := self toCategoryName: newTagName.
 
-	oldName = categoryName ifTrue: [ ^ self ].
+	oldTagName = newTagName ifTrue: [ ^ self ].
 
 	self basicRenameTo: newTagName.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self classes do: [ :each | each category: categoryName ].
-		self organizer renameCategory: oldName toBe: categoryName ].
-	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: tagName newName: newTagName)
+		self flag: #package. "This should be removed with the system organizer."
+		self classes do: [ :each | each category: newCategoryName ].
+		self organizer renameCategory: oldCategoryName toBe: newCategoryName ].
+	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 
-{ #category : #accessing }
-RPackageTag >> renameTo: aString category: categoryName [
-
-	| oldName |
-	oldName := self toCategoryName: self name.
-	oldName = categoryName ifTrue: [ ^ self ].
-
-	self basicRenameTo: aString.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self classes do: [ :each | each category: categoryName ].
-		self organizer renameCategory: oldName toBe: categoryName ]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTag >> rootTagName [
 
 	^ self package rootTagName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageTag >> toCategoryName: aString [
 	^ aString = self packageName
 		ifTrue: [ aString ]

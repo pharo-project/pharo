@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*Shift-ClassInstaller' }
+{ #category : '*Shift-ClassInstaller' }
 Class >> addClassSlot: aSlot [
 
 	^ self classInstaller update: self to: [ :builder |
@@ -8,7 +8,7 @@ Class >> addClassSlot: aSlot [
 			classSlots: (self class classLayout slots copyWith: aSlot)]
 ]
 
-{ #category : #'*Shift-ClassInstaller' }
+{ #category : '*Shift-ClassInstaller' }
 Class >> addSlot: aSlot [
 
 	^ self classInstaller
@@ -16,7 +16,7 @@ Class >> addSlot: aSlot [
 		  to: [ :builder | builder slots: (self localSlots copyWith: aSlot) ]
 ]
 
-{ #category : #'*Shift-ClassInstaller' }
+{ #category : '*Shift-ClassInstaller' }
 Class >> removeClassSlot: aSlot [
 
 	^ self classInstaller update: self to: [ :builder |
@@ -24,7 +24,7 @@ Class >> removeClassSlot: aSlot [
 			classSlots: (self class classLayout slots copyWithout: aSlot)]
 ]
 
-{ #category : #'*Shift-ClassInstaller' }
+{ #category : '*Shift-ClassInstaller' }
 Class >> removeSlot: aSlot [
 
 	(self classLayout slots includes: aSlot) ifFalse: [

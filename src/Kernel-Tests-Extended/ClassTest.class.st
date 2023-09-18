@@ -2,29 +2,31 @@
 SUnit tests for classes
 "
 Class {
-	#name : #ClassTest,
-	#superclass : #ClassTestCase,
+	#name : 'ClassTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'className',
 		'testEnvironment'
 	],
-	#category : #'Kernel-Tests-Extended-Classes'
+	#category : 'Kernel-Tests-Extended-Classes',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Classes'
 }
 
-{ #category : #setup }
+{ #category : 'setup' }
 ClassTest >> categoryNameForTemporaryClasses [
 	"Answer the category where to classify temporarily created classes"
 
 	^'Dummy-Tests-Class'
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ClassTest >> classToBeTested [
 
 	^ Class
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 ClassTest >> deleteClass [
 	| cl |
 	cl := testEnvironment at: className ifAbsent: [ ^ self ].
@@ -35,26 +37,26 @@ ClassTest >> deleteClass [
 	cl removeFromSystemUnlogged
 ]
 
-{ #category : #'referencing methods' }
+{ #category : 'referencing methods' }
 ClassTest >> referencingMethod1 [
 
 	^ ExampleForTest1
 ]
 
-{ #category : #'referencing methods' }
+{ #category : 'referencing methods' }
 ClassTest >> referencingMethod2 [
 
 	^ {ExampleForTest12. ExampleForTest1}
 ]
 
-{ #category : #'referencing methods' }
+{ #category : 'referencing methods' }
 ClassTest >> referencingMethod3 [
 	"no reference"
 
 	^ self
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassTest >> setUp [
 	super setUp.
 	className := #TUTU.
@@ -67,7 +69,7 @@ ClassTest >> setUp [
 			package: self categoryNameForTemporaryClasses]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassTest >> tearDown [
 
 	self deleteClass.
@@ -77,7 +79,7 @@ ClassTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTest >> testAddClassSlot [
 	| tutu slot1 slot2 |
 	tutu := testEnvironment at: #TUTU.
@@ -89,7 +91,7 @@ ClassTest >> testAddClassSlot [
 	self assert: tutu class instVarNames equals: #(#X #Y)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTest >> testAddInstVarName [
 
 	| tutu |
@@ -100,7 +102,7 @@ ClassTest >> testAddInstVarName [
 	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTest >> testAddSlot [
 
 	| tutu |
@@ -112,7 +114,7 @@ ClassTest >> testAddSlot [
 	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTest >> testAddSlotAnonymous [
 
 	| tutu |
@@ -126,7 +128,7 @@ ClassTest >> testAddSlotAnonymous [
 	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
-{ #category : #'tests - access' }
+{ #category : 'tests - access' }
 ClassTest >> testAllSharedPools [
 	self assert: Point allSharedPools equals: OrderedCollection new.
 	self assert: Date sharedPools first equals: ChronologyConstants.
@@ -137,7 +139,12 @@ ClassTest >> testAllSharedPools [
 	self assertEmpty: SubclassPoolUser sharedPools
 ]
 
-{ #category : #tests }
+{ #category : 'tests - class variables' }
+ClassTest >> testAnyUserOfClassVarNamed [
+	self assert: ((Object anyUserOfClassVarNamed: #DependentsFields) isKindOf: Object)
+]
+
+{ #category : 'tests' }
 ClassTest >> testChangingShapeDoesNotPutNilInMethodsLastLiteralKey [
 	"Test that when the shape of a class changes, the key of the last literal of the methods is not nil"
 	| tutu |
@@ -148,14 +155,14 @@ ClassTest >> testChangingShapeDoesNotPutNilInMethodsLastLiteralKey [
 	self deny: (tutu >> #foo) allLiterals last key isNil
 ]
 
-{ #category : #'test - accessing parallel hierarchy' }
+{ #category : 'test - accessing parallel hierarchy' }
 ClassTest >> testClassSide [
 
 	self assert: Point classSide equals: Point class.
 	self assert: Point class classSide equals: Point class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTest >> testClassVariableEntanglement [
 	| firstClassName firstClass secondClassName secondClass thirdClassName thirdClass |
 	<ignoreNotImplementedSelectors: #(myVar myVar:)>
@@ -226,13 +233,13 @@ ClassTest >> testClassVariableEntanglement [
 			removeFromSystemUnlogged ]
 ]
 
-{ #category : #'tests - accessing - comments' }
+{ #category : 'tests - accessing - comments' }
 ClassTest >> testComment [
 	self assert: Object comment isNotNil.
 	self assert: Object class comment equals: Object comment
 ]
 
-{ #category : #'tests - accessing - comments' }
+{ #category : 'tests - accessing - comments' }
 ClassTest >> testCommentSourcePointer [
 
 	self
@@ -240,13 +247,13 @@ ClassTest >> testCommentSourcePointer [
 		identicalTo: Object commentSourcePointer
 ]
 
-{ #category : #'tests - accessing - comments' }
+{ #category : 'tests - accessing - comments' }
 ClassTest >> testCommentStamp [
 	self assert: Object commentStamp equals: ''.
 	self assert: Object class commentStamp equals: ''.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTest >> testCommonSuperclassWith [
 	self assert: (OrderedCollection commonSuperclassWith: Array) equals: SequenceableCollection.
 	self assert: (OrderedCollection commonSuperclassWith: OrderedCollection) equals: SequenceableCollection.
@@ -258,28 +265,28 @@ ClassTest >> testCommonSuperclassWith [
 	self assert: (nil commonSuperclassWith: ProtoObject) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTest >> testCompileAll [
 	ClassTest compileAll
 ]
 
-{ #category : #'tests - dependencies' }
+{ #category : 'tests - dependencies' }
 ClassTest >> testDependencies [
 	self assert: (self class dependentClasses includes: self class superclass).
 	self assert: (self class dependentClasses includes: Date)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTest >> testEnvironment [
 	^ testEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTest >> testEnvironment: anObject [
 	testEnvironment := anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTest >> testHasBindingThatBeginsWith [
 	self assert: (SmalltalkImage hasBindingThatBeginsWith: 'Compiler').
 	self assert: (SmalltalkImage hasBindingThatBeginsWith: 'Object').
@@ -291,20 +298,20 @@ ClassTest >> testHasBindingThatBeginsWith [
 	self deny: (CompiledMethod hasBindingThatBeginsWith: 'Compiler')
 ]
 
-{ #category : #'tests - class variables' }
+{ #category : 'tests - class variables' }
 ClassTest >> testHasClassVarNamed [
 
 	self assert: (Object hasClassVarNamed: #DependentsFields).
 	self deny: (Object hasClassVarNamed: #CompilerClass)
 ]
 
-{ #category : #'tests - accessing - comments' }
+{ #category : 'tests - accessing - comments' }
 ClassTest >> testHasComments [
 	self assert: Object hasComment.
 	self assert: Object class hasComment
 ]
 
-{ #category : #'tests - access' }
+{ #category : 'tests - access' }
 ClassTest >> testHasPoolVarNamed [
 
 	self assert: (Date usesLocalPoolVarNamed: 'DayNames').
@@ -316,7 +323,7 @@ ClassTest >> testHasPoolVarNamed [
 	self deny: (SubclassPoolUser usesLocalPoolVarNamed: 'AnAuthor')
 ]
 
-{ #category : #'tests - access' }
+{ #category : 'tests - access' }
 ClassTest >> testHasSharedPools [
 
 	self deny: Point hasSharedPools.
@@ -331,28 +338,28 @@ ClassTest >> testHasSharedPools [
 	self deny: SubclassPoolUser hasSharedPools
 ]
 
-{ #category : #'test - accessing parallel hierarchy' }
+{ #category : 'test - accessing parallel hierarchy' }
 ClassTest >> testInstanceSide [
 
 	self assert: Point instanceSide equals: Point.
 	self assert: Point class instanceSide equals: Point
 ]
 
-{ #category : #'test - accessing parallel hierarchy' }
+{ #category : 'test - accessing parallel hierarchy' }
 ClassTest >> testIsClassSide [
 
 	self deny: Point isClassSide.
 	self assert: Point class isClassSide
 ]
 
-{ #category : #'test - accessing parallel hierarchy' }
+{ #category : 'test - accessing parallel hierarchy' }
 ClassTest >> testIsInstanceSide [
 
 	self assert: Point isInstanceSide.
 	self deny: Point class isInstanceSide
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - navigation' }
 ClassTest >> testMethodsReferencingClass [
 	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest111)) equals: {(ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
 	self
@@ -361,7 +368,7 @@ ClassTest >> testMethodsReferencingClass [
 	self assertEmpty: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #BehaviorTest))
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - navigation' }
 ClassTest >> testMethodsReferencingClasses [
 
 	| collectionOfMethods collectionOfMethodsShouldBe |
@@ -376,7 +383,7 @@ ClassTest >> testMethodsReferencingClasses [
 	self assert: collectionOfMethods asSet equals: collectionOfMethodsShouldBe asSet
 ]
 
-{ #category : #'tests - class creation' }
+{ #category : 'tests - class creation' }
 ClassTest >> testNewSubclass [
 	| cls |
 	cls := Point newSubclass.
@@ -390,7 +397,7 @@ ClassTest >> testNewSubclass [
 	cls removeFromSystem
 ]
 
-{ #category : #'tests - file in/out' }
+{ #category : 'tests - file in/out' }
 ClassTest >> testOrdersACollectionOfClassesBySuperclass [
 	| ordered |
 	ordered := (Class superclassOrder:
@@ -408,7 +415,7 @@ ClassTest >> testOrdersACollectionOfClassesBySuperclass [
 	self assert: (ordered indexOf: ExampleForTest1 class) < (ordered indexOf: ExampleForTest12 class)
 ]
 
-{ #category : #'tests - file in/out' }
+{ #category : 'tests - file in/out' }
 ClassTest >> testOrdersMetaClassAfterItsClassInstance [
 	| ordered |
 	ordered := (Class superclassOrder:
@@ -424,7 +431,7 @@ ClassTest >> testOrdersMetaClassAfterItsClassInstance [
 	self assert: (ordered indexOf: Boolean) < (ordered indexOf: True)
 ]
 
-{ #category : #'tests - pools' }
+{ #category : 'tests - pools' }
 ClassTest >> testPoolVariableAccessibleInClassUser [
 	"This test shows that a Pool Variable is accessible from the class that declare the Pool usage: here the superclass"
 
@@ -435,7 +442,7 @@ ClassTest >> testPoolVariableAccessibleInClassUser [
 	self assert: RootClassPoolUser author equals: 'Ducasse'
 ]
 
-{ #category : #'tests - pools' }
+{ #category : 'tests - pools' }
 ClassTest >> testPoolVariableAccessibleInSubclassOfClassUser [
 	"This test shows that a Pool Variable is not accessible from a subclass that declare the Pool usage: here SubFlop subclass of Flop and this is a bug. "
 
@@ -446,7 +453,7 @@ ClassTest >> testPoolVariableAccessibleInSubclassOfClassUser [
 	self assert: SubclassPoolUser author equals: 'Ducasse'
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - navigation' }
 ClassTest >> testReferencedClasses [
 	{(ExceptionTester -> { MyTestNotification. Warning. String. MyResumableTestError. OrderedCollection. MyTestError}).
 	 (CollectionCombinator -> {Array}).
@@ -461,7 +468,7 @@ ClassTest >> testReferencedClasses [
 	self assert: (SmalltalkImage class>>#compilerClass ) referencedClasses isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTest >> testRemoveClassSlot [
 	| tutu slot1 slot2 |
 	tutu := testEnvironment at: #TUTU.
@@ -477,7 +484,7 @@ ClassTest >> testRemoveClassSlot [
 	self assert: tutu class instVarNames equals: #()
 ]
 
-{ #category : #'tests - access' }
+{ #category : 'tests - access' }
 ClassTest >> testSharedPoolOfVarNamed [
 
 	self assert: (Date sharedPoolOfVarNamed: 'DayNames') equals: ChronologyConstants.
@@ -493,7 +500,7 @@ ClassTest >> testSharedPoolOfVarNamed [
 	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'Gloups') equals: PoolDefiner
 ]
 
-{ #category : #'tests - access' }
+{ #category : 'tests - access' }
 ClassTest >> testSharedPools [
 	self assert: Point sharedPools equals: OrderedCollection new.
 	self assert: Date sharedPools first equals: ChronologyConstants.
@@ -504,7 +511,7 @@ ClassTest >> testSharedPools [
 	self assertEmpty: SubclassPoolUser sharedPools
 ]
 
-{ #category : #'tests - class creation' }
+{ #category : 'tests - class creation' }
 ClassTest >> testSubclass [
 	| cls |
 	(testEnvironment includesKey: #SubclassExample) ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
@@ -521,7 +528,7 @@ ClassTest >> testSubclass [
 	cls removeFromSystem
 ]
 
-{ #category : #'tests - class creation' }
+{ #category : 'tests - class creation' }
 ClassTest >> testSubclassInstanceVariableNames [
 	| cls |
 	(testEnvironment includesKey: #SubclassExample) ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
@@ -542,7 +549,7 @@ ClassTest >> testSubclassInstanceVariableNames [
 	cls removeFromSystem
 ]
 
-{ #category : #'tests - file in/out' }
+{ #category : 'tests - file in/out' }
 ClassTest >> testSuperclassOrder [
 	|  ordered orderedSuperclasses shuffledSuperclasses |
 	orderedSuperclasses := {ProtoObject. Object. Collection. SequenceableCollection}.
@@ -556,7 +563,7 @@ ClassTest >> testSuperclassOrder [
 	self assert: ordered equals: orderedSuperclasses asOrderedCollection
 ]
 
-{ #category : #'tests - file in/out' }
+{ #category : 'tests - file in/out' }
 ClassTest >> testSuperclassOrderPreservingOrder [
 	| noHierarchicalRelationship ordered |
 	"a shuffled collection of direct subclasses of Collection"
@@ -568,7 +575,7 @@ ClassTest >> testSuperclassOrderPreservingOrder [
 	self assert: ordered equals: noHierarchicalRelationship asOrderedCollection
 ]
 
-{ #category : #'tests - access' }
+{ #category : 'tests - access' }
 ClassTest >> testUsesPoolVarNamed [
 
 	self assert: (Date usesPoolVarNamed: 'DayNames').
@@ -580,13 +587,13 @@ ClassTest >> testUsesPoolVarNamed [
 	self assert: (SubclassPoolUser usesPoolVarNamed: 'AnAuthor')
 ]
 
-{ #category : #'tests - class variables' }
+{ #category : 'tests - class variables' }
 ClassTest >> testallClassVariables [
 
 	self assert: SmalltalkImage allClassVariables last name equals: #DependentsFields
 ]
 
-{ #category : #'tests - class variables' }
+{ #category : 'tests - class variables' }
 ClassTest >> testclassVarNames [
 
 	self assert: (Object classVarNames includes: #DependentsFields).
@@ -595,7 +602,7 @@ ClassTest >> testclassVarNames [
 	self assert: Object classVarNames equals: Object class classVarNames
 ]
 
-{ #category : #'tests - class variables' }
+{ #category : 'tests - class variables' }
 ClassTest >> testclassVariables [
 
 	self assert: Object classVariables first name equals: #DependentsFields.
@@ -604,7 +611,8 @@ ClassTest >> testclassVariables [
 	self assert: Object classVariables equals: Object class classVariables
 ]
 
-{ #category : #'tests - class creation' }
+{ #category : 'tests - class creation' }
 ClassTest >> unclassifiedCategory [
-	^#Unclassified
+
+	^ Class unclassifiedCategory
 ]

@@ -211,6 +211,7 @@ SystemDictionary >> forgetClass: aClass [
 	self flag: #package. "Unify categories and packages to have only one removal to do and not two."
 	self organization removeBehavior: aClass.
 	self organization removeClass: aClass.
+	aClass basicCategory: Class unclassifiedCategory.
 	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]
@@ -388,11 +389,10 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	"Rename the class, aClass, to have the title newName."
 
 	| oldref category |
-	self flag: #package. "When the category thing will be removed, we should have only one line updating the organization"
+	self flag: #package. "When the category thing will be removed, we should remove the category update"
 	category := self organization categoryOfBehavior: oldName.
 	self organization classify: newName under: category.
 	self organization removeBehavior: oldName.
-	self organization renameClass: aClass from: oldName to: newName.
 	oldref := self associationAt: oldName.
 	self removeKey: oldName.
 	oldref key: newName.

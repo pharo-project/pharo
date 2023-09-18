@@ -159,7 +159,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithPackage [
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
 		         build.
-	self assert: class category equals: #Unclassified
+	self assert: class category equals: Class unclassifiedCategory
 ]
 
 { #category : #tests }
