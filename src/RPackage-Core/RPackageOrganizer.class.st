@@ -138,17 +138,6 @@ RPackageOrganizer class >> isPackageDefinedForClass: aClass [
 	^ (self default packageOf: aClass) notNil
 ]
 
-{ #category : 'private' }
-RPackageOrganizer class >> methodAdded: anEvent [
-	"precondition: package exist, class exist"
-
-	| methodCategory |
-	methodCategory := anEvent protocol.
-	(methodCategory isEmptyOrNil or: [ methodCategory first ~= $* ]) ifFalse: [
-		(self isPackageDefinedForClass: anEvent methodClass) ifFalse: [
-			RPackage new named: (self packageOrganizer categoryOfBehavior: anEvent methodClass instanceSide) ] ]
-]
-
 { #category : 'class initialization' }
 RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 

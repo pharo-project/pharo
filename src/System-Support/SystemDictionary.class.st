@@ -20,18 +20,20 @@ As the above example let you guess, the global namespace of Smalltalk system is 
 	Smalltalk globals.
 "
 Class {
-	#name : #SystemDictionary,
-	#superclass : #IdentityDictionary,
+	#name : 'SystemDictionary',
+	#superclass : 'IdentityDictionary',
 	#instVars : [
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
 		'pseudoVariables'
 	],
-	#category : #'System-Support-Utilities'
+	#category : 'System-Support-Utilities',
+	#package : 'System-Support',
+	#tag : 'Utilities'
 }
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> allBehaviors [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
 
@@ -39,62 +41,62 @@ SystemDictionary >> allBehaviors [
 		  cachedBehaviors := self allClassesAndTraits flatCollect: [ :each | { each. each classSide } ] ]
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> allBehaviorsDo: aBlock [
 	"Execute a block on each class, metaclass, trait and trait class"
 
 	self allBehaviors do: aBlock
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> allClasses [
 	"Return all the class defines in the Smalltalk SystemDictionary"
 
 	^ self classNames collect: [:name | self at: name ]
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> allClassesAndTraits [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
 
 	^ self classAndTraitNames collect: [:each | self at: each ]
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> allClassesAndTraitsDo: aBlock [
 	"Evaluate the argument, aBlock, for each class and trait in the system."
 
 	^self classAndTraitNames do: [:each | aBlock value: (self at: each) ]
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> allClassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each class in the system."
 
 	^self classNames do: [:name | aBlock value: (self at: name) ]
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> allMethods [
 	"all methods, including copies from Traits"
 	^ self allBehaviors flatCollect: [ :behavior | behavior methods ]
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> allTraits [
 	"Return all traits defined in the Smalltalk SystemDictionary"
 
 	^ self traitNames collect: [:each | self at: each ]
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> allTraitsDo: aBlock [
 	"Evaluate the argument, aBlock, for each trait in the system."
 
 	^ self traitNames do: [ :name | aBlock value: (self at: name) ]
 ]
 
-{ #category : #'accessing - dictionary access' }
+{ #category : 'accessing - dictionary access' }
 SystemDictionary >> at: aKey put: anObject [
 	"Override from Dictionary to check Undeclared and fix up
 	references to undeclared variables."
@@ -106,14 +108,14 @@ SystemDictionary >> at: aKey put: anObject [
 	^ anObject
 ]
 
-{ #category : #'accessing - variable lookup' }
+{ #category : 'accessing - variable lookup' }
 SystemDictionary >> bindingOf: varName [
 	"SystemDictionaries includes symbols only"
 
 	^ super bindingOf: varName asSymbol
 ]
 
-{ #category : #'accessing - class and trait names' }
+{ #category : 'accessing - class and trait names' }
 SystemDictionary >> classAndTraitNames [
 	"Answer a sorted collection of all class and trait (not including class-traits) names.
 	Now traits are normal classes. So they are in same class list.
@@ -122,20 +124,20 @@ SystemDictionary >> classAndTraitNames [
 	^self classNames
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> classNamed: className [
 
 	^ self classOrTraitNamed: className
 ]
 
-{ #category : #'accessing - class and trait names' }
+{ #category : 'accessing - class and trait names' }
 SystemDictionary >> classNames [
 	"Answer a sorted collection of all class names. Use the return value of #fillCaches to avoid concurrency issues."
 
 	^cachedClassNames ifNil: [ self fillCaches at: 1 ]
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> classOrTraitNamed: aString [
 	"aString is either a class or trait name or a class or trait name followed by ' class' or 'classTrait'
 	respectively. Answer the class or metaclass it names."
@@ -160,14 +162,14 @@ SystemDictionary >> classOrTraitNamed: aString [
 				  ifTrue: [ global classSide ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDictionary >> environment [
 	"For conversion from SmalltalkImage to SystemDictionary"
 
 	^ self
 ]
 
-{ #category : #'accessing - class and trait names' }
+{ #category : 'accessing - class and trait names' }
 SystemDictionary >> fillCaches [
 	"Fill cachedClassNames and cachedNonClassNames. Return an array with the calculated values."
 
@@ -195,7 +197,7 @@ SystemDictionary >> fillCaches [
 	^{ classNames. nonClassNames }
 ]
 
-{ #category : #'accessing - class and trait names' }
+{ #category : 'accessing - class and trait names' }
 SystemDictionary >> flushClassNameCache [
 	"Force recomputation of the cached list of class names and non-class names."
 
@@ -203,7 +205,7 @@ SystemDictionary >> flushClassNameCache [
 	cachedClassNames := cachedNonClassNames := cachedBehaviors := nil
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> forgetClass: aClass [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
@@ -216,7 +218,7 @@ SystemDictionary >> forgetClass: aClass [
 	self removeKey: aClass name ifAbsent: [  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemDictionary >> hasBindingThatBeginsWith: aString [
 	"Use the cached class and non-class names for better performance."
 
@@ -236,7 +238,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 	^ name notNil
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> hasClassNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
 
@@ -246,7 +248,7 @@ SystemDictionary >> hasClassNamed: aString [
 	^ false
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> hasClassOrTraitNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
 
@@ -257,13 +259,13 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 	^ false
 ]
 
-{ #category : #'accessing - variable lookup' }
+{ #category : 'accessing - variable lookup' }
 SystemDictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
 	^self pseudoVariables at: name ifAbsent: [self bindingOf: name]
 ]
 
-{ #category : #'accessing - system attributes' }
+{ #category : 'accessing - system attributes' }
 SystemDictionary >> maxIdentityHash [
 	"Answer the maximum identityHash value supported by the VM."
 	<primitive: 176>
@@ -271,20 +273,20 @@ SystemDictionary >> maxIdentityHash [
 	^self primitiveFailed
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> methods [
 	"all methods, but without those installed by Traits"
 	^ self allBehaviors flatCollect: [ :behavior | behavior localMethods ]
 ]
 
-{ #category : #'accessing - class and trait names' }
+{ #category : 'accessing - class and trait names' }
 SystemDictionary >> nonClassNames [
 	"Answer a sorted collection of all non-class names. Use the return value of #fillCaches to avoid concurrency issues."
 
 	^ cachedNonClassNames ifNil: [ self fillCaches at: 2 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDictionary >> organization [
 	"Return the organizer for the receiver"
 
@@ -293,7 +295,7 @@ SystemDictionary >> organization [
 		  self at: #SystemOrganization ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDictionary >> organization: anOrganization [
 	"Return the organizer for the receiver"
 
@@ -301,13 +303,13 @@ SystemDictionary >> organization: anOrganization [
 	^ self at: #SystemOrganization put: anOrganization
 ]
 
-{ #category : #'accessing - variable lookup' }
+{ #category : 'accessing - variable lookup' }
 SystemDictionary >> outerScope [
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDictionary >> poolUsers [
 	"Answer a dictionary of pool name -> classes that refer to it.
 	Also includes any globally know dictionaries (such as
@@ -331,13 +333,13 @@ SystemDictionary >> poolUsers [
 	^ poolUsers
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SystemDictionary >> printElementsOn: aStream [
 
 	aStream nextPutAll: '(lots of globals)'
 ]
 
-{ #category : #'accessing - variable lookup' }
+{ #category : 'accessing - variable lookup' }
 SystemDictionary >> pseudoVariables [
 	"We cache the variables for speed"
 
@@ -345,7 +347,7 @@ SystemDictionary >> pseudoVariables [
 		  pseudoVariables := PseudoVariable lookupDictionary ]
 ]
 
-{ #category : #'accessing - classes and traits' }
+{ #category : 'accessing - classes and traits' }
 SystemDictionary >> removeClassNamed: aName [
 	"Invoked from fileouts: if there is currently a class in the system named aName, then remove it"
 
@@ -354,7 +356,7 @@ SystemDictionary >> removeClassNamed: aName [
 		ifPresent: [ :oldClass | oldClass removeFromSystem ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 SystemDictionary >> removeFromCaches: aKey [
 	"In case we remove a key from the system dictionary, we do not need to flush all the caches. We can just remove it from the class name and non class name caches."
 
@@ -363,34 +365,34 @@ SystemDictionary >> removeFromCaches: aKey [
 	cachedBehaviors := nil
 ]
 
-{ #category : #'accessing - dictionary access' }
+{ #category : 'accessing - dictionary access' }
 SystemDictionary >> removeKey: key ifAbsent: aBlock [
 
 	self removeFromCaches: key.
 	^ super removeKey: key ifAbsent: aBlock
 ]
 
-{ #category : #renaming }
+{ #category : 'renaming' }
 SystemDictionary >> renameClass: aClass as: newName [
 	"Rename the class, aClass, to have the title newName."
 
 	^ self renameClass: aClass from: aClass name to: newName
 ]
 
-{ #category : #renaming }
+{ #category : 'renaming' }
 SystemDictionary >> renameClass: aClass from: oldName [
 	"Rename the class, aClass, to have the title newName."
 
 	^ self renameClass: aClass from: oldName to: aClass name
 ]
 
-{ #category : #renaming }
+{ #category : 'renaming' }
 SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	"Rename the class, aClass, to have the title newName."
 
 	| oldref category |
 	self flag: #package. "When the category thing will be removed, we should remove the category update"
-	category := self organization categoryOfBehavior: oldName.
+	category := aClass category.
 	self organization classify: newName under: category.
 	self organization removeBehavior: oldName.
 	oldref := self associationAt: oldName.
@@ -407,7 +409,7 @@ SystemDictionary >> renameClass: aClass from: oldName to: newName [
 	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: newName ]
 ]
 
-{ #category : #renaming }
+{ #category : 'renaming' }
 SystemDictionary >> renameClassNamed: oldName as: newName [
 	"Invoked from fileouts: if there is currently a class in the system named oldName, then rename it to newName. If anything untoward happens, report it in the Transcript."
 
@@ -420,14 +422,14 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 	oldClass rename: newName
 ]
 
-{ #category : #'accessing - variable lookup' }
+{ #category : 'accessing - variable lookup' }
 SystemDictionary >> resetPseudoVariables [
 	"Lazy init in the accessor, resetting it will take new subclasses on PseudoVariable into account"
 
 	^ pseudoVariables := nil
 ]
 
-{ #category : #'accessing - class and trait names' }
+{ #category : 'accessing - class and trait names' }
 SystemDictionary >> traitNames [
 	"Answer a SortedCollection of all traits (not including class-traits) names."
 
@@ -439,7 +441,7 @@ SystemDictionary >> traitNames [
 			  ifAbsent: [ false ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SystemDictionary >> veryDeepCopyWith: deepCopier [
 	"Return self. I can't be copied. Do not record me."
 ]
