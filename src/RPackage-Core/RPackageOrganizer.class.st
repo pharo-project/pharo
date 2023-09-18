@@ -107,9 +107,7 @@ Class {
 		'classPackageMapping',
 		'packages',
 		'classExtendingPackagesMapping',
-		'debuggingName',
-		'environment',
-		'categoryMap'
+		'environment'
 	],
 	#category : 'RPackage-Core-Base',
 	#package : 'RPackage-Core',
