@@ -2,17 +2,18 @@
 Unit test for announcement handling when dealing with traits
 "
 Class {
-	#name : #T2TraitAnnouncementsTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitAnnouncementsTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitAnnouncementsTest >> packageName [
 	^ 'TestPackage'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 
 	| c1 t1 |
@@ -28,7 +29,7 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 	self assert: self packageName asPackage methods size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 
 	[
