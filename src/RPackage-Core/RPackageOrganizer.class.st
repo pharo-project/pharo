@@ -342,7 +342,7 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 
 	| tmpPackageName |
 	"we first look if their is a package matching exactly the name specified"
-	(self packageNamed: anExtensionName ifAbsent: [ nil ]) ifNotNil: [ :package | ^ package ].
+	self packageNamed: anExtensionName ifPresent: [ :package | ^ package ].
 
 	"if no package was found, we try to find one matching the begining of the name specified"
 	tmpPackageName := ''.
@@ -461,8 +461,9 @@ RPackageOrganizer >> registerInterestToSystemAnnouncement [
 RPackageOrganizer >> registerPackage: aPackage [
 	"A new package is now available and declared in the receiver. "
 
-	(self packageNamed: aPackage name ifAbsent: [ nil ]) ifNotNil: [
-		RPackageConflictError signal: ('Package can not be added because it conflicts with package a package of the same name.' format: { aPackage name }) ].
+	self
+		packageNamed: aPackage name
+		ifPresent: [ RPackageConflictError signal: ('Package can not be added because it conflicts with package a package of the same name.' format: { aPackage name }) ].
 
 	self basicRegisterPackage: aPackage.
 	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].

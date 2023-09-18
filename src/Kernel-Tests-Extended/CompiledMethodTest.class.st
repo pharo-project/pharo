@@ -473,7 +473,7 @@ CompiledMethodTest >> testIsExtension [
 
 	self class removeSelector: #isExtensionTestMethod.
 	self deny: method isExtension ] ensure: [
-		(self packageOrganizer packageNamed: 'Kernel-Tests-Generated-Package' ifAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+		self packageOrganizer packageNamed: 'Kernel-Tests-Generated-Package' ifPresent: [ :package | package removeFromSystem ].
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
