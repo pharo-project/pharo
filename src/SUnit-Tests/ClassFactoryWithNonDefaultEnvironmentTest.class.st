@@ -2,37 +2,39 @@
 SUnit tests for ClassFactoryWithOrganization
 "
 Class {
-	#name : #ClassFactoryWithNonDefaultEnvironmentTest,
-	#superclass : #ClassFactoryForTestCaseTest,
-	#category : #'SUnit-Tests-Core'
+	#name : 'ClassFactoryWithNonDefaultEnvironmentTest',
+	#superclass : 'ClassFactoryForTestCaseTest',
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryWithNonDefaultEnvironmentTest >> assertEnvironmentOf: aBehavior [
 	self assert: aBehavior environment equals: self environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryWithNonDefaultEnvironmentTest >> environment [
 
 	^ factory environment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassFactoryWithNonDefaultEnvironmentTest >> setUp [
 
 	super setUp.
 	factory := ClassFactoryForTestCase environment: SystemDictionary new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryWithNonDefaultEnvironmentTest >> testClassCreationInDifferentTags [
 
 	super testClassCreationInDifferentTags.
 	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryWithNonDefaultEnvironmentTest >> testMultipleClassCreation [
 
 	self flag: #package. "Broken because of the SystemOrganizer/PackageOrganizer mixup."
@@ -41,7 +43,7 @@ ClassFactoryWithNonDefaultEnvironmentTest >> testMultipleClassCreation [
 	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryWithNonDefaultEnvironmentTest >> testSingleClassCreation [
 
 	super testSingleClassCreation.
