@@ -30,7 +30,7 @@ ImageFillStyle >> = anOrientedFillStyle [
 { #category : #converting }
 ImageFillStyle >> asColor [
 	"Answer transparent, no other reasonable interpretation."
-	
+
 	^Color transparent
 ]
 
@@ -66,7 +66,7 @@ ImageFillStyle >> form: aForm [
 { #category : #comparing }
 ImageFillStyle >> hash [
 	"Hash is implemented because #= is implemented."
-	
+
 	^super hash bitXor: self form hash
 ]
 

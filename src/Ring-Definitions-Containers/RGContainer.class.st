@@ -8,54 +8,45 @@ Class {
 }
 
 { #category : #'image package loading' }
-RGContainer class >> allManagers [
+RGContainer class >> allWorkingCopies [
 
-	^ Smalltalk globals at: #MCWorkingCopy 
-		ifPresent: [:mcwc | mcwc allManagers ] 
-		ifAbsent: [OrderedCollection new ]
-]
-
-{ #category : #'image package loading' }
-RGContainer class >> category: categoryName matches: prefix [
-
-	| prefixSize catSize |
-	categoryName ifNil: [ ^false ].
-	catSize := categoryName size.
-	prefixSize := prefix size.
-	catSize < prefixSize ifTrue: [ ^false ].
-	(categoryName findString: prefix startingAt: 1 caseSensitive: true) = 1
-		ifFalse: [ ^false ].
-	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
+	^ Smalltalk globals
+		  at: #MCWorkingCopy
+		  ifPresent: [ :class | class allWorkingCopies ]
+		  ifAbsent: [ OrderedCollection new ]
 ]
 
 { #category : #'image package loading' }
 RGContainer class >> packageKeys [
 
-	^ self allManagers collect: [ :pck | pck package name asSymbol -> ('*', pck package name asLowercase) ]
+	^ self allWorkingCopies collect: [ :pck | pck package name asSymbol -> ('*' , pck package name asLowercase) ]
 ]
 
 { #category : #'image package loading' }
 RGContainer class >> packageNames [
 
-	^ self allManagers collect: [ :pck | pck package name asSymbol ]
+	^ self allWorkingCopies collect: [ :pck | pck package name asSymbol ]
 ]
 
 { #category : #'image package loading' }
 RGContainer class >> packageOfClass: aRGBehaviorDefinition [
 
-	^ self packageOfClass: aRGBehaviorDefinition using: self packageNames.
+	^ self packageOfClass: aRGBehaviorDefinition using: self packageNames
 ]
 
 { #category : #'image package loading' }
 RGContainer class >> packageOfClass: aRGBehaviorDefinition using: packageNames [
-
 	"Looks for the package of aRGBehaviorDefinition from the image"
+
 	| pName |
-	aRGBehaviorDefinition ifNil:[ ^nil ].
-	pName := (packageNames 
-				detect: [ :each| each = aRGBehaviorDefinition category ]
-				ifNone: [ packageNames detect:[ :each| self category: aRGBehaviorDefinition category matches: each ] ifNone:[ nil ] ]).
-	^ pName ifNotNil:[ RGPackageDefinition named: pName ]
+	aRGBehaviorDefinition ifNil: [ ^ nil ].
+	pName := packageNames
+		         detect: [ :each | each = aRGBehaviorDefinition category ]
+		         ifNone: [
+			         packageNames
+				         detect: [ :each | aRGBehaviorDefinition category isCategoryOf: each ]
+				         ifNone: [ nil ] ].
+	^ pName ifNotNil: [ RGPackageDefinition named: pName ]
 ]
 
 { #category : #'image package loading' }
@@ -66,17 +57,18 @@ RGContainer class >> packageOfMethod: aRGMethodDefinition [
 
 { #category : #'image package loading' }
 RGContainer class >> packageOfMethod: aRGMethodDefinition using: packageKeys [
-
 	"Looks for the package of aRGMethodDefinition from the image"
+
 	| pName parentPackage |
-	(aRGMethodDefinition protocol notNil and:[ aRGMethodDefinition protocol beginsWith: '*' ]) ifFalse:[
-		parentPackage := (aRGMethodDefinition parent ifNotNil:[ aRGMethodDefinition parent package ]).	
-		^ parentPackage ifNil:[ self packageOfClass: aRGMethodDefinition parent ] ].
+	(aRGMethodDefinition protocol notNil and: [ aRGMethodDefinition protocol beginsWith: '*' ]) ifFalse: [
+		parentPackage := aRGMethodDefinition parent ifNotNil: [ aRGMethodDefinition parent package ].
+		^ parentPackage ifNil: [ self packageOfClass: aRGMethodDefinition parent ] ].
 
 	aRGMethodDefinition protocol ifNil: [ ^ nil ].
-	pName := (packageKeys 
-				detect: [ :each| self category: aRGMethodDefinition protocol asLowercase matches: each value ] ifNone:[ nil ]).
-	^ pName ifNotNil:[ RGPackageDefinition named: pName key ]
+	pName := packageKeys
+		         detect: [ :each | aRGMethodDefinition protocol asLowercase isCategoryOf: each value ]
+		         ifNone: [ nil ].
+	^ pName ifNotNil: [ RGPackageDefinition named: pName key ]
 ]
 
 { #category : #'adding-removing' }
@@ -90,7 +82,7 @@ RGContainer >> addClass: aRGBehaviorDefinition [
 ]
 
 { #category : #'adding-removing' }
-RGContainer >> addClassNamed: className [ 
+RGContainer >> addClassNamed: className [
 	"Creates a class with the given name"
 	self addClass: (RGClassDefinition named: className)
 ]
@@ -127,7 +119,7 @@ RGContainer >> addTrait: aRGTraitDefinition [
 ]
 
 { #category : #'adding-removing' }
-RGContainer >> addTraitNamed: traitName [ 
+RGContainer >> addTraitNamed: traitName [
 	"Creates a trait with the given name"
 	self addClass:  (RGTraitDefinition named: traitName)
 ]
@@ -159,7 +151,7 @@ RGContainer >> allMethods [
 { #category : #'convenient accesses' }
 RGContainer >> allTraits [
 	"convenient method"
-	
+
 	^self allClasses select:[ :each | each isTrait ]
 ]
 
@@ -177,14 +169,14 @@ RGContainer >> allTraitsDo: aBlock [
 RGContainer >> classNamed: className [
 	"Retrieves an RGBehaviorDefinition object.
 	className could be classSide name"
-	
+
 	^self classOrTraitNamed: className
 ]
 
 { #category : #'convenient accesses' }
 RGContainer >> classNames [
 	"Retrieves class names (including traits)"
-	
+
 	^ self definedClasses isDictionary
 		ifTrue: [ self definedClasses keys ]
 		ifFalse:[ self definedClasses collect:[ :class|  class name ] ]
@@ -198,7 +190,7 @@ RGContainer >> classOrTraitNamed: className [
 	className ifNil: [^nil ].
 	theClass:= self elementNamed: (self theNonMetaClassNameOf: className) in: self definedClasses.
 	theClass ifNil:[ ^nil ].
-	
+
 	^(self isMetaclassName: className)
 		ifTrue: [ theClass classSide ]
 		ifFalse:[ theClass ]
@@ -264,25 +256,28 @@ RGContainer >> extensionMethods [
 
 { #category : #'image package loading' }
 RGContainer >> findPackageOfClass: aRGBehaviorDefinition using: packageKeys [
-
 	"Look for the package of a class. It is nil when there is not a package created for a category in MC"
-	| pair |
+
 	self packages isEmpty ifTrue: [ ^ nil ].
-	^ self packages at: aRGBehaviorDefinition category ifAbsent:[
-		pair := packageKeys detect:[ :each| self class category: aRGBehaviorDefinition category matches: each key ] ifNone:[ nil ].
-		pair ifNotNil:[ self packages at: pair key ] ]
+	^ self packages at: aRGBehaviorDefinition category ifAbsent: [
+		  packageKeys
+			  detect: [ :pair | aRGBehaviorDefinition category isCategoryOf: pair key ]
+			  ifFound: [ :pair | self packages at: pair key ]
+			  ifNone: [ nil ] ]
 ]
 
 { #category : #'image package loading' }
 RGContainer >> findPackageOfMethod: aRGMethodDefinition using: packageKeys [
-
 	"Look for the package of an extension method. nil otherwise"
-	| pair lname |	
-	self packages isEmpty ifTrue: [ ^nil ].
-	(aRGMethodDefinition protocol beginsWith: '*') ifFalse:[ ^ nil ].
+
+	| pair lname |
+	self packages ifEmpty: [ ^ nil ].
+	(aRGMethodDefinition protocol beginsWith: '*') ifFalse: [ ^ nil ].
 	lname := aRGMethodDefinition protocol asLowercase.
- 	pair := packageKeys detect:[ :assoc| self class category: lname matches: assoc value ] ifNone:[ nil ].
-	^ pair ifNotNil:[ self packages at: pair key ]
+	pair := packageKeys
+		        detect: [ :assoc | lname isCategoryOf: assoc value ]
+		        ifNone: [ nil ].
+	^ pair ifNotNil: [ self packages at: pair key ]
 ]
 
 { #category : #testing }
@@ -309,7 +304,7 @@ RGContainer >> includesClassNamed: className [
 	"Returns true if the receiver includes the className in the defined classes"
 
 	self flag: 'can a metaclass be stored without its nonMetaClass? Check this'.
-	^self includesElementNamed: (self theNonMetaClassNameOf: className) in: self definedClasses.
+	^self includesElementNamed: (self theNonMetaClassNameOf: className) in: self definedClasses
 ]
 
 { #category : #testing }
@@ -320,21 +315,21 @@ RGContainer >> includesMethod: aRGMethodDefinition [
 
 { #category : #testing }
 RGContainer >> includesMethodNamed: fullSelectorName [
-	
+
 	^self includesElementNamed: fullSelectorName in: self methods
 ]
 
 { #category : #testing }
 RGContainer >> includesPackage: aRGPackage [
 	"Verifies if a child package == aRGPackage exists"
-	
+
 	^self packages includes: aRGPackage
 ]
 
 { #category : #testing }
 RGContainer >> includesPackageNamed: packageName [
 	"Verifies if a child package with name = packageName exists"
-	
+
 	^self includesElementNamed: packageName in: self packages
 ]
 
@@ -344,13 +339,13 @@ RGContainer >> initialize [
 	super initialize.
 	self definedClasses: IdentityDictionary new.
 	self methods: IdentityDictionary new.
-	self packages: IdentityDictionary new.
+	self packages: IdentityDictionary new
 ]
 
 { #category : #utilities }
 RGContainer >> isMetaclassName: aSymbol [
 	"Validates if the arguments corresponds to a nonMetaClass"
-	
+
 	^(aSymbol
 		indexOfSubCollection: ' class'
 		startingAt: 1) > 0
@@ -376,9 +371,9 @@ RGContainer >> loadPackagesFromImage [
 
 	| rgPackage rgPackageKeys |
 	rgPackageKeys := OrderedCollection new.
-	self class allManagers do: [ :pck | 
+	self class allWorkingCopies do: [ :pck |
 		rgPackage := RGPackageDefinition named: pck package name asSymbol.
-		rgPackageKeys add: (rgPackage name -> ('*', rgPackage name asLowercase)).
+		rgPackageKeys add: rgPackage name -> ('*' , rgPackage name asLowercase).
 		self addPackage: rgPackage ].
 	^ rgPackageKeys
 ]
@@ -387,7 +382,7 @@ RGContainer >> loadPackagesFromImage [
 RGContainer >> loadTraitUsers [
 	"Set the users of a trait"
 	| users |
-	
+
 	users := self classes select: [ :cls | cls hasTraitComposition ].
 	users do:[ :each |  | rgTrait |
 		each traitNames do:[ :tname|
@@ -400,13 +395,13 @@ RGContainer >> loadTraitUsers [
 { #category : #'lookup by name' }
 RGContainer >> metaclassNamed: metaclassName [
 	| theClass |
-	
+
 	theClass:= (self classOrTraitNamed: metaclassName).
 	theClass notNil
-	ifTrue:[ ^theClass isMeta 
+	ifTrue:[ ^theClass isMeta
 		      ifTrue: [ theClass ]
 		      ifFalse:[ theClass classSide ] ].
-	
+
 	^nil
 ]
 
@@ -419,14 +414,14 @@ RGContainer >> methodNamed: fullSelectorName [
 { #category : #accessing }
 RGContainer >> methods [
 	"Retrieves methods defined in the container"
-	
+
 	^self elements at: #methods ifAbsentPut:[ IdentityDictionary new ]
 ]
 
 { #category : #accessing }
 RGContainer >> methods: aCollection [
 	"Set the methods collection"
-	
+
 	self elements at: #methods put: aCollection
 ]
 
@@ -440,7 +435,7 @@ RGContainer >> methodsDo: aBlock [
 { #category : #'lookup by name' }
 RGContainer >> packageNamed: packageName [
 	"Look for a child package named packageName"
-	
+
 	^self elementNamed: packageName in: self packages
 ]
 
@@ -488,7 +483,7 @@ RGContainer >> removeTrait: aRGTraitDefinition [
 RGContainer >> setPackageOfClass: rgClass using: packageKeys [
 	"Set the package to aRGBehaviorDefinition"
 
-	(self findPackageOfClass: rgClass using: packageKeys) 
+	(self findPackageOfClass: rgClass using: packageKeys)
 		ifNotNil:[ :pck| pck addClass: rgClass ]
 ]
 
@@ -496,11 +491,11 @@ RGContainer >> setPackageOfClass: rgClass using: packageKeys [
 RGContainer >> setPackageOfMethod: rgMethod ofClass: rgClass using: packageKeys [
 	"Set the package to aRGMethodDefinition and its value isExtension"
 
-	(self findPackageOfMethod: rgMethod using: packageKeys) 
-		ifNil:[ rgClass package ifNotNil:[ :pck| 
+	(self findPackageOfMethod: rgMethod using: packageKeys)
+		ifNil:[ rgClass package ifNotNil:[ :pck|
 				pck addMethod: rgMethod.
 				rgMethod isExtension: false ] ]
-		ifNotNil:[ :pck| 
+		ifNotNil:[ :pck|
 			pck addMethod: rgMethod.
 			rgMethod isExtension: (rgMethod package ~= rgClass package) ]
 ]
@@ -509,13 +504,13 @@ RGContainer >> setPackageOfMethod: rgMethod ofClass: rgClass using: packageKeys 
 RGContainer >> theNonMetaClassNameOf: aSymbol [
 	"Rejects the prefix ' class' or ' classTrait' of the argument"
 	| index |
-	
+
 	index := aSymbol
 				indexOfSubCollection: ' class'
 				startingAt: 1
 				ifAbsent: [ ^aSymbol asSymbol ].
 
-	^(aSymbol 
+	^(aSymbol
 		copyFrom: 1
 		to: index - 1) asSymbol
 ]
@@ -525,7 +520,7 @@ RGContainer >> traitNamed: traitName [
 	"Retrieves an RGTraitDefinition object.
 	traitName could be classSide name"
 	| trait |
-	
+
 	^(trait:= self classOrTraitNamed: traitName) isTrait
 	ifTrue:[ trait ]
 	ifFalse:[ nil ]
@@ -564,12 +559,12 @@ RGContainer >> withoutClasses [
 
 { #category : #'adding-removing' }
 RGContainer >> withoutMethods [
-	
+
 	self removeElementsCategorized: #methods
 ]
 
 { #category : #'adding-removing' }
 RGContainer >> withoutPackages [
-	
+
 	self removeElementsCategorized: #packages
 ]

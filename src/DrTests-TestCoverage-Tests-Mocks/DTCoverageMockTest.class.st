@@ -11,7 +11,7 @@ Class {
 DTCoverageMockTest >> setUp [
 
 	super setUp.
-	mockObj := MockForCoverage new.
+	mockObj := MockForCoverage new
 ]
 
 { #category : #running }
@@ -26,4 +26,10 @@ DTCoverageMockTest >> testMethod2forMock [
 	self
 		assert: 5
 		equals: 5
+]
+
+{ #category : #running }
+DTCoverageMockTest >> testMethod3forMock [
+
+	self assert: (mockObj method3ForMockWithConditional: 2 ) equals: 0
 ]

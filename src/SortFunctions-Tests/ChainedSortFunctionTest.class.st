@@ -15,7 +15,7 @@ ChainedSortFunctionTest >> testComparisonOfFunctions [
 
 	self deny: #name ascending, #surname equals: #name ascending, #surname2.
 	self deny: #name ascending, #surname equals: #name descending, #surname.
-	self deny: #name ascending, #surname ascending equals: #name ascending, #surname descending.
+	self deny: #name ascending, #surname ascending equals: #name ascending, #surname descending
 ]
 
 { #category : #tests }

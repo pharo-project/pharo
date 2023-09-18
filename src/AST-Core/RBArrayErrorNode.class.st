@@ -16,15 +16,15 @@ Class {
 RBArrayErrorNode class >> error: aToken withNodes: aCollection [
 	"Analyses the token to identify if it's an opening or a closure."
 	| message |
-	message := ('{' = aToken value asString) ifTrue: [ '''}'' expected' ] 
+	message := ('{' = aToken value asString) ifTrue: [ '''}'' expected' ]
 										  				 ifFalse: [ '''{'' expected' ].
 	"If the collection is empty, there is only the token in the error."
 	aCollection isEmpty
-		ifTrue: [ ^self new content: aCollection; start: aToken start; stop: aToken stop; errorMessage: message ].
+		ifTrue: [ ^self new contents: aCollection; start: aToken start; stop: aToken stop; errorMessage: message ].
 	"If the collection is not empty, we have to sort where the node begins and where it ends."
 	^message = '''}'' expected'
-		ifTrue: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message ]
-		ifFalse: [ self new content: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
+		ifTrue: [ self new contents: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message ]
+		ifFalse: [ self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
 ]
 
 { #category : #testing }
@@ -47,8 +47,8 @@ RBArrayErrorNode >> repairCollectionFromStart [
 	collection := self content statements.
 	result := OrderedCollection new.
 	removedStatements := OrderedCollection new.
-	[ collection isNotNil ] 
-		whileTrue: [ | statements node | 
+	[ collection isNotNil ]
+		whileTrue: [ | statements node |
 						 statements := OrderedCollection new.
 					    node := RBArrayNode statements: collection.
 						 node start: self start.
@@ -57,7 +57,7 @@ RBArrayErrorNode >> repairCollectionFromStart [
 						 removedStatements addFirst: collection last.
 						 collection removeLast. ].
 	result add: removedStatements.
-	^collection.
+	^collection
 ]
 
 { #category : #testing }
@@ -69,8 +69,8 @@ RBArrayErrorNode >> repairCollectionFromStop [
 	collection := self content statements.
 	result := OrderedCollection new.
 	removedStatements := OrderedCollection new.
-	[ collection isNotNil ] 
-		whileTrue: [ | statements node | 
+	[ collection isNotNil ]
+		whileTrue: [ | statements node |
 						 statements := OrderedCollection new.
 						 node := RBArrayNode statements: collection.
 						 node start: self start -1.
@@ -79,5 +79,5 @@ RBArrayErrorNode >> repairCollectionFromStop [
 						 removedStatements add: collection first.
 						 collection removeFirst. ].
 	result add: removedStatements.
-	^collection.
+	^collection
 ]

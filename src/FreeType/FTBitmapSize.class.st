@@ -29,7 +29,7 @@ FTBitmapSize class >> fieldsDesc [
     FT_Pos    size;
 
     FT_Pos    x_ppem;
-    FT_Pos    y_ppem;	
+    FT_Pos    y_ppem;
 )
 ]
 
@@ -78,7 +78,7 @@ FTBitmapSize >> x_ppem [
 { #category : #'accessing - structure variables' }
 FTBitmapSize >> x_ppem: anObject [
 	"This method was automatically generated"
-	
+
 	^ handle platformLongAt: OFFSET_X_PPEM put: anObject
 ]
 

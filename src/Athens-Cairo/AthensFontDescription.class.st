@@ -25,7 +25,7 @@ Class {
 AthensFontDescription class >> example [
 	<sampleInstance>
 	| fDesc |
-	fDesc := AthensFontDescription new. 
+	fDesc := AthensFontDescription new.
 	fDesc
 		family: 'monospace';
 		fontSize: 22.
@@ -38,14 +38,14 @@ AthensFontDescription >> asString [
 	| str |
 	str := '' writeStream.
 	str nextPutAll:  family; space.
-	"	
+	"
 2)STYLE_OPTIONS is a whitespace separated list of words where each WORD describes one of style, variant, weight, stretch, or gravity. If STYLE-OPTIONS is missing, then all style options will be set to the default values
 "
 	#(slant. variant. weight. stretch. gravity) do:[:each|
 		|val|
 		val := options at: each ifAbsent: nil.
 		val notNil ifTrue:[str nextPutAll: val ; space ]].
-	
+
 	self fontSize notNil ifTrue:[
 		str
 			space;
@@ -65,7 +65,7 @@ AthensFontDescription >> beItalic [
 
 { #category : #accessing }
 AthensFontDescription >> beNormal [
-	self slant: #normal ; weight: #normal.
+	self slant: #normal ; weight: #normal
 ]
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ AthensFontDescription >> beOblique [
 { #category : #'cairo - options' }
 AthensFontDescription >> family: aFamilyName [
 	"CSS2 generic family names: serif, sans-serif, cursive, fantasy, monospace"
-	family := aFamilyName.
+	family := aFamilyName
 ]
 
 { #category : #'cairo - options' }
@@ -121,7 +121,7 @@ AthensFontDescription >> fontWeight [
 
 { #category : #'pango-options' }
 AthensFontDescription >> gravity: aNumber [
-	options at: #gravity put: aNumber.
+	options at: #gravity put: aNumber
 ]
 
 { #category : #initialization }
@@ -130,27 +130,27 @@ AthensFontDescription >> initialize [
 	family := 'monospace'.
 	options := Dictionary new.
 	options
-		at:#weight put: #normal; 
+		at:#weight put: #normal;
 		at:#slant put: #normal.
-	size := 14.
+	size := 14
 ]
 
 { #category : #'cairo - options' }
 AthensFontDescription >> slant: aNumber [
-	options at: #slant put: aNumber.
+	options at: #slant put: aNumber
 ]
 
 { #category : #'pango-options' }
 AthensFontDescription >> stretch: aNumber [
-	options at: #stretch put: aNumber.
+	options at: #stretch put: aNumber
 ]
 
 { #category : #'pango-options' }
 AthensFontDescription >> variant: aNumber [
-	options at: #variant put: aNumber.
+	options at: #variant put: aNumber
 ]
 
 { #category : #'cairo - options' }
 AthensFontDescription >> weight: aNumber [
-	options at: #weight put: aNumber.
+	options at: #weight put: aNumber
 ]

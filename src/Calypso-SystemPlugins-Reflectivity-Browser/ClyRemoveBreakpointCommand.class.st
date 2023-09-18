@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ClyRemoveBreakpointCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^ (super canBeExecutedInContext: aBrowserContext) and: [ 
+	^ (super canBeExecutedInContext: aBrowserContext) and: [
 		  aBrowserContext isSelectedItemHasBreakpoint ]
 ]
 

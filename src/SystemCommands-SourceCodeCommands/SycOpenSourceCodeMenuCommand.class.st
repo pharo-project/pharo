@@ -32,8 +32,8 @@ SycOpenSourceCodeMenuCommand >> defaultMenuItemName [
 { #category : #execution }
 SycOpenSourceCodeMenuCommand >> execute [
 
-	context selectedTextInterval ifEmpty: [ 
+	context selectedTextInterval ifEmpty: [
 		context showSourceNode].
-	
+
 	super execute
 ]

@@ -5,7 +5,7 @@ Class {
 		'selectors',
 		'classes'
 	],
-	#category : #'Refactoring2-Transformations-Model-Migrated'
+	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
 }
 
 { #category : #api }
@@ -40,12 +40,26 @@ RBPushDownMethodTransformation >> allClasses [
 	^ classes ifNil: [ class subclasses ]
 ]
 
-{ #category : #converting }
-RBPushDownMethodTransformation >> asRefactoring [
+{ #category : #preconditions }
+RBPushDownMethodTransformation >> applicabilityPreconditions [ 
 
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
+	| condition |
+	condition := selectors
+		             inject: (RBCondition true)
+		             into: [ :cond :each |
+			             cond & (RBCondition definesSelector: each in: class)].
+	^ condition 
+]
+
+{ #category : #preconditions }
+RBPushDownMethodTransformation >> breakingChangePreconditions [
+
+	| condition |
+	condition := selectors
+		             inject: (RBCondition isAbstractClass: class)
+		             into: [ :cond :each |
+			             cond & (RBCondition subclassesOf: class referToSelector: each) not ].
+	^ condition 
 ]
 
 { #category : #executing }
@@ -56,23 +70,9 @@ RBPushDownMethodTransformation >> buildTransformations [
 
 { #category : #accessing }
 RBPushDownMethodTransformation >> classes: aCollection [
-	classes := aCollection collect: [ :cls | 
+	classes := aCollection collect: [ :cls |
 		self model classObjectFor: cls.
 	]
-]
-
-{ #category : #preconditions }
-RBPushDownMethodTransformation >> preconditions [
-
-	| condition |
-	condition := selectors
-		             inject: self emptyCondition
-		             into: [ :cond :each | 
-			             cond & (RBCondition definesSelector: each in: class)
-			             &
-			             (RBCondition subclassesOf: class referToSelector: each)
-				             not ].
-	^ condition & (RBCondition isAbstractClass: class)
 ]
 
 { #category : #transforming }
@@ -83,16 +83,16 @@ RBPushDownMethodTransformation >> pushDown: aSelector [
 	protocols := class protocolsFor: aSelector.
 	refactoring := RBExpandReferencedPoolsTransformation
 		               model: self model
-		               forMethod: (class parseTreeFor: aSelector)
+		               forMethod: (class parseTreeForSelector: aSelector)
 		               fromClass: class
 		               toClasses: self allClasses.
-	^ {refactoring}, (self allClasses select: [ :each | (each directlyDefinesMethod: aSelector) not ] 
+	^ {refactoring}, (self allClasses select: [ :each | (each directlyDefinesMethod: aSelector) not ]
 		thenCollect: [ :each |
 				RBAddMethodTransformation
 				model: self model
-				sourceCode: code 
-				in: each 
-				withProtocols: protocols ])
+				sourceCode: code
+				in: each
+				withProtocol: protocols ])
 ]
 
 { #category : #api }
@@ -105,17 +105,17 @@ RBPushDownMethodTransformation >> pushDown: selectorCollection from: aClass [
 RBPushDownMethodTransformation >> pushDown: selectorCollection from: aClass in: aCollection [
 	class := self model classObjectFor: aClass.
 	selectors := selectorCollection.
-	self classes: aCollection.
+	self classes: aCollection
 ]
 
 { #category : #transforming }
 RBPushDownMethodTransformation >> pushDownSelectors [
-	^ selectors flatCollect: [:each | self pushDown: each].
+	^ selectors flatCollect: [:each | self pushDown: each]
 ]
 
 { #category : #transforming }
 RBPushDownMethodTransformation >> removeSelectors [
-	^ RBRemoveMethodTransformation 
+	^ RBRemoveMethodTransformation
 		model: self model
 		selectors: selectors
 		from: class

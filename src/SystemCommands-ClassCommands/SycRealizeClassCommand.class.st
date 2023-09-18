@@ -9,13 +9,15 @@ Class {
 
 { #category : #execution }
 SycRealizeClassCommand >> asRefactorings [
-	
-	^classes collect: [ :each | RBRealizeClassTransformation className: each]
+
+	^classes collect: [ :each | self refactoringClass className: each]
 ]
 
 { #category : #accessing }
 SycRealizeClassCommand >> defaultMenuItemName [
-	^'Realize'
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^ self refactoringClass menuItemString
 ]
 
 { #category : #execution }
@@ -27,4 +29,10 @@ SycRealizeClassCommand >> execute [
 { #category : #testing }
 SycRealizeClassCommand >> isComplexRefactoring [
 	^true
+]
+
+{ #category : #'factory method' }
+SycRealizeClassCommand >> refactoringClass [
+
+	^ RBRealizeClassTransformation
 ]

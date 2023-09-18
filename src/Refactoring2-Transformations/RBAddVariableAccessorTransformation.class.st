@@ -23,6 +23,16 @@ Class {
 	#category : #'Refactoring2-Transformations-Model'
 }
 
+{ #category : #preconditions }
+RBAddVariableAccessorTransformation >> applicabilityPreconditions [ 
+
+	class := self model classObjectFor: className.
+
+	^ isClassVariable
+		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
+		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+]
+
 { #category : #private }
 RBAddVariableAccessorTransformation >> createGetterAccessor [
 
@@ -32,14 +42,16 @@ RBAddVariableAccessorTransformation >> createGetterAccessor [
 { #category : #private }
 RBAddVariableAccessorTransformation >> createSetterAccessor [
 
-	(self definingClass setterMethodFor: variableName) ifNil: [ self defineSetterMethod ]
+	(self definingClass setterMethodFor: variableName)
+		ifNil: [ self defineSetterMethod ]
+		ifNotNil: [ setterMethod := self definingClass setterMethodFor: variableName ]
 ]
 
 { #category : #private }
 RBAddVariableAccessorTransformation >> defineGetterMethod [
 
 	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
-	self definingClass 
+	self definingClass
 		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
 		classified: #(#accessing).
 	^ getterMethod
@@ -51,25 +63,25 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 	|  sourceCode |
 	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
 	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
-	self definingClass 
+	self definingClass
 		compile: (sourceCode expandMacrosWith: setterMethod with: variableName)
 		classified: #accessing.
 	^setterMethod
 ]
 
+{ #category : #accessing }
+RBAddVariableAccessorTransformation >> definingClass [
+	"Usually a shared variable is defined on the instance side and instance 
+	variables on both instance and class side."
+	
+	^ isClassVariable
+		ifTrue: [ super definingClass classSide ]
+		ifFalse: [ super definingClass ]
+]
+
 { #category : #private }
 RBAddVariableAccessorTransformation >> getterMethod [
 	^ getterMethod
-]
-
-{ #category : #preconditions }
-RBAddVariableAccessorTransformation >> preconditions [
-
-	class := self model classObjectFor: className.
-
-	^ isClassVariable 
-		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
-		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
 ]
 
 { #category : #executing }
@@ -81,7 +93,7 @@ RBAddVariableAccessorTransformation >> privateTransform [
 ]
 
 { #category : #private }
-RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aString [ 
+RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
 	| baseString newString hasParam i |
@@ -89,12 +101,12 @@ RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aStrin
 	baseString at: 1 put: baseString first asLowercase.
 	newString := baseString.
 	hasParam := newString last = $:.
-	hasParam 
+	hasParam
 		ifTrue: [baseString := newString copyFrom: 1 to: newString size - 1].
 	i := 0.
-	[aClass hierarchyDefinesMethod: newString asSymbol] whileTrue: 
+	[aClass hierarchyDefinesMethod: newString asSymbol] whileTrue:
 			[i := i + 1.
-			newString := baseString , i printString 
+			newString := baseString , i printString
 						, (hasParam ifTrue: [':'] ifFalse: [''])].
 	^newString asSymbol
 ]

@@ -17,7 +17,7 @@ Class {
 { #category : #'API - Processes' }
 EDDebuggingAPI class >> allRunningProcesses [
 	^ Process allSubInstances
-		reject: [ :each | 
+		reject: [ :each |
 			each isTerminated
 				or: [ self forbiddenProcesses anySatisfy: [ :block | block value == each ] ] ]
 ]
@@ -171,14 +171,14 @@ EDDebuggingAPI >> revert: aCompiledMethod to: aChangeRecord [
 
 	aCompiledMethod methodClass
 		compile: aChangeRecord sourceCode
-		classified: aChangeRecord category
+		classified: aChangeRecord protocol
 		withStamp: aChangeRecord stamp
 		notifying: nil
 ]
 
 { #category : #'API - Revert' }
 EDDebuggingAPI >> revert: aCompiledMethod to: aChangeRecord inContext: aContext [
-	"Reverts the given method to the given change record in the given context. 
+	"Reverts the given method to the given change record in the given context.
 	The cached stack is updated."
 
 	session
@@ -199,7 +199,7 @@ EDDebuggingAPI >> session: anObject [
 ]
 
 { #category : #'API - Stack' }
-EDDebuggingAPI >> stack [ 	
+EDDebuggingAPI >> stack [
 	^self longStack
 ]
 

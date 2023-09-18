@@ -16,7 +16,7 @@ ClyRequestMethodPackageForEditorCommand class >> canBeExecutedInMethodEditor: aT
 { #category : #activation }
 ClyRequestMethodPackageForEditorCommand class >> methodEditorShorcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $e meta, $p meta for: ClyTextEditorContext
 ]
 
@@ -28,6 +28,6 @@ ClyRequestMethodPackageForEditorCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyRequestMethodPackageForEditorCommand >> execute [
 	| packageEditor |
-	packageEditor := methodEditor tagsAndPackageEditor.
+	packageEditor := methodEditor protocolAndPackageEditor.
 	packageEditor requestChangeBy: [ packageEditor requestPackage]
 ]

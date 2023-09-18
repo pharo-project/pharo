@@ -22,7 +22,7 @@ Class {
 		'interval',
 		'sourceCode'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -52,7 +52,7 @@ RBAddSubtreeTransformation class >> model: aRBModel interval: anInterval with: a
 RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 	"Searches for the statement before which the new code should be added.
 	 If not found, it just adds the new code at the end of the block"
-	
+
 	aSequenceNode statements
 		detect: [ :node | node intersectsInterval: interval ]
 		ifFound: [ :node |
@@ -62,31 +62,31 @@ RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 	^ aSequenceNode methodNode
 ]
 
+{ #category : #preconditions }
+RBAddSubtreeTransformation >> applicabilityPreconditions [ 
+
+	^ (RBCondition definesSelector: selector in: self definingClass)
+		&
+			(RBCondition
+				withBlock: [ self parserClass
+						parseExpression: sourceCode
+						onError: [ :string :pos | self refactoringError: 'Invalid source to add - ' , string ].
+					true ])
+]
+
 { #category : #api }
 RBAddSubtreeTransformation >> interval: anInterval with: aString from: aSelector in: aClass [
 
 	self className: aClass.
 	selector := aSelector.
 	interval := anInterval.
-	sourceCode := aString.
-]
-
-{ #category : #preconditions }
-RBAddSubtreeTransformation >> preconditions [
-	^ (RBCondition definesSelector: selector in: self definingClass)
-		&
-			(RBCondition
-				withBlock: [ self parserClass
-						parseExpression: sourceCode
-						onError:
-							[ :string :pos | self refactoringError: 'Invalid source to add - ' , string ].
-					true ])
+	sourceCode := aString
 ]
 
 { #category : #executing }
 RBAddSubtreeTransformation >> privateTransform [
 	| parseTree newNode |
-	parseTree := self definingClass parseTreeFor: selector.
+	parseTree := self definingClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	newNode := self parserClass
 		parseExpression: sourceCode
@@ -108,7 +108,7 @@ RBAddSubtreeTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBAddSubtreeTransformation >> storeOn: aStream [ 
+RBAddSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

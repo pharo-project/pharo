@@ -24,13 +24,13 @@ Class {
 { #category : #emitting }
 OCVectorTempVariable >> emitStore: methodBuilder [
 
-	methodBuilder storeRemoteTemp: name inVector: vectorName.
+	methodBuilder storeRemoteTemp: name inVector: vectorName
 ]
 
 { #category : #emitting }
 OCVectorTempVariable >> emitValue: methodBuilder [
 
-	methodBuilder pushRemoteTemp: name inVector: vectorName.
+	methodBuilder pushRemoteTemp: name inVector: vectorName
 ]
 
 { #category : #testing }
@@ -57,12 +57,12 @@ OCVectorTempVariable >> readVectorFromContext: aContext scope: contextScope [
 	"We need to first read the temp vector. We use the closest copied var up the stack possible as
 	 as the definition context could be already garbage collected"
 	tempVectorVar := contextScope lookupVar: vectorName.
-	"We might be called from the debugger for a context that actually does not access the temp vector, 
+	"We might be called from the debugger for a context that actually does not access the temp vector,
 	so we need to read possibly from a context above aContext"
 	theVector := tempVectorVar readFromContext: aContext scope: contextScope.
 	"We can call this method on a context in any state, e.g. even when the copied var is not yet initialized.
 	In this case, we lookup in the outer context with the corresponding outer scope"
-	^ theVector ifNil: [ aContext outerContext 
+	^ theVector ifNil: [ aContext outerContext
 		"but there might be no outer context, so in that case, just return an empty array of the correct size"
 			ifNil: [ Array new: tempVectorVar originalVar scope tempVector size ]
 			ifNotNil: [: ctxt | self readVectorFromContext: ctxt scope: contextScope outerScope ]]
@@ -83,5 +83,5 @@ OCVectorTempVariable >> writeFromContext: aContext scope: contextScope value: aV
 
 	| theVector |
 	theVector := self readVectorFromContext: aContext scope: contextScope.
-	^theVector at: self index put: aValue.
+	^theVector at: self index put: aValue
 ]

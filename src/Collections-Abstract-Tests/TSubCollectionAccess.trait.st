@@ -35,7 +35,7 @@ TSubCollectionAccess >> testAllButFirstNElements [
 	| allButFirst collection |
 	collection := self moreThan3Elements.
 	allButFirst := collection allButFirst: 2.
-	allButFirst withIndexDo: 
+	allButFirst withIndexDo:
 		 [:el :i | self assert: el equals: (collection at: i + 2) ].
 	self assert: allButFirst size + 2 equals: collection size
 ]
@@ -66,7 +66,7 @@ TSubCollectionAccess >> testFirstNElements [
 	| result |
 	result := self moreThan3Elements first: self moreThan3Elements size - 1.
 	result withIndexDo: [:el :i | self assert: el equals: (self moreThan3Elements at: i) ].
-	
+
 	self assert: result size equals: (self moreThan3Elements size - 1).
 	self should: [ self moreThan3Elements first: self moreThan3Elements size + 1 ] raise: SubscriptOutOfBounds
 ]
@@ -78,7 +78,24 @@ TSubCollectionAccess >> testLastNElements [
 	result := self moreThan3Elements last: self moreThan3Elements size - 1.
 	result withIndexDo: [:el :i | self assert: el equals: (self moreThan3Elements at: i + 1) ].
 	self assert: result size equals: (self moreThan3Elements size - 1).
-	self 
+	self
 		should: [ self moreThan3Elements last: self moreThan3Elements size + 1 ]
 		raise: Error
+]
+
+{ #category : #'tests - subcollections access' }
+TSubCollectionAccess >> testTakeFirst [
+
+	| abf col |
+	col := self moreThan3Elements.
+	abf := col takeFirst: 2.
+	self assert: abf size equals: 2.
+	self 
+		assertCollection: abf
+		hasSameElements: (col first: 2).
+	abf := col takeFirst: 10.
+	self assert: abf size equals: col size.
+	
+	self assertEmpty: (col takeFirst: 0).
+	
 ]

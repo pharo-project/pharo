@@ -42,7 +42,7 @@ SymbolTest >> anotherElementOrAssociationNotIn [
 
 { #category : #coverage }
 SymbolTest >> classToBeTested [
-	
+
 	^ Symbol
 ]
 
@@ -55,7 +55,7 @@ SymbolTest >> collection [
 { #category : #'tests - set arithmetic' }
 SymbolTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
-	
+
 	^ Symbol
 ]
 
@@ -93,7 +93,7 @@ SymbolTest >> collectionWithElementsToRemove [
 SymbolTest >> collectionWithEqualElements [
 " return a collecition including atLeast two elements equal"
 
-^ sameAtEndAndBegining .
+^ sameAtEndAndBegining
 ]
 
 { #category : #requirements }
@@ -106,7 +106,7 @@ SymbolTest >> collectionWithSameAtEndAndBegining [
 { #category : #requirements }
 SymbolTest >> collectionWithSortableElements [
 	" return a collection only including elements that can be sorted (understanding '<' )"
-	^ nonEmptySymbol5ElementsNoDuplicates .
+	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
@@ -131,7 +131,7 @@ SymbolTest >> elementInForElementAccessing [
 { #category : #requirements }
 SymbolTest >> elementInForIndexAccessing [
 " return an element included in 'collectionMoreThan1NoDuplicates' "
-	^ self collectionMoreThan1NoDuplicates anyOne.
+	^ self collectionMoreThan1NoDuplicates anyOne
 ]
 
 { #category : #requirements }
@@ -176,7 +176,7 @@ SymbolTest >> empty [
 
 { #category : #accessing }
 SymbolTest >> expectedBehavior [
-	^ { 
+	^ {
 		  ([ Symbol readFromString: '#''abc''' ] -> #abc).
 		  ([ Symbol readFromString: '#ab-C' ] -> #ab).
 		  ([ Symbol readFromString: '#abC' ] -> #abC).
@@ -228,7 +228,7 @@ SymbolTest >> nonEmpty1Element [
 
 { #category : #requirements }
 SymbolTest >> nonEmptyMoreThan1Element [
-" return a collection that don't includes equal elements'" 
+" return a collection that don't includes equal elements'"
 	^nonEmptySymbol5ElementsNoDuplicates
 ]
 
@@ -241,7 +241,7 @@ ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 
 
 { #category : #requirements }
 SymbolTest >> replacementCollection [
-" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
+" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  "
 	^ collection1Element
 ]
 
@@ -262,7 +262,7 @@ SymbolTest >> setUp [
 	nonEmptySymbol5ElementsNoDuplicates := #abcde.
 	sameAtEndAndBegining := #abcda.
 	notIn := $z.
-	collectionNotIncluded := #zz.
+	collectionNotIncluded := #zz
 ]
 
 { #category : #requirements }
@@ -347,12 +347,12 @@ SymbolTest >> testDisplayString [
 
 { #category : #'tests - testing' }
 SymbolTest >> testEndsWithAColon [
-	 
+
 	self assert: #fred: endsWithAColon.
 
 	self deny: #'fred' endsWithAColon.
 
-	self deny: #fred endsWithAColon.
+	self deny: #fred endsWithAColon
 ]
 
 { #category : #tests }
@@ -360,9 +360,9 @@ SymbolTest >> testIsLiteralSymbol [
 
 	self assert: ('*+-/\~=<>&@%,|' allSatisfy: [:char | (Symbol with: char) isLiteralSymbol])
 		description: 'single letter binary symbols can be printed without string quotes'.
-		
+
 	self assert: (#('x' 'x:' 'x:y:' 'from:to:by:' 'yourself') allSatisfy: [:str | str asSymbol isLiteralSymbol])
-		description: 'valid ascii selector symbols can be printed without string quotes'.
+		description: 'valid ascii selector symbols can be printed without string quotes'
 ]
 
 { #category : #'tests - selectors' }
@@ -371,10 +371,19 @@ SymbolTest >> testIsSelectorSymbol [
 	self assert: #assert:equals: isSelectorSymbol
 ]
 
+{ #category : #tests }
+SymbolTest >> testKeywordsStrict [
+
+	self assert: #foo: keywordsStrict equals: #( 'foo:' ).
+	self assert: #foo:bar: keywordsStrict equals: #( 'foo:' 'bar:' ).
+	self assert: #foo keywordsStrict equals: #(  ).
+	self assert: #+ keywordsStrict equals: #(  )
+]
+
 { #category : #requirements }
 SymbolTest >> testNew [
-	
-	self should: [Symbol new: 5 ] raise: self defaultTestError.
+
+	self should: [Symbol new: 5 ] raise: self defaultTestError
 ]
 
 { #category : #tests }
@@ -489,6 +498,18 @@ SymbolTest >> testNumArgsUnary [
 	self assert: 'name123' numArgs equals: 0.
 	self assert: 'na123me' numArgs equals: 0.
 	self assert: '123name' numArgs equals: -1
+]
+
+{ #category : #tests }
+SymbolTest >> testPrintOn [
+
+	| printed allElementsAsString |
+	allElementsAsString := self elements collect: [ :each | each asString ].
+
+	printed := String streamContents: [ :stream |
+		           self nonEmpty printOn: stream ].
+
+	self assert: printed equals: $# asString , ('' join: allElementsAsString)
 ]
 
 { #category : #tests }

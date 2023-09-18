@@ -19,11 +19,11 @@ SycMockEnvironment class >> with: aCollection [
 ]
 
 { #category : #testing }
-SycMockEnvironment >> includesClass: aString [ 
+SycMockEnvironment >> includesClass: aString [
 	^ content anySatisfy: [ :aMockObject | aMockObject changeClass = aString ]
 ]
 
 { #category : #accessing }
-SycMockEnvironment >> with: aCollection [ 
+SycMockEnvironment >> with: aCollection [
 	content := aCollection
 ]

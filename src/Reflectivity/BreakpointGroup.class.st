@@ -43,7 +43,7 @@ BreakpointGroup class >> cleanUpAll [
 	AllGroups do: [ :group | group breakpoints do: [ :bp | group removeBreakpoint: bp ] ].
 	Breakpoint copy all do: [ :bp | bp remove ].
 	AllGroups copy do: [ :group | group remove ].
-	self initialize.
+	self initialize
 ]
 
 { #category : #'class initialization' }
@@ -51,13 +51,13 @@ BreakpointGroup class >> initialize [
 
 	AllGroups := OrderedCollection new.
 	AllBreakpointsGroup := self new name: 'All Breakpoints'.
-	UngroupedBreakpointsGroup := self new name: 'No Group'.
+	UngroupedBreakpointsGroup := self new name: 'No Group'
 ]
 
 { #category : #'instance creation' }
 BreakpointGroup class >> newBreakpoint: aBreakpoint [
 	AllBreakpointsGroup addBreakpoint: aBreakpoint.
-	UngroupedBreakpointsGroup addBreakpoint: aBreakpoint.
+	UngroupedBreakpointsGroup addBreakpoint: aBreakpoint
 ]
 
 { #category : #accessing }
@@ -71,14 +71,14 @@ BreakpointGroup >> addBreakpoint: aBreakpoint [
 ]
 
 { #category : #accessing }
-BreakpointGroup >> breakpoints [ 
+BreakpointGroup >> breakpoints [
 	^breakpoints ifNil: [ breakpoints := WeakSet new]
 ]
 
 { #category : #initialization }
-BreakpointGroup >> initialize [ 
+BreakpointGroup >> initialize [
 	AllGroups add: self.
-	^self.
+	^self
 ]
 
 { #category : #accessing }
@@ -94,11 +94,10 @@ BreakpointGroup >> name: aString [
 { #category : #API }
 BreakpointGroup >> remove [
 	breakpoints copy do: [ :bp | bp group: self class ungroupedBreakpointsGroup ].
-	AllGroups remove: self.
-	
+	AllGroups remove: self
 ]
 
 { #category : #API }
 BreakpointGroup >> removeBreakpoint: aBreakpoint [
-	self breakpoints remove: aBreakpoint ifAbsent: [].
+	self breakpoints remove: aBreakpoint ifAbsent: []
 ]

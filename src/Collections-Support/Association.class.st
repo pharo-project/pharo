@@ -18,7 +18,7 @@ Class {
 
 { #category : #'instance creation' }
 Association class >> key: newKey value: newValue [
-	"Answer an instance of me with the arguments as the key and value of 
+	"Answer an instance of me with the arguments as the key and value of
 	the association."
 
 	^self basicNew key: newKey value: newValue
@@ -57,7 +57,7 @@ Association >> isVariableBinding [
 ]
 
 { #category : #accessing }
-Association >> key: aKey value: anObject [ 
+Association >> key: aKey value: anObject [
 	"Store the arguments as the variables of the receiver."
 
 	key := aKey.
@@ -98,7 +98,7 @@ Association >> value [
 ]
 
 { #category : #accessing }
-Association >> value: anObject [ 
+Association >> value: anObject [
 	"Store the argument, anObject, as the value of the receiver."
 
 	value := anObject

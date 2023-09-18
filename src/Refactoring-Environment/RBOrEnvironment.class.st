@@ -22,22 +22,22 @@ RBOrEnvironment class >> onEnvironment: anEnvironment or: anotherEnvironment [
 RBOrEnvironment >> classesDo: aBlock [
 	| enumerated |
 	enumerated := IdentitySet new.
-	environment classesDo: [ :each | 
+	environment classesDo: [ :each |
 		aBlock value: each.
 		enumerated add: each].
-	self orEnvironment classesDo: [ :each | 
-		(enumerated includes: each) 
+	self orEnvironment classesDo: [ :each |
+		(enumerated includes: each)
 			ifFalse: [ aBlock value: each ] ]
 ]
 
 { #category : #testing }
 RBOrEnvironment >> definesClass: aClass [
-	^ (environment definesClass: aClass) or: [ 
+	^ (environment definesClass: aClass) or: [
 		self orEnvironment definesClass: aClass ]
 ]
 
 { #category : #testing }
-RBOrEnvironment >> includesCategory: aCategory [ 
+RBOrEnvironment >> includesCategory: aCategory [
 	^ (environment includesCategory: aCategory)
 		or: [ self orEnvironment includesCategory: aCategory ]
 ]
@@ -53,14 +53,25 @@ RBOrEnvironment >> includesClass: aClass [
 
 { #category : #testing }
 RBOrEnvironment >> includesProtocol: aProtocol in: aClass [
-	^ (environment includesProtocol: aProtocol in: aClass)
-		or: [ self orEnvironment includesProtocol: aProtocol in: aClass ]
+
+	^ (environment includesProtocol: aProtocol in: aClass) or: [ self orEnvironment includesProtocol: aProtocol in: aClass ]
 ]
 
 { #category : #testing }
 RBOrEnvironment >> includesSelector: aSelector in: aClass [
 	^ (environment includesSelector: aSelector in: aClass)
 		or: [ self orEnvironment includesSelector: aSelector in: aClass ]
+]
+
+{ #category : #accessing }
+RBOrEnvironment >> methodsForClass: aClass do: aBlock [
+
+	| enumerated |
+	enumerated := IdentitySet new.
+	environment methodsForClass: aClass do: [ :method |
+		enumerated add: method.
+		aBlock value: method ].
+	self orEnvironment methodsForClass: aClass do: [ :method | (enumerated includes: method) ifFalse: [ aBlock value: method ] ]
 ]
 
 { #category : #accessing }
@@ -95,18 +106,18 @@ RBOrEnvironment >> selectorsForClass: aClass do: aBlock [
 	enumerated := IdentitySet new.
 	environment
 		selectorsForClass: aClass
-		do: [ :each | 
+		do: [ :each |
 			enumerated add: each.
 			aBlock value: each ].
 	self orEnvironment
 		selectorsForClass: aClass
-		do: [:each | 
-			(enumerated includes: each) 
+		do: [:each |
+			(enumerated includes: each)
 				ifFalse: [ aBlock value: each ] ]
 ]
 
 { #category : #printing }
-RBOrEnvironment >> storeOn: aStream [ 
+RBOrEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	environment storeOn: aStream.
 	aStream nextPutAll: self operator.

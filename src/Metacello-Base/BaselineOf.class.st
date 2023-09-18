@@ -106,6 +106,12 @@ BaselineOf >> baseline: spec [
 	"
 ]
 
+{ #category : #baselines }
+BaselineOf >> pharoVersionsFrom: aVersion [
+
+	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
+]
+
 { #category : #accessing }
 BaselineOf >> projectClass [
     ^ MetacelloMCBaselineProject

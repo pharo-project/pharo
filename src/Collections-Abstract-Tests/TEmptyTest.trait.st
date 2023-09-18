@@ -11,13 +11,13 @@ Trait {
 
 { #category : #requirements }
 TEmptyTest >> empty [
-	
+
 	^ self explicitRequirement
 ]
 
 { #category : #requirements }
 TEmptyTest >> nonEmpty [
-	
+
 	^ self explicitRequirement
 ]
 

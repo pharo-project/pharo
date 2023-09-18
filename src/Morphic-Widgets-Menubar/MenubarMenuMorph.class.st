@@ -14,7 +14,7 @@ Class {
 MenubarMenuMorph >> leftArrowStroked: evt [
 	| keyboardFocus |
 	super leftArrowStroked: evt.
-	
+
 	"If the menu is a submenu of a MenubarItemMorph then we need to give back the focus but also move the MenubarItemMorph selected one left."
 	keyboardFocus := evt hand keyboardFocus.
 	keyboardFocus isMenubar ifTrue: [ keyboardFocus keyStroke: evt ]

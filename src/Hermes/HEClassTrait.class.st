@@ -23,5 +23,5 @@ HEClassTrait >> asLiteralIn: env [
 
 { #category : #accessing }
 HEClassTrait >> value: aClassTrait [
-	value := aClassTrait instanceSide name.
+	value := aClassTrait instanceSide name
 ]

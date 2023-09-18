@@ -10,11 +10,11 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #visiting }
+{ #category : #initialization }
 TypingVisitor >> initialize [
 
 	typeStack := Stack new.
-	typeStack push: Dictionary new.
+	typeStack push: Dictionary new
 ]
 
 { #category : #visiting }
@@ -27,13 +27,13 @@ TypingVisitor >> visitAssignmentNode: anAssignmentNode [
 	"if not a temporary variable - return.
 	if no type return.
 	add type of a variable to a dictionary with the key being the variable's name"
-	
+
 	| variableType |
 	super visitAssignmentNode: anAssignmentNode.
 	anAssignmentNode variable isTempVariable ifFalse: [ ^self ].
    (anAssignmentNode value hasProperty: #type) ifFalse: [ ^self ].
 	variableType := anAssignmentNode value propertyAt: #type.
-	typeStack top at: anAssignmentNode variable name put: variableType.
+	typeStack top at: anAssignmentNode variable name put: variableType
 ]
 
 { #category : #visiting }
@@ -43,12 +43,12 @@ TypingVisitor >> visitBlockNode: aBlockNode [
 	typeStack push: typeStack top copy.
 	super visitBlockNode: aBlockNode.
 	stackTop := typeStack pop.
-	stackTop keysDo: [ :name | 
+	stackTop keysDo: [ :name |
 			| type1 type2 |
 			type2 := stackTop at: name.
 			(typeStack top includesKey: name)
 				ifFalse: [ typeStack top at: name put: type2 ]
-				ifTrue: [ type1 := typeStack top at: name. 
+				ifTrue: [ type1 := typeStack top at: name.
 					type1 == type2 ifFalse: [ typeStack top at: name put: (type2 commonSuperclassWith: type1) ] ] ].
 	aBlockNode propertyAt: #type put: BlockClosure
 ]
@@ -77,7 +77,7 @@ TypingVisitor >> visitSelfNode: aSelfNode [
 
 { #category : #visiting }
 TypingVisitor >> visitSuperNode: aSuperNode [
-	| class | 
+	| class |
 	class := aSuperNode methodNode methodClass.
 	"the type of super of a Trait is not known"
 	class isTrait ifTrue: [ ^self ].

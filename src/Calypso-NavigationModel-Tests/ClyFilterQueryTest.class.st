@@ -22,7 +22,7 @@ ClyFilterQueryTest >> testConvertingWithNewScopeBasisShouldKeepFilter [
 	| convertedQuery |
 
 	convertedQuery := query withScopeOf: #(newBasis).
-	
+
 	self assert: convertedQuery itemFilter equals: query itemFilter
 ]
 
@@ -30,9 +30,9 @@ ClyFilterQueryTest >> testConvertingWithNewScopeBasisShouldKeepFilter [
 ClyFilterQueryTest >> testConvertingWithNewScopeShouldKeepFilter [
 	| newScope convertedQuery |
 	newScope := ClyExample2Scope of: #someBasis in: environment.
-	
+
 	convertedQuery := query withScope: newScope.
-	
+
 	self assert: convertedQuery itemFilter equals: query itemFilter
 ]
 
@@ -42,9 +42,9 @@ ClyFilterQueryTest >> testExecution [
 	scope := ClyExampleScope ofAll: {self class superclass. self class} in: environment.
 	mainQuery := ClyReturningScopeBasisExampleQuery from: scope.
 	query subqueries: {mainQuery}.
-	
+
 	self executeQuery.
-	
+
 	self assert: resultItems size equals: 1.
 	self assert: resultItems first equals: self class
 ]
@@ -55,7 +55,7 @@ ClyFilterQueryTest >> testExecutionOverExistingQuery [
 	scope := ClyExampleScope ofAll: {self class superclass. self class} in: environment.
 	mainQuery := ClyReturningScopeBasisExampleQuery from: scope.
 	query := mainQuery filteredBy: query itemFilter.
-	
+
 	result := query execute.
 	resultItems := result items.
 	self assert: resultItems size equals: 1.

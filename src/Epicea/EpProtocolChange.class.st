@@ -12,11 +12,17 @@ Class {
 }
 
 { #category : #'instance creation' }
-EpProtocolChange class >> behavior: aBehavior protocol: aProtocol [ 
-	^ self basicNew 
+EpProtocolChange class >> behavior: aBehavior protocol: aProtocol [
+	^ self basicNew
 		initializeWithBehavior: aBehavior
 		protocol: aProtocol;
 		yourself
+]
+
+{ #category : #testing }
+EpProtocolChange class >> isAbstract [
+
+	^ self == EpProtocolChange
 ]
 
 { #category : #accessing }
@@ -31,10 +37,10 @@ EpProtocolChange >> behaviorAffectedName [
 ]
 
 { #category : #testing }
-EpProtocolChange >> doesOverride: aCodeChange [ 
+EpProtocolChange >> doesOverride: aCodeChange [
 
 	^ aCodeChange isEpProtocolChange and: [
-		aCodeChange behaviorAffectedName = self behaviorAffectedName and: [ 
+		aCodeChange behaviorAffectedName = self behaviorAffectedName and: [
 		aCodeChange protocol = self protocol ] ]
 ]
 
@@ -42,7 +48,7 @@ EpProtocolChange >> doesOverride: aCodeChange [
 EpProtocolChange >> initializeWithBehavior: aBehavior protocol: aProtocol [
 	self initialize.
 	behavior := aBehavior asEpiceaRingDefinition.
-	protocol := aProtocol asSymbol.
+	protocol := aProtocol asSymbol
 ]
 
 { #category : #testing }

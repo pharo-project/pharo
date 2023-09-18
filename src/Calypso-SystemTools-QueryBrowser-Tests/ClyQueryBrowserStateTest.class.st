@@ -15,14 +15,14 @@ ClyQueryBrowserStateTest >> createBrowser [
 ClyQueryBrowserStateTest >> restoreBrowserInstance [
 
 	self snapshotState.
-	
+
 	navigationState applyTo: browser
 ]
 
 { #category : #running }
 ClyQueryBrowserStateTest >> setUp [
 	super setUp.
-	
+
 	browser showResultOf: (ClyAllMethodsQuery sortedFrom: browser queryScopes first)
 ]
 
@@ -30,9 +30,9 @@ ClyQueryBrowserStateTest >> setUp [
 ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithActiveScope [
 
 	browser activeScope: browser queryScopes last.
-	
+
 	self restoreBrowserInstance.
-	
+
 	self assert: browser activeScope equals: browser queryScopes last
 ]
 
@@ -40,7 +40,7 @@ ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithActiveScope [
 ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithExpectedFlatQueryResult [
 
 	self restoreBrowserInstance.
-	
+
 	self assert: navigationState expectedFlatQueryResult notNil.
 	self assert: browser expectedFlatQueryResult equals: navigationState expectedFlatQueryResult
 ]
@@ -51,9 +51,9 @@ ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithMethodQuery [
 	| query |
 	query := ClyAllMethodsQuery sorted.
 	browser systemQuery: query.
-	
+
 	self restoreBrowserInstance.
-	
+
 	self assert: browser systemQuery equals: query
 ]
 
@@ -62,15 +62,15 @@ ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithQueryScopes [
 
 	self restoreBrowserInstance.
 	self assert: navigationState queryScopes size equals: 2.
-	
-	self assert: browser queryScopes equals: navigationState queryScopes.
+
+	self assert: browser queryScopes equals: navigationState queryScopes
 ]
 
 { #category : #tests }
 ClyQueryBrowserStateTest >> testRetrievesActiveScope [
 
 	self snapshotState.
-	
+
 	self assert: navigationState activeScope equals: browser activeScope
 ]
 
@@ -78,7 +78,7 @@ ClyQueryBrowserStateTest >> testRetrievesActiveScope [
 ClyQueryBrowserStateTest >> testRetrievesExpectedFlatQueryResult [
 
 	self snapshotState.
-	
+
 	self assert: navigationState expectedFlatQueryResult equals: browser expectedFlatQueryResult
 ]
 
@@ -86,7 +86,7 @@ ClyQueryBrowserStateTest >> testRetrievesExpectedFlatQueryResult [
 ClyQueryBrowserStateTest >> testRetrievesMethodQuery [
 
 	self snapshotState.
-	
+
 	self assert: navigationState systemQuery equals: browser systemQuery
 ]
 
@@ -94,6 +94,6 @@ ClyQueryBrowserStateTest >> testRetrievesMethodQuery [
 ClyQueryBrowserStateTest >> testRetrievesQueryScopes [
 
 	self snapshotState.
-	
+
 	self assert: navigationState queryScopes equals: browser queryScopes
 ]

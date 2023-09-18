@@ -40,23 +40,23 @@ SycRemoveMessageArgumentCommand >> argumentName: anObject [
 { #category : #private }
 SycRemoveMessageArgumentCommand >> computeArgumentName [
 
-	^ (originalMessage argumentNames reject: [ :arg | 
+	^ (originalMessage argumentNames reject: [ :arg |
 		   (self methodName arguments indexOf: arg) > 0 ]) first
 ]
 
 { #category : #execution }
 SycRemoveMessageArgumentCommand >> createRefactoring [
-
+	
 	^(RBRemoveParameterRefactoring
 		model: model
 		removeParameter: argumentName
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
+		in: refactoredClass
 		selector: originalMessage selector)
-		newSelector: self resultMessageSelector 
+		newSelector: self resultMessageSelector
 ]
 
 { #category : #accessing }
-SycRemoveMessageArgumentCommand >> defaultMenuIconName [ 
+SycRemoveMessageArgumentCommand >> defaultMenuIconName [
 	^#remove
 ]
 
@@ -75,7 +75,7 @@ SycRemoveMessageArgumentCommand >> informArgumentError [
 { #category : #accessing }
 SycRemoveMessageArgumentCommand >> methodName [
 
-	^ methodName ifNil: [ 
+	^ methodName ifNil: [
 		  methodName := RBMethodName
 			                selector: originalMessage selector
 			                arguments: originalMessage argumentNames ]
@@ -90,11 +90,17 @@ SycRemoveMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 	dialog cancelled ifTrue: [ self abort ].
 
 	self argumentName: self computeArgumentName.
-	
-	(originalMessage argumentNames includes: argumentName) 
+
+	(originalMessage argumentNames includes: argumentName)
 		ifTrue: [ ^ self ].
+	
 	self informArgumentError.
 	self abort
+]
+
+{ #category : #accessing }
+SycRemoveMessageArgumentCommand >> refactoredClass: aClass [ 
+	refactoredClass := aClass
 ]
 
 { #category : #execution }

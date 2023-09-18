@@ -20,7 +20,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyActivityAnimationIconMorph class >> label: aString [
-	^self new 
+	^self new
 		addLabel: aString;
 		yourself
 ]
@@ -44,28 +44,28 @@ ClyActivityAnimationIconMorph >> defaultColor [
 { #category : #initialization }
 ClyActivityAnimationIconMorph >> initialize [
 	super initialize.
-	self 
+	self
 		changeTableLayout;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
 		listDirection: #leftToRight;
-		cellInset: 2.
+		cellInset: 2 scaledByDisplayScaleFactor.
 	progress := 1.
 	progressIconMorph := self currentIcon asMorph.
 	self addMorphBack: progressIconMorph.
-	self extent: progressIconMorph extent.
+	self extent: progressIconMorph extent
 ]
 
 { #category : #stepping }
 ClyActivityAnimationIconMorph >> step [
 	progress := progress + 1.
 	progress > 10 ifTrue: [ progress := 1 ].
-	
+
 	progressIconMorph form: self currentIcon
 ]
 
 { #category : #stepping }
 ClyActivityAnimationIconMorph >> stepTime [
-	
+
 	^ 100 "milliseconds"
 ]

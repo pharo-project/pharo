@@ -26,7 +26,7 @@ ClyMethodSourcesQueryTest >> methodWithExpectedStringInSources [
 ClyMethodSourcesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: self class in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyClassScope of: self class superclass in: environment).
 	self assert: query checkEmptyResult
 ]
@@ -43,7 +43,7 @@ ClyMethodSourcesQueryTest >> testComparison [
 { #category : #tests }
 ClyMethodSourcesQueryTest >> testExpectedMethodShouldIncludeExpectedString [
 
-	self assert: ((self class >> #methodWithExpectedStringInSources) sourceCode 
+	self assert: ((self class >> #methodWithExpectedStringInSources) sourceCode
 		includesSubstring: self expectedSourceCodeSubstring caseSensitive: false)
 ]
 
@@ -51,8 +51,8 @@ ClyMethodSourcesQueryTest >> testExpectedMethodShouldIncludeExpectedString [
 ClyMethodSourcesQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyClassScope of: self class.
-	
+
 	self assert: resultItems size equals: 1.
-	
+
 	self assert: resultItems first equals: (self class >> #methodWithExpectedStringInSources)
 ]

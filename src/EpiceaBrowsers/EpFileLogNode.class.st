@@ -14,19 +14,19 @@ Class {
 
 { #category : #convenience }
 EpFileLogNode class >> fromAllLogsIn: directory [
-	
+
 	| nodes |
-	nodes := directory entries 
+	nodes := directory entries
 		select: [ :each | each basename endsWith: OmFileStore defaultFileSuffix ]
 		thenCollect: [ :entry | self withEntry: entry ].
-		
+
 	^ nodes
 ]
 
 { #category : #'instance creation' }
 EpFileLogNode class >> withEntry: aDirectoryEntry [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeWithEntry: aDirectoryEntry;
 		yourself
 ]
@@ -49,13 +49,13 @@ EpFileLogNode >> initializeWithEntry: aDirectoryEntry [
 
 	directoryEntry := aDirectoryEntry.
 
-	self initialize.
+	self initialize
 ]
 
 { #category : #accessing }
 EpFileLogNode >> log [
 
-	^ log ifNil: [ 
+	^ log ifNil: [
 		log := EpLog newWithStore: self ombuStore ]
 ]
 

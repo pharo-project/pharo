@@ -41,32 +41,32 @@ Class {
 
 { #category : #preconditions }
 RBMergeInstanceVariableIntoAnother >> preconditions [
-	^ (RBCondition 
-		withBlock: [ (variableName = newName) 
-			ifTrue: [ self refactoringFailure: 'The variable merged must be different' ].
+	^ (RBCondition
+		withBlock: [ (variableName = newName)
+			ifTrue: [ self refactoringError: 'The variable merged must be different' ].
 		true ])
-		& (RBCondition definesInstanceVariable: variableName in: class) 
+		& (RBCondition definesInstanceVariable: variableName in: class)
 			& (RBCondition definesInstanceVariable: newName in: class)
 ]
 
 { #category : #transforming }
-RBMergeInstanceVariableIntoAnother >> renameVariable [ 
-	model 
-		renameInstanceVariable: variableName
-		to: newName
-		in: class
-		around: [ self renameReferences ].
+RBMergeInstanceVariableIntoAnother >> privateTransform [
+	renameAccessors ifTrue: [
+		self removeOldAccessors
+	].
+
+	self renameVariable.
+
+	renameAccessors ifFalse: [ ^ self ].
+	self addNewAccessors.
+	self renameAccessorsReferences
 ]
 
 { #category : #transforming }
-RBMergeInstanceVariableIntoAnother >> transform [
-	renameAccessors ifTrue: [ 
-		self removeOldAccessors 
-	].
-	
-	self renameVariable.
-	
-	renameAccessors ifFalse: [ ^ self ].
-	self addNewAccessors.
-	self renameAccessorsReferences.
+RBMergeInstanceVariableIntoAnother >> renameVariable [
+	model
+		renameInstanceVariable: variableName
+		to: newName
+		in: class
+		around: [ self renameReferences ]
 ]

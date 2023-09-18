@@ -17,6 +17,7 @@ ExampleSlotWithStateTest >> testExampleClassSide [
 { #category : #tests }
 ExampleSlotWithStateTest >> testExampleSlotWithState [
 	| slot |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => ExampleSlotWithState.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
@@ -33,12 +34,12 @@ ExampleSlotWithStateTest >> testExampleSlotWithState [
 { #category : #tests }
 ExampleSlotWithStateTest >> testExampleTwoSlotWithState [
 	" add two, remove one"
-	aClass := self make: [ :builder | builder 
+	aClass := self make: [ :builder | builder
 		slots: {#slot1 =>ExampleSlotWithState . #slot2 =>ExampleSlotWithState}].
 
 	self assert: (aClass hasSlotNamed: #slot1).
 	self assert: (aClass hasSlotNamed: #slot2).
-	
+
 	aClass := self make: [ :builder | builder  slots: {#slot2 =>ExampleSlotWithState}].
 	self deny: (aClass hasSlotNamed: #slot1).
 	self assert: (aClass hasSlotNamed: #slot2)

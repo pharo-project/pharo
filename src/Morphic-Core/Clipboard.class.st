@@ -26,23 +26,24 @@ Clipboard class >> chooseRecentClipping [  "Clipboard chooseRecentClipping"
 
 { #category : #accessing }
 Clipboard class >> clipboardText [ "Clipboard clipboardText"
-	^self default clipboardText.
+	^self default clipboardText
 ]
 
 { #category : #accessing }
-Clipboard class >> clipboardText: aText [ 
+Clipboard class >> clipboardText: aText [
 	^self default clipboardText: aText
 ]
 
 { #category : #accessing }
 Clipboard class >> default [
-	^Default ifNil: [Default := self new].
+	^Default ifNil: [Default := self new]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Clipboard class >> initialize [
+
 	self startUp: true.
-	SessionManager default 
+	SessionManager default
 		registerSystemClassNamed: self name
 ]
 
@@ -67,7 +68,7 @@ Clipboard >> chooseRecentClipping [
 
 	recent ifNil: [ ^ nil ].
 	^ UIManager default
-		  chooseFrom: (recent collect: [ :txt | 
+		  chooseFrom: (recent collect: [ :txt |
 				   ((txt asString contractTo: 50)
 					    copyReplaceAll: String cr
 					    with: '\') copyReplaceAll: String tab with: '|' ])
@@ -84,7 +85,7 @@ Clipboard >> clipboardText [
 Clipboard >> clipboardText: text [
 
 	self noteRecentClipping: text asText copyWithoutExternalReferences.
-	contents := text asText copyWithoutExternalReferences.
+	contents := text asText copyWithoutExternalReferences
 ]
 
 { #category : #initialization }
@@ -101,5 +102,5 @@ Clipboard >> noteRecentClipping: text [
 	text size > 50000 ifTrue: [^ self].
 	(recent includes: text) ifTrue: [^ self].
 	recent addFirst: text.
-	[recent size > 5] whileTrue: [recent removeLast].
+	[recent size > 5] whileTrue: [recent removeLast]
 ]

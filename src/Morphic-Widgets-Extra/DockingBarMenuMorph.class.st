@@ -8,12 +8,12 @@ Class {
 }
 
 { #category : #accessing }
-DockingBarMenuMorph >> activatedFromDockingBar: aDockingBar [ 
+DockingBarMenuMorph >> activatedFromDockingBar: aDockingBar [
 	activatorDockingBar := aDockingBar
 ]
 
 { #category : #control }
-DockingBarMenuMorph >> activeSubmenu: aSubmenu [ 
+DockingBarMenuMorph >> activeSubmenu: aSubmenu [
 	super activeSubmenu: aSubmenu.
 	aSubmenu
 		ifNotNil: [activeSubMenu activatedFromDockingBar: nil]

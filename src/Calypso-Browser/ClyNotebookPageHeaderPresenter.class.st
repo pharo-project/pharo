@@ -43,18 +43,18 @@ ClyNotebookPageHeaderPresenter >> initializePresenters [
 	titleLabel := self newLabel
 		addStyle: 'fixed';
 		yourself.
-	closeImage := self newImage 
+	closeImage := self newImage
 		image: (self application iconNamed: #glamorousClose);
 		yourself.
-		
-	closeImage eventHandler 
-		whenMouseDownDo: [ :anEvent | 
-			anEvent isPrimaryButton 
+
+	closeImage eventHandler
+		whenMouseDownDo: [ :anEvent |
+			anEvent isPrimaryButton
 				ifTrue: [ self doClose ] ].
 
 	titleLabel eventHandler
-		"This is required to fix a problem that arrives when doubleClick 
-		 event of tab label happens: ot disables event processing by its parent. 
+		"This is required to fix a problem that arrives when doubleClick
+		 event of tab label happens: ot disables event processing by its parent.
 		 So this is just to bubble up the event"
 		whenMouseDownDo: [ :anEvent | self mouseDown: anEvent ];
 		whenMouseUpDo: [ :anEvent | self mouseUp: anEvent ];
@@ -64,31 +64,31 @@ ClyNotebookPageHeaderPresenter >> initializePresenters [
 ]
 
 { #category : #'event processing' }
-ClyNotebookPageHeaderPresenter >> mouseDown: event [ 
+ClyNotebookPageHeaderPresenter >> mouseDown: event [
 
 	"bubble up"
-	self adapter widget owner eventHandler 
-		mouseDown: event 
+	self adapter widget owner eventHandler
+		mouseDown: event
 		fromMorph: self adapter widget owner
 ]
 
 { #category : #'event processing' }
-ClyNotebookPageHeaderPresenter >> mouseUp: event [ 
+ClyNotebookPageHeaderPresenter >> mouseUp: event [
 
 	"bubble up"
-	self adapter widget owner eventHandler 
-		mouseUp: event 
+	self adapter widget owner eventHandler
+		mouseUp: event
 		fromMorph: self adapter widget owner
 ]
 
 { #category : #'event handling' }
-ClyNotebookPageHeaderPresenter >> onClose: aBlock [ 
+ClyNotebookPageHeaderPresenter >> onClose: aBlock [
 
 	closeAction := aBlock
 ]
 
 { #category : #'event handling' }
-ClyNotebookPageHeaderPresenter >> onDoubleClick: aBlock [ 
+ClyNotebookPageHeaderPresenter >> onDoubleClick: aBlock [
 
 	doubleClickAction := aBlock
 ]

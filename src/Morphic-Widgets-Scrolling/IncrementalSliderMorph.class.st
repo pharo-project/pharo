@@ -190,7 +190,7 @@ IncrementalSliderMorph >> minEnabled [
 IncrementalSliderMorph >> minExtent [
 	"Must answer a fixed small size here to
 	allow auto orientation to work."
-	
+
 	|superMin|
 	superMin := super minExtent.
 	^(24 max: superMin x) @ (24 max: superMin y)
@@ -329,7 +329,7 @@ IncrementalSliderMorph >> sliderMorph: anObject [
 { #category : #updating }
 IncrementalSliderMorph >> update: aSymbol [
 	"Update the value."
-	
+
 	super update: aSymbol.
 	aSymbol = self getValueSelector
 		ifTrue: [^self updateValue].
@@ -384,7 +384,7 @@ IncrementalSliderMorph >> updateOrientation: aPoint [
 { #category : #protocol }
 IncrementalSliderMorph >> updateValue [
 	"Update the value."
-	
+
 	self model ifNotNil: [
 		self getValueSelector ifNotNil: [
 			self sliderMorph ifNotNil: [:sm |

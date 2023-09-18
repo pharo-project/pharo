@@ -32,9 +32,9 @@ RBSelectorNode class >> value: aString keywordPositions: keywordPositions [
 ]
 
 { #category : #comparing }
-RBSelectorNode >> = anObject [ 
+RBSelectorNode >> = anObject [
 	self == anObject ifTrue: [^true].
-	^ self class = anObject class ifTrue: [ self value = anObject value ] ifFalse: [ false ]
+	^ self class = anObject class and: [ self value = anObject value ]
 ]
 
 { #category : #visiting }
@@ -76,7 +76,7 @@ RBSelectorNode >> needsParenthesis [
 ]
 
 { #category : #accessing }
-RBSelectorNode >> numArgs [ 
+RBSelectorNode >> numArgs [
 	^ value numArgs
 ]
 
@@ -97,7 +97,7 @@ RBSelectorNode >> startWithoutParentheses [
 
 { #category : #accessing }
 RBSelectorNode >> stopWithoutParentheses [
-	
+
 	^ self keywordPositions last + self keywords last size
 ]
 

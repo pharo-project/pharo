@@ -34,7 +34,7 @@ ClyTextEditor >> implementorsOf: selectedSelector [
 ClyTextEditor >> implementorsOfIt [
 
 	| selector |
-	(selector := self selectedSelector) ifNil: [ ^ textArea flash ].
+	(selector := self selectedSelector) isNil or: [ selector ifEmpty: [ ^ textArea flash ]].
 	selector isCharacter ifTrue: [ ^ textArea flash ].
 	self implementorsOf: selector
 ]
@@ -57,11 +57,11 @@ ClyTextEditor >> referencesTo: aVariableName [
 	" ugly dispatch, but current Browser protocol names aren't really cool "
 	class := self modelCurrentSelectedClass.
 
-	class isBehavior ifTrue: [ 
-		class slotNamed: aVariableName ifFound: [:slot | 
+	class isBehavior ifTrue: [
+		class slotNamed: aVariableName ifFound: [:slot |
 			var := ClyInstanceVariable on: slot visibleFrom: class.
 			^self browser spawnQueryBrowserOn: (ClyVariableReferencesQuery of: var)]].
-	
+
 	self browser browseReferencesTo: aVariableName asSymbol inNameResolver: class
 ]
 
@@ -70,7 +70,7 @@ ClyTextEditor >> referencesToIt [
 	| selector |
 	"self lineSelectAndEmptyCheck: [^ self]."
 	(selector := self selectedSelector) == nil ifTrue: [^ textArea flash].
-	
+
 	self referencesTo: selector
 ]
 

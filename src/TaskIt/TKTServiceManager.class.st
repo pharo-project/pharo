@@ -14,7 +14,7 @@ Class {
 TKTServiceManager >> initialize [
 
 	super initialize.
-	services := Set new.
+	services := Set new
 ]
 
 { #category : #configuration }
@@ -24,14 +24,14 @@ TKTServiceManager >> isDebuggingCompatible [
 
 { #category : #purging }
 TKTServiceManager >> purge [
-	
+
 	services := services select: [ :each | each isRunning ]
 ]
 
 { #category : #purging }
 TKTServiceManager >> removeService: aService [
 
-	services remove: aService ifAbsent: [  ].
+	services remove: aService ifAbsent: [  ]
 ]
 
 { #category : #accessing }
@@ -43,7 +43,7 @@ TKTServiceManager >> services [
 TKTServiceManager >> startService: aService [
 	services
 		detect: [ :any | any name = aService name ]
-		ifFound: [ :s | 
+		ifFound: [ :s |
 			s = aService
 				ifFalse: [ self
 						error:
@@ -51,10 +51,4 @@ TKTServiceManager >> startService: aService [
 								format: {('name' -> aService name)} asDictionary) ] ]
 		ifNone: [ aService launch.
 			services add: aService ]
-]
-
-{ #category : #'start-stop' }
-TKTServiceManager >> stopService: aService [
-
-	aService requestStop
 ]

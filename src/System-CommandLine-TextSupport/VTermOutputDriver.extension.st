@@ -17,16 +17,16 @@ VTermOutputDriver >> color256: aColor background: isBackground [
 	"use the resources for colors 0-15 - usually more-or-less a reproduction of the standard ANSI colors, but possibly more pleasing shades
 	colors 16-231 are a 6x6x6 color cube
 	colors 232-255 are a grayscale ramp, intentionally leaving out black and white"
-	
+
 	self csiEscape.
 
-	outStream nextPutAll: (isBackground 
+	outStream nextPutAll: (isBackground
 		ifFalse: [ '38;5;' ]
 		ifTrue:  [ '48;5;' ]).
-		
-	outStream 
+
+	outStream
 		print: aColor closestXTermPixelValue;
-		nextPut: $m.
+		nextPut: $m
 ]
 
 { #category : #'*System-CommandLine-TextSupport' }
@@ -36,8 +36,8 @@ VTermOutputDriver class >> printText: aText [
 
 	out := self stdout.
 
-	aText doWithIndex: [ :char :index| 
-		aText attributesAt: index do: [ :attr| 
+	aText doWithIndex: [ :char :index|
+		aText attributesAt: index do: [ :attr|
 			(attr isKindOf: TextEmphasis )	ifTrue: [ out bold ].
 			(attr isKindOf: TextColor )	ifTrue: [ out color256: attr color ]].
 		(char = Character cr)
@@ -45,5 +45,5 @@ VTermOutputDriver class >> printText: aText [
 			ifFalse: [ out << char ].
 		out clear ].
 
-	out lf.
+	out lf
 ]

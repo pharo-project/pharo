@@ -16,7 +16,7 @@ EpTEventVisitor >> visitBehaviorCopy: anEvent [
 { #category : #visitor }
 EpTEventVisitor >> visitCodeChange: aChange [
 	"Default behavior for any change."
-		
+
 	^ self visitEvent: aChange
 ]
 
@@ -31,7 +31,7 @@ EpTEventVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 ]
 
 { #category : #visitor }
-EpTEventVisitor >> visitLogCommentModification: anEvent [ 
+EpTEventVisitor >> visitLogCommentModification: anEvent [
 	^ self visitEvent: anEvent
 ]
 
@@ -51,7 +51,7 @@ EpTEventVisitor >> visitRedo: aRedoEvent [
 ]
 
 { #category : #visitor }
-EpTEventVisitor >> visitRefactoring: anEvent [ 
+EpTEventVisitor >> visitRefactoring: anEvent [
 	^ self visitEvent: anEvent
 ]
 
@@ -66,7 +66,7 @@ EpTEventVisitor >> visitSessionSnapshot: anEvent [
 ]
 
 { #category : #visitor }
-EpTEventVisitor >> visitSessionStart: anEvent [ 
+EpTEventVisitor >> visitSessionStart: anEvent [
 	^ self visitEvent: anEvent
 ]
 

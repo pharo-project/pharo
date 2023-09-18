@@ -27,9 +27,9 @@ ClyMoveMethodGroupToClassCommand class >> canBeExecutedInContext: aToolContext [
 { #category : #activation }
 ClyMoveMethodGroupToClassCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
-	
-	^CmdDragAndDropActivation 
-		for: ClyMethodGroup asCalypsoItemContext 
+
+	^CmdDragAndDropActivation
+		for: ClyMethodGroup asCalypsoItemContext
 		toDropIn: ClyClass asCalypsoItemContext
 ]
 
@@ -37,7 +37,7 @@ ClyMoveMethodGroupToClassCommand class >> fullBrowserDragAndDropActivation [
 ClyMoveMethodGroupToClassCommand >> execute [
 
 	| moveCommand |
-	methodGroups do: [ :each | 
+	methodGroups do: [ :each |
 		moveCommand := SycMoveMethodsToClassCommand methods: each methods class: targetClass.
 		moveCommand execute.
 		each removeWithMethods]
@@ -53,7 +53,7 @@ ClyMoveMethodGroupToClassCommand >> prepareExecutionInDropContext: aToolContext 
 { #category : #execution }
 ClyMoveMethodGroupToClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	targetClass := aToolContext requestSingleClass: 'Choose class'.
 	targetClass := aToolContext currentMetaLevelOf: targetClass
 ]

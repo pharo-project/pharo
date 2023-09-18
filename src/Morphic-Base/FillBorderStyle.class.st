@@ -10,6 +10,12 @@ Class {
 	#category : #'Morphic-Base-Borders'
 }
 
+{ #category : #'class initialization' }
+FillBorderStyle class >> initialize [
+	"Deprecated in Pharo 11"
+	self deprecatedAliases: { #FillStyleBorder }
+]
+
 { #category : #geometry }
 FillBorderStyle >> borderRectsFor: aRectangle [
 	"Answer a collection of rectangles to fill.
@@ -42,7 +48,7 @@ FillBorderStyle >> fillStyle: anObject [
 { #category : #drawing }
 FillBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Fill the border areas with the fill style, clipping for each segment."
-	
+
 	(self borderRectsFor: aRectangle) do: [:r |
 		aCanvas
 			fillRectangle: r

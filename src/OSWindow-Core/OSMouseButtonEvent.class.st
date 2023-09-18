@@ -12,13 +12,13 @@ Class {
 
 { #category : #accessing }
 OSMouseButtonEvent >> button [
-	
+
 	^ button
 ]
 
 { #category : #accessing }
 OSMouseButtonEvent >> button: anObject [
-	
+
 	button := anObject
 ]
 
@@ -30,15 +30,15 @@ OSMouseButtonEvent >> isWheel [
 { #category : #printing }
 OSMouseButtonEvent >> printOn: stream [
 	super printOn: stream.
-	stream 
-		space; 
+	stream
+		space;
 		print: button
 ]
 
 { #category : #accessing }
 OSMouseButtonEvent >> wheelDirection [
 	"If button is wheel button (>3), answer direction (#up/#down)"
-	^ self button = 4 
-		ifTrue: [ #up ] 
+	^ self button = 4
+		ifTrue: [ #up ]
 		ifFalse: [ #down ]
 ]

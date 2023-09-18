@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 ReSendsUnknownMessageToGlobalRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'SendsUnknownMessageToGlobalRule'
 ]
 
@@ -22,6 +22,8 @@ ReSendsUnknownMessageToGlobalRule >> basicCheck: aNode [
 	aNode receiver isUndeclaredVariable ifTrue: [ ^false ].
 	aNode receiver isClassVariable ifTrue: [ ^false ].
 	
+	"if we know that the selector does not exist, we ignore"
+	(aNode methodNode compiledMethod allIgnoredNotImplementedSelectors includes: aNode selector) ifTrue: [ ^false ].
 	^ (aNode receiver variable value respondsTo: aNode selector) not
 ]
 

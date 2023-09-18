@@ -30,7 +30,7 @@ SycMockScope >> content [
 { #category : #accessing }
 SycMockScope >> content: anArray [
 
-	content := anArray collect: [ :each | 
+	content := anArray collect: [ :each |
 		           SycMockObject new
 			           changeClass: each;
 			           yourself ]

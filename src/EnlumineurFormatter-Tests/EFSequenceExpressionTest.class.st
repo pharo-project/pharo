@@ -379,7 +379,7 @@ EFSequenceExpressionTest >> testNoNewLineBetweenVariableAndIfTrue [
 			gammaTable: gammaTable
 			ungammaTable: gammaInverseTable ]		
 "
-x ifTrue: [ 
+x ifTrue: [
 	aBitBlt
 		copyBitsColor: foreColorVal
 		alpha: foreColorAlpha

@@ -15,7 +15,7 @@ Class {
 { #category : #utilities }
 BreakpointTest >> newDummyClass [
 
-	^ self class classInstaller make: [ :aBuilder | 
+	^ self class classInstaller make: [ :aBuilder |
 		  aBuilder
 			  name: #DummyClassForBreakpoint;
 			  package: 'DummyPackage' ]
@@ -34,19 +34,19 @@ BreakpointTest >> setUp [
 	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
 	SystemAnnouncer announcer: nil.
 	Breakpoint registerInterestToSystemAnnouncement.
-	Breakpoint all removeAll.
+	Breakpoint all removeAll
 ]
 
 { #category : #running }
 BreakpointTest >> tearDown [
 	| pkg |
-	Breakpoint removeAll.	
+	Breakpoint removeAll.
 	Breakpoint all addAll: previousBreakpoints.
 	SystemAnnouncer announcer: oldSystemAnnouncer.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
-	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
+	pkg := 'DummyPackage' asPackageIfAbsent: [ ].
 	pkg ifNotNil: [ pkg removeFromSystem ].
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -60,11 +60,11 @@ BreakpointTest >> testAddRemoveBreakpoint [
 	bp install.
 	"after the breakpoint is installed, the method is different"
 	self deny: (cls >> #dummy) bytecodes equals: method bytecodes.
-	
+
 	self assertCollection: Breakpoint all includesAll: {bp}.
 	bp remove.
 	self assertEmpty: Breakpoint all.
-	
+
 	"Check that the method is correcty reverted"
 	self assert: (cls >> #dummy) bytecodes equals: method bytecodes
 ]
@@ -98,11 +98,11 @@ BreakpointTest >> testBreakInContextNode [
 	|observer breakpoint|
 	observer := DummyBreakpointObserver new.
 	Breakpoint registerObserver: observer.
-	breakpoint := Breakpoint new.	
+	breakpoint := Breakpoint new.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break.
 	self assert: observer tag notNil.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
-	self assertCollection: observer tag nodes equals: #(#node).
+	self assertCollection: observer tag nodes equals: #(#node)
 ]
 
 { #category : #tests }
@@ -131,11 +131,11 @@ BreakpointTest >> testBreakOnceInContext [
 	|observer breakpoint|
 	observer := DummyBreakpointObserver new.
 	Breakpoint registerObserver: observer.
-	breakpoint := Breakpoint new once: true.	
+	breakpoint := Breakpoint new once: true.
 	self assert: breakpoint isEnabled.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break.
 	self deny: breakpoint isEnabled.
-	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break.
+	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break
 ]
 
 { #category : #tests }
@@ -151,7 +151,7 @@ BreakpointTest >> testBreakpointEnabled [
 
 { #category : #tests }
 BreakpointTest >> testBreakpointInitialization [
-	|bp|	
+	|bp|
 	bp := Breakpoint new.
 	self assert: bp targetInstance isNil.
 	self deny: bp isObjectCentric
@@ -168,13 +168,13 @@ BreakpointTest >> testBreakpointNodeProperty [
 	self assert: (cls >> #dummy) ast hasBreakpoint.
 	self assertCollection: (cls >> #dummy) ast breakpoints equals: {breakpoint} asSet.
 	breakpoint remove.
-	self deny: (cls >> #dummy) ast hasBreakpoint.
+	self deny: (cls >> #dummy) ast hasBreakpoint
 ]
 
 { #category : #tests }
 BreakpointTest >> testDisableEnableBreakpoint [
 	| breakpoint |
-	breakpoint := Breakpoint new.	
+	breakpoint := Breakpoint new.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break.
 	breakpoint disable.
 	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break.
@@ -209,56 +209,56 @@ BreakpointTest >> testModifyMethodWithBreakpoint [
 
 { #category : #tests }
 BreakpointTest >> testObjectCentricAPI [
-	|object1 object2|		
+	|object1 object2|
 	object1 := ReflectivityExamples new.
 	object2 := ReflectivityExamples new.
-	
+
 	Breakpoint breakOn: #exampleAssignment inObject: object1.
-	
+
 	self should: [object1 exampleAssignment] raise: Break.
 	self shouldnt: [object2 exampleAssignment] raise: Break
 ]
 
 { #category : #tests }
 BreakpointTest >> testObjectCentricASTAPI [
-	|object1 object2 ast|		
+	|object1 object2 ast|
 	object1 := ReflectivityExamples new.
 	object2 := ReflectivityExamples new.
 	ast := (ReflectivityExamples >> #exampleAssignment) ast statements first.
-	
+
 	Breakpoint breakOnAST: ast inObject: object1.
-	
+
 	self should: [object1 exampleAssignment] raise: Break.
 	self shouldnt: [object2 exampleAssignment] raise: Break
 ]
 
 { #category : #tests }
 BreakpointTest >> testObjectCentricBreakpoint [
-	|bp object1 object2 ast|	
+	|bp object1 object2 ast|
 	bp := Breakpoint new.
 	object1 := ReflectivityExamples new.
 	object2 := ReflectivityExamples new.
 	ast := (ReflectivityExamples >> #exampleAssignment) ast.
-	
+
 	bp node: ast.
 	bp scopeTo: object1.
 	bp install.
-	
+
 	self should: [object1 exampleAssignment] raise: Break.
 	self shouldnt: [object2 exampleAssignment] raise: Break.
-	
+
 	bp remove.
-	self shouldnt: [object1 exampleAssignment] raise: Break.
+	self shouldnt: [object1 exampleAssignment] raise: Break
 ]
 
 { #category : #tests }
 BreakpointTest >> testObjectCentricObjectAPI [
-	|object1 object2|		
+	|object1 object2|
 	object1 := ReflectivityExamples new.
 	object2 := ReflectivityExamples new.
-	
+
 	object1 haltOnCallTo: #exampleAssignment.
-	
+
 	self should: [object1 exampleAssignment] raise: Break.
 	self shouldnt: [object2 exampleAssignment] raise: Break
 ]
@@ -268,12 +268,12 @@ BreakpointTest >> testRemoveBreakpointWithRemoveFrom [
 	|bp node |
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.
-	
+
 	node := (cls >> #dummy) ast.
 	bp := (Breakpoint new node: node) install.
 	self assertCollection: Breakpoint all includesAll: {bp}.
 	Breakpoint removeFrom: node.
-	self assertEmpty: Breakpoint all.
+	self assertEmpty: Breakpoint all
 ]
 
 { #category : #tests }
@@ -306,11 +306,11 @@ BreakpointTest >> testRemoveMethodWithBreakpoint [
 
 { #category : #tests }
 BreakpointTest >> testScopeTo [
-	|bp object|	
+	|bp object|
 	bp := Breakpoint new.
 	object := Object new.
 	bp scopeTo: object.
-	
+
 	self assert: bp targetInstance identicalTo: object.
 	self assert: bp isObjectCentric
 ]
@@ -335,15 +335,15 @@ BreakpointTest >> testSetAsBreakpointProperty [
 	breakpoint2 := Breakpoint new.
 	breakpoint node: node.
 	breakpoint2 node: node.
-	
+
 	breakpoint setAsNodeProperty.
 	breakpoint2 setAsNodeProperty.
 	self assert: node hasBreakpoint.
 	self assertCollection: node breakpoints equals: { breakpoint. breakpoint2 } asSet.
-	
+
 	breakpoint setAsNodeProperty.
 	self assertCollection: node breakpoints equals: { breakpoint. breakpoint2 } asSet.
-	
+
 	breakpoint removeFromNodeProperty.
 	breakpoint2 removeFromNodeProperty.
 	self deny: node hasBreakpoint
@@ -387,39 +387,39 @@ BreakpointTest >> testSuperSendWithArgs_conditionBlockProducerMethodAST [
 
 { #category : #tests }
 BreakpointTest >> testTargetInstanceGarbageCollected [
-	|bp object|	
+	|bp object|
 	bp := Breakpoint new.
 	object := Object new.
 	bp scopeTo: object.
 	object := nil.
 	Smalltalk garbageCollect.
-	
+
 	self assert: bp targetInstance isNil.
 	self deny: bp isObjectCentric
 ]
 
 { #category : #tests }
 BreakpointTest >> testUninstallFromGarbageCollectedInstance [
-	|bp object ast|	
+	|bp object ast|
 	bp := Breakpoint new.
 	object := ReflectivityExamples new.
 	ast := (ReflectivityExamples >> #exampleAssignment) ast.
-	
+
 	bp node: ast.
 	bp scopeTo: object.
 	bp install.
-	
+
 	object := nil.
 	Smalltalk garbageCollect.
-	
-	self shouldnt: [ bp remove ] raise: Error.
+
+	self shouldnt: [ bp remove ] raise: Error
 ]
 
 { #category : #tests }
 BreakpointTest >> testUpdateMethod [
 	| bp method |
 	"test that, if we install a breakpoint and edit the method, it is removed correctly"
-	
+
 	cls compile: 'dummy ^42'.
 	method := cls >> #dummy.
 	self assertEmpty: Breakpoint all.

@@ -8,7 +8,7 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex autoBoundAt: aP
 	font := StandardFonts codeFont.
 	textStyle := font textStyle.
 	lineHeight := textStyle lineGrid.
-	1 to: aString size do: [ :i | 
+	1 to: aString size do: [ :i |
 		character := aString at: i.
 		width := character = carriageReturn
 			ifTrue: [ lineWidth := lineWidth max: width.
@@ -29,7 +29,7 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex autoBoundAt: aP
 	port fill: bounds fillColor: Color white rule: Form paint.
 	font installOn: port foregroundColor: c backgroundColor: Color white.
 	aString lines
-		doWithIndex: [ :line :index | 
+		doWithIndex: [ :line :index |
 			font
 				displayString: line
 				on: port

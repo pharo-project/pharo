@@ -99,7 +99,7 @@ SDL_TextEditingEvent class >> fieldsDesc [
 	char text29;
 	char text30;
 	char text31;
-	
+
 	Sint32 start; "the location to begin editing from"
 	Sint32 length "the number of characters to edit from the start point
 
@@ -138,24 +138,22 @@ SDL_TextEditingEvent >> start: anObject [
 
 { #category : #accessing }
 SDL_TextEditingEvent >> strlen [
+
 	| len |
 	len := 0.
-	12 to: 12 + 32 - 1 do:
-		[ :i | 
-		(self getHandle nbUInt8AtOffset: i) = 0
-			ifTrue: [ ^ len ].
+	12 to: 12 + 32 - 1 do: [ :i |
+		(self getHandle uint8AtOffset: i) = 0 ifTrue: [ ^ len ].
 		len := len + 1 ].
 	^ len
 ]
 
 { #category : #accessing }
 SDL_TextEditingEvent >> text [
+
 	| len text |
 	len := self strlen.
 	text := ByteArray new: len.
-	1 to: len do: [ :i |
-		text at: i put: (self getHandle nbUInt8AtOffset: 12 + i - 1)
-	].
+	1 to: len do: [ :i | text at: i put: (self getHandle uint8AtOffset: 12 + i - 1) ].
 	^ text
 ]
 

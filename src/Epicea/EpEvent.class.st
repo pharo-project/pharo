@@ -14,6 +14,12 @@ EpEvent class >> handlesAnnouncement: anAnnouncement [
 	^ anAnnouncement class includesBehavior: self
 ]
 
+{ #category : #testing }
+EpEvent class >> isAbstract [
+
+	^ self == EpEvent
+]
+
 { #category : #visitor }
 EpEvent >> accept: aVisitor [
 
@@ -27,12 +33,6 @@ EpEvent >> isCodeChange [
 
 { #category : #testing }
 EpEvent >> isEpBehaviorChange [
-
-	^ false
-]
-
-{ #category : #testing }
-EpEvent >> isEpCategoryChange [
 
 	^ false
 ]
@@ -57,6 +57,18 @@ EpEvent >> isEpLogEntriesComment [
 
 { #category : #testing }
 EpEvent >> isEpMethodChange [
+
+	^ false
+]
+
+{ #category : #testing }
+EpEvent >> isEpPackageChange [
+
+	^ false
+]
+
+{ #category : #testing }
+EpEvent >> isEpPackageTagChange [
 
 	^ false
 ]

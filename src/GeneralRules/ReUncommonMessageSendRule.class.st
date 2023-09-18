@@ -17,17 +17,17 @@ ReUncommonMessageSendRule class >> checksMethod [
 { #category : #accessing }
 ReUncommonMessageSendRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'UncommonMessageSendRule'
 ]
 
 { #category : #running }
 ReUncommonMessageSendRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemSelectors |
-	problemSelectors := 
-		aMethod sendNodes select: [ :msgSend | 
+	problemSelectors :=
+		aMethod sendNodes select: [ :msgSend |
 			msgSend selector first isUppercase | (self commonLiterals includes: msgSend selector) ].
-	
+
 	problemSelectors do: [ :msgSend |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString) ]
 ]

@@ -21,31 +21,32 @@ RenrakuBaseTestCase class >> isAbstract [
 
 { #category : #running }
 RenrakuBaseTestCase >> setUp [
+
 	super setUp.
-	testPackage := (RPackage named: #'RenrakuCreatedForTests') register.
-	self setupScreamerRule.
+	testPackage := self packageOrganizer ensurePackage: #RenrakuCreatedForTests.
+	self setupScreamerRule
 ]
 
 { #category : #running }
 RenrakuBaseTestCase >> setupScreamerRule [
 
-	ScreamerRule := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	ScreamerRule := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: #ReScreamerRuleForTesting;
 			superclass: ReAbstractRule;
 			package: testPackage name ].
 
-		
+
 	ScreamerRule class
 		compile: 'checksMethod ^ true';
 		compile: 'checksClass ^ true';
 		compile: 'checksPackage ^ true'.
-		
+
 	ScreamerRule
 		compile: 'name ^ ''A tautological violation for testing''';
 		compile: 'check: aNode forCritiquesDo: aBlock
 						aBlock cull: (self critiqueFor: aNode)'.
-						
+
 	ReRuleManager reset
 ]
 
@@ -53,8 +54,7 @@ RenrakuBaseTestCase >> setupScreamerRule [
 RenrakuBaseTestCase >> tearDown [
 
 	self tearDownscreamerRule.
-	testPackage unregister.
-	testPackage := nil.	
+	testPackage removeFromSystem.
 	super tearDown
 ]
 

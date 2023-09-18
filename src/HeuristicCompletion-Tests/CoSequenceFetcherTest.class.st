@@ -12,11 +12,11 @@ CoSequenceFetcherTest >> setUp [
 			completionClass: self completionClass)
 				, (CoGlobalVariableFetcher new
 					systemNavigation: self systemNavigation).
-	expectedElements := { 
-		NECInstVarEntry contents: 'a' node: nil. 
+	expectedElements := {
+		NECInstVarEntry contents: 'a' node: nil.
 		NECInstVarEntry contents: 'b' node: nil.
 		NECInstVarEntry contents: 'c' node: nil.
-		NECGlobalEntry contents: 'A' node: nil. 
+		NECGlobalEntry contents: 'A' node: nil.
 		NECGlobalEntry contents: 'B' node: nil.
 		NECGlobalEntry contents: 'C' node: nil. }
 ]

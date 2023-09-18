@@ -14,14 +14,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBPackage class >> existingNamed: aSymbol [ 
+RBPackage class >> existingNamed: aSymbol [
 	^(self named: aSymbol)
 		realPackageFor: aSymbol;
 		yourself
 ]
 
 { #category : #'instance creation' }
-RBPackage class >> existingNamed: aSymbol model: aRBNamespace [ 
+RBPackage class >> existingNamed: aSymbol model: aRBNamespace [
 	^ (self named: aSymbol)
 		model: aRBNamespace;
 		realPackageFor: aSymbol;
@@ -29,7 +29,7 @@ RBPackage class >> existingNamed: aSymbol model: aRBNamespace [
 ]
 
 { #category : #'instance creation' }
-RBPackage class >> named: aSymbol [ 
+RBPackage class >> named: aSymbol [
 	^(self new)
 		name: aSymbol;
 		yourself
@@ -72,6 +72,6 @@ RBPackage >> realPackage: anObject [
 ]
 
 { #category : #accessing }
-RBPackage >> realPackageFor: aSymbol [ 
+RBPackage >> realPackageFor: aSymbol [
 	self realPackage: ( self model environment packageAt: aSymbol ifAbsent: [nil] )
 ]

@@ -3,7 +3,7 @@ Extension { #name : #ProportionalSplitterMorph }
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
-	
+
 	super adoptPaneColor: paneColor.
 	self fillStyle: self normalFillStyle
 ]
@@ -43,7 +43,7 @@ ProportionalSplitterMorph >> hideRightOrBottom [
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary and change the color back to normal."
-	
+
 	(self bounds containsPoint: anEvent cursorPoint)
 		ifFalse: [anEvent hand showTemporaryCursor: nil].
 	self class fastSplitterResize
@@ -56,14 +56,14 @@ ProportionalSplitterMorph >> mouseUp: anEvent [
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
-	
+
 	^self theme splitterNormalFillStyleFor: self
 ]
 
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> noteNewOwner: o [
 	"Update the fill style."
-	
+
 	super noteNewOwner: o.
 	self defer: [self adoptPaneColor: self paneColor]
 ]
@@ -87,21 +87,21 @@ ProportionalSplitterMorph >> overlapsVertical: aSplitter [
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
-	
+
 	^self theme splitterPressedFillStyleFor: self
 ]
 
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> setGrabbedColor [
 	"Set the color of the receiver when it is grabbed."
-	
+
 	self fillStyle: self pressedFillStyle
 ]
 
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> shouldDraw [
 	"Answer whether the receiver should be drawn."
-	
+
 	^super shouldDraw or: [self class showSplitterHandles]
 ]
 
@@ -109,7 +109,7 @@ ProportionalSplitterMorph >> shouldDraw [
 ProportionalSplitterMorph >> shouldInvalidateOnMouseTransition [
 	"Answer whether the receiver should be invalidated
 	when the mouse enters or leaves."
-	
+
 	^self class showSplitterHandles
 ]
 

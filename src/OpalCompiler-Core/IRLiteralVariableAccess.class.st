@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #accessing }
-IRLiteralVariableAccess >> association [ 
+IRLiteralVariableAccess >> association [
 	^association
 ]
 

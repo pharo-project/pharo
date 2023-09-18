@@ -6,7 +6,7 @@ Class {
 
 { #category : #coverage }
 TextMorphTest >> classToBeTested [
-	
+
 	^ TextMorph
 ]
 

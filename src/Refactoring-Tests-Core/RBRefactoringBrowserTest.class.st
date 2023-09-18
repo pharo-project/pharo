@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRefactoringBrowserTest,
 	#superclass : #AbstractEnvironmentTestCase,
-	#category : #'Refactoring-Tests-Core-Base'
+	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #testing }
@@ -36,6 +36,6 @@ RBRefactoringBrowserTest >> parserClass [
 ]
 
 { #category : #private }
-RBRefactoringBrowserTest >> proceedThroughWarning: aBlock [ 
+RBRefactoringBrowserTest >> proceedThroughWarning: aBlock [
 	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]
 ]

@@ -15,7 +15,7 @@ Class {
 { #category : #private }
 TreeListMorph >> addSubmorphsAfter: parentMorph fromCollection: aCollection allowSorting: sortBoolean [
 	"Update the font on each morph."
-	
+
 	|answer|
 	answer := super addSubmorphsAfter: parentMorph fromCollection: aCollection allowSorting: sortBoolean.
 	"I commented out the following lines, because it makes this morph incredible slow.
@@ -47,7 +47,7 @@ TreeListMorph >> font: anObject [
 { #category : #private }
 TreeListMorph >> insertNewMorphs: morphList [
 	"Update the font on each morph."
-	
+
 	morphList do: [:m |
 		m
 			font: self font;
@@ -60,7 +60,7 @@ TreeListMorph >> layoutBounds: aRectangle [
 	"Set the bounds for laying out children of the receiver.
 	Update the scroller and scrollbars now since bounds set directly
 	(not via #extent:)."
-	
+
 	super layoutBounds: aRectangle.
 	self
 		resizeScroller;

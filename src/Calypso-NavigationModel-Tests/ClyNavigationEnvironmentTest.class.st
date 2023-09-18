@@ -22,7 +22,7 @@ ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsEmptyResult [
 	query := self createQueryFromScope: ClyExampleScope empty.
 	result := environment query: query.
 	self assert: result items isEmpty.
-	
+
 	self assert: (environment isQueryEmpty: query)
 ]
 
@@ -31,7 +31,7 @@ ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNoResultButItWould
 
 	| query |
 	query := self createQueryFromScope: ClyExampleScope empty.
-	
+
 	self assert: (environment isQueryEmpty: query)
 ]
 
@@ -40,7 +40,7 @@ ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNoResultButItWould
 
 	| query |
 	query := self createQueryFromScopeOf: self class.
-	
+
 	self deny: (environment isQueryEmpty: query)
 ]
 
@@ -51,7 +51,7 @@ ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNotEmptyResult [
 	query := self createQueryFromScopeOf: self class.
 	result := environment query: query.
 	self assert: result items notEmpty.
-	
+
 	self deny: (environment isQueryEmpty: query)
 ]
 
@@ -61,7 +61,7 @@ ClyNavigationEnvironmentTest >> testMakeQueryOfResultAsReadOnlyObjectWhenItIsExe
 	| query |
 	query := self createQueryFromScopeOf: self class.
 	environment query: query.
-	
+
 	self assert: query isReadOnlyObject
 ]
 
@@ -71,7 +71,7 @@ ClyNavigationEnvironmentTest >> testMakeQueryScopeOfResultAsReadOnlyObjectWhenIt
 	| query |
 	query := self createQueryFromScopeOf: self class.
 	environment query: query.
-	
+
 	self assert: query scope isReadOnlyObject
 ]
 
@@ -81,10 +81,10 @@ ClyNavigationEnvironmentTest >> testProcessingQueryCacheWhenSomeWasCollectedAsGa
 	| evaluated |
 	environment query: (self createQueryFromScopeOf: self class).
 	Smalltalk garbageCollectMost; garbageCollectMost.
-	
+
 	evaluated := false.
 	environment withCachedQueriesDo: [ :each | evaluated := true ].
-	
+
 	self deny: evaluated
 ]
 
@@ -93,9 +93,9 @@ ClyNavigationEnvironmentTest >> testQueryCacheShouldBeWeak [
 
 	| cache query |
 	query := self createQueryFromScopeOf: self class.
-	environment query: query.	
+	environment query: query.
 	Smalltalk garbageCollectMost; garbageCollectMost.
-	
+
 	cache := environment cachedResultOf: query.
 	self assert: cache equals: nil
 ]
@@ -109,7 +109,7 @@ ClyNavigationEnvironmentTest >> testQueryExecutionShouldRemoveOldWeaklyGarbagedC
 	Smalltalk garbageCollectMost; garbageCollectMost.
 	result := environment cachedResultOf: query.
 	self assert: result equals: nil.
-	
+
 	result := environment query: (self createQueryFromScopeOf: self class superclass).
 	self deny: (environment queryCache includesKey: query)
 ]

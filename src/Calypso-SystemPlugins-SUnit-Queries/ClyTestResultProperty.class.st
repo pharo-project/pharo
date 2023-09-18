@@ -28,13 +28,13 @@ Class {
 
 { #category : #'instance creation' }
 ClyTestResultProperty class >> ofMethod: aMethod [
-	^ClyCompositeTestResultProperty new 
+	^ClyCompositeTestResultProperty new
 		accumulateTestMethod: aMethod
 ]
 
 { #category : #'instance creation' }
 ClyTestResultProperty class >> ofTestCase: aTestCaseClass [
-	^self new 
+	^self new
 		accumulateTestCase: aTestCaseClass
 ]
 
@@ -95,7 +95,7 @@ ClyTestResultProperty >> createIcon [
 		ifTrue: [ ^ self iconNamed: #testYellow ].
 	errorCount > 0
 		ifTrue: [ ^ self iconNamed: #testRed].
-		
+
 	^ self iconNamed: #testNotRun
 ]
 

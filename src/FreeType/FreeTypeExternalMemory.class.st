@@ -60,7 +60,7 @@ FreeTypeExternalMemory >> validate [
 
 	self isValid ifTrue: [ ^ self ].
 	bytes ifNil: [ ^ self  ].
-	
+
 	self primCopyToExternalMemory: bytes.
 	self autoRelease
 ]

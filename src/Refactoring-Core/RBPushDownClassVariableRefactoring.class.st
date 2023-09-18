@@ -20,13 +20,13 @@ RBPushDownClassVariableRefactoring >> findDestinationClass [
 			and: [ (each classSide whichSelectorsReferToClassVariable: variableName) isEmpty ] ].
 	destinationClass := classes ifEmpty: [ nil ]
 		ifNotEmpty: [ classes asOrderedCollection first ].
-	classes do: [ :each | 
-		(destinationClass includesClass: each) 
+	classes do: [ :each |
+		(destinationClass includesClass: each)
 			ifTrue: [ destinationClass := each ]
 				ifFalse: [
-					(each includesClass: destinationClass) 
+					(each includesClass: destinationClass)
 						ifFalse: [ self signalMultipleReferenceError ] ] ].
-	destinationClass = class 
+	destinationClass = class
 		ifTrue: [ self signalStillReferencedError ].
 	^ destinationClass
 ]
@@ -35,15 +35,23 @@ RBPushDownClassVariableRefactoring >> findDestinationClass [
 RBPushDownClassVariableRefactoring >> preconditions [
 	"Preconditions are that only one subclass refers to the class variable."
 
-	^(RBCondition definesClassVariable: variableName in: class) 
-		& (RBCondition withBlock: 
+	^(RBCondition definesClassVariable: variableName in: class)
+		& (RBCondition withBlock:
 					[self findDestinationClass.
 					true])
 ]
 
+{ #category : #transforming }
+RBPushDownClassVariableRefactoring >> privateTransform [
+
+	class removeClassVariable: variableName.
+	destinationClass ifNil: [ ^ self ].
+	destinationClass addClassVariable: variableName
+]
+
 { #category : #preconditions }
 RBPushDownClassVariableRefactoring >> signalMultipleReferenceError [
-	self signalReferenceError: ('Multiple subclasses reference <1s>' 
+	self signalReferenceError: ('Multiple subclasses reference <1s>'
 				expandMacrosWith: variableName)
 ]
 
@@ -57,7 +65,7 @@ RBPushDownClassVariableRefactoring >> signalReferenceError: errorString [
 			error := '<1s><n>Browse references?' expandMacrosWith: errorString.
 			classVarName := variableName asSymbol.
 			self
-				refactoringError: error
+				refactoringWarning: error
 				with: [ self
 						openBrowserOn: ( RBVariableEnvironment referencesToClassVariable: classVarName in: class realClass )
 					]
@@ -66,15 +74,7 @@ RBPushDownClassVariableRefactoring >> signalReferenceError: errorString [
 
 { #category : #preconditions }
 RBPushDownClassVariableRefactoring >> signalStillReferencedError [
-	self signalReferenceError: ('<1p> has references to <2s>' 
+	self signalReferenceError: ('<1p> has references to <2s>'
 				expandMacrosWith: class
 				with: variableName)
-]
-
-{ #category : #transforming }
-RBPushDownClassVariableRefactoring >> transform [
-
-	class removeClassVariable: variableName.
-	destinationClass ifNil: [ ^ self ].
-	destinationClass addClassVariable: variableName
 ]

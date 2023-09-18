@@ -106,7 +106,6 @@ Class {
 SourceSansProRegular class >> fontContents [
 
 	^ self fontContentsData copy
-	
 ]
 
 { #category : #accessing }
@@ -115,7 +114,7 @@ SourceSansProRegular class >> fontContentsData [
 ]
 
 { #category : #'class initialization' }
-SourceSansProRegular class >> initialize [ 
+SourceSansProRegular class >> initialize [
 	EmbeddedFreeTypeFontInstaller registerFont: self
 ]
 
@@ -126,5 +125,5 @@ SourceSansProRegular class >> originalFileName [
 
 { #category : #accessing }
 SourceSansProRegular >> fontContents [
-	self shouldBeImplemented.
+	self shouldBeImplemented
 ]

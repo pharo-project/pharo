@@ -103,7 +103,7 @@ ZipArchiveMember >> bitFlag [
 
 		Bit 3: If this bit is set, the fields crc-32, compressed size and uncompressed size are set to zero in the local header.  The correct values are put in the data descriptor immediately following the compressed data.  (Note: PKZIP version 2.04g for DOS only recognizes this bit for method 8 compression, newer versions of PKZIP recognize this bit for any compression method.)
 
-		Bit 4: Reserved for use with method 8, for enhanced deflating. 
+		Bit 4: Reserved for use with method 8, for enhanced deflating.
 
 		Bit 5: If this bit is set, this indicates that the file is compressed patched data.  (Note: Requires PKZIP version 2.70 or greater)
 
@@ -126,14 +126,14 @@ ZipArchiveMember >> bitFlag [
 		Bit 14: Reserved by PKWARE.
 
 		Bit 15: Reserved by PKWARE."
-	
-	^ bitFlag.
+
+	^ bitFlag
 ]
 
 { #category : #'accessing - spec fields' }
 ZipArchiveMember >> bitFlag: aNumber [
 	"See comment for #bitFlag"
-	
+
 	bitFlag := aNumber
 ]
 
@@ -212,7 +212,7 @@ ZipArchiveMember >> contentStreamFromEncoding: encodingName [
 { #category : #reading }
 ZipArchiveMember >> contents [
 	"Answer my contents as a string."
-	^ ByteArray new: self uncompressedSize streamContents: [ :s | 
+	^ ByteArray new: self uncompressedSize streamContents: [ :s |
 		self extractTo: s ]
 ]
 
@@ -428,7 +428,7 @@ ZipArchiveMember >> extractToFile: aFile informingOverwrite: shouldOverwrite onS
 				ensureDelete;
 				ensureCreateFile ]
 				on: Error
-				do: [ :ex | 
+				do: [ :ex |
 					failedBlock cull: ex.
 					^ self ] ].
 			self
@@ -563,14 +563,14 @@ ZipArchiveMember >> looksLikeDirectory [
 { #category : #private }
 ZipArchiveMember >> mapPermissionsFromUnix: unixPerms [
 	"Take Unix permissions (e.g. 8r40755 for a directory) and put them in the high 16 bits. The low 16 bits are for DOS permissions"
-	
+
 	^ unixPerms bitShift: 16
 ]
 
 { #category : #private }
 ZipArchiveMember >> mapPermissionsToUnix: zipPerms [
 	"Extract Unix permissions (the high 16 bits) from zip permissions. The low 16 bits are for DOS permissions"
-	
+
 	^ zipPerms bitShift: -16
 ]
 
@@ -610,7 +610,7 @@ ZipArchiveMember >> unixFileAttributes [
 	"See comment at end"
 
 	^self mapPermissionsToUnix: externalFileAttributes
-	
+
 "Per http://unix.stackexchange.com/questions/14705/the-zip-formats-external-file-attribute : These values can all be found in <sys/stat.h> - link to 4.4BSD version. These are not in the POSIX standard (which defines test macros instead); but originate from AT&T Unix and BSD. (in GNU libc / Linux, the values themselves are defined as __S_IFDIR etc in bits/stat.h, though the kernel header might be easier to read - the values are all the same pretty much everywhere.)
 
 #define S_IFIFO  0010000  /* named pipe (fifo) */
@@ -643,7 +643,7 @@ And of course, the other 12 bits are for the permissions and setuid/setgid/stick
 { #category : #accessing }
 ZipArchiveMember >> unixFileAttributes: perms [
 	"See #unixFileAttributes comment"
-	
+
 	| oldPerms newPerms |
 	oldPerms := self mapPermissionsToUnix: externalFileAttributes.
 	newPerms :=  self isDirectory
@@ -659,14 +659,14 @@ ZipArchiveMember >> versionMadeBy [
 		2 Bytes:
 		- The upper byte indicates the compatibility of the file attribute information.  If the external file attributes are compatible with MS-DOS and can be read by PKZIP for DOS version 2.04g then this value will be zero.
 		- The lower byte indicates the ZIP specification version (the version of PKWARE Appnote) supported by the software used to encode the file.  The value / 10 indicates the major version number, and the value mod 10 is the minor version number"
-	
+
 	^ versionMadeBy
 ]
 
 { #category : #'accessing - spec fields' }
 ZipArchiveMember >> versionMadeBy: anInteger [
 	"See comment for #versionMadeBy"
-	
+
 	versionMadeBy := anInteger
 ]
 
@@ -677,14 +677,14 @@ ZipArchiveMember >> versionNeededToExtract [
 		- File is a folder (directory)
 		- File is compressed using Deflate compression
 		- File is encrypted using traditional PKWARE encryption"
-	
+
 	^ versionNeededToExtract
 ]
 
 { #category : #'accessing - spec fields' }
 ZipArchiveMember >> versionNeededToExtract: anInteger [
 	"See comment for #versionNeededToExtract"
-	
+
 	versionNeededToExtract := anInteger
 ]
 
@@ -697,7 +697,7 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	systemFileComment := fileComment utf8Encoded.
 	systemCdExtraField := cdExtraField.
 	aStream nextPutAll: CentralDirectoryFileHeaderSignature.
-	
+
 
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	endianStream nextLittleEndianNumber: 1 put: self versionMadeBy.
@@ -758,7 +758,7 @@ ZipArchiveMember >> writeDataTo: aStream [
 	(compressionMethod = CompressionDeflated and: [ desiredCompressionMethod = CompressionStored ])
 		ifTrue: [ ^self uncompressDataTo: aStream ].
 
-	self copyDataTo: aStream.
+	self copyDataTo: aStream
 ]
 
 { #category : #'private - writing' }
@@ -778,7 +778,7 @@ ZipArchiveMember >> writeDataTo: aStream from: start to: finish [
 	(compressionMethod = CompressionDeflated and: [ desiredCompressionMethod = CompressionStored ])
 		ifTrue: [ ^self uncompressDataTo: aStream from: start to: finish ].
 
-	self copyRawDataTo: aStream from: start to: finish.
+	self copyRawDataTo: aStream from: start to: finish
 ]
 
 { #category : #'private - writing' }
@@ -806,7 +806,7 @@ ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 	endianStream nextLittleEndianNumber: 2 put: localExtraField size.
 
 	aStream nextPutAll: systemFileName asByteArray.
-	aStream nextPutAll: localExtraField asByteArray.
+	aStream nextPutAll: localExtraField asByteArray
 ]
 
 { #category : #writing }
@@ -819,7 +819,7 @@ ZipArchiveMember >> writeTo: aStream [
 	self rewindData.
 	headerStartPosition := aStream position.
 	headerSize := 30
-		+ fileName asVmPathName asByteArray size 
+		+ fileName asVmPathName asByteArray size
 		+ localExtraField asByteArray size.
 	headerEndPosition := headerStartPosition + headerSize.
 	aStream nextPutAll: (ByteArray new: headerSize).
@@ -829,5 +829,5 @@ ZipArchiveMember >> writeTo: aStream [
 	self writeLocalFileHeaderTo: aStream.
 	"Verify that our calculation of the header size was correct!"
 	aStream position == headerEndPosition ifFalse: [ self error: 'Incorrect header size!' ].
-	aStream position: dataEndPosition.
+	aStream position: dataEndPosition
 ]

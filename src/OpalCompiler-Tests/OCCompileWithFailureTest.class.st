@@ -18,29 +18,41 @@ OCCompileWithFailureTest >> notify: aMessage at: positon in: object [
 
 { #category : #tests }
 OCCompileWithFailureTest >> testEmptyBlockArg [
-	| result | 
+	| result |
 	"parse [:] in parse error mode, this results in arg vars with an empty string as a name"
 	result := UndefinedObject compiler
     source: '^[ :]';
-    noPattern: true;
-    options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+    isScripting: true;
     requestor: self;
-    parse. 
+    parse.
 	self assert: result isDoIt.
 	self assert: result statements first isReturn
 ]
 
 { #category : #tests }
 OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
-	| ast cm |
-	ast := OpalCompiler new
+	| compiler cm |
+	cm := (compiler := OpalCompiler new)
 				source: 'method 3+';
-				options: #(+ optionParseErrors);
-				parse.
-	
-	self assert: ast isMethod.
-	self assert: ast isFaulty.
-	
-	cm := ast compiledMethod.
+				permitFaulty: true;
+				compile.
+
+	self assert: compiler ast isMethod.
+	self assert: compiler ast isFaulty.
+
+	self should: [cm valueWithReceiver: nil arguments: #()] raise: RuntimeSyntaxError
+]
+
+{ #category : #tests }
+OCCompileWithFailureTest >> testParenthesis [
+	| compiler cm |
+	cm := (compiler := UndefinedObject compiler)
+    source: 'self assert: pragma( numArgs equals: 0.';
+    isScripting: true;
+    requestor: self;
+    permitFaulty: true;
+    compile.
+	self assert: compiler ast isDoIt.
+	self assert: compiler ast isFaulty.
 	self should: [cm valueWithReceiver: nil arguments: #()] raise: RuntimeSyntaxError
 ]

@@ -21,21 +21,21 @@ Class {
 FuzzyMatcherExample class >> exampleAuthors [
 	<sampleInstance>
 	| authors blk |
-	
+
 	authors := OrderedCollection new.
-	blk := [ :mtd | 
+	blk := [ :mtd |
 		mtd timeStamp ifNotEmpty: [ :stamp |
 			(' ' join: ((stamp splitOn: ' ') allButLast: 2)) ifNotEmpty: [ :author |
 				 author trimmed ifNotEmpty: [ authors add: author ]
 			]
-		] 
+		]
 	].
 	Smalltalk globals allClassesAndTraitsDo: [ :each |
-		each methodsDo: blk. 
+		each methodsDo: blk.
 		each classSide methodsDo: blk.
 	].
 
-	^ self new 
+	^ self new
 		elements: authors asSet asArray;
 		open
 ]
@@ -44,7 +44,7 @@ FuzzyMatcherExample class >> exampleAuthors [
 FuzzyMatcherExample class >> exampleClasses [
 	<sampleInstance>
 
-	^ self new 
+	^ self new
 		pattern: 'mph';
 		elements: (self environment allClassesAndTraits collect: [:each | each name]);
 		open
@@ -52,19 +52,19 @@ FuzzyMatcherExample class >> exampleClasses [
 
 { #category : #examples }
 FuzzyMatcherExample class >> examplePackages [
-	<example>
 
-	^ self new 
-		pattern: '-st';
-		elements: (RPackage organizer packages collect: [:each | each name] );
-		open
+	<example>
+	^ self new
+		  pattern: '-st';
+		  elements: (self packageOrganizer packages collect: [ :each | each name ]);
+		  open
 ]
 
 { #category : #examples }
 FuzzyMatcherExample class >> exampleSelectors [
 	<example>
 
-	^ self new 
+	^ self new
 		pattern: '::::::::::';
 		elements: Symbol selectorTable asArray;
 		open
@@ -80,28 +80,28 @@ FuzzyMatcherExample >> aquireFont [
 FuzzyMatcherExample >> buildMorph [
 
 	| morph ft |
-	
+
 	morph := AlignmentMorph newColumn
-		color: Color transparent;  
+		color: Color transparent;
 		cellInset: 4@4;
 		yourself.
-	
+
 	textModel := textModel newTextField
 		textFont: self aquireFont;
 		hResizing: #spaceFill;
 		yourself.
-		
+
 	ft := FTTableMorph new
 		dataSource: dataSource;
-		vResizing: #spaceFill; 
+		vResizing: #spaceFill;
 		hResizing: #spaceFill;
 		yourself.
 
-	morph 
+	morph
 		addMorph: ft;
 		addMorph: stringMorph;
 		addMorph: textModel.
-	
+
 	^ morph
 ]
 
@@ -124,25 +124,25 @@ FuzzyMatcherExample >> fontName [
 FuzzyMatcherExample >> initialize [
 
 	super initialize.
-	
+
 	pattern := ''.
-	
+
 	dataSource := FTEasyListDataSource new
 		elements: #();
 		display: [ :item |
-			String streamContents: [ :stream |			
-				stream 
+			String streamContents: [ :stream |
+				stream
 					nextPutAll: item value asString;
 					space: (10 - ((stream position *2) min: 8));
 					nextPutAll: item key asString
 			]
 		];
 		yourself.
-				
+
 	textModel := RubScrolledTextModel new.
-	textModel announcer when: RubEditsStateChangedInModel 
+	textModel announcer when: RubEditsStateChangedInModel
 		send: #update to: self.
-	
+
 	stringMorph := StringMorph contents: '' font: self aquireFont
 ]
 
@@ -150,21 +150,21 @@ FuzzyMatcherExample >> initialize [
 FuzzyMatcherExample >> match: aPattern for: aCollection [
 
 	| matcher matches |
-	
+
 	aPattern isEmpty ifTrue: [ ^ aCollection ].
-	
+
 	matcher := FuzzyMatcher pattern: aPattern.
 
 	matches := OrderedCollection new: aCollection size.
-	
-	aCollection do: [ :each | 
-		matcher 
+
+	aCollection do: [ :each |
+		matcher
 			match: each key
-			ifScored: [ :score | matches add: each key -> score ] 
+			ifScored: [ :score | matches add: each key -> score ]
 	].
-	
+
 	matches sort: [ :a :b | a value >= b value ].
-	
+
 	^ matches
 ]
 
@@ -172,14 +172,14 @@ FuzzyMatcherExample >> match: aPattern for: aCollection [
 FuzzyMatcherExample >> open [
 	<script: 'self new open'>
 	| window area |
-	
+
 	window := (self buildMorph openInWindowLabeled: 'Fuzzy Matching Example').
 	area := window world clearArea.
-	
-	window 
+
+	window
 		extent: (area extent * (0.6 @ 0.7)) asIntegerPoint;
 		center: area center.
-	
+
 	^ window
 ]
 
@@ -210,17 +210,17 @@ FuzzyMatcherExample >> updatePattern: newPattern [
 
 	pattern = newPattern ifTrue: [ ^ self ].
 
-	searchPool := pattern size > newPattern size 
+	searchPool := pattern size > newPattern size
 		ifTrue: [ elements ]
 		ifFalse: [ matchedElements ].
 
 	t := [ matchedElements := self match: newPattern for: searchPool ] timeToRun.
-	
-	text := 'Checked {1} items, found {2} matching | {3} ms' format: { 
+
+	text := 'Checked {1} items, found {2} matching | {3} ms' format: {
 		elements size . matchedElements size. t asMilliSeconds }.
-	
-	stringMorph contents: text.		
-	pattern := newPattern.	
-	dataSource elements: matchedElements.	
+
+	stringMorph contents: text.
+	pattern := newPattern.
+	dataSource elements: matchedElements.
 	dataSource table ifNotNil: [ :fastTable | fastTable refresh ]
 ]

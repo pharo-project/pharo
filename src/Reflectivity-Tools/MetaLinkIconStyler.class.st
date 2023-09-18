@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
+{ #category : #testing }
+MetaLinkIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 MetaLinkIconStyler >> highlightColor [
 	^(Color orange alpha: 0.1)
@@ -30,6 +36,6 @@ MetaLinkIconStyler >> iconLabel: aNode [
 { #category : #testing }
 MetaLinkIconStyler >> shouldStyleNode: aNode [
 
-	^ aNode hasMetaLinks and: [ 
+	^ aNode hasMetaLinks and: [
 		  aNode links anySatisfy: [ :link | link hasOption: #optionStyler ] ]
 ]

@@ -10,7 +10,7 @@ Class {
 { #category : #activation }
 ClySwitchToFullHierarchyCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $h meta for: ClyFullBrowserClassContext
 ]
 
@@ -21,7 +21,7 @@ ClySwitchToFullHierarchyCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClySwitchToFullHierarchyCommand >> execute [
-	
+
 	browser switchToFullClassHierarchy
 ]
 

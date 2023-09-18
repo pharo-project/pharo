@@ -54,17 +54,21 @@ RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol: protocol [
 	aClass addMethod: rbMethod.
-	aClass compile: rbMethod source classified: {protocol}.
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			sourceCode: rbMethod source
+			in: aClass
+			withProtocol: protocol)
 ]
 
 { #category : #preconditions }
-RBMoveMethodToClassSideRefactoring >> applicabilityConditions [
+RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 
 	^ (RBCondition isMetaclass: class) not
 ]
 
 { #category : #preconditions }
-RBMoveMethodToClassSideRefactoring >> breakingChangeConditions [
+RBMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition definesSelector: method selector in: class classSide)
 		  not
@@ -72,18 +76,32 @@ RBMoveMethodToClassSideRefactoring >> breakingChangeConditions [
 
 { #category : #checking }
 RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
-	(class whoDefinesInstanceVariable: aString) ifNotNil: 
+	(class whoDefinesInstanceVariable: aString) ifNotNil:
 			[^ true].
-	(class whoDefinesClassVariable: aString) ifNotNil: 
+	(class whoDefinesClassVariable: aString) ifNotNil:
 			[^ true].
 	^ (self parseTree allDefinedVariables includes: aString)
+]
+
+{ #category : #refactoring }
+RBMoveMethodToClassSideRefactoring >> generateChanges [
+	
+	self applicabilityPreconditions check ifFalse: [
+		^ RBApplicabilityChecksFailedError signal:
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangePreconditions errorString ].
+
+	self privateTransform.
+	^ self changes
 ]
 
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 	| sender |
 	sender := ''.
-	method argumentNames isNotEmpty ifTrue: [ 
+	method argumentNames isNotEmpty ifTrue: [
 		(method selector keywords) with: (method argumentNames )do: [:a :b |
 		sender := sender, a, ' ', b, ' ']]
 	ifFalse: [ sender := method selector ].
@@ -99,7 +117,7 @@ RBMoveMethodToClassSideRefactoring >> getNewSource [
 	node := RBParser parseMethod: method source.
 	rewriter := RBParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
-		ifTrue: [ 
+		ifTrue: [
 			node := RBParser parseMethod: rewriter tree formattedCode.
 			node body addNodeFirst:
 				(RBParser parseExpression: temp , ' := self new').
@@ -124,16 +142,34 @@ RBMoveMethodToClassSideRefactoring >> getTempName [
 RBMoveMethodToClassSideRefactoring >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: method selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+		ifNil: [ parseTree := class parseTreeForSelector: method selector.
+			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 			].
-	^ parseTree
+	^ parseTree doSemanticAnalysis
 ]
 
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
+{ #category : #transforming }
+RBMoveMethodToClassSideRefactoring >> privateTransform [
+
+| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
+	newSource := self getNewInstSideSource.
+	originalProtocol := method protocolName.
+	oldClass := class.
+	self removeInstVariableReferences.
+	method := class methodFor: method selector.
+	newClass := self model classNamed: class name, ' class'.
+	newSource2 := self getNewSource.
+	rbMethod := RBClassModelFactory rbMethod for: newClass source: newSource2 selector: method selector.
+	rbMethod2 := RBClassModelFactory rbMethod for: oldClass source: newSource selector: method selector.
+	oldClass removeMethod: method selector.
+	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
+	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
 ]
 
 { #category : #transforming }
@@ -141,12 +177,12 @@ RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
 
 	| rbMethod references |
 	rbMethod := class methodFor: method selector.
-	references := class instanceVariableNames select: [ :e | 
+	references := class instanceVariableNames select: [ :e |
 		              rbMethod refersToVariable: e ].
-	references do: [ :e | 
+	references do: [ :e |
 		| replacer accessorsRefactoring |
 		accessorsRefactoring := self accessorsFor: e.
-		self performCompositeRefactoring: accessorsRefactoring.
+		self generateChangesFor: accessorsRefactoring.
 		replacer := self parseTreeRewriterClass
 			            variable: e
 			            getter: accessorsRefactoring getterMethodName
@@ -155,13 +191,13 @@ RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
 ]
 
 { #category : #printing }
-RBMoveMethodToClassSideRefactoring >> storeOn: aStream [ 
+RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
 		nextPutAll: ' method: '.
 	method storeOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: ' class: ';
 		nextPutAll: class name.
 	aStream
@@ -178,21 +214,4 @@ RBMoveMethodToClassSideRefactoring >> temporaryName [
 	whileTrue: [ counter := counter + 1.
 		tempName := aString , counter asString ].
 	^ tempName
-]
-
-{ #category : #transforming }
-RBMoveMethodToClassSideRefactoring >> transform [
-	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
-	newSource := self getNewInstSideSource.
-	originalProtocol := method protocol.
-	oldClass := class.
-	self removeInstVariableReferences.
-	method := class methodFor: method selector.
-	newClass := self model classNamed: class name, ' class'.
-	newSource2 := self getNewSource.
-	rbMethod := RBClassModelFactory rbMethod for: newClass source: newSource2 selector: method selector.
-	rbMethod2 := RBClassModelFactory rbMethod for: oldClass source: newSource selector: method selector.
-	oldClass removeMethod: method selector.
-	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
-	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol.
 ]

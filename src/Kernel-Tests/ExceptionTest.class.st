@@ -27,7 +27,7 @@ Class {
 
 { #category : #private }
 ExceptionTest >> assertSuccess: anExceptionTester [
-	self should: [ ( anExceptionTester suiteLog first) endsWith:  'succeeded'].
+	self should: [ ( anExceptionTester suiteLog first) endsWith:  'succeeded']
 ]
 
 { #category : #utilities }
@@ -42,7 +42,7 @@ ExceptionTest >> methodSignallingZeroDivide [
 ExceptionTest >> runCaseManaged [
 	"We should disable TestEnvironment to avoid any logic for unhandled errors from background processes.
 	Some tests fork processes to ensure clean no handlers (SUnit catches errors for example)"
-	
+
 	^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
 ]
 
@@ -51,9 +51,9 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 	"Executing the given block directly would go through all handlers of SUnit machinery.
 	Here we simulate the clean environment with no outer handlers for possible block errors"
 	| synchSemaphore result |
-	synchSemaphore := Semaphore new. 
+	synchSemaphore := Semaphore new.
 	[result := aBlock ensure: [synchSemaphore signal]] forkNamed: 'Test process'.
-	"we should not wait forever in case of wrong behaviour 
+	"we should not wait forever in case of wrong behaviour
 	(general test timeout is disabled in #runCaseManaged)"
 	(synchSemaphore wait: 2 seconds)
 		ifTrue: [ self error: 'Timeout for block execution' ].
@@ -66,7 +66,7 @@ ExceptionTest >> testCaptureIfSignalledWhenStepping [
 	self assert: Error captureIfSignalledWhenStepping.
 	self deny: (Error allSubclasses anySatisfy: [ :c| c  captureIfSignalledWhenStepping]).
 	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) size equals: 1.
-	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) first identicalTo: Halt.
+	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) first identicalTo: Halt
 ]
 
 { #category : #tests }
@@ -77,7 +77,7 @@ ExceptionTest >> testDefaultAction [
 
 	| expected result |
 	expected := #marker.
-	self runWithNoHandlers: [ 
+	self runWithNoHandlers: [
 		[ result := MyResumableTestError signal ]
 			on: UnhandledError
 			do: [ :ex | ex resume: expected ] ].
@@ -122,8 +122,8 @@ ExceptionTest >> testHandlerContext [
 	"A test ensuring that when evaluating the action block the exception environment is set to the handler context."
 
 	| result |
-	result := [ 
-	[ 
+	result := [
+	[
 	[ MyResumableTestError signal ]
 		on: MyTestError
 		do: [ 'handler 2' ] ]
@@ -139,8 +139,8 @@ ExceptionTest >> testHandlerFromAction [
 	"A test ensuring that nested exceptions work as expected."
 
 	| result |
-	result := [ 
-	[ 
+	result := [
+	[
 	[ self error: 'trigger error' ]
 		on: ZeroDivide
 		do: [ :ex | 'inner' ] ]
@@ -159,14 +159,14 @@ ExceptionTest >> testHandlingExceptionSetWithExclusion [
 	wasHandled := false.
 
 	self
-		should: [ 
+		should: [
 			[ ZeroDivide signalWithDividend: 1 ]
 				on: Error, ArithmeticError - ZeroDivide
-				do: [ :exception | 
+				do: [ :exception |
 					wasHandled := true.
 					exception return ] ]
 		raise: ZeroDivide.
-	
+
 	self deny: wasHandled
 ]
 
@@ -177,11 +177,11 @@ ExceptionTest >> testHandlingWhenThereIsSomeExclusionButDontApplies [
 
 	wasHandled := false.
 
-	result := [ 
+	result := [
 	ZeroDivide signalWithDividend: 1.
 	2 ]
 		on: Error - MessageNotUnderstood
-		do: [ :exception | 
+		do: [ :exception |
 			wasHandled := true.
 			exception return ].
 
@@ -198,14 +198,14 @@ ExceptionTest >> testHandlingWithExclusion [
 	wasHandled := false.
 
 	self
-		should: [ 
+		should: [
 			[ ZeroDivide signalWithDividend: 1 ]
 				on: Error - ZeroDivide
-				do: [ :exception | 
+				do: [ :exception |
 					wasHandled := true.
 					exception return ] ]
 		raise: ZeroDivide.
-	
+
 	self deny: wasHandled
 ]
 
@@ -214,24 +214,24 @@ ExceptionTest >> testHandlingWithSeveralExclusions [
 	| wasHandled |
 	wasHandled := false.
 	self
-		should: [ 
+		should: [
 			[ ZeroDivide signalWithDividend: 1 ]
 				on: Error - Warning - ZeroDivide
-				do: [ :exception | 
+				do: [ :exception |
 					wasHandled := true.
 					exception return ] ]
 		raise: ZeroDivide.
 	self deny: wasHandled.
-	
+
 	self
-		should: [ 
+		should: [
 			[ ZeroDivide signalWithDividend: 1 ]
 				on: Error - (Warning , ZeroDivide)
-				do: [ :exception | 
+				do: [ :exception |
 					wasHandled := true.
 					exception return ] ]
 		raise: ZeroDivide.
-	self deny: wasHandled.
+	self deny: wasHandled
 ]
 
 { #category : #'tests - handling' }
@@ -241,31 +241,31 @@ ExceptionTest >> testHandlingWithSeveralExclusionsAndExceptionSetsHandling [
 
 	wasHandled := false.
 
-	result := [ 
+	result := [
 	ZeroDivide signalWithDividend: 1.
 	2 ]
 		on: Error - MessageNotUnderstood - Warning
-		do: [ :exception | 
+		do: [ :exception |
 			wasHandled := true.
 			exception return ].
 
 	self
 		assert: wasHandled;
 		assert: result isNil.
-		
+
 	wasHandled := false.
 
-	result := [ 
+	result := [
 	ZeroDivide signalWithDividend: 1.
 	2 ]
 		on: Error - (MessageNotUnderstood , Warning)
-		do: [ :exception | 
+		do: [ :exception |
 			wasHandled := true.
 			exception return ].
 
 	self
 		assert: wasHandled;
-		assert: result isNil.
+		assert: result isNil
 ]
 
 { #category : #'tests - exceptiontester' }
@@ -282,8 +282,8 @@ ExceptionTest >> testNonResumableFallOffTheEndHandler [
 ExceptionTest >> testNonResumableOuter [
 
 	self should: [
-		[Error signal. 4] 
-			on: Error 
+		[Error signal. 4]
+			on: Error
 			do: [:ex | ex outer. ex return: 5]
 		] raise: Error
 ]
@@ -292,8 +292,8 @@ ExceptionTest >> testNonResumableOuter [
 ExceptionTest >> testNonResumablePass [
 
 	self should: [
-		[Error signal. 4] 
-			on: Error 
+		[Error signal. 4]
+			on: Error
 			do: [:ex | ex pass. ex return: 5]
 		] raise: Error
 ]
@@ -302,6 +302,7 @@ ExceptionTest >> testNonResumablePass [
 ExceptionTest >> testResignalAs [
 
 	| answer |
+	<ignoreNotImplementedSelectors: #(zork)>
 	answer := [
 		[3 zork]
 			on: ZeroDivide
@@ -313,13 +314,20 @@ ExceptionTest >> testResignalAs [
 { #category : #'tests - resignal' }
 ExceptionTest >> testResignalAsUnwinds [
 
+	<ignoreNotImplementedSelectors: #( zork )>
 	| unwound answer |
 	unwound := false.
 	answer := [
-		[3 zork]
-			on: ZeroDivide do: [:ex | self assert: unwound.  ex return: 5]
-	] on: Error do: [:ex | [ex resignalAs: ZeroDivide] ifCurtailed: [unwound := true]].
-	self assert: answer == 5
+	          [ 3 zork ]
+		          on: ZeroDivide
+		          do: [ :ex |
+			          self assert: unwound.
+			          ex return: 5 ] ]
+		          on: Error
+		          do: [ :ex |
+			          [ ex resignalAs: ZeroDivide ] ifCurtailed: [
+				          unwound := true ] ].
+	self assert: answer identicalTo: 5
 ]
 
 { #category : #'tests - resignal' }
@@ -344,8 +352,8 @@ ExceptionTest >> testResumableFallOffTheEndHandler [
 ExceptionTest >> testResumableOuter [
 
 	| result |
-	result := [Notification signal. 4] 
-		on: Notification 
+	result := [Notification signal. 4]
+		on: Notification
 		do: [:ex | ex outer. ex return: 5].
 	self assert: result equals: 5
 ]
@@ -356,7 +364,7 @@ ExceptionTest >> testResumablePass [
 	result := [ Notification signal.
 	4 ]
 		on: Notification
-		do: [ :ex | 
+		do: [ :ex |
 			ex pass.
 			ex return: 5 ].
 	self assert: result equals: 4
@@ -370,7 +378,7 @@ ExceptionTest >> testResumeNonresumableUnhandledError [
 
 	| signalOccurred |
 	self
-		runWithNoHandlers: [ 
+		runWithNoHandlers: [
 			[[ MyTestError signal ]
 				on: UnhandledError
 				do: [ :ex | ex resume: nil ]]
@@ -388,11 +396,11 @@ ExceptionTest >> testSignalFromHandlerActionTest [
 ExceptionTest >> testSignalWithTag [
 	| aTag |
 	aTag := Object new.
-	
-	[ 
+
+	[
 		DomainError signal: 'aMessage' withTag: aTag.
-		self fail: 'The exception was not signaled'. 
-	] on: DomainError do: [ :e | 
+		self fail: 'The exception was not signaled'.
+	] on: DomainError do: [ :e |
 		self assert: e messageText equals: 'aMessage'.
 		self assert: e tag equals: aTag.
 	]
@@ -458,7 +466,7 @@ ExceptionTest >> testUnhandledErrorWhenHandlerPassesOriginalException [
 	| executed |
 	executed := false.
 	self runWithNoHandlers: [
-		[ 
+		[
 			[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
 		] on: ZeroDivide do: [:z | z pass].
 	].
@@ -480,7 +488,7 @@ ExceptionTest >> testUnhandledErrorWhenTwoHandlersPassOriginalException [
 	| executed |
 	executed := false.
 	self runWithNoHandlers: [
-		[ [  
+		[ [
 				[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
 			] on: ZeroDivide do: [:z | z pass]
 		] on: ZeroDivide do: [:z | z pass]
@@ -490,10 +498,10 @@ ExceptionTest >> testUnhandledErrorWhenTwoHandlersPassOriginalException [
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledExceptionShouldAllowToCatchError [
-	
+
 	| error caughtException |
 	error := Error new.
-	self runWithNoHandlers: [ 
+	self runWithNoHandlers: [
 		[ error signal ] on: UnhandledException do: [ :err | caughtException := err ]
 	].
 	self assert: caughtException class equals: UnhandledError.
@@ -502,7 +510,7 @@ ExceptionTest >> testUnhandledExceptionShouldAllowToCatchError [
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledExceptionShouldAllowToCatchHalt [
-	
+
 	| halt caughtException |
 	halt := Halt new.
 	self runWithNoHandlers: [
@@ -513,7 +521,7 @@ ExceptionTest >> testUnhandledExceptionShouldAllowToCatchHalt [
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledExceptionShouldAllowToCatchWarning [
-	
+
 	| warning caughtException |
 	warning := Warning new.
 	self runWithNoHandlers: [
@@ -525,7 +533,7 @@ ExceptionTest >> testUnhandledExceptionShouldAllowToCatchWarning [
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledWarningShouldBeProcessedAsUnhandledError [
-	
+
 	| warning caughtException |
 	warning := Warning new.
 	self runWithNoHandlers: [

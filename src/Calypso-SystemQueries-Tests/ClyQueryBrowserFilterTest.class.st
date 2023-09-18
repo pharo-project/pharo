@@ -18,7 +18,7 @@ ClyQueryBrowserFilterTest >> itemOfThisTestMethod [
 ClyQueryBrowserFilterTest >> testMatchesClassOfPackageWhichMatchesIt [
 
 	filter := ClyQueryBrowserFilter substringPattern: 'SystemQueries-Tests'.
-	
+
 	self assert: (filter matches: self itemOfThisTestClass)
 ]
 
@@ -26,7 +26,7 @@ ClyQueryBrowserFilterTest >> testMatchesClassOfPackageWhichMatchesIt [
 ClyQueryBrowserFilterTest >> testMatchesClassWhichNameMatchesIt [
 
 	filter := ClyQueryBrowserFilter substringPattern: 'FilterTest'.
-	
+
 	self assert: (filter matches: self itemOfThisTestClass)
 ]
 
@@ -34,7 +34,7 @@ ClyQueryBrowserFilterTest >> testMatchesClassWhichNameMatchesIt [
 ClyQueryBrowserFilterTest >> testMatchesMethodOfClassWhichMatchesIt [
 
 	filter := ClyQueryBrowserFilter substringPattern: 'FilterTest'.
-	
+
 	self assert: (filter matches: self itemOfThisTestMethod)
 ]
 
@@ -42,7 +42,7 @@ ClyQueryBrowserFilterTest >> testMatchesMethodOfClassWhichMatchesIt [
 ClyQueryBrowserFilterTest >> testMatchesMethodOfPackageWhichMatchesIt [
 
 	filter := ClyQueryBrowserFilter substringPattern: 'SystemQueries-Tests'.
-	
+
 	self assert: (filter matches: self itemOfThisTestMethod)
 ]
 
@@ -50,7 +50,7 @@ ClyQueryBrowserFilterTest >> testMatchesMethodOfPackageWhichMatchesIt [
 ClyQueryBrowserFilterTest >> testMatchesMethodWithSelectorWhichMatchesIt [
 
 	filter := ClyQueryBrowserFilter substringPattern: 'MethodWithSelector'.
-	
+
 	self assert: (filter matches: self itemOfThisTestMethod)
 ]
 
@@ -58,7 +58,7 @@ ClyQueryBrowserFilterTest >> testMatchesMethodWithSelectorWhichMatchesIt [
 ClyQueryBrowserFilterTest >> testNotMatchesClassWithWrongNameAndPackage [
 
 	filter := ClyQueryBrowserFilter substringPattern: 'filter not matches class name and package'.
-	
+
 	self deny: (filter matches: self itemOfThisTestClass)
 ]
 
@@ -66,7 +66,7 @@ ClyQueryBrowserFilterTest >> testNotMatchesClassWithWrongNameAndPackage [
 ClyQueryBrowserFilterTest >> testNotMatchesMethodWithWrongClassAndPackageAndSelector [
 
 	filter := ClyQueryBrowserFilter substringPattern: 'filter not matches package, class or selector'.
-	
+
 	self deny: (filter matches: self itemOfThisTestMethod)
 ]
 
@@ -74,34 +74,34 @@ ClyQueryBrowserFilterTest >> testNotMatchesMethodWithWrongClassAndPackageAndSele
 ClyQueryBrowserFilterTest >> testUsingBadScriptWhichNotReturnBoolean [
 
 	filter := ClyQueryBrowserFilter substringPattern: '[:each | each selector]'.
-	
+
 	self assert: (filter matches: self itemOfThisTestMethod).
-	self assert: (filter matches: (ClyBrowserItem with: Object >> #printString)).
+	self assert: (filter matches: (ClyBrowserItem with: Object >> #printString))
 ]
 
 { #category : #'tests - filter by script' }
 ClyQueryBrowserFilterTest >> testUsingBadScriptWithoutClosingBracket [
 
 	filter := ClyQueryBrowserFilter substringPattern: '[:each | true '.
-	
+
 	self assert: (filter matches: self itemOfThisTestMethod).
-	self assert: (filter matches: (ClyBrowserItem with: Object >> #printString)).
+	self assert: (filter matches: (ClyBrowserItem with: Object >> #printString))
 ]
 
 { #category : #'tests - filter by script' }
 ClyQueryBrowserFilterTest >> testUsingScript [
 
 	filter := ClyQueryBrowserFilter substringPattern: '[:each | each selector = #testUsingScript]'.
-	
+
 	self assert: (filter matches: self itemOfThisTestMethod).
-	self deny: (filter matches: (ClyBrowserItem with: Object >> #printString)).
+	self deny: (filter matches: (ClyBrowserItem with: Object >> #printString))
 ]
 
 { #category : #'tests - filter by script' }
 ClyQueryBrowserFilterTest >> testUsingUncompiledScript [
 
 	filter := ClyQueryBrowserFilter substringPattern: '[:each | each 123selector]'.
-	
+
 	self assert: (filter matches: self itemOfThisTestMethod).
-	self assert: (filter matches: (ClyBrowserItem with: Object >> #printString)).
+	self assert: (filter matches: (ClyBrowserItem with: Object >> #printString))
 ]

@@ -23,7 +23,7 @@ Class {
 { #category : #comparing }
 TextAnchor >> = other [
 
-	^ other class == self class and: [ 
+	^ other class == self class and: [
 		  other anchoredMorph == anchoredMorph ]
 ]
 
@@ -42,13 +42,13 @@ TextAnchor >> anchoredMorph: aMorph [
 { #category : #comparing }
 TextAnchor >> hash [
 	"#hash is re-implemented because #= is re-implemented"
-	
+
 	^anchoredMorph identityHash
 ]
 
 { #category : #accessing }
 TextAnchor >> mayBeExtended [
 	"A textAnchor is designed to modify only a single character, and therefore must not be extended by the ParagraphEditor's emphasisHere facility"
-	
+
 	^ false
 ]

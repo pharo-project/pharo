@@ -32,7 +32,7 @@ ClyMethodCreationToolMorph class >> tabOrder [
 ClyMethodCreationToolMorph >> activationPriority [
 	"We want creation tool be active by default only when user select method group.
 	Instead when user select class creation tool should not be activated"
-	^browser methodGroupSelection isEmpty 
+	^browser methodGroupSelection isEmpty
 		ifTrue: [ 0]
 		ifFalse: [ ClyClassDefinitionEditorToolMorph tabOrder + 1 ]
 ]
@@ -41,20 +41,16 @@ ClyMethodCreationToolMorph >> activationPriority [
 ClyMethodCreationToolMorph >> applyChanges [
 	| newMethod selector selectedClass |
 	selectedClass := self chooseClassForNewMethodIfNone: [^false].
-	
-	selector := methodTags 
-		ifEmpty: [ selectedClass compile: self pendingText asString notifying: textMorph]
-		ifNotEmpty: [
-			selectedClass compile: self pendingText asString classified: methodTags anyOne notifying: textMorph].
-			
+
+	selector := selectedClass compile: self pendingText asString classified: methodProtocol notifying: textMorph.
+
 	selector ifNil: [ ^false ].
-	
+
 	newMethod := selectedClass >> selector.
-	methodTags ifEmpty: [ 
-		MethodClassifier classify: newMethod.
-		methodTags := newMethod tags ].
-	self tagAndPackageEditingMethod: newMethod.
-	
+	MethodClassifier classify: newMethod fallbackProtocol: methodProtocol.
+	methodProtocol := newMethod protocolName.
+	self protocolAndPackageEditingMethod: newMethod.
+
 	self removeFromBrowser.
 	browser tabManager desiredSelection: {ClyMethodCodeEditorToolMorph}.
 	browser selectMethod: newMethod.
@@ -69,12 +65,12 @@ ClyMethodCreationToolMorph >> belongsToCurrentBrowserContext [
 { #category : #initialization }
 ClyMethodCreationToolMorph >> decorateContainerTab [
 	| title |
-	
+
 	super decorateContainerTab.
-	
+
 	browser metaLevelScope == ClyClassSideScope ifFalse: [ ^ self ].
-	 
-	title := self defaultTitle asText allBold. 
+
+	title := self defaultTitle asText allBold.
 	containerTab label: title
 ]
 
@@ -97,9 +93,9 @@ ClyMethodCreationToolMorph >> editingText [
 { #category : #testing }
 ClyMethodCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
-	
+
 	^methodClass == anotherBrowserTool methodClass
-		and: [ methodTags = anotherBrowserTool methodTags 
+		and: [ methodProtocol = anotherBrowserTool methodProtocol
 				and: [ extendingPackage = anotherBrowserTool extendingPackage ] ]
 ]
 
@@ -127,22 +123,21 @@ ClyMethodCreationToolMorph >> restoreBrowserState [
 
 { #category : #initialization }
 ClyMethodCreationToolMorph >> setUpModelFromContext [
+
 	| selectedGroup |
 	super setUpModelFromContext.
 
 	methodClass := context selectedClassSide.
-	context isMethodGroupSelected ifFalse: [ ^self].
+	context isMethodGroupSelected ifFalse: [ ^ self ].
 	selectedGroup := context lastSelectedMethodGroup.
-	(selectedGroup isKindOf: ClyExternalPackageMethodGroup) ifTrue: [ 
-		^extendingPackage := selectedGroup package].
-	(selectedGroup isKindOf: ClyTaggedMethodGroup) ifTrue: [ 
-		^methodTags := {selectedGroup tag}]
+	(selectedGroup isKindOf: ClyExternalPackageMethodGroup) ifTrue: [ ^ extendingPackage := selectedGroup package ].
+	(selectedGroup isKindOf: ClyMethodsInProtocolGroup) ifTrue: [ ^ methodProtocol := selectedGroup protocol ]
 ]
 
 { #category : #initialization }
 ClyMethodCreationToolMorph >> setUpTargetClasses [
 
 	targetClasses := browser chooseClassesForNewMethod.
-	(targetClasses includes: methodClass) ifFalse: [ 
+	(targetClasses includes: methodClass) ifFalse: [
 		targetClasses := {methodClass}, targetClasses ]
 ]

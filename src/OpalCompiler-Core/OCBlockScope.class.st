@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 OCBlockScope >> hasEscapingVars [
-	^ (copiedVars isEmpty and: [tempVector isEmpty]) not
+	^ self inComingCopiedVarNames isNotEmpty
 ]
 
 { #category : #accessing }
@@ -25,6 +25,12 @@ OCBlockScope >> isBlockScope [
 { #category : #testing }
 OCBlockScope >> isInsideOptimizedLoop [
 	^ self outerScope isInsideOptimizedLoop
+]
+
+{ #category : #testing }
+OCBlockScope >> isOptimized [
+
+	^ false
 ]
 
 { #category : #lookup }

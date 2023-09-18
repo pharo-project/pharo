@@ -11,7 +11,8 @@ Class {
 	#name : #SycVariableCommand,
 	#superclass : #CmdCommand,
 	#instVars : [
-		'variables'
+		'variables',
+		'toolContext'
 	],
 	#category : #'SystemCommands-VariableCommands'
 }
@@ -28,8 +29,9 @@ SycVariableCommand class >> isAbstract [
 
 { #category : #execution }
 SycVariableCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
 	
+	super prepareFullExecutionInContext: aToolContext.
+	toolContext := aToolContext.
 	variables := aToolContext selectedVariables
 ]
 

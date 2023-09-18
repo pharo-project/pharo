@@ -16,8 +16,8 @@ Class {
 }
 
 { #category : #testing }
-OCAbstractMethodScope class >> isAbstract [ 
-	^self = OCAbstractMethodScope 
+OCAbstractMethodScope class >> isAbstract [
+	^self = OCAbstractMethodScope
 ]
 
 { #category : #'temp vars - copying' }
@@ -30,11 +30,11 @@ OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 
 	(self copiedVarNames includes: aVar name) ifFalse: [self addCopyingTemp: aVar].
 	self = aVar scope ifTrue: [^ self].
-	^ self outerScope addCopyingTempToAllScopesUpToDefTemp: aVar.
+	^ self outerScope addCopyingTempToAllScopesUpToDefTemp: aVar
 ]
 
 { #category : #'temp vars' }
-OCAbstractMethodScope >> addTemp: aTempVar [	
+OCAbstractMethodScope >> addTemp: aTempVar [
 	aTempVar scope: self.
 	^ tempVars
 		at: aTempVar name
@@ -43,7 +43,7 @@ OCAbstractMethodScope >> addTemp: aTempVar [
 
 { #category : #'temp vars - vector' }
 OCAbstractMethodScope >> addVectorTemp: aTemp [
-	^ tempVector 
+	^ tempVector
 		at:  aTemp name
 		put: (OCVectorTempVariable new
 			name: aTemp name;
@@ -64,9 +64,9 @@ OCAbstractMethodScope >> allTemps [
 	"return all temps defined, even the ones in the outer scope that are not used in the current.
 	 This includes the arguments. We do not need to care about shadowed temps as temp shadowing is not allowed."
 
-	^ Array streamContents: [ :str | 
+	^ Array streamContents: [ :str |
 			self outerScope allTemps
-				do: [ :var | 
+				do: [ :var |
 					(self localTempNames includes: var name)
 						ifFalse: [ str nextPut: var ] ].
 			str nextPutAll: self localTemps ]
@@ -85,7 +85,7 @@ OCAbstractMethodScope >> copiedVars [
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> copyEscapingReads [
 
-	self tempVars values 
+	self tempVars values
 		select: [ :each | each isEscapingRead ]
 		thenDo: [ :each | self addCopyingTemp: each ]
 ]
@@ -96,7 +96,7 @@ OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
 	(copiedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(tempVector hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(tempVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	
+
 	^ self outerScope hasBindingThatBeginsWith: aString
 ]
 
@@ -128,8 +128,8 @@ OCAbstractMethodScope >> localTempNames [
 OCAbstractMethodScope >> localTemps [
 	"all temps accessed in the context... for tempVectors, it takes all the vars even those not used here"
 
-	^ Array streamContents: [ :str | 
-			copiedVars valuesDo: [ :var | 
+	^ Array streamContents: [ :str |
+			copiedVars valuesDo: [ :var |
 					var isStoringTempVector
 						ifTrue: [ var originalVar scope tempVector
 								do: [ :tempVectorVars | str nextPut: tempVectorVars ] ] ].
@@ -139,20 +139,20 @@ OCAbstractMethodScope >> localTemps [
 { #category : #lookup }
 OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aContext [
 	"Is this the definition context for var? If it not, we look in the outer context using the corresponding outer scope. If found, we return the context"
-	
+
 	^self = var scope
 		ifFalse: [ self outerScope lookupDefiningContextForVariable: var startingFrom: (self nextOuterScopeContextOf: aContext) ]
 		ifTrue: [ aContext ]
 ]
 
 { #category : #lookup }
-OCAbstractMethodScope >> lookupVar: name declare: aBoolean [
+OCAbstractMethodScope >> lookupVar: name [
 
 	copiedVars at: name ifPresent: [:v | ^ v].
 	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
-	^self outerScope lookupVar: name declare: aBoolean
+	^ super lookupVar: name
 ]
 
 { #category : #scope }
@@ -173,20 +173,20 @@ OCAbstractMethodScope >> moveEscapingWritesToTempVector [
 OCAbstractMethodScope >> moveToVectorTemp: aTempVar [
 
 	self addVectorTemp: aTempVar.
-	self removeTemp: aTempVar.
+	self removeTemp: aTempVar
 ]
 
 { #category : #scope }
 OCAbstractMethodScope >> newBlockScope: int [
-	^ OCBlockScope new outerScope: self; id: int; yourself.
+	^ OCBlockScope new outerScope: self; id: int; yourself
 ]
 
 { #category : #scope }
 OCAbstractMethodScope >> newOptimizedBlockScope: int [
-	^ OCOptimizedBlockScope new 
-			outerScope: self; 
+	^ OCOptimizedBlockScope new
+			outerScope: self;
 			id: int;
-			yourself.
+			yourself
 ]
 
 { #category : #lookup }
@@ -216,24 +216,10 @@ OCAbstractMethodScope >> popScope [
 	^ self outerScope
 ]
 
-{ #category : #printing }
-OCAbstractMethodScope >> printOn: stream [
-
-	super printOn: stream.
-	stream space.
-	self scopeLevel printOn: stream.
-]
-
 { #category : #'temp vars' }
 OCAbstractMethodScope >> removeTemp: tempVar [
 
 	tempVars removeKey: tempVar name
-]
-
-{ #category : #printing }
-OCAbstractMethodScope >> scopeLevel [
-	"For debugging we print a counter for all Method and Block scopes"
-	^ outerScope scopeLevel + 1
 ]
 
 { #category : #'temp vars - copying' }
@@ -289,8 +275,8 @@ OCAbstractMethodScope >> tempVectorVar [
 
 { #category : #'temp vars - vector' }
 OCAbstractMethodScope >> tempVectorVarNames [
-	"As other users are taking the values directly from the tempVector Dictionary, 
-	it is important that the collect is performed like this. As in this way it has always the order dependending on the hash of the String (that is constant). 
+	"As other users are taking the values directly from the tempVector Dictionary,
+	it is important that the collect is performed like this. As in this way it has always the order dependending on the hash of the String (that is constant).
 	If done with collect:as: it has the order of the Dictionary that is almost random (changes from image run to image run)"
 	^ (self tempVector collect: [:each| each name]) asArray
 ]

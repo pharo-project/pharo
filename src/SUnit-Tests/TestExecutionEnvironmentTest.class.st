@@ -38,7 +38,7 @@ TestExecutionEnvironmentTest >> runTestWith: aBlock [
 	currentServices := executionEnvironment services copy.
 	executionEnvironment activated. "activation registerrs all default services"
 	executionEnvironment services: currentServices.
-	
+
 	ranTest exampleTestBlock: aBlock.
 	executionEnvironment runTestCase: ranTest
 ]
@@ -49,9 +49,9 @@ TestExecutionEnvironmentTest >> testActivationShouldRegisterDefaultServices [
 	[
 		TestServiceExample isEnabled: true.
 		executionEnvironment removeAllServices.
-		
+
 		executionEnvironment activated.
-		self assert: (executionEnvironment services 
+		self assert: (executionEnvironment services
 						anySatisfy: [:each | each class = TestServiceExample ])
 
 	] ensure: [TestServiceExample isEnabled: false]
@@ -61,7 +61,7 @@ TestExecutionEnvironmentTest >> testActivationShouldRegisterDefaultServices [
 TestExecutionEnvironmentTest >> testActivationShouldSetUpMainTestProcess [
 
 	executionEnvironment activated.
-	
+
 	self assert: executionEnvironment mainTestProcess equals: Processor activeProcess
 ]
 
@@ -69,7 +69,7 @@ TestExecutionEnvironmentTest >> testActivationShouldSetUpMainTestProcess [
 TestExecutionEnvironmentTest >> testActivationShouldStartWatchDog [
 
 	executionEnvironment activated.
-	
+
 	self assert: executionEnvironment watchDogProcess isTerminated not
 ]
 
@@ -80,9 +80,9 @@ TestExecutionEnvironmentTest >> testCleanUpAlsoDisabledTestServices [
 	testService2 := self createTestService.
 	testService2 enable.
 	executionEnvironment registerService: testService2.
-	
+
 	executionEnvironment cleanUpAfterTest.
-	
+
 	self assert: testService isCleanUpDone.
 	self assert: testService2 isCleanUpDone
 ]
@@ -90,8 +90,8 @@ TestExecutionEnvironmentTest >> testCleanUpAlsoDisabledTestServices [
 { #category : #tests }
 TestExecutionEnvironmentTest >> testCleanUpTestServicesAfterFailedTest [
 
-	[ 
-		self runTestWith: [ self error: 'test error'] 
+	[
+		self runTestWith: [ self error: 'test error']
 	] onErrorDo: [].
 
 	self assert: testService isCleanUpDone
@@ -119,9 +119,9 @@ TestExecutionEnvironmentTest >> testDeactivation [
 
 	executionEnvironment activated.
 	self deny: executionEnvironment watchDogProcess isTerminated.
-	
+
 	executionEnvironment deactivated.
-	self assert: executionEnvironment watchDogProcess isTerminated.
+	self assert: executionEnvironment watchDogProcess isTerminated
 ]
 
 { #category : #tests }
@@ -136,16 +136,16 @@ TestExecutionEnvironmentTest >> testDisableGivenServiceWhenItExists [
 TestExecutionEnvironmentTest >> testDisableGivenServiceWhenItIsNotRegistered [
 
 	executionEnvironment removeAllServices.
-	
+
 	executionEnvironment disableService: TestServiceExample
 ]
 
 { #category : #tests }
 TestExecutionEnvironmentTest >> testDoesNotCleanUpTestServicesUntilTestErrorIsNotHandled [
 
-	self runWithNoHandlers: [ 
+	self runWithNoHandlers: [
 		[ self runTestWith: [ self error: 'test error'] ]
-			on: UnhandledError do: [:exc | 
+			on: UnhandledError do: [:exc |
 				self deny: testService isCleanUpDone.
 	]].
 
@@ -155,7 +155,7 @@ TestExecutionEnvironmentTest >> testDoesNotCleanUpTestServicesUntilTestErrorIsNo
 { #category : #tests }
 TestExecutionEnvironmentTest >> testDoesNotNotifyTestServicesAboutTerminatedTest [
 
-	self runWithNoHandlers: [ 
+	self runWithNoHandlers: [
 		self runTestWith: [Processor terminateActive].
 	].
 
@@ -167,7 +167,7 @@ TestExecutionEnvironmentTest >> testEnableGivenServiceWhenItExists [
 
 	| actual |
 	testService disable.
-	
+
 	actual := executionEnvironment enableService: TestServiceExample.
 
 	self assert: actual identicalTo: testService.
@@ -178,7 +178,7 @@ TestExecutionEnvironmentTest >> testEnableGivenServiceWhenItExists [
 TestExecutionEnvironmentTest >> testEnableGivenServiceWhenItIsNotRegistered [
 
 	executionEnvironment removeAllServices.
-	
+
 	testService := executionEnvironment enableService: TestServiceExample.
 
 	self assert: testService identicalTo: (executionEnvironment findService: TestServiceExample).
@@ -204,7 +204,7 @@ TestExecutionEnvironmentTest >> testFindService [
 TestExecutionEnvironmentTest >> testGettingEnvironmentFromTestCase [
 
 	| actual |
-	executionEnvironment beActiveDuring: [ 
+	executionEnvironment beActiveDuring: [
 		actual := self executionEnvironment.
 	].
 
@@ -216,10 +216,10 @@ TestExecutionEnvironmentTest >> testHandleForkedProcessesByAllServices [
 
 	| process |
 	executionEnvironment activated.
-	
+
 	process := [  ] newProcess name: 'test process'.
 	executionEnvironment prepareForNewProcess: process.
-	
+
 	self assert: (testService forkedProcesses includes: process)
 ]
 
@@ -227,7 +227,7 @@ TestExecutionEnvironmentTest >> testHandleForkedProcessesByAllServices [
 TestExecutionEnvironmentTest >> testHasEmptyServicesByDefault [
 
 	executionEnvironment := TestExecutionEnvironment new.
-	
+
 	self assert: executionEnvironment services isEmpty
 ]
 
@@ -236,11 +236,11 @@ TestExecutionEnvironmentTest >> testIgnoreLongTestWhenItIsSuspendedAsUnderDebug 
 	| timeOutSignaled testProcess |
 	timeOutSignaled := false.
 	testProcess := [
-		executionEnvironment activated.		
-		[ self runTestWith: [ 
+		executionEnvironment activated.
+		[ self runTestWith: [
 				executionEnvironment maxTimeForTest: 10 milliSeconds.
 				Processor activeProcess suspend "it simulates the under debugger condition"]
-		] on: TestTookTooMuchTime do: [ :err | timeOutSignaled := true ]		
+		] on: TestTookTooMuchTime do: [ :err | timeOutSignaled := true ]
 	] forkAt: Processor activePriority + 1.
 
 	self deny: timeOutSignaled
@@ -248,10 +248,10 @@ TestExecutionEnvironmentTest >> testIgnoreLongTestWhenItIsSuspendedAsUnderDebug 
 
 { #category : #tests }
 TestExecutionEnvironmentTest >> testIgnoreWatchDogProcessAsForkedOne [
-	
+
 	executionEnvironment activated.
 	executionEnvironment prepareForNewProcess: executionEnvironment watchDogProcess.
-	
+
 	self deny: (testService forkedProcesses includes: executionEnvironment watchDogProcess)
 ]
 
@@ -259,20 +259,20 @@ TestExecutionEnvironmentTest >> testIgnoreWatchDogProcessAsForkedOne [
 TestExecutionEnvironmentTest >> testIsMainTestProcess [
 
 	executionEnvironment activated.
-	
+
 	self assert: (executionEnvironment isMainTestProcess: Processor activeProcess).
-	
-	self deny: (executionEnvironment isMainTestProcess: [] newProcess).
+
+	self deny: (executionEnvironment isMainTestProcess: [] newProcess)
 ]
 
 { #category : #tests }
 TestExecutionEnvironmentTest >> testIsMainTestProcessActive [
 
 	executionEnvironment activated.
-	
+
 	self assert: (executionEnvironment isMainTestProcessActive).
-	
-	self runWithNoHandlers: [ 
+
+	self runWithNoHandlers: [
 		self deny: (executionEnvironment isMainTestProcessActive) ]
 ]
 
@@ -281,11 +281,11 @@ TestExecutionEnvironmentTest >> testIsMainTestProcessFailed [
 
 	| processMonitor |
 	processMonitor := ProcessMonitorTestService new.
-	executionEnvironment registerService: processMonitor.		
+	executionEnvironment registerService: processMonitor.
 	executionEnvironment activated.
-	
+
 	self deny: executionEnvironment isMainTestProcessFailed.
-	
+
 	processMonitor recordTestFailure: Error new.
 	self assert: executionEnvironment isMainTestProcessFailed
 ]
@@ -299,12 +299,12 @@ TestExecutionEnvironmentTest >> testNotifyOnlyEnabledTestServices [
 	testService3 := self createTestService.
 	testService3 enable.
 	executionEnvironment registerService: testService2; registerService: testService3.
-	
+
 	self runTestWith: [ #success ].
-	
+
 	self deny: testService isCompletedTestHandled.
 	self deny: testService2 isCompletedTestHandled.
-	self assert: testService3 isCompletedTestHandled.
+	self assert: testService3 isCompletedTestHandled
 ]
 
 { #category : #tests }
@@ -331,8 +331,8 @@ TestExecutionEnvironmentTest >> testNotifyTestServicesAboutHalt [
 	| errorPassed expectedException|
 	errorPassed := false.
 	expectedException := Halt new messageText: 'test halt'.
-	self runWithNoHandlers: [	
-		[self runTestWith: [ expectedException signal]] on: Halt do: [:actualException | 
+	self runWithNoHandlers: [
+		[self runTestWith: [ expectedException signal]] on: Halt do: [:actualException |
 			errorPassed := true.
 			self assert: actualException equals: expectedException.
 			self assert: (testService signaledExceptions includes: actualException)].
@@ -347,9 +347,9 @@ TestExecutionEnvironmentTest >> testNotifyTestServicesAboutUnhandledError [
 
 	errorPassed := false.
 	expectedException := Error new messageText: 'test error'.
-	
-	self runWithNoHandlers: [	
-		[self runTestWith: [ expectedException signal]] on: UnhandledError do: [:actualException | 
+
+	self runWithNoHandlers: [
+		[self runTestWith: [ expectedException signal]] on: UnhandledError do: [:actualException |
 			errorPassed := true.
 			self assert: actualException exception equals: expectedException.
 			self assert: (testService signaledExceptions includes: actualException)].
@@ -363,8 +363,8 @@ TestExecutionEnvironmentTest >> testNotifyTestServicesAboutWarning [
 	| errorPassed expectedException|
 	errorPassed := false.
 	expectedException := Warning new messageText: 'test halt'.
-	self runWithNoHandlers: [	
-		[self runTestWith: [ expectedException signal]] on: Warning do: [:actualException | 
+	self runWithNoHandlers: [
+		[self runTestWith: [ expectedException signal]] on: Warning do: [:actualException |
 			errorPassed := true.
 			self assert: actualException equals: expectedException.
 			self assert: (testService signaledExceptions includes: actualException)].
@@ -382,12 +382,12 @@ TestExecutionEnvironmentTest >> testRegisteredServiceShouldBeBoundToEnvironment 
 { #category : #tests }
 TestExecutionEnvironmentTest >> testResetWatchDogTimeoutBetweenFailedTests [
 
-	[self runTestWith: [ 
-		executionEnvironment maxTimeForTest: self defaultTimeLimit + 10 seconds. 
+	[self runTestWith: [
+		executionEnvironment maxTimeForTest: self defaultTimeLimit + 10 seconds.
 		self error: 'test error']
 	]	onErrorDo: [].
-	
-	self runTestWith: [ 
+
+	self runTestWith: [
 		self assert: executionEnvironment maxTimeForTest equals: self defaultTimeLimit]
 ]
 
@@ -395,8 +395,8 @@ TestExecutionEnvironmentTest >> testResetWatchDogTimeoutBetweenFailedTests [
 TestExecutionEnvironmentTest >> testResetWatchDogTimeoutBetweenTests [
 
 	self runTestWith: [ executionEnvironment maxTimeForTest: self defaultTimeLimit + 10 seconds].
-	
-	self runTestWith: [ 
+
+	self runTestWith: [
 		self assert: executionEnvironment maxTimeForTest equals: self defaultTimeLimit]
 ]
 
@@ -404,8 +404,8 @@ TestExecutionEnvironmentTest >> testResetWatchDogTimeoutBetweenTests [
 TestExecutionEnvironmentTest >> testRunningTest [
 	| executed |
 	executed := false.
-	
-	self runTestWith: [ 
+
+	self runTestWith: [
 		self assert: executionEnvironment testCase identicalTo: ranTest.
 		executed := true
 	].
@@ -416,7 +416,7 @@ TestExecutionEnvironmentTest >> testRunningTest [
 { #category : #tests }
 TestExecutionEnvironmentTest >> testRunningTestShouldSetDefaultTimeLimit [
 
-	self runTestWith: [ 
+	self runTestWith: [
 		self assert: executionEnvironment maxTimeForTest equals: self defaultTimeLimit
 	]
 ]
@@ -424,9 +424,9 @@ TestExecutionEnvironmentTest >> testRunningTestShouldSetDefaultTimeLimit [
 { #category : #tests }
 TestExecutionEnvironmentTest >> testRunningTooLongTest [
 
-	self 
+	self
 		should: [
-			self runTestWith: [ 
+			self runTestWith: [
 				executionEnvironment maxTimeForTest: 10 milliSeconds.
 				20 milliSeconds wait]]
 		raise: TestTookTooMuchTime

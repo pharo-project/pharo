@@ -45,8 +45,8 @@ ZnHeaders class >> initialize [
 			'Referer' 'Dnt'
 			'Cookie' 'Set-Cookie' 'Authorization' 'WWW-Authenticate' 'Proxy-Authorization'
 			'Content-Encoding' 'Transfer-Encoding' 'Location'
-			'If-Modified-Since' 'Content-Disposition' 
-			'X-Zinc-Remote-Address' 'X-Forwarded-Server' 'X-Forwarded-For' 'X-Forwarded-Host' ) 
+			'If-Modified-Since' 'Content-Disposition'
+			'X-Zinc-Remote-Address' 'X-Forwarded-Server' 'X-Forwarded-For' 'X-Forwarded-Host' )
 			collect: [ :each | ZnUtils capitalizeString: each ]) asSet
 ]
 
@@ -69,7 +69,7 @@ ZnHeaders class >> requestHeadersFor: url [
 ZnHeaders class >> withAll: keyedCollection [
 	^ self new
 		addAll: keyedCollection;
-		yourself 
+		yourself
 ]
 
 { #category : #comparing }
@@ -81,16 +81,16 @@ ZnHeaders >> = other [
 { #category : #accessing }
 ZnHeaders >> acceptEntityDescription: entity [
 	"Take over the content type and length from entity"
-	
-	entity 
+
+	entity
 		ifNotNil: [
 			self
 				contentType: entity contentType;
 				contentLength: entity contentLength ]
 		ifNil: [
-			self 
-				clearContentType; 
-				clearContentLength ] 
+			self
+				clearContentType;
+				clearContentLength ]
 ]
 
 { #category : #accessing }
@@ -106,18 +106,16 @@ ZnHeaders >> addAll: keyedCollection [
 ZnHeaders >> at: headerName [
 	"Return the value stored under headerName,
 	a String for single-valued headers, an Array of Strings for multi-valued headers"
-	
+
 	^ self headers at: (self normalizeHeaderKey: headerName)
 ]
 
 { #category : #accessing }
 ZnHeaders >> at: headerName add: value [
-	"Store value under headerName, optionally turning it into a multi-valued header 
+	"Store value under headerName, optionally turning it into a multi-valued header
 	when a value was already present"
-	
-	^ self headers at: (self normalizeHeaderKey: headerName) add: value 
-		
 
+	^ self headers at: (self normalizeHeaderKey: headerName) add: value
 ]
 
 { #category : #accessing }
@@ -125,7 +123,7 @@ ZnHeaders >> at: headerName ifAbsent: block [
 	"Return the value stored under headerName,
 	a String for single-valued headers, an Array of Strings for multi-valued headers.
 	Executes block when the headerName is not found"
-	
+
 	self isEmpty ifTrue: [ ^ block value ].
 	^ self headers at: (self normalizeHeaderKey: headerName) ifAbsent: block
 ]
@@ -142,7 +140,7 @@ ZnHeaders >> at: headerName ifPresent: block [
 { #category : #accessing }
 ZnHeaders >> at: headerName put: value [
 	"Store value under headerName, replace existing entries"
-	
+
 	^ self headers at: (self normalizeHeaderKey: headerName) put: value
 ]
 
@@ -162,25 +160,25 @@ ZnHeaders >> at: headerName put: value ifPresentMerge: binaryBlock [
 
 { #category : #accessing }
 ZnHeaders >> clearContentLength [
-	self removeKey: 'Content-Length' ifAbsent: [] 
+	self removeKey: 'Content-Length' ifAbsent: []
 ]
 
 { #category : #accessing }
 ZnHeaders >> clearContentType [
-	self removeKey: 'Content-Type' ifAbsent: [] 
+	self removeKey: 'Content-Type' ifAbsent: []
 ]
 
 { #category : #accessing }
 ZnHeaders >> contentLength [
 	"We allow multiple content-length headers provided they are identical."
-	
+
 	| value |
 	(value := self headers at: 'Content-Length') isString
 		ifFalse: [
 			value asSet size = 1
 				ifTrue: [ value := value first ]
 				ifFalse: [ self error: 'Multiple, different Content-Length headers are not allowed' ] ].
-	^ Integer readFrom: value ifFail: [ self error: 'Illegal HTTP Content Length' ] 
+	^ Integer readFrom: value ifFail: [ self error: 'Illegal HTTP Content Length' ]
 ]
 
 { #category : #accessing }
@@ -203,7 +201,7 @@ ZnHeaders >> contentType: object [
 
 { #category : #private }
 ZnHeaders >> extendHeaderAt: key from: line [
-	"The value of a continuation header line is concatenated, 
+	"The value of a continuation header line is concatenated,
 	keeping the whitespace, but without the CRLF"
 
 	| existingValue newValue |
@@ -246,8 +244,8 @@ ZnHeaders >> headersDo: block [
 	self isEmpty ifTrue: [ ^ self ].
 	self headers keysAndValuesDo: [ :headerKey :headerValue |
 		headerValue isArray
-			ifTrue: [ 
-				headerValue do: [ :each | 
+			ifTrue: [
+				headerValue do: [ :each |
 					block value: headerKey value: each ] ]
 			ifFalse: [
 				block value: headerKey value: headerValue ] ]
@@ -256,20 +254,18 @@ ZnHeaders >> headersDo: block [
 { #category : #testing }
 ZnHeaders >> includesKey: headerName [
 	^ self isEmpty not and: [ self headers includesKey: (self normalizeHeaderKey: headerName) ]
-	
 ]
 
 { #category : #testing }
 ZnHeaders >> isDescribingEntity [
 	"Do I include enough information to describe an entity (i.e. content length and type) ?"
-	
-	^ (self headers includesKey: 'Content-Type') 
-		and: [ self headers includesKey: 'Content-Length' ]
 
+	^ (self headers includesKey: 'Content-Type')
+		and: [ self headers includesKey: 'Content-Length' ]
 ]
 
 { #category : #testing }
-ZnHeaders >> isEmpty [ 
+ZnHeaders >> isEmpty [
 	^ headers isNil or: [ self headers isEmpty ]
 ]
 
@@ -285,13 +281,13 @@ ZnHeaders >> keysAndValuesDo: block [
 ZnHeaders >> normalizeHeaderKey: string [
 	"Test string to see if it has proper header key capitalization,
 	if true, return string, if not, return a properly capitalized copy"
-	
+
 	"Optimization: if string is a know,, properly capitalized header, use it as is"
-	(CommonHeaders includes: string) 
+	(CommonHeaders includes: string)
 		ifTrue: [ ^ string ].
 	^ (ZnUtils isCapitalizedString: string)
-		ifTrue: [ string ] 
-		ifFalse: [ ZnUtils capitalizeString: string ] 
+		ifTrue: [ string ]
+		ifFalse: [ ZnUtils capitalizeString: string ]
 ]
 
 { #category : #copying }
@@ -303,7 +299,6 @@ ZnHeaders >> postCopy [
 ZnHeaders >> printOn: stream [
 	super printOn: stream.
 	self isEmpty ifFalse: [ self headers printElementsOn: stream ]
-	
 ]
 
 { #category : #'initialize-release' }
@@ -314,8 +309,8 @@ ZnHeaders >> readFrom: stream [
 		key := self readOneHeaderFrom: line readStream.
 		"Continuation header lines start with a space or tab"
 		[ stream atEnd not and: [ #[ 32 9 ] includes: stream peek asInteger ] ]
-			whileTrue: [ 
-				self extendHeaderAt: key from: reader nextLine ] ] 
+			whileTrue: [
+				self extendHeaderAt: key from: reader nextLine ] ]
 ]
 
 { #category : #private }
@@ -329,7 +324,7 @@ ZnHeaders >> readOneHeaderFrom: stream [
 ]
 
 { #category : #accessing }
-ZnHeaders >> removeKey: headerName [	
+ZnHeaders >> removeKey: headerName [
 	^ self headers removeKey: (self normalizeHeaderKey: headerName)
 ]
 
@@ -342,21 +337,20 @@ ZnHeaders >> removeKey: headerName ifAbsent: block [
 { #category : #accessing }
 ZnHeaders >> request: url [
 	"Setup the receiver to request url"
-	
-	(url isNil or: [ url hasHost not ]) ifTrue: [ ^ self ].  
+
+	(url isNil or: [ url hasHost not ]) ifTrue: [ ^ self ].
 	self at: 'Host' put: url authority.
 	(ZnNetworkingUtils proxyAuthorizationHeaderValueToUrl: url)
-		ifNotNil: [ :value | self at: 'Proxy-Authorization' put: value ].    
-  
+		ifNotNil: [ :value | self at: 'Proxy-Authorization' put: value ].
 ]
 
 { #category : #accessing }
 ZnHeaders >> singleAt: headerName ifAbsent: block [
 	"Return the value stored under headerName,
-	a String for single-valued headers, 
+	a String for single-valued headers,
 	or the last String from an Array of Strings for multi-valued headers.
 	Executes block when the headerName is not found"
-	
+
 	| value |
 	self isEmpty ifTrue: [ ^ block value ].
 	value := self headers at: (self normalizeHeaderKey: headerName) ifAbsent: block.

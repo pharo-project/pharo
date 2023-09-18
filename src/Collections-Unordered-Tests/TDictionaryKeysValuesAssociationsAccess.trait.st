@@ -9,7 +9,7 @@ Trait {
 { #category : #requirements }
 TDictionaryKeysValuesAssociationsAccess >> nonEmpty [
 
-self explicitRequirement.
+self explicitRequirement
 ]
 
 { #category : #'tests - fixture' }
@@ -24,7 +24,7 @@ TDictionaryKeysValuesAssociationsAccess >> testAssociations [
 	| collection result  |
 	collection := self nonEmpty .
 	result := collection associations.
-	
+
 	self assert: result size = collection size.
 	result do: [:assoc | self assert: (assoc value) = (collection at: assoc key) ].
 	"keys do: [ :key | self assert: ( result at: key ) = ( collection at: key )] ."
@@ -53,11 +53,11 @@ TDictionaryKeysValuesAssociationsAccess >> testKeysSortedSafely [
 
 { #category : #'tests - dictionary keys values associations access' }
 TDictionaryKeysValuesAssociationsAccess >> testValues [
-	
+
 	| collection result |
 	collection := self nonEmpty .
 	result := collection values.
-	
+
 	self assert: result size = collection size.
-	result do: [:each | self assert: (collection occurrencesOf:each ) = (result occurrencesOf: each) ].
+	result do: [:each | self assert: (collection occurrencesOf:each ) = (result occurrencesOf: each) ]
 ]

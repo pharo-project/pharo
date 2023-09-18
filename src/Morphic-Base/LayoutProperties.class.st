@@ -67,7 +67,7 @@ LayoutProperties >> includesTableProperties [
 LayoutProperties >> initialize [
 	super initialize.
 	hResizing := vResizing := #rigid.
-	disableLayout := false.
+	disableLayout := false
 ]
 
 { #category : #initialize }
@@ -75,7 +75,7 @@ LayoutProperties >> initializeFrom: defaultProvider [
 	"Initialize the receiver from a default provider"
 	self hResizing: defaultProvider hResizing.
 	self vResizing: defaultProvider vResizing.
-	self disableTableLayout: defaultProvider disableTableLayout.
+	self disableTableLayout: defaultProvider disableTableLayout
 ]
 
 { #category : #'table defaults' }

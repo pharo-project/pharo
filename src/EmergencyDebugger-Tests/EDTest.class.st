@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #testing }
-EDTest class >> isAbstract [ 	
+EDTest class >> isAbstract [
 	^self == EDTest
 ]
 
@@ -37,7 +37,7 @@ EDTest >> configureDebugSession [
 	EDMockObjectForTests>>m: 19
 	EDMockObjectForTests>>m: 20
 	[ EDMockObjectForTests new m: 20 ] in UndefinedObject>>DoIt"
-	
+
 	session stepThrough.
 	session stepOver.
 	session stepInto.
@@ -46,50 +46,50 @@ EDTest >> configureDebugSession [
 	session stepInto.
 	session stepOver.
 	session stepOver.
-	session stepInto.	
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	
-	session stepOver.
-	session stepOver.
 	session stepInto.
 	session stepOver.
 	session stepOver.
-	session stepInto.	
-	session stepOver.
-	session stepOver.
 	session stepInto.
-	
+
 	session stepOver.
 	session stepOver.
 	session stepInto.
 	session stepOver.
 	session stepOver.
-	session stepInto.	
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	
-	session stepOver.
-	session stepOver.
 	session stepInto.
 	session stepOver.
 	session stepOver.
-	session stepInto.	
-	session stepOver.
-	session stepOver.
 	session stepInto.
-	
+
 	session stepOver.
 	session stepOver.
 	session stepInto.
 	session stepOver.
 	session stepOver.
-	session stepInto.	
+	session stepInto.
 	session stepOver.
 	session stepOver.
 	session stepInto.
+
+	session stepOver.
+	session stepOver.
+	session stepInto.
+	session stepOver.
+	session stepOver.
+	session stepInto.
+	session stepOver.
+	session stepOver.
+	session stepInto.
+
+	session stepOver.
+	session stepOver.
+	session stepInto.
+	session stepOver.
+	session stepOver.
+	session stepInto.
+	session stepOver.
+	session stepOver.
+	session stepInto
 ]
 
 { #category : #'instance creation' }

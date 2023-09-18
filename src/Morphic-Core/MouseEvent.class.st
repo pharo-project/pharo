@@ -130,7 +130,7 @@ MouseEvent >> isMouseUp [
 { #category : #testing }
 MouseEvent >> isMouseWheel [
 	"Answer whether the receiver is a mouse wheel event."
-	
+
 	^false
 ]
 
@@ -144,7 +144,7 @@ MouseEvent >> printOn: aStream [
 	aStream nextPutAll: self buttonString.
 	aStream print: timeStamp ; space.
 	aStream print: self windowIndex .
-	aStream nextPut: $].
+	aStream nextPut: $]
 ]
 
 { #category : #'button state' }
@@ -160,13 +160,13 @@ MouseEvent >> sentTo: anObject [
 	type == #mouseOver ifTrue:[^anObject handleMouseOver: self].
 	type == #mouseEnter ifTrue:[^anObject handleMouseEnter: self].
 	type == #mouseLeave ifTrue:[^anObject handleMouseLeave: self].
-	^super sentTo: anObject.
+	^super sentTo: anObject
 ]
 
 { #category : #private }
 MouseEvent >> setType: aSymbol [
 	"For quick conversion between event types"
-	type := aSymbol.
+	type := aSymbol
 ]
 
 { #category : #private }
@@ -175,7 +175,7 @@ MouseEvent >> setType: evtType position: evtPos buttons: evtButtons hand: evtHan
 	position := evtPos.
 	buttons := evtButtons.
 	source := evtHand.
-	wasHandled := false.
+	wasHandled := false
 ]
 
 { #category : #printing }
@@ -189,7 +189,7 @@ MouseEvent >> storeOn: aStream [
 	aStream space.
 	position y storeOn: aStream.
 	aStream space.
-	buttons storeOn: aStream.
+	buttons storeOn: aStream
 ]
 
 { #category : #'button state' }

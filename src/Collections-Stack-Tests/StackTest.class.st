@@ -15,13 +15,13 @@ Class {
 
 { #category : #accessing }
 StackTest >> empty [
-	
+
  	^ empty
 ]
 
 { #category : #accessing }
 StackTest >> nonEmpty [
-	
+
  	^ nonEmpty
 ]
 
@@ -33,7 +33,7 @@ StackTest >> setUp [
 	nonEmpty push: 1.
 	nonEmpty push: -2.
 	nonEmpty push: 3.
-	nonEmpty push: 1.
+	nonEmpty push: 1
 ]
 
 { #category : #tests }

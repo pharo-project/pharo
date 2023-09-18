@@ -35,7 +35,7 @@ DateTest >> restoreLocalTimeZoneAfter: aBlock [
 
 	| realTimeZone |
 	realTimeZone := DateAndTime localTimeZone.
-	aBlock ensure: [ DateAndTime localTimeZone: realTimeZone ].
+	aBlock ensure: [ DateAndTime localTimeZone: realTimeZone ]
 ]
 
 { #category : #coverage }
@@ -60,22 +60,22 @@ DateTest >> setUp [
 { #category : #tests }
 DateTest >> testAccessing [
 
-	self	
+	self
 		assert: june2nd1973 day equals: 153;
 		assert: june2nd1973 julianDayNumber equals: 2441836;
 		assert: june2nd1973 monthIndex equals: 6;
 		assert: june2nd1973 monthName equals: #June;
 		assert: june2nd1973 weekday equals: #Saturday;
 		assert: june2nd1973 weekdayIndex equals: 7;
-		assert: june2nd1973 year equals: 1973.
+		assert: june2nd1973 year equals: 1973
 ]
 
 { #category : #tests }
 DateTest >> testAddDays [
 
-	self assert: (january23rd2004 addDays: 0) equals: '2004-01-23' asDate.	
+	self assert: (january23rd2004 addDays: 0) equals: '2004-01-23' asDate.
 	self assert: (january23rd2004 addDays: 31) equals: '2004-02-23' asDate.
-	self assert: (january23rd2004 addDays: 366) equals: '2005-01-23' asDate.
+	self assert: (january23rd2004 addDays: 366) equals: '2005-01-23' asDate
 ]
 
 { #category : #tests }
@@ -83,7 +83,7 @@ DateTest >> testAddMonths [
 
 	self assert: (january23rd2004 addMonths: 0) equals: '2004-01-23' asDate.
 	self assert: (january23rd2004 addMonths: 1) equals: '2004-02-23' asDate.
-	self assert: (january23rd2004 addMonths: 12) equals: '2005-01-23' asDate.
+	self assert: (january23rd2004 addMonths: 12) equals: '2005-01-23' asDate
 ]
 
 { #category : #tests }
@@ -92,22 +92,22 @@ DateTest >> testArithmetic [
 	| laterDate |
 	laterDate := june2nd1973 addDays: 32.
 
-	self 
+	self
 		assert: (laterDate subtractDate: june2nd1973) equals: 32;
 		assert: (june2nd1973 subtractDate: laterDate) equals: -32;
-		assert: (laterDate subtractDays: 32) equals: june2nd1973.
+		assert: (laterDate subtractDays: 32) equals: june2nd1973
 ]
 
 { #category : #tests }
 DateTest >> testAsDate [
 
-	self assert: january23rd2004 asDate equals: january23rd2004.
+	self assert: january23rd2004 asDate equals: january23rd2004
 ]
 
 { #category : #tests }
 DateTest >> testAsMonthInYear [
-	
-	self assert: ((Date asMonth: 9 inYear: 2018) asString) equals: 'September 2018'.
+
+	self assert: ((Date asMonth: 9 inYear: 2018) asString) equals: 'September 2018'
 ]
 
 { #category : #tests }
@@ -119,21 +119,21 @@ DateTest >> testAsSeconds [
 		secondsSinceEpoch := (dateUTC start - DateAndTime epoch) asSeconds.
 		self assert: dateUTC asSeconds equals: secondsSinceEpoch.
 		self assert: (Date fromSeconds: dateUTC asSeconds) equals: dateUTC ].
-	
+
 	self useTimeZone: 'EDT' during: [
 		dateEDT := Date readFrom: '01-23-2004' readStream.
 		secondsSinceEpoch := (dateEDT start - DateAndTime epoch) asSeconds.
 		self assert: dateEDT asSeconds equals: secondsSinceEpoch.
 		self assert: (Date fromSeconds: dateEDT asSeconds) equals: dateEDT ].
-	
+
 	self useTimeZone: 'PST' during: [
 		datePST := Date readFrom: '01-23-2004' readStream.
 		secondsSinceEpoch := (datePST start - DateAndTime epoch) asSeconds.
 		self assert: datePST asSeconds equals: secondsSinceEpoch.
 		self assert: (Date fromSeconds: datePST asSeconds) equals: datePST ].
-	
+
 	self assert: dateUTC asSeconds  equals: dateEDT asSeconds - (4*3600).
-	self assert: dateUTC asSeconds  equals: datePST asSeconds - (8*3600).
+	self assert: dateUTC asSeconds  equals: datePST asSeconds - (8*3600)
 ]
 
 { #category : #tests }
@@ -160,55 +160,55 @@ DateTest >> testComparing [
 		assert: june2nd1973 equals: sameDate;
 		assert: june2nd1973 equals: june2nd1973 copy;
 		assert: june2nd1973 hash equals: sameDate hash.
-	self 
+	self
 		assert: june2nd1973 < laterDate;
-		assert: june2nd1973 > earlierDate.
+		assert: june2nd1973 > earlierDate
 ]
 
 { #category : #tests }
 DateTest >> testDayMonthYearDo [
-	
-	january23rd2004 dayMonthYearDo: [ :day :month :year | 
+
+	january23rd2004 dayMonthYearDo: [ :day :month :year |
 		self assert: day equals: 23.
 		self assert: month equals: 1.
-		self assert: year equals: 2004 ].
+		self assert: year equals: 2004 ]
 ]
 
 { #category : #tests }
 DateTest >> testDayOfWeek [
 
 	| dayNames sundayIndex |
-	
+
 	sundayIndex := self dateClass dayOfWeek: #Sunday.
 	self assert: sundayIndex equals: 1.
-	
+
 	dayNames := #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday).
 	dayNames doWithIndex: [ :e :i | | dayIndex |
 		dayIndex := self dateClass dayOfWeek: e.
-		self assert: dayIndex equals: i ].
+		self assert: dayIndex equals: i ]
 ]
 
 { #category : #tests }
 DateTest >> testDaysInMonthForYear [
 
-	self assert: (Date daysInMonth: #February forYear: 2008) equals: 29.	
-	self assert: (Date daysInMonth: #February forYear: 2000) equals: 29.	
-	self assert: (Date daysInMonth: #February forYear: 2100) equals: 28.	
-	self assert: (Date daysInMonth: #July forYear: 2100) equals: 31.
+	self assert: (Date daysInMonth: #February forYear: 2008) equals: 29.
+	self assert: (Date daysInMonth: #February forYear: 2000) equals: 29.
+	self assert: (Date daysInMonth: #February forYear: 2100) equals: 28.
+	self assert: (Date daysInMonth: #July forYear: 2100) equals: 31
 ]
 
 { #category : #tests }
 DateTest >> testDaysInYear [
 
-	self assert: (Date daysInYear: 2000) equals: 366.	
-	self assert: (Date daysInYear: 2008) equals: 366.	
+	self assert: (Date daysInYear: 2000) equals: 366.
+	self assert: (Date daysInYear: 2008) equals: 366.
 	self assert: (Date daysInYear: 2100) equals: 365
 ]
 
 { #category : #tests }
 DateTest >> testDuration [
 
-	self assert: january23rd2004 duration equals: 24 hours.
+	self assert: january23rd2004 duration equals: 24 hours
 ]
 
 { #category : #tests }
@@ -220,7 +220,6 @@ DateTest >> testEqual [
 DateTest >> testEquals [
 
 	| tzm8 tzp10 |
-	
 	tzm8 := january23rd2004 translateTo: -8 hours.
 	tzp10 := january23rd2004 translateTo: 10 hours.
 
@@ -228,13 +227,13 @@ DateTest >> testEquals [
 		assert: (january23rd2004 equals: tzm8);
 		assert: (january23rd2004 equals: tzp10);
 		assert: (tzm8 equals: tzp10);
-		assert: (january23rd2004 equals: june2nd1973) not.
+		deny: (january23rd2004 equals: june2nd1973)
 ]
 
 { #category : #tests }
 DateTest >> testFirstWeekdayOfMonthYear [
 
-	self assert: (Date firstWeekdayOfMonth: 'January' year: 2004) equals: 5.
+	self assert: (Date firstWeekdayOfMonth: 'January' year: 2004) equals: 5
 ]
 
 { #category : #tests }
@@ -251,113 +250,107 @@ DateTest >> testFromDays [
 	march18th1627 := '18 March 1627' asDate.
 	march18th1627FromDays := self dateClass fromDays: (march18th1627 - self epoch) asDays.
 	self assert: march18th1627FromDays equals: (march18th1627 translateTo: 0).
-	
+
 	january23rd2004FromDays := self dateClass fromDays: 103*365 "years" + 22 "days since Jan 1" + 25 "leap days".
-	self assert: january23rd2004FromDays equals: (january23rd2004 translateTo: 0).
+	self assert: january23rd2004FromDays equals: (january23rd2004 translateTo: 0)
 ]
 
 { #category : #tests }
 DateTest >> testFromSeconds [
 
 	| d |
-	d := self dateClass fromSeconds: june2nd1973 asSeconds. 
-	self assert: d equals: june2nd1973.
+	d := self dateClass fromSeconds: june2nd1973 asSeconds.
+	self assert: d equals: june2nd1973
 ]
 
 { #category : #tests }
 DateTest >> testFromString [
  	"The fromString method requires month, day and year delemited by a valid date delimiter"
-	
+
 	| d |
-	d := self dateClass fromString: '06.02.1973'. 
-	self assert: d equals: june2nd1973.
- 
-	d := self dateClass fromString: '06-02-1973'. 
+	d := self dateClass fromString: '06.02.1973'.
 	self assert: d equals: june2nd1973.
 
-	d := self dateClass fromString: '06/02/1973'. 
+	d := self dateClass fromString: '06-02-1973'.
 	self assert: d equals: june2nd1973.
+
+	d := self dateClass fromString: '06/02/1973'.
+	self assert: d equals: june2nd1973
 ]
 
 { #category : #tests }
 DateTest >> testIndexOfMonth [
 
-	self assert: (Date indexOfMonth: #January) equals: 1.	
+	self assert: (Date indexOfMonth: #January) equals: 1.
 	self assert: (Date indexOfMonth: #December) equals: 12.
-	
-	self should: [ Date indexOfMonth: #NonExistantMonth ] raise: Error.
+
+	self should: [ Date indexOfMonth: #NonExistantMonth ] raise: Error
 ]
 
 { #category : #tests }
 DateTest >> testInquiries [
 
-	self	
+	self
 		assert: june2nd1973 dayOfMonth equals: 2;
 		assert: june2nd1973 dayOfYear equals: 153;
 		assert: june2nd1973 daysInMonth equals: 30;
 		assert: june2nd1973 daysInYear equals: 365;
 		assert: june2nd1973 daysLeftInYear equals: (365 - 153);
-		assert: june2nd1973 firstDayOfMonth equals: 152.
+		assert: june2nd1973 firstDayOfMonth equals: 152
 ]
 
 { #category : #tests }
 DateTest >> testIsAfter [
 
 	| tzm8 tzp10 |
-	
 	tzm8 := january23rd2004 translateTo: -8 hours.
 	tzp10 := january23rd2004 translateTo: 10 hours.
-
 	self
-		assert: (tzp10 isAfter: tzm8) not;
+		deny: (tzp10 isAfter: tzm8);
 		assert: (january23rd2004 isAfter: june2nd1973);
-		assert: (june2nd1973 isAfter: june2nd1973) not.
+		deny: (june2nd1973 isAfter: june2nd1973)
 ]
 
 { #category : #tests }
 DateTest >> testIsBefore [
 
 	| tzm8 tzp10 |
-	
 	tzm8 := january23rd2004 translateTo: -8 hours.
 	tzp10 := january23rd2004 translateTo: 10 hours.
-
 	self
-		assert: (tzm8 isBefore: tzp10) not;
+		deny: (tzm8 isBefore: tzp10);
 		assert: (june2nd1973 isBefore: january23rd2004);
-		assert: (june2nd1973 isBefore: june2nd1973) not.
+		deny: (june2nd1973 isBefore: june2nd1973)
 ]
 
 { #category : #tests }
-DateTest >> testIsLeapYear [ 
+DateTest >> testIsLeapYear [
 
 	| dateInLeapYear dateInNonLeapYear |
 	dateInLeapYear := january23rd2004.
 	dateInNonLeapYear := dateInLeapYear + 365 days.
 	self assert: dateInLeapYear isLeapYear equals: true.
-	self assert: dateInNonLeapYear isLeapYear equals: false.
+	self assert: dateInNonLeapYear isLeapYear equals: false
 ]
 
 { #category : #tests }
 DateTest >> testIsOnOrAfter [
 
 	| tzm8 tzp10 |
-	
 	tzm8 := january23rd2004 translateTo: -8 hours.
 	tzp10 := january23rd2004 translateTo: 10 hours.
 
 	self
 		assert: (tzp10 isOnOrAfter: tzm8);
-		assert: (june2nd1973 isOnOrAfter: january23rd2004) not;
+		deny: (june2nd1973 isOnOrAfter: january23rd2004);
 		assert: (june2nd1973 isOnOrAfter: june2nd1973);
-		assert: (january23rd2004 isOnOrAfter: june2nd1973).
+		assert: (january23rd2004 isOnOrAfter: june2nd1973)
 ]
 
 { #category : #tests }
 DateTest >> testIsOnOrBefore [
 
 	| tzm8 tzp10 |
-	
 	tzm8 := january23rd2004 translateTo: -8.
 	tzp10 := january23rd2004 translateTo: 10.
 
@@ -365,13 +358,13 @@ DateTest >> testIsOnOrBefore [
 		assert: (tzm8 isOnOrBefore: tzp10);
 		assert: (june2nd1973 isOnOrBefore: january23rd2004);
 		assert: (june2nd1973 isOnOrBefore: june2nd1973);
-		assert: (january23rd2004 isOnOrBefore: june2nd1973) not.
+		deny: (january23rd2004 isOnOrBefore: june2nd1973)
 ]
 
 { #category : #tests }
 DateTest >> testJulianDayNumber [
 
-	self assert: (january23rd2004 translateTo: 0) equals: (Date julianDayNumber: ((4713+2004)*365 +1323) offset: 0 hour).
+	self assert: (january23rd2004 translateTo: 0) equals: (Date julianDayNumber: ((4713+2004)*365 +1323) offset: 0 hour)
 ]
 
 { #category : #tests }
@@ -383,24 +376,24 @@ DateTest >> testMmddyyyy [
 DateTest >> testNameOfDay [
 
 	| dayNames firstDayName |
-	
+
 	firstDayName := self dateClass nameOfDay: 1.
 	self assert: firstDayName equals: #Sunday.
-	
+
 	dayNames := #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday).
 	(1 to: 7) do: [ :i | | dayName |
 		dayName := self dateClass nameOfDay: i.
-		self assert: dayName equals: (dayNames at: i) ].
+		self assert: dayName equals: (dayNames at: i) ]
 ]
 
 { #category : #tests }
 DateTest >> testNameOfMonth [
 
-	self assert: (Date nameOfMonth: 1) equals: #January.	
+	self assert: (Date nameOfMonth: 1) equals: #January.
 	self assert: (Date nameOfMonth: 12) equals: #December.
 
 	self should: [ Date nameOfMonth: 0 ] raise: SubscriptOutOfBounds.
-	self should: [ Date nameOfMonth: 13 ] raise: SubscriptOutOfBounds.
+	self should: [ Date nameOfMonth: 13 ] raise: SubscriptOutOfBounds
 ]
 
 { #category : #tests }
@@ -409,17 +402,17 @@ DateTest >> testNew [
 	instance := self dateClass new.
 	epoch := self epoch.
 	"We have to be careful, since #new creates a Date for midnight in the local timezone, whereas #epoch is based on a fixed time in UTC"
-	instance offset negative 
-		ifTrue: [ epoch := epoch - 1 day ]. 
+	instance offset negative
+		ifTrue: [ epoch := epoch - 1 day ].
 	self
 		assert: instance
-		equals: epoch.
+		equals: epoch
 ]
 
 { #category : #tests }
 DateTest >> testNewDayMonthYear [
 
-	self assert: (Date year: 2004 month: 1 day: 23) equals: january23rd2004.
+	self assert: (Date year: 2004 month: 1 day: 23) equals: january23rd2004
 ]
 
 { #category : #tests }
@@ -433,7 +426,7 @@ DateTest >> testNext [
 
 	| nextDay |
 	nextDay := june2nd1973 next.
-	self assert: nextDay equals: '3 June, 1973' asDate.
+	self assert: nextDay equals: '3 June, 1973' asDate
 ]
 
 { #category : #tests }
@@ -441,13 +434,13 @@ DateTest >> testPrevious [
 
 	| previousDay |
 	previousDay := june2nd1973 previous.
-	self assert: previousDay equals: '1 June, 1973' asDate.
+	self assert: previousDay equals: '1 June, 1973' asDate
 ]
 
 { #category : #tests }
 DateTest >> testPreviousByName [
 
-	self assert: (january23rd2004 previous: #Friday) equals: '2004-01-16' asDate.
+	self assert: (january23rd2004 previous: #Friday) equals: '2004-01-16' asDate
 ]
 
 { #category : #tests }
@@ -542,7 +535,7 @@ DateTest >> testStarting [
 	| aDateAndTime anyTime |
 	anyTime := '13:12' asTime.
 	aDateAndTime := DateAndTime date: january23rd2004 time: anyTime.
-	self assert: (Date starting: aDateAndTime) equals: january23rd2004.
+	self assert: (Date starting: aDateAndTime) equals: january23rd2004
 ]
 
 { #category : #tests }
@@ -553,37 +546,37 @@ DateTest >> testStoreOn [
 { #category : #tests }
 DateTest >> testSubtractDate [
 
-	self assert: (january23rd2004 subtractDate: january23rd2004 previous) equals: 1.	
-	self assert: (january23rd2004 subtractDate: january23rd2004) equals: 0.	
-	self assert: (january23rd2004 subtractDate: january23rd2004 next) equals: -1.
+	self assert: (january23rd2004 subtractDate: january23rd2004 previous) equals: 1.
+	self assert: (january23rd2004 subtractDate: january23rd2004) equals: 0.
+	self assert: (january23rd2004 subtractDate: january23rd2004 next) equals: -1
 ]
 
 { #category : #tests }
 DateTest >> testSubtractDays [
 
-	self assert: (january23rd2004 subtractDays: 0) equals: '2004-01-23' asDate.	
-	self assert: (january23rd2004 subtractDays: 30) equals: '2003-12-24' asDate.
+	self assert: (january23rd2004 subtractDays: 0) equals: '2004-01-23' asDate.
+	self assert: (january23rd2004 subtractDays: 30) equals: '2003-12-24' asDate
 ]
 
 { #category : #tests }
 DateTest >> testTomorrow [
 
 	"Not a great test: could falsely fail if midnight come in between the two executions"
-	self assert: Date tomorrow equals: Date today + 1 day.
+	self assert: Date tomorrow equals: Date today + 1 day
 ]
 
 { #category : #tests }
 DateTest >> testWeekday [
 
-	self assert: january23rd2004 weekday equals: #Friday.	
-	self assert: january23rd2004 weekdayIndex equals: 6.
+	self assert: january23rd2004 weekday equals: #Friday.
+	self assert: january23rd2004 weekdayIndex equals: 6
 ]
 
 { #category : #tests }
 DateTest >> testYesterday [
 
 	"Not a great test: could falsely fail if midnight come in between the two executions"
-	self assert: Date yesterday equals: Date today - 1 day.
+	self assert: Date yesterday equals: Date today - 1 day
 ]
 
 { #category : #tests }
@@ -595,7 +588,7 @@ DateTest >> testYyyymmdd [
 { #category : #helpers }
 DateTest >> useNonUtcTimeZoneDuring: aBlock [
 
-	self useTimeZone: 'EDT' during: aBlock.
+	self useTimeZone: 'EDT' during: aBlock
 ]
 
 { #category : #helpers }
@@ -603,7 +596,7 @@ DateTest >> useTimeZone: abbreviation during: aBlock [
 
   | timeZone |
   timeZone := TimeZone abbreviated: abbreviation.
-  self restoreLocalTimeZoneAfter: [ 
-    DateAndTime localTimeZone: timeZone. 
-    aBlock cull: timeZone ].
+  self restoreLocalTimeZoneAfter: [
+    DateAndTime localTimeZone: timeZone.
+    aBlock cull: timeZone ]
 ]

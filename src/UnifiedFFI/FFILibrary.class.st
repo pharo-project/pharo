@@ -19,7 +19,7 @@ FFILibrary class >> asFFILibrary [
 { #category : #converting }
 FFILibrary class >> calloutAPIClass [
 
-	^ self uniqueInstance calloutAPIClass 
+	^ self uniqueInstance calloutAPIClass
 ]
 
 { #category : #'instance creation' }
@@ -29,26 +29,26 @@ FFILibrary class >> new [
 
 { #category : #options }
 FFILibrary class >> options [
-	
+
 	^ #()
 ]
 
 { #category : #'instance creation' }
-FFILibrary class >> uniqueInstance [ 
-	self = FFILibrary 
+FFILibrary class >> uniqueInstance [
+	self = FFILibrary
 		ifTrue: [ self error: 'I''m an abstract class, use one of my children.' ].
 	^ uniqueInstance ifNil: [ uniqueInstance := super new ]
 ]
 
 { #category : #converting }
-FFILibrary >> asFFILibrary [ 
+FFILibrary >> asFFILibrary [
 	^ self
 ]
 
 { #category : #converting }
 FFILibrary >> calloutAPIClass [
 
-	^ FFICalloutAPI calloutAPIClass 
+	^ FFICalloutAPI calloutAPIClass
 ]
 
 { #category : #accessing }
@@ -66,7 +66,7 @@ FFILibrary >> ffiLibraryName [
 ]
 
 { #category : #accessing }
-FFILibrary >> libraryName [ 
+FFILibrary >> libraryName [
 	^ Smalltalk platform ffiLibraryName: self
 ]
 
@@ -81,7 +81,7 @@ FFILibrary >> macLibraryName [
 
 { #category : #'accessing - platform' }
 FFILibrary >> options [
-	
+
 	^ self class options
 ]
 
@@ -95,25 +95,25 @@ FFILibrary >> preMethodBuildContext: sender builder: builder spec: functionSpec 
 
 { #category : #accessing }
 FFILibrary >> uniqueInstance [
-	
+
 	^ self
 ]
 
 { #category : #'accessing - platform' }
 FFILibrary >> unix32LibraryName [
-	"Use to #unixLibraryName to keep backward compatibility." 
+	"Use to #unixLibraryName to keep backward compatibility."
 	^ self unixLibraryName
 ]
 
 { #category : #'accessing - platform' }
 FFILibrary >> unix64LibraryName [
-	"Point to #unixLibraryName to keep backward compatibility." 
+	"Point to #unixLibraryName to keep backward compatibility."
 	^ self unixLibraryName
 ]
 
 { #category : #'accessing - platform' }
 FFILibrary >> unixLibraryName [
-	"Kept for backward compatibility. 
+	"Kept for backward compatibility.
 	The system complains that this method is not implemented as it will only exist
 	in subclasses that use the old API.
 	 Users should use unix32* or unix64*"

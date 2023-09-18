@@ -13,7 +13,7 @@ Class {
 { #category : #decoration }
 ClyClassTableDecorator class >> decorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 

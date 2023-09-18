@@ -14,7 +14,7 @@ Class {
 AndreasSystemProfilerTest >> setUp [
 	super setUp.
 	tally := QSystemTally new.
-	tally class: self class method: self class >> #testPrintingTally	
+	tally class: self class method: self class >> #testPrintingTally
 	"tally class: Object method: Object >> #printString."
 ]
 
@@ -23,7 +23,7 @@ AndreasSystemProfilerTest >> testFullPrintOn [
 	| stream |
 	stream := WriteStream on: String new.
 	tally fullPrintOn: stream tallyExact: false orThreshold: 0 time: 10.
-	
+
 	self assert: stream contents equals: '**Tree**
 
 **Leaves**
@@ -33,10 +33,10 @@ AndreasSystemProfilerTest >> testFullPrintOn [
 { #category : #'tests tally' }
 AndreasSystemProfilerTest >> testGetNewTab [
 	| tabs |
-	
+
 	self assert: (tally getNewTabsFor: #()) equals: #().
 	self assert: (tally getNewTabsFor: #(' ')) equals:  #(' ').
-	
+
 	tabs := OrderedCollection new.
 	tabs add: '['.
 	(tally maxTabs + 1) timesRepeat: [ tabs add: ' ' ].
@@ -51,7 +51,7 @@ AndreasSystemProfilerTest >> testPrintingTally [
 
 { #category : #'tests tally' }
 AndreasSystemProfilerTest >> testPrintingTallyUninitialized [
-	
+
 	self assert: QSystemTally new printString equals: 'nil>>nil -- nil'
 ]
 
@@ -71,15 +71,15 @@ AndreasSystemProfilerTest >> testSimpleReport [
 AndreasSystemProfilerTest >> testTallyTreePrint [
 	| stream |
 	stream := WriteStream on: String new.
-	tally 
-		treePrintOn: stream 
-		tabs: #() 
-		thisTab: nil 
-		total: 50 
-		totalTime: 100 
-		tallyExact: true 
+	tally
+		treePrintOn: stream
+		tabs: #()
+		thisTab: nil
+		total: 50
+		totalTime: 100
+		tallyExact: true
 		orThreshold: 1.
-	
+
 	"Nothing is printed since there is no tab"
 	self assertEmpty: stream contents
 ]
@@ -88,15 +88,15 @@ AndreasSystemProfilerTest >> testTallyTreePrint [
 AndreasSystemProfilerTest >> testTallyTreePrintWithTab [
 	| stream |
 	stream := WriteStream on: String new.
-	tally 
-		treePrintOn: stream 
+	tally
+		treePrintOn: stream
 		tabs: #(' ')
-		thisTab: nil 
-		total: 50 
-		totalTime: 100 
-		tallyExact: true 
-		orThreshold: 1.	
-	
+		thisTab: nil
+		total: 50
+		totalTime: 100
+		tallyExact: true
+		orThreshold: 1.
+
 	self assert: stream contents equals: ' 0 AndreasSystemProfilerTest  testPrintingTally
 '
 ]

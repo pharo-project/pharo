@@ -27,7 +27,7 @@ ClyClassCommentsQueryTest >> expectedClassCommentSubstring [
 ClyClassCommentsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: self class in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyClassScope of: self class superclass in: environment).
 	self assert: query checkEmptyResult
 ]
@@ -45,29 +45,15 @@ ClyClassCommentsQueryTest >> testComparison [
 ClyClassCommentsQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyClassScope ofAll: { self class. self class superclass }.
-	
+
 	self assert: resultItems size equals: 1.
-	
+
 	self assert: resultItems first equals: (ClyClassComment of: self class)
-]
-
-{ #category : #tests }
-ClyClassCommentsQueryTest >> testFromClassWithoutCommentWhenPatternSatisfiesCommentTemplate [
-
-	| noCommentClass substring |
-	noCommentClass := Object newAnonymousSubclass.
-	self deny: noCommentClass hasComment.
-	substring := noCommentClass comment copyFrom: 4 to: 30.
-	
-	query pattern: (ClySubstringPattern with: substring).	
-	self queryFromScope: ClyClassScope of: noCommentClass.
-	
-	self assert: resultItems isEmpty
 ]
 
 { #category : #tests }
 ClyClassCommentsQueryTest >> testThisClassShouldIncludeExpectedComment [
 
-	self assert: (self class comment 
+	self assert: (self class comment
 		includesSubstring: self expectedClassCommentSubstring caseSensitive: false)
 ]

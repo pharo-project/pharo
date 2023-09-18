@@ -17,7 +17,7 @@ ProfilerToolbarPresenter >> ensureItemWith: aTallyModel [
 	| newItem |
 	(self getItemWith: aTallyModel) ifNotNil: [ :found | ^ found ].
 
-	self selectedItem ifNotNil: [ :selected | 
+	self selectedItem ifNotNil: [ :selected |
 		self removeItemsAfter: selected ].
 
 	newItem := self newItemFrom: aTallyModel.
@@ -44,7 +44,7 @@ ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 		label: aTallyModel methodName;
 		selectedObject: aTallyModel;
 		help: 'Display ' , aTallyModel methodName , ' as root';
-		action: [ 
+		action: [
 			aTallyModel model setTallyRoot: aTallyModel.
 			self setSelectedItem: button
 			].
@@ -58,7 +58,7 @@ ProfilerToolbarPresenter >> removeItemsAfter: anItem [
 
 	toKeep := #() asOrderedCollection.
 	i := 1.
-	[ 
+	[
 	item := self items at: i.
 	toKeep add: item.
 	i := i + 1.
@@ -70,8 +70,7 @@ ProfilerToolbarPresenter >> removeItemsAfter: anItem [
 { #category : #reseting }
 ProfilerToolbarPresenter >> reset [
 	self selectedItem: nil.
-	self removeAllItems.
-		
+	self removeAllItems
 ]
 
 { #category : #accessing }
@@ -87,10 +86,9 @@ ProfilerToolbarPresenter >> selectedItem: anObject [
 ]
 
 { #category : #accessing }
-ProfilerToolbarPresenter >> setSelectedItem: aToolbarButtonPresenter [ 
-	
+ProfilerToolbarPresenter >> setSelectedItem: aToolbarButtonPresenter [
+
 	self items do: [:itm | itm icon: nil ].
 	aToolbarButtonPresenter icon: (self iconNamed: 'windowMenu').
 	self selectedItem: aToolbarButtonPresenter
-	
 ]

@@ -12,13 +12,35 @@ Class {
 }
 
 { #category : #initialization }
-RBDoItMethodNode >> initialize [ 	
+RBDoItMethodNode >> initialize [
 	super initialize.
-	
+
 	selector := #DoIt
 ]
 
 { #category : #testing }
-RBDoItMethodNode >> isDoIt [ 
+RBDoItMethodNode >> isDoIt [
 	^true
+]
+
+{ #category : #accessing }
+RBDoItMethodNode >> sourceCode [
+
+	| interval |
+	interval := self sourceInterval.
+	interval ifEmpty: [ ^ '' ].
+
+	^ self source
+		copyFrom: interval first
+		to: interval last
+]
+
+{ #category : #accessing }
+RBDoItMethodNode >> start [
+	^ body start
+]
+
+{ #category : #accessing }
+RBDoItMethodNode >> stop [
+	^ body stop
 ]

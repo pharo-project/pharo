@@ -23,14 +23,16 @@ Class {
 
 { #category : #'instance creation' }
 RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
-	
+
 	anIdentifierName = #self
 		ifTrue: [ ^ self selfNode start: aPosition ].
 	anIdentifierName = #thisContext
 		ifTrue: [ ^ self thisContextNode start: aPosition ].
+	anIdentifierName = #thisProcess
+		ifTrue: [ ^ self thisProcessNode start: aPosition ].
 	anIdentifierName = #super
 		ifTrue: [ ^ self superNode start: aPosition ].
-	^ self named: anIdentifierName start: aPosition.
+	^ self named: anIdentifierName start: aPosition
 ]
 
 { #category : #'instance creation' }
@@ -40,30 +42,35 @@ RBVariableNode class >> named: aName [
 
 { #category : #'instance creation' }
 RBVariableNode class >> named: aName start: aPosition [
-	^self new 
-		named: aName start: aPosition; 
-		yourself.
+	^self new
+		named: aName start: aPosition;
+		yourself
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> selfNode [
-	^ (self named: #self) variable: SelfVariable instance
+	^ self named: #self
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> superNode [
-	^ (self named: #super) variable: SuperVariable instance
+	^ self named: #super
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> thisContextNode [
-	^ (self named: #thisContext) variable: ThisContextVariable instance
+	^ self named: #thisContext
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> thisProcessNode [
+	^ self named: #thisProcess
 ]
 
 { #category : #comparing }
-RBVariableNode >> = anObject [ 
+RBVariableNode >> = anObject [
 	self == anObject ifTrue: [^true].
-	((anObject isKindOf: self class) or: [self isKindOf: anObject class]) 
+	((anObject isKindOf: self class) or: [self isKindOf: anObject class])
 		ifFalse: [^false].
 	^self name = anObject name
 ]
@@ -74,13 +81,13 @@ RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : #matching }
-RBVariableNode >> copyInContext: aDictionary [ 
-	^ self class named: name.
+RBVariableNode >> copyInContext: aDictionary [
+	^ self class named: name
 ]
 
 { #category : #comparing }
-RBVariableNode >> equalTo: anObject withMapping: aDictionary [ 
-	^self class = anObject class and: 
+RBVariableNode >> equalTo: anObject withMapping: aDictionary [
+	^self class = anObject class and:
 			[(aDictionary at: self name ifAbsentPut: [anObject name]) = anObject name]
 ]
 
@@ -156,13 +163,13 @@ RBVariableNode >> isLocalVariable [
 ]
 
 { #category : #testing }
-RBVariableNode >> isRead [
-	^ self isWrite not and: [ self isUsed ]
+RBVariableNode >> isPseudoVariable [
+	^ variable isPseudoVariable
 ]
 
 { #category : #testing }
-RBVariableNode >> isReservedVariable [
-	^ variable isReservedVariable
+RBVariableNode >> isRead [
+	^ self isWrite not and: [ self isUsed ]
 ]
 
 { #category : #testing }
@@ -218,14 +225,14 @@ RBVariableNode >> name [
 
 { #category : #accessing }
 RBVariableNode >> name: aName [
-	name := aName asSymbol.
+	name := aName asSymbol
 ]
 
 { #category : #initialization }
 RBVariableNode >> named: aName start: aPosition [
 
 	self name: aName.
-	self start: aPosition.
+	self start: aPosition
 ]
 
 { #category : #testing }
@@ -239,13 +246,13 @@ RBVariableNode >> precedence [
 ]
 
 { #category : #testing }
-RBVariableNode >> references: aVariableName [ 
+RBVariableNode >> references: aVariableName [
 	^self name = aVariableName
 ]
 
 { #category : #replacing }
-RBVariableNode >> replaceSourceFrom: aNode [ 
-	self addReplacement: (RBStringReplacement 
+RBVariableNode >> replaceSourceFrom: aNode [
+	self addReplacement: (RBStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
 				with: self name)
@@ -253,19 +260,16 @@ RBVariableNode >> replaceSourceFrom: aNode [
 
 { #category : #replacing }
 RBVariableNode >> replaceSourceWith: aNode [
-	self addReplacement: (RBStringReplacement 
+	self addReplacement: (RBStringReplacement
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)
 ]
 
 { #category : #accessing }
-RBVariableNode >> start [
-	^ start
-]
-
-{ #category : #accessing }
 RBVariableNode >> start: aPosition [
+	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+
 	start := aPosition
 ]
 
@@ -287,5 +291,5 @@ RBVariableNode >> startWithoutParentheses [
 
 { #category : #accessing }
 RBVariableNode >> stopWithoutParentheses [
-	^ start + name size - 1.
+	^ start + name size - 1
 ]

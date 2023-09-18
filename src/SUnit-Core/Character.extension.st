@@ -2,7 +2,7 @@ Extension { #name : #Character }
 
 { #category : #'*SUnit-Core' }
 Character class >> specialCharacterNames [
-	^ Dictionary newFrom: { 
+	^ Dictionary newFrom: {
 		$+ -> 'plus'.
 		$- -> 'minus'.
 		$/ -> 'slash'.

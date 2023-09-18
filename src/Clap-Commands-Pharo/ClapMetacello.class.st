@@ -23,7 +23,7 @@ ClapMetacello class >> metacello [
 		add: ((ClapFlag id: #version)
 			description: 'Version to load (only valid for configurations)';
 			add: (ClapPositional id: #VERSION));
-		meaning: [ :args | 
+		meaning: [ :args |
 			args	at: #helpFlag ifPresent: [ :help | help value; exitSuccess ].
 			(self with: args) execute ]
 ]
@@ -35,7 +35,7 @@ ClapMetacello >> baselineName [
 
 { #category : #execution }
 ClapMetacello >> execute [
-	self outputStreamDo: [ :out | 
+	self outputStreamDo: [ :out |
 		out
 			print: self repositoryUrl;
 			print: self baselineName;

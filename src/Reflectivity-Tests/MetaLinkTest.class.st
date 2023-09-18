@@ -3,7 +3,7 @@ Tests for MetaLink
 "
 Class {
 	#name : #MetaLinkTest,
-	#superclass : #TestCase,
+	#superclass : #ReflectivityTestCase,
 	#category : #'Reflectivity-Tests-Base'
 }
 
@@ -12,7 +12,7 @@ MetaLinkTest >> testAvailableReifications [
 	self assert: (RBMessageNode new availableReifications includes: #receiver).
 	self assert: (RBMessageNode new availableReifications includes: #value).
 	self assert: ((ReflectivityExamples classVariableNamed: #ClassVar) availableReifications includes: #name).
-	self deny: ((ReflectivityExamples classVariableNamed: #ClassVar) availableReifications includes: #selector).
+	self deny: ((ReflectivityExamples classVariableNamed: #ClassVar) availableReifications includes: #selector)
 ]
 
 { #category : #'tests - simple' }
@@ -71,11 +71,11 @@ MetaLinkTest >> testDefintionString [
 { #category : #'tests - options' }
 MetaLinkTest >> testLinkOption [
 	| link |
-	link := MetaLink new 
+	link := MetaLink new
 		options: #(+option1 -option2).
-	
+
 	self assert: link option1.
-	self deny: link option2.
+	self deny: link option2
 ]
 
 { #category : #'tests - options' }
@@ -84,23 +84,23 @@ MetaLinkTest >> testLinkOptionsDefault [
 	link := MetaLink new.
 
 	self assert: link optionInlineMetaObject.
-	self deny: link optionCompileOnLinkInstallation.
+	self deny: link optionCompileOnLinkInstallation
 ]
 
 { #category : #'tests - options' }
 MetaLinkTest >> testOptionFor [
 
 	self assert: (((ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) ast optionsFor: MetaLink new) includes: #optionCompileOnLinkInstallation).
-	self assert: (((ReflectivityExamples class>>#exampleMethodWithMetaLinkOptionsViaClass) ast optionsFor: MetaLink new) includes: #optionCompileOnLinkInstallation).
+	self assert: (((ReflectivityExamples class>>#exampleMethodWithMetaLinkOptionsViaClass) ast optionsFor: MetaLink new) includes: #optionCompileOnLinkInstallation)
 ]
 
 { #category : #'tests - simple' }
 MetaLinkTest >> testReificationError [
 	| link |
-	link := MetaLink new 
+	link := MetaLink new
 		metaObject: #unknown.
 	self should: [ (ReflectivityExamples>>#exampleMethod) ast link: link ] raise: Error.
-	self should: [ (ReflectivityExamples classVariableNamed: #ClassVar) link: link ] raise: Error.
+	self should: [ (ReflectivityExamples classVariableNamed: #ClassVar) link: link ] raise: Error
 ]
 
 { #category : #'tests - simple' }

@@ -17,14 +17,14 @@ AlphaBlendingCanvas >> alpha [
 
 { #category : #accessing }
 AlphaBlendingCanvas >> alpha: newAlpha [
-	alpha := newAlpha.
+	alpha := newAlpha
 ]
 
 { #category : #'drawing - images' }
 AlphaBlendingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	"Draw the given form. For the 'paint' combination rule use stenciling otherwise simply fill the source rectangle.
 	Do a blendAlpha if the rule is blend to cope with translucent images being drawn (via translucentImage:...)."
-	
+
 	rule = Form paint ifTrue:[
 		^myCanvas
 			image: aForm
@@ -48,7 +48,7 @@ AlphaBlendingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule
 			sourceRect: sourceRect
 			rule: Form blendAlpha
 			alpha: alpha.
-	].
+	]
 ]
 
 { #category : #private }
@@ -62,5 +62,5 @@ AlphaBlendingCanvas >> mapColor: aColor [
 { #category : #initialization }
 AlphaBlendingCanvas >> on: aCanvas [
 	myCanvas := aCanvas.
-	alpha := 1.0.
+	alpha := 1.0
 ]

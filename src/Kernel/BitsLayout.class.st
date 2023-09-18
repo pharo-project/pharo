@@ -50,7 +50,7 @@ BitsLayout >> extendDoubleWord [
 ]
 
 { #category : #extending }
-BitsLayout >> extendWeak: aLayoutClassScope [ 
+BitsLayout >> extendWeak: aLayoutClassScope [
 	IncompatibleLayoutConflict new
 		layout: self;
 		subType: #weak;

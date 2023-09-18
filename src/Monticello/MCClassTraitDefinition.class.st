@@ -128,7 +128,7 @@ MCClassTraitDefinition >> printDefinitionOn: stream [
 
 { #category : #accessing }
 MCClassTraitDefinition >> requirements [
-	^Array with: baseTrait
+	^ { baseTrait }
 ]
 
 { #category : #accessing }

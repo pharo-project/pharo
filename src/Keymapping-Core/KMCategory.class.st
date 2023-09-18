@@ -19,8 +19,8 @@ KMCategory class >> named: aCategorySymbol [
 ]
 
 { #category : #associating }
-KMCategory >> addKeymapEntry: aKeymapEntry [ 
-	self commonEntries add: aKeymapEntry.
+KMCategory >> addKeymapEntry: aKeymapEntry [
+	self commonEntries add: aKeymapEntry
 ]
 
 { #category : #associating }
@@ -42,8 +42,8 @@ KMCategory >> asKmCategoryIn: aKmRepository [
 
 { #category : #binding }
 KMCategory >> bindToObject: anObject andMorph: aMorph [
-	
-	^ KMCategoryBinding target: anObject morph: aMorph category: self.
+
+	^ KMCategoryBinding target: anObject morph: aMorph category: self
 ]
 
 { #category : #initialization }
@@ -74,7 +74,7 @@ KMCategory >> displayStringOn: stream [
 { #category : #accessing }
 KMCategory >> entriesAt: aPlatform [
 	platforms ifNil: [ platforms := Dictionary new ].
-	^platforms at: aPlatform ifAbsentPut: [ KMStorage new ].
+	^platforms at: aPlatform ifAbsentPut: [ KMStorage new ]
 ]
 
 { #category : #associating }
@@ -125,13 +125,13 @@ KMCategory >> keymaps [
 
 { #category : #testing }
 KMCategory >> matches: aString [
-	^ self keymaps anySatisfy: [ :entry | 
+	^ self keymaps anySatisfy: [ :entry |
 		entry matches: aString ]
 ]
 
 { #category : #testing }
 KMCategory >> matchesCompletely: aString [
-	^ self keymaps anySatisfy: [ :entry | 
+	^ self keymaps anySatisfy: [ :entry |
 		entry matchesCompletely: aString ]
 ]
 
@@ -141,16 +141,16 @@ KMCategory >> name [
 ]
 
 { #category : #accessing }
-KMCategory >> name: aCategorySymbol [ 
+KMCategory >> name: aCategorySymbol [
 	name := aCategorySymbol
 ]
 
 { #category : #matching }
 KMCategory >> onMatchWith: anEventBuffer notify: aMatchListener andDo: aBlock [
-	self keymaps do: [ :entry | 
-		entry onMatchWith: anEventBuffer 
-			notify: aMatchListener 
-			andDo: aBlock ].
+	self keymaps do: [ :entry |
+		entry onMatchWith: anEventBuffer
+			notify: aMatchListener
+			andDo: aBlock ]
 ]
 
 { #category : #associating }
@@ -161,7 +161,13 @@ KMCategory >> platformEntries [
 { #category : #associating }
 KMCategory >> removeKeymapEntry: aKeymapEntry [
 
-	[ self commonEntries remove: aKeymapEntry ] 
+	[ self commonEntries remove: aKeymapEntry ]
 	on: Error
 	do: [ self platformEntries remove: aKeymapEntry ]
+]
+
+{ #category : #keymaps }
+KMCategory >> tools [
+
+	^ Smalltalk tools
 ]

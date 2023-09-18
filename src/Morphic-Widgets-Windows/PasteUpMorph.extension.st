@@ -6,8 +6,8 @@ PasteUpMorph >> fitAllVisibleWindows [
 	|allowedArea|
 	allowedArea := RealEstateAgent maximumUsableAreaInWorld: self world.
 	(self  windowsSatisfying: [:w | w isCollapsed not])
-		reverseDo:[:w | 
-			w extent: w initialExtent.  
+		reverseDo:[:w |
+			w extent: w initialExtent.
 			w bounds:((w position extent: w initialExtent) translatedAndSquishedToBeWithin: allowedArea).
 		].
 	self displayWorld
@@ -17,7 +17,7 @@ PasteUpMorph >> fitAllVisibleWindows [
 PasteUpMorph >> isWindowActive: aSystemWindow [
 	"Answer whether the given window is active.
 	True if the current top window."
-	
+
 	^self currentWindow == aSystemWindow
 ]
 
@@ -31,7 +31,7 @@ PasteUpMorph >> modelWakeUpIn: aWindow [
 { #category : #'*Morphic-Widgets-Windows' }
 PasteUpMorph >> navigateVisibleWindowForward [
 	"Change the active window to the next visible and not collapsed window."
- 
+
 	self nextVisibleWindow
 		ifNil: [SystemWindow passivateTopWindow]
 		ifNotNil: [:m | m activate]
@@ -60,9 +60,9 @@ PasteUpMorph >> navigateWindowForward [
 PasteUpMorph >> nextVisibleWindow [
 	"Answer the next (visible) window to navigate to."
 
-	^self visibleSystemWindows 
-		ifEmpty: [ nil ] 
-		ifNotEmpty: [ :windows | 
+	^self visibleSystemWindows
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ :windows |
 			windows after: self currentWindow ifAbsent: [windows first]
 		]
 ]
@@ -90,13 +90,13 @@ PasteUpMorph >> previousWindow [
 { #category : #'*Morphic-Widgets-Windows' }
 PasteUpMorph >> systemWindows [
 	"Answer the system windows in the world."
-	
+
 	^self submorphsSatisfying: [:m | m isSystemWindow]
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
 PasteUpMorph >> visibleSystemWindows [
 	"Answer the visible system windows in the world."
-	
+
 	^self submorphsSatisfying: [:m | m isSystemWindow and: [m visible]]
 ]

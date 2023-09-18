@@ -11,3 +11,9 @@ Class {
 IRPushDup >> accept: aVisitor [
 	^ aVisitor visitPushDup: self
 ]
+
+{ #category : #testing }
+IRPushDup >> isRemovableByPop [
+
+	^ true
+]

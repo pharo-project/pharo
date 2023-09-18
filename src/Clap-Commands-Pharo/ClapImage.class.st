@@ -22,8 +22,8 @@ ClapImage class >> image [
 		description: 'Manage image/changes files';
 		add: self saveCommand;
 		add: self cleanupCommand;
-		meaning: [ :args | 
-			args at: #helpFlag ifPresent: [ :help | 
+		meaning: [ :args |
+			args at: #helpFlag ifPresent: [ :help |
 				help value; exitSuccess ].
 			args validateAll.
 			(self with: args) execute ]

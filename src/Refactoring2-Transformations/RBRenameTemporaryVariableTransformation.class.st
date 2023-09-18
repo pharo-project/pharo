@@ -21,11 +21,11 @@ Class {
 		'variableName',
 		'newVariableName'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
-RBRenameTemporaryVariableTransformation class >> model: aRBModel rename: oldName to: newName in: aClass selector: aSelector [ 
+RBRenameTemporaryVariableTransformation class >> model: aRBModel rename: oldName to: newName in: aClass selector: aSelector [
 
 	^ self new
 		model: aRBModel;
@@ -36,13 +36,24 @@ RBRenameTemporaryVariableTransformation class >> model: aRBModel rename: oldName
 ]
 
 { #category : #api }
-RBRenameTemporaryVariableTransformation class >> rename: oldName to: newName in: aClass selector: aSelector [ 
+RBRenameTemporaryVariableTransformation class >> rename: oldName to: newName in: aClass selector: aSelector [
 
 	^ self new
 		class: aClass
 		selector: aSelector
 		rename: oldName
 		to: newName
+]
+
+{ #category : #preconditions }
+RBRenameTemporaryVariableTransformation >> applicabilityPreconditions [ 
+	"check whether variable exists?
+	 test instance variables as well"
+
+	^ (RBCondition isValidInstanceVariableName: newVariableName for: self definingClass)
+		& (RBCondition definesSelector: selector in: self definingClass)
+		& (RBCondition definesInstanceVariable: newVariableName in: self definingClass) not
+		& (RBCondition definesClassVariable: newVariableName in: self definingClass) not
 ]
 
 { #category : #private }
@@ -52,7 +63,7 @@ RBRenameTemporaryVariableTransformation >> checkExistingVariable: variableNode [
 		ifTrue: [ self refactoringError: ('Temporary variable named {1} does not exist.'
 							format: { variableName asString }) ].
 	variableNode name = variableName
-		ifFalse: [ self refactoringError: 'Selected interval should include variable declaration' ].
+		ifFalse: [ self refactoringError: 'Selected interval should include variable declaration' ]
 ]
 
 { #category : #private }
@@ -66,27 +77,16 @@ RBRenameTemporaryVariableTransformation >> checkNewVariable: aParseTree [
 							format: { newVariableName asString }) ].
 	(aParseTree allDefinedVariables includes: newVariableName)
 		ifTrue: [ self refactoringError: ('Temporary variable named {1} is already defined.'
-							format: { newVariableName asString }) ].
+							format: { newVariableName asString }) ]
 ]
 
 { #category : #api }
-RBRenameTemporaryVariableTransformation >> class: aClass selector: aSelector rename: anOldSymbol to: aNewSymbol [ 
+RBRenameTemporaryVariableTransformation >> class: aClass selector: aSelector rename: anOldSymbol to: aNewSymbol [
 
 	self className: aClass.
 	selector := aSelector.
 	variableName := anOldSymbol.
 	newVariableName := aNewSymbol
-]
-
-{ #category : #preconditions }
-RBRenameTemporaryVariableTransformation >> preconditions [
-	"check whether variable exists?
-	 test instance variables as well"
-
-	^ (RBCondition isValidInstanceVariableName: newVariableName for: self definingClass)
-		& (RBCondition definesSelector: selector in: self definingClass)
-		& (RBCondition definesInstanceVariable: newVariableName in: self definingClass) not
-		& (RBCondition definesClassVariable: newVariableName in: self definingClass) not
 ]
 
 { #category : #executing }
@@ -103,7 +103,7 @@ RBRenameTemporaryVariableTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBRenameTemporaryVariableTransformation >> storeOn: aStream [ 
+RBRenameTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

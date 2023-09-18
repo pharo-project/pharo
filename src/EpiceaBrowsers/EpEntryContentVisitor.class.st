@@ -11,7 +11,7 @@ Class {
 
 { #category : #visitor }
 EpEntryContentVisitor >> visitEvent: aChange [
-	^ self error: 'Should not be reached'.
+	^ self error: 'Should not be reached'
 ]
 
 { #category : #visitor }

@@ -8,8 +8,14 @@ Class {
 	#category : #'TraitsV2-Tests'
 }
 
+{ #category : #helpers }
+T2CommonClassDefinitionPrinterTest >> packageTagOfMOP [
+
+	^ '''TraitsV2-Tests-MOP'''
+]
+
 { #category : #running }
-T2CommonClassDefinitionPrinterTest >> setUp [ 
+T2CommonClassDefinitionPrinterTest >> setUp [
 	super setUp.
 	slotuse := ClassDefinitionPrinter showFluidClassDefinition.
 	emptySlots := ClassDefinitionPrinter displayEmptySlots.

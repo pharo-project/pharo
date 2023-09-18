@@ -9,8 +9,29 @@ Class {
 
 { #category : #coverage }
 ObjectTest >> classToBeTested [
-	
+
 	^ Object
+]
+
+{ #category : #'tests - reflecting' }
+ObjectTest >> testAdoptInstance [
+
+	| point |
+	self assert: Point format equals: Association format. "non-indexable with 2 ivars"
+
+	point := 10 @ 20.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	Association adoptInstance: point.
+	self assert: point class equals: Association.
+	self assert: point printString equals: '10->20'.
+
+	Point adoptInstance: point.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	self should: [ Object adoptInstance: point ] raise: PrimitiveFailed
 ]
 
 { #category : #tests }
@@ -27,11 +48,20 @@ ObjectTest >> testAs [
 	self assert: coll1 identicalTo: coll2
 ]
 
+{ #category : #tests }
+ObjectTest >> testAssert [
+
+	self shouldnt: [Object new assert: true] raise: AssertionFailure.
+	self shouldnt: [
+		"make sure that we non-boolean arguments just fails"
+		self should: [Object new assert: 1] raise: AssertionFailure ] raise: [NonBooleanReceiver]. 
+]
+
 { #category : #'tests - accessing' }
 ObjectTest >> testBasicSize [
 	"Numbers are not indexable"
 	self assert: 1 basicSize equals: 0.
-	
+
 	"Collections are indexable"
 	self assert: #(a b c) basicSize equals: 3
 ]
@@ -39,7 +69,7 @@ ObjectTest >> testBasicSize [
 { #category : #'tests - accessing' }
 ObjectTest >> testBasicSizeNotOverwritten [
 	"#basicSize should not be overwritten by subclasses of Object, except in Context"
-	
+
 	self assert: #basicSize implementors asArray equals: {Context>>#basicSize. Object>>#basicSize}
 ]
 
@@ -57,11 +87,11 @@ ObjectTest >> testBeRecursivelyReadOnlyObject [
 	assoc beRecursivelyReadOnlyObject.
 	self should: [ assoc key: 2 ] raise: ModificationForbidden.
 	self should: [ assoc value key: 2 ] raise: ModificationForbidden.
-	
+
 	array := Array with: 1 with: (Array with:1 with: 2).
 	array beRecursivelyReadOnlyObject.
 	self should: [ array at: 1 put: 2 ] raise: ModificationForbidden.
-	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden.
+	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden
 ]
 
 { #category : #'tests - write barrier' }
@@ -77,7 +107,7 @@ ObjectTest >> testBeRecursivelyWritableObject [
 	assoc value key: 2.
 	self assert: assoc key equals: 2.
 	self assert: assoc value key equals: 2.
-	
+
 	array := Array with: 1 with: (Array with:1 with: 2).
 	array beRecursivelyReadOnlyObject.
 	self should: [ array at: 1 put: 2 ] raise: ModificationForbidden.
@@ -86,10 +116,10 @@ ObjectTest >> testBeRecursivelyWritableObject [
 	array at: 1 put: 2.
 	array second at: 1 put: 2.
 	self assert: array first equals: 2.
-	self assert: array second first equals: 2.
+	self assert: array second first equals: 2
 ]
 
-{ #category : #tests }
+{ #category : #'tests - reflecting' }
 ObjectTest >> testBecome [
 	"this test should that all the variables pointing to an object are pointing now to another one, and all
       object pointing to the other are pointing to the object"
@@ -105,7 +135,7 @@ ObjectTest >> testBecome [
 	self assert: pt1 equals: 100 @ 100
 ]
 
-{ #category : #tests }
+{ #category : #'tests - reflecting' }
 ObjectTest >> testBecomeForward [
 	"this test should that all the variables pointing to an object are pointing now to another one.
 	Not that this inverse is not true. This kind of become is called oneWayBecome in VW"
@@ -123,36 +153,36 @@ ObjectTest >> testBecomeForward [
 { #category : #tests }
 ObjectTest >> testCaseOf [
 	| temp |
-	
+
 	"Test for Value"
-	temp := #case1 caseOf: {		
- 		[#case1]->[ 1 ].		
-  		[#case2]->[ 2 ] }.		
- 	self assert: temp equals: 1.		
+	temp := #case1 caseOf: {
+ 		[#case1]->[ 1 ].
+  		[#case2]->[ 2 ] }.
+ 	self assert: temp equals: 1.
 
-  	temp := #case2 caseOf: {		
- 		[#case1]->[ 1 ].		
-  		[#case2]->[ 2 ] }.		
- 	self assert: temp equals: 2.		
+  	temp := #case2 caseOf: {
+ 		[#case1]->[ 1 ].
+  		[#case2]->[ 2 ] }.
+ 	self assert: temp equals: 2.
 
-  	self should: [ 		
- 		temp := #case3 caseOf: {		
- 			[#case1]->[ 1 ].		
-  			[#case2]->[ 2 ] }		
+  	self should: [
+ 		temp := #case3 caseOf: {
+ 			[#case1]->[ 1 ].
+  			[#case2]->[ 2 ] }
  		] raise: Error.
-	
+
 	"Test for effect"
 	#case1 caseOf: {
 		[#case1]->[ temp := 1 ].
  		[#case2]->[ temp := 2 ] }.
 	self assert: temp equals: 1.
-	
+
 	#case2 caseOf: {
 		[#case1]->[ temp := 1 ].
  		[#case2]->[ temp := 2 ] }.
 	self assert: temp equals: 2.
-	
-	self should: [ 
+
+	self should: [
 		#case3 caseOf: {
 			[#case1]->[ 1 ].
  			[#case2]->[ 2 ] }
@@ -163,49 +193,49 @@ ObjectTest >> testCaseOf [
 ObjectTest >> testCaseOfOtherwise [
 	| temp |
 	"Test for Value"
-	temp := #case1 
+	temp := #case1
 		caseOf: {
 			[#case1]->[ 1 ].
  			[#case2]->[ 2 ] }
 		otherwise: [ 3 ].
 	self assert: temp equals: 1.
-	
+
 	temp := #case2
 		caseOf: {
 			[#case1]->[ 1 ].
  			[#case2]->[ 2 ] }
 		otherwise: [ 3 ].
 	self assert: temp equals: 2.
-	
-	temp := #case3 
+
+	temp := #case3
 		caseOf: {
 			[#case1]->[ 1 ].
  			[#case2]->[ 2 ] }
 		otherwise: [ 3 ].
 	self assert: temp equals: 3.
-	
+
 	"Disabled due to bootrap not using Pharo9
 	temp := #case4
 		caseOf: { }
 		otherwise: [ 3 ].
 	self assert: temp equals: 3."
-	
+
 	"Test Effect"
-	#case1 
+	#case1
 		caseOf: {
 			[#case1]->[ temp := 1 ].
  			[#case2]->[ temp := 2 ] }
 		otherwise: [ temp := 3 ].
 	self assert: temp equals: 1.
-	
+
 	#case2
 		caseOf: {
 			[#case1]->[ temp := 1 ].
  			[#case2]->[ temp := 2 ] }
 		otherwise: [ temp := 3 ].
 	self assert: temp equals: 2.
-	
-	#case3 
+
+	#case3
 		caseOf: {
 			[#case1]->[ temp := 1 ].
  			[#case2]->[ temp := 2 ] }
@@ -253,6 +283,27 @@ ObjectTest >> testInstVarNamedPut [
 	self assert: (obj instVarNamed: 'variable') equals: 1.
 	self shouldnt: [ obj instVarNamed: 'variable' put: 1 ] raise: InstanceVariableNotFound.
 	self should: [ obj instVarNamed: 'timoleon' put: 1 ] raise: InstanceVariableNotFound
+]
+
+{ #category : #'tests - reflecting' }
+ObjectTest >> testPrimitiveChangeClassTo [
+
+	| point |
+	self assert: Point format equals: Association format. "non-indexable with 2 ivars"
+
+	point := 10 @ 20.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	point primitiveChangeClassTo: Association new.
+	self assert: point class equals: Association.
+	self assert: point printString equals: '10->20'.
+
+	point primitiveChangeClassTo: Point new.
+	self assert: point class equals: Point.
+	self assert: point printString equals: '(10@20)'.
+
+	self should: [ point primitiveChangeClassTo: Object new ] raise: PrimitiveFailed
 ]
 
 { #category : #'tests - printing' }

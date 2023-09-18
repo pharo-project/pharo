@@ -21,7 +21,6 @@ Class {
 Beacon class >> announce: anAnnouncement [
 
 	self instance announce: anAnnouncement
-	
 ]
 
 { #category : #accessing }
@@ -33,7 +32,7 @@ Beacon class >> instance [
 { #category : #accessing }
 Beacon class >> loggers [
 
-	^ self instance loggers 
+	^ self instance loggers
 ]
 
 { #category : #accessing }
@@ -45,14 +44,14 @@ Beacon class >> loggersOf: aClass [
 { #category : #'class initialization' }
 Beacon class >> reset [
 	<script>
-	
+
 	self resetInstance
 ]
 
 { #category : #'private - initialization' }
 Beacon class >> resetInstance [
 
-	Instance ifNotNil: [ 
+	Instance ifNotNil: [
 		Instance announcer subscriptions reset ].
 	Instance := nil
 ]

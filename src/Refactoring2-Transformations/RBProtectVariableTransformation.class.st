@@ -14,7 +14,7 @@ overriden from RBAddAccessorsForClassTransformation and RBRemoveDirectAccessToVa
 Class {
 	#name : #RBProtectVariableTransformation,
 	#superclass : #RBCompositeVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #executing }
@@ -34,7 +34,7 @@ RBProtectVariableTransformation >> buildTransformations [
 ]
 
 { #category : #printing }
-RBProtectVariableTransformation >> storeOn: aStream [ 
+RBProtectVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -52,5 +52,5 @@ RBProtectVariableTransformation >> variable: aVariableName class: aClassName cla
 
 	variableName := aVariableName.
 	isClassVariable := aBoolean.
-	className := aClassName.
+	className := aClassName
 ]

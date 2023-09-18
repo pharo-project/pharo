@@ -18,11 +18,11 @@ Class {
 	#instVars : [
 		'package'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #'instance creation' }
-RBRenamePackageTransformation class >> model: aRBSmalltalk rename: aSymbol to: aNewName [ 
+RBRenamePackageTransformation class >> model: aRBSmalltalk rename: aSymbol to: aNewName [
 	^ self new
 		model: aRBSmalltalk;
 		packageName: aSymbol newName: aNewName;
@@ -39,45 +39,44 @@ RBRenamePackageTransformation class >> rename: aString to: aNewName [
 RBRenamePackageTransformation >> buildTransformations [
 
 	transformations := OrderedCollection new.
-	
-	self 
+
+	self
 		renamePackage;
 		renameManifestClass.
-		
+
 	^ transformations
 ]
 
 { #category : #executing }
 RBRenamePackageTransformation >> manifestClassNameFor: aPackageName [
 	"Returns a symbol representing a suitable name for a Manifest class for the given package"
-	
+
 	^('Manifest', (aPackageName select: [:each | each isAlphaNumeric ])) asSymbol
 ]
 
 { #category : #executing }
-RBRenamePackageTransformation >> packageName: aName newName: aNewName [ 
+RBRenamePackageTransformation >> packageName: aName newName: aNewName [
 	packageName := aName asSymbol.
 	package := self model packageNamed: packageName.
 	newName := aNewName asSymbol
 ]
 
 { #category : #executing }
-RBRenamePackageTransformation >> preconditions [ 
-	^ super preconditions & (RBCondition withBlock: [ newName = package name ifTrue: 
-		[ self refactoringError: 'Use a different name' ].
-		true ]) &
-	(RBCondition withBlock: [ [RPackage organizer validatePackageDoesNotExist: newName. true]
-			on: Error 
-			do: [ :e | self refactoringError: e messageText ]
-		])
+RBRenamePackageTransformation >> preconditions [
+	^ super preconditions
+		& (RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.')
+		& (RBCondition
+			   withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+				   (self packageOrganizer hasPackage: newName) not ]
+			   errorString: 'The system already includes a package named ' , newName)
 ]
 
 { #category : #executing }
-RBRenamePackageTransformation >> renameManifestClass [ 
+RBRenamePackageTransformation >> renameManifestClass [
 	| manifest |
 	manifest := package realPackage packageManifestOrNil.
 	manifest ifNotNil: [
-	transformations add: ( RBRenameClassTransformation  
+	transformations add: ( RBRenameClassTransformation
 		model: self model
 		rename: manifest name
 		to: (self manifestClassNameFor: newName)) ]
@@ -89,7 +88,7 @@ RBRenamePackageTransformation >> renamePackage [
 ]
 
 { #category : #executing }
-RBRenamePackageTransformation >> storeOn: aStream [ 
+RBRenamePackageTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' rename: '.

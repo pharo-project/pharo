@@ -122,22 +122,22 @@ RxParser >> atom [
 	"An atom is one of a lot of possibilities, see below."
 
 	| atom |
-	(lookahead = #epsilon 
-	or: [ lookahead = $| 
+	(lookahead = #epsilon
+	or: [ lookahead = $|
 	or: [ lookahead = $)
 	or: [ lookahead = $*
-	or: [ lookahead = $+ 
+	or: [ lookahead = $+
 	or: [ lookahead = $? ]]]]])
 		ifTrue: [ ^RxsEpsilon new ].
-		
-	lookahead = $( 
+
+	lookahead = $(
 		ifTrue: [
 			"<atom> ::= '(' <regex> ')' "
 			self match: $(.
 			atom := self regex.
 			self match: $).
 			^atom ].
-	
+
 	lookahead = $[
 		ifTrue: [
 			"<atom> ::= '[' <characterSet> ']' "
@@ -145,38 +145,38 @@ RxParser >> atom [
 			atom := self characterSet.
 			self match: $].
 			^atom ].
-	
-	lookahead = $: 
+
+	lookahead = $:
 		ifTrue: [
 			"<atom> ::= ':' <messagePredicate> ':' "
 			self match: $:.
 			atom := self messagePredicate.
 			self match: $:.
 			^atom ].
-	
-	lookahead = $. 
+
+	lookahead = $.
 		ifTrue: [
 			"any non-whitespace character"
 			self next.
 			^RxsContextCondition new beAny].
-	
-	lookahead = $^ 
+
+	lookahead = $^
 		ifTrue: [
 			"beginning of line condition"
 			self next.
 			^RxsContextCondition new beBeginningOfLine].
-	
-	lookahead = $$ 
+
+	lookahead = $$
 		ifTrue: [
 			"end of line condition"
 			self next.
 			^RxsContextCondition new beEndOfLine].
-		
-	lookahead = $\ 
+
+	lookahead = $\
 		ifTrue: [
 			"<atom> ::= '\' <character>"
 			self next.
-			lookahead = #epsilon 
+			lookahead = #epsilon
 				ifTrue: [ self signalParseError: 'bad quotation' ].
 			(BackslashConstants includesKey: lookahead)
 				ifTrue: [
@@ -185,7 +185,7 @@ RxParser >> atom [
 					^atom].
 			self ifSpecial: lookahead
 				then: [:node | self next. ^node]].
-		
+
 	"If passed through the above, the following is a regular character."
 	atom := RxsCharacter with: lookahead.
 	self next.
@@ -198,13 +198,13 @@ RxParser >> branch [
 
 	| piece branch |
 	piece := self piece.
-	(lookahead = #epsilon 
-	or: [ lookahead = $| 
+	(lookahead = #epsilon
+	or: [ lookahead = $|
 	or: [ lookahead = $) ]])
 		ifTrue: [ branch := nil ]
 		ifFalse: [ branch := self branch ].
-	^RxsBranch new 
-		initializePiece: piece 
+	^RxsBranch new
+		initializePiece: piece
 		branch: branch
 ]
 
@@ -218,10 +218,10 @@ RxParser >> characterSet [
 	| spec errorMessage |
 	errorMessage := ' no terminating "]"'.
 	spec := self inputUpTo: $] nestedOn: $[ errorMessage: errorMessage.
-	(spec isEmpty 
-	or: [spec = '^']) 
+	(spec isEmpty
+	or: [spec = '^'])
 		ifTrue: [
-			"This ']' was literal." 
+			"This ']' was literal."
 			self next.
 			spec := spec, ']', (self inputUpTo: $] nestedOn: $[ errorMessage: errorMessage)].
 	^self characterSetFrom: spec
@@ -274,7 +274,7 @@ RxParser >> inputUpTo: aCharacter errorMessage: aString [
 ]
 
 { #category : #private }
-RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aString [ 
+RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aString [
 	"Accumulate input stream until <aCharacter> is encountered
 	and answer the accumulated chars as String, not including
 	<aCharacter>. Signal error if end of stream is encountered,
@@ -283,7 +283,7 @@ RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aStri
 	| accumulator nestLevel |
 	accumulator := WriteStream on: (String new: 20).
 	nestLevel := 0.
-	[lookahead ~= aCharacter or: [nestLevel > 0]] whileTrue: 
+	[lookahead ~= aCharacter or: [nestLevel > 0]] whileTrue:
 			[#epsilon = lookahead ifTrue: [self signalParseError: aString].
 			accumulator nextPut: lookahead.
 			lookahead = anotherCharacter ifTrue: [nestLevel := nestLevel + 1].
@@ -312,7 +312,7 @@ RxParser >> inputUpToAny: aDelimiterString errorMessage: aString [
 
 { #category : #'recursive descent' }
 RxParser >> lookAround [
-	"Parse a lookaround expression after: (?<lookround>) 
+	"Parse a lookaround expression after: (?<lookround>)
 	<lookround> ::= !<regex> | =<regex>"
 	| lookaround |
 	(lookahead = $!
@@ -330,7 +330,7 @@ RxParser >> match: aCharacter [
 	"<aCharacter> MUST match the current lookeahead.
 	If this is the case, advance the input. Otherwise, blow up."
 
-	aCharacter ~= lookahead 
+	aCharacter ~= lookahead
 		ifTrue: [^self signalParseError].	"does not return"
 	self next
 ]
@@ -343,11 +343,11 @@ RxParser >> messagePredicate [
 	| spec negated |
 	spec := self inputUpTo: $: errorMessage: ' no terminating ":"'.
 	negated := false.
-	spec first = $^ 
+	spec first = $^
 		ifTrue: [
 			negated := true.
 			spec := spec copyFrom: 2 to: spec size].
-	^RxsMessagePredicate new 
+	^RxsMessagePredicate new
 		initializeSelector: spec asSymbol
 		negated: negated
 ]
@@ -394,33 +394,33 @@ RxParser >> piece [
 
 	| atom |
 	atom := self atom.
-	
+
 	lookahead = $*
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			atom isNullable
 				ifTrue: [ self signalNullableClosureParserError ].
 			^ RxsPiece new initializeStarAtom: atom ].
 
 	lookahead = $+
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			atom isNullable
 				ifTrue: [ self signalNullableClosureParserError ].
 			^ RxsPiece new initializePlusAtom: atom ].
 
 	lookahead = $?
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			atom isNullable
-				ifTrue: [ 
+				ifTrue: [
 					^ self lookAround ].
 			^ RxsPiece new initializeOptionalAtom: atom ].
-	
+
 	lookahead = ${
 		ifTrue: [
 			^ self quantifiedAtom: atom ].
-		
+
 	^ RxsPiece new initializeAtom: atom
 ]
 
@@ -440,13 +440,13 @@ RxParser >> quantifiedAtom: atom [
 	lookahead = $,
 		ifTrue: [
 			self next.
-			max := (self inputUpToAny: ',}' errorMessage: ' no terminating "}"') asUnsignedInteger ].	
+			max := (self inputUpToAny: ',}' errorMessage: ' no terminating "}"') asUnsignedInteger ].
 	self match: $}.
 	atom isNullable
 		ifTrue: [ self signalNullableClosureParserError ].
 	(max isNotNil and: [ max < min ])
 		ifTrue: [ self signalParseError: ('wrong quantifier, expected ', min asString, ' <= ', max asString) ].
-	^ RxsPiece new 
+	^ RxsPiece new
 		initializeAtom: atom
 		min: min
 		max: max
@@ -458,26 +458,26 @@ RxParser >> regex [
 
 	| branch regex |
 	branch := self branch.
-	
-	(lookahead = #epsilon 
+
+	(lookahead = #epsilon
 	or: [ lookahead = $) ])
 		ifTrue: [ regex := nil ]
 		ifFalse: [
 			self match: $|.
 			regex := self regex ].
-		
+
 	^RxsRegex new initializeBranch: branch regex: regex
 ]
 
 { #category : #private }
 RxParser >> signalNullableClosureParserError [
-	self signalParseError: ' nullable closure'.
+	self signalParseError: ' nullable closure'
 ]
 
 { #category : #private }
 RxParser >> signalParseError [
 
-	self class 
+	self class
 		signalSyntaxException: 'Regex syntax error' at: input position
 ]
 

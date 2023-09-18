@@ -25,10 +25,10 @@ RFReification class >> entities [
 ]
 
 { #category : #'instance creation' }
-RFReification class >> entity: aNodeOrVar link: aLink [ 
+RFReification class >> entity: aNodeOrVar link: aLink [
 	^self new
 		link: aLink;
-		entity: aNodeOrVar.
+		entity: aNodeOrVar
 ]
 
 { #category : #'plugin interface' }
@@ -51,7 +51,7 @@ RFReification class >> key [
 ]
 
 { #category : #accessing }
-RFReification >> entity: aRBMessageNode [ 
+RFReification >> entity: aRBMessageNode [
 	entity := aRBMessageNode
 ]
 
@@ -107,11 +107,6 @@ RFReification >> genForRBGlobalNode [
 ]
 
 { #category : #generate }
-RFReification >> genForRBInstanceVariableNode [
-	^self genForRBVariableNode
-]
-
-{ #category : #generate }
 RFReification >> genForRBLiteralArrayNode [
 	^self genForRBProgramNode
 ]
@@ -138,7 +133,7 @@ RFReification >> genForRBMethodNode [
 
 { #category : #generate }
 RFReification >> genForRBPragmaNode [
-	^ self genForRBProgramNode 
+	^ self genForRBProgramNode
 ]
 
 { #category : #generate }
@@ -172,7 +167,7 @@ RFReification >> genForRBVariableNode [
 ]
 
 { #category : #accessing }
-RFReification >> link: anUndefinedObject [ 
+RFReification >> link: anUndefinedObject [
 	link := anUndefinedObject
 ]
 
@@ -191,7 +186,7 @@ RFReification >> preamble: aNode [
 	aNode isDynamicArray ifTrue: [ ^self preambleForArray: aNode ].
 	aNode isAssignment ifTrue: [ ^self preambleForAssignment: aNode ].
 	aNode isVariable ifTrue: [ ^self preambleForVariable: aNode ].
-	^#().
+	^#()
 ]
 
 { #category : #preamble }

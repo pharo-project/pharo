@@ -12,7 +12,7 @@ Trait {
 TOccurrencesForMultiplinessTest >> collectionWithEqualElements [
 " return a collecition including atLeast two elements equal"
 
-^ self explicitRequirement.
+^ self explicitRequirement
 ]
 
 { #category : #requirements }
@@ -46,7 +46,7 @@ TOccurrencesForMultiplinessTest >> test0FixtureOccurrencesForMultiplinessTest [
 	self elementTwiceInForOccurrences.
 	self collectionWithEqualElements.
 	cpt := 0. " testing with identity check ( == ) so that identy collections can use this trait : "
-	self collectionWithEqualElements do: [ :each | 
+	self collectionWithEqualElements do: [ :each |
 		each == self elementTwiceInForOccurrences ifTrue: [ cpt := cpt + 1 ] ].
 	self assert: cpt = 2
 ]
@@ -60,7 +60,7 @@ TOccurrencesForMultiplinessTest >> test0FixtureOccurrencesTest [
 	self denyEmpty: self collectionWithoutEqualElements.
 	tmp := OrderedCollection new.
 	self collectionWithoutEqualElements
-		do: [ :each | 
+		do: [ :each |
 			self deny: (tmp includes: each).
 			tmp add: each ].
 	self elementNotInForOccurrences.
@@ -71,7 +71,7 @@ TOccurrencesForMultiplinessTest >> test0FixtureOccurrencesTest [
 TOccurrencesForMultiplinessTest >> testOccurrencesOf [
 	| collection |
 	collection := self collectionWithoutEqualElements .
-	
+
 	collection do: [ :each | self assert: (collection occurrencesOf: each) equals: 1 ]
 ]
 
@@ -90,7 +90,7 @@ TOccurrencesForMultiplinessTest >> testOccurrencesOfForMultipliness [
 	collection := self collectionWithEqualElements.
 	elem := self elementTwiceInForOccurrences.
 
-	self assert: (collection occurrencesOf: elem ) equals: 2.
+	self assert: (collection occurrencesOf: elem ) equals: 2
 ]
 
 { #category : #'tests - occurrencesOf' }

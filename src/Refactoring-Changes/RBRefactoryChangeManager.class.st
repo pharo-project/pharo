@@ -47,6 +47,17 @@ RBRefactoryChangeManager class >> instance [
 	^ Instance ifNil: [ Instance := self basicNew initialize ]
 ]
 
+{ #category : #'world menu' }
+RBRefactoryChangeManager class >> menuCommandOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #'Undo last refactoring')
+				action: [self undoLastRefactoring];
+				parent: #Refactoring;
+				help: 'Undo last refactoring';
+				order: 10;
+				iconName: #smallUndo
+]
+
 { #category : #'instance creation' }
 RBRefactoryChangeManager class >> new [
 
@@ -71,6 +82,22 @@ RBRefactoryChangeManager class >> nuke [
 RBRefactoryChangeManager class >> resetCounter [
 
 	Counter := nil
+]
+
+{ #category : #menu }
+RBRefactoryChangeManager class >> undoLastRefactoring [
+	| manager |
+	manager := RBRefactoryChangeManager instance.
+	manager undoPointers ifNotEmpty: [
+	[ |limit list|
+	list := OrderedCollection new.
+	limit := manager lastUndoPointer .
+	1 to: limit do:[ :i | list add: manager undoChange ].
+	list do: [ :e | e execute ]
+	 ] asJob
+		title: 'Refactoring';
+		run]
+	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
 ]
 
 { #category : #'class initialization' }
@@ -115,27 +142,24 @@ RBRefactoryChangeManager >> clearUndoRedoList [
 	undo := Stack new.
 	redo := OrderedCollection new.
 	undoPointers := Stack new.
-	self class resetCounter.
+	self class resetCounter
 ]
 
 { #category : #initialization }
 RBRefactoryChangeManager >> connectToChanges [
+
 	SystemAnnouncer uniqueInstance weak
-		when: CategoryAdded,
-			CategoryRemoved,
-			CategoryRenamed,
-			ClassAdded,
-			ClassModifiedClassDefinition,
-			ClassRemoved,
-			ClassRenamed,
-			ClassReorganized,
-			MethodAdded,
-			MethodModified,
-			MethodRemoved,
-			ProtocolAdded,
-			ProtocolRemoved
+		when: PackageTagAnnouncement,
+				ClassAdded,
+				ClassModifiedClassDefinition,
+				ClassRemoved,
+				ClassRenamed,
+				MethodAdded,
+				MethodModified,
+				MethodRemoved, 
+				ProtocolAnnouncement
 		send: #update:
-		to: self.
+		to: self
 ]
 
 { #category : #initialization }
@@ -179,6 +203,7 @@ RBRefactoryChangeManager >> lastUndoPointer [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> performChange: aRefactoringChange [
+	
 	self ignoreChangesWhile: [ self addUndo: aRefactoringChange execute ]
 ]
 
@@ -190,7 +215,7 @@ RBRefactoryChangeManager >> redoChange [
 { #category : #'public access' }
 RBRefactoryChangeManager >> redoOperation [
 	redo ifEmpty: [ ^ self ].
-	self ignoreChangesWhile: [ 
+	self ignoreChangesWhile: [
 		| change |
 		change := redo removeLast.
 		undo add: change execute ]
@@ -213,7 +238,7 @@ RBRefactoryChangeManager >> undoChange [
 RBRefactoryChangeManager >> undoOperation [
 
 	undo ifEmpty: [ ^ self ].
-	self ignoreChangesWhile: [ 
+	self ignoreChangesWhile: [
 		| change |
 		change := undo removeLast.
 		redo add: change execute ]

@@ -23,31 +23,32 @@ MethodRecategorized class >> method: aCompiledMethod oldProtocol: anOldProtocol 
 ]
 
 { #category : #testing }
-MethodRecategorized >> affectsMethodsTaggedWith: tagName [
-	^(super affectsMethodsTaggedWith: tagName) or: [ oldProtocol = tagName ]
+MethodRecategorized >> affectsMethodsInProtocol: protocol [
+
+	^ (super affectsMethodsInProtocol: protocol) or: [ self oldProtocol name = protocol ]
 ]
 
 { #category : #accessing }
 MethodRecategorized >> methodRecategorized [
-	
+
 	^ method
 ]
 
 { #category : #accessing }
 MethodRecategorized >> newProtocol [
-	
+
 	^ self protocol
 ]
 
 { #category : #accessing }
 MethodRecategorized >> oldProtocol [
-	
+
 	^ oldProtocol
 ]
 
 { #category : #accessing }
 MethodRecategorized >> oldProtocol: anObject [
-	
+
 	oldProtocol := anObject
 ]
 

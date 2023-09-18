@@ -7,6 +7,6 @@ Class {
 { #category : #annotations }
 SubclassWithOverridenAnnotation class >> annotationExample [
 	<classAnnotation>
-	
+
 	^ClassAnnotationExample2 new
 ]

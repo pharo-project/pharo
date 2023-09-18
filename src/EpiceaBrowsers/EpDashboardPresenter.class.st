@@ -54,7 +54,7 @@ EpDashboardPresenter class >> title [
 
 { #category : #actions }
 EpDashboardPresenter >> createNewSessionLog [
-	
+
 	| fileNameOrNil sessionStore |
 	sessionStore := self monitor sessionStore.
 
@@ -64,7 +64,7 @@ EpDashboardPresenter >> createNewSessionLog [
 	fileNameOrNil ifNil: [ ^ self ].
 
 	(self monitor sessionStore existsStoreNamed: fileNameOrNil)
-		ifTrue: [ 
+		ifTrue: [
 			self inform: 'Invalid name: Already used' ]
 		ifFalse: [
 			self monitor sessionStore resetWithStoreNamed: fileNameOrNil.
@@ -97,11 +97,11 @@ EpDashboardPresenter >> initializeOpenSettingsButton [
 ]
 
 { #category : #initialization }
-EpDashboardPresenter >> initializePresenter [ 
+EpDashboardPresenter >> initializePresenter [
 	super initializePresenter.
 
 	"Listen announcers"
-	self initializeRefreshEnableMonitorButtonModelOnMonitorUpdate.
+	self initializeRefreshEnableMonitorButtonModelOnMonitorUpdate
 ]
 
 { #category : #initialization }
@@ -133,7 +133,7 @@ EpDashboardPresenter >> initializeWindow: aWindowPresenter [
 
 { #category : #accessing }
 EpDashboardPresenter >> monitor [
-	
+
 	^ monitor ifNil: [ EpMonitor current ]
 ]
 
@@ -149,12 +149,12 @@ EpDashboardPresenter >> openSettingsBrowser [
 	"Inspired on Glamour's code"
 
 	| settingsBrowser settingsWindow |
-	settingsBrowser := SettingBrowser new 
-		changePackageSet: (RPackage organizer packageNamed: 'EpiceaBrowsers') asOrderedCollection;
-		yourself.
+	settingsBrowser := SettingBrowser new
+		                   changePackageSet: (self packageOrganizer packageNamed: 'EpiceaBrowsers') asOrderedCollection;
+		                   yourself.
 	settingsWindow := settingsBrowser open.
 	settingsWindow position: Display extent - settingsWindow extent // 2.
-	settingsBrowser expandAll.
+	settingsBrowser expandAll
 ]
 
 { #category : #refreshing }
@@ -169,7 +169,7 @@ EpDashboardPresenter >> refreshCurrentSessionInfoPresenter [
 	sessionStore := self monitor sessionStore.
 
 	text := String
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			stream
 				nextPutAll: 'Current Log: ';
 				cr;

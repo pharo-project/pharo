@@ -20,9 +20,3 @@ VTermOutputBackground >> = aBackground [
 VTermOutputBackground >> hash [
 	^ self color hash
 ]
-
-{ #category : #styling }
-VTermOutputBackground >> setInDriver: aVTermOutputDriver [ 
-	
-	aVTermOutputDriver setBackgroundColor: color
-]

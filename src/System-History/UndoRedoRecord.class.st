@@ -39,7 +39,7 @@ UndoRedoRecord class >> redo: doMessageSend undo: undoMessageSend [
 	anUndoRecord := self new.
 	anUndoRecord redoMessage: doMessageSend.
 	anUndoRecord undoMessage: undoMessageSend.
-	^anUndoRecord.
+	^anUndoRecord
 ]
 
 { #category : #'instance creation' }
@@ -47,17 +47,17 @@ UndoRedoRecord class >> redoArray: doArray undoArray: undoArray [
 	" doArray and undoArray are constructed as follow: #(receiver selector arguments) "
 	| anUndoRecord |
 	anUndoRecord := self new.
-	anUndoRecord redoMessage: (MessageSend 
-		receiver: 	(doArray first) 
-		selector: 	(doArray second) 
+	anUndoRecord redoMessage: (MessageSend
+		receiver: 	(doArray first)
+		selector: 	(doArray second)
 		arguments: 	(doArray third)).
-	undoArray 
-		ifNotNil: [ 
-			anUndoRecord undoMessage: (MessageSend 
-				receiver: 	(undoArray first) 
-				selector: 	(undoArray second) 
+	undoArray
+		ifNotNil: [
+			anUndoRecord undoMessage: (MessageSend
+				receiver: 	(undoArray first)
+				selector: 	(undoArray second)
 				arguments: 	(undoArray third))].
-	^anUndoRecord.
+	^anUndoRecord
 ]
 
 { #category : #compatibility }
@@ -78,7 +78,7 @@ UndoRedoRecord >> doMessage: aMessageSend [
 
 { #category : #'redo-undo' }
 UndoRedoRecord >> redo [
-	^self redoMessage value.
+	^self redoMessage value
 ]
 
 { #category : #accessing }
@@ -96,7 +96,7 @@ UndoRedoRecord >> redoMessage: aMessageSend [
 { #category : #'redo-undo' }
 UndoRedoRecord >> undo [
 	^self undoMessage
-		ifNotNil: [self undoMessage value].
+		ifNotNil: [self undoMessage value]
 ]
 
 { #category : #accessing }

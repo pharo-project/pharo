@@ -36,7 +36,7 @@ TFCalloutAPI class >> newCallbackBackendFor: aCallback [
 		forCallback: aCallback
 		parameters: (aCallback functionSpec arguments collect: #tfExternalTypeWithArity) asArray
 		returnType: aCallback functionSpec returnType tfExternalTypeWithArity
-		runner: aCallback ffiLibrary runner)
+		runner: aCallback ffiLibrary runner forCallback)
 			runStrategy: aCallback ffiLibrary callbackRunningStrategy;
 			yourself
 ]
@@ -44,7 +44,7 @@ TFCalloutAPI class >> newCallbackBackendFor: aCallback [
 { #category : #tracing }
 TFCalloutAPI class >> resetTrace [
 	<script>
-	
+
 	TraceBlock := nil.
 	FFIMethodRegistry resetAll
 ]

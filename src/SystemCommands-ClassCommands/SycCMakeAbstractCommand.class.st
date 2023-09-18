@@ -10,13 +10,7 @@ Class {
 { #category : #executing }
 SycCMakeAbstractCommand >> executeRefactoring [
 
-	| transformation |
-	transformation := (RBAddMethodTransformation
-		                   sourceCode: 'isAbstract
-		
-	^ self == ' , targetClass asString
-		                   in: targetClass classSide
-		                   withProtocols: #( #testing )) execute
+	(self refactoringClass class: targetClass) execute
 ]
 
 { #category : #accessing }
@@ -26,17 +20,23 @@ SycCMakeAbstractCommand >> icon [
 ]
 
 { #category : #accessing }
-SycCMakeAbstractCommand >> isApplicable [ 
+SycCMakeAbstractCommand >> isApplicable [
 
 	^ context lastSelectedClass isAbstract not
 ]
 
 { #category : #testing }
 SycCMakeAbstractCommand >> name [
-	^ 'Make Abstract'
+	^ self refactoringClass menuItemString
 ]
 
 { #category : #testing }
 SycCMakeAbstractCommand >> order [
 	^ 40
+]
+
+{ #category : #'factory method' }
+SycCMakeAbstractCommand >> refactoringClass [
+
+	^ RBMakeClassAbstractTransformation
 ]

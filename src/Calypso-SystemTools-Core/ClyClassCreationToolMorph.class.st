@@ -33,12 +33,12 @@ ClyClassCreationToolMorph class >> tabOrder [
 ClyClassCreationToolMorph >> applyChanges [
 
 	| newClass |
-	newClass := browser 
-						compileANewClassFrom: self pendingText asString 
-						notifying: textMorph 
+	newClass := browser
+						compileANewClassFrom: self pendingText asString
+						notifying: textMorph
 						startingFrom: nil.
 	newClass ifNil: [ ^false].
-	
+
 	self removeFromBrowser.
 	browser selectClass: newClass.
 	^true
@@ -51,7 +51,7 @@ ClyClassCreationToolMorph >> belongsToCurrentBrowserContext [
 	packageSelection := browser packageSelection.
 	package ifNil: [ ^packageSelection isEmpty].
 	packageSelection isEmpty ifTrue: [ ^true ].
-	
+
 	^packageSelection includesActualObject: package
 ]
 
@@ -87,18 +87,34 @@ ClyClassCreationToolMorph >> editingText [
 ]
 
 { #category : #building }
-ClyClassCreationToolMorph >> fillStatusBar [ 
+ClyClassCreationToolMorph >> fillStatusBar [
 	super fillStatusBar.
-	
+
 	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
 ]
 
 { #category : #testing }
 ClyClassCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
-	
-	^package = anotherBrowserTool package 
+
+	^package = anotherBrowserTool package
 		and: [ classTag = anotherBrowserTool classTag ]
+]
+
+{ #category : #testing }
+ClyClassCreationToolMorph >> isValidInContext: aClyFullBrowserContext [
+	| isValid |
+
+	self context class = aClyFullBrowserContext class
+		ifFalse: [ ^ false ].
+
+	isValid := true.
+	aClyFullBrowserContext isPackageSelected
+		ifTrue: [ isValid := package = aClyFullBrowserContext lastSelectedPackage ].
+
+	^ isValid and: [ aClyFullBrowserContext isClassTagSelected
+		ifTrue: [ classTag = aClyFullBrowserContext lastSelectedClassTag ]
+		ifFalse: [ classTag isNil ] ]
 ]
 
 { #category : #accessing }
@@ -123,7 +139,7 @@ ClyClassCreationToolMorph >> packageName [
 
 { #category : #printing }
 ClyClassCreationToolMorph >> printContext [
-	package ifNil: [^super printContext].	
+	package ifNil: [^super printContext].
 	classTag ifNil: [ ^package name ].
 	^package name, ' / ' , classTag
 ]

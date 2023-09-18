@@ -12,6 +12,9 @@ Class {
 	#superclass : #FFIExternalObject,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
+	#instVars : [
+		'ftFace'
+	],
 	#pools : [
 		'AthensCairoDefinitions',
 		'AthensFT2Constants'
@@ -26,20 +29,20 @@ CairoFontFace class >> boldEmphasisCode [
 ]
 
 { #category : #finalizing }
-CairoFontFace class >> countReferences: handle [
-"
-unsigned int  cairo_font_face_get_reference_count             (cairo_font_face_t *font_face);
-"
-	^ self ffiCall: #( uint cairo_font_face_get_reference_count (size_t handle))
-]
-
-{ #category : #finalizing }
-CairoFontFace class >> finalizeResourceData: handle [
+CairoFontFace class >> destroy: handle [
 
 "
 void                cairo_font_face_destroy             (cairo_font_face_t *font_face);
 "
-	^ self ffiCall: #( void cairo_font_face_destroy (size_t handle))
+	^ self ffiCall: #( void cairo_font_face_destroy (void* handle))
+]
+
+{ #category : #finalization }
+CairoFontFace class >> finalizeResourceData: handle [
+
+	handle isNull ifTrue: [ ^ self ].
+	self destroy: handle.
+	handle beNull.
 ]
 
 { #category : #'instance creation' }
@@ -47,14 +50,8 @@ CairoFontFace class >> fromFreetypeFace: aFace [
 	| handle cairoFace |
 	handle := aFace getHandle.
  	cairoFace := self primFtFace: handle loadFlags: 0.
-	
-	^ cairoFace initializeWithFreetypeFace: aFace
-]
 
-{ #category : #finalizing }
-CairoFontFace class >> hasSharedResourceData: handle [
-	"Answer wether the external cairo_font_face resource is shared (referenced) by other external objects."
-	^(self countReferences: handle) > 1
+	^ cairoFace initializeWithFreetypeFace: aFace
 ]
 
 { #category : #private }
@@ -77,18 +74,17 @@ load_flags: flags to pass to FT_Load_Glyph when loading glyphs from the font. Th
 ]
 
 { #category : #initialization }
-CairoFontFace >> initialize [ 
+CairoFontFace >> initialize [
 	self autoRelease
 ]
 
 { #category : #initialization }
 CairoFontFace >> initializeWithFreetypeFace: aFace [
-	FFIExternalResourceManager
-		addResource: self
-		executor:
-			(CairoFontFaceExecutor new
-				resourceClass: self class data: self resourceData;
-				ftFace: aFace)
+	
+	FFIExternalResourceManager addResource: self.
+	"We keep a strong reference to the FT Face used to create the CairoFontFace"
+	ftFace := aFace.
+
 ]
 
 { #category : #private }
@@ -102,8 +98,9 @@ cairo_ft_font_face_set_synthesize (cairo_font_face_t *font_face,
 ]
 
 { #category : #'external resource management' }
-CairoFontFace >> resourceData [ 
-	^ handle value
+CairoFontFace >> resourceData [
+	
+	^ handle
 ]
 
 { #category : #accessing }

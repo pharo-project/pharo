@@ -28,11 +28,11 @@ TCloneTest >> test0FixtureCloneTest [
 
 { #category : #'tests - copy - clone' }
 TCloneTest >> testCopyCreatesNewObject [
-	 
-	
-	| copy | 
+
+
+	| copy |
 	copy := self nonEmpty copy.
-	self deny: self nonEmpty == copy.
+	self deny: self nonEmpty == copy
 ]
 
 { #category : #'tests - copy - clone' }

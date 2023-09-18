@@ -11,7 +11,7 @@ Class {
 
 { #category : #configuring }
 BytecodeMappedInlinePrimitiveConfiguration class >> configure: instructionClient [
-	"Send the `addMappedInlinePrimitiveHandler:at:` message to the instructionClient in order to add bytecode handlers"	
-			
+	"Send the `addMappedInlinePrimitiveHandler:at:` message to the instructionClient in order to add bytecode handlers"
+
 	self subclassResponsibility
 ]

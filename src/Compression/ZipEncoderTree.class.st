@@ -68,7 +68,7 @@ ZipEncoderTree >> buildHierarchyFrom: aHeap [
 	[aHeap size > 1] whileTrue:[
 		left := aHeap removeFirst.
 		right := aHeap removeFirst.
-		parent := ZipEncoderNode value: -1 
+		parent := ZipEncoderNode value: -1
 			frequency: (left frequency + right frequency)
 			height: (left height max: right height) + 1.
 		left parent: parent.
@@ -112,7 +112,7 @@ ZipEncoderTree >> buildTree: nodeList maxDepth: depth [
 	blCounts := WordArray new: depth+1.
 	rootNode encodeBitLength: blCounts from: self.
 	self buildCodes: nodeList counts: blCounts maxDepth: depth.
-	self setValuesFrom: nodeList.
+	self setValuesFrom: nodeList
 ]
 
 { #category : #encoding }
@@ -123,7 +123,7 @@ ZipEncoderTree >> buildTreeFrom: frequencies maxDepth: depth [
 	1 to: frequencies size do:[:i|
 		nodeList at: i put: (ZipEncoderNode value: i-1 frequency: (frequencies at: i) height: 0)
 	].
-	self buildTree: nodeList maxDepth: depth.
+	self buildTree: nodeList maxDepth: depth
 ]
 
 { #category : #accessing }
@@ -149,7 +149,7 @@ ZipEncoderTree >> maxCode: aNumber [
 
 { #category : #encoding }
 ZipEncoderTree >> nodeSortBlock [
-	^ [ :n1 :n2 | 
+	^ [ :n1 :n2 |
 	n1 frequency = n2 frequency
 		ifTrue: [ n1 height <= n2 height ]
 		ifFalse: [ n1 frequency <= n2 frequency ] ]

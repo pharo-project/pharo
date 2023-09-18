@@ -71,16 +71,8 @@ RBVariableTransformation class >> variable: aVariableName class: aClassName clas
 		yourself
 ]
 
-{ #category : #accessing }
-RBVariableTransformation >> definingClass [
-
-	^ isClassVariable 
-		ifTrue: [ super definingClass classSide ]
-		ifFalse: [ super definingClass ]
-]
-
 { #category : #printing }
-RBVariableTransformation >> storeOn: aStream [ 
+RBVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -98,5 +90,5 @@ RBVariableTransformation >> variable: aVariableName class: aClassName classVaria
 
 	self className: aClassName.
 	variableName := aVariableName.
-	isClassVariable := aBoolean.
+	isClassVariable := aBoolean
 ]

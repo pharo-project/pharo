@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 CDTraitAliasNode >> aliasName [
-	
+
 	^ aliasName
 ]
 
@@ -23,18 +23,18 @@ CDTraitAliasNode >> aliases [
 ]
 
 { #category : #accessing }
-CDTraitAliasNode >> aliases: aCollection [ 
+CDTraitAliasNode >> aliases: aCollection [
 	aliases := aCollection asDictionary
 ]
 
 { #category : #testing }
 CDTraitAliasNode >> isTraitAliasNode [
-	
+
 	^ true
 ]
 
 { #category : #printing }
-CDTraitAliasNode >> toString [ 
+CDTraitAliasNode >> toString [
 	"should replace aliasName"
 	^ subject name, ' -> ', aliasName
 ]

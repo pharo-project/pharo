@@ -11,13 +11,13 @@ Class {
 SycGenerateVariableAccessorCommand >> asRefactorings [
 
 	^self
-		createRefactorings: RBCreateAccessorsForVariableTransformation 
+		createRefactorings: self refactoringClass
 		using: [ :refactoring :var |
 			refactoring classVariable: var isClassVariable ]
 ]
 
 { #category : #accessing }
-SycGenerateVariableAccessorCommand >> defaultMenuIconName [ 
+SycGenerateVariableAccessorCommand >> defaultMenuIconName [
 	^ #smallAdd
 ]
 
@@ -25,5 +25,11 @@ SycGenerateVariableAccessorCommand >> defaultMenuIconName [
 SycGenerateVariableAccessorCommand >> defaultMenuItemName [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
-	^'(T) Generate accessors'
+	^ self refactoringClass menuItemString
+]
+
+{ #category : #'factory method' }
+SycGenerateVariableAccessorCommand >> refactoringClass [
+
+	^ RBCreateAccessorsForVariableTransformation
 ]

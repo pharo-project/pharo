@@ -32,24 +32,24 @@ FFIFunctionSpec >> arguments: anObject [
 
 { #category : #converting }
 FFIFunctionSpec >> asArraySpec [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		stream nextPutAll: '#( '.
 		self printType: returnType on: stream.
 		stream space.
 		functionName ifNotNil: [
-			stream 
-				nextPutAll: functionName; 
+			stream
+				nextPutAll: functionName;
 				space ].
 		stream nextPutAll: '( '.
-		arguments 
-			do: [ :each | 
+		arguments
+			do: [ :each |
 				stream nextPutAll: each second. "type name"
-				each third 
+				each third
 					timesRepeat: [ stream nextPut: $* ].
-				stream 
+				stream
 					space;
 					nextPutAll: each first;
-					space ] 
+					space ]
 			separatedBy: [ stream nextPutAll: ', ' ].
 		stream nextPutAll: '))' ]
 ]
@@ -61,29 +61,29 @@ FFIFunctionSpec >> asArraySpecArrayedArgs [
 		self printType: returnType on: stream.
 		stream space.
 		functionName ifNotNil: [
-			stream 
-				nextPutAll: functionName; 
+			stream
+				nextPutAll: functionName;
 				space ].
 		stream nextPutAll: '( '.
 		index := 1.
-		arguments 
-			do: [ :each | 
+		arguments
+			do: [ :each |
 				stream nextPutAll: each second. "type name"
-				each third 
+				each third
 					timesRepeat: [ stream nextPut: $* ].
-				stream 
+				stream
 					space;
 					nextPutAll: 'argsArray@', index printString;
 					space.
-				index := index + 1 ] 
-			separatedBy: [ 
+				index := index + 1 ]
+			separatedBy: [
 				stream nextPutAll: ', ' ].
 		stream nextPutAll: '))' ]
 ]
 
 { #category : #converting }
 FFIFunctionSpec >> asMethodSelectorAndArguments [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		stream nextPutAll: functionName.
 		arguments ifNotEmpty: [
 			arguments size = 1 ifFalse: [
@@ -91,15 +91,15 @@ FFIFunctionSpec >> asMethodSelectorAndArguments [
 					nextPut: $_;
 					nextPutAll: arguments first first ].
 			stream
-				nextPut: $:; 
+				nextPut: $:;
 				space;
 				nextPutAll: arguments first first.
-				
-			arguments allButFirst 
-				do: [:each | 
-					stream 
+
+			arguments allButFirst
+				do: [:each |
+					stream
 						space;
-						nextPutAll: each first; 
+						nextPutAll: each first;
 						nextPut: $:;
 						space;
 						nextPutAll: each first ]]]
@@ -107,14 +107,14 @@ FFIFunctionSpec >> asMethodSelectorAndArguments [
 
 { #category : #converting }
 FFIFunctionSpec >> asMethodSelectorAndArrayOfArguments [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 		stream
 			nextPutAll: functionName;
 			nextPutAll: ': argsArray';
 			cr;
 			nextPut: $".
-		arguments 
-			do: [ :each | stream nextPutAll: each first ] 
+		arguments
+			do: [ :each | stream nextPutAll: each first ]
 			separatedBy: [ stream nextPutAll: ', ' ].
 		stream nextPut: $" ]
 ]
@@ -143,13 +143,12 @@ FFIFunctionSpec >> isAnonymous [
 { #category : #converting }
 FFIFunctionSpec >> printType: typeAndArity on: stream [
 	stream nextPutAll: typeAndArity first.
-	typeAndArity second timesRepeat: [ stream nextPut: $* ].
-
+	typeAndArity second timesRepeat: [ stream nextPut: $* ]
 ]
 
 { #category : #resolution }
 FFIFunctionSpec >> resolveUsing: aResolver [
-	
+
 	returnType resolveUsing: aResolver.
 	arguments do: [ :e | e resolveUsing: aResolver ]
 ]

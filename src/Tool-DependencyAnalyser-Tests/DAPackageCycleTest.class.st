@@ -16,31 +16,31 @@ DAPackageCycleTest >> setUp [
 	aPDPackageCycle := DAPackageCycle new.
 	packageA := DAPackage on: (RPackageSet named:'A').
 	packageB := DAPackage on: (RPackageSet named:'B').
-	packageC := DAPackage on: (RPackageSet named:'C').
+	packageC := DAPackage on: (RPackageSet named:'C')
 ]
 
 { #category : #tests }
 DAPackageCycleTest >> testIsAtLeastInCycle [
 	| aCollectionOfPDPackage |
 	aCollectionOfPDPackage  := OrderedCollection new.
-	aCollectionOfPDPackage 
+	aCollectionOfPDPackage
 		add: packageA;
 		add: packageB;
 		add: packageC.
-	
+
 	aPDPackageCycle
 		addPackage: packageA;
 		addPackage: packageB.
-	
+
 	self assert: (aPDPackageCycle isAtLeastInCycle: aCollectionOfPDPackage).
 	aCollectionOfPDPackage remove: packageA; remove: packageB.
-	self deny: (aPDPackageCycle isAtLeastInCycle: aCollectionOfPDPackage).
+	self deny: (aPDPackageCycle isAtLeastInCycle: aCollectionOfPDPackage)
 ]
 
 { #category : #tests }
 DAPackageCycleTest >> testIsInCycle [
 	aPDPackageCycle addPackage: packageA.
-	self assert: (aPDPackageCycle isInCycle: packageA).
+	self assert: (aPDPackageCycle isInCycle: packageA)
 ]
 
 { #category : #running }
@@ -60,7 +60,7 @@ DAPackageCycleTest >> testRemoveOutgoingDependencies [
 	"at this point, package A and B does not have dependency with C and D, because C is not in the cycle"
 	"self halt."
 	self deny: (aPDPackageCycle hasOutgoingDependencies: firstPackage).
-	self deny: (aPDPackageCycle hasOutgoingDependencies: secondPackage).
+	self deny: (aPDPackageCycle hasOutgoingDependencies: secondPackage)
 ]
 
 { #category : #tests }

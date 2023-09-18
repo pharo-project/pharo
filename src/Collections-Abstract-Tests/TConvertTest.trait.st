@@ -21,8 +21,8 @@ TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass
 	| result |
 	result := aCollection perform: ('as' , aClass name) asSymbol.
 	self assert: (result class includesBehavior: aClass).
-	result do: 
-		[ :each | 
+	result do:
+		[ :each |
 		self assert: (aCollection occurrencesOf: each) equals: (result occurrencesOf: each) ].
 	^ result
 ]
@@ -63,7 +63,7 @@ TConvertTest >> test0FixtureTConvertTest [
 { #category : #'tests - converting' }
 TConvertTest >> testAsArray [
 
-	self 
+	self
 		assertSameContents: self collectionWithoutEqualElements
 		whenConvertedTo: Array
 ]
@@ -92,20 +92,20 @@ TConvertTest >> testAsByteArray [
 TConvertTest >> testAsIdentitySet [
 	"Test with a collection without equal elements :"
 
-	self 
+	self
 		assertSameContents: self collectionWithoutEqualElements
 		whenConvertedTo: IdentitySet
 ]
 
 { #category : #'tests - converting' }
 TConvertTest >> testAsOrderedCollection [
-	
+
 	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: OrderedCollection
 ]
 
 { #category : #'tests - converting' }
 TConvertTest >> testAsSet [
  	"Test with a collection without equal elements"
-	
+
 	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
 ]

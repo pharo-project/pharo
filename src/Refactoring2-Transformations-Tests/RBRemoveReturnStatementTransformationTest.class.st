@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRemoveReturnStatementTransformationTest,
-	#superclass : #RBTransformationTest,
+	#superclass : #RBAbstractTransformationTest,
 	#category : #'Refactoring2-Transformations-Tests-Test'
 }
 
@@ -8,7 +8,7 @@ Class {
 RBRemoveReturnStatementTransformationTest >> methodAfter [
 
 	| variable |
-	variable := 'String'.
+	variable := 'String'
 ]
 
 { #category : #utilities }
@@ -23,47 +23,46 @@ RBRemoveReturnStatementTransformationTest >> methodBefore [
 RBRemoveReturnStatementTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
-							return: '^ variable'
-							inMethod: #methodBefore
-							inClass: #RBReturnStatementTransformationTest)
-							asRefactoring
+			 return: '^ variable'
+			 inMethod: #methodBefore
+			 inClass: #RBReturnStatementTransformationTest)
 ]
 
 { #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testMethodDoesNotExist [
 
-	self shouldFail: (RBRemoveReturnStatementTransformation 
-							return: '^ variable'
-							inMethod: #method
-							inClass: #RBRemoveReturnStatementTransformationTest)
-							asRefactoring
+	self shouldFail: (RBRemoveReturnStatementTransformation
+			 return: '^ variable'
+			 inMethod: #method
+			 inClass: #RBRemoveReturnStatementTransformationTest)
 ]
 
 { #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testRefactoring [
 
 	| refactoring class |
-	refactoring := (RBRemoveReturnStatementTransformation 
-						return: '^ variable'
-						inMethod: #methodBefore
-						inClass: #RBRemoveReturnStatementTransformationTest)
-						asRefactoring transform.
-	
+	refactoring := (RBRemoveReturnStatementTransformation
+		                return: '^ variable'
+		                inMethod: #methodBefore
+		                inClass: #RBRemoveReturnStatementTransformationTest)
+		               primitiveExecute.
+
 	self assert: refactoring model changes changes size equals: 1.
-	
-	class := refactoring model classNamed: #RBRemoveReturnStatementTransformationTest.
-	self assert: (class parseTreeFor: #methodBefore) body
-			equals: (class parseTreeFor: #methodAfter) body.
+
+	class := refactoring model classNamed:
+		         #RBRemoveReturnStatementTransformationTest.
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
 { #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testReturnDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
-							return: '^ variable'
-							inMethod: #methodAfter
-							inClass: #RBRemoveReturnStatementTransformationTest)
-							asRefactoring
+			 return: '^ variable'
+			 inMethod: #methodAfter
+			 inClass: #RBRemoveReturnStatementTransformationTest)
 ]
 
 { #category : #tests }
@@ -71,14 +70,14 @@ RBRemoveReturnStatementTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBRemoveReturnStatementTransformation new
-		return: '^ variable'
-		inMethod: #methodBefore
-		inClass: self class name)
-		transform.
-	
+		                   return: '^ variable'
+		                   inMethod: #methodBefore
+		                   inClass: self class name) primitiveExecute.
+
 	self assert: transformation model changes changes size equals: 1.
-	
+
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeFor: #methodBefore) body
-			equals: (class parseTreeFor: #methodAfter) body.
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]

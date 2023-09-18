@@ -25,7 +25,7 @@ DABrowserToolMorph class >> tabOrder [
 
 { #category : #accessing }
 DABrowserToolMorph >> analyzedPackage [
-	^ analyzedPackage 
+	^ analyzedPackage
 ]
 
 { #category : #building }
@@ -33,7 +33,7 @@ DABrowserToolMorph >> build [
 
 	presenter := DATabPackageDependenciesPresenter on: analyzedPackage.
 	presenter browser: self browser.
-	self 
+	self
 		addMorph: presenter build
 		fullFrame: LayoutFrame identity
 ]
@@ -41,8 +41,9 @@ DABrowserToolMorph >> build [
 { #category : #private }
 DABrowserToolMorph >> daPackageFor: aPackageName [
 
-	^ DADependencyChecker new daPackageFor: aPackageName
-
+	^ DADependencyChecker new 
+		shouldComputeMessageSendDependencies: false; "Message sends dependencies are not displayed and they take time to compute"
+		daPackageFor: aPackageName
 ]
 
 { #category : #initialization }
@@ -53,7 +54,7 @@ DABrowserToolMorph >> defaultIconName [
 
 { #category : #initialization }
 DABrowserToolMorph >> defaultTitle [
-	
+
 	^ 'Dependencies'
 ]
 
@@ -63,8 +64,16 @@ DABrowserToolMorph >> isSimilarTo: anotherBrowserTool [
 	^ self analyzedPackage = anotherBrowserTool analyzedPackage
 ]
 
+{ #category : #testing }
+DABrowserToolMorph >> isValidInContext: aClyFullBrowserContext [
+	self context class = aClyFullBrowserContext class
+		ifFalse: [ ^ false ].
+
+	^ self analyzedPackage rPackageSet packageName = aClyFullBrowserContext lastSelectedClassGroup name
+]
+
 { #category : #initialization }
 DABrowserToolMorph >> setUpModelFromContext [
 
-	analyzedPackage := self daPackageFor: context lastSelectedClassGroup name.
+	analyzedPackage := self daPackageFor: context lastSelectedClassGroup name
 ]

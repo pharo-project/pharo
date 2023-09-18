@@ -26,7 +26,7 @@ TaCompositionElement >> = aTrait [
 ]
 
 { #category : #users }
-TaCompositionElement >> addUser: aClass [ 
+TaCompositionElement >> addUser: aClass [
 	"When a user is added to me I propagate to the real Trait, as I am the root of the TraitComposition"
 	innerClass addUser: aClass
 ]
@@ -40,15 +40,13 @@ TaCompositionElement >> aliasSelector: selector [
 
 { #category : #querying }
 TaCompositionElement >> allTraits [
-	^ { innerClass } , innerClass traitComposition allTraits.
+	^ { innerClass } , innerClass traitComposition allTraits
 ]
 
 { #category : #testing }
 TaCompositionElement >> changesSourceCode: aSelector [
 
-	^ false 
-	
-
+	^ false
 ]
 
 { #category : #accessing }
@@ -67,12 +65,12 @@ TaCompositionElement >> compiledMethodAt: selector [
 { #category : #copying }
 TaCompositionElement >> copyTraitExpression [
 	"I can be just shallowCopy, because I have only a reference to the real Trait"
-	^ self shallowCopy.
+	^ self shallowCopy
 ]
 
 { #category : #copying }
-TaCompositionElement >> copyWithoutTrait: aTrait [ 
-	
+TaCompositionElement >> copyWithoutTrait: aTrait [
+
 	"If you want to remove a trait that is equivalent to me, I return an empty composition.
 	If not a copy is returned"
 	^ self = aTrait ifTrue: [ TaEmptyComposition new ] ifFalse: [ self copy ]
@@ -82,9 +80,11 @@ TaCompositionElement >> copyWithoutTrait: aTrait [
 TaCompositionElement >> dealiasSelector: oldSelector [
 	"Usefule to dealias the initialize selector. Used mostly with stateful Talents"
 
+	(oldSelector beginsWith: 'initializeTalent_') ifFalse: [ ^ oldSelector ].
+
 	^ oldSelector = self initializeSelectorForMe
-		ifTrue: [ #initializeTalent ]
-		ifFalse: [ oldSelector ]
+		  ifTrue: [ #initializeTalent ]
+		  ifFalse: [ oldSelector ]
 ]
 
 { #category : #comparing }
@@ -108,8 +108,8 @@ TaCompositionElement >> innerClass: anObject [
 ]
 
 { #category : #testing }
-TaCompositionElement >> isAliasSelector: aString [ 
-	
+TaCompositionElement >> isAliasSelector: aString [
+
 	^ innerClass traitComposition isAliasSelector: aString
 ]
 
@@ -125,22 +125,23 @@ TaCompositionElement >> name [
 
 { #category : #testing }
 TaCompositionElement >> needsRecompilation: aSelector [
-
 	"We need to recompile if there is a supersend"
 
-	^ (innerClass >> aSelector) sendsToSuper or: [ 
-		  super needsRecompilation: aSelector ]
+	^ innerClass
+		  compiledMethodAt: aSelector
+		  ifPresent: [ :aMethod | aMethod sendsToSuper or: [ super needsRecompilation: aSelector ] ]
+		  ifAbsent: [ true ]
 ]
 
 { #category : #users }
-TaCompositionElement >> removeUser: aClass [ 
-	"When a user is removed from me I propagate to the real Trait, as I am the root of the TraitComposition"	
+TaCompositionElement >> removeUser: aClass [
+	"When a user is removed from me I propagate to the real Trait, as I am the root of the TraitComposition"
 	innerClass removeUser: aClass
 ]
 
 { #category : #querying }
 TaCompositionElement >> reverseAlias: aSelector [
-	
+
 	^ #()
 ]
 
@@ -149,20 +150,20 @@ TaCompositionElement >> selectors [
 	" I get all the selectors of the methods in this talent, if there is a #initializeTalent selector I rename it to #initializeTalent_NameOfTalent"
 
 	| originals |
-	originals := self methods collect: [:each | each selector].
+	originals := self methods collect: [ :method | method selector ].
 	^ (originals includes: #initializeTalent)
-		ifTrue: [ (originals reject: [ :e | e = #initializeTalent ]) copyWith: self initializeSelectorForMe ]
-		ifFalse: [ originals ]
+		  ifTrue: [ (originals reject: [ :e | e = #initializeTalent ]) copyWith: self initializeSelectorForMe ]
+		  ifFalse: [ originals ]
 ]
 
 { #category : #accessing }
 TaCompositionElement >> slots [
-	^ innerClass allSlots 
+	^ innerClass allSlots
 ]
 
 { #category : #printing }
 TaCompositionElement >> traitCompositionExpression [
-	
+
 	^ innerClass name
 ]
 
@@ -176,7 +177,7 @@ TaCompositionElement >> traitCompositionExpressionWithParens [
 TaCompositionElement >> traitDefining: selector [
 	| newSelector |
 	newSelector := self dealiasSelector: selector.
-	
+
 	^ innerClass localMethods
 		detect: [ :e | e selector = newSelector ]
 		ifFound: [ :e | self ]
@@ -190,5 +191,5 @@ TaCompositionElement >> traits [
 
 { #category : #operations }
 TaCompositionElement >> without: anotherTrait [
-	^ self = anotherTrait ifTrue:[nil] ifFalse:[self].
+	^ self = anotherTrait ifTrue:[nil] ifFalse:[self]
 ]

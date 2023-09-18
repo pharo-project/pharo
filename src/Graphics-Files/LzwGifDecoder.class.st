@@ -46,7 +46,7 @@ LzwGifDecoder >> checkCodeSize [
 	mask value."
 	nextAvailableCode := nextAvailableCode + 1.
 	(nextAvailableCode bitAnd: bitMask) = 0
-		ifTrue: [ 
+		ifTrue: [
 			"GIF89a specifies a 'deferred' clearCode
 			implementation, which means we keep going
 			with the current table even if its full but
@@ -54,11 +54,11 @@ LzwGifDecoder >> checkCodeSize [
 			code size at that point."
 			nextAvailableCode >= maxCode ifTrue: [ ^ self ].
 			codeSize := codeSize + 1.
-			bitMask := bitMask + nextAvailableCode ].
+			bitMask := bitMask + nextAvailableCode ]
 ]
 
 { #category : #private }
-LzwGifDecoder >> codeStream: aReadableStream [ 
+LzwGifDecoder >> codeStream: aReadableStream [
 	"Set the stream of encoded bytes we will decode
 	to be the internal codeStream. We read off the first
 	byte immediately, which tells us how many subsequent bytes
@@ -66,7 +66,7 @@ LzwGifDecoder >> codeStream: aReadableStream [
 	| chunkSize |
 	codeStream := aReadableStream.
 	chunkSize := codeStream next.
-	codeStreamBuffer := ReadStream on: (codeStream next: chunkSize).
+	codeStreamBuffer := ReadStream on: (codeStream next: chunkSize)
 ]
 
 { #category : #api }
@@ -77,16 +77,16 @@ LzwGifDecoder >> decode [
 	numLeftoverBits := 0.
 	currentCode := self nextCode.
 	currentCode = clearCode ifFalse: [ ^ self error: 'First code on the stream should always be the clear code!' ].
-	
+
 	"The first real code simply gets output
 	onto the stream, then we enter the loop"
 	currentCode := self nextCode.
 	self writeBit: currentCode on: outStream.
 	prevCode := currentCode.
 	currentCode := self nextCode.
-	[ currentCode = eoiCode ] whileFalse: [ 
+	[ currentCode = eoiCode ] whileFalse: [
 		currentCode = clearCode
-			ifTrue: [ 
+			ifTrue: [
 				self initializeTables.
 				currentCode := self nextCode.
 				self
@@ -96,7 +96,7 @@ LzwGifDecoder >> decode [
 			ifFalse: [ self handleCode: currentCode withPreviousCode: prevCode on: outStream ].
 		prevCode := currentCode.
 		currentCode := self nextCode ].
-	^ outStream contents.
+	^ outStream contents
 ]
 
 { #category : #private }
@@ -106,48 +106,48 @@ LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteS
 	| first searchIndex searchStack |
 	"The code already exists in the table"
 	anInteger < nextAvailableCode
-		ifTrue: [ 
+		ifTrue: [
 			anInteger < clearCode
 				"If it's less than the clearCode
 				then it is one of the original entries
 				and we can simply use the suffix"
-				ifTrue: [ 
+				ifTrue: [
 					first := (suffixTable at: (anInteger + 1)).
 					self writeBit: first on: aWriteStream ]
 				"Otherwise we need to loop backwards along
 				the prefix index values and take the suffix each
 				time"
-				ifFalse: [ 
+				ifFalse: [
 					searchStack := Stack new.
 					searchIndex := anInteger + 1.
-					[ searchIndex > clearCode ] whileTrue: [ 
+					[ searchIndex > clearCode ] whileTrue: [
 						searchStack push: (suffixTable at: searchIndex).
 						searchIndex := (prefixTable at: searchIndex) + 1 ].
 					searchStack push: (suffixTable at: searchIndex).
 					first := searchStack first.
 					searchStack do: [ :int |
-						self writeBit: int on: aWriteStream ] ]. 
+						self writeBit: int on: aWriteStream ] ].
 			]
-		ifFalse: [ 
+		ifFalse: [
 			"Here, the incoming code is not yet in the code tables"
 			prevInteger < clearCode
-				ifTrue: [ 
+				ifTrue: [
 					first := (suffixTable at: (prevInteger + 1)).
 					self
 						writeBit: first on: aWriteStream;
 						writeBit: first on: aWriteStream.
 					 ]
-				ifFalse: [ 
+				ifFalse: [
 					searchStack := Stack new.
 					searchIndex := prevInteger + 1.
-					[ searchIndex > clearCode ] whileTrue: [ 
+					[ searchIndex > clearCode ] whileTrue: [
 						searchStack push: (suffixTable at: searchIndex).
 						searchIndex := (prefixTable at: searchIndex) + 1 ].
 					searchStack push: (suffixTable at: searchIndex).
 					first := searchStack first.
 					searchStack do: [ :int |
 						self writeBit: int on: aWriteStream ].
-					self writeBit: first on: aWriteStream ]. 
+					self writeBit: first on: aWriteStream ].
 			].
 		"We add prevCode and the new
 		suffix to a new entry in the code table, but
@@ -156,10 +156,10 @@ LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteS
 		the maxCode and haven't seen a clear, you stop
 		writing to the tables but continue querying."
 		nextAvailableCode >= maxCode
-			ifFalse: [ 
+			ifFalse: [
 				suffixTable at: (nextAvailableCode + 1) put: first.
 				prefixTable at: (nextAvailableCode + 1) put: prevInteger ].
-		self checkCodeSize.
+		self checkCodeSize
 ]
 
 { #category : #initialization }
@@ -169,7 +169,7 @@ LzwGifDecoder >> initializeTables [
 	the method is much, much faster"
 	prefixTable := Array new: (maxCode).
 	suffixTable := Array new: (maxCode).
-	
+
 	"The initial code size and mask settings
 	also get reinitialized each time"
 	codeSize := minimumCodeSize + 1.
@@ -177,20 +177,20 @@ LzwGifDecoder >> initializeTables [
 	eoiCode := clearCode + 1.
 	nextAvailableCode := clearCode + 2.
 	bitMask := (1 bitShift: codeSize) - 1.
-	
+
 	"Fill the tables with the initial values"
 	1 to: clearCode do: [ :n |
 		prefixTable at: n put: (n - 1).
-		suffixTable at: n put: (n - 1) ].
+		suffixTable at: n put: (n - 1) ]
 ]
 
 { #category : #accessing }
-LzwGifDecoder >> maxCode: anInteger [ 
+LzwGifDecoder >> maxCode: anInteger [
 	maxCode := anInteger
 ]
 
 { #category : #accessing }
-LzwGifDecoder >> minimumCodeSize: anInteger [ 
+LzwGifDecoder >> minimumCodeSize: anInteger [
 	minimumCodeSize := anInteger
 ]
 
@@ -198,11 +198,11 @@ LzwGifDecoder >> minimumCodeSize: anInteger [
 LzwGifDecoder >> nextByte [
 	| nextChunkSize |
 	codeStreamBuffer atEnd
-		ifTrue: [ 
+		ifTrue: [
 			nextChunkSize := codeStream next.
 			nextChunkSize = 0 ifTrue: [ ^ self error: 'Next chunk size was 0!' ].
 			codeStreamBuffer := (codeStream next: nextChunkSize) readStream ].
-	^ codeStreamBuffer next.
+	^ codeStreamBuffer next
 ]
 
 { #category : #private }
@@ -212,13 +212,13 @@ LzwGifDecoder >> nextCode [
 	Store the remaining bits etc for later computation"
 	integer := 0.
 	numLeftoverBits = 0
-		ifTrue: [ 
+		ifTrue: [
 			numBitsRead := 8.
 			shiftAmount := 0 ]
-		ifFalse: [ 
+		ifFalse: [
 			numBitsRead := numLeftoverBits.
 			shiftAmount := numLeftoverBits - 8 ].
-		[ numBitsRead < codeSize ] whileTrue: [ 
+		[ numBitsRead < codeSize ] whileTrue: [
 			byte := self nextByte.
 			byte == nil ifTrue: [ ^ eoiCode ].
 			integer := integer + (byte bitShift: shiftAmount).
@@ -229,7 +229,7 @@ LzwGifDecoder >> nextCode [
 			ifFalse: [ byte := self peekByte ].
 		byte == nil ifTrue: [ ^ eoiCode ].
 		numLeftoverBits := newRemainder.
-		^ integer + (byte bitShift: shiftAmount) bitAnd: bitMask.
+		^ integer + (byte bitShift: shiftAmount) bitAnd: bitMask
 ]
 
 { #category : #accessing }
@@ -244,19 +244,19 @@ LzwGifDecoder >> onDecodedBit: aBlock [
 LzwGifDecoder >> peekByte [
 	| nextChunkSize |
 	codeStreamBuffer atEnd
-		ifTrue: [ 
+		ifTrue: [
 			nextChunkSize := codeStream next.
 			nextChunkSize = 0 ifTrue: [ ^ self error: 'Next chunk size is 0!' ].
 			codeStreamBuffer := (codeStream next: nextChunkSize) readStream ].
-	^ codeStreamBuffer peek.
+	^ codeStreamBuffer peek
 ]
 
 { #category : #writing }
 LzwGifDecoder >> writeBit: anInteger on: aWriteStream [
 	"Write the incoming decoded value onto a
-	writestream. If I have an outBlock set, 
+	writestream. If I have an outBlock set,
 	send this value also"
 	aWriteStream nextPut: anInteger.
 	outBlock ifNil: [ ^ self ].
-	outBlock value: anInteger.
+	outBlock value: anInteger
 ]

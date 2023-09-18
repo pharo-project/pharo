@@ -11,10 +11,10 @@ Class {
 
 { #category : #private }
 IdentityDictionary >> keyAtValue: value ifAbsent: exceptionBlock [
-	"Answer the key that is the external name for the argument, value. If 
+	"Answer the key that is the external name for the argument, value. If
 	there is none, answer the result of evaluating exceptionBlock."
- 
-	self associationsDo: 
+
+	self associationsDo:
 		[:association | value == association value ifTrue: [^ association key]].
 	^ exceptionBlock value
 ]
@@ -42,10 +42,10 @@ IdentityDictionary >> scanFor: anObject [
 { #category : #private }
 IdentityDictionary >> scanForEmptySlotFor: aKey [
 	"Scan the key array for the first slot containing an empty slot (indicated by a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
-	
+
 	| index start |
 	index := start := aKey identityHash \\ array size + 1.
-	[ 
+	[
 		(array at: index) ifNil: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
 	self errorNoFreeSpace

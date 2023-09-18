@@ -12,26 +12,8 @@ RBExtractMethodToComponentParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBExtractMethodToComponentParametrizedTest >> constructor [ 
+RBExtractMethodToComponentParametrizedTest >> constructor [
 	^ #extract:from:in:
-]
-
-{ #category : #'failure tests' }
-RBExtractMethodToComponentParametrizedTest >> testBadInterval [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (24 to: 30) . #testMethod . RBRefactoryTestDataApp }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (80 to: 147) . #subclassOf:overrides: . RBBasicLintRuleTestData class })
-]
-
-{ #category : #'failure tests' }
-RBExtractMethodToComponentParametrizedTest >> testExtractFailure [
-	self shouldFail: (self createRefactoringWithArguments:
-		{(80 to: 269) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (53 to: 56) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (77 to: 222) . #subclassResponsibilityNotDefined . RBBasicLintRuleTestData class })
 ]
 
 { #category : #tests }
@@ -47,7 +29,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 
 	self
-		assert: (class parseTreeFor: #openEditor)
+		assert: (class parseTreeForSelector: #openEditor)
 		equals:
 			(self
 				parseMethod:
@@ -56,7 +38,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 								rules := self failedRules.
 								^rules foo: self').
 	self
-		assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:)
+		assert: ((refactoring model classNamed: #Collection) parseTreeForSelector: #foo:)
 		equals:
 			(self
 				parseMethod:
@@ -67,10 +49,34 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 	self assert: class selectors size equals: selectorsSize
 ]
 
+{ #category : #'failure tests' }
+RBExtractMethodToComponentParametrizedTest >> testFailureBadInterval [
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (24 to: 30) . #testMethod . RBClassDataForRefactoringTest }).
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (80 to: 147) . #subclassOf:overrides: . RBBasicLintRuleTestData class })
+]
+
+{ #category : #'failure tests' }
+RBExtractMethodToComponentParametrizedTest >> testFailureExtract [
+	self shouldFail: (self createRefactoringWithArguments:
+		{(80 to: 269) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (53 to: 56) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (77 to: 222) . #subclassResponsibilityNotDefined . RBBasicLintRuleTestData class })
+]
+
+{ #category : #'failure tests' }
+RBExtractMethodToComponentParametrizedTest >> testFailureNonExistantSelector [
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
+]
+
 { #category : #tests }
 RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 	| refactoring class selectorsSize |
-	refactoring := self createRefactoringWithArguments: { (118 to: 286) . #copyDictionary: . RBReadBeforeWrittenTester }.
+	refactoring := self createRefactoringWithArguments: { (118 to: 285) . #copyDictionary: . RBReadBeforeWrittenTester }.
 	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
 	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
 	self setupVariableTypesFor: refactoring toReturn: (Array with: (refactoring model classNamed: #Dictionary)).
@@ -78,23 +84,17 @@ RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
 
-	self assert: (class parseTreeFor: #copyDictionary:) equals: (self parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
+	self assert: (class parseTreeForSelector: #copyDictionary:) equals: (self parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
 	self
-		assert: ((refactoring model classNamed: #Dictionary) parseTreeFor: #copyWithAssociations)
+		assert: ((refactoring model classNamed: #Dictionary) parseTreeForSelector: #copyWithAssociations)
 		equals:
 			(self
 				parseMethod:
-					'copyWithAssociations 
+					'copyWithAssociations
 							| newDictionary |
 							newDictionary := Dictionary new: self size.
 							self
 								keysAndValuesDo: [:key :value | newDictionary at: key put: value].
 							^newDictionary').
 	self assert: class selectors size equals: selectorsSize
-]
-
-{ #category : #'failure tests' }
-RBExtractMethodToComponentParametrizedTest >> testNonExistantSelector [
-	self shouldFail: (self createRefactoringWithArguments:  
-		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
 ]

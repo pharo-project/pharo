@@ -17,50 +17,52 @@ RBRenameInstanceVariableParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBRenameInstanceVariableParametrizedTest >> testAlreadyExistingName [
+RBRenameInstanceVariableParametrizedTest >> testFailureAlreadyExistingName [
 
-	self shouldFail: (self createRefactoringWithArguments: 
-		{'classBlock' . 'name' . #RBBasicLintRuleTestData } )
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'classBlock'. 'name'. #RBBasicLintRuleTestData })
 ]
 
 { #category : #'failure tests' }
-RBRenameInstanceVariableParametrizedTest >> testMetaclassFailure [
+RBRenameInstanceVariableParametrizedTest >> testFailureMetaclassFailure [
 
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #RecursiveSelfRule . #Foo . RBTransformationRuleTestData class name })
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RecursiveSelfRule.
+				 #Foo.
+				 RBTransformationRuleTestData class name })
 ]
 
 { #category : #'failure tests' }
-RBRenameInstanceVariableParametrizedTest >> testNonExistantName [
+RBRenameInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ 'foo' . 'newFoo' . #RBBasicLintRuleTestData })
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'foo'. 'newFoo'. #RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
 RBRenameInstanceVariableParametrizedTest >> testRenameInstVar [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: 
-		{ 'classBlock' . 
-		'asdf' . 
+	refactoring := self createRefactoringWithArguments:
+		{ 'classBlock' .
+		'asdf' .
 		#RBBasicLintRuleTestData}.
-	
+
 	self executeRefactoring: refactoring.
-	
+
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
 	self
 		assert:
-			(class parseTreeFor: #checkClass:)
+			(class parseTreeForSelector: #checkClass:)
 				equals:
 					(self
 						parseMethod:
-							'checkClass: aSmalllintContext 
+							'checkClass: aSmalllintContext
 								^asdf value: aSmalllintContext value: result').
 	self
 		assert:
-			(class parseTreeFor: #initialize)
+			(class parseTreeForSelector: #initialize)
 				equals:
 					(self
 						parseMethod:
@@ -75,19 +77,19 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVar [
 { #category : #tests }
 RBRenameInstanceVariableParametrizedTest >> testRenameInstVarFromTrait [
 	| refactoring class |
-	
-	refactoring := self createRefactoringWithArguments: 
-		{ 'var1' . 
-		'var11' . 
-		#RBDummy }.
-		
+
+	refactoring := self createRefactoringWithArguments:
+		{ 'var1' .
+		'var11' .
+		#RBTDummy }.
+
 	self executeRefactoring: refactoring.
-	
-	class := refactoring model classNamed: #RBDummy.
+
+	class := refactoring model classNamed: #RBTDummy.
 	self assert: (class directlyDefinesInstanceVariable: 'var11').
 	self deny: (class directlyDefinesInstanceVariable: 'var1').
 	self
-		assert: (class parseTreeFor: #var1)
+		assert: (class parseTreeForSelector: #var1)
 		equals: (self parseMethod: 'var1 ^ var11').
 	class := refactoring model classNamed: #RBClassUsingSharedPoolForTestData.
 	self flag: 'TODO: for transformation'
@@ -103,18 +105,18 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVarFromTrait [
 { #category : #tests }
 RBRenameInstanceVariableParametrizedTest >> testRenameInstVarNotAccessors [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: 
-		{ 'result' . 
-		'whatever' . 
+	refactoring := self createRefactoringWithArguments:
+		{ 'result' .
+		'whatever' .
 		#RBBasicLintRuleTestData }.
-		
+
 	self executeRefactoring: refactoring.
-	
+
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class directlyDefinesInstanceVariable: 'whatever').
 	self deny: (class directlyDefinesInstanceVariable: 'result').
-	
+
 	self deny: (class definesMethod: #whatever).
 	self deny: (class definesMethod: #whatever:).
-	self assert: (class definesMethod: #result).
+	self assert: (class definesMethod: #result)
 ]

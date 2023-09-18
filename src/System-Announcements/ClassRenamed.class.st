@@ -50,8 +50,9 @@ ClassRenamed >> affectsMethodsDefinedInPackage: aPackage [
 ]
 
 { #category : #testing }
-ClassRenamed >> affectsMethodsTaggedWith: tagName [
-	^classRenamed tagsForMethods includes: tagName
+ClassRenamed >> affectsMethodsInProtocol: protocol [
+
+	^ classRenamed protocolNames includes: protocol
 ]
 
 { #category : #testing }
@@ -61,19 +62,19 @@ ClassRenamed >> affectsVariablesOf: aClass [
 	And we do not need to distinguish it"
 
 	aClass instanceSide = classRenamed instanceSide ifTrue: [ ^true ].
-	
+
 	^false
 ]
 
 { #category : #accessing }
 ClassRenamed >> category [
-	
+
 	^ category
 ]
 
 { #category : #accessing }
 ClassRenamed >> category: anObject [
-	
+
 	category := anObject
 ]
 
@@ -84,13 +85,13 @@ ClassRenamed >> classAffected [
 
 { #category : #accessing }
 ClassRenamed >> classRenamed [
-	
+
 	^ classRenamed
 ]
 
 { #category : #accessing }
 ClassRenamed >> classRenamed: anObject [
-	
+
 	classRenamed := anObject
 ]
 
@@ -101,7 +102,7 @@ ClassRenamed >> newName [
 
 { #category : #accessing }
 ClassRenamed >> newName: anObject [
-	
+
 	newName := anObject
 ]
 
@@ -112,7 +113,7 @@ ClassRenamed >> oldName [
 
 { #category : #accessing }
 ClassRenamed >> oldName: anObject [
-	
+
 	oldName := anObject
 ]
 

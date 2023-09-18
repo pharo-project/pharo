@@ -14,8 +14,8 @@ ClassUsedInInstructionStreamTest >> aMethodSuspendedBeforeTheTerminateOfAnotherP
 	Processor activeProcess suspend.
 
 	aProcess terminate.
-	
-	expectedValue := 42.
+
+	expectedValue := 42
 ]
 
 { #category : #examples }
@@ -24,14 +24,14 @@ ClassUsedInInstructionStreamTest >> aMethodWithHalt [
 	<haltOrBreakpointForTesting>
 
 	Processor activeProcess suspend.
-	self halt.
+	self halt
 ]
 
 { #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodWithMNU [
-
-	Processor activeProcess suspend.
-	self iAmAnMNUMessage.
+	<ignoreNotImplementedSelectors: #(iAmAnMNUMessage)>
+	thisProcess suspend.
+	self iAmAnMNUMessage
 ]
 
 { #category : #examples }
@@ -46,7 +46,7 @@ ClassUsedInInstructionStreamTest >> aMethodWithMustBeBooleanMNU [
 ClassUsedInInstructionStreamTest >> aMethodWithSuspendAndReturnANumber [
 
 	Processor activeProcess suspend.
-	^ 42.
+	^ 42
 ]
 
 { #category : #examples }
@@ -128,8 +128,8 @@ ClassUsedInInstructionStreamTest >> newMethodWithALotOfLiteralsToTestExtensions 
 ]
 
 { #category : #accessing }
-ClassUsedInInstructionStreamTest >> process: aValue [ 
-	
+ClassUsedInInstructionStreamTest >> process: aValue [
+
 	aProcess := aValue
 ]
 

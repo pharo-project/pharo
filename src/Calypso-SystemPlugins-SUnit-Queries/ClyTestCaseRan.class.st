@@ -17,13 +17,13 @@ Class {
 
 { #category : #'instance creation' }
 ClyTestCaseRan class >> testCase: aClass [
-	^self new 
+	^self new
 		testCase: aClass
 ]
 
 { #category : #testing }
 ClyTestCaseRan >> affectsCritiques [
-	"It should be packages in critic plugin package 
+	"It should be packages in critic plugin package
 	but for such simple message we can not do it"
 	^false
 ]
@@ -45,9 +45,10 @@ ClyTestCaseRan >> affectsMethodsDefinedInPackage: aPackage [
 	^testCase package == aPackage or: [ aPackage extendsClass: testCase ]
 ]
 
-{ #category : #'event processing' }
-ClyTestCaseRan >> affectsMethodsTaggedWith: tagName [
-	^testCase tagsForMethods includes: tagName
+{ #category : #testing }
+ClyTestCaseRan >> affectsMethodsInProtocol: protocol [
+
+	^ testCase protocolNames includes: protocol
 ]
 
 { #category : #'event processing' }
@@ -72,7 +73,7 @@ ClyTestCaseRan >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	testCase printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }

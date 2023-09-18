@@ -19,7 +19,7 @@ Class {
 
 { #category : #requests }
 CoASTNodeFetcherHeuristic >> appliesForNode: aRBMessageNode inContext: aContext [
-	
+
 	^ false
 ]
 
@@ -49,13 +49,13 @@ CoASTNodeFetcherHeuristic >> initialize [
 
 { #category : #testing }
 CoASTNodeFetcherHeuristic >> isStatisticsHeuristicWrapper [
-	
+
 	^ false
 ]
 
 { #category : #'fetcher-creation' }
 CoASTNodeFetcherHeuristic >> newMessageInHierarchyFetcherForClass: aClass inASTNode: astNode [
-	
+
 	^ CoClassImplementedMessagesFetcher new
 		astNode: astNode;
 		completionClass: aClass;
@@ -68,6 +68,6 @@ CoASTNodeFetcherHeuristic >> next [
 ]
 
 { #category : #accessing }
-CoASTNodeFetcherHeuristic >> next: nextHeuristic [ 
+CoASTNodeFetcherHeuristic >> next: nextHeuristic [
 	next := nextHeuristic
 ]

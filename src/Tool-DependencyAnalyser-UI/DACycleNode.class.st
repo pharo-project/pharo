@@ -15,8 +15,8 @@ DACycleNode >> addMenuEntriesOn: aMenu [
 		addMenuItem: (SpMenuItemPresenter new
 						name: 'Generate GraphViz file';
 						action: [ treeModelParent ifGraphVizAbsent: [ self error: 'Please install Graphviz Support' ].
-									graphvizGenerator := DAPackageCycleGenerator 
-										newWith: cycle 
+									graphvizGenerator := DAPackageCycleGenerator
+										newWith: cycle
 										named: 'CycleGraph' , cycle size asString , 'nodes'.
 									treeModelParent saveGraphAndOpenWith: graphvizGenerator ])
 ]

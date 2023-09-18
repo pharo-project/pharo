@@ -37,43 +37,43 @@ CmdMenuGroup >> addItem: aMenuItem [
 ]
 
 { #category : #accessing }
-CmdMenuGroup >> allGroupsWhich: aBlock [ 
+CmdMenuGroup >> allGroupsWhich: aBlock [
 	| result |
 	result := OrderedCollection new.
-	
-	contents 
+
+	contents
 		reject: [ :each | each isCommandItem ]
-		thenDo: [ :each | 
+		thenDo: [ :each |
 			(aBlock value: each) ifTrue: [ result add: each ].
 			result addAll: (each allGroupsWhich: aBlock) ].
-		
+
 	^result
 ]
 
 { #category : #accessing }
-CmdMenuGroup >> allItemsWhich: aBlock [ 
+CmdMenuGroup >> allItemsWhich: aBlock [
 	| result |
 	result := OrderedCollection new.
-	
-	contents do: [ :each | 
+
+	contents do: [ :each |
 		(aBlock value: each) ifTrue: [ result add: each ].
-		each isCommandItem ifFalse: [ 
+		each isCommandItem ifFalse: [
 			result addAll: (each allItemsWhich: aBlock) ]].
-		
+
 	^result
 ]
 
 { #category : #accessing }
 CmdMenuGroup >> commandItemLike: aCommandClass [
 
-	^contents detect: [ :each | 
+	^contents detect: [ :each |
 		each isCommandItem and: [ each includesCommand: aCommandClass ]]
 ]
 
 { #category : #accessing }
 CmdMenuGroup >> commands [
-	^contents 
-		select: [ :each | each isCommandItem ] 
+	^contents
+		select: [ :each | each isCommandItem ]
 		thenCollect: [ :each | each command ]
 ]
 
@@ -89,7 +89,7 @@ CmdMenuGroup >> contents: anObject [
 
 { #category : #accessing }
 CmdMenuGroup >> description [
-	"By default the result is nil which is not really nice 
+	"By default the result is nil which is not really nice
 	but it is already expected by many tools. So it is easy to allow nil"
 	^nil
 ]
@@ -98,14 +98,14 @@ CmdMenuGroup >> description [
 CmdMenuGroup >> findGroupLike: menuGroupClass ifExists: foundBlock [
 
 	contents detect: [ :each | each isKindOf: menuGroupClass] ifFound: foundBlock.
-		
+
 	contents do: [ :each | each findGroupLike: menuGroupClass ifExists: foundBlock ]
 ]
 
 { #category : #accessing }
 CmdMenuGroup >> findItemSimilarTo: aMenuItem ifPresent: presentBlock ifAbsent: absentBlock [
 
-	contents 
+	contents
 		detect: [:each | each isSimilarTo: aMenuItem  ]
 		ifFound: presentBlock
 		ifNone: absentBlock
@@ -113,10 +113,10 @@ CmdMenuGroup >> findItemSimilarTo: aMenuItem ifPresent: presentBlock ifAbsent: a
 
 { #category : #accessing }
 CmdMenuGroup >> icon [
-	"By default the result is nil which is not really nice 
+	"By default the result is nil which is not really nice
 	but it is already expected by many tools.	So it is easy to allow nil.
 	For simple cases users should implement method #iconName"
-	^self iconName 
+	^self iconName
 		ifNotNil: [:iconName | Smalltalk ui iconNamed: iconName ]
 ]
 
@@ -125,7 +125,7 @@ CmdMenuGroup >> iconName [
 	"Not really nice to return nil. But it is already expected by many tools.
 	So it is easy to allow nil.
 	Users should use method #icon which returns Form instance"
-	
+
 	^nil
 ]
 
@@ -135,7 +135,7 @@ CmdMenuGroup >> includes: aMenuItem [
 ]
 
 { #category : #testing }
-CmdMenuGroup >> includesCommand: aClass [ 
+CmdMenuGroup >> includesCommand: aClass [
 	"It answers only about itself without looking recursively into child groups"
 	^contents anySatisfy: [:each |
 		each isCommandItem and: [each includesCommand: aClass] ]
@@ -144,8 +144,8 @@ CmdMenuGroup >> includesCommand: aClass [
 { #category : #initialization }
 CmdMenuGroup >> initialize [
 	super initialize.
-	contents := SortedCollection sortBlock: [ :a :b | 
-		a order = b order 
+	contents := SortedCollection sortBlock: [ :a :b |
+		a order = b order
 			ifTrue: [ a name <= b name ]
 			ifFalse: [ a order <= b order ]]
 ]
@@ -173,9 +173,9 @@ CmdMenuGroup >> isInlined [
 { #category : #testing }
 CmdMenuGroup >> isLastActiveMenuItem: childMenuItem [
 
-	contents reverseDo: [ :each | 
+	contents reverseDo: [ :each |
 		each isActive ifTrue: [ ^each == childMenuItem ] ].
-	
+
 	^false
 ]
 
@@ -219,10 +219,10 @@ CmdMenuGroup >> size [
 CmdMenuGroup >> synchronizeContentWith: anotherGroup [
 
 	contents removeAllSuchThat: [ :each | (anotherGroup includes: each) not].
-	anotherGroup contents do: [ :each | 
-		self 
+	anotherGroup contents do: [ :each |
+		self
 			findItemSimilarTo: each
-			ifPresent: [ :existing | 
+			ifPresent: [ :existing |
 				existing synchronizeContentWith: each.
 				existing isEmpty ifTrue: [ self removeItem: existing ] ]
 			ifAbsent: [ self addItem: each]]

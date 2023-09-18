@@ -37,7 +37,7 @@ ReAbstractCritique class >> for: anEntity by: aRule [
 ]
 
 { #category : #testing }
-ReAbstractCritique class >> isAbstract [ 
+ReAbstractCritique class >> isAbstract [
 
 	^self == ReAbstractCritique
 ]
@@ -62,10 +62,10 @@ ReAbstractCritique class >> withAnchor: anAnchor by: aRule hint: aString [
 ]
 
 { #category : #actions }
-ReAbstractCritique >> actions [ 
+ReAbstractCritique >> actions [
 
 	| actions |
-	
+
 	actions := OrderedCollection new: 3.
 
 	actions add: (RePropertyAction new
@@ -77,24 +77,24 @@ ReAbstractCritique >> actions [
 					notifyCritique: crit
 					descriptionViewedFor: crit sourceAnchor entity ];
 			yourself).
-	
-	self providesChange ifTrue: [ 
+
+	self providesChange ifTrue: [
 		actions add: (RePropertyAction new
 			icon: (self iconNamed: #repair);
 			description: 'Automatically resolve the issue';
 			action: [ :crit |
 				| changesBrowser |
-				
-				changesBrowser := (ChangesBrowser changes: { crit change })
+
+				changesBrowser := (StChangesBrowserPresenter changes: { crit change })
 					extent: 500@400;
-					setModal: SystemWindow topWindow;
+					asModalWindow;
 					yourself.
-					
+
 				changesBrowser openDialog
 					okAction: [ changesBrowser accept ];
 					centered ];
 			yourself) ].
-	
+
 	actions add: (RePropertyAction new
 			icon: (self iconNamed: #smallCancel);
 			description: 'Ban this rule';
@@ -111,7 +111,7 @@ ReAbstractCritique >> ban [
 
 { #category : #accessing }
 ReAbstractCritique >> change [
-	
+
 	^ self subclassResponsibility
 ]
 
@@ -146,7 +146,7 @@ ReAbstractCritique >> icon [
 ReAbstractCritique >> initializeRule: aRule sourceAnchor: anAnchor [
 
 	self initializeSourceAnchor: anAnchor.
-	rule := aRule.
+	rule := aRule
 ]
 
 { #category : #initialization }

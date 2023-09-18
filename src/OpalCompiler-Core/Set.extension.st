@@ -3,26 +3,29 @@ Extension { #name : #Set }
 { #category : #'*OpalCompiler-Core' }
 Set >> parseOptions: anArray [
 
-	"parse an array, which is a sequence of options in a form of: 
-	
+	"
+	Helper method for option parsing, used by the compiler (see pragma #compilerOptions:).
+
+	Parse an array, which is a sequence of options in a form of:
+
 	#( + option1 option2 - option3 ... )
-	
+
 	each time the #+ is seen, the options which follow it will be subject for inclusion
 	and, correspondingly, if #- seen, then they will be excluded	.
 
 	By default, (if none of #+ or #- specified initially), all options are subject for inclusion.
 	"
 	| include |
-	
+
 	include := true.
 	anArray do: [:option |
-		option == #+ 
+		option == #+
 			ifTrue: [ include := true ]
 			ifFalse: [
-				option == #- 
+				option == #-
 					ifTrue: [ include := false ]
-					ifFalse: [ 
-						include ifTrue: [ self add: option ] 
+					ifFalse: [
+						include ifTrue: [ self add: option ]
 						ifFalse: [ self remove: option ifAbsent:[] ]]]
-		].
+		]
 ]

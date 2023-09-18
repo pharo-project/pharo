@@ -24,8 +24,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBMethod class >> for: aRBClass fromMethod: aCompiledMethod andSelector: aSymbol [ 
-	^ self new 
+RBMethod class >> for: aRBClass fromMethod: aCompiledMethod andSelector: aSymbol [
+	^ self new
 		modelClass: aRBClass;
 		method: aCompiledMethod;
 		selector: aSymbol;
@@ -33,12 +33,17 @@ RBMethod class >> for: aRBClass fromMethod: aCompiledMethod andSelector: aSymbol
 ]
 
 { #category : #'instance creation' }
-RBMethod class >> for: aRBClass source: aString selector: aSelector [ 
+RBMethod class >> for: aRBClass source: aString selector: aSelector [
 	^(self new)
 		modelClass: aRBClass;
 		selector: aSelector;
 		source: aString;
 		yourself
+]
+
+{ #category : #accessing }
+RBMethod >> argumentNames [
+	^ self ast argumentNames
 ]
 
 { #category : #accessing }
@@ -87,9 +92,9 @@ RBMethod >> method [
 ]
 
 { #category : #accessing }
-RBMethod >> method: aCompiledMethod [ 
+RBMethod >> method: aCompiledMethod [
 	compiledMethod := aCompiledMethod.
-	self isFromTrait: compiledMethod isFromTrait.
+	self isFromTrait: compiledMethod isFromTrait
 ]
 
 { #category : #accessing }
@@ -116,7 +121,12 @@ RBMethod >> package [
 
 { #category : #accessing }
 RBMethod >> parseTree [
-	^ self parserClass parseMethod: self source onError: [:str :pos | ^nil]
+	| tree |
+	tree := self parserClass
+		  parseMethod: self source
+		  onError: [ :str :pos | ^ nil ].
+	tree ifNotNil: [ tree doSemanticAnalysis ].
+	^ tree
 ]
 
 { #category : #testing }
@@ -130,7 +140,7 @@ RBMethod >> parserTreeSearcher [
 ]
 
 { #category : #printing }
-RBMethod >> printOn: aStream [ 
+RBMethod >> printOn: aStream [
 	class printOn: aStream.
 	aStream
 		nextPutAll: '>>';
@@ -179,7 +189,7 @@ RBMethod >> refersToVariable: aString [
 	searcher
 		matches: aString do: [ :node :answer | true ];
 		matches: '[:`@vars | | `@temps | `@.Stmts]'
-			do: [ :node :answer | 
+			do: [ :node :answer |
 			answer
 				or: [ ((node defines: aString) or: [ node body defines: aString ]) not
 						and: [ searcher executeTree: node body initialAnswer: false ] ] ].
@@ -192,7 +202,7 @@ RBMethod >> selector [
 ]
 
 { #category : #accessing }
-RBMethod >> selector: aSymbol [ 
+RBMethod >> selector: aSymbol [
 	selector := aSymbol
 ]
 
@@ -202,6 +212,6 @@ RBMethod >> source [
 ]
 
 { #category : #accessing }
-RBMethod >> source: aString [ 
+RBMethod >> source: aString [
 	source := aString
 ]

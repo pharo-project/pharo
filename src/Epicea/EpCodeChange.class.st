@@ -7,6 +7,12 @@ Class {
 	#category : #'Epicea-Model'
 }
 
+{ #category : #testing }
+EpCodeChange class >> isAbstract [
+
+	^ self == EpCodeChange
+]
+
 { #category : #accessing }
 EpCodeChange >> affectedPackageName [
 
@@ -14,7 +20,7 @@ EpCodeChange >> affectedPackageName [
 ]
 
 { #category : #testing }
-EpCodeChange >> doesOverride: aCodeChange [ 
+EpCodeChange >> doesOverride: aCodeChange [
 
 	^ self subclassResponsibility
 ]

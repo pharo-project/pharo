@@ -15,7 +15,7 @@ Checks whether there are any references to this method
 Class {
 	#name : #RBRemoveMethodTransformation,
 	#superclass : #RBMethodTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -54,22 +54,29 @@ RBRemoveMethodTransformation class >> selectors: aCollection from: aClassName [
 ]
 
 { #category : #preconditions }
+RBRemoveMethodTransformation >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: self definingClass)
+		& (RBCondition withBlock: [ self checkSuperMethods. true ])
+]
+
+{ #category : #preconditions }
 RBRemoveMethodTransformation >> checkBrowseAllOccurrences: anCollectionOfOccurrences [
 
 	| methods callers |
 	methods := anCollectionOfOccurrences collect: [ :c | c key ] as: Set.
 	callers := anCollectionOfOccurrences collect: [ :v | v value ].
 	methods size = 1
-		ifTrue: [ self refactoringError:
+		ifTrue: [ self refactoringWarning:
 				('Possible call to <2s> in <1p> methods.<n>Browse references?'
 					expandMacrosWith: anCollectionOfOccurrences size
 					with: methods anyOne)
 				with: [ self openBrowserOn: (RBBrowserEnvironment new referencesTo: methods anyOne) ] ]
-		ifFalse: [ self refactoringError:
+		ifFalse: [ self refactoringWarning:
 				('Possible call to the <2p> selectors in <1p> methods.<n>Browse references?'
 					expandMacrosWith: callers size
 					with: methods size)
-				with: [ 
+				with: [
 					| env |
 					env := RBSelectorEnvironment new.
 					callers do: [ :d | env addMethod: d method ].
@@ -79,7 +86,7 @@ RBRemoveMethodTransformation >> checkBrowseAllOccurrences: anCollectionOfOccurre
 { #category : #preconditions }
 RBRemoveMethodTransformation >> checkBrowseOccurrenceIn: aRBMethod [
 
-	self refactoringError:
+	self refactoringWarning:
 		('Possible call to <2s> in <1p><n>Browse references?'
 			expandMacrosWith: aRBMethod modelClass
 			with: selector)
@@ -97,13 +104,7 @@ RBRemoveMethodTransformation >> checkBrowseOccurrences: anCollectionOfOccurrence
 RBRemoveMethodTransformation >> checkReferences [
 
 	| occurrences |
-	occurrences := OrderedCollection new.
-
-	self model
-		  allReferencesTo: selector
-		  do: [ :aRBMethod | 
-				(selector = aRBMethod selector)
-				ifFalse: [ occurrences add: selector -> aRBMethod ] ].
+	occurrences := self senders.
 	occurrences ifEmpty: [ ^ self ].
 	^ self checkBrowseOccurrences: occurrences
 ]
@@ -113,8 +114,8 @@ RBRemoveMethodTransformation >> checkSuperMethods [
 
 	(self justSendsSuper: selector) ifTrue: [ ^ self ]
 		ifFalse: [ (self superclassEquivalentlyDefines: selector)
-			ifTrue: [ (self definingClass parseTreeFor: selector) superMessages
-				ifNotEmpty: [ self 
+			ifTrue: [ (self definingClass parseTreeForSelector: selector) superMessages
+				ifNotEmpty: [ self
 						refactoringError: ('Although <1s> is equivalent to a superclass method,<n>
 							it contains a super send so it might modify behavior.'
 							expandMacrosWith: selector ) ] ]
@@ -125,35 +126,28 @@ RBRemoveMethodTransformation >> checkSuperMethods [
 RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 	| matcher parseTree superclass |
 	matcher := self parseTreeSearcherClass justSendsSuper.
-	parseTree := self definingClass parseTreeFor: aSelector.
+	parseTree := self definingClass parseTreeForSelector: aSelector.
 	(matcher executeTree: parseTree initialAnswer: false)
 		ifFalse: [ ^ false ].
 	parseTree lastIsReturn
-		ifTrue: [ ^ true ].	"Since there isn't a superclass that implements the message, we can 
+		ifTrue: [ ^ true ].	"Since there isn't a superclass that implements the message, we can
 	 delete it since it would be an error anyway."
 	superclass := self definingClass superclass
 		whichClassIncludesSelector: aSelector.
 	superclass ifNil: [ ^ true ].
-	parseTree := superclass parseTreeFor: aSelector.
+	parseTree := superclass parseTreeForSelector: aSelector.
 	matcher := self parseTreeSearcherClass new.
 	matcher
 		matches: '^``@object'
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			answer
 				add: aNode value;
 				yourself ].
 	matcher executeTree: parseTree initialAnswer: Set new.
 	^ matcher answer
-		allSatisfy: [ :each | "^ (matcher answer 
+		allSatisfy: [ :each | "^ (matcher answer
 		detect: [:each | (each isVariable and: [each name = 'self']) not]
 		ifNone: [nil]) isNil" each isVariable and: [ each name = 'self' ] ]
-]
-
-{ #category : #preconditions }
-RBRemoveMethodTransformation >> preconditions [
-
-	^ (RBCondition definesSelector: selector in: self definingClass) 
-		& (RBCondition withBlock: [ self checkSuperMethods. true ])
 ]
 
 { #category : #executing }
@@ -169,8 +163,26 @@ RBRemoveMethodTransformation >> selector: aSelector from: aClassName [
 	selector := aSelector
 ]
 
+{ #category : #preconditions }
+RBRemoveMethodTransformation >> senders [
+
+	^ self sendersOf: { selector }
+]
+
+{ #category : #preconditions }
+RBRemoveMethodTransformation >> sendersOf: aCollection [
+	"This method expects a collection of selectors to have the same API than the corresponding refactoring. This should be revisited in the future."
+	| occurrences |
+	occurrences := OrderedCollection new.
+	aCollection do: [ :each |
+		self model allReferencesTo: each do: [ :aRBMethod |
+			selector = aRBMethod selector ifFalse: [
+				occurrences add: each -> aRBMethod ] ] ].
+	^ occurrences
+]
+
 { #category : #printing }
-RBRemoveMethodTransformation >> storeOn: aStream [ 
+RBRemoveMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -186,10 +198,9 @@ RBRemoveMethodTransformation >> storeOn: aStream [
 RBRemoveMethodTransformation >> superclassEquivalentlyDefines: aSelector [
 
 	| superTree myTree |
-
 	self definingClass superclass ifNil: [ ^ false ].
-	superTree := self definingClass superclass parseTreeFor: aSelector.
-	myTree := self definingClass parseTreeFor: aSelector.
+	superTree := self definingClass superclass parseTreeForSelector: aSelector.
+	myTree := self definingClass parseTreeForSelector: aSelector.
 	( superTree isNil or: [ myTree isNil ] )
 		ifTrue: [ ^ false ].
 	^ superTree equalTo: myTree exceptForVariables: #()

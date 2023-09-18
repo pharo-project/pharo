@@ -15,7 +15,7 @@ Class {
 { #category : #accessing }
 SVColorSelectorMorph >> adoptPaneColor: paneColor [
 	"Pass on to the border too."
-	
+
 	super adoptPaneColor: paneColor.
 	self borderStyle baseColor: paneColor twiceDarker
 ]
@@ -23,7 +23,7 @@ SVColorSelectorMorph >> adoptPaneColor: paneColor [
 { #category : #accessing }
 SVColorSelectorMorph >> basicColor: aColor [
 	"Set the gradient colors."
-	
+
 	super color: aColor beOpaque.
 	self
 		fillStyle: self gradient
@@ -51,7 +51,7 @@ SVColorSelectorMorph >> blackGradientMorph [
 { #category : #accessing }
 SVColorSelectorMorph >> color: aColor [
 	"Set the gradient colors."
-	
+
 	self
 		basicColor: aColor;
 		selectedColor: (Color h: aColor hue s: self selectedColor saturation v: self selectedColor brightness)
@@ -60,7 +60,7 @@ SVColorSelectorMorph >> color: aColor [
 { #category : #'pixel access' }
 SVColorSelectorMorph >> colorAt: aPoint [
 	"Answer the color in the world at the given point."
-	
+
 	^self isInWorld
 		ifTrue: [(Display colorAt: aPoint) beOpaque ]
 		ifFalse: [Color black]
@@ -77,7 +77,7 @@ SVColorSelectorMorph >> extent: p [
 { #category : #'visual properties' }
 SVColorSelectorMorph >> fillStyle: fillStyle [
 	"If it is a color then override with gradient."
-	
+
 	fillStyle isColor
 		ifTrue: [self color: fillStyle]
 		ifFalse: [super fillStyle: fillStyle]
@@ -96,7 +96,7 @@ SVColorSelectorMorph >> gradient [
 
 { #category : #'event handling' }
 SVColorSelectorMorph >> handlesMouseDown: evt [
-	"Yes for down and move.." 
+	"Yes for down and move.."
 
 	^true
 ]
@@ -104,7 +104,7 @@ SVColorSelectorMorph >> handlesMouseDown: evt [
 { #category : #'event handling' }
 SVColorSelectorMorph >> handlesMouseOverDragging: evt [
 	"Yes, make the location morph visible when leaving."
-	
+
 	^true
 ]
 
@@ -133,7 +133,7 @@ SVColorSelectorMorph >> initialize [
 SVColorSelectorMorph >> layoutBounds: aRectangle [
 	"Set the bounds for laying out children of the receiver.
 	Note: written so that #layoutBounds can be changed without touching this method"
-	
+
 	super layoutBounds: aRectangle.
 	self updateGradients
 ]
@@ -153,9 +153,9 @@ SVColorSelectorMorph >> locationMorph: anObject [
 ]
 
 { #category : #'event handling' }
-SVColorSelectorMorph >> mouseDown: evt [ 
+SVColorSelectorMorph >> mouseDown: evt [
 	"Handle a mouse down event. Select the color at the mouse position."
-	
+
 	evt redButtonPressed
 		ifFalse: [^super mouseDown: evt].
 	evt hand showTemporaryCursor: (Cursor crossHair copy offset: -9 @ -9).
@@ -167,23 +167,23 @@ SVColorSelectorMorph >> mouseDown: evt [
 { #category : #'event handling' }
 SVColorSelectorMorph >> mouseEnterDragging: evt [
 	"Make the location morph invisible when entering."
-	
+
 	self hideLocation.
-	evt hand showTemporaryCursor: (Cursor crossHair copy offset: -9 @ -9).
+	evt hand showTemporaryCursor: (Cursor crossHair copy offset: -9 @ -9)
 ]
 
 { #category : #'event handling' }
 SVColorSelectorMorph >> mouseLeaveDragging: evt [
 	"Make the location morph visible when leaving."
-	
+
 	evt hand showTemporaryCursor: nil.
 	self showLocation
 ]
 
 { #category : #'event handling' }
-SVColorSelectorMorph >> mouseMove: evt [ 
+SVColorSelectorMorph >> mouseMove: evt [
 	"Handle a mouse move event. Select the color at the mouse position."
-	
+
 	evt redButtonPressed
 		ifFalse: [^super mouseMove: evt].
 	self selectColorAt: evt position.
@@ -191,9 +191,9 @@ SVColorSelectorMorph >> mouseMove: evt [
 ]
 
 { #category : #'event handling' }
-SVColorSelectorMorph >> mouseUp: evt [ 
+SVColorSelectorMorph >> mouseUp: evt [
 	"Handle a up event. Show the location morph again."
-	
+
 	evt hand showTemporaryCursor: nil.
 	self updateSelectedLocation.
 	self locationMorph visible: true
@@ -210,7 +210,7 @@ SVColorSelectorMorph >> newLocationMorph [
 { #category : #accessing }
 SVColorSelectorMorph >> selectColorAt: aPoint [
 	"Set the color at the given position."
-	
+
 	|b p|
 	b := self innerBounds.
 	p := (b containsPoint: aPoint)
@@ -255,8 +255,8 @@ SVColorSelectorMorph >> selectedLocation [
 { #category : #displaying }
 SVColorSelectorMorph >> showLocation [
 	"Show the location morph and update the display."
-	
-	self locationMorph visible: true; changed.
+
+	self locationMorph visible: true; changed
 ]
 
 { #category : #updating }
@@ -279,7 +279,7 @@ SVColorSelectorMorph >> updateGradients [
 { #category : #updating }
 SVColorSelectorMorph >> updateSelectedLocation [
 	"Position the location morph to indicate the selected colour."
-	
+
 	self locationMorph
 		position: (self selectedLocation - (self locationMorph extent // 2 + (self locationMorph extent \\ 2)))
 ]

@@ -11,13 +11,14 @@ Class {
 	#superclass : #RBLiteralNode,
 	#instVars : [
 		'isByteArray',
-		'contents'
+		'contents',
+		'openerSize'
 	],
 	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
-RBLiteralArrayNode class >> startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean [ 
+RBLiteralArrayNode class >> startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean [
 	^(self new)
 		startPosition: startInteger
 			contents: anArray
@@ -27,7 +28,7 @@ RBLiteralArrayNode class >> startPosition: startInteger contents: anArray stopPo
 ]
 
 { #category : #'instance creation' }
-RBLiteralArrayNode class >> value: aValue [ 
+RBLiteralArrayNode class >> value: aValue [
 	^(self new)
 		startPosition: 0
 			contents: (aValue asArray collect: [:each | RBLiteralNode value: each])
@@ -37,7 +38,7 @@ RBLiteralArrayNode class >> value: aValue [
 ]
 
 { #category : #comparing }
-RBLiteralArrayNode >> = anObject [ 
+RBLiteralArrayNode >> = anObject [
 	super = anObject ifFalse: [^false].
 	self isForByteArray = anObject isForByteArray ifFalse: [^false].
 	self contents size = anObject contents size ifFalse: [^false].
@@ -63,14 +64,14 @@ RBLiteralArrayNode >> contents [
 ]
 
 { #category : #initialization }
-RBLiteralArrayNode >> contents: aRBLiteralNodeCollection [ 
+RBLiteralArrayNode >> contents: aRBLiteralNodeCollection [
 	contents := aRBLiteralNodeCollection.
 	contents do: [:each | each parent: self]
 ]
 
 { #category : #matching }
-RBLiteralArrayNode >> copyInContext: aDictionary [ 
-	^ self class 
+RBLiteralArrayNode >> copyInContext: aDictionary [
+	^ self class
 		startPosition: 0
 		contents: (self copyList: self contents inContext: aDictionary)
 		stopPosition: -1
@@ -78,7 +79,7 @@ RBLiteralArrayNode >> copyInContext: aDictionary [
 ]
 
 { #category : #comparing }
-RBLiteralArrayNode >> equalTo: anObject withMapping: aDictionary [ 
+RBLiteralArrayNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	self isForByteArray = anObject isForByteArray ifFalse: [^false].
 	self contents size = anObject contents size ifFalse: [^false].
@@ -88,8 +89,9 @@ RBLiteralArrayNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBLiteralArrayNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self contents anySatisfy: [:each | each isFaulty]
 ]
 
@@ -104,13 +106,25 @@ RBLiteralArrayNode >> isLiteralArray [
 ]
 
 { #category : #matching }
-RBLiteralArrayNode >> match: aNode inContext: aDictionary [ 
+RBLiteralArrayNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	self isForByteArray = aNode isForByteArray ifFalse: [^false].
-	^self 
+	^self
 		matchList: contents
 		against: aNode contents
 		inContext: aDictionary
+]
+
+{ #category : #accessing }
+RBLiteralArrayNode >> openerSize [
+
+	^ openerSize
+]
+
+{ #category : #accessing }
+RBLiteralArrayNode >> openerSize: anObject [
+
+	openerSize := anObject
 ]
 
 { #category : #copying }
@@ -120,24 +134,24 @@ RBLiteralArrayNode >> postCopy [
 ]
 
 { #category : #replacing }
-RBLiteralArrayNode >> replaceNode: aNode withNode: anotherNode [ 
-	self contents: (contents 
+RBLiteralArrayNode >> replaceNode: aNode withNode: anotherNode [
+	self contents: (contents
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
 { #category : #'private - replacing' }
-RBLiteralArrayNode >> replaceSourceWith: aNode [ 
-	(self class = aNode class and: 
-			[self isForByteArray = aNode isForByteArray 
-				and: [self contents size = aNode contents size]]) 
+RBLiteralArrayNode >> replaceSourceWith: aNode [
+	(self class = aNode class and:
+			[self isForByteArray = aNode isForByteArray
+				and: [self contents size = aNode contents size]])
 		ifFalse: [^super replaceSourceWith: aNode].
 	self contents
-		with: aNode contents 
+		with: aNode contents
 		do: [:first :second | first = second ifFalse: [ first replaceSourceWith: second]]
 ]
 
 { #category : #initialization }
-RBLiteralArrayNode >> startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean [ 
+RBLiteralArrayNode >> startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean [
 	start := startInteger.
 	self contents: anArray.
 	stop := stopInteger.
@@ -147,7 +161,7 @@ RBLiteralArrayNode >> startPosition: startInteger contents: anArray stopPosition
 { #category : #accessing }
 RBLiteralArrayNode >> value [
 	| array |
-	array := (isByteArray ifTrue: [ByteArray] ifFalse: [Array]) 
+	array := (isByteArray ifTrue: [ByteArray] ifFalse: [Array])
 				new: contents size.
 	1 to: contents size
 		do: [:each | array at: each put: (contents at: each) value].

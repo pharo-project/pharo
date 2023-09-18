@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 FFIExternalPackedStructureTest >> testExternallyAllocatedStructure [
 	| struct struct2 |
-	
+
 	struct := FFITestPackedStructure externalNew.
 	self assert: struct getHandle isExternalAddress.
 
@@ -21,16 +21,16 @@ FFIExternalPackedStructureTest >> testExternallyAllocatedStructure [
 		struct float: 1.0.
 		struct double: 2.0.
 		"struct int64: 123456789101112."
-	
+
 		struct2 := FFITestPackedStructure fromHandle: struct getHandle.
-	
+
 		self assert: struct2 byte equals: 10.
-		self assert: struct2 short equals: -20.	
-		self assert: struct2 long equals: 100.	
-		self assert: struct2 float equals: 1.0.	
-		self assert: struct2 double equals: 2.0.	
+		self assert: struct2 short equals: -20.
+		self assert: struct2 long equals: 100.
+		self assert: struct2 float equals: 1.0.
+		self assert: struct2 double equals: 2.0.
 		self flag: #pharoTodo. "This is not yet implemented"
-		"self assert: (struct2 int64 = 123456789101112)."	 ] 
+		"self assert: (struct2 int64 = 123456789101112)."	 ]
 	ensure: [ struct free ]
 ]
 

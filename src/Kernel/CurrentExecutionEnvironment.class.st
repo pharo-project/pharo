@@ -14,8 +14,8 @@ CurrentExecutionEnvironment class >> activate: anExecutionEnvironment for: aBloc
 
 	| current |
 	self value == anExecutionEnvironment ifTrue: [ ^aBlock value ].
-	
-	current := self soleInstance valueOrNil.	
+
+	current := self soleInstance valueOrNil.
 	[ self value: anExecutionEnvironment.
 	anExecutionEnvironment activated.
 	aBlock value  ] ensure: [
@@ -45,6 +45,6 @@ CurrentExecutionEnvironment >> default [
 { #category : #inheriting }
 CurrentExecutionEnvironment >> installValue: anExecutionEnvironment intoForked: newProcess from: ownerProcess [
 	super installValue: anExecutionEnvironment intoForked: newProcess from: ownerProcess.
-	
+
 	anExecutionEnvironment prepareForNewProcess: newProcess
 ]

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #idioms }
-ReProperMethodProtocolNameForTestsRule class >> protocolIdiom [ 
+ReProperMethodProtocolNameForTestsRule class >> protocolIdiom [
 
 	^self use: 'tests' insteadOf: #('test')
 ]
@@ -16,6 +16,6 @@ ReProperMethodProtocolNameForTestsRule class >> protocolIdiom [
 { #category : #running }
 ReProperMethodProtocolNameForTestsRule >> basicCheck: aMethod [
 	"We only check for SUnit test methods"
-	
-	^ aMethod isTestMethod and: [ self class badMethodProtocolNames includes: aMethod category ]
+
+	^ aMethod isTestMethod and: [ self class badMethodProtocolNames includes: aMethod protocolName ]
 ]

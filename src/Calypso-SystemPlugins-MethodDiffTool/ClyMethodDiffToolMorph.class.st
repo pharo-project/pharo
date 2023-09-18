@@ -46,14 +46,14 @@ ClyMethodDiffToolMorph >> activationPriority [
 { #category : #controlling }
 ClyMethodDiffToolMorph >> attachToSystem [
 
-	browser system 
-		when: (ClyMethodChange ofAll: {self leftMethod. self rightMethod}) 
+	browser system
+		when: (ClyMethodChange ofAll: {self leftMethod. self rightMethod})
 		send: #triggerUpdate to: self
 ]
 
 { #category : #testing }
 ClyMethodDiffToolMorph >> belongsToCurrentBrowserContext [
-	^(browser isMethodSelected: leftMethod) 
+	^(browser isMethodSelected: leftMethod)
 		and: [ browser isMethodSelected: rightMethod ]
 ]
 
@@ -65,7 +65,7 @@ ClyMethodDiffToolMorph >> belongsToRemovedBrowserContext [
 { #category : #building }
 ClyMethodDiffToolMorph >> build [
 	diffMorph := DiffMorph from: self leftMethod sourceCode to: self rightMethod sourceCode.
-	diffMorph	
+	diffMorph
 		contextClass: self rightMethod sourceCode;
 		hResizing:	#spaceFill;
 		vResizing: #spaceFill;
@@ -92,7 +92,7 @@ ClyMethodDiffToolMorph >> detachFromSystem [
 { #category : #testing }
 ClyMethodDiffToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
-	
+
 	^{leftMethod. rightMethod} asIdentitySet = {anotherBrowserTool leftMethod. anotherBrowserTool rightMethod  } asIdentitySet
 ]
 
@@ -109,7 +109,7 @@ ClyMethodDiffToolMorph >> printContext [
 { #category : #initialization }
 ClyMethodDiffToolMorph >> resetStateForSnapshot [
 	super resetStateForSnapshot.
-	
+
 	diffMorph := nil
 ]
 
@@ -119,7 +119,7 @@ ClyMethodDiffToolMorph >> rightMethod [
 ]
 
 { #category : #initialization }
-ClyMethodDiffToolMorph >> setUpModelFromContext [ 
+ClyMethodDiffToolMorph >> setUpModelFromContext [
 
 	leftMethod := context firstSelectedMethod.
 	rightMethod := context lastSelectedMethod
@@ -127,12 +127,12 @@ ClyMethodDiffToolMorph >> setUpModelFromContext [
 
 { #category : #updating }
 ClyMethodDiffToolMorph >> update [
-	leftMethod := leftMethod origin 
+	leftMethod := leftMethod origin
 		localMethodNamed: leftMethod selector ifAbsent: [^self].
-	rightMethod := rightMethod origin 
+	rightMethod := rightMethod origin
 		localMethodNamed: rightMethod selector ifAbsent: [^self].
-	
+
 	super update.
-	
+
 	diffMorph from: leftMethod sourceCode to: rightMethod sourceCode
 ]

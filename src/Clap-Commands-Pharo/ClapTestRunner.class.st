@@ -27,7 +27,7 @@ ClapTestRunner class >> test [
 			args at: #helpFlag ifPresent: [ :help |
 				help value; exitSuccess ].
 			args validateAll.
-			
+
 			(self with: args) execute ]
 ]
 
@@ -47,14 +47,16 @@ ClapTestRunner >> execute [
 	self outputStreamDo: [ :out |
 		self suite
 			when: TestAnnouncement
-			do: [ :ann | out nextPutAll: ann test name; lf ];
+			do: [ :ann | out nextPutAll: ann test name; lf ]
+			for: self;
 			when: TestCaseAnnouncement
-			do: [ :ann | out space; space; nextPutAll: ann testSelector; lf ].
+			do: [ :ann | out space; space; nextPutAll: ann testSelector; lf ]
+			for: self.
 		result := [ self suite run ]
 			ensure: [ self suite unsubscribe: TestAnnouncement ].
 		out print: result; lf
 	].
-	
+
 	self context exitSuccess
 ]
 
@@ -67,11 +69,8 @@ ClapTestRunner >> packagePatterns [
 
 { #category : #accessing }
 ClapTestRunner >> packages [
-	^ self packagePatterns
-		flatCollect: [ :regex |
-			RPackage organizer packages
-				select: [ :package | regex matches: package name ]]
-		as: Set
+
+	^ self packagePatterns flatCollect: [ :regex | self packageOrganizer packages select: [ :package | regex matches: package name ] ] as: Set
 ]
 
 { #category : #accessing }

@@ -18,5 +18,5 @@ GlobalIdentifierWithStonTest >> setUpPersistenceStrategyAndChecker [
 	preferences ensureDelete.
 	identifier persistenceStrategy: GlobalIdentifierPersistence ston.
 	identifier persistenceStrategy preferences: preferences.
-	identifier persistenceStrategy checker: (self newChecker answer: [ FileLocator workingDirectory exists ]; yourself).
+	identifier persistenceStrategy checker: (self newChecker answer: [ FileLocator workingDirectory exists ]; yourself)
 ]

@@ -53,46 +53,49 @@ Number class >> one [
 ]
 
 { #category : #arithmetic }
-Number >> * aNumber [ 
+Number >> * aNumber [
 	"Answer the result of multiplying the receiver by aNumber."
 
 	self subclassResponsibility
 ]
 
 { #category : #arithmetic }
-Number >> + aNumber [ 
+Number >> + aNumber [
 	"Answer the sum of the receiver and aNumber."
 
 	self subclassResponsibility
 ]
 
 { #category : #arithmetic }
-Number >> - aNumber [ 
+Number >> - aNumber [
 	"Answer the difference between the receiver and aNumber."
 
 	self subclassResponsibility
 ]
 
 { #category : #arithmetic }
-Number >> / aNumber [ 
+Number >> / aNumber [
 	"Answer the result of dividing the receiver by aNumber."
 
 	self subclassResponsibility
 ]
 
 { #category : #arithmetic }
-Number >> // aNumber [ 
-	"Integer quotient defined by division with truncation toward negative 
-	infinity. 9//4 = 2, -9//4 = -3. -0.9//0.4 = -3. \\ answers the remainder 
-	from this division."
+Number >> // aNumber [
+	"Integer quotient defined by division with truncation toward negative
+	infinity. \\ answers the remainder from this division."
+
+	"9//4 >>> 2"
+	"-9//4 >>> -3"
+	"-0.9//0.4 >>> -3"
 
 	^(self / aNumber) floor
 ]
 
 { #category : #arithmetic }
-Number >> @ y [ 
-	"Primitive. Answer a Point whose x value is the receiver and whose y 
-	value is the argument. Optional. No Lookup. See Object documentation 
+Number >> @ y [
+	"Primitive. Answer a Point whose x value is the receiver and whose y
+	value is the argument. Optional. No Lookup. See Object documentation
 	whatIsAPrimitive."
 
 	<primitive: 18>
@@ -100,10 +103,10 @@ Number >> @ y [
 ]
 
 { #category : #arithmetic }
-Number >> \\ aNumber [ 
-	"modulo. Remainder defined in terms of //. Answer a Number with the 
+Number >> \\ aNumber [
+	"modulo. Remainder defined in terms of //. Answer a Number with the
 	same sign as aNumber."
-	
+
 	"9 \\ 4 >>> 1"
 	"-9 \\ 4 >>> 3"
 	"9 \\ -4 >>> -3"
@@ -113,19 +116,19 @@ Number >> \\ aNumber [
 
 { #category : #arithmetic }
 Number >> abs [
-	"Answer a Number that is the absolute value (positive magnitude) of the 
+	"Answer a Number that is the absolute value (positive magnitude) of the
 	receiver."
 
-	self < 0
-		ifTrue: [^self negated]
-		ifFalse: [^self]
+	^ self < 0
+		ifTrue: [self negated]
+		ifFalse: [self]
 ]
 
 { #category : #converting }
-Number >> adaptToFloat: rcvr andCompare: selector [ 
+Number >> adaptToFloat: rcvr andCompare: selector [
 	"If I am involved in comparison with a Float, convert rcvr to a
 	Fraction. This way, no bit is lost and comparison is exact."
-	
+
 	rcvr isFinite
 		ifFalse: [
 			selector == #= ifTrue: [^false].
@@ -141,7 +144,7 @@ Number >> adaptToFloat: rcvr andCompare: selector [
 ]
 
 { #category : #converting }
-Number >> adaptToFloat: rcvr andSend: selector [ 
+Number >> adaptToFloat: rcvr andSend: selector [
 	"If I am involved in arithmetic with a Float, convert me to a Float."
 	^ rcvr perform: selector with: self asFloat
 ]
@@ -163,9 +166,9 @@ Number >> addAssignToFloatArray: aFloatArray [
 	^ aFloatArray primAddScalar: self asFloat
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #converting }
 Number >> asDuration [
- 
+
  	^ Duration seconds: self asInteger
 ]
 
@@ -177,16 +180,16 @@ Number >> asFloat [
 ]
 
 { #category : #converting }
+Number >> asFraction [
+	^ self subclassResponsibility
+]
+
+{ #category : #converting }
 Number >> asInteger [
 	"Round me towards nearest integer closer to zero."
 	"This violates the ANSI standard, but the system depends on this"
 
 	^self truncated
-]
-
-{ #category : #converting }
-Number >> asMargin [
-	^ Margin fromNumber: self.
 ]
 
 { #category : #converting }
@@ -196,8 +199,8 @@ Number >> asNumber [
 
 { #category : #converting }
 Number >> asPoint [
-	"Answer a Point with the receiver as both coordinates; often used to 
-	supply the same value in two dimensions, as with symmetrical gridding 
+	"Answer a Point with the receiver as both coordinates; often used to
+	supply the same value in two dimensions, as with symmetrical gridding
 	or scaling."
 
 	^self @ self
@@ -206,19 +209,18 @@ Number >> asPoint [
 { #category : #converting }
 Number >> asScaledDecimal [
 	"Answer a scaled decimal number approximating the receiver."
-	#Numeric.
 
 	^ self asScaledDecimal: 8
 ]
 
 { #category : #converting }
-Number >> asScaledDecimal: scale [ 
+Number >> asScaledDecimal: scale [
 	"Answer the receiver converted to a ScaledDecimal."
-	
+
 	^ ScaledDecimal newFromNumber: self scale: scale
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #converting }
 Number >> asSeconds [
 	^ Duration milliSeconds: self * 1000
 ]
@@ -255,12 +257,11 @@ Number >> ceiling [
 ]
 
 { #category : #calculating }
-Number >> clampBetween: min and: max [ 
-	
+Number >> clampBetween: min and: max [
+
 	 (self between: min and: max ) ifTrue: [ ^ self  ]
 	ifFalse: [( self < min )  ifTrue: [ ^ min]].
 	^ max
-	
 ]
 
 { #category : #converting }
@@ -269,18 +270,18 @@ Number >> copySignTo: aNumber [
 
 	^ self signBit = 0
 		ifTrue: [aNumber abs]
-		ifFalse: [aNumber abs negated].
+		ifFalse: [aNumber abs negated]
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> day [
- 
+
  	^ self days
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> days [
- 
+
  	^ Duration days: self
 ]
 
@@ -316,10 +317,10 @@ Number >> floor [
 
 	| truncation |
 	truncation := self truncated.
-	self >= 0 ifTrue: [^truncation].
-	self = truncation
-		ifTrue: [^truncation]
-		ifFalse: [^truncation - 1]
+	self >= 0 ifTrue: [ ^ truncation ].
+	^ self = truncation
+		  ifTrue: [ truncation ]
+		  ifFalse: [ truncation - 1 ]
 ]
 
 { #category : #'truncation and round off' }
@@ -328,15 +329,15 @@ Number >> fractionPart [
 	^self - self integerPart
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> hour [
- 
+
  	^ self hours
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> hours [
- 
+
  	^ Duration hours: self
 ]
 
@@ -363,57 +364,62 @@ Number >> isNumber [
 ]
 
 { #category : #testing }
+Number >> isPowerOfTwo [
+	^ self subclassResponsibility
+]
+
+{ #category : #testing }
 Number >> isZero [
 	^self = 0
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> milliSecond [
 	"1 milliSecond printString >>> '0:00:00:00.001'"
 	"(1 second + 1 milliSecond) printString >>> '0:00:00:01.001'"
-	
+
  	^ self milliSeconds
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> milliSeconds [
 
 	"2 milliSeconds printString >>> '0:00:00:00.002'"
 	"(1 second + 2 milliSeconds) printString >>> '0:00:00:01.002'"
-	
+
  	^ Duration milliSeconds: self
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> minute [
 	"1 minute printString >>> '0:00:01:00'"
 	"(1 hour + 1 minute) printString >>> '0:01:01:00'"
- 
+
  	^ self minutes
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> minutes [
 	"2 minutes printString >>> '0:00:02:00'"
 	"(1 hour + 2 minutes) printString >>> '0:01:02:00'"
- 
+
  	^ Duration minutes: self
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> nanoSecond [
 	"1 nanoSecond printString >>> '0:00:00:00.000000001'"
 	"(1 milliSecond + 1 nanoSecond) printString >>> '0:00:00:00.001000001'"
- 
+
  	^ self nanoSeconds
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> nanoSeconds [
 	"2 nanoSeconds printString >>> '0:00:00:00.000000002'"
 	"(1 milliSecond + 2 nanoSeconds) printString >>> '0:00:00:00.001000002'"
- 
- 	^ Duration nanoSeconds: self.
+
+ 	^ Duration nanoSeconds: self
 ]
 
 { #category : #arithmetic }
@@ -447,7 +453,7 @@ Number >> printOn: aStream [
 Number >> printOn: aStream base: base [
 	"This method should print a representation of the number for the given base,
 	excluding the base prefix (and the letter r for radix)"
-	
+
 	self subclassResponsibility
 ]
 
@@ -470,7 +476,7 @@ Number >> printOn: aStream showingDecimalPlaces: placesDesired [
 { #category : #printing }
 Number >> printShowingDecimalPlaces: placesDesired [
 	"Print the receiver showing precisely the given number of places desired.  If placesDesired is positive, a decimal point and that many digits after the decimal point will always be shown.  If placesDesired is zero, a whole number will be shown, without a decimal point. Here are some examples:"
-	
+
 	"(23 printShowingDecimalPlaces: 2) >>> '23.00'"
 	"(23.5698 printShowingDecimalPlaces: 2) >>> '23.57'"
 	"(-234.567 printShowingDecimalPlaces: 5) >>> '-234.56700'"
@@ -499,26 +505,26 @@ Number >> printStringBase: base [
 	"(-10 printStringBase: 10) >>> '-10'"
 	"(10 printStringBase: 2) >>> '1010'"
 	"(10 printStringBase: 16) >>> 'A'"
-	
+
 	^ String streamContents: [:strm | self printOn: strm base: base]
 ]
 
 { #category : #arithmetic }
-Number >> quo: aNumber [ 
-	"Integer quotient defined by division with truncation toward zero. 
-	
+Number >> quo: aNumber [
+	"Integer quotient defined by division with truncation toward zero.
+
 	(-9 quo: 4) = -2.
-	(-0.9 quo: 0.4) = -2. 
-	
+	(-0.9 quo: 0.4) = -2.
+
 	rem: answers the remainder from this division."
 
 	^(self / aNumber) truncated
 ]
 
 { #category : #'mathematical functions' }
-Number >> raisedTo: aNumber [ 
+Number >> raisedTo: aNumber [
 	"Answer the receiver raised to aNumber."
-	
+
 	"(2 raisedTo: 8) >>> 256"
 	"(8 raisedTo: 2) >>> 64"
 	"(2 raisedTo: (1/12)) >>> 1.0594630943592953"
@@ -535,9 +541,9 @@ Number >> raisedTo: aNumber [
 	0 = aNumber ifTrue: [^ self class one].	"Special case of exponent=0"
 	1 = aNumber ifTrue: [^ self].	"Special case of exponent=1"
 	0 = self ifTrue: [				"Special case of self = 0"
-		aNumber < 0
-			ifTrue: [^ (ZeroDivide dividend: 1) signal]
-			ifFalse: [^ self]].
+		^ aNumber < 0
+			ifTrue: [ (ZeroDivide dividend: 1) signal]
+			ifFalse: [ self]].
 	^ (aNumber * self ln) exp		"Otherwise use logarithms"
 ]
 
@@ -560,7 +566,7 @@ Number >> raisedToInteger: anInteger [
 	be handled as an indeterminate form.
 	I take the first context because that's the way that was previously handled.
 	Maybe further discussion is required on this topic."
-	
+
 	|bitProbe result|
 
 	anInteger negative ifTrue: [^(self raisedToInteger: anInteger negated) reciprocal].
@@ -571,7 +577,7 @@ Number >> raisedToInteger: anInteger [
        bitProbe := bitProbe bitShift: -1.
 		bitProbe > 0 ]
 	whileTrue: [result := result * result].
-	
+
 	^result
 ]
 
@@ -579,12 +585,12 @@ Number >> raisedToInteger: anInteger [
 Number >> reciprocal [
 	"Returns the reciprocal of self.
 	In case self is 0 the / signals ZeroDivide"
-	
+
 	"1/2 reciprocal >>> 2"
 	"2 reciprocal >>> (1/2)"
 	"1.25 reciprocal >>> 0.8"
 	"-2 reciprocal >>> (-1/2)"
-	
+
 	^1 / self
 ]
 
@@ -595,8 +601,8 @@ Number >> reduce [
 ]
 
 { #category : #arithmetic }
-Number >> rem: aNumber [ 
-	"Remainder defined in terms of quo:. Answer a Number with the same 
+Number >> rem: aNumber [
+	"Remainder defined in terms of quo:. Answer a Number with the same
 	sign as self. e.g. 9 rem: 4 = 1, -9 rem: 4 = -1. 0.9 rem: 0.4 = 0.1."
 
 	^self - ((self quo: aNumber) * aNumber)
@@ -607,38 +613,38 @@ Number >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal"
    "(10.12345 round: 2) >>> 10.12"
 	"(10.199999999 round: 2) >>>10.2"
-	 
+
 	^ self subclassResponsibility
 ]
 
 { #category : #'truncation and round off' }
 Number >> roundDownTo: aNumber [
-	"Answer the next multiple of aNumber toward negative infinity that is nearest the receiver. 
+	"Answer the next multiple of aNumber toward negative infinity that is nearest the receiver.
 	Examples:"
                "(3.1479 roundDownTo: 0.01) >>> 3.14"
                "(3.1479 roundDownTo: 0.1) >>> 3.1"
                "(1923 roundDownTo: 10) >>> 1920"
                "(3.1479 roundDownTo: 0.005) >>> 3.145"
                "(-3.1479 roundDownTo: 0.01) >>> -3.15"
-	
+
 	^(self / aNumber) floor * aNumber
 ]
 
 { #category : #'truncation and round off' }
-Number >> roundTo: quantum [ 
+Number >> roundTo: quantum [
 	"Answer the nearest number that is a multiple of quantum."
 
 	^(self / quantum) rounded * quantum
 ]
 
 { #category : #'truncation and round off' }
-Number >> roundUpTo: aNumber [ 
+Number >> roundUpTo: aNumber [
 	"Answer the next multiple of aNumber toward infinity that is nearest the receiver."
 	"(3.1479 roundUpTo: 0.01) >>> 3.15"
 	"(3.1479 roundUpTo: 0.1) >>> 3.2"
 	"(1923 roundUpTo: 10) >>> 1930"
 	"(3.1479 roundUpTo: 0.005) >>> 3.15"
-	"(-3.1479 roundUpTo: 0.01) >>> -3.14" 
+	"(-3.1479 roundUpTo: 0.01) >>> -3.14"
 
 	^(self / aNumber) ceiling * aNumber
 ]
@@ -646,7 +652,7 @@ Number >> roundUpTo: aNumber [
 { #category : #'truncation and round off' }
 Number >> rounded [
 	"Answer the integer nearest the receiver."
-	
+
 	"1.4 rounded >>> 1"
 	"1.5 rounded >>> 2"
 	"2 rounded >>> 2"
@@ -655,20 +661,20 @@ Number >> rounded [
 	^(self + (self sign / 2)) truncated
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> second [
 	"1 second printString >>> '0:00:00:01'"
 	"(1 minute + 1 second) printString >>> '0:00:01:01'"
-	
+
  	^ self seconds
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> seconds [
 
 	"2 seconds printString >>> '0:00:00:02'"
 	"(1 minute + 2 seconds) printString >>> '0:00:01:02'"
- 
+
  	^ Duration seconds: self
 ]
 
@@ -684,8 +690,8 @@ Number >> sign [
 { #category : #converting }
 Number >> sign: aNumber [
  	"Return a Number with the same sign as aNumber"
- 
- 	^ aNumber copySignTo: self.
+
+ 	^ aNumber copySignTo: self
 ]
 
 { #category : #'mathematical functions' }
@@ -697,7 +703,7 @@ Number >> signBit [
 ]
 
 { #category : #printing }
-Number >> storeOn: aStream [ 
+Number >> storeOn: aStream [
 	self printOn: aStream
 ]
 
@@ -705,7 +711,7 @@ Number >> storeOn: aStream [
 Number >> storeOn: aStream base: base [
 	"This method should print a representation of the number for the given base,
 	including the base prefix (with letter r for radix)"
-	
+
 	^self subclassResponsibility
 ]
 
@@ -724,7 +730,7 @@ Number >> stringForReadout [
 ]
 
 { #category : #'truncation and round off' }
-Number >> truncateTo: aNumber [ 
+Number >> truncateTo: aNumber [
 	"Answer the next multiple of aNumber toward zero that is nearest the receiver."
 	"(3.1479 truncateTo: 0.01) >>>  3.14"
    "(3.1479 truncateTo: 0.1) >>>  3.1"
@@ -733,7 +739,7 @@ Number >> truncateTo: aNumber [
 	"(-1929 truncateTo: 10) >>>  -1920"
 	"(3.1479 truncateTo: 0.005) >>>  3.145"
 	"(-3.1479 truncateTo: 0.01) >>>  -3.14"
-             
+
 	^(self quo: aNumber) * aNumber
 ]
 
@@ -744,26 +750,26 @@ Number >> truncated [
 	^self quo: 1
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> week [
- 
+
  	^ self weeks
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> weeks [
- 
+
  	^ Duration weeks: self
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> year [
- 
+
  	^self years
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #accessing }
 Number >> years [
- 
+
  	^ Duration years: self
 ]

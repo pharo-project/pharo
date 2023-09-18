@@ -11,7 +11,7 @@ MenuItemMorph >> drawBackgroundOnAthensCanvas: anAthensCanvas [
 { #category : #'*Athens-Morphic' }
 MenuItemMorph >> drawIconAndLabelOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			self drawIconOnAthensCanvas: anAthensCanvas.
 			self drawLabelOnAthensCanvas: anAthensCanvas ]
 ]
@@ -31,7 +31,7 @@ MenuItemMorph >> drawLabelOnAthensCanvas: anAthensCanvas [
 			anAthensCanvas
 				setPaint: self color;
 				setFont: self fontToUse;
-				drawString: contents.
+				drawString: contents
 ]
 
 { #category : #'*Athens-Morphic' }
@@ -39,7 +39,7 @@ MenuItemMorph >> drawOnAthensCanvas: anAthensCanvas [
 	| bnd |
 	bnd := self bounds topLeft + self layoutInset.
 	anAthensCanvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			anAthensCanvas pathTransform translateBy: bnd.
 			self drawBackgroundOnAthensCanvas: anAthensCanvas.
 			self drawIconAndLabelOnAthensCanvas: anAthensCanvas.
@@ -51,7 +51,7 @@ MenuItemMorph >> drawSubMenuMarkerOnAthensCanvas: anAthensCanvas [
 	self hasSubMenu
 		ifFalse: [ ^ self ].
 	anAthensCanvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			anAthensCanvas pathTransform translateX: self extent x - self subMenuMarker width Y: 0.
 			anAthensCanvas pathTransform translateX: 0 Y: (self subMenuMarker height //2).
 			anAthensCanvas setPaint: self subMenuMarker.

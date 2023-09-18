@@ -18,7 +18,7 @@ MetacelloPlatform class >> current [
 	^ Current
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 MetacelloPlatform class >> initialize [
   "noop ... use #select"
 ]
@@ -43,7 +43,7 @@ MetacelloPlatform >> authorName [
 
 { #category : #utilities }
 MetacelloPlatform >> authorName: aString [
-	"Primarily used for testing"
+	"Used by SmalltalkCI"
 
 	self subclassResponsibility
 ]
@@ -246,12 +246,16 @@ MetacelloPlatform >> defaultRepositoryDescription [
 
 { #category : #'file system' }
 MetacelloPlatform >> deleteFileNamed: filePath [
+	<ignoreNotImplementedSelectors: #(containingDirectory localNameFor:)>
+
 	(self fileDirectoryClass on: filePath) containingDirectory deleteFileNamed: (self fileDirectoryClass localNameFor: filePath)
 ]
 
 { #category : #'file system' }
 MetacelloPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirectoryPath [
 	"Get a handle on the following path: anotherDirectoryPath/adirectoryPath"
+	<ignoreNotImplementedSelectors: #(directoryNamed:)>
+
 	^ anotherDirectoryPath directoryNamed: adirectoryPath
 ]
 
@@ -302,6 +306,7 @@ MetacelloPlatform >> downloadZipArchive: url to: outputFileName [
 { #category : #'file system' }
 MetacelloPlatform >> ensureDirectoryExists: aDirectoryHandle [
 	"Ensure the directory exists."
+	<ignoreNotImplementedSelectors: #(assureExistence)>
 
 	^ aDirectoryHandle assureExistence ; yourself
 ]
@@ -374,18 +379,15 @@ MetacelloPlatform >> globalNamed: globalName ifAbsent: absentBlock [
 
 { #category : #monticello }
 MetacelloPlatform >> newVersionForWorkingCopy: aWorkingCopy [
+	<ignoreNotImplementedSelectors: #(newVersion)>
   ^ aWorkingCopy newVersion
-]
-
-{ #category : #'repository creation' }
-MetacelloPlatform >> packageInfoFor: aMCWorkingCopy [
-  ^ aMCWorkingCopy packageInfo
 ]
 
 { #category : #'file system' }
 MetacelloPlatform >> parentDirectoryOf: aFileHandler [
 	"Get the parent directory of this file."
-	
+	<ignoreNotImplementedSelectors: #(containingDirectory)>
+
 	^ aFileHandler containingDirectory
 ]
 
@@ -405,15 +407,6 @@ MetacelloPlatform >> processPID [
 ]
 
 { #category : #'file system' }
-MetacelloPlatform >> readStreamOn: aFileHandle do: aBlock [
-	"Get a read stream on the file handle and execute some actions on it."
-	| stream |
-	stream := aFileHandle readStream.
-	^ [ aBlock value: stream ] 
-		ensure: [ stream close ]
-]
-
-{ #category : #'file system' }
 MetacelloPlatform >> recursiveDelete: aDirectory [
 	"delete this directory and all children of it"
 
@@ -427,6 +420,7 @@ MetacelloPlatform >> reenableUndefinedSybolUpdates: undefinedSymbols [
 
 { #category : #'repository creation' }
 MetacelloPlatform >> registerPackageNamed: packageName [
+	<ignoreNotImplementedSelectors: #(registerPackageName:)>
   ^ (Smalltalk at: #'PackageInfo') registerPackageName: packageName
 ]
 
@@ -461,6 +455,8 @@ MetacelloPlatform >> stackCacheFor: cacheName cacheClass: cacheClass at: key doi
 
 { #category : #utilities }
 MetacelloPlatform >> string: aString includesSubstring: aSubstring [
+	<ignoreNotImplementedSelectors: #(includesSubString:)>
+
 	"abstract String>>includesSubstring: to have the same message on all supported platforms."
 
 	^aString includesSubString: aSubstring
@@ -468,6 +464,7 @@ MetacelloPlatform >> string: aString includesSubstring: aSubstring [
 
 { #category : #system }
 MetacelloPlatform >> suspendSystemUpdateEventsDuring: aBlock [
+	<ignoreNotImplementedSelectors: #(doSilently:)>
 	"Wraps call to the system evetn manager to tell it that we want to suspend events during execution of aBlock"
 	(Smalltalk at: #SystemChangeNotifier) uniqueInstance doSilently: aBlock
 ]

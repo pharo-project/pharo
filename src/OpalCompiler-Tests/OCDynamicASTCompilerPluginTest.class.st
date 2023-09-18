@@ -8,16 +8,16 @@ Class {
 OCDynamicASTCompilerPluginTest >> testCreateAndUseDynamicCompilerPlugin [
 
 	| plugin result |
-	
+
 	plugin := OCDynamicASTCompilerPlugin
-		          newFromTransformBlock: [ :ast | 
+		          newFromTransformBlock: [ :ast |
 			          (RBParseTreeRewriter
 				           replaceLiteral: 42
 				           with: 'meaning of life') executeTree: ast.
 			          ast ]
 		          andPriority: 0.
-		
-	"Use plugin with compiler"	
+
+	"Use plugin with compiler"
 	result := Object compiler
 		          addPlugin: plugin;
 		          evaluate: '42'.
@@ -25,10 +25,10 @@ OCDynamicASTCompilerPluginTest >> testCreateAndUseDynamicCompilerPlugin [
 ]
 
 { #category : #tests }
-OCDynamicASTCompilerPluginTest >> testCreateDynamicCompilerPluginWithDefaultPriority [  
+OCDynamicASTCompilerPluginTest >> testCreateDynamicCompilerPluginWithDefaultPriority [
 
 	| plugin |
 	plugin := OCDynamicASTCompilerPlugin newFromTransformBlock: [ :ast | ast ].
-			
+
 	self assert: plugin priority equals: OCDynamicASTCompilerPlugin defaultPriority
 ]

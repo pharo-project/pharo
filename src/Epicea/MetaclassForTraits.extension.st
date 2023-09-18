@@ -6,7 +6,7 @@ MetaclassForTraits >> asEpiceaRingDefinition [
 	| baseClassDefinition |
 	baseClassDefinition  := self instanceSide asEpiceaRingDefinition.
 
-	^ baseClassDefinition withMetaclass classSide 
+	^ baseClassDefinition withMetaclass classSide
 		traitCompositionSource: self classSide traitCompositionString;
 		definitionSource: self classSide definitionString;
 		yourself

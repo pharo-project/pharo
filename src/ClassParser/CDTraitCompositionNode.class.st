@@ -16,12 +16,12 @@ Class {
 
 { #category : #testing }
 CDTraitCompositionNode class >> isAbstract [
-		
+
 	^ self == CDTraitCompositionNode
 ]
 
 { #category : #accessing }
-CDTraitCompositionNode >> subject [ 
+CDTraitCompositionNode >> subject [
 	^subject
 ]
 

@@ -1,3 +1,6 @@
+"
+I model push thisThisProcess bytecode
+"
 Class {
 	#name : #IRPushThisProcess,
 	#superclass : #IRAccess,
@@ -7,4 +10,10 @@ Class {
 { #category : #visiting }
 IRPushThisProcess >> accept: aVisitor [
 	^ aVisitor visitPushThisProcess: self
+]
+
+{ #category : #testing }
+IRPushThisProcess >> isRemovableByPop [
+
+	^ true
 ]

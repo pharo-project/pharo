@@ -14,7 +14,7 @@ Class {
 { #category : #'instance creation' }
 EpTraitModification class >> oldTrait: anOldTrait newTrait: aNewTrait [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeOldTrait: anOldTrait newTrait: aNewTrait;
 		yourself
 ]
@@ -38,7 +38,7 @@ EpTraitModification >> behaviorAffectedName [
 
 { #category : #testing }
 EpTraitModification >> hasChanges [
-	^ oldTrait definitionSource ~= newTrait definitionSource or: [ 
+	^ oldTrait definitionSource ~= newTrait definitionSource or: [
 		oldTrait classSide definitionSource ~= newTrait classSide definitionSource ]
 ]
 
@@ -47,7 +47,7 @@ EpTraitModification >> initializeOldTrait: anOldTrait newTrait: aNewTrait [
 
 	self initialize.
 	oldTrait := anOldTrait asEpiceaRingDefinition.
-	newTrait := aNewTrait asEpiceaRingDefinition.
+	newTrait := aNewTrait asEpiceaRingDefinition
 ]
 
 { #category : #accessing }

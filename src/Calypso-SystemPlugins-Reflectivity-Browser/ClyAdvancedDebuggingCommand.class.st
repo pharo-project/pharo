@@ -15,7 +15,7 @@ ClyAdvancedDebuggingCommand class >> contextMenuOrder [
 
 { #category : #testing }
 ClyAdvancedDebuggingCommand class >> isAbstract [
-	^self == ClyAdvancedDebuggingCommand 
+	^self == ClyAdvancedDebuggingCommand
 ]
 
 { #category : #activation }
@@ -42,7 +42,7 @@ ClyAdvancedDebuggingCommand class >> methodEditorLeftBarMenuActivation [
 ClyAdvancedDebuggingCommand class >> sourceCodeMenuActivation [
 
 	<classAnnotation>
-	^ SycAdvancedDebuggingMenuActivation 
+	^ SycAdvancedDebuggingMenuActivation
 		  byItemOf: ClyAdvancedDebuggingMenuGroup
 		  order: self contextMenuOrder
 		  for: ClyMethodSourceCodeContext

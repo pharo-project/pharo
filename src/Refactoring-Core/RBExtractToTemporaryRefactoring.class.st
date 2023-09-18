@@ -13,12 +13,12 @@ Class {
 		'newVariableName',
 		'parseTree'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
-RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [ 
-	^ self new 
+RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [
+	^ self new
 		extract: anInterval
 		to: aString
 		from: aSelector
@@ -26,7 +26,7 @@ RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: a
 ]
 
 { #category : #'instance creation' }
-RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [ 
+RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
@@ -38,17 +38,17 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 
 { #category : #preconditions }
 RBExtractToTemporaryRefactoring >> checkVariableName [
-	(class whoDefinesInstanceVariable: newVariableName) ifNotNil: 
-			[self refactoringError: ('<1p> defines an instance variable named <2s>' 
+	(class whoDefinesInstanceVariable: newVariableName) ifNotNil:
+			[self refactoringError: ('<1p> defines an instance variable named <2s>'
 						expandMacrosWith: class
 						with: newVariableName)].
-	(class whoDefinesClassVariable: newVariableName) ifNotNil: 
-			[self refactoringError: ('<1p> defines a class variabled named <2s>' 
+	(class whoDefinesClassVariable: newVariableName) ifNotNil:
+			[self refactoringError: ('<1p> defines a class variabled named <2s>'
 						expandMacrosWith: class
 						with: newVariableName)].
-	(self parseTree allDefinedVariables includes: newVariableName) 
-		ifTrue: 
-			[self refactoringError: ('<1s> is already a temporary variable name' 
+	(self parseTree allDefinedVariables includes: newVariableName)
+		ifTrue:
+			[self refactoringError: ('<1s> is already a temporary variable name'
 						expandMacrosWith: newVariableName)]
 ]
 
@@ -58,14 +58,14 @@ RBExtractToTemporaryRefactoring >> compileNewMethod [
 ]
 
 { #category : #transforming }
-RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [ 
+RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	| valueNode |
 	valueNode := RBVariableNode named: newVariableName.
 	^RBAssignmentNode variable: valueNode value: aNode
 ]
 
 { #category : #initialization }
-RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [ 
+RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval.
@@ -77,7 +77,7 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 	| node statementNode nodeReferences children |
 	node := self parseTree whichNodeIsContainedBy: sourceInterval.
 	(node notNil and: [ node isValue ])
-		ifFalse: [ self refactoringFailure: 'Cannot assign to non-value nodes' ].
+		ifFalse: [ self refactoringError: 'Cannot assign to non-value nodes' ].
 	children := self parseTree body allChildren.
 	nodeReferences := children select: [ :each | each = node ] thenCollect: [ :each | each ].
 	statementNode := node statementNode.
@@ -95,20 +95,27 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 RBExtractToTemporaryRefactoring >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+		ifNil: [ parseTree := class parseTreeForSelector: selector.
+			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 			].
-	^ parseTree
+	^ parseTree doSemanticAnalysis
 ]
 
 { #category : #preconditions }
 RBExtractToTemporaryRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class) 
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class) 
-			& (RBCondition withBlock: 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
+			& (RBCondition withBlock:
 						[self verifySelectedInterval.
 						self checkVariableName.
 						true])
+]
+
+{ #category : #transforming }
+RBExtractToTemporaryRefactoring >> privateTransform [
+	self
+		insertTemporary;
+		compileNewMethod
 ]
 
 { #category : #'private - accessing' }
@@ -117,15 +124,15 @@ RBExtractToTemporaryRefactoring >> selectedSource [
 	| source |
 
 	source := class sourceCodeFor: selector.
-	source ifNil: [ self refactoringFailure: 'Couldn''t find sources' ].
+	source ifNil: [ self refactoringError: 'Couldn''t find sources' ].
 	( ( sourceInterval first between: 1 and: source size )
 		and: [ sourceInterval last between: 1 and: source size ] )
-		ifFalse: [ self refactoringFailure: 'Invalid interval' ].
+		ifFalse: [ self refactoringError: 'Invalid interval' ].
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
 { #category : #printing }
-RBExtractToTemporaryRefactoring >> storeOn: aStream [ 
+RBExtractToTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' extract: '.
@@ -140,20 +147,13 @@ RBExtractToTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #transforming }
-RBExtractToTemporaryRefactoring >> transform [
-	self
-		insertTemporary;
-		compileNewMethod
-]
-
 { #category : #preconditions }
 RBExtractToTemporaryRefactoring >> verifySelectedInterval [
 	| selectedParseTree selectedSources |
 	selectedSources := self selectedSource.
 	selectedParseTree := self parserClass
 		parseExpression: selectedSources
-		onError: [ :message :position | self refactoringFailure: 'Invalid selection' ].
+		onError: [ :message :position | self refactoringError: 'Invalid selection' ].
 	selectedParseTree isSequence
-		ifTrue: [ self refactoringFailure: 'Cannot assign temp to multiple statements' ]
+		ifTrue: [ self refactoringError: 'Cannot assign temp to multiple statements' ]
 ]

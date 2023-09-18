@@ -11,10 +11,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-InfiniteForm class >> with: aForm [ 
+InfiniteForm class >> with: aForm [
 	"Answer an instance of me whose pattern form is the argument, aForm."
 
-	^self new 
+	^self new
 		form: aForm;
 		yourself
 ]
@@ -47,7 +47,7 @@ InfiniteForm >> colorForInsets [
 ]
 
 { #category : #'display box access' }
-InfiniteForm >> computeBoundingBox [ 
+InfiniteForm >> computeBoundingBox [
 	"Refer to the comment in DisplayObject|computeBoundingBox."
 
 	^0 @ 0 corner: SmallInteger maxVal @ SmallInteger maxVal
@@ -108,7 +108,7 @@ InfiniteForm >> displayOnPort: aPort at: offset [
 	left to: (targetBox right - 1) by: patternBox width do:
 		[:x | top to: (targetBox bottom - 1) by: patternBox height do:
 			[:y | aPort destOrigin: x@y; copyBits]].
-	aPort colorMap: savedMap.
+	aPort colorMap: savedMap
 ]
 
 { #category : #displaying }
@@ -137,7 +137,7 @@ InfiniteForm >> displayOnPort: aPort offsetBy: offset [
 	left to: (targetBox right - 1) by: patternBox width do:
 		[:x | top to: (targetBox bottom - 1) by: patternBox height do:
 			[:y | aPort destOrigin: x@y; copyBits]].
-	aPort colorMap: savedMap.
+	aPort colorMap: savedMap
 ]
 
 { #category : #accessing }
@@ -184,14 +184,14 @@ InfiniteForm >> isSolidFill [
 { #category : #testing }
 InfiniteForm >> isTiled [
 	"Return true if the receiver should be drawn as a tiled pattern"
-	
+
 	^ true
 ]
 
 { #category : #testing }
 InfiniteForm >> isTranslucent [
 	"Return true since the bitmap may be translucent and we don't really want to check"
-	
+
 	^ true
 ]
 
@@ -207,7 +207,7 @@ InfiniteForm >> normal [
 ]
 
 { #category : #accessing }
-InfiniteForm >> offset [ 
+InfiniteForm >> offset [
 	"Refer to the comment in DisplayObject|offset."
 
 	^0 @ 0

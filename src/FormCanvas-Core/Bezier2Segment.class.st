@@ -29,17 +29,17 @@ Bezier2Segment class >> from: startPoint to: endPoint withMidPoint: pointOnCurve
 ]
 
 { #category : #'instance creation' }
-Bezier2Segment class >> from: startPoint via: viaPoint to: endPoint [ 
+Bezier2Segment class >> from: startPoint via: viaPoint to: endPoint [
 	^self new from: startPoint to: endPoint via: viaPoint
 ]
 
 { #category : #'instance creation' }
-Bezier2Segment class >> from: startPoint withMidPoint: pointOnCurve at: parameter to: endPoint [ 
+Bezier2Segment class >> from: startPoint withMidPoint: pointOnCurve at: parameter to: endPoint [
 	^self new from: startPoint to: endPoint withMidPoint: pointOnCurve at: parameter
 ]
 
 { #category : #'instance creation' }
-Bezier2Segment class >> from: startPoint withMidPoint: pointOnCurve to: endPoint [ 
+Bezier2Segment class >> from: startPoint withMidPoint: pointOnCurve to: endPoint [
 	^self new from: startPoint to: endPoint withMidPoint: pointOnCurve
 ]
 
@@ -47,7 +47,7 @@ Bezier2Segment class >> from: startPoint withMidPoint: pointOnCurve to: endPoint
 Bezier2Segment class >> makeEllipseSegments: aRectangle [
 	"Answer a set of bezier segments approximating an ellipsoid fitting the given rectangle.
 	This method creates eight bezier segments (two for each quadrant) approximating the oval."
-	"EXAMPLE: 
+	"EXAMPLE:
 	This example draws an oval with a red border and overlays the approximating bezier segments on top of the oval (drawn in black), thus giving an impression of how closely the bezier resembles the oval. Change the rectangle to see how accurate the approximation is for various radii of the oval.
 		| rect |
 		rect := 100@100 extent: 1200@500.
@@ -56,7 +56,7 @@ Bezier2Segment class >> makeEllipseSegments: aRectangle [
 			seg lineSegmentsDo:[:last :next|
 				Display getCanvas line: last to: next width: 1 color: Color black]].
 	"
-	"EXAMPLE: 
+	"EXAMPLE:
 		| minRadius maxRadius |
 		maxRadius := 300.
 		minRadius := 20.
@@ -90,7 +90,7 @@ Bezier2Segment class >> makeEllipseSegments: aRectangle [
 
 	dir := (dir * scale) @ 0.
 	nrm := 0 @ (nrm * scale).
-	
+
 	seg1a := self from: topCenter via: topCenter + dir to: topRight.
 	seg1b := self from: topRight via: rightCenter - nrm to: rightCenter.
 
@@ -130,9 +130,9 @@ Bezier2Segment >> asBezier3Segment [
 { #category : #converting }
 Bezier2Segment >> asIntegerSegment [
 	"Convert the receiver into integer representation"
-	^self species 
-			from: start asIntegerPoint 
-			to: end asIntegerPoint 
+	^self species
+			from: start asIntegerPoint
+			to: end asIntegerPoint
 			via: via asIntegerPoint
 ]
 
@@ -194,7 +194,7 @@ Bezier2Segment >> curveFrom: param1 to: param2 [
 	].
 	tan2 := (tan2 - tan1 * param1 + tan1) * (param2 - param1).
 	newVia := newStart + tan2.
-	^self shallowCopy from: newStart to: newEnd via: newVia.
+	^self shallowCopy from: newStart to: newEnd via: newVia
 ]
 
 { #category : #accessing }
@@ -207,7 +207,7 @@ Bezier2Segment >> from: startPoint to: endPoint [
 	"Initialize the receiver as straight line"
 	start := startPoint.
 	end := endPoint.
-	via := (start + end) // 2.
+	via := (start + end) // 2
 ]
 
 { #category : #initialize }
@@ -215,7 +215,7 @@ Bezier2Segment >> from: startPoint to: endPoint via: viaPoint [
 	"Initialize the receiver"
 	start := startPoint.
 	end := endPoint.
-	via := viaPoint.
+	via := viaPoint
 ]
 
 { #category : #initialize }
@@ -224,7 +224,7 @@ Bezier2Segment >> from: startPoint to: endPoint withMidPoint: pointOnCurve [
 	start := startPoint.
 	end := endPoint.
 	"Compute via"
-	via := (pointOnCurve * 2) - (start + end * 0.5).
+	via := (pointOnCurve * 2) - (start + end * 0.5)
 ]
 
 { #category : #initialize }
@@ -251,7 +251,7 @@ Bezier2Segment >> initializeFrom: controlPoints [
 	controlPoints size = 3 ifFalse:[self error:'Wrong number of control points'].
 	start := controlPoints at: 1.
 	via := controlPoints at: 2.
-	end := controlPoints at: 3.
+	end := controlPoints at: 3
 ]
 
 { #category : #testing }
@@ -285,7 +285,7 @@ Bezier2Segment >> lineSegments: steps do: aBlock [
 		next := self valueAt: t.
 		aBlock value: last value: next.
 		last := next.
-		t := t + deltaStep].
+		t := t + deltaStep]
 ]
 
 { #category : #'vector functions' }
@@ -301,7 +301,7 @@ Bezier2Segment >> lineSegmentsDo: aBlock [
 		next := self valueAt: t.
 		aBlock value: last value: next.
 		last := next.
-		t := t + deltaStep].
+		t := t + deltaStep]
 ]
 
 { #category : #'vector functions' }
@@ -353,26 +353,26 @@ Bezier2Segment >> parameterAtExtreme: tangentDirection [
 	nrmX := tangentDirection y.
 	nrmY := 0 - tangentDirection x.
 	"Compute result"
-	^((inX * nrmX) + (inY * nrmY)) / 
+	^((inX * nrmX) + (inY * nrmY)) /
 		((dirX * nrmX) + (dirY * nrmY))
 ]
 
 { #category : #'vector functions' }
 Bezier2Segment >> parameterAtExtremeX [
 	"Note: Only valid for non-monoton receivers"
-	^self parameterAtExtreme: 0.0@1.0.
+	^self parameterAtExtreme: 0.0@1.0
 ]
 
 { #category : #'vector functions' }
 Bezier2Segment >> parameterAtExtremeY [
 	"Note: Only valid for non-monoton receivers"
-	^self parameterAtExtreme: 1.0@0.0.
+	^self parameterAtExtreme: 1.0@0.0
 ]
 
 { #category : #printing }
 Bezier2Segment >> printOn: aStream [
 	"Print the receiver on aStream"
-	aStream 
+	aStream
 		nextPutAll: self class name;
 		nextPutAll:' from: ';
 		print: start;
@@ -380,13 +380,13 @@ Bezier2Segment >> printOn: aStream [
 		print: via;
 		nextPutAll: ' to: ';
 		print: end;
-		space.
+		space
 ]
 
 { #category : #'vector functions' }
 Bezier2Segment >> roundTo: quantum [
 	super roundTo: quantum.
-	via := via roundTo: quantum.
+	via := via roundTo: quantum
 ]
 
 { #category : #'vector functions' }
@@ -423,8 +423,8 @@ Bezier2Segment >> tangentAtStart [
 Bezier2Segment >> valueAt: parameter [
 	"Evaluate the receiver at the given parametric value"
 	"Return the point at the parametric value t:
-		p(t) =	(1-t)^2 * p1 + 
-				2*t*(1-t) * p2 + 
+		p(t) =	(1-t)^2 * p1 +
+				2*t*(1-t) * p2 +
 				t^2 * p3.
 	"
 	| t1 t2 t3 |

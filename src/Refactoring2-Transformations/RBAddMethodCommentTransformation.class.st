@@ -16,14 +16,14 @@ Class {
 	#instVars : [
 		'comment'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
 RBAddMethodCommentTransformation class >> comment: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
-		comment: aString 
+		comment: aString
 		inMethod: aSelector
 		inClass: aClassName;
 		yourself
@@ -34,7 +34,7 @@ RBAddMethodCommentTransformation class >> model: aRBModel comment: aString inMet
 
 	^ self new
 		model: aRBModel;
-		comment: aString 
+		comment: aString
 		inMethod: aSelector
 		inClass: aClassName;
 		yourself
@@ -46,13 +46,6 @@ RBAddMethodCommentTransformation >> comment: aString inMethod: aSelector inClass
 	self className: aClassName.
 	selector := aSelector.
 	comment := aString
-]
-
-{ #category : #preconditions }
-RBAddMethodCommentTransformation >> preconditions [
-	"no preconditions needed"
-	
-	^ self emptyCondition
 ]
 
 { #category : #executing }

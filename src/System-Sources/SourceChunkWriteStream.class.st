@@ -8,26 +8,8 @@ Class {
 	#category : #'System-Sources-Utilities'
 }
 
-{ #category : #accessing }
-SourceChunkWriteStream >> nextPut: aString [
-	"Append the argument, aString, to the receiver, doubling embedded ! terminators and adding a extra one"
+{ #category : #writing }
+SourceChunkWriteStream >> afterNexPut [
 
-	| string start bangIndex |
-	string := aString asString.
-	start := 1.
-	[ 
-	(bangIndex := string indexOf: self terminatorMark startingAt: start)
-	= 0 ] whileFalse: [ 
-		decoratedStream
-			next: bangIndex - start + 1
-			putAll: string
-			startingAt: start.
-		self bang. "double it"
-		start := bangIndex + 1 ].
-	decoratedStream
-		next: string size - start + 1
-		putAll: string
-		startingAt: start.
-	self bang. "one extra"
 	decoratedStream setToEnd
 ]

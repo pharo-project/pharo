@@ -11,11 +11,11 @@ SignalLoggerTest >> testStartingTwiceDoesNotRegisterTwice [
 	SignalLogger resetInstance.
 	SignalLogger start.
 	SignalLogger start.
-	self 
-		assert: Beacon instance announcer numberOfSubscriptions 
+	self
+		assert: Beacon instance announcer numberOfSubscriptions
 		equals: initialNumberOfSubscriptions + 1.
 	SignalLogger stop.
-	self 
-		assert: Beacon instance announcer numberOfSubscriptions 
+	self
+		assert: Beacon instance announcer numberOfSubscriptions
 		equals: initialNumberOfSubscriptions
 ]

@@ -24,7 +24,6 @@ SycDeprecateMessageCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #execution }
 SycDeprecateMessageCommand >> applyResultInContext: aContext [
-	
 ]
 
 { #category : #accessing }
@@ -37,14 +36,14 @@ SycDeprecateMessageCommand >> defaultMenuItemName [
 SycDeprecateMessageCommand >> execute [
 
 	(RBDeprecateMethodDriver
-		 model: model
 		 deprecateMethod: originalMessage selector
-		 in: originalMessage contextUser origin) execute
+		 in: originalMessage methodClass
+		 scopes: refactoringScopes) runRefactoring
 ]
 
 { #category : #testing }
-SycDeprecateMessageCommand >> isComplexRefactoring [ 
-	"We need to override this to prevent `RBRefactoringPreviewPresenter` from opening (See `CmdCommand >> execute` for details.) 
+SycDeprecateMessageCommand >> isComplexRefactoring [
+	"We need to override this to prevent `RBRefactoringPreviewPresenter` from opening (See `CmdCommand >> execute` for details.)
 	We want this command to call the appropriate Driver that will execute refactoring."
 
 	^ false

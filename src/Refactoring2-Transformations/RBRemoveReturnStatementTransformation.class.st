@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'returnValue'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -48,17 +48,26 @@ RBRemoveReturnStatementTransformation class >> return: anExpression inMethod: aS
 ]
 
 { #category : #preconditions }
-RBRemoveReturnStatementTransformation >> preconditions [
+RBRemoveReturnStatementTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		& (RBCondition
-			withBlock: [ self definingClass canUnderstand: selector ]
-			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		& (RBCondition
-			withBlock: [ self definingMethod lastIsReturn ]
-			errorString: ('Method named <1s> does not have a return statement' expandMacrosWith: selector))
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [ self definingMethod lastIsReturn ]
+			   errorString:
+				   ('Method named <1s> does not have a return statement'
+					    expandMacrosWith: selector))
+]
+
+{ #category : #preconditions }
+RBRemoveReturnStatementTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
 { #category : #executing }
@@ -66,15 +75,15 @@ RBRemoveReturnStatementTransformation >> privateTransform [
 
 	| methodTree nodesToRemove |
 	methodTree := self definingMethod.
-	
+
 	nodesToRemove := ( methodTree allChildren removeDuplicates
 		select: #isReturn )
 		select: [ :node | node sourceCode = returnValue ].
-	
+
 	nodesToRemove
 		ifEmpty: [ methodTree removeLast ]
 		ifNotEmpty: [ nodesToRemove do: [ :node | node parent removeNode: node ] ].
-	self definingClass compileTree: methodTree.
+	self definingClass compileTree: methodTree
 ]
 
 { #category : #api }
@@ -86,7 +95,7 @@ RBRemoveReturnStatementTransformation >> return: anExpression inMethod: aSelecto
 ]
 
 { #category : #printing }
-RBRemoveReturnStatementTransformation >> storeOn: aStream [ 
+RBRemoveReturnStatementTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

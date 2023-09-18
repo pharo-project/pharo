@@ -5,9 +5,12 @@ I wrap the access to my parent's functionality (#next, #nextInteger: and #next:i
 
 To access the default shared random number generator, do:
 
-	SharedRandom globalGenerator.
+    SharedRandom globalGenerator.
 	
 In principle it is better to use a shared generator since multiple users will create a more random pattern.
+
+The system wide global shared random generator will be reset at system start up (and when the image is saved).
+
 "
 Class {
 	#name : #SharedRandom,
@@ -23,32 +26,38 @@ Class {
 
 { #category : #accessing }
 SharedRandom class >> globalGenerator [
-	^ global
+	"Return the system wide global shared random generator."
+
+	^ global ifNil: [ global := self new ]
 ]
 
 { #category : #'class initialization' }
-SharedRandom class >> initialize [
+SharedRandom class >> reset [
+	global := nil
+]
 
-	global := self new
+{ #category : #'system startup' }
+SharedRandom class >> startUp [
+	self reset
 ]
 
 { #category : #initialization }
 SharedRandom >> initialize [
 	super initialize.
-	mutex := Semaphore forMutualExclusion.
+	mutex := Semaphore forMutualExclusion
 ]
 
 { #category : #accessing }
 SharedRandom >> next [
-	^ 	mutex critical: [ super privateNextValue ].
+	^ mutex critical: [ super next ]
 ]
 
 { #category : #accessing }
 SharedRandom >> next: anInteger into: anArray [
-    ^ mutex critical: [ super next: anInteger into: anArray ].
+    ^ mutex critical: [ super next: anInteger into: anArray ]
 ]
 
 { #category : #accessing }
 SharedRandom >> nextInteger: anInteger [
-    ^ mutex critical: [ super nextInteger: anInteger ].
+    ^ mutex critical: [ super nextInteger: anInteger ]
 ]

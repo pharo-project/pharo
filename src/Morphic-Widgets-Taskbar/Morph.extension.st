@@ -17,7 +17,7 @@ Morph >> isTaskbar [
 { #category : #'*Morphic-Widgets-Taskbar' }
 Morph >> taskThumbnailOfSize: thumbExtent [
 	"Answer a new task thumbnail for the receiver."
-	
+
 	^ ImageMorph new
 		form: (self asFormOfSize: thumbExtent);
 		yourself
@@ -56,7 +56,7 @@ Morph >> taskbarThumbnailExtent [
 { #category : #'*Morphic-Widgets-Taskbar' }
 Morph >> taskbars [
 	"Answer the receiver's taskbars."
-	
+
 	^self submorphs select: [:each |
 		each isTaskbar]
 ]

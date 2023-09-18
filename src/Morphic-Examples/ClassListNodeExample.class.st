@@ -14,7 +14,7 @@ ClassListNodeExample >> browseItem [
 
 { #category : #menu }
 ClassListNodeExample >> classButton [
-	^ (self theme 
+	^ (self theme
 		newButtonIn: self
 		for: self
 		getState: nil
@@ -36,11 +36,6 @@ ClassListNodeExample >> commentText [
 		yourself
 ]
 
-{ #category : #accessing }
-ClassListNodeExample >> exploreItem [
-	self inspect
-]
-
 { #category : #menu }
 ClassListNodeExample >> icon [
 	^ self iconNamed: #smallExpertIcon
@@ -59,23 +54,17 @@ ClassListNodeExample >> keyStroke: anEvent from: aTreeMorph [
 		ifTrue: [self browseItem. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
 ]
 
 { #category : #accessing }
-ClassListNodeExample >> menu: menu shifted: b [ 
+ClassListNodeExample >> menu: menu shifted: b [
 	menu
-		add: 'Browse (b)' 
+		add: 'Browse (b)'
 		target: self
 		selector: #browseItem.
 	menu
-		add: 'Inspect (i)' 
+		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem.
-	menu
-		add: 'Explore (I)' 
-		target: self
-		selector: #exploreItem.
+		selector: #inspectItem
 ]

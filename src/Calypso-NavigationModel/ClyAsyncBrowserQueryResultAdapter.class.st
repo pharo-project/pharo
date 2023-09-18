@@ -21,17 +21,17 @@ ClyAsyncBrowserQueryResultAdapter >> allItems [
 { #category : #queries }
 ClyAsyncBrowserQueryResultAdapter >> findItemsSimilarTo: sampleEnvironmentItems [
 	| rest found |
-	actualResult protectItemsWhile: [ 
+	actualResult protectItemsWhile: [
 		rest := sampleEnvironmentItems as: OrderedCollection.
-		found := OrderedCollection new.	
+		found := OrderedCollection new.
 		actualResult items do: [ :existing |
 			rest
 				detect: [ :sample | sample isSimilarTo: existing]
-				ifFound: [ :sample | 
+				ifFound: [ :sample |
 					existing prepareIn: self environment.
-					found add: existing. 
+					found add: existing.
 					rest remove: sample.
-					rest ifEmpty: [ ^found ] ]].	
+					rest ifEmpty: [ ^found ] ]].
 		^found]
 ]
 
@@ -45,7 +45,7 @@ ClyAsyncBrowserQueryResultAdapter >> findItemsWith: actualObjects [
 	^actualResult protectItemsWhile: [
 		result := actualObjects collect: [ :eachObject |
 			actualResult items
-				detect: [ :item | item representsObjectEqualTo: eachObject ] 
+				detect: [ :item | item representsObjectEqualTo: eachObject ]
 				ifNone: nil].
 		self prepareItems: result]
 ]

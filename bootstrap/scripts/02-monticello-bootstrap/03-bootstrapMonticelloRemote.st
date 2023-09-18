@@ -1,3 +1,4 @@
+| mcPackages |
 mcPackages := #(
  'Network-Kernel'
  'Network-MIME'
@@ -6,12 +7,11 @@ mcPackages := #(
  'MonticelloRemoteRepositories'
 
  'Zinc-HTTP'
- 'Zinc-FileSystem'
  'Zodiac-Core'
  ).
 
 (MonticelloBootstrap inDirectory: (CommandLineArguments new optionAt: 'BOOTSTRAP_PACKAGE_CACHE_DIR' ifAbsent: [ MCCacheRepository uniqueInstance directory ]) asFileReference)
-  loadPackagesNamed: mcPackages.
+  loadPackagesNamed: mcPackages!
 
 InternetConfiguration initialize.
 NetNameResolver initialize.

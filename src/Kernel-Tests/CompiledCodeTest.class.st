@@ -1,6 +1,9 @@
 Class {
 	#name : #CompiledCodeTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'var'
+	],
 	#category : #'Kernel-Tests-Classes'
 }
 
@@ -11,12 +14,18 @@ CompiledCodeTest >> compiledMethod1 [
 
 { #category : #examples }
 CompiledCodeTest >> method1 [
-	
+
 	<pragma1: 123 foo: 'bar' >
-	| array | 
+	| array |
 	array := Array new.
 	array at: 1 put: 'Pharo loves tests'.
 	#(#add #at: #remove) do: #printOn:
+]
+
+{ #category : #examples }
+CompiledCodeTest >> methodReturnOne [
+
+	^ 1
 ]
 
 { #category : #'tests - scanning' }
@@ -25,19 +34,88 @@ CompiledCodeTest >> testAccessesRef [
 	readMethod := SmalltalkImage class>>#compilerClass.
 	writeMethod := SmalltalkImage class>>#compilerClass:.
 	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
-	
+
 	self assert: (readMethod accessesRef: classVar).
-	self assert: (writeMethod accessesRef: classVar).
+	self assert: (writeMethod accessesRef: classVar)
+]
+
+{ #category : #'tests - testing' }
+CompiledCodeTest >> testBlockReturnSpecial [
+	"we do not compile blocks with quick returns for now"
+	self deny: [ ^ self ] compiledBlock isReturnSpecial.
+	self deny: [ ^ nil ] compiledBlock isReturnSpecial.
+	self deny: [ ^ true ] compiledBlock isReturnSpecial.
+	self deny: [ ^ false ] compiledBlock isReturnSpecial.
+	self deny: [ ^ -1 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 0 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 1 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ 2 ] compiledBlock isReturnSpecial.
+
+	self deny: [ ^ 3 ] compiledBlock isReturnSpecial.
+	self deny: [ ^ var ] compiledBlock isReturnSpecial.
+	self deny: [ ^ Object ] compiledBlock isReturnSpecial
+]
+
+{ #category : #'tests - flag' }
+CompiledCodeTest >> testClearFlag [
+	| method |
+	
+	method := self class >> #methodReturnOne.
+	
+	method clearFlag.
+	self deny: method flag.
+	method setFlag.
+	self assert: method flag.
+	method clearFlag.
+	self deny: method flag.
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testEquivalentTo [
+
+	| aClass origin |
+	aClass := Object newAnonymousSubclass.
+	aClass compile: 'm1 ^ self'.
+	origin := aClass >> #m1.
+	self assert: (origin equivalentTo: origin).
+	self assert: (origin equivalentTo: origin copy).
+
+	aClass compile: 'm1 "with comment" ^ self'.
+	self assert: (origin equivalentTo: aClass >> #m1).
+	self assert: (origin equivalentTo: (aClass >> #m1) copy).
+
+	aClass compile: 'm2 ^ self'.
+	self deny: (origin equivalentTo: aClass >> #m2).
+
+	aClass compile: 'm1 <pragma: 1> ^ self'.
+	self deny: (origin equivalentTo: aClass >> #m1).
+
+	origin := aClass >> #m1.
+	aClass compile: 'm1 <pragma: 2> ^ self'.
+	self deny: (origin equivalentTo: aClass >> #m1)
+]
+
+{ #category : #'tests - flag' }
+CompiledCodeTest >> testFlag [
+	| method |
+	
+	method := self class >> #methodReturnOne.
+	self deny: method flag.
+	method setFlag.
+	self assert: method flag.
+	method clearFlag.
+	self deny: method flag.
+
 ]
 
 { #category : #'tests - literals' }
 CompiledCodeTest >> testHasLiteral [
 
 	| method |
-	method := self class compiler compile: 'method 
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
-		self doIt: [ 
+		self doIt: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		self name ].
@@ -61,17 +139,17 @@ CompiledCodeTest >> testHasLiteral [
 	"args of pragmas not found, too."
 	self deny: (method hasLiteral: #pragma).
 	"the method selector NOT"
-	self deny: (method hasLiteral: #method).
+	self deny: (method hasLiteral: #method)
 ]
 
 { #category : #'tests - literals' }
 CompiledCodeTest >> testHasLiteralSuchThat [
 
 	| method |
-	method := self class compiler compile: 'method 
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
-		self doIt: [ 
+		self doIt: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		self name ].
@@ -93,17 +171,17 @@ CompiledCodeTest >> testHasLiteralSuchThat [
 	"args of pragmas are NOT found, too"
 	self deny: (method hasLiteralSuchThat: [:literal | literal == #pragma]).
 	"the method selector NOT"
-	self deny: (method hasLiteralSuchThat: [:literal | literal == #method]).
+	self deny: (method hasLiteralSuchThat: [:literal | literal == #method])
 ]
 
 { #category : #'tests - literals' }
 CompiledCodeTest >> testHasSelector [
 
 	| method |
-	method := self class compiler compile: 'method 
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
-		self doIt: [ 
+		self doIt: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		self name ].
@@ -125,17 +203,17 @@ CompiledCodeTest >> testHasSelector [
 	"args of pragmas are found, too"
 	self assert: (method hasSelector: #pragma).
 	"the method selector NOT"
-	self deny: (method hasSelector: #method).
+	self deny: (method hasSelector: #method)
 ]
 
 { #category : #'tests - literals' }
 CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 
 	| method specialIndex |
-	method := self class compiler compile: 'method 
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
-		self do: [ 
+		self do: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		self name ].
@@ -166,7 +244,7 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 	self assert: (method hasSelector: #pragma: specialSelectorIndex: specialIndex).
 	"the method selector NOT"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: #method.
-	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex).
+	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex)
 ]
 
 { #category : #'tests - testing' }
@@ -184,33 +262,34 @@ CompiledCodeTest >> testHasTemporaries [
 CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 
 	| method block |
-	method := self class compiler compile: 'method 
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		Class.
-		self doIt: [ 
+		self doIt: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		Object.
 		self name ].
 		^#(#array) '.
-	block := (self class compiler evaluate: '[ 
+	block := (self class compiler permitFaulty: true; evaluate: '[
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		Object.
 		self name ]') compiledBlock.
-	self assertCollection: method literals equals: { 
+	self assertCollection: method literals equals: {
 			2.
 			(UndeclaredVariable key: #test value: nil).
+			#runtimeUndeclaredWrite:.
+			(GlobalVariable key: #Class value: Class).
 			block.
 			#doIt:.
-			#( #array ).
-			(GlobalVariable key: #Class value: Class) }
+			#( #array )}
 ]
 
 { #category : #'tests - literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
-	
+
 	self
 		deny:
 			(self compiledMethod1
@@ -227,11 +306,11 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 	"The behavior is different than literals"
 	| method |
-	method := self class compiler compile: 'method 
+	method := self class compiler permitFaulty: true; compile: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		Class.
-		self doIt: [ 
+		self doIt: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		Object.
@@ -241,17 +320,19 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 	self deny: method literalsEvenTheOnesInTheInnerBlocks equals: method literals.
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
-		equals: { 
+		equals: {
 				2.
 				(UndeclaredVariable key: #test value: nil).
+				#runtimeUndeclaredWrite:.
+				(GlobalVariable key: #Class value: Class).
 				2.
 				(UndeclaredVariable key: #test value: nil).
+				#runtimeUndeclaredWrite:.
 				#( #arrayInBlock ).
-				#name.
 				(GlobalVariable key: #Object value: Object).
+				#name.
 				#doIt:.
-				#( #array ).
-				(GlobalVariable key: #Class value: Class) }
+				#( #array ). }
 ]
 
 { #category : #'tests - literals' }
@@ -261,14 +342,40 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 
 	| method |
 	method := self class compiler compile:
-		          'exampleAccessOuterFromCleanBlock 
+		          'exampleAccessOuterFromCleanBlock
 	<compilerOptions: #(+ optionCleanBlockClosure)>
 	| b |
-	b := 1. 
+	b := 1.
 	^[ thisContext tempNamed: ''b'' ] value'.
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: #( 'b' #tempNamed: )
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testLocalMessages [
+	| method |
+	method := self class compiler compile: 'method self doit. [Object class]'.
+	self assert: method localMessages asArray equals: #(#doit) .
+	
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testMessages [
+	| method |
+	method := self class compiler compile: 'method self doit. [Object class]'.
+	self assertCollection: method messages asArray hasSameElements: #(#doit #class).
+]
+
+{ #category : #'tests - testing' }
+CompiledCodeTest >> testMethodReturnSpecial [
+
+	| returnSpecialMethod normalMethod |
+	returnSpecialMethod := self class >> #methodReturnOne.
+	self assert: returnSpecialMethod isReturnSpecial.
+
+	normalMethod := self class >> #method1.
+	self deny: normalMethod isReturnSpecial
 ]
 
 { #category : #'tests - scanning' }
@@ -277,11 +384,11 @@ CompiledCodeTest >> testReadsRef [
 	readMethod := SmalltalkImage class>>#compilerClass.
 	writeMethod := SmalltalkImage class>>#compilerClass:.
 	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
-	
+
 	self assert: (readMethod readsRef: classVar).
 	self deny: (writeMethod readsRef: classVar).
-	
-	"Special test for a method with super in a full block. 
+
+	"Special test for a method with super in a full block.
 	We push a binding for this class but make sure that it is not the same"
 	self deny: ((DelayMutexScheduler>>#unschedule:) readsRef: DelayMutexScheduler binding)
 ]
@@ -299,7 +406,7 @@ CompiledCodeTest >> testReadsSelf [
 	Here we test just the case of a FFI method that was not yet called to not make this test depend on FFI
 	calls"
 	method := self class compiler compile: 'status ^ self ffiCall: #(int cairo_scaled_font_status (self))'.
-	self assert: method readsSelf.
+	self assert: method readsSelf
 ]
 
 { #category : #'tests - scanning' }
@@ -308,12 +415,12 @@ CompiledCodeTest >> testReadsThisContext [
 	method := self class compiler compile: 'method ^thisContext'.
 	self assert: method readsThisContext.
 	method := self class compiler compile: 'method ^self'.
-	self deny: method readsThisContext.
+	self deny: method readsThisContext
 ]
 
 { #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsFalseWhenLiteralNotInMethodPropertiesKey [
-	
+
 	[ self compiledMethod1 propertyAt: #Once put: true.
 	self deny: (self compiledMethod1 refersToLiteral: #Absent) ]
 		ensure: [ self compiledMethod1 removeProperty: #Once ]
@@ -345,30 +452,47 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsContainedInArray
 
 { #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsGlobalVariable [
-	
+
 	self assert: (self compiledMethod1
 				refersToLiteral: (self class environment associationAt: #Array))
 ]
 
 { #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaArguments [
-	
+
 	self assert: (self compiledMethod1 refersToLiteral: 'bar').
 	self assert: (self compiledMethod1 refersToLiteral: 123)
 ]
 
 { #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaSelector [
-	
+
 	self assert: (self compiledMethod1
 				refersToLiteral: #pragma1:foo:)
+]
+
+{ #category : #'tests - flag' }
+CompiledCodeTest >> testSetFlag [
+	| method |
+	method := self class >> #methodReturnOne.
+	
+	self deny: method flag.
+	method setFlag.
+	self assert: method flag.
+	"we can set it twice"
+	method setFlag.
+	self assert: method flag.
+	"we can execute the method"
+	self assert: self methodReturnOne equals: 1.
+	method clearFlag.
+	self deny: method flag.
 ]
 
 { #category : #'tests - debugging support' }
 CompiledCodeTest >> testStepIntoQuickMethods [
 	|ctx compiledBlock|
-	
-	self deny: self compiledMethod1 stepIntoQuickMethods. 
+
+	self deny: self compiledMethod1 stepIntoQuickMethods.
 	ctx := [ 1 + 1 ] asContext.
 	compiledBlock := ctx method.
 	compiledBlock stepIntoQuickMethods: true.

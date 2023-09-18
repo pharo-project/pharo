@@ -22,7 +22,7 @@ Class {
 { #category : #'class initialization' }
 SourceFileArray class >> initialize [
 
-	SessionManager default registerSystemClassNamed: self name.
+	SessionManager default registerSystemClassNamed: self name
 ]
 
 { #category : #'system startup' }
@@ -53,13 +53,13 @@ SourceFileArray >> changesWriteStreamDo: aBlock [
 	changesFile closed ifTrue: [ ^ self ].
 	changesFile isReadOnly ifTrue: [ ^ self ].
 	changesFile setToEnd.
-	
+
 	^ aBlock value: changesFile
 ]
 
 { #category : #'public - file system operations' }
 SourceFileArray >> close [
-		
+
 	| oldFiles |
 	oldFiles := files.
 	files := Array new: 2.
@@ -70,10 +70,10 @@ SourceFileArray >> close [
 { #category : #private }
 SourceFileArray >> closeFileArray: anArray [
 
-	anArray 
-		reject: [ :file | file isNil ] 
+	anArray
+		reject: [ :file | file isNil ]
 		thenDo: [ :file | file close ].
-		
+
 	^ anArray
 ]
 
@@ -93,21 +93,20 @@ SourceFileArray >> createReadOnlyFiles [
 	| readOnly |
 	readOnly := {
 		self sourcesFileStream ifNotNil: [self sourcesFileStream readOnlyCopy].
-		self sourcesFileStream ifNotNil: [self changesFileStream readOnlyCopy] }.
-	^ (readOnly anySatisfy: [ :any | any isNil or: [any closed] ])
-			ifTrue: [ self closeFileArray: readOnly ]
-			ifFalse: [ readOnly ]
+		self changesFileStream ifNotNil: [self changesFileStream readOnlyCopy] }.
+
+	^readOnly
 ]
 
 { #category : #'public - string writing' }
 SourceFileArray >> deferFlushDuring: aBlock [
 
 	"defer flushing the filestream until a block has been executed"
-	
+
 	flushChanges ifFalse: [ ^ aBlock value ].
-	
+
 	flushChanges := false.
-	
+
 	^ [ aBlock value ] ensure: [
 		flushChanges := true.
 		self flushChangesFile ]
@@ -115,8 +114,8 @@ SourceFileArray >> deferFlushDuring: aBlock [
 
 { #category : #'public - file system operations' }
 SourceFileArray >> emptyReadStreamsQueue [
-		
-	| oldQueue | 
+
+	| oldQueue |
 	oldQueue := readOnlyQueue.
 	readOnlyQueue := SharedQueue new.
 	oldQueue flushAllSuchThat: [ :each | self closeFileArray: each. true]
@@ -126,22 +125,22 @@ SourceFileArray >> emptyReadStreamsQueue [
 SourceFileArray >> ensureOpen [
 	"Ensure that the source and changes files are opened.
 	Close them before re-opening them."
-	
+
 	| aSourcesFile aChangesFile |
 
 	self close.
 
 	aSourcesFile := PharoFilesOpener default sourcesFileOrNil.
 	aChangesFile := PharoFilesOpener default changesFileOrNil.
-	
-	aChangesFile ifNil: [ 
+
+	aChangesFile ifNil: [
 		aChangesFile := PharoFilesOpener default changesFileOrNilReadOnly: true silent: false ].
 
 	files := Array
 		with: aSourcesFile
 		with: aChangesFile.
-			
-	readOnlyQueue := SharedQueue new.
+
+	readOnlyQueue := SharedQueue new
 ]
 
 { #category : #'private - accessing file streams' }
@@ -157,39 +156,31 @@ SourceFileArray >> fileAt: index ifAbsent: aBlock [
 { #category : #'private - sourcepointer conversion' }
 SourceFileArray >> fileIndexFromSourcePointer: anInteger [
 	"Return the index of the source file which contains the source chunk addressed by anInteger"
+	"1 is sources file, 2 is changes file"
 
-	^ (anInteger bitAnd: 16r1000000) ~= 0
-		ifTrue: [ 1	"sources file" ]
-		ifFalse: [ anInteger >= 16r1000000
-				ifTrue: [ 2	"changes file" ]
-				ifFalse: [ 0	"compatibility with StandardSourceFileArray" ] ]
+	^ (anInteger bitAnd: 1) + 1
 ]
 
 { #category : #'private - sourcepointer conversion' }
 SourceFileArray >> filePositionFromSourcePointer: anInteger [
-	"Return the position of the source chunk addressed by anInteger"
+	"Return the position of the source chunk addressed by anInteger, just shift by one"
 
-	| hi lo |
-	hi := anInteger // 33554432.
-	lo := anInteger \\ 16777216.
-	^ ((anInteger bitAnd: 16777216) ~= 0 or: [ anInteger < 16777216	"compatibility with StandardSourceFileArray" ])
-		ifTrue: [ hi * 16777216 + lo	"sources file" ]
-		ifFalse: [ (hi - 1) * 16777216 + lo	"changes file" ]
+	^ anInteger >> 1
 ]
 
 { #category : #private }
 SourceFileArray >> finishedReading: aReadOnlyFileArray from: aQueue [
 
-	(aQueue == readOnlyQueue and: [ aQueue size < self readOnlyQueueLimit ]) 
+	(aQueue == readOnlyQueue and: [ aQueue size < self readOnlyQueueLimit ])
 		ifTrue: [ aQueue nextPut: aReadOnlyFileArray ]
 		ifFalse: [ self closeFileArray: aReadOnlyFileArray ]
 ]
 
 { #category : #'public - file system operations' }
 SourceFileArray >> flushChangesFile [
-	
+
 	flushChanges ifFalse: [ ^ self ].
-	self changesFileStream ifNotNil: [:stream | stream flush].
+	self changesFileStream ifNotNil: [:stream | stream flush]
 ]
 
 { #category : #'public - file system operations' }
@@ -198,7 +189,7 @@ SourceFileArray >> forceChangesToDisk [
 
 	| changesFile |
 	changesFile := self changesFileStream.
-	changesFile isReadOnly ifFalse: [ 
+	changesFile isReadOnly ifFalse: [
 		changesFile flush ].
 	changesFile close.
 	changesFile tryOpen.
@@ -214,7 +205,7 @@ SourceFileArray >> getPreambleFrom: aSourceFileStream at: position [
 SourceFileArray >> initialize [
 
 	files := Array new: 2.
-	
+
 	readOnlyQueue := SharedQueue new.
 	flushChanges := true
 ]
@@ -222,7 +213,7 @@ SourceFileArray >> initialize [
 { #category : #'public - string reading' }
 SourceFileArray >> protocolAt: sourcePointer [
 	"Answer the protocol for a given method, retrieved from the sources or changes file. Answer unfound protocol if no protocol is available"
-				
+
 	^ self protocolAt: sourcePointer for: self sourceDataPointers
 ]
 
@@ -236,11 +227,11 @@ SourceFileArray >> protocolAt: sourcePointer for: sourceDataPointers [
 	see http://code.google.com/p/pharo/issues/detail?id=4581"
 	preamble := self sourcedDataAt: sourcePointer.
 	preamble = 'Trait method' ifTrue: [ ^ nil ].
-	(preamble includesSubstring: sourceDataPointers key) ifTrue: [ 
+	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
 		tokens := preamble parseLiterals.
 		protocolPosition := tokens indexOf: sourceDataPointers key.
 		protocolPosition = 0
-			ifFalse: [ 
+			ifFalse: [
 				"New format gives change protocol and unified prior pointer"
 				protocol := tokens at: protocolPosition + 1 ] ].
 	^ protocol
@@ -279,60 +270,60 @@ SourceFileArray >> readStreamAt: sourcePointer ifPresent: presentBlock ifAbsent:
 
 	| index position |
 	sourcePointer ifNil: [ ^ absentBlock value ].
-	
+
 	index := self fileIndexFromSourcePointer: sourcePointer.
 	index = 0 ifTrue: [ ^ absentBlock value ].	"no source pointer for this element"
 
 	position := self filePositionFromSourcePointer: sourcePointer.
 	position = 0 ifTrue: [ ^ absentBlock value ].
 
-	^ self 
-		readStreamAtFileIndex: index 
-		atPosition: position 
-		ifPresent: presentBlock 
+	^ self
+		readStreamAtFileIndex: index
+		atPosition: position
+		ifPresent: presentBlock
 		ifAbsent: absentBlock
 ]
 
 { #category : #'private - accessing file streams' }
 SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: presentBlock ifAbsent: absentBlock [
- 
+
    | queue stream rofa result file |
-   
-	"This method is really ugly. 
-	It uses different readers over the same file that is beeing writing. 
-	This can lead to buffer problems. 
+
+	"This method is really ugly.
+	It uses different readers over the same file that is beeing writing.
+	This can lead to buffer problems.
 	This should be rethougth to a better way.
-	
+
 	Maybe an unification of all the accesses using the same buffer could be nice."
-    
+
   	queue := readOnlyQueue.
   	rofa := queue nextOrNil ifNil: [ self createReadOnlyFiles ].
-       
-   rofa ifNil: [ ^ absentBlock value ].  
+
+   rofa ifNil: [ ^ absentBlock value ].
 
    stream := rofa at: index.
 	stream ifNil: [ ^ absentBlock value ].
-	
+
 	file := files at: index.
-	
-   position > file size ifTrue: [ 
-		self finishedReading: rofa from: queue. 
-		^ absentBlock value 
+
+   position > file size ifTrue: [
+		self finishedReading: rofa from: queue.
+		^ absentBlock value
 	].
 
 	"If the file has been flushed, I am discarding the readonly stream's buffer.
-	This is to avoid a problem where the readOnly buffer is missing data that was in 
-	the writer buffer."	
+	This is to avoid a problem where the readOnly buffer is missing data that was in
+	the writer buffer."
 	file ensureWrittenPosition: position.
 
 	"I am discarding the buffer of the readonly stream, because if not is out-of-sync."
 	stream discardBuffer.
-	
+
    stream position: position.
    result := presentBlock value: stream.
-       
-	self finishedReading: rofa from: queue. 
-                      
+
+	self finishedReading: rofa from: queue.
+
     ^ result
 ]
 
@@ -341,7 +332,7 @@ SourceFileArray >> remoteStringAt: sourcePointer [
 
 	| filePosition fileIndex |
 	fileIndex := self fileIndexFromSourcePointer: sourcePointer.
-	filePosition := self filePositionFromSourcePointer: sourcePointer.	
+	filePosition := self filePositionFromSourcePointer: sourcePointer.
 
 	^ RemoteString newFileNumber: fileIndex position: filePosition
 ]
@@ -358,20 +349,20 @@ SourceFileArray >> remoteStringForNewString: aString [
 { #category : #printing }
 SourceFileArray >> reportString [
 
-	^ String streamContents: [ :aStream | 
-		{ self sourcesFileStream. self changesFileStream } 
+	^ String streamContents: [ :aStream |
+		{ self sourcesFileStream. self changesFileStream }
 			do: [:each | each ifNotNil: [
 				aStream nextPutAll: each printString; cr ] ] ]
 ]
 
 { #category : #'public - string reading' }
-SourceFileArray >> sourceCodeAt: sourcePointer [ 
+SourceFileArray >> sourceCodeAt: sourcePointer [
 	"Retrieves the source code for the pointer received as argument"
-	
+
 	^ self
-		readStreamAt: sourcePointer 
+		readStreamAt: sourcePointer
 		ifPresent: [ :stream | (ChunkReadStream on: stream) next ]
-		ifAbsent: [ '' ]
+		ifAbsent: [ nil ]
 ]
 
 { #category : #private }
@@ -387,21 +378,20 @@ SourceFileArray >> sourceDataPointers [
 SourceFileArray >> sourcePointerFromFileIndex: index andPosition: position [
 	"Return a sourcePointer encoding the given file index and position"
 
-	| hi lo |
 	(index = 1 or: [index = 2])
 		ifFalse: [self error: 'invalid source file index'].
 	position < 0 ifTrue: [self error: 'invalid source code pointer'].
-	hi := position // 16r1000000 *2 + index.
-	lo := position \\ 16r1000000.
-	^ hi * 16r1000000 + lo
+	
+	"we shift the position by one and set the last bit for .changes"
+	^ (position << 1) bitOr: index - 1
 ]
 
 { #category : #'public - string reading' }
 SourceFileArray >> sourcedDataAt: sourcePointer [
 
-	^ self 
-		readStreamAt: sourcePointer 
-		ifPresent: [ :file | 
+	^ self
+		readStreamAt: sourcePointer
+		ifPresent: [ :file |
 			| position |
 			position := self filePositionFromSourcePointer: sourcePointer.
 			self getPreambleFrom: file at: (0 max: position - 3) ]
@@ -437,11 +427,11 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 	flushChanges ifFalse: [ ^ stamp ].
 	preamble := self sourcedDataAt: sourcePointer.
 	(preamble includesSubstring: sourceDataPointers key)
-		ifTrue: [ 
+		ifTrue: [
 			tokens := preamble parseLiterals.
 			stampPosition := tokens indexOf: sourceDataPointers value.
 			stampPosition = 0
-				ifFalse: [ 
+				ifFalse: [
 					"New format gives change stamp and unified prior pointer"
 					stamp := tokens at: stampPosition + 1 ] ].
 	^ stamp
@@ -455,7 +445,7 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 	(file isNil or: [file closed or: [ file isReadOnly ] ]) ifTrue: [ ^ failBlock value ].
 
 	ChangesLog default assureStartupStampLogged.
-	
+
 	file setToEnd.
 	file nextPutAll: preamble.
 	position := file position.
@@ -463,5 +453,5 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 
 	successBlock cull: (self sourcePointerFromFileIndex: 2 andPosition: position) cull: file.
 
-	self flushChangesFile.
+	self flushChangesFile
 ]

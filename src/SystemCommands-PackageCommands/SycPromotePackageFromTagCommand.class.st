@@ -39,15 +39,13 @@ SycPromotePackageFromTagCommand >> defaultMenuItemName [
 { #category : #execution }
 SycPromotePackageFromTagCommand >> execute [
 
-	| packageTag |
-	packageTag := package classTagNamed: classTag.
-	packageTag promoteAsRPackage
+	(package classTagNamed: classTag) promoteAsPackage
 ]
 
 { #category : #execution }
 SycPromotePackageFromTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	package := aToolContext lastSelectedPackage.
 	classTag := aToolContext lastSelectedClassTag
 ]

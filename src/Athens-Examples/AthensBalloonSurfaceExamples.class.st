@@ -11,6 +11,6 @@ Class {
 
 { #category : #utilities }
 AthensBalloonSurfaceExamples class >> newSurface: extent [
-	
+
 	^ AthensBalloonSurface extent: extent
 ]

@@ -3,14 +3,14 @@ Extension { #name : #MorphicUIManager }
 { #category : #'*Files-Prompt' }
 MorphicUIManager >> fileExistsDefaultAction: anException [
 	| file choice |
-	
+
 	file := anException file.
 	choice := self chooseFrom: {
 		'overwrite that file'.
 		'choose another name'.
 		'cancel'
 	} title: file name, ' already exists.'.
- 
+
 	choice = 1 ifTrue: [
 		file delete.
 		file ifExists: [ self error: 'Could not delete the old version of that file' ].

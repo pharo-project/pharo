@@ -25,10 +25,10 @@ Class {
 }
 
 { #category : #drawing }
-FadingMorph >> areasRemainingToFill: aRectangle [ 
-	
+FadingMorph >> areasRemainingToFill: aRectangle [
+
 	"the whole rectangle is translucent"
-	
+
 	^Array with: aRectangle
 ]
 
@@ -47,7 +47,7 @@ FadingMorph >> beUnResetable [
 { #category : #initialization }
 FadingMorph >> defaultFadingFactor [
 	"show the morph for 2.5 seconds"
-	
+
 	^0.04
 ]
 
@@ -60,31 +60,31 @@ FadingMorph >> fullDrawOn: aCanvas [
 { #category : #'events-processing' }
 FadingMorph >> handleMouseMove: anEvent [
 
-	(anEvent wasHandled or: [ resetable not ]) ifTrue:[ ^self ]. 
-	
+	(anEvent wasHandled or: [ resetable not ]) ifTrue:[ ^self ].
+
 	self resetAlpha.
 
-	anEvent wasHandled: true.
+	anEvent wasHandled: true
 ]
 
 { #category : #initialization }
 FadingMorph >> initialize [
 
 	super initialize.
-	
-	self 
+
+	self
 	initializeAppearance;
 	initializeLayout;
 	beResetable;
 	resetAlpha.
-	
-	fadingFactor := self defaultFadingFactor.
+
+	fadingFactor := self defaultFadingFactor
 ]
 
 { #category : #initialization }
 FadingMorph >> initializeAppearance [
 
-	self 
+	self
 	color: Color gray;
 	borderStyle: (BorderStyle inset width: 3)
 ]
@@ -92,14 +92,14 @@ FadingMorph >> initializeAppearance [
 { #category : #initialization }
 FadingMorph >> initializeLayout [
 
-	self 
+	self
 	changeTableLayout;
 	layoutInset: 6;
 	listDirection: #topToBottom;
 	cellPositioning: #topRight;
 	hResizing: #shrinkWrap;
 	vResizing: #shrinkWrap;
-	cellInset: 0.
+	cellInset: 0
 ]
 
 { #category : #'events-processing' }
@@ -120,8 +120,8 @@ FadingMorph >> step [
 	alpha <= fadingFactor ifTrue: [ ^self delete ].
 
 	alpha := alpha - fadingFactor.
-	
-	self changed.
+
+	self changed
 ]
 
 { #category : #stepping }

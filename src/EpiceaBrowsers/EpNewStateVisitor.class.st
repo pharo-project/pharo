@@ -26,18 +26,6 @@ EpNewStateVisitor >> visitBehaviorNameChange: aClassRenameChange [
 ]
 
 { #category : #visitor }
-EpNewStateVisitor >> visitCategoryAddition: aClassCategoryCreatedChange [
-
-	^ aClassCategoryCreatedChange categoryName
-]
-
-{ #category : #visitor }
-EpNewStateVisitor >> visitCategoryRename: aClassCategoryRenamedChange [
-
-	^ aClassCategoryRenamedChange newCategoryName
-]
-
-{ #category : #visitor }
 EpNewStateVisitor >> visitClassAddition: aClassCreatedChange [
 
 	^ self stringForBehavior: aClassCreatedChange classAdded
@@ -56,23 +44,52 @@ EpNewStateVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 ]
 
 { #category : #visitor }
-EpNewStateVisitor >> visitLogCommentModification: anEvent [ 
+EpNewStateVisitor >> visitLogCommentModification: anEvent [
 	^ anEvent newComment
 ]
 
 { #category : #visitor }
 EpNewStateVisitor >> visitMethodAddition: aMethodCreatedChange [
-	^ self 
-		printProtocol: aMethodCreatedChange protocol
-		sourceCode: aMethodCreatedChange sourceCode
+
+	^ self printProtocol: aMethodCreatedChange protocol sourceCode: aMethodCreatedChange sourceCode
 ]
 
 { #category : #visitor }
 EpNewStateVisitor >> visitMethodModification: aMethodModification [
 
-	^ self 
+	^ self
 		printProtocol: aMethodModification newProtocol
 		sourceCode: aMethodModification newSourceCode
+]
+
+{ #category : #visitor }
+EpNewStateVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ aPackageAddition packageName
+]
+
+{ #category : #visitor }
+EpNewStateVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ aPackageRemoval packageName
+]
+
+{ #category : #visitor }
+EpNewStateVisitor >> visitPackageRename: aPackageRename [
+
+	^ aPackageRename newPackageName
+]
+
+{ #category : #visitor }
+EpNewStateVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ self printTag: aPackageTagAddition tagName package: aPackageTagAddition packageName
+]
+
+{ #category : #visitor }
+EpNewStateVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	^ self printTag: aPackageTagRename newTagName package: aPackageTagRename packageName
 ]
 
 { #category : #visitor }

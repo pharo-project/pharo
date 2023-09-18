@@ -65,7 +65,6 @@ DiffElement >> match [
 DiffElement >> match: aDiffMatch [
 
 	match := aDiffMatch
-	
 ]
 
 { #category : #accessing }

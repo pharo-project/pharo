@@ -53,8 +53,8 @@ ClyBrowserContext >> actualSelectionFrom: browserItemCollection [
 
 { #category : #'drag and drop' }
 ClyBrowserContext >> asDraggableMorph [
-	^(String streamContents: [ :s| 
-		selectedItems 
+	^(String streamContents: [ :s|
+		selectedItems
 			do: [ :each | s nextPutAll: each name ]
 			separatedBy: [ s space ]]) asStringMorph
 ]
@@ -67,7 +67,7 @@ ClyBrowserContext >> browser [
 { #category : #copying }
 ClyBrowserContext >> copyForBrowserStateSnapshot [
 
-	^self copy 
+	^self copy
 		initializeForBrowserStateSnapshot;
 		yourself
 ]
@@ -105,19 +105,19 @@ ClyBrowserContext >> initializeForBrowserStateSnapshot [
 { #category : #testing }
 ClyBrowserContext >> isAboutBrowserItemType: itemTypeClass [
 
-	^selectedItems anySatisfy: [ :each | 
+	^selectedItems anySatisfy: [ :each |
 		each type isCalypsoItemType: itemTypeClass ]
 ]
 
 { #category : #testing }
 ClyBrowserContext >> isAboutSelectedItem: aDataSourceItem [
-	"It can be just last line: #isEqualTo:. 
-	But in remote scenario it could lead to few messages to underlying remote objects. 
+	"It can be just last line: #isEqualTo:.
+	But in remote scenario it could lead to few messages to underlying remote objects.
 	It is nice to avoid such interaction.
 	So here we first try simplified comparison. And then complete version is used"
 	(selectedItems anySatisfy: [ :each | each actualObject == aDataSourceItem actualObject])
 		ifTrue: [ ^true ].
-	(selectedItems anySatisfy: [ :each | each name = aDataSourceItem name]) 
+	(selectedItems anySatisfy: [ :each | each name = aDataSourceItem name])
 		ifFalse: [ ^false ].
 	^selectedItems anySatisfy: [ :each | each isEqualTo: aDataSourceItem  ]
 ]
@@ -125,10 +125,10 @@ ClyBrowserContext >> isAboutSelectedItem: aDataSourceItem [
 { #category : #testing }
 ClyBrowserContext >> isSimilarTo: anotherBrowserContext [
 	self class = anotherBrowserContext class ifFalse: [ ^false ].
-	
+
 	(selectedItems size = anotherBrowserContext selectedItems size)
 		ifFalse: [ ^false ].
-		
+
 	^selectedItems allSatisfy: [ :each |
 		anotherBrowserContext isAboutSelectedItem: each]
 ]
@@ -174,8 +174,10 @@ ClyBrowserContext >> selectedObjects [
 ]
 
 { #category : #'tool controlling' }
-ClyBrowserContext >> showMethodTag: aString [
+ClyBrowserContext >> showProtocol: protocolName [
 	"Default is to do nothing"
+
+	
 ]
 
 { #category : #accessing }

@@ -11,14 +11,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-LookupKey class >> key: aKey [ 
+LookupKey class >> key: aKey [
 	"Answer an instance of me with the argument as the lookup up."
 
 	^self basicNew key: aKey
 ]
 
 { #category : #testing }
-LookupKey >> < aLookupKey [ 
+LookupKey >> < aLookupKey [
 	"Refer to the comment in Magnitude|<."
 
 	^key < aLookupKey key
@@ -26,9 +26,8 @@ LookupKey >> < aLookupKey [
 
 { #category : #comparing }
 LookupKey >> = aLookupKey [
-	^ self species = aLookupKey species
-		ifTrue: [ key = aLookupKey key ]
-		ifFalse: [ false ]
+
+	^ self species = aLookupKey species and: [ key = aLookupKey key ]
 ]
 
 { #category : #comparing }
@@ -46,7 +45,7 @@ LookupKey >> key [
 ]
 
 { #category : #accessing }
-LookupKey >> key: anObject [ 
+LookupKey >> key: anObject [
 	"Store the argument, anObject, as the lookup key of the receiver."
 
 	key := anObject

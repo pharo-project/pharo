@@ -36,13 +36,13 @@ NECDetailMorph >> contentBounds [
 	factor := self itemHeight.
 	rectangle := self bounds top: self bounds top + 3.
 	rectangle := rectangle left: rectangle left + (factor * 2.0).
-	rectangle := rectangle bottom: rectangle bottom - factor.
+	rectangle := rectangle bottom: rectangle bottom.
 	^ rectangle
 ]
 
 { #category : #drawing }
 NECDetailMorph >> defaultColor [
-	^ NECMenuMorph backgroundColor.
+	^ NECMenuMorph backgroundColor
 ]
 
 { #category : #accessing }
@@ -67,40 +67,13 @@ NECDetailMorph >> drawArrowOn: aCanvas [
 ]
 
 { #category : #drawing }
-NECDetailMorph >> drawMessageOn: aCanvas [
-	| factor rectangle width browseMessage |
-	factor := self itemHeight.
-	rectangle := self bounds top: self bounds bottom - factor.
-	rectangle := rectangle left: self contentBounds left.
-	aCanvas 
-		line: rectangle topLeft 
-		to: rectangle topRight
-		color: Color darkGray.
-	rectangle := rectangle top: rectangle top + 1.
-	aCanvas
-		drawString: '<- close detail'
-		in: rectangle
-		font: self messageFont
-		color: Color darkGray.
-	browseMessage := 'browse ->'.
-	width := self messageFont widthOfString: browseMessage.
-	aCanvas
-		drawString: browseMessage
-		in: (rectangle left: rectangle right - width)
-		font: self messageFont
-		color: Color darkGray
-]
-
-{ #category : #drawing }
-NECDetailMorph >> drawOn: aCanvas [ 
+NECDetailMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas.
-	arrowPosition ifNotNil: [
-		self drawArrowOn: aCanvas.
-		self drawMessageOn: aCanvas]
+	arrowPosition ifNotNil: [ self drawArrowOn: aCanvas ]
 ]
 
 { #category : #accessing }
-NECDetailMorph >> entryDescription: anECEntryDescription [ 
+NECDetailMorph >> entryDescription: anECEntryDescription [
 	| categoryContents entryDescription |
 	entryDescription := anECEntryDescription.
 	title
@@ -120,15 +93,15 @@ NECDetailMorph >> entryDescription: anECEntryDescription [
 NECDetailMorph >> initialize [
 	| childBounds |
 	super initialize.
-	
+
 	self borderStyle: (BorderStyle color: Color gray width: 1).
 	childBounds := self contentBounds.
-	label := StringMorph 
+	label := StringMorph
 		contents: ''
 		font: self messageFont.
 	label bounds: childBounds.
 	self addMorph: label.
-	title := StringMorph 
+	title := StringMorph
 		contents: ''
 		font: NECMenuMorph titleFont.
 	title bounds: self titleBounds.
@@ -151,7 +124,7 @@ NECDetailMorph >> messageFont [
 ]
 
 { #category : #drawing }
-NECDetailMorph >> position: aPoint menuWidth: anInteger [ 
+NECDetailMorph >> position: aPoint menuWidth: anInteger [
 	| y x |
 	arrowPosition := aPoint.
 	y := aPoint y + self class height.
@@ -168,7 +141,7 @@ NECDetailMorph >> position: aPoint menuWidth: anInteger [
 ]
 
 { #category : #private }
-NECDetailMorph >> positionOnLeft: anInteger [ 
+NECDetailMorph >> positionOnLeft: anInteger [
 	^ arrowPosition x - self class width - anInteger
 ]
 

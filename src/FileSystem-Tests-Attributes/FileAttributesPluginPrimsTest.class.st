@@ -14,7 +14,7 @@ Class {
 FileAttributesPluginPrimsTest >> setUp [
 
 	super setUp.
-	primitives := File.
+	primitives := File
 ]
 
 { #category : #tests }
@@ -23,21 +23,21 @@ FileAttributesPluginPrimsTest >> testExistsPathTooLong [
 	| pathMax filename |
 	pathMax := primitives primPathMax.
 	filename := String new: pathMax * 2 withAll: $a.
-	self 
+	self
 		should: [ primitives exists: filename ]
-		raise: IllegalFileName.
+		raise: IllegalFileName
 ]
 
 { #category : #tests }
 FileAttributesPluginPrimsTest >> testFileAttributeNumberOutOfRange [
 	"Check that the appropriate Bad Argument error is raised if an invalid attribute number is supplied"
 
-	self 
+	self
 		should: [ primitives fileAttribute: 'ignored' number: 0 ]
 		raise: PrimitiveFailed.
-	self 
+	self
 		should: [ primitives fileAttribute: 'ignore' number: primitives fileAttributeNumberMap size + 1 ]
-		raise: PrimitiveFailed.
+		raise: PrimitiveFailed
 ]
 
 { #category : #tests }
@@ -47,8 +47,8 @@ FileAttributesPluginPrimsTest >> testPrimCloseDirNil [
 	self
 		should: [ primitives primClosedir: nil ]
 		raise: PrimitiveFailed
-		withExceptionDo: [ :exception | 
-			self assert: exception selector equals: #'bad argument' ].
+		withExceptionDo: [ :exception |
+			self assert: exception selector equals: #'bad argument' ]
 ]
 
 { #category : #tests }
@@ -58,8 +58,8 @@ FileAttributesPluginPrimsTest >> testPrimCloseDirString [
 	self
 		should: [ primitives primClosedir: 'not a buffer' ]
 		raise: PrimitiveFailed
-		withExceptionDo: [ :exception | 
-			self assert: exception selector equals: #'bad argument' ].
+		withExceptionDo: [ :exception |
+			self assert: exception selector equals: #'bad argument' ]
 ]
 
 { #category : #tests }
@@ -69,8 +69,8 @@ FileAttributesPluginPrimsTest >> testPrimCloseDirWrongLength [
 	self
 		should: [ primitives primClosedir: (ByteArray new: 1) ]
 		raise: PrimitiveFailed
-		withExceptionDo: [ :exception | 
-			self assert: exception selector equals: #'bad argument' ].
+		withExceptionDo: [ :exception |
+			self assert: exception selector equals: #'bad argument' ]
 ]
 
 { #category : #tests }
@@ -80,6 +80,6 @@ FileAttributesPluginPrimsTest >> testPrimExistsNil [
 	self
 		should: [ primitives primExists: nil ]
 		raise: PrimitiveFailed
-		withExceptionDo: [ :exception | 
-			self assert: exception selector equals: #'bad argument' ].
+		withExceptionDo: [ :exception |
+			self assert: exception selector equals: #'bad argument' ]
 ]

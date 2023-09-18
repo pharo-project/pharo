@@ -13,15 +13,15 @@ Class {
 { #category : #running }
 SycRemoveClassStrategyTest >> setUp [
 	super setUp.
-	
-	factory := ClassFactoryForTestCase new.
+
+	factory := ClassFactoryForTestCase new
 ]
 
 { #category : #running }
 SycRemoveClassStrategyTest >> tearDown [
 
 	factory cleanUp.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -34,7 +34,7 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForParentClass [
 		              classes: { ClyBrowserMorph }.
 	self
 		assert: strategies size > 2;
-		assert: (strategies anySatisfy: [ :each | 
+		assert: (strategies anySatisfy: [ :each |
 					 each userRequestString
 					 =
 						 ClyNotRemoveAndShowSubclassesClassStrategy new
@@ -82,14 +82,9 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForUsedTrait [
 
 	| browser strategies |
 	browser := ClyFullBrowserMorph onDefaultEnvironment.
-	strategies := SycRemoveClassStrategy
-		              createForBrowser: browser
-		              classes: { TRBProgramNodeVisitor }.
+	strategies := SycRemoveClassStrategy createForBrowser: browser classes: { TRefactoringCommandSupport }.
 	self
 		assert: strategies size > 2;
-		assert: (strategies anySatisfy: [ :each | 
-					 each userRequestString
-					 = ClyNotRemoveAndShowUsersClassStrategy new userRequestString ]);
-		assert: strategies last userRequestString
-		equals: SycNotRemoveClassStrategy new userRequestString
+		assert: (strategies anySatisfy: [ :each | each userRequestString = ClyNotRemoveAndShowUsersClassStrategy new userRequestString ]);
+		assert: strategies last userRequestString equals: SycNotRemoveClassStrategy new userRequestString
 ]

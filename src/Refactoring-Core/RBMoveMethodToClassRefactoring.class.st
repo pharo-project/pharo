@@ -36,8 +36,9 @@ RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 
 { #category : #transforming }
 RBMoveMethodToClassRefactoring >> classModelOf: aClass [
+
 	| classModel |
-	classModel := aClass isMeta 
+	classModel := aClass isMeta
 		ifTrue: [ RBClassModelFactory rbMetaclass named: aClass name ]
 		ifFalse: [ RBClassModelFactory rbClass named: aClass name ].
 	classModel model: self model.
@@ -47,7 +48,7 @@ RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 { #category : #initialization }
 RBMoveMethodToClassRefactoring >> method: aMethod class: aClass [
 	method := aMethod.
-	class := self classObjectFor: aClass.
+	class := self classObjectFor: aClass
 ]
 
 { #category : #preconditions }
@@ -55,8 +56,24 @@ RBMoveMethodToClassRefactoring >> preconditions [
 	^(RBCondition definesSelector: method selector in: class) not
 ]
 
+{ #category : #transforming }
+RBMoveMethodToClassRefactoring >> privateTransform [
+	| oldClass newClass rbMethod originalProtocol |
+	oldClass := self classModelOf: method methodClass.
+	newClass := self classModelOf: class.
+	rbMethod := RBClassModelFactory rbMethod for: newClass source: method sourceCode selector: method selector.
+	originalProtocol := method protocolName.
+	oldClass removeMethod: method selector.
+	newClass addMethod: rbMethod.
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			sourceCode: rbMethod source
+			in: newClass
+			withProtocol: originalProtocol)
+]
+
 { #category : #printing }
-RBMoveMethodToClassRefactoring >> storeOn: aStream [ 
+RBMoveMethodToClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
@@ -66,16 +83,4 @@ RBMoveMethodToClassRefactoring >> storeOn: aStream [
 	class storeOn: aStream.
 	aStream
 		nextPutAll: ''')'
-]
-
-{ #category : #transforming }
-RBMoveMethodToClassRefactoring >> transform [
-	| oldClass newClass rbMethod originalProtocol |
-	oldClass := self classModelOf: method methodClass.
-	newClass := self classModelOf: class.
-	rbMethod := RBClassModelFactory rbMethod for: newClass source: method sourceCode selector: method selector.
-	originalProtocol := method protocol.
-	oldClass removeMethod: method selector.
-	newClass addMethod: rbMethod.
-	newClass compile: rbMethod source classified: {originalProtocol}
 ]

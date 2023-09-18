@@ -15,39 +15,45 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBMergeInstanceVariableIntoAnotherParametrizedTest >> testEqualsVariables [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ 'classBlock' . 'classBlock' . RBBasicLintRuleTestData })
+RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureEqualsVariables [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'classBlock'.
+				 'classBlock'.
+				 RBBasicLintRuleTestData })
 ]
 
 { #category : #'failure tests' }
-RBMergeInstanceVariableIntoAnotherParametrizedTest >> testNonExistingVariable [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ 'classBlock' . 'anInstVar1' . RBBasicLintRuleTestData })
+RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureNonExistingVariable [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'classBlock'.
+				 'anInstVar1'.
+				 RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoAnother [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ 'classBlock' . 'anInstVar' . RBBasicLintRuleTestData }.
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class whichSelectorsReferToInstanceVariable: 'classBlock') isNotEmpty.
 	self executeRefactoring: refactoring.
-	
-	self assert: (class whichSelectorsReferToInstanceVariable: 'classBlock') isEmpty.
+
+	self assert: (class whichSelectorsReferToInstanceVariable: 'classBlock') isEmpty
 ]
 
 { #category : #tests }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoSupeclassVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ 'name' . 'classBlock' . RBBasicLintRuleTestData }.
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class whichSelectorsReferToInstanceVariable: 'name') isNotEmpty.
 	self executeRefactoring: refactoring.
 	self assert: (class definesInstanceVariable: 'name').
 	self assert: (class directlyDefinesInstanceVariable: 'classBlock').
-	
-	self assert: (class whichSelectorsReferToInstanceVariable: 'name') isEmpty.
+
+	self assert: (class whichSelectorsReferToInstanceVariable: 'name') isEmpty
 ]

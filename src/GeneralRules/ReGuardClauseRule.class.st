@@ -32,10 +32,10 @@ ReGuardClauseRule >> group [
 { #category : #initialization }
 ReGuardClauseRule >> initialize [
 	super initialize.
-	self 
-		addMatchingMethod: '`@methodName: `@args 
-					| `@temps | 
-					`@.Statements. 
+	self
+		addMatchingMethod: '`@methodName: `@args
+					| `@temps |
+					`@.Statements.
 					`@condition ifTrue: [| `@trueTemps | `.Statement1. `.Statement2. `@.Statements1]'
 		rewriteTo: '`@methodName: `@args
 					| `@temps `@trueTemps |
@@ -44,9 +44,9 @@ ReGuardClauseRule >> initialize [
 					`.Statement1.
 					`.Statement2.
 					`@.Statements1';
-		addMatchingMethod: '`@methodName: `@args 
-					| `@temps | 
-					`@.Statements. 
+		addMatchingMethod: '`@methodName: `@args
+					| `@temps |
+					`@.Statements.
 					`@condition ifFalse: [| `@falseTemps | `.Statement1. `.Statement2. `@.Statements1]'
 		rewriteTo: '`@methodName: `@args
 					| `@temps `@falseTemps |

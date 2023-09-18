@@ -19,18 +19,18 @@ ZnCharacterReadStream >> collectionSpecies [
 ]
 
 { #category : #accessing }
-ZnCharacterReadStream >> match: subCollection [ 
+ZnCharacterReadStream >> match: subCollection [
 	"Set the access position of the receiver to be past the next occurrence of the subCollection. Answer whether subCollection is found.  No wildcards, and case does matter."
 	| pattern startMatch |
 	pattern := subCollection readStream.
 	startMatch := nil.
-	[ pattern atEnd ] whileFalse: 
+	[ pattern atEnd ] whileFalse:
 		[ self atEnd ifTrue: [ ^ false ].
-		self next = pattern next 
+		self next = pattern next
 			ifTrue: [ pattern position = 1 ifTrue: [ startMatch := self position ] ]
-			ifFalse: 
+			ifFalse:
 				[ pattern position: 0.
-				startMatch ifNotNil: 
+				startMatch ifNotNil:
 					[ self position: startMatch.
 					startMatch := nil ] ] ].
 	^ true
@@ -44,41 +44,41 @@ ZnCharacterReadStream >> nextElement [
 { #category : #accessing }
 ZnCharacterReadStream >> nextLine [
 	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
-	
+
 	self atEnd ifTrue: [ ^ nil ].
 	^ self collectionSpecies streamContents: [ :out | | eol char |
 		eol := false.
-		[ eol ] whileFalse: [ 
+		[ eol ] whileFalse: [
 			char := self next.
 			(char isNil or: [ char = Character lf ])
 				ifTrue: [ eol := true ]
-				ifFalse: [ 
-					char = Character cr 
+				ifFalse: [
+					char = Character cr
 						ifTrue: [ eol := true. self peekFor: Character lf ]
 						ifFalse: [ out nextPut: char ] ] ] ]
 ]
 
 { #category : #accessing }
-ZnCharacterReadStream >> readInto: collection startingAt: offset count: requestedCount [ 
+ZnCharacterReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read count elements and place them in collection starting at offset.
 	Return the number of elements actually read."
-	
-	^ peeked 
+
+	^ peeked
 		ifNil: [ | readCount |
-			[ readCount := self encoder 
-					readInto: collection 
-					startingAt: offset 
-					count: requestedCount 
+			[ readCount := self encoder
+					readInto: collection
+					startingAt: offset
+					count: requestedCount
 					fromStream: stream ]
-				on: ZnByteStringBecameWideString 
-				do: [ :byteStringBecameWideString | 
+				on: ZnByteStringBecameWideString
+				do: [ :byteStringBecameWideString |
 					byteStringBecameWideString becomeForward; resume ].
 			readCount ]
-		ifNotNil: [ 
+		ifNotNil: [
 			collection at: offset put: peeked.
 			peeked := nil.
-			(self 
-				readInto: collection 
+			(self
+				readInto: collection
 				startingAt: offset + 1
 				count: requestedCount - 1) + 1 ]
 ]
@@ -86,23 +86,18 @@ ZnCharacterReadStream >> readInto: collection startingAt: offset count: requeste
 { #category : #accessing }
 ZnCharacterReadStream >> upToAll: aCollection [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
-	
-	^ self collectionSpecies streamContents: [ :out |
-		| partialMatch pattern matched |
-		partialMatch := (self collectionSpecies new: aCollection size) writeStream.
+
+	^ self collectionSpecies streamContents: [ :out | | pattern |
 		pattern := aCollection readStream.
-		matched := false.
-		([ matched or: [ self atEnd or: [ pattern atEnd ] ] ]) whileFalse: [
-			| ch |
-			(ch := self next) = pattern next
+		([ self atEnd or: [ pattern atEnd ] ]) whileFalse: [
+			self peek = pattern peek
 				ifTrue: [
-					pattern atEnd
-						ifTrue: [ matched := true ]
-						ifFalse: [ partialMatch nextPut: ch ] ]
+					self next. pattern next ]
 				ifFalse: [
-					pattern reset.
-					out nextPutAll: partialMatch contents.
-					partialMatch reset.
-					out nextPut: ch ] ].
-		matched ifFalse: [ out nextPutAll: partialMatch contents ] ]
+					pattern position = 0
+						ifTrue: [ out nextPut: self next ]
+						ifFalse: [ out next: pattern position putAll: aCollection ].
+					pattern reset ] ].
+		pattern atEnd
+			ifFalse: [ out next: pattern position putAll: aCollection ] ]
 ]

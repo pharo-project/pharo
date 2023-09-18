@@ -48,7 +48,7 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 			subResults: ((anOrderedColletion groupedBy: #class) associations collect: [ :assoc |
 				DTTreeNode new
 					name: assoc key name;
-					subResults: ((assoc value groupedBy: [ :testCase | (testCase class lookupSelector: testCase selector) protocol ]) associations collect: [ :protocolToTest |
+					subResults: ((assoc value groupedBy: [ :testCase | (testCase class lookupSelector: testCase selector) protocolName ]) associations collect: [ :protocolToTest |
 						DTTreeNode new
 							name: protocolToTest key;
 							subResults: (self buildLeavesFrom: protocolToTest value type: testResultType) ]);
@@ -60,25 +60,25 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 DTTestsRunnerResult >> buildTreeForUI [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
-		subResults: { 
+		subResults: {
 			DTTreeNode new
 				name: DTTestResultType error pluralName;
 				subResults: (self buildLeavesFrom: self errors type: DTTestResultType error);
 				startExpanded;
-				displayColorIfNotEmpty: self theme testColorError;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForErrorTest;
 				yourself.
 			DTTreeNode new
 				name: DTTestResultType fail pluralName;
 				subResults: (self buildLeavesFrom: self failures type: DTTestResultType fail);
 				startExpanded;
-				displayColorIfNotEmpty:  self theme testColorFailure.
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForFailureTest.
 			DTTreeNode new
 				name: DTTestResultType skipped pluralName;
 				subResults: (self buildLeavesFrom: self skipped type: DTTestResultType skipped).
 			DTTreeNode new
 				name: DTTestResultType pass pluralName;
 				subResults: (self buildLeavesFrom: self passed type: DTTestResultType pass);
-				displayColorIfNotEmpty: self theme testColorPassing.
+				displayColorIfNotEmpty:  TestResult defaultColorBackGroundForPassingTest.
 			DTTreeNode new
 				name: DTTestResultType expectedFailure pluralName;
 				subResults: (self buildLeavesFrom: self expectedFailures type: DTTestResultType expectedFailure).
@@ -137,13 +137,13 @@ DTTestsRunnerResult >> expectedFailures [
 
 { #category : #accessing }
 DTTestsRunnerResult >> failures [
-	^ self testResults failures asOrderedCollection 
+	^ self testResults failures asOrderedCollection
 	   select: [ :t | t shouldPass ]
 ]
 
 { #category : #accessing }
 DTTestsRunnerResult >> passed [
-	^ self testResults passed asOrderedCollection 
+	^ self testResults passed asOrderedCollection
 		select: [ :t | t shouldPass]
 ]
 
@@ -157,7 +157,7 @@ DTTestsRunnerResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
 	^ String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			s
 				print: self testResults passed size;
 				<< ' passed';

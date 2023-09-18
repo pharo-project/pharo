@@ -25,12 +25,12 @@ Class {
 		'newClassName',
 		'referenceVariableName'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
 RBSplitClassTransformation class >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
- 
+
 	^ self new
 		class: aClass
 		instanceVariables: instVars
@@ -40,7 +40,7 @@ RBSplitClassTransformation class >> class: aClass instanceVariables: instVars ne
 
 { #category : #api }
 RBSplitClassTransformation class >> model: aRBModel class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
- 
+
 	^ self new
 		model: aRBModel;
 		class: aClass
@@ -54,20 +54,20 @@ RBSplitClassTransformation >> abstractReferenceTo: instVar [
 
 	transformations add:
 		(RBAddVariableAccessorTransformation
-			model: self model 
+			model: self model
 			instanceVariable: instVar
 			class: newClassName).
-	
+
 	transformations add: ((
 		RBRemoveDirectAccessToVariableTransformation
-			model: self model 
+			model: self model
 			instanceVariable: instVar
 			class: class)
 			receiver: referenceVariableName).
-		
+
 	transformations add: (
 		RBRemoveVariableTransformation
-			model: self model 
+			model: self model
 			instanceVariable: instVar
 			class: class)
 ]
@@ -81,10 +81,10 @@ RBSplitClassTransformation >> abstractVariableReferences [
 { #category : #private }
 RBSplitClassTransformation >> addClass [
 
-	transformations add: 
-		(RBInsertClassTransformation 
-			model: self model 
-			addClass: newClassName 
+	transformations add:
+		(RBInsertNewClassTransformation
+			model: self model
+			addClass: newClassName
 			superclass: #Object
 			subclasses: #()
 			category: class category)
@@ -96,28 +96,49 @@ RBSplitClassTransformation >> addInstanceVariables [
 	instanceVariables
 		collect: [ :instVar |
 			RBAddVariableTransformation
-				model: self model 
+				model: self model
 				instanceVariable: instVar
 				class: newClassName ]
 		thenDo: [ :each | transformations add: each ]
+]
+
+{ #category : #preconditions }
+RBSplitClassTransformation >> applicabilityPreconditions [
+
+	class := self definingClass.
+
+	"check whether instVar exist"
+	^ (RBCondition isValidClassName: newClassName) & self isNotGlobal
+	  & (RBCondition
+			   isValidInstanceVariableName: referenceVariableName
+			   for: class)
+	  &
+		  (RBCondition
+			   hierarchyOf: class
+			   definesVariable: referenceVariableName) not
+	  & (RBCondition isGlobal: referenceVariableName in: self model) not
+	  &
+		  (RBCondition
+			   definesTemporaryVariable: referenceVariableName
+			   in: class) not
 ]
 
 { #category : #executing }
 RBSplitClassTransformation >> buildTransformations [
 
 	transformations := OrderedCollection new.
-	
+
 	self
 		createNewClass;
 		createReference;
 		abstractVariableReferences.
-		
+
 	^ transformations
 ]
 
 { #category : #api }
 RBSplitClassTransformation >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
- 
+
 	class := self model classObjectFor: aClass.
 	instanceVariables := instVars.
 	newClassName := className.
@@ -136,8 +157,8 @@ RBSplitClassTransformation >> createNewClass [
 RBSplitClassTransformation >> createReference [
 
 	transformations add: (
-		RBAddVariableTransformation 
-			model: self model 
+		RBAddVariableTransformation
+			model: self model
 			instanceVariable: referenceVariableName
 			class: class)
 ]
@@ -149,23 +170,13 @@ RBSplitClassTransformation >> definingClass [
 ]
 
 { #category : #preconditions }
-RBSplitClassTransformation >> preconditions [
+RBSplitClassTransformation >> isNotGlobal [
 
-	class := self definingClass.
-
-	"check whether instVar exist"
-	^(RBCondition isValidClassName: newClassName) 
-		& (RBCondition isGlobal: newClassName in: self model) not 
-		& (RBCondition isValidInstanceVariableName: referenceVariableName for: class) 
-		& (RBCondition hierarchyOf: class definesVariable: referenceVariableName) 
-				not 
-		& (RBCondition isGlobal: referenceVariableName in: self model) not 
-		& (RBCondition definesTemporaryVariable: referenceVariableName in: class) 
-				not
+	^ (RBCondition isGlobal: newClassName in: self model) not
 ]
 
 { #category : #printing }
-RBSplitClassTransformation >> storeOn: aStream [ 
+RBSplitClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

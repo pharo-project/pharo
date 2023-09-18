@@ -5,15 +5,15 @@ Class {
 	#name : #BlockClosureTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'aBlockContext',
-		'contextOfaBlockContext'
+		'aBlock',
+		'contextOfaBlock'
 	],
 	#category : #'Kernel-Tests-Methods'
 }
 
 { #category : #helpers }
 BlockClosureTest >> blockWithNonLocalReturn: resultObject [
-		
+
 	^[ ^resultObject ]
 ]
 
@@ -21,8 +21,8 @@ BlockClosureTest >> blockWithNonLocalReturn: resultObject [
 BlockClosureTest >> setUp [
 	super setUp.
 	"we reference self to force a full block"
-	aBlockContext := [self . 100@100 corner: 200@200].
-	contextOfaBlockContext := thisContext.
+	aBlock := [self . 100@100 corner: 200@200].
+	contextOfaBlock := thisContext
 ]
 
 { #category : #'tests - evaluating' }
@@ -141,15 +141,37 @@ BlockClosureTest >> testCullCullCullCull [
 ]
 
 { #category : #'tests - evaluating' }
-BlockClosureTest >> testHasMethodReturn [
+BlockClosureTest >> testHasNonLocalReturn [
 
-	self assert: [ ^self  ] hasMethodReturn.
-	self deny: [ 1 + 2 ] hasMethodReturn.
-	self deny: [ self printString ] hasMethodReturn.
-	
+	self assert: [ ^self  ] hasNonLocalReturn.
+	self deny: [ 1 + 2 ] hasNonLocalReturn.
+	self deny: [ self printString ] hasNonLocalReturn.
+
 	"nested blocks"
-	self assert: [ 1 > 2 ifTrue: [ ^self ] ] hasMethodReturn.
-	self assert: [ #(1) do: [ ^self ] ] hasMethodReturn
+	self assert: [ 1 > 2 ifTrue: [ ^self ] ] hasNonLocalReturn.
+	self assert: [ #(1) do: [ ^self ] ] hasNonLocalReturn
+]
+
+{ #category : #tests }
+BlockClosureTest >> testHomeMethod [
+	<compilerOptions: #(+ #optionConstantBlockClosure) >
+	| block |
+	"block with non-local return, will go via #home"
+	block := [ ^self ].
+	self assert: block homeMethod equals: thisContext method.
+	self assert: block homeMethod equals: block home method.
+	self assert: block homeMethod equals: block compiledBlock outerCode method.
+	"constant block does not know the outerContext, but can discover home method
+	statically"
+	block := [ ].
+	self assert: block home isNil.
+	self assert: block homeMethod equals: thisContext method.
+	self assert: block homeMethod equals: block compiledBlock outerCode method.
+	"nested block"
+	block := [[]] value.
+	self assert: block home isNil.
+	self assert: block homeMethod equals: thisContext method.
+	self assert: block homeMethod equals: block compiledBlock outerCode method
 ]
 
 { #category : #'tests - testing' }
@@ -158,20 +180,31 @@ BlockClosureTest >> testIsClean [
 	local := #testIsClean.
 	self assert: [] isClean. "closes over nothing at all"
 	self assert: [thisContext] isClean. "we can access the context"
+	self assert: [
+		| local2 | true ifTrue: [local2 := 1 ] ] isClean. "optimized blocks are clean"
 	self assert: [:a :b| a < b] isClean. "accesses only arguments"
 	self assert: [:a :b| | s | s := a + b. s even] isClean. "accesses only local variables"
 	self deny: [^nil] isClean. "closes over home (^-return)"
 	self deny: [self] isClean. "closes over the receiver"
+	self deny: [ aBlock ] isClean. "accesses ivar"
 	self deny: [super testIsClean] isClean. "closes over the receiver"
-	self deny: [contextOfaBlockContext] isClean. "closes over the receiver (to access the inst var contextOfaBlockContext)"
+	self deny: [contextOfaBlock] isClean. "closes over the receiver (to access the inst var contextOfaBlockContext)"
 	self deny: [local] isClean. "closes over local variable of outer context"
+	
+	"an inner non-clean block does not mean that the outer block is not clean"
+	self assert: [ :x | x do: [ x + 1 ] ] isClean.
+	"but if we access self or return, it is"
+	self deny: [ :x | x do: [ ^x] ] isClean.
+	self deny: [ :x | x do: [ self] ] isClean.
+	self deny: [ :x | x do: [ super testIsClean ] ] isClean.
+	self deny: [ :x | x do: [ aBlock] ] isClean
 ]
 
 { #category : #tests }
 BlockClosureTest >> testLiteralEqual [
 	"Check that if we have two clean blocks with the same code, they are not #literalEqual:"
 	| methodToTest compiledBlocks |
-	methodToTest := self class compiler 
+	methodToTest := self class compiler
 		options: #(+ optionCleanBlockClosure);
 		compile: 'twoCleanBlocks
 
@@ -179,7 +212,7 @@ BlockClosureTest >> testLiteralEqual [
 	[3].
 	"just two clean blocks"
 	[3].'.
-	
+
 	compiledBlocks := methodToTest literals select: [ :each | each isBlock ].
 	self assert: compiledBlocks size equals: 2.
 	self deny: (compiledBlocks first literalEqual: compiledBlocks second).
@@ -193,9 +226,9 @@ BlockClosureTest >> testNew [
 	[Context new: 5]
 		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:'].
 	[Context new]
-		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:'].	
-	[Context basicNew]
 		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:'].
+	[Context basicNew]
+		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:']
 ]
 
 { #category : #tests }
@@ -251,7 +284,7 @@ BlockClosureTest >> testOnForkErrorOnSeparateProcess [
 
 	| forkedProc sema |
 	sema := Semaphore new.
-	[ 1 / 0 ] on: Exception fork: [ 
+	[ 1 / 0 ] on: Exception fork: [
 		forkedProc := Processor activeProcess.
 		sema signal ].
 
@@ -262,15 +295,15 @@ BlockClosureTest >> testOnForkErrorOnSeparateProcess [
 { #category : #'tests - on-fork' }
 BlockClosureTest >> testOnForkErrorReturnsNil [
 	"Test that if code runs with error, there is fork"
-	
+
 	| result sema |
-	
-	sema := Semaphore new.	
+
+	sema := Semaphore new.
 	result := [ 1/0 ] on: Exception fork: [ sema signal. ].
-	
+
 	sema wait.
 	"in case of error, evaluation result should be nil"
-	self assert: result isNil.
+	self assert: result isNil
 ]
 
 { #category : #'tests - on-fork' }
@@ -295,19 +328,19 @@ BlockClosureTest >> testOnForkErrorTakesLessThanOneSecond [
 { #category : #'tests - on-fork' }
 BlockClosureTest >> testOnForkSplit [
 	"Test that when forking, the stack are split correctly (there is no any contexts referenced by both processes)"
-	
+
 	| sema timeout forkedContexts myContexts c |
-	
+
 	self flag: 'This test is too brittle, failing often on CI'; skip.
-		
+
 	sema := Semaphore new.
-	
+
 	[ 1/0 ] on: Exception fork: [  | ctx |
 		forkedContexts := IdentitySet new.
 		ctx := thisContext.
 		[ ctx notNil ] whileTrue: [ forkedContexts add: ctx. ctx := ctx sender ].
 		sema signal ].
-	
+
 	timeout := (sema waitTimeoutSeconds: 1).
 	self assert: timeout == false description: 'fork lasted more than one second'.
 
@@ -316,7 +349,7 @@ BlockClosureTest >> testOnForkSplit [
 	[ c notNil ] whileTrue: [ myContexts add: c. c := c sender ].
 
 	self assert: (myContexts noneSatisfy: [:b | forkedContexts includes: b ]) description: 'myContexts are not within forkedContexts'.
-	self assert: (forkedContexts noneSatisfy: [:b | myContexts includes: b ]) description: 'forkedContexts are not within myContexts'.
+	self assert: (forkedContexts noneSatisfy: [:b | myContexts includes: b ]) description: 'forkedContexts are not within myContexts'
 ]
 
 { #category : #tests }
@@ -335,29 +368,24 @@ BlockClosureTest >> testPrintOn [
 
 { #category : #'tests - printing' }
 BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
-	| method copy start block |
-	"Generating method with source code"
-	UndefinedObject compile: 'method ^ [ 1 + 2 ]'.
-	method := UndefinedObject >> #method.
-	["Removing the source code of method"
-		copy := method copyWithTrailerBytes: CompiledMethodTrailer new.
-		start := method endPC + 1.
-		method replaceFrom: start to: method size with: copy startingAt: start.
-		block := nil method.
-		
-		self deny: method hasSourceCode.
-		self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
-	] ensure: [ method removeFromSystem ]
+	| method block |
+	method := OpalCompiler new compile: 'method ^ [ 1 + 2 ]'.
+	method removeProperty: #source.
+	self deny: method hasSourceCode.
+	
+	block := method valueWithReceiver: nil.
+	"we compare the ast to not depend on pretty printer settings"
+	self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
 ]
 
 { #category : #tests }
 BlockClosureTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"
 
-	self assert: aBlockContext home equals: contextOfaBlockContext.
-	self assert: aBlockContext receiver equals: self.
+	self assert: aBlock home equals: contextOfaBlock.
+	self assert: aBlock receiver equals: self.
 	"Depending on the closure implementation, it's either a compiled block, a compiled method or nil."
-	self assert: (aBlockContext method isNil or: [ aBlockContext method isKindOf: CompiledCode ])
+	self assert: (aBlock method isNil or: [ aBlock method isKindOf: CompiledCode ])
 ]
 
 { #category : #tests }
@@ -383,14 +411,14 @@ BlockClosureTest >> testSupplyAnswerOfFillInTheBlankUsingDefaultAnswer [
 { #category : #tests }
 BlockClosureTest >> testSupplyAnswerThroughNestedBlocks [
 
-	self should: [true = ([[self confirm: 'You like Smalltalk?'] 
+	self should: [true = ([[self confirm: 'You like Smalltalk?']
 		valueSupplyingAnswer: #('Blub' false)] valueSupplyingAnswer: #('Smalltalk' true))]
 ]
 
 { #category : #tests }
 BlockClosureTest >> testSupplyAnswerUsingOnlySubstringOfQuestion [
 
-	self should: [false = ([self confirm: 'You like Smalltalk?'] 
+	self should: [false = ([self confirm: 'You like Smalltalk?']
 		valueSupplyingAnswer: #('like' false))]
 ]
 
@@ -398,15 +426,15 @@ BlockClosureTest >> testSupplyAnswerUsingOnlySubstringOfQuestion [
 BlockClosureTest >> testSupplyAnswerUsingRegexMatchOfQuestion [
 
 	(String includesSelector: #matchesRegex:) ifFalse: [^ self].
-	
-	self should: [true = ([self confirm: 'You like Smalltalk?'] 
+
+	self should: [true = ([self confirm: 'You like Smalltalk?']
 		valueSupplyingAnswer: #('.*Smalltalk\?' true))]
 ]
 
 { #category : #tests }
 BlockClosureTest >> testSupplyAnswerUsingTraditionalMatchOfQuestion [
 
-	self should: [true = ([self confirm: 'You like Smalltalk?'] 
+	self should: [true = ([self confirm: 'You like Smalltalk?']
 		valueSupplyingAnswer: #('*Smalltalk#' true))]
 ]
 
@@ -414,24 +442,24 @@ BlockClosureTest >> testSupplyAnswerUsingTraditionalMatchOfQuestion [
 BlockClosureTest >> testSupplySameAnswerToAllQuestions [
 
 	self should: [true = ([self confirm: 'You like Smalltalk?'] valueSupplyingAnswer: true)].
-	
-	self should: [#(true true) = ([{self confirm: 'One'. self confirm: 'Two'}] valueSupplyingAnswer: true)].
+
+	self should: [#(true true) = ([{self confirm: 'One'. self confirm: 'Two'}] valueSupplyingAnswer: true)]
 ]
 
 { #category : #tests }
 BlockClosureTest >> testSupplySeveralAnswersToSeveralQuestions [
 
-	self should: [#(false true) = ([{self confirm: 'One'. self confirm: 'Two'}] 
+	self should: [#(false true) = ([{self confirm: 'One'. self confirm: 'Two'}]
 		valueSupplyingAnswers: #( ('One' false) ('Two' true) ))].
-	
-	self should: [#(true false) = ([{self confirm: 'One'. self confirm: 'Two'}] 
+
+	self should: [#(true false) = ([{self confirm: 'One'. self confirm: 'Two'}]
 		valueSupplyingAnswers: #( ('One' true) ('Two' false) ))]
 ]
 
 { #category : #tests }
 BlockClosureTest >> testSupplySpecificAnswerToQuestion [
 
-	self should: [false = ([self confirm: 'You like Smalltalk?'] 
+	self should: [false = ([self confirm: 'You like Smalltalk?']
 		valueSupplyingAnswer: #('You like Smalltalk?' false))]
 ]
 
@@ -445,48 +473,48 @@ BlockClosureTest >> testSuppressInform [
 BlockClosureTest >> testSuppressInformUsingStringMatchOptions [
 
 	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('Should not see this message or this test failed!')) isNil].
-	
+
 	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('not see this message')) isNil].
-	
-	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('*message*failed#')) isNil].
+
+	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('*message*failed#')) isNil]
 ]
 
 { #category : #'tests - evaluating' }
 BlockClosureTest >> testValueWithArguments [
 
-	self shouldnt: [ aBlockContext valueWithArguments: #() ] raise: ArgumentsCountMismatch.
+	self shouldnt: [ aBlock valueWithArguments: #() ] raise: ArgumentsCountMismatch.
 
-	self should: [ aBlockContext valueWithArguments: #(1) ] raise: ArgumentsCountMismatch 
-		withExceptionDo: [ :err | 
+	self should: [ aBlock valueWithArguments: #(1) ] raise: ArgumentsCountMismatch
+		withExceptionDo: [ :err |
 			self assert: err expectedArgumentsCount equals: 0.
 			self assert: err calledArgumentsCount equals: 1 ].
-		
-	self should: [ [ :i | 3 + 4 ] valueWithArguments: #(1 2) ] raise: ArgumentsCountMismatch 
-		withExceptionDo: [ :err | 
+
+	self should: [ [ :i | 3 + 4 ] valueWithArguments: #(1 2) ] raise: ArgumentsCountMismatch
+		withExceptionDo: [ :err |
 			self assert: err expectedArgumentsCount equals: 1.
-			self assert: err calledArgumentsCount equals: 2 ].
+			self assert: err calledArgumentsCount equals: 2 ]
 ]
 
 { #category : #'tests - evaluating' }
 BlockClosureTest >> testValueWithArgumentsWithOrderedCollection [
 
-	self 
-		shouldnt: [ aBlockContext valueWithArguments: #() asOrderedCollection ] 
+	self
+		shouldnt: [ aBlock valueWithArguments: #() asOrderedCollection ]
 		raise: ArgumentsCountMismatch.
 
-	self 
-		should: [ aBlockContext valueWithArguments: #(1) asOrderedCollection ] 
-		raise: ArgumentsCountMismatch 
-		withExceptionDo: [ :err | 
+	self
+		should: [ aBlock valueWithArguments: #(1) asOrderedCollection ]
+		raise: ArgumentsCountMismatch
+		withExceptionDo: [ :err |
 			self assert: err expectedArgumentsCount equals: 0.
 			self assert: err calledArgumentsCount equals: 1 ].
-		
-	self 
-		should: [ [ :i | 3 + 4 ] valueWithArguments: #(1 2) asOrderedCollection ] 
-		raise: ArgumentsCountMismatch 
-		withExceptionDo: [ :err | 
+
+	self
+		should: [ [ :i | 3 + 4 ] valueWithArguments: #(1 2) asOrderedCollection ]
+		raise: ArgumentsCountMismatch
+		withExceptionDo: [ :err |
 			self assert: err expectedArgumentsCount equals: 1.
-			self assert: err calledArgumentsCount equals: 2 ].
+			self assert: err calledArgumentsCount equals: 2 ]
 ]
 
 { #category : #'tests - evaluating' }
@@ -497,8 +525,8 @@ BlockClosureTest >> testValueWithExit [
 { #category : #'tests - evaluating' }
 BlockClosureTest >> testValueWithExitBreak [
 	| val |
-	[ :break | 
-	1 to: 10 do: [ :i | 
+	[ :break |
+	1 to: 10 do: [ :i |
 		val := i.
 		i = 4 ifTrue: [ break value ] ] ] valueWithExit.
 
@@ -510,8 +538,8 @@ BlockClosureTest >> testValueWithExitContinue [
 	| val last |
 	val := 0.
 
-	1 to: 10 do: [ :i | 
-		[ :continue | 
+	1 to: 10 do: [ :i |
+		[ :continue |
 		i = 4 ifTrue: [ continue value ].
 		val := val + 1.
 		last := i ] valueWithExit ].

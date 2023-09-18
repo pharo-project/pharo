@@ -18,7 +18,7 @@ Class {
 { #category : #private }
 ZnIncomplete >> defaultResumeValue [
 	"$? codePoint"
-	
+
 	^ 63
 ]
 

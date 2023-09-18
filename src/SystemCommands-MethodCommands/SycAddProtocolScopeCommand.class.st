@@ -12,16 +12,18 @@ Class {
 
 { #category : #execution }
 SycAddProtocolScopeCommand >> execute [
+
 	| scope protocols |
 	self prepareFullExecution.
-	protocols := methodGroups select: [:each | each isKindOf: ClyTaggedMethodGroup] 
-		thenCollect: [ :each | each tag].
+	protocols := methodGroups
+		             select: [ :methodGroup | methodGroup isKindOf: ClyMethodsInProtocolGroup ]
+		             thenCollect: [ :methodsInProtocolGroup | methodsInProtocolGroup protocol ].
 	scope := RBBrowserEnvironment new forClass: class protocols: protocols.
 	RefactoringSettings addScope: scope
 ]
 
 { #category : #accessing }
-SycAddProtocolScopeCommand >> icon [ 
+SycAddProtocolScopeCommand >> icon [
 	^ self iconNamed: #add
 ]
 
@@ -33,5 +35,5 @@ SycAddProtocolScopeCommand >> name [
 { #category : #execution }
 SycAddProtocolScopeCommand >> prepareFullExecution [
 	super prepareFullExecution.
-	class := context lastSelectedClass.
+	class := context lastSelectedClass
 ]

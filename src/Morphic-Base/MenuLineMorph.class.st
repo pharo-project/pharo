@@ -12,15 +12,15 @@ Class {
 MenuLineMorph >> baseColor [
 	^ self theme autoMenuColor
 		ifTrue: [ owner color twiceDarker ]
-		ifFalse: [ 
+		ifFalse: [
 			self theme currentSettings flatMenu
 				ifFalse: [ owner color ]
 				ifTrue: [ owner color twiceDarker ] ]
 ]
 
 { #category : #drawing }
-MenuLineMorph >> drawOn: aCanvas [ 
-	self theme flatMenu 
+MenuLineMorph >> drawOn: aCanvas [
+	self theme flatMenu
 		ifFalse: [
 			aCanvas
 				fillRectangle: (bounds topLeft corner: bounds rightCenter)
@@ -37,12 +37,12 @@ MenuLineMorph >> drawOn: aCanvas [
 { #category : #drawing }
 MenuLineMorph >> drawOnAthensCanvas: anAthensCanvas [
 	self theme flatMenu
-		ifFalse: [ 
+		ifFalse: [
 			anAthensCanvas setPaint: self baseColor twiceDarker.
 			anAthensCanvas drawShape: (bounds topLeft corner: bounds rightCenter).
 			anAthensCanvas setPaint: self baseColor twiceLighter.
 			anAthensCanvas drawShape: (bounds leftCenter corner: bounds bottomRight) ]
-		ifTrue: [ 
+		ifTrue: [
 			anAthensCanvas setPaint: self baseColor.
 			anAthensCanvas drawShape: (bounds topLeft corner: bounds bottomRight) ]
 ]
@@ -50,7 +50,7 @@ MenuLineMorph >> drawOnAthensCanvas: anAthensCanvas [
 { #category : #initialization }
 MenuLineMorph >> initialize [
 	super initialize.
-	self hResizing: #spaceFill; vResizing: #spaceFill.
+	self hResizing: #spaceFill; vResizing: #spaceFill
 ]
 
 { #category : #testing }

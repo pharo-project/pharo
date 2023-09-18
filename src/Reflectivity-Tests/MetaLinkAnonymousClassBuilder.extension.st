@@ -6,6 +6,6 @@ MetaLinkAnonymousClassBuilder >> migratedObjects [
 ]
 
 { #category : #'*Reflectivity-Tests' }
-MetaLinkAnonymousClassBuilder >> requestClassOfObject: anObject [ 
+MetaLinkAnonymousClassBuilder >> requestClassOfObject: anObject [
 	^anObject class
 ]

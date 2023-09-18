@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'sourceCode'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -44,16 +44,9 @@ RBRemoveSubtreeTransformation class >> model: aRBModel code: aString from: aSele
 		yourself
 ]
 
-{ #category : #api }
-RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
-
-	self className: aClassName.
-	selector := aSelector.
-	sourceCode := aString
-]
-
 { #category : #preconditions }
-RBRemoveSubtreeTransformation >> preconditions [
+RBRemoveSubtreeTransformation >> applicabilityPreconditions [ 
+
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&
 			(RBCondition
@@ -66,11 +59,19 @@ RBRemoveSubtreeTransformation >> preconditions [
 						ifNil: [ self refactoringError: 'Invalid source to extract - ' , sourceCode ].
 					(tree isSequence and: [ tree statements isEmpty ])
 						ifTrue: [ self refactoringError: 'Selected code to extract is empty' ].
-					tree := ((self definingClass parseTreeFor: selector)
+					tree := ((self definingClass parseTreeForSelector: selector)
 						extractSubtreeWith: sourceCode)
 						ifNil: [ self
 								refactoringError: 'Could not extract code from method ' , selector ].
 					true ])
+]
+
+{ #category : #api }
+RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
+
+	self className: aClassName.
+	selector := aSelector.
+	sourceCode := aString
 ]
 
 { #category : #executing }
@@ -79,18 +80,18 @@ RBRemoveSubtreeTransformation >> privateTransform [
 	| parseTree |
 	"execute in terms of nodes and not in parserewriter"
 	"suggest remove similar code here"
-	parseTree := self definingClass parseTreeFor: selector.
+	parseTree := self definingClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
-	
+
 	"Halt now."
 	(parseTree extractSubtreeWith: sourceCode)
 		ifNotNil: [ :subtree |
 			parseTree removeSubtree: subtree.
 			self definingClass compileTree: parseTree ]
 		ifNil: [ ^ self ].
-	
-	
-	"(subtree := parseTree extractSubtreeWith: sourceCode) ifNil: [ ^ self ].	
+
+
+	"(subtree := parseTree extractSubtreeWith: sourceCode) ifNil: [ ^ self ].
 	parseTree := parseTree removeSubtree: subtree.
 	self definingClass compileTree: parseTree"
 ]
@@ -111,7 +112,7 @@ RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 ]
 
 { #category : #printing }
-RBRemoveSubtreeTransformation >> storeOn: aStream [ 
+RBRemoveSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

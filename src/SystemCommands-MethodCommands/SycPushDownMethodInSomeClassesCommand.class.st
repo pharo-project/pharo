@@ -1,31 +1,25 @@
+"
+I am a command that pushes down methods in some classes.
+
+I am responsible for delegating execution to `RBPushDownMethodInSomeClassesDriver`.
+"
 Class {
 	#name : #SycPushDownMethodInSomeClassesCommand,
 	#superclass : #SysRefactoringMethodCommand,
 	#instVars : [
-		'classes'
+		'refactoringScopes'
 	],
 	#category : #'SystemCommands-MethodCommands'
 }
 
 { #category : #converting }
 SycPushDownMethodInSomeClassesCommand >> asRefactorings [
-	"Return push down method refactoring using method"
-	| refactoring |
-	refactoring := RBPushDownMethodRefactoring 
-		model: model
-		pushDown: (methods collect: [ :each | each selector ])
-		from: methods first origin
-		in: self classes.
-	^ OrderedCollection with: refactoring
-]
 
-{ #category : #converting }
-SycPushDownMethodInSomeClassesCommand >> classes [
-	^ classes ifNil: [ classes := #() ]
+	self shouldNotImplement
 ]
 
 { #category : #accessing }
-SycPushDownMethodInSomeClassesCommand >> defaultMenuIconName [ 
+SycPushDownMethodInSomeClassesCommand >> defaultMenuIconName [
 	^ #down
 ]
 
@@ -35,25 +29,23 @@ SycPushDownMethodInSomeClassesCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycPushDownMethodInSomeClassesCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	self selectMethodsAndClasses.
+SycPushDownMethodInSomeClassesCommand >> executeRefactorings [
+
+	(RBPushDownMethodInSomeClassesDriver
+		model: model
+		scopes: refactoringScopes
+		pushDown: methods) runRefactoring
+]
+
+{ #category : #testing }
+SycPushDownMethodInSomeClassesCommand >> isComplexRefactoring [ 
+
+	^ false
 ]
 
 { #category : #execution }
-SycPushDownMethodInSomeClassesCommand >> selectMethodsAndClasses [
-	| dialog class|
-	class := methods first origin.
-	dialog := RBMethodsSelectionPresenter 
-		   label: 'Push down methods from ', class name
-			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
-			selecting: methods asOrderedCollection. 
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	methods := dialog presenter selectedItems.
-	dialog := RBVariablesSelectionPresenter 
-		   label: 'Push down in classes: '
-			withItems: (class subclasses sort: [ :a :b | a name < b name ]) asOrderedCollection
-			selecting: class subclasses. 
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	classes := (dialog presenter selectedItems) collect: [ :each | each name ]
+SycPushDownMethodInSomeClassesCommand >> prepareFullExecutionInContext: aToolContext [
+	super prepareFullExecutionInContext: aToolContext.
+	refactoringScopes := aToolContext refactoringScopes
+
 ]

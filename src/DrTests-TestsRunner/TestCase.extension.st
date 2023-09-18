@@ -11,7 +11,7 @@ TestCase >> drTestsBrowse [
 ]
 
 { #category : #'*DrTests-TestsRunner' }
-TestCase >> drTestsBuildContextMenu: aMenuModel [ 
+TestCase >> drTestsBuildContextMenu: aMenuModel [
 	"Nothing to display yet."
 ]
 

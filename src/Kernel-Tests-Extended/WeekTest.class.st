@@ -26,7 +26,7 @@ WeekTest >> selectorsToBeIgnored [
 	private := #( #printOn: ).
 	special := #( #next #do: ).
 
-	^ super selectorsToBeIgnored, deprecated, private, special.
+	^ super selectorsToBeIgnored, deprecated, private, special
 ]
 
 { #category : #running }
@@ -58,20 +58,20 @@ WeekTest >> testByWeekNumber [
 	week := Week year: 2013 week: 32.
 	self assert: week start equals: (DateAndTime year: 2013 month: 8 day: 5).
 	self assert: week start dayOfWeek equals: 2.
-	
+
 	week := Week year: 2013 week: 52.
 	self assert: week start equals: (DateAndTime year: 2013 month: 12 day: 23).
 	self assert: week start dayOfWeek equals: 2.
-	
+
 	week := Week year: 2014 week: 1.
 	self assert: week start equals: (DateAndTime year: 2013 month: 12 day: 30).
-	self assert: week start dayOfWeek equals: 2.
+	self assert: week start dayOfWeek equals: 2
 ]
 
 { #category : #tests }
 WeekTest >> testByWeekNumberInCurrentYear [
 	week := Week week: 2.
-	self assert: week year asYear equals: Year current.
+	self assert: week year asYear equals: Year current
 ]
 
 { #category : #tests }

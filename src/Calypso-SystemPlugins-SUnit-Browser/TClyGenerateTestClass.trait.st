@@ -16,7 +16,7 @@ TClyGenerateTestClass >> addNewCommentForTestClass: aClass basedOn: baseClass [
 	aClass
 		comment:
 			(String
-				streamContents: [ :stream | 
+				streamContents: [ :stream |
 					| name |
 					name := aClass name.
 					name first isVowel
@@ -38,7 +38,7 @@ TClyGenerateTestClass >> newTestClassCategoryFor: aClass [
 	| tag |
 	tag := aClass package classTagForClass: aClass.
 	^ String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			s
 				nextPutAll: aClass package name;
 				nextPutAll: '-Tests'.
@@ -62,8 +62,8 @@ TClyGenerateTestClass >> testClassFor: inputClass [
 		ifPresent: [ :class | resultClass := class ]
 		ifAbsent: [
 			(self isValidClass: inputClass) ifFalse: [ ClyInvalidClassForTestClassGeneration signalFor: inputClass ].
-			self systemEnvironment ensureExistAndRegisterPackageNamed: inputClass package name asString , '-Tests'.
-			
+			self systemEnvironment ensurePackage: inputClass package name asString , '-Tests'.
+
 			resultClass := self class classInstaller make: [ :aBuilder |
 				aBuilder name: className;
 					superclass: TestCase;

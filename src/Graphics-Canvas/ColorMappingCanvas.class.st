@@ -60,9 +60,9 @@ ColorMappingCanvas >> drawPolygon: vertices color: aColor borderWidth: bw border
 ColorMappingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c [
 	"Draw the given string in the given font and color clipped to the given rectangle. If the font is nil, the default font is used."
 	myCanvas
-		drawString: s from: firstIndex to: lastIndex 
-		in: boundsRect 
-		font: fontOrNil 
+		drawString: s from: firstIndex to: lastIndex
+		in: boundsRect
+		font: fontOrNil
 		color: (self mapColor: c)
 ]
 
@@ -70,15 +70,15 @@ ColorMappingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRec
 ColorMappingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	"Draw the given string in the given font and color clipped to the given rectangle. If the font is nil, the default font is used."
 	myCanvas
-		drawString: s 
-		from: firstIndex 
-		to: lastIndex 
-		in: boundsRect 
-		font: fontOrNil 
-		color: (self mapColor: c) 
-		underline: underline 
-		underlineColor: (self mapColor: uc) 
-		strikethrough: strikethrough 
+		drawString: s
+		from: firstIndex
+		to: lastIndex
+		in: boundsRect
+		font: fontOrNil
+		color: (self mapColor: c)
+		underline: underline
+		underlineColor: (self mapColor: uc)
+		strikethrough: strikethrough
 		strikethroughColor: (self mapColor: sc)
 ]
 
@@ -99,7 +99,7 @@ ColorMappingCanvas >> fillOval: r color: c borderWidth: borderWidth borderColor:
 
 { #category : #initialization }
 ColorMappingCanvas >> flush [
-	myCanvas flush.
+	myCanvas flush
 ]
 
 { #category : #accessing }
@@ -121,9 +121,9 @@ ColorMappingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth:
 ColorMappingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth topLeftColor: topLeftColor bottomRightColor: bottomRightColor [
 	"Draw the rectangle using the given attributes"
 	myCanvas
-		frameAndFillRectangle: r 
-		fillColor: (self mapColor: fillColor) 
-		borderWidth: borderWidth 
+		frameAndFillRectangle: r
+		fillColor: (self mapColor: fillColor)
+		borderWidth: borderWidth
 		topLeftColor: (self mapColor: topLeftColor)
 		bottomRightColor: (self mapColor: bottomRightColor)
 ]
@@ -131,7 +131,7 @@ ColorMappingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth:
 { #category : #private }
 ColorMappingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	"Draw the given form. For the 'paint' combination rule use stenciling otherwise simply fill the source rectangle."
-	^myCanvas image: aForm at: aPoint sourceRect: sourceRect rule: rule.
+	^myCanvas image: aForm at: aPoint sourceRect: sourceRect rule: rule
 ]
 
 { #category : #testing }
@@ -146,7 +146,7 @@ ColorMappingCanvas >> line: pt1 to: pt2 width: w color: c [
 		line: pt1
 		to: pt2
 		width: w
-		color: (self mapColor: c).
+		color: (self mapColor: c)
 ]
 
 { #category : #private }
@@ -156,7 +156,7 @@ ColorMappingCanvas >> mapColor: aColor [
 
 { #category : #initialization }
 ColorMappingCanvas >> on: aCanvas [
-	myCanvas := aCanvas.
+	myCanvas := aCanvas
 ]
 
 { #category : #accessing }
@@ -175,7 +175,7 @@ ColorMappingCanvas >> paragraph: paragraph bounds: bounds color: c [
 
 { #category : #initialization }
 ColorMappingCanvas >> reset [
-	myCanvas reset.
+	myCanvas reset
 ]
 
 { #category : #'drawing - images' }
@@ -207,7 +207,7 @@ ColorMappingCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect durin
 				myCanvas := newCanvas.
 				aBlock value: self]
 		smoothing: cellSize.
-	myCanvas := oldCanvas.
+	myCanvas := oldCanvas
 ]
 
 { #category : #other }
@@ -218,7 +218,7 @@ ColorMappingCanvas >> translateBy: delta clippingTo: aRectangle during: aBlock [
 	myCanvas translateBy: delta clippingTo: aRectangle during:[:newCanvas|
 		myCanvas := newCanvas.
 		aBlock value: self].
-	myCanvas := oldCanvas.
+	myCanvas := oldCanvas
 ]
 
 { #category : #'drawing - support' }
@@ -229,7 +229,7 @@ ColorMappingCanvas >> translateBy: delta during: aBlock [
 	myCanvas translateBy: delta during:[:newCanvas|
 		myCanvas := newCanvas.
 		aBlock value: self].
-	myCanvas := oldCanvas.
+	myCanvas := oldCanvas
 ]
 
 { #category : #'drawing - support' }
@@ -240,5 +240,5 @@ ColorMappingCanvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlo
 	myCanvas translateTo: newOrigin clippingTo: aRectangle during:[:newCanvas|
 		myCanvas := newCanvas.
 		aBlock value: self].
-	myCanvas := oldCanvas.
+	myCanvas := oldCanvas
 ]

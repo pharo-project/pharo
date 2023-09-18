@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ClyAddWatchCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^ (super canBeExecutedInContext: aBrowserContext) and: [ 
+	^ (super canBeExecutedInContext: aBrowserContext) and: [
 		  aBrowserContext isSelectedItemHasWatch not ]
 ]
 
@@ -31,6 +31,6 @@ ClyAddWatchCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddWatchCommand >> execute [
-	
+
 	Watch in: sourceNode
 ]

@@ -21,7 +21,7 @@ Class {
 { #category : #'instance creation' }
 AthensBalloonSurface class >> extent: aPoint [
 	"Create a new surface with given extent."
-	
+
 	^ self new form: (Form extent: aPoint depth: 32)
 ]
 
@@ -86,7 +86,7 @@ AthensBalloonSurface >> createFormPaint: aForm [
 
 { #category : #paints }
 AthensBalloonSurface >> createLinearGradient: colorRamp start: pt1 stop: pt2 [
- 
+
 	^ AthensBalloonLinearGradient new
 		colorRamp: colorRamp;
 		origin: pt1;
@@ -97,7 +97,7 @@ AthensBalloonSurface >> createLinearGradient: colorRamp start: pt1 stop: pt2 [
 { #category : #paths }
 AthensBalloonSurface >> createPath: aPathCreatingBlock [
 	"Create a path from provided path builder instance"
-	
+
 	| builder |
 	builder := AthensSimplePathBuilder new.
 	aPathCreatingBlock value: builder.
@@ -130,7 +130,7 @@ AthensBalloonSurface >> disableMask [
 ]
 
 { #category : #drawing }
-AthensBalloonSurface >> drawImage: aForm [ 
+AthensBalloonSurface >> drawImage: aForm [
 
 	engine drawImage: aForm transform: imageTransform
 ]
@@ -148,7 +148,7 @@ AthensBalloonSurface >> engine [
 ]
 
 { #category : #drawing }
-AthensBalloonSurface >> fillBezierShape: contours color: aColor [ 
+AthensBalloonSurface >> fillBezierShape: contours color: aColor [
 
 	engine
 		prepareForRendering;
@@ -208,7 +208,7 @@ AthensBalloonSurface >> form: aForm [
 	mask := Form extent: form extent depth: 1.
 
 	engine := AthensBalloonEngine new.
-	engine 
+	engine
 		bitBlt: (GrafPort toForm: form);
 		clipRect: (0 @ 0 extent: form extent);
 		edgeTransform: pathTransform;
@@ -234,7 +234,7 @@ AthensBalloonSurface >> initialize [
 	super initialize.
 	pathTransform := AthensAffineTransform new.
 	paintTransform := AthensAffineTransform new.
-	
+
 	imageTransform := AthensAffineTransform new " AthensGenericTransform new".
 	fillTransform := AthensAffineTransform new.
 	strokeTransform := AthensAffineTransform new.
@@ -267,8 +267,8 @@ AthensBalloonSurface >> pathTransform: anObject [
 ]
 
 { #category : #drawing }
-AthensBalloonSurface >> strokeBezierShape: contours color: aColor width: aWidth [ 
-	
+AthensBalloonSurface >> strokeBezierShape: contours color: aColor width: aWidth [
+
 	engine
 		prepareForRendering;
 		registerColorFill: aColor;
@@ -277,7 +277,7 @@ AthensBalloonSurface >> strokeBezierShape: contours color: aColor width: aWidth 
 
 { #category : #drawing }
 AthensBalloonSurface >> strokeRectangle: rect color: aColor width: aWidth [
-	 
+
 	engine
 		prepareForRendering;
 		registerColorFill: aColor;

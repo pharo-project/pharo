@@ -32,15 +32,10 @@ TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2
 #  - taking the entire name,
 #  - removing the suffix after the first dot
 #  - removing the prefix "Pharo"
-TEST_VM_VERSION=`echo ${TEST_NAME_PREFIX} | cut -d'.' -f 1 | cut -c6-`0
+TEST_VM_VERSION=`echo ${TEST_NAME_PREFIX} | cut -d'.' -f 1 | cut -d'-' -f 1 | cut -c6-`0
 
-#Odd PR builds use the the latest VM, else use the stable VM
-if [[ $(is_development_build) == "0" && $((${BUILD_NUMBER} % 2)) -eq 1 ]]
-then
- TEST_VM_KIND="vmLatest"
-else
- TEST_VM_KIND="vm"	
-fi
+#Use always the latest VM
+TEST_VM_KIND="vmLatest"
 
 ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${TEST_VM_VERSION} ${TEST_VM_KIND} ${1}
 					

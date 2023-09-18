@@ -2,15 +2,18 @@ Extension { #name : #BlockClosure }
 
 { #category : #'*Kernel-Chronology-Extras' }
 BlockClosure >> bench [
-	"Return how many times the receiver can get executed in 5 seconds. 
-	Answer a string with meaningful description.
-	See #benchFor: which returns a BenchmarkResult"
-	
+	"Answer a BenchmarkResult with the number of times the receiver was executed in 5 seconds"
+
 	"[3.14 printString] bench"
-	
-	| benchmarkResult |
-	benchmarkResult := self benchFor: 5 seconds.
-	^ benchmarkResult shortPrintString
+
+	^ self benchFor: 5 seconds
+]
+
+{ #category : #'*Kernel-Chronology-Extras' }
+BlockClosure >> benchCompareTo: aBlock [
+	"Answer a BenchmarkComparison of the receiver to the argument."
+
+	^ self bench compareTo: aBlock bench
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -29,7 +32,7 @@ BlockClosure >> benchFor: duration [
 			do: [ :e | exception := e ].
 		run := false ] forkAt: Processor timingPriority - 1.
 	started := Time millisecondClockValue.
-	[ run ] whileTrue: [ 
+	[ run ] whileTrue: [
 		self value.
 		count := count + 1 ].
 	exception ifNotNil: [ exception signal ].

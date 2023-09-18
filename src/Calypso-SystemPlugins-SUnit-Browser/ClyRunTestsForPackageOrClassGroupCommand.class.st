@@ -20,17 +20,17 @@ ClyRunTestsForPackageOrClassGroupCommand >> execute [
 { #category : #execution }
 ClyRunTestsForPackageOrClassGroupCommand >> runTestsOf: aClassGroup [
 	| testResult testClasses |
-	
+
 	testClasses := aClassGroup classes
 		select: [ :each | each isTestCase and: [ each isAbstract not ] ].
-	testClasses 
+	testClasses
 		ifEmpty: [testResult := TestAsserter classForTestResult new]
 		ifNotEmpty: [ testResult := testClasses anyOne classForTestResult new].
-		
-	testClasses do: [ :each | self runTestCase: each results: testResult].		
-	testResult updateResultsInHistory.	
-	self  
-		notifyUserAboutResults: testResult 
+
+	testClasses do: [ :each | self runTestCase: each results: testResult].
+	testResult updateResultsInHistory.
+	self
+		notifyUserAboutResults: testResult
 		with: aClassGroup name
 ]
 

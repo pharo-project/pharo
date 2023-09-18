@@ -22,7 +22,7 @@ Class {
 { #category : #'instance creation' }
 ClyInteractiveRemoveMethodStrategy class >> newForBrowser: aBrowser [
 
-	^self new 
+	^self new
 		browser: aBrowser
 ]
 

@@ -40,6 +40,6 @@ SycShowMethodVersionCommand >> execute [
 { #category : #execution }
 SycShowMethodVersionCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	method := aToolContext lastSelectedMethod
 ]

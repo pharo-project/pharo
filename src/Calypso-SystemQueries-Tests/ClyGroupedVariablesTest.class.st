@@ -13,7 +13,7 @@ ClyGroupedVariablesTest class >> isAbstract [
 ClyGroupedVariablesTest >> assertVars: varNames [
 
 	| vars i var |
-	vars := items 
+	vars := items
 		select: [ :each | each actualObject isKindOf: ClyVariableMethodGroup ].
 	self assert: vars size equals: varNames size.
 	i := 1.

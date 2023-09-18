@@ -10,11 +10,11 @@ Class {
 		'packageName',
 		'newName'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #accessing }
-RBPackageTransformation class >> model: aRBModel packageName: aName [ 
+RBPackageTransformation class >> model: aRBModel packageName: aName [
 	^ self new
 		model: aRBModel;
 		packageName: aName;
@@ -40,9 +40,10 @@ RBPackageTransformation >> packageName: anObject [
 ]
 
 { #category : #preconditions }
-RBPackageTransformation >> preconditions [ 
-	^ (RBCondition withBlock: [ [ RPackage organizer includesPackageNamed: packageName ]
-			on: Error 
-			do: [ :e | self refactoringError: e messageText ]
-		])
+RBPackageTransformation >> preconditions [
+
+	^ RBCondition
+		  withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+			  self packageOrganizer hasPackage: packageName ]
+		  errorString: 'The package ' , packageName , ' does not exsit in the system.'
 ]

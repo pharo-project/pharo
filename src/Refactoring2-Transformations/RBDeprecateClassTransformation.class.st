@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'className'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -36,7 +36,7 @@ RBDeprecateClassTransformation class >> model: aRBModel class: aClassName [
 { #category : #executing }
 RBDeprecateClassTransformation >> buildTransformations [
 
-	^ transformations ifNil: [ 
+	^ transformations ifNil: [
 		transformations := OrderedCollection
 			with: (RBAddMethodTransformation
 					sourceCode: (String streamContents: [ :code | code
@@ -48,15 +48,15 @@ RBDeprecateClassTransformation >> buildTransformations [
 						nextPutAll: String tab;
 						nextPutAll: '^ super new' ])
 					in: (className, ' class') asSymbol
-					withProtocols: {#deprecation})
+					withProtocol: #deprecation)
 			with: (RBAddMethodTransformation
-					sourceCode: (String streamContents: [ :code | code 
+					sourceCode: (String streamContents: [ :code | code
 						nextPutAll: 'deprecated';
 						nextPutAll: String cr;
 						nextPutAll: String tab;
 						nextPutAll: '^ true' ])
 					in: (className, ' class') asSymbol
-					withProtocols: {#deprecation})
+					withProtocol: #deprecation)
 			with: (RBAddMethodTransformation
 					sourceCode: (String streamContents: [ :code | code
 						nextPutAll: 'systemIcon';
@@ -64,7 +64,7 @@ RBDeprecateClassTransformation >> buildTransformations [
 						nextPutAll: String tab;
 						nextPutAll: '^ Smalltalk ui icons iconNamed: #packageDelete' ])
 					in: (className, ' class') asSymbol
-					withProtocols: {#deprecation})
+					withProtocol: #deprecation)
 			with: (RBAddClassCommentTransformation
 					 comment: 'Deprecated!!! Use superclass'
 					 in: className) ]
@@ -77,7 +77,7 @@ RBDeprecateClassTransformation >> class: aClassName [
 ]
 
 { #category : #printing }
-RBDeprecateClassTransformation >> storeOn: aStream [ 
+RBDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

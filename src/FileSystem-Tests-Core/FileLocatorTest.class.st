@@ -34,45 +34,45 @@ FileLocatorTest >> testCPath [
 FileLocatorTest >> testCanCreateLocatorFromStringWhenDeepChild [
 	| path |
 	path := (FileLocator home / 'foo' / 'bar' / 'bee' / 'see') fullName.
-	
+
 	locator := FileLocator fromString: path ifNone: [ nil ].
-	
+
 	self
 		assert: locator origin
 		equals: #home.
 	self
 		assert: locator fullName
-		equals: path.
+		equals: path
 ]
 
 { #category : #'creation tests' }
 FileLocatorTest >> testCanCreateLocatorFromStringWhenDirectChild [
 	| path |
 	path := (FileLocator home / 'foo') fullName.
-	
+
 	locator := FileLocator fromString: path ifNone: [ nil ].
-		
+
 	self
 		assert: locator origin
 		equals: #home.
 	self
 		assert: locator fullName
-		equals: path.
+		equals: path
 ]
 
 { #category : #'creation tests' }
 FileLocatorTest >> testCanCreateLocatorFromStringWhenSamePath [
 	| path |
 	path := FileLocator home fullName.
-	
+
 	locator := FileLocator fromString: path ifNone: [ nil ].
-	
+
 	self
 		assert: locator
 		equals: FileLocator home.
 	self
 		assert: locator fullName
-		equals: path.
+		equals: path
 ]
 
 { #category : #'creation tests' }
@@ -85,7 +85,7 @@ FileLocatorTest >> testCananonicalize [
 
 	canonicalized := fl canonicalize.
 	self assert: canonicalized path isRelative.
-	self assert: canonicalized path size equals: 2.
+	self assert: canonicalized path size equals: 2
 ]
 
 { #category : #'compatibility tests' }
@@ -111,7 +111,7 @@ FileLocatorTest >> testContainsLocator [
 
 { #category : #'compatibility tests' }
 FileLocatorTest >> testContainsPath [
-	
+
 	locator := FileLocator image.
 	self assert: (locator contains: (locator resolve / 'griffle') path)
 ]
@@ -148,12 +148,12 @@ FileLocatorTest >> testFileSystem [
 FileLocatorTest >> testFromPathReturnsBlockValueIfPathNotPartOfAnOrigin [
 	| path |
 	path := '/foo' asFileReference path.
-	
+
 	locator := FileLocator fromPath: path ifNone: [ nil ].
-	
+
 	self
 		assert: locator
-		equals: nil.
+		equals: nil
 ]
 
 { #category : #'creation tests' }
@@ -168,7 +168,7 @@ FileLocatorTest >> testGetRightLocatorWhenCreatingFromString [
 		equals: #documents.
 	self
 		assert: locator fullName
-		equals: path.
+		equals: path
 ]
 
 { #category : #tests }
@@ -247,13 +247,13 @@ FileLocatorTest >> testMoveTo [
 	[
 		old := FileLocator imageDirectory / 'testMoveTo_old'.
 		old ensureCreateFile.
-		
+
 		new := FileLocator home / 'testMoveTo_new'.
 		old moveTo: new.
-		
+
 		self deny: old exists.
 		self assert: new exists.
-	] ensure: [ 
+	] ensure: [
 		old ensureDelete.
 		new ensureDelete.
 	]

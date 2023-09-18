@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #running }
-CommonClassDefinitionPrinterTest >> setUp [ 
+CommonClassDefinitionPrinterTest >> setUp [
 	super setUp.
 	slotUse := ClassDefinitionPrinter showFluidClassDefinition.
 	slotDisplay := ClassDefinitionPrinter displayEmptySlots.

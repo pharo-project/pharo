@@ -16,7 +16,7 @@ Class {
 { #category : #'open/close' }
 KeyPrinterMorph class >> open [
 	<script>
-	
+
 	self new openInWorld
 ]
 
@@ -38,11 +38,11 @@ KeyPrinterMorph >> handlesMouseDown: evt [
 
 { #category : #'event handling' }
 KeyPrinterMorph >> keyDown: anEvent [
-	UIManager default inform: anEvent key asString.
+	UIManager default inform: anEvent key asString
 ]
 
 { #category : #'event handling' }
-KeyPrinterMorph >> mouseDown: event [ 
+KeyPrinterMorph >> mouseDown: event [
 	super mouseDown: event.
 	self activeHand newKeyboardFocus: self
 ]

@@ -18,7 +18,7 @@ Class {
 
 { #category : #accessing }
 ClyTestedClassProperty class >> coveringTestCase: aTestCase [
-	^self new 
+	^self new
 		coveringTestCase: aTestCase
 ]
 

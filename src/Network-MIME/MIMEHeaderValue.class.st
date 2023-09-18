@@ -23,32 +23,32 @@ Class {
 MIMEHeaderValue class >> forField: aFName fromString: aString [
 	"Create a MIMEHeaderValue from aString. How it is parsed depends on whether it is a MIME specific field or a generic header field."
 
-	^(aFName beginsWith: 'content-') 
+	^(aFName beginsWith: 'content-')
 		ifTrue: [ self fromMIMEHeader: aString ]
 		ifFalse: [ self fromTraditionalHeader: aString ]
 ]
 
 { #category : #'instance creation' }
-MIMEHeaderValue class >> fromMIMEHeader: aString [ 
+MIMEHeaderValue class >> fromMIMEHeader: aString [
 	"This is the value of a MIME header field and so is parsed to extract the various parts"
 	| parts newValue parms |
 	newValue := self new.
 	parts := (aString findTokens: ';') readStream.
 	newValue mainValue: parts next.
 	parms := Dictionary new.
-	parts do: 
-		[ :e | | separatorPos parmValue parmName | 
-		separatorPos := e 
+	parts do:
+		[ :e | | separatorPos parmValue parmName |
+		separatorPos := e
 			findAnySubstring: '='
 			startingAt: 1.
-		separatorPos <= e size ifTrue: 
-			[ parmName := (e 
+		separatorPos <= e size ifTrue:
+			[ parmName := (e
 				copyFrom: 1
 				to: separatorPos - 1) trimBoth asLowercase.
-			parmValue := (e 
+			parmValue := (e
 				copyFrom: separatorPos + 1
 				to: e size) trimBoth withoutQuoting.
-			parms 
+			parms
 				at: parmName
 				put: parmValue ] ].
 	newValue parameters: parms.
@@ -72,7 +72,7 @@ MIMEHeaderValue >> asHeaderValue [
 	strm := (String new: 20) writeStream.
 	strm nextPutAll: mainValue.
 	parameters
-		associationsDo: [ :e | 
+		associationsDo: [ :e |
 			strm
 				nextPut: $;;
 				nextPutAll: e key;
@@ -110,7 +110,7 @@ MIMEHeaderValue >> parameters: anObject [
 { #category : #printing }
 MIMEHeaderValue >> printOn: aStream [
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: ': ';
 		nextPutAll: self asHeaderValue
 ]

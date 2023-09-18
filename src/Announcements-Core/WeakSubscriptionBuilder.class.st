@@ -33,19 +33,27 @@ WeakSubscriptionBuilder >> weak [
 ]
 
 { #category : #'wrapped protocol' }
-WeakSubscriptionBuilder >> when: anAnnouncementClass do: aValuable [
+WeakSubscriptionBuilder >> when: anAnnouncementClass do: aValuable for: receiver [
 	"Do not use this message on weak announcer because it does not work. The block will hold strongly the receiver and more.
 	 We need ephemerons for that'"
-	"aValuable isBlock ifTrue: [  
+	
+	"aValuable isBlock ifTrue: [
 		self error: 'Do not use this message on weak and block because it does not work. We need ephemerons for that']."
+	
 	^	announcer basicSubscribe: (
-			WeakAnnouncementSubscription new 
+			WeakAnnouncementSubscription new
 				announcer: announcer;
 				announcementClass: anAnnouncementClass;
-				valuable: aValuable)
+				action: aValuable;
+				subscriber: receiver; 
+				yourself) 
 ]
 
 { #category : #'wrapped protocol' }
 WeakSubscriptionBuilder >> when: anAnnouncementClass send: aSelector to: anObject [
-	^ self when: anAnnouncementClass do: (WeakMessageSend receiver: anObject selector: aSelector)
+
+	^ self
+		  when: anAnnouncementClass
+		  do: (WeakMessageSend receiver: anObject selector: aSelector)
+		  for: anObject
 ]

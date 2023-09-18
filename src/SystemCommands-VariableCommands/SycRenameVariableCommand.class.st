@@ -26,7 +26,7 @@ SycRenameVariableCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : #accessing }
-SycRenameVariableCommand class >> defaultMenuIconName [ 
+SycRenameVariableCommand class >> defaultMenuIconName [
 	^ #edit
 ]
 
@@ -51,10 +51,8 @@ SycRenameVariableCommand >> defaultMenuItemName [
 SycRenameVariableCommand >> execute [
 
 	| refactoring |
-	refactoring := variable createVariableRefactoring:
-		               self classRefactoring.
+	refactoring := variable createVariableRefactoring: self classRefactoring.
 	refactoring newName: self newVariableName.
-
 	refactoring execute
 ]
 
@@ -89,7 +87,7 @@ SycRenameVariableCommand >> requestNewNameIn: aToolContext [
 		           request: 'New name of the variable'
 		           initialAnswer: variable name
 		           title: 'Rename a variable'.
-	newName isEmptyOrNil | (newName = variable name) ifTrue: [ 
+	newName isEmptyOrNil | (newName = variable name) ifTrue: [
 		CmdCommandAborted signal ]
 ]
 

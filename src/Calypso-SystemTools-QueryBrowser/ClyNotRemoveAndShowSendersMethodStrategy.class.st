@@ -14,7 +14,7 @@ ClyNotRemoveAndShowSendersMethodStrategy >> orderForBrowser [
 
 { #category : #execution }
 ClyNotRemoveAndShowSendersMethodStrategy >> removeMethods: methods [
-	
+
 	(ClyShowMessageSenderCommand forMethods: methods by: browser) execute
 ]
 

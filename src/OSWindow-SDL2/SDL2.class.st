@@ -40,16 +40,16 @@ SDL2 class >> clipboardText [
 { #category : #clipboard }
 SDL2 class >> clipboardText: text [
 	| encoded encoder |
-	
+
 	encoded := ByteArray streamContents: [ :stream |
 		encoder := ZnUTF8Encoder new.
-		encoder 
-			next: text size 
+		encoder
+			next: text size
 			putAll: text asString
-			startingAt: 1 
+			startingAt: 1
 			toStream: stream.
 		stream nextPut: 0 ].
-	
+
 	encoded pinInMemory.
 	self primClipboardText: encoded
 ]
@@ -77,13 +77,13 @@ SDL2 class >> createCursor: data mask: mask w: w h: h hotX: hotX hotY: hotY [
 { #category : #cairo }
 SDL2 class >> createRGBSurfaceForCairoWidth: width height: height [
 
-	^ (self primCreateRGBSurfaceForCairoWidth: width height: height) initialize.
+	^ (self primCreateRGBSurfaceForCairoWidth: width height: height) initialize
 ]
 
 { #category : #video }
 SDL2 class >> createRGBSurfaceFromPixels: pixels width: width height: height depth: depth pitch: pitch
 	rmask: rmask gmask: gmask bmask: bmask amask: amask [
-	^ self ffiCall: #( SDL_Surface* SDL_CreateRGBSurfaceFrom 
+	^ self ffiCall: #( SDL_Surface* SDL_CreateRGBSurfaceFrom
 						( void* pixels , int width , int height , int depth , int pitch ,
 						  Uint32 rmask , Uint32 gmask , Uint32 bmask , Uint32 amask ) )
 ]
@@ -122,20 +122,18 @@ SDL2 class >> ffiLibraryName [
 
 { #category : #native }
 SDL2 class >> findSDL2 [
+	| libFullPath |
+
 	"In Linux, try to use the linked version."
 	OSSDL2Driver hasPlugin.
-	
-	"Look for SDL2 using different names."
-	#(0							"Static"
-	SDL2
-	'libSDL2-2.0.0.dylib'		"Mac"
-	'libSDL2-2.0.so.0'			"Linux 1"
-	'libSDL2-2.0.so.0.2.1'	"Linux 2"
-	'SDL2.dll'					"Windows"
-	) do: [ :eachName | 
-		[ (self checkLibraryName: eachName) ifTrue: [ ^ eachName ] ] 
-		onErrorDo: [nil] ].
-	self error: 'Failed to find SDL2 library.'
+
+	libFullPath := Smalltalk platform ffiLibraryName: SDL2.
+	(self checkLibraryName: libFullPath)
+		ifTrue: [ ^ libFullPath ]
+		ifFalse: [
+			libFullPath asFileReference exists
+				ifFalse: [ self error: libFullPath asString , ' does not exist. Please install or update SDL2 in your system' ]
+				ifTrue: [ self error: 'Failed to load SDL2 library. Check if the library ' , libFullPath asString , ' exports the SDL_Init symbol and matches this platform' ] ]
 ]
 
 { #category : #video }
@@ -155,7 +153,7 @@ SDL2 class >> gameControllerOpen: deviceIndex [
 
 { #category : #audio }
 SDL2 class >> getAudioDeviceName: index isCapture: isCapture [
-	^ self ffiCall: #( char* SDL_GetAudioDeviceName(int index, int isCapture) ) options: #( optStringEncodingUtf8 ).
+	^ self ffiCall: #( char* SDL_GetAudioDeviceName(int index, int isCapture) ) options: #( optStringEncodingUtf8 )
 ]
 
 { #category : #video }
@@ -196,7 +194,7 @@ SDL2 class >> glCreateContext: window [
 { #category : #opengl }
 SDL2 class >> glGetAttribute: attr [
 
-	^ ExternalAddress allocate: 4 bytesDuring: [ :value | 
+	^ ExternalAddress allocate: 4 bytesDuring: [ :value |
 		  self glGetAttribute: attr into: value.
 		  value unsignedLongAt: 1 ]
 ]
@@ -260,21 +258,21 @@ SDL2 class >> initLibrary [
 	Session == Smalltalk session ifTrue: [ ^ 1 ].
 	"Configure SDL2 in 'application mode', to let the screen to turn off on inactivity.
 	 But we let the user to restore 'game mode' on screen, by using #disableScreenSaver"
-	
+
 	self initPlatformSpecific.
-	
+
 	self
 		setHint: SDL_HINT_VIDEO_ALLOW_SCREENSAVER value: '1';
 		setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1'.
-		
+
 	self init: SDL_INIT_NOPARACHUTE.
-	Session := Smalltalk session.
+	Session := Smalltalk session
 ]
 
 { #category : #common }
 SDL2 class >> initPlatformSpecific [
 
-	OSPlatform current sdlPlatform initPlatformSpecific.
+	OSPlatform current sdlPlatform initPlatformSpecific
 ]
 
 { #category : #common }
@@ -290,7 +288,7 @@ SDL2 class >> initVideo [
 
 { #category : #common }
 SDL2 class >> isAvailable [
-	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2 moduleName) notNil ] 	
+	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2 moduleName) notNil ]
 		onErrorDo: [ false ]
 ]
 
@@ -307,6 +305,15 @@ SDL2 class >> joystickEventState: state [
 { #category : #joystick }
 SDL2 class >> joystickOpen: deviceIndex [
 	^ self ffiCall: #( SDL_Joystick SDL_JoystickOpen ( int deviceIndex ) )
+]
+
+{ #category : #native }
+SDL2 class >> macLibraryName [
+
+	^ FFIMacLibraryFinder
+		findAnyLibrary: #(
+			'libSDL2.dylib'
+			'libSDL2-2.0.0.dylib')
 ]
 
 { #category : #mouse }
@@ -367,7 +374,7 @@ SDL2 class >> primClipboardText: text [
 
 { #category : #cairo }
 SDL2 class >> primCreateRGBSurfaceForCairoWidth: width height: height [
-	^ self ffiCall: #( SDL_Surface* SDL_CreateRGBSurface 
+	^ self ffiCall: #( SDL_Surface* SDL_CreateRGBSurface
 						( 0 , int width , int height , 32 ,
 						  16r00FF0000 , 16r0000FF00 , 16r000000FF , 0 ) )
 ]
@@ -408,6 +415,14 @@ SDL2 class >> ticks [
 	^ self ffiCall: #( Uint32 SDL_GetTicks ( ) )
 ]
 
+{ #category : #native }
+SDL2 class >> unix64LibraryName [
+
+	^ FFIUnix64LibraryFinder findAnyLibrary: #(
+		'libSDL2-2.0.so.0.2.1'
+		'libSDL2-2.0.so.0')
+]
+
 { #category : #common }
 SDL2 class >> version [
 	"Answer the SDL version. For example, a SDL_Version(2.0.7)."
@@ -422,6 +437,12 @@ SDL2 class >> version [
 { #category : #common }
 SDL2 class >> wasInit: flags [
 	^ self ffiCall: #( int SDL_WasInit ( Uint32 flags ) )
+]
+
+{ #category : #native }
+SDL2 class >> win32LibraryName [
+
+	^ FFIWindowsLibraryFinder findAnyLibrary: #('SDL2.dll' 'libSDL2.dll')
 ]
 
 { #category : #'nb-library' }

@@ -12,7 +12,7 @@ ClyAllClassGroupsQueryTest >> createQuery [
 { #category : #running }
 ClyAllClassGroupsQueryTest >> setUp [
 	super setUp.
-	
+
 	environment addPlugin: ClyDefaultSystemEnvironmentPlugin new
 ]
 
@@ -22,7 +22,7 @@ ClyAllClassGroupsQueryTest >> testCheckIfEmpty [
 	scope := ClyPackageScope of: ClyClass7WithTag1FromP5Mock package in: environment.
 	query scope: scope.
 	self deny: query checkEmptyResult.
-	
+
 	scope := ClyPackageScope of: ClySubclassMOfClass1FromP2Mock package in: environment.
 	query scope: scope.
 	self assert: query checkEmptyResult
@@ -32,9 +32,9 @@ ClyAllClassGroupsQueryTest >> testCheckIfEmpty [
 ClyAllClassGroupsQueryTest >> testFromSinglePackage [
 
 	self queryFromScope: ClyPackageScope of: ClyClass7WithTag1FromP5Mock package.
-	
+
 	self assert: (resultItems collect: #class as: Set) equals: { ClyNoTagClassGroup. ClyTaggedClassGroup. ClyClassGroup} asSet.
-	self 
-		assert: (resultItems select:[:each | each class = ClyTaggedClassGroup] thenCollect: #tag) asSet
+	self
+		assert: (resultItems select:[:each | each class = ClyTaggedClassGroup] thenCollect: [:group | group tag]) asSet
 		equals: ClyClass7WithTag1FromP5Mock package tagsForClasses asSet
 ]

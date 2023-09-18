@@ -40,15 +40,15 @@ DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
 	"note `asSet` is used to avoid duplication if a class is defined/extended in more than one package"
 
-	^ packagesSelected asSet flatCollect: [ :package | 
-		  package definedOrExtendedClasses select: [ :class | 
+	^ packagesSelected asSet flatCollect: [ :package |
+		  package definedOrExtendedClasses select: [ :class |
 			  class hasDocComment or: [ class class hasDocComment ] ] ]
 ]
 
 { #category : #api }
 DTCommentToTestPlugin >> packagesAvailableForAnalysis [
-	^ RPackage organizer packages
-		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
+
+	^ self packageOrganizer packages select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
 ]
 
 { #category : #accessing }
@@ -72,8 +72,9 @@ DTCommentToTestPlugin >> runForConfiguration: aDTpluginConfiguration [
 DTCommentToTestPlugin >> runSuite: aTestSuite withResult: aResult [
 	aTestSuite
 		when: TestAnnouncement
-		do: [ :testAnnouncement | 
-			self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test asString}) ].
+		do: [ :testAnnouncement |
+			self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test asString}) ]
+		for: self.
 	[ aTestSuite run: aResult ]
 		ensure: [ aTestSuite unsubscribe: TestAnnouncement ]
 ]

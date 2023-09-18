@@ -32,6 +32,9 @@ AbstractInitializedSlot >> default [
 
 { #category : #accessing }
 AbstractInitializedSlot >> default: anObject [
+	"this needs to be a literal or clean block"
+	(anObject isLiteral or: [ anObject isBlock and: [anObject isClean]])
+		ifFalse: [ self error: 'default value has to be a literal or clean block' ].
 	default := anObject
 ]
 
@@ -42,7 +45,7 @@ AbstractInitializedSlot >> hash [
 
 { #category : #printing }
 AbstractInitializedSlot >> printOn: aStream [
-	aStream 
+	aStream
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name;

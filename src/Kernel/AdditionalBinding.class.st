@@ -18,7 +18,7 @@ Class {
 { #category : #'code generation' }
 AdditionalBinding >> emitStore: methodBuilder [
 
-	methodBuilder storeIntoLiteralVariable: self.
+	methodBuilder storeIntoLiteralVariable: self
 ]
 
 { #category : #'code generation' }

@@ -12,15 +12,15 @@ Class {
 
 { #category : #creation }
 MemoryFileSystemDirectory >> ensureCreateDirectory: aDirectoryName [
-	^ self 
+	^ self
 		fileEntryAt: aDirectoryName
 		put: (self class named: aDirectoryName)
 ]
 
 { #category : #creation }
 MemoryFileSystemDirectory >> ensureCreateFile: aFileName [
-	^ self 
-		fileEntryAt: aFileName 
+	^ self
+		fileEntryAt: aFileName
 		put: (MemoryFileSystemFile named: aFileName)
 ]
 
@@ -31,9 +31,9 @@ MemoryFileSystemDirectory >> entries [
 
 { #category : #enumeration }
 MemoryFileSystemDirectory >> fileEntriesDo: aBlock [
-	
+
 	entries keys sort do: [ :fileName|
-		aBlock value: (entries at: fileName)].
+		aBlock value: (entries at: fileName)]
 ]
 
 { #category : #accessing }
@@ -58,8 +58,8 @@ MemoryFileSystemDirectory >> fileEntryAt: aFileName ifPresent: aBlock [
 
 { #category : #accessing }
 MemoryFileSystemDirectory >> fileEntryAt: aFileName put: anEntry [
-	^ entries 
-		at: aFileName 
+	^ entries
+		at: aFileName
 		ifAbsentPut: [
 			self modified.
 			anEntry ]
@@ -86,7 +86,7 @@ MemoryFileSystemDirectory >> fileSize [
 { #category : #initialization }
 MemoryFileSystemDirectory >> initialize [
 	super initialize.
-	entries := Dictionary new.
+	entries := Dictionary new
 ]
 
 { #category : #testing }

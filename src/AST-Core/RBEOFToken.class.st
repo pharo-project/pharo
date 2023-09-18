@@ -15,6 +15,11 @@ RBEOFToken >> length [
 ]
 
 { #category : #accessing }
+RBEOFToken >> source [
+	^ self value
+]
+
+{ #category : #accessing }
 RBEOFToken >> value [
 
 	^ ''

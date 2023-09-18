@@ -47,29 +47,29 @@ CmdShortcutActivation class >> buildSettingsOn: aBuilder [
 		description: 'All System Command Shortcuts';
 		with: [
 			self buildSettingsFor: self redefiningInstances on: aBuilder.
-			self 
+			self
 				buildSettingsFor: (self registeredInstances copyWithoutAll: self redefiningInstances)
 				on: aBuilder.
 		]
 ]
 
 { #category : #'instance creation' }
-CmdShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [  
+CmdShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [
 	^(self for: anAnnotationUser)
 		keyCombination: aKeyCombination
 ]
 
 { #category : #'well known shortcuts' }
-CmdShortcutActivation class >> removalFor: anAnnotationUser [  
+CmdShortcutActivation class >> removalFor: anAnnotationUser [
 	<classAnnotationDependency>
-	
+
 	^self by: $x meta for: anAnnotationUser
 ]
 
 { #category : #'well known shortcuts' }
-CmdShortcutActivation class >> renamingFor: anAnnotationUser [  
+CmdShortcutActivation class >> renamingFor: anAnnotationUser [
 	<classAnnotationDependency>
-	
+
 	^self by: $r meta for: anAnnotationUser
 ]
 
@@ -84,7 +84,7 @@ CmdShortcutActivation class >> settingInputWidgetForNode: aShortcutSetting [
 { #category : #settings }
 CmdShortcutActivation >> buildSettingNodeOn: aBuilder [
 	| nodeBuilder |
-	nodeBuilder := aBuilder 
+	nodeBuilder := aBuilder
 		nodeClass: CmdShortcutSetting name: self id.
 	nodeBuilder node item shortcutActivation: self.
 	^nodeBuilder
@@ -105,16 +105,16 @@ CmdShortcutActivation >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	keyCombination printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #'command execution' }
 CmdShortcutActivation >> tryExecuteCommandInContext: aToolContext byEvents: anEventBuffer [
-	
+
 	| activator |
-	(keyCombination matches: anEventBuffer) ifTrue: [ 
+	(keyCombination matches: anEventBuffer) ifTrue: [
 		(self isActiveInContext: aToolContext) ifFalse: [ ^false].
-		
+
 		(keyCombination matchesCompletely: anEventBuffer)
 			ifTrue: [ KMBuffer uniqueInstance completeMatch.
 				activator := self newActivatorFor: aToolContext.

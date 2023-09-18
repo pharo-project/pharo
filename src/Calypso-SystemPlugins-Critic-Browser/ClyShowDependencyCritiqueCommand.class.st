@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ClyShowDependencyCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 	(super canBeExecutedInContext: aCriticContext) ifFalse: [ ^false ].
-	
+
 	^aCriticContext selectedCritique class = ArchitecturalCritique
 ]
 

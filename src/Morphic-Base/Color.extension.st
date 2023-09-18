@@ -3,7 +3,7 @@ Extension { #name : #Color }
 { #category : #'*Morphic-Base' }
 Color >> addFillStyleMenuItems: aMenu hand: aHand from: aMorph [
 	"Add the items for changing the current fill style of the receiver"
-	
+
 	aMenu add: 'change color...' target: self selector: #changeColorIn:event: argument: aMorph
 ]
 
@@ -14,7 +14,7 @@ Color >> changeColorIn: aMorph event: evt [
 ]
 
 { #category : #'*Morphic-Base' }
-Color >> iconOrThumbnailOfSize: aNumberOrPoint [ 
+Color >> iconOrThumbnailOfSize: aNumberOrPoint [
 	"Answer an appropiate form to represent the receiver"
 	| form |
 	form := Form extent: aNumberOrPoint asPoint asPoint depth: 32.

@@ -26,7 +26,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyBrowserToolbarItemMorph class >> activatingBy: aCommandActivator [
-	^self new 
+	^self new
 		activator: aCommandActivator
 ]
 
@@ -64,12 +64,12 @@ ClyBrowserToolbarItemMorph >> executeCommand [
 { #category : #initialization }
 ClyBrowserToolbarItemMorph >> initialize [
 	super initialize.
-	self 
+	self
 		changeTableLayout;
 		listDirection: #leftToRight;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
-		cellInset: 4
+		cellInset: 4 scaledByDisplayScaleFactor
 ]
 
 { #category : #printing }
@@ -77,7 +77,7 @@ ClyBrowserToolbarItemMorph >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	activator printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }

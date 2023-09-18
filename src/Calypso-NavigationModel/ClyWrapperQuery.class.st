@@ -46,7 +46,7 @@ ClyWrapperQuery >> subqueries: queriesCollection [
 
 { #category : #converting }
 ClyWrapperQuery >> withResult: aQueryResult [
-	
+
 	| newQuery |
 	newQuery := super withResult: aQueryResult.
 	newQuery subqueries: (subqueries collect: [ :each | each withResult: aQueryResult ]).
@@ -56,6 +56,6 @@ ClyWrapperQuery >> withResult: aQueryResult [
 { #category : #converting }
 ClyWrapperQuery >> withSubqueries: newSubqueries [
 
-	^self copy 
+	^self copy
 		subqueries: newSubqueries
 ]

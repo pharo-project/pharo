@@ -18,6 +18,6 @@ ClyProjectChildItemTableDecorator class >> decorateTableCell: anItemCellMorph of
 { #category : #decoration }
 ClyProjectChildItemTableDecorator class >> decorationStrategy [
 	<classAnnotation>
-	
+
 	^ClyTableDecorationStrategyAnnotation for: ClyProjectChildItem asCalypsoItemContext
 ]

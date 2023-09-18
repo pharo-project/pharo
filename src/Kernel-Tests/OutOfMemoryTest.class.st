@@ -8,17 +8,17 @@ Class {
 }
 
 { #category : #running }
-OutOfMemoryTest >> setUp [ 
+OutOfMemoryTest >> setUp [
 
 	super setUp.
-	oldValue := Smalltalk vm maxOldSpaceSize: 2 * 1024 *1024 * 1024.
+	oldValue := Smalltalk vm maxOldSpaceSize: 2 * 1024 *1024 * 1024
 ]
 
 { #category : #running }
-OutOfMemoryTest >> tearDown [ 
+OutOfMemoryTest >> tearDown [
 
 	Smalltalk vm maxOldSpaceSize: oldValue.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }

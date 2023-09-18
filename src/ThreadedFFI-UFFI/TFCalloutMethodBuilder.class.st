@@ -17,21 +17,21 @@ Class {
 TFCalloutMethodBuilder class >> abiConstantFor: aString [
 
 	| key |
-	aString = OSPlatform current ffiCallingConvention ifTrue: [ 
+	aString = OSPlatform current ffiCallingConvention ifTrue: [
 		^ DEFAULT_ABI ].
-	key := { 
+	key := {
 		       Smalltalk vm operatingSystemName asSymbol.
 		       Smalltalk vm architectureName asSymbol.
 		       aString asSymbol }.
 
-	^ self abiConstantMapping at: key ifAbsent: [ 
+	^ self abiConstantMapping at: key ifAbsent: [
 		  self error: 'The requested ABI is not available for this architecture:'
 		  , key printString ]
 ]
 
 { #category : #'calling convention' }
 TFCalloutMethodBuilder class >> abiConstantMapping [
-	
+
 	^ ABI_MAPPING ifNil: [ self initializeABIMapping ]
 ]
 
@@ -40,7 +40,7 @@ TFCalloutMethodBuilder class >> initializeABIMapping [
 
 	"self initializeABIMapping"
 
-	^ ABI_MAPPING := { 
+	^ ABI_MAPPING := {
 		  ({ #Win32. #x86_64. #win64 } -> WIN_X86_64_WIN64).
 		  ({ #Win32. #x86_64. #gnuw64 } -> WIN_X86_64_GNUW64).
 		  ({ #Win32. #x86_64. #cdecl } -> WIN_X86_64_GNUW64).
@@ -70,7 +70,7 @@ TFCalloutMethodBuilder class >> initializeABIMapping [
 		  ({ #unix. #i686. #ms_cdecl } -> UNIX_X86_32_MS_CDECL).
 		  ({ #unix. #i686. #pascal } -> UNIX_X86_32_PASCAL).
 		  ({ #unix. #i686. #register } -> UNIX_X86_32_REGISTER).
-		
+
 		} asDictionary
 ]
 
@@ -78,8 +78,6 @@ TFCalloutMethodBuilder class >> initializeABIMapping [
 TFCalloutMethodBuilder >> abiConstantFor: aSelector [
 
 	^ self class abiConstantFor: aSelector
-	
-	
 ]
 
 { #category : #private }
@@ -98,45 +96,45 @@ TFCalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 { #category : #private }
 TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary [
 
-	TFCalloutAPI isTracing ifTrue: [ 
-		TFCalloutAPI trace: sender. 
-		builder 
+	TFCalloutAPI isTracing ifTrue: [
+		TFCalloutAPI trace: sender.
+		builder
 			pushLiteral: TFCalloutAPI;
 			pushLiteral: sender;
 			send: #trace: ].
-	
-	builder 
+
+	builder
 		pushLiteral: (ffiLibrary uniqueInstance runner).
-			
+
 	"save ffi call as literal"
 	builder pushLiteral: (self createFFICalloutLiteralFromSpec: functionSpec).
 	"iterate arguments in order (in the function) to create the function call"
-	
-	functionSpec arguments 
-		do: [ :each | 
+
+	functionSpec arguments
+		do: [ :each |
 			each emitArgument: builder context: sender inCallout: self requestor.
 			each resolvedType tfExternalTypeWithArity emitMarshallToPrimitive: builder ].
-	
+
 	"create the array"
 	builder pushConsArray: functionSpec arguments size.
 	builder addTemp: #argumentsArray.
 	builder storeTemp: #argumentsArray.
-	
+
 	"send call and store into result"
 	builder send: #invokeFunction:withArguments:.
 
-	functionSpec arguments withIndexDo: [ :each :index| 
+	functionSpec arguments withIndexDo: [ :each :index|
 		each emitReturnArgument: builder context: sender.
-		each resolvedType tfExternalTypeWithArity 
+		each resolvedType tfExternalTypeWithArity
 			emitFreeIfNeededOfIndex: index
 			argumentsArrayTempName: #argumentsArray
 			withBuilder: builder  ].
-	
-	"Additional marshall in the case of TFFI"	
+
+	"Additional marshall in the case of TFFI"
 	functionSpec returnType resolvedType tfExternalTypeWithArity emitMarshallFromPrimitive: builder.
 
-	"convert in case return type needs it. And return reseult"	
-	
+	"convert in case return type needs it. And return reseult"
+
 	^ functionSpec returnType
 		emitReturn: builder
 		resultTempVar: #result

@@ -13,11 +13,11 @@ Class {
 { #category : #enumerating }
 Schedule >> between: aStart and: anEnd do: aBlock [
 	"from Cuis 99"
-	
+
 	| element end i startDate |
 	end := self end min: anEnd.
 
-	element := self start.	
+	element := self start.
 	"Performance optimization. Avoid going through unnecesary days if easy."
 	startDate := aStart asDate.
 	(startDate > element asDate and: [ self everyDayAtSameTimes ]) ifTrue: [
@@ -34,7 +34,7 @@ Schedule >> between: aStart and: anEnd do: aBlock [
 		element := element + (schedule at: i).
 		i := i + 1.
 		i > schedule size ifTrue: [i := 1]]
-.
+
 ]
 
 { #category : #enumerating }
@@ -43,13 +43,13 @@ Schedule >> dateAndTimes [
 	| dateAndTimes |
 	dateAndTimes := OrderedCollection new.
 	self scheduleDo: [ :e | dateAndTimes add: e ].
-	^ dateAndTimes asArray.
+	^ dateAndTimes asArray
 ]
 
 { #category : #private }
 Schedule >> everyDayAtSameTimes [
 	"Answer false if unknown"
-	
+
 	| count |
 	count := (Duration days: 1) / self scheduleDuration.
 	^ count >= 1 and: [ count isInteger ]
@@ -61,7 +61,7 @@ Schedule >> includes: aDateAndTime [
 	| dt |
 	dt := aDateAndTime asDateAndTime.
 	self scheduleDo: [ :e | e = dt ifTrue: [^true] ].
-	^ false.
+	^ false
 ]
 
 { #category : #enumerating }
@@ -78,7 +78,7 @@ Schedule >> schedule: anArrayOfDurations [
 { #category : #enumerating }
 Schedule >> scheduleDo: aBlock [
 
-	self between: (self start) and: (self end) do: aBlock.
+	self between: (self start) and: (self end) do: aBlock
 ]
 
 { #category : #private }

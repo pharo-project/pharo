@@ -36,7 +36,7 @@ RGBehavior class >> named: aString [
 RGBehavior class >> named: aName behaviorStrategy: anRGBehaviorStrategy [
 
 	| aBehavior |
-	
+
 	aBehavior := self basicNew
 		behaviorStrategy: anRGBehaviorStrategy;
 		initialize.
@@ -54,7 +54,7 @@ RGBehavior class >> named: aString parent: anRGObject [
 
 { #category : #accessing }
 RGBehavior class >> named: aName parent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
-	
+
 	| aBehavior |
 
 	aBehavior := self basicNew
@@ -93,7 +93,7 @@ RGBehavior class >> newTrait [
 
 { #category : #accessing }
 RGBehavior class >> parent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
-	
+
 	| aBehavior |
 
 	aBehavior := self basicNew
@@ -108,7 +108,7 @@ RGBehavior class >> parent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 RGBehavior class >> unnamedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 	| aBehavior |
-	
+
 	aBehavior := self basicNew
 		behaviorStrategy: anRGBehaviorStrategy;
 		initialize.
@@ -118,7 +118,7 @@ RGBehavior class >> unnamedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 { #category : #accessing }
 RGBehavior class >> unresolvedNamed: aName withParent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
-	
+
 	| aBehavior |
 
 	aBehavior := self basicNew
@@ -135,7 +135,7 @@ RGBehavior class >> unresolvedNamed: aName withParent: anRGObject behaviorStrate
 RGBehavior class >> unresolvedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 	| aBehavior |
-	
+
 	aBehavior := self basicNew
 		behaviorStrategy: anRGBehaviorStrategy;
 		initializeUnresolved.
@@ -145,7 +145,7 @@ RGBehavior class >> unresolvedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 { #category : #accessing }
 RGBehavior class >> unresolvedWithParent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
-	
+
 	| aBehavior |
 
 	aBehavior := self basicNew
@@ -160,21 +160,14 @@ RGBehavior class >> unresolvedWithParent: anRGObject behaviorStrategy: anRGBehav
 RGBehavior >> addLocalMethod: anRGMethod [
 
 	self backend forBehavior addLocalMethod: anRGMethod to: self.
-	
-	self announcer methodAdded: anRGMethod.
+
+	self announcer methodAdded: anRGMethod
 ]
 
 { #category : #'accessing - backend' }
-RGBehavior >> addMethodTag: aSymbol [ 
+RGBehavior >> addProtocol: aSymbol [
 
-	self announceDefinitionChangeDuring: [ 
-		self backend forBehavior addMethodTag: aSymbol to: self. ].
-]
-
-{ #category : #'accessing - backend' }
-RGBehavior >> addProtocol: aSymbol [ 
-
-	self addMethodTag: aSymbol
+	self announceDefinitionChangeDuring: [ self backend forBehavior addMethodTag: aSymbol to: self ]
 ]
 
 { #category : #'managing container' }
@@ -184,13 +177,13 @@ RGBehavior >> addoptToParentStub [
 
 	super addoptToParentStub.
 
-	self parent pvtAddBehavior: self.
+	self parent pvtAddBehavior: self
 ]
 
 { #category : #'queries - other' }
 RGBehavior >> allInstVarNames [
-	"Answer an Array of the names of the receiver's instance variables. The 
-	Array ordering is the order in which the variables are stored and 
+	"Answer an Array of the names of the receiver's instance variables. The
+	Array ordering is the order in which the variables are stored and
 	accessed by the interpreter."
 
 	| vars |
@@ -205,15 +198,15 @@ RGBehavior >> announceDefinitionChangeDuring: aBlock [
 
 	| oldVersion |
 
-	self announcer isSuspended ifTrue: [ 
-		aBlock value. 
+	self announcer isSuspended ifTrue: [
+		aBlock value.
 		^ self ]	.
-		
-	self announcer  suspendAllWhile: [ 
+
+	self announcer  suspendAllWhile: [
 		oldVersion := self copyForBehaviorDefinition.].
 	aBlock value.
 	self announcer 	behaviorDefinitionChangedFrom: oldVersion to: self.
-	self announcer behaviorModificationAppliedTo: self.
+	self announcer behaviorModificationAppliedTo: self
 ]
 
 { #category : #accessing }
@@ -228,20 +221,20 @@ RGBehavior >> canMergeWith: anRGObject visited: visitedDefinitions [
 	| newVisited |
 
 	(visitedDefinitions includes: self) ifTrue: [ ^ true ].
-	
+
 	(self isRingFullyResolved or: [ anRGObject isRingFullyResolved]) ifTrue: [^ true].
 
 	(super canMergeWith: anRGObject visited: visitedDefinitions) ifFalse: [ ^ false ].
 
 	newVisited := visitedDefinitions copyWith: self.
-	
-	self superclass ~~ self ifTrue: [ 
+
+	self superclass ~~ self ifTrue: [
 		(self superclass canMergeWith: anRGObject superclass visited: newVisited) ifFalse: [ ^ false ]].
 
-	self metaclass ~~ self ifTrue: [ 
+	self metaclass ~~ self ifTrue: [
 		(self metaclass canMergeWith: anRGObject metaclass visited: newVisited) ifFalse: [ ^ false ]].
-	
-	^ true.
+
+	^ true
 ]
 
 { #category : #'accessing - definition' }
@@ -261,28 +254,28 @@ RGBehavior >> classVariablesString [
 RGBehavior >> cleanLocalMethods [
 
 	| oldMethods |
-	
+
 	oldMethods := self localMethods.
 
 	self backend forBehavior cleanLocalMethodsFor: self.
 
 	self cleanProtocols.
-	
+
 	oldMethods do: [ :each |
 		self announcer methodRemoved: each ]
 ]
 
 { #category : #'accessing - backend' }
 RGBehavior >> cleanProtocols [
-	
+
 	self cleanTagsForMethods
 ]
 
 { #category : #'accessing - backend' }
 RGBehavior >> cleanTags [
 
-	self announceDefinitionChangeDuring: [ 
-		self cleanTagsWithoutAnnouncemnt ].
+	self announceDefinitionChangeDuring: [
+		self cleanTagsWithoutAnnouncemnt ]
 ]
 
 { #category : #'accessing - backend' }
@@ -294,7 +287,7 @@ RGBehavior >> cleanTagsForMethods [
 { #category : #'accessing - backend' }
 RGBehavior >> cleanTagsWithoutAnnouncemnt [
 
-	self backend forBehavior cleanClassTagsFor: self.
+	self backend forBehavior cleanClassTagsFor: self
 ]
 
 { #category : #accessing }
@@ -307,10 +300,10 @@ RGBehavior >> compiler [
 RGBehavior >> convertToMetaclassTrait [
 
 	| metaclassTraitStrategy originalName |
-	
+
 	(self resolvedProperties includesAnyOf: #(traitComposition))
 		ifTrue: [self error: 'This class cannot be converted to trait'].
-		
+
 	"TODO: check empty layout"
 "	newMetaclassTrait := RGMetaclassTrait unresolvedWithParent: self parent.
 	newMetaclassTrait copyPropertiesFrom: self.
@@ -322,21 +315,21 @@ RGBehavior >> convertToMetaclassTrait [
 	self behaviorStrategy: metaclassTraitStrategy.
 
 	originalName := self name.
-	
+
 	(self hasResolvedName)
 		ifTrue: [ self pvtName: ((self name withoutSuffix: ' class'), ' classTrait') asSymbol ].
-		
-	self environment ask replaceName: originalName with: self name.
+
+	self environment ask replaceName: originalName with: self name
 ]
 
 { #category : #converting }
 RGBehavior >> convertToTrait [
 
 	| traitStrategy originalName |
-	
+
 	(self resolvedProperties includesAnyOf: #("superclass" traitComposition classVariables sharedPools))
 		ifTrue: [self error: 'This class cannot be converted to trait'].
-		
+
 	"TODO: check empty layout"
 	"newTrait := RGTrait unresolvedWithParent: self parent.
 	newTrait copyPropertiesFrom: self.
@@ -354,29 +347,29 @@ RGBehavior >> convertToTrait [
 	traitStrategy pvtClassTrait: self pvtMetaclass.
 	traitStrategy pvtPackage: self behaviorStrategy pvtPackage.
 	traitStrategy pvtComment: self behaviorStrategy pvtComment.
-	
+
 	self behaviorStrategy: traitStrategy.
 
-	self environment ask replaceName: originalName with: self name.
+	self environment ask replaceName: originalName with: self name
 ]
 
 { #category : #copying }
 RGBehavior >> copyForBehaviorDefinitionPostCopy [
 
 	super copyForBehaviorDefinitionPostCopy.
-	
+
 	superclass := self superclass shallowCopy. "we need the superclass name"
 	traitComposition := self traitComposition copyForBehaviorDefinition.
 	tagsForMethods := self tagsForMethods copy asSet.
 	tags := self tags copy asSet.
-	
+
 	behaviorStrategy := behaviorStrategy copyForBehaviorDefinitionWithOwner: self
 ]
 
 { #category : #'default model values' }
 RGBehavior >> defaultLayout [
 
-	^ self defaultFixedLayoutStubIn: self.
+	^ self defaultFixedLayoutStubIn: self
 ]
 
 { #category : #'default model values' }
@@ -406,7 +399,14 @@ RGBehavior >> defaultTagsForMethods [
 { #category : #'default model values' }
 RGBehavior >> defaultTraitComposition [
 
-	^ self defaultTraitCompositionStubIn: self.
+	^ self defaultTraitCompositionStubIn: self
+]
+
+{ #category : #printing }
+RGBehavior >> definitionString [
+	"Answer a <String> with the receiver's definition accordingly to its strategy"
+
+	^ self behaviorStrategy definitionString
 ]
 
 { #category : #fileout }
@@ -418,24 +418,26 @@ RGBehavior >> definitionStringFor: aConfiguredPrinter [
 { #category : #'queries - methods' }
 RGBehavior >> ensureLocalMethodNamed: aSymbol [
 
-	^ self localMethodNamed: aSymbol ifAbsent: [ 
+	^ self localMethodNamed: aSymbol ifAbsent: [
 		| newMethod |
 		newMethod := RGMethod named: aSymbol asSymbol parent: self.
 		self addLocalMethod: newMethod.
-		newMethod].
+		newMethod]
 ]
 
 { #category : #'queries - tags' }
 RGBehavior >> ensureMethodTagNamed: aSymbol [
 
-	^ self tagsForMethods detect: [ :each | each asSymbol = aSymbol ] ifNone: [ 
-		self addMethodTag: aSymbol.
-		aSymbol ]
+	^ self tagsForMethods
+		  detect: [ :each | each asSymbol = aSymbol ]
+		  ifNone: [
+			  self addProtocol: aSymbol.
+			  aSymbol ]
 ]
 
 { #category : #'queries - protocols' }
 RGBehavior >> ensureProtocolNamed: aSymbol [
- 
+
 	^ self ensureMethodTagNamed: aSymbol
 ]
 
@@ -486,31 +488,31 @@ RGBehavior >> includesSelector: aString [
 ]
 
 { #category : #'testing - class hierarchy' }
-RGBehavior >> inheritsFrom: aClass [ 
-	"Answer whether the argument, aClass, is on the receiver's superclass 
+RGBehavior >> inheritsFrom: aClass [
+	"Answer whether the argument, aClass, is on the receiver's superclass
 	chain."
 
 	| aSuperclass |
 	aSuperclass := self superclass.
-	[aSuperclass == nil]
-		whileFalse: 
-			[aSuperclass == aClass ifTrue: [^true].
-			aSuperclass := aSuperclass superclass].
-	^false
+	[ aSuperclass isNil ] whileFalse: [
+		aSuperclass == aClass ifTrue: [ ^ true ].
+		aSuperclass hasResolvedName ifFalse: [ ^ false ].
+		aSuperclass := aSuperclass superclass ].
+	^ false
 ]
 
 { #category : #initialization }
 RGBehavior >> initialize [
 
 	super initialize.
-	
+
 	"use unresolved value for superclass to avoid infinite recursion. It needs to be set later"
 	superclass := RGUnresolvedValue recursive.
 	metaclass := RGUnresolvedValue recursive.
 	localMethods := self unresolvedValue: self defaultLocalMethods.
 	traitComposition := self unresolvedValue: self defaultTraitComposition.
-	tagsForMethods := self unresolvedValue: self defaultTagsForMethods.	
-	tags := self unresolvedValue: self defaultTags.
+	tagsForMethods := self unresolvedValue: self defaultTagsForMethods.
+	tags := self unresolvedValue: self defaultTags
 ]
 
 { #category : #initialization }
@@ -522,14 +524,14 @@ RGBehavior >> initializeUnresolved [
 	metaclass := self. "will be set later"
 	localMethods := self unresolvedValue: self defaultLocalMethods.
 	traitComposition := self unresolvedValue: self defaultTraitComposition.
-	tagsForMethods := self unresolvedValue: self defaultTagsForMethods.	
-	tags := self unresolvedValue: self defaultTags.
+	tagsForMethods := self unresolvedValue: self defaultTagsForMethods.
+	tags := self unresolvedValue: self defaultTags
 ]
 
 { #category : #'queries - testing' }
 RGBehavior >> isAccessedIn: anRGMethod [
-	^ (anRGMethod ast variableNodes select: [ :each | 
-		   each isGlobalVariable ]) anySatisfy: [ :each | 
+	^ (anRGMethod ast variableNodes select: [ :each |
+		   each isGlobalVariable ]) anySatisfy: [ :each |
 		  each name = self name ]
 ]
 
@@ -582,8 +584,8 @@ RGBehavior >> isPointers [
 ]
 
 { #category : #'queries - testing' }
-RGBehavior >> isRootInEnvironment [		
-		
+RGBehavior >> isRootInEnvironment [
+
 	^ self superclass == self or: [ self superclass isNil ]
 ]
 
@@ -617,8 +619,8 @@ RGBehavior >> isWords [
 RGBehavior >> localMethodNamed: aSymbol ifAbsent: aBlock [
 
 	self localMethodsDo: [ :each | (each name = aSymbol) ifTrue: [^ each]].
-	
-	^ aBlock value.
+
+	^ aBlock value
 ]
 
 { #category : #'queries - methods' }
@@ -637,7 +639,7 @@ RGBehavior >> localMethodsDo: aBlock [
 RGBehavior >> localMethodsSet [
 
 	| methods |
-	
+
 	methods := self defaultLocalMethods.
 	self localMethodsDo: [ :each | methods add: each ].
 	^ methods
@@ -657,19 +659,6 @@ RGBehavior >> lookupVar: aName [
 		  ifNone: [ self bindingOf: aName ]
 ]
 
-{ #category : #lookup }
-RGBehavior >> lookupVar: aName declare: aBoolean [
-	^ self lookupVar: aName
-]
-
-{ #category : #lookup }
-RGBehavior >> lookupVarForDeclaration: aName [
-
-	"This is a version of #lookupVar: that skips the OCRequestorScope, from here on it is the same as lookupVar:"
-
-	^ self lookupVar: aName
-]
-
 { #category : #resolving }
 RGBehavior >> makeResolved [
 
@@ -679,8 +668,8 @@ RGBehavior >> makeResolved [
 	metaclass := self metaclass markAsRingResolved.
 	tagsForMethods := self tagsForMethodsSet markAsRingResolved.
 	tags := self tagsSet markAsRingResolved.
-	
-	super makeResolved.
+
+	super makeResolved
 ]
 
 { #category : #'accessing - backend' }
@@ -692,7 +681,7 @@ RGBehavior >> metaclass [
 { #category : #'accessing - backend' }
 RGBehavior >> metaclass: anRGMetaclass [
 
-	self backend forBehavior setMetaclassFor: self to: anRGMetaclass.
+	self backend forBehavior setMetaclassFor: self to: anRGMetaclass
 ]
 
 { #category : #'queries - methods' }
@@ -729,33 +718,39 @@ RGBehavior >> methodsTaggedWith: aSymbol [
 RGBehavior >> name: aString [
 
 	| oldName subclassesWithOldDefinitions |
-	
+
 	oldName := self name.
-	
-	subclassesWithOldDefinitions := (self subclasses reject: [:each | each isMeta]) collect: [ :each | 
+
+	subclassesWithOldDefinitions := (self subclasses reject: [:each | each isMeta]) collect: [ :each |
 		each -> each copyForBehaviorDefinition ].
-	
-	self announceDefinitionChangeDuring: [ 
+
+	self announceDefinitionChangeDuring: [
 		super name: aString ].
-	
+
 	self announcer behaviorRenamed: self from: oldName.
 
 	subclassesWithOldDefinitions do: [ :assoc |
 		self announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
 		self announcer behaviorModificationAppliedTo: assoc key.
-		self announcer behaviorParentRenamed: assoc key from: oldName ].
+		self announcer behaviorParentRenamed: assoc key from: oldName ]
+]
+
+{ #category : #testing }
+RGBehavior >> needsSlotClassDefinition [
+
+	^ false
 ]
 
 { #category : #fileout }
 RGBehavior >> oldDefinition [
-	
+
 	^ ClassDefinitionPrinter legacy
 		for: self;
 		definitionString
 ]
 
 { #category : #printing }
-RGBehavior >> printOn: aStream [ 
+RGBehavior >> printOn: aStream [
 	aStream nextPutAll: self name
 ]
 
@@ -763,51 +758,58 @@ RGBehavior >> printOn: aStream [
 RGBehavior >> protocols [
 
 	| methodTags |
-	
+
 	methodTags := self tagsForMethods.
 	^	methodTags
-		ifEmpty: [ 
-			self methods 
+		ifEmpty: [
+			self methods
 				ifEmpty: [ OrderedCollection new ]
 				ifNotEmpty: [  OrderedCollection with: self class asYetUnclassifiedProtocolName   ].
 			]
 		ifNotEmpty: [ methodTags  ]
 ]
 
+{ #category : #'accessing - model' }
+RGBehavior >> protocolsForAllMethods [
+	"I act as #tagsForMethods but I also takes into account methods comming from traits"
+
+	^ self methods flatCollect: [ :each  | each tags ] as: Set
+]
+
 { #category : #'private - backend interface' }
 RGBehavior >> pvtAddLocalMethod: anRGMethod [
 
 	self environment verifyOwnership: anRGMethod.
-	
-	localMethods isRingResolved ifFalse: [ 
+
+	localMethods isRingResolved ifFalse: [
 		self pvtCleanLocalMethods ].
 
-	(self hasResolved: #tagsForMethods) 
+	(self hasResolved: #tagsForMethods)
 		ifFalse: [ self pvtCleanTagsForMethods ].
 
 	anRGMethod tags do: [ :aTag |
 		self pvtAddMethodTag: aTag ].
 
-	localMethods add: anRGMethod.
+	localMethods add: anRGMethod
 ]
 
 { #category : #'private - backend access' }
 RGBehavior >> pvtAddMethodTag: aSymbol [
-	
-	tagsForMethods isRingResolved ifFalse: [ 
+
+	tagsForMethods isRingResolved ifFalse: [
 		self pvtCleanTagsForMethods  ].
-	
-	tagsForMethods add: aSymbol.
+
+	tagsForMethods add: aSymbol
 ]
 
 { #category : #strategy }
 RGBehavior >> pvtAsTrait [
 
 	| traitStrategy |
-	
+
 	(self resolvedProperties includesAnyOf: #("superclass" traitComposition classVariables sharedPools))
 		ifTrue: [self error: 'This class cannot be converted to trait'].
-		
+
 	"TODO: check empty layout"
 	"newTrait := RGTrait unresolvedWithParent: self parent.
 	newTrait copyPropertiesFrom: self.
@@ -822,23 +824,23 @@ RGBehavior >> pvtAsTrait [
 
 	traitStrategy pvtComment: self behaviorStrategy comment.
 	traitStrategy pvtPackage: self behaviorStrategy package.
-	
+
 	self behaviorStrategy: traitStrategy.
-	
+
 	^ self
 ]
 
 { #category : #'private - backend interface' }
 RGBehavior >> pvtCleanLocalMethods [
 
-	localMethods := self defaultLocalMethods.
+	localMethods := self defaultLocalMethods
 ]
 
 { #category : #'private - backend access' }
 RGBehavior >> pvtCleanTags [
 
 	tags := self defaultTags.
-		
+
 	"TODO:Announce if not empty"
 ]
 
@@ -846,7 +848,7 @@ RGBehavior >> pvtCleanTags [
 RGBehavior >> pvtCleanTagsForMethods [
 
 	tagsForMethods := self defaultTagsForMethods.
-		
+
 	"TODO:Announce if not empty"
 ]
 
@@ -881,28 +883,28 @@ RGBehavior >> pvtMetaclass: anRGMetaclass [
 RGBehavior >> pvtRemoveLocalMethod: anRGMethod [
 
 	self environment verifyOwnership: anRGMethod.
-	
-	localMethods remove: anRGMethod.
+
+	localMethods remove: anRGMethod
 ]
 
 { #category : #'private - backend access' }
 RGBehavior >> pvtRemoveMethodTag: aSymbol [
-	
+
 	tagsForMethods remove: aSymbol.
-	
+
 	"TODO:Announce"
 ]
 
 { #category : #'private - backend interface' }
 RGBehavior >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#superclass -> superclass. 
-		#localMethods -> localMethods. 
-		#traitComposition -> traitComposition.  
-		#metaclass -> metaclass.  
-		#tagsForMethods -> tagsForMethods. 
- 		#tags -> tags. 
+	^ super pvtResolvableProperties, {
+		#superclass -> superclass.
+		#localMethods -> localMethods.
+		#traitComposition -> traitComposition.
+		#metaclass -> metaclass.
+		#tagsForMethods -> tagsForMethods.
+ 		#tags -> tags.
     	}, self behaviorStrategy pvtResolvableProperties
 ]
 
@@ -915,7 +917,7 @@ RGBehavior >> pvtSuperclass [
 { #category : #'private - backend interface' }
 RGBehavior >> pvtSuperclass: anRGBehavior [
 
-	anRGBehavior ifNotNil: [ 
+	anRGBehavior ifNotNil: [
 		self environment verifyOwnership: anRGBehavior.].
 
 	^ superclass := anRGBehavior
@@ -923,11 +925,11 @@ RGBehavior >> pvtSuperclass: anRGBehavior [
 
 { #category : #'private - backend access' }
 RGBehavior >> pvtTagWith: aSymbol [
-	
-	tags isRingResolved ifFalse: [ 
+
+	tags isRingResolved ifFalse: [
 		self pvtCleanTags  ].
-	
-	tags add: aSymbol.
+
+	tags add: aSymbol
 ]
 
 { #category : #'private - backend access' }
@@ -964,37 +966,37 @@ RGBehavior >> pvtTraitComposition: anRGTraitComposition [
 
 { #category : #'private - backend access' }
 RGBehavior >> pvtUntagFrom: aSymbol [
-	
+
 	(tags value includes: aSymbol)
 		ifTrue: [ tags remove: aSymbol ].
-	
+
 	"TODO:Announce"
 ]
 
 { #category : #'accessing - backend' }
-RGBehavior >> removeLocalMethod: anRGMethod [ 
+RGBehavior >> removeLocalMethod: anRGMethod [
 
 	(anRGMethod package = self package)
 		ifFalse: [ anRGMethod package removeExtensionMethod:  anRGMethod ].
-		
+
 	self backend forBehavior removeLocalMethod: anRGMethod from: self.
-	
-	self announcer methodRemoved: anRGMethod.
+
+	self announcer methodRemoved: anRGMethod
 ]
 
 { #category : #'accessing - backend' }
 RGBehavior >> removeMethodTag: aSymbol [
 
 	self backend forPackage removeMethodTag: aSymbol from: self.
-	
-	self localMethodsDo: [ :method | 
-		method untagFrom: aSymbol ].
+
+	self localMethodsDo: [ :method |
+		method untagFrom: aSymbol ]
 ]
 
 { #category : #'accessing - backend' }
 RGBehavior >> removeProtocol: aSymbol [
 
-	self removeMethodTag: aSymbol.
+	self removeMethodTag: aSymbol
 ]
 
 { #category : #'queries - methods' }
@@ -1008,8 +1010,8 @@ RGBehavior >> sharedPoolsString [
 	"Answer a string of my class variable names separated by spaces."
 
 	"TODO: check validity"
-	^String streamContents: [ :stream | 
-		self sharedPools 
+	^String streamContents: [ :stream |
+		self sharedPools
 			do: [ :each | stream nextPutAll: each name]
 			separatedBy: [ stream space ] ]
 ]
@@ -1019,21 +1021,21 @@ RGBehavior >> slotDefinitionString [
 	"Answer a string that contains an executable description of my Slots"
 
 	"^self slots ifNotEmpty: [self slots asString] ifEmpty: ['{}']"
-	
+
 	^String streamContents: [ :str | | special |
 		str nextPutAll: '{ '.
 		self slots do: [:slot |
 				str nextPutAll: slot definitionString.
-				special := slot needsFullDefinition]				
-			separatedBy: [ 
-				str nextPutAll: ' . '.  
+				special := slot needsFullDefinition]
+			separatedBy: [
+				str nextPutAll: ' . '.
 				special ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 ]
 
 { #category : #slots }
-RGBehavior >> slots [		
-		
+RGBehavior >> slots [
+
 	^ self layout slots
 ]
 
@@ -1062,17 +1064,17 @@ RGBehavior >> superclass [
 { #category : #'accessing - backend' }
 RGBehavior >> superclass: anRGBehavior [
 
-	self announceDefinitionChangeDuring: [ 
-		self backend forBehavior setSuperclassFor: self to: anRGBehavior ].
+	self announceDefinitionChangeDuring: [
+		self backend forBehavior setSuperclassFor: self to: anRGBehavior ]
 ]
 
 { #category : #'accessing - backend' }
-RGBehavior >> tagWith: aSymbol [ 
+RGBehavior >> tagWith: aSymbol [
 
-	self announceDefinitionChangeDuring: [ 
+	self announceDefinitionChangeDuring: [
 		self backend forBehavior tagClass: self with: aSymbol.
 		self package addClassTag: aSymbol.
-	].
+	]
 ]
 
 { #category : #'accessing - model' }
@@ -1085,13 +1087,6 @@ RGBehavior >> tags [
 RGBehavior >> tagsDo: aBlock [
 
 	self backend forBehavior tagsForClass: self do: aBlock
-]
-
-{ #category : #'accessing - model' }
-RGBehavior >> tagsForAllMethods [
-	"I act as #tagsForMethods but I also takes into account methods comming from traits"
-
-	^ self methods flatCollect: [ :each  | each tags ] as: Set
 ]
 
 { #category : #'accessing - model' }
@@ -1138,8 +1133,8 @@ RGBehavior >> traitComposition [
 { #category : #'accessing - backend' }
 RGBehavior >> traitComposition: anRGTraitComposition [
 
-	self announceDefinitionChangeDuring: [ 
-		self backend forBehavior setTraitCompositionFor: self to: anRGTraitComposition.].
+	self announceDefinitionChangeDuring: [
+		self backend forBehavior setTraitCompositionFor: self to: anRGTraitComposition.]
 ]
 
 { #category : #'accessing - definition' }
@@ -1151,28 +1146,28 @@ RGBehavior >> traitCompositionString [
 RGBehavior >> unresolveName [
 
 	| oldName subclassesWithOldDefinitions |
-	
+
 	oldName := self name.
-	
-	subclassesWithOldDefinitions := (self subclasses reject: [:each | each isMeta]) collect: [ :each | 
+
+	subclassesWithOldDefinitions := (self subclasses reject: [:each | each isMeta]) collect: [ :each |
 		each -> each copyForBehaviorDefinition ].
-	
-	self announceDefinitionChangeDuring: [ 
+
+	self announceDefinitionChangeDuring: [
 		super unresolveName ].
-	
+
 	self announcer behaviorRenamed: self from: oldName.
 
 	subclassesWithOldDefinitions do: [ :assoc |
 		self announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
 		self announcer behaviorModificationAppliedTo: assoc key.
-		self announcer behaviorParentRenamed: assoc key from: oldName ].
+		self announcer behaviorParentRenamed: assoc key from: oldName ]
 ]
 
 { #category : #'accessing - backend' }
 RGBehavior >> unresolveSuperclass [
 
-	self announceDefinitionChangeDuring: [ 
-		self pvtSuperclass: (RGUnresolvedValue recursive) ].
+	self announceDefinitionChangeDuring: [
+		self pvtSuperclass: (RGUnresolvedValue recursive) ]
 ]
 
 { #category : #'accessing - backend' }

@@ -27,7 +27,7 @@ ClyHierarchicalSystemItemsResult >> buildItemsPerClassFrom: systemObjects [
 		localItems := itemsPerClass
 			at: item systemDefinitionClass ifAbsentPut: [self containerForItemsOfClass ].
 		localItems add: item].
-	
+
 	^itemsPerClass
 ]
 
@@ -43,10 +43,10 @@ ClyHierarchicalSystemItemsResult >> fillWith: objects [
 	| itemsPerClass localItems classMap |
 	itemsPerClass := self buildItemsPerClassFrom: objects.
 	classMap := ClySubclassHierarchy buildFrom: itemsPerClass keys.
-	
+
 	items := OrderedCollection new: objects size.
 	classMap doInOrderWithDepth: [ :eachClass :depth |
 		localItems := itemsPerClass at: eachClass.
 		localItems do: [:each | each depth: depth].
-		items addAll: localItems].
+		items addAll: localItems]
 ]

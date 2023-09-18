@@ -29,7 +29,7 @@ Class {
 	#instVars : [
 		'defaultValue'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -49,6 +49,15 @@ RBAddVariableAccessorWithLazyInitializationTransformation class >> variable: aVa
 ]
 
 { #category : #preconditions }
+RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityPreconditions [ 
+
+	^ super applicabilityPreconditions &
+	(RBCondition withBlock: [
+		self verifyInitializationExpressionOf: self defaultValue.
+		true ])
+]
+
+{ #category : #preconditions }
 RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
@@ -56,7 +65,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableRefere
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var'
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			| name |
 
 			name := aNode name.
@@ -68,7 +77,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableRefere
 { #category : #private }
 RBAddVariableAccessorWithLazyInitializationTransformation >> createGetterAccessor [
 
-	(self definingClass getterMethodFor: variableName) 
+	(self definingClass getterMethodFor: variableName)
 		ifNil: [ self defineGetterMethod ]
 		ifNotNil: [ :symbol | self defineGetterCalled: symbol ]
 ]
@@ -84,13 +93,13 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> defaultValue: aStri
 ]
 
 { #category : #transforming }
-RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterCalled: aSymbol [ 
+RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterCalled: aSymbol [
 
 	| selector |
 	selector := aSymbol.
-	self definingClass 
-		compile:  ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]' 
-			expandMacrosWith: selector 
+	self definingClass
+		compile:  ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
+			expandMacrosWith: selector
 			with: variableName
 			with: self defaultValue)
 		classified: #(#accessing).
@@ -104,20 +113,12 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterMethod 
 ]
 
 { #category : #accessing }
-RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [ 
+RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [
 	^ self safeMethodNameFor: self definingClass basedOn: variableName asString
 ]
 
-{ #category : #preconditions }
-RBAddVariableAccessorWithLazyInitializationTransformation >> preconditions [
-	^ super preconditions & 
-	(RBCondition withBlock: [ 
-		self verifyInitializationExpressionOf: self defaultValue.
-		true ])
-]
-
 { #category : #printing }
-RBAddVariableAccessorWithLazyInitializationTransformation >> storeOn: aStream [ 
+RBAddVariableAccessorWithLazyInitializationTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -137,8 +138,8 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> verifyInitializatio
 	| tree |
 	tree := self parserClass
 		parseExpression: initializer
-		onError: [ :msg :index | self refactoringFailure: 'Illegal initialization code because:.', msg ].
+		onError: [ :msg :index | self refactoringError: 'Illegal initialization code because:.', msg ].
 	tree isValue
-		ifFalse: [ self refactoringFailure: 'The initialization code cannot be a return node or a list of statements' ].
-	self checkVariableReferencesIn: tree.
+		ifFalse: [ self refactoringError: 'The initialization code cannot be a return node or a list of statements' ].
+	self checkVariableReferencesIn: tree
 ]

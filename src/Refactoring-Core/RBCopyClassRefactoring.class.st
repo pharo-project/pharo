@@ -63,19 +63,19 @@ RBCopyClassRefactoring >> category: aSymbol [
 
 { #category : #transforming }
 RBCopyClassRefactoring >> copyClass [
-	self performCompositeRefactoring: (RBInsertClassRefactoring
+	self generateChangesFor: (RBInsertNewClassRefactoring
 		model: self model
 		addClass: className
 		superclass: aClass superclass
 		subclasses: #()
 		category: self category
-		comment: aClass comment).
+		comment: aClass comment)
 ]
 
 { #category : #copying }
 RBCopyClassRefactoring >> copyClass: cls withName: aName [
 	self className: aName.
-	aClass := self classObjectFor: cls.
+	aClass := self classObjectFor: cls
 ]
 
 { #category : #transforming }
@@ -90,39 +90,39 @@ RBCopyClassRefactoring >> copyMethods [
 RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	rbClass1 selectors do: [ :symbol | | rbMethod |
 		rbMethod := rbClass1 methodFor: symbol.
-		self performCompositeRefactoringThroughWarning:
-			(RBAddMethodRefactoring 
+		self generateChangesFor:
+			(RBAddMethodTransformation
 				model: self model
-				addMethod: rbMethod source 
-				toClass: rbClass2
-				inProtocols: rbMethod protocols)
+				sourceCode: rbMethod source
+				in: rbClass2
+				withProtocol: rbMethod protocols)
 	]
 ]
 
 { #category : #transforming }
 RBCopyClassRefactoring >> copyVariables [
 	aClass instanceVariableNames do: [ :varName |
-		self performCompositeRefactoring: (RBAddInstanceVariableRefactoring
+		self generateChangesFor: (RBAddInstanceVariableRefactoring
 		model: self model
 		variable: varName
 		class: className) ].
 
 	aClass classVariableNames do: [ :varName |
-		self performCompositeRefactoring: (RBAddClassVariableRefactoring
+		self generateChangesFor: (RBAddClassVariableRefactoring
 		model: self model
 		variable: varName
 		class: className) ]
 ]
 
 { #category : #preconditions }
-RBCopyClassRefactoring >> preconditions [ 
-	^ (RBCondition isValidClassName: className) 
+RBCopyClassRefactoring >> preconditions [
+	^ (RBCondition isValidClassName: className)
 		& (RBCondition isGlobal: className in: self model) not
 ]
 
 { #category : #transforming }
-RBCopyClassRefactoring >> transform [
+RBCopyClassRefactoring >> privateTransform [
 	self copyClass.
 	self copyVariables.
-	self copyMethods.
+	self copyMethods
 ]

@@ -15,7 +15,7 @@ Class {
 ClyAllMethodGroup class >> withMethodQuery: aMethodQuery andClassesInheritedFrom: aClassScope [
 	| group |
 	group := super withMethodQuery: aMethodQuery andClassesInheritedFrom: aClassScope.
-	group name: (aMethodQuery scope localScopeClass = ClyInstanceSideScope 
+	group name: (aMethodQuery scope localScopeClass = ClyInstanceSideScope
 		ifTrue: [ 'instance side' ]
 		ifFalse: [ 'class side' ]).
 	^group
@@ -24,15 +24,14 @@ ClyAllMethodGroup class >> withMethodQuery: aMethodQuery andClassesInheritedFrom
 { #category : #'instance creation' }
 ClyAllMethodGroup class >> withMethodsInheritedFrom: aClassScope [
 
-	^self  
+	^self
 		withMethodQuery: (ClyAllMethodsQuery from: aClassScope asLocalClassScope)
 		andClassesInheritedFrom: aClassScope
 ]
 
 { #category : #operations }
-ClyAllMethodGroup >> importMethod: aMethod [ 
-	"To support some people scenario to unclassify methods 
-	by drag and drop into this group (which was with ALL name in past)"
-	
-	aMethod tags do: [ :each | aMethod untagFrom: each ]
+ClyAllMethodGroup >> importMethod: aMethod [
+	"To support some people scenario to unclassify methods by drag and drop into this group (which was with ALL name in past)"
+
+	aMethod unclassify
 ]

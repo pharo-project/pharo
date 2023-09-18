@@ -87,15 +87,15 @@ TRemoveForMultiplenessTest >> testRemoveAllSuchThat [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementFromEmpty [
-	 
-	self 
+
+	self
 		should: [ self empty remove: self nonEmptyWithoutEqualElements anyOne ]
 		raise: Error
 ]
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementReallyRemovesElement [
- 
+
 	| size |
 	size := self nonEmptyWithoutEqualElements size.
 	self nonEmptyWithoutEqualElements remove: self nonEmptyWithoutEqualElements anyOne.
@@ -104,7 +104,7 @@ TRemoveForMultiplenessTest >> testRemoveElementReallyRemovesElement [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementThatExists [
- 
+
 	| el res |
 	el := self nonEmptyWithoutEqualElements anyOne.
 	res := self nonEmptyWithoutEqualElements remove: el.
@@ -119,7 +119,7 @@ TRemoveForMultiplenessTest >> testRemoveElementThatExistsTwice [
 	self assert: (self nonEmpty includes: self elementTwiceIn).
 	self nonEmpty remove: self elementTwiceIn.
 	self assert: size - 1 = self nonEmpty size.
-	
+
 	self assert: (self nonEmpty includes: self elementTwiceIn).
 	self nonEmpty remove: self elementTwiceIn.
 	self assert: size - 2 = self nonEmpty size

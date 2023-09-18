@@ -27,15 +27,15 @@ SystemNavigationTest >> classFactory [
 { #category : #utilities }
 SystemNavigationTest >> createClassFactory [
 
-	^ ClassFactoryWithOrganization newWithOrganization: self systemNavigationToTest environment organization
+	^ ClassFactoryForTestCase environment: self systemNavigationToTest environment
 ]
 
 { #category : #running }
 SystemNavigationTest >> setUp [
 
-	super setUp. 	
+	super setUp.
 	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil.	
+	SystemAnnouncer announcer: nil.
 	classFactory := self createClassFactory
 ]
 
@@ -47,8 +47,8 @@ SystemNavigationTest >> systemNavigationToTest [
 
 { #category : #running }
 SystemNavigationTest >> tearDown [
-	
-	self classFactory cleanUp. 
+
+	self classFactory cleanUp.
 	SystemAnnouncer announcer: oldSystemAnnouncer.
 	super tearDown
 ]
@@ -68,14 +68,13 @@ SystemNavigationTest >> testAllClassesImplementing [
 SystemNavigationTest >> testAllExistingProtocolsFor [
 
 	| instSideProtocols classSideProtocols |
-
-	instSideProtocols := self systemNavigationToTest allExistingProtocolsFor: true. 
+	instSideProtocols := self systemNavigationToTest allExistingProtocolsFor: true.
 	classSideProtocols := self systemNavigationToTest allExistingProtocolsFor: false.
-	 
-	self assert: (instSideProtocols allSatisfy: #isSymbol).	
+
+	self assert: (instSideProtocols allSatisfy: #isSymbol).
 	self assert: (classSideProtocols allSatisfy: #isSymbol).
-	self assert: (instSideProtocols includesAll: (Object protocols)).
-	self assert: (classSideProtocols includesAll: (Object class protocols))
+	self assert: (instSideProtocols includesAll: Object protocolNames).
+	self assert: (classSideProtocols includesAll: Object class protocolNames)
 ]
 
 { #category : #tests }
@@ -101,11 +100,13 @@ SystemNavigationTest >> testIsMessageSentInSystemWithClassesActuallySendngTheMes
 
 	| classesSendingMessage sentMessageSelector |
 	sentMessageSelector := 'MessageSentOnlyByTestClassesXXXShouldNotBeRealyDefined' asSymbol.
-	5 timesRepeat: [ self classFactory newClassInCategory: #One ].
-	5 timesRepeat: [ self classFactory newClassInCategory: #Two ].
+	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #One ] ].
+	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	classesSendingMessage := (self classFactory createdClasses asArray first: 2) , (self classFactory createdClasses asArray last: 3).
 	classesSendingMessage do: [ :class | class compileSilently: 'meth self ' , sentMessageSelector ].
-	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size equals: 5
+	self
+		assertCollection: (self systemNavigationToTest allSendersOf: sentMessageSelector)
+		hasSameElements: (classesSendingMessage collect: [ :class | class >> #meth ])
 ]
 
 { #category : #tests }
@@ -113,11 +114,13 @@ SystemNavigationTest >> testIsMessageSentInSystemWithTheSelectorInsideAnArray [
 
 	| classesSendingMessage sentMessageSelector |
 	sentMessageSelector := 'MessageSentOnlyByTestClassesXXXShouldNotBeRealyDefined' asSymbol.
-	5 timesRepeat: [ self classFactory newClassInCategory: #One ].
-	5 timesRepeat: [ self classFactory newClassInCategory: #Two ].
+	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #One ] ].
+	5 timesRepeat: [ self classFactory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	classesSendingMessage := (self classFactory createdClasses asArray first: 2) , (self classFactory createdClasses asArray last: 3).
 	classesSendingMessage do: [ :class | class compileSilently: 'meth ^#(a b ' , sentMessageSelector , ' c)' ].
-	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size equals: 5
+	self
+		assertCollection: (self systemNavigationToTest allSendersOf: sentMessageSelector)
+		hasSameElements: (classesSendingMessage collect: [ :class | class >> #meth ])
 ]
 
 { #category : #tests }
@@ -151,19 +154,15 @@ SystemNavigationTest >> testReferencesToAClassInBlock [
 { #category : #tests }
 SystemNavigationTest >> testSenderOfASelectorInBlock [
 
-	| senders selector class otherClass callers |
+	| senders selector class otherClass |
 	selector := ('aMethod' , 'WithSenders') asSymbol.
-	class := self classFactory newClass.
+	class := self classFactory silentlyNewClass.
 	class compileSilently: selector asString , ' ^ self'.
 	class compileSilently: 'anotherMethod ^ [self ' , selector asString , ']'.
 
-	otherClass := self classFactory newClass.
-	otherClass
-		compileSilently: 'yetAnotherMethod ^[[self ' , selector asString , ']]'.
+	otherClass := self classFactory silentlyNewClass.
+	otherClass compileSilently: 'yetAnotherMethod ^[[self ' , selector asString , ']]'.
 
 	senders := self systemNavigationToTest allSendersOf: selector.
-	self assert: senders size equals: 2.
-	callers := senders collect: [ :methodRef | methodRef selector ].
-	self
-		assert: (callers includesAll: #(#anotherMethod #yetAnotherMethod))
+	self assert: (senders collect: [ :method | method selector ]) asSet equals: { #anotherMethod. #yetAnotherMethod } asSet
 ]

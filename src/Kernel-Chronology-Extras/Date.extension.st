@@ -1,16 +1,16 @@
 Extension { #name : #Date }
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date >> addDays: dayCount [ 
+Date >> addDays: dayCount [
 	"((Date year: 2018 month: 9 day: 28) addDays: 3) printString >>> '1 October 2018'"
 
 	^ (self asDateAndTime + (dayCount days)) asDate
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date >> addMonths: monthCount [ 
+Date >> addMonths: monthCount [
 	"((Date year: 2018 month: 9 day: 28) addMonths: 3) printString>>> '28 December 2018'"
-	
+
 	|year month maxDaysInMonth day |
 	year := self year + (monthCount + self monthIndex - 1 // 12).
 	month := self monthIndex + monthCount - 1 \\ 12 + 1.
@@ -22,7 +22,7 @@ Date >> addMonths: monthCount [
 { #category : #'*Kernel-Chronology-Extras' }
 Date class >> asMonth: aMonthNumber inYear: aYearNumber [
       "Returns the month corresponding the month number"
-    
+
         ^ Month year: aYearNumber month: aMonthNumber
 ]
 
@@ -33,7 +33,7 @@ Date class >> dayNames [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date class >> dayOfWeek: dayName [ 
+Date class >> dayOfWeek: dayName [
 
 	^ Week indexOfDay: dayName
 ]
@@ -45,15 +45,15 @@ Date class >> daysInMonth [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date class >> daysInMonth: monthName forYear: yearInteger [ 
+Date class >> daysInMonth: monthName forYear: yearInteger [
 
-	^ Month daysInMonth: monthName forYear: yearInteger.
+	^ Month daysInMonth: monthName forYear: yearInteger
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date class >> daysInYear: yearInteger [ 
+Date class >> daysInYear: yearInteger [
 
-	^ Year daysInYear: yearInteger.
+	^ Year daysInYear: yearInteger
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -75,13 +75,13 @@ Date class >> firstWeekdayOfMonth: month year: year [
 Date class >> fromString: aString [
 	"Answer an instance of created from a string with format mm.dd.yyyy or mm-dd-yyyy or mm/dd/yyyy"
 
-	^ self readFrom: aString readStream.
+	^ self readFrom: aString readStream
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date class >> indexOfMonth: aMonthName [ 
+Date class >> indexOfMonth: aMonthName [
 
-	^ Month indexOfMonth: aMonthName.
+	^ Month indexOfMonth: aMonthName
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -92,10 +92,10 @@ Date >> isAfter: aDate [
 	| otherDate |
 
 	otherDate := aDate asDate.
-	^self year > otherDate year or: [ 
-		self year = otherDate year and: [ 
-			self monthIndex > otherDate monthIndex or: [ 
-				self monthIndex = otherDate monthIndex and: [ 
+	^self year > otherDate year or: [
+		self year = otherDate year and: [
+			self monthIndex > otherDate monthIndex or: [
+				self monthIndex = otherDate monthIndex and: [
 					self dayOfMonth > otherDate dayOfMonth ] ] ] ]
 ]
 
@@ -107,10 +107,10 @@ Date >> isBefore: aDate [
 	| otherDate |
 
 	otherDate := aDate asDate.
-	^self year < otherDate year or: [ 
-		self year = otherDate year and: [ 
-			self monthIndex < otherDate monthIndex or: [ 
-				self monthIndex = otherDate monthIndex and: [ 
+	^self year < otherDate year or: [
+		self year = otherDate year and: [
+			self monthIndex < otherDate monthIndex or: [
+				self monthIndex = otherDate monthIndex and: [
 					self dayOfMonth < otherDate dayOfMonth ] ] ] ]
 ]
 
@@ -162,7 +162,7 @@ Date >> month [
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> monthIndex [
 	"(Date year: 2018 month: 9 day: 28) monthIndex >>> 9"
-		
+
 	^ super month
 ]
 
@@ -173,19 +173,19 @@ Date class >> monthNames [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date class >> nameOfDay: dayIndex [ 
+Date class >> nameOfDay: dayIndex [
 
 	^ Week nameOfDay: dayIndex
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date class >> nameOfMonth: anIndex [ 
+Date class >> nameOfMonth: anIndex [
 
-	^ Month nameOfMonth: anIndex.
+	^ Month nameOfMonth: anIndex
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date class >> newDay: day month: month year: year [ 
+Date class >> newDay: day month: month year: year [
 
 	^ self year: year month: month day: day
 ]
@@ -211,7 +211,7 @@ Date >> onPreviousMonth [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date >> previous: dayName [ 
+Date >> previous: dayName [
 	"Answer the previous date whose weekday name is dayName."
 	"((Date year: 2018 month: 9 day: 28) previous: 'Sunday') printString >>> '23 September 2018'"
 
@@ -222,9 +222,9 @@ Date >> previous: dayName [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date class >> readFrom: aStream [ 
-	"Read a Date from the stream in any of the forms:  
-		<day> <month> <year>		(15 April 1982; 15-APR-82; 15.4.82; 15APR82)  
+Date class >> readFrom: aStream [
+	"Read a Date from the stream in any of the forms:
+		<day> <month> <year>		(15 April 1982; 15-APR-82; 15.4.82; 15APR82)
 		<month> <day> <year>		(April 15, 1982; 4/15/82)
 		<year>-<month>-<day>			(1982-04-15) (ISO8601)"
 	| day month year parsedNumber prefix |
@@ -248,15 +248,15 @@ Date class >> readFrom: aStream [
 			month := month contents.
 			[aStream peek isAlphaNumeric]
 				whileFalse: [aStream skip: 1].
-			parsedNumber 
+			parsedNumber
 				ifNil: ["MM DD YY"
 					day := Integer readFrom: aStream]
 				ifNotNil: [
-					year 
+					year
 						ifNil: ["DD MM YY"
 							day := parsedNumber]]]
 		ifFalse: ["MM-DD-YY or DD-MM-YY or YY-MM-DD"
-			year 
+			year
 				ifNil: ["MM-DD-YY or DD-MM-YY"
 					parsedNumber > 12
 						ifTrue: ["DD-MM-YY"
@@ -270,12 +270,12 @@ Date class >> readFrom: aStream [
 					month := Month nameOfMonth: (Integer readFrom: aStream)]].
 	[aStream peek isAlphaNumeric]
 		whileFalse: [aStream skip: 1].
-	year 
+	year
 		ifNil: [year := Integer readFrom: aStream]
 		ifNotNil: [day := Integer readFrom: aStream].
-	(year < 100 and: [year >= 0]) 
+	(year < 100 and: [year >= 0])
 		ifTrue: [
-			year < 69 
+			year < 69
 				ifTrue: [year := 2000 + year]
 				ifFalse: [year := 1900 + year]].
 
@@ -287,7 +287,7 @@ Date class >> readFrom: aStream [
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date class >> readFrom: aStringOrStream pattern: pattern [
-	"See 
+	"See
 	DateParser comment"
 
 	^ (DateParser readingFrom: aStringOrStream readStream pattern: pattern) parse
@@ -295,12 +295,12 @@ Date class >> readFrom: aStringOrStream pattern: pattern [
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> storeOn: aStream [
- 
+
  	aStream print: self printString; nextPutAll: ' asDate'
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date >> subtractDate: aDate [ 
+Date >> subtractDate: aDate [
 	"Answer the number of days between self and aDate"
 	"((Date year: 2018 month: 9 day: 28) subtractDate: '27 September 2018') >>> 1"
 
@@ -308,7 +308,7 @@ Date >> subtractDate: aDate [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Date >> subtractDays: dayCount [ 
+Date >> subtractDays: dayCount [
 	"((Date year: 2018 month: 9 day: 28) subtractDays: 1) printString >>> '27 September 2018'"
 
 	^ (self asDateAndTime - (dayCount days)) asDate
@@ -338,7 +338,7 @@ Date >> weekday [
 Date >> weekdayIndex [
 	"Sunday=1, ... , Saturday=7"
 	"(Date year: 2018 month: 9 day: 28) weekdayIndex >>> 6"
-	
+
 	^ self dayOfWeek
 ]
 
@@ -371,7 +371,7 @@ Date >> yyyymmdd [
  	"Format the date in ISO 8601 standard like '2002-10-22'
 	The result is of fixed size 10 characters long.."
  	"(Date year: 2018 month: 9 day: 28) yyyymmdd >>> '2018-09-28'"
-	
+
  	^ String new: 10 streamContents: [ :aStream |
 		self printOn: aStream format: #(3 2 1 $- 1 1 2) ]
 ]

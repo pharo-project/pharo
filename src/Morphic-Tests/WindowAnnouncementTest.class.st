@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #running }
-WindowAnnouncementTest >> tearDown [ 
+WindowAnnouncementTest >> tearDown [
 	window ifNotNil: [ window delete ].
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'tests - window change' }
@@ -19,7 +19,7 @@ WindowAnnouncementTest >> testCollapsing [
 	window := SystemWindow labelled: 'foo'.
 	t := 0.
 	window openInWorld.
-	window announcer when: WindowCollapsed do: [ :ann | t := t + 1 ].
+	window announcer when: WindowCollapsed do: [ :ann | t := t + 1 ] for: self.
 	self assert: t equals: 0.
 	window collapse.
 	self assert: t equals: 1
@@ -36,9 +36,10 @@ WindowAnnouncementTest >> testMoving [
 	oldBounds := window bounds.
 	window announcer
 		when: WindowMoved
-		do: [ :ann | 
+		do: [ :ann |
 			t := t + 1.
-			event := ann ].
+			event := ann ]
+		for: self.
 
 	self assert: t equals: 0.
 	self assert: event isNil.
@@ -66,7 +67,7 @@ WindowAnnouncementTest >> testResizing [
 	t := 0.
 	window openInWorld.
 	oldBounds := window bounds.
-	window announcer when: WindowResizing do: [ :ann | t := t + 1 ].
+	window announcer when: WindowResizing do: [ :ann | t := t + 1 ] for: self.
 	self assert: t equals: 0.
 	window extent: 50 @ 60.
 	newBounds := window bounds.
@@ -79,7 +80,7 @@ WindowAnnouncementTest >> testResizingClosing [
 	window := SystemWindow labelled: 'foo'.
 	coll := OrderedCollection new.
 	window openInWorld.
-	window announcer when: WindowAnnouncement do: [ :ann | coll add: ann ].
+	window announcer when: WindowAnnouncement do: [ :ann | coll add: ann ] for: self.
 	self assertEmpty: coll.
 	window minimizeOrRestore.
 
@@ -113,7 +114,7 @@ WindowAnnouncementTest >> testScrolling [
 	window addMorph: pane fullFrame: LayoutFrame identity.
 	t := 0 @ 0.
 	window openInWorld.
-	window announcer when: WindowScrolling do: [ :ann | t := t + ann step ].
+	window announcer when: WindowScrolling do: [ :ann | t := t + ann step ] for: self.
 	pane hScrollBarValue: 10.
 	pane vScrollBarValue: 5.
 
@@ -127,12 +128,12 @@ WindowAnnouncementTest >> testScrolling [
 WindowAnnouncementTest >> testWindowCreation [
 	| t oldBounds newBounds |
 	t := 0.
-	self currentWorld announcer when: WindowResizing do: [ :ann | t := t + 1 ].
+	self currentWorld announcer when: WindowResizing do: [ :ann | t := t + 1 ] for: self.
 	window := SystemWindow labelled: 'foo'.
 	window setProperty: #minimumExtent toValue: 1 @ 1.
 	window openInWorld.
 	oldBounds := window bounds.
-	window announcer when: WindowResizing do: [ :ann | t := t + 1 ].
+	window announcer when: WindowResizing do: [ :ann | t := t + 1 ] for: self.
 	self assert: t equals: 0.
 	window extent: 50 @ 60.
 	newBounds := window bounds.
@@ -145,14 +146,16 @@ WindowAnnouncementTest >> testWindowCreationAndDeletion [
 	t := 0.
 	self currentWorld announcer
 		when: WindowOpened
-		do: [ :ann | 
+		do: [ :ann |
 			t := t + 1.
-			newWindowCreated := ann window ].
+			newWindowCreated := ann window ]
+		for: self.
 	self currentWorld announcer
 		when: WindowClosed
-		do: [ :ann | 
+		do: [ :ann |
 			t := t + 10.
-			newWindowCreated := ann window ].
+			newWindowCreated := ann window ]
+		for: self.
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
 
@@ -172,9 +175,10 @@ WindowAnnouncementTest >> testWindowLabelling [
 	labels := #().
 	self currentWorld announcer
 		when: WindowLabelled
-		do: [ :ann | 
+		do: [ :ann |
 			win := ann window.
-			labels := labels copyWith: ann label ].
+			labels := labels copyWith: ann label ]
+		for: self.
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
 	self assert: win equals: window.

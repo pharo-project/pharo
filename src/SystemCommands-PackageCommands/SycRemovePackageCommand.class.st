@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-SycRemovePackageCommand class >> defaultMenuIconName [ 
+SycRemovePackageCommand class >> defaultMenuIconName [
 	^ #delete
 ]
 
@@ -24,7 +24,7 @@ SycRemovePackageCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycRemovePackageCommand >> execute [
-			
+
 	packages do: [ :each | each removeFromSystem ]
 ]
 
@@ -32,9 +32,9 @@ SycRemovePackageCommand >> execute [
 SycRemovePackageCommand >> prepareFullExecutionInContext: aToolContext [
 
 	| packagesWithClasses names answer |
-	super prepareFullExecutionInContext: aToolContext.	
+	super prepareFullExecutionInContext: aToolContext.
 	packagesWithClasses := packages reject: [ :each | each isEmpty].
-	packagesWithClasses ifNotEmpty: [ 	
+	packagesWithClasses ifNotEmpty: [
 		names := (packagesWithClasses collect: [:package | package name ]) joinUsing: ', '.
 		answer := UIManager default confirm: (
 			'Are you sure you want to delete the selection(s)?', String cr, names, ' still contains classes.').

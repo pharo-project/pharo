@@ -16,7 +16,7 @@ Class {
 IndexedSlot >> = other [
 	self == other
 		ifTrue: [ ^ true ].
-	^ ((self species == other species) 
+	^ ((self species == other species)
 			and: [ index = other index ])
 			and: [ name = other name ]
 ]
@@ -50,8 +50,8 @@ IndexedSlot >> isVirtual [
 
 { #category : #'meta-object-protocol' }
 IndexedSlot >> object: anObject instVarAt: anIndex [
-	"Primitive. Answer a fixed variable in an object. The numbering of the 
-	 variables corresponds to the named instance variables. Fail if the index 
+	"Primitive. Answer a fixed variable in an object. The numbering of the
+	 variables corresponds to the named instance variables. Fail if the index
 	 is not an Integer or is not the index of a fixed variable. Essential for the
 	 debugger. See  Object documentation whatIsAPrimitive."
 
@@ -61,7 +61,7 @@ IndexedSlot >> object: anObject instVarAt: anIndex [
 ]
 
 { #category : #'meta-object-protocol' }
-IndexedSlot >> object: anObject instVarAt: anIndex put: aValue [ 
+IndexedSlot >> object: anObject instVarAt: anIndex put: aValue [
 	"Primitive. Store a value into a fixed variable in the argument anObject.
 	 The numbering of the variables corresponds to the named instance
 	 variables.  Fail if the index is not an Integer or is not the index of a

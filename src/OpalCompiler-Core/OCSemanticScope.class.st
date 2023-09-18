@@ -32,8 +32,8 @@ Class {
 }
 
 { #category : #testing }
-OCSemanticScope class >> isAbstract [ 
-	^self = OCSemanticScope 
+OCSemanticScope class >> isAbstract [
+	^self = OCSemanticScope
 ]
 
 { #category : #accessing }
@@ -42,70 +42,28 @@ OCSemanticScope >> allTemps [
 ]
 
 { #category : #'code evaluation' }
-OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [ 
+OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 
 	aSystemAnnouncer evaluated: aSourceString context: nil
 ]
 
-{ #category : #converting }
-OCSemanticScope >> asDoItScope [
-	self subclassResponsibility 
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForContext: aContext [ 
-	^OCContextualDoItSemanticScope targetingContext: aContext
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForReceiver: anObject [
-	^OCReceiverDoItSemanticScope targetingReceiver: anObject
-]
-
-{ #category : #'code compilation' }
-OCSemanticScope >> compileMethodFromASTBy: aCompiler [
-	self subclassResponsibility 
-]
-
 { #category : #testing }
 OCSemanticScope >> hasBindingThatBeginsWith: aString [
-	
-	(self targetClass hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	
-	^super hasBindingThatBeginsWith: aString
 
+	(self targetClass hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+
+	^super hasBindingThatBeginsWith: aString
 ]
 
 { #category : #testing }
-OCSemanticScope >> isDoItScope [ 
+OCSemanticScope >> isDoItScope [
 	^false
 ]
 
 { #category : #lookup }
-OCSemanticScope >> lookupVar: name declare: aBoolean [
+OCSemanticScope >> lookupVar: name [
 
-	(self targetClass lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^v ].
-	
-	^outerScope ifNotNil: [ outerScope lookupVar: name declare: aBoolean ]
-	
-]
+	(self targetClass lookupVar: name) ifNotNil: [ :v | ^v ].
 
-{ #category : #'code compilation' }
-OCSemanticScope >> parseASTBy: aParser [
-	self subclassResponsibility 
-]
-
-{ #category : #printing }
-OCSemanticScope >> scopeLevel [ 
-	^0
-]
-
-{ #category : #accessing }
-OCSemanticScope >> targetClass [ 
-	self subclassResponsibility  
-]
-
-{ #category : #accessing }
-OCSemanticScope >> targetEnvironment [ 
-	^self targetClass environment 
+	^ super lookupVar: name
 ]

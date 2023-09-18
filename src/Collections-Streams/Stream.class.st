@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 Stream class >> isAbstract [
-		
+
 	^ self == Stream
 ]
 
@@ -40,25 +40,25 @@ Stream >> atEnd [
 { #category : #private }
 Stream >> basicNext [
 
-	^ self next.
+	^ self next
 ]
 
 { #category : #private }
 Stream >> basicNext: anAmount putAll: aCollection startingAt: startIndex [
 
-	^ self next: anAmount putAll: aCollection startingAt: startIndex.
+	^ self next: anAmount putAll: aCollection startingAt: startIndex
 ]
 
 { #category : #private }
-Stream >> basicNextPut: anObject [ 
+Stream >> basicNextPut: anObject [
 
 	^ self nextPut: anObject
 ]
 
 { #category : #private }
-Stream >> basicNextPutAll: aCollection [ 
+Stream >> basicNextPutAll: aCollection [
 
-	^ self nextPutAll: aCollection.
+	^ self nextPutAll: aCollection
 ]
 
 { #category : #modes }
@@ -69,7 +69,7 @@ Stream >> binary [
 
 { #category : #'open/close' }
 Stream >> close [
-	"Presumably sets the status of the receiver to be closed. This message does 
+	"Presumably sets the status of the receiver to be closed. This message does
 	nothing at this level, but is included for FileStream compatibility."
 
 	^self
@@ -88,7 +88,7 @@ Stream >> contents [
 ]
 
 { #category : #enumerating }
-Stream >> do: aBlock [ 
+Stream >> do: aBlock [
 	"Evaluate aBlock for each of the objects accessible by receiver."
 
 	[self atEnd]
@@ -124,9 +124,9 @@ Stream >> next [
 ]
 
 { #category : #accessing }
-Stream >> next: anInteger [ 
+Stream >> next: anInteger [
 	"Answer the next anInteger number of objects accessible by the receiver."
-	
+
 	| aCollection |
 	aCollection := OrderedCollection new.
 	anInteger timesRepeat: [aCollection addLast: self next].
@@ -134,12 +134,10 @@ Stream >> next: anInteger [
 ]
 
 { #category : #accessing }
-Stream >> next: anInteger put: anObject [ 
-	<compilerOptions: #(+ optionInlineTimesRepeat)>
-	
-	"Make anObject be the next anInteger number of objects accessible by the 
+Stream >> next: anInteger put: anObject [
+	"Make anObject be the next anInteger number of objects accessible by the
 	receiver. Answer anObject."
-	
+
 	anInteger timesRepeat: [ self nextPut: anObject ].
 	^ anObject
 ]
@@ -167,26 +165,26 @@ Stream >> nextMatchAll: aColl [
 ]
 
 { #category : #accessing }
-Stream >> nextMatchFor: anObject [ 
-	"Gobble the next object and answer whether it is equal to the argument, 
+Stream >> nextMatchFor: anObject [
+	"Gobble the next object and answer whether it is equal to the argument,
 	anObject."
 
 	^anObject = self next
 ]
 
 { #category : #accessing }
-Stream >> nextPut: anObject [ 
-	"Insert the argument, anObject, as the next object accessible by the 
+Stream >> nextPut: anObject [
+	"Insert the argument, anObject, as the next object accessible by the
 	receiver. Answer anObject."
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-Stream >> nextPutAll: aCollection [ 
-	"Append the elements of aCollection to the sequence of objects accessible 
+Stream >> nextPutAll: aCollection [
+	"Append the elements of aCollection to the sequence of objects accessible
 	by the receiver. Answer aCollection."
-	
+
 	aCollection do: [:v | self nextPut: v].
 	^aCollection
 ]
@@ -195,7 +193,7 @@ Stream >> nextPutAll: aCollection [
 Stream >> nextWordsPutAll: aCollection [
 	"Write the argument a word-like object in big endian format on the receiver.
 	May be used to write other than plain word-like objects (such as ColorArray)."
-	
+
 	(aCollection class isPointers or: [ aCollection class isWords not ])
 		ifTrue: [ ^ self error: aCollection class name,' is not word-like'].
 	1 to: aCollection basicSize do: [ :i |
@@ -226,7 +224,7 @@ Stream >> upToEnd [
 	"answer the remaining elements in the string"
 	| elements |
 	elements := OrderedCollection new.
-	[ self atEnd ] whileFalse: [ 
+	[ self atEnd ] whileFalse: [
 		elements add: self next ].
 	^elements
 ]

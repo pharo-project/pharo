@@ -19,7 +19,7 @@ MorphicRenderLoop >> doOneCycle [
 { #category : #'initialize-release' }
 MorphicRenderLoop >> doOneCycleWhile: aBlock [
 
-	[ aBlock value ] whileTrue: [ 
+	[ aBlock value ] whileTrue: [
 		self doOneCycle.
 		"Collaborate with other processes in the same priority"
 		Processor yield. ]

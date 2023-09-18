@@ -25,12 +25,10 @@ Class {
 ReImplementedNotSentRule class >> allMessages [
 	"return all 'message sends' in the system and cache them"
 
-	^allMessages ifNil: [
-		allMessages := IdentitySet new.
-		Smalltalk globals allBehaviors do: [ :behavior | 
-				behavior methodsDo: [ :method |
-						allMessages addAll: method messages ] ].
-		allMessages	]
+	^ allMessages ifNil: [
+		  allMessages := IdentitySet new.
+		  Smalltalk globals allBehaviors do: [ :behavior | behavior methodsDo: [ :method | allMessages addAll: method messages ] ].
+		  allMessages ]
 ]
 
 { #category : #testing }
@@ -52,7 +50,7 @@ ReImplementedNotSentRule class >> enabled [
 ReImplementedNotSentRule class >> enabled: aBoolean [
 	super enabled: aBoolean.
 	self reset.
-	aBoolean 
+	aBoolean
 		ifTrue: [ self subscribe ]
 		ifFalse: [ self unsubscribe ]
 ]
@@ -63,7 +61,7 @@ ReImplementedNotSentRule class >> initialize [
 	self enabled ifFalse: [ ^self ].
 	self reset.
 	self subscribe.
-	SessionManager default 
+	SessionManager default
 		registerToolClassNamed: self name
 ]
 
@@ -86,7 +84,7 @@ ReImplementedNotSentRule class >> reset [
 ]
 
 { #category : #cleanup }
-ReImplementedNotSentRule class >> shutDown [	
+ReImplementedNotSentRule class >> shutDown [
 	self reset
 ]
 
@@ -94,7 +92,7 @@ ReImplementedNotSentRule class >> shutDown [
 ReImplementedNotSentRule class >> subscribe [
 	<systemEventRegistration>
 	self unsubscribe.
-	
+
 	SystemAnnouncer uniqueInstance weak
 		when: MethodAdded    send: #methodAdded: to: self;
 		when: MethodModified send: #methodModified: to: self
@@ -103,7 +101,7 @@ ReImplementedNotSentRule class >> subscribe [
 { #category : #accessing }
 ReImplementedNotSentRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ImplementedNotSentRule'
 ]
 
@@ -117,10 +115,23 @@ ReImplementedNotSentRule class >> unsubscribe [
 ReImplementedNotSentRule >> basicCheck: aMethod [
 	"Check if there are any senders. Furthermore methods with pragmas are likely to be sent through reflection, thus do not report those."
 
+	| occurrencesToFind |
 	aMethod pragmas ifNotEmpty: [ ^ false ].
 	aMethod isTestMethod ifTrue: [ ^ false ].
 
-	^ (self class allMessages includes: aMethod selector) not
+	"In the case the method is calling itself, we want to ignore this number of calls from the check.
+	For example, if a method calls itself 3 times, we consider that it is sent only if 4 messages in the system send them."
+	occurrencesToFind := aMethod messages occurrencesOf: aMethod selector.
+
+	^ self class allMessages noneSatisfy: [ :message |
+		  message = aMethod selector
+			  ifTrue: [
+				  occurrencesToFind = 0
+					  ifTrue: [ true ]
+					  ifFalse: [
+						  occurrencesToFind := occurrencesToFind - 1.
+						  false ] ]
+			  ifFalse: [ false ] ]
 ]
 
 { #category : #accessing }

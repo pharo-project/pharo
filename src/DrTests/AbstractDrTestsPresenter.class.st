@@ -38,7 +38,7 @@ AbstractDrTestsPresenter >> currentPlugin: anObject [
 
 	currentPlugin ifNotNil: [ currentPlugin unconfigureUI: self ].
 	currentPlugin := anObject.
-	
+
 	currentPlugin announcer
 		when: DTStatusUpdate
 		send: #handlePluginStatusUpdate:
@@ -47,11 +47,11 @@ AbstractDrTestsPresenter >> currentPlugin: anObject [
 	currentPlugin announcer
 		when: DTUpdateResults
 		send: #handlePluginResultUpdate:
-		to: self.
+		to: self
 ]
 
 { #category : #events }
-AbstractDrTestsPresenter >> handlePluginResultUpdate: resultsAnnouncement [ 
+AbstractDrTestsPresenter >> handlePluginResultUpdate: resultsAnnouncement [
 
 	self updateWithPluginResult: resultsAnnouncement results
 ]
@@ -80,14 +80,14 @@ AbstractDrTestsPresenter >> initializePresenters [
 { #category : #'api - locking' }
 AbstractDrTestsPresenter >> lock [
 	"Lock the UI, once this method is called, the user is not able to click on buttons or lists anymore."
-	
+
 	self locked: false
 ]
 
 { #category : #'api - locking' }
 AbstractDrTestsPresenter >> locked: aBoolean [
 	"Lock or unlock widgets returned by #subwidgetsToLock depending on aBoolean."
-	
+
 	self subwidgetsToLock
 		do: [ :subwidget | subwidget enabled: aBoolean ]
 ]
@@ -165,7 +165,7 @@ AbstractDrTestsPresenter >> testsConfiguration: anObject [
 { #category : #'api - locking' }
 AbstractDrTestsPresenter >> unlock [
 	"Unlock the UI, once this method is called, the user is able to click on buttons or lists and to launch analysis."
-	
+
 	self locked: true
 ]
 

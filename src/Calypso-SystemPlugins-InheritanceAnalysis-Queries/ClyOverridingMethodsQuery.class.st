@@ -18,11 +18,11 @@ ClyOverridingMethodsQuery >> description [
 { #category : #'system changes' }
 ClyOverridingMethodsQuery >> isAffectedByChangedMethod: aMethod [
 	| selector |
-	
+
 	(self isFromScopeWithClassKindOf: aMethod origin) ifFalse: [ ^false ].
-	
+
 	selector := aMethod selector.
-	scope classesDo: [ :each | 
+	scope classesDo: [ :each |
 		(each lookupSelector: selector) ifNotNil: [ ^true ]].
 	^ false
 ]

@@ -33,7 +33,7 @@ SycAddMessageArgumentCommand >> canEditName [
 ]
 
 { #category : #requesting }
-SycAddMessageArgumentCommand >> canRemoveArgs [ 
+SycAddMessageArgumentCommand >> canRemoveArgs [
 	^ false
 ]
 
@@ -43,7 +43,7 @@ SycAddMessageArgumentCommand >> createRefactoring [
 	^(RBAddParameterRefactoring
 		model: model
 		addParameterToMethod: originalMessage selector
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
+		in: refactoredClass
 		newSelector: newSelector selector
 		permutation: newSelector permutation
 		newArgs: newSelector newArgs)
@@ -73,8 +73,8 @@ SycAddMessageArgumentCommand >> newSelector: anObject [
 { #category : #execution }
 SycAddMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
-	newSelector := self requestNewMessageIn: aToolContext.
+
+	newSelector := self requestNewMessageIn: aToolContext
 ]
 
 { #category : #execution }

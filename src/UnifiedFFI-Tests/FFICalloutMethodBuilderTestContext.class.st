@@ -34,9 +34,14 @@ FFICalloutMethodBuilderTestContext >> compiledMethod [
 ]
 
 { #category : #accessing }
-FFICalloutMethodBuilderTestContext >> ffiLibrary [ 
+FFICalloutMethodBuilderTestContext >> ffiLibrary [
 
 	^ LibC
+]
+
+{ #category : #accessing }
+FFICalloutMethodBuilderTestContext >> homeMethod [
+	^ self
 ]
 
 { #category : #accessing }
@@ -74,9 +79,4 @@ FFICalloutMethodBuilderTestContext >> selector [
 { #category : #accessing }
 FFICalloutMethodBuilderTestContext >> selector: anObject [
 	selector := anObject
-]
-
-{ #category : #accessing }
-FFICalloutMethodBuilderTestContext >> trailer [
-	^ CompiledMethodTrailer empty
 ]

@@ -19,13 +19,13 @@ Class {
 }
 
 { #category : #initialization }
-OCScopesCollector >> initialize [ 
+OCScopesCollector >> initialize [
 	scopes := OrderedCollection new.
 	super initialize
 ]
 
 { #category : #accessing }
-OCScopesCollector >> scopes [ 
+OCScopesCollector >> scopes [
 	^scopes
 ]
 

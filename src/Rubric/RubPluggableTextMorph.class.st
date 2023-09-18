@@ -60,7 +60,7 @@ RubPluggableTextMorph >> getColorSelector [
 { #category : #accessing }
 RubPluggableTextMorph >> getColorSelector: aSymbol [
 	self getBackgroundColorSelector: aSymbol.
-	self update: self getColorSelector.
+	self update: self getColorSelector
 ]
 
 { #category : #accessing }
@@ -91,7 +91,7 @@ RubPluggableTextMorph >> hasUnacceptedEdits: aBoolean [
 
 	(self model respondsTo: #hasUnacceptedEdits:)
 		ifTrue: [ self model hasUnacceptedEdits: aBoolean ]
-		ifFalse: [ 
+		ifFalse: [
 			super hasUnacceptedEdits: aBoolean.
 			self changed ].
 	aBoolean
@@ -150,21 +150,21 @@ RubPluggableTextMorph >> promptForCancel [
 		cancelChoice: 'Cancel' translated
 		default: nil.
 	choice
-		ifNotNil: [ 
+		ifNotNil: [
 			choice
-				ifTrue: [ 
+				ifTrue: [
 					self acceptTextInModel.
 					self basicHasUnacceptedEdits: false ]
-				ifFalse: [ self model 
-						ifNotNil: [ :m | m clearUserEditFlag ] 
+				ifFalse: [ self model
+						ifNotNil: [ :m | m clearUserEditFlag ]
 						ifNil: [ self basicHasUnacceptedEdits: false ] ] ]
 ]
 
 { #category : #'accessing - scrollbars' }
 RubPluggableTextMorph >> registerScrollChanges: aSelector [
 
-	self announcer 
-		when: PaneScrolling 
+	self announcer
+		when: PaneScrolling
 		send: aSelector
 		to: self model
 ]
@@ -212,7 +212,7 @@ RubPluggableTextMorph >> update: aSymbol [
 					[ "Knock off first half of text"
 					self text size > self model characterLimit
 						ifTrue: [ self textArea selectInvisiblyFrom: 1 to: self text size // 2.
-							self textArea replaceSelectionWith: Text new ].	
+							self textArea replaceSelectionWith: Text new ].
 					self appendText: self model contents asText ].
 			^ self ].
 	aSymbol == #clearText

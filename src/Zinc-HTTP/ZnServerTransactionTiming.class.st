@@ -25,7 +25,7 @@ ZnServerTransactionTiming >> handlerDuration: anObject [
 	handlerDuration := anObject
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnServerTransactionTiming >> initialize [
 	super initialize.
 	requestDuration := handlerDuration := responseDuration := 0
@@ -54,6 +54,6 @@ ZnServerTransactionTiming >> responseDuration: anObject [
 { #category : #accessing }
 ZnServerTransactionTiming >> totalDuration [
 	"requestDuration is unreliable because it contains idle wait time"
-	
-	^ handlerDuration + responseDuration 
+
+	^ handlerDuration + responseDuration
 ]

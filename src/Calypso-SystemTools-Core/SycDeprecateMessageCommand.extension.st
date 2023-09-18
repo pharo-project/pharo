@@ -4,6 +4,6 @@ Extension { #name : #SycDeprecateMessageCommand }
 SycDeprecateMessageCommand class >> methodMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation 
+	^CmdContextMenuActivation
 		byRootGroupItemOrder: self browserMenuOrder for: ClyMethod asCalypsoItemContext
 ]

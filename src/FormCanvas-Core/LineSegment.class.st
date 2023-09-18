@@ -22,7 +22,7 @@ LineSegment class >> controlPoints: anArray [
 	anArray size = 2 ifTrue:[^LineSegment new initializeFrom: anArray].
 	anArray size = 3 ifTrue:[^Bezier2Segment new initializeFrom: anArray].
 	anArray size = 4 ifTrue:[^Bezier3Segment new initializeFrom: anArray].
-	self error:'Unsupported'.
+	self error:'Unsupported'
 ]
 
 { #category : #'instance creation' }
@@ -87,8 +87,8 @@ LineSegment >> asBezier2Segments: error [
 	"Demote a cubic bezier to a set of approximating quadratic beziers."
 	| pts |
 	pts := self asBezier2Points: error.
-	^(1 to: pts size by: 3) collect:[:i| 
-		Bezier2Segment from: (pts at: i) via: (pts at: i+1) to: (pts at: i+2)].
+	^(1 to: pts size by: 3) collect:[:i|
+		Bezier2Segment from: (pts at: i) via: (pts at: i+1) to: (pts at: i+2)]
 ]
 
 { #category : #converting }
@@ -131,7 +131,7 @@ LineSegment >> bezierClipCurve: aCurve epsilon: eps [
 		^(curve1 bezierClipCurve: self epsilon: eps),
 			(curve2 bezierClipCurve: self epsilon: eps).
 	].
-	^newCurve bezierClipCurve: self epsilon: eps.
+	^newCurve bezierClipCurve: self epsilon: eps
 ]
 
 { #category : #'bezier clipping' }
@@ -158,7 +158,7 @@ LineSegment >> bezierClipInterval: aCurve [
 	"Map receiver's control point into fat line; compute vMin and vMax"
 	vMin := vMax := nil.
 	self
-		controlPointsDo: [ :pt | 
+		controlPointsDo: [ :pt |
 			| vValue |
 			vValue := nrm x * pt x + (nrm y * pt y).	"nrm dotProduct: pt."
 			vMin == nil
@@ -181,7 +181,7 @@ LineSegment >> bezierClipInterval: aCurve [
 	inside := false.	"assume we're completely outside"
 	tMin := 2.0.
 	tMax := -1.0.	"clip interval"
-	1 to: pts size do: [ :i | 
+	1 to: pts size do: [ :i |
 		next := pts at: i.
 		nextV := nrm x * next x + (nrm y * next y).	"nrm dotProduct: next."
 		false ifTrue: [ ((nextV - vMin) / (vMax - vMin)) printString displayAt: 0 @ ((i - 1) * 20) ].
@@ -244,7 +244,7 @@ LineSegment >> curveFrom: parameter1 to: parameter2 [
 
 { #category : #private }
 LineSegment >> debugDraw [
-	^self debugDrawAt: 0@0.
+	^self debugDrawAt: 0@0
 ]
 
 { #category : #private }
@@ -255,7 +255,7 @@ LineSegment >> debugDrawAt: offset [
 		self lineSegmentsDo:[:p1 :p2|
 			aCanvas line: p1 rounded to: p2 rounded width: 1 color: Color black.
 		].
-	].
+	]
 ]
 
 { #category : #accessing }
@@ -283,7 +283,7 @@ LineSegment >> end: aPoint [
 LineSegment >> from: startPoint to: endPoint [
 	"Initialize the receiver"
 	start := startPoint.
-	end := endPoint.
+	end := endPoint
 ]
 
 { #category : #testing }
@@ -296,7 +296,7 @@ LineSegment >> hasZeroLength [
 LineSegment >> initializeFrom: controlPoints [
 	controlPoints size = 2 ifFalse:[self error:'Wrong number of control points'].
 	start := controlPoints at: 1.
-	end := controlPoints at: 2.
+	end := controlPoints at: 2
 ]
 
 { #category : #intersection }
@@ -312,7 +312,7 @@ LineSegment >> intersectionWith: anotherSegment [
 	det = 0 ifTrue:[^nil]. "no intersection"
 	alpha * det < 0 ifTrue:[^nil].
 	beta * det < 0 ifTrue:[^nil].
-	det > 0 
+	det > 0
 		ifTrue:[(alpha > det or:[beta > det]) ifTrue:[^nil]]
 		ifFalse:[(alpha < det or:[beta < det]) ifTrue:[^nil]].
 	"And compute intersection"
@@ -383,13 +383,13 @@ LineSegment >> lineSegmentsDo: aBlock [
 { #category : #printing }
 LineSegment >> printOn: aStream [
 	"Print the receiver on aStream"
-	aStream 
+	aStream
 		nextPutAll: self class name;
 		nextPutAll:' from: ';
 		print: start;
 		nextPutAll: ' to: ';
 		print: end;
-		space.
+		space
 ]
 
 { #category : #converting }
@@ -400,7 +400,7 @@ LineSegment >> reversed [
 { #category : #intersection }
 LineSegment >> roundTo: quantum [
 	start := start roundTo: quantum.
-	end := end roundTo: quantum.
+	end := end roundTo: quantum
 ]
 
 { #category : #'vector functions' }

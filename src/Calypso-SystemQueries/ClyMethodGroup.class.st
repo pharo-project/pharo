@@ -55,7 +55,7 @@ ClyMethodGroup class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugi
 ]
 
 { #category : #testing }
-ClyMethodGroup class >> isBasedOnMethodTag [
+ClyMethodGroup class >> isBasedOnProtocol [
 	^false
 ]
 
@@ -67,7 +67,7 @@ ClyMethodGroup class >> named: aString on: aMethodQuery [
 
 { #category : #'instance creation' }
 ClyMethodGroup class >> named: aString on: aMethodQuery withSubgroupsFrom: subgroupsQuery [
-	^(self named: aString on: aMethodQuery) 
+	^(self named: aString on: aMethodQuery)
 		subgroupsQuery: subgroupsQuery
 ]
 
@@ -79,7 +79,7 @@ ClyMethodGroup class >> named: aString priority: aNumber on: aMethodQuery [
 
 { #category : #'instance creation' }
 ClyMethodGroup class >> named: aString priority: aNumber on: aMethodQuery withSubgroupsFrom: subgroupsQuery [
-	^(self named: aString priority: aNumber on: aMethodQuery) 
+	^(self named: aString priority: aNumber on: aMethodQuery)
 		subgroupsQuery: subgroupsQuery
 ]
 
@@ -100,32 +100,32 @@ ClyMethodGroup >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
-	
+
 	^ methodQuery = anObject methodQuery
 		and: [ subgroupsQuery = anObject subgroupsQuery ]
 ]
 
 { #category : #testing }
 ClyMethodGroup >> asAsyncQueryGroup [
-	^ClyAsyncMethodGroup 
-		named: name 
-		priority: priority 
+	^ClyAsyncMethodGroup
+		named: name
+		priority: priority
 		on: methodQuery
 		withSubgroupsFrom: subgroupsQuery
 ]
 
 { #category : #operations }
-ClyMethodGroup >> convertToMethodTag: aTagName [
+ClyMethodGroup >> categorizeMethodsIn: protocolName [
 
-	self methods do: [ :each | each tagWith: aTagName ]
+	self methods do: [ :method | method protocol: protocolName ]
 ]
 
 { #category : #decoration }
 ClyMethodGroup >> decorateOwnBrowserItem: myItem [
 	super decorateOwnBrowserItem: myItem.
-	
+
 	methodQuery decorateItemGroup: myItem.
-	subgroupsQuery decorateItemGroup: myItem.
+	subgroupsQuery decorateItemGroup: myItem
 ]
 
 { #category : #testing }
@@ -149,7 +149,7 @@ ClyMethodGroup >> importMethod: aMethod [
 ]
 
 { #category : #operations }
-ClyMethodGroup >> importMethods: methodsCollection [ 
+ClyMethodGroup >> importMethods: methodsCollection [
 
 	methodsCollection do: [ :each | self importMethod: each ]
 ]
@@ -162,7 +162,7 @@ ClyMethodGroup >> includesMethod: aMethod [
 { #category : #initialization }
 ClyMethodGroup >> initialize [
 	super initialize.
-	
+
 	subgroupsQuery := ClyUnknownQuery instance
 ]
 
@@ -201,7 +201,7 @@ ClyMethodGroup >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	methodQuery printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #operations }

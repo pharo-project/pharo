@@ -17,7 +17,7 @@ SharedQueueTest >> testBasics [
 	self assertCollection: q contents hasSameElements: #(5).
 	self should: [ q nextOrNil = 5 ].
 	self should: [ q nextOrNil isNil ].
-	self assert: q atEnd.
+	self assert: q atEnd
 ]
 
 { #category : #tests }

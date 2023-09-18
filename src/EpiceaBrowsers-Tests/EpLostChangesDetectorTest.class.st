@@ -27,7 +27,9 @@ EpLostChangesDetectorTest >> testDetectNoChange [
 	self deny: detector hasLostChanges.
 	self assertEmpty: detector lostChanges.
 
-	self assert: monitor log entriesCount equals: 2	"Just to be sure of the assumed precondition: category and only one class created"
+	"Category addition and registration are two separate events"
+	"Just to be sure of the assumed precondition: category and only one class created"	
+	self assert: monitor log entriesCount equals: 3
 ]
 
 { #category : #tests }
@@ -45,7 +47,7 @@ EpLostChangesDetectorTest >> testDetectNoChangeBecauseLogFileWasDeleted [
 
 	detector := EpLostChangesDetector newWithLog: logWithALostChange.
 	self deny: detector hasLostChanges.
-	self assertEmpty: detector lostChanges.
+	self assertEmpty: detector lostChanges
 ]
 
 { #category : #tests }
@@ -54,12 +56,12 @@ EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 	| logWithALostChange |
 	"Create an initial change that will be ignored by the detector (read below)"
 	classFactory newClass.
-	
+
 	"Simulate the image session starts here (then previous change shouldn't be detected as lost... that's how it works)."
 	logWithALostChange := EpLog newWithStore: monitor sessionStore store flush copyReopened refresh.
 	classFactory newClass.
 	monitor sessionStore flush.
-	
+
 	"At this moment, the log meets the conditions of opening an image after a crash."
 	detector := EpLostChangesDetector newWithLog: logWithALostChange.
 
@@ -71,7 +73,7 @@ EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 { #category : #tests }
 EpLostChangesDetectorTest >> testDetectThreeChanges [
 
-	| logWithLostChanges numberOfLostChanges expectedLostClassNames detectedLostChanges |
+	| logWithLostChanges numberOfLostChanges expectedLostClassNames detectedLostChanges detectedLostClassChanges |
 
 	"Build a log with several lost changes (class additions)"
 	numberOfLostChanges := 3.
@@ -83,10 +85,14 @@ EpLostChangesDetectorTest >> testDetectThreeChanges [
 	detector := EpLostChangesDetector newWithLog: logWithLostChanges.
 
 	detectedLostChanges := detector lostChanges.
-	detectedLostChanges do: [ :each | self assert: each content isEpClassChange ].
-
-	self assert: detectedLostChanges size equals: numberOfLostChanges.
 	self
-		assert: (detectedLostChanges collect: [ :each | each content behaviorAffectedName ]) asArray
-		equals: expectedLostClassNames.
+		assert: (detectedLostChanges anySatisfy: [ : omEntry | omEntry content isEpPackageTagChange ])
+		description: 'It test that the class additions include a category registration'.
+	detectedLostClassChanges := detectedLostChanges reject: [ : omEntry | omEntry content isEpPackageTagChange ].
+	detectedLostClassChanges do: [ :each | self assert: each content isEpClassChange ].
+
+	self assert: detectedLostClassChanges size equals: numberOfLostChanges.
+	self
+		assert: (detectedLostClassChanges collect: [ :each | each content behaviorAffectedName ]) asArray
+		equals: expectedLostClassNames
 ]

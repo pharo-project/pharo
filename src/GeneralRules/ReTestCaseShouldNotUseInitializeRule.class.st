@@ -20,20 +20,20 @@ ReTestCaseShouldNotUseInitializeRule class >> checksClass [
 ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 
 	| alteredVariables expectedVariables |
-	
-	aClass isTestCase 
+
+	aClass isTestCase
 		ifFalse: [ ^ false ].
-		
+
 	(aClass selectors includes: #initialize)
 		ifFalse: [ ^ false ].
-	
-	alteredVariables := (aClass >> #initialize) ast allChildren 
+
+	alteredVariables := (aClass >> #initialize) ast allChildren
 					select: [ :e | e isAssignment and: [ e variable isInstanceVariable ] ]
 					thenCollect: [ :e | e variable ].
-	
+
 	expectedVariables := aClass new instanceVariablesToKeep.
-					
-	^ alteredVariables anySatisfy: [ :e | (expectedVariables includes: e name) not ].
+
+	^ alteredVariables anySatisfy: [ :e | (expectedVariables includes: e name) not ]
 ]
 
 { #category : #accessing }
@@ -43,6 +43,6 @@ ReTestCaseShouldNotUseInitializeRule >> group [
 
 { #category : #accessing }
 ReTestCaseShouldNotUseInitializeRule >> name [
-	
+
 	^ 'Tests should not use initialize'
 ]

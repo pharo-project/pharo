@@ -50,7 +50,8 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: aString [
 
 { #category : #running }
 HDTestReport class >> runPackage: aString [
-	^ self runClasses: (RPackage organizer packageNamed: aString) definedClasses named: aString
+
+	^ self runClasses: (self packageOrganizer packageNamed: aString) definedClasses named: aString
 ]
 
 { #category : #running }
@@ -281,10 +282,11 @@ HDTestReport >> serializeError: error of: aTestCase [
 		at: #FLDebuggerStackSerializer
 		ifPresent: [ :fuelOutStackDebugAction | 
 			| context testCaseMethodContext |
-			context := error signalerContext.
-			testCaseMethodContext := context findContextSuchThat: [ :ctx | 
+			"we use signalContext and findMethodContextSuchThat: to find the method even with clean blocks in the middle"
+ 			context := error signalContext.
+			testCaseMethodContext := context findMethodContextSuchThat: [ :ctx | 
 				                         ctx receiver == aTestCase and: [ 
-					                         ctx methodSelector == #performTest ] ].
+					                         ctx selector == #performTest ] ].
 			context := context copyTo: testCaseMethodContext.
 
 			fuelFileName := self suiteFileNameWithoutExtension , ('-' , aTestCase class name asString , '-',  aTestCase selector asString , '.fuel').
@@ -446,7 +448,7 @@ HDTestReport >> writeException: anException of: aTestCase asNode: errorNodeName 
 HDTestReport >> writeExceptionStack: anException of: aTestCase [
 	| context |
 	context := anException signalerContext.
-	[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ]]]
+	[ context isNil or: [ context receiver == aTestCase and: [ context selector == #runCase ]]]
 		whileFalse: [
 			[ stream nextPutAll: (self encode: context printString); lf ] 
 				onErrorDo: [ stream nextPutAll: 'PRINTING ERROR'; lf].

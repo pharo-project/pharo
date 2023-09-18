@@ -18,6 +18,12 @@ Class {
 	#category : #'Morphic-Base-Kernel'
 }
 
+{ #category : #'class initialization' }
+ModelMorph class >> initialize [
+
+	self deprecatedAliases: { #MorphicModel }
+]
+
 { #category : #settings }
 ModelMorph class >> keyboardFocusOnMouseDown [
 	^ KeyboardFocusOnMouseDown ifNil: [KeyboardFocusOnMouseDown := true]
@@ -71,7 +77,7 @@ ModelMorph >> keyboardFocusOnMouseDown [
 ]
 
 { #category : #accessing }
-ModelMorph >> model [ 
+ModelMorph >> model [
 	^ model
 ]
 
@@ -81,7 +87,7 @@ ModelMorph >> model: anObject [
 
 	model ifNotNil: [model removeDependent: self].
 	anObject ifNotNil: [anObject addDependent: self].
-	model := anObject.
+	model := anObject
 ]
 
 { #category : #settings }

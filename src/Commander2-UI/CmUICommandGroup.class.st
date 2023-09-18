@@ -40,7 +40,7 @@ CmUICommandGroup >> beDisplayedAsSubMenu [
 
 { #category : #configuring }
 CmUICommandGroup >> beRoot [
-	self isRoot: true.
+	self isRoot: true
 ]
 
 { #category : #accessing }
@@ -54,7 +54,7 @@ CmUICommandGroup >> displayStrategy: anObject [
 ]
 
 { #category : #accessing }
-CmUICommandGroup >> icon [ 
+CmUICommandGroup >> icon [
 
 	^ icon
 ]

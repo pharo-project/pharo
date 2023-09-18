@@ -9,18 +9,18 @@ Class {
 }
 
 { #category : #accessing }
-FTExampleClassInfoTableDataSource >> cellColumn: column row: rowIndex [ 
+FTExampleClassInfoTableDataSource >> cellColumn: column row: rowIndex [
 	column id = 'Icon' ifTrue: [ ^ self iconColumn: column row: rowIndex ].
 	column id = 'Name' ifTrue: [ ^ self nameColumn: column row: rowIndex ].
 	column id = 'Number of methods' ifTrue: [ ^ self numberOfMethodsColumn: column row: rowIndex ].
 	column id = 'Number of instance variables' ifTrue: [ ^ self numberOfInstanceVariablesColumn: column row: rowIndex ].
-	
+
 	self error: 'Invalid column'
 ]
 
 { #category : #accessing }
 FTExampleClassInfoTableDataSource >> iconColumn: column row: rowIndex [
-	^ FTCellMorph new  
+	^ FTCellMorph new
 		addMorphBack: (self iconFor: rowIndex) asMorph;
 		yourself
 ]
@@ -39,8 +39,8 @@ FTExampleClassInfoTableDataSource >> iconFor: index [
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
-	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClass].
+	class hasComment 
+		ifFalse: [ ^ self iconNamed: #uncommentedClass].
 	((class
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
@@ -51,8 +51,6 @@ FTExampleClassInfoTableDataSource >> iconFor: index [
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
-	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
 	^ self iconNamed: class systemIconName
 ]
 
@@ -64,14 +62,14 @@ FTExampleClassInfoTableDataSource >> initialize [
 
 { #category : #accessing }
 FTExampleClassInfoTableDataSource >> nameColumn: column row: rowIndex [
-	^ FTCellMorph new  
+	^ FTCellMorph new
 		addMorphBack: (self elementAt: rowIndex) name asStringMorph;
 		yourself
 ]
 
 { #category : #accessing }
 FTExampleClassInfoTableDataSource >> numberOfInstanceVariablesColumn: column row: rowIndex [
-	^ FTCellMorph new 
+	^ FTCellMorph new
 		addMorph: (self elementAt: rowIndex) instSize asStringMorph;
 		yourself
 ]

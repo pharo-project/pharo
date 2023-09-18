@@ -19,7 +19,7 @@ DTDebugTestCommand >> execute [
 
 { #category : #initialization }
 DTDebugTestCommand >> initialize [
-	
+
 	super initialize.
 	self
 		name: 'Debug test';

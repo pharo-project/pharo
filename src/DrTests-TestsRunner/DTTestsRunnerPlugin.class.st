@@ -77,7 +77,7 @@ DTTestsRunnerPlugin >> joinTestResult: aTestResult with: partialResult [
 DTTestsRunnerPlugin >> label: aString forSuite: aTestSuite [
 	^ String streamContents: [ :stream |
 		stream nextPutAll: 'Running '; print: aTestSuite tests size; space; nextPutAll: aString.
-		aTestSuite tests size > 1 ifTrue: [ stream nextPut: $s ] ].
+		aTestSuite tests size > 1 ifTrue: [ stream nextPut: $s ] ]
 ]
 
 { #category : #accessing }
@@ -120,12 +120,13 @@ DTTestsRunnerPlugin >> runForConfiguration: aDTpluginConfiguration [
 { #category : #private }
 DTTestsRunnerPlugin >> runSuite: aTestSuite withResult: aResult [
 
-	aTestSuite when: TestAnnouncement do: [ :testAnnouncement | 
+	aTestSuite when: TestAnnouncement do: [ :testAnnouncement |
 		self flag: #TODO. "Dirty"
-		testAnnouncement test class = TestSuite ifTrue: [ 
+		testAnnouncement test class = TestSuite ifTrue: [
 			self announceStatusChanged:
-				('Running test {1}.' format: { testAnnouncement test name }) ] ].
-	[ aResult mergeWith: (aTestSuite run) ] ensure: [ 
+				('Running test {1}.' format: { testAnnouncement test name }) ] ]
+		for: self.
+	[ aResult mergeWith: (aTestSuite run) ] ensure: [
 		aTestSuite unsubscribe: TestAnnouncement ]
 ]
 
@@ -134,9 +135,9 @@ DTTestsRunnerPlugin >> runTestSuites: testSuites [
 
 	| result |
 	result := TestAsserter classForTestResult new.
-	CurrentExecutionEnvironment runTestsBy: [ 
+	CurrentExecutionEnvironment runTestsBy: [
 		testSuites
-			do: [ :testSuite | 
+			do: [ :testSuite |
 				| specificResult |
 				specificResult := testSuite resultClass new.
 				self runSuite: testSuite withResult: specificResult.
@@ -163,9 +164,9 @@ DTTestsRunnerPlugin >> startButtonLabel [
 { #category : #tests }
 DTTestsRunnerPlugin >> testSuiteOf: aSetOfTest withName: aString [
 	^ aSetOfTest
-		collect: [ :each | 
+		collect: [ :each |
 			TestSuite new
-				in: [ :suite | 
+				in: [ :suite |
 					suite
 						addTest: each;
 						name: (self label: aString forSuite: suite) ];

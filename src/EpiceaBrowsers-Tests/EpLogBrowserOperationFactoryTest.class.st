@@ -24,3 +24,10 @@ EpLogBrowserOperationFactoryTest >> setMonitorLogAsInputEntries [
 	inputEntries := monitor log entries.
 	inputEntry := nil. "Not used"
 ]
+
+{ #category : #running }
+EpLogBrowserOperationFactoryTest >> tearDown [
+
+	(self packageOrganizer packages select: [ :package | package name beginsWith: classFactory packageName ]) do: [ :package | package removeFromSystem ].
+	super tearDown
+]

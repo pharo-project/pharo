@@ -11,7 +11,7 @@ Class {
 ClyRunFailedTestsFromMethodDataSourceCommand class >> canBeExecutedInContext: aBrowserContext [
 	| testResult |
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false].
-	
+
 	testResult := aBrowserContext browser resultView dataSource getMetaProperty: ClyTestResultProperty.
 	^testResult hasBrokenTests
 ]
@@ -23,12 +23,12 @@ ClyRunFailedTestsFromMethodDataSourceCommand class >> menuOrder [
 
 { #category : #execution }
 ClyRunFailedTestsFromMethodDataSourceCommand >> buildTestSuite [
-	
+
 	| suite |
 	suite := TestSuite new.
-	
+
 	self testMethodsDo: [ :eachMethod |
-		eachMethod isFailedTest | eachMethod isErrorTest ifTrue: [ 
+		eachMethod isFailedTest | eachMethod isErrorTest ifTrue: [
 			suite addTest: (eachMethod methodClass selector: eachMethod selector)]].
 
 	^suite
@@ -37,6 +37,6 @@ ClyRunFailedTestsFromMethodDataSourceCommand >> buildTestSuite [
 { #category : #accessing }
 ClyRunFailedTestsFromMethodDataSourceCommand >> defaultMenuItemName [
 	self hasTestResult ifFalse: [ ^'Run failed' ].
-	
+
 	^'Run failed (', self testResult brokenCount asString, ')'
 ]

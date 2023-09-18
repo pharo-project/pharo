@@ -12,40 +12,43 @@ Class {
 { #category : #visitor }
 EpBrowseVisitor >> visitBehaviorChange: aChange [
 
-	self 
-		behaviorNamed: aChange behaviorAffectedName 
+	self
+		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: #browse
 ]
 
 { #category : #visitor }
-EpBrowseVisitor >> visitCategoryChange: aChange [
-
-	| package |
-	package := RPackageOrganizer default packageNamed: aChange affectedPackageName.
-	package classTags
-		detect: [ :tag |
-			tag categoryName = aChange categoryName
-		]
-		ifFound: [ :tag | Smalltalk tools browser openOnPackage: tag ]
-		ifNone: [ self inform: 'Category ' , aChange categoryName , ' not found.' ].
-]
-
-{ #category : #visitor }
 EpBrowseVisitor >> visitCodeChange: aChange [
-	^ self error: 'Should not be reached'.
+	^ self error: 'Should not be reached'
 ]
 
 { #category : #visitor }
 EpBrowseVisitor >> visitMethodChange: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior | 
-			behavior 
-				compiledMethodAt: aChange methodAffectedSelector 
-				ifPresent: #browse 
-				ifAbsent: [ 
-					self inform: 
+		ifPresent: [ :behavior |
+			behavior
+				compiledMethodAt: aChange methodAffectedSelector
+				ifPresent: #browse
+				ifAbsent: [
+					self inform:
 						'Cannot find ', behavior asString, '>>', aChange methodAffectedSelector.
-					behavior browse ] ].
+					behavior browse ] ]
+]
+
+{ #category : #visitor }
+EpBrowseVisitor >> visitPackageChange: aChange [
+
+	(self packageOrganizer packageNamed: aChange packageName ifAbsent: [ ^ self inform: 'Package ' , aChange packageName , ' not found.' ]) browse
+]
+
+{ #category : #visitor }
+EpBrowseVisitor >> visitPackageTagChange: aPackageTagChange [
+
+	Smalltalk tools browser openOnPackage: ((self packageOrganizer
+			  packageNamed: aPackageTagChange packageName
+			  ifAbsent: [ ^ self inform: 'Package named ' , aPackageTagChange packageName , ' not found in the system' ])
+			 classTagNamed: aPackageTagChange tagName
+			 ifAbsent: [ ^ self inform: 'Tag named ' , aPackageTagChange tagName , ' not found in package named ' , aPackageTagChange packageName ])
 ]

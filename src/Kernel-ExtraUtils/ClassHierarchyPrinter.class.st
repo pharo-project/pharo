@@ -151,12 +151,12 @@ ClassHierarchyPrinter >> excludedClasses: aCollection [
 ]
 
 { #category : #'public API' }
-ClassHierarchyPrinter >> forClass: aClass [ 
+ClassHierarchyPrinter >> forClass: aClass [
 	theClass := aClass
 ]
 
 { #category : #initialization }
-ClassHierarchyPrinter >> initialize [ 	
+ClassHierarchyPrinter >> initialize [
 	super initialize.
 	excludedClasses := #().
 	limitedToClasses := #().
@@ -167,14 +167,14 @@ ClassHierarchyPrinter >> initialize [
 ]
 
 { #category : #initialization }
-ClassHierarchyPrinter >> initializeStream [ 
+ClassHierarchyPrinter >> initializeStream [
 	stream := (String new: 100) writeStream
 ]
 
 { #category : #configuration }
 ClassHierarchyPrinter >> limitedToClasses: aCollection [
 	"To set the only classes that should be printed."
-	
+
 	limitedToClasses := aCollection
 ]
 
@@ -191,11 +191,11 @@ ClassHierarchyPrinter >> on: aStream [
 
 { #category : #'public API' }
 ClassHierarchyPrinter >> print [
-	"Answer a description containing the names and instance variable names 
+	"Answer a description containing the names and instance variable names
 	of all of the subclasses and superclasses of the class."
-	
-	theClass ifNotNil: [ 
-		showSuperclasses 
+
+	theClass ifNotNil: [
+		showSuperclasses
 			ifTrue: [ self printSuperclasses ].
 			self printSubclassesOf: theClass ].
 	^ stream contents
@@ -206,8 +206,8 @@ ClassHierarchyPrinter >> printClass: aClass [
 	"Print a single line in the printout."
 	stream tab: index.
 	stream nextPutAll: aClass name.
-	aClass instVarNames ifNotEmpty: [ :vars | 
-		showState ifTrue: [ stream space. 
+	aClass instVarNames ifNotEmpty: [ :vars |
+		showState ifTrue: [ stream space.
 								stream nextPutAll: '( '.
 								aClass instVarNames
 									do: [ :iv | stream nextPutAll:  iv asString ]
@@ -222,13 +222,13 @@ ClassHierarchyPrinter >> printSubclassesOf: aClass [
 	subclass on the file stream, aStream, indenting level times."
 
 	| sortedSubclasses |
-	limitedToClasses ifNotEmpty: [ 
-			(limitedToClasses includes: aClass) 
+	limitedToClasses ifNotEmpty: [
+			(limitedToClasses includes: aClass)
 				ifFalse: [ ^ self ]
 			].
 	(excludedClasses includes: aClass)
 		ifTrue: [ ^ self ].
-		
+
 	self printClass: aClass.
 	aClass == Class
 		ifTrue: [ stream
@@ -237,7 +237,7 @@ ClassHierarchyPrinter >> printSubclassesOf: aClass [
 			^ self ].
 	sortedSubclasses := aClass subclasses
 		asSortedCollection: [ :c1 :c2 | c1 name <= c2 name ].
-	sortedSubclasses do: [ :subclass | 
+	sortedSubclasses do: [ :subclass |
 			index := index + 1.
 			self printSubclassesOf: subclass.
 			index := index - 1 ]
@@ -247,15 +247,15 @@ ClassHierarchyPrinter >> printSubclassesOf: aClass [
 ClassHierarchyPrinter >> printSuperclasses [
 
 	theClass allSuperclasses
-		reverseDo: [ :aClass | 
+		reverseDo: [ :aClass |
 			self printClass: aClass.
 			index := index + 1 ].
 	stream cr.	"to spot the requested class."
 ]
 
 { #category : #initialization }
-ClassHierarchyPrinter >> resetLevel [ 
-	index := 0.
+ClassHierarchyPrinter >> resetLevel [
+	index := 0
 ]
 
 { #category : #configuration }

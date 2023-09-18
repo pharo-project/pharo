@@ -9,6 +9,6 @@ Class {
 
 { #category : #exceptiondescription }
 SystemNotification >> defaultAction [
-	
+
 	UIManager default systemNotificationDefaultAction: self
 ]

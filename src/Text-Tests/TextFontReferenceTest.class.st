@@ -12,7 +12,7 @@ TextFontReferenceTest >> setUp [
 	super setUp.
 	prototypes
 		add: (TextFontReference
-				toFont: (StrikeFont familyName: 'NewYork' size: 15)) 
+				toFont: (StrikeFont familyName: 'NewYork' size: 15))
 ]
 
 { #category : #accessing }

@@ -18,11 +18,11 @@ KMOSXShortcutPrinter >> basicModifierStringsOf: aShortcut [
 ]
 
 { #category : #visiting }
-KMOSXShortcutPrinter >> mapSpecialCharacter: char [ 
+KMOSXShortcutPrinter >> mapSpecialCharacter: char [
 
-	char = KeyboardKey enter ifTrue: [ ^ self class symbolTableAt: #Enter ifAbsent: [ 'Enter' ] ].	
+	char = KeyboardKey enter ifTrue: [ ^ self class symbolTableAt: #Enter ifAbsent: [ 'Enter' ] ].
 	(char = (KeyboardKey fromCharacter: Character space))
-		ifTrue: [ ^ self class symbolTableAt: #Space ifAbsent: [ 'Space' ] ].	
+		ifTrue: [ ^ self class symbolTableAt: #Space ifAbsent: [ 'Space' ] ].
 	^ char name asUppercase
 ]
 
@@ -31,7 +31,7 @@ KMOSXShortcutPrinter >> visitSingleShortcut: aShortcut [
 
 	| keyParts symbols char |
 	keyParts := self shortcutModifiersOf: aShortcut.
-	symbols := keyParts inject: '' into: [ :s :each | 
+	symbols := keyParts inject: '' into: [ :s :each |
 		           s , (self class
 			            symbolTableAt: each
 			            ifAbsent: [ each capitalized ]) ].

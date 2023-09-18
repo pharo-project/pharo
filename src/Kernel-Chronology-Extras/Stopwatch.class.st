@@ -15,7 +15,7 @@ Class {
 Stopwatch >> activate [
 
 	self isSuspended ifTrue:
-		[self timespans add: 
+		[self timespans add:
 			(Timespan starting: DateAndTime now duration: Duration zero).
 		self state: #active]
 ]
@@ -24,16 +24,16 @@ Stopwatch >> activate [
 Stopwatch >> duration [
 
 	| ts last |
-	self isSuspended 
-		ifTrue:
-			[ (ts := self timespans) isEmpty ifTrue: 
-				[ ts := { Timespan starting: DateAndTime now duration: Duration zero } ] ]
-		ifFalse:
-			[ last := self timespans last.
+	self isSuspended
+		ifTrue: [ (ts := self timespans) ifEmpty: [ ts := { (Timespan starting: DateAndTime now duration: Duration zero) } ] ]
+		ifFalse: [
+			last := self timespans last.
 			ts := self timespans allButLast
-				add: (last duration: (DateAndTime now - last start); yourself);
-				yourself ].
-		
+				      add: (last
+						       duration: DateAndTime now - last start;
+						       yourself);
+				      yourself ].
+
 	^ (ts collect: [ :t | t duration ]) sum
 ]
 
@@ -64,22 +64,22 @@ Stopwatch >> printOn: aStream [
 		nextPutAll: self state;
 		nextPut: $:;
 		print: self duration;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #actions }
 Stopwatch >> reActivate [
 
-	self 
+	self
 		suspend;
-		activate.
+		activate
 ]
 
 { #category : #initialization }
 Stopwatch >> reset [
 
 	self suspend.
-	timespans := nil.
+	timespans := nil
 ]
 
 { #category : #actions }

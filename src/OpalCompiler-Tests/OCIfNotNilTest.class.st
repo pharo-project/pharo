@@ -67,14 +67,14 @@ OCIfNotNilTest >> testIfNotNil1ArgWithStatement [
 	self
 		assert:
 			(5
-				ifNotNil: [ :a | 
+				ifNotNil: [ :a |
 					3.
 					a ])
 		equals: 5.
 	self
 		assert:
 			(5
-				ifNotNil: [ :a | 
+				ifNotNil: [ :a |
 					a.
 					3 ])
 		equals: 3

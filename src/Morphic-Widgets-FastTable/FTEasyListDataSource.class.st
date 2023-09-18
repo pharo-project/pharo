@@ -14,11 +14,11 @@ Class {
 }
 
 { #category : #accessing }
-FTEasyListDataSource >> cellColumn: column row: rowIndex [ 
+FTEasyListDataSource >> cellColumn: column row: rowIndex [
 	^ FTCellMorph new
 		cellInset: 5;
-		in: [ :me | 
-			(self iconFor: rowIndex) 
+		in: [ :me |
+			(self iconFor: rowIndex)
 				ifNotNil: [ :icon | me addMorphBack: icon asMorph ] ];
 		addMorphBack: (self displayFor: rowIndex) asMorph;
 		yourself
@@ -33,9 +33,9 @@ FTEasyListDataSource >> display: aBlock [
 FTEasyListDataSource >> displayFor: rowIndex [
 	| element |
 	element := self elementAt: rowIndex.
-	^ displayBlock 
+	^ displayBlock
 		ifNotNil: [ displayBlock value: element ]
-		ifNil: [ ^ element ].
+		ifNil: [ ^ element ]
 ]
 
 { #category : #accessing }
@@ -57,8 +57,8 @@ FTEasyListDataSource >> menu: aBlock [
 { #category : #accessing }
 FTEasyListDataSource >> menuColumn: column row: rowIndex [
 	menuBlock ifNil: [ ^ nil ].
-	rowIndex = 0 ifTrue: [ 
-		"I could answer a menu without selection, but in this case I will just answer nil, 
+	rowIndex = 0 ifTrue: [
+		"I could answer a menu without selection, but in this case I will just answer nil,
 		 which means 'no menu'"
 		^ nil ].
 	^ menuBlock value: (self elementAt: rowIndex)

@@ -9,15 +9,15 @@ Class {
 
 { #category : #testing }
 ClyRunCoveringTestMethodsCommand class >> canBeExecutedInContext: aToolContext [
-	
-	^aToolContext selectedMethodItems anySatisfy: [ :each | 
+
+	^aToolContext selectedMethodItems anySatisfy: [ :each |
 		each hasProperty: ClyTestedMethodProperty ]
 ]
 
 { #category : #execution }
 ClyRunCoveringTestMethodsCommand >> readParametersFromContext: aToolContext [
 	super readParametersFromContext: aToolContext.
-	testItems := aToolContext selectedItems 
+	testItems := aToolContext selectedItems
 		select: [ :each | each hasProperty: ClyTestedMethodProperty ]
 ]
 

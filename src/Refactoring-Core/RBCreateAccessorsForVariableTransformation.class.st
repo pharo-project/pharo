@@ -41,6 +41,12 @@ Class {
 	#category : #'Refactoring-Core-Transformation'
 }
 
+{ #category : #displaying }
+RBCreateAccessorsForVariableTransformation class >> basicMenuItemString [
+
+	^ 'Generate accessors'
+]
+
 { #category : #'instance creation' }
 RBCreateAccessorsForVariableTransformation class >> classVariable: aVarName class: aClass [
 	^ self variable: aVarName class: aClass classVariable: true
@@ -52,12 +58,13 @@ RBCreateAccessorsForVariableTransformation class >> instanceVariable: aVarName c
 ]
 
 { #category : #accessing }
-RBCreateAccessorsForVariableTransformation class >> kind [
-	^ 'Transformation'
+RBCreateAccessorsForVariableTransformation class >> isTransformation [
+
+	^ true
 ]
 
 { #category : #'instance creation' }
-RBCreateAccessorsForVariableTransformation class >> model: aRBSmalltalk classVariable: aVarName class: aClass [ 
+RBCreateAccessorsForVariableTransformation class >> model: aRBSmalltalk classVariable: aVarName class: aClass [
 
 	^ self model: aRBSmalltalk variable: aVarName class: aClass classVariable: true
 ]
@@ -69,8 +76,8 @@ RBCreateAccessorsForVariableTransformation class >> model: aRBSmalltalk instance
 ]
 
 { #category : #'instance creation' }
-RBCreateAccessorsForVariableTransformation class >> model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean [ 
-	^(self 
+RBCreateAccessorsForVariableTransformation class >> model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean [
+	^(self
 		model: aRBSmalltalk
 		variable: aVarName
 		class: aClass)
@@ -79,26 +86,26 @@ RBCreateAccessorsForVariableTransformation class >> model: aRBSmalltalk variable
 ]
 
 { #category : #'instance creation' }
-RBCreateAccessorsForVariableTransformation class >> variable: aVarName class: aClass classVariable: aBoolean [ 
+RBCreateAccessorsForVariableTransformation class >> variable: aVarName class: aClass classVariable: aBoolean [
 	^(self variable: aVarName class: aClass)
 		classVariable: aBoolean; yourself
 ]
 
 { #category : #initialization }
-RBCreateAccessorsForVariableTransformation >> classVariable: aBoolean [ 
+RBCreateAccessorsForVariableTransformation >> classVariable: aBoolean [
 	classVariable := aBoolean
 ]
 
 { #category : #transforming }
 RBCreateAccessorsForVariableTransformation >> createGetterAccessor [
 	"Only define a getter if it is not already defined in the class or its subclasses."
-	
+
 	getterMethodName := self findGetterMethod.
 	getterMethodName ifNil: [ getterMethodName := self defineGetterMethod ]
 ]
 
 { #category : #transforming }
-RBCreateAccessorsForVariableTransformation >> createMatcher [ 
+RBCreateAccessorsForVariableTransformation >> createMatcher [
 	^ self parseTreeSearcherClass getterMethod: variableName
 ]
 
@@ -111,31 +118,41 @@ RBCreateAccessorsForVariableTransformation >> createSetterAccessor [
 
 { #category : #transforming }
 RBCreateAccessorsForVariableTransformation >> defineGetterMethod [
-	self definingClass 
-		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: self selector with: variableName)
-		classified: #(#accessing).
-	^selector
+
+	self generateChangesFor: 
+		(RBAddMethodTransformation
+			 sourceCode: ('<1s><r><r><t>^ <2s>'
+					  expandMacrosWith: self selector
+					  with: variableName)
+			 in: self definingClass
+			 withProtocol: #accessing ).
+
+	^ selector
 ]
 
 { #category : #transforming }
 RBCreateAccessorsForVariableTransformation >> defineSetterMethod [
 	| definingClass string |
 	definingClass := self definingClass.
-	string := self needsReturnForSetter 
+	string := self needsReturnForSetter
 				ifTrue: ['<1s> anObject<r><r><t>^ <2s> := anObject']
 				ifFalse: ['<1s> anObject<r><r><t><2s> := anObject'].
-	selector := self 
+	selector := self
 						safeMethodNameFor: definingClass
 						basedOn: variableName asString , ':'.
-	definingClass 
-		compile: (string expandMacrosWith: selector with: variableName)
-		classified: #accessing.
+						
+	self generateChangesFor: 
+		(RBAddMethodTransformation
+		 	 sourceCode: (string expandMacrosWith: selector with: variableName)
+			 in: definingClass
+		 	 withProtocol: #accessing ).
+
 	^selector
 ]
 
 { #category : #'private - accessing' }
 RBCreateAccessorsForVariableTransformation >> definingClass [
-	^ classVariable 
+	^ classVariable
 		ifTrue: [ class classSide ]
 		ifFalse: [ class ]
 ]
@@ -144,7 +161,7 @@ RBCreateAccessorsForVariableTransformation >> definingClass [
 RBCreateAccessorsForVariableTransformation >> findGetterMethod [
 	"Look for possible already existing getter method (a method accessing the instance variable in a class or its subclasses).
 	This information will be used to avoid creating a new getter."
-	
+
 	| definingClass matcher |
 	definingClass := self definingClass.
 	matcher := self createMatcher.
@@ -159,14 +176,14 @@ RBCreateAccessorsForVariableTransformation >> findGetterMethod [
 RBCreateAccessorsForVariableTransformation >> findSetterMethod [
 	"Look for possible already existing setter method (a method accessing the instance variable in a class or its subclasses).
 	This information will be used to avoid creating a new setter."
-	
+
 	| definingClass matcher |
 	definingClass := self definingClass.
 	matcher := self needsReturnForSetter
 		ifTrue: [ self parseTreeSearcherClass returnSetterMethod: variableName ]
 		ifFalse: [ self parseTreeSearcherClass setterMethod: variableName ].
 	^ self possibleSetterSelectors
-		detect: [ :each | 
+		detect: [ :each |
 			(self checkClass: definingClass selector: each using: matcher) notNil
 				and: [ (definingClass subclassRedefines: each) not ] ]
 		ifNone: [ nil ]
@@ -188,7 +205,7 @@ RBCreateAccessorsForVariableTransformation >> getterMethodName [
 { #category : #'private - accessing' }
 RBCreateAccessorsForVariableTransformation >> methodsReferencingVariable [
 
-	^ classVariable 
+	^ classVariable
 		ifTrue: [ self definingClass whichSelectorsReferToClassVariable: variableName ]
 		ifFalse: [ self definingClass whichSelectorsReferToInstanceVariable: variableName ]
 ]
@@ -196,13 +213,13 @@ RBCreateAccessorsForVariableTransformation >> methodsReferencingVariable [
 { #category : #testing }
 RBCreateAccessorsForVariableTransformation >> needsReturnForSetter [
 	"In case the variable is used in a sequence of assignments y := x := 2, the generated code for the setter will generate
-	
+
 	x: anObject
 
 			^ x := anObject
-	
-	if the class does not contain such sequence of assignements, the setter will be 
-	
+
+	if the class does not contain such sequence of assignements, the setter will be
+
 	x: anObject
 
 			x := anObject
@@ -229,15 +246,22 @@ RBCreateAccessorsForVariableTransformation >> possibleSetterSelectors [
 { #category : #preconditions }
 RBCreateAccessorsForVariableTransformation >> preconditions [
 	"Checks that the class actually defines the variable from which we will build setter and getter."
-	
-	^ classVariable 
+
+	^ classVariable
 		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
 		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
 ]
 
 { #category : #transforming }
-RBCreateAccessorsForVariableTransformation >> selector [ 
-	^ selector ifNil: [ 
+RBCreateAccessorsForVariableTransformation >> privateTransform [
+	self
+		createGetterAccessor;
+		createSetterAccessor
+]
+
+{ #category : #transforming }
+RBCreateAccessorsForVariableTransformation >> selector [
+	^ selector ifNil: [
 		selector := self safeMethodNameFor: self definingClass
 				basedOn: variableName asString. ]
 ]
@@ -245,18 +269,18 @@ RBCreateAccessorsForVariableTransformation >> selector [
 { #category : #'client refactoring API' }
 RBCreateAccessorsForVariableTransformation >> setterMethod [
 	self deprecated: 'Use getterMethodName' transformWith: '`@arg setterMethod' -> '`@arg setterMethodName'.
-	
+
 	^ self setterMethodName
 ]
 
 { #category : #'client refactoring API' }
 RBCreateAccessorsForVariableTransformation >> setterMethodName [
-	
+
 	^ setterMethodName
 ]
 
 { #category : #printing }
-RBCreateAccessorsForVariableTransformation >> storeOn: aStream [ 
+RBCreateAccessorsForVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' variable: '.
@@ -268,13 +292,6 @@ RBCreateAccessorsForVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #transforming }
-RBCreateAccessorsForVariableTransformation >> transform [
-	self
-		createGetterAccessor;
-		createSetterAccessor
-]
-
 { #category : #testing }
 RBCreateAccessorsForVariableTransformation >> usesAssignmentOf: aString in: aClass classVariable: isClassVar [
 	"Returns whether the variable aString is used in a assignement sequence e.g., x := y := 2 in the class and its subclasses."
@@ -284,7 +301,7 @@ RBCreateAccessorsForVariableTransformation >> usesAssignmentOf: aString in: aCla
 	matcher
 		answer: false;
 		matches: aString , ' := ``@object'
-			do: [ :aNode :answer | 
+			do: [ :aNode :answer |
 			answer
 				or: [ aNode isUsed and: [ aNode methodNode selector ~= aString ] ] ].
 	definingClass := isClassVar
@@ -295,7 +312,7 @@ RBCreateAccessorsForVariableTransformation >> usesAssignmentOf: aString in: aCla
 			(isClassVar
 				ifTrue: [ definingClass classSide withAllSubclasses ]
 				ifFalse: [ #() ])
-		anySatisfy: [ :each | 
+		anySatisfy: [ :each |
 			((isClassVar
 				ifTrue: [ each whichSelectorsReferToClassVariable: aString ]
 				ifFalse: [ each whichSelectorsReferToInstanceVariable: aString ])

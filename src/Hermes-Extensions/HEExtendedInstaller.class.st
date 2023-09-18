@@ -26,12 +26,12 @@ HEExtendedInstaller >> duplicationMode: anObject [
 
 { #category : #'validating existence' }
 HEExtendedInstaller >> existingClass: aHEClass [
-	^ duplicationMode existingClass: aHEClass on: self.
+	^ duplicationMode existingClass: aHEClass on: self
 ]
 
 { #category : #'validating existence' }
 HEExtendedInstaller >> existingTrait: aHETrait [
-	^ duplicationMode existingTrait: aHETrait on: self.
+	^ duplicationMode existingTrait: aHETrait on: self
 ]
 
 { #category : #accessing }
@@ -43,14 +43,14 @@ HEExtendedInstaller >> failOnUndeclared: anObject [
 HEExtendedInstaller >> forOptions: aCommandLine [
 	failOnUndeclared := (aCommandLine hasOption: 'no-fail-on-undeclared') not.
 
-	duplicationMode := HEDuplicationModeStrategy forOption: (aCommandLine optionAt: 'on-duplication' ifAbsent: [ 'fail' ]).
+	duplicationMode := HEDuplicationModeStrategy forOption: (aCommandLine optionAt: 'on-duplication' ifAbsent: [ 'fail' ])
 ]
 
 { #category : #initialization }
 HEExtendedInstaller >> initialize [
 	super initialize.
 	failOnUndeclared := true.
-	duplicationMode := HEFailOnDuplication new.
+	duplicationMode := HEFailOnDuplication new
 ]
 
 { #category : #'reporting undeclared' }
@@ -65,5 +65,5 @@ HEExtendedInstaller >> reportNewUndeclareds: newUndeclareds [
 
 { #category : #'validating existence' }
 HEExtendedInstaller >> shouldBuildMethod: aHEMethod in: aClass [
-	^ duplicationMode shouldBuildMethod: aHEMethod in: aClass installer: self.
+	^ duplicationMode shouldBuildMethod: aHEMethod in: aClass installer: self
 ]

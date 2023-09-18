@@ -6,12 +6,12 @@ Class {
 
 { #category : #helpers }
 CDNormalMetaclassParserTest >> classDefinitionString [
-	
-	^ '{className} class 
+
+	^ '{className} class
 		uses: {classTraitName} classTrait
 		instanceVariableNames: ''{instvar1} {instvar2}'''
-			format: { 
-				'className' -> self className.	
+			format: {
+				'className' -> self className.
 				'instvar1' -> self firstInstanceVariableName.
 				'instvar2' -> self secondInstanceVariableName.
 				'classTraitName' -> self classTraitName
@@ -31,7 +31,7 @@ CDNormalMetaclassParserTest >> testTraitDefinitionNodeIsTraitNode [
 
 { #category : #helpers }
 CDNormalMetaclassParserTest >> traitCompositionNode [
-	
+
 	^ self nodeFor: self traitDefinition
 ]
 

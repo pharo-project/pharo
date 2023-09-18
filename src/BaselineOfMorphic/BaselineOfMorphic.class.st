@@ -115,8 +115,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
 
-		spec package: 'Unicode-Initialization'.
-
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.
@@ -138,9 +136,7 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
 	ImageMorph classPool at: #DefaultForm put: (Form extent: 1 @ 1 depth: 1).
-	Behavior flushObsoleteSubclasses.
 	World cleanseOtherworldlySteppers.
-	Smalltalk organization removeEmptyCategories.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
@@ -151,23 +147,17 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	Smalltalk garbageCollect.
 	HashedCollection rehashAll.
 	Symbol rehash.
-	  
-	  "Remove empty categories, which are not in MC packages, because MC does
-	  not do this (this script does not make packages dirty)"
-	  Smalltalk organization removeEmptyCategories.
-	  Smalltalk
-	    allClassesAndTraitsDo: [ :class |
-	      [ :each |
-	        each
-	          removeEmptyCategories;
-	          sortCategories ]
-	            value: class organization;
-	            value: class class organization ].
-	Smalltalk organization sortCategories.
+
+	"Remove empty packages and protocols"
+	self packageOrganizer removeEmptyPackagesAndTags.
+	Smalltalk allClassesAndTraitsDo: [ :class |
+		class removeEmptyProtocols.
+		class class removeEmptyProtocols ].
+
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Smalltalk garbageCollect.
-	Author reset.
+	Author reset
 ]
 
 { #category : #fonts }
@@ -289,7 +279,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 		
 	"Initialize Fuel"
 	FLLargeIdentityHashedCollection initialize.
-	FLPlatform reset.
 
 	Stdio stdout nextPutAll: 'starting...'; lf.
 
@@ -338,7 +327,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	UIManager default: UIManager forCurrentSystemConfiguration.
 	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; lf.
 
-	TextEditor initialize.
 
 	MenubarMorph initialize.	
 
@@ -348,7 +336,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Smalltalk cleanOutUndeclared.
 
-	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
+	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextStyle) do: [:each |
 		 (Smalltalk globals at: each) initialize. ].
 
 	LogicalFontManager current addFontProvider: FreeTypeFontProvider current.
@@ -372,6 +360,10 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	SystemNotification signal: 'Starting preload action'.
+
+	"Declare global variables"
+	Smalltalk globals at: #World put: nil.
+	Smalltalk globals at: #ActiveWorld put: nil.
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.

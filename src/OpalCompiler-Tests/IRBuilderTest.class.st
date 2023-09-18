@@ -26,21 +26,21 @@ IRBuilderTest class >> testToPush: anObject [
 { #category : #'tests - builder' }
 IRBuilderTest >> testBuildMethod [
 	|  aCompiledMethod |
-	
-	aCompiledMethod := IRBuilder buildMethod: [ : builder | 
+
+	aCompiledMethod := IRBuilder buildMethod: [ : builder |
 		builder pushLiteral: 3;
 		pushDup;
 		send: #=;
 		returnTop].
 
-	self assert: (aCompiledMethod isKindOf: CompiledMethod).
+	self assert: (aCompiledMethod isKindOf: CompiledMethod)
 ]
 
 { #category : #tests }
 IRBuilderTest >> testDup [
 
 	| iRMethod aCompiledMethod |
-	iRMethod := IRBuilder buildIR: [ : builder | 
+	iRMethod := IRBuilder buildIR: [ : builder |
 		builder pushLiteral: 3;
 		pushDup;
 		send: #=;
@@ -93,20 +93,20 @@ IRBuilderTest >> testJumpAheadTo [
 IRBuilderTest >> testJumpAheadToIf [
 
 	| iRMethod aCompiledMethod |
-	
+
 	iRMethod := IRBuilder new
 		pushReceiver;
 		pushLiteral: true;
 		jumpAheadTo: #end if: true;
 		returnTop;
-		jumpAheadTarget: #end;	
+		jumpAheadTarget: #end;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
  	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) isNil).
-	^iRMethod.
+	^iRMethod
 ]
 
 { #category : #tests }
@@ -120,14 +120,14 @@ IRBuilderTest >> testJumpBackTo [
 		jumpAheadTo: #end if: true;
 		pushLiteral: true;
 		jumpBackTo: #begin;
-		jumpAheadTarget: #end;	
+		jumpAheadTarget: #end;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) isNil).
-	^iRMethod.
+	^iRMethod
 ]
 
 { #category : #tests }
@@ -149,14 +149,14 @@ IRBuilderTest >> testLiteralBoolean [
 
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteral: true; 	
+		pushLiteral: true;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() )).
-	^iRMethod.
+	^iRMethod
 ]
 
 { #category : #tests }
@@ -178,7 +178,7 @@ IRBuilderTest >> testLiteralFloat [
 
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteral: 2.0; 	
+		pushLiteral: 2.0;
 		returnTop;
 		ir.
 
@@ -207,7 +207,7 @@ IRBuilderTest >> testLiteralNil [
 
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteral: nil; 	
+		pushLiteral: nil;
 		returnTop;
 		ir.
 
@@ -359,7 +359,7 @@ IRBuilderTest >> testPushNewArray [
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
-	
+
 	receiver :=  (5@8).
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
@@ -439,7 +439,7 @@ IRBuilderTest >> testPushThisContext [
 
 { #category : #tests }
 IRBuilderTest >> testPushThisProcess [
-	
+
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushThisProcess;

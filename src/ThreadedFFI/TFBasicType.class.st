@@ -68,7 +68,7 @@ Class {
 { #category : #'instance creation' }
 TFBasicType class >> createBasicTypes [
 
-	^ { 	
+	^ {
 			"Platform independent types"
 			VOID := self newTypeName: #void code: 1.
 		 	FLOAT := self newFloatTypeName: #float code: 2.
@@ -78,7 +78,7 @@ TFBasicType class >> createBasicTypes [
 			UINT16 := self newIntTypeName: #uint16 code: 5 signed: false.
 			UINT32 := self newIntTypeName: #uint32 code: 6 signed: false.
 			UINT64 := self newIntTypeName: #uint64 code: 7 signed: false.
-			
+
 			SINT8 := self newIntTypeName: #sint8 code: 8 signed: true.
 			SINT16 := self newIntTypeName: #sint16 code: 9 signed: true.
 			SINT32 := self newIntTypeName: #sint32 code: 10 signed: true.
@@ -89,7 +89,7 @@ TFBasicType class >> createBasicTypes [
 
 			UCHAR := self newCharTypeName: #uchar code: 13 signed: false.
 			SCHAR := self newCharTypeName: #schar code: 14 signed: true.
-			
+
 			USHORT := self newIntTypeName: #ushort code: 15 signed: false.
 			SSHORT := self newIntTypeName: #sshort code: 16 signed: true.
 
@@ -97,31 +97,31 @@ TFBasicType class >> createBasicTypes [
 			SINT := self newIntTypeName: #sint code: 18 signed: true.
 
 			ULONG := self newIntTypeName: #ulong code: 19 signed: false.
-			SLONG := self newIntTypeName: #slong code: 20 signed: true.	
+			SLONG := self newIntTypeName: #slong code: 20 signed: true.
 			}
 ]
 
 { #category : #accessing }
-TFBasicType class >> double [ 
+TFBasicType class >> double [
 	^ DOUBLE
 ]
 
 { #category : #accessing }
-TFBasicType class >> float [ 
+TFBasicType class >> float [
 	^ FLOAT
 ]
 
 { #category : #'class initialization' }
-TFBasicType class >> initialize [ 	
-	
+TFBasicType class >> initialize [
+
 	Types := self createBasicTypes.
-	TypeMap := (Types collect: [ :t | t typeName -> t ]) asDictionary.
+	TypeMap := (Types collect: [ :t | t typeName -> t ]) asDictionary
 ]
 
 { #category : #'instance creation' }
 TFBasicType class >> newCharTypeName: aName code: aCode signed: signed [
-	
-	^ TFCharType new 
+
+	^ TFCharType new
 		typeName: aName;
 		typeCode: aCode;
 		signed: signed;
@@ -131,7 +131,7 @@ TFBasicType class >> newCharTypeName: aName code: aCode signed: signed [
 { #category : #'instance creation' }
 TFBasicType class >> newDoubleName: aName code: aCode [
 
-	^ TFDoubleType new 
+	^ TFDoubleType new
 		typeName: aName;
 		typeCode: aCode;
 		yourself
@@ -140,7 +140,7 @@ TFBasicType class >> newDoubleName: aName code: aCode [
 { #category : #'instance creation' }
 TFBasicType class >> newFloatTypeName: aName code: aCode [
 
-	^ TFFloatType new 
+	^ TFFloatType new
 		typeName: aName;
 		typeCode: aCode;
 		yourself
@@ -148,8 +148,8 @@ TFBasicType class >> newFloatTypeName: aName code: aCode [
 
 { #category : #'instance creation' }
 TFBasicType class >> newIntTypeName: aName code: aCode signed: signed [
-	
-	^ TFIntType new 
+
+	^ TFIntType new
 		typeName: aName;
 		typeCode: aCode;
 		signed: signed;
@@ -159,7 +159,7 @@ TFBasicType class >> newIntTypeName: aName code: aCode signed: signed [
 { #category : #'instance creation' }
 TFBasicType class >> newPointerTypeName: aName code: aCode [
 
-	^ TFPointerType new 
+	^ TFPointerType new
 		typeName: aName;
 		typeCode: aCode;
 		yourself
@@ -167,15 +167,15 @@ TFBasicType class >> newPointerTypeName: aName code: aCode [
 
 { #category : #'instance creation' }
 TFBasicType class >> newTypeName: aName code: aCode [
-	
-	^ self new 
+
+	^ self new
 		typeName: aName;
 		typeCode: aCode;
 		yourself
 ]
 
 { #category : #accessing }
-TFBasicType class >> pointer [ 
+TFBasicType class >> pointer [
 	^ POINTER
 ]
 
@@ -190,22 +190,22 @@ TFBasicType class >> sint [
 ]
 
 { #category : #accessing }
-TFBasicType class >> sint16 [ 
+TFBasicType class >> sint16 [
 	^ SINT16
 ]
 
 { #category : #accessing }
-TFBasicType class >> sint32 [ 
+TFBasicType class >> sint32 [
 	^ SINT32
 ]
 
 { #category : #accessing }
-TFBasicType class >> sint64 [ 
+TFBasicType class >> sint64 [
 	^ SINT64
 ]
 
 { #category : #accessing }
-TFBasicType class >> sint8 [ 
+TFBasicType class >> sint8 [
 	^ SINT8
 ]
 
@@ -228,12 +228,12 @@ TFBasicType class >> sshort [
 ]
 
 { #category : #accessing }
-TFBasicType class >> typemap [ 
+TFBasicType class >> typemap [
 	^ TypeMap
 ]
 
 { #category : #accessing }
-TFBasicType class >> types [ 
+TFBasicType class >> types [
 	^ Types
 ]
 
@@ -248,22 +248,22 @@ TFBasicType class >> uint [
 ]
 
 { #category : #accessing }
-TFBasicType class >> uint16 [ 
+TFBasicType class >> uint16 [
 	^ UINT16
 ]
 
 { #category : #accessing }
-TFBasicType class >> uint32 [ 
+TFBasicType class >> uint32 [
 	^ UINT32
 ]
 
 { #category : #accessing }
-TFBasicType class >> uint64 [ 
+TFBasicType class >> uint64 [
 	^ UINT64
 ]
 
 { #category : #accessing }
-TFBasicType class >> uint8 [ 
+TFBasicType class >> uint8 [
 	^ UINT8
 ]
 
@@ -278,42 +278,40 @@ TFBasicType class >> ushort [
 ]
 
 { #category : #accessing }
-TFBasicType class >> void [ 
+TFBasicType class >> void [
 	^ VOID
 ]
 
 { #category : #accessing }
 TFBasicType >> basicType [
-	
+
 	^ self
 ]
 
 { #category : #size }
 TFBasicType >> byteSize [
-	
+
 	self validate.
 	^ byteSize ifNil: [ self primitiveByteSize ]
 ]
 
 { #category : #marshalling }
-TFBasicType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argumentsArrayTempName withBuilder: anIRBuilder [ 	
+TFBasicType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argumentsArrayTempName withBuilder: anIRBuilder [
 ]
 
 { #category : #marshalling }
 TFBasicType >> emitMarshallFromPrimitive: aBuilder [
-
-	
 ]
 
 { #category : #marshalling }
 TFBasicType >> emitMarshallToPrimitive: builder [
-	
+
 	"Nothing to do in this case"
 ]
 
 { #category : #writing }
-TFBasicType >> freeValueIfNeeded: aValue [ 
-	
+TFBasicType >> freeValueIfNeeded: aValue [
+
 	"Do nothing. Basic types do not need to be free'd"
 ]
 
@@ -325,36 +323,34 @@ TFBasicType >> isVoid [
 
 { #category : #marshalling }
 TFBasicType >> marshallFromPrimitive: aValue [
-	
+
 	^ aValue
-	
 ]
 
 { #category : #marshalling }
 TFBasicType >> marshallToPrimitive: aValue [
-	
+
 	^ aValue
-	
 ]
 
 { #category : #primitives }
 TFBasicType >> primFillType [
 	<primitive: 'primitiveFillBasicType'>
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]
 
 { #category : #primitives }
 TFBasicType >> primitiveByteSize [
 	<primitive: 'primitiveTypeByteSize'>
 
-	^ self primitiveFailed	
+	^ self primitiveFailed
 ]
 
 { #category : #printing }
 TFBasicType >> printOn: aStream [
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $[;
 		print: typeName;
 		space;
@@ -389,8 +385,8 @@ TFBasicType >> typeName: anObject [
 ]
 
 { #category : #validating }
-TFBasicType >> validate [ 
-	
+TFBasicType >> validate [
+
 	self isValid ifTrue: [ ^ self ].
 	self primFillType.
 	byteSize := self primitiveByteSize

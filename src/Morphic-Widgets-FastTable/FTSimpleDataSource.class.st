@@ -19,7 +19,7 @@ FTSimpleDataSource class >> elements: aCollection [
 ]
 
 { #category : #accessing }
-FTSimpleDataSource >> cellColumn: column row: rowIndex [ 
+FTSimpleDataSource >> cellColumn: column row: rowIndex [
 	^ FTCellMorph new
 		addMorphBack: (self elementAt: rowIndex) asMorph;
 		yourself
@@ -48,14 +48,14 @@ FTSimpleDataSource >> headerColumn: column [
 { #category : #accessing }
 FTSimpleDataSource >> newDataSourceMatching: aFTFilter [
 	| newElements |
-	newElements := Array withAll: (elements select: [ :each | 
+	newElements := Array withAll: (elements select: [ :each |
 		aFTFilter matches: (self toString: each) ]).
 	^ self class new elements: newElements
 ]
 
 { #category : #accessing }
-FTSimpleDataSource >> numberOfRows [ 
-	^ self elements 
+FTSimpleDataSource >> numberOfRows [
+	^ self elements
 		ifNotNil: [ self elements size ]
 		ifNil: [ 0 ]
 ]

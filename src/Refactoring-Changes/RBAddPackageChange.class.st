@@ -28,14 +28,15 @@ RBAddPackageChange >> asUndoOperation [
 
 { #category : #private }
 RBAddPackageChange >> primitiveExecute [
-	RPackageOrganizer default createPackageNamed: packageName
+
+	self packageOrganizer ensurePackage: packageName
 ]
 
 { #category : #printing }
-RBAddPackageChange >> printOn: aStream [ 
+RBAddPackageChange >> printOn: aStream [
 	aStream
-		nextPutAll: 'RPackageOrganizer default ';
-		nextPutAll: #createPackageNamed:;
+		nextPutAll: 'self packageOrganizer ';
+		nextPutAll: #ensurePackage:;
 		nextPutAll: packageName;
 		nextPut: $!
 ]

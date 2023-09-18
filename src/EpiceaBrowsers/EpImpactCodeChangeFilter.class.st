@@ -32,7 +32,7 @@ EpImpactCodeChangeFilter >> accepts: anOmEntry [
 
 { #category : #accessing }
 EpImpactCodeChangeFilter >> environment: anEnvironment [
-	
+
 	environment := anEnvironment
 ]
 
@@ -44,6 +44,6 @@ EpImpactCodeChangeFilter >> hash [
 
 { #category : #accessing }
 EpImpactCodeChangeFilter >> title [
-	
+
 	^ self class title
 ]

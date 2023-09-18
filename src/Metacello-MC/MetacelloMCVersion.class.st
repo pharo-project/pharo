@@ -81,12 +81,6 @@ MetacelloMCVersion >> currentlyLoadedClassesInVersion [
 ]
 
 { #category : #querying }
-MetacelloMCVersion >> currentlyLoadedExtensionClassesInVersion [
-
-	^self spec currentlyLoadedExtensionClassesInVersion
-]
-
-{ #category : #querying }
 MetacelloMCVersion >> defaultPackageNamesToLoad [
 	"Answer the list of packages and projects to be loaded --> packages already loaded"
 	

@@ -16,7 +16,7 @@ Class {
 { #category : #accessing }
 ZnEndianSensitiveUTFEncoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string"
-	
+
 	^ false
 ]
 
@@ -24,7 +24,7 @@ ZnEndianSensitiveUTFEncoder class >> handlesEncoding: string [
 ZnEndianSensitiveUTFEncoder class >> newForEncoding: string [
 	"Return a new character encoder object for an encoding described by string.
 	Try to infer endianness from string, defaulting to big endian."
-	
+
 	| encoder |
 	encoder := self new.
 	(string asLowercase endsWith: 'be') ifTrue: [ encoder beBigEndian ].
@@ -37,12 +37,12 @@ ZnEndianSensitiveUTFEncoder >> = anObject [
 	^ super = anObject and: [ self endianness == anObject endianness ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnEndianSensitiveUTFEncoder >> beBigEndian [
 	endianness := #big
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnEndianSensitiveUTFEncoder >> beLittleEndian [
 	endianness := #little
 ]
@@ -57,7 +57,7 @@ ZnEndianSensitiveUTFEncoder >> hash [
 	^ super hash bitXor: self endianness hash
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZnEndianSensitiveUTFEncoder >> initialize [
 	endianness := #big
 ]

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'event type' }
-SDL_ClipboardUpdateEvent class >> eventType [ 
+SDL_ClipboardUpdateEvent class >> eventType [
 
 	^ SDL_CLIPBOARDUPDATE
 ]

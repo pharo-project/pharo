@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #testing }
-TestExecutionEnvironmentTestCase class >> isAbstract [ 
+TestExecutionEnvironmentTestCase class >> isAbstract [
 	^self = TestExecutionEnvironmentTestCase
 ]
 
@@ -34,7 +34,7 @@ TestExecutionEnvironmentTestCase >> newProcess: aName toImmediatelyExecute: aBlo
 TestExecutionEnvironmentTestCase >> runCaseManaged [
 	"Here we are testing the test environment logic.
 	So we should disable it for ourselves"
-	
+
 	^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
 ]
 
@@ -43,9 +43,9 @@ TestExecutionEnvironmentTestCase >> runWithNoHandlers: aBlock [
 	"Executing the given block directly would go through all handlers of SUnit machinery.
 	Here we simulate the clean environment with no outer handlers for possible block errors"
 	| newProcess synchSemaphore result |
-	synchSemaphore := Semaphore new. 
-	newProcess := self 
-		newProcess: 'Test process with no error handlers' 
+	synchSemaphore := Semaphore new.
+	newProcess := self
+		newProcess: 'Test process with no error handlers'
 		toImmediatelyExecute: [result := aBlock ensure: [synchSemaphore signal]].
 	newProcess resume.
 	synchSemaphore wait.
@@ -56,29 +56,29 @@ TestExecutionEnvironmentTestCase >> runWithNoHandlers: aBlock [
 TestExecutionEnvironmentTestCase >> setUp [
 	super setUp.
 	processes := OrderedCollection new.
-	
-	testService := self createTestService.	
+
+	testService := self createTestService.
 	testService enable.
 	executionEnvironment := TestExecutionEnvironment new.
-	executionEnvironment registerService: testService.
+	executionEnvironment registerService: testService
 ]
 
 { #category : #running }
 TestExecutionEnvironmentTestCase >> tearDown [
-	
+
 	executionEnvironment deactivated. "for the case if we activated environment during test"
 	processes do: [ :each | each terminate ].
-	
-	super tearDown.
+
+	super tearDown
 ]
 
 { #category : #tests }
 TestExecutionEnvironmentTestCase >> testCleanUpShouldRevertServiceToBeEnabledByDefault [
 
 	testService isEnabled: testService isEnabledByDefault not.
-	
+
 	testService cleanUpAfterTest.
-	
+
 	self assert: testService isEnabled equals: testService isEnabledByDefault
 ]
 
@@ -86,7 +86,7 @@ TestExecutionEnvironmentTestCase >> testCleanUpShouldRevertServiceToBeEnabledByD
 TestExecutionEnvironmentTestCase >> testIsEnabledByDefault [
 
 	testService := self createTestService.
-	
+
 	self assert: testService isEnabled equals: testService isEnabledByDefault.
 	self assert: testService isEnabledByDefault equals: testService class isEnabled
 ]

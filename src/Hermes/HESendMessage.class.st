@@ -49,16 +49,16 @@ HESendMessage >> asLiteralIn: env [
 	aReceiver := receiver asLiteralIn: env.
 	aSelector := selector asLiteralIn: env.
 	args := arguments asLiteralIn: env.
-	
+
 	^ aReceiver perform: aSelector withArguments: args
 ]
 
 { #category : #reading }
-HESendMessage >> doReadFrom: aReader [ 
+HESendMessage >> doReadFrom: aReader [
 
 	selector := (HEExportedLiteral readFrom: aReader).
 	receiver := (HEExportedLiteral readFrom: aReader).
-	arguments := (HEExportedLiteral readFrom: aReader).
+	arguments := (HEExportedLiteral readFrom: aReader)
 ]
 
 { #category : #accessing }

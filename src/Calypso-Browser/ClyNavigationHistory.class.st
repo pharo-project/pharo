@@ -101,24 +101,24 @@ ClyNavigationHistory >> recordAcrossWindowNavigationFrom: aBrowser byUndo: isUnd
 
 	| returnState |
 	returnState := ClyAccrossWindowNavigationState from: aBrowser.
-	isUndoOperation 
+	isUndoOperation
 		ifTrue: [ self executeUndoBy: [ self recordState: returnState ] ]
 		ifFalse: [ self executeRedoBy: [ self recordState: returnState ] ]
 ]
 
 { #category : #operations }
 ClyNavigationHistory >> recordState: aBrowserState [
-	aBrowserState representsConcreteQuery ifFalse: [ ^self ]. 
+	aBrowserState representsConcreteQuery ifFalse: [ ^self ].
 	waitingNewState ifFalse: [ ^self ].
-	
-	undoExecuting | redoExecuting ifTrue: [ 
+
+	undoExecuting | redoExecuting ifTrue: [
 		"During undo or redo system can trigger multiple navigation changes.
 		waitingNewState flag here is to address this case. We need to track only first change"
 		waitingNewState := false ].
-	
-	undoExecuting 
+
+	undoExecuting
 		ifTrue: [ redoList add: aBrowserState ]
-		ifFalse: [ 
+		ifFalse: [
 			redoExecuting ifFalse: [ redoList removeAll].
 			undoList add: aBrowserState ]
 ]
@@ -136,8 +136,8 @@ ClyNavigationHistory >> redoList: anObject [
 { #category : #operations }
 ClyNavigationHistory >> redoNavigationOf: aBrowser [
 	redoList ifEmpty: [ ^self ].
-	
-	self executeRedoBy: [ 
+
+	self executeRedoBy: [
 		self restoreNavigationState: redoList removeLast of: aBrowser]
 ]
 
@@ -160,7 +160,7 @@ ClyNavigationHistory >> undoList: anObject [
 { #category : #operations }
 ClyNavigationHistory >> undoNavigationOf: aBrowser [
 	undoList ifEmpty: [ ^self ].
-	
-	self executeUndoBy: [ 
+
+	self executeUndoBy: [
 		self restoreNavigationState: undoList removeLast of: aBrowser ]
 ]

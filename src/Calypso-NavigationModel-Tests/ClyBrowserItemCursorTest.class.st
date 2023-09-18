@@ -16,14 +16,14 @@ ClyBrowserItemCursorTest >> rawResultItems [
 
 { #category : #tests }
 ClyBrowserItemCursorTest >> testAllItems [
-	
+
 	| allItems unprepared |
 	allItems := cursor retrieveAll.
-	
+
 	self assert: allItems equals: queryResult items.
 	unprepared := allItems reject: [:each | each isPrepared].
 	self assert: unprepared isEmpty.
-	self assert: (allItems collect: [:each | each position]) asArray equals: (1 to: queryResult size) asArray.
+	self assert: (allItems collect: [:each | each position]) asArray equals: (1 to: queryResult size) asArray
 ]
 
 { #category : #tests }

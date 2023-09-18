@@ -23,11 +23,11 @@ Class {
 		'className',
 		'newClassName'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
-RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassName to: aNewClassName [ 
+RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassName to: aNewClassName [
 
 	^ self new
 		model: aRBModel;
@@ -47,14 +47,14 @@ RBRenameAndDeprecateClassTransformation class >> rename: aClassName to: aNewClas
 { #category : #executing }
 RBRenameAndDeprecateClassTransformation >> buildTransformations [
 
-	^ transformations ifNil: [ 
+	^ transformations ifNil: [
 		transformations := OrderedCollection
-			with: (RBInsertClassTransformation
+			with: (RBInsertNewClassTransformation
 						addClass: self tmpName
 						superclass: className asSymbol
 						subclasses: #()
 						category: (self model classNamed: className) category)
-			with: (RBRenameClassTransformation new 
+			with: (RBRenameClassTransformation new
 						className: className newClassName: newClassName)
 			with: (RBRenameClassTransformation new
 						className: self tmpName newClassName: className)
@@ -70,7 +70,7 @@ RBRenameAndDeprecateClassTransformation >> className: aClassName newClassName: a
 ]
 
 { #category : #printing }
-RBRenameAndDeprecateClassTransformation >> storeOn: aStream [ 
+RBRenameAndDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -85,6 +85,6 @@ RBRenameAndDeprecateClassTransformation >> storeOn: aStream [
 { #category : #private }
 RBRenameAndDeprecateClassTransformation >> tmpName [
 	"return the hidden name of the subclass"
-	
+
 	^ (#TmpSubclass,className) asSymbol
 ]

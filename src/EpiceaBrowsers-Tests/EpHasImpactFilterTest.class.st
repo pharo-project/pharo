@@ -8,19 +8,25 @@ Class {
 	#category : #'EpiceaBrowsers-Tests-Filters'
 }
 
+{ #category : #asserting }
+EpHasImpactFilterTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpHasImpactFilterTest >> setUp [
 	super setUp.
 	classFactory := ClassFactoryForTestCase new.
 	impactFilter := EpImpactCodeChangeFilter new
 		environment: self class environment;
-		yourself.
+		yourself
 ]
 
 { #category : #running }
 EpHasImpactFilterTest >> tearDown [
 	classFactory cleanUp.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -74,12 +80,12 @@ EpHasImpactFilterTest >> testCommentWithImpact [
 	aClass := classFactory newClass.
 	aClass comment: 'a'.
 	aClass comment: 'b'.
-	anEvent := OmEntry content: (EpBehaviorCommentChange 
+	anEvent := OmEntry content: (EpBehaviorCommentChange
 		newWithBehavior: aClass asEpiceaRingDefinition
 		oldComment: 'a'
 		newComment: 'b'
-		oldStamp: aClass organization commentStamp
-		newStamp: aClass organization commentStamp).
+		oldStamp: aClass commentStamp
+		newStamp: aClass commentStamp).
 	aClass comment: 'c'.
 	self assert: (impactFilter accepts: anEvent)
 ]
@@ -89,12 +95,12 @@ EpHasImpactFilterTest >> testCommentWithoutImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass.
 	aClass comment: 'a'.
-	anEvent := OmEntry content: (EpBehaviorCommentChange 
+	anEvent := OmEntry content: (EpBehaviorCommentChange
 		newWithBehavior: aClass asEpiceaRingDefinition
 		oldComment: 'a'
 		newComment: 'b'
-		oldStamp: aClass organization commentStamp
-		newStamp: aClass organization commentStamp).
+		oldStamp: aClass commentStamp
+		newStamp: aClass commentStamp).
 	aClass comment: 'c'.
 	aClass comment: 'b'.
 	self deny: (impactFilter accepts: anEvent)
@@ -117,4 +123,17 @@ EpHasImpactFilterTest >> testMethodWithoutImpact [
 	aClass compile: 'a ^1'.
 	anEvent := OmEntry content: (EpMethodAddition method: aClass >> #a).
 	self deny: (impactFilter accepts: anEvent)
+]
+
+{ #category : #tests }
+EpHasImpactFilterTest >> testProtocolRemovalOfTraitProtocol [
+
+	| anEntry aClass |
+	aClass := classFactory make: [ :aBuilder | aBuilder traitComposition: TAssertable ].
+	anEntry := OmEntry content: (EpProtocolRemoval behavior: aClass asRingDefinition protocol: #private).
+	self deny: (impactFilter accepts: anEntry).
+
+	aClass compile: 'a ^1' classified: #private.
+
+	self assert: (impactFilter accepts: anEntry)
 ]

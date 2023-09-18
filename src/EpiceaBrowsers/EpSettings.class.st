@@ -14,7 +14,7 @@ EpSettings class >> groupSettingsOn: aBuilder [
 	(aBuilder group: #epicea)
 		label: 'Epicea';
 		description: 'Epicea is a tool that records code changes enriched with IDE events. Epicea extends and could replace the traditional .changes logging mechanism, where the recorded code changes are incomplete and are not properly reified and thus it can be difficult to recover lost code after an image crash.';
-		parent: #tools.
+		parent: #tools
 ]
 
 { #category : #accessing }
@@ -38,7 +38,7 @@ EpSettings class >> lostEventsDetectorEnabledSettingOn: aBuilder [
 		default: true;
 		description: 'Check if current Epicea log has events that were not applied in this image (useful for recovering changes when the image crashed)';
 		parent: #epicea;
-		target: self.
+		target: self
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ EpSettings class >> monitorEnabledSettingOn: aBuilder [
 		default: true;
 		description: 'The Epicea Monitor listens events in the system such as class added and method modified, and records them to the current Epicea log.';
 		parent: #epicea;
-		target: self.
+		target: self
 ]
 
 { #category : #accessing }
@@ -87,7 +87,7 @@ EpSettings class >> storeNameStrategySettingsOn: aBuilder [
 		parent: #epicea;
 		target: self;
 		default: OmTimeStampSuffixStrategy;
-		domainValues: OmSessionStoreNamingStrategy availableStrategies.
+		domainValues: OmSessionStoreNamingStrategy availableStrategies
 ]
 
 { #category : #accessing }
@@ -109,11 +109,11 @@ EpSettings class >> writingDeferDurationSettingOn: aBuilder [
 	(aBuilder setting: #writingDeferDuration)
 		label: 'Writing defer duration';
 		default: 250;
-		description: 'Time to wait before write. When Epicea listens new events, it does not write them immediately. Instead, the new events are buffered until there were not new events during the time specified by this setting. The goal is to optimize I/O operations by batching them. 
-		
-Consecuences of a high defer duration: 
+		description: 'Time to wait before write. When Epicea listens new events, it does not write them immediately. Instead, the new events are buffered until there were not new events during the time specified by this setting. The goal is to optimize I/O operations by batching them.
+
+Consecuences of a high defer duration:
 - Pros: For example, when a project is loaded into the image, many events happen in a small window of time.
 - Cons: Code changes can be lost if the vm crashes.';
 		parent: #epicea;
-		target: self.
+		target: self
 ]

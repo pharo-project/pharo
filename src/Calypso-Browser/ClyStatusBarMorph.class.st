@@ -44,7 +44,7 @@ ClyStatusBarMorph >> buildCommandBar [
 		listDirection: #rightToLeft;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
-		cellInset: 4@0;
+		cellInset: (4@0) scaledByDisplayScaleFactor;
 		color: Color transparent;
 		height: 0;
 		minHeight: 0.
@@ -59,7 +59,7 @@ ClyStatusBarMorph >> buildContextBar [
 		listDirection: #leftToRight;
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap;
-		cellInset: 4@0;
+		cellInset: (4@0) scaledByDisplayScaleFactor;
 		color: Color transparent;
 		height: 0;
 		minHeight: 0.
@@ -74,8 +74,8 @@ ClyStatusBarMorph >> clear [
 
 { #category : #initialization }
 ClyStatusBarMorph >> initialize [
-	super initialize.	
-	self 
+	super initialize.
+	self
 		color: self theme windowColor;
 		changeTableLayout;
 		listDirection: #leftToRight;
@@ -83,7 +83,7 @@ ClyStatusBarMorph >> initialize [
 		vResizing: #shrinkWrap;
 		height: 0;
 		minHeight: 0;
-		layoutInset: 10@2.
+		layoutInset: (10@2) scaledByDisplayScaleFactor.
 	self buildContextBar.
 	self buildCommandBar
 ]
@@ -93,8 +93,8 @@ ClyStatusBarMorph >> update [
 	"Here I just trying to reset extent.
 	When there are no items it should hide it.
 	Otherwise layout policy will ignore it".
-	(contextBar submorphs isEmpty and: [commandBar submorphs isEmpty]) 
-		ifTrue: [ 
+	(contextBar submorphs isEmpty and: [commandBar submorphs isEmpty])
+		ifTrue: [
 			self height: 0.
 			contextBar height: 0.
 			commandBar height: 0]

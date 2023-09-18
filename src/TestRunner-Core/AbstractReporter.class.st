@@ -17,6 +17,16 @@ AbstractReporter class >> isAbstract [
 	^ self = AbstractReporter
 ]
 
+{ #category : #facotry }
+AbstractReporter class >> stdReporter [
+	^ StdReporter new
+]
+
+{ #category : #facotry }
+AbstractReporter class >> xmlReporter [
+	^ XmlReporter new
+]
+
 { #category : #internal }
 AbstractReporter >> addToSuiteExecutionDuration: aDuration [
 

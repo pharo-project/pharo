@@ -17,7 +17,7 @@ Class {
 AlignmentMorph class >> columnPrototype [
 	"Answer a prototypical column"
 	"self columnPrototype openInHand"
-	
+
 	| sampleMorphs aColumn |
 	sampleMorphs := #(red yellow green) collect:
 		[:aColor | Morph new extent: 130 @ 38; color: (Color perform: aColor); setNameTo: aColor asString; yourself].
@@ -128,14 +128,14 @@ AlignmentMorph >> addARowCentered: aCollectionOfMorphs cellInset: cellInsetInteg
 { #category : #initialization }
 AlignmentMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
-	
+
 	^ 0
 ]
 
 { #category : #initialization }
 AlignmentMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
-	
+
 	^ Color
 		r: 0.8
 		g: 1.0
@@ -157,21 +157,21 @@ AlignmentMorph >> inAColumn: aCollectionOfMorphs [
 ]
 
 { #category : #'visual properties' }
-AlignmentMorph >> inARightColumn: aCollectionOfMorphs [ 
-	
-	self setAsColumn 
+AlignmentMorph >> inARightColumn: aCollectionOfMorphs [
+
+	self setAsColumn
 				 vResizing: #shrinkWrap;
 				 layoutInset: 1;
 				 wrapCentering: #bottomRight;
 				 cellPositioning: #topCenter.
 	aCollectionOfMorphs
-		do: [ :each | self addMorphBack: each ].
+		do: [ :each | self addMorphBack: each ]
 ]
 
 { #category : #'visual properties' }
-AlignmentMorph >> inARow: aCollectionOfMorphs [ 
+AlignmentMorph >> inARow: aCollectionOfMorphs [
 
-	 self setAsRow 
+	 self setAsRow
 				color: Color transparent;
 				vResizing: #shrinkWrap;
 				hResizing: #shrinkWrap;
@@ -179,12 +179,12 @@ AlignmentMorph >> inARow: aCollectionOfMorphs [
 				wrapCentering: #center;
 				cellPositioning: #leftCenter.
 	aCollectionOfMorphs
-		do: [ :each | self addMorphBack: each].
+		do: [ :each | self addMorphBack: each]
 ]
 
 { #category : #initialization }
 AlignmentMorph >> initialize [
-	
+
 	super initialize.
 	self
 		layoutPolicy: TableLayout new;
@@ -206,13 +206,13 @@ AlignmentMorph >> isAlignmentMorph [
 AlignmentMorph >> openInWindowLabeled: aString inWorld: aWorld [
 
 	self layoutInset: 0.
-	^super openInWindowLabeled: aString inWorld: aWorld.
+	^super openInWindowLabeled: aString inWorld: aWorld
 ]
 
 { #category : #'visual properties' }
 AlignmentMorph >> setAsColumn [
 
-	self 
+	self
 		listDirection: #topToBottom;
 		hResizing: #spaceFill;
 		extent: 1@1;
@@ -237,7 +237,7 @@ AlignmentMorph >> setAsSpacer: aColor [
 		layoutInset: 0;
 		borderWidth: 0;
 		extent: 1@1;
-		color: aColor.
+		color: aColor
 ]
 
 { #category : #'event handling' }

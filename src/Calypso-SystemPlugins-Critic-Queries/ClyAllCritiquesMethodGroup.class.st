@@ -14,16 +14,16 @@ Class {
 { #category : #'instance creation' }
 ClyAllCritiquesMethodGroup class >> withMethods: aMethodQuery from: aClassScope [
 	| subgroupsQuery |
-	subgroupsQuery := ClyAllMethodCritiqueQuery 
+	subgroupsQuery := ClyAllMethodCritiqueQuery
 		from: aClassScope as: ClyGroupedCritiqueResult new.
-	
+
 	^self named: 'critiques' priority: 8.5 on: aMethodQuery withSubgroupsFrom: subgroupsQuery
 ]
 
 { #category : #accessing }
 ClyAllCritiquesMethodGroup >> loadAsyncQueryResult [
-	"Here method query is based on actual critiques query. 
-	And each subgroup method query is also based on it. 
+	"Here method query is based on actual critiques query.
+	And each subgroup method query is also based on it.
 	So we need to hold reference to based critue query result instead of method query"
 	^methodQuery loadCritiquesAsync
 ]

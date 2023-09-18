@@ -56,7 +56,7 @@ PluggableDictionary >> equalBlock [
 { #category : #accessing }
 PluggableDictionary >> equalBlock: aBlock [
 	"Set a new equality block. The block must accept two arguments and return true if the argumets are considered to be equal, false otherwise"
-	equalBlock := aBlock.
+	equalBlock := aBlock
 ]
 
 { #category : #comparing }
@@ -75,19 +75,19 @@ PluggableDictionary >> hashBlock [
 { #category : #accessing }
 PluggableDictionary >> hashBlock: aBlock [
 	"Set a new hash block. The block must accept one argument and must return the hash value of the given argument."
-	hashBlock := aBlock.
+	hashBlock := aBlock
 ]
 
 { #category : #private }
-PluggableDictionary >> scanFor: anObject [ 
+PluggableDictionary >> scanFor: anObject [
 	"Scan the key array for the first slot containing either a nil
-(indicating 
-	  an empty slot) or an element that matches anObject. Answer the index 
-	  
+(indicating
+	  an empty slot) or an element that matches anObject. Answer the index
+
 	of that slot or zero if no slot is found. This  method will be
-overridden   
-	in various subclasses that have different interpretations for matching 
- 
+overridden
+	in various subclasses that have different interpretations for matching
+
 	elements."
 	| element start finish |
 	start := (hashBlock ifNil: [anObject hash]
@@ -110,12 +110,12 @@ overridden
 { #category : #private }
 PluggableDictionary >> scanForEmptySlotFor: aKey [
 	"Scan the key array for the first slot containing an empty slot (indicated by a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
-	
+
 	| index start |
 	index := start := (hashBlock
 		ifNil: [ aKey hash ]
 		ifNotNil: [ hashBlock value: aKey ]) \\ array size + 1.
-	[ 
+	[
 		(array at: index) ifNil: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
 	self errorNoFreeSpace

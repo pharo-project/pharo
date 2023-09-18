@@ -24,7 +24,7 @@ MorphTreeResizerMorph class >> fastSplitterResize [
 ]
 
 { #category : #'Polymorph-Widgets' }
-MorphTreeResizerMorph >> adoptPaneColor: paneColor [ 
+MorphTreeResizerMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
 	super adoptPaneColor: paneColor.
 	self fillStyle: self normalFillStyle
@@ -49,7 +49,7 @@ MorphTreeResizerMorph >> container: aTreeMorph index: anInteger [
 { #category : #'dependents access' }
 MorphTreeResizerMorph >> delete [
 	super delete.
-	self release.
+	self release
 ]
 
 { #category : #'event handling' }
@@ -75,7 +75,7 @@ MorphTreeResizerMorph >> getOldColor [
 ]
 
 { #category : #'event handling' }
-MorphTreeResizerMorph >> mouseDown: anEvent [ 
+MorphTreeResizerMorph >> mouseDown: anEvent [
 	"A mouse button has been pressed.
 	Update the color for feedback and store the mouse
 	position and relative offset to the receiver."
@@ -92,7 +92,7 @@ MorphTreeResizerMorph >> mouseDown: anEvent [
 { #category : #'event handling' }
 MorphTreeResizerMorph >> mouseEnter: anEvent [
 	self canResizeColumn ifFalse: [^ self].
-	(owner notNil and: [owner bounds containsPoint: anEvent position]) 
+	(owner notNil and: [owner bounds containsPoint: anEvent position])
 		ifTrue: [super mouseEnter: anEvent]
 ]
 
@@ -103,7 +103,7 @@ MorphTreeResizerMorph >> mouseLeave: anEvent [
 ]
 
 { #category : #'event handling' }
-MorphTreeResizerMorph >> mouseMove: anEvent [ 
+MorphTreeResizerMorph >> mouseMove: anEvent [
 	self canResizeColumn ifFalse: [^ self].
 	anEvent hand temporaryCursor
 		ifNil: [^ self].
@@ -120,7 +120,7 @@ MorphTreeResizerMorph >> mouseMove: anEvent [
 { #category : #'Polymorph-Widgets' }
 MorphTreeResizerMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary and change the color back to normal."
-	
+
 	self canResizeColumn ifFalse: [^ self].
 	(self bounds containsPoint: anEvent cursorPoint)
 		ifFalse: [anEvent hand showTemporaryCursor: nil].
@@ -144,7 +144,7 @@ MorphTreeResizerMorph >> normalizedX: x [
 ]
 
 { #category : #'instance creation' }
-MorphTreeResizerMorph >> normalizedY: y [ 
+MorphTreeResizerMorph >> normalizedY: y [
 	^y
 ]
 
@@ -160,7 +160,7 @@ MorphTreeResizerMorph >> release [
 	oldColor := nil.
 	container := nil.
 	self releaseActionMap. "we are not sure if we need it"
-	super release.
+	super release
 ]
 
 { #category : #'instance creation' }
@@ -171,7 +171,7 @@ MorphTreeResizerMorph >> resizeCursor [
 { #category : #'instance creation' }
 MorphTreeResizerMorph >> setGrabbedColor [
 	"Set the color of the receiver when it is grabbed."
-	
+
 	self fillStyle: self pressedFillStyle
 ]
 
@@ -193,21 +193,21 @@ MorphTreeResizerMorph >> themeChanged [
 ]
 
 { #category : #'instance creation' }
-MorphTreeResizerMorph >> updateFromEvent: anEvent [ 
+MorphTreeResizerMorph >> updateFromEvent: anEvent [
 	"Update the splitter and attached morph positions from
 	the mouse event.
 	Take into account the mouse down offset."
 	| pNew previousX newWidth minX newLeft |
 	pNew := anEvent cursorPoint - lastMouse second.
-	minX := index = 1 
-		ifTrue: [container minResizerX] 
+	minX := index = 1
+		ifTrue: [container minResizerX]
 		ifFalse: [(container columnResizers at: index - 1) right + container minResizerOffset].
 	newLeft := minX max: pNew x.
-	index = 1 
+	index = 1
 		ifTrue: [newLeft := newLeft + 3].
 	self left: newLeft.
 	previousX := index = 1
-		ifTrue: [container scroller left - container scroller offset x + 3] 
+		ifTrue: [container scroller left - container scroller offset x + 3]
 		ifFalse: [(container columnResizers at: index - 1) left].
 	newWidth := self left - previousX.
 	self column currentWidth: newWidth.

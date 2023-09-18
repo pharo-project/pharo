@@ -64,7 +64,7 @@ ClyTypedQuery class >> from: aScopeClass ofAll: basisObjects in: aNavigationEnvi
 ClyTypedQuery class >> fromAll: scopeClasses of: aBasisObject in: aNavigationEnvironment [
 
 	| subqueries |
-	subqueries := scopeClasses collect: [:eachScope | 
+	subqueries := scopeClasses collect: [:eachScope |
 		self from: eachScope of: aBasisObject in: aNavigationEnvironment].
 	^ClyQuery unionFrom: subqueries
 ]
@@ -74,11 +74,11 @@ ClyTypedQuery class >> mergeOwnInstances: queries [
 
 	| queryGroups merged |
 	queryGroups := queries groupedBy: [ :each | each asUnifiedInstance ].
-	
+
 	merged := OrderedCollection new.
 	queryGroups keysAndValuesDo: [ :unifiedQuery :groupedQueries |
 		merged addAll: (self mergeOwnInstances: groupedQueries unifiedBy: unifiedQuery)].
-	
+
 	^merged
 ]
 
@@ -86,15 +86,15 @@ ClyTypedQuery class >> mergeOwnInstances: queries [
 ClyTypedQuery class >> mergeOwnInstances: queries unifiedBy: ownUnifiedInstance [
 	| scopeGroups result mergedBasis mergedScope |
 	scopeGroups := queries groupedBy: [ :each | each scope asUnifiedInstance ].
-	
+
 	result := OrderedCollection new.
-	scopeGroups keysAndValuesDo: [ :unifiedScope :groupedQueries | 
-		mergedBasis := groupedQueries 
-			flatCollect: [:each | each scope basisObjects] 
+	scopeGroups keysAndValuesDo: [ :unifiedScope :groupedQueries |
+		mergedBasis := groupedQueries
+			flatCollect: [:each | each scope basisObjects]
 			as: OrderedCollection. "Merging duplications will be performed by scope itself"
 		mergedScope := unifiedScope withNewBasisObjects: mergedBasis.
 		result add: (ownUnifiedInstance withScope: mergedScope)].
-		
+
 	^result
 ]
 
@@ -110,8 +110,8 @@ ClyTypedQuery class >> sorted [
 
 { #category : #'instance creation' }
 ClyTypedQuery class >> sortedFrom: aScope [
-	
-	^self sorted 
+
+	^self sorted
 		scope: aScope
 ]
 
@@ -122,7 +122,7 @@ ClyTypedQuery >> , anotherQuery [
 
 { #category : #private }
 ClyTypedQuery >> asUnifiedInstance [
-	^self copy 
+	^self copy
 		resetScope
 ]
 

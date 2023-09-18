@@ -31,8 +31,8 @@ WeakSet >> anyOne [
 	"First we will try to return any real object which is not garbage collected. It will skip all slots with flag. In case when everything is garbage collected we will return nil. WeakSet is not empty in this case (isEmpty will return false). So we should not signal any error"
 	| result |
 	result := super anyOne.
-	^result == self 
-		ifTrue: [ nil ] 
+	^result == self
+		ifTrue: [ nil ]
 		ifFalse: [ result ]
 ]
 
@@ -40,11 +40,11 @@ WeakSet >> anyOne [
 WeakSet >> asArray [
 
 	| newArray |
-	
+
 	newArray := OrderedCollection new.
-	
+
 	self do: [:each | newArray add: each].
-	
+
 	^ newArray asArray
 ]
 
@@ -94,14 +94,14 @@ WeakSet >> fixCollisionsFrom: start [
 	| element index |
 	index := start.
 	[ (element := array at: (index := index \\ array size + 1)) == flag ] whileFalse: [
-		element 
+		element
 			ifNil: [ "This object is gone"
 				array at: index put: flag.
 				tally := tally - 1 ]
 			ifNotNil: [
 				| newIndex |
 				(newIndex := self scanFor: element enclosedElement) = index ifFalse: [
-					array 
+					array
 						at: newIndex put: element;
 						at: index put: flag ] ] ]
 ]
@@ -130,8 +130,8 @@ WeakSet >> growTo: anInteger [
 ]
 
 { #category : #testing }
-WeakSet >> includes: anObject [ 
-	
+WeakSet >> includes: anObject [
+
 	^(array at: (self scanFor: anObject))
 		ifNil: [ false ]
 		ifNotNil: [ :object | object ~~ flag ]
@@ -151,7 +151,7 @@ WeakSet >> initialize: n [
 WeakSet >> isHealthy [
 	"Test that object hashes match their positions stored in set's array,
 	answer true if everything ok, false otherwise
-	
+
 	WeakSet allSubInstances select: [:badSet |
 		badSet isHealthy not ]
 	"
@@ -190,7 +190,7 @@ WeakSet >> noCheckNoGrowFillFrom: anArray [
 	tally := 0.
 	1 to: anArray size do: [ :index |
 		(anArray at: index) ifNotNil: [ :object |
-			object == flag ifFalse: [ 
+			object == flag ifFalse: [
 				array
 					at: (self scanForEmptySlotFor: object enclosedElement)
 					put: object.
@@ -203,7 +203,7 @@ WeakSet >> postCopy [
 	super postCopy.
 	oldFlag := flag.
 	flag := Object new.
-	array replaceAll: oldFlag with: flag.
+	array replaceAll: oldFlag with: flag
 ]
 
 { #category : #public }
@@ -239,7 +239,7 @@ WeakSet >> scanFor: anObject [
 
 	| index start |
 	index := start := anObject hash \\ array size + 1.
-	[ 
+	[
 		| element |
 		((element := array at: index) == flag or: [ element enclosedElement = anObject ])
 			ifTrue: [ ^index ].
@@ -250,10 +250,10 @@ WeakSet >> scanFor: anObject [
 { #category : #private }
 WeakSet >> scanForEmptySlotFor: aKey [
 	"Scan the key array for the first slot containing an empty slot (indicated by flag or a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
-	
+
 	| index start |
 	index := start := aKey hash \\ array size + 1.
-	[ 
+	[
 		| element |
 		((element := array at: index) == flag or: [ element == nil ]) ifTrue: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.

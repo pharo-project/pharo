@@ -23,7 +23,7 @@ ClyActiveBreakpointsQueryTest >> installBreakpointInto: aMethod [
 { #category : #running }
 ClyActiveBreakpointsQueryTest >> setUp [
 	super setUp.
-	
+
 	installedBreakpoints := OrderedCollection new.
 	ClyClassWithHaltsMock compile: 'methodWithHalts1 self halt'
 ]
@@ -39,14 +39,14 @@ ClyActiveBreakpointsQueryTest >> tearDown [
 { #category : #tests }
 ClyActiveBreakpointsQueryTest >> testCheckIfEmpty [
 	self installBreakpointInto: (ClyClassWithBreakpointsMock >> #methodWithBreakpoints).
-	query scope: (ClyMethodScope 
+	query scope: (ClyMethodScope
 		of: (ClyClassWithHaltsMock >> #methodWithHalts1) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (ClyClassWithBreakpointsMock >> #methodWithBreakpoints) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope
 		of: (ClyClassWithBreakpointsMock >> #methodWithoutBreakpoints) in: environment).
 	self assert: query checkEmptyResult
@@ -69,11 +69,11 @@ ClyActiveBreakpointsQueryTest >> testDecoratingMethodWithBreakpoint [
 	self installBreakpointInto: (ClyClassWithBreakpointsMock >> #methodWithBreakpoints).
 	method := ClyClassWithBreakpointsMock >> #methodWithBreakpoints.
 	methodItem := method asCalypsoBrowserItem.
-		
+
 	plugin decorateBrowserItem: methodItem ofMethod: method.
-	
+
 	self assert: (methodItem isMarkedWith: ClyMethodWithBreakpointTag).
-	self deny: (methodItem isMarkedWith: ClyMethodWithHaltTag).
+	self deny: (methodItem isMarkedWith: ClyMethodWithHaltTag)
 ]
 
 { #category : #tests }
@@ -83,9 +83,9 @@ ClyActiveBreakpointsQueryTest >> testDecoratingMethodWithHalt [
 	plugin := ClyReflectiveEnvironmentPlugin new.
 	method := ClyClassWithHaltsMock >> #methodWithHalts1.
 	methodItem := method asCalypsoBrowserItem.
-		
+
 	plugin decorateBrowserItem: methodItem ofMethod: method.
-	
+
 	self assert: (methodItem isMarkedWith: ClyMethodWithHaltTag).
 	self deny: (methodItem isMarkedWith: ClyMethodWithBreakpointTag)
 ]
@@ -94,10 +94,10 @@ ClyActiveBreakpointsQueryTest >> testDecoratingMethodWithHalt [
 ClyActiveBreakpointsQueryTest >> testFromThreeMethods [
 	self installBreakpointInto: (ClyClassWithBreakpointsMock >> #methodWithBreakpoints).
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClassWithHaltsMock >> #methodWithHalts1. 
+		ClyClassWithHaltsMock >> #methodWithHalts1.
 		ClyClassWithBreakpointsMock >> #methodWithBreakpoints.
 		ClyClassWithBreakpointsMock >> #methodWithoutBreakpoints}.
-	
+
 	self assert: foundSelectors sorted asArray equals: #(#methodWithBreakpoints #methodWithHalts1)
 ]
 
@@ -117,6 +117,6 @@ ClyActiveBreakpointsQueryTest >> testSelectsMethodWithBreakpoint [
 
 { #category : #tests }
 ClyActiveBreakpointsQueryTest >> testSelectsMethodWithHalt [
-	
+
 	self assert: (query selectsMethod: ClyClassWithHaltsMock>>#methodWithHalts1)
 ]

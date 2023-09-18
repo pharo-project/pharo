@@ -15,44 +15,47 @@ NoUnusedVariablesLeftTest class >> defaultTimeLimit [
 
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
+
 	| variables classes validExceptions remaining |
-	
 	variables := Smalltalk globals allBehaviors flatCollect: [ :each | each classVariables ].
 	variables := variables reject: [ :each | each isReferenced ].
-	
+
 	classes := variables collect: [ :each | each definingClass ] as: Set.
-	
-	validExceptions := #(OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject FLFullBasicSerializationTest).	
-	
-	remaining := classes asOrderedCollection reject: [ :each  | validExceptions includes: each name].
-	self assert: remaining isEmpty description: ('the following classes have unused class variables and should be cleaned: ', remaining asString)
+
+	validExceptions := #( OSKeySymbols SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData
+	                      RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject FLFullBasicSerializationTest
+	                      SHRBStyleAttributionTest SHRBMockSharedPoolStyler ).
+
+	remaining := classes asOrderedCollection reject: [ :each | validExceptions includes: each name ].
+	self assert: remaining isEmpty description: 'the following classes have unused class variables and should be cleaned: ' , remaining asString
 ]
 
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
-	| variables classes validExceptions remaining |
-	
-	variables := Smalltalk globals allBehaviors flatCollect: [ :each | each instanceVariables ].
-	variables := variables reject: [ :each | each isReferenced ].
-	
+
+	| variables classes |
+	variables := Smalltalk globals allBehaviors flatCollect: [ :class | class instanceVariables ].
+
+	variables := variables reject: [ :variable |
+		             variable isReferenced or: [
+			             variable definingClass pragmas anySatisfy: [ :pragma |
+				             pragma selector = #ignoreUnusedVariables: and: [ (pragma argumentAt: 1) includes: variable name ] ] ] ].
+
 	classes := variables collect: [ :each | each definingClass ] as: Set.
-	
-	validExceptions := { RBFooLintRuleTestData . RBLintRuleTestData .RBFooDummyLintRuleTest . RBDummyLintRuleTest. MockWithComplexSlot .ClassDescription }.	
-	
-	remaining := classes asOrderedCollection removeAll: validExceptions; yourself.
-	self assert: remaining isEmpty description: ('the following classes have unused instance variables and should be cleaned: ', remaining asString)
+
+	self assert: classes isEmpty description: 'the following classes have unused instance variables and should be cleaned: ' , classes asOrderedCollection asString
 ]
 
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedTemporaryVariablesLeft [
 	"Fail if there are methods who have unused temporary variables"
 	| found validExceptions |
-	found := SystemNavigation default allMethodsSelect: [ :m | 
+	found := SystemNavigation default allMethodsSelect: [ :m |
 		m hasTemporaries and: [m ast temporaries anySatisfy: [ :x | x binding isUsed not] ] ].
-	
-	"No other exceptions beside the ones mentioned here should be allowed"	
-	validExceptions := { MFClassA>>#method. MFClassB>>#method3. MFClassB>>#method2 . TemporaryVariableTest>>#testIsReferenced }.	
+
+	"No other exceptions beside the ones mentioned here should be allowed"
+	validExceptions := { MFClassA>>#method. MFClassB>>#method3. MFClassB>>#method2 . TemporaryVariableTest>>#testIsReferenced }.
 	found removeAll: validExceptions.
-								
+
 	self assert: found isEmpty description: ('the following methods have unused temporary variables and should be cleaned: ', found asString)
 ]

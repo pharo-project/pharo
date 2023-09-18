@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #accessing }
-FFIUInt16 class >> externalType [ 
-	^ ExternalType ushort	
+FFIUInt16 class >> externalType [
+	^ ExternalType ushort
 ]
 
 { #category : #accessing }

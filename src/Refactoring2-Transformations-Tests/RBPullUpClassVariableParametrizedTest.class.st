@@ -15,16 +15,16 @@ RBPullUpClassVariableParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
-RBPullUpClassVariableParametrizedTest >> testMetaClassFailure [
-	self shouldFail: 
-		(self createRefactoringWithArguments: 
-			{ #RecursiveSelfRule . #'RBLintRuleTestData class'})
+RBPullUpClassVariableParametrizedTest >> testFailureMetaClassFailure [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #RecursiveSelfRule. #'RBLintRuleTestData class' })
 ]
 
 { #category : #'failure tests' }
-RBPullUpClassVariableParametrizedTest >> testNonExistantName [
-self flag: 'TODO: Some conditions are in transformation part'.
+RBPullUpClassVariableParametrizedTest >> testFailureNonExistantName [
 
+	self skip.
 	"self shouldFail: (self createRefactoringWithArguments:
 		{ #Foo . #RBLintRuleTestData })"
 ]
@@ -32,13 +32,13 @@ self flag: 'TODO: Some conditions are in transformation part'.
 { #category : #tests }
 RBPullUpClassVariableParametrizedTest >> testPullUpClassVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: 
+	refactoring := self createRefactoringWithArguments:
 		{ #RecursiveSelfRule . #RBLintRuleTestData }.
-	[ self executeRefactoring: refactoring ] 
-		on: RBRefactoringError 
+	[ self executeRefactoring: refactoring ]
+		on: RBRefactoringWarning 
 		do: [ :e | e resume ].
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) 
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData)
 		directlyDefinesClassVariable: #RecursiveSelfRule).
-	self deny: ((refactoring model classNamed: #RBTransformationRuleTestData) 
+	self deny: ((refactoring model classNamed: #RBTransformationRuleTestData)
 		directlyDefinesClassVariable: #RecursiveSelfRule)
 ]

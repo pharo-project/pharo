@@ -17,7 +17,7 @@ ClyApplyClassDeprecationCommand class >> canBeExecutedInContext: aToolContext [
 { #category : #activation }
 ClyApplyClassDeprecationCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemFor: ClyClass asCalypsoItemContext
 ]
 
@@ -34,7 +34,7 @@ ClyApplyClassDeprecationCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyApplyClassDeprecationCommand >> execute [
-	
+
 	self executeRefactorings
 ]
 

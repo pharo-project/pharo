@@ -20,14 +20,14 @@ ClyMethodCounterGroupProviderTest >> groupProviderClass [
 { #category : #running }
 ClyMethodCounterGroupProviderTest >> setUp [
 	super setUp.
-	
+
 	installedCounter := ClyMethodCallCountersQueryTest new setUp; installCounterInto: #methodWithCounter
 ]
 
 { #category : #running }
 ClyMethodCounterGroupProviderTest >> tearDown [
-	
+
 	installedCounter uninstall.
-	
-	super tearDown.
+
+	super tearDown
 ]

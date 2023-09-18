@@ -30,6 +30,11 @@ NullWorldRenderer >> actualScreenSize [
 NullWorldRenderer >> checkForNewScreenSize [
 ]
 
+{ #category : #accessing }
+NullWorldRenderer >> clipboardText: aString [
+	"nothing because they don't have window"
+]
+
 { #category : #utilities }
 NullWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 
@@ -59,7 +64,7 @@ NullWorldRenderer >> forceDamageToScreen: allDamage [
 ]
 
 { #category : #accessing }
-NullWorldRenderer >> icon: aForm [ 
+NullWorldRenderer >> icon: aForm [
 
 	"Do nothing, a null world rendered has no window, so no icon either"
 ]
@@ -70,8 +75,6 @@ NullWorldRenderer >> requestStopTextEditing [
 
 { #category : #events }
 NullWorldRenderer >> requestTextEditingAt: aRectangle [
-
-	
 ]
 
 { #category : #rendering }

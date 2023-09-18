@@ -14,13 +14,13 @@ CDClassNameNode >> binding [
 
 { #category : #accessing }
 CDClassNameNode >> className [
-	
+
 	^ className
 ]
 
 { #category : #accessing }
-CDClassNameNode >> className: aString [ 
-	
+CDClassNameNode >> className: aString [
+
 	className := aString
 ]
 
@@ -28,8 +28,8 @@ CDClassNameNode >> className: aString [
 CDClassNameNode >> existingBindingIfAbsent: aBlock [
 
 	| binding |
-	binding := originalNode methodNode compilationContext environment bindingOf: className.
-	^binding ifNil: aBlock
+	binding := originalNode methodNode scope environment bindingOf: className.
+	^binding ifNil: [ aBlock ]
 ]
 
 { #category : #accessing }
@@ -48,21 +48,21 @@ CDClassNameNode >> isTempVariable [
 
 { #category : #testing }
 CDClassNameNode >> isVariable [
-	"Existing class name is a variable 
+	"Existing class name is a variable
 	to be polymorphic to method literal nodes which encode class reference"
-	
+
 	self existingBindingIfAbsent: [ ^false ].
 	^true
 ]
 
 { #category : #accessing }
 CDClassNameNode >> name [
-	
+
 	^ className
 ]
 
 { #category : #accessing }
 CDClassNameNode >> value [
-	
+
 	^ className
 ]

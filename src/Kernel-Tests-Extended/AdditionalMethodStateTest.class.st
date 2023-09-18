@@ -16,8 +16,8 @@ AdditionalMethodStateTest >> setUp [
 	| pragma |
 	super setUp.
 	pragma := (Object compiledMethodAt: #at:) penultimateLiteral at: #primitive:.
-	
-	amState := AdditionalMethodState selector: #at: with: pragma copy.
+
+	amState := AdditionalMethodState selector: #at: with: pragma copy
 ]
 
 { #category : #tests }
@@ -25,11 +25,11 @@ AdditionalMethodStateTest >> testAnalogousCodeTo [
 	"create a fake traitSource association property"
 	| state |
 	state := AdditionalMethodState new: 1.
-	state 
+	state
 		basicAt: 1
 		put: #traitSource -> TSortable.
-		
-	self 
+
+	self
 		shouldnt: [ state analogousCodeTo: state ]
 		raise: MessageNotUnderstood
 ]

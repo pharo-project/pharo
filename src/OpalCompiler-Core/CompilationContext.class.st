@@ -16,10 +16,6 @@ Class {
 	#name : #CompilationContext,
 	#superclass : #Object,
 	#instVars : [
-		'requestor',
-		'failBlock',
-		'logged',
-		'compiledMethod',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -27,9 +23,9 @@ Class {
 		'semanticAnalyzerClass',
 		'astTranslatorClass',
 		'bytecodeGeneratorClass',
-		'compiledMethodTrailer',
 		'encoderClass',
 		'astTransformPlugins',
+		'astParseTransformPlugins',
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
@@ -37,10 +33,17 @@ Class {
 	],
 	#classVars : [
 		'DefaultOptions',
+		'DefaultParseTransformationPlugins',
 		'DefaultTransformationPlugins'
 	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
+
+{ #category : #adding }
+CompilationContext class >> addDefaultParseTransformationPlugin: aPlugin [
+
+	self defaultParseTransformationPlugins add: aPlugin
+]
 
 { #category : #adding }
 CompilationContext class >> addDefaultTransformationPlugin: aPlugin [
@@ -78,7 +81,7 @@ CompilationContext class >> compilerSettingsOn: aBuilder [
 ]
 
 { #category : #'instance creation' }
-CompilationContext class >> default [ 
+CompilationContext class >> default [
 	^ self new
 		setOptions: self defaultOptions copy;
 		yourself
@@ -86,12 +89,21 @@ CompilationContext class >> default [
 
 { #category : #options }
 CompilationContext class >> defaultOptions [
-	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self fallBackDefaultOptions ]
+	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self initialDefaultOptions ]
+]
+
+{ #category : #accessing }
+CompilationContext class >> defaultParseTransformationPlugins [
+
+	^ DefaultParseTransformationPlugins
+		ifNil: [ DefaultParseTransformationPlugins := OrderedCollection new ]
 ]
 
 { #category : #accessing }
 CompilationContext class >> defaultTransformationPlugins [
-	^ DefaultTransformationPlugins ifNil: [ DefaultTransformationPlugins := OrderedCollection new ]
+
+	^ DefaultTransformationPlugins ifNil: [
+		DefaultTransformationPlugins := OrderedCollection new ]
 ]
 
 { #category : #accessing }
@@ -100,7 +112,8 @@ CompilationContext class >> defaultTransformationPlugins: anObject [
 ]
 
 { #category : #options }
-CompilationContext class >> fallBackDefaultOptions [
+CompilationContext class >> initialDefaultOptions [
+	"Skip the comment of each option"
 	^ (self optionsDescription collect: [ :each | each allButLast ]) flattened
 ]
 
@@ -108,6 +121,16 @@ CompilationContext class >> fallBackDefaultOptions [
 CompilationContext class >> initialize [
 	"Note: we don't set-up here DefaultOptions since it requires other class-side methods, and that's messed up."
 	DefaultTransformationPlugins := OrderedCollection new
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionBlockClosureOptionalOuter [
+	^ self readDefaultOption: #optionBlockClosureOptionalOuter
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionBlockClosureOptionalOuter: aBoolean [
+	^ self writeDefaultOption: #optionBlockClosureOptionalOuter value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -121,13 +144,13 @@ CompilationContext class >> optionCleanBlockClosure: aBoolean [
 ]
 
 { #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources [
-	^ self readDefaultOption: #optionEmbeddSources
+CompilationContext class >> optionConstantBlockClosure [
+	^ self readDefaultOption: #optionConstantBlockClosure
 ]
 
 { #category : #'options - settings API' }
-CompilationContext class >> optionEmbeddSources: aBoolean [
-	^ self writeDefaultOption: #optionEmbeddSources value: aBoolean
+CompilationContext class >> optionConstantBlockClosure: aBoolean [
+	^ self writeDefaultOption: #optionConstantBlockClosure value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -230,6 +253,20 @@ CompilationContext class >> optionLongIvarAccessBytecodes: aBoolean [
 	^ self writeDefaultOption: #optionLongIvarAccessBytecodes value: aBoolean
 ]
 
+{ #category : #options }
+CompilationContext class >> optionOptimiseSpecialSends [
+
+	^ self readDefaultOption: #optionOptimiseSpecialSends
+]
+
+{ #category : #options }
+CompilationContext class >> optionOptimiseSpecialSends: aBoolean [
+
+	^ self
+		  writeDefaultOption: #optionOptimiseSpecialSends
+		  value: aBoolean
+]
+
 { #category : #'options - settings API' }
 CompilationContext class >> optionOptimizeIR [
 	^ self readDefaultOption: #optionOptimizeIR
@@ -273,29 +310,31 @@ CompilationContext class >> optionSkipSemanticWarnings: aBoolean [
 { #category : #options }
 CompilationContext class >> optionsDescription [
 	"Default options are held by DefaultOptions class variable.
-	 The description of default options here is only used as a 
+	 The description of default options here is only used as a
 	 fall-back if DefaultOptions is not initialized (bootstrap, ...)"
-	
+
 	"each entry is fall-back default value (+/-), option name, description"
 	^ #(
+	(+ optionOptimiseSpecialSends 'Use optimised bytecodes for special selectors. These bytecodes hint the VM to do static type predictions')
 	(+ optionInlineIf 					'Inline ifTrue:, ifFalse:, ifTrue:ifFalse:, ifFalse:ifTrue: if specific conditions are met (See isInlineIf)')
 	(+ optionInlineIfNil 				'Inline ifNil:, ifNotNil:, ifNil:ifNotNil:, ifNotNil:ifNil: if specific conditions are met (See isInlineIfNil)')
 	(+ optionInlineAndOr 				'Inline and:, or: if specific conditions are met (See isInlineAndOr)')
 	(+ optionInlineWhile 				'Inline whileTrue, whileTrue:, whileFalse:, whileFalse if specific conditions are met (See isInlineWhile)')
 	(+ optionInlineToDo 				'Inline to:do:, to:by:do: if specific conditions are met (See isInlineToDo)')
 	(+ optionInlineCase 				'Inline caseOf:, caseOf:otherwise: if specific conditions are met (See isInlineCase)')
-	(- optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
-	(- optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
+	(+ optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
+	(+ optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
-	
-	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
+
+	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
+	(+ optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
 	(- optionParseErrors 					'Parse syntactically wrong code (interactive and non-interactive')
 	(- optionParseErrorsNonInteractiveOnly 	'Parse syntactically wrong code in non-interactive mode only')
 	(- optionSkipSemanticWarnings 		'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing')
-		
+
 	)
 ]
 
@@ -311,19 +350,33 @@ CompilationContext class >> removeDefaultTransformationPlugin: aPlugin [
 
 { #category : #'options - settings API' }
 CompilationContext class >> writeDefaultOption: option value: boolean [
-	boolean 
+	boolean
 		ifTrue: [ self defaultOptions add: option ]
 		ifFalse: [ self defaultOptions remove: option ifAbsent: []]
 ]
 
 { #category : #plugins }
 CompilationContext >> addASTTransformationPlugin: aPlugin [
+
 	astTransformPlugins add: aPlugin
 ]
 
 { #category : #plugins }
+CompilationContext >> addParseASTTransformationPlugin: aPlugin [
+
+	astParseTransformPlugins add: aPlugin
+]
+
+{ #category : #plugins }
+CompilationContext >> astParseTransformPlugins [
+
+	^ astParseTransformPlugins
+]
+
+{ #category : #plugins }
 CompilationContext >> astTransformPlugins [
-	^astTransformPlugins
+
+	^ astTransformPlugins
 ]
 
 { #category : #accessing }
@@ -360,24 +413,14 @@ CompilationContext >> bytecodeGeneratorClass: anObject [
 ]
 
 { #category : #accessing }
-CompilationContext >> class: aClass [ 
+CompilationContext >> class: aClass [
 	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethod [
-	^ compiledMethod
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethod: anObject [
-	compiledMethod := anObject
 ]
 
 { #category : #accessing }
 CompilationContext >> compiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
-	^ compiledMethodClass ifNil: [ 
+	^ compiledMethodClass ifNil: [
 		self productionEnvironment
 			at: #CompiledMethod
 			ifAbsent: [ CompiledMethod ] ]
@@ -386,18 +429,8 @@ CompilationContext >> compiledMethodClass [
 { #category : #accessing }
 CompilationContext >> compiledMethodClass: aCompiledMethodClass [
 	"Return the class used to instantiate the compiled method created by the compiler"
-	
+
 	compiledMethodClass := aCompiledMethodClass
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer [
-	^ compiledMethodTrailer ifNil: [ compiledMethodTrailer := CompiledMethodTrailer empty ]
-]
-
-{ #category : #accessing }
-CompilationContext >> compiledMethodTrailer: anObject [
-	compiledMethodTrailer := anObject
 ]
 
 { #category : #options }
@@ -417,7 +450,7 @@ CompilationContext >> encoderClass: anObject [
 
 { #category : #accessing }
 CompilationContext >> environment [
-	^ environment ifNil: [ environment := semanticScope targetEnvironment ]
+	^ environment ifNil: [ environment := semanticScope environment ]
 ]
 
 { #category : #accessing }
@@ -425,57 +458,13 @@ CompilationContext >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #accessing }
-CompilationContext >> failBlock [
-	^ failBlock
-]
-
-{ #category : #accessing }
-CompilationContext >> failBlock: anObject [
-	failBlock := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> getClass [
-	^ semanticScope targetClass
-]
-
 { #category : #initialization }
 CompilationContext >> initialize [
+
 	options := Set new.
 	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins.
+	astParseTransformPlugins := OrderedCollection withAll: self class defaultParseTransformationPlugins.
 	semanticScope := OCMethodSemanticScope targetingClass: nil class
-]
-
-{ #category : #accessing }
-CompilationContext >> interactive [
-
-	requestor ifNil: [ ^ false ].
-	"we asume requestors are interactive, but they can override.
-	this should be simplified "
-	^ (requestor respondsTo: #interactive)
-		  ifTrue: [ requestor interactive ]
-		  ifFalse: [ true ]
-]
-
-{ #category : #accessing }
-CompilationContext >> logDoItEvaluation: aSourceString [ 
-	self logged ifFalse: [ ^self ].
-	
-	Smalltalk globals 
-			at: #SystemAnnouncer 
-			ifPresent: [ :sysAnn | 
-				semanticScope announceDoItEvaluation: aSourceString by: sysAnn uniqueInstance ]
-]
-
-{ #category : #accessing }
-CompilationContext >> logged [
-	^logged ifNil: [ false ].
-]
-
-{ #category : #accessing }
-CompilationContext >> logged: anObject [
-	logged := anObject
 ]
 
 { #category : #accessing }
@@ -485,11 +474,14 @@ CompilationContext >> noPattern [
 
 { #category : #accessing }
 CompilationContext >> noPattern: anObject [
-	anObject ifTrue: [
-		semanticScope := semanticScope asDoItScope.
-		"when we compile an expression, embedd sources, as the resulting method will never be installed"
-		self parseOptions: #(+ #optionEmbeddSources).
-	 ]
+
+	(anObject and: [ self noPattern not ]) ifTrue: [
+		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
+]
+
+{ #category : #options }
+CompilationContext >> optionBlockClosureOptionalOuter [
+	^ options includes: #optionBlockClosureOptionalOuter
 ]
 
 { #category : #options }
@@ -498,28 +490,35 @@ CompilationContext >> optionCleanBlockClosure [
 ]
 
 { #category : #options }
-CompilationContext >> optionEmbeddSources [
-	^ options includes: #optionEmbeddSources
+CompilationContext >> optionConstantBlockClosure [
+	^ options includes: #optionConstantBlockClosure
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineAndOr [
-	^ options includes: #optionInlineAndOr
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineAndOr ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineCase [
-	^ options includes: #optionInlineCase
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineCase ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineIf [
-	^ options includes: #optionInlineIf
+
+	^ self optionInlineNone not and: [ options includes: #optionInlineIf ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineIfNil [
-	^ options includes: #optionInlineIfNil
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineIfNil ]
 ]
 
 { #category : #options }
@@ -529,27 +528,40 @@ CompilationContext >> optionInlineNone [
 
 { #category : #options }
 CompilationContext >> optionInlineRepeat [
-	^ options includes: #optionInlineRepeat
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineRepeat ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineTimesRepeat [
-	^ options includes: #optionInlineTimesRepeat
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineTimesRepeat ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineToDo [
-	^ options includes: #optionInlineToDo
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineToDo ]
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineWhile [
-	^ options includes: #optionInlineWhile
+
+	^ self optionInlineNone not and: [
+		  options includes: #optionInlineWhile ]
 ]
 
 { #category : #options }
 CompilationContext >> optionLongIvarAccessBytecodes [
 	^ options includes: #optionLongIvarAccessBytecodes
+]
+
+{ #category : #options }
+CompilationContext >> optionOptimiseSpecialSends [
+	^ options includes: #optionOptimiseSpecialSends
 ]
 
 { #category : #options }
@@ -574,6 +586,7 @@ CompilationContext >> optionSkipSemanticWarnings [
 
 { #category : #options }
 CompilationContext >> parseOptions: optionsArray [
+
 	options parseOptions: optionsArray
 ]
 
@@ -598,16 +611,6 @@ CompilationContext >> productionEnvironment: aDictionary [
 ]
 
 { #category : #accessing }
-CompilationContext >> requestor [
-	^ requestor
-]
-
-{ #category : #accessing }
-CompilationContext >> requestor: anObject [
-	requestor := anObject
-]
-
-{ #category : #accessing }
 CompilationContext >> requestorScopeClass [
 	^ requestorScopeClass ifNil: [ requestorScopeClass := OCRequestorScope ]
 ]
@@ -616,25 +619,6 @@ CompilationContext >> requestorScopeClass [
 CompilationContext >> requestorScopeClass: anObject [
 	"clients can set their own subclass of OCRequestorScope if needed"
 	requestorScopeClass := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> scope [
-	| newScope |
-
-	newScope := semanticScope.
-	requestor ifNotNil: [
-		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"  
-		newScope := (self requestorScopeClass new
-			compilationContext: self;
-			requestor: requestor) outerScope: newScope].
-		
-	bindings ifNotNil: [
-		"if we passed additional bindings in, setup a scope here"  
-		newScope := (OCExtraBindingScope  new
-			bindings: bindings) outerScope: newScope].	
-		
-	^newScope
 ]
 
 { #category : #accessing }
@@ -657,8 +641,6 @@ CompilationContext >> semanticScope [
 CompilationContext >> semanticScope: anObject [
 
 	semanticScope := anObject
-	
-
 ]
 
 { #category : #options }

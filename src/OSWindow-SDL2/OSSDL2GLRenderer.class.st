@@ -23,7 +23,7 @@ OSSDL2GLRenderer class >> finalizeResourceData: windowAndContext [
 		SDL2
 			glMakeCurrent: (SDL_Window null) context: (SDL_GLContext null).
 		context delete
-	].
+	]
 ]
 
 { #category : #misc }
@@ -71,7 +71,7 @@ OSSDL2GLRenderer >> makeCurrent: aBackendWindow [
 OSSDL2GLRenderer >> pixelExtent [
 	| w h |
 	backendWindow ifNil: [ ^ super pixelExtent ].
-	
+
 	w := ByteArray new: 4.
 	h := ByteArray new: 4.
 	backendWindow sdl2Window glGetDrawableSizeW: w h: h.
@@ -81,7 +81,7 @@ OSSDL2GLRenderer >> pixelExtent [
 { #category : #misc }
 OSSDL2GLRenderer >> swapBuffers: aWindow [
 	self checkThread.
-	SDL2 glSwapWindow: aWindow sdl2Window.
+	SDL2 glSwapWindow: aWindow sdl2Window
 ]
 
 { #category : #'updating screen' }

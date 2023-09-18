@@ -20,7 +20,7 @@ ClyConcreteCritiqueMethodGroup class >> basedOn: aCritique withMethodsFrom: aSco
 
 	| groupName methodQuery |
 	groupName := aCritique rule group.
-	methodQuery := ClyAllProblemMethodQuery 
+	methodQuery := ClyAllProblemMethodQuery
 			from: aScope withCritiquesFromGroup: groupName.
 
 	^self named: groupName asLowercase on: methodQuery
@@ -37,7 +37,7 @@ ClyConcreteCritiqueMethodGroup >> addCritique: aCritique [
 { #category : #initialization }
 ClyConcreteCritiqueMethodGroup >> initialize [
 	super initialize.
-	
+
 	ruleSeverity := ClyCritiqueSeverityProperty default
 ]
 

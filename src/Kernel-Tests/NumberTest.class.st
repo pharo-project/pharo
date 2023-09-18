@@ -9,7 +9,7 @@ Class {
 
 { #category : #coverage }
 NumberTest >> classToBeTested [
-	
+
 	^ Number
 ]
 
@@ -23,25 +23,19 @@ NumberTest >> testAsInteger [
 { #category : #tests }
 NumberTest >> testClampReturnsMaxIfNumberIsOverMax [
 
-	self assert: (80 clampBetween: 10 and: 20) equals: 20. 
-
-	
+	self assert: (80 clampBetween: 10 and: 20) equals: 20.
 ]
 
 { #category : #tests }
 NumberTest >> testClampReturnsMinIfNumberIsBelowMin [
 
-	self assert: (8 clampBetween: 10 and: 20) equals: 10. 
-
-	
+	self assert: (8 clampBetween: 10 and: 20) equals: 10.
 ]
 
 { #category : #tests }
 NumberTest >> testClampReturnsSameNumberIfBetweenMinAndMax [
 
-	self assert: (17 clampBetween: 10 and: 20) equals: 17. 
-
-	
+	self assert: (17 clampBetween: 10 and: 20) equals: 17.
 ]
 
 { #category : #tests }
@@ -69,7 +63,7 @@ NumberTest >> testIntegerPart [
 { #category : #tests }
 NumberTest >> testNew [
 
-	self should: [Number new] raise: self defaultTestError.
+	self should: [Number new] raise: self defaultTestError
 ]
 
 { #category : #tests }
@@ -126,9 +120,21 @@ NumberTest >> testPrintShowingDecimalPlaces3 [
 { #category : #tests }
 NumberTest >> testRaisedTo [
 	"this is a test related to http://bugs.squeak.org/view.php?id=6781"
-	
+
 	self should: [0 raisedTo: -1] raise: ZeroDivide.
-	self should: [0 raisedTo: -1.0] raise: ZeroDivide.
+	self should: [0 raisedTo: -1.0] raise: ZeroDivide
+]
+
+{ #category : #tests }
+NumberTest >> testRaisedTo02 [
+
+	self assert: (2 raisedTo: 8) equals: 256.
+	self assert: (2 raisedTo: 1 / 12) equals: 1.0594630943592953.
+	self should: [ -10 raisedTo: 1.5 ] raise: ArithmeticError.
+	self assert: (10 raisedTo: 0.0) equals: 1.
+	self assert: (10 raisedTo: 1.0) equals: 10.
+	self assert: (0 raisedTo: 1.2) equals: 0.
+	self assert: (10 raisedTo: 2.5) equals: 316.22776601683825
 ]
 
 { #category : #tests }
@@ -200,6 +206,6 @@ NumberTest >> testRounded [
 
 	self assert: 0 rounded equals: 0.
 	self assert: 1 rounded equals: 1.
-	self assert: (1/2) rounded equals: 1.
-	self assert: ((1/2) - Float epsilon) rounded equals: 0.
+	self assert: (1 / 2) rounded equals: 1.
+	self assert: (1 / 2 - Float machineEpsilon) rounded equals: 0
 ]

@@ -15,7 +15,7 @@ ScaledDecimal >> nthRoot: anInteger [
 { #category : #'*Math-Operations-Extensions' }
 ScaledDecimal >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal."
-	
+
    "(10.156s round: 2) >>> 10.160s3 "
    "(1/3.0s round: 4) >>> 0.3333s4 "
 

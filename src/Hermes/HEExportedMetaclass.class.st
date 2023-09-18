@@ -23,5 +23,5 @@ HEExportedMetaclass >> asLiteralIn: env [
 
 { #category : #accessing }
 HEExportedMetaclass >> value: aMetaclass [
-	value := aMetaclass instanceSide name.
+	value := aMetaclass instanceSide name
 ]

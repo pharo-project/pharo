@@ -1,7 +1,7 @@
 Extension { #name : #TaEmptyComposition }
 
 { #category : #'*TraitsV2-Compatibility' }
-TaEmptyComposition >> includesElement: aTaCompositionElement [ 
+TaEmptyComposition >> includesElement: aTaCompositionElement [
 	^ false
 ]
 

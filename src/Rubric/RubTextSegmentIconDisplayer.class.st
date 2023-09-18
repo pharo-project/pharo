@@ -31,20 +31,20 @@ RubTextSegmentIconDisplayer >> drawOn: aCanvas [
 	self paragraph lines ifNil: [ ^ self ].
 	aCanvas
 		clipBy: self bounds
-		during: [ :clippedCanvas | 
+		during: [ :clippedCanvas |
 			| tl br |
 			clippedCanvas fillRectangle: self verticalSeparatorBounds color: self verticalSeparatorColor.
 			visibleRectangle := clippedCanvas clipRect.
 			tl := self lineIndexForPoint: visibleRectangle topLeft.
 			br := self lineIndexForPoint: visibleRectangle bottomRight.
-			tl to: br do: [ :i | 
+			tl to: br do: [ :i |
 				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon notNil ])
-					ifNotEmpty: [ :segments | 
+					ifNotEmpty: [ :segments |
 						| s pos |
 						s := segments first.
 						s displayIconAt: (pos := self iconPositionOfSegment: s) on: aCanvas.
 						segments size > 1
-							ifTrue: [ 
+							ifTrue: [
 								| r ygap |
 								ygap := s icon height + 1.
 								r := pos + (0 @ ygap) corner: (pos x + 12) @ (pos y + ygap + 2).
@@ -65,7 +65,7 @@ RubTextSegmentIconDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 	self paragraph lines ifNil: [ ^ self ].
 	anAthensCanvas
 		clipBy: self bounds
-		during: [ 
+		during: [
 			| tl br |
 			anAthensCanvas setShape: self verticalSeparatorBounds.
 			anAthensCanvas setPaint: self verticalSeparatorColor.
@@ -73,15 +73,15 @@ RubTextSegmentIconDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 			visibleRectangle := anAthensCanvas clipRect.
 			tl := self lineIndexForPoint: visibleRectangle topLeft.
 			br := self lineIndexForPoint: visibleRectangle bottomRight.
-			tl to: br do: [ :i | 
+			tl to: br do: [ :i |
 				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon notNil ])
-					ifNotEmpty: [ :segments | 
+					ifNotEmpty: [ :segments |
 						| s pos |
 						s := segments first.
 						pos := self iconPositionOfSegment: s.
 						s displayIconAt: pos onAthensCanvas: anAthensCanvas.
 						segments size > 1
-							ifTrue: [ 
+							ifTrue: [
 								| r ygap path |
 								ygap := s icon height + 1.
 								r := pos + (0 @ ygap) corner: (pos x + 12) @ (pos y + ygap + 2).
@@ -89,7 +89,7 @@ RubTextSegmentIconDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 								anAthensCanvas setPaint: (Color white alpha: 0.4).
 								anAthensCanvas draw.
 								path := anAthensCanvas
-									createPath: [ :builder | 
+									createPath: [ :builder |
 										builder absolute.
 										builder moveTo: r topLeft + (2@0).
 										builder lineTo: r topRight + (2@0)].
@@ -112,7 +112,7 @@ RubTextSegmentIconDisplayer >> handleMouseOver: anEvent [
 	self mouseEnter: anEvent in: ( (self paragraphProvider segmentsAtLine: lineIndex) select: [ :s | s icon notNil ] ).
 	previouslyIn ifNotNil: [
 		previouslyIn showMouseHasLeaved.
-		previouslyIn := nil ].
+		previouslyIn := nil ]
 ]
 
 { #category : #'event handling' }
@@ -133,12 +133,12 @@ RubTextSegmentIconDisplayer >> handlesMouseOver: evt [
 
 { #category : #geometry }
 RubTextSegmentIconDisplayer >> horizontalGapAfter [
-	^ 1
+	^ 1 scaledByDisplayScaleFactor
 ]
 
 { #category : #geometry }
 RubTextSegmentIconDisplayer >> horizontalGapBefore [
-	^ 1
+	^ 1 scaledByDisplayScaleFactor
 ]
 
 { #category : #drawing }
@@ -168,15 +168,15 @@ RubTextSegmentIconDisplayer >> invokeIconMenuOfSegments: aSegmentList event: anE
 	menu
 		on: #mouseLeave
 		send: #value
-		to: [ 
+		to: [
 			menu delete.
 			self changed ].
 	menu invokeAt: (self iconPositionOfSegment: aSegmentList first) - (1 @ 4 negated) in: self
 ]
 
 { #category : #accessing }
-RubTextSegmentIconDisplayer >> itemWidth [ 
-	^ 16
+RubTextSegmentIconDisplayer >> itemWidth [
+	^ 16 scaledByDisplayScaleFactor
 ]
 
 { #category : #accessing }
@@ -195,13 +195,13 @@ RubTextSegmentIconDisplayer >> mouseEnter: anEvent in: aSegmentList [
 	previouslyIn = aSegmentList first
 		ifTrue: [ ^ self ].
 	previouslyIn := aSegmentList first.
-	self invokeIconMenuOfSegments: aSegmentList event: anEvent.
+	self invokeIconMenuOfSegments: aSegmentList event: anEvent
 ]
 
 { #category : #'event handling' }
 RubTextSegmentIconDisplayer >> mouseLeave: anEvent [
 	previouslyIn
-		ifNotNil: [ 
+		ifNotNil: [
 			previouslyIn showMouseHasLeaved.
 			previouslyIn := nil ]
 ]
@@ -232,5 +232,5 @@ RubTextSegmentIconDisplayer >> verticalSeparatorColor [
 
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> verticalSeparatorWidth [
-	^ 1
+	^ 1 scaledByDisplayScaleFactor
 ]

@@ -22,7 +22,7 @@ Class {
 	#instVars : [
 		'variableName'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -47,18 +47,29 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 ]
 
 { #category : #preconditions }
-RBRemoveTemporaryVariableTransformation >> preconditions [
+RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'No such class or trait named ', className asString)
-		& ( RBCondition definesSelector: selector in: self definingClass)
-		& ( RBCondition
-			withBlock: [ self definingMethod allTemporaryVariables includes: variableName ]
-			errorString: 'Method named ', selector, ' does not define a temporary variable named ', variableName )
-		& ( RBCondition
-			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
-			errorString: 'Variable named ', variableName, ' cannot be removed because it is an argument in this method' )
+	^ self classExist
+	  & (RBCondition definesSelector: selector in: self definingClass)
+	  & (RBCondition
+			   withBlock: [
+			   self definingMethod allTemporaryVariables includes: variableName ]
+			   errorString: 'Method named ' , selector
+				   , ' does not define a temporary variable named ' , variableName)
+	  & (RBCondition
+			   withBlock: [
+				   (self definingMethod allArgumentVariables includes:
+					    variableName) not ]
+			   errorString: 'Variable named ' , variableName
+				   , ' cannot be removed because it is an argument in this method')
+]
+
+{ #category : #preconditions }
+RBRemoveTemporaryVariableTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString: 'No such class or trait named ' , className asString
 ]
 
 { #category : #executing }
@@ -70,14 +81,14 @@ RBRemoveTemporaryVariableTransformation >> privateTransform [
 	modifiedNode := (methodTree allChildren select: [:each | each isSequence])
 						detect: [ :sequence | sequence defines: variableName ]
 						ifNone: [ nil ].
-	
+
 	modifiedNode ifNotNil: [ modifiedNode removeTemporaryNamed: variableName ].
 
 	class compileTree: methodTree
 ]
 
 { #category : #printing }
-RBRemoveTemporaryVariableTransformation >> storeOn: aStream [ 
+RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

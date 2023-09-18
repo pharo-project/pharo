@@ -9,39 +9,46 @@ Class {
 
 { #category : #testing }
 AthensCairoExportSurfaceTest class >> isAbstract [
+
 	^ self = AthensCairoExportSurfaceTest
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 AthensCairoExportSurfaceTest >> athensSurfaceClass [
+
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 AthensCairoExportSurfaceTest >> fileName [
+
 	^ self className asString
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 AthensCairoExportSurfaceTest >> fileReference [
+
 	^ self fileName asFileReference
 ]
 
 { #category : #running }
 AthensCairoExportSurfaceTest >> setUp [
+
 	super setUp.
 	self fileReference ensureDelete
 ]
 
 { #category : #running }
 AthensCairoExportSurfaceTest >> tearDown [
+
 	surface close.
 	self fileReference ensureDelete.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
 AthensCairoExportSurfaceTest >> testExportBoxes [
+
 	| path |
 	surface := self athensSurfaceClass
 		extent: 100@100
@@ -64,11 +71,12 @@ AthensCairoExportSurfaceTest >> testExportBoxes [
 	surface close.
 
 	self assert: self fileReference exists.
-	self assert: self fileReference size > 400.
+	self assert: self fileReference size > 400
 ]
 
 { #category : #tests }
 AthensCairoExportSurfaceTest >> testExtent [
+
 	surface := self athensSurfaceClass
 		extent: 100@50
 		fileName: self fileName.
@@ -77,6 +85,7 @@ AthensCairoExportSurfaceTest >> testExtent [
 
 { #category : #tests }
 AthensCairoExportSurfaceTest >> testHeight [
+
 	surface := self athensSurfaceClass
 		extent: 100@50
 		fileName: self fileName.
@@ -85,6 +94,7 @@ AthensCairoExportSurfaceTest >> testHeight [
 
 { #category : #tests }
 AthensCairoExportSurfaceTest >> testWidth [
+
 	surface := self athensSurfaceClass
 		extent: 100@50
 		fileName: self fileName.

@@ -15,20 +15,20 @@ Class {
 		'statementNodes',
 		'transformedNode'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring-Core-Refactorings-Unused'
 }
 
 { #category : #'instance creation' }
 RBCreateCascadeRefactoring class >> combine: anInterval from: aSelector in: aClass [
-	^ self new 
+	^ self new
 		combine: anInterval from: aSelector in: aClass;
 		yourself
 ]
 
 { #category : #'instance creation' }
 RBCreateCascadeRefactoring class >> model: aNamespace combine: anInterval from: aSelector in: aClass [
-	^ self new 
-		model: aNamespace; 
+	^ self new
+		model: aNamespace;
 		combine: anInterval from: aSelector in: aClass;
 		yourself
 ]
@@ -39,7 +39,7 @@ RBCreateCascadeRefactoring >> addStatementNode: aNode [
 		ifTrue: [ ^ statementNodes add: aNode ].
 	aNode isCascade
 		ifTrue: [ ^ statementNodes addAll: aNode messages ].
-	self refactoringFailure: aNode formattedCode , ' is not a valid message'
+	self refactoringError: aNode formattedCode , ' is not a valid message'
 ]
 
 { #category : #initialization }
@@ -78,7 +78,7 @@ RBCreateCascadeRefactoring >> findReceiverNode [
 	"Find the sequence to be combined."
 
 	| receiverNodes |
-	receiverNodes := statementNodes 
+	receiverNodes := statementNodes
 		collect: [ :each | each receiver ].
 	receiverNodes asSet size = 1
 		ifFalse: [ self refactoringError: 'All statements must have the same receiver' ].
@@ -92,9 +92,9 @@ RBCreateCascadeRefactoring >> findSequenceNode [
 
 	sequenceNode := self parserClass
 		parseExpression: self selectedSource
-		onError: [ :msg :pos | self refactoringFailure: 'Invalid source to rewrite' ].
+		onError: [ :msg :pos | self refactoringError: 'Invalid source to rewrite' ].
 	(sequenceNode isSequence and: [ sequenceNode statements size > 1 ])
-		ifFalse: [ self refactoringFailure: 'You must select two or more statements' ]
+		ifFalse: [ self refactoringError: 'You must select two or more statements' ]
 ]
 
 { #category : #preconditions }
@@ -117,26 +117,26 @@ RBCreateCascadeRefactoring >> findStatementNodes [
 RBCreateCascadeRefactoring >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ]
+		ifNil: [ parseTree := class parseTreeForSelector: selector.
+			parseTree ifNil: [ self refactoringError: 'Could not parse sources' ]
 			].
-	^ parseTree
+	^ parseTree doSemanticAnalysis
 ]
 
 { #category : #preconditions }
 RBCreateCascadeRefactoring >> preconditions [
-	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [ 
+	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [
 		self findSequenceNode; findStatementNodes; findReceiverNode.
 		true ])
+]
+
+{ #category : #transforming }
+RBCreateCascadeRefactoring >> privateTransform [
+	self combineMessages.
+	self compileCode
 ]
 
 { #category : #accessing }
 RBCreateCascadeRefactoring >> selectedSource [
 	^  self parseTree source copyFrom: selectedInterval first to: selectedInterval last
-]
-
-{ #category : #transforming }
-RBCreateCascadeRefactoring >> transform [
-	self combineMessages.
-	self compileCode
 ]

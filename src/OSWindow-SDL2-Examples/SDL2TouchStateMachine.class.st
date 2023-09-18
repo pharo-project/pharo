@@ -15,14 +15,14 @@ Class {
 
 { #category : #'instance creation' }
 SDL2TouchStateMachine class >> for:	anPosition [
-	^self new 
+	^self new
 		first: anPosition;
 		yourself
 ]
 
 { #category : #accessing }
 SDL2TouchStateMachine >> add: aPoint [
-	move add: aPoint.
+	move add: aPoint
 ]
 
 { #category : #accessing }
@@ -38,7 +38,7 @@ SDL2TouchStateMachine >> finish [
 { #category : #accessing }
 SDL2TouchStateMachine >> finish: anObject [
 	finish := anObject.
-	move add: anObject.
+	move add: anObject
 ]
 
 { #category : #accessing }
@@ -54,7 +54,7 @@ SDL2TouchStateMachine >> first: anObject [
 { #category : #initialization }
 SDL2TouchStateMachine >> initialize [
 	move := OrderedCollection new.
-	color := Color random.
+	color := Color random
 ]
 
 { #category : #accessing }

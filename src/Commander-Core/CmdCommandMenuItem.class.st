@@ -21,7 +21,7 @@ Class {
 
 { #category : #'instance creation' }
 CmdCommandMenuItem class >> activatingBy: aMenuCommandActivator [
-	^self new 
+	^self new
 		activator: aMenuCommandActivator
 ]
 
@@ -77,7 +77,7 @@ CmdCommandMenuItem >> isCommandItem [
 
 { #category : #testing }
 CmdCommandMenuItem >> isSimilarTo: aMenuItem [
-	^self class == aMenuItem class and: [ 
+	^self class == aMenuItem class and: [
 		activator isSimilarTo: aMenuItem activator]
 ]
 
@@ -96,7 +96,7 @@ CmdCommandMenuItem >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	aStream nextPutAll: self name.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #updating }

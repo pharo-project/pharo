@@ -14,12 +14,18 @@ Class {
 
 { #category : #reading }
 HETrait >> doReadHeaderFrom: aReader [
-	traitName := aReader readByteSymbol.
+	traitName := aReader readByteSymbol
 ]
 
 { #category : #accessing }
 HETrait >> isTrait [
 	^ true
+]
+
+{ #category : #accessing }
+HETrait >> name [
+
+	^ self traitName
 ]
 
 { #category : #accessing }

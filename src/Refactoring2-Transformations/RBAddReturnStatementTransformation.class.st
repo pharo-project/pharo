@@ -22,7 +22,7 @@ Class {
 	#instVars : [
 		'returnValue'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -47,31 +47,35 @@ RBAddReturnStatementTransformation class >> return: aString inMethod: aSelector 
 ]
 
 { #category : #preconditions }
-RBAddReturnStatementTransformation >> preconditions [
-	^ (RBCondition
-		withBlock: [ self definingClass isNotNil ]
-		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		&
-			(RBCondition
-				withBlock: [ self definingClass canUnderstand: selector ]
-				errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		&
-			(RBCondition
-				withBlock: [ self definingMethod lastIsReturn not ]
-				errorString:
-					('Method named <1s> already has a return statement'
-						expandMacrosWith: selector))
-		&
-			(RBCondition
-				withBlock: [ | returnNode |
-					returnNode := self parserClass parseExpression: returnValue.
-					returnNode allVariables
-						allSatisfy: [ :e | 
-							(self definingMethod hasArgumentNamed: e name)
-								or: [ self definingMethod hasTemporaryNamed: e name ] ] ]
-				errorString:
-					('Some variables in this return statement are not defined in method named <1s>.'
-						expandMacrosWith: selector))
+RBAddReturnStatementTransformation >> applicabilityPreconditions [
+
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [ self definingMethod lastIsReturn not ]
+			   errorString:
+				   ('Method named <1s> already has a return statement'
+					    expandMacrosWith: selector)) & (RBCondition
+		   withBlock: [
+			   | returnNode |
+			   returnNode := self parserClass parseExpression: returnValue.
+			   returnNode allVariables allSatisfy: [ :e |
+				   (self definingMethod hasArgumentNamed: e name) or: [
+					   self definingMethod hasTemporaryNamed: e name ] ] ]
+		   errorString:
+			   ('Some variables in this return statement are not defined in method named <1s>.'
+				    expandMacrosWith: selector))
+]
+
+{ #category : #preconditions }
+RBAddReturnStatementTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
 { #category : #executing }
@@ -95,7 +99,7 @@ RBAddReturnStatementTransformation >> return: anExpression inMethod: aSelector i
 ]
 
 { #category : #printing }
-RBAddReturnStatementTransformation >> storeOn: aStream [ 
+RBAddReturnStatementTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -36,10 +36,10 @@ RGMonticelloTest >> testConvertingMCClassDefinition [
 { #category : #testing }
 RGMonticelloTest >> testConvertingMCMethodDefinition [
 	| mcMethod ringMethod |
-	
+
 	ringMethod := (OrderedCollection >> #add: ) asRingDefinition.
 	mcMethod := ringMethod asMCMethodDefinition.
-	
+
 	self assert: (ringMethod isMethod).
 	self assert: (ringMethod isSameRevisionAs: ((OrderedCollection >> #add: ) asRingDefinition)).
 	self deny: (ringMethod isSameRevisionAs: ((OrderedCollection >> #addAll: ) asRingDefinition))
@@ -48,11 +48,11 @@ RGMonticelloTest >> testConvertingMCMethodDefinition [
 { #category : #testing }
 RGMonticelloTest >> testConvertingMCOrganizationDefinition [
 	| mcOrganization ringOrganization mcOrganization2 |
-	
+
 	mcOrganization := MCOrganizationDefinition categories: {#'Ring-Definitions-Core' . #'Ring-Definitions-Core-Definitions'}.
 	mcOrganization2 := MCOrganizationDefinition categories: {#'Ring-Definitions-Core' . #'Ring-Definitions-Core-Definitions' . #'Ring-Definitions-Core-Variables'}.
 	ringOrganization := mcOrganization asRingDefinition.
-	
+
 	self assert: (ringOrganization isOrganization).
 	self deny: (ringOrganization isSameRevisionAs: mcOrganization2 asRingDefinition)
 ]

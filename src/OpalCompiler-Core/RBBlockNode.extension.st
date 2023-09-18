@@ -21,7 +21,7 @@ RBBlockNode >> ir [
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir: aIRMethodNode [
 
-	^ self propertyAt: #ir put: aIRMethodNode.
+	^ self propertyAt: #ir put: aIRMethodNode
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -31,16 +31,21 @@ RBBlockNode >> irInstruction [
 
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isClean [
-	"a block is clean if it has no escaping vars, has no non local return and its children are clean"
-	self isInlined ifTrue: [ ^ false ].
+	"a block is clean if..."
+	"it or any embedded blocks do not need self"
+	self isAccessingSelf ifTrue: [ ^ false ].
+	"it or any embedded blocks do not need the outer context to return"
+	self hasNonLocalReturn ifTrue: [ ^ false ].
+	"there are no escaping vars accessed from the outer"
 	self scope hasEscapingVars ifTrue: [ ^ false ].
-	self hasBlockReturn ifTrue: [ ^ false ].
-	^ super isClean
+	^true
+
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isInlined [
 	parent isMessage ifFalse: [ ^ false ].
+	parent methodCompilationContextOrNil ifNotNil:[:c | c optionInlineNone ifTrue: [ ^false ]].
 	parent isInlineAndOr ifTrue: [^ true].
 	parent isInlineIf ifTrue: [^ true].
 	parent isInlineIfNil ifTrue: [^ true].

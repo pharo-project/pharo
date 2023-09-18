@@ -37,7 +37,7 @@ RubSegmentMorph >> areasRemainingToFill: aRectangle [
 { #category : #initialization }
 RubSegmentMorph >> beSmoothCurve [
 	smoothCurve == true
-		ifFalse: [ 
+		ifFalse: [
 			smoothCurve := true.
 			self computeBounds ]
 ]
@@ -51,7 +51,7 @@ RubSegmentMorph >> beStraightSegments [
 ]
 
 { #category : #accessing }
-RubSegmentMorph >> borderColor: aColor [ 
+RubSegmentMorph >> borderColor: aColor [
 
 	super borderColor: aColor.
 	self releaseCachedState
@@ -83,12 +83,12 @@ RubSegmentMorph >> bounds: newBounds [
 	"This method has to be reimplemented since self extent: will also change self bounds origin,
 	super bounds would leave me in wrong position when container is growing.
 	Always change extent first then position"
-	
+
 	self extent: newBounds extent; position: newBounds topLeft
 ]
 
 { #category : #'cubic support' }
-RubSegmentMorph >> changeInSlopes: slopes of: verts [ 
+RubSegmentMorph >> changeInSlopes: slopes of: verts [
 	"A message to knots of a spline. Returns an array with the 3rd cubic coeff."
 	"The last nth item is correct iff this is a closed cubic.
 	Presumably that is the only time we care.
@@ -105,10 +105,10 @@ RubSegmentMorph >> changeInSlopes: slopes of: verts [
 
 { #category : #'cubic support' }
 RubSegmentMorph >> changeOfChangesInSlopes: slopes of: verts [
-	"A message to knots of a spline. Returns an array with the 4rd 
+	"A message to knots of a spline. Returns an array with the 4rd
 	cubic coeff."
-	"The last nth item is correct iff this is a closed cubic. 
-	Presumably that is the only time we care. 
+	"The last nth item is correct iff this is a closed cubic.
+	Presumably that is the only time we care.
 	We always return the same sized array as self."
 	| n changes |
 	n := verts size.
@@ -122,20 +122,20 @@ RubSegmentMorph >> changeOfChangesInSlopes: slopes of: verts [
 ]
 
 { #category : #'cubic support' }
-RubSegmentMorph >> closedCubicSlopesOf: knots [ 
+RubSegmentMorph >> closedCubicSlopesOf: knots [
 	"Sent to knots returns the slopes of a closed cubic spline.
-	From the same set of java sources as naturalCubic. This is a smalltalk  
+	From the same set of java sources as naturalCubic. This is a smalltalk
 	transliteration of the java code."
-	"from java code NatCubicClosed extends NatCubic  
-	solves for the set of equations for all knots: 
+	"from java code NatCubicClosed extends NatCubic
+	solves for the set of equations for all knots:
 	b1+4*b2+b3=3*(a3-a1)
 	where a1 is (knots atWrap: index + 1) etc.
 	and the b's are the slopes .
-	by decomposing the matrix into upper triangular and lower matrices  
-	and then back sustitution. See Spath 'Spline Algorithms for Curves  
-	and Surfaces' pp 19--21. The D[i] are the derivatives at the knots.  
+	by decomposing the matrix into upper triangular and lower matrices
+	and then back sustitution. See Spath 'Spline Algorithms for Curves
+	and Surfaces' pp 19--21. The D[i] are the derivatives at the knots.
 	"
-	
+
 	| v w x y z n1  D F G H |
 	n1 := knots size.
 	n1 < 3
@@ -143,7 +143,7 @@ RubSegmentMorph >> closedCubicSlopesOf: knots [
 	v := Array new: n1.
 	w := Array new: n1.
 	y := Array new: n1.
-	
+
 	D := Array new: n1.
 	x := knots.
 	z := 1.0 / 4.0.
@@ -153,7 +153,7 @@ RubSegmentMorph >> closedCubicSlopesOf: knots [
 	H := 4.0.
 	F := 3 * ((x at: 1) - (x at: n1 - 1)).
 	G := 1.
-	2 to: n1 - 1 do: [:k | 
+	2 to: n1 - 1 do: [:k |
 			z := 1.0 / (4.0 - (v at: k)).
 			v at: k + 1 put: z.
 			w at: k + 1 put: z negated
@@ -175,28 +175,28 @@ RubSegmentMorph >> closedCubicSlopesOf: knots [
 { #category : #smoothing }
 RubSegmentMorph >> coefficients [
 	curveState ifNotNil: [^ curveState at: 1].
-	^ self vertices size < 1 
+	^ self vertices size < 1
 		ifTrue: [ self  ]
-		ifFalse: [ self coefficientsForMoreThanThreePoints ].
+		ifFalse: [ self coefficientsForMoreThanThreePoints ]
 ]
 
 { #category : #smoothing }
-RubSegmentMorph >> coefficientsForMoreThanThreePoints [ 
+RubSegmentMorph >> coefficientsForMoreThanThreePoints [
 	"Less than three points handled as segments by our lineSegmentsDo:"
 	| verts coefficients vertXs slopeXs vertYs slopeYs bestSegments |
-	verts := self vertices. 
+	verts := self vertices.
 	coefficients := {
 		vertXs := verts collect: [:p | p x asFloat].
-		slopeXs := self slopes: vertXs. 
+		slopeXs := self slopes: vertXs.
 		self changeInSlopes: slopeXs of: vertXs .
-		self changeOfChangesInSlopes: slopeXs of: vertXs. 
+		self changeOfChangesInSlopes: slopeXs of: vertXs.
 		vertYs := verts collect: [:p | p y asFloat].
 		slopeYs := self slopes: vertYs.
 		self changeInSlopes: slopeYs of: vertYs.
-		self changeOfChangesInSlopes: slopeYs of: vertYs. 
+		self changeOfChangesInSlopes: slopeYs of: vertYs.
 		Array new: verts size withAll: 12}.
-		
-		
+
+
 	bestSegments := (1 to: verts size) collect: [:i | (self transform: coefficients toCubicPointPolynomialAt: i) bestSegments].
 	coefficients at: 9 put:bestSegments.
 
@@ -212,15 +212,15 @@ RubSegmentMorph >> computeBounds [
 	self releaseCachedState.
 	bounds := self curveBounds expanded.
 	self layoutChanged.
-	self changed.
+	self changed
 ]
 
 { #category : #smoothing }
 RubSegmentMorph >> computeNextToEndPoints [
 	| pointAfterFirst pointBeforeLast |
 	pointAfterFirst := nil.
-	self lineSegmentsDo: 
-			[:p1 :p2 | 
+	self lineSegmentsDo:
+			[:p1 :p2 |
 			pointAfterFirst ifNil: [pointAfterFirst := p2 asIntegerPoint].
 			pointBeforeLast := p1 asIntegerPoint].
 	curveState at: 2 put: pointAfterFirst.
@@ -234,7 +234,7 @@ RubSegmentMorph >> containsPoint: aPoint [
 	color isTransparent
 		ifFalse: [ ^ (self filledForm pixelValueAt: aPoint - bounds topLeft + 1) > 0 ].
 	self
-		lineSegmentsDo: [ :p1 :p2 | 
+		lineSegmentsDo: [ :p1 :p2 |
 			(aPoint onLineFrom: p1 to: p2 within: (3 max: (borderWidth + 1) // 2) asFloat)
 				ifTrue: [ ^ true ] ].
 	^ false
@@ -257,9 +257,9 @@ RubSegmentMorph >> couldHaveRoundedCorners [
 { #category : #private }
 RubSegmentMorph >> curveBounds [
 
-	"Compute the bounds from actual curve traversal, with 
-	leeway for borderWidth. 
-	Also note the next-to-first and next-to-last points for arrow 
+	"Compute the bounds from actual curve traversal, with
+	leeway for borderWidth.
+	Also note the next-to-first and next-to-last points for arrow
 	directions."
 
 	"wiz - to avoid roundoff errors we return unrounded curvebounds."
@@ -275,7 +275,7 @@ RubSegmentMorph >> curveBounds [
 	curveState := nil.	"Force recomputation"	"curveBounds := vertices first corner: vertices last."
 	pointAfterFirst := nil.
 	self
-		lineSegmentsDo: [ :p1 :p2 | 
+		lineSegmentsDo: [ :p1 :p2 |
 			pointAfterFirst
 				ifNil: [ pointAfterFirst := p2 floor.
 					oX := cX := p1 x.
@@ -310,17 +310,17 @@ RubSegmentMorph >> defaultColor [
 { #category : #shaping }
 RubSegmentMorph >> diamondOval [
 	"Set my vertices to an array of edge midpoint vertices. Order of vertices is in the tradion of warpblt quads."
-	
+
 	| b |
 	b := self bounds.
 	self setVertices: { b leftCenter. b bottomCenter. b rightCenter. b topCenter }
 ]
 
 { #category : #drawing }
-RubSegmentMorph >> drawBorderOn: aCanvas [ 
+RubSegmentMorph >> drawBorderOn: aCanvas [
 	self
 		drawClippedBorderOn: aCanvas
-		usingEnds: (Array with: vertices first with: vertices last)
+		usingEnds: { vertices first . vertices last }
 ]
 
 { #category : #drawing }
@@ -331,7 +331,7 @@ RubSegmentMorph >> drawBorderOn: aCanvas usingEnds: anArray [
 	style := self borderStyle.
 	bigClipRect := aCanvas clipRect expandBy: (self borderWidth + 1) // 2.
 	self
-		lineSegmentsDo: [ :p1 :p2 | 
+		lineSegmentsDo: [ :p1 :p2 |
 			| p1i p2i |
 			p1i := p1 asIntegerPoint.
 			p2i := p2 asIntegerPoint.
@@ -339,7 +339,7 @@ RubSegmentMorph >> drawBorderOn: aCanvas usingEnds: anArray [
 ]
 
 { #category : #drawing }
-RubSegmentMorph >> drawBorderOnAthensCanvas: aCanvas [ 
+RubSegmentMorph >> drawBorderOnAthensCanvas: aCanvas [
 	self
 		drawClippedBorderOnAthensCanvas: aCanvas
 		usingEnds: (Array with: vertices first with: vertices last)
@@ -353,12 +353,12 @@ RubSegmentMorph >> drawBorderOnAthensCanvas: aCanvas usingEnds: anArray [
 	style := self borderStyle.
 	bigClipRect := aCanvas clipRect expandBy: (self borderWidth + 1) // 2.
 	self
-		lineSegmentsDo: [ :p1 :p2 | 
+		lineSegmentsDo: [ :p1 :p2 |
 			| p1i p2i path |
 			p1i := p1 asIntegerPoint.
 			p2i := p2 asIntegerPoint.
 			path := aCanvas
-				createPath: [ :builder | 
+				createPath: [ :builder |
 					builder absolute.
 					builder moveTo: p1i.
 					builder lineTo: p2i ].
@@ -367,8 +367,8 @@ RubSegmentMorph >> drawBorderOnAthensCanvas: aCanvas usingEnds: anArray [
 ]
 
 { #category : #drawing }
-RubSegmentMorph >> drawClippedBorderOn: aCanvas usingEnds: anArray [ 
-	aCanvas clipBy: self bounds during:[:cc| self drawBorderOn: cc usingEnds: anArray].
+RubSegmentMorph >> drawClippedBorderOn: aCanvas usingEnds: anArray [
+	aCanvas clipBy: self bounds during:[:cc| self drawBorderOn: cc usingEnds: anArray]
 ]
 
 { #category : #drawing }
@@ -377,8 +377,8 @@ RubSegmentMorph >> drawClippedBorderOnAthensCanvas: aCanvas usingEnds: anArray [
 ]
 
 { #category : #drawing }
-RubSegmentMorph >> drawOn: aCanvas [ 
-	"Display the receiver, a spline curve, approximated by straight 
+RubSegmentMorph >> drawOn: aCanvas [
+	"Display the receiver, a spline curve, approximated by straight
 	line segments."
 	|  |
 	aCanvas drawPolygon: self getVertices fillStyle: self fillStyle.
@@ -387,12 +387,12 @@ RubSegmentMorph >> drawOn: aCanvas [
 
 { #category : #drawing }
 RubSegmentMorph >> drawOnAthensCanvas: anAthensCanvas [
-	"Display the receiver, a spline curve, approximated by straight 
+	"Display the receiver, a spline curve, approximated by straight
 	line segments."
 	| verts polygonPath |
 	verts := self getVertices.
 	polygonPath := anAthensCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder
 				absolute;
 				moveTo: verts first.
@@ -434,7 +434,7 @@ RubSegmentMorph >> filledForm [
 	"Fill it in..."
 	filledForm convexShapeFill: Color black.
 
-	(borderColor isColor and: [borderColor isTranslucentButNotTransparent]) ifTrue: 
+	(borderColor isColor and: [borderColor isTranslucentButNotTransparent]) ifTrue:
 		["If border is stored as a form, then erase any overlap now."
 		filledForm copy: self borderForm boundingBox from: self borderForm
 			to: 1@1 rule: Form erase].
@@ -457,11 +457,11 @@ RubSegmentMorph >> initialize [
 	super initialize.
 	vertices := Array with: 5 @ 0 with: 20 @ 10 with: 0 @ 20.
 	smoothCurve := false.
-	self computeBounds.
+	self computeBounds
 ]
 
 { #category : #geometry }
-RubSegmentMorph >> intersects: aRectangle [ 
+RubSegmentMorph >> intersects: aRectangle [
 	"Answer whether any of my segments intersects aRectangle, which is in World coordinates."
 	| rect |
 	(super intersects: aRectangle) ifFalse: [ ^false ].
@@ -479,20 +479,20 @@ RubSegmentMorph >> isCurve [
 
 { #category : #testing }
 RubSegmentMorph >> isCurvy [
-	"Test for significant curves.  
+	"Test for significant curves.
 	Small smoothcurves in practice are straight."
 	^ smoothCurve and: [vertices size > 2]
 ]
 
 { #category : #smoothing }
-RubSegmentMorph >> lineSegmentsDo: endPointsBlock [ 
+RubSegmentMorph >> lineSegmentsDo: endPointsBlock [
 	"Emit a sequence of segment endpoints into endPointsBlock."
-	"Unlike the method this one replaces we expect the curve 
+	"Unlike the method this one replaces we expect the curve
 	coefficents not the dirivatives"
 	"Also unlike the replaced method the smooth closed curve
-	does 
-	not need an extra vertex. 
-	We take care of the extra endpoint here. Just like for 
+	does
+	not need an extra vertex.
+	We take care of the extra endpoint here. Just like for
 	segmented curves."
 	| cs x y beginPoint |
 	vertices size < 1
@@ -500,12 +500,12 @@ RubSegmentMorph >> lineSegmentsDo: endPointsBlock [
 	"test too few vertices first"
 	self isCurvy
 		ifFalse: [beginPoint := nil.
-			"smoothCurve 
+			"smoothCurve
 			ifTrue: [cs := self coefficients]."
-			"some things still depend on smoothCurves having 
+			"some things still depend on smoothCurves having
 			curveState"
 			vertices
-				do: [:vert | 
+				do: [:vert |
 					beginPoint
 						ifNotNil: [endPointsBlock value: beginPoint value: vert].
 					beginPoint := vert].
@@ -516,7 +516,7 @@ RubSegmentMorph >> lineSegmentsDo: endPointsBlock [
 	cs := self coefficients.
 	beginPoint := (x := cs first first) @ (y := cs fifth first).
 	1 to: cs first size
-		do: [:i | | t n x3 y3 x1 endPoint x2 y1 y2 | 
+		do: [:i | | t n x3 y3 x1 endPoint x2 y1 y2 |
 			"taylor series coefficients"
 			x1 := cs second at: i.
 			y1 := cs sixth at: i.
@@ -525,14 +525,14 @@ RubSegmentMorph >> lineSegmentsDo: endPointsBlock [
 			x3 := cs fourth at: i.
 			y3 := cs eighth at: i.
 			n := cs ninth at: i.
-			"guess n 
+			"guess n
 			n := 5 max: (x2 abs + y2 abs * 2.0 + (cs third atWrap:
-			i 
-			+ 1) abs + (cs seventh atWrap: i + 1) abs / 100.0) 
+			i
+			+ 1) abs + (cs seventh atWrap: i + 1) abs / 100.0)
 			rounded."
 			1
 				to: n - 1
-				do: [:j | 
+				do: [:j |
 					t := j asFloat / n asFloat.
 					endPoint := x3 * t + x2 * t + x1 * t + x @ (y3 * t + y2 * t + y1 * t + y).
 					endPointsBlock value: beginPoint value: endPoint.
@@ -543,51 +543,51 @@ RubSegmentMorph >> lineSegmentsDo: endPointsBlock [
 ]
 
 { #category : #geometry }
-RubSegmentMorph >> merge: aPolygon [ 
+RubSegmentMorph >> merge: aPolygon [
 	"Expand myself to enclose the other polygon.  (Later merge overlapping or disjoint in a smart way.)  For now, the two polygons must share at least two vertices.  Shared vertices must come one after the other in each polygon.  Polygons must not overlap."
 
 	| shared mv vv hv xx |
 	shared := vertices select: [:mine | aPolygon vertices includes: mine].
 	shared size < 2 ifTrue: [^nil].	"not sharing a segment"
 	mv := vertices asOrderedCollection.
-	[shared includes: mv first] whileFalse: 
+	[shared includes: mv first] whileFalse:
 			["rotate them"
 
 			vv := mv removeFirst.
 			mv addLast: vv].
 	hv := aPolygon vertices asOrderedCollection.
-	[mv first = hv first] whileFalse: 
+	[mv first = hv first] whileFalse:
 			["rotate him until same shared vertex is first"
 
 			vv := hv removeFirst.
 			hv addLast: vv].
-	[shared size > 2] whileTrue: 
+	[shared size > 2] whileTrue:
 			[shared := shared asOrderedCollection.
-			(self 
+			(self
 				mergeDropThird: mv
 				in: hv
 				from: shared) ifNil: [^nil]].
 	"works by side effect on the lists"
-	(mv second) = hv last 
-		ifTrue: 
+	(mv second) = hv last
+		ifTrue:
 			[mv
 				removeFirst;
 				removeFirst.
 			^self setVertices: (hv , mv) asArray].
-	(hv second) = mv last 
-		ifTrue: 
+	(hv second) = mv last
+		ifTrue:
 			[hv
 				removeFirst;
 				removeFirst.
 			^self setVertices: (mv , hv) asArray].
-	(mv second) = (hv second) 
-		ifTrue: 
+	(mv second) = (hv second)
+		ifTrue:
 			[hv removeFirst.
 			mv remove: (mv second).
 			xx := mv removeFirst.
 			^self setVertices: (hv , (Array with: xx) , mv reversed) asArray].
-	mv last = hv last 
-		ifTrue: 
+	mv last = hv last
+		ifTrue:
 			[mv removeLast.
 			hv removeFirst.
 			^self setVertices: (mv , hv reversed) asArray].
@@ -595,29 +595,29 @@ RubSegmentMorph >> merge: aPolygon [
 ]
 
 { #category : #geometry }
-RubSegmentMorph >> mergeDropThird: mv in: hv from: shared [ 
+RubSegmentMorph >> mergeDropThird: mv in: hv from: shared [
 	"We are merging two polygons.  In this case, they have at least three identical shared vertices.  Make sure they are sequential in each, and drop the middle one from vertex lists mv, hv, and shared.  First vertices on lists are identical already."
 
 	"know (mv first = hv first)"
 
 	| mdrop vv |
-	(shared includes: (mv at: mv size - 2)) 
+	(shared includes: (mv at: mv size - 2))
 		ifTrue: [(shared includes: mv last) ifTrue: [mdrop := mv last]]
-		ifFalse: 
-			[(shared includes: mv last) 
+		ifFalse:
+			[(shared includes: mv last)
 				ifTrue: [(shared includes: mv second) ifTrue: [mdrop := mv first]]].
-	(shared includes: (mv third)) 
+	(shared includes: (mv third))
 		ifTrue: [(shared includes: mv second) ifTrue: [mdrop := mv second]].
 	mdrop ifNil: [^nil].
 	mv remove: mdrop.
 	hv remove: mdrop.
 	shared remove: mdrop.
-	[shared includes: mv first] whileFalse: 
+	[shared includes: mv first] whileFalse:
 			["rotate them"
 
 			vv := mv removeFirst.
 			mv addLast: vv].
-	[mv first = hv first] whileFalse: 
+	[mv first = hv first] whileFalse:
 			["rotate him until same shared vertex is first"
 
 			vv := hv removeFirst.
@@ -636,7 +636,7 @@ RubSegmentMorph >> midVertices [
 	tweens add: vertices first asIntegerPoint.
 	"guarantee at least two points."
 	self
-		lineSegmentsDo: [:p1 :p2 | 
+		lineSegmentsDo: [:p1 :p2 |
 			tweens addLast: p2 asIntegerPoint.
 			p2 = (vertices atWrap: nextVertIx)
 				ifTrue: ["Found endPoint."
@@ -650,10 +650,10 @@ RubSegmentMorph >> midVertices [
 ]
 
 { #category : #'cubic support' }
-RubSegmentMorph >> naturalCubicSlopesOf: knots [ 
+RubSegmentMorph >> naturalCubicSlopesOf: knots [
 	"Sent to knots returns the slopes of a natural cubic curve fit."
-	"We solve the equation for knots with end conditions:  
-	2*b1+b2 = 3(a1 - a0) 
+	"We solve the equation for knots with end conditions:
+	2*b1+b2 = 3(a1 - a0)
 	bN1+2*bN = 3*(aN-aN1)
 	and inbetween:
 	b2+4*b3+b4=3*(a4-a2)
@@ -661,11 +661,11 @@ RubSegmentMorph >> naturalCubicSlopesOf: knots [
 	and the b's are the slopes .
 	N is the last index (knots size)
 	N1 is N-1.
-	 
-	by using row operations to convert the matrix to upper  
-	triangular and then back sustitution. The D[i] are the derivatives at the  
+
+	by using row operations to convert the matrix to upper
+	triangular and then back sustitution. The D[i] are the derivatives at the
 	knots."
-	
+
 	| x gamma delta D n1 |
 	n1 := knots size.
 	n1 < 3
@@ -673,7 +673,7 @@ RubSegmentMorph >> naturalCubicSlopesOf: knots [
 	x := knots.
 	gamma := Array new: n1.
 	delta := Array new: n1.
-	
+
 	D := Array new: n1.
 	gamma at: 1 put: 1.0 / 2.0.
 	2 to: n1 - 1 do: [:i | gamma at: i put: 1.0 / (4.0
@@ -711,7 +711,7 @@ RubSegmentMorph >> privateMoveBy: delta [
 ]
 
 { #category : #geometry }
-RubSegmentMorph >> referencePosition [ 
+RubSegmentMorph >> referencePosition [
 	"Return the current reference position of the receiver"
 	^ self valueOfProperty: #referencePosition ifAbsent: [super referencePosition]
 ]
@@ -724,14 +724,14 @@ RubSegmentMorph >> releaseCachedState [
 	borderForm := nil.
 	curveState := nil.
 	(self hasProperty: #flex) ifTrue:
-		[self removeProperty: #flex].
+		[self removeProperty: #flex]
 ]
 
 { #category : #'cubic support' }
-RubSegmentMorph >> segmentedSlopesOf: knots [ 
-	"For a collection of floats. Returns the slopes for straight 
+RubSegmentMorph >> segmentedSlopesOf: knots [
+	"For a collection of floats. Returns the slopes for straight
 	segments between vertices."
-	"last slope closes the polygon. Always return same size as 
+	"last slope closes the polygon. Always return same size as
 	self. "
 	^ knots collectWithIndex: [:x :i | (knots atWrap: i + 1) - x]
 ]
@@ -743,17 +743,17 @@ RubSegmentMorph >> setVertices: newVertices [
 ]
 
 { #category : #smoothing }
-RubSegmentMorph >> slopes: knots [ 
+RubSegmentMorph >> slopes: knots [
 	"Choose slopes according to state of polygon"
 	self isCurvy ifFalse: [^ self segmentedSlopesOf: knots ].
 	^ self closedCubicSlopesOf: knots
 ]
 
 { #category : #'cubic support' }
-RubSegmentMorph >> transform: coefficients toCubicPointPolynomialAt: vIndex [ 
-	"From curve information assemble a 4-array of points representing the coefficents for curve segment between to points. Beginning point is first point in array endpoint is the pointSum of the array. Meant to be sent to newcurves idea of curve coefficents." 
+RubSegmentMorph >> transform: coefficients toCubicPointPolynomialAt: vIndex [
+	"From curve information assemble a 4-array of points representing the coefficents for curve segment between to points. Beginning point is first point in array endpoint is the pointSum of the array. Meant to be sent to newcurves idea of curve coefficents."
 	| transformed |
-	transformed := (1 to: 4) collect: [:i | 
+	transformed := (1 to: 4) collect: [:i |
 			((coefficients at: i) at: vIndex) @ ((coefficients at: 4 + i) at: vIndex)].
 	^ Cubic withAll: transformed
 ]
@@ -769,11 +769,11 @@ RubSegmentMorph >> vertices [
 ]
 
 { #category : #initialization }
-RubSegmentMorph >> vertices: verts color: aColor borderWidth: borderWidthInteger borderColor: anotherColor [ 
+RubSegmentMorph >> vertices: verts color: aColor borderWidth: borderWidthInteger borderColor: anotherColor [
 	super initialize.
 	vertices := verts.
 	color := aColor.
-	borderWidth := borderWidthInteger. 
+	borderWidth := borderWidthInteger.
 	borderColor := anotherColor.
 	self computeBounds
 ]

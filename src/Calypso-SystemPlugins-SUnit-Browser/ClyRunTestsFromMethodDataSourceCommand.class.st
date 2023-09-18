@@ -37,14 +37,14 @@ ClyRunTestsFromMethodDataSourceCommand class >> menuOrder [
 { #category : #activation }
 ClyRunTestsFromMethodDataSourceCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
-	
-	^ClyToolbarActivation 
+
+	^ClyToolbarActivation
 		byItemOf: ClyButtonToolbarGroup order: self menuOrder for: ClyQueryBrowserContext
 ]
 
 { #category : #execution }
 ClyRunTestsFromMethodDataSourceCommand >> buildTestSuite [
-	
+
 	self subclassResponsibility
 ]
 
@@ -52,13 +52,13 @@ ClyRunTestsFromMethodDataSourceCommand >> buildTestSuite [
 ClyRunTestsFromMethodDataSourceCommand >> execute [
 	| testSuite result |
 	testSuite := self buildTestSuite.
-	
+
 	result := testSuite run.
-	
+
 	result updateResultsInHistory.
-	
+
 	self
-		notifyUserAboutResults: result 
+		notifyUserAboutResults: result
 		with: 'Tests complete'
 ]
 
@@ -71,15 +71,15 @@ ClyRunTestsFromMethodDataSourceCommand >> hasTestResult [
 { #category : #execution }
 ClyRunTestsFromMethodDataSourceCommand >> readParametersFromContext: aBrowserContext [
 	super readParametersFromContext: aBrowserContext.
-	
+
 	methodDataSource := aBrowserContext browser resultView dataSource
 ]
 
 { #category : #execution }
 ClyRunTestsFromMethodDataSourceCommand >> testMethodsDo: aBlock [
 
-	methodDataSource queryResult rawItemsDo: [ :eachMethod | 
-		(eachMethod isTestMethod and: [ eachMethod methodClass isAbstract not]) 
+	methodDataSource queryResult rawItemsDo: [ :eachMethod |
+		(eachMethod isTestMethod and: [ eachMethod methodClass isAbstract not])
 			ifTrue: [ aBlock value: eachMethod]]
 ]
 

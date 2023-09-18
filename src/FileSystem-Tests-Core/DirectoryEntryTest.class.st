@@ -115,7 +115,7 @@ DirectoryEntryTest >> testRootEntry [
 	self assert: rootEntry size equals: 0.
 	self assert: rootEntry isReadable.
 	self assert: rootEntry isExecutable.
-	self deny: rootEntry isWritable.
+	self deny: rootEntry isWritable
 ]
 
 { #category : #tests }

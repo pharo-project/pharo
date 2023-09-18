@@ -15,7 +15,7 @@ Class {
 { #category : #private }
 EpApplyPreviewer >> behaviorNamed: aSymbol ifPresent: presentBlock [
 
-	^ (self environment classOrTraitNamed: aSymbol) 
+	^ (self environment classOrTraitNamed: aSymbol)
 		ifNil: [ self ]
 		ifNotNil: presentBlock
 ]
@@ -31,12 +31,6 @@ EpApplyPreviewer >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #private }
-EpApplyPreviewer >> includesCategory: aString [
-
-	^ self environment organization includesCategory: aString
-]
-
 { #category : #visitor }
 EpApplyPreviewer >> visitBehaviorCategoryChange: aChange [
 
@@ -49,11 +43,11 @@ EpApplyPreviewer >> visitBehaviorCategoryChange: aChange [
 					EpBehaviorCategoryChange
 						oldCategory: aChange oldCategory
 						newCategory: aChange newCategory
-						class: behavior 
+						class: behavior
 					}
 				]
 			].
-			
+
 	^ #()
 ]
 
@@ -62,15 +56,15 @@ EpApplyPreviewer >> visitBehaviorCommentChange: aChange [
 
 	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :aBehavior | 
-			(aBehavior organization classComment = aChange newComment) ifFalse: [ 
-				^ { 
-					EpBehaviorCommentChange 
+		ifPresent: [ :aBehavior |
+			(aBehavior comment = aChange newComment) ifFalse: [
+				^ {
+					EpBehaviorCommentChange
 						newWithBehavior: aBehavior
-						oldComment: aBehavior organization classComment
-						newComment: aChange newComment 
-						oldStamp: aBehavior organization commentStamp
-						newStamp: aChange newStamp 
+						oldComment: aBehavior comment
+						newComment: aChange newComment
+						oldStamp: aBehavior commentStamp
+						newStamp: aChange newStamp
 				} ] ].
 
 	^ #()
@@ -79,10 +73,10 @@ EpApplyPreviewer >> visitBehaviorCommentChange: aChange [
 { #category : #visitor }
 EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange oldName
-		ifPresent: [ :behavior | 
-			^ { EpBehaviorNameChange 
+		ifPresent: [ :behavior |
+			^ { EpBehaviorNameChange
 					oldName: aChange oldName
 					newName: aChange newName
 					class: behavior } ].
@@ -91,38 +85,14 @@ EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 ]
 
 { #category : #visitor }
-EpApplyPreviewer >> visitCategoryAddition: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ #() ]
-			ifFalse: [ { aChange } ]
-]
-
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryRemoval: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ { aChange } ]
-			ifFalse: [ #() ]
-]
-
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryRename: aChange [
-
-	^ (self includesCategory: aChange oldCategoryName)
-		ifTrue: [ { aChange } ]
-		ifFalse: [ #() ]
-]
-
-{ #category : #visitor }
 EpApplyPreviewer >> visitClassChange: aChange [
 
 	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :aClass | 
+		ifPresent: [ :aClass |
 			^ aClass definitionString = aChange behaviorAffected definition
 				  ifTrue: [ #(  ) ]
-				  ifFalse: [ 
+				  ifFalse: [
 					  { (EpClassModification
 						   oldClass: aClass
 						   newClass: aChange behaviorAffected) } ] ].
@@ -133,7 +103,7 @@ EpApplyPreviewer >> visitClassChange: aChange [
 { #category : #visitor }
 EpApplyPreviewer >> visitClassRemoval: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior | ^ { EpClassRemoval class: behavior } ].
 
@@ -143,7 +113,7 @@ EpApplyPreviewer >> visitClassRemoval: aChange [
 { #category : #visitor }
 EpApplyPreviewer >> visitCodeChange: aChange [
 	"Default behavior for any change."
-		
+
 	self error: 'Shouldn''t happen'. ^ {aChange}
 ]
 
@@ -160,11 +130,11 @@ EpApplyPreviewer >> visitMethodChange: aChange [
 
 	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior | 
+		ifPresent: [ :behavior |
 			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
-				ifPresent: [ :method | 
-					(method protocol ~= aChange methodAffectedProtocol
+				ifPresent: [ :method |
+					(method protocol name ~= aChange methodAffectedProtocol
 						or: [ method sourceCode ~= aChange methodAffectedSourceCode ])
 						ifTrue: [ {(EpMethodModification
 								oldMethod: method
@@ -177,11 +147,11 @@ EpApplyPreviewer >> visitMethodChange: aChange [
 { #category : #visitor }
 EpApplyPreviewer >> visitMethodRemoval: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior |
 			"If method comes from trait, removing has no impact."
-			^ behavior 
+			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
 				ifPresent: [ :method | method isFromTrait not
 					ifTrue: [ { EpMethodRemoval method: method } ]
@@ -192,29 +162,73 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 ]
 
 { #category : #visitor }
+EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
+
+	^ (self packageOrganizer hasPackage: aPackageAddition packageName)
+		  ifTrue: [ {  } ]
+		  ifFalse: [ { aPackageAddition } ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageRemoval: aPackageRemoval [
+
+	^ (self packageOrganizer hasPackage: aPackageRemoval packageName)
+		  ifTrue: [ { aPackageRemoval } ]
+		  ifFalse: [ {  } ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageRename: aPackageRename [
+
+	^ (self packageOrganizer hasPackage: aPackageRename oldPackageName)
+		  ifTrue: [ { aPackageRename } ]
+		  ifFalse: [ #(  ) ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ (self packageOrganizer hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName)
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ { aPackageTagAddition } ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ (self packageOrganizer hasTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval packageName)
+		  ifTrue: [ { aPackageTagRemoval } ]
+		  ifFalse: [ #(  ) ]
+]
+
+{ #category : #visitor }
+EpApplyPreviewer >> visitPackageTagRename: aPackageTagRename [
+
+	^ (self packageOrganizer hasTag: aPackageTagRename oldTagName inPackage: aPackageTagRename packageName)
+		  ifTrue: [ { aPackageTagRename } ]
+		  ifFalse: [ #(  ) ]
+]
+
+{ #category : #visitor }
 EpApplyPreviewer >> visitProtocolAddition: aChange [
 
-	self 
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			^(behavior organization protocolOrganizer hasProtocolNamed: aChange protocol)
-				ifTrue: [ #() ]
-				ifFalse: [ { EpProtocolAddition behavior: behavior protocol: aChange protocol } ] ].
+	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
+		^ (behavior hasProtocol: aChange protocol)
+			  ifTrue: [ #(  ) ]
+			  ifFalse: [ { (EpProtocolAddition behavior: behavior protocol: aChange protocol) } ] ].
 
-	^ #()
+	^ #(  )
 ]
 
 { #category : #visitor }
 EpApplyPreviewer >> visitProtocolRemoval: aChange [
 
-	self 
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			^(behavior organization protocolOrganizer hasProtocolNamed: aChange protocol)
-				ifTrue: [ { EpProtocolRemoval behavior: behavior protocol: aChange protocol } ]
-				ifFalse: [ #() ] ].
+	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
+		^ (behavior hasProtocol: aChange protocol)
+			  ifTrue: [ { (EpProtocolRemoval behavior: behavior protocol: aChange protocol) } ]
+			  ifFalse: [ #(  ) ] ].
 
-	^ #()
+	^ #(  )
 ]
 
 { #category : #visitor }
@@ -224,14 +238,14 @@ EpApplyPreviewer >> visitTraitChange: aChange [
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aTrait |
 			^ { EpTraitModification oldTrait: aTrait newTrait: aChange behaviorAffected } ].
-	
+
 	^ { EpTraitAddition trait: aChange behaviorAffected }
 ]
 
 { #category : #visitor }
 EpApplyPreviewer >> visitTraitRemoval: aChange [
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior | ^ { EpTraitRemoval trait: behavior } ].
 

@@ -18,7 +18,7 @@ RBAddProtocolChange class >> addProtocolNamed: aString in: aClass [
 
 { #category : #converting }
 RBAddProtocolChange >> asUndoOperation [
-	
+
 	^ RBRemoveProtocolChange removeProtocolNamed: protocol in: self changeClass
 ]
 
@@ -31,11 +31,11 @@ RBAddProtocolChange >> changeString [
 { #category : #private }
 RBAddProtocolChange >> primitiveExecute [
 
-	self changeClass organization addCategory: protocol
+	self changeClass addProtocol: protocol
 ]
 
 { #category : #printing }
-RBAddProtocolChange >> printOn: aStream [ 
+RBAddProtocolChange >> printOn: aStream [
 
 	aStream
 		nextPutAll: self displayClassName;

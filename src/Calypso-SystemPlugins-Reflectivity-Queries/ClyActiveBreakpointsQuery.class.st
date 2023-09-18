@@ -15,16 +15,16 @@ ClyActiveBreakpointsQuery class >> newIncludingHaltsForTesting [
 	| cab |
 	cab := self new.
 	cab excludesHaltsForTesting: false.
-	^ cab.
+	^ cab
 ]
 
 { #category : #comparing }
 ClyActiveBreakpointsQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
-	
+
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
-	^excludesHaltsForTesting = anObject excludesHaltsForTesting.
+	^excludesHaltsForTesting = anObject excludesHaltsForTesting
 ]
 
 { #category : #printing }
@@ -52,7 +52,7 @@ ClyActiveBreakpointsQuery >> hash [
 { #category : #initialization }
 ClyActiveBreakpointsQuery >> initialize [
 	super initialize.
-	excludesHaltsForTesting := true.
+	excludesHaltsForTesting := true
 ]
 
 { #category : #testing }
@@ -62,6 +62,6 @@ ClyActiveBreakpointsQuery >> selectsMethod: aMethod [
 	"If the method contains halts or breakpoints and we are not exclude halts for testing, we show it"
 	(self excludesHaltsForTesting) ifFalse: [ ^true. ].
 	"If we are excluding methods with halts for testing, we show the method if it has not been marked as containing halts for tests or those that implement halts (e.g. Object>>#halt)"
-	^ ((aMethod hasPragmaNamed: #haltOrBreakpointForTesting) 
-		or: [(aMethod hasPragmaNamed: #debuggerCompleteToSender)]) not.
+	^ ((aMethod hasPragmaNamed: #haltOrBreakpointForTesting)
+		or: [(aMethod hasPragmaNamed: #debuggerCompleteToSender)]) not
 ]

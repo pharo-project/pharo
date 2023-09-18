@@ -31,14 +31,14 @@ Class {
 { #category : #'tools registry' }
 DrTests class >> beDefaultTestRunner [
 	<script>
-	
+
 	self registerToolsOn: Smalltalk tools
 ]
 
 { #category : #'world menu' }
 DrTests class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	
+
 	(aBuilder item: #'Dr Test (Preview)')
 		parent: #Testing;
 		action: [ self open ];
@@ -52,7 +52,7 @@ DrTests class >> menuCommandOn: aBuilder [
 { #category : #api }
 DrTests class >> open [
 	<script>
-	
+
 	^ self new
 		  open;
 		  yourself
@@ -61,8 +61,8 @@ DrTests class >> open [
 { #category : #'tools registry' }
 DrTests class >> registerToolsOn: registry [
 	"Note: For now, DrTests is only available for preview, thus the following code is commented."
-	
-	"Add DrTests to registry to replace the old test runner." 
+
+	"Add DrTests to registry to replace the old test runner."
 	"registry register: self as: #testRunner"
 ]
 
@@ -84,20 +84,19 @@ DrTests >> contentForReRun [
 DrTests >> currentPlugin: aPlugin [
 	| newPluginPresenter |
 
-	self currentPlugin = aPlugin ifTrue: [ ^ self ].  
+	self currentPlugin = aPlugin ifTrue: [ ^ self ].
 
 	super currentPlugin: aPlugin.
 
-	aPlugin pluginPresenterClass = pluginPresenter class 
-		ifFalse: [ 
-			newPluginPresenter := self 
-				instantiate: aPlugin pluginPresenterClass 
-				on: { aPlugin. self }.
-			self layout 
-				replace: pluginPresenter 
-				with: newPluginPresenter.
-			pluginPresenter := newPluginPresenter ].
-	
+	"Always instantiate and update the plugin, as the plugin presenter class is not sufficient to tell them appart"
+	newPluginPresenter := self
+		instantiate: aPlugin pluginPresenterClass
+		on: { aPlugin. self }.
+	self layout
+		replace: pluginPresenter
+		with: newPluginPresenter.
+	pluginPresenter := newPluginPresenter.
+
 	self updateStatus: aPlugin pluginName , ' plugin is ready to work!' translated
 ]
 
@@ -129,7 +128,7 @@ DrTests >> initializeButtons [
 	super initializeButtons.
 	switchButton
 		label: 'Minimize';
-		disable.
+		disable
 ]
 
 { #category : #initialization }
@@ -147,7 +146,7 @@ DrTests >> initializePluginsDropList [
 		items: self plugins;
 		display: [ :pluginClass | pluginClass pluginName ];
 		displayIcon: [ :pluginClass | pluginClass pluginIcon ];
-		whenSelectedItemChangedDo: [ :pluginClass | 
+		whenSelectedItemChangedDo: [ :pluginClass |
 			self currentPlugin: pluginClass new ]
 ]
 
@@ -185,7 +184,7 @@ DrTests >> menuForSelectedResult: menu [
 
 { #category : #accessing }
 DrTests >> packagesSelected [
-	
+
 	^ pluginPresenter packagesSelected
 ]
 
@@ -218,7 +217,7 @@ DrTests >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPluginRes
 
 { #category : #accessing }
 DrTests >> selectedItems [
-	
+
 	^ pluginPresenter selectedItems
 ]
 
@@ -247,7 +246,7 @@ DrTests >> switchToMiniDrTest [
 		testsConfiguration: self testsConfiguration;
 		currentPlugin: self currentPlugin;
 		updateWithPluginResult: self pluginResult;
-		yourself) 
+		yourself)
 		open
 ]
 
@@ -281,7 +280,7 @@ DrTests >> title [
 { #category : #updating }
 DrTests >> updateStatus: aString [
 	self statusLabel
-		label: ('{1}: {2}' format: { self dateAndTimeString . aString }).
+		label: ('{1}: {2}' format: { self dateAndTimeString . aString })
 ]
 
 { #category : #updating }
@@ -294,8 +293,8 @@ DrTests >> updateSwitchButton: itemsSelected [
 { #category : #updating }
 DrTests >> updateUI [
 	super updateUI.
-	
-	pluginPresenter updateUI.
+
+	pluginPresenter updateUI
 ]
 
 { #category : #updating }

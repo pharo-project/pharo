@@ -19,28 +19,29 @@ self flag: 'need change tranformation to have the same behavior of ref'.
 RBProtectInstanceVariableParametrizedTest >> setUp [
 
 	super setUp.
-	model := self abstractVariableTestData.
+	model := self rbModelForVariableTest
+]
+
+{ #category : #'failure tests' }
+RBProtectInstanceVariableParametrizedTest >> testFailureVariableNotDefined [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'rewrite'. #RBSubclassOfClassToRename }).
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'foo'. #RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
 RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:  
+	refactoring := self createRefactoringWithArguments:
 		{('rewrite' , 'Rule1') . #RBSubclassOfClassToRename}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBSubclassOfClassToRename.
-	self assert: (class parseTreeFor: #calls1) equals: (self parseMethod: 'calls1
+	self assert: (class parseTreeForSelector: #calls1) equals: (self parseMethod: 'calls1
 								^rewriteRule1 := (rewriteRule1 := self calls)').
-	self assert: (class parseTreeFor: #calls) equals: (self parseMethod: 'calls
+	self assert: (class parseTreeForSelector: #calls) equals: (self parseMethod: 'calls
 								^rewriteRule1 := rewriteRule1 , rewriteRule1').
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1') asSymbol).
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1:') asSymbol)
-]
-
-{ #category : #'failure tests' }
-RBProtectInstanceVariableParametrizedTest >> testVariableNotDefined [
-	self shouldFail:
-		(self createRefactoringWithArguments: {'rewrite' . #RBSubclassOfClassToRename}).
-	self shouldFail: 
-		(self createRefactoringWithArguments: {'foo' . #RBBasicLintRuleTestData}).
 ]

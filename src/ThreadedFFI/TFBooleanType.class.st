@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 TFBooleanType >> basicType [
-	
+
 	^ TFBasicType uint8
 ]
 
@@ -20,24 +20,23 @@ TFBooleanType >> callbackReadValue: anExternalAddress [
 ]
 
 { #category : #marshalling }
-TFBooleanType >> emitMarshallFromPrimitive: anIRBuilder [ 
-	
+TFBooleanType >> emitMarshallFromPrimitive: anIRBuilder [
+
 	anIRBuilder pushLiteral: 0.
-	anIRBuilder send: #~=.
+	anIRBuilder send: #~=
 ]
 
 { #category : #marshalling }
-TFBooleanType >> emitMarshallToPrimitive: builder [ 
-		
+TFBooleanType >> emitMarshallToPrimitive: builder [
+
 	builder pushLiteral: true.
 	builder send: #==.
 	builder jumpAheadTo: #falseLabel if: false.
 	builder pushLiteral: 1.
-	builder jumpAheadTo: #endLabel.	
+	builder jumpAheadTo: #endLabel.
 	builder jumpAheadTarget: #falseLabel.
 	builder pushLiteral: 0.
-	builder jumpAheadTarget: #endLabel.
-
+	builder jumpAheadTarget: #endLabel
 ]
 
 { #category : #'reading-writing' }
@@ -47,9 +46,9 @@ TFBooleanType >> readValue: anExternalAddress [
 ]
 
 { #category : #'reading-writing' }
-TFBooleanType >> write: aBoolean into: aCollection [ 
-	
-	self basicType 
-		write: aBoolean asBit 
+TFBooleanType >> write: aBoolean into: aCollection [
+
+	self basicType
+		write: aBoolean asBit
 		into: aCollection
 ]

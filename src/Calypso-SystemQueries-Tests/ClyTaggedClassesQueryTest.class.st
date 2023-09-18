@@ -16,7 +16,7 @@ ClyTaggedClassesQueryTest >> testCheckIfEmpty [
 	query tag: #Tag1.
 	query scope: (ClyClassScope of: ClyClass7WithTag1FromP5Mock in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyClassScope of: ClyClass8WithTag2FromP5Mock in: environment).
 	self assert: query checkEmptyResult
 ]
@@ -33,7 +33,7 @@ ClyTaggedClassesQueryTest >> testComparisonToSimilarQueryWithDifferentTag [
 { #category : #tests }
 ClyTaggedClassesQueryTest >> testFromThreeClasses [
 	query tag: #Tag1.
-	
+
 	self queryFromScope: ClyClassScope ofAll: {
 		ClyClass6UntaggedFromP5Mock. ClyClass7WithTag1FromP5Mock. ClyClass8WithTag2FromP5Mock }.
 

@@ -11,9 +11,9 @@ Class {
 { #category : #activation }
 ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
-	
-	^ClyToolbarActivation 
-		byItemOf: ClyPackageToolbarGroup 
+
+	^ClyToolbarActivation
+		byItemOf: ClyPackageToolbarGroup
 		order: self toolbarOrder
 		for: ClyFullBrowserPackageContext
 ]
@@ -21,9 +21,9 @@ ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation [
 { #category : #activation }
 ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation2 [
 	<classAnnotation>
-	
-	^ClyToolbarActivation 
-		byItemOf: ClyPackageToolbarGroup 
+
+	^ClyToolbarActivation
+		byItemOf: ClyPackageToolbarGroup
 		order: self toolbarOrder
 		for: ClyFullBrowserClassGroupContext
 ]
@@ -31,9 +31,9 @@ ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation2 [
 { #category : #activation }
 ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation3 [
 	<classAnnotation>
-	
-	^ClyToolbarActivation 
-		byItemOf: ClyPackageToolbarGroup 
+
+	^ClyToolbarActivation
+		byItemOf: ClyPackageToolbarGroup
 		order: self toolbarOrder
 		for: ClyFullBrowserProjectContext
 ]

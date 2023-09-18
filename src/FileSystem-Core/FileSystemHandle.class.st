@@ -35,7 +35,7 @@ FileSystemHandle >> at: index put: anObject [
 	buffer := ByteArray with: (anObject isCharacter
 		ifTrue: [ anObject codePoint ]
 		ifFalse: [ anObject ]).
-	self at: index write: buffer startingAt: 1 count: 1.
+	self at: index write: buffer startingAt: 1 count: 1
 ]
 
 { #category : #public }
@@ -51,20 +51,20 @@ FileSystemHandle >> at: offset write: buffer startingAt: start count: count [
 { #category : #private }
 FileSystemHandle >> basicOpen [
 	"get the raw stream description from the filesystem's store"
-	^ self fileSystem 
+	^ self fileSystem
 		openStreamDescription: reference path
 		writable: writable
 ]
 
 { #category : #streams }
 FileSystemHandle >> binaryReadStream [
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #streams }
 FileSystemHandle >> binaryWriteStream [
-	
+
 	self subclassResponsibility
 ]
 

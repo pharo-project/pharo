@@ -64,54 +64,53 @@ Object class >> flushDependents [
 	DependentsFields keysAndValuesDo:[:key :dep|
 		key ifNotNil:[key removeDependent: nil].
 	].
-	DependentsFields finalizeValues.
 ]
 
 { #category : #documentation }
 Object class >> howToModifyPrimitives [
-	"You are allowed to write methods which specify primitives, but please use 
-	caution.  If you make a subclass of a class which contains a primitive method, 
-	the subclass inherits the primitive.  The message which is implemented 
-	primitively may be overridden in the subclass (E.g., see at:put: in String's 
-	subclass Symbol).  The primitive behavior can be invoked using super (see 
-	Symbol string:). 
-	 
-	A class which attempts to mimic the behavior of another class without being 
-	its subclass may or may not be able to use the primitives of the original class.  
-	In general, if the instance variables read or written by a primitive have the 
-	same meanings and are in the same fields in both classes, the primitive will 
-	work.  
+	"You are allowed to write methods which specify primitives, but please use
+	caution.  If you make a subclass of a class which contains a primitive method,
+	the subclass inherits the primitive.  The message which is implemented
+	primitively may be overridden in the subclass (E.g., see at:put: in String's
+	subclass Symbol).  The primitive behavior can be invoked using super (see
+	Symbol string:).
 
-	For certain frequently used 'special selectors', the compiler emits a 
-	send-special-selector bytecode instead of a send-message bytecode.  
-	Special selectors were created because they offer two advantages.  Code 
-	which sends special selectors compiles into fewer bytes than normal.  For 
-	some pairs of receiver classes and special selectors, the interpreter jumps 
-	directly to a primitive routine without looking up the method in the class.  
-	This is much faster than a normal message lookup. 
-	 
-	A selector which is a special selector solely in order to save space has a 
-	normal behavior.  Methods whose selectors are special in order to 
-	gain speed contain the comment, 'No Lookup'.  When the interpreter 
-	encounters a send-special-selector bytecode, it checks the class of the 
-	receiver and the selector.  If the class-selector pair is a no-lookup pair, 
-	then the interpreter swiftly jumps to the routine which implements the 
-	corresponding primitive.  (A special selector whose receiver is not of the 
-	right class to make a no-lookup pair, is looked up normally).  The pairs are 
-	listed below.  No-lookup methods contain a primitive number specification, 
-	<primitive: xx>, which is redundant.  Since the method is not normally looked 
-	up, deleting the primitive number specification cannot prevent this 
-	primitive from running.  If a no-lookup primitive fails, the method is looked 
-	up normally, and the expressions in it are executed. 
-	 
-	No Lookup pairs of (class, selector) 
-	 
-	SmallInteger with any of		+ - * /  \\  bitOr: bitShift: bitAnd:  // 
-	SmallInteger with any of		=  ~=  >  <  >=  <= 
-	Any class with					== 
-	Any class with 					@ 
-	Point with either of				x y 
-	Context with					blockCopy: 
+	A class which attempts to mimic the behavior of another class without being
+	its subclass may or may not be able to use the primitives of the original class.
+	In general, if the instance variables read or written by a primitive have the
+	same meanings and are in the same fields in both classes, the primitive will
+	work.
+
+	For certain frequently used 'special selectors', the compiler emits a
+	send-special-selector bytecode instead of a send-message bytecode.
+	Special selectors were created because they offer two advantages.  Code
+	which sends special selectors compiles into fewer bytes than normal.  For
+	some pairs of receiver classes and special selectors, the interpreter jumps
+	directly to a primitive routine without looking up the method in the class.
+	This is much faster than a normal message lookup.
+
+	A selector which is a special selector solely in order to save space has a
+	normal behavior.  Methods whose selectors are special in order to
+	gain speed contain the comment, 'No Lookup'.  When the interpreter
+	encounters a send-special-selector bytecode, it checks the class of the
+	receiver and the selector.  If the class-selector pair is a no-lookup pair,
+	then the interpreter swiftly jumps to the routine which implements the
+	corresponding primitive.  (A special selector whose receiver is not of the
+	right class to make a no-lookup pair, is looked up normally).  The pairs are
+	listed below.  No-lookup methods contain a primitive number specification,
+	<primitive: xx>, which is redundant.  Since the method is not normally looked
+	up, deleting the primitive number specification cannot prevent this
+	primitive from running.  If a no-lookup primitive fails, the method is looked
+	up normally, and the expressions in it are executed.
+
+	No Lookup pairs of (class, selector)
+
+	SmallInteger with any of		+ - * /  \\  bitOr: bitShift: bitAnd:  //
+	SmallInteger with any of		=  ~=  >  <  >=  <=
+	Any class with					==
+	Any class with 					@
+	Point with either of				x y
+	Context with					blockCopy:
 	BlockContext with either of 		value value:
 	"
 
@@ -120,14 +119,15 @@ Object class >> howToModifyPrimitives [
 
 { #category : #'class initialization' }
 Object class >> initialize [
-	"Object initialize"
+	"Upon loading a class, this selector is not looked up.
+	If you want a class to be initialized upon loading, this class should define the selector #intialize explicitly"
 	DependentsFields ifNil:[ self initializeDependentsFields ]
 ]
 
 { #category : #'class initialization' }
 Object class >> initializeDependentsFields [
 	<script: 'Object initialize'>
-	
+
 	DependentsFields := WeakIdentityKeyDictionary new
 ]
 
@@ -157,7 +157,7 @@ Object class >> reInitializeDependentsFields [
 
 	| oldFields |
 	oldFields := DependentsFields.
-	DependentsFields := WeakIdentityKeyDictionary new.
+	self initializeDependentsFields.
 	oldFields
 		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]
@@ -174,69 +174,69 @@ Object class >> readFrom: textStringOrStream [
 
 { #category : #documentation }
 Object class >> whatIsAPrimitive [
-	"Some messages in the system are responded to primitively. A primitive   
-	response is performed directly by the interpreter rather than by evaluating   
-	expressions in a method. The methods for these messages indicate the   
-	presence of a primitive response by including <primitive: xx> or 
-	<primitive: 79 error: ec>before the first expression in the method.   
-	
-	In the second case, ec is a special temporary variable that holds an error code. 
-	In the VM primitive, failure is indicated by a variable called primFailCode being 
-	non-zero. On activating a method with a failing primitive, if the index is in 
-	bounds of the 	primitiveFailCodes array in the VMspecialObjectsArray then the 
-	failure code substitutes the symbol in the 	primitiveFailCodes array, otherwise 
+	"Some messages in the system are responded to primitively. A primitive
+	response is performed directly by the interpreter rather than by evaluating
+	expressions in a method. The methods for these messages indicate the
+	presence of a primitive response by including <primitive: xx> or
+	<primitive: 79 error: ec>before the first expression in the method.
+
+	In the second case, ec is a special temporary variable that holds an error code.
+	In the VM primitive, failure is indicated by a variable called primFailCode being
+	non-zero. On activating a method with a failing primitive, if the index is in
+	bounds of the 	primitiveFailCodes array in the VMspecialObjectsArray then the
+	failure code substitutes the symbol in the 	primitiveFailCodes array, otherwise
 	it supplies the integer value.
-	  
-	Primitives exist for several reasons. Certain basic or 'primitive' 
-	operations cannot be performed in any other way. Smalltalk without 
-	primitives can move values from one variable to another, but cannot add two 
-	SmallIntegers together. Many methods for arithmetic and comparison 
-	between numbers are primitives. Some primitives allow Smalltalk to 
-	communicate with I/O devices such as the disk, the display, and the keyboard. 
-	Some primitives exist only to make the system run faster; each does the same 
-	thing as a certain Smalltalk method, and its implementation as a primitive is 
-	optional.  
-	  
-	When the Smalltalk interpreter begins to execute a method which specifies a 
-	primitive response, it tries to perform the primitive action and to return a 
-	result. If the routine in the interpreter for this primitive is successful, 
-	it will return a value and the expressions in the method will not be evaluated. 
-	If the primitive routine is not successful, the primitive 'fails', and the 
-	Smalltalk expressions in the method are executed instead. These 
-	expressions are evaluated as though the primitive routine had not been 
-	called.  
-	  
-	The Smalltalk code that is evaluated when a primitive fails usually 
-	anticipates why that primitive might fail. If the primitive is optional, the 
-	expressions in the method do exactly what the primitive would have done (See 
-	Number @). If the primitive only works on certain classes of arguments, the 
-	Smalltalk code tries to coerce the argument or appeals to a superclass to find 
-	a more general way of doing the operation (see SmallInteger +). If the 
-	primitive is never supposed to fail, the expressions signal an error (see 
-	SmallInteger asFloat).  
-	  
-	Each method that specifies a primitive has a comment in it. If the primitive is 
-	optional, the comment will say 'Optional'. An optional primitive that is not 
-	implemented always fails, and the Smalltalk expressions do the work 
-	instead.  
-	 
-	If a primitive is not optional, the comment will say, 'Essential'. Some 
-	methods will have the comment, 'No Lookup'. See Object 
-	howToModifyPrimitives for an explanation of special selectors which are 
-	not looked up.  
-	  
-	For the primitives for +, -, *, and bitShift: in SmallInteger, and truncated 
-	in Float, the primitive constructs and returns a 16-bit 
-	LargePositiveInteger when the result warrants it. Returning 16-bit 
-	LargePositiveIntegers from these primitives instead of failing is 
-	optional in the same sense that the LargePositiveInteger arithmetic 
-	primitives are optional. The comments in the SmallInteger primitives say, 
-	'Fails if result is not a SmallInteger', even though the implementor has the 
-	option to construct a LargePositiveInteger. For further information on 
-	primitives, see the 'Primitive Methods' part of the chapter on the formal 
+
+	Primitives exist for several reasons. Certain basic or 'primitive'
+	operations cannot be performed in any other way. Smalltalk without
+	primitives can move values from one variable to another, but cannot add two
+	SmallIntegers together. Many methods for arithmetic and comparison
+	between numbers are primitives. Some primitives allow Smalltalk to
+	communicate with I/O devices such as the disk, the display, and the keyboard.
+	Some primitives exist only to make the system run faster; each does the same
+	thing as a certain Smalltalk method, and its implementation as a primitive is
+	optional.
+
+	When the Smalltalk interpreter begins to execute a method which specifies a
+	primitive response, it tries to perform the primitive action and to return a
+	result. If the routine in the interpreter for this primitive is successful,
+	it will return a value and the expressions in the method will not be evaluated.
+	If the primitive routine is not successful, the primitive 'fails', and the
+	Smalltalk expressions in the method are executed instead. These
+	expressions are evaluated as though the primitive routine had not been
+	called.
+
+	The Smalltalk code that is evaluated when a primitive fails usually
+	anticipates why that primitive might fail. If the primitive is optional, the
+	expressions in the method do exactly what the primitive would have done (See
+	Number @). If the primitive only works on certain classes of arguments, the
+	Smalltalk code tries to coerce the argument or appeals to a superclass to find
+	a more general way of doing the operation (see SmallInteger +). If the
+	primitive is never supposed to fail, the expressions signal an error (see
+	SmallInteger asFloat).
+
+	Each method that specifies a primitive has a comment in it. If the primitive is
+	optional, the comment will say 'Optional'. An optional primitive that is not
+	implemented always fails, and the Smalltalk expressions do the work
+	instead.
+
+	If a primitive is not optional, the comment will say, 'Essential'. Some
+	methods will have the comment, 'No Lookup'. See Object
+	howToModifyPrimitives for an explanation of special selectors which are
+	not looked up.
+
+	For the primitives for +, -, *, and bitShift: in SmallInteger, and truncated
+	in Float, the primitive constructs and returns a 16-bit
+	LargePositiveInteger when the result warrants it. Returning 16-bit
+	LargePositiveIntegers from these primitives instead of failing is
+	optional in the same sense that the LargePositiveInteger arithmetic
+	primitives are optional. The comments in the SmallInteger primitives say,
+	'Fails if result is not a SmallInteger', even though the implementor has the
+	option to construct a LargePositiveInteger. For further information on
+	primitives, see the 'Primitive Methods' part of the chapter on the formal
 	specification of the interpreter in the Smalltalk book."
-	
-	
+
+
 
 	self error: 'comment only'
 ]
@@ -248,16 +248,16 @@ Object >> -> anObject [
 
 	"(1 -> 'one') key >>> 1"
 	"(1 -> 'one') value >>> 'one'"
-	
+
 	"Note that key and value can be ANY object."
-	
+
 	^ Association key: self value: anObject
 ]
 
 { #category : #comparing }
-Object >> = anObject [ 
-	"Answer whether the receiver and the argument represent the same 
-	object. If = is redefined in any subclass, consider also redefining the 
+Object >> = anObject [
+	"Answer whether the receiver and the argument represent the same
+	object. If = is redefined in any subclass, consider also redefining the
 	message hash."
 
 	^ self == anObject
@@ -266,7 +266,7 @@ Object >> = anObject [
 { #category : #finalization }
 Object >> actAsExecutor [
 	"Prepare the receiver to act as executor for any resources associated with it"
-	
+
 	self breakDependents
 ]
 
@@ -287,10 +287,10 @@ Object >> adaptToFloat: rcvr andSend: selector [
 ]
 
 { #category : #converting }
-Object >> adaptToFraction: rcvr andCompare: selector [ 
+Object >> adaptToFraction: rcvr andCompare: selector [
 	"If I am involved in comparison with a Fraction.
 	Default behaviour is to process comparison as any other selectors."
-	
+
 	^ self adaptToFraction: rcvr andSend: selector
 ]
 
@@ -298,15 +298,15 @@ Object >> adaptToFraction: rcvr andCompare: selector [
 Object >> adaptToFraction: rcvr andSend: selector [
 	"If no method has been provided for adapting an object to a Fraction,
 	then it may be adequate to simply adapt it to a number."
-	
+
 	^ self adaptToNumber: rcvr andSend: selector
 ]
 
 { #category : #converting }
-Object >> adaptToInteger: rcvr andCompare: selector [ 
+Object >> adaptToInteger: rcvr andCompare: selector [
 	"If I am involved in comparison with an Integer.
 	Default behaviour is to process comparison as any other selectors."
-	
+
 	^ self adaptToInteger: rcvr andSend: selector
 ]
 
@@ -314,7 +314,7 @@ Object >> adaptToInteger: rcvr andCompare: selector [
 Object >> adaptToInteger: rcvr andSend: selector [
 	"If no method has been provided for adapting an object to a Integer,
 	then it may be adequate to simply adapt it to a number."
-	
+
 	^ self adaptToNumber: rcvr andSend: selector
 ]
 
@@ -341,7 +341,7 @@ Object >> as: aSimilarClass [
 { #category : #converting }
 Object >> asCollectionElement [
 	"Answer an object, which can be put into a Set as element , wrapped
-	by one of SetElement instance, if necessary. 
+	by one of SetElement instance, if necessary.
 	Default implementation is to answer self"
 ]
 
@@ -356,13 +356,6 @@ Object >> asLink [
 Object >> asLinkPrepend: anObject [
 
 	^ self asLink asLinkPrepend: anObject
-]
-
-{ #category : #converting }
-Object >> asOrderedCollection [
-	"Answer an OrderedCollection with the receiver as its only element."
-
-	^ OrderedCollection with: self
 ]
 
 { #category : #converting }
@@ -386,15 +379,16 @@ Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
 
 	<debuggerCompleteToSender>
-	aBlock value ifFalse: [ 
+	"we do the == true check to avoid NonBooleanReceiver error for nonBoolean aBlock values"
+	aBlock value == true ifFalse: [
 		AssertionFailure signal: aStringOrBlock value ]
 ]
 
 { #category : #accessing }
-Object >> at: index [ 
-	"Primitive. Assumes receiver is indexable. Answer the value of an 
-	indexable element in the receiver. Fail if the argument index is not an 
-	Integer or is out of bounds. Essential. See Object documentation 
+Object >> at: index [
+	"Primitive. Assumes receiver is indexable. Answer the value of an
+	indexable element in the receiver. Fail if the argument index is not an
+	Integer or is out of bounds. Essential. See Object documentation
 	whatIsAPrimitive. Read the class comment for a discussion about that the fact
 	that the index can be a float."
 
@@ -407,32 +401,32 @@ Object >> at: index [
 ]
 
 { #category : #accessing }
-Object >> at: index put: value [ 
-	"Primitive. Assumes receiver is indexable. Store the argument value in 
-	the indexable element of the receiver indicated by index. Fail if the 
-	index is not an Integer or is out of bounds. Or fail if the value is not of 
-	the right type for this kind of collection. Answer the value that was 
+Object >> at: index put: value [
+	"Primitive. Assumes receiver is indexable. Store the argument value in
+	the indexable element of the receiver indicated by index. Fail if the
+	index is not an Integer or is out of bounds. Or fail if the value is not of
+	the right type for this kind of collection. Answer the value that was
 	stored. Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 61>
-	index isInteger 
+	index isInteger
 		ifTrue: [self class isVariable
 			ifTrue: [(index between: 1 and: self size)
 				ifFalse: [ ^ self errorSubscriptBounds: index]]
 			ifFalse: [ ^ self errorNotIndexable ]]
 		ifFalse: [ ^ self errorNonIntegerIndex ].
-	self isReadOnlyObject 
+	self isReadOnlyObject
 		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: value ].
 	self errorImproperStore
 ]
 
 { #category : #'write barrier' }
-Object >> attemptToAssign: value withIndex: index [ 
+Object >> attemptToAssign: value withIndex: index [
 	"Called by the VM when assigning an instance variable of an immutable object.
-	Upon return, executing will resume *after* the inst var assignment. If the inst var mutation has to be 
+	Upon return, executing will resume *after* the inst var assignment. If the inst var mutation has to be
 	performed, do it manually here in the call back with instVarAt:put:.
 	This method has to return *no* value by jumping to the context's sender"
-	
+
 	self modificationForbiddenFor: #instVarAt:put: index: index value: value.
 
 	thisContext sender jump
@@ -440,42 +434,47 @@ Object >> attemptToAssign: value withIndex: index [
 ]
 
 { #category : #accessing }
-Object >> basicAt: index [ 
-	"Primitive. Assumes receiver is indexable. Answer the value of an 
-	indexable element in the receiver. Fail if the argument index is not an 
-	Integer or is out of bounds. Essential. Do not override in a subclass. See 
+Object >> basicAt: index [
+	"Primitive. Assumes receiver is indexable. Answer the value of an
+	indexable element in the receiver. Fail if the argument index is not an
+	Integer or is out of bounds. Essential. Do not override in a subclass. See
 	Object documentation whatIsAPrimitive."
 
 	<primitive: 60>
-	index isInteger ifTrue: [self errorSubscriptBounds: index].
+	index isInteger ifTrue: [
+		SubscriptOutOfBounds
+			signalFor: index
+			lowerBound: 1
+			upperBound: self basicSize
+			in: self ].
 	self errorNonIntegerIndex
 ]
 
 { #category : #accessing }
-Object >> basicAt: index put: value [ 
-	"Primitive. Assumes receiver is indexable. Store the second argument 
-	value in the indexable element of the receiver indicated by index. Fail 
-	if the index is not an Integer or is out of bounds. Or fail if the value is 
-	not of the right type for this kind of collection. Answer the value that 
-	was stored. Essential. Do not override in a subclass. See Object 
+Object >> basicAt: index put: value [
+	"Primitive. Assumes receiver is indexable. Store the second argument
+	value in the indexable element of the receiver indicated by index. Fail
+	if the index is not an Integer or is out of bounds. Or fail if the value is
+	not of the right type for this kind of collection. Answer the value that
+	was stored. Essential. Do not override in a subclass. See Object
 	documentation whatIsAPrimitive."
 
 	<primitive: 61>
-	index isInteger 
+	index isInteger
 		ifTrue: [self class isVariable
 			ifTrue: [(index between: 1 and: self size)
 				ifFalse: [ ^ self errorSubscriptBounds: index ]]
 			ifFalse: [ ^ self errorNotIndexable ]]
 		ifFalse: [ ^ self errorNonIntegerIndex ].
-	self isReadOnlyObject 
+	self isReadOnlyObject
 		ifTrue: [ ^ self modificationForbiddenFor: #basicAt:put: index: index value: value ].
 	self errorImproperStore
 ]
 
 { #category : #accessing }
 Object >> basicSize [
-	"Primitive. Answer the number of indexable variables in the receiver. 
-	This value is the same as the largest legal subscript. Essential. Do not 
+	"Primitive. Answer the number of indexable variables in the receiver.
+	This value is the same as the largest legal subscript. Essential. Do not
 	override in any subclass (except Context). See Object documentation whatIsAPrimitive."
 
 	<primitive: 62>
@@ -524,12 +523,6 @@ Object >> beWritableObject [
 	^ self setIsReadOnlyObject: false
 ]
 
-{ #category : #binding }
-Object >> bindingOf: aString [
-
-	^ nil
-]
-
 { #category : #dependencies }
 Object >> breakDependents [
 	"Remove all of the receiver's dependents."
@@ -575,7 +568,7 @@ Object >> caseOf: aBlockAssociationCollection [
 { #category : #'casing-To be deprecated' }
 Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 	"DO NOT USE THIS METHOD! It will be removed from Pharo."
-	
+
 	"The elements of aBlockAssociationCollection are associations between blocks.
 	 Answer the evaluated value of the first association in aBlockAssociationCollection
 	 whose evaluated key equals the receiver.  If no match is found, answer the result
@@ -594,16 +587,16 @@ Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 
 { #category : #updating }
 Object >> changed [
-	"Receiver changed in a general way; inform all the dependents by 
+	"Receiver changed in a general way; inform all the dependents by
 	sending each dependent an update: message."
 
 	self changed: self
 ]
 
 { #category : #updating }
-Object >> changed: aParameter [ 
-	"Receiver changed. The change is denoted by the argument aParameter. 
-	Usually the argument is a Symbol that is part of the dependent's change 
+Object >> changed: aParameter [
+	"Receiver changed. The change is denoted by the argument aParameter.
+	Usually the argument is a Symbol that is part of the dependent's change
 	protocol. Inform all of the dependents."
 
 	self dependents do: [:aDependent | aDependent update: aParameter]
@@ -611,8 +604,8 @@ Object >> changed: aParameter [
 
 { #category : #updating }
 Object >> changed: anAspect with: anObject [
-	"Receiver changed. The change is denoted by the argument anAspect. 
-	Usually the argument is a Symbol that is part of the dependent's change 
+	"Receiver changed. The change is denoted by the argument anAspect.
+	Usually the argument is a Symbol that is part of the dependent's change
 	protocol. Inform all of the dependents. Also pass anObject for additional information."
 
 	self dependents do: [:aDependent | aDependent update: anAspect with: anObject]
@@ -635,10 +628,10 @@ Object >> clone [
 	"If the primitive fails due to insufficient memory, instantiate via basicNew: to invoke
 	 the garbage collector before retrying, and use copyFrom: to copy state."
 	newObject := (class := self class) isVariable
-					ifTrue: 
+					ifTrue:
 						[class isCompiledMethodClass
 							ifTrue:
-								[class newMethod: self basicSize - self initialPC + 1 header: self header]
+								[class newMethod: self basicSize - self initialPC + 1 + CompiledMethod trailerSize header: self header]
 							ifFalse:
 								[class basicNew: self basicSize]]
 					ifFalse:
@@ -666,7 +659,7 @@ Object >> copyFrom: anotherObject [
 			self instVarAt: ind put: (anotherObject instVarAt: ind)]].
 	self class isVariable & anotherObject class isVariable ifTrue: [
 		1 to: (self basicSize min: anotherObject basicSize) do: [:ind |
-			self basicAt: ind put: (anotherObject basicAt: ind)]].
+			self basicAt: ind put: (anotherObject basicAt: ind)]]
 ]
 
 { #category : #copying }
@@ -681,7 +674,7 @@ Object >> copySameFrom: otherObject [
 		(match := otherInstVars indexOf: each) > 0 ifTrue:
 			[self instVarAt: index put: (otherObject instVarAt: match)]].
 	1 to: (self basicSize min: otherObject basicSize) do: [:i |
-		self basicAt: i put: (otherObject basicAt: i)].
+		self basicAt: i put: (otherObject basicAt: i)]
 ]
 
 { #category : #copying }
@@ -694,17 +687,17 @@ It doesn't handle cycles, #veryDeepCopy does. In the future we will make it hand
 	class := self class.
 	(class == Object) ifTrue: [^self].
 	class isVariable
-		ifTrue: 
+		ifTrue:
 			[index := self basicSize.
 			newObject := class basicNew: index.
 			[index > 0]
-				whileTrue: 
+				whileTrue:
 					[newObject basicAt: index put: (self basicAt: index) deepCopy.
 					index := index - 1]]
 		ifFalse: [newObject := class basicNew].
 	index := class instSize.
 	[index > 0]
-		whileTrue: 
+		whileTrue:
 			[newObject instVarAt: index put: (self instVarAt: index) deepCopy.
 			index := index - 1].
 	^newObject
@@ -721,7 +714,7 @@ Object >> dependents [
 { #category : #deprecation }
 Object >> deprecated: anExplanationString [
 	"Warn that the sending method has been deprecated"
-	
+
 	Deprecation new
 		context: thisContext sender;
 		explanation: anExplanationString;
@@ -731,7 +724,7 @@ Object >> deprecated: anExplanationString [
 { #category : #deprecation }
 Object >> deprecated: anExplanationString on: date in: version [
 	"Warn that the sending method has been deprecated"
-	
+
 	Deprecation new
 		context: thisContext sender;
 		explanation: anExplanationString;
@@ -743,7 +736,7 @@ Object >> deprecated: anExplanationString on: date in: version [
 { #category : #deprecation }
 Object >> deprecated: anExplanationString on: date in: version transformWith: aRule [
 	"Automatically tranform the deprecated call"
-	
+
 	Deprecation new
 		context: thisContext sender;
 		explanation: anExplanationString;
@@ -756,7 +749,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 { #category : #deprecation }
 Object >> deprecated: anExplanationString on: date in: version transformWith: aRule when: conditionBlock [
 	"Automatically tranform the deprecated call if it matches the condition"
-	
+
 	Deprecation new
 		context: thisContext sender;
 		explanation: anExplanationString;
@@ -770,7 +763,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 { #category : #deprecation }
 Object >> deprecated: anExplanationString transformWith: aRule [
 	"Automatically tranform the deprecated call"
-	
+
 	Deprecation new
 		context: thisContext sender;
 		explanation: anExplanationString;
@@ -781,7 +774,7 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 { #category : #deprecation }
 Object >> deprecated: anExplanationString transformWith: aRule when: conditionBlock [
 	"Automatically tranform the deprecated call if it matches the condition"
-	
+
 	Deprecation new
 		context: thisContext sender;
 		explanation: anExplanationString;
@@ -793,7 +786,7 @@ Object >> deprecated: anExplanationString transformWith: aRule when: conditionBl
 { #category : #displaying }
 Object >> displayString [
 	"While printString is about to give a detailled information about an object, displayString is a message that should return a short string-based representation to be used by list and related UI frameworks. By default, simply return printString. Subclasses should not override this method but instead stream based method #displayStringOn:"
-	
+
 	^ self displayStringLimitedTo: 1000
 ]
 
@@ -801,7 +794,7 @@ Object >> displayString [
 Object >> displayStringLimitedTo: limit [
 	"Answer a String whose characters are a description of the receiver.
 	If you want to print without a character limit, use fullDisplayString."
-	
+
 	^ self printStringLimitedTo: limit using: [:s | self displayStringOn: s]
 ]
 
@@ -814,11 +807,11 @@ Object >> displayStringOn: aStream [
 ]
 
 { #category : #'reflective operations' }
-Object >> doesNotUnderstand: aMessage [ 
+Object >> doesNotUnderstand: aMessage [
 	<debuggerCompleteToSender>
 	 "Handle the fact that there was an attempt to send the given message to the receiver but the receiver does not understand this message (typically sent from the machine when a message is sent to the receiver and no method is defined for that selector)."
 	"Testing: (3 activeProcess)"
-		
+
 	| exception resumeValue |
 	(exception := MessageNotUnderstood new)
 		message: aMessage;
@@ -831,7 +824,7 @@ Object >> doesNotUnderstand: aMessage [
 
 { #category : #accessing }
 Object >> enclosedElement [
-	"The receiver is included into a set as an element. 
+	"The receiver is included into a set as an element.
 	Since some objects require wrappers (see SetElement) to be able to be included into a Set,
 	a set sends this message to its element to make sure it getting real object,
 	instead of its wrapper.
@@ -874,7 +867,7 @@ Object >> errorNotIndexable [
 ]
 
 { #category : #private }
-Object >> errorSubscriptBounds: index [ 
+Object >> errorSubscriptBounds: index [
 	"Create an error notification that an improper integer was used as an index."
 
 	SubscriptOutOfBounds signalFor: index
@@ -883,8 +876,12 @@ Object >> errorSubscriptBounds: index [
 { #category : #finalization }
 Object >> executor [
 	"Return an object which can act as executor for finalization of the receiver"
-	
-	^ self shallowCopy actAsExecutor
+
+	self
+		deprecated: 'Please use #finalizer instead. See Phep0003'
+		transformWith: '`@receiver executor' -> '`@receiver finalizer'.
+
+	^ self finalizer
 ]
 
 { #category : #'error handling' }
@@ -894,17 +891,17 @@ Object >> explicitRequirement [
 	| originalMethod originalArguments errorBlock originalReceiver callingContext originalSelector |
 	errorBlock := [ ^ self error: 'Explicitly required method' ].
 	callingContext := thisContext sender.
-	originalMethod := callingContext compiledCode method.
+	originalMethod := callingContext homeMethod.
 	originalMethod isFromTrait
-		ifFalse: errorBlock.
+		ifFalse: [ errorBlock value].
 	originalReceiver := callingContext receiver.
 	originalSelector := originalMethod selector.
 	originalArguments := callingContext arguments.
 	originalReceiver class superclass
-		withAllSuperclassesDo: [ :superClass | 
+		withAllSuperclassesDo: [ :superClass |
 			superClass
 				compiledMethodAt: originalSelector
-				ifPresent: [ :method | 
+				ifPresent: [ :method |
 					(method isProvided or: [ method isFromTrait not ])
 						ifTrue: [ callingContext
 								return:
@@ -918,12 +915,19 @@ Object >> explicitRequirement [
 Object >> finalizationRegistry [
 	"Answer the finalization registry associated with the receiver."
 	
-	^ WeakRegistry default
+	^ FinalizationRegistry default
 ]
 
 { #category : #finalization }
 Object >> finalize [
 	"Finalize the resource associated with the receiver. This message should only be sent during the finalization process. There is NO garantuee that the resource associated with the receiver hasn't been free'd before so take care that you don't run into trouble - this all may happen with interrupt priority."
+]
+
+{ #category : #finalization }
+Object >> finalizer [
+	"Return an object which can act as finalizer of the receiver"
+
+	^ self
 ]
 
 { #category : #enumerating }
@@ -971,7 +975,7 @@ Object >> haltFromCount: anInteger [
 { #category : #halting }
 Object >> haltIf: condition [
 	<debuggerCompleteToSender>
-	
+
 	Halt if: condition
 ]
 
@@ -1004,7 +1008,7 @@ Object >> haltOnCount: anInteger [
 { #category : #halting }
 Object >> haltOnce [
 	<debuggerCompleteToSender>
-	Halt once.
+	Halt once
 ]
 
 { #category : #'process termination handling' }
@@ -1020,12 +1024,6 @@ Object >> handles: exception [
 	^ false
 ]
 
-{ #category : #binding }
-Object >> hasBindingOf: aString [
-
-	^ false
-]
-
 { #category : #'literal testing' }
 Object >> hasLiteralSuchThat: testBlock [
 	"This is the end of the embedded structure path so return false."
@@ -1036,7 +1034,7 @@ Object >> hasLiteralSuchThat: testBlock [
 { #category : #finalization }
 Object >> hasMultipleExecutors [
 	"All objects, except ObjectFinalizerCollection instances should answer false to this message"
-	
+
 	^ false
 ]
 
@@ -1059,7 +1057,7 @@ Object >> in: aBlock [
 Object >> instVarAt: index [
 	"Primitive. Answer a fixed variable in an object. The numbering of the variables
 	 corresponds to the named instance variables, followed by the indexed instance
-	 variables. Fail if the index is not an Integer or is not the index of a fixed 
+	 variables. Fail if the index is not an Integer or is not the index of a fixed
 	 variable or indexed variable. Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 173 error: ec>
@@ -1074,10 +1072,10 @@ Object >> instVarAt: index put: anObject [
 	 variable or indexed variable. Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 174 error: ec>
-	 (index isInteger 
-		and: [ index between: 1 and: self class instSize + self basicSize]) 
+	 (index isInteger
+		and: [ index between: 1 and: self class instSize + self basicSize])
 			ifFalse: [ ^ self errorSubscriptBounds: index ].
-	self isReadOnlyObject 
+	self isReadOnlyObject
 		ifTrue: [ ^ self modificationForbiddenFor: #instVarAt:put: index: index value: anObject ]
 ]
 
@@ -1206,7 +1204,7 @@ Object >> isEmbeddedBlock [
 { #category : #testing }
 Object >> isFloat [
 	"Overridden to return true in Float, natch"
-	
+
 
 	^ false
 ]
@@ -1253,10 +1251,19 @@ Object >> isKindOf: aClass [
 
 { #category : #testing }
 Object >> isLiteral [
-	"Answer whether the receiver has a literal text form recognized by the 
-	compiler."
+
+	"Answer whether the receiver has a literal text form recognized by the compiler.
+	For ex:
+	#(1 true #three #(4) )
+	"
 
 	^ false
+]
+
+{ #category : #testing }
+Object >> isLiteral: alreadyVisited [
+
+	^ self isLiteral
 ]
 
 { #category : #'class membership' }
@@ -1308,7 +1315,7 @@ Object >> isPinned [
 	"self
 		deprecated: 'Please use #isPinnedInMemory instead'
 		transformWith: '`@receiver isPinned' -> '`@receiver isPinnedInMemory'."
-		
+
 	^self isPinnedInMemory
 ]
 
@@ -1350,7 +1357,15 @@ Object >> isRectangle [
 { #category : #'self evaluating' }
 Object >> isSelfEvaluating [
 
+	"A self evaluating object means that the string representation can be evaluated and give an identical object"
+
 	^ self isLiteral
+]
+
+{ #category : #'self evaluating' }
+Object >> isSelfEvaluating: alreadyVisited [
+
+	^ self isSelfEvaluating
 ]
 
 { #category : #testing }
@@ -1363,7 +1378,7 @@ Object >> isStream [
 { #category : #testing }
 Object >> isString [
 	"Overridden to return true in String, natch"
-	
+
 	^ false
 ]
 
@@ -1418,7 +1433,7 @@ Object >> literalEqual: other [
 
 { #category : #printing }
 Object >> longPrintOn: aStream [
-	"Append to the argument, aStream, the names and values of all 
+	"Append to the argument, aStream, the names and values of all
 	of the receiver's instance variables."
 
 	self class allInstVarNames doWithIndex:
@@ -1442,7 +1457,7 @@ Object >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 		 nextPut: $:;
 		 space;
 		 tab;
-		 nextPutAll: 
+		 nextPutAll:
 			((self instVarAt: index) printStringLimitedTo: (sizeLimit -3 -title size max: 1));
 		 cr]
 ]
@@ -1450,21 +1465,23 @@ Object >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 { #category : #printing }
 Object >> longPrintString [
 	"Answer a String whose characters are a description of the receiver."
-	
+
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #printing }
 Object >> longPrintStringLimitedTo: aLimitValue [
 	"Answer a String whose characters are a description of the receiver."
-	
+
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0 ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : #dependencies }
@@ -1510,8 +1527,8 @@ Object >> notYetImplemented [
 ]
 
 { #category : #'error handling' }
-Object >> notify: aString [ 
-	"Create and schedule a Notifier with the argument as the message in 
+Object >> notify: aString [
+	"Create and schedule a Notifier with the argument as the message in
 	order to request confirmation before a process can proceed."
 	<debuggerCompleteToSender>
 	Warning signal: aString
@@ -1523,12 +1540,18 @@ Object >> okToChange [
 	^ true
 ]
 
+{ #category : #accessing }
+Object >> packageOrganizer [
+
+	^ self class packageOrganizer
+]
+
 { #category : #'message performing' }
-Object >> perform: aSymbol [ 
+Object >> perform: aSymbol [
 	"Send the unary selector, aSymbol, to the receiver.
 	Fail if the number of arguments expected by the selector is not zero.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-	
+
 	<primitive: 83>
 	^ self perform: aSymbol withArguments: #()
 ]
@@ -1540,17 +1563,17 @@ Object >> perform: selector orSendTo: otherTarget [
 ]
 
 { #category : #'message performing' }
-Object >> perform: aSymbol with: anObject [ 
+Object >> perform: aSymbol with: anObject [
 	"Send the selector, aSymbol, to the receiver with anObject as its argument.
 	Fail if the number of arguments expected by the selector is not one.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-	
+
 	<primitive: 83>
 	^ self perform: aSymbol withArguments: {anObject}
 ]
 
 { #category : #'message performing' }
-Object >> perform: aSymbol with: firstObject with: secondObject [ 
+Object >> perform: aSymbol with: firstObject with: secondObject [
 	"Send the selector, aSymbol, to the receiver with the given arguments.
 	Fail if the number of arguments expected by the selector is not two.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
@@ -1560,11 +1583,11 @@ Object >> perform: aSymbol with: firstObject with: secondObject [
 ]
 
 { #category : #'message performing' }
-Object >> perform: aSymbol with: firstObject with: secondObject with: thirdObject [ 
+Object >> perform: aSymbol with: firstObject with: secondObject with: thirdObject [
 	"Send the selector, aSymbol, to the receiver with the given arguments.
 	Fail if the number of arguments expected by the selector is not three.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-	
+
 	<primitive: 83>
 	^ self perform: aSymbol
 		withArguments: {firstObject . secondObject . thirdObject}
@@ -1582,12 +1605,12 @@ Object >> perform: aSymbol with: firstObject with: secondObject with: thirdObjec
 ]
 
 { #category : #'message performing' }
-Object >> perform: selector withArguments: argArray [ 
+Object >> perform: selector withArguments: argArray [
 	"Send the selector, aSymbol, to the receiver with arguments in argArray.
-	Fail if the number of arguments expected by the selector 
+	Fail if the number of arguments expected by the selector
 	does not match the size of argArray.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-	
+
 	<primitive: 84>
 	^ self perform: selector withArguments: argArray inSuperclass: self class
 ]
@@ -1633,7 +1656,7 @@ Object >> pin [
 	"self
 		deprecated: 'Please use #pinInMemory instead'
 		transformWith: '`@receiver pin' -> '`@receiver pinInMemory'."
-		
+
 	self pinInMemory
 ]
 
@@ -1650,7 +1673,7 @@ Object >> pinInMemory [
 Object >> pointsOnlyWeaklyTo: anObject [
 	"Assume, we already know that receiver points to an object,
 	answer true if receiver points only weakly to it "
-	
+
 	self class isWeak ifFalse: [ ^ false ].
 	1 to: self class instSize do:
 		[:i | (self instVarAt: i) == anObject ifTrue: [^ false]].
@@ -1670,14 +1693,14 @@ Object >> primitiveChangeClassTo: anObject [
 	Note: The primitive will fail in most cases that you think might work. This is mostly because of differences in the format. As an example, '(Array new: 3) primitiveChangeClassTo: Morph basicNew' would fail for two of the reasons mentioned above. Array is variable and Morph is fixed (different format - failure #1). Morph is a fixed-field-only object and the array is too short (failure #2)."
 
 	<primitive: 115>
-	self isReadOnlyObject 
-		ifTrue: [ ^ self modificationForbiddenFor: #primitiveChangeClassTo: value: anObject ]. 
+	self isReadOnlyObject
+		ifTrue: [ ^ self modificationForbiddenFor: #primitiveChangeClassTo: value: anObject ].
 	self primitiveFailed
 ]
 
 { #category : #printing }
 Object >> printOn: aStream [
-	"Append to the argument, aStream, a sequence of characters that  
+	"Append to the argument, aStream, a sequence of characters that
 	identifies the receiver."
 
 	| title |
@@ -1689,7 +1712,7 @@ Object >> printOn: aStream [
 
 { #category : #printing }
 Object >> printString [
-	"Answer a String whose characters are a description of the receiver. 
+	"Answer a String whose characters are a description of the receiver.
 	If you want to print without a character limit, use fullPrintString."
 
 	^ self printStringLimitedTo: 50000
@@ -1718,12 +1741,12 @@ Object >> putOn: aStream [
 	"Write the receiver onto aStream.
 	In general we assume aStream accepts the receiver as element type.
 	Return self."
-	
+
 	aStream nextPut: self
 ]
 
 { #category : #reading }
-Object >> readFromString: aString [ 
+Object >> readFromString: aString [
 	"Create an object based on the contents of aString."
 	^ self readFrom: aString readStream
 ]
@@ -1753,13 +1776,13 @@ Object >> recursivelySetIsReadOnlyObject: aBoolean exceptObjectsIn: alreadyDone 
 			alreadyDone add: self ].
 
 	"Handle all instance vars of self."
-	self class allSlots do: [ :ivar | 
+	self class allSlots do: [ :ivar |
 		(ivar read: self)
 			recursivelySetIsReadOnlyObject: aBoolean
 			exceptObjectsIn: alreadyDone ].
-	
+
 	"Handle all indexed elements of self."
-	1 to: self basicSize do: [ :i | 
+	1 to: self basicSize do: [ :i |
 		(self basicAt: i)
 			recursivelySetIsReadOnlyObject: aBoolean
 			exceptObjectsIn: alreadyDone ]
@@ -1772,8 +1795,8 @@ Object >> refersToLiteral: aLitteral [
 
 { #category : #dependencies }
 Object >> release [
-	"Remove references to objects that may refer to the receiver. This message 
-	should be overridden by subclasses with any cycles, in which case the 
+	"Remove references to objects that may refer to the receiver. This message
+	should be overridden by subclasses with any cycles, in which case the
 	subclass should also include the expression super release."
 ]
 
@@ -1782,13 +1805,13 @@ Object >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
 	| dependents |
-	dependents := self dependents reject: [:each | each == anObject].
-	self myDependents: (dependents isEmpty ifFalse: [dependents]).
+	dependents := self dependents reject: [ :each | each == anObject ].
+	self myDependents: dependents.
 	^ anObject
 ]
 
 { #category : #'class membership' }
-Object >> respondsTo: aSymbol [ 
+Object >> respondsTo: aSymbol [
 	"Answer whether the receiver can understand the specified message selector
 	aSymbol (ie. will respond meaningfully when such a message is sent to the
 	receiver)."
@@ -1799,9 +1822,9 @@ Object >> respondsTo: aSymbol [
 { #category : #private }
 Object >> retrySetPinnedInMemory: aBoolean [
 	"Never use me directly use #setPinnedInMemory: instead"
-	
+
 	<primitive: 184 error: ec>
-	
+
 	^ self primitiveFailed
 ]
 
@@ -1815,7 +1838,7 @@ Object >> retryWithGC: execBlock until: testBlock [
 	blockValue := execBlock value.
 	(testBlock value: blockValue) ifTrue:[^blockValue].
 	Smalltalk garbageCollect.
-	^execBlock value.
+	^execBlock value
 ]
 
 { #category : #'write barrier' }
@@ -1839,7 +1862,7 @@ Object >> setPinned: aBoolean [
 	"self
 		deprecated: 'Please use #setPinnedInMemory: instead'
 		transformWith: '`@receiver setPinned: `@statements' -> '`@receiver setPinnedInMemory: `@statements'."
-		
+
 	self setPinnedInMemory: aBoolean
 ]
 
@@ -1850,18 +1873,18 @@ Object >> setPinnedInMemory: aBoolean [
     while still being reclamable by the garbage collector. This can make
 	 it easier to pass objects out through the FFI. Objects are unpinnned when created.
 	 This primitive either pins or unpins an object, and answers if it was already pinned.
-	
+
 	If there is not enough memory, I will try to find more memory and retry once."
 	<primitive: 184 error: ec>
-	
+
 	| requiredSize |
-	
+
 	ec = #'insufficient object memory'
 		ifFalse: [ ^ self primitiveFailed ].
-	
+
 	"Require at least the double of my size in Memory"
 	requiredSize := self sizeInMemory * 2.
-	
+
 	Smalltalk garbageCollect < requiredSize ifTrue:
 		[Smalltalk growMemoryByAtLeast: requiredSize].
 
@@ -1871,22 +1894,22 @@ Object >> setPinnedInMemory: aBoolean [
 { #category : #copying }
 Object >> shallowCopy [
 	"Answer a copy of the receiver which shares the receiver's instance variables. It should never be overridden. I'm invoked from the copy template method. Subclasses that need to specialize the copy should specialize the postCopy hook method."
-	
+
 	| class newObject index |
 	<primitive: 148>
 	class := self class.
 	class isVariable
-		ifTrue: 
+		ifTrue:
 			[index := self basicSize.
 			newObject := class basicNew: index.
 			[index > 0]
-				whileTrue: 
+				whileTrue:
 					[newObject basicAt: index put: (self basicAt: index).
 					index := index - 1]]
 		ifFalse: [newObject := class basicNew].
 	index := class instSize.
 	[index > 0]
-		whileTrue: 
+		whileTrue:
 			[newObject instVarAt: index put: (self instVarAt: index).
 			index := index - 1].
 	^ newObject
@@ -1902,12 +1925,20 @@ Object >> shouldBeImplemented [
 { #category : #'literal testing' }
 Object >> shouldBePrintedAsLiteral [
 
-	^self isLiteral
+	"Only literals should be printed as literals"
+
+	^ self isLiteral
+]
+
+{ #category : #'literal testing' }
+Object >> shouldBePrintedAsLiteral: alreadyVisited [
+
+	^ self shouldBePrintedAsLiteral
 ]
 
 { #category : #'error handling' }
 Object >> shouldNotImplement [
-	"Announce that, although the receiver inherits this message, 
+	"Announce that, although the receiver inherits this message,
 	it should not implement it."
 	<debuggerCompleteToSender>
 	ShouldNotImplement signalFor: thisContext sender selector
@@ -1915,8 +1946,8 @@ Object >> shouldNotImplement [
 
 { #category : #accessing }
 Object >> size [
-	"Primitive. Answer the number of indexable variables in the receiver. 
-	This value is the same as the largest legal subscript. Essential. See Object 
+	"Primitive. Answer the number of indexable variables in the receiver.
+	This value is the same as the largest legal subscript. Essential. See Object
 	documentation whatIsAPrimitive."
 
 	<primitive: 62>
@@ -1939,42 +1970,18 @@ Object >> someObject [
 	 objects."
 
 	<primitive: 138>
-	self primitiveFailed.
+	self primitiveFailed
 ]
 
 { #category : #private }
 Object >> species [
-	"Answer the preferred class for reconstructing the receiver.  For example, 
-	collections create new collections whenever enumeration messages such as 
-	collect: or select: are invoked.  The new kind of collection is determined by 
-	the species of the original collection.  Species and class are not always the 
+	"Answer the preferred class for reconstructing the receiver.  For example,
+	collections create new collections whenever enumeration messages such as
+	collect: or select: are invoked.  The new kind of collection is determined by
+	the species of the original collection.  Species and class are not always the
 	same.  For example, the species of Interval is Array."
 	<primitive: 111>
 	^self class
-]
-
-{ #category : #stepping }
-Object >> stepAt: millisecondClockValue in: aWindow [
-
-	^ self stepIn: aWindow
-]
-
-{ #category : #stepping }
-Object >> stepIn: aWindow [
-
-	^ self step
-]
-
-{ #category : #stepping }
-Object >> stepTime [
-	
-	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
-]
-
-{ #category : #stepping }
-Object >> stepTimeIn: aSystemWindow [
-	
-	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
 ]
 
 { #category : #private }
@@ -1986,8 +1993,8 @@ Object >> storeAt: offset inTempFrame: aContext [
 ]
 
 { #category : #printing }
-Object >> storeOn: aStream [ 
-	"Append to the argument aStream a sequence of characters that is an 
+Object >> storeOn: aStream [
+	"Append to the argument aStream a sequence of characters that is an
 	expression whose evaluation creates an object similar to the receiver."
 
 	aStream nextPut: $(.
@@ -2015,7 +2022,7 @@ Object >> storeOn: aStream [
 
 { #category : #printing }
 Object >> storeString [
-	"Answer a String representation of the receiver from which the receiver 
+	"Answer a String representation of the receiver from which the receiver
 	can be reconstructed."
 
 	^ String streamContents: [:s | self storeOn: s]
@@ -2033,13 +2040,16 @@ Object >> subclassResponsibility [
 Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 	"When I am finalized (e.g., garbage collected) close the associated resource handle by sending aSelector to the appropriate finalizer (the guy who knows how to get rid of the resource).
 	WARNING: Neither the finalizer nor the resource handle are allowed to reference me. If they do, then I will NEVER be garbage collected. Since this cannot be validated here, it is up to the client to make sure this invariant is not broken."
-	self == aFinalizer ifTrue:[self error: 'I cannot finalize myself'].
-	self == aResourceHandle ifTrue:[self error: 'I cannot finalize myself'].
-	^self finalizationRegistry add: self executor:
-		(ObjectFinalizer new
-			receiver: aFinalizer
-			selector: aSelector
-			argument: aResourceHandle)
+
+	self == aFinalizer ifTrue: [ self error: 'I cannot finalize myself' ].
+	self == aResourceHandle ifTrue: [
+		self error: 'I cannot finalize myself' ].
+	^ self finalizationRegistry
+		  add: self
+		  finalizer: (ObjectFinalizer new
+				   receiver: aFinalizer
+				   selector: aSelector
+				   argument: aResourceHandle)
 ]
 
 { #category : #'error handling' }
@@ -2052,7 +2062,7 @@ Object >> unpin [
 	"self
 		deprecated: 'Please use #unpinInMemory instead'
 		transformWith: '`@receiver unpin' -> '`@receiver unpinInMemory'."
-		
+
 	self unpinInMemory
 ]
 
@@ -2066,9 +2076,9 @@ Object >> unpinInMemory [
 ]
 
 { #category : #updating }
-Object >> update: aParameter [ 
-	"Receive a change notice from an object of whom the receiver is a 
-	dependent. The default behavior is to do nothing; a subclass might want 
+Object >> update: aParameter [
+	"Receive a change notice from an object of whom the receiver is a
+	dependent. The default behavior is to do nothing; a subclass might want
 	to change itself in some way."
 
 	^ self
@@ -2076,9 +2086,9 @@ Object >> update: aParameter [
 
 { #category : #updating }
 Object >> update: anAspect with: anObject [
-	"Receive a change notice from an object of whom the receiver is a 
+	"Receive a change notice from an object of whom the receiver is a
 	dependent. The default behavior is to call update:,
-	which by default does nothing; a subclass might want 
+	which by default does nothing; a subclass might want
 	to change itself in some way."
 
 	^ self update: anAspect
@@ -2103,7 +2113,7 @@ Object >> veryDeepCopy [
 	| copier new |
 	copier := DeepCopier new initialize: 4096 "self initialDeepCopierSize".
 	new := self veryDeepCopyWith: copier.
-	copier references associationsDo: [:assoc | 
+	copier references associationsDo: [:assoc |
 		assoc value veryDeepFixupWith: copier].
 	copier fixDependents.
 	^ new
@@ -2112,55 +2122,55 @@ Object >> veryDeepCopy [
 { #category : #copying }
 Object >> veryDeepCopyWith: deepCopier [
 	"Copy me and the entire tree of objects I point to.  An object in the tree twice is copied once, and both references point to him.  deepCopier holds a dictionary of objects we have seen.  Some classes refuse to be copied.  Some classes are picky about which fields get deep copied."
-	
+
 	| class selfNumberOfInstanceVariables fieldOfSelf copyOfSelf currentClass hasVeryDeepInnerMethod currentNumberOfInstanceVariables |
-	
+
 	deepCopier references at: self ifPresent: [ :newer | 	"already copied" ^ newer].
 	class := self class.
 	class isMeta ifTrue: [ "a metaclass" ^ self ].
 	copyOfSelf := self shallowCopy.
 	deepCopier references at: self put: copyOfSelf.	"remember"
-		
+
 	(class isVariable and: [class isPointers]) ifTrue: [
 		self basicSize to: 1 by: -1 do: [ :i |
-			fieldOfSelf := self basicAt: i. 
-			copyOfSelf 
+			fieldOfSelf := self basicAt: i.
+			copyOfSelf
 				basicAt: i
-				put: (deepCopier references 
+				put: (deepCopier references
 					at: fieldOfSelf
 					ifAbsent: [ fieldOfSelf veryDeepCopyWith: deepCopier ])]].
-	
+
 	"Ask each superclass if it wants to share (weak copy) any inst vars"
 	copyOfSelf veryDeepInner: deepCopier.
 
 	"other superclasses want all instance variables deep copied"
-	currentClass := class.  
+	currentClass := class.
 	selfNumberOfInstanceVariables := class instSize.
-	
+
 	[ selfNumberOfInstanceVariables == 0 ] whileFalse: [
 		hasVeryDeepInnerMethod := currentClass includesSelector: #veryDeepInner:.
 		currentNumberOfInstanceVariables := currentClass instSize - currentClass superclass instSize.
-		hasVeryDeepInnerMethod 
+		hasVeryDeepInnerMethod
 			ifTrue: ["skip inst vars"
-				selfNumberOfInstanceVariables := selfNumberOfInstanceVariables - currentNumberOfInstanceVariables]	
-			ifFalse: [ 
-				currentNumberOfInstanceVariables timesRepeat: [ 
+				selfNumberOfInstanceVariables := selfNumberOfInstanceVariables - currentNumberOfInstanceVariables]
+			ifFalse: [
+				currentNumberOfInstanceVariables timesRepeat: [
 					fieldOfSelf := self instVarAt: selfNumberOfInstanceVariables.
-					copyOfSelf 
-						instVarAt: selfNumberOfInstanceVariables 
-						put: (deepCopier references 
-							at: fieldOfSelf 
+					copyOfSelf
+						instVarAt: selfNumberOfInstanceVariables
+						put: (deepCopier references
+							at: fieldOfSelf
 							ifAbsent: [ fieldOfSelf veryDeepCopyWith: deepCopier ]).
 					selfNumberOfInstanceVariables := selfNumberOfInstanceVariables - 1 ]].
 		currentClass := currentClass superclass ].
-		
+
 	^ copyOfSelf
 ]
 
 { #category : #copying }
 Object >> veryDeepFixupWith: deepCopier [
 	"I have no fields and no superclass.  Catch the super call."
-	
+
 	"avoid to use me we will deprecate it in the future"
 ]
 
@@ -2169,20 +2179,6 @@ Object >> veryDeepInner: deepCopier [
 	"No special treatment for inst vars of my superclasses.  Override when some need to be weakly copied.  Object>>veryDeepCopyWith: will veryDeepCopy any inst var whose class does not actually define veryDeepInner:"
 
 	"avoid to use me we will deprecate it in the future"
-]
-
-{ #category : #stepping }
-Object >> wantsSteps [
-	"Overridden by morphic classes whose instances want to be stepped,
-	or by model classes who want their morphic views to be stepped."
-
-	^ false
-]
-
-{ #category : #stepping }
-Object >> wantsStepsIn: aSystemWindow [
-	
-	^ self wantsSteps
 ]
 
 { #category : #'model - updating' }
@@ -2204,30 +2200,30 @@ Object >> writeSlotNamed: aName value: anObject [
 Object >> yourself [
 	"Answer self. The message yourself deserves a bit of explanation.
 	Sending yourself is handy to get the receiver of a message. It is especially useful when using a cascade since all the cascaded messages are send to the receiver. Let us look at an example.
-	
+
 	Imagine that you have the following expression
 		#('hello' 'world') at: 2 put: 'pharo'
-	and that you would like to get the modified array #('hello' 'pharo') - the receiver of the message at:put:. 
-	
+	and that you would like to get the modified array #('hello' 'pharo') - the receiver of the message at:put:.
+
 	Right now the expression #('hello' 'world') at: 2 put: 'pharo' returns 'pharo' and not the receiver because the message at:put: always returns the second argument.
-	 
+
 	To get the receiver we can simply use a cascade as follows:
 		#('hello' 'world') at: 2 put: 'pharo'; yourself
 	and since yourself returns the receiver of the message we will get the modified array.
-	
+
 	Stepping back using a cascade and yourself is equivalent to declare a variable, assign the expression and return the variable as follows:
 	| a |
-	a := #('hello' 'world'). 
+	a := #('hello' 'world').
 	a at: 2 put: 'pharo'.
-	a 
+	a
 	"
-	
+
 	^self
 ]
 
 { #category : #comparing }
-Object >> ~= anObject [ 
-	"Answer whether the receiver and the argument do not represent the 
+Object >> ~= anObject [
+	"Answer whether the receiver and the argument do not represent the
 	same object."
 
 	^ self = anObject == false

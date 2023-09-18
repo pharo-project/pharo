@@ -10,7 +10,7 @@ Class {
 
 { #category : #'instance creation' }
 BalloonBuffer class >> new [
-	^self new: 256.
+	^self new: 256
 ]
 
 { #category : #accessing }
@@ -48,7 +48,7 @@ BalloonBuffer >> floatAt: index [
 BalloonBuffer >> floatAt: index put: value [
 	"For simulation only"
 	<primitive: 'primitiveAtPut' module: 'FloatArrayPlugin'>
-	value isFloat 
+	value isFloat
 		ifTrue:[self basicAt: index put: value asIEEE32BitWord]
 		ifFalse:[self at: index put: value asFloat].
 	^value

@@ -141,7 +141,7 @@ ClyBrowserMorph class >> canBeDefault [
 
 { #category : #'instance creation' }
 ClyBrowserMorph class >> on: aNavigationEnvironment [
-	^self new 
+	^self new
 		navigationEnvironment: aNavigationEnvironment;
 		setUpAvailablePlugins
 ]
@@ -161,7 +161,7 @@ ClyBrowserMorph >> activeStatusBar [
 { #category : #accessing }
 ClyBrowserMorph >> addPlugin: aBrowserPlugin [
 	plugins detect: [ :each | each class = aBrowserPlugin class ] ifFound: [ ^self ].
-	
+
 	aBrowserPlugin browser: self.
 	plugins add: aBrowserPlugin
 ]
@@ -171,9 +171,9 @@ ClyBrowserMorph >> allContexts [
 
 	| result |
 	result := OrderedCollection new.
-	
+
 	self allContextsDo: [:each | result add: each ].
-	
+
 	^result
 ]
 
@@ -181,28 +181,28 @@ ClyBrowserMorph >> allContexts [
 ClyBrowserMorph >> allContextsDo: aBlock [
 
 	self navigationContextsDo: aBlock.
-	
-	tabManager tools 
+
+	tabManager tools
 		select: [ :each | each isKindOf: ClyTextEditorToolMorph ]
 		thenDo: [ :each | aBlock value: each createTextContext ]
 ]
 
 { #category : #navigation }
 ClyBrowserMorph >> allNavigationScopes [
-	
+
 	| defaultScope |
 	defaultScope := self defaultNavigationScope.
-	
-	^self systemScope = defaultScope 
+
+	^self systemScope = defaultScope
 		ifTrue: [ {self systemScope} ]
 		ifFalse: [ { self systemScope. defaultScope } ]
 ]
 
 { #category : #'opening/closing' }
-ClyBrowserMorph >> buildWindow [	
+ClyBrowserMorph >> buildWindow [
 	| window |
 	window := (SystemWindow labelled: self newWindowTitle) model: self.
-	window 
+	window
 		addMorph: self frame: (0@0 extent: 1@1);
 		updatePaneColors.
 	^window
@@ -217,25 +217,25 @@ ClyBrowserMorph >> changeStateBy: aBlock [
 	navigationFailed := false.
 	state := self snapshotState.
 	^[
-		aBlock on: Error do: [:err | 
+		aBlock on: Error do: [:err |
 			navigationFailed := true. "this flag prevents any UI update in case of error"
 			err pass]
-	] ensure: [ 
+	] ensure: [
 		navigationStarted := false.
-		navigationFailed | (state isCurrentStateOf: self) ifFalse: [ 
+		navigationFailed | (state isCurrentStateOf: self) ifFalse: [
 			self recordNavigationState: state.
-			self updateWindowTitle.				
+			self updateWindowTitle.
 			self rebuildAllTools]]
 ]
 
 { #category : #navigation }
 ClyBrowserMorph >> changeStateOf: aQueryView by: aBlock [
-	
+
 	| newTools |
 	self changeStateBy: [
 		aBlock value.
 		aQueryView changesWasInitiatedByUser ifTrue: [
-			newTools := OrderedCollection new.	
+			newTools := OrderedCollection new.
 			tabManager buildToolsOn: newTools for: aQueryView createSelectionContext.
 			tabManager desiredSelection: (newTools collect: [:each | each class])	].
 	]
@@ -245,14 +245,14 @@ ClyBrowserMorph >> changeStateOf: aQueryView by: aBlock [
 ClyBrowserMorph >> close [
 	| currentWindow |
 	currentWindow := self window.
-	
-	(currentWindow ownerThatIsA: GroupWindowMorph) ifNotNil: [:group | 
-		^self okToChange ifTrue: [  
-			[group removeWindow: currentWindow] 
-				on: ProvideAnswerNotification do: [:notification | 
+
+	(currentWindow ownerThatIsA: GroupWindowMorph) ifNotNil: [:group |
+		^self okToChange ifTrue: [
+			[group removeWindow: currentWindow]
+				on: ProvideAnswerNotification do: [:notification |
 					"We already got answer from okToChange check above"
 					notification resume: true]]].
-	
+
 	currentWindow close
 ]
 
@@ -266,10 +266,10 @@ Is it OK to discard changes?'
 { #category : #context }
 ClyBrowserMorph >> createCommandContext [
 	"Some subclasses needs general global context where commands can be attached
-	independently from the actual internal widget under focus. 
+	independently from the actual internal widget under focus.
 	They should override this method returning appropriate global context instance.
 	But by default it is undefined unknown context"
-	
+
 	^ClyUnknownBrowserContext for: self
 ]
 
@@ -277,14 +277,15 @@ ClyBrowserMorph >> createCommandContext [
 ClyBrowserMorph >> createWindowGroupFrom: currentWindow [
   | group pos ext |
 	(currentWindow ownerThatIsA: GroupWindowMorph) ifNotNil: [:existing | ^existing].
-	
+
 	pos := currentWindow position.
 	ext := currentWindow extent.
 	group := ClyGroupWindowMorph new.
 	group addWindow: currentWindow.
-	(group openInWindowLabeled: currentWindow label) 
+	(group openInWindowLabeled: currentWindow label)
  		extent: ext;
-		position: pos.
+		position: pos;
+		model: group.
 	^group
 ]
 
@@ -296,14 +297,14 @@ ClyBrowserMorph >> decorateTool: aBrowserTool [
 
 { #category : #navigation }
 ClyBrowserMorph >> defaultNavigationScope [
-	
+
 	^self systemScope
 ]
 
 { #category : #accessing }
 ClyBrowserMorph >> disablePluginsWhichAreNotIn: aBrowser [
 
-	plugins removeAllSuchThat: [ :each | 
+	plugins removeAllSuchThat: [ :each |
 		each isAutoActivated and: [ (aBrowser hasPlugin: each) not ] ]
 ]
 
@@ -318,7 +319,7 @@ ClyBrowserMorph >> ensureInitialState [
 
 	(navigationViews anySatisfy: [ :each | each hasRealQuery ])
 		ifTrue: [ ^self].
-		
+
 	self prepareDefaultState
 ]
 
@@ -347,7 +348,7 @@ ClyBrowserMorph >> ignoreNavigationDuring: aBlock [
 
 { #category : #initialization }
 ClyBrowserMorph >> initialExtent [
-	^ 850@620
+	^ 850@620 * self currentWorld displayScaleFactor
 ]
 
 { #category : #initialization }
@@ -365,25 +366,25 @@ ClyBrowserMorph >> initialize [
 
 { #category : #initialization }
 ClyBrowserMorph >> initializeNavigationPanel [
-	
+
 	| eachViewExtent lastViewLeft |
 	navigationPanel := PanelMorph new.
 	navigationPanel name: 'navigation panel'.
-	navigationPanel changeProportionalLayout.	
+	navigationPanel changeProportionalLayout.
 	navigationViews := OrderedCollection new.
 	self initializeNavigationViews.
-	
+
 	eachViewExtent := 1.0 / navigationViews size.
 	lastViewLeft := 0.0.
 	navigationViews do: [ :each | | frame |
 		frame := (lastViewLeft @ 0.0 corner: lastViewLeft + eachViewExtent @ 1.0) asLayoutFrame.
-		each == navigationViews last ifFalse: [ 
+		each == navigationViews last ifFalse: [
 			frame := frame rightOffset: -4 ].
-		navigationPanel 
-			addMorph: each 
+		navigationPanel
+			addMorph: each
 			fullFrame: frame.
 		lastViewLeft := lastViewLeft + eachViewExtent ].
-	
+
 	navigationPanel addPaneSplitters.
 	self addMorph: navigationPanel fullFrame: ((0.0 @ 0 corner: 1.0 @ 0.5) asLayoutFrame bottomOffset: toolbar height negated)
 ]
@@ -397,10 +398,10 @@ ClyBrowserMorph >> initializeNavigationViews [
 ClyBrowserMorph >> initializeToolsPanel [
 	toolbar := ClyToolbarMorph of: self.
 	tabManager := ClyNotebookManager of: self.
-	
+
 	toolPanel := PanelMorph new.
-	toolPanel name: 'tools panel'. 
-	toolPanel 
+	toolPanel name: 'tools panel'.
+	toolPanel
 		changeTableLayout;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
@@ -419,7 +420,7 @@ ClyBrowserMorph >> isNavigationPanelFocused [
 
 { #category : #updating }
 ClyBrowserMorph >> itemsChanged [
-	
+
 	navigationStarted ifTrue: [ ^self ].
 	navigationStarted := true.
 
@@ -440,6 +441,12 @@ ClyBrowserMorph >> navigateBack [
 { #category : #navigation }
 ClyBrowserMorph >> navigateForward [
 	navigationHistory redoNavigationOf: self
+]
+
+{ #category : #accessing }
+ClyBrowserMorph >> navigationContexts [
+
+	^ navigationViews collect: [ :each | each createSelectionContext ]
 ]
 
 { #category : #accessing }
@@ -476,7 +483,7 @@ ClyBrowserMorph >> navigationViews [
 { #category : #initialization }
 ClyBrowserMorph >> newNavigationView [
 	| view |
-	view := ClyQueryViewMorph for: self. 
+	view := ClyQueryViewMorph for: self.
 	navigationViews add: view.
 	^view
 ]
@@ -495,12 +502,12 @@ ClyBrowserMorph >> okToChange [
 { #category : #'opening/closing' }
 ClyBrowserMorph >> open [
 	| window |
-	
+
 	self ensureInitialState.
 	window := self openInWindow.
 	window model: self.
 	self updateWindowTitle.
-	window minimumExtent: 650@500.0
+	window minimumExtent: (650@500.0) scaledByDisplayScaleFactor
 ]
 
 { #category : #'opening/closing' }
@@ -512,7 +519,7 @@ ClyBrowserMorph >> openAnotherBrowser: aBrowser [
 ClyBrowserMorph >> openInWindow: aWindow [
 	| groupWindow myWindow |
 	groupWindow := self createWindowGroupFrom: aWindow.
-	
+
 	myWindow := self buildWindow.
 	groupWindow addWindow: myWindow.
 	myWindow activate.
@@ -527,7 +534,7 @@ ClyBrowserMorph >> plugins [
 { #category : #initialization }
 ClyBrowserMorph >> prepareDefaultState [
 	"The initial state is required state for browser.
-	But default state is the state which should be applyed 
+	But default state is the state which should be applyed
 	when user to not setup any custom state to the browser.
 	For example browser can be opened with particulal selected item.
 	In that case it will be initial state of browser and default state will be ignored"
@@ -541,8 +548,8 @@ ClyBrowserMorph >> prepareInitialState [
 
 { #category : #initialization }
 ClyBrowserMorph >> prepareInitialStateBy: aBlock [
-	
-	navigationHistory ignoreNavigationDuring: [		
+
+	navigationHistory ignoreNavigationDuring: [
 		self prepareInitialState.
 		aBlock valueWithPossibleArgument: self]
 ]
@@ -586,7 +593,7 @@ ClyBrowserMorph >> searchDialog [
 { #category : #initialization }
 ClyBrowserMorph >> setUpAvailablePlugins [
 
-	ClyBrowserPlugin allSubclasses 
+	ClyBrowserPlugin allSubclasses
 		select: [ :each | each isAutoActivated ]
 		thenDo: [ :each | self addPlugin: each new ]
 ]
@@ -599,7 +606,7 @@ ClyBrowserMorph >> setWindowTitle: aString in: aWindow [
 
 { #category : #navigation }
 ClyBrowserMorph >> snapshotState [
-	
+
 	^ClyBrowserState of: self
 ]
 
@@ -608,7 +615,7 @@ ClyBrowserMorph >> spawnBrowser: aBrowserClass withState: navigationBlock [
 	| browser |
 	browser := aBrowserClass on: navigationEnvironment systemScope: self systemScope.
 	browser disablePluginsWhichAreNotIn: self.
-	
+
 	browser prepareInitialStateBy: navigationBlock.
 	self openAnotherBrowser: browser.
 	browser wasSpawnedFrom: self.
@@ -655,10 +662,10 @@ ClyBrowserMorph >> tabManager [
 
 { #category : #'tools support' }
 ClyBrowserMorph >> toggleFullWindowTabs [
-	
+
 	| tabMorph |
 	tabMorph := tabManager tabMorph.
-	(submorphs includes: tabMorph ) 
+	(submorphs includes: tabMorph )
 		ifFalse: [ self addMorph: tabMorph fullFrame: LayoutFrame identity]
 		ifTrue: [ toolPanel addMorphBack: tabMorph ]
 ]
@@ -677,11 +684,11 @@ ClyBrowserMorph >> update [
 { #category : #updating }
 ClyBrowserMorph >> updateWindowTitle [
 
-	self window ifNotNil: [ :w | 
+	self window ifNotNil: [ :w |
 		self setWindowTitle: self newWindowTitle in: w.
 		"in the case when window is managed as tab by window group
 		we should set up top group window label too"
-		(self ownerThatIsA: GroupWindowMorph) ifNotNil: [:group | 
+		(self ownerThatIsA: GroupWindowMorph) ifNotNil: [:group |
 			group window ifNotNil: [:mainWindow |
 				self setWindowTitle: w labelString in: mainWindow]]
 	]
@@ -689,8 +696,8 @@ ClyBrowserMorph >> updateWindowTitle [
 
 { #category : #navigation }
 ClyBrowserMorph >> wasSpawnedFrom: aBrowser [
-	
-	self recordNavigationState:  (ClyAccrossWindowNavigationState from: aBrowser).
+
+	self recordNavigationState:  (ClyAccrossWindowNavigationState from: aBrowser)
 ]
 
 { #category : #'opening/closing' }

@@ -20,7 +20,7 @@ EpEntryReferencesFilter class >> title [
 { #category : #comparing }
 EpEntryReferencesFilter >> = other [
 
-	^ self class = other class and: [ 
+	^ self class = other class and: [
 		self rejectedEntryReferences = other rejectedEntryReferences ]
 ]
 

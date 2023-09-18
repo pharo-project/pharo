@@ -29,7 +29,7 @@ RubDisplayScanner >> backgroundColor: aColor [
 
 { #category : #'stop conditions' }
 RubDisplayScanner >> cr [
-	"When a carriage return is encountered, simply increment the pointer 
+	"When a carriage return is encountered, simply increment the pointer
 	into the paragraph."
 
 	pendingKernX := 0.
@@ -41,11 +41,11 @@ RubDisplayScanner >> cr [
 
 { #category : #'stop conditions' }
 RubDisplayScanner >> crossedX [
-	"This condition will sometimes be reached 'legally' during display, when, 
-	for instance the space that caused the line to wrap actually extends over 
-	the right boundary. This character is allowed to display, even though it 
-	is technically outside or straddling the clipping ectangle since it is in 
-	the normal case not visible and is in any case appropriately clipped by 
+	"This condition will sometimes be reached 'legally' during display, when,
+	for instance the space that caused the line to wrap actually extends over
+	the right boundary. This character is allowed to display, even though it
+	is technically outside or straddling the clipping ectangle since it is in
+	the normal case not visible and is in any case appropriately clipped by
 	the scanner."
 
 	^ true
@@ -60,8 +60,8 @@ RubDisplayScanner >> defaultTextColor [
 { #category : #displaying }
 RubDisplayScanner >> displayEmbeddedForm: aForm [
 
-	aForm 
-		displayOn: bitBlt destForm 
+	aForm
+		displayOn: bitBlt destForm
 		at: destX @ (lineY + line baseline - aForm height)
 		clippingBox: bitBlt clipRect
 		rule: Form blend
@@ -101,8 +101,8 @@ RubDisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 						in: string rightX: rightMargin stopConditions: stopConditions
 						kern: kern.
 		lastIndex >= startIndex ifTrue:[
-			bitBlt displayString: string 
-				from: startIndex 
+			bitBlt displayString: string
+				from: startIndex
 	"XXXX: The following is an interesting bug. All stopConditions exept #endOfRun
 		have lastIndex past the last character displayed. #endOfRun sets it *on* the character.
 		If we display up until lastIndex then we will also display invisible characters like
@@ -126,16 +126,16 @@ RubDisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 
 { #category : #displaying }
 RubDisplayScanner >> displayString: string from: startIndex to: stopIndex at: aPoint [
-	font displayString: string on: bitBlt 
-		from: startIndex 
-		to: stopIndex 
+	font displayString: string on: bitBlt
+		from: startIndex
+		to: stopIndex
 		at: aPoint kern: kern
 ]
 
 { #category : #'stop conditions' }
 RubDisplayScanner >> endOfRun [
-	"The end of a run in the display case either means that there is actually 
-	a change in the style (run code) to be associated with the string or the 
+	"The end of a run in the display case either means that there is actually
+	a change in the style (run code) to be associated with the string or the
 	end of this line has been reached."
 	| runLength |
 	lastIndex = line last ifTrue: [^true].
@@ -151,20 +151,20 @@ RubDisplayScanner >> fillTextBackground [
 	fillBlt == nil ifFalse:
 		["Not right"
 		fillBlt destX: line left destY: lineY
-			width: line width left height: line lineHeight; copyBits].
+			width: line width left height: line lineHeight; copyBits]
 ]
 
 { #category : #'multilingual scanning' }
 RubDisplayScanner >> isBreakableAt: index in: sourceString [
 
-	^ false.
+	^ false
 ]
 
 { #category : #'stop conditions' }
 RubDisplayScanner >> paddedSpace [
-	"Each space is a stop condition when the alignment is right justified. 
-	Padding must be added to the base width of the space according to 
-	which space in the line this space is and according to the amount of 
+	"Each space is a stop condition when the alignment is right justified.
+	Padding must be added to the base width of the space according to
+	which space in the line this space is and according to the amount of
 	space that remained at the end of the line when it was composed."
 
 	spaceCount := spaceCount + 1.
@@ -177,7 +177,7 @@ RubDisplayScanner >> paddedSpace [
 { #category : #scanning }
 RubDisplayScanner >> placeEmbeddedObject: anchoredMorph [
 	anchoredMorph relativeTextAnchorPosition ifNotNil:[
-		anchoredMorph position: 
+		anchoredMorph position:
 			anchoredMorph relativeTextAnchorPosition +
 			(anchoredMorph owner bounds origin x @ 0)
 			- (0@morphicOffset y) + (0@lineY).
@@ -191,12 +191,12 @@ RubDisplayScanner >> placeEmbeddedObject: anchoredMorph [
 		destY := lineY.
 		baselineY := lineY + anchoredMorph height..
 		runX := destX.
-		anchoredMorph 
-			displayOn: bitBlt destForm 
+		anchoredMorph
+			displayOn: bitBlt destForm
 			at: destX - anchoredMorph width @ destY
 			clippingBox: bitBlt clipRect
 			rule: Form blend
-			fillColor: Color white 
+			fillColor: Color white
 	].
 	^ true
 ]
@@ -213,22 +213,22 @@ RubDisplayScanner >> plainTab [
 { #category : #private }
 RubDisplayScanner >> presentationText: t [
 
-	text := t.
+	text := t
 ]
 
 { #category : #'stop conditions' }
 RubDisplayScanner >> setDestForm: df [
-	bitBlt setDestForm: df.
+	bitBlt setDestForm: df
 ]
 
 { #category : #'stop conditions' }
-RubDisplayScanner >> setFont [ 
+RubDisplayScanner >> setFont [
 	foregroundColor := self defaultTextColor.
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
 	font installOn: bitBlt foregroundColor: foregroundColor backgroundColor: Color transparent.
 	text ifNotNil:[
 		baselineY := lineY + line baseline.
-		destY := baselineY - font ascent].
+		destY := baselineY - font ascent]
 ]
 
 { #category : #'stop conditions' }
@@ -242,13 +242,13 @@ RubDisplayScanner >> setPort: aBitBlt [
 { #category : #'stop conditions' }
 RubDisplayScanner >> setStopConditions [
 	"Set the font and the stop conditions for the current run."
-	
+
 	self setFont.
 	self setConditionArray: (alignment = self justified ifTrue: [#paddedSpace]).
 
 "
 	alignment = self justified ifTrue: [
-		stopConditions == DefaultStopConditions 
+		stopConditions == DefaultStopConditions
 			ifTrue:[stopConditions := stopConditions copy].
 		stopConditions at: Character space asciiValue + 1 put: #paddedSpace]
 "
@@ -264,7 +264,7 @@ RubDisplayScanner >> tab [
 { #category : #private }
 RubDisplayScanner >> text: t textStyle: ts foreground: foreColor background: backColor fillBlt: blt ignoreColorChanges: shadowMode [
 	text := t.
-	textStyle := ts. 
+	textStyle := ts.
 	foregroundColor := foreColor.
 	(backgroundColor := backColor) isTransparent ifFalse:
 		[fillBlt := blt.

@@ -58,7 +58,7 @@ OSTouchRotationDetector >> createEventBeginning [
 	vectorAtBeginnig := self vectorBetweenFirstAndLastFingers.
 	currentAngle := vectorAtBeginnig angleWith: self vectorBetweenFirstAndLastFingers.
 	self updateCurrentAngle .
-	
+
 	^ self eventClassBeginGesture new
 		timestamp: eventHandler lastUpdateTimestamp;
 		dTheta: 0;
@@ -117,7 +117,7 @@ OSTouchRotationDetector >> isBrinkAngleOverwhelmed [
 { #category : #update }
 OSTouchRotationDetector >> updateCurrentAngle [
 	lastAngle := currentAngle.
-	currentAngle := vectorAtBeginnig angleWith: self vectorBetweenFirstAndLastFingers.
+	currentAngle := vectorAtBeginnig angleWith: self vectorBetweenFirstAndLastFingers
 ]
 
 { #category : #calculating }
@@ -128,13 +128,13 @@ OSTouchRotationDetector >> vectorBetweenFirstAndLastFingers [
 { #category : #visiting }
 OSTouchRotationDetector >> visitTouchPointerDownEvent: anEvent [
 	super visitTouchPointerDownEvent: anEvent.
-	eventHandler fingerCount = self necessaryFingers 
+	eventHandler fingerCount = self necessaryFingers
 		ifTrue:[ vectorAtBeginnig := self vectorBetweenFirstAndLastFingers ]
 ]
 
 { #category : #visiting }
 OSTouchRotationDetector >> visitTouchPointerMoveEvent: anEvent [
 	super visitTouchPointerMoveEvent: anEvent.
-	eventHandler fingerCount = self necessaryFingers 
+	eventHandler fingerCount = self necessaryFingers
 		ifTrue:[ self updateCurrentAngle ]
 ]

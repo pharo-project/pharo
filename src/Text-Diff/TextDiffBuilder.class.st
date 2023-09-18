@@ -35,18 +35,17 @@ TextDiffBuilder class >> buildDisplayPatchFrom: sourceText to: destinationText [
 ]
 
 { #category : #'instance creation' }
-TextDiffBuilder class >> buildDisplayPatchFrom: sourceText to: destinationText inClass: sourceClass [ 
+TextDiffBuilder class >> buildDisplayPatchFrom: sourceText to: destinationText inClass: sourceClass [
 
-	^self 
-		buildDisplayPatchFrom: sourceText 
+	^self
+		buildDisplayPatchFrom: sourceText
 		to: destinationText
 		inClass: sourceClass
 		prettyDiffs: self diffsWithPrettyPrint
-		
 ]
 
 { #category : #'instance creation' }
-TextDiffBuilder class >> buildDisplayPatchFrom: srcString to: dstString inClass: srcClass prettyDiffs: prettyDiffs [ 
+TextDiffBuilder class >> buildDisplayPatchFrom: srcString to: dstString inClass: srcClass prettyDiffs: prettyDiffs [
 	"Build a display patch for mapping via diffs from srcString to dstString
 	in the given class. If prettyDiffs is true, do the diffing for pretty-printed forms"
 
@@ -61,24 +60,24 @@ TextDiffBuilder class >> buildDisplayPatchFrom: srcString to: dstString inClass:
 ]
 
 { #category : #settings }
-TextDiffBuilder class >> differatorSettingsOn: aBuilder [ 
+TextDiffBuilder class >> differatorSettingsOn: aBuilder [
 	<systemsettings>
-	(aBuilder group: #differator) 
+	(aBuilder group: #differator)
 		label: 'Code Diffs';
-		parent: #codeBrowsing; 
+		parent: #codeBrowsing;
 		description: 'All settings concerned with the computation of diffs' ;
-		with: [	
-			(aBuilder setting: #ignoreLineEndings) 
+		with: [
+			(aBuilder setting: #ignoreLineEndings)
 				label: 'Ignore line endings';
 				target: self;
 				default: true;
 		 		description: 'When selected, line ending differences will be ignored ' ];
-		with: [  
+		with: [
 		(aBuilder setting: #diffsWithPrettyPrint)
-				target: self;	
+				target: self;
 				default: false;
 				label: 'Pretty print differences' ;
-				description: 'If true, displays of source code differences will be pretty-printed first' 
+				description: 'If true, displays of source code differences will be pretty-printed first'
 		]
 ]
 
@@ -108,14 +107,14 @@ TextDiffBuilder class >> from: srcString to: dstString inClass: srcClass [
 { #category : #settings }
 TextDiffBuilder class >> ignoreLineEndings [
 	"Answer a boolean telling if line endings differences should be ignored or emphasized"
-	
+
 	^IgnoreLineEndings ifNil: [ true ]
 ]
 
 { #category : #settings }
 TextDiffBuilder class >> ignoreLineEndings: aBoolean [
 	"Setting for  if line ending differences should be ignored or emphasized"
-	
+
 	IgnoreLineEndings := aBoolean
 ]
 
@@ -137,7 +136,7 @@ TextDiffBuilder class >> initializeTextAttributes [
 TextDiffBuilder >> buildDisplayPatch [
 
 	^Text streamContents: [ :stream |
-		self 
+		self
 			patchSequenceDoIfMatch: [ :string |
 				self print: string withAttributes: NormalTextAttributes on: stream ]
 			ifInsert: [ :string |
@@ -151,12 +150,12 @@ TextDiffBuilder >> buildPatchSequence [
 	"This method is only implemented for backwards compatibility and testing."
 
 	^Array streamContents: [ :stream |
-		self 
+		self
 			patchSequenceDoIfMatch: [ :string |
 				stream nextPut: #match -> string ]
-			ifInsert: [ :string | 
+			ifInsert: [ :string |
 				stream nextPut: #insert -> string ]
-			ifRemove: [ :string | 
+			ifRemove: [ :string |
 				stream nextPut: #remove -> string ] ]
 ]
 
@@ -178,7 +177,7 @@ TextDiffBuilder >> findMatches [
 	temp := nil.	"Find the longest common subsequence."
 	lcs := self lcsFor: xNumbers and: yNumbers.	"Mark the matching pairs."
 	[ lcs isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			(xFilteredLines at: (lcs at: 1)) matches: (yFilteredLines at: (lcs at: 2)).
 			lcs := lcs at: 3 ]
 ]
@@ -227,10 +226,10 @@ TextDiffBuilder >> patchSequenceDoIfMatch: matchBlock ifInsert: insertBlock ifRe
 	| xLine xLineStream |
 	xLineStream := xLines readStream.
 	yLines
-		do: [ :yLine | 
+		do: [ :yLine |
 			yLine hasMatch
 				ifFalse: [ insertBlock value: yLine string ]
-				ifTrue: [ 
+				ifTrue: [
 					[ (xLine := xLineStream next) isNil or: [ xLine == yLine match ] ] whileFalse: [ removeBlock value: xLine string ].
 					matchBlock value: yLine string ] ].
 	[ (xLine := xLineStream next) isNil ] whileFalse: [ removeBlock value: xLine string ]
@@ -240,12 +239,12 @@ TextDiffBuilder >> patchSequenceDoIfMatch: matchBlock ifInsert: insertBlock ifRe
 TextDiffBuilder >> print: aString withAttributes: attributes on: stream [
 
 	stream
-		withAttributes: attributes 
-		do: [ 
+		withAttributes: attributes
+		do: [
 			stream nextPutAll: aString.
-			(aString notEmpty and: [ 
+			(aString notEmpty and: [
 				aString last = Character cr or: [
-					aString endsWith: String crlf ] ]) 
+					aString endsWith: String crlf ] ])
 						ifFalse: [ stream cr ] ]
 ]
 

@@ -14,36 +14,36 @@ FTTableMorphTest >> setUp [
 	super setUp.
 	table := FTTableMorph new.
 	table extent: 800@600.
-	self initializeSemaphore.
+	self initializeSemaphore
 ]
 
 { #category : #running }
 FTTableMorphTest >> tearDown [
 	table delete.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
 FTTableMorphTest >> testCanAlternateRowColors [
 	| rows oddRows oddColor evenRows evenColor |
-	table  
+	table
 		hideColumnHeaders;
 		alternateRowsColor: true.
 	table openInWorld.
 	table dataSource: (FTSimpleDataSource elements: #(1 2 3 4 5)).
 	self waitUntilUIRedrawed.
 	rows := table container submorphs.
-	
+
 	oddRows := rows withIndexSelect: [ :row : index | index odd ].
 	oddColor := oddRows first color.
 	evenRows := rows withIndexSelect: [ :row : index | index even ].
 	evenColor := evenRows first color.
-	
-	self 
-		assert: (oddRows collect: [ :e | e color ] as: Set) size 
+
+	self
+		assert: (oddRows collect: [ :e | e color ] as: Set) size
 		equals: 1.
-	self 
-		assert: (evenRows collect: [ :e | e color ] as: Set) size 
+	self
+		assert: (evenRows collect: [ :e | e color ] as: Set) size
 		equals: 1.
-	self deny: oddColor equals: evenColor.
+	self deny: oddColor equals: evenColor
 ]

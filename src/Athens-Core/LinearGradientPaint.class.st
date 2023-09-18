@@ -23,14 +23,14 @@ Class {
 
 { #category : #'instance creation' }
 LinearGradientPaint class >> from: aStartPoint  to: aStopPoint [
-	^ self new start: aStartPoint; stop: aStopPoint; yourself.
+	^ self new start: aStartPoint; stop: aStopPoint; yourself
 ]
 
 { #category : #converting }
 LinearGradientPaint >> asAthensPaintOn: aCanvas [
 	^ aCanvas surface
 			createLinearGradient: self colorRamp
-				start: self start 
+				start: self start
 				stop: self stop
 ]
 
@@ -42,7 +42,7 @@ LinearGradientPaint >> start [
 
 { #category : #accessing }
 LinearGradientPaint >> start: anObject [
-	
+
 	start := anObject
 ]
 
@@ -54,6 +54,6 @@ LinearGradientPaint >> stop [
 
 { #category : #accessing }
 LinearGradientPaint >> stop: anObject [
-	
+
 	stop := anObject
 ]

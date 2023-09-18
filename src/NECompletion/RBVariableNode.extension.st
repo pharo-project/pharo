@@ -18,12 +18,12 @@ RBVariableNode >> classVarEntriesForClass: lookupClass [
 RBVariableNode >> completionEntries: offset [
 	| methodNode lookupClass |
 	methodNode := self methodNode.
-	lookupClass := methodNode compilationContext getClass.
+	lookupClass := methodNode methodClass.
 	self isDefinition
 		ifTrue: [ ^ self possibleSelectorEntries ].
-	
-	^ Array streamContents: [ :str | 
-		str 
+
+	^ Array streamContents: [ :str |
+		str
 			nextPutAll: (self globalEntries);
 			nextPutAll: (self slotEntriesForClass: lookupClass);
 			nextPutAll: (self tempEntriesForMethodNode: methodNode);
@@ -48,7 +48,7 @@ RBVariableNode >> entriesSpecialVariables [
 
 { #category : #'*NECompletion' }
 RBVariableNode >> globalEntries [
-	^ Smalltalk globals keys 
+	^ Smalltalk globals keys
 			select: [ :each | each beginsWith: self name ]
 			thenCollect: [ :each | NECGlobalEntry contents: each  node: self ]
 ]
@@ -69,7 +69,7 @@ RBVariableNode >> possibleSelectorEntries [
 
 { #category : #'*NECompletion' }
 RBVariableNode >> slotEntriesForClass: lookupClass [
-	^lookupClass 
+	^lookupClass
 		allSlots select: [ :each | each name beginsWith: self name ]
 		thenCollect: [ :each | NECInstVarEntry contents: each name node: self ]
 ]

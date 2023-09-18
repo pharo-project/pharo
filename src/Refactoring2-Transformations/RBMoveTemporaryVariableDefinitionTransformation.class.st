@@ -24,7 +24,7 @@ Class {
 		'variableName',
 		'blockNodes'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -48,12 +48,25 @@ RBMoveTemporaryVariableDefinitionTransformation class >> variable: aString inMet
 		yourself
 ]
 
-{ #category : #converting }
-RBMoveTemporaryVariableDefinitionTransformation >> asRefactoring [
+{ #category : #preconditions }
+RBMoveTemporaryVariableDefinitionTransformation >> applicabilityPreconditions [ 
 
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
+	^ ( RBCondition
+			withBlock: [ self definingClass isNotNil ]
+			errorString: 'No such class or trait named ', class asString)
+		& ( RBCondition definesSelector: selector in: self definingClass)
+		& ( RBCondition
+			withBlock: [ self definingMethod allTemporaryVariables includes: variableName ]
+			errorString: 'Method named ', selector, ' does not define a temporary variable named ', variableName )
+		& ( RBCondition
+			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
+			errorString: 'Variable named ', variableName, ' cannot be removed because it is an argument in this method' )
+		& ( RBCondition
+			withBlock: [ (self checkBlocksIn: self definingBlock) not ]
+			errorString: 'Variable named ', variableName, ' is already bound tightly as possible.')
+		& ( RBCondition
+			withBlock: [ self checkLocationsIn: (self checkAllBlocksIn: self definingBlock) ]
+			errorString: 'Variable named ', variableName, ' is used in an outside block.')
 ]
 
 { #category : #executing }
@@ -61,11 +74,11 @@ RBMoveTemporaryVariableDefinitionTransformation >> buildTransformations [
 
 	"ifnil... tight blocks should not be returned as errors"
 	blockNodes ifNil: [ self checkMethodForBlocks ].
-	
+
 	^ (OrderedCollection
 		withAll: ((blockNodes
 			sorted: [ :a :b | a start > b start ])
-			collect: [ :blockNode | 
+			collect: [ :blockNode |
 				RBAddTemporaryVariableTransformation
 					variable: variableName
 					inInterval: blockNode body sourceInterval
@@ -84,7 +97,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree 
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '[:`@blockTemps | | `@temps | `@.Statements]'
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			(aNode references: variableName)
 				ifTrue: [ answer add: aNode ].
 			answer ].
@@ -107,17 +120,17 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
 { #category : #private }
 RBMoveTemporaryVariableDefinitionTransformation >> checkLocationsIn: candidateBlocks [
 
-	(candidateBlocks 
+	(candidateBlocks
 		detect: [:each | RBReadBeforeWrittenTester
 							isVariable: variableName readBeforeWrittenIn: each]
-		ifNone: [nil]) notNil 
+		ifNone: [nil]) notNil
 		ifTrue: [^false].
-		
+
 	blockNodes ifNil: [ blockNodes := OrderedCollection new ].
-	candidateBlocks do: [ :each | 
-		(self checkBlocksIn: each body) 
+	candidateBlocks do: [ :each |
+		(self checkBlocksIn: each body)
 			ifTrue: [ blockNodes add: each ]
-			ifFalse: 	[ (self checkLocationsIn: (self checkAllBlocksIn: each body)) 
+			ifFalse: 	[ (self checkLocationsIn: (self checkAllBlocksIn: each body))
 							ifFalse: [ blockNodes add: each ]]].
 	^ true
 ]
@@ -139,39 +152,18 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 		ifNil: [ self refactoringError: 'Method does not exist' ]
 		ifNotNil: [ :methodNode | methodNode variableWith: variableName ].
 	node ifNil: [self refactoringError: 'Unable to locate temporary variable in parse tree'].
-	
+
 	definingNode := node whoDefines: variableName.
-	definingNode 
+	definingNode
 		ifNil: [self refactoringError: 'Cannot locate variable definition'].
 	definingNode isSequence
 		ifFalse: [self refactoringError: 'Variable is an argument'].
-		
+
 	^ definingNode
 ]
 
-{ #category : #preconditions }
-RBMoveTemporaryVariableDefinitionTransformation >> preconditions [
-
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'No such class or trait named ', class asString)
-		& ( RBCondition definesSelector: selector in: self definingClass)
-		& ( RBCondition
-			withBlock: [ self definingMethod allTemporaryVariables includes: variableName ]
-			errorString: 'Method named ', selector, ' does not define a temporary variable named ', variableName )
-		& ( RBCondition
-			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
-			errorString: 'Variable named ', variableName, ' cannot be removed because it is an argument in this method' )
-		& ( RBCondition
-			withBlock: [ (self checkBlocksIn: self definingBlock) not ]
-			errorString: 'Variable named ', variableName, ' is already bound tightly as possible.')
-		& ( RBCondition
-			withBlock: [ self checkLocationsIn: (self checkAllBlocksIn: self definingBlock) ]
-			errorString: 'Variable named ', variableName, ' is used in an outside block.')
-]
-
 { #category : #printing }
-RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [ 
+RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

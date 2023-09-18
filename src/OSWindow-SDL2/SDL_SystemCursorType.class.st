@@ -106,27 +106,27 @@ SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_WAITARROW [
 ]
 
 { #category : #'enum declaration' }
-SDL_SystemCursorType class >> enumDecl [ 
+SDL_SystemCursorType class >> enumDecl [
 
-	^ #( SDL_SYSTEM_CURSOR_ARROW 			0     
-        SDL_SYSTEM_CURSOR_IBEAM 			1     
-        SDL_SYSTEM_CURSOR_WAIT 			2     
-        SDL_SYSTEM_CURSOR_CROSSHAIR 		3 
-        SDL_SYSTEM_CURSOR_WAITARROW 		4 
-        SDL_SYSTEM_CURSOR_SIZENWSE 		5  
-        SDL_SYSTEM_CURSOR_SIZENESW 		6  
-        SDL_SYSTEM_CURSOR_SIZEWE 			7    
-        SDL_SYSTEM_CURSOR_SIZENS 			8    
-        SDL_SYSTEM_CURSOR_SIZEALL 		9   
-        SDL_SYSTEM_CURSOR_NO 				10        
-        SDL_SYSTEM_CURSOR_HAND 			11      
+	^ #( SDL_SYSTEM_CURSOR_ARROW 			0
+        SDL_SYSTEM_CURSOR_IBEAM 			1
+        SDL_SYSTEM_CURSOR_WAIT 			2
+        SDL_SYSTEM_CURSOR_CROSSHAIR 		3
+        SDL_SYSTEM_CURSOR_WAITARROW 		4
+        SDL_SYSTEM_CURSOR_SIZENWSE 		5
+        SDL_SYSTEM_CURSOR_SIZENESW 		6
+        SDL_SYSTEM_CURSOR_SIZEWE 			7
+        SDL_SYSTEM_CURSOR_SIZENS 			8
+        SDL_SYSTEM_CURSOR_SIZEALL 		9
+        SDL_SYSTEM_CURSOR_NO 				10
+        SDL_SYSTEM_CURSOR_HAND 			11
         SDL_NUM_SYSTEM_CURSORS				12)
 ]
 
 { #category : #'class initialization' }
 SDL_SystemCursorType class >> initialize [
 	self initializeEnumeration.
-	
+
 	self classPool keysDo: [ :e |
 		self class compile: ('{1}
 	^ {1}' format: {e asString}) classified: #accessing	]

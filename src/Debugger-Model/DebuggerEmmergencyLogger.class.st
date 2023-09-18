@@ -33,12 +33,12 @@ DebuggerEmmergencyLogger >> logError: anError forSession: aDebugSession [
 	errStream cr.
 
 	self inform: '**Debugger opening error** ' , errStream contents.
-	[ 
+	[
 	Smalltalk
 		logError: errStream contents
 		inContext: aDebugSession interruptedContext ]
 		on: Error
-		do: [ :err | 
+		do: [ :err |
 			self inform:
 				'Cannot log error: ' , anError printString , 'due to error: '
 				, err printString ]

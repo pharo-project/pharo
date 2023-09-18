@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'className'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -55,7 +55,7 @@ RBAddAccessorsForClassTransformation >> className: aClassName [
 ]
 
 { #category : #printing }
-RBAddAccessorsForClassTransformation >> storeOn: aStream [ 
+RBAddAccessorsForClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

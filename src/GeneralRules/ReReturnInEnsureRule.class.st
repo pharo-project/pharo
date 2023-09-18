@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 ReReturnInEnsureRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'ReturnInEnsureRule'
 ]
 
@@ -28,7 +28,7 @@ ReReturnInEnsureRule >> group [
 { #category : #initialization }
 ReReturnInEnsureRule >> initialize [
 	super initialize.
-	self matchesAny: #( 
+	self matchesAny: #(
 		'`@rcv ensure: [| `@temps | `@.Stmts]'
 		'`@rcv ifCurtailed: [| `@temps | `@.Stmts]')
 ]

@@ -20,7 +20,7 @@ KeyNotFound >> key: aKey [
 { #category : #private }
 KeyNotFound >> standardMessageText [
 	"Generate a standard textual description"
-	
+
 	^ String streamContents: [ :stream |
 		stream << 'key '.
 		stream print: self object.

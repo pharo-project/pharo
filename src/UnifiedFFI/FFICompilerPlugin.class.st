@@ -40,14 +40,14 @@ Class {
 { #category : #accessing }
 FFICompilerPlugin class >> ffiCalloutSelectors [
 	<script: 'self ffiCalloutSelectors inspect'>
-	
+
 	^FFICalloutSelectors ifNil: [ self initializeFFICalloutSelectors ]
 ]
 
 { #category : #'class initialization' }
 FFICompilerPlugin class >> initialize [
 
-	self 
+	self
 		initializeFFICalloutSelectors;
 		recompileSenders;
 		install
@@ -65,7 +65,7 @@ FFICompilerPlugin class >> install [
 	(CompilationContext defaultTransformationPlugins includes: self)
 		ifTrue: [ ^ self ].
 	CompilationContext addDefaultTransformationPlugin: self.
-	self recompileSenders.
+	self recompileSenders
 ]
 
 { #category : #private }
@@ -98,7 +98,7 @@ FFICompilerPlugin >> transform [
 		- collect all ffiCallout selectors like ffiCall:, nbCall:
 		- mark ffi methods which use collected selectors that they are FFI"
 	self transformsFFIMethod ifFalse: [ ^ast].
-	 
+
 	ast ensureCachedArgumentNames.
 	ast methodPropertyAt: #isFFIMethod put: true.
 	^ ast
@@ -106,10 +106,10 @@ FFICompilerPlugin >> transform [
 
 { #category : #api }
 FFICompilerPlugin >> transformsFFIMethod [
-	
+
 	(ast hasPragmaNamed: #ffiCalloutTranslator)
 		ifTrue: [ ^ false ].
-	ast nodesDo: [ :each | 
+	ast nodesDo: [ :each |
 			each isMessage ifTrue: [
 				(self ffiCalloutSelectors includes: each selector)
 					ifTrue: [ ^ true ] ] ].

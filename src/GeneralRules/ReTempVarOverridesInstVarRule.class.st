@@ -15,7 +15,7 @@ ReTempVarOverridesInstVarRule class >> checksMethod [
 { #category : #accessing }
 ReTempVarOverridesInstVarRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'TempVarOverridesInstVarRule'
 ]
 
@@ -23,10 +23,10 @@ ReTempVarOverridesInstVarRule class >> uniqueIdentifierName [
 ReTempVarOverridesInstVarRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	| problemTemps |
-	problemTemps := aMethod ast variableDefinitionNodes 
+	problemTemps := aMethod ast variableDefinitionNodes
 		 collect: [ :node | node variable ]
 		 thenSelect: [ :var | var isShadowing ].
-	problemTemps do: [ :var | 
+	problemTemps do: [ :var |
 		aCriticBlock cull:
 			(self critiqueFor: aMethod about: var definingNode) ]
 ]

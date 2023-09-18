@@ -24,9 +24,9 @@ CommandLineUIManager class >> isValidForCurrentSystemConfiguration [
 { #category : #'instance creation' }
 CommandLineUIManager class >> replacing: aUIManager [
 
-	"Replace the current UI manager with instance of myself. 
+	"Replace the current UI manager with instance of myself.
 	Keep a backup reference to old manager, and then restore it, when image will be interactive again. "
-	
+
 	^ self new replacing: aUIManager
 ]
 
@@ -57,14 +57,14 @@ CommandLineUIManager class >> uiSettingsOn: aBuilder [
 
 { #category : #'ui TEasilyThemed' }
 CommandLineUIManager >> abort: aStringOrText [
-	
-	self abort: aStringOrText title: 'Error'.
+
+	self abort: aStringOrText title: 'Error'
 ]
 
 { #category : #'ui TEasilyThemed' }
 CommandLineUIManager >> abort: aStringOrText title: aString [
-	
-	self logTitle: aString andDescription: aStringOrText to: self stderr.
+
+	self logTitle: aString andDescription: aStringOrText to: self stderr
 ]
 
 { #category : #private }
@@ -75,39 +75,38 @@ CommandLineUIManager >> activate [
 { #category : #'ui TEasilyThemed' }
 CommandLineUIManager >> alert: aStringOrText [
 
-	self abort: aStringOrText title: 'Alert'.
+	self abort: aStringOrText title: 'Alert'
 ]
 
 { #category : #'ui TEasilyThemed' }
 CommandLineUIManager >> alert: aStringOrText title: aString [
 
-	self logTitle: aString andDescription: aStringOrText to: self stdout.
+	self logTitle: aString andDescription: aStringOrText to: self stdout
 ]
 
 { #category : #'ui TEasilyThemed' }
 CommandLineUIManager >> alert: aStringOrText title: aString configure: aBlock [
 	"Ignore the block, because we don't create a dialog, so there is nothing to configure."
 
-	self alert: aStringOrText title: aString.
+	self alert: aStringOrText title: aString
 ]
 
 { #category : #'ui requests' }
 CommandLineUIManager >> choose: questionsAnswerDict title: queryString [
-
 ]
 
 { #category : #'ui requests' }
 CommandLineUIManager >> chooseFrom: aList lines: linesArray title: aString [
 	| maxPad |
 	maxPad := aList size asString size.
-	self stdout 
+	self stdout
 		nextPutAll: aString; nextPut: $:; cr.
 	aList withIndexDo: [ :item :index |
-		self stdout 
+		self stdout
 			nextPutAll: '    ['; nextPutAll: (index asString padLeftTo: maxPad); nextPutAll: '] ';
 			print: item; cr].
-	self stdout nextPutAll: '> '.	
-	^ aList at: (self stdin upToAnyOf: String crlf do: [ :chr| ]) asInteger.
+	self stdout nextPutAll: '> '.
+	^ aList at: (self stdin upToAnyOf: String crlf do: [ :chr| ]) asInteger
 ]
 
 { #category : #'ui requests' }
@@ -118,7 +117,6 @@ CommandLineUIManager >> confirm: queryString label: title trueChoice: trueLabel 
 	falseLabel ifNotNil: [ questions at: 'n' put: falseLabel ].
 	cancelLabel ifNotNil: [ questions at: 'c' put: cancelLabel ].
 	^ self choose: questions title: title, ' ', queryString
-
 ]
 
 { #category : #'ui requests' }
@@ -129,7 +127,6 @@ CommandLineUIManager >> confirm: queryString trueChoice: trueLabel falseChoice: 
 		falseChoice: falseLabel
 		cancelChoice: nil
 		default: nil
-		
 ]
 
 { #category : #'ui requests' }
@@ -140,7 +137,6 @@ CommandLineUIManager >> confirm: queryString trueChoice: trueLabel falseChoice: 
 	falseLabel ifNotNil: [ questions at: 'n' put: falseLabel ].
 	cancelLabel ifNotNil: [ questions at: 'c' put: cancelLabel ].
 	^ self choose: questions title: queryString
-
 ]
 
 { #category : #debug }
@@ -155,9 +151,9 @@ CommandLineUIManager >> debugProcess: process context: context label: title full
 			cr;
 			print: context.
 		notificationString ifNotNil: [ stream nextPutAll: notificationString ] ].
-	self 
+	self
 		logTitle: title
-		andDescription: description 
+		andDescription: description
 		to: self stderr
 ]
 
@@ -178,12 +174,10 @@ CommandLineUIManager >> exitFailure [
 			doNotQuitOnRestart := true.
 			"make a new image version snapshot before leaving"
 			Smalltalk saveAsNewVersion  ].
-	] ensure: [ 
+	] ensure: [
 		doNotQuitOnRestart ifFalse: [ Smalltalk exitFailure ].
-		doNotQuitOnRestart := false.	
-	].
-	
-	
+		doNotQuitOnRestart := false.
+	]
 ]
 
 { #category : #'handle debug requests' }
@@ -197,7 +191,7 @@ CommandLineUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: an
 { #category : #'error handling' }
 CommandLineUIManager >> handleError: anError log: shouldLog [
 
-	shouldLog ifTrue: [ self logError: anError ].
+	shouldLog ifTrue: [ self logError: anError ]
 ]
 
 { #category : #'handle debug requests' }
@@ -210,9 +204,9 @@ CommandLineUIManager >> handleWarningDebugRequest: aDebugRequest fromDebuggerSys
 
 { #category : #accessing }
 CommandLineUIManager >> headlessManager [
-	self class == CommandLineUIManager 
+	self class == CommandLineUIManager
 		ifFalse: [ ^ self ].
-		
+
 	^ CommandLineUIManager replacing: uiManager
 ]
 
@@ -223,7 +217,7 @@ CommandLineUIManager >> inform: aString [
 
 	"Just log notifications"
 	(ProvideAnswerNotification signal: aString) ifNotNil: [:answer | ^true].
-	
+
 	logBlock := [:logger |
 		logger cr;
 			nextPutAll: (String new: 79 withAll: $= ); cr;
@@ -231,69 +225,65 @@ CommandLineUIManager >> inform: aString [
 			nextPutAll: aString; cr;
 			nextPutAll: (String new: 79 withAll: $= ); cr].
 
-	Smalltalk logDuring: logBlock.
+	Smalltalk logDuring: logBlock
 ]
 
 { #category : #initialization }
 CommandLineUIManager >> initialize [
-	doNotQuitOnRestart := false.
+	doNotQuitOnRestart := false
 ]
 
 { #category : #utilities }
 CommandLineUIManager >> logColored: anAnsiiColorCode during: aBlock [
-	
+
 	Smalltalk logStdErrorDuring: [:stderr |
 		stderr
-			nextPut: Character escape; 
+			nextPut: Character escape;
 			nextPut: $[; nextPutAll: anAnsiiColorCode; nextPut: $m.
-		
+
 		aBlock value: stderr.
-		
+
 		stderr nextPut: Character escape; nextPutAll: '[0m'
 	]
 ]
 
 { #category : #utilities }
 CommandLineUIManager >> logDuring: aBlock [
-	
+
 	Smalltalk logStdErrorDuring: [ :stderr | aBlock value: stderr ]
-
-
 ]
 
 { #category : #utilities }
 CommandLineUIManager >> logGreenDuring: aBlock [
-	
+
 	^ self logColored: '32' during: aBlock
 ]
 
 { #category : #utilities }
 CommandLineUIManager >> logRedDuring: aBlock [
-	
+
 	^ self logColored: '31' during: aBlock
 ]
 
 { #category : #private }
 CommandLineUIManager >> logTitle: aString andDescription: aStringOrText to: aStream [
-	
+
 	aStream
 		nextPutAll: aString;
 		nextPutAll: ': ';
 		nextPutAll: aStringOrText asString;
-		cr.
+		cr
 ]
 
 { #category : #utilities }
 CommandLineUIManager >> logYellowDuring: aBlock [
-	
+
 	^ self logColored: '33' during: aBlock
 ]
 
 { #category : #display }
-CommandLineUIManager >> newDisplayDepthNoRestore: pixelSize [	
+CommandLineUIManager >> newDisplayDepthNoRestore: pixelSize [
 	"do nothing"
-	
-
 ]
 
 { #category : #'non-interactive' }
@@ -304,7 +294,7 @@ CommandLineUIManager >> nonInteractiveManager [
 ]
 
 { #category : #events }
-CommandLineUIManager >> onPrimitiveError: aString [	
+CommandLineUIManager >> onPrimitiveError: aString [
 
 	" log error and quit "
 	^ self quitFrom: thisContext sender withMessage: aString
@@ -346,22 +336,22 @@ CommandLineUIManager >> questionWithoutCancel: aStringOrText title: aString [
 CommandLineUIManager >> quitFrom: aContext withMessage: aString [
 
 	" log error and quit "
-	[ Smalltalk 
+	[ Smalltalk
 		logError: aString
 		inContext: aContext.
-		
+
 	" Print stacks of all current processes "
 
-	Smalltalk logDuring: [:logger | 
+	Smalltalk logDuring: [:logger |
 		logger nextPutAll: 'Processes and their stacks: ';cr.
-		
+
 		Process allInstances do: [:each | | ctx |
 			logger nextPutAll: 'Process: '; print: each; cr; nextPutAll: '  stack:'; cr; cr.
-		
+
 			ctx := each isActiveProcess ifTrue: [ thisContext sender ] ifFalse: [ each suspendedContext ].
 			ctx ifNotNil: [
 				(ctx stackOfSize: 20) do: [:s | logger print: s; cr ]].
-			logger nextPutAll: '------------------------------'; cr; cr.	
+			logger nextPutAll: '------------------------------'; cr; cr.
 		]].
 	] ensure: [ self exitFailure ]
 ]
@@ -370,25 +360,25 @@ CommandLineUIManager >> quitFrom: aContext withMessage: aString [
 CommandLineUIManager >> replacing: aUIManager [
 
 	" save the aUIManager to restore it later, when we become interactive again "
-	
+
 	uiManager := aUIManager.
-	
-	self beDefault.
+
+	self beDefault
 ]
 
 { #category : #display }
-CommandLineUIManager >> restoreDisplay [	
+CommandLineUIManager >> restoreDisplay [
 	"do nothing"
 ]
 
 { #category : #display }
-CommandLineUIManager >> restoreDisplayAfter: aBlock [	
+CommandLineUIManager >> restoreDisplayAfter: aBlock [
 	"do nothing"
 ]
 
 { #category : #accessing }
 CommandLineUIManager >> stderr [
-		
+
 	^ Stdio stderr
 ]
 
@@ -400,21 +390,20 @@ CommandLineUIManager >> stdin [
 
 { #category : #accessing }
 CommandLineUIManager >> stdout [
-	
+
 	^ Stdio stdout
 ]
 
 { #category : #'ui requests' }
 CommandLineUIManager >> systemNotificationDefaultAction: aNotification [
-	
+
 	Smalltalk logStdOutDuring: [:logger |
 		logger nextPutAll: aNotification class name;
-				 nextPutAll: ': ';  
-				 nextPutAll: aNotification messageText; 
+				 nextPutAll: ': ';
+				 nextPutAll: aNotification messageText;
 				 cr ].
-	
-	aNotification resume.
 
+	aNotification resume
 ]
 
 { #category : #'ui TEasilyThemed' }
@@ -430,7 +419,6 @@ CommandLineUIManager >> textEntry: aStringOrText title: aString [
 { #category : #'ui TEasilyThemed' }
 CommandLineUIManager >> textEntry: aStringOrText title: aString entryText: defaultEntryText [
 	"Open a text entry dialog."
-
 ]
 
 { #category : #'ui requests' }
@@ -444,7 +432,7 @@ CommandLineUIManager >> uiProcess [
 CommandLineUIManager >> unhandledErrorDefaultAction: anException [
 
 	self quitFrom: anException signalerContext  withMessage: anException description.
-	
+
 	UIManager default == self ifFalse: [
 		^ UIManager default unhandledErrorDefaultAction: anException
 		]
@@ -454,18 +442,16 @@ CommandLineUIManager >> unhandledErrorDefaultAction: anException [
 CommandLineUIManager >> warningDefaultAction: aWarning [
 	| logBlock |
 	"Pass all warnings, but log them"
-	
+
 	logBlock := [:logger |
-		logger 
+		logger
 			cr;
 			nextPutAll: '*** Warning: ';
 			nextPutAll: aWarning description;
 			cr ].
-	
+
 	Smalltalk logDuring: logBlock.
 	self logYellowDuring: logBlock.
-	
-	aWarning resume.
 
-	
+	aWarning resume
 ]

@@ -29,16 +29,16 @@ HiFastTableExample class >> openExample: selector [
 		dataSource: dataSource;
 		beResizable;
 		yourself.
-	
+
 	dataSource elements: commits.
-	
-	^ table openInWindowLabeled: ('Hiedra in FastTable - {1} - {2} elements' format: {selector. commits size}).
+
+	^ table openInWindowLabeled: ('Hiedra in FastTable - {1} - {2} elements' format: {selector. commits size})
 ]
 
 { #category : #accessing }
 HiFastTableExample >> cellColumn: column row: rowIndex [
 	"Answer a morph with the cell view."
-	
+
 	column id = #'Comment' ifTrue: [
 		| hiedraMorph commentMorph |
 		hiedraMorph := hiedraColumnController cellMorphAtRow: rowIndex.
@@ -60,14 +60,14 @@ HiFastTableExample >> elements: commits [
 	hiedraColumnController renderer rowHeight: self table rowHeight floor.
 
 	"Create a new ruler model with the new elements"
-	hiedraColumnController ruler: (HiRulerBuilder 
+	hiedraColumnController ruler: (HiRulerBuilder
 		newRulerValues: commits
 		linksBlock: [:aCommit |
-			aCommit parentIds collect: [:id | 
+			aCommit parentIds collect: [:id |
 				commits detect: [:each | each id = id ] ] ]).
 
 	"Reset the visualization"
-	hiedraColumnController reset.
+	hiedraColumnController reset
 ]
 
 { #category : #initialization }
@@ -77,5 +77,5 @@ HiFastTableExample >> initialize [
 	hiedraColumnController renderer
 		arrowSize: 1;
 		nodeConnectionOffset: 2;
-		cellWidth: 7.
+		cellWidth: 7
 ]

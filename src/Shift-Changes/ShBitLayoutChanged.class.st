@@ -10,7 +10,7 @@ Class {
 
 { #category : #propagating }
 ShBitLayoutChanged >> hasChangeInstanceSideShape [
-	^ true.
+	^ true
 ]
 
 { #category : #propagating }

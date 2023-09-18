@@ -1,3 +1,8 @@
+"
+I am a mock used to simlify testing.
+	
+A mock is an object that simulates the behavior of a real object or component in a controlled manner. It is used in unit testing to isolate the code being tested from its dependencies, allowing the code to be tested in isolation.
+"
 Class {
 	#name : #CoMockFetcherToRecordResets,
 	#superclass : #CoFetcher,
@@ -14,14 +19,14 @@ CoMockFetcherToRecordResets >> entriesDo: aBlock [
 ]
 
 { #category : #initialization }
-CoMockFetcherToRecordResets >> initialize [ 
+CoMockFetcherToRecordResets >> initialize [
 
 	super initialize.
-	resetingCount := 0.
+	resetingCount := 0
 ]
 
 { #category : #initialization }
-CoMockFetcherToRecordResets >> reset [ 
+CoMockFetcherToRecordResets >> reset [
 
 	resetingCount := resetingCount + 1.
 	super reset
@@ -29,6 +34,6 @@ CoMockFetcherToRecordResets >> reset [
 
 { #category : #accessing }
 CoMockFetcherToRecordResets >> resetingCount [
-	
+
 	^ resetingCount
 ]

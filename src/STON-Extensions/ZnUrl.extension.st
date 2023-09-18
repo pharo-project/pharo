@@ -7,8 +7,8 @@ ZnUrl >> stonContainSubObjects [
 
 { #category : #'*STON-Extensions' }
 ZnUrl >> stonOn: stonWriter [
-	stonWriter 
-		writeObject: self 
-		named: STONZnUrl stonName 
+	stonWriter
+		writeObject: self
+		named: STONZnUrl stonName
 		listSingleton: self asString
 ]

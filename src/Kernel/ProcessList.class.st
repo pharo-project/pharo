@@ -67,7 +67,7 @@ ProcessList >> add: aLinkOrObject afterLink: otherLink [
 	aLink := aLinkOrObject asLink.
 	otherLink nextLink: aLink.
 	aLink nextLink:  savedLink.
-	^aLink.
+	^aLink
 ]
 
 { #category : #adding }
@@ -85,7 +85,7 @@ ProcessList >> add: aLinkOrObject beforeLink: otherLink [
 	| currentLink|
 
 	firstLink == otherLink ifTrue: [^ self addFirst: aLinkOrObject].
-	
+
 	currentLink := firstLink.
 	[currentLink == nil] whileFalse: [
 		currentLink nextLink == otherLink ifTrue: [
@@ -101,26 +101,28 @@ ProcessList >> add: aLinkOrObject beforeLink: otherLink [
 ]
 
 { #category : #adding }
-ProcessList >> addFirst: aLinkOrObject [ 
+ProcessList >> addFirst: aLinkOrObject [
 	"Add aLink to the beginning of the receiver's list. Answer aLink."
-	|aLink|
+
+	| aLink |
 	aLink := aLinkOrObject asLink.
-	self isEmpty ifTrue: [lastLink := aLink].
+	self ifEmpty: [ lastLink := aLink ].
 	aLink nextLink: firstLink.
 	firstLink := aLink.
-	^aLink
+	^ aLink
 ]
 
 { #category : #adding }
 ProcessList >> addLast: aLinkOrObject [
 	"Add aLink to the end of the receiver's list. Answer aLink."
-	|aLink|
+
+	| aLink |
 	aLink := aLinkOrObject asLink.
-	self isEmpty
-		ifTrue: [firstLink := aLink]
-		ifFalse: [lastLink nextLink: aLink].
+	self 
+		ifEmpty: [ firstLink := aLink ]
+		ifNotEmpty: [ lastLink nextLink: aLink ].
 	lastLink := aLink.
-	^aLink
+	^ aLink
 ]
 
 { #category : #accessing }
@@ -136,7 +138,7 @@ ProcessList >> at: index put: anObject [
 ]
 
 { #category : #accessing }
-ProcessList >> at: index putLink: aLink [ 
+ProcessList >> at: index putLink: aLink [
 	| previousLink nextLink |
 	"Please don't put a link which is already in the list, or you will create an infinite loop"
 	(self validIndex: index)
@@ -148,7 +150,7 @@ ProcessList >> at: index putLink: aLink [
 			^ aLink].
 	previousLink := self linkAt: index - 1.
 	nextLink := previousLink nextLink nextLink.
-	
+
 	nextLink ifNil: [
 		aLink nextLink: self lastLink
 	] ifNotNil: [
@@ -166,9 +168,9 @@ ProcessList >> at: index putLink: aLink [
 ]
 
 { #category : #enumerating }
-ProcessList >> collect: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	Collect the resulting values into a collection like the receiver. Answer  
+ProcessList >> collect: aBlock [
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	Collect the resulting values into a collection like the receiver. Answer
 	the new collection."
 
 	| aLink newCollection |
@@ -187,7 +189,7 @@ ProcessList >> collect: collectBlock thenSelect: selectBlock [
 	| newCollection newElement |
 	newCollection := self class new.
 	self
-		do: [ :each | 
+		do: [ :each |
 			newElement := collectBlock value: each.
 			(selectBlock value: newElement)
 				ifTrue: [ newCollection add: newElement ] ].
@@ -201,7 +203,7 @@ ProcessList >> copyWith: newElement [
 
 { #category : #copying }
 ProcessList >> copyWithout: oldElement [
-	|newInst| 
+	|newInst|
 	newInst := self class new.
 	self do: [:each | each = oldElement ifFalse: [newInst add: each]].
 	^newInst
@@ -219,14 +221,14 @@ ProcessList >> do: aBlock [
 
 { #category : #accessing }
 ProcessList >> first [
-	"Answer the first link. Create an error notification if the receiver is 
+	"Answer the first link. Create an error notification if the receiver is
 	empty."
 ^self firstLink value
 ]
 
 { #category : #accessing }
 ProcessList >> firstLink [
-	"Answer the first link. Create an error notification if the receiver is 
+	"Answer the first link. Create an error notification if the receiver is
 	empty."
 
 	self emptyCheck.
@@ -236,13 +238,13 @@ ProcessList >> firstLink [
 { #category : #private }
 ProcessList >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
 	"Answer the index of the first occurrence of anElement after start
-	within the receiver. If the receiver does not contain anElement, 
+	within the receiver. If the receiver does not contain anElement,
 	answer the 	result of evaluating the argument, exceptionBlock."
-			
-	|currentLink index|		
+
+	|currentLink index|
 	currentLink := self linkAt: start ifAbsent: [nil].
 	index := start.
-	[currentLink isNil ] 
+	[currentLink isNil ]
 		whileFalse: [currentLink value = anElement value ifTrue: [^index].
 					currentLink := currentLink nextLink.
 					index := index +1].
@@ -257,7 +259,7 @@ ProcessList >> isEmpty [
 
 { #category : #accessing }
 ProcessList >> last [
-	"Answer the last link. Create an error notification if the receiver is 
+	"Answer the last link. Create an error notification if the receiver is
 	empty."
 
 
@@ -266,7 +268,7 @@ ProcessList >> last [
 
 { #category : #accessing }
 ProcessList >> lastLink [
-	"Answer the last link. Create an error notification if the receiver is 
+	"Answer the last link. Create an error notification if the receiver is
 	empty."
 
 	self emptyCheck.
@@ -290,15 +292,15 @@ ProcessList >> linkAt: index ifAbsent: errorBlock [
 ]
 
 { #category : #private }
-ProcessList >> linkOf: anObject [ 
+ProcessList >> linkOf: anObject [
 	^ self
 		linkOf: anObject
 		ifAbsent: [self error: 'No such element']
 ]
 
 { #category : #private }
-ProcessList >> linkOf: anObject ifAbsent: errorBlock [ 
-	
+ProcessList >> linkOf: anObject ifAbsent: errorBlock [
+
 	self
 		linksDo: [:el | el value = anObject
 				ifTrue: [^ el]].
@@ -323,13 +325,13 @@ ProcessList >> postCopy [
 	firstLink ifNotNil: [
 		aLink := firstLink := firstLink copy.
 		[aLink nextLink isNil] whileFalse: [aLink nextLink: (aLink := aLink nextLink copy)].
-		lastLink := aLink].
+		lastLink := aLink]
 ]
 
 { #category : #removing }
-ProcessList >> remove: aLinkOrObject ifAbsent: aBlock [ 
+ProcessList >> remove: aLinkOrObject ifAbsent: aBlock [
 	"Remove aLink from the receiver. If it is not there, answer the result of evaluating aBlock."
-	
+
 	| link |
 	link := self linkOf: aLinkOrObject ifAbsent: [^aBlock value].
 	self removeLink: link ifAbsent: [^aBlock value].
@@ -344,7 +346,7 @@ ProcessList >> removeAll [
 ]
 
 { #category : #removing }
-ProcessList >> removeAllSuchThat: aBlock [ 
+ProcessList >> removeAllSuchThat: aBlock [
 	"Evaluate aBlock for each element and remove all that elements from
 	the receiver for that aBlock evaluates to true.  For LinkedLists, it's safe to use do:."
 
@@ -353,7 +355,7 @@ ProcessList >> removeAllSuchThat: aBlock [
 
 { #category : #removing }
 ProcessList >> removeFirst [
-	"Remove the first element and answer it. If the receiver is empty, create 
+	"Remove the first element and answer it. If the receiver is empty, create
 	an error notification."
 
 	| oldLink |
@@ -368,7 +370,7 @@ ProcessList >> removeFirst [
 
 { #category : #removing }
 ProcessList >> removeLast [
-	"Remove the receiver's last element and answer it. If the receiver is 
+	"Remove the receiver's last element and answer it. If the receiver is
 	empty, create an error notification."
 
 	| oldLink aLink |
@@ -391,7 +393,7 @@ ProcessList >> removeLink: aLink [
 ]
 
 { #category : #removing }
-ProcessList >> removeLink: aLink ifAbsent: aBlock [  
+ProcessList >> removeLink: aLink ifAbsent: aBlock [
 	"Remove aLink from the receiver. If it is not there, answer the result of
 	evaluating aBlock."
 
@@ -413,14 +415,14 @@ ProcessList >> removeLink: aLink ifAbsent: aBlock [
 ]
 
 { #category : #enumerating }
-ProcessList >> select: aBlock [ 
-	"Reimplemennt #select: for speedup on linked lists. 
+ProcessList >> select: aBlock [
+	"Reimplemennt #select: for speedup on linked lists.
 	The super implemention accesses the linkes by index, thus causing an O(n^2)"
-	
+
 	| newCollection |
 	newCollection := self class new.
-	self do: [ :each | 
-		(aBlock value: each) 
+	self do: [ :each |
+		(aBlock value: each)
 			ifTrue: [ newCollection add: each ]].
 	^newCollection
 ]
@@ -432,7 +434,7 @@ ProcessList >> select: selectBlock thenCollect: collectBlock [
 	| newCollection |
 	newCollection := self class new.
 	self
-		do: [ :each | 
+		do: [ :each |
 			(selectBlock value: each)
 				ifTrue: [ newCollection add: (collectBlock value: each) ] ].
 	^ newCollection
@@ -459,14 +461,14 @@ ProcessList >> swap: ix1 with: ix2 [
 	"Reimplemented, super would create an infinite loop"
 	| minIx maxIx link1Prev link2Prev link1 link2 link1Next link2Next newLink2Next |
 	((self validIndex: ix1) and: [self validIndex: ix2])	ifFalse: [^ self errorOutOfBounds].
-	
+
 	"Get edge case out of the way"
 	ix1 = ix2 ifTrue: [^ self ].
-	
-	"Sort indexes to make boundary-checks easier" 
+
+	"Sort indexes to make boundary-checks easier"
 	minIx := ix1 min: ix2.
 	maxIx := ix2 max: ix1.
-	
+
 	link1Prev := (minIx = 1) ifFalse: [self linkAt: minIx -1].
 	link1 := link1Prev ifNotNil: [ link1Prev nextLink]
 				ifNil: [self linkAt: minIx].
@@ -474,7 +476,7 @@ ProcessList >> swap: ix1 with: ix2 [
 	link2Prev := self linkAt: maxIx -1.
 	link2 := link2Prev nextLink.
 	link2Next := link2 nextLink.
-	
+
 	"Link at start being swapped"
 	link1 = firstLink ifTrue: [firstLink := link2.] ifFalse: [link1Prev nextLink: link2].
 	"Link at end being swapped"
@@ -483,7 +485,7 @@ ProcessList >> swap: ix1 with: ix2 [
 	newLink2Next := (link1 nextLink = link2) ifTrue: [link1] ifFalse: [link2Prev nextLink: link1.
 		link1Next].
 	link1 nextLink: link2Next.
-	link2 nextLink: newLink2Next.
+	link2 nextLink: newLink2Next
 ]
 
 { #category : #private }

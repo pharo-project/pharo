@@ -20,15 +20,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBAssignmentNode class >> variable: aVariableNode value: aValueNode [ 
-	^self 
+RBAssignmentNode class >> variable: aVariableNode value: aValueNode [
+	^self
 		variable: aVariableNode
 		value: aValueNode
 		position: nil
 ]
 
 { #category : #'instance creation' }
-RBAssignmentNode class >> variable: aVariableNode value: aValueNode position: anInteger [ 
+RBAssignmentNode class >> variable: aVariableNode value: aValueNode position: anInteger [
 	^(self new)
 		variable: aVariableNode
 			value: aValueNode
@@ -37,7 +37,7 @@ RBAssignmentNode class >> variable: aVariableNode value: aValueNode position: an
 ]
 
 { #category : #comparing }
-RBAssignmentNode >> = anObject [ 
+RBAssignmentNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	^self variable = anObject variable and: [self value = anObject value]
@@ -69,7 +69,7 @@ RBAssignmentNode >> assignmentPosition [
 ]
 
 { #category : #testing }
-RBAssignmentNode >> assigns: aVariableName [ 
+RBAssignmentNode >> assigns: aVariableName [
 	^variable name = aVariableName or: [value assigns: aVariableName]
 ]
 
@@ -79,7 +79,7 @@ RBAssignmentNode >> children [
 ]
 
 { #category : #matching }
-RBAssignmentNode >> copyInContext: aDictionary [ 
+RBAssignmentNode >> copyInContext: aDictionary [
 	^ self class new
 		variable: (self variable copyInContext: aDictionary);
 		value: (self value copyInContext: aDictionary);
@@ -87,14 +87,14 @@ RBAssignmentNode >> copyInContext: aDictionary [
 ]
 
 { #category : #testing }
-RBAssignmentNode >> directlyUses: aNode [ 
+RBAssignmentNode >> directlyUses: aNode [
 	^aNode = value ifTrue: [true] ifFalse: [self isDirectlyUsed]
 ]
 
 { #category : #comparing }
-RBAssignmentNode >> equalTo: anObject withMapping: aDictionary [ 
-	^self class = anObject class and: 
-			[(self variable equalTo: anObject variable withMapping: aDictionary) 
+RBAssignmentNode >> equalTo: anObject withMapping: aDictionary [
+	^self class = anObject class and:
+			[(self variable equalTo: anObject variable withMapping: aDictionary)
 				and: [self value equalTo: anObject value withMapping: aDictionary]]
 ]
 
@@ -108,13 +108,14 @@ RBAssignmentNode >> isAssignment [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBAssignmentNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self variable isFaulty or: [ self value isFaulty ]
 ]
 
 { #category : #matching }
-RBAssignmentNode >> match: aNode inContext: aDictionary [ 
+RBAssignmentNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^(variable match: aNode variable inContext: aDictionary)
 		and: [value match: aNode value inContext: aDictionary]
@@ -146,17 +147,17 @@ RBAssignmentNode >> removeNode: aNode [
 ]
 
 { #category : #replacing }
-RBAssignmentNode >> replaceNode: aNode withNode: anotherNode [ 
+RBAssignmentNode >> replaceNode: aNode withNode: anotherNode [
 	value == aNode ifTrue: [self value: anotherNode].
 	variable == aNode ifTrue: [self variable: anotherNode]
 ]
 
 { #category : #replacing }
-RBAssignmentNode >> replaceSourceWith: aNode [ 
+RBAssignmentNode >> replaceSourceWith: aNode [
 	"Check if we need to convert the assignment. Also check if we are being replaced with a setter message send. If so, create the replacements to edit the original source."
 
 	(aNode isAssignment and: [ aNode assignmentOperator ~= self assignmentOperator ]) ifTrue: [
-		self addReplacement: (RBStringReplacement 
+		self addReplacement: (RBStringReplacement
 			replaceFrom: self assignmentPosition
 			to: self assignmentPosition + self assignmentOperator size - 1
 			with: aNode assignmentOperator).
@@ -165,21 +166,21 @@ RBAssignmentNode >> replaceSourceWith: aNode [
 	aNode isMessage ifFalse: [^super replaceSourceWith: aNode].
 	aNode receiver isVariable ifFalse: [^super replaceSourceWith: aNode].
 	aNode numArgs = 1 ifFalse: [^super replaceSourceWith: aNode].
-	(self mappingFor: self value) = aNode arguments first 
+	(self mappingFor: self value) = aNode arguments first
 		ifFalse: [^super replaceSourceWith: aNode].
-	(self value hasParentheses not 
-		and: [aNode arguments first precedence >= aNode precedence]) 
-			ifTrue: 
+	(self value hasParentheses not
+		and: [aNode arguments first precedence >= aNode precedence])
+			ifTrue:
 				[self
-					addReplacement: (RBStringReplacement 
+					addReplacement: (RBStringReplacement
 								replaceFrom: self value start
 								to: self value start - 1
 								with: '(');
-					addReplacement: (RBStringReplacement 
+					addReplacement: (RBStringReplacement
 								replaceFrom: self value stop + 1
 								to: self value stop
 								with: ')')].
-	self addReplacement: (RBStringReplacement 
+	self addReplacement: (RBStringReplacement
 				replaceFrom: self variable start
 				to: self assignmentPosition + 1
 				with: aNode receiver name , ' ' , aNode selector)
@@ -196,7 +197,7 @@ RBAssignmentNode >> stopWithoutParentheses [
 ]
 
 { #category : #testing }
-RBAssignmentNode >> uses: aNode [ 
+RBAssignmentNode >> uses: aNode [
 	^aNode = value ifTrue: [true] ifFalse: [self isUsed]
 ]
 
@@ -206,7 +207,7 @@ RBAssignmentNode >> value [
 ]
 
 { #category : #accessing }
-RBAssignmentNode >> value: aValueNode [ 
+RBAssignmentNode >> value: aValueNode [
 	value := aValueNode.
 	value parent: self
 ]
@@ -217,13 +218,13 @@ RBAssignmentNode >> variable [
 ]
 
 { #category : #accessing }
-RBAssignmentNode >> variable: varNode [ 
+RBAssignmentNode >> variable: varNode [
 	variable := varNode.
 	variable parent: self
 ]
 
 { #category : #initialization }
-RBAssignmentNode >> variable: aVariableNode value: aValueNode position: anInteger [ 
+RBAssignmentNode >> variable: aVariableNode value: aValueNode position: anInteger [
 	self variable: aVariableNode.
 	self value: aValueNode.
 	assignment := anInteger

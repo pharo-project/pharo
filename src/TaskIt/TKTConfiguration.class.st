@@ -71,9 +71,9 @@ TKTConfiguration class >> processProvider [
 { #category : #accessing }
 TKTConfiguration class >> processProvider: aProcessProvider during: aBlock [
 
-	^ self 
-		optionAt: #processProvider 
-		value: aProcessProvider 
+	^ self
+		optionAt: #processProvider
+		value: aProcessProvider
 		during: aBlock
 ]
 
@@ -92,7 +92,7 @@ TKTConfiguration class >> profile: aProfile [
 { #category : #accessing }
 TKTConfiguration class >> profile: aProfile during: aBlock [
 	| return |
-	
+
 	return := self value: aProfile during: [aProfile activateProfile. aBlock value].
 	aProfile finalizeProfile.
 	^ return
@@ -131,10 +131,10 @@ TKTConfiguration class >> profiles [
 ]
 
 { #category : #accessing }
-TKTConfiguration class >> resetSoleInstance [ 
+TKTConfiguration class >> resetSoleInstance [
 
 	TKTWatchDog reset.
-	super resetSoleInstance.
+	super resetSoleInstance
 ]
 
 { #category : #accessing }
@@ -163,7 +163,7 @@ TKTConfiguration class >> settingsOn: aBuilder [
 
 	(aBuilder group: #taskitExecution)
 		label: 'Task it execution profile';
-		with: [ 
+		with: [
 			(aBuilder pickOne: #profileNamed)
 				label: 'Exeucting Profile';
 				target: self;
@@ -179,16 +179,16 @@ TKTConfiguration class >> watchDog [
 ]
 
 { #category : #accessing }
-TKTConfiguration >> basicValue [ 
+TKTConfiguration >> basicValue [
 	^ value
 ]
 
 { #category : #accessing }
 TKTConfiguration >> default [
-	
-	^ value ifNil: [ 
+
+	^ value ifNil: [
 			self class profile: TKTProfile defaultProfile.
-			value ifNil: [ 
+			value ifNil: [
 				self error: 'No default profile available.' ] ]
 ]
 

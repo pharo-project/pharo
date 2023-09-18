@@ -286,12 +286,12 @@ FBDDecompilerTest >> testCaseOf3 [
 
 { #category : #tests }
 FBDDecompilerTest >> testCaseOf4 [
-	self checkCorrectDecompilation: #exampleCaseOf4.
+	self checkCorrectDecompilation: #exampleCaseOf4
 ]
 
 { #category : #tests }
 FBDDecompilerTest >> testCaseOf5 [
-	self checkCorrectDecompilation: #exampleCaseOf5.
+	self checkCorrectDecompilation: #exampleCaseOf5
 ]
 
 { #category : #tests }
@@ -1002,6 +1002,8 @@ FBDDecompilerTest >> testWhileTrue2 [
 
 { #category : #tests }
 FBDDecompilerTest >> testWhileTrue3 [
+	<expectedFailure>
+	"See https://github.com/pharo-project/pharo/issues/13196"
 
 	self checkCorrectDecompilation: #exampleWhileTrue3
 ]

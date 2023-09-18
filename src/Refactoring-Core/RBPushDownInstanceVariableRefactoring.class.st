@@ -13,7 +13,6 @@ Class {
 RBPushDownInstanceVariableRefactoring >> preconditions [
 
 	| references |
-
 	references := RBCondition referencesInstanceVariable: variableName in: class.
 	class realClass
 		ifNil: [ references errorMacro: ( '<1s> is referenced.' expandMacrosWith: variableName ) ]
@@ -26,7 +25,7 @@ RBPushDownInstanceVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBPushDownInstanceVariableRefactoring >> transform [
+RBPushDownInstanceVariableRefactoring >> privateTransform [
 	class removeInstanceVariable: variableName.
 	class subclasses do: [:each | each addInstanceVariable: variableName]
 ]

@@ -24,170 +24,160 @@ Class {
 	#category : #'TraitsV2-Base'
 }
 
-{ #category : #private }
-Trait class >> configureBuilder: builder withName: aName traitComposition: aTraitCompositionOrCollection instanceVariableNames: aString packageName: aPackageName [
-
-	^ self
-		  configureBuilder: builder
-		  withName: aName
-		  traitComposition: aTraitCompositionOrCollection
-		  slots: aString asSlotCollection
-		  packageName: aPackageName
-]
-
-{ #category : #private }
-Trait class >> configureBuilder: builder withName: aName traitComposition: aTraitCompositionOrCollection slots: someSlots packageName: aPackageName [
-
-	^ builder
-		name: aName;
-		beTrait;
-		slots: someSlots;
-		sharedVariables: '';
-		sharedPools: '';
-		category: aPackageName;
-		traitComposition: aTraitCompositionOrCollection asTraitComposition;
-		classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition
-]
-
 { #category : #'old pharo 8 syntax' }
-Trait class >> named: aSymbol [
-	^ self named: aSymbol uses: {} package: 'Unclassified'
+Trait class >> named: aName [
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  beTrait ]
 ]
 
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName instanceVariableNames: aString package: aPackageName [
 
-	^ self named: aName 
-		uses: {} 
-		instanceVariableNames: aString 
-		package: aPackageName 
-		env: self environment 
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  slotsFromString: aString;
+			  category: aPackageName;
+			  beTrait ]
 ]
 
 { #category : #'old pharo 8 syntax' }
-Trait class >> named: aSymbol package: aString [
-	^ self
-		named: aSymbol
-		uses: {}
-		package: aString
-		env: self environment
+Trait class >> named: aName package: aString [
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  category: aString;
+			  beTrait ]
 ]
 
 { #category : #'old pharo 8 syntax' }
-Trait class >> named: aSymbol trait: aCompositionOrArray [
-	^ self named: aSymbol trait: aCompositionOrArray package: 'Unclassified'
-]
+Trait class >> named: aName uses: aCompositionOrArray [
 
-{ #category : #'old pharo 8 syntax' }
-Trait class >> named: aSymbol uses: aCompositionOrArray [
-	^ self named: aSymbol uses: aCompositionOrArray package: 'Unclassified'
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  traitComposition: aCompositionOrArray;
+			  beTrait ]
 ]
 
 { #category : #deprecated }
-Trait class >> named: aSymbol uses: aTraitCompositionOrCollection category: aString [
-	^ self
-		named: aSymbol
-		uses: aTraitCompositionOrCollection
-		package: aString
-		env: self environment
+Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPackageName [
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  category: aPackageName;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #deprecated }
-Trait class >> named: aName uses: aTraitCompositionOrCollection category: aString env: anEnvironment [
-	^ self
-		named: aName
-		uses: aTraitCompositionOrCollection
-		slots: #()
-		package: aString
-		env: anEnvironment
+Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPackageName env: anEnvironment [
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  category: aPackageName;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName [
 
-	^ self named: aName 
-		uses: aTraitCompositionOrCollection 
-		instanceVariableNames: aString 
-		package: aPackageName 
-		env: self environment 
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  slotsFromString: aString;
+			  category: aPackageName;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName env: anEnvironment [
-	| trait |
-	trait := self classInstaller
-		make: [ :builder | 
-			self
-				configureBuilder: builder
-				withName: aName
-				traitComposition: aTraitCompositionOrCollection
-				slots: aString asSlotCollection
-				packageName: aPackageName ].
-	self assert: [ trait class class = MetaclassForTraits ].
-	self assert: [ trait class superclass = Trait ].
-	^ trait
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  slotsFromString: aString;
+			  category: aPackageName;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #'old pharo 8 syntax' }
-Trait class >> named: aSymbol uses: aTraitCompositionOrCollection package: aString [
-	^ self
-		named: aSymbol
-		uses: aTraitCompositionOrCollection
-		package: aString
-		env: self environment
+Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString [
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  category: aString;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString env: anEnvironment [
-	^ self
-		named: aName
-		uses: aTraitCompositionOrCollection
-		slots: #()
-		package: aString
-		env: anEnvironment
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  category: aString;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #deprecated }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory [
 
-	^ self named: aName 
-		uses: aTraitCompositionOrCollection 
-		slots: someSlots 
-		package: aCategory 
-		env: self environment 
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  slots: someSlots;
+			  category: aCategory;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #deprecated }
-Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [ 
-	"It is unclear that it is not use by low level library such as MC so we should not use it but we do not remove it for now."
-	
-	^ self named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aCategory env: anEnvironment 
+Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  slots: someSlots;
+			  category: aCategory;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName [
 
-	^ self named: aName 
-		uses: aTraitCompositionOrCollection 
-		slots: someSlots 
-		package: aPackageName 
-		env: self environment 
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  slots: someSlots;
+			  category: aPackageName;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName env: anEnvironment [
-	| trait |
-	trait := self classInstaller
-		make: [ :builder | 
-			self
-				configureBuilder: builder
-				withName: aName
-				traitComposition: aTraitCompositionOrCollection
-				slots: someSlots
-				packageName: aPackageName ].
-	self assert: [ trait class class = MetaclassForTraits ].
-	self assert: [ trait class superclass = Trait ].
-	^ trait
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  slots: someSlots;
+			  category: aPackageName;
+			  traitComposition: aTraitCompositionOrCollection;
+			  beTrait ]
 ]
 
 { #category : #accessing }
@@ -222,7 +212,7 @@ Trait >> @@ anArray [
 ]
 
 { #category : #users }
-Trait >> addUser: aClass [ 
+Trait >> addUser: aClass [
 
 	self users add: aClass
 ]
@@ -230,10 +220,10 @@ Trait >> addUser: aClass [
 { #category : #'instance creation' }
 Trait >> basicNew [
 	"Traits should never be instantiated.
-	They are naked object: superclass = nil. 
-	They not understand any Object messages 
+	They are naked object: superclass = nil.
+	They not understand any Object messages
 	and any DNU crashes VM because there are no methods doesNotUnderstand: or cannotInterpret:"
-	
+
 	self error: 'Traits should not be instantiated!'
 ]
 
@@ -252,36 +242,35 @@ Trait >> definitionStringFor: aConfiguredPrinter [
 { #category : #fileout }
 Trait >> expandedDefinitionStringFor: aPrinter [
 
-	^ aPrinter expandedTraitDefinitionString 
+	^ aPrinter expandedTraitDefinitionString
 ]
 
 { #category : #testing }
 Trait >> isBaseTrait [
-	
+
 	^ true
 ]
 
 { #category : #testing }
 Trait >> isClass [
-	
+
 	^ false
 ]
 
 { #category : #testing }
 Trait >> isClassTrait [
-	
+
 	^ false
 ]
 
 { #category : #testing }
-Trait >> isEmpty [ 
-	"Since we can have potential an empty array in the fluid definition (to be revisited) 
+Trait >> isEmpty [
+	"Since we can have potential an empty array in the fluid definition (to be revisited)
 	when the trait composition is aTrait it received the message isEmpty and would break
-	traitComposition 
+	traitComposition
 		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: traitComposition ]]."
 
 	^ false
-	
 ]
 
 { #category : #testing }
@@ -306,10 +295,11 @@ Trait >> isUsed [
 ]
 
 { #category : #'organization updating' }
-Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
+Trait >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
-	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
-	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
+
+	super notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol.
+	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -322,27 +312,25 @@ Trait >> rebuildMethodDictionary [
 
 { #category : #initialization }
 Trait >> removeFromSystem: logged [
-	
+
 	"When a trait is removed from the system it should:
-	
+
 	- Remove it self from its trait compositions.
 	- Remove it self from its users.
 	- Remove its classTrait from its users.
 	- Do what any class does."
 	self traitComposition removeUser: self.
 	self class traitComposition removeUser: self class.
-	
+
 	self traitUsers do: [ :e | e isObsolete ifFalse: [ e removeFromComposition: self ]].
 	self class traitUsers do: [ :e | e isObsolete ifFalse: [e removeFromComposition: self class ]].
 	^ super removeFromSystem: logged
 ]
 
 { #category : #removing }
-Trait >> removeUser: aClass [ 
+Trait >> removeUser: aClass [
 
-	self users remove: aClass ifAbsent: [ ].
-	
-	
+	self users remove: aClass ifAbsent: [ ]
 ]
 
 { #category : #accessing }

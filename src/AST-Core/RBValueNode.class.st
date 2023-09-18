@@ -24,19 +24,19 @@ Class {
 
 { #category : #testing }
 RBValueNode class >> isAbstract [
-		
+
 	^ self == RBValueNode
 ]
 
 { #category : #accessing }
-RBValueNode >> addParenthesis: anInterval [ 
+RBValueNode >> addParenthesis: anInterval [
 	parentheses ifNil: [parentheses := OrderedCollection new: 1].
 	parentheses add: anInterval
 ]
 
 { #category : #testing }
-RBValueNode >> containedBy: anInterval [ 
-	^anInterval first <= self startWithoutParentheses 
+RBValueNode >> containedBy: anInterval [
+	^anInterval first <= self startWithoutParentheses
 		and: [anInterval last >= self stopWithoutParentheses]
 ]
 
@@ -49,18 +49,19 @@ RBValueNode >> evaluate [
 { #category : #evaluating }
 RBValueNode >> evaluateForContext: aContext [
 	"evaluate the AST taking variables from the context"
-	^(self asDoItForContext: aContext) 
-		generateWithSource valueWithReceiver: aContext receiver arguments: #().
+	^ aContext compiler
+		  ast: self asDoit;
+		  evaluate
 ]
 
 { #category : #evaluating }
-RBValueNode >> evaluateForReceiver: aReceicer [
-	"evaluate the AST without taking variables into account"
-	| methodNode |
-	
-	methodNode := self asDoit.
-	methodNode methodClass: aReceicer class.
-	^methodNode generateWithSource valueWithReceiver: aReceicer arguments: #().
+RBValueNode >> evaluateForReceiver: aReceiver [
+	"evaluate the AST binding self to the receiver and taking its variables"
+
+	^ aReceiver class compiler
+		  ast: self asDoit;
+		  receiver: aReceiver;
+		  evaluate
 ]
 
 { #category : #testing }

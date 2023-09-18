@@ -26,14 +26,14 @@ Class {
 }
 
 { #category : #'shortcut editor' }
-CmdShortcutSetting >> accept: aKeyCombination [ 
+CmdShortcutSetting >> accept: aKeyCombination [
 
 	shortcutActivation redefineBy: [  shortcutActivation keyCombination: aKeyCombination ].
 	self updated
 ]
 
 { #category : #visitor }
-CmdShortcutSetting >> acceptSettings: aVisitor [ 
+CmdShortcutSetting >> acceptSettings: aVisitor [
 
 	shortcutActivation isRedefined ifTrue: [ ^ aVisitor visitCmdShortcutSetting: self]
 ]
@@ -41,7 +41,7 @@ CmdShortcutSetting >> acceptSettings: aVisitor [
 { #category : #accessing }
 CmdShortcutSetting >> default [
 
-	^shortcutActivation isRedefined 
+	^shortcutActivation isRedefined
 		ifTrue: [ shortcutActivation redefinedInstance ]
 		ifFalse: [ shortcutActivation ]
 ]
@@ -55,7 +55,7 @@ CmdShortcutSetting >> hasDefault [
 { #category : #updating }
 CmdShortcutSetting >> markRedefinedStatus [
 	(label beginsWith: '*') ifTrue: [label := label allButFirst].
-	
+
 	shortcutActivation isRedefined ifTrue: [ label := '*', label ]
 ]
 
@@ -70,7 +70,7 @@ CmdShortcutSetting >> realValue: aShortcutActivation [
 
 	shortcutActivation redefineBy: [
 			shortcutActivation keyCombination: aShortcutActivation keyCombination].
-		
+
 	self updated
 ]
 
@@ -78,9 +78,9 @@ CmdShortcutSetting >> realValue: aShortcutActivation [
 CmdShortcutSetting >> setToDefault [
 
 	shortcutActivation := shortcutActivation revertRedefinedInstanceIfAbsent: [
-		self inform: 'Annotation not exists anymore'. 
+		self inform: 'Annotation not exists anymore'.
 		^self].
-		
+
 	self updated
 ]
 
@@ -97,10 +97,10 @@ CmdShortcutSetting >> shortcutActivation [
 { #category : #accessing }
 CmdShortcutSetting >> shortcutActivation: aShortcutActivation [
 	shortcutActivation := aShortcutActivation.
-	
+
 	label := shortcutActivation id.
 	description := shortcutActivation commandClass comment.
-	self markRedefinedStatus.
+	self markRedefinedStatus
 ]
 
 { #category : #updating }

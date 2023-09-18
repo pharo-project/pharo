@@ -48,7 +48,7 @@ ClyItemGroup class >> isEditableGroup [
 
 { #category : #'instance creation' }
 ClyItemGroup class >> named: aString [
-	^self new 
+	^self new
 		name: aString
 ]
 

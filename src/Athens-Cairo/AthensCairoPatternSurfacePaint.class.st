@@ -25,9 +25,9 @@ AthensCairoPatternSurfacePaint class >> createForSurface: anAthensCairoSurface [
 
 { #category : #primitives }
 AthensCairoPatternSurfacePaint class >> primCreateForSurface: anAthensCairoSurface [
-	
+
 "	pattern = cairo_pattern_create_for_surface (image);"
-	
+
 	^ self ffiCall: #(AthensCairoPatternSurfacePaint cairo_pattern_create_for_surface(
 		cairo_surface_t  anAthensCairoSurface ) )
 ]
@@ -40,7 +40,7 @@ AthensCairoPatternSurfacePaint >> athensFillRectangle: aRectangle on: aCanvas [
 	extent
 		ifNotNil: [ self setRect: (origin extent: extent) forFillOn: aCanvas ]
 		ifNil: [ self setRect: aRectangle forFillOn: aCanvas ].
-		
+
 	self setMatrix: aCanvas paintTransform inverted.
 	self loadOnCairoCanvas: aCanvas.
 	aCanvas fill
@@ -57,14 +57,14 @@ AthensCairoPatternSurfacePaint >> extent: aPatternExtent [
 ]
 
 { #category : #initialization }
-AthensCairoPatternSurfacePaint >> initializeFor: anAthensCairoSurface [ 
+AthensCairoPatternSurfacePaint >> initializeFor: anAthensCairoSurface [
 	self initialize.
-	surface := anAthensCairoSurface .
+	surface := anAthensCairoSurface
 ]
 
 { #category : #accessing }
-AthensCairoPatternSurfacePaint >> origin: aPoint [ 
-	origin := aPoint.
+AthensCairoPatternSurfacePaint >> origin: aPoint [
+	origin := aPoint
 ]
 
 { #category : #accessing }

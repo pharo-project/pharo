@@ -19,7 +19,7 @@ Class {
 
 { #category : #'instance creation' }
 CoStatisticsCompletionEntry class >> on: aNECEntry [
-	
+
 	^ self new
 		necEntry: aNECEntry;
 		yourself
@@ -27,13 +27,13 @@ CoStatisticsCompletionEntry class >> on: aNECEntry [
 
 { #category : #comparing }
 CoStatisticsCompletionEntry >> = anEntry [
- 
+
 	^ self contents = anEntry contents
 ]
 
 { #category : #activation }
-CoStatisticsCompletionEntry >> activateOn: aCoCompletionContext [ 
-	
+CoStatisticsCompletionEntry >> activateOn: aCoCompletionContext [
+
 	| entry |
 	entry := CoEntryAcceptedEvent new
 		index: index;
@@ -46,13 +46,13 @@ CoStatisticsCompletionEntry >> activateOn: aCoCompletionContext [
 
 { #category : #accessing }
 CoStatisticsCompletionEntry >> contents [
-	
+
 	^ necEntry contents
 ]
 
 { #category : #comparing }
 CoStatisticsCompletionEntry >> hash [
- 
+
 	^ self contents hash
 ]
 
@@ -78,8 +78,8 @@ CoStatisticsCompletionEntry >> index [
 ]
 
 { #category : #accessing }
-CoStatisticsCompletionEntry >> index: anInteger [ 
-	
+CoStatisticsCompletionEntry >> index: anInteger [
+
 	index := anInteger
 ]
 
@@ -89,7 +89,7 @@ CoStatisticsCompletionEntry >> necEntry [
 ]
 
 { #category : #accessing }
-CoStatisticsCompletionEntry >> necEntry: aNECEntry [ 
+CoStatisticsCompletionEntry >> necEntry: aNECEntry [
 	"self haltIf: [ aNECEntry isKindOf: self class ]."
 	necEntry := aNECEntry
 ]

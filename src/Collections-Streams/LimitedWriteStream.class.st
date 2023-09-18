@@ -92,7 +92,7 @@ LimitedWriteStream >> nextPut: anObject [
 LimitedWriteStream >> nextPutAll: aCollection [
 
 	| newEnd |
-	collection class == aCollection class 
+	collection class == aCollection class
 		ifFalse: [ ^ super nextPutAll: aCollection ].
 
 	newEnd := position + aCollection size.
@@ -107,7 +107,7 @@ LimitedWriteStream >> nextPutAll: aCollection [
 
 	collection replaceFrom: position+1 to: newEnd  with: aCollection startingAt: 1.
 	position := newEnd.
-	
+
 	^ aCollection
 ]
 

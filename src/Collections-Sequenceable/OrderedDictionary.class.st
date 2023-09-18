@@ -57,17 +57,17 @@ OrderedDictionary class >> newFrom: anAssociationCollection [
 		newDictionary
 			at: each key
 			put: each value].
-	^ newDictionary.
+	^ newDictionary
 ]
 
 { #category : #'instance creation' }
 OrderedDictionary class >> newFromKeys: keys andValues: values [
 	"Create a dictionary from the keys and values arguments which should have the same length."
-	
+
 	"(OrderedDictionary newFromKeys: #(#x #y) andValues: #(3 6)) >>> (OrderedDictionary new at: #x put: 3; at: #y put: 6 ;yourself)"
-	
+
 	| dict |
-	dict := self new.
+	dict := self new: keys size.
 	keys with: values do: [ :k :v | dict at: k put: v ].
 	^ dict
 ]
@@ -81,7 +81,7 @@ OrderedDictionary class >> newFromPairs: aSequenceableCollection [
 		newDictionary
 			at: (aSequenceableCollection at: i)
 			put: (aSequenceableCollection at: i + 1)].
-	^ newDictionary.
+	^ newDictionary
 ]
 
 { #category : #comparing }
@@ -96,7 +96,7 @@ OrderedDictionary >> = anObject [
 	dictionary associationsDo: [:each |
 		(anObject at: each key ifAbsent: [^ false]) = each value
 			ifFalse: [^ false]].
-	^ true.
+	^ true
 ]
 
 { #category : #adding }
@@ -110,7 +110,7 @@ OrderedDictionary >> add: anAssociation [
 			orderedKeys size > oldSize
 				ifFalse: [self growOrderedKeys].
 			orderedKeys at: oldSize + 1 put: anAssociation key].
-	^ anAssociation.
+	^ anAssociation
 ]
 
 { #category : #adding }
@@ -119,7 +119,7 @@ OrderedDictionary >> addAll: anAssociationCollection [
 	any collection of associations including Arrays and OrderedCollections"
 
 	anAssociationCollection associationsDo: [:each | self add: each].
-	^ anAssociationCollection.
+	^ anAssociationCollection
 ]
 
 { #category : #accessing }
@@ -151,7 +151,7 @@ OrderedDictionary >> associations [
 	self associationsDo: [:each |
 		associations at: i put: each.
 		i := i + 1].
-	^ associations.
+	^ associations
 ]
 
 { #category : #enumerating }
@@ -187,7 +187,7 @@ OrderedDictionary >> at: firstKey at: secondKey [
 { #category : #'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey ifAbsent: aZeroArgBlock [
 		"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. Execute aZeroArgBlock in case one of the key is wrong."
-		
+
 	| subDictionary |
 	subDictionary := self at: firstKey ifAbsent: [ ^ aZeroArgBlock value ].
 	^ subDictionary at: secondKey ifAbsent: aZeroArgBlock
@@ -205,7 +205,7 @@ OrderedDictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 { #category : #'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
-	
+
 	| subDictionary |
 	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
 	^ subDictionary at: secondKey put: aValue
@@ -253,25 +253,25 @@ OrderedDictionary >> at: aKey put: aValue [
 			orderedKeys size > oldSize
 				ifFalse: [self growOrderedKeys].
 			orderedKeys at: oldSize + 1 put: aKey].
-	^ aValue.
+	^ aValue
 ]
 
 { #category : #accessing }
-OrderedDictionary >> at: key update: updateBlock [ 
+OrderedDictionary >> at: key update: updateBlock [
 	"I am used to update the value at a given key, or if the key does not exist, to throw an error"
-	self at: key update: updateBlock initial: [ KeyNotFound signalFor: key ].
+	self at: key update: updateBlock initial: [ KeyNotFound signalFor: key ]
 ]
 
 { #category : #accessing }
 OrderedDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
-	"I am used to update the value at a given key. The updateBlock is passed 
+	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
 	If the key does not exist, store the value of the initBlocktOrValue.
 	initBlocktOrValue can be a block in case the initial value is expencive to compute."
 	| val |
 	val := self at: key ifAbsent: [ nil ].
-	val 
-		ifNil: [ self at: key put: (initBlocktOrValue value) ] 
+	val
+		ifNil: [ self at: key put: (initBlocktOrValue value) ]
 		ifNotNil: [ self at: key put: (updateBlock value: val) ]
 ]
 
@@ -336,7 +336,7 @@ OrderedDictionary >> growOrderedKeys [
 			replaceFrom: 1
 			to: orderedKeys size
 			with: orderedKeys
-			startingAt: 1.
+			startingAt: 1
 ]
 
 { #category : #testing }
@@ -359,7 +359,7 @@ OrderedDictionary >> identityIndexOfKey: aKey ifAbsent: aBlock [
 	1 to: self size do: [:i |
 		(orderedKeys at: i) == aKey
 			ifTrue: [^ i]].
-	^ aBlock value.
+	^ aBlock value
 ]
 
 { #category : #testing }
@@ -392,13 +392,13 @@ OrderedDictionary >> indexOfKey: aKey ifAbsent: aBlock [
 	1 to: self size do: [:i |
 		(orderedKeys at: i) = aKey
 			ifTrue: [^ i]].
-	^ aBlock value.
+	^ aBlock value
 ]
 
 { #category : #initialization }
 OrderedDictionary >> initialize: aCapacity [
 	dictionary := self dictionaryClass new: aCapacity.
-	orderedKeys := Array new: aCapacity.
+	orderedKeys := Array new: aCapacity
 ]
 
 { #category : #testing }
@@ -466,7 +466,7 @@ OrderedDictionary >> keysAndValuesRemove: aTwoArgumentBlock [
 	self associationsDo: [:each |
 		(aTwoArgumentBlock value: each key value: each value)
 			ifTrue: [removedAssociations add: each]].
-	removedAssociations do: [:each | self removeKey: each key].
+	removedAssociations do: [:each | self removeKey: each key]
 ]
 
 { #category : #enumerating }
@@ -506,13 +506,13 @@ OrderedDictionary >> orderedKeysRemove: aRemovedKey [
 	key slot before removing and shifting"
 	orderedKeys
 		at: self size + 1
-		put: nil.
+		put: nil
 ]
 
 { #category : #copying }
 OrderedDictionary >> postCopy [
 	orderedKeys := orderedKeys copy.
-	dictionary := dictionary copy.
+	dictionary := dictionary copy
 ]
 
 { #category : #printing }
@@ -530,7 +530,7 @@ OrderedDictionary >> printElementsOn: aStream [
 					print: each value.
 				(i < self size)
 					ifTrue: [aStream space]]].
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #removing }
@@ -541,7 +541,7 @@ OrderedDictionary >> remove: anObject ifAbsent: aBlock [
 { #category : #removing }
 OrderedDictionary >> removeAll [
 	1 to: self size do: [:i | orderedKeys at: i put: nil].
-	dictionary removeAll.
+	dictionary removeAll
 ]
 
 { #category : #removing }
@@ -550,7 +550,7 @@ OrderedDictionary >> removeKey: aKey [
 
 	value := dictionary removeKey: aKey.
 	self orderedKeysRemove: aKey.
-	^ value.
+	^ value
 ]
 
 { #category : #removing }
@@ -561,7 +561,7 @@ OrderedDictionary >> removeKey: aKey ifAbsent: aBlock [
 	value := dictionary removeKey: aKey ifAbsent: aBlock.
 	dictionary size < oldSize
 		ifTrue: [self orderedKeysRemove: aKey].
-	^ value.
+	^ value
 ]
 
 { #category : #removing }
@@ -612,9 +612,9 @@ OrderedDictionary >> size [
 OrderedDictionary >> storeOn: aStream [
 	aStream << '((' << self class name << ' new)'.
 	self associations
-		ifNotEmpty: [ :assos | 
+		ifNotEmpty: [ :assos |
 			assos
-				do: [ :each | 
+				do: [ :each |
 					aStream
 						<< ' add: ';
 						store: each ]

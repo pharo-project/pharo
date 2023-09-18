@@ -22,7 +22,7 @@ CoStatisticsTest >> logAcceptedEvent: anIndex typedToken: aToken [
 		source: 'heuristic';
 		typedToken: aToken;
 		completedEntry: 'toto'.
-	
+
 	statistics logAcceptEvent: entry
 ]
 
@@ -92,9 +92,9 @@ CoStatisticsTest >> testAcceptEntryLogsItsSource [
 	| entries |
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
-	
+
 	entries := statistics groupBy: [ :e | e index = 1 and: [ e source = 'heuristic' ] ].
-	
+
 	self assert: entries size equals: 1
 ]
 

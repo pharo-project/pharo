@@ -17,23 +17,23 @@ Class {
 
 { #category : #coverage }
 ReadWriteStreamTest >> classToBeTested [
-	
+
 	^ ReadWriteStream
 ]
 
 { #category : #'accessing - defaults' }
 ReadWriteStreamTest >> emptyByteStream [
-	^ ReadWriteStream on: (ByteArray new: 4096).
+	^ ReadWriteStream on: (ByteArray new: 4096)
 ]
 
 { #category : #'accessing - defaults' }
 ReadWriteStreamTest >> emptyStream [
-	^ ReadWriteStream on: (String new: 4096).
+	^ ReadWriteStream on: (String new: 4096)
 ]
 
 { #category : #'accessing - defaults' }
 ReadWriteStreamTest >> streamOnString [
-	^ ReadWriteStream with: 'abcde'.
+	^ ReadWriteStream with: 'abcde'
 ]
 
 { #category : #'tests - testing' }
@@ -85,13 +85,13 @@ ReadWriteStreamTest >> testIsEmpty [
 	stream reset.
 	self deny: stream isEmpty.
 	stream next.
-	self deny: stream isEmpty.
+	self deny: stream isEmpty
 ]
 
 { #category : #tests }
 ReadWriteStreamTest >> testNew [
 
-	self should: [ ReadWriteStream new ] raise: Error.
+	self should: [ ReadWriteStream new ] raise: Error
 ]
 
 { #category : #tests }
@@ -211,7 +211,7 @@ ReadWriteStreamTest >> testReset [
 	stream reset.
 	self assert: stream next equals: $a.
 	stream := self emptyStream.
-	stream 
+	stream
 		nextPutAll: 'abc';
 		reset.
 	stream nextPutAll: 'def'.

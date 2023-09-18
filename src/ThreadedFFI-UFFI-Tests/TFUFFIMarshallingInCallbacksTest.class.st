@@ -27,7 +27,7 @@ TFUFFIMarshallingInCallbacksTest >> assertType: aType value: aValue [
 
 	| callbackGotValue |
 	callbackGotValue := self call: aType value: aValue.
-	self assert: callbackGotValue equals: aValue.
+	self assert: callbackGotValue equals: aValue
 ]
 
 { #category : #tests }
@@ -102,7 +102,7 @@ TFUFFIMarshallingInCallbacksTest >> simple_callback_f_long: callback value: aVal
 ]
 
 { #category : #'ffi-calls' }
-TFUFFIMarshallingInCallbacksTest >> simple_callback_f_pointer: aCallback value: aValue [ 
+TFUFFIMarshallingInCallbacksTest >> simple_callback_f_pointer: aCallback value: aValue [
 
 	^ self ffiCall: #(void simple_callback_f_ulonglong(void *aCallback, void* aValue))
 ]

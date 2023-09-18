@@ -7,7 +7,7 @@ FreeTypeFont >> displayLineGlyphOn: aDisplayContext from: startPoint to: endPoin
 	oldCombinationRule := aDisplayContext combinationRule .
 	oldHalftoneForm := aDisplayContext halftoneForm .
 	originalColorMap := aDisplayContext colorMap.
-	clr := (foreColor := aDisplayContext lastFontForegroundColor ifNil:[Color black asNontranslucentColor]) 
+	clr := (foreColor := aDisplayContext lastFontForegroundColor ifNil:[Color black asNontranslucentColor])
 		pixelValueForDepth: 32.
 	depth := aDisplayContext destForm depth.
 	foreColorVal := clr bitAnd: 16rFFFFFF.
@@ -28,23 +28,23 @@ FreeTypeFont >> displayLineGlyphOn: aDisplayContext from: startPoint to: endPoin
 	aDisplayContext destOrigin: startPointX@startPointY.
 	aDisplayContext width: width.
 	aDisplayContext height: height.
-	aDisplayContext 
+	aDisplayContext
 		sourceOrigin: 0@0;
 		halftoneForm: nil.
 	(FreeTypeSettings current useSubPixelAntiAliasing and: [depth >= 8])
 		ifTrue:[
-			aDisplayContext 
+			aDisplayContext
 				combinationRule: 41.
-			aDisplayContext 
-				copyBitsColor: foreColorVal 
-				alpha: foreColorAlpha 
+			aDisplayContext
+				copyBitsColor: foreColorVal
+				alpha: foreColorAlpha
 				gammaTable: FreeTypeSettings current gammaTable
 				ungammaTable: FreeTypeSettings current gammaInverseTable]
 		ifFalse:[
 			glyph fillWithColor: foreColor.
 			aDisplayContext combinationRule: (depth <= 8 ifTrue: [Form paint] ifFalse: [34]).
-			aDisplayContext copyBits].		
-	aDisplayContext 
+			aDisplayContext copyBits].
+	aDisplayContext
 		colorMap: originalColorMap;
 		combinationRule: oldCombinationRule;
 		halftoneForm: oldHalftoneForm

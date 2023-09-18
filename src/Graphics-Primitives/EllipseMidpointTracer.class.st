@@ -28,7 +28,7 @@ EllipseMidpointTracer >> on: aRectangle [
 	bSquared := b * b.
 	d1 := bSquared - (aSquared * b) + (0.25 * aSquared).
 	d2 := nil.
-	inFirstRegion := true.
+	inFirstRegion := true
 ]
 
 { #category : #computing }

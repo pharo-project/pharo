@@ -135,7 +135,7 @@ RBLintRule >> isTransformationRule [
 ]
 
 { #category : #accessing }
-RBLintRule >> leaves [ 
+RBLintRule >> leaves [
 	^ {self}
 ]
 
@@ -184,7 +184,7 @@ RBLintRule >> run [
 ]
 
 { #category : #running }
-RBLintRule >> runOnEnvironment: anEnvironment [ 
+RBLintRule >> runOnEnvironment: anEnvironment [
 	^ RBSmalllintChecker runRule: self onEnvironment: anEnvironment
 ]
 

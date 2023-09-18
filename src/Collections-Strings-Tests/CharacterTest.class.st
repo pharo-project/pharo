@@ -12,7 +12,7 @@ Class {
 
 { #category : #coverage }
 CharacterTest >> classToBeTested [
-	
+
 	^ Character
 ]
 
@@ -48,17 +48,17 @@ CharacterTest >> testCodePoint [
 
 	self assert: $A codePoint equals: 65.
 	self assert: (Character codePoint: $a codePoint) equals: $a.
-	self assert: (Character codePoint: 97) codePoint equals: 97.
+	self assert: (Character codePoint: 97) codePoint equals: 97
 ]
 
 { #category : #tests }
 CharacterTest >> testDigitValue [
-		
+
 	'0123456789ABCDEF' with: #(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
 		do: [:char :value | self assert: char digitValue equals: value].
-	
+
 	'0123456789' with: #(0 1 2 3 4 5 6 7 8 9)
-		do: [:char :value | self assert: char digitValue equals: value].
+		do: [:char :value | self assert: char digitValue equals: value]
 ]
 
 { #category : #tests }
@@ -90,7 +90,7 @@ CharacterTest >> testMaxVal [
 	- A character created with the value has the same code point
 	- Attempting to create a character with maxVal+1 fails"
 
-	self assert: (Character value: Character maxVal) codePoint 
+	self assert: (Character value: Character maxVal) codePoint
 			equals: Character maxVal.
 	self should: [ Character value: Character maxVal + 1 ]
 			raise: PrimitiveFailed
@@ -99,7 +99,7 @@ CharacterTest >> testMaxVal [
 { #category : #'tests - instance creation' }
 CharacterTest >> testNew [
 
-	self should: [Character new] raise: Error.
+	self should: [Character new] raise: Error
 ]
 
 { #category : #tests }
@@ -113,13 +113,13 @@ CharacterTest >> testPrintString [
 	self assert: Character space printString equals: 'Character space'.
 
 	self assert: (Character value: 0) printString equals: 'Character null'.
-	self assert: (Character value: 17) printString equals: 'Character value: 17'.
+	self assert: (Character value: 17) printString equals: 'Character value: 17'
 ]
 
 { #category : #tests }
 CharacterTest >> testPrintStringAll [
 
-	Character allByteCharacters do: [ :each | 
+	Character allByteCharacters do: [ :each |
 		self assert: (self class compiler evaluate: each printString) equals: each ]
 ]
 
@@ -139,13 +139,13 @@ CharacterTest >> testStoreString [
 	self assert: Character lf storeString equals: 'Character lf'.
 	self assert: Character space storeString equals: 'Character space'.
 	self assert: (Character value: 0) storeString equals: 'Character null'.
-	
-	self assert: (Character value: 17) storeString equals: '(Character value: 17)'.
+
+	self assert: (Character value: 17) storeString equals: '(Character value: 17)'
 ]
 
 { #category : #tests }
 CharacterTest >> testStoreStringAll [
 
-	Character allByteCharacters do: [ :each | 
+	Character allByteCharacters do: [ :each |
 		self assert: (self class compiler evaluate: each storeString) equals: each ]
 ]

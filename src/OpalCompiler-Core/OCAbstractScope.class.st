@@ -11,8 +11,13 @@ Class {
 }
 
 { #category : #testing }
-OCAbstractScope class >> isAbstract [ 
+OCAbstractScope class >> isAbstract [
 	^self = OCAbstractScope
+]
+
+{ #category : #accessing }
+OCAbstractScope >> environment [
+	^self targetClass environment
 ]
 
 { #category : #lookup }
@@ -48,22 +53,8 @@ OCAbstractScope >> isMethodScope [
 { #category : #lookup }
 OCAbstractScope >> lookupVar: name [
 	"search the scope (and the outer scopes) for a variable 'name' and return it"
-	^ self lookupVar: name declare: true
-]
 
-{ #category : #lookup }
-OCAbstractScope >> lookupVar: name declare: aBoolean [
-	"search the scope (and the outer scopes) for a variable 'name' and return it"
-	^self subclassResponsibility
-]
-
-{ #category : #lookup }
-OCAbstractScope >> lookupVarForDeclaration: name [
-	"This is a version of #lookupVar: that skips the OCRequestorScope.
-	When looking temp var declarations, we do not want the Requestor scope to automatically
-	create that variable. Subclasses override if they do not skip but do a lookup"
-
-	^ self lookupVar: name declare: false
+	^ outerScope ifNotNil: [ :it | it lookupVar: name ]
 ]
 
 { #category : #lookup }
@@ -76,4 +67,15 @@ OCAbstractScope >> outerScope [
 OCAbstractScope >> outerScope: aSemScope [
 
 	outerScope := aSemScope
+]
+
+{ #category : #lookup }
+OCAbstractScope >> registerVariables [
+
+	outerScope ifNotNil: [ :it | it registerVariables ]
+]
+
+{ #category : #accessing }
+OCAbstractScope >> targetClass [
+	^outerScope ifNotNil: [ :it | it targetClass ]
 ]

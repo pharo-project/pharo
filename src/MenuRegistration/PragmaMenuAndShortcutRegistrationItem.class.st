@@ -33,7 +33,7 @@ Class {
 
 { #category : #accessing }
 PragmaMenuAndShortcutRegistrationItem >> action [
-	
+
 	^ action
 ]
 
@@ -45,7 +45,7 @@ PragmaMenuAndShortcutRegistrationItem >> action: aBlock [
 
 { #category : #accessing }
 PragmaMenuAndShortcutRegistrationItem >> arguments [
-	
+
 	^ arguments
 ]
 
@@ -62,8 +62,8 @@ PragmaMenuAndShortcutRegistrationItem >> category [
 ]
 
 { #category : #protocol }
-PragmaMenuAndShortcutRegistrationItem >> category: aByteSymbol [ 
-	
+PragmaMenuAndShortcutRegistrationItem >> category: aByteSymbol [
+
 	category := aByteSymbol
 ]
 
@@ -74,7 +74,7 @@ PragmaMenuAndShortcutRegistrationItem >> default [
 ]
 
 { #category : #protocol }
-PragmaMenuAndShortcutRegistrationItem >> default: aKMModifiedShortcut [ 
+PragmaMenuAndShortcutRegistrationItem >> default: aKMModifiedShortcut [
 
 	default := aKMModifiedShortcut
 ]
@@ -93,7 +93,7 @@ PragmaMenuAndShortcutRegistrationItem >> enabled: aBoolean [
 
 { #category : #accessing }
 PragmaMenuAndShortcutRegistrationItem >> enabledBlock [
-	
+
 	^ enabledBlock
 ]
 
@@ -105,7 +105,7 @@ PragmaMenuAndShortcutRegistrationItem >> enabledBlock: aBlock [
 
 { #category : #accessing }
 PragmaMenuAndShortcutRegistrationItem >> group [
-	
+
 	^ group
 ]
 
@@ -122,8 +122,8 @@ PragmaMenuAndShortcutRegistrationItem >> help [
 ]
 
 { #category : #'menu protocol' }
-PragmaMenuAndShortcutRegistrationItem >> help: aString [ 
-	
+PragmaMenuAndShortcutRegistrationItem >> help: aString [
+
 	help := aString
 ]
 
@@ -135,7 +135,7 @@ PragmaMenuAndShortcutRegistrationItem >> icon [
 
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> icon: anIcon [
-	
+
 	icon := anIcon
 ]
 
@@ -144,12 +144,12 @@ PragmaMenuAndShortcutRegistrationItem >> initialize [
 
 	super initialize.
 
-	withSeparatorAfter := false.
+	withSeparatorAfter := false
 ]
 
 { #category : #accessing }
 PragmaMenuAndShortcutRegistrationItem >> isWithSeparatorAfter [
-	
+
 	^ withSeparatorAfter
 ]
 
@@ -160,8 +160,8 @@ PragmaMenuAndShortcutRegistrationItem >> item [
 ]
 
 { #category : #'menu protocol' }
-PragmaMenuAndShortcutRegistrationItem >> item: aSymbol [ 
-	
+PragmaMenuAndShortcutRegistrationItem >> item: aSymbol [
+
 	item := aSymbol
 ]
 
@@ -183,7 +183,7 @@ PragmaMenuAndShortcutRegistrationItem >> label [
 
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> label: aString [
-	
+
 	label := aString
 ]
 
@@ -194,7 +194,7 @@ PragmaMenuAndShortcutRegistrationItem >> order [
 ]
 
 { #category : #'menu protocol' }
-PragmaMenuAndShortcutRegistrationItem >> order: anInteger [ 
+PragmaMenuAndShortcutRegistrationItem >> order: anInteger [
 
 	order := anInteger
 ]
@@ -206,8 +206,8 @@ PragmaMenuAndShortcutRegistrationItem >> parent [
 ]
 
 { #category : #'menu protocol' }
-PragmaMenuAndShortcutRegistrationItem >> parent: aSymbol [ 
-	
+PragmaMenuAndShortcutRegistrationItem >> parent: aSymbol [
+
 	parent := aSymbol
 ]
 
@@ -218,14 +218,14 @@ PragmaMenuAndShortcutRegistrationItem >> platform [
 ]
 
 { #category : #protocol }
-PragmaMenuAndShortcutRegistrationItem >> platform: aSymbol [ 
+PragmaMenuAndShortcutRegistrationItem >> platform: aSymbol [
 
 	platform := aSymbol
 ]
 
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> precondition: aBlock [
-	
+
 	precondition := aBlock
 ]
 
@@ -236,32 +236,32 @@ PragmaMenuAndShortcutRegistrationItem >> selector [
 ]
 
 { #category : #'menu protocol' }
-PragmaMenuAndShortcutRegistrationItem >> selector: aSymbol [ 
-	
+PragmaMenuAndShortcutRegistrationItem >> selector: aSymbol [
+
 	selector := aSymbol
 ]
 
 { #category : #accessing }
 PragmaMenuAndShortcutRegistrationItem >> shortcut [
-	
+
 	^ shortcut
 ]
 
 { #category : #protocol }
-PragmaMenuAndShortcutRegistrationItem >> shortcut: aSymbol [ 
-	
+PragmaMenuAndShortcutRegistrationItem >> shortcut: aSymbol [
+
 	shortcut := aSymbol
 ]
 
 { #category : #protocol }
 PragmaMenuAndShortcutRegistrationItem >> shortcutName [
-	
+
 	^shortcutName
 ]
 
 { #category : #protocol }
-PragmaMenuAndShortcutRegistrationItem >> shortcutName: aSymbol [ 
-	
+PragmaMenuAndShortcutRegistrationItem >> shortcutName: aSymbol [
+
 	shortcutName := aSymbol
 ]
 
@@ -272,8 +272,8 @@ PragmaMenuAndShortcutRegistrationItem >> target [
 ]
 
 { #category : #'menu protocol' }
-PragmaMenuAndShortcutRegistrationItem >> target: aSymbol [ 
-	
+PragmaMenuAndShortcutRegistrationItem >> target: aSymbol [
+
 	target := aSymbol
 ]
 
@@ -285,7 +285,7 @@ PragmaMenuAndShortcutRegistrationItem >> with [
 
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> with: aBlock [
- 
+
 	with := aBlock
 ]
 

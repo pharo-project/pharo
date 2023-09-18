@@ -16,7 +16,7 @@ TReplacementSequencedTest >> elementInForReplacement [
 { #category : #requirements }
 TReplacementSequencedTest >> firstIndex [
 	"Return an index between 'nonEmpty' bounds that is < to 'second index'"
-	
+
 	^self explicitRequirement
 ]
 
@@ -36,21 +36,21 @@ TReplacementSequencedTest >> nonEmpty [
 { #category : #requirements }
 TReplacementSequencedTest >> replacementCollection [
 	"Return a collection that will be put into 'nonEmpty'"
-	
+
 	^ self replacementCollectionSameSize, self 	replacementCollectionSameSize
 ]
 
 { #category : #requirements }
 TReplacementSequencedTest >> replacementCollectionSameSize [
 	"Return a collection of size (secondIndex - firstIndex + 1)"
-	
+
 	^self explicitRequirement
 ]
 
 { #category : #requirements }
 TReplacementSequencedTest >> secondIndex [
 	"Return an index between 'nonEmpty' bounds that is > to 'first index'"
-	
+
 	^self explicitRequirement
 ]
 
@@ -87,7 +87,7 @@ TReplacementSequencedTest >> testReplaceAllWith [
 	newElement := self newElement.
 	oldOccurrences := (result occurrencesOf: oldElement) + (result occurrencesOf: newElement).
 	result replaceAll: oldElement with: newElement.
-	
+
 	self assert: oldOccurrences equals: (result occurrencesOf: newElement)
 ]
 
@@ -100,16 +100,16 @@ TReplacementSequencedTest >> testReplaceFromToWith [
 	secondInd := self secondIndex.
 	result := collection copy.
 	result replaceFrom: firstInd to: secondInd with: replacementCollec.
-	
+
 	"Verify content of 'result'"
 
-	"First part of 'result'"	
+	"First part of 'result'"
 	1 to: (firstInd - 1) do: [:i | self assert: (collection at:i) equals: (result at: i) ].
-	
-	"Middle part containing replacementCollection"	
-	firstInd to: (firstInd + replacementCollec size - 1) do: 
+
+	"Middle part containing replacementCollection"
+	firstInd to: (firstInd + replacementCollec size - 1) do:
 		[:i | self assert: (result at: i) equals: (replacementCollec at: (i - firstInd + 1)) ].
-	
+
 	"End part"
 	(firstInd + replacementCollec size) to: (result size) do:
 		[:i|
@@ -126,16 +126,16 @@ TReplacementSequencedTest >> testReplaceFromToWithStartingAt [
 	secondInd := self secondIndex.
 	repStart := replacementCollec size - (secondInd - firstInd + 1) + 1.
 	result replaceFrom: firstInd to: secondInd with: replacementCollec startingAt: repStart.
-	
+
 	"Verify content of 'result'"
-	
-	"First part of 'result'" 	
+
+	"First part of 'result'"
 	1 to: (firstInd - 1) do: [:i | self assert: (collection at:i) equals: (result at: i) ].
-	
-	"Middle part containing replacementCollection"	
-	firstInd to: (replacementCollec size - repStart +1) do: 
+
+	"Middle part containing replacementCollection"
+	firstInd to: (replacementCollec size - repStart +1) do:
 		[:i| self assert: (result at: i) equals: (replacementCollec at: (repStart + (i - firstInd))) ].
-	
+
 	"End part"
 	(firstInd + replacementCollec size) to: (result size) do:
 		[ :i | self assert: (result at: i) equals: (collection at: (secondInd + 1 - (firstInd + replacementCollec size) + i)) ]

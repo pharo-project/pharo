@@ -36,7 +36,7 @@ ColorFillStyle >> extent: anObject [
 { #category : #operating }
 ColorFillStyle >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver."
-	
+
 	|o c|
 	o := self origin ifNil: [aRectangle origin] ifNotNil: [self origin].
 	c := self extent ifNil: [aRectangle corner] ifNotNil: [o + self extent].
@@ -46,7 +46,7 @@ ColorFillStyle >> fillRectangle: aRectangle on: aCanvas [
 { #category : #testing }
 ColorFillStyle >> isOrientedFill [
 	"Answer true if origin is not nil so that morph movement adjusts origin."
-	
+
 	^self origin notNil
 ]
 

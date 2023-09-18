@@ -5,8 +5,7 @@ Class {
 	#name : #RGClassDescriptionDefinition,
 	#superclass : #RGBehaviorDefinition,
 	#instVars : [
-		'instanceVariables',
-		'organization'
+		'instanceVariables'
 	],
 	#category : #'Ring-Definitions-Core-Base'
 }
@@ -20,15 +19,15 @@ RGClassDescriptionDefinition class >> isAbstract [
 { #category : #comparing }
 RGClassDescriptionDefinition >> = aRGClassDefinition [
 
-	^self class = aRGClassDefinition class 
-		and: [ self name = aRGClassDefinition name 
+	^self class = aRGClassDefinition class
+		and: [ self name = aRGClassDefinition name
 			and: [ self environment = aRGClassDefinition environment ] ]
 ]
 
 { #category : #'instance variables' }
 RGClassDescriptionDefinition >> addInstVarNamed: aString [
 	| var |
-	var := ((self isMeta 
+	var := ((self isMeta
 				ifTrue: [ RGClassInstanceVariableDefinition ]
 				ifFalse:[  RGInstanceVariableDefinition ])
 		named: aString) parent: self.
@@ -46,13 +45,13 @@ RGClassDescriptionDefinition >> addInstanceVariable: aRGVariableDefinition [
 
 { #category : #'instance variables' }
 RGClassDescriptionDefinition >> addInstanceVariables: aCollection [
-	
+
 	aCollection do: [:var | self addInstVarNamed: var ]
 ]
 
 { #category : #private }
 RGClassDescriptionDefinition >> addVariable: aRGVariableDefinition in: aCollection [
-	"Adds a RGVariableDefinition in the collection received" 
+	"Adds a RGVariableDefinition in the collection received"
 
 	aCollection add: aRGVariableDefinition
 ]
@@ -67,7 +66,7 @@ RGClassDescriptionDefinition >> allInstVarNames [
 RGClassDescriptionDefinition >> allInstanceVariables [
 	"Answer a collection of the receiver's instanceVariables, including those defined in its superclass"
 
-	^self hasSuperclass 
+	^self hasSuperclass
 		ifFalse:[ instanceVariables ]
 		ifTrue:[ self superclass allInstanceVariables, instanceVariables ]
 ]
@@ -88,20 +87,20 @@ RGClassDescriptionDefinition >> hash [
 RGClassDescriptionDefinition >> initialize [
 
 	super initialize.
-	instanceVariables:= OrderedCollection new.
+	instanceVariables:= OrderedCollection new
 ]
 
 { #category : #'instance variables' }
 RGClassDescriptionDefinition >> instVarNames [
 	"Answer a collection of the names of the instance variables defined in the receiver."
-	
+
 	^instanceVariables collect:[ :ivar| ivar name ]
 ]
 
 { #category : #'instance variables' }
 RGClassDescriptionDefinition >> instanceVariableNamed: aString [
-	^ instanceVariables 
-		detect: [ :v | v name = aString asSymbol ] 
+	^ instanceVariables
+		detect: [ :v | v name = aString asSymbol ]
 		ifNone: [ nil ]
 ]
 
@@ -137,26 +136,6 @@ RGClassDescriptionDefinition >> methodsInProtocol: aString [
 	"Retrieves the methods classified in protocol named aString"
 
 	^methods select: [ :each | each protocol = aString ]
-]
-
-{ #category : #organization }
-RGClassDescriptionDefinition >> organization [
-	"Answer the instance of ClassOrganizer that represents the organization 
-	of the messages of the receiver."
-
-	organization ifNil: [
-		self organization: (ClassOrganization forClass: self) ].
-	"Making sure that subject is set correctly. It should not be necessary."
-	organization ifNotNil: [ organization setSubject: self ].
-	^ organization
-]
-
-{ #category : #accessing }
-RGClassDescriptionDefinition >> organization: aClassOrg [
-	"Install an instance of ClassOrganizer that represents the organization of the messages of the receiver."
-
-	aClassOrg ifNotNil: [aClassOrg setSubject: self].
-	organization := aClassOrg
 ]
 
 { #category : #'instance variables' }

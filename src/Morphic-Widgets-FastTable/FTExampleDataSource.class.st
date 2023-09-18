@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-FTExampleDataSource >> cellColumn: column row: rowIndex [ 
+FTExampleDataSource >> cellColumn: column row: rowIndex [
 	^ FTCellMorph new
 		color: (self colorFor: rowIndex);
 		cellInset: 5;
@@ -40,8 +40,8 @@ FTExampleDataSource >> iconFor: index [
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
-	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
+	class hasComment 
+		ifFalse: [ ^ self iconNamed: #uncommentedClass].
 	((class
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
@@ -52,7 +52,5 @@ FTExampleDataSource >> iconFor: index [
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
-	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
 	^ self iconNamed: class systemIconName
 ]

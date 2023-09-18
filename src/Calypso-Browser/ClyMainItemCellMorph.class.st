@@ -44,7 +44,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyMainItemCellMorph class >> on: aDataSourceItem [
-	^self new 
+	^self new
 		item: aDataSourceItem
 ]
 
@@ -60,9 +60,9 @@ ClyMainItemCellMorph >> addBarForFullIndentation [
 	mainItemsCount := 0.
 	absentItemsCount := mainItemsCount - submorphs size.
 
-	requiredWidth := absentItemsCount * 16 + (self itemDepth * 8).
+	requiredWidth := (absentItemsCount * 16 + (self itemDepth * 8)) * self currentWorld displayScaleFactor.
 	requiredWidth = 0 ifTrue: [ ^self ].
-	
+
 	self addMorphBack: (self emptyBarWithWidth: requiredWidth)
 ]
 
@@ -74,15 +74,15 @@ ClyMainItemCellMorph >> addBarForLabelIndentation [
 	mainItemsCount := placeForExpansionRequired ifTrue: [ 2 ] ifFalse: [ 1 ].
 	absentItemsCount := mainItemsCount - submorphs size.
 
-	requiredWidth := absentItemsCount * 16 + (self itemDepth * 8).
+	requiredWidth := (absentItemsCount * 16 + (self itemDepth * 8)) * self currentWorld displayScaleFactor.
 	requiredWidth = 0 ifTrue: [ ^self ].
-	
+
 	self addMorphBack: (self emptyBarWithWidth: requiredWidth)
 ]
 
 { #category : #accessing }
 ClyMainItemCellMorph >> addExtraIcon: iconName [
-	
+
 	| icon |
 	icon := self iconNamed: iconName.
 	^self addExtraTool: icon asMorph
@@ -90,7 +90,7 @@ ClyMainItemCellMorph >> addExtraIcon: iconName [
 
 { #category : #accessing }
 ClyMainItemCellMorph >> addExtraTool: aMorph [
-	
+
 	extraToolMorphs ifNil: [ extraToolMorphs := OrderedCollection new].
 	extraToolMorphs add: aMorph.
 	^aMorph
@@ -109,9 +109,9 @@ ClyMainItemCellMorph >> browserItem [
 { #category : #building }
 ClyMainItemCellMorph >> build [
 
-	fullIndentation 
+	fullIndentation
 		ifTrue: [ self buildWithFullIndentation ]
-		ifFalse: [ self buildWithLabelIndentation  ].
+		ifFalse: [ self buildWithLabelIndentation  ]
 ]
 
 { #category : #building }
@@ -119,17 +119,17 @@ ClyMainItemCellMorph >> buildWithFullIndentation [
 
 	| expansionButton |
 	self addBarForFullIndentation.
-	item supportsExpansion ifTrue: [ 
+	item supportsExpansion ifTrue: [
 		expansionButton := self currentExpansionButton.
 		self addMorphBack: expansionButton].
 	definitionMorph ifNotNil: [
-		definitionMorph width: 16.
+		definitionMorph width: 16 scaledByDisplayScaleFactor.
 		 self addMorphBack: definitionMorph].
-	
-	
+
+
 	self addMorphBack: label.
 	extraToolMorphs ifNotNil: [ extraToolMorphs do: [:each |
-			each width: 16.
+			each width: 16 scaledByDisplayScaleFactor.
 			 self addMorphBack: each  ] ]
 ]
 
@@ -137,17 +137,17 @@ ClyMainItemCellMorph >> buildWithFullIndentation [
 ClyMainItemCellMorph >> buildWithLabelIndentation [
 
 	| expansionButton |
-	item supportsExpansion ifTrue: [ 
+	item supportsExpansion ifTrue: [
 		expansionButton := self currentExpansionButton.
 		self addMorphBack: expansionButton].
 	definitionMorph ifNotNil: [
-		definitionMorph width: 16.
+		definitionMorph width: 16 * self currentWorld displayScaleFactor.
 		 self addMorphBack: definitionMorph].
-	
+
 	self addBarForLabelIndentation.
 	self addMorphBack: label.
 	extraToolMorphs ifNotNil: [ extraToolMorphs do: [:each |
-			each width: 16.
+			each width: 16 * self currentWorld displayScaleFactor.
 			 self addMorphBack: each  ] ]
 ]
 
@@ -167,15 +167,15 @@ ClyMainItemCellMorph >> collapsedButton [
 ClyMainItemCellMorph >> currentExpansionButton [
 
 	item hasChildren ifFalse: [^FTTreeDataSource emptyMorph].
-	
-	^item isExpanded 
+
+	^item isExpanded
 		ifTrue: [ self expandedButton ]
 		ifFalse: [self collapsedButton]
 ]
 
 { #category : #accessing }
 ClyMainItemCellMorph >> definitionIcon: iconName [
-	
+
 	| icon |
 	icon := self iconNamed: iconName.
 	^self definitionMorph: icon asMorph
@@ -183,9 +183,9 @@ ClyMainItemCellMorph >> definitionIcon: iconName [
 
 { #category : #accessing }
 ClyMainItemCellMorph >> definitionMorph: aMorph [
-	
+
 	definitionMorph := aMorph.
-	definitionMorph width: 16.
+	definitionMorph width: 16 scaledByDisplayScaleFactor.
 	^definitionMorph
 ]
 
@@ -193,10 +193,10 @@ ClyMainItemCellMorph >> definitionMorph: aMorph [
 ClyMainItemCellMorph >> emptyBarWithWidth: aNumber [
 	| bar |
 	bar := Morph new.
-	bar 
+	bar
 		setNamePropertyTo: 'emptyBar';
 		color: Color transparent;
-		changeTableLayout;		
+		changeTableLayout;
 		vResizing: #spaceFill;
 		hResizing: #rigid;
 		minWidth: 0;
@@ -220,7 +220,7 @@ ClyMainItemCellMorph >> expandedButton [
 ClyMainItemCellMorph >> initialize [
 	super initialize.
 	fullIndentation := false.
-	self cellInset: 2@0
+	self cellInset: (2@0) scaledByDisplayScaleFactor
 ]
 
 { #category : #accessing }
@@ -239,7 +239,7 @@ ClyMainItemCellMorph >> itemDepth [
 ]
 
 { #category : #accessing }
-ClyMainItemCellMorph >> overrideItemDepthByDelta: delta [ 
+ClyMainItemCellMorph >> overrideItemDepthByDelta: delta [
 	^itemDepth := item depth + delta
 ]
 

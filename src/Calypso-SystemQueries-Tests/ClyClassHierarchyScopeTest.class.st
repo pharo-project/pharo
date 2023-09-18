@@ -25,9 +25,9 @@ ClyClassHierarchyScopeTest >> testConvertingToInheritedScope [
 	| convertedScope |
 	scope := self createSampleScope.
 	scope localScopeClass: ClyInstanceSideScope.
-	
+
 	convertedScope := scope asInheritedScope.
-	
+
 	self assert: (convertedScope representsScope: ClySuperclassScope).
 	self assert: convertedScope localScopeClass equals: ClyInstanceSideScope.
 	self assert: convertedScope basisObjects equals: scope basisObjects.
@@ -40,9 +40,9 @@ ClyClassHierarchyScopeTest >> testConvertingToInheritingScope [
 	| convertedScope |
 	scope := self createSampleScope.
 	scope localScopeClass: ClyInstanceSideScope.
-	
+
 	convertedScope := scope asInheritingScope.
-	
+
 	self assert: (convertedScope representsScope: ClySubclassScope).
 	self assert: convertedScope localScopeClass equals: ClyInstanceSideScope.
 	self assert: convertedScope basisObjects equals: scope basisObjects.
@@ -69,9 +69,9 @@ ClyClassHierarchyScopeTest >> testConvertingWithNewBasisShouldKeepMetaLevelScope
 	| convertedScope |
 	scope := self singleScopeSample.
 	scope localScopeClass: ClyInstanceSideScope.
-	
+
 	convertedScope := scope withNewBasisObjects: {self extraBasisSample}.
-	
+
 	self assert: convertedScope localScopeClass equals: ClyInstanceSideScope
 ]
 
@@ -79,6 +79,6 @@ ClyClassHierarchyScopeTest >> testConvertingWithNewBasisShouldKeepMetaLevelScope
 ClyClassHierarchyScopeTest >> testHasDefaultClassLocalScope [
 
 	scope := self createSampleScope.
-	
+
 	self assert: scope localScopeClass equals: ClyClassScope
 ]

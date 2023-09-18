@@ -25,21 +25,21 @@ IRPushArray >> cons [
 
 { #category : #accessing }
 IRPushArray >> cons: aBool [
-	cons := aBool.
+	cons := aBool
 ]
 
 { #category : #initialization }
 IRPushArray >> initialize [
 	size := 0.
-	cons := false.
+	cons := false
 ]
 
 { #category : #accessing }
-IRPushArray >> size [ 
+IRPushArray >> size [
 	^ size
 ]
 
 { #category : #accessing }
-IRPushArray >> size: aSmallInteger [ 
+IRPushArray >> size: aSmallInteger [
 	size := aSmallInteger
 ]

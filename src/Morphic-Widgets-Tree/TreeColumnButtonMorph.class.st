@@ -11,17 +11,23 @@ Class {
 	#category : #'Morphic-Widgets-Tree'
 }
 
+{ #category : #'class initialization' }
+TreeColumnButtonMorph class >> initialize [
+
+	self deprecatedAliases: { #MorphTreeColumnButton }
+]
+
 { #category : #accessing }
 TreeColumnButtonMorph >> acceptDroppingMorph: aMorph event: evt [
 	self model container swapColumn: self model withColumn: aMorph passenger.
 	evt hand releaseMouseFocus: self.
 	self noMorePotentialDropTarget.
 	self model container changed.
-	Cursor normal show.
+	Cursor normal show
 ]
 
 { #category : #accessing }
-TreeColumnButtonMorph >> asPotentialDropTarget [ 
+TreeColumnButtonMorph >> asPotentialDropTarget [
 	self model asPotentialDropTarget
 ]
 
@@ -38,9 +44,9 @@ TreeColumnButtonMorph >> icon [
 
 { #category : #accessing }
 TreeColumnButtonMorph >> icon: anIcon [
-	
+
 	icon ifNotNil: [ self removeMorph: icon ].
-	
+
 	anIcon ifNotNil: [
 		icon := anIcon.
 		self addMorphFront: anIcon ]
@@ -72,7 +78,7 @@ TreeColumnButtonMorph >> model: anObject [
 { #category : #'event handling' }
 TreeColumnButtonMorph >> mouseDown: anEvent [
 	| selectors |
-	selectors := Array 
+	selectors := Array
 		with: #click:
 		with: nil
 		with: nil
@@ -88,7 +94,7 @@ TreeColumnButtonMorph >> mouseEnterDragging: evt [
 	(self wantsDroppedMorph: evt hand firstSubmorph event: evt )
 		ifTrue:[
 			self asPotentialDropTarget.
-		].
+		]
 ]
 
 { #category : #'dropping/grabbing' }
@@ -109,8 +115,8 @@ TreeColumnButtonMorph >> noMorePotentialDropTarget [
 
 { #category : #accessing }
 TreeColumnButtonMorph >> removeIcon [
-	
-	icon ifNotNil: [ self removeMorph: icon ].
+
+	icon ifNotNil: [ self removeMorph: icon ]
 ]
 
 { #category : #'event handling' }
@@ -119,7 +125,7 @@ TreeColumnButtonMorph >> startDrag: anEvent [
 	self dragEnabled ifFalse: [^ self].
 	(anEvent hand hasSubmorphs)
 		ifTrue: [^ self].
-	oldColor 
+	oldColor
 		ifNotNil: [
 			self fillStyle: oldColor.
 			oldColor := nil].
@@ -135,6 +141,6 @@ TreeColumnButtonMorph >> themedFillStyle [
 ]
 
 { #category : #accessing }
-TreeColumnButtonMorph >> wantsDroppedMorph: aMorph event: anEvent [ 
+TreeColumnButtonMorph >> wantsDroppedMorph: aMorph event: anEvent [
 	^ model container columnDropUnabled and: [(aMorph isTransferable) and: [(aMorph passenger isKindOf: MorphTreeColumn) and: [aMorph passenger ~= self model]]]
 ]

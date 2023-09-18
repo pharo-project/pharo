@@ -1,14 +1,14 @@
 Extension { #name : #FreeTypeSettings }
 
 { #category : #'*FreeType-Graphics' }
-FreeTypeSettings >> bitBltSubPixelAvailable [	
+FreeTypeSettings >> bitBltSubPixelAvailable [
 	"Answer true if the the subPixel combination rule is available, false otherwise.
 	to test :-
-	bitBltSubPixelAvailable := false. 
+	bitBltSubPixelAvailable := false.
 	FreeTypeCache current removeAll.
 	World restoreMorphicDisplay
 	"
-	
+
 	| form bitBlt color |
 	bitBltSubPixelAvailable == nil ifFalse:[^bitBltSubPixelAvailable].
 	form := Form extent: 10@10 depth: 32.
@@ -18,9 +18,9 @@ FreeTypeSettings >> bitBltSubPixelAvailable [
 	bitBlt destOrigin: 1@1.
 	bitBlt width: 5; height: 5.
 	color := Color black asNontranslucentColor pixelValueForDepth: 32.
-	[bitBlt 
+	[bitBlt
 		copyBitsColor: (color bitAnd: 16rFFFFFF)
-		alpha: (color bitAnd: 16rFF000000) >> 24 
+		alpha: (color bitAnd: 16rFF000000) >> 24
 		gammaTable: nil
 		ungammaTable: nil]
 	on: Error do:[:e | ^bitBltSubPixelAvailable := false].
@@ -36,8 +36,8 @@ FreeTypeSettings >> glyphContrast: aContrastValue [
 	Cursor wait showWhile: [
 		| v g |
 		v := (((aContrastValue asNumber) min: 100) max: 1) asFloat.
-		(v closeTo: 50.0) 
+		(v closeTo: 50.0)
 			ifTrue: [g := 1.0]
 			ifFalse: [g := ((100 - v) + 50 / 100.0) raisedTo: 2].
-		self setGamma: g].
+		self setGamma: g]
 ]

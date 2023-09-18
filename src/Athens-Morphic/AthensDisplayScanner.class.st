@@ -23,7 +23,7 @@ AthensDisplayScanner class >> on: anAthensCanvas [
 { #category : #displaying }
 AthensDisplayScanner >> displayString: string from: startIndex to: stopIndex at: aPoint [
 	canvas pathTransform
-		restoreAfter: [ 
+		restoreAfter: [
 			canvas pathTransform translateBy: aPoint + (0@font ascent).
 			canvas drawString: string from: startIndex to: stopIndex ]
 ]
@@ -41,7 +41,7 @@ AthensDisplayScanner >> initWithParagraph: aParagraph andCanvas: anAthensCanvas 
 
 { #category : #initialization }
 AthensDisplayScanner >> initialize [
-	super initialize.
+	super initialize
 ]
 
 { #category : #displaying }

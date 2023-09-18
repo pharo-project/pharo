@@ -61,7 +61,7 @@ Class {
 ParametrizedTestCase class >> buildSuite [
 
 	| expandedMatrix suite |
-	
+
 	expandedMatrix := self testParameters expandMatrix.
 
 	expandedMatrix ifEmpty: [ ^ self buildSuiteFromSelectors].
@@ -85,7 +85,7 @@ ParametrizedTestCase class >> isAbstract [
 ParametrizedTestCase class >> testParameters [
 	"I'm the main hook to define configuration.
 	See addCase and forSelector:addOptions: on ParametrizedTestMatrix."
-	
+
 	^ ParametrizedTestMatrix new
 ]
 
@@ -126,12 +126,12 @@ ParametrizedTestCase >> printOn: aStream [
 ParametrizedTestCase >> setUp [
 	super setUp.
 	self parametersToUse do: [ :aParameter | aParameter applyTo: self ].
-	
+
 	"If I am executed without calling buildSuite in the class. I will use the first set of options.
 	This is a workaround to work when running from Calypso"
-	(self parametersToUse isEmpty and: [self class testParameters isNotEmpty]) 
-		ifTrue: [ 
-				self class 
-						testParameters expandMatrix first 
+	(self parametersToUse isEmpty and: [self class testParameters isNotEmpty])
+		ifTrue: [
+				self class
+						testParameters expandMatrix first
 						do: [ :aParameter | aParameter applyTo: self ] ]
 ]

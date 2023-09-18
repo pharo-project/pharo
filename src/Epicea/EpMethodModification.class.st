@@ -37,12 +37,12 @@ EpMethodModification >> initializeWithOldMethod: anOldMethod newMethod: aNewMeth
 
 	self initialize.
 	oldMethod := anOldMethod asEpiceaRingDefinition.
-	newMethod := aNewMethod asEpiceaRingDefinition.
+	newMethod := aNewMethod asEpiceaRingDefinition
 ]
 
 { #category : #accessing }
 EpMethodModification >> methodAffected [
-	
+
 	^ newMethod
 ]
 

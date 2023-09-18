@@ -1,7 +1,7 @@
 Extension { #name : #StrikeFont }
 
 { #category : #'*System-Settings-Browser' }
-StrikeFont >> settingStoreOn: aStream [ 
+StrikeFont >> settingStoreOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.
 	aStream nextPut: Character space.

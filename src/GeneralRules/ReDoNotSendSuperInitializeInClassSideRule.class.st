@@ -20,19 +20,19 @@ Class {
 { #category : #accessing }
 ReDoNotSendSuperInitializeInClassSideRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'DoNotSendSuperInitializeInClassSideRule'
 ]
 
 { #category : #hooks }
 ReDoNotSendSuperInitializeInClassSideRule >> afterCheck: aNode mappings: mappingDict [
-		
+
 	aNode methodNode ifNotNil: [ :methNode |
 		methNode compiledMethod ifNotNil: [ :method |
-			(method selector = #initialize and: [ 
+			(method selector = #initialize and: [
 			method methodClass isMeta ])
 				ifTrue: [ ^ true ] ] ].
-		
+
 	^ false
 ]
 
@@ -44,8 +44,8 @@ ReDoNotSendSuperInitializeInClassSideRule >> group [
 { #category : #initialization }
 ReDoNotSendSuperInitializeInClassSideRule >> initialize [
 	super initialize.
-	self 
-		replace: 'super initialize' 
+	self
+		replace: 'super initialize'
 		with: ''
 ]
 

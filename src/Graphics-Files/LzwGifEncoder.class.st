@@ -48,9 +48,9 @@ LzwGifEncoder >> checkCodeSize [
 	"Determine whether or not we need to increment
 	the codeSize"
 	(nextAvailableCode > maxCode and: [ codeSize < 12 ])
-		ifTrue: [ 
+		ifTrue: [
 			codeSize := codeSize + 1.
-			maxCode := (1 bitShift: codeSize) - 1 ].
+			maxCode := (1 bitShift: codeSize) - 1 ]
 ]
 
 { #category : #private }
@@ -60,12 +60,12 @@ LzwGifEncoder >> checkSettings [
 	have been set"
 	codeStream ifNil: [ ^ self error: 'You must set a codeStream (byte stream) to write onto!' ].
 	dimensions ifNil: [ ^ self error: 'You must provide the extent of the image we will encode!' ].
-	rowByteSize ifNil: [ ^ self error: 'You must provide a rowByteSize for the supplied image bits!' ].
+	rowByteSize ifNil: [ ^ self error: 'You must provide a rowByteSize for the supplied image bits!' ]
 ]
 
 { #category : #accessing }
 LzwGifEncoder >> codeStream: aByteStream [
-	codeStream := aByteStream.
+	codeStream := aByteStream
 ]
 
 { #category : #accessing }
@@ -85,7 +85,7 @@ LzwGifEncoder >> encode: bits [
 	numLeftoverBits := 0.
 	codeStreamBuffer := WriteStream on: (ByteArray new: 256).
 	self initializeParameters.
-	
+
 	"These temp vars are taken from the
 	original GIFReadWriter implementation"
 	maxBits := 12.
@@ -95,60 +95,60 @@ LzwGifEncoder >> encode: bits [
 	suffixTable := Array new: tSize.
 	tShift := 0.
 	fCode := tSize.
-	[ fCode < 65536 ] whileTrue: [ 
+	[ fCode < 65536 ] whileTrue: [
 		tShift := tShift + 1.
 		fCode := fCode * 2 ].
 	tShift := 8 - tShift.
 	1 to: tSize do: [ :i |
 		suffixTable at: i put: -1 ].
-	
+
 	"We immediately write the clearCode
 	to the output stream"
 	self writeCodeAndCheckCodeSize: clearCode.
-	
+
 	"This loop is also taken from the original
 	GIFReadWriter implementation"
 	ent := self readPixelFrom: bits.
-	[ (pixel := self readPixelFrom: bits) == nil ] whileFalse: 
+	[ (pixel := self readPixelFrom: bits) == nil ] whileFalse:
 		[ fCode := (pixel bitShift: maxBits) + ent.
 		index := ((pixel bitShift: tShift) bitXor: ent) + 1.
-		(suffixTable at: index) = fCode 
+		(suffixTable at: index) = fCode
 			ifTrue: [ ent := prefixTable at: index ]
-			ifFalse: 
+			ifFalse:
 				[ nomatch := true.
-				(suffixTable at: index) >= 0 ifTrue: 
+				(suffixTable at: index) >= 0 ifTrue:
 					[ disp := tSize - index + 1.
 					index = 1 ifTrue: [ disp := 1 ].
 					"probe"
-					
+
 					[ (index := index - disp) < 1 ifTrue: [ index := index + tSize ].
-					(suffixTable at: index) = fCode ifTrue: 
+					(suffixTable at: index) = fCode ifTrue:
 						[ ent := prefixTable at: index.
 						nomatch := false
 						"continue whileFalse:" ].
-					nomatch and: [ (suffixTable at: index) > 0 ] ] whileTrue: 
+					nomatch and: [ (suffixTable at: index) > 0 ] ] whileTrue:
 						[ "probe"
 						 ] ].
 				"nomatch"
-				nomatch ifTrue: 
+				nomatch ifTrue:
 					[ self writeCodeAndCheckCodeSize: ent.
 					ent := pixel.
-					nextAvailableCode < maxMaxCode 
-						ifTrue: 
-							[ prefixTable 
+					nextAvailableCode < maxMaxCode
+						ifTrue:
+							[ prefixTable
 								at: index
 								put: nextAvailableCode.
-							suffixTable 
+							suffixTable
 								at: index
 								put: fCode.
 							nextAvailableCode := nextAvailableCode + 1 ]
-						ifFalse: 
+						ifFalse:
 							[ self writeCodeAndCheckCodeSize: clearCode.
-							1 
+							1
 								to: tSize
-								do: 
-									[ :i | 
-									suffixTable 
+								do:
+									[ :i |
+									suffixTable
 										at: i
 										put: -1 ].
 							self initializeParameters ] ] ] ].
@@ -156,7 +156,7 @@ LzwGifEncoder >> encode: bits [
 	self writeCodeAndCheckCodeSize: ent.
 	self writeCodeAndCheckCodeSize: eoiCode.
 	self flushBits.
-	codeStream nextPut: 0.
+	codeStream nextPut: 0
 ]
 
 { #category : #accessing }
@@ -168,7 +168,7 @@ LzwGifEncoder >> extent: anExtentPoint [
 
 { #category : #'private - bits access' }
 LzwGifEncoder >> flushBits [
-	numLeftoverBits = 0 ifFalse: 
+	numLeftoverBits = 0 ifFalse:
 		[ self nextBytePut: bitBuffer.
 		numLeftoverBits := 0 ].
 	self flushBuffer
@@ -183,7 +183,7 @@ LzwGifEncoder >> flushBuffer [
 	codeStream
 		nextPut: codeStreamBuffer size;
 		nextPutAll: codeStreamBuffer contents.
-	codeStreamBuffer := (ByteArray new: 256) writeStream.
+	codeStreamBuffer := (ByteArray new: 256) writeStream
 ]
 
 { #category : #initialization }
@@ -194,7 +194,7 @@ LzwGifEncoder >> initializeParameters [
 	clearCode := (1 bitShift: minimumCodeSize).
 	eoiCode := clearCode + 1.
 	nextAvailableCode := clearCode + 2.
-	maxCode := (1 bitShift: codeSize) - 1.
+	maxCode := (1 bitShift: codeSize) - 1
 ]
 
 { #category : #accessing }
@@ -210,7 +210,7 @@ LzwGifEncoder >> nextBytePut: anInteger [
 	byte chunks to the stream also"
 	codeStreamBuffer nextPut: anInteger.
 	codeStreamBuffer size >= 254
-		ifTrue: [ self flushBuffer ].
+		ifTrue: [ self flushBuffer ]
 ]
 
 { #category : #'private - bits access' }
@@ -223,13 +223,13 @@ LzwGifEncoder >> nextCodePut: anInteger [
 	| numBitsWritten shiftCount newInteger |
 	shiftCount := 0.
 	numLeftoverBits = 0
-		ifTrue: [ 
+		ifTrue: [
 			numBitsWritten := 8.
 			newInteger := anInteger ]
-		ifFalse: [ 
+		ifFalse: [
 			numBitsWritten := numLeftoverBits.
 			newInteger := bitBuffer + (anInteger bitShift: 8 - numLeftoverBits) ].
-	[ numBitsWritten < codeSize ] whileTrue: [ 
+	[ numBitsWritten < codeSize ] whileTrue: [
 		self nextBytePut: ((newInteger bitShift: shiftCount) bitAnd: 255).
 		shiftCount := shiftCount - 8.
 		numBitsWritten := numBitsWritten + 8 ].
@@ -263,11 +263,11 @@ LzwGifEncoder >> updatePixelPosition [
 	xPos := xPos + 1.
 	xPos >= (dimensions x) ifFalse: [ ^ self ].
 	xPos := 0.
-	yPos := yPos + 1.
+	yPos := yPos + 1
 ]
 
 { #category : #writing }
 LzwGifEncoder >> writeCodeAndCheckCodeSize: aCode [
 	self nextCodePut: aCode.
-	self checkCodeSize.
+	self checkCodeSize
 ]

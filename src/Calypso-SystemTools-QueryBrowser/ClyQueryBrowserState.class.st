@@ -58,8 +58,8 @@ ClyQueryBrowserState >> queryScopes: anObject [
 { #category : #private }
 ClyQueryBrowserState >> restoreStateOf: aBrowser [
 	super restoreStateOf: aBrowser.
-	
-	aBrowser  
+
+	aBrowser
 		systemQuery: methodQuery;
 		queryScopes: queryScopes;
 		activeScope: activeScope;
@@ -69,7 +69,7 @@ ClyQueryBrowserState >> restoreStateOf: aBrowser [
 { #category : #operations }
 ClyQueryBrowserState >> retrieveStateFrom: aBrowser [
 	super retrieveStateFrom: aBrowser.
-	
+
 	queryScopes := aBrowser queryScopes.
 	activeScope := aBrowser activeScope.
 	methodQuery := aBrowser systemQuery.

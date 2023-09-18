@@ -27,11 +27,11 @@ AbstractMethodReferenceConverter >> initialize [
 { #category : #private }
 AbstractMethodReferenceConverter >> priorVersionOfAMethod: aMethodReference [
 	| tempList |
-	
-	tempList := referencesList select:[:each | 
-		(each className = aMethodReference className) & 
+
+	tempList := referencesList select:[:each |
+		(each className = aMethodReference className) &
 		(each name = aMethodReference name)].
-	^ tempList detect: [:each | (self versionOfAMethod: each) = ((self versionOfAMethod: aMethodReference) -1)] ifNone: [aMethodReference].
+	^ tempList detect: [:each | (self versionOfAMethod: each) = ((self versionOfAMethod: aMethodReference) -1)] ifNone: [aMethodReference]
 ]
 
 { #category : #accessing }
@@ -43,9 +43,9 @@ AbstractMethodReferenceConverter >> referencesList: aListOfReferences [
 { #category : #private }
 AbstractMethodReferenceConverter >> versionOfAMethod: aMethodReference [
 	| tempList |
-	
-	tempList := referencesList select: [:each | 
-		(each className = aMethodReference className) & 
+
+	tempList := referencesList select: [:each |
+		(each className = aMethodReference className) &
 		(each name = aMethodReference name)].
 	tempList := tempList sort: [:m1 :m2 | m1 timeStamp < m2 timeStamp].
 	^ tempList identityIndexOf: aMethodReference ifAbsent: [0]

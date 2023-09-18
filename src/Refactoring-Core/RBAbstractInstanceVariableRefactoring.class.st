@@ -26,12 +26,12 @@ RBAbstractInstanceVariableRefactoring >> abstractReferences [
 		            setter: self accessorsRefactoring setterMethodName.
 	self
 		convertClasses: class withAllSubclasses
-		select: [ :aClass | "remove the setter and getters from the list of methods whose instance variable accesses should be converted to 
+		select: [ :aClass | "remove the setter and getters from the list of methods whose instance variable accesses should be converted to
 			getter/setter."
-			(aClass whichSelectorsReferToInstanceVariable: variableName) 
-				reject: [ :each | 
-					aClass == class and: [ 
-						each == self accessorsRefactoring getterMethodName or: [ 
+			(aClass whichSelectorsReferToInstanceVariable: variableName)
+				reject: [ :each |
+					aClass == class and: [
+						each == self accessorsRefactoring getterMethodName or: [
 							each == self accessorsRefactoring setterMethodName ] ] ] ]
 		using: replacer
 ]
@@ -51,7 +51,7 @@ RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 
 { #category : #transforming }
 RBAbstractInstanceVariableRefactoring >> createAccessors [
-	self performCompositeRefactoring: self accessorsRefactoring
+	self generateChangesFor: self accessorsRefactoring
 ]
 
 { #category : #preconditions }
@@ -60,7 +60,7 @@ RBAbstractInstanceVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBAbstractInstanceVariableRefactoring >> transform [
+RBAbstractInstanceVariableRefactoring >> privateTransform [
 	self createAccessors.
 	self abstractReferences
 ]

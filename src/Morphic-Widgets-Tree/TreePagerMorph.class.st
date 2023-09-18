@@ -10,6 +10,12 @@ Class {
 	#category : #'Morphic-Widgets-Tree-Pagination'
 }
 
+{ #category : #'class initialization' }
+TreePagerMorph class >> initialize [
+
+	self deprecatedAliases: { #MorphTreePager }
+]
+
 { #category : #accessing }
 TreePagerMorph >> allIntervals [
 	| intervals |
@@ -30,7 +36,7 @@ TreePagerMorph >> buildPanel [
 	widgets := OrderedCollection new.
 	(self nodeList size > pageSize)
 		ifTrue: [firstPageButton := self
-						buttonLabel: self class smallToLeftEndIcon 
+						buttonLabel: self class smallToLeftEndIcon
 						actionSelector: #currentPage:
 						arguments: {1}
 						getEnabled: #notOnFirstPage
@@ -90,18 +96,18 @@ TreePagerMorph >> buildPanel [
 TreePagerMorph >> choosePage [
 	| choiceList chosen |
 	choiceList := OrderedCollection new.
-	self allIntervals 
+	self allIntervals
 		doWithIndex: [:assoc :idx | | choiceString |
 			choiceString := idx asString, ': ', (self nodeList at: assoc key) asString, ' ... ', (self nodeList at: assoc value) asString.
 			choiceList add: idx -> choiceString].
-	chosen := 
-		UIManager default 
+	chosen :=
+		UIManager default
 			chooseFrom: (choiceList collect: [:c | c value])
 			values: (choiceList collect: [:c | c key])
-			lines: nil 
+			lines: nil
 			title: 'Choose a page'.
 	chosen ifNil: [^self].
-	self currentPage: chosen.
+	self currentPage: chosen
 ]
 
 { #category : #private }
@@ -119,11 +125,11 @@ TreePagerMorph >> currentPage [
 { #category : #accessing }
 TreePagerMorph >> currentPage: anIndex [
 	anIndex = self currentPage ifTrue: [^ self].
-	anIndex = 1 
+	anIndex = 1
 		ifTrue: [self setPageInterval: (1 to: (pageSize min: self nodeList size))]
 		ifFalse: [ | lastIdx  |
 			lastIdx := (anIndex * pageSize).
-			lastIdx <= self nodeList size 
+			lastIdx <= self nodeList size
 				ifTrue: [self setPageInterval: (((lastIdx - pageSize + 1) max: 1) to: (lastIdx))]
 				ifFalse: [self setPageInterval: ((((self lastPage - 1) * pageSize) + 1) to: self nodeList size)]]
 ]
@@ -163,7 +169,7 @@ TreePagerMorph >> lastPage [
 	| p |
 	p := (self nodeList size / pageSize) asInteger.
 	self nodeList size \\ pageSize > 0 ifTrue: [p := p + 1].
-	^ p.
+	^ p
 ]
 
 { #category : #accessing }
@@ -218,7 +224,7 @@ TreePagerMorph >> setPageInterval: anInterval [
 TreePagerMorph >> showCurrentPage [
 	self buildPanel.
 	treeMorph scroller removeAllMorphs.
-	(self nodeList isNil or: [self nodeList isEmpty]) 
+	(self nodeList isNil or: [self nodeList isEmpty])
 		ifTrue: [^ treeMorph emptySelection].
 	treeMorph addSubmorphsFromNodeList.
 	treeMorph updateColumnMorphs.

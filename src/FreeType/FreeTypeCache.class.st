@@ -28,14 +28,14 @@ FreeTypeCache class >> cleanUp [
 { #category : #'system startup' }
 FreeTypeCache class >> clearCacheOnShutdown [
 	"Answer true if the cache should be cleared on image shutdown"
-	
+
 	^ true
 ]
 
 { #category : #'private - cleaning' }
 FreeTypeCache class >> clearCurrent [
 	<script>
-	
+
 	current := nil
 ]
 
@@ -48,15 +48,16 @@ FreeTypeCache class >> current [
 { #category : #accessing }
 FreeTypeCache class >> defaultMaximumSize [
 	"Answer the default maximumSize in bytes"
-	
+
 	^1024*5000 "5 Megabytes"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 FreeTypeCache class >> initialize [
-	SessionManager default 
+
+	SessionManager default
 		registerGuiClassNamed: self name
-		atPriority: 10.
+		atPriority: 10
 ]
 
 { #category : #'system startup' }
@@ -64,7 +65,7 @@ FreeTypeCache class >> shutDown: isImageQuitting [
 
 	isImageQuitting ifFalse: [ ^ self ].
 	(current notNil and: [ self clearCacheOnShutdown ])
-		ifTrue:[ 
+		ifTrue:[
 			self current removeAll.
 			current := nil ]
 ]
@@ -92,18 +93,18 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 
 	| charCodeTable typeTable entry v vSize |
 
-	aFreeTypeFont mutex criticalReleasingOnError: [  				
+	aFreeTypeFont mutex criticalReleasingOnError: [
 		charCodeTable := fontTable at: aFreeTypeFont ifAbsentPut:[self dictionaryClass new: 60].
 		typeTable := charCodeTable at: charCodeInteger ifAbsentPut:[self dictionaryClass new: 10].
 		entry := typeTable at: typeFlag ifAbsent:[].
-		entry 
+		entry
 			ifNotNil:[
 				fifo moveDown: entry.
 				^entry object].
 		v := aBlock value.
 		vSize := self sizeOf: v.
-		(maximumSize notNil and:[vSize > maximumSize]) 
-			ifTrue:[^v].  
+		(maximumSize notNil and:[vSize > maximumSize])
+			ifTrue:[^v].
 		used := used + vSize.
 		entry := (self fifoEntryClass new
 			 font: aFreeTypeFont;
@@ -122,18 +123,18 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 
 	| charCodeTable typeTable anObjectSize oldEntry oldEntrySize entry |
 
-	aFreeTypeFont mutex criticalReleasingOnError: [  					
+	aFreeTypeFont mutex criticalReleasingOnError: [
 		anObjectSize := self sizeOf: anObject.
-		(maximumSize notNil and:[anObjectSize > maximumSize]) 
-			ifTrue:[^anObject].  
+		(maximumSize notNil and:[anObjectSize > maximumSize])
+			ifTrue:[^anObject].
 		(charCodeTable := fontTable at: aFreeTypeFont ifAbsentPut:[self dictionaryClass new: 60])
 			ifNotNil:[
 				(typeTable := charCodeTable at: charCodeInteger ifAbsentPut:[self dictionaryClass new: 10])
 					ifNotNil:[
 						oldEntry := typeTable at: typeFlag ifAbsent:[].
-						oldEntrySize := (oldEntry 
-							ifNil:[0] 
-							ifNotNil:[self sizeOf: oldEntry object]). 
+						oldEntrySize := (oldEntry
+							ifNil:[0]
+							ifNotNil:[self sizeOf: oldEntry object]).
 						entry := (self fifoEntryClass new
 							font: aFreeTypeFont;
 							charCode: charCodeInteger;
@@ -218,9 +219,9 @@ FreeTypeCache >> removeAllForFont: aFreeTypeFont [
 	| toRemove |
 	(fontTable includesKey: aFreeTypeFont) ifFalse: [ ^ self ].
 	toRemove := IdentitySet new.
-	fifo do: [ :entry | 
+	fifo do: [ :entry |
 		entry font = aFreeTypeFont ifTrue: [ toRemove add: entry ] ].
-	toRemove do: [ :entry | 
+	toRemove do: [ :entry |
 		| d |
 		fifo remove: entry.
 		d := (fontTable at: entry font) at: entry charCode.
@@ -233,9 +234,9 @@ FreeTypeCache >> removeAllForType: typeFlag [
 
 	| toRemove |
 	toRemove := IdentitySet new.
-	fifo do: [ :entry | 
+	fifo do: [ :entry |
 		entry type = typeFlag ifTrue: [ toRemove add: entry ] ].
-	toRemove do: [ :entry | 
+	toRemove do: [ :entry |
 		| d |
 		fifo remove: entry.
 		d := (fontTable at: entry font) at: entry charCode.
@@ -246,9 +247,9 @@ FreeTypeCache >> removeAllForType: typeFlag [
 { #category : #reporting }
 FreeTypeCache >> reportCacheState [
 	"Answer a description of the current state of the cache"
-	
+
 	| usedPercent |
-	usedPercent := maximumSize 
+	usedPercent := maximumSize
 		ifNil: [0]
 		ifNotNil: [(used * 100 / maximumSize) asFloat rounded].
 	^ usedPercent asString,'% Full (maximumSize: ', maximumSize asString, ' , used: ', used asString,')'
@@ -257,7 +258,7 @@ FreeTypeCache >> reportCacheState [
 { #category : #'private - sizing' }
 FreeTypeCache >> shrinkTo: newSize [
 	"if the used size is greater than newSize, then remove all the receiver's entries"
-	
+
 	used > newSize ifTrue:[self removeAll]
 ]
 

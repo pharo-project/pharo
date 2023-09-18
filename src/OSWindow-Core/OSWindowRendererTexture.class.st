@@ -34,7 +34,7 @@ OSWindowRendererTexture >> uploadAthensSurface: athensSurface [
 
 { #category : #'texture manipulation' }
 OSWindowRendererTexture >> uploadAthensSurface: anAthensSurface withModificationCount: newModificationCount [
-	(modificationCount isNil or: [ modificationCount < newModificationCount ]) ifTrue: [ 
+	(modificationCount isNil or: [ modificationCount < newModificationCount ]) ifTrue: [
 		self uploadAthensSurface: anAthensSurface.
 		modificationCount := newModificationCount
 	]
@@ -46,7 +46,7 @@ OSWindowRendererTexture >> uploadForm: aForm [
 
 { #category : #'texture manipulation' }
 OSWindowRendererTexture >> uploadForm: aForm withModificationCount: newModificationCount [
-	(modificationCount isNil or: [ modificationCount < newModificationCount ]) ifTrue: [ 
+	(modificationCount isNil or: [ modificationCount < newModificationCount ]) ifTrue: [
 		self uploadForm: aForm.
 		modificationCount := newModificationCount
 	]

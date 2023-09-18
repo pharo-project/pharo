@@ -17,26 +17,42 @@ Preconditions:
 Class {
 	#name : #RBAddVariableTransformation,
 	#superclass : #RBVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #preconditions }
-RBAddVariableTransformation >> preconditions [
+RBAddVariableTransformation >> applicabilityPreconditions [
 
 	class := self definingClass.
-	
-	^ (isClassVariable 
-		ifTrue: [ (RBCondition isMetaclass: class)
-					& (RBCondition isValidClassVarName: variableName for: class) ]
-		ifFalse: [ (RBCondition isMetaclass: class) not
-					& (RBCondition isValidInstanceVariableName: variableName for: class) ])
-		& (RBCondition hierarchyOf: class definesVariable: variableName asString) not 
-		& (RBCondition isGlobal: variableName in: self model) not
+
+	^ (isClassVariable
+		   ifTrue: [
+			   (RBCondition isMetaclass: class) not
+			   & (RBCondition isValidClassVarName: variableName for: class) ]
+		   ifFalse: [
+			   (RBCondition
+				    isValidInstanceVariableName: variableName
+				    for: class) ])
+	  & self isNotGlobal
+]
+
+{ #category : #preconditions }
+RBAddVariableTransformation >> breakingChangePreconditions [ 
+
+	^ (RBCondition
+			   hierarchyOf: class
+			   definesVariable: variableName asString) not
+]
+
+{ #category : #preconditions }
+RBAddVariableTransformation >> isNotGlobal [
+
+	^ (RBCondition isGlobal: variableName in: self model) not
 ]
 
 { #category : #executing }
 RBAddVariableTransformation >> privateTransform [
-	
+
 	isClassVariable
 		ifTrue: [ self definingClass instanceSide addClassVariable: variableName ]
 		ifFalse: [ self definingClass addInstanceVariable: variableName ]

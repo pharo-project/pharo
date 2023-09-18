@@ -18,13 +18,13 @@ Class {
 
 { #category : #initialization }
 ClyMethodExtensionSwitchMorph >> build [
-	
-	checkbox := self theme 
-		newCheckboxIn: self 
-		for: self 
-		getSelected: #isActive 
-		setSelected: #toggle 
-		getEnabled: nil 
+
+	checkbox := self theme
+		newCheckboxIn: self
+		for: self
+		getSelected: #isActive
+		setSelected: #toggle
+		getEnabled: nil
 		getLabel: #label
 		help: 'toggle check box to choose/reset package of method'.
 	checkbox
@@ -53,7 +53,7 @@ ClyMethodExtensionSwitchMorph >> isActive [
 { #category : #accessing }
 ClyMethodExtensionSwitchMorph >> label [
 	| label |
-	label := ownerTool extendingPackage 
+	label := ownerTool extendingPackage
 		ifNil: ['extension']
 		ifNotNil: [:package | package name ].
 	ownerTool modifiesExtension ifTrue: [ label := '*', label ].

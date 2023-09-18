@@ -17,10 +17,10 @@ CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
 	| layoutClass |
 	self handleClassName: aNode.
 	layoutClass := ObjectLayout layoutForSubclassDefiningSymbol: aSymbol.
-	
+
 	"if we get back CompiledMethodLayout or ByteLayout, we need to check the class name"
-	(layoutClass = CompiledMethodLayout or: [ layoutClass = ByteLayout ]) ifTrue: [ 
-		layoutClass := (classDefinition className = 'CompiledMethod') 
+	(layoutClass = CompiledMethodLayout or: [ layoutClass = ByteLayout ]) ifTrue: [
+		layoutClass :=  (#('CompiledMethod' 'CompiledBlock' 'CompiledCode') includes: classDefinition className)
 					ifTrue:  [  CompiledMethodLayout ]
 					ifFalse: [  ByteLayout ]].
 	classDefinition layoutClass: (layoutClass)
@@ -32,7 +32,7 @@ CDClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	sharedPoolString := aNode value.
 	shareds := sharedPoolString substrings.
 	sharedPoolNodes := shareds
-		collect: [ :slotName | 
+		collect: [ :slotName |
 			| start |
 			start := aNode start + (sharedPoolString findString: slotName).
 			self sharedPoolNodeClass
@@ -59,16 +59,21 @@ CDClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> handleTraitDefinitionFromNode: aNode [
-	
+
 	| traitComposition |
-	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.	
-	classDefinition traitDefinition: traitComposition.
+	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.
+	classDefinition traitDefinition: traitComposition
 ]
 
 { #category : #testing }
 CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."
-	^ aRBMessageNode receiver isMessage not
+	^ (aRBMessageNode isSequence 
+		"when defining a subclass of nil, we have two sends"
+		and: [aRBMessageNode statements size = 2
+		and: [aRBMessageNode statements second isMessage
+		and: [aRBMessageNode statements second selector == #superclass: ]]]) or: [
+	aRBMessageNode receiver isMessage not]
 ]
 
 { #category : #parsing }
@@ -80,11 +85,11 @@ CDClassDefinitionParser >> parseRootNode: expressionTree [
 ]
 
 { #category : #parsing }
-CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
-	
+CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
+
 	"We could do this with reflection, or with a dictionary and closures.
 	I chose to use a series of if for readability only."
-	
+
 	(ObjectLayout allSubclassDefiningSymbols includes: aString)
 		ifTrue: [ ^ self handleClassName: aNode withType: aString  ].
 	aString =	 #instanceVariableNames:
@@ -92,16 +97,16 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	aString =	 #classVariableNames:
 		ifTrue: [ ^ self handleSharedVariableNames: aNode ].
 	aString =	 #category:
-		ifTrue: [ ^ self handlePackage: aNode ].	
+		ifTrue: [ ^ self handlePackage: aNode ].
 	aString =	 #package:
 		ifTrue: [ ^ self handlePackage: aNode ].
 	aString =	 #uses:
 		ifTrue: [ ^ self handleTraitDefinitionFromNode: aNode ].
 	aString =	 #poolDictionaries:
 		ifTrue: [ ^ self handleSharedPoolsFromNode: aNode ].
-	
+
 	CDUnrecognizedClassPart new
-		classDefinition: self; 
+		classDefinition: self;
 		unrecognizedPart: aString;
 		signal
 ]
@@ -120,9 +125,19 @@ CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 	(self isInstanceSideDefinition: aRBMessageNode)
 		ifTrue: [ self handleSuperclassNode: aRBMessageNode receiver ]
 		ifFalse: [ self handleClassName: aRBMessageNode receiver receiver ].
-	
+
 	aRBMessageNode selectorParts
 		with: aRBMessageNode arguments
 		do: [ :selectorPart :argument |
 			self parseSelectorPart: selectorPart withArgument: argument ]
+]
+
+{ #category : #visiting }
+CDClassDefinitionParser >> visitSequenceNode: aRBSequenceNode [
+	"we end up here when parsing the definition of a class with nil superclass, e.g., ProtoObject"
+	self visitMessageNode: aRBSequenceNode statements first.
+	classDefinition superclassName: 'nil'.
+	classDefinition superclassNameNode
+		originalNode: aRBSequenceNode statements second arguments first;
+		className: 'nil'
 ]

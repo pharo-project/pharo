@@ -57,9 +57,9 @@ ExternalData >> bytesFromCString [
 
 { #category : #converting }
 ExternalData >> fromCString [
-	self 
-		deprecated:  'Please use #bytesFromCString instead' 
-		transformWith:  '`@receiver fromCString' 
+	self
+		deprecated:  'Please use #bytesFromCString instead'
+		transformWith:  '`@receiver fromCString'
 						-> '`@receiver bytesFromCString utf8Decoded'.
 
 	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
@@ -73,7 +73,7 @@ ExternalData >> fromCStrings [
 
 	| stream index char strings str |
 
-	self 
+	self
 		deprecated:  'This method returns strings that are not decoded. Please use #bytesFromCString with the rifght decoder instead'.
 
 	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
@@ -96,23 +96,23 @@ ExternalData >> fromCStrings [
 { #category : #printing }
 ExternalData >> printOn: stream [
 
-	stream 
+	stream
 		nextPut: $(;
-		print: type; 
-		nextPut: $). 
-	self getHandle printOn: stream.
+		print: type;
+		nextPut: $).
+	self getHandle printOn: stream
 ]
 
 { #category : #private }
 ExternalData >> setHandle: aHandle type: aType [
 	handle := aHandle.
-	type := aType.
+	type := aType
 ]
 
 { #category : #accessing }
 ExternalData >> utf8StringFromCString [
-	"Assume that the receiver represents a C string containing UTF8 characters and convert 
+	"Assume that the receiver represents a C string containing UTF8 characters and convert
 	 it to a Smalltalk string."
-	
+
 	^ self bytesFromCString ifNotNil: [ :bytes | bytes utf8Decoded ]
 ]

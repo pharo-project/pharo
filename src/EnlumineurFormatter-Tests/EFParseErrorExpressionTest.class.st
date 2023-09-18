@@ -32,6 +32,5 @@ EFParseErrorExpressionTest >> testParseError2 [
 	expr := RBParser parseFaultyExpression: '1 := '.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
-	self assert: source equals:
-' 1. :='
+	self assert: source equals: '1. := '
 ]

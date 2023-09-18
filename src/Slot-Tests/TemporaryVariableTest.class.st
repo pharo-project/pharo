@@ -8,17 +8,20 @@ Class {
 }
 
 { #category : #tests }
-TemporaryVariableTest >> testDeclaringNode [
-	| method declaringNode declaringNodeViaVariable|
-	method := self class >> #testTemporaryVariablesMethod.
-	declaringNode := method ast body temporaries first.
-	declaringNodeViaVariable := method assignmentNodes first variable variable definingNode.
-	self assert: declaringNodeViaVariable equals: declaringNode.
-	
-	method := OrderedCollection >> #do:.
-	declaringNode := method ast arguments first.
-	declaringNodeViaVariable := method ast variableReadNodes third variable definingNode.
-	self assert: declaringNodeViaVariable equals: declaringNode.
+TemporaryVariableTest >> testDefiningNode [
+	"test for normal temps, copied and tempvector"
+	| ast tempsNodes tempDefintions  tempUses |
+	ast := self class compiler parse: 'myMethod: arg
+ 	 | test testCopied testTempVector|
+ 	 test := 2.
+  	 test.
+  	 [ testCopied. testTempVector := 1 ].
+    ^test'.
+	tempsNodes := ast allChildren select: [ :each | each isTempVariable ].
+	tempDefintions := tempsNodes select:  [ :each | each isDefinition ].
+	tempUses := tempsNodes reject:  [ :each | each isDefinition ].
+	tempUses do: [ :use | self assert: (tempDefintions includes: use variable definingNode)].
+
 ]
 
 { #category : #tests }
@@ -41,22 +44,22 @@ TemporaryVariableTest >> testIsReferenced [
 	"The temp notReferenced is not used as we test exactly that here"
 	method := self class >> #testIsReferenced.
 	self assert: method temporaryVariables first isReferenced.
-	self deny: method temporaryVariables second isReferenced.
+	self deny: method temporaryVariables second isReferenced
 ]
 
 { #category : #properties }
 TemporaryVariableTest >> testPropertyAtPut [
 
 	| testValue temp |
-	
+
 	testValue := Date today.
-	temp := thisContext temporaryVariableNamed:  #testValue.
-	
+	temp := thisContext lookupVar:  #testValue.
+
 	temp propertyAt: #testKeySelector put: testValue.
 	self
 		assert: (temp propertyAt: #testKeySelector)
 		equals: testValue.
-		
+
 	temp removeProperty: #testKeySelector.
 	self assert: temp properties isNil
 ]
@@ -66,15 +69,15 @@ TemporaryVariableTest >> testReadNodes [
 	| method |
 	"On the level of CompiledMethod, args include temps. This needs to be fixed"
 	method := OrderedCollection >> #do:.
-	self assert: (method temporaryVariableNamed: #aBlock) astNodes notEmpty
+	self assert: (method lookupVar: #aBlock) astNodes notEmpty
 ]
 
 { #category : #tests }
 TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	| tempVar |
-	tempVar := thisContext temporaryVariableNamed: #tempVar.
+	tempVar := thisContext lookupVar: #tempVar.
 
-	self assert: (tempVar readInContext: thisContext) class equals: TemporaryVariable
+	self assert: (tempVar readInContext: thisContext) equals: tempVar
 ]
 
 { #category : #tests }
@@ -82,7 +85,7 @@ TemporaryVariableTest >> testScope [
 	| method variable |
 	method := self class >> #testTemporaryVariablesMethod.
 	self assert: method temporaryVariables first scope isMethodScope.
-	
+
 	variable := method temporaryVariables first.
 	self assert: (variable scope lookupVar: variable name) equals: variable
 ]
@@ -99,18 +102,18 @@ TemporaryVariableTest >> testTemporaryVariablesMethod [
 	| method |
 	method := self class >> #testTemporaryVariablesMethod.
 	self assert: method temporaryVariables first name equals: #method.
-	
+
 	"On the level of CompiledMethod, args include temps. This needs to be fixed"
 	method := OrderedCollection >> #do:.
 	self assert: method temporaryVariables first name equals: #aBlock.
 	self assert: (method hasTemporaryVariableNamed: #aBlock).
-	self assert: (method temporaryVariableNamed: #aBlock) class equals: ArgumentVariable.
+	self assert: (method lookupVar: #aBlock) class equals: ArgumentVariable
 ]
 
 { #category : #tests }
 TemporaryVariableTest >> testWriteTemporaryVariablesMethod [
 	| tempVar |
-	tempVar := thisContext temporaryVariableNamed: #tempVar.
+	tempVar := thisContext lookupVar: #tempVar.
 
 	tempVar write: 5 inContext: thisContext.
 	self assert: tempVar equals: 5

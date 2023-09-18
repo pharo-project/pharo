@@ -11,12 +11,12 @@ Class {
 { #category : #activation }
 ClyInvertVariableOrderCommand class >> browserContextMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyVariableMethodGroup asCalypsoItemContext
 ]
 
 { #category : #accessing }
-ClyInvertVariableOrderCommand >> defaultMenuItemName [ 
+ClyInvertVariableOrderCommand >> defaultMenuItemName [
 	^'Invert hierarchy'
 ]
 

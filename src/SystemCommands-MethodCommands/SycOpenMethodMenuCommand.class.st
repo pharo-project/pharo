@@ -9,12 +9,12 @@ Class {
 }
 
 { #category : #execution }
-SycOpenMethodMenuCommand >> activationStrategy [ 
+SycOpenMethodMenuCommand >> activationStrategy [
 	^ SycMethodMenuActivation
 ]
 
 { #category : #'context menu' }
-SycOpenMethodMenuCommand >> cmCommandClass [ 
+SycOpenMethodMenuCommand >> cmCommandClass [
 	^ SycMethodCmCommand
 ]
 

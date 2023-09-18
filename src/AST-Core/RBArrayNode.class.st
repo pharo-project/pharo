@@ -25,7 +25,7 @@ RBArrayNode class >> statements: statements [
 ]
 
 { #category : #comparing }
-RBArrayNode >> = anObject [ 
+RBArrayNode >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
 	self statements size = anObject statements size ifFalse: [ ^ false ].
@@ -48,9 +48,9 @@ RBArrayNode >> addNode: aNode [
 ]
 
 { #category : #'adding nodes' }
-RBArrayNode >> addNode: aNode before: anotherNode [ 
+RBArrayNode >> addNode: aNode before: anotherNode [
 	| index |
-	aNode isReturn 
+	aNode isReturn
 		ifTrue: [ self error: 'Cannot add return node' ].
 	index := self indexOfNode: anotherNode.
 	index = 0 ifTrue: [ ^ self addNode: aNode ].
@@ -80,7 +80,7 @@ RBArrayNode >> addNodes: aCollection [
 ]
 
 { #category : #'adding nodes' }
-RBArrayNode >> addNodes: aCollection before: anotherNode [ 
+RBArrayNode >> addNodes: aCollection before: anotherNode [
 	aCollection do: [ :each | self addNode: each before: anotherNode ].
 	^ aCollection
 ]
@@ -107,20 +107,20 @@ RBArrayNode >> children [
 ]
 
 { #category : #matching }
-RBArrayNode >> copyInContext: aDictionary [ 
+RBArrayNode >> copyInContext: aDictionary [
 	^ self class statements: (self copyList: self statements inContext: aDictionary)
 ]
 
 { #category : #comparing }
-RBArrayNode >> equalTo: anObject withMapping: aDictionary [ 
-	self class = anObject class 
+RBArrayNode >> equalTo: anObject withMapping: aDictionary [
+	self class = anObject class
 		ifFalse: [ ^ false ].
-	self statements size = anObject statements size 
+	self statements size = anObject statements size
 		ifFalse: [ ^ false ].
 	self statements with: anObject statements do: [ :first :second |
 		(first equalTo: second withMapping: aDictionary)
 			ifFalse: [ ^ false ] ].
-	aDictionary values asSet size = aDictionary size 
+	aDictionary values asSet size = aDictionary size
 		ifFalse: [ ^ false ].
 	^ true
 ]
@@ -131,10 +131,10 @@ RBArrayNode >> hash [
 ]
 
 { #category : #private }
-RBArrayNode >> indexOfNode: aNode [ 
+RBArrayNode >> indexOfNode: aNode [
 	"Try to find the node by first looking for ==, and then for ="
 
-	^ (1 to: statements size) 
+	^ (1 to: statements size)
 		detect: [ :each | (statements at: each) == aNode ]
 		ifNone: [ statements indexOf: aNode ]
 ]
@@ -144,7 +144,7 @@ RBArrayNode >> initialize [
 	super initialize.
 	statements := OrderedCollection new.
 	periods := #().
-	left := right := 0.
+	left := right := 0
 ]
 
 { #category : #testing }
@@ -157,8 +157,9 @@ RBArrayNode >> isEmpty [
 	^ statements isEmpty
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBArrayNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
@@ -179,7 +180,7 @@ RBArrayNode >> left: anInteger [
 ]
 
 { #category : #matching }
-RBArrayNode >> match: aNode inContext: aDictionary [ 
+RBArrayNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [ ^ false ].
 	^ self matchList: statements against: aNode statements inContext: aDictionary
 ]
@@ -211,14 +212,14 @@ RBArrayNode >> precedence [
 ]
 
 { #category : #testing }
-RBArrayNode >> references: aVariableName [ 
+RBArrayNode >> references: aVariableName [
 	^ statements anySatisfy: [ :each | each references: aVariableName ]
 ]
 
 { #category : #replacing }
 RBArrayNode >> replaceNode: oldNode  withNode: newNode [
 	self statements: (statements collect: [ :statement |
-		statement == oldNode 
+		statement == oldNode
 			ifTrue: [ newNode ]
 			ifFalse: [ statement ] ])
 ]
@@ -234,7 +235,7 @@ RBArrayNode >> right: anInteger [
 ]
 
 { #category : #accessing }
-RBArrayNode >> startWithoutParentheses [ 
+RBArrayNode >> startWithoutParentheses [
 	^ left
 ]
 
@@ -249,17 +250,17 @@ RBArrayNode >> statements [
 ]
 
 { #category : #accessing }
-RBArrayNode >> statements: statements0 [ 
+RBArrayNode >> statements: statements0 [
 	statements := statements0.
 	statements do: [:statement | statement parent: self]
 ]
 
 { #category : #accessing }
-RBArrayNode >> stopWithoutParentheses [ 
+RBArrayNode >> stopWithoutParentheses [
 	^ right
 ]
 
 { #category : #testing }
-RBArrayNode >> uses: aNode [ 
+RBArrayNode >> uses: aNode [
 	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsed ]
 ]

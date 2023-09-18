@@ -37,20 +37,20 @@ StringLineEndingsTest >> newTestingSubject [
 ]
 
 { #category : #accessing }
-StringLineEndingsTest >> originLineEnding: aString [ 
+StringLineEndingsTest >> originLineEnding: aString [
 	originLineEnding := aString
 ]
 
 { #category : #running }
 StringLineEndingsTest >> setUp [
-	
+
 	super setUp.
-	testingSubjectWithOriginLineEnding := self newTestingSubject. 
-	testingSubjectWithTargetLineEnding := testingSubjectWithOriginLineEnding withLineEndings: targetLineEnding.
+	testingSubjectWithOriginLineEnding := self newTestingSubject.
+	testingSubjectWithTargetLineEnding := testingSubjectWithOriginLineEnding withLineEndings: targetLineEnding
 ]
 
 { #category : #accessing }
-StringLineEndingsTest >> targetLineEnding: aString [ 
+StringLineEndingsTest >> targetLineEnding: aString [
 	targetLineEnding := aString
 ]
 
@@ -71,9 +71,9 @@ StringLineEndingsTest >> testLineEndinglessStringShouldBeEquals [
 
 { #category : #tests }
 StringLineEndingsTest >> testOriginStringCanBeProducedFromTargetStringAndOriginalLineEnding [
-	
+
 	" This test is for testing that we can tranform a string with certain line ending to a another line ending, and then transform it back to the original line ending. "
-	
+
 	| testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding |
 	testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding := testingSubjectWithTargetLineEnding withLineEndings: originLineEnding .
 	self assert: testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding equals: testingSubjectWithOriginLineEnding
@@ -83,7 +83,7 @@ StringLineEndingsTest >> testOriginStringCanBeProducedFromTargetStringAndOrigina
 StringLineEndingsTest >> testTargetLineEndingStringWithoutOriginLineEnding [
 	self
 		assert:
-			((targetLineEnding includesSubstring: originLineEnding) 
+			((targetLineEnding includesSubstring: originLineEnding)
 				xor: [ (testingSubjectWithTargetLineEnding
 						includesSubstring: originLineEnding) not ])
 ]

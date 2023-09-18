@@ -16,8 +16,12 @@ RBProgramNodeVisitor class >> isAbstract [
 ]
 
 { #category : #API }
-RBProgramNodeVisitor >> visit: aRBMessageNode [ 
+RBProgramNodeVisitor >> visit: aRBMessageNode [
 	^ aRBMessageNode acceptVisitor: self
+]
+
+{ #category : #visiting }
+RBProgramNodeVisitor >> visitAnnotationMarkNode: aRBAnnotationValueNode [
 ]
 
 { #category : #visiting }
@@ -69,8 +73,14 @@ RBProgramNodeVisitor >> visitClassVariableNode: aNode [
 ]
 
 { #category : #visiting }
+RBProgramNodeVisitor >> visitCommentNode: aRBComment [
+	"Note: currenlty, comment nodes are not automatically visited by `RBProgramNodeVisitor`.
+	This method can still be reached by custom visitors and direct visit on a comment node."
+]
+
+{ #category : #visiting }
 RBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
-	anEnglobingErrorNode content do: [ :each | self visitNode: each ].
+	anEnglobingErrorNode contents do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }
@@ -218,12 +228,6 @@ RBProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
 { #category : #visiting }
 RBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 	^ self visitVariableNode: aThisContextNode
-]
-
-{ #category : #visiting }
-RBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
-	
-	^ self visitEnglobingErrorNode: anUnreachableStatement
 ]
 
 { #category : #visiting }

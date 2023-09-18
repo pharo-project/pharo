@@ -13,7 +13,7 @@ Class {
 { #category : #accessing }
 AuthorNameRequest class >> messagePrompt [
 	^
-'Please type your full name. 
+'Please type your full name.
 It will be used to sign the changes you make to the image.
 Spaces, accents, dashes, underscore and similar characters are not allowed
 '
@@ -29,13 +29,13 @@ AuthorNameRequest >> defaultAction [
 
 { #category : #accessing }
 AuthorNameRequest >> initialAnswer [
-	
+
 	^ initialAnswer
 ]
 
 { #category : #accessing }
 AuthorNameRequest >> initialAnswer: anObject [
-	
+
 	initialAnswer := anObject
 ]
 

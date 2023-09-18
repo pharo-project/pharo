@@ -20,7 +20,7 @@ ClassTest >> categoryNameForTemporaryClasses [
 
 { #category : #coverage }
 ClassTest >> classToBeTested [
-	
+
 	^ Class
 ]
 
@@ -28,10 +28,10 @@ ClassTest >> classToBeTested [
 ClassTest >> deleteClass [
 	| cl |
 	cl := testEnvironment at: className ifAbsent: [ ^ self ].
-	
-	testingEnvironment at: #ChangeSet ifPresent: [ 
+
+	testingEnvironment at: #ChangeSet ifPresent: [
 		cl removeFromChanges ].
-	
+
 	cl removeFromSystemUnlogged
 ]
 
@@ -60,18 +60,20 @@ ClassTest >> setUp [
 	className := #TUTU.
 	testEnvironment:= Smalltalk globals.
 	self deleteClass.
-	
+
 	self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: className;
 			package: self categoryNameForTemporaryClasses]
 ]
 
 { #category : #running }
 ClassTest >> tearDown [
+
 	self deleteClass.
-	{self unclassifiedCategory. self categoryNameForTemporaryClasses} do: [:category|
-			RPackage organizer unregisterPackageNamed: category].
+	{
+		self unclassifiedCategory.
+		self categoryNameForTemporaryClasses } do: [ :category | self packageOrganizer removePackage: category ].
 	super tearDown
 ]
 
@@ -143,29 +145,29 @@ ClassTest >> testChangingShapeDoesNotPutNilInMethodsLastLiteralKey [
 	tutu compile: 'foo'.
 	self deny: (tutu >> #foo) allLiterals last key isNil.
 	tutu addInstVarNamed: 'x'.
-	self deny: (tutu >> #foo) allLiterals last key isNil.
+	self deny: (tutu >> #foo) allLiterals last key isNil
 ]
 
 { #category : #'test - accessing parallel hierarchy' }
 ClassTest >> testClassSide [
 
-	self assert: Point classSide equals: Point class. 
-	self assert: Point class classSide equals: Point class.
+	self assert: Point classSide equals: Point class.
+	self assert: Point class classSide equals: Point class
 ]
 
 { #category : #tests }
-ClassTest >> testClassVariableEntanglement [ 
+ClassTest >> testClassVariableEntanglement [
 	| firstClassName firstClass secondClassName secondClass thirdClassName thirdClass |
-
+	<ignoreNotImplementedSelectors: #(myVar myVar:)>
 	firstClassName := 'MyFirstClass'.
 
 	firstClass := self class classInstaller make: [ :aBuilder |
-		aBuilder 
+		aBuilder
 			name: firstClassName;
 			sharedVariablesFromString: 'MyVar';
 			package: self categoryNameForTemporaryClasses ].
-		
-	[ 
+
+	[
 
 		firstClass class compile: 'myVar
 	^ MyVar'.
@@ -175,12 +177,12 @@ ClassTest >> testClassVariableEntanglement [
 		secondClassName := 'MySecondClass'.
 
 		secondClass := self class classInstaller make: [ :aBuilder |
-			aBuilder 
+			aBuilder
 				name: secondClassName;
 				sharedVariablesFromString: 'MyVar';
 				package: self categoryNameForTemporaryClasses ].
-			
-		[ 
+
+		[
 
 			secondClass class compile: 'myVar
 	^ MyVar'.
@@ -189,12 +191,12 @@ ClassTest >> testClassVariableEntanglement [
 
 			thirdClassName := 'MyThirdClass'.
 			thirdClass := secondClass duplicateClassWithNewName: thirdClassName.
-			[ 
+			[
 
 				self assert: firstClass myVar equals: nil.
 				self assert: secondClass myVar equals: nil.
 				self assert: thirdClass myVar equals: nil.
-	
+
 				firstClass myVar: 123.
 				self assert: firstClass myVar equals: 123.
 				self assert: secondClass myVar equals: nil.
@@ -210,18 +212,38 @@ ClassTest >> testClassVariableEntanglement [
 				self assert: secondClass myVar equals: 456.
 				self assert: thirdClass myVar equals: 789.
 
-			 ] ensure: [ 
-				thirdClass 
+			 ] ensure: [
+				thirdClass
 					removeFromChanges;
 					removeFromSystemUnlogged ].
-		 ] ensure: [ 
-			secondClass 
+		 ] ensure: [
+			secondClass
 				removeFromChanges;
 				removeFromSystemUnlogged ].
-	 ] ensure: [ 
-		firstClass 
+	 ] ensure: [
+		firstClass
 			removeFromChanges;
-			removeFromSystemUnlogged ].
+			removeFromSystemUnlogged ]
+]
+
+{ #category : #'tests - accessing - comments' }
+ClassTest >> testComment [
+	self assert: Object comment isNotNil.
+	self assert: Object class comment equals: Object comment
+]
+
+{ #category : #'tests - accessing - comments' }
+ClassTest >> testCommentSourcePointer [
+
+	self
+		assert: Object class commentSourcePointer
+		identicalTo: Object commentSourcePointer
+]
+
+{ #category : #'tests - accessing - comments' }
+ClassTest >> testCommentStamp [
+	self assert: Object commentStamp equals: ''.
+	self assert: Object class commentStamp equals: ''.
 ]
 
 { #category : #tests }
@@ -233,7 +255,7 @@ ClassTest >> testCommonSuperclassWith [
 	"but the other way this is not true"
 	self assert: (Object commonSuperclassWith: ProtoObject) equals: nil.
 	"as nil is the terminator of the hierarchy, we have to support it"
-	self assert: (nil commonSuperclassWith: ProtoObject) equals: nil.
+	self assert: (nil commonSuperclassWith: ProtoObject) equals: nil
 ]
 
 { #category : #tests }
@@ -261,12 +283,12 @@ ClassTest >> testEnvironment: anObject [
 ClassTest >> testHasBindingThatBeginsWith [
 	self assert: (SmalltalkImage hasBindingThatBeginsWith: 'Compiler').
 	self assert: (SmalltalkImage hasBindingThatBeginsWith: 'Object').
-	
+
 	"Pools are looked up, too"
 	self assert: (TimeZone hasBindingThatBeginsWith: 'DaysInMo').
-	
+
 	"CompiledMethodLayout works, too"
-	self deny: (CompiledMethod hasBindingThatBeginsWith: 'Compiler').
+	self deny: (CompiledMethod hasBindingThatBeginsWith: 'Compiler')
 ]
 
 { #category : #'tests - class variables' }
@@ -276,16 +298,22 @@ ClassTest >> testHasClassVarNamed [
 	self deny: (Object hasClassVarNamed: #CompilerClass)
 ]
 
+{ #category : #'tests - accessing - comments' }
+ClassTest >> testHasComments [
+	self assert: Object hasComment.
+	self assert: Object class hasComment
+]
+
 { #category : #'tests - access' }
-ClassTest >> testHasPoolVarNamed [	
+ClassTest >> testHasPoolVarNamed [
 
 	self assert: (Date usesLocalPoolVarNamed: 'DayNames').
 	"a metaclass does not have shared pools since only classes have shared pools"
 	self deny: (Date class usesLocalPoolVarNamed: 'DayNames').
-	
+
 	self assert: (RootClassPoolUser usesLocalPoolVarNamed: 'AnAuthor').
 	"a subclass does not have the one of its superclass - but it would be good to change that"
-	self deny: (SubclassPoolUser usesLocalPoolVarNamed: 'AnAuthor').
+	self deny: (SubclassPoolUser usesLocalPoolVarNamed: 'AnAuthor')
 ]
 
 { #category : #'tests - access' }
@@ -293,21 +321,21 @@ ClassTest >> testHasSharedPools [
 
 	self deny: Point hasSharedPools.
 	self assert: Date hasSharedPools.
-	
+
 	"a metaclass does not have shared pools since only classes have shared pools"
 	self deny: Date class hasSharedPools.
-	
+
 	self assert: RootClassPoolUser hasSharedPools.
-	
+
 	"has shared pools does not take into account the fact that a superclass may use some shared pools"
-	self deny: SubclassPoolUser hasSharedPools.
+	self deny: SubclassPoolUser hasSharedPools
 ]
 
 { #category : #'test - accessing parallel hierarchy' }
 ClassTest >> testInstanceSide [
 
-	self assert: Point instanceSide equals: Point. 
-	self assert: Point class instanceSide equals: Point.
+	self assert: Point instanceSide equals: Point.
+	self assert: Point class instanceSide equals: Point
 ]
 
 { #category : #'test - accessing parallel hierarchy' }
@@ -337,14 +365,14 @@ ClassTest >> testMethodsReferencingClass [
 ClassTest >> testMethodsReferencingClasses [
 
 	| collectionOfMethods collectionOfMethodsShouldBe |
-	
+
 	collectionOfMethods := ((ClassTest methodsReferencingClasses: {Smalltalk classNamed: #ExampleForTest12. Smalltalk classNamed: #ExampleForTest1}) sort: [ :a :b | a name <= b name]) asArray.
-	
+
 	collectionOfMethodsShouldBe := {
 		ClassTest>>#referencingMethod1.
 		ClassTest>>#referencingMethod2.
 		ClassTest>>#testOrdersACollectionOfClassesBySuperclass}.
-		
+
 	self assert: collectionOfMethods asSet equals: collectionOfMethodsShouldBe asSet
 ]
 
@@ -363,37 +391,37 @@ ClassTest >> testNewSubclass [
 ]
 
 { #category : #'tests - file in/out' }
-ClassTest >> testOrdersACollectionOfClassesBySuperclass [	
+ClassTest >> testOrdersACollectionOfClassesBySuperclass [
 	| ordered |
-	ordered := (Class superclassOrder:  
-		(OrderedCollection 
-				with: ExampleForTest11 class 
-				with: ExampleForTest111 class 
-				with: ExampleForTest12 class 
-				with: ExampleForTest1 class 
-				with: ExampleForTest12 class 
+	ordered := (Class superclassOrder:
+		(OrderedCollection
+				with: ExampleForTest11 class
+				with: ExampleForTest111 class
+				with: ExampleForTest12 class
+				with: ExampleForTest1 class
+				with: ExampleForTest12 class
 				with: ExampleForTest112 class)).
-	
+
 	self assert: (ordered indexOf: ExampleForTest1 class) < (ordered indexOf: ExampleForTest11 class).
 	self assert: (ordered indexOf: ExampleForTest11 class) < (ordered indexOf: ExampleForTest111 class).
 	self assert: (ordered indexOf: ExampleForTest11 class) < (ordered indexOf: ExampleForTest112 class).
-	self assert: (ordered indexOf: ExampleForTest1 class) < (ordered indexOf: ExampleForTest12 class).
+	self assert: (ordered indexOf: ExampleForTest1 class) < (ordered indexOf: ExampleForTest12 class)
 ]
 
 { #category : #'tests - file in/out' }
 ClassTest >> testOrdersMetaClassAfterItsClassInstance [
 	| ordered |
-	ordered := (Class superclassOrder:  
-		(OrderedCollection 
+	ordered := (Class superclassOrder:
+		(OrderedCollection
 				with: Boolean class
 				with: True
 				with: Boolean
 				with: True class)).
-	
+
 	self assert: (ordered indexOf: Boolean) < (ordered indexOf: Boolean class).
 	self assert: (ordered indexOf: True) < (ordered indexOf: True class).
 	self assert: (ordered indexOf: Boolean class) < (ordered indexOf: True class).
-	self assert: (ordered indexOf: Boolean) < (ordered indexOf: True).
+	self assert: (ordered indexOf: Boolean) < (ordered indexOf: True)
 ]
 
 { #category : #'tests - pools' }
@@ -420,17 +448,17 @@ ClassTest >> testPoolVariableAccessibleInSubclassOfClassUser [
 
 { #category : #'tests - navigation' }
 ClassTest >> testReferencedClasses [
-	{(ExceptionTester -> { MyTestNotification. Warning. String. MyResumableTestError. OrderedCollection. MyTestError}). 
+	{(ExceptionTester -> { MyTestNotification. Warning. String. MyResumableTestError. OrderedCollection. MyTestError}).
 	 (CollectionCombinator -> {Array}).
 	 (ExecutionEnvironmentStub -> {OrderedCollection}).
 	 (ReferencedClassesTestClass -> {Array. OrderedCollection. Object})
 	}
-		do: [ :assoc | 
+		do: [ :assoc |
 			self assert: assoc key referencedClasses notEmpty.
 			self assert: (assoc key referencedClasses asSet includesAll: assoc value asSet)].
-		
+
 	"classes referenced from class variables should not be seen as referenced statically"
-	self assert: (SmalltalkImage class>>#compilerClass ) referencedClasses isEmpty.
+	self assert: (SmalltalkImage class>>#compilerClass ) referencedClasses isEmpty
 ]
 
 { #category : #tests }
@@ -446,20 +474,20 @@ ClassTest >> testRemoveClassSlot [
 	tutu removeClassSlot: slot2.
 	self assert: tutu class instVarNames equals: #(#X).
 	tutu removeClassSlot: slot1.
-	self assert: tutu class instVarNames equals: #().
+	self assert: tutu class instVarNames equals: #()
 ]
 
 { #category : #'tests - access' }
-ClassTest >> testSharedPoolOfVarNamed [	
+ClassTest >> testSharedPoolOfVarNamed [
 
 	self assert: (Date sharedPoolOfVarNamed: 'DayNames') equals: ChronologyConstants.
 	"a metaclass does not have shared pools since only classes have shared pools"
 	self assert: (Date class sharedPoolOfVarNamed: 'DayNames') isNil.
-	
+
 	self assert: (RootClassPoolUser sharedPoolOfVarNamed: 'AnAuthor') equals: PoolDefiner.
 	self assert: (RootClassPoolUser sharedPoolOfVarNamed: 'Gloups') equals: PoolDefiner.
 	self assert: (SubclassPoolUser sharedPoolOfVarNamed: 'AnAuthor') equals: PoolDefiner.
-	
+
 	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'AnAuthor') equals: PoolDefiner.
 	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'VariableInPoolDefiner2') equals: PoolDefiner2.
 	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'Gloups') equals: PoolDefiner
@@ -483,7 +511,7 @@ ClassTest >> testSubclass [
 
 	self deny: (testEnvironment includesKey: #SubclassExample).
 	cls := self class classInstaller make: [ :aBuilder | aBuilder name: #SubclassExample ].
-	
+
 	self assert: (testEnvironment includesKey: #SubclassExample).
 
 	self assert: (testEnvironment at: #SubclassExample) identicalTo: cls.
@@ -500,10 +528,10 @@ ClassTest >> testSubclassInstanceVariableNames [
 
 	self deny: (testEnvironment includesKey: #SubclassExample).
 
-	cls := self class classInstaller make: [ :aBuilder | 
-		aBuilder 
+	cls := self class classInstaller make: [ :aBuilder |
+		aBuilder
 			name: #SubclassExample;
-			slots: 'x y' asSlotCollection].
+			slotsFromString: 'x y'].
 
 	self assert: (testEnvironment includesKey: #SubclassExample).
 
@@ -518,12 +546,12 @@ ClassTest >> testSubclassInstanceVariableNames [
 ClassTest >> testSuperclassOrder [
 	|  ordered orderedSuperclasses shuffledSuperclasses |
 	orderedSuperclasses := {ProtoObject. Object. Collection. SequenceableCollection}.
-	
+
 	"a shuffled collection of superclasses of OrderedCollection"
 	shuffledSuperclasses := {Collection. SequenceableCollection. ProtoObject. Object}.
-	
+
 	ordered := Class superclassOrder: shuffledSuperclasses.
-	
+
 	"should not affect the order as there is no dependencies"
 	self assert: ordered equals: orderedSuperclasses asOrderedCollection
 ]
@@ -532,21 +560,21 @@ ClassTest >> testSuperclassOrder [
 ClassTest >> testSuperclassOrderPreservingOrder [
 	| noHierarchicalRelationship ordered |
 	"a shuffled collection of direct subclasses of Collection"
-	noHierarchicalRelationship := {CharacterSet. WideCharacterSet. OrderedDictionary. DependentsArray. Bag. SmallDictionary. SequenceableCollection. HashedCollection. WeakRegistry. Heap}.
-	
+	noHierarchicalRelationship := {CharacterSet. WideCharacterSet. OrderedDictionary. DependentsArray. Bag. SmallDictionary. SequenceableCollection. HashedCollection. Heap}.
+
 	ordered := Class superclassOrder: noHierarchicalRelationship.
-	
+
 	"should not affect the order as there is no dependencies"
 	self assert: ordered equals: noHierarchicalRelationship asOrderedCollection
 ]
 
 { #category : #'tests - access' }
-ClassTest >> testUsesPoolVarNamed [	
+ClassTest >> testUsesPoolVarNamed [
 
 	self assert: (Date usesPoolVarNamed: 'DayNames').
 	"a metaclass does not have shared pools since only classes have shared pools"
 	self deny: (Date class usesPoolVarNamed: 'DayNames').
-	
+
 	self assert: (RootClassPoolUser usesPoolVarNamed: 'AnAuthor').
 	"a subclass  has  the one of its superclass"
 	self assert: (SubclassPoolUser usesPoolVarNamed: 'AnAuthor')
@@ -562,7 +590,7 @@ ClassTest >> testallClassVariables [
 ClassTest >> testclassVarNames [
 
 	self assert: (Object classVarNames includes: #DependentsFields).
-	
+
 	"A class and it's meta-class share the class variables"
 	self assert: Object classVarNames equals: Object class classVarNames
 ]
@@ -571,7 +599,7 @@ ClassTest >> testclassVarNames [
 ClassTest >> testclassVariables [
 
 	self assert: Object classVariables first name equals: #DependentsFields.
-	
+
 	"A class and it's meta-class share the class variables"
 	self assert: Object classVariables equals: Object class classVariables
 ]

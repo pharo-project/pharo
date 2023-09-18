@@ -54,7 +54,7 @@ FTVisibleItemsStrategy >> matchingFilter: anItem [
 	anItem isExpanded
 		ifTrue:
 			[ ((anItem children collect: [ :each | self matchingFilter: each ]) reject: #isNil)
-				ifNotEmpty: [ :coll | 
+				ifNotEmpty: [ :coll |
 					^ (self newStaticItemFrom: anItem)
 						children: coll asArray;
 						expandWithoutChange;
@@ -82,8 +82,8 @@ FTVisibleItemsStrategy >> realSearch [
 	cpt := 0.
 	dataSource rootsItems
 		do:
-			[ :item | 
-			1 to: item numberOfVisibleChildren + 1 do: [ :index | 
+			[ :item |
+			1 to: item numberOfVisibleChildren + 1 do: [ :index |
 				| elem |
 				elem := item selfOrChildAt: index.
 				(self isMatching: elem)

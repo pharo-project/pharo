@@ -86,7 +86,7 @@ HistoryNodeTest >> testReset [
 
 { #category : #tests }
 HistoryNodeTest >> testTwoConsecutiveCloseGroup [
-	| h i grp1 grp2 i3 | 
+	| h i grp1 grp2 i3 |
 	h := HistoryNode new.
 	h addItem: (i := HistoryLeaf new).
 	self assert: h size equals: 1.
@@ -103,12 +103,12 @@ HistoryNodeTest >> testTwoConsecutiveCloseGroup [
 	h closeGroup.
 	h addItem: (i3 := HistoryLeaf new).
 	self assert: h size equals: 3.
-	self assert: h current equals: i3.
+	self assert: h current equals: i3
 ]
 
 { #category : #tests }
 HistoryNodeTest >> testTwoGroups [
-	| h i grp1 grp2  i2 i3 | 
+	| h i grp1 grp2  i2 i3 |
 	h := HistoryNode new.
 	h addItem: (i := HistoryLeaf new).
 	self assert: h size equals: 1.

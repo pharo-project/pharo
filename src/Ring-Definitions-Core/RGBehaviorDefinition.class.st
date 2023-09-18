@@ -55,7 +55,7 @@ RGBehaviorDefinition class >> subclassesKey [
 
 { #category : #'class-annotations' }
 RGBehaviorDefinition class >> superclassNameKey [
-	
+
 	^#superclassName
 ]
 
@@ -75,12 +75,6 @@ RGBehaviorDefinition class >> traitCompositionSourceKey [
 RGBehaviorDefinition class >> usersKey [
 
 	^#users
-]
-
-{ #category : #operations }
-RGBehaviorDefinition >> addCategory: newName before: aCategory [
-
-	^ self addProtocol: newName
 ]
 
 { #category : #'managing container' }
@@ -111,7 +105,7 @@ RGBehaviorDefinition >> addMethod: aRGMethodDefinition in: aCollection [
 RGBehaviorDefinition >> addProtocol: anObject [
 	"Adds a protocol named anObject.
 	Protocols are not repeated"
-	
+
 	anObject ifNil:[ ^self ].
 	protocols add: anObject
 ]
@@ -119,7 +113,7 @@ RGBehaviorDefinition >> addProtocol: anObject [
 { #category : #'adding-removing methods' }
 RGBehaviorDefinition >> addSelector: selectorName classified: protocolName sourced: source [
 
-	self addMethod: ((RGMethodDefinition named: selectorName) 
+	self addMethod: ((RGMethodDefinition named: selectorName)
 							parent: self;
 							protocol: protocolName;
 							sourceCode: source;
@@ -143,10 +137,10 @@ RGBehaviorDefinition >> allInstVarNames [
 RGBehaviorDefinition >> allSelectors [
 	"Retrieves all the selectos of the receiver in the chain hierarchy"
 	| class selectors |
-	
+
 	class:= self.
 	selectors := Set new.
-	[class notNil] whileTrue: 
+	[class notNil] whileTrue:
 			[selectors addAll: class selectors.
 			class := class superclass ].
 	^selectors
@@ -156,12 +150,12 @@ RGBehaviorDefinition >> allSelectors [
 RGBehaviorDefinition >> allSubclasses [
 	"Retrieves all the subclasses of the receiver in the chan hiearchy - value is kept as an annotation"
 	"is a good idea storing this?"
-	
+
 	^self annotationNamed: self class allSubclassesKey
 		ifAbsentPut:[ | collection index |
 			index := 1.
 			collection := OrderedCollection withAll: self subclasses.
-			[index <= collection size] whileTrue: 
+			[index <= collection size] whileTrue:
 				[collection addAll: (collection at: index) subclasses.
 				index := index + 1].
 			collection ]
@@ -170,22 +164,22 @@ RGBehaviorDefinition >> allSubclasses [
 { #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> allSubclasses: aCollection [
 	"Stores all the subclasses (direct and indirect) as an annotation"
-	
+
 	self annotationNamed: self class allSubclassesKey
 		ifAbsentPut:[ aCollection ]
 ]
 
 { #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> allSuperclasses [
-	"Answer an OrderedCollection of the receiver's and the receiver's  
+	"Answer an OrderedCollection of the receiver's and the receiver's
 	ancestor's superclasses"
 	"Is implementation of Behavior more efficient?"
-	
+
 	^self annotationNamed: self class allSuperclassesKey
 		ifAbsentPut:[ | supers sprClass |
 			supers := OrderedCollection new.
 			sprClass := self superclass.
-			[sprClass notNil] whileTrue: 
+			[sprClass notNil] whileTrue:
 				[supers add: sprClass.
 				sprClass := sprClass superclass].
 			supers ]
@@ -194,7 +188,7 @@ RGBehaviorDefinition >> allSuperclasses [
 { #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> allSuperclasses: aCollection [
 	"Stores all the superclasses (direct and indirect) as an annotation"
-	
+
 	self annotationNamed: self class allSuperclassesKey
 		ifAbsentPut:[ aCollection ]
 ]
@@ -212,7 +206,7 @@ RGBehaviorDefinition >> allSuperclassesDo: aBlock [
 { #category : #'accessing - parallel hierarchy' }
 RGBehaviorDefinition >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
-	
+
 	^ self subclassResponsibility
 ]
 
@@ -236,7 +230,7 @@ RGBehaviorDefinition >> definition [
 RGBehaviorDefinition >> definitionSource [
 	"Retrieves the definition template of the receiver -> aString.
 	This value is kept as an annotation"
-	
+
 	^self annotationNamed: self class definitionSourceKey
 ]
 
@@ -244,7 +238,7 @@ RGBehaviorDefinition >> definitionSource [
 RGBehaviorDefinition >> definitionSource: aString [
 	"Sets the definition template of the receiver -> aString.
 	It's stored as an annotation"
-	
+
 	self annotationNamed: self class definitionSourceKey
 		put: aString
 ]
@@ -258,7 +252,7 @@ RGBehaviorDefinition >> extensionMethods [
 { #category : #annotations }
 RGBehaviorDefinition >> hasDefinitionSource [
 	"Tests whether the receiver has a source definition."
-	
+
 	^ self definitionSource notNil
 ]
 
@@ -302,14 +296,14 @@ RGBehaviorDefinition >> includesBehavior: aClass [
 { #category : #testing }
 RGBehaviorDefinition >> includesProtocol: aString [
 	    "Looks for a protocols named = aString"
-    
+
 	    ^protocols includes: aString
 ]
 
 { #category : #'accessing - methods' }
 RGBehaviorDefinition >> includesSelector: selector [
 	"Looks if selector is a key in the methods dictionary"
-	
+
 	^methods includesKey: selector asSymbol
 ]
 
@@ -318,20 +312,20 @@ RGBehaviorDefinition >> initialize [
 
 	super initialize.
 	methods:= IdentityDictionary new.
-	protocols:= Set new.
+	protocols:= Set new
 ]
 
 { #category : #'accessing - parallel hierarchy' }
 RGBehaviorDefinition >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
-	
+
 	^ self subclassResponsibility
 ]
 
 { #category : #testing }
 RGBehaviorDefinition >> isDefined [
 	"If the class exists in the environment"
-	
+
 	^self realClass notNil
 ]
 
@@ -383,12 +377,12 @@ RGBehaviorDefinition >> methods: aDictionary [
 
 { #category : #accessing }
 RGBehaviorDefinition >> package [
-	
+
 	self subclassResponsibility
 ]
 
 { #category : #printing }
-RGBehaviorDefinition >> printOn: aStream [ 
+RGBehaviorDefinition >> printOn: aStream [
 	aStream nextPutAll: self name
 ]
 
@@ -448,9 +442,9 @@ RGBehaviorDefinition >> removeSelector: selector [
 ]
 
 { #category : #subclassing }
-RGBehaviorDefinition >> removeSubclass: aRGBehaviorDefinition [ 
+RGBehaviorDefinition >> removeSubclass: aRGBehaviorDefinition [
 	"Removes aRGAbstractClassDefinition from the direct subclasses - without failing if does not exist"
-	
+
 	self subclasses remove: aRGBehaviorDefinition ifAbsent: []
 ]
 
@@ -464,12 +458,12 @@ RGBehaviorDefinition >> selectors [
 { #category : #compatibility }
 RGBehaviorDefinition >> soleInstance [
 	"to be deprecated in the future"
-	
+
 	^self instanceSide
 ]
 
 { #category : #printing }
-RGBehaviorDefinition >> storeOn: aStream [ 
+RGBehaviorDefinition >> storeOn: aStream [
 	self name storeOn: aStream
 ]
 
@@ -520,29 +514,29 @@ RGBehaviorDefinition >> superclassName [
 { #category : #annotations }
 RGBehaviorDefinition >> superclassName: aSymbol [
 
-	self annotationNamed: self class superclassNameKey 
+	self annotationNamed: self class superclassNameKey
 		put: aSymbol
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorDefinition >> theMetaClass [
 	"This method is deprecated so consider to migrate."
-	
+
 	self
 		deprecated: 'Please use #classSide instead'
 		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
-		
+
 	^ self classSide
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorDefinition >> theNonMetaClass [
 	"This method is deprecated so consider to migrate."
-	
+
 	self
 		deprecated: 'Please use #instanceSide instead'
 		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
-	
+
 	^ self instanceSide
 ]
 
@@ -568,16 +562,16 @@ RGBehaviorDefinition >> traitNames [
 	testing for the first character being an uppercase character
 	(and thus not a special character such as {, # etc.)"
 	| tokens |
-	
+
 	tokens := self traitCompositionSource parseLiterals flattened.
-	^tokens select: [:each | each first isUppercase].
+	^tokens select: [:each | each first isUppercase]
 ]
 
 { #category : #accessing }
 RGBehaviorDefinition >> traits [
 	"Retrieves ring traits based on the names in the traitComposition and from the environment if it is a ring object"
-	
-	^ self environment isRingObject 	
+
+	^ self environment isRingObject
 		ifTrue: [ self traitNames collect:[ :each| self environment traitNamed: each ] ]
 		ifFalse:[ #() ]
 ]

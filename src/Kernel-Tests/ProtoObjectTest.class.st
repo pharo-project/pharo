@@ -12,7 +12,7 @@ Class {
 
 { #category : #coverage }
 ProtoObjectTest >> classToBeTested [
-	
+
 	^ ProtoObject
 ]
 
@@ -196,16 +196,16 @@ ProtoObjectTest >> testIsNil [
 ProtoObjectTest >> testNextObject [
 	"In issue 4011 (https://github.com/pharo-project/pharo/issues/4011), "
 	"the image crashed if nextObject was called on a Character, SmallInteger or a SmallFloat64"
-	
+
 	self assert: (nil nextObject notNil).
 	self assert: ('test' nextObject notNil).
-	
+
 	self should: [42 nextObject notNil] raise: ShouldNotImplement.
 	self should: [$x nextObject notNil] raise: ShouldNotImplement.
 
-	"Small Floats are only available in 64 bits VMs"	
-	Smalltalk vm hasSmallFloats 
-		ifTrue: [self should: [3.14 nextObject notNil] raise: ShouldNotImplement].
+	"Small Floats are only available in 64 bits VMs"
+	Smalltalk vm hasSmallFloats
+		ifTrue: [self should: [3.14 nextObject notNil] raise: ShouldNotImplement]
 ]
 
 { #category : #'tests - testing' }
@@ -215,7 +215,7 @@ ProtoObjectTest >> testNotTheSame [
 	object1 := ProtoObject new.
 	object2 := ProtoObject new.
 	self assert: object1 ~~ object2.
-	self deny: object1 ~~ object1.
+	self deny: object1 ~~ object1
 ]
 
 { #category : #'tests - testing' }

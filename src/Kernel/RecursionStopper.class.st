@@ -28,8 +28,8 @@ RecursionStopper class >> default [
 { #category : #api }
 RecursionStopper class >> during: aBlock [
 	<debuggerCompleteToSender>
-	self default 
-		stopMethod: thisContext sender compiledCode method
+	self default
+		stopMethod: thisContext sender homeMethod
 		during: aBlock
 ]
 
@@ -37,16 +37,16 @@ RecursionStopper class >> during: aBlock [
 RecursionStopper >> initialize [
 
 	super initialize.
-	
-	activeMethods := OrderedCollection new.
+
+	activeMethods := OrderedCollection new
 ]
 
 { #category : #operating }
 RecursionStopper >> stopMethod: aMethod during: aBlock [
 
 	(activeMethods includes: aMethod) ifTrue: [ ^ self ].
-	
+
 	activeMethods add: aMethod.
-	
+
 	aBlock ensure: [ activeMethods remove: aMethod ]
 ]

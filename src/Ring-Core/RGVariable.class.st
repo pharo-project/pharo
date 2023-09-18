@@ -64,14 +64,14 @@ RGVariable >> isPoolVariable [
 ]
 
 { #category : #testing }
-RGVariable >> isReservedVariable [
-	"Ring2 does not model self, super, thisContext"
+RGVariable >> isPseudoVariable [
+	"Ring2 does not model self, super, thisContext, thisProcess"
 	^false
 ]
 
 { #category : #testing }
 RGVariable >> isSuperVariable [
-	
+
 	^ false
 ]
 
@@ -104,8 +104,8 @@ RGVariable >> isWritable [
 { #category : #accessing }
 RGVariable >> name: aString [
 
-	self parent announceDefinitionChangeDuring: [ 
-		super name: aString ].
+	self parent announceDefinitionChangeDuring: [
+		super name: aString ]
 ]
 
 { #category : #testing }

@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-Bitmap class >> decodeIntFrom: s [ 
+Bitmap class >> decodeIntFrom: s [
 	"Decode an integer in stream s as follows...
 		0-223	0-223
 		224-254	(0-30)*256 + next byte (0-7935)
@@ -19,19 +19,19 @@ Bitmap class >> decodeIntFrom: s [
 	int <= 223 ifTrue: [ ^ int ].
 	int <= 254 ifTrue: [ ^ (int - 224) * 256 + s next ].
 	int := s next.
-	1 
+	1
 		to: 3
 		do: [ :j | int := (int bitShift: 8) + s next ].
 	^ int
 ]
 
 { #category : #'instance creation' }
-Bitmap class >> decompressFromByteArray: byteArray [ 
+Bitmap class >> decompressFromByteArray: byteArray [
 	| s bitmap size |
 	s := byteArray readStream.
 	size := self decodeIntFrom: s.
 	bitmap := self new: size.
-	bitmap 
+	bitmap
 		decompress: bitmap
 		fromByteArray: byteArray
 		at: s position + 1.
@@ -40,7 +40,7 @@ Bitmap class >> decompressFromByteArray: byteArray [
 
 { #category : #'class initialization' }
 Bitmap class >> initialize [
-	Smalltalk specialObjectsArray 
+	Smalltalk specialObjectsArray
 		at: 5
 		put: self
 ]
@@ -60,7 +60,7 @@ Bitmap class >> newFromStream: s [
 ]
 
 { #category : #utilities }
-Bitmap class >> swapBytesIn: aNonPointerThing from: start to: stop [ 
+Bitmap class >> swapBytesIn: aNonPointerThing from: start to: stop [
 	"Perform a bigEndian/littleEndian byte reversal of my words.
 	We only intend this for non-pointer arrays.  Do nothing if I contain pointers."
 	"The implementation is a hack, but fast for large ranges"
@@ -104,14 +104,14 @@ Bitmap >> asByteArray [
 	"Faster way to make a byte array from me.
 	copyFromByteArray: makes equal Bitmap."
 	| f bytes hack |
-	f := Form 
+	f := Form
 		extent: 4 @ self size
 		depth: 8
 		bits: self.
 	bytes := ByteArray new: self size * 4.
 	hack := Form new hackBits: bytes.
 	EndianDetector isLittleEndian ifTrue: [ hack swapEndianness ].
-	hack 
+	hack
 		copyBits: f boundingBox
 		from: f
 		at: 0 @ 0
@@ -128,7 +128,7 @@ Bitmap >> asByteArray [
 Bitmap >> atAllPut: value [
 	"Fill the receiver, an indexable bytes or words object, with the given positive integer. The range of possible fill values is [0..255] for byte arrays and [0..(2^32 - 1)] for word arrays."
 	<primitive: 145>
-	super atAllPut: value.
+	super atAllPut: value
 ]
 
 { #category : #accessing }
@@ -139,7 +139,7 @@ Bitmap >> bitPatternForDepth: depth [
 ]
 
 { #category : #accessing }
-Bitmap >> byteAt: byteAddress [ 
+Bitmap >> byteAt: byteAddress [
 	"Extract a byte from a Bitmap.  Note that this is a byte address and it is one-order.  For repeated use, create an instance of BitBlt and use pixelAt:.  See Form>>#pixelAt:"
 	| lowBits |
 	lowBits := byteAddress - 1 bitAnd: 3.
@@ -147,7 +147,7 @@ Bitmap >> byteAt: byteAddress [
 ]
 
 { #category : #accessing }
-Bitmap >> byteAt: byteAddress put: byte [ 
+Bitmap >> byteAt: byteAddress put: byte [
 	"Insert a byte into a Bitmap.  Note that this is a byte address and it is one-order.  For repeated use, create an instance of BitBlt and use pixelAt:put:.  See Form>>#pixelAt:put:"
 	| longWord shift lowBits longAddr |
 	(byte < 0 or: [ byte > 255 ]) ifTrue: [ ^ self errorImproperStore ].
@@ -155,7 +155,7 @@ Bitmap >> byteAt: byteAddress put: byte [
 	longWord := self at: (longAddr := (byteAddress - 1 - lowBits) // 4 + 1).
 	shift := (3 - lowBits) * 8.
 	longWord := longWord - (longWord bitAnd: (255 bitShift: shift)) + (byte bitShift: shift).
-	self 
+	self
 		at: longAddr
 		put: longWord.
 	^ byte
@@ -185,75 +185,75 @@ Bitmap >> compress: bm toByteArray: ba [
 			255		next 4 bytes"
 	| size k word j lowByte eqBytes i |
 	<primitive: 'primitiveCompressToByteArray' module: 'MiscPrimitivePlugin'>
-	
+
 	<var: #bm declareC: 'int *bm'>
 	<var: #ba declareC: 'unsigned char *ba'>
-	
+
 	size := bm size.
-	i := self 
+	i := self
 		encodeInt: size
 		in: ba
 		at: 1.
 	k := 1.
-	[ k <= size ] whileTrue: 
+	[ k <= size ] whileTrue:
 		[ word := bm at: k.
 		lowByte := word bitAnd: 255.
-		eqBytes := (word >> 8 bitAnd: 255) = lowByte and: 
+		eqBytes := (word >> 8 bitAnd: 255) = lowByte and:
 			[ (word >> 16 bitAnd: 255) = lowByte and: [ (word >> 24 bitAnd: 255) = lowByte ] ].
 		j := k.
 		[ j < size and: [ word = (bm at: j + 1) ]	"scan for = words..." ] whileTrue: [ j := j + 1 ].
-		j > k 
-			ifTrue: 
+		j > k
+			ifTrue:
 				[ "We have two or more = words, ending at j"
-				eqBytes 
-					ifTrue: 
+				eqBytes
+					ifTrue:
 						[ "Actually words of = bytes"
-						i := self 
+						i := self
 							encodeInt: (j - k + 1) * 4 + 1
 							in: ba
 							at: i.
-						ba 
+						ba
 							at: i
 							put: lowByte.
 						i := i + 1 ]
-					ifFalse: 
-						[ i := self 
+					ifFalse:
+						[ i := self
 							encodeInt: (j - k + 1) * 4 + 2
 							in: ba
 							at: i.
-						i := self 
+						i := self
 							encodeBytesOf: word
 							in: ba
 							at: i ].
 				k := j + 1 ]
-			ifFalse: 
+			ifFalse:
 				[ "Check for word of 4 = bytes"
-				eqBytes 
-					ifTrue: 
+				eqBytes
+					ifTrue:
 						[ "Note 1 word of 4 = bytes"
-						i := self 
+						i := self
 							encodeInt: 1 * 4 + 1
 							in: ba
 							at: i.
-						ba 
+						ba
 							at: i
 							put: lowByte.
 						i := i + 1.
 						k := k + 1 ]
-					ifFalse: 
+					ifFalse:
 						[ "Finally, check for junk"
 						[ j < size and: [ (bm at: j) ~= (bm at: j + 1) ]	"scan for ~= words..." ] whileTrue: [ j := j + 1 ].
 						j = size ifTrue: [ j := j + 1 ].
 						"We have one or more unmatching words, ending at j-1"
-						i := self 
+						i := self
 							encodeInt: (j - k) * 4 + 3
 							in: ba
 							at: i.
-						k 
+						k
 							to: j - 1
-							do: 
-								[ :m | 
-								i := self 
+							do:
+								[ :m |
+								i := self
 									encodeBytesOf: (bm at: m)
 									in: ba
 									at: i ].
@@ -273,16 +273,16 @@ The worst that can happen is that the method begins with unequal words, and than
 	"NOTE: This code is copied in Form hibernate for reasons given there."
 	| byteArray lastByte |
 	byteArray := ByteArray new: self size * 4 + 7 + (self size // 1984 * 3).
-	lastByte := self 
+	lastByte := self
 		compress: self
 		toByteArray: byteArray.
-	^ byteArray 
+	^ byteArray
 		copyFrom: 1
 		to: lastByte
 ]
 
 { #category : #accessing }
-Bitmap >> copyFromByteArray: byteArray [ 
+Bitmap >> copyFromByteArray: byteArray [
 	"This method should work with either byte orderings"
 
 	| myHack byteHack |
@@ -306,7 +306,7 @@ Bitmap >> decompress: bm fromByteArray: ba at: index [
 		S and N are encoded as follows (see decodeIntFrom:)...
 			0-223	0-223
 			224-254	(0-30)*256 + next byte (0-7935)
-			255		next 4 bytes"	
+			255		next 4 bytes"
 	"NOTE:  If fed with garbage, this routine could read past the end of ba, but it should fail before writing past the ned of bm."
 	| i code n anInt data end k pastEnd |
 	<primitive: 'primitiveDecompressFromByteArray' module: 'MiscPrimitivePlugin'>
@@ -356,24 +356,21 @@ Bitmap >> defaultElement [
 Bitmap >> encodeBytesOf: anInt in: ba at: i [
 	"Copy the integer anInt into byteArray ba at index i, and return the next index"
 
-	<inline: true>
-	<var: #ba declareC: 'unsigned char *ba'>
-	
-	0 to: 3 do:
-		[:j | ba at: i+j put: (anInt >> (3-j*8) bitAnd: 16rFF)].
-	^ i+4
+	0 to: 3 do: [ :j |
+	ba at: i + j put: (anInt >> (3 - j * 8) bitAnd: 16rFF) ].
+	^ i + 4
 ]
 
 { #category : #filing }
-Bitmap >> encodeInt: int [ 
+Bitmap >> encodeInt: int [
 	"Encode the integer int as per encodeInt:in:at:, and return it as a ByteArray"
 	| byteArray next |
 	byteArray := ByteArray new: 5.
-	next := self 
+	next := self
 		encodeInt: int
 		in: byteArray
 		at: 1.
-	^ byteArray 
+	^ byteArray
 		copyFrom: 1
 		to: next - 1
 ]
@@ -384,33 +381,35 @@ Bitmap >> encodeInt: anInt in: ba at: i [
 	The encoding is as follows...
 		0-223	0-223
 		224-254	(0-30)*256 + next byte (0-7935)
-		255		next 4 bytes"		
+		255		next 4 bytes"
 
-	<inline: true>
-	<var: #ba declareC: 'unsigned char *ba'>
-	
-	anInt <= 223 ifTrue: [ba at: i put: anInt. ^ i+1].
-	anInt <= 7935 ifTrue: [ba at: i put: anInt//256+224. ba at: i+1 put: anInt\\256.  ^ i+2].
+	anInt <= 223 ifTrue: [
+		ba at: i put: anInt.
+		^ i + 1 ].
+	anInt <= 7935 ifTrue: [
+		ba at: i put: anInt // 256 + 224.
+		ba at: i + 1 put: anInt \\ 256.
+		^ i + 2 ].
 	ba at: i put: 255.
-	^ self encodeBytesOf: anInt in: ba at: i+1
+	^ self encodeBytesOf: anInt in: ba at: i + 1
 ]
 
 { #category : #initialize }
-Bitmap >> fromByteStream: aStream [ 
-	"Initialize the array of bits by reading integers from the argument, 
+Bitmap >> fromByteStream: aStream [
+	"Initialize the array of bits by reading integers from the argument,
 	aStream."
 	aStream nextWordsInto: self
 ]
 
 { #category : #accessing }
-Bitmap >> integerAt: index [ 
+Bitmap >> integerAt: index [
 	"Return the integer at the given index"
 	| word |
 	<primitive: 165>
 	word := self basicAt: index.
 	word < 1073741823 ifTrue: [ ^ word ].	"Avoid LargeInteger computations"
-	^ word >= 2147483648 
-		ifTrue: 
+	^ word >= 2147483648
+		ifTrue:
 			[ "Negative?!"
 			"word - 16r100000000"
 			(word bitInvert32 + 1) negated ]
@@ -418,16 +417,16 @@ Bitmap >> integerAt: index [
 ]
 
 { #category : #accessing }
-Bitmap >> integerAt: index put: anInteger [ 
+Bitmap >> integerAt: index put: anInteger [
 	"Store the integer at the given index"
 	| word |
 	<primitive: 166>
-	anInteger < 0 
-		ifTrue: 
+	anInteger < 0
+		ifTrue:
 			[ "word := 16r100000000 + anInteger"
 			word := (anInteger + 1) negated bitInvert32 ]
 		ifFalse: [ word := anInteger ].
-	self 
+	self
 		basicAt: index
 		put: word.
 	^ anInteger
@@ -452,7 +451,7 @@ Bitmap >> primFill: aPositiveInteger [
 	"Fill the receiver, an indexable bytes or words object, with the given positive integer. The range of possible fill values is [0..255] for byte arrays and [0..(2^32 - 1)] for word arrays."
 
 	<primitive: 145>
-	self errorImproperStore.
+	self errorImproperStore
 ]
 
 { #category : #printing }
@@ -462,7 +461,7 @@ Bitmap >> printOn: aStream [
 ]
 
 { #category : #filing }
-Bitmap >> readCompressedFrom: strm [ 
+Bitmap >> readCompressedFrom: strm [
 	"Decompress an old-style run-coded stream into this bitmap:
 		[0 means end of runs]
 		[n = 1..127] [(n+3) copies of next byte]
@@ -470,25 +469,25 @@ Bitmap >> readCompressedFrom: strm [
 		[n = 192..255] [(n-190) copies of next 4 bytes]"
 	| n byte out outBuff bytes |
 	out := (outBuff := ByteArray new: self size * 4) writeStream.
-	[ (n := strm next) > 0 ] whileTrue: 
-		[ (n 
+	[ (n := strm next) > 0 ] whileTrue:
+		[ (n
 			between: 1
-			and: 127) ifTrue: 
+			and: 127) ifTrue:
 			[ byte := strm next.
-			1 
+			1
 				to: n + 3
 				do: [ :i | out nextPut: byte ] ].
-		(n 
+		(n
 			between: 128
-			and: 191) ifTrue: 
-			[ 1 
+			and: 191) ifTrue:
+			[ 1
 				to: n - 127
 				do: [ :i | out nextPut: strm next ] ].
-		(n 
+		(n
 			between: 192
-			and: 255) ifTrue: 
+			and: 255) ifTrue:
 			[ bytes := (1 to: 4) collect: [ :i | strm next ].
-			1 
+			1
 				to: n - 190
 				do: [ :i | bytes do: [ :b | out nextPut: b ] ] ] ].
 	out position = outBuff size ifFalse: [ self error: 'Decompression size error' ].
@@ -497,7 +496,7 @@ Bitmap >> readCompressedFrom: strm [
 ]
 
 { #category : #accessing }
-Bitmap >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
+Bitmap >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
@@ -509,28 +508,28 @@ Bitmap >> restoreEndianness [
 ]
 
 { #category : #filing }
-Bitmap >> storeBits: startBit to: stopBit on: aStream [ 
-	"Store my bits as a hex string, breaking the lines every 100 bytes or 
-	so to comply with the maximum line length limits of Postscript (255 
+Bitmap >> storeBits: startBit to: stopBit on: aStream [
+	"Store my bits as a hex string, breaking the lines every 100 bytes or
+	so to comply with the maximum line length limits of Postscript (255
 	bytes). "
 	| lineWidth |
 	lineWidth := 0.
 	self
-		do: [:word | 
+		do: [:word |
 			startBit
 				to: stopBit
 				by: -4
-				do: [:shift | 
+				do: [:shift |
 					aStream nextPut: (word >> shift bitAnd: 15) asHexDigit.
 					lineWidth := lineWidth + 1].
 			(lineWidth > 100)
 				ifTrue: [aStream cr.
 					lineWidth := 0]].
-	lineWidth > 0 ifTrue: [ aStream cr ].
+	lineWidth > 0 ifTrue: [ aStream cr ]
 ]
 
 { #category : #filing }
-Bitmap >> writeOn: aStream [ 
+Bitmap >> writeOn: aStream [
 	"Store the array of bits onto the argument, aStream. A leading byte of 16r80 identifies this as compressed by compressToByteArray (qv)."
 	| b |
 	aStream nextPut: 128.
@@ -541,7 +540,7 @@ Bitmap >> writeOn: aStream [
 ]
 
 { #category : #filing }
-Bitmap >> writeUncompressedOn: aStream [ 
+Bitmap >> writeUncompressedOn: aStream [
 	"Store the array of bits onto the argument, aStream.
 	(leading byte ~= 16r80) identifies this as raw bits (uncompressed)."
 

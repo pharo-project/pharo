@@ -1,7 +1,7 @@
 Extension { #name : #Boolean }
 
 { #category : #'*STON-Core' }
-Boolean >> stonContainSubObjects [ 
+Boolean >> stonContainSubObjects [
 	^ false
 ]
 

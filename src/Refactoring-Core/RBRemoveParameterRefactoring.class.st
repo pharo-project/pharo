@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRemoveParameterRefactoring class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [ 
+RBRemoveParameterRefactoring class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
 		removeParameter: aString
@@ -28,9 +28,9 @@ RBRemoveParameterRefactoring class >> model: aRBSmalltalk removeParameter: aStri
 
 { #category : #'instance creation' }
 RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass selector: aSelector [
-	^ self new 
-		removeParameter: aString 
-		in: aClass 
+	^ self new
+		removeParameter: aString
+		in: aClass
 		selector: aSelector
 ]
 
@@ -38,27 +38,27 @@ RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass select
 RBRemoveParameterRefactoring >> applyValidations [
 
 	| tree |
-	(class directlyDefinesMethod: oldSelector) ifFalse: [ 
-		self refactoringFailure: 'Method doesn''t exist' ].
-	tree := class parseTreeFor: oldSelector.
-	tree ifNil: [ self refactoringFailure: 'Cannot parse sources' ].
-	argument ifNil: [ 
-		self refactoringFailure: 'This method does not have an argument' ].
+	(class directlyDefinesMethod: oldSelector) ifFalse: [
+		self refactoringError: 'Method doesn''t exist' ].
+	tree := class parseTreeForSelector: oldSelector.
+	tree ifNil: [ self refactoringError: 'Cannot parse sources' ].
+	argument ifNil: [
+		self refactoringError: 'This method does not have an argument' ].
 	parameterIndex := tree argumentNames
 		                  indexOf: argument
-		                  ifAbsent: [ 
-		                  self refactoringFailure: 'Select a parameter!!' ].
-	oldSelector numArgs == 0 ifTrue: [ 
-		self refactoringFailure: 'This method contains no arguments' ].
-	oldSelector isInfix ifTrue: [ 
-		self refactoringFailure:
+		                  ifAbsent: [
+		                  self refactoringError: 'Select a parameter!!' ].
+	oldSelector numArgs == 0 ifTrue: [
+		self refactoringError: 'This method contains no arguments' ].
+	oldSelector isInfix ifTrue: [
+		self refactoringError:
 			'Cannot remove parameters of infix selectors' ]
 ]
 
 { #category : #private }
 RBRemoveParameterRefactoring >> computeNewSelector [
 	| keywords |
-	
+
 	keywords := oldSelector keywords asOrderedCollection.
 	keywords size = 1
 		ifTrue: [ ^ (keywords first copyWithout: $:) asSymbol ].
@@ -78,8 +78,8 @@ RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
 
 	| tree |
 
-	tree := each parseTreeFor: oldSelector.
-	tree ifNil: [ self refactoringFailure: 'Cannot parse sources.' ].
+	tree := each parseTreeForSelector: oldSelector.
+	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
 ]
 
@@ -89,9 +89,9 @@ RBRemoveParameterRefactoring >> myConditions [
 	imps := self model allImplementorsOf: oldSelector.
 	self getNewSelector.
 	^imps inject: (RBCondition definesSelector: oldSelector in: class)
-		into: 
-			[:cond :each | 
-			cond 
+		into:
+			[:cond :each |
+			cond
 				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
 						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
@@ -102,21 +102,22 @@ RBRemoveParameterRefactoring >> newSelector: aSelector [
 ]
 
 { #category : #initialization }
-RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aSelector [ 
+RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.
 	argument := aString
 ]
 
 { #category : #printing }
-RBRemoveParameterRefactoring >> storeOn: aStream [ 
+RBRemoveParameterRefactoring >> storeOn: aStream [
+
 	aStream nextPut: $(.
-	self class storeOn: aStream.
+	aStream nextPutAll: self class name.
 	aStream
 		nextPutAll: ' removeParameter: ''';
 		nextPutAll: argument;
 		nextPutAll: ''' in: '.
-	class storeOn: aStream.
+	aStream nextPutAll: class name.
 	aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector.

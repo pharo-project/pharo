@@ -7,8 +7,8 @@ Class {
 { #category : #resources }
 EpApplyPreviewerTest >> assertEmptyPreviewLog [
 
-	self 
-		assert: self outputEvents isEmpty 
+	self
+		assert: self outputEvents isEmpty
 		description: 'Shouldn''t find anything to apply'
 ]
 
@@ -19,8 +19,8 @@ EpApplyPreviewerTest >> assertOutputsAnEventWith: aBlock [
 	outputEvents := self outputEvents.
 
 	self assert: outputEvents size equals: 1.
-	
-	aBlock value: outputEvents anyOne.
+
+	aBlock value: outputEvents anyOne
 ]
 
 { #category : #resources }
@@ -28,15 +28,15 @@ EpApplyPreviewerTest >> assertOutputsEventsWith: aBlock [
 
 	| logBrowserModel outputLog |
 	logBrowserModel := EpLogBrowserPresenter newWithLog: monitor log.
-	
+
 	outputLog :=
 		EpLogBrowserOperationFactory new
 			logBrowserModel: logBrowserModel;
 			entries: inputEntries;
 			errorHandlerBlock: [:error | error signal ];
 			newApplyPreviewLog.
-	
-	aBlock value: (outputLog entries collect: [:each | each content]).
+
+	aBlock value: (outputLog entries collect: [:each | each content])
 ]
 
 { #category : #resources }
@@ -44,14 +44,14 @@ EpApplyPreviewerTest >> outputEvents [
 
 	| outputLog logBrowserModel |
 	logBrowserModel := EpLogBrowserPresenter newWithLog: monitor log.
-	
+
 	outputLog :=
 		EpLogBrowserOperationFactory new
 			logBrowserModel: logBrowserModel;
 			entries: inputEntries;
 			errorHandlerBlock: [:error | error signal ];
 			newApplyPreviewLog.
-	
+
 	^ outputLog entries collect: [:each | each content]
 ]
 
@@ -66,7 +66,7 @@ EpApplyPreviewerTest >> testBehaviorCategoryChange [
 	self setHeadAsInputEntry.
 
 	aClass category: aCategory.
-	
+
 	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpBehaviorCategoryChange.
 		self assert: output oldCategory equals: aCategory.
@@ -79,9 +79,9 @@ EpApplyPreviewerTest >> testBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
-	aClass classComment: 'after'.
+	aClass comment: 'after'.
 
 	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpBehaviorCommentChange.
@@ -110,53 +110,6 @@ EpApplyPreviewerTest >> testBehaviorNameChange [
 ]
 
 { #category : #tests }
-EpApplyPreviewerTest >> testCategoryAdditionWithCategoryRemoved [
-
-	self class environment organization addCategory: classFactory defaultCategory.
-	self setHeadAsInputEntry.
-	self class environment organization removeCategory: classFactory defaultCategory.
-
-	self assertOutputsAnEventWith: [:output |
-		self assert: output class equals: EpCategoryAddition.
-		self assert: output categoryName equals: classFactory defaultCategory.
-		]
-]
-
-{ #category : #tests }
-EpApplyPreviewerTest >> testCategoryRemovalWithCategoryAdded [
-
-	self class environment organization addCategory: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
-	self setHeadAsInputEntry.
-
-	self class environment organization addCategory: classFactory defaultCategory.
-
-	self assertOutputsAnEventWith: [:output |
-		self assert: output class equals: EpCategoryRemoval.
-		self assert: output categoryName equals: classFactory defaultCategory.
-		]
-]
-
-{ #category : #tests }
-EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
-
-	| organization aCategory anotherCategory |
-	organization := self class environment organization.
-	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
-	organization renameCategory: aCategory toBe: anotherCategory.
-	self setHeadAsInputEntry.
-	organization renameCategory: anotherCategory toBe: aCategory. "Rollback"
-
-	self assertOutputsAnEventWith: [:output |
-		self assert: output class equals: EpCategoryRename.
-		self assert: output oldCategoryName equals: aCategory.
-		self assert: output newCategoryName equals: anotherCategory.
-		]
-]
-
-{ #category : #tests }
 EpApplyPreviewerTest >> testClassAdditionWithClassRemoved [
 
 	| aClass classDefinition |
@@ -166,7 +119,7 @@ EpApplyPreviewerTest >> testClassAdditionWithClassRemoved [
 
 	aClass removeFromSystem.
 
-	self assertOutputsAnEventWith: [ :output | 
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpClassAddition.
 		self
 			assert: output behaviorAffected definitionSource
@@ -182,7 +135,7 @@ EpApplyPreviewerTest >> testClassAdditionWithInstanceVariablesChanged [
 	self setHeadAsInputEntry.
 	aClass addInstVarNamed: #x.
 
-	self assertOutputsAnEventWith: [ :output | 
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpClassModification.
 		self
 			assert: output oldClass definitionSource
@@ -201,7 +154,7 @@ EpApplyPreviewerTest >> testClassAdditionWithSuperclassChanged [
 	self setHeadAsInputEntry.
 	aClass superclass: Array.
 
-	self assertOutputsAnEventWith: [ :output | 
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpClassModification.
 		self
 			assert: output oldClass definitionSource
@@ -226,7 +179,7 @@ EpApplyPreviewerTest >> testClassRemovalWithClassAdded [
 	aClass := classFactory newClass.
 	aClass rename: className.
 
-	self assertOutputsAnEventWith: [ :output | 
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpClassRemoval.
 		self
 			assert: output behaviorAffected definitionSource
@@ -242,7 +195,7 @@ EpApplyPreviewerTest >> testKeepChangeWhenMethodAdditionWithAbsentBehavior [
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpMethodAddition ]
 ]
 
@@ -256,7 +209,7 @@ EpApplyPreviewerTest >> testKeepChangeWhenMethodModificationWithAbsentBehavior [
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpMethodModification ]
 ]
 
@@ -269,7 +222,7 @@ EpApplyPreviewerTest >> testMethodAdditionWithMethodRemoved [
 	self setHeadAsInputEntry.
 	aClass removeSelector: #fortyTwo.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpMethodAddition.
 		self assert: output methodAffectedSourceCode equals: 'fortyTwo ^42'.
 		self assert: output methodAffectedProtocol equals: 'number'.
@@ -285,7 +238,7 @@ EpApplyPreviewerTest >> testMethodAdditionWithProtocolChanged [
 	self setHeadAsInputEntry.
 	(aClass>>#fortyTwo) protocol: 'none'.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpMethodModification.
 		self assert: output oldSourceCode equals: 'fortyTwo ^42'.
 		self assert: output oldProtocol equals: 'none'.
@@ -303,7 +256,7 @@ EpApplyPreviewerTest >> testMethodAdditionWithSourceCodeChanged [
 	self setHeadAsInputEntry.
 	aClass compile: 'fortyTwo ^nil'.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpMethodModification.
 		self assert: output oldSourceCode equals: 'fortyTwo ^nil'.
 		self assert: output oldProtocol equals: 'number'.
@@ -322,7 +275,7 @@ EpApplyPreviewerTest >> testMethodModificationWithMethodRemoved [
 	self setHeadAsInputEntry.
 	aClass removeSelector: #fortyTwo.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpMethodAddition.
 		self assert: output methodAffectedSourceCode equals: 'fortyTwo ^nil'.
 		self assert: output methodAffectedProtocol equals: 'number'.
@@ -339,7 +292,7 @@ EpApplyPreviewerTest >> testMethodRemovalWithMethodAdded [
 	self setHeadAsInputEntry.
 	aClass compile: 'fortyTwo ^42' classified: 'number'.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [:output |
 		self assert: output class equals: EpMethodRemoval.
 		self assert: output methodAffectedSourceCode equals: 'fortyTwo ^42'.
 		self assert: output methodAffectedProtocol equals: 'number'.
@@ -350,14 +303,58 @@ EpApplyPreviewerTest >> testMethodRemovalWithMethodAdded [
 EpApplyPreviewerTest >> testNonCodeChangeEvent [
 
 	monitor logEntryCommented:
-		(EpLogEntriesComment 
+		(EpLogEntriesComment
 			entryReferences: #()
 			oldComment: ''
 			newComment: '42').
 
 	self setHeadAsInputEntry.
 
-	self assertEmptyPreviewLog.
+	self assertEmptyPreviewLog
+]
+
+{ #category : #tests }
+EpApplyPreviewerTest >> testPackageTagAdditionWithPackageTagRemoval [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self setHeadAsInputEntry.
+	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
+
+	self assertOutputsAnEventWith: [ :output |
+		self assert: output class equals: EpPackageTagAddition.
+		self assert: output packageName equals: classFactory packageName.
+		self assert: output tagName equals: classFactory defaultTagPostfix ]
+]
+
+{ #category : #tests }
+EpApplyPreviewerTest >> testPackageTagRemovalWithPackageTagAddition [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
+	self setHeadAsInputEntry.
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+
+	self assertOutputsAnEventWith: [ :output |
+		self assert: output class equals: EpPackageTagRemoval.
+		self assert: output packageName equals: classFactory packageName.
+		self assert: output tagName equals: classFactory defaultTagPostfix ]
+]
+
+{ #category : #tests }
+EpApplyPreviewerTest >> testPackageTagRenameWithPreviousRollback [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+
+	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
+	self setHeadAsInputEntry.
+	self packageOrganizer renameTag: classFactory defaultTagPostfix , '2' to: classFactory defaultTagPostfix inPackage: classFactory packageName. "Rollback"
+
+	self assertOutputsAnEventWith: [ :output |
+		self assert: output class equals: EpPackageTagRename.
+		self assert: output packageName equals: classFactory packageName.
+		self assert: output oldTagName equals: classFactory defaultTagPostfix.
+		self assert: output newTagName equals: classFactory defaultTagPostfix , '2' ]
 ]
 
 { #category : #tests }
@@ -365,14 +362,13 @@ EpApplyPreviewerTest >> testProtocolAdditionWithProtocolRemoved [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 	aClass removeProtocol: 'protocol'.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpProtocolAddition.
-		self assert: output protocol equals: 'protocol'.
-		]
+		self assert: output protocol equals: 'protocol' ]
 ]
 
 { #category : #tests }
@@ -380,15 +376,14 @@ EpApplyPreviewerTest >> testProtocolRemovalWithProtocolAdded [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 
-	self assertOutputsAnEventWith: [:output |
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpProtocolRemoval.
-		self assert: output protocol equals: 'protocol'.
-		]
+		self assert: output protocol equals: 'protocol' ]
 ]
 
 { #category : #tests }
@@ -401,8 +396,8 @@ EpApplyPreviewerTest >> testRedundantBehaviorCategoryChange [
 	aClass category: anotherCategory.
 	aClass category: aCategory. "Rollback"
 	self setHeadAsInputEntry.
-	
-	self assertEmptyPreviewLog.
+
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
@@ -417,7 +412,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCategoryChangeWithAbsentBehavior [
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
 
-	self assertEmptyPreviewLog.
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
@@ -425,12 +420,12 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
-	aClass classComment: 'after'.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
+	aClass comment: 'after'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
 
-	self assertEmptyPreviewLog.
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
@@ -438,42 +433,9 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
+	aClass comment: 'before'.
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
-
-	self assertEmptyPreviewLog.
-]
-
-{ #category : #tests }
-EpApplyPreviewerTest >> testRedundantCategoryAddition [
-
-	self class environment organization addCategory: classFactory defaultCategory.
-	self setHeadAsInputEntry.
-
-	self assertEmptyPreviewLog.
-]
-
-{ #category : #tests }
-EpApplyPreviewerTest >> testRedundantCategoryRemoval [
-
-	self class environment organization addCategory: classFactory defaultCategory.
-	self class environment organization removeCategory: classFactory defaultCategory.
-	self setHeadAsInputEntry.
-
-	self assertEmptyPreviewLog.
-]
-
-{ #category : #tests }
-EpApplyPreviewerTest >> testRedundantCategoryRenameWithAbsentCategory [
-
-	| organization aCategory anotherCategory |
-	organization := self class environment organization.
-	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
-	organization renameCategory: aCategory toBe: anotherCategory.
-	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
 ]
@@ -493,8 +455,8 @@ EpApplyPreviewerTest >> testRedundantClassRemoval [
 	aClass := classFactory newClass.
 	aClass removeFromSystem.
 	self setHeadAsInputEntry.
-	
-	self assertEmptyPreviewLog.
+
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
@@ -505,7 +467,7 @@ EpApplyPreviewerTest >> testRedundantMethodAddition [
 	aClass compile: 'fortyTwo ^42' classified: 'number'.
 	self setHeadAsInputEntry.
 
-	self assertEmptyPreviewLog.
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
@@ -517,7 +479,7 @@ EpApplyPreviewerTest >> testRedundantMethodModification [
 	aClass compile: 'fortyTwo ^nil' classified: 'number'.
 	self setHeadAsInputEntry.
 
-	self assertEmptyPreviewLog.
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
@@ -529,7 +491,7 @@ EpApplyPreviewerTest >> testRedundantMethodRemoval [
 	aClass removeSelector: #fortyTwo.
 	self setHeadAsInputEntry.
 
-	self assertEmptyPreviewLog.
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
@@ -542,7 +504,36 @@ EpApplyPreviewerTest >> testRedundantMethodRemovalWithAbsentBehavior [
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
 
-	self assertEmptyPreviewLog.
+	self assertEmptyPreviewLog
+]
+
+{ #category : #tests }
+EpApplyPreviewerTest >> testRedundantPAckageTagRenameWithAbsentTag [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
+	self setHeadAsInputEntry.
+
+	self assertEmptyPreviewLog
+]
+
+{ #category : #tests }
+EpApplyPreviewerTest >> testRedundantPackageTagAddition [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self setHeadAsInputEntry.
+
+	self assertEmptyPreviewLog
+]
+
+{ #category : #tests }
+EpApplyPreviewerTest >> testRedundantPackageTagRemoval [
+
+	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
+	self setHeadAsInputEntry.
+
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
@@ -550,10 +541,10 @@ EpApplyPreviewerTest >> testRedundantProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
-	self assertEmptyPreviewLog.
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
@@ -561,11 +552,11 @@ EpApplyPreviewerTest >> testRedundantProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addCategory: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
-	self assertEmptyPreviewLog.
+	self assertEmptyPreviewLog
 ]
 
 { #category : #'tests - multiple changes' }
@@ -592,10 +583,10 @@ EpApplyPreviewerTest >> testSequenceOfClassAndMethodAddition [
 	aClass removeSelector: #fortyTwo.
 	aClass removeFromSystem.
 
-	self assertOutputsEventsWith: [:output | 
+	self assertOutputsEventsWith: [:output |
 		| outputClasses |
 		outputClasses := output collect: #class as: Array.
-		self assert: outputClasses equals: { EpClassAddition. EpMethodAddition }.
+		self assert: outputClasses equals: { EpPackageTagAddition . EpClassAddition . EpMethodAddition }.
 		]
 ]
 
@@ -612,10 +603,10 @@ EpApplyPreviewerTest >> testSequenceOfMethodModifications [
 	aClass removeSelector: #fortyTwo.
 	aClass removeFromSystem.
 
-	self assertOutputsEventsWith: [:output | 
+	self assertOutputsEventsWith: [:output |
 		| outputClasses |
 		outputClasses := output collect: #class as: Array.
-		self assert: outputClasses equals: { EpClassAddition. EpMethodModification }.
+		self assert: outputClasses equals: { EpPackageTagAddition . EpClassAddition . EpMethodModification }.
 		self assert: output last methodAffectedSourceCode equals: 'fortyTwo ^44'.
 		]
 ]
@@ -630,7 +621,7 @@ EpApplyPreviewerTest >> testTraitAdditionWithTraitRemoved [
 
 	aTrait removeFromSystem.
 
-	self assertOutputsAnEventWith: [ :output | 
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpTraitAddition.
 		self
 			assert: output behaviorAffected definitionSource
@@ -650,7 +641,7 @@ EpApplyPreviewerTest >> testTraitRemovalWithTraitAdded [
 	aTrait := classFactory newTrait.
 	aTrait rename: traitName.
 
-	self assertOutputsAnEventWith: [ :output | 
+	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpTraitRemoval.
 		self
 			assert: output behaviorAffected definitionSource

@@ -8,7 +8,7 @@ Class {
 ZnBivalentWriteStreamTest >> testByteWriting [
 	| string |
 	string := String
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			| writeStream |
 			writeStream := ZnBivalentWriteStream on: stream.
 			writeStream
@@ -21,7 +21,7 @@ ZnBivalentWriteStreamTest >> testByteWriting [
 ZnBivalentWriteStreamTest >> testCharacterWriting [
 	| bytes |
 	bytes := ByteArray
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			| writeStream |
 			writeStream := ZnBivalentWriteStream on: stream.
 			writeStream

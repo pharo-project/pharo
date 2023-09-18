@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 EpTriggeringIntegrationTest >> changesBrowserOpenedWindows [
 
-	^ ChangesBrowser allSubInstances reject: [ :each | each window isClosed ]
+	^ StChangesBrowserPresenter allSubInstances reject: [ :each | each window isClosed ]
 ]
 
 { #category : #accessing }
@@ -24,11 +24,11 @@ EpTriggeringIntegrationTest >> resources [
 
 { #category : #tests }
 EpTriggeringIntegrationTest >> testMCVersionLoad [
-	
+
 	| gofer anEntry |
 	gofer := Gofer new.
 	gofer disablePackageCache.
-	gofer 
+	gofer
 		repository: self monticelloRepository;
 		package: 'GoferFoo'.
 	gofer load.
@@ -39,14 +39,14 @@ EpTriggeringIntegrationTest >> testMCVersionLoad [
 
 	anEntry := (self allLogEntriesWith: EpClassAddition) anyOne.
 
-	self 
-		assert: (anEntry tags includesKey: EpLog triggererReferenceKey) 
+	self
+		assert: (anEntry tags includesKey: EpLog triggererReferenceKey)
 		description: 'It did not recognize that the code change was triggered by other event.'
 ]
 
 { #category : #tests }
 EpTriggeringIntegrationTest >> testNoTrigger [
-	
+
 	classFactory newClass.
 	[ classFactory newClass ] asJob run.
 

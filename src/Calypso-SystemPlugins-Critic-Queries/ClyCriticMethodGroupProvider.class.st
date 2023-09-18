@@ -9,8 +9,8 @@ Class {
 
 { #category : #'building groups' }
 ClyCriticMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	
-	^ClyAllCritiquesMethodGroup 
+
+	^ClyAllCritiquesMethodGroup
 		withMethods: aMethodQuery actualQuery from: aClassScope
 ]
 

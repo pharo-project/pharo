@@ -44,7 +44,7 @@ DAAbstractItemDiff >> beUnderteminate [
 
 { #category : #testing }
 DAAbstractItemDiff >> canBeDisplay [
-	^ (self isNew or: [ self isRemoved ]) or: [ self hasChanged ].
+	^ (self isNew or: [ self isRemoved ]) or: [ self hasChanged ]
 ]
 
 { #category : #accessing }
@@ -69,7 +69,7 @@ DAAbstractItemDiff >> diff: anObject [
 
 { #category : #testing }
 DAAbstractItemDiff >> hasChanged [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -91,10 +91,10 @@ DAAbstractItemDiff >> isRemoved [
 
 { #category : #testing }
 DAAbstractItemDiff >> isUnderteminate [
-	 ^ underteminate 
+	 ^ underteminate
 ]
 
 { #category : #printing }
 DAAbstractItemDiff >> printOn: aStream [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

@@ -59,7 +59,7 @@ RectangleTest >> testAreasOutside1 [
       0 to: 2 do: [:j |
             rects add: (i@j * 20 extent: 10@10)
     ]  ].
-  
+
    visibleArea := Array with: frame.
    rects do: [:aRectangle |  | remnants |
       remnants := OrderedCollection new.
@@ -86,7 +86,7 @@ RectangleTest >> testAreasOutside2 [
     rects := OrderedCollection new: 80.
     rects add: (50@50 corner: 200 @ 200);
           add: (100@100 corner: 250@250).
-  
+
    visibleArea := Array with: frame.
    rects do: [:rect |  | remnants |
       remnants := OrderedCollection new.
@@ -104,7 +104,7 @@ RectangleTest >> testAreasOutside2 [
   1 to: rects size do: [:idx |
      1 to: visibleArea size do: [:idx2 |
         self deny: ((rects at: idx) intersects: (visibleArea at: idx2)).
-  ]  ].
+  ]  ]
 ]
 
 { #category : #'tests - accessing' }
@@ -184,7 +184,7 @@ RectangleTest >> testCloseTo [
 	self assert: (bOrigin y closeTo: 0.00001).
 	self assert: (bCorner x closeTo: 2.00001).
 	self assert: (bCorner y closeTo: 2.00001).
-	
+
 	self assert: ((aOrigin extent: aCorner) closeTo: (bOrigin extent: bCorner))
 ]
 
@@ -207,8 +207,24 @@ RectangleTest >> testCloseToWithPrecision [
 	self assert: (bOrigin y closeTo: 0.1 precision: 0.1).
 	self assert: (bCorner x closeTo: 2.1 precision: 0.1).
 	self assert: (bCorner y closeTo: 2.1 precision: 0.1).
-	
+
 	self assert: ((aOrigin extent: aCorner) closeTo: (bOrigin extent: bCorner) precision: 0.1)
+]
+
+{ #category : #'tests - comparing' }
+RectangleTest >> testEquals [
+
+	self deny: nil equals: (10 @ 10 corner: 20 @ 20).
+	self deny: Object new equals: (10 @ 10 corner: 20 @ 20).
+	self 
+		deny: (10 @ 8 corner: 20 @ 20) 
+		equals: (10 @ 10 corner: 20 @ 20).
+	self
+		deny: (10 @ 10 corner: 20 @ 8)
+		equals: (10 @ 10 corner: 20 @ 20).
+	self
+		assert: (10 @ 10 corner: 20 @ 20)
+		equals: (10 @ 10 corner: 20 @ 20)
 ]
 
 { #category : #tests }
@@ -232,14 +248,14 @@ RectangleTest >> testFlip [
 RectangleTest >> testFlipByCenterAt [
 
 	| rectangle |
-	
+
 	rectangle := 10 @ 10 corner: 20 @ 20.
 	self assert: (10 @ 0 corner: 20 @ 10) equals: (rectangle flipBy: #vertical centerAt: 10 @ 10).
 	self assert: (0 @ 10 corner: 10 @ 20) equals: (rectangle flipBy: #horizontal centerAt: 10 @ 10)
 ]
 
 { #category : #tests }
-RectangleTest >> testFloatCenter [ 
+RectangleTest >> testFloatCenter [
 	| r1 c |
 	r1 := 0@0 extent: 11@21.
 	c := r1 floatCenter.
@@ -253,15 +269,15 @@ RectangleTest >> testFloatCenter [
 { #category : #tests }
 RectangleTest >> testFloatCenterExtent [
 	| r1 c |
-	r1 := Rectangle 
+	r1 := Rectangle
 		floatCenter: 1.3@1.3
 		extent: 4.4 asPoint.
 	c := r1 floatCenter.
 	self
 		assert: (c closeTo: 1.3@1.3);
-		assert: (r1 topLeft distanceTo: c) 
+		assert: (r1 topLeft distanceTo: c)
 			equals: (r1 bottomRight distanceTo: c);
-		assert: (r1 bottomLeft distanceTo: c) 
+		assert: (r1 bottomLeft distanceTo: c)
 			equals: (r1 topRight distanceTo: c);
 		assert: (r1 topLeft distanceTo: c)
 			equals: (r1 bottomLeft distanceTo: c);
@@ -516,7 +532,7 @@ RectangleTest >> testPointNearestTo [
 	self assert: 20 @ 15 equals: (rectangle pointNearestTo: 17 @ 15).
 	self assert: 15 @ 20 equals: (rectangle pointNearestTo: 15 @ 18).
 	negativeRectangle := -10 @ -10 corner: -20 @ -20.
-	self assert: -10 @ -10 equals: (negativeRectangle pointNearestTo: 0@0).
+	self assert: -10 @ -10 equals: (negativeRectangle pointNearestTo: 0@0)
 ]
 
 { #category : #tests }
@@ -525,10 +541,10 @@ RectangleTest >> testPointPointConstructorIsSymmetrical [
 
 	pt1:= 0@0.
 	pt2 := 10@10.
-    
+
 	rect1 := Rectangle point: pt1 point: pt2.
 	rect2 := Rectangle point: pt2 point: pt1.
-	
+
 	self assert: rect1 equals: rect2
 ]
 
@@ -545,7 +561,7 @@ RectangleTest >> testRectanglesWithSameOriginIntersect [
     | rect1 rect2 |
    rect1 := 10@10 corner: 20@30.
    rect2 := rect1 corner extent: 20@40.
-   self deny: (rect1 intersects: rect2).
+   self deny: (rect1 intersects: rect2)
 ]
 
 { #category : #'tests - accessing' }
@@ -603,16 +619,16 @@ RectangleTest >> testScaleBy [
 
 { #category : #tests }
 RectangleTest >> testSettingLeftDoesNotProduceInvalidRectangle [
-  
+
 	| rect1 rect2 |
-	
+
 	rect1 := 0@0 corner: 40@40.
 
 	"the left side of new rectangle wants to be beyond the right side of it"
 	rect2 := rect1 left: 50.
-	
+
 	self assert: rect2 left equals: 40.
-	self assert: rect2 right equals: 50.
+	self assert: rect2 right equals: 50
 ]
 
 { #category : #'tests - rectangle functions' }
@@ -660,22 +676,22 @@ RectangleTest >> testTranslateBy [
 
 { #category : #tests }
 RectangleTest >> testTwoRectanglesWithAnAdjascentBorderDoNotIntersect [
-  
+
    | rect1 rect2 |
    rect1 := 0@0 corner: 40@40.
    rect2 := 40@0 extent:40@40.
    self deny: (rect1 intersects: rect2);
-        deny: (rect2 intersects: rect1).
+        deny: (rect2 intersects: rect1)
 ]
 
 { #category : #tests }
 RectangleTest >> testTwoRectanglesWithAnAdjascentCornerDoNotIntersect [
-  
+
    | rect1 rect2 |
    rect1 := 0@0 corner: 40@40.
    rect2 := 40@40 corner: 50@50.
    self deny: (rect1 intersects: rect2);
-        deny: (rect2 intersects: rect1).
+        deny: (rect2 intersects: rect1)
 ]
 
 { #category : #'tests - rectangle functions' }
@@ -694,10 +710,10 @@ RectangleTest >> testWithBottom [
 
 { #category : #tests }
 RectangleTest >> testWithBottomDoesNotProduceInvalidRectangle [
-	
+
 	| rect1 rect2 |
 	rect1 := 0@10 corner: 50@60.
-	
+
 	"it is possible to adjust the bottom below the current bottom side"
 	rect2 := rect1 withBottom: 100.
 	self assert: rect2 bottom equals: 100.
@@ -705,7 +721,7 @@ RectangleTest >> testWithBottomDoesNotProduceInvalidRectangle [
 	"it is possible to adjust the bottom above the current bottom side"
 	rect2 := rect1 withBottom: 40.
 	self assert: rect2 bottom equals: 40.
-	
+
 	"it is possible to adjust the bottom above the current bottom side but not above the top"
 	rect2 := rect1 withBottom: -10.
 	self assert: rect2 bottom equals: 10.
@@ -722,11 +738,11 @@ RectangleTest >> testWithHeight [
 ]
 
 { #category : #tests }
-RectangleTest >> testWithLeftDoesNotProduceInvalidRectangle [	
+RectangleTest >> testWithLeftDoesNotProduceInvalidRectangle [
 
 	| rect1 rect2 |
 	rect1 := 0@10 corner: 50@60.
-	
+
 	"it is possible to adjust the left to the left of the current left side"
 	rect2 := rect1 withLeft: -10.
 	self assert: rect2 left equals: -10.
@@ -734,8 +750,8 @@ RectangleTest >> testWithLeftDoesNotProduceInvalidRectangle [
 	"it is possible to adjust the left to the right of the current left side but not over the righ side!!!!"
 	rect2 := rect1 withLeft: 40.
 	self assert: rect2 left equals: 40.
-	
-	"it is possible to adjust the left to be to the right of the current left side but not over the righ side, at the maximum 
+
+	"it is possible to adjust the left to be to the right of the current left side but not over the righ side, at the maximum
 	you will a zero width rectangle!!!!"
 	rect2 := rect1 withLeft: 80.
 	self assert: rect2 left equals: 50.
@@ -743,11 +759,11 @@ RectangleTest >> testWithLeftDoesNotProduceInvalidRectangle [
 ]
 
 { #category : #tests }
-RectangleTest >> testWithRightDoesNotProduceInvalidRectangle [	
+RectangleTest >> testWithRightDoesNotProduceInvalidRectangle [
 
 	| rect1 rect2 |
 	rect1 := 0@10 corner: 50@60.
-	
+
 	"it is possible to adjust the right to the right of the current right side"
 	rect2 := rect1 withRight: 100.
 	self assert: rect2 right equals: 100.
@@ -755,8 +771,8 @@ RectangleTest >> testWithRightDoesNotProduceInvalidRectangle [
 	"it is possible to adjust the right to the left of the current right side but not over the left side!!!!"
 	rect2 := rect1 withRight: 40.
 	self assert: rect2 right equals: 40.
-	
-	"it is possible to adjust the right to be to the left of the current right side but not over the left side itself, at the maximum 
+
+	"it is possible to adjust the right to be to the left of the current right side but not over the left side itself, at the maximum
 	you will a zero width rectangle!!!!"
 	rect2 := rect1 withRight: -10.
 	self assert: rect2 right equals: 0.
@@ -773,11 +789,11 @@ RectangleTest >> testWithTop [
 ]
 
 { #category : #tests }
-RectangleTest >> testWithTopDoesNotProduceInvalidRectangle [	
+RectangleTest >> testWithTopDoesNotProduceInvalidRectangle [
 
 	| rect1 rect2 |
 	rect1 := 0@10 corner: 50@60.
-	
+
 	"it is possible to adjust the top above of the current top side"
 	rect2 := rect1 withTop: -10.
 	self assert: rect2 top equals: -10.
@@ -785,7 +801,7 @@ RectangleTest >> testWithTopDoesNotProduceInvalidRectangle [
 	"it is possible to adjust the top below of the current top side"
 	rect2 := rect1 withTop: 40.
 	self assert: rect2 top equals: 40.
-	
+
 	"it is possible to adjust the top below of the current top side but not below the bottom"
 	rect2 := rect1 withTop: 70.
 	self assert: rect2 top equals: 60.

@@ -73,14 +73,14 @@ ClyQueryBrowserMorph class >> browseSendersOf: aSymbol [
 
 { #category : #default }
 ClyQueryBrowserMorph class >> defaultQueryResult [
-	^DefaultQueryResult ifNil: [ 
+	^DefaultQueryResult ifNil: [
 		DefaultQueryResult := ClyHierarchicalSystemItemsResult new]
 ]
 
 { #category : #'instance creation' }
 ClyQueryBrowserMorph class >> on: aNavigationEnvironment scopes: scopes [
 
-	^(self on: aNavigationEnvironment) 
+	^(self on: aNavigationEnvironment)
 		queryScopes: scopes
 ]
 
@@ -171,7 +171,7 @@ ClyQueryBrowserMorph >> extraScopesOfSelectedItems [
 	| classScope |
 	classScope := self classScopeOfSelectedItems.
 	^{
-		self packageScopeOfSelectedItems. 
+		self packageScopeOfSelectedItems.
 		classScope asFullHierarchyScope.
 		classScope
 	}, RefactoringSettings availableScopes
@@ -180,7 +180,7 @@ ClyQueryBrowserMorph >> extraScopesOfSelectedItems [
 { #category : #initialization }
 ClyQueryBrowserMorph >> initialize [
 	super initialize.
-	
+
 	queryScopes := OrderedCollection new.
 	expectedFlatQueryResult := self defaultFlatQueryResult
 ]
@@ -190,16 +190,16 @@ ClyQueryBrowserMorph >> initializeNavigationViews [
 	resultView := self newNavigationView.
 	resultView enableFilter: ClyQueryBrowserFilter.
 	resultView allowsDeselection: false.
-	resultView mainColumn 
+	resultView mainColumn
 		width: 250;
 		displayItemPropertyBy: [:item | self classNameOf: item].
-	(resultView addColumn: #name) 
+	(resultView addColumn: #name)
 		width: 200;
 		displayItemPropertyBy: [:item | self mainNameOf: item].
-	(resultView addColumn: #protocol) 
+	(resultView addColumn: #protocol)
 		width: 200;
 		displayItemPropertyBy: [:item | self protocolNameOf: item].
-	(resultView addColumn: #package) 
+	(resultView addColumn: #package)
 		width: 50;
 		displayItemPropertyBy: [:item | self packageNameOf: item]
 ]
@@ -225,7 +225,7 @@ ClyQueryBrowserMorph >> itemCount [
 { #category : #initialization }
 ClyQueryBrowserMorph >> mainNameOf: aBrowserItem [
 	aBrowserItem type = ClyClass ifTrue: [ ^'' ].
-	
+
 	^aBrowserItem name
 ]
 
@@ -239,28 +239,28 @@ ClyQueryBrowserMorph >> navigateSpawnedFullBrowser: aFullBrowser [
 
 	| lastItem definition |
 	aFullBrowser setUpScopedModeWith: self activeScope.
-	
+
 	lastItem := self selection lastSelectedItem.
 	definition := lastItem systemDefinition.
-	
+
 	aFullBrowser selectPackage: definition definingPackage.
 	aFullBrowser selectClass: definition definingClass.
-	
-	(definition isKindOf: ClyMethodDefinitionProperty) ifTrue: [ 
-		aFullBrowser selectMethod: lastItem actualObject].
+
+	(definition isKindOf: ClyMethodDefinitionProperty) ifTrue: [
+		aFullBrowser selectMethod: lastItem actualObject]
 ]
 
 { #category : #updating }
 ClyQueryBrowserMorph >> newWindowTitle [
-	| title | 
+	| title |
 	title := systemQuery description.
-	resultView areItemsLoaded 
+	resultView areItemsLoaded
 		ifTrue: [title := title capitalized , ' [' ,  self itemCount asString, ']']
 		ifFalse: [title := 'Loading: ', title ].
-	
-	self systemScope isCurrentImage ifFalse: [ 
+
+	self systemScope isCurrentImage ifFalse: [
 		title := title , ' in ', self systemScope description ].
-	
+
 	^title
 ]
 
@@ -292,7 +292,7 @@ ClyQueryBrowserMorph >> prepareInitialState [
 ]
 
 { #category : #initialization }
-ClyQueryBrowserMorph >> protocolNameOf: aClyBrowserItem [ 
+ClyQueryBrowserMorph >> protocolNameOf: aClyBrowserItem [
 	^ aClyBrowserItem systemDefinition printDefiningProtocol
 ]
 
@@ -311,8 +311,8 @@ ClyQueryBrowserMorph >> queryScopes: scopesCollection [
 { #category : #updating }
 ClyQueryBrowserMorph >> rebuildToolsForChangedEnvironment [
 	super rebuildToolsForChangedEnvironment.
-	
-	tabManager tools ifEmpty: [ 
+
+	tabManager tools ifEmpty: [
 		resultView ensureSelectedItem.
 		self rebuildAllTools ].
 	self updateWindowTitle
@@ -320,7 +320,7 @@ ClyQueryBrowserMorph >> rebuildToolsForChangedEnvironment [
 
 { #category : #accessing }
 ClyQueryBrowserMorph >> requiredQueryResult [
-	^systemQuery 
+	^systemQuery
 		ifNil: [self class defaultQueryResult]
 		ifNotNil: [ systemQuery requiredResult  ]
 ]
@@ -331,32 +331,32 @@ ClyQueryBrowserMorph >> resultView [
 ]
 
 { #category : #navigation }
-ClyQueryBrowserMorph >> selectClass: aClass [ 
+ClyQueryBrowserMorph >> selectClass: aClass [
 
 	self selectObject: aClass
 ]
 
 { #category : #navigation }
 ClyQueryBrowserMorph >> selectLastItem [
-	
+
 	self changeStateBy: [
 		resultView selectLastItem
 	]
 ]
 
 { #category : #navigation }
-ClyQueryBrowserMorph >> selectMethod: aMethod [ 
+ClyQueryBrowserMorph >> selectMethod: aMethod [
 
 	self selectObject: aMethod
 ]
 
 { #category : #navigation }
-ClyQueryBrowserMorph >> selectObject: anObject [ 
+ClyQueryBrowserMorph >> selectObject: anObject [
 	| foundItems |
 	self changeStateBy: [
 		foundItems := resultView findItemsWith: { anObject }.
-	
-		foundItems ifNotEmpty: [ 
+
+		foundItems ifNotEmpty: [
 			self selection selectItems: foundItems ]
 	]
 ]
@@ -368,20 +368,20 @@ ClyQueryBrowserMorph >> selection [
 
 { #category : #initialization }
 ClyQueryBrowserMorph >> setUpActiveScope [
-	systemQuery isBoundToEnvironment ifFalse: [ 
+	systemQuery isBoundToEnvironment ifFalse: [
 		systemQuery := systemQuery withScope: self systemScope].
-	(queryScopes includes: systemQuery scope) ifFalse: [ 
-		queryScopes add: systemQuery scope ].	
+	(queryScopes includes: systemQuery scope) ifFalse: [
+		queryScopes add: systemQuery scope ].
 	activeScope := systemQuery scope
 ]
 
 { #category : #initialization }
-ClyQueryBrowserMorph >> showQueryResult [	
-	self showsFlatResult ifTrue: [ 
-		"Browser keeps flat query result in variable 
-		to be able switch back to it later from hierarchy mode"	
+ClyQueryBrowserMorph >> showQueryResult [
+	self showsFlatResult ifTrue: [
+		"Browser keeps flat query result in variable
+		to be able switch back to it later from hierarchy mode"
 		expectedFlatQueryResult := systemQuery requiredResult ].
-	
+
 	self setUpActiveScope.
 	resultView showQuery: systemQuery semiAsync
 ]
@@ -389,10 +389,10 @@ ClyQueryBrowserMorph >> showQueryResult [
 { #category : #navigation }
 ClyQueryBrowserMorph >> showResultOf: aQuery [
 	"If given query has specific result then browser will show it as requested.
-	Otherwise it will force query to build currently configured required result 
-	(when given query has no explicitly specified result which means it has only default value)"		
+	Otherwise it will force query to build currently configured required result
+	(when given query has no explicitly specified result which means it has only default value)"
 	self changeStateBy: [
-		systemQuery := aQuery buildsDefaultResult 
+		systemQuery := aQuery buildsDefaultResult
 			ifTrue: [aQuery withResult: self requiredQueryResult]
 			ifFalse: [ aQuery ].
 		self showQueryResult
@@ -413,29 +413,29 @@ ClyQueryBrowserMorph >> showsQueryResultAs: aQueryResult [
 
 { #category : #navigation }
 ClyQueryBrowserMorph >> snapshotState [
-	
+
 	^ClyQueryBrowserState of: self
 ]
 
 { #category : #navigation }
 ClyQueryBrowserMorph >> spawnFullBrowser [
 	super spawnFullBrowser.
-	
-	self itemCount = 1 ifTrue: [ 
-		[self close] on: ProvideAnswerNotification do: [:notification | 
+
+	self itemCount = 1 ifTrue: [
+		[self close] on: ProvideAnswerNotification do: [:notification |
 			"If we have ditry tabs we are not able close it"
 			notification resume: false]
-	].
+	]
 ]
 
 { #category : #navigation }
 ClyQueryBrowserMorph >> spawnQueryBrowserOn: aQuery withState: navigationState [
-	
+
 	| actualQuery |
-	actualQuery := aQuery isBoundToEnvironment 
+	actualQuery := aQuery isBoundToEnvironment
 		ifTrue: [ aQuery ]
 		ifFalse: [ aQuery withScope: activeScope].
-	
+
 	super spawnQueryBrowserOn: actualQuery withState: navigationState
 ]
 
@@ -450,7 +450,7 @@ ClyQueryBrowserMorph >> switchResultTo: aQueryResult [
 
 { #category : #navigation }
 ClyQueryBrowserMorph >> switchScopeTo: aScope [
-	
+
 	self changeStateBy: [
 		systemQuery := systemQuery withScope: aScope.
 		self showQueryResult]

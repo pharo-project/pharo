@@ -13,7 +13,7 @@ SystemNavigation >> allSentMessagesInClass: aClass [
 SystemNavigation >> allSentMessagesInClass: aClass do: aBlock [
 	"Answer the set of selectors which are sent somewhere in the system."
 	aClass methodsDo: [:method | "Include all sels, but not if sent by self"
-		method literalsDo: [:literal | 
+		method literalsDo: [:literal |
 			(literal isSymbol) ifTrue: ["might be sent"
 				literal == method selector ifFalse: [ aBlock value: literal ]].
 			(literal isMemberOf: Array) ifTrue: ["might be performed"
@@ -21,7 +21,7 @@ SystemNavigation >> allSentMessagesInClass: aClass do: aBlock [
 	"The following may be sent without being in any literal frame"
 	1
 		to: Smalltalk specialSelectorSize
-		do: [:index | aBlock value: (Smalltalk specialSelectorAt: index)].
+		do: [:index | aBlock value: (Smalltalk specialSelectorAt: index)]
 ]
 
 { #category : #'*HeuristicCompletion-Model' }
@@ -35,7 +35,6 @@ SystemNavigation >> allSentMessagesInPackage: aPackage [
 { #category : #'*HeuristicCompletion-Model' }
 SystemNavigation >> allSentMessagesInPackage: aPackage do: aBlock [
 	"Answer the set of selectors which are sent somewhere in the system."
-	aPackage definedClassesDo: [ :className | | class |
-		class := Smalltalk globals at: className.
-		self allSentMessagesInClass: class do: aBlock ]
+
+	aPackage definedClasses do: [ :class | self allSentMessagesInClass: class do: aBlock ]
 ]

@@ -50,8 +50,8 @@ RBRegexRefactoring class >> isAbstract [
 { #category : #private }
 RBRegexRefactoring >> execute: aString [
 	"Perform all searches on aString and return the transformation."
-	
-	^ matchers 
+
+	^ matchers
 		inject: aString asString
 		into: [ :string :assoc | self execute: string replace: assoc key with: assoc value ]
 ]
@@ -80,20 +80,20 @@ RBRegexRefactoring >> initialize [
 { #category : #preconditions }
 RBRegexRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
 { #category : #searching }
 RBRegexRefactoring >> replace: aFindString with: aReplaceString [
 	"Replace all matches of aFindString (regular expression) with aReplaceString, where $0 references the whole match, and $1..$9 the matched groups.
 	Central method of the regex based refactoring. To be used in collaboration with renameClasses and others
-	
+
 	RBClassRegexRefactoring new
 		model: model;
 		renameClasses;
 		replace: '^YK(.*)$' with: newClassPrefix,'$1';
  		 execute.
-	Check class comment for a full script. 
+	Check class comment for a full script.
 	"
 	self replace: aFindString with: aReplaceString ignoreCase: false
 ]
@@ -101,7 +101,7 @@ RBRegexRefactoring >> replace: aFindString with: aReplaceString [
 { #category : #searching }
 RBRegexRefactoring >> replace: aFindString with: aReplaceString ignoreCase: aBoolean [
 	"Replace all matches of aFindString (regular expression) with aReplaceString, where $0 references the whole match, and $1..$9 the matched groups. See replace:with: comment too."
-	
+
 	| regex stream |
 	regex := RxParser preferredMatcherClass
 		for: (RxParser new parse: aFindString)

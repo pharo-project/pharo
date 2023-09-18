@@ -12,8 +12,8 @@ LegacyClassDefinitionPrinterTest >> forClass: aClass [
 { #category : #'tests - classes' }
 LegacyClassDefinitionPrinterTest >> testArray [
 
-	self 
-		assert: (self forClass: Array) 
+	self
+		assert: (self forClass: Array)
 		equals: 'ArrayedCollection variableSubclass: #Array
 	instanceVariableNames: ''''
 	classVariableNames: ''''
@@ -35,8 +35,8 @@ LegacyClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 { #category : #'tests - classes' }
 LegacyClassDefinitionPrinterTest >> testByteString [
 
-	self 
-		assert: (self forClass: ByteString) 
+	self
+		assert: (self forClass: ByteString)
 		equals: 'String variableByteSubclass: #ByteString
 	instanceVariableNames: ''''
 	classVariableNames: ''NonAsciiMap''
@@ -65,7 +65,7 @@ LegacyClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 
 { #category : #'tests - metaclasses' }
 LegacyClassDefinitionPrinterTest >> testMetaclass [
-	
+
 	self
 		assert: (self forClass: Metaclass)
 		equals: 'ClassDescription subclass: #Metaclass
@@ -77,9 +77,9 @@ LegacyClassDefinitionPrinterTest >> testMetaclass [
 
 { #category : #'tests - metaclasses' }
 LegacyClassDefinitionPrinterTest >> testMetaclassClass [
-	
-	self 
-		assert: (self forClass: Metaclass class) 
+
+	self
+		assert: (self forClass: Metaclass class)
 		equals: 'Metaclass class
 	instanceVariableNames: '''''
 ]
@@ -87,7 +87,7 @@ LegacyClassDefinitionPrinterTest >> testMetaclassClass [
 { #category : #'tests - classes' }
 LegacyClassDefinitionPrinterTest >> testPoint [
 
-	self 
+	self
 		assert: (self forClass: Point)
 		equals: 'Object subclass: #Point
 	instanceVariableNames: ''x y''
@@ -98,7 +98,7 @@ LegacyClassDefinitionPrinterTest >> testPoint [
 
 { #category : #'tests - classes' }
 LegacyClassDefinitionPrinterTest >> testProtoObject [
-	
+
 	self
 		assert: (self forClass: ProtoObject)
 		equals: 'ProtoObject subclass: #ProtoObject
@@ -111,9 +111,9 @@ ProtoObject superclass: nil'
 
 { #category : #'tests - metaclasses' }
 LegacyClassDefinitionPrinterTest >> testSystemAnnouncerClass [
-	
-	self 
-		assert: (self forClass: SystemAnnouncer class) 
+
+	self
+		assert: (self forClass: SystemAnnouncer class)
 		equals: 'SystemAnnouncer class
 	instanceVariableNames: ''announcer'''
 ]

@@ -12,6 +12,12 @@ Class {
 	#category : #'EpiceaBrowsers-Tests-Exporter'
 }
 
+{ #category : #asserting }
+EpOmbuExporterTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpOmbuExporterTest >> setUp [
 
@@ -31,10 +37,10 @@ EpOmbuExporterTest >> setUp [
 
 { #category : #running }
 EpOmbuExporterTest >> tearDown [
-	
+
 	logBuilder1 cleanUp.
 	logBuilder2 cleanUp.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -42,16 +48,16 @@ EpOmbuExporterTest >> testBasicExport [
 
 	| selection outputResult |
 	selection := inputLog1 entries.
-	
-	EpOmbuExporter new 
+
+	EpOmbuExporter new
 		outputLog: outputLog;
 		fileOut: selection.
-	
+
 	outputResult := outputLog events.
-	
+
 	self assert: outputResult size equals: selection size.
-	self 
-		assert: outputResult asSet 
+	self
+		assert: outputResult asSet
 		equals: (selection collect: [ :each | each content ]) asSet
 ]
 
@@ -80,11 +86,11 @@ EpOmbuExporterTest >> testCommentExportWithDependencyFix [
 EpOmbuExporterTest >> testRoundtrip [
 
 	| outputLogReopened |
-	EpOmbuExporter new 
+	EpOmbuExporter new
 		outputLog: outputLog;
 		fileOut: inputLog1 entries.
 
-	"Open a fresh log with the exported entries. 
+	"Open a fresh log with the exported entries.
 	(fresh, to be sure it was correctly written to disk)"
 	outputLogReopened := EpLog newWithStore: outputLog store flush copyReopened refresh.
 

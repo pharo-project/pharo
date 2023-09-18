@@ -23,14 +23,14 @@ ClyRemoveClassGroupCommand class >> canBeExecutedInContext: aToolContext [
 { #category : #activation }
 ClyRemoveClassGroupCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserClassGroupContext
 ]
 
 { #category : #activation }
 ClyRemoveClassGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation removalFor: ClyFullBrowserClassGroupContext
 ]
 
@@ -56,7 +56,7 @@ ClyRemoveClassGroupCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyRemoveClassGroupCommand >> execute [
-	
+
 	classGroup removeWithClasses
 ]
 
@@ -64,11 +64,10 @@ ClyRemoveClassGroupCommand >> execute [
 ClyRemoveClassGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	| confirmed |
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	classGroup := aToolContext lastSelectedClassGroup.
 
 	classGroup classesSize > 0 ifTrue: [
-		confirmed := UIManager default 
-			confirm: 'Are you sure you want to remove all classes in group ', classGroup name, '?'.
+		confirmed := self confirm: 'Are you sure you want to remove all classes in group ', classGroup name, '?'.
 		confirmed ifFalse: [CmdCommandAborted signal]]
 ]

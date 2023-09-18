@@ -25,7 +25,7 @@ AthensCompositeStrokePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 	| r |
 	r := aRect.
 	strokePaints
-		do: [ :paint | 
+		do: [ :paint |
 			paint athensFillRectangle: r on: anAthensCanvas.
 			withInset ifTrue:[r := r insetBy: paint width ]]
 ]
@@ -42,7 +42,7 @@ AthensCompositeStrokePaint >> fromDashedBorderStyle: border on: anAthensCanvas [
 	allDashLength := border dashLengths sum: #yourself.
 	offset := 0.
 	strokePaints := border dashColors
-		collectWithIndex: [ :c :i | 
+		collectWithIndex: [ :c :i |
 			| stroke dashLength |
 			dashLength := border dashLengths at: i.
 			stroke := c asStrokePaintOn: anAthensCanvas.

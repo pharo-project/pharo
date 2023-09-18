@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #'instance creation api' }
-SHStyleElement class >> color: aColor tokens: tokens [ 
+SHStyleElement class >> color: aColor tokens: tokens [
 
 	^ self new
 		basicColor: aColor tokens: tokens emphasis: nil;
@@ -21,15 +21,15 @@ SHStyleElement class >> color: aColor tokens: tokens [
 ]
 
 { #category : #instanceCreation }
-SHStyleElement class >> emphasis: anEmphasis tokens: someTokens [ 
-	
-	^ self new 
+SHStyleElement class >> emphasis: anEmphasis tokens: someTokens [
+
+	^ self new
 		basicColor: nil tokens: someTokens emphasis: anEmphasis;
 		yourself
 ]
 
 { #category : #settings }
-SHStyleElement class >> settingInputWidgetForNode: aSettingNode [ 
+SHStyleElement class >> settingInputWidgetForNode: aSettingNode [
 	| theme |
 	theme := UITheme builder.
 	^ theme newRow: {theme
@@ -48,15 +48,15 @@ SHStyleElement class >> settingInputWidgetForNode: aSettingNode [
 ]
 
 { #category : #'instance creation' }
-SHStyleElement class >> tokens: aCollection [ 
-	
+SHStyleElement class >> tokens: aCollection [
+
 	^ self new
 		basicColor: nil tokens: aCollection  emphasis: nil;
 		yourself
 ]
 
 { #category : #'instance creation' }
-SHStyleElement class >> withTokens: aCollection [ 
+SHStyleElement class >> withTokens: aCollection [
 	^ self new tokens: aCollection;
 		 yourself
 ]
@@ -75,7 +75,7 @@ SHStyleElement >> basicColor: aColor tokens: someTokens emphasis: anEmphasis [
 
 	color := aColor.
 	tokens := someTokens.
-	emphasis := anEmphasis.
+	emphasis := anEmphasis
 ]
 
 { #category : #accessing }
@@ -86,7 +86,7 @@ SHStyleElement >> color [
 ]
 
 { #category : #accessing }
-SHStyleElement >> color: anObject [ 
+SHStyleElement >> color: anObject [
 	color := anObject.
 	SHPreferences applyStyle
 ]
@@ -106,7 +106,7 @@ SHStyleElement >> emphasis [
 ]
 
 { #category : #accessing }
-SHStyleElement >> emphasis: anObject [ 
+SHStyleElement >> emphasis: anObject [
 	emphasis := anObject.
 	SHPreferences applyStyle
 ]
@@ -119,7 +119,7 @@ SHStyleElement >> emphasisAsArray [
 ]
 
 { #category : #comparing }
-SHStyleElement >> hash [ 
+SHStyleElement >> hash [
 
 	^ tokens hash
 ]
@@ -131,24 +131,24 @@ SHStyleElement >> printOn: aStream [
 	color
 		ifNotNil: [ aStream
 				nextPutAll: ' color: ';
-				print: color 
+				print: color
 			].
 	emphasis
 		ifNotNil: [ aStream
 				nextPutAll: ' emphasis: ';
-				print: emphasis 
+				print: emphasis
 			].
 	tokens
 		ifNotNil: [ aStream
 				nextPutAll: ' tokens: ';
-				print: tokens 
+				print: tokens
 			]
 ]
 
 { #category : #styling }
 SHStyleElement >> styleForTable [
 	^ self tokens
-		collect: [:token | 
+		collect: [:token |
 			| style |
 			style := OrderedCollection with: token.
 			style add: self color.
@@ -163,6 +163,6 @@ SHStyleElement >> tokens [
 ]
 
 { #category : #accessing }
-SHStyleElement >> tokens: anObject [ 
+SHStyleElement >> tokens: anObject [
 	tokens := anObject
 ]

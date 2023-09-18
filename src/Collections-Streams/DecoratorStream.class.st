@@ -17,7 +17,7 @@ DecoratorStream class >> on: aStream [
 
 	^ self basicNew
 		on: aStream;
-		yourself.
+		yourself
 ]
 
 { #category : #testing }
@@ -39,10 +39,10 @@ DecoratorStream >> next [
 ]
 
 { #category : #accessing }
-DecoratorStream >> nextPut: anObject [ 
-	"Insert the argument, anObject, as the next object accessible by the 
+DecoratorStream >> nextPut: anObject [
+	"Insert the argument, anObject, as the next object accessible by the
 	receiver. Answer anObject."
-	
+
 	decoratedStream nextPut: anObject.
 	^anObject
 ]
@@ -51,7 +51,7 @@ DecoratorStream >> nextPut: anObject [
 DecoratorStream >> on: aStream [
 
 	self initialize.
-	decoratedStream := aStream.
+	decoratedStream := aStream
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ DecoratorStream >> peek [
 
 { #category : #decorating }
 DecoratorStream >> position [
-	
+
 	^ decoratedStream position
 ]
 

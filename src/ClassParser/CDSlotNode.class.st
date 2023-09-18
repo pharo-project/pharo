@@ -9,9 +9,14 @@ Class {
 
 { #category : #transforming }
 CDSlotNode >> asSlot [
-	"for not this only supports instance variable slots. 
-	We need to create a slot here using the slot class and initialization message"
-	^InstanceVariableSlot named: name
+
+	"when parsing old style definitions, the node is just the string of all ivars"
+	node isLiteralNode ifTrue: [ ^InstanceVariableSlot named: name ]
+
+	"As we controll the creation of the AST, it is safe to evaluate it. The
+	only thing that can go wrong is that the class of the slot is not yet loaded,
+	we crate an UndefinedSlot for that case".
+	^ [ node evaluate ] on: Error do: [ UndefinedSlot named: self name ast: node ]
 ]
 
 { #category : #testing }

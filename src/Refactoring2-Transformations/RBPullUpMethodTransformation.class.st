@@ -6,7 +6,7 @@ Class {
 		'selectors',
 		'targetSuperclass'
 	],
-	#category : #'Refactoring2-Transformations-Model-Migrated'
+	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
 }
 
 { #category : #api }
@@ -35,12 +35,18 @@ RBPullUpMethodTransformation class >> pullUp: selectorCollection from: aClass to
 	^ self new pullUp: selectorCollection from: aClass to: aSuperClass
 ]
 
-{ #category : #converting }
-RBPullUpMethodTransformation >> asRefactoring [
+{ #category : #preconditions }
+RBPullUpMethodTransformation >> applicabilityPreconditions [ 
 
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
+	^ (selectors 
+			inject: (RBCondition hasSuperclass: class)
+			into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
+					& (RBCondition withBlock:
+							[self checkInstVars.
+							self checkClassVars.
+							self checkSuperclass.
+							self checkSuperMessages.
+							true])
 ]
 
 { #category : #executing }
@@ -59,25 +65,25 @@ RBPullUpMethodTransformation >> checkBackReferencesTo: aSelector [
 	| definingClass pushUpParseTree |
 	definingClass := targetSuperclass whoDefinesMethod: aSelector.
 	definingClass ifNil: [^self].
-	pushUpParseTree := class parseTreeFor: aSelector.
-	targetSuperclass allSubclasses do: 
-			[:each | 
-			each selectors do: 
-					[:sel | 
+	pushUpParseTree := class parseTreeForSelector: aSelector.
+	targetSuperclass allSubclasses do:
+			[:each |
+			each selectors do:
+					[:sel |
 					| parseTree |
-					parseTree := each parseTreeFor: sel.
-					(parseTree notNil and: 
-							[(parseTree superMessages includes: aSelector) 
-								and: [definingClass == (each whoDefinesMethod: aSelector)]]) 
-						ifTrue: 
+					parseTree := each parseTreeForSelector: sel.
+					(parseTree notNil and:
+							[(parseTree superMessages includes: aSelector)
+								and: [definingClass == (each whoDefinesMethod: aSelector)]])
+						ifTrue:
 							[removeDuplicates := true.
-							(aSelector == sel 
-								and: [parseTree equalTo: pushUpParseTree exceptForVariables: #()]) 
-									ifFalse: 
-										[self 
-											refactoringError: ('Cannot pull up <1s> since it would override the method defined in <2p>' 
+							(aSelector == sel
+								and: [parseTree equalTo: pushUpParseTree exceptForVariables: #()])
+									ifFalse:
+										[self
+											refactoringError: ('Cannot pull up <1s> since it would override the method defined in <2p>'
 													expandMacrosWith: aSelector
-						
+
 							with: definingClass)]]]]
 ]
 
@@ -88,10 +94,10 @@ RBPullUpMethodTransformation >> checkClassVars [
 
 { #category : #preconditions }
 RBPullUpMethodTransformation >> checkClassVarsFor: aSelector [
-	class instanceSide classVariableNames do: 
-		[ :each | 
-		((class whichSelectorsReferToClassVariable: each) includes: aSelector) ifTrue: 
-			[ self refactoringError: ('<1p> refers to <2s> which is defined in <3p>' 
+	class instanceSide classVariableNames do:
+		[ :each |
+		((class whichSelectorsReferToClassVariable: each) includes: aSelector) ifTrue:
+			[ self refactoringError: ('<1p> refers to <2s> which is defined in <3p>'
 					expandMacrosWith: aSelector
 					with: each
 					with: class) ] ]
@@ -104,35 +110,35 @@ RBPullUpMethodTransformation >> checkInstVars [
 
 { #category : #preconditions }
 RBPullUpMethodTransformation >> checkInstVarsFor: aSelector [
-	class instanceVariableNames do: 
-			[:each | 
-			((class whichSelectorsReferToInstanceVariable: each) includes: aSelector) ifTrue: 
+	class instanceVariableNames do:
+			[:each |
+			((class whichSelectorsReferToInstanceVariable: each) includes: aSelector) ifTrue:
 					[ (self confirm: ('<1p> refers to #<2s> which is defined in <3p>. Do you want push up variable #<2s> also?' expandMacrosWith: aSelector
 								with: each
-								with: class)) 
+								with: class))
 						ifTrue: [ self previousTransformations add: (self pushUpVariable: each) ]
-						ifFalse: [ self refactoringError: 'You are about to push your method without the instance variable it uses. 
+						ifFalse: [ self refactoringError: 'You are about to push your method without the instance variable it uses.
 						It will bring the system is an inconsistent state. But this may be what you want.
 						So do you want to push up anyway?' ] ]]
 ]
 
 { #category : #preconditions }
 RBPullUpMethodTransformation >> checkSiblingSuperSendsFrom: aRBClass [
-	aRBClass selectors do: 
-			[:each | 
+	aRBClass selectors do:
+			[:each |
 			| tree |
-			tree := aRBClass parseTreeFor: each.
-			tree ifNotNil: 
-					[tree superMessages do: 
-							[:aSelector | 
-							(selectors includes: aSelector) 
-								ifTrue: 
+			tree := aRBClass parseTreeForSelector: each.
+			tree ifNotNil:
+					[tree superMessages do:
+							[:aSelector |
+							(selectors includes: aSelector)
+								ifTrue:
 									[| definer |
 									definer := aRBClass superclass whoDefinesMethod: aSelector.
-									(definer notNil and: [class includesClass: definer]) 
-										ifTrue: 
-											[self 
-												refactoringError: ('Cannot pull up <1s> since <2p>>><3s> sends a super message to it.' 
+									(definer notNil and: [class includesClass: definer])
+										ifTrue:
+											[self
+												refactoringError: ('Cannot pull up <1s> since <2p>>><3s> sends a super message to it.'
 														expandMacrosWith: aSelector
 														with: aRBClass
 														with: each)]]]]].
@@ -147,15 +153,15 @@ RBPullUpMethodTransformation >> checkSuperMessages [
 
 { #category : #preconditions }
 RBPullUpMethodTransformation >> checkSuperSendsFromPushedUpMethods [
-	selectors do: 
-			[:each | 
+	selectors do:
+			[:each |
 			| parseTree |
-			parseTree := class parseTreeFor: each.
-			parseTree superMessages 
+			parseTree := class parseTreeForSelector: each.
+			parseTree superMessages
 				detect: [:sup | targetSuperclass directlyDefinesMethod: sup]
-				ifFound: 
-					[self 
-						refactoringError: ('Cannot pull up <1s> since it sends a super message that is defined in the superclass.' 
+				ifFound:
+					[self
+						refactoringError: ('Cannot pull up <1s> since it sends a super message that is defined in the superclass.'
 								expandMacrosWith: each)]]
 ]
 
@@ -172,10 +178,10 @@ RBPullUpMethodTransformation >> checkSuperclass [
 	overrideSelectors := selectors
 		select: [ :each | targetSuperclass directlyDefinesMethod: each ].
 	overrideSelectors := overrideSelectors
-		reject: [ :each | 
+		reject: [ :each |
 			| myTree superTree |
-			myTree := class parseTreeFor: each.
-			superTree := targetSuperclass parseTreeFor: each.
+			myTree := class parseTreeForSelector: each.
+			superTree := targetSuperclass parseTreeForSelector: each.
 			superTree equalTo: myTree exceptForVariables: #() ].
 	overrideSelectors ifEmpty: [ ^ self ].
 	targetSuperclass isAbstract
@@ -193,36 +199,36 @@ RBPullUpMethodTransformation >> copyDownMethod: aSelector [
 	superclassDefiner := targetSuperclass whoDefinesMethod: aSelector.
 	superclassDefiner ifNil: [^ {  } ].
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
-	oldSource ifNil: 
-			[ self 
-				refactoringFailure: ('Source code for <1s> superclass method not available' 
+	oldSource ifNil:
+			[ self
+				refactoringError: ('Source code for <1s> superclass method not available'
 						expandMacrosWith: aSelector)].
 	oldProtocol := superclassDefiner protocolsFor: aSelector.
-	subclasses := targetSuperclass subclasses 
+	subclasses := targetSuperclass subclasses
 				reject: [:each | each directlyDefinesMethod: aSelector].
 	subclasses ifEmpty: [^ {  } ].
-	(superclassDefiner parseTreeFor: aSelector) superMessages 
+	(superclassDefiner parseTreeForSelector: aSelector) superMessages
 		detect: [:each | superclassDefiner directlyDefinesMethod: each]
-		ifFound: 
-			[self 
-				refactoringError: ('Cannot pull up <1s> since we must copy down the superclass method in <2p><n>to the other subclasses, and the superclass method sends a super message which is overriden.' 
+		ifFound:
+			[self
+				refactoringError: ('Cannot pull up <1s> since we must copy down the superclass method in <2p><n>to the other subclasses, and the superclass method sends a super message which is overriden.'
 						expandMacrosWith: aSelector
 						with: superclassDefiner)].
-	self 
-		refactoringWarning: 'Do you want to copy down the superclass method to the classes that don''t define ' 
+	self
+		refactoringWarning: 'Do you want to copy down the superclass method to the classes that don''t define '
 				, aSelector, '?'.
 	refactoring := RBExpandReferencedPoolsTransformation
 				model: self model
-				forMethod: (superclassDefiner parseTreeFor: aSelector)
+				forMethod: (superclassDefiner parseTreeForSelector: aSelector)
 				fromClass: superclassDefiner
 				toClasses: subclasses.
 	^ Array with: refactoring
-		withAll: (subclasses collect: 
+		withAll: (subclasses collect:
 		[:each | RBAddMethodTransformation
 			model: self model
 			sourceCode: oldSource
 			in: each
-			withProtocols: oldProtocol])
+			withProtocol: oldProtocol])
 ]
 
 { #category : #executing }
@@ -230,36 +236,23 @@ RBPullUpMethodTransformation >> copyDownMethods [
 	^ selectors flatCollect: [:each | self copyDownMethod: each]
 ]
 
-{ #category : #preconditions }
-RBPullUpMethodTransformation >> preconditions [
-	self requestSuperClass.
-	^(selectors inject: (RBCondition hasSuperclass: class)
-		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)]) 
-			& (RBCondition withBlock: 
-						[self checkInstVars.
-						self checkClassVars.
-						self checkSuperclass.
-						self checkSuperMessages.
-						true])
-]
-
 { #category : #executing }
 RBPullUpMethodTransformation >> pullUp: aSelector [
 	| source refactoring |
 	source := class sourceCodeFor: aSelector.
-	source ifNil: [self refactoringFailure: 'Source for method not available'].
+	source ifNil: [self refactoringError: 'Source for method not available'].
 	refactoring := RBExpandReferencedPoolsTransformation
 				model: self model
-				forMethod: (class parseTreeFor: aSelector)
+				forMethod: (class parseTreeForSelector: aSelector)
 				fromClass: class
 				toClasses: (Array with: targetSuperclass).
-	^ Array 
-		with: refactoring 
+	^ Array
+		with: refactoring
 		with: (RBAddMethodTransformation
-		model: self model 
-		sourceCode: source 
+		model: self model
+		sourceCode: source
 		in: targetSuperclass
-		withProtocols: (class protocolsFor: aSelector))
+		withProtocol: (class protocolsFor: aSelector))
 ]
 
 { #category : #api }
@@ -269,9 +262,9 @@ RBPullUpMethodTransformation >> pullUp: selectorCollection from: aClass [
 
 { #category : #api }
 RBPullUpMethodTransformation >> pullUp: selectorCollection from: aClass to: aSuperClass [
-	self setOption: #superClass toUse: [ :ref | ].
+
 	class := self model classObjectFor: aClass.
-	targetSuperclass := self model classObjectFor: aSuperClass .
+	targetSuperclass := self model classObjectFor: aSuperClass.
 	selectors := selectorCollection.
 	removeDuplicates := false
 ]
@@ -296,40 +289,35 @@ RBPullUpMethodTransformation >> removeDuplicateMethods [
 
 { #category : #executing }
 RBPullUpMethodTransformation >> removeDuplicatesOf: aSelector [
-	^ RBCustomTransformation 
-		model: self model 
-		with: [ :rbModel | 
+	^ RBCustomTransformation
+		model: self model
+		with: [ :rbModel |
 			| tree |
-			tree := targetSuperclass parseTreeFor: aSelector.
-			targetSuperclass allSubclasses collect: 
-			[:aClass | 
-			((aClass directlyDefinesMethod: aSelector) and: 
-					[(tree equalTo: (aClass parseTreeFor: aSelector) exceptForVariables: #()) 
-						and: [(aClass superclass whoDefinesMethod: aSelector) == targetSuperclass]]) 
-				ifTrue: 
-					[removeDuplicates 
-						ifFalse: 
-							[removeDuplicates := self refactoringConfirmWarning: 
+			tree := targetSuperclass parseTreeForSelector: aSelector.
+			targetSuperclass allSubclasses collect:
+			[:aClass |
+			((aClass directlyDefinesMethod: aSelector) and:
+					[(tree equalTo: (aClass parseTreeForSelector: aSelector) exceptForVariables: #())
+						and: [(aClass superclass whoDefinesMethod: aSelector) == targetSuperclass]])
+				ifTrue:
+					[removeDuplicates
+						ifFalse:
+							[removeDuplicates := self refactoringConfirmWarning:
 							'Do you want to remove duplicate subclass methods?'].
 					removeDuplicates ifTrue:[
-						(RBRemoveMethodTransformation 
+						(RBRemoveMethodTransformation
 							model: self model
 							selector: aClass
-							from: aSelector) transform ]]]]
+							from: aSelector) primitiveExecute ]]]]
 ]
 
 { #category : #executing }
 RBPullUpMethodTransformation >> removePulledUpMethods [
-	^ selectors collect: [:symbol | 
-		RBRemoveMethodTransformation 
+	^ selectors collect: [:symbol |
+		RBRemoveMethodTransformation
 			model: self model
 			selector: symbol
 			from: class ]
-]
-
-{ #category : #preconditions }
-RBPullUpMethodTransformation >> requestSuperClass [
-	^ (self options at: #superClass) value: self
 ]
 
 { #category : #printing }

@@ -28,7 +28,7 @@ OSSDL2Driver class >> allWindows [
 ]
 
 { #category : #testing }
-OSSDL2Driver class >> eventLoopProcess [ 
+OSSDL2Driver class >> eventLoopProcess [
 
 	^ EventLoopProcess
 ]
@@ -45,7 +45,7 @@ OSSDL2Driver class >> isSuitable [
 ]
 
 { #category : #testing }
-OSSDL2Driver class >> isSupported [ 
+OSSDL2Driver class >> isSupported [
 	^ SDL2 isAvailable
 ]
 
@@ -57,16 +57,16 @@ OSSDL2Driver class >> isVMDisplayUsingSDL2 [
 
 { #category : #events }
 OSSDL2Driver >> afterMainPharoWindowCreated: osWindow [
-	
-	OSPlatform current sdlPlatform 
+
+	OSPlatform current sdlPlatform
 		afterMainPharoWindowCreated: osWindow
 ]
 
 { #category : #events }
 OSSDL2Driver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
-	
-	OSPlatform current sdlPlatform 
-		afterSetWindowTitle: windowTitle onWindow: osWindow.
+
+	OSPlatform current sdlPlatform
+		afterSetWindowTitle: windowTitle onWindow: osWindow
 ]
 
 { #category : #private }
@@ -87,18 +87,18 @@ OSSDL2Driver >> closeRemovedJoystick: index [
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	| flags handle aBackendWindow glAttributes x y |
-	
+
 	flags := attributes visible ifTrue: [ SDL_WINDOW_SHOWN ] ifFalse: [ SDL_WINDOW_HIDDEN ].
 	attributes fullscreen ifTrue: [ flags := flags | SDL_WINDOW_FULLSCREEN_DESKTOP ].
 	attributes borderless ifTrue: [ flags := flags | SDL_WINDOW_BORDERLESS ].
 	flags := flags | SDL_WINDOW_ALLOW_HIGHDPI.
-	
+
 	" Set the OpenGL attributes."
 	glAttributes := attributes glAttributes.
-	glAttributes ifNotNil: [ 
+	glAttributes ifNotNil: [
 		flags := flags | SDL_WINDOW_OPENGL.
 		self setGLAttributes: glAttributes ].
-	
+
 	"Get the actual initial position value."
 	x := attributes x.
 	y := attributes y.
@@ -107,34 +107,31 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 		y := SDL_WINDOWPOS_CENTERED ].
 
 	"Extra creation flags"
-	attributes resizable ifTrue: [ 
+	attributes resizable ifTrue: [
 		flags := flags | SDL_WINDOW_RESIZABLE ].
 
-	attributes maximized ifTrue: [ 
+	attributes maximized ifTrue: [
 		flags := flags | SDL_WINDOW_MAXIMIZED ].
-	
-	attributes minimized ifTrue: [ 
+
+	attributes minimized ifTrue: [
 		flags := flags | SDL_WINDOW_MINIMIZED ].
 
 	"Create the window"
-	WindowMapMutex critical: [ 
+	WindowMapMutex critical: [
 		handle := SDL2 createWindow: attributes title
 			x: x
 			y: y
-			width: attributes width 
-			height: attributes height 
+			width: attributes width
+			height: attributes height
 			flags: flags.
-		
+
 		aBackendWindow := OSSDL2BackendWindow newWithHandle: handle attributes: attributes.
 		aBackendWindow osWindow: osWindow.
 		self registerWindow: aBackendWindow.
-		
+
 		"The OSWindow handle has to be set inside of this critical section to avoid losing some events such as expose."
 		osWindow setJustCreatedHandle: aBackendWindow.
 	].
-
-	"Workaround to https://github.com/pharo-project/pharo/issues/10981"
-	20 milliSeconds wait.
 
 	^ aBackendWindow
 ]
@@ -145,11 +142,11 @@ OSSDL2Driver >> dispatchEvent: mappedEvent [
 	| window |
 
 	mappedEvent windowID ifNil: [ ^ self sendEventWithoutWindow: mappedEvent ].
-	
-	WindowMapMutex critical: [ 
+
+	WindowMapMutex critical: [
 		window := WindowMap at: mappedEvent windowID ifAbsent: [ ^ nil ] ].
 
-	^ window handleNewSDLEvent: mappedEvent.
+	^ window handleNewSDLEvent: mappedEvent
 ]
 
 { #category : #'events-processing' }
@@ -167,7 +164,7 @@ OSSDL2Driver >> eventFilter [
 
 { #category : #accessing }
 OSSDL2Driver >> eventLoopProcess [
-	
+
 	^ self class eventLoopProcess
 ]
 
@@ -176,7 +173,7 @@ OSSDL2Driver >> eventLoopProcessWithPlugin [
 	| event session semaIndex |
 	event := SDL_Event new.
 	session := Smalltalk session.
-	
+
 	semaIndex := (Smalltalk registerExternalObject: inputSemaphore).
 	self primSetupInputSemaphore: semaIndex.
 	[
@@ -192,9 +189,9 @@ OSSDL2Driver >> eventLoopProcessWithPlugin [
 OSSDL2Driver >> eventLoopProcessWithVMWindow [
 	| event session semaIndex eventBuffer |
 	event := SDL_Event new.
-	eventBuffer := event getHandle. 
+	eventBuffer := event getHandle.
 	session := Smalltalk session.
-	
+
 	semaIndex := (Smalltalk registerExternalObject: inputSemaphore).
 	self primitiveSetVMSDL2Input: semaIndex.
 	[
@@ -211,12 +208,12 @@ OSSDL2Driver >> eventLoopProcessWithoutPlugin [
 	| event session |
 	event := SDL_Event new.
 	session := Smalltalk session.
-	
-	[ session == Smalltalk session] 
+
+	[ session == Smalltalk session]
 	whileTrue: [
-		[ (SDL2 pollEvent: event) > 0 ] 
+		[ (SDL2 pollEvent: event) > 0 ]
 		whileTrue: [ self processEvent: event ].
-		
+
 		(Delay forMilliseconds: 5) wait ]
 ]
 
@@ -231,25 +228,24 @@ OSSDL2Driver >> initialize [
 "		initVideo;
 		initJoystick;
 		initGameController;
-"		initEverything.
-	self setupEventLoop.
+"		initEverything
 ]
 
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> initializeJoystickMap [
 
-	JoystickMap ifNil: [ 
-		JoystickMap := Dictionary new. 
-	].
+	JoystickMap ifNil: [
+		JoystickMap := Dictionary new.
+	]
 ]
 
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> initializeWindowMap [
 
-	WindowMap ifNil: [ 
-		WindowMap := WeakValueDictionary new. 
+	WindowMap ifNil: [
+		WindowMap := WeakValueDictionary new.
 	].
-	WindowMapMutex := Semaphore forMutualExclusion.
+	WindowMapMutex := Semaphore forMutualExclusion
 ]
 
 { #category : #'global events' }
@@ -261,14 +257,14 @@ OSSDL2Driver >> isGameController: joystickIndex [
 OSSDL2Driver >> openAddedController: index [
 	| controller |
 	controller := SDL2 gameControllerOpen: index.
-	JoystickMap at: index put: controller.
+	JoystickMap at: index put: controller
 ]
 
 { #category : #private }
 OSSDL2Driver >> openAddedJoystick: index [
 	| joystick |
 	joystick := SDL2 joystickOpen: index.
-	JoystickMap at: index put: joystick.
+	JoystickMap at: index put: joystick
 ]
 
 { #category : #'events-processing' }
@@ -292,12 +288,12 @@ OSSDL2Driver >> primitiveSetVMSDL2Input: semaIndex [
 { #category : #'events-processing' }
 OSSDL2Driver >> processEvent: sdlEvent [
 	| mappedEvent |
-			
-	[ 
+
+	[
 		mappedEvent := sdlEvent mapped.
 		self evaluateUserInterrupt: mappedEvent.
 		self eventFilter dispatchEvent: mappedEvent
-	] on: Error do: [ :err | 
+	] on: Error do: [ :err |
 		"It is critical, that event handling keep running despite errors.
 		Normally, any errors in event handling requires immediate attention and fixing"
 		err freeze.
@@ -325,7 +321,7 @@ OSSDL2Driver >> sendEventWithoutWindow: event [
 	converted := event accept: self.
 	converted ifNil: [ ^ self ].
 	globalListeners do: [ :list | list handleEvent: converted ].
-	self flag: #pharoFixMe. "Avoid holding the mutex for so long".	
+	self flag: #pharoFixMe. "Avoid holding the mutex for so long".
 	WindowMapMutex critical: [
 		WindowMap valuesDo: [ :window | window deliverGlobalEvent: converted ].
 	]
@@ -333,19 +329,19 @@ OSSDL2Driver >> sendEventWithoutWindow: event [
 
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> setGLAttributes: glAttributes [
-	glAttributes majorVersion ifNotNil: [ 
+	glAttributes majorVersion ifNotNil: [
 		SDL2 glSetAttribute: SDL_GL_CONTEXT_MAJOR_VERSION value: glAttributes majorVersion.
 	].
-	glAttributes minorVersion ifNotNil: [ 
+	glAttributes minorVersion ifNotNil: [
 		SDL2 glSetAttribute: SDL_GL_CONTEXT_MINOR_VERSION value: glAttributes minorVersion.
 	].
-	glAttributes hasCompatibilityProfile ifTrue: [ 
+	glAttributes hasCompatibilityProfile ifTrue: [
 		SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: SDL_GL_CONTEXT_PROFILE_COMPATIBILITY
 	].
-	glAttributes hasCoreProfile ifTrue: [ 
+	glAttributes hasCoreProfile ifTrue: [
 		SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: SDL_GL_CONTEXT_PROFILE_CORE
 	].
-	glAttributes hasESProfile ifTrue: [ 
+	glAttributes hasESProfile ifTrue: [
 		SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: SDL_GL_CONTEXT_PROFILE_ES
 	].
 
@@ -356,24 +352,29 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 	SDL2 glSetAttribute: SDL_GL_DEPTH_SIZE value: glAttributes depthSize.
 	SDL2 glSetAttribute: SDL_GL_STENCIL_SIZE value: glAttributes stencilSize.
 	SDL2 glSetAttribute: SDL_GL_DOUBLEBUFFER value: glAttributes doubleBuffer.
-	SDL2 glSetAttribute: SDL_GL_FRAMEBUFFER_SRGB_CAPABLE value: glAttributes srgbFramebuffer asBit.
+	SDL2 glSetAttribute: SDL_GL_FRAMEBUFFER_SRGB_CAPABLE value: glAttributes srgbFramebuffer asBit
 ]
 
 { #category : #'events-processing' }
 OSSDL2Driver >> setupEventLoop [
-	EventLoopProcess ifNotNil: [ 
-		EventLoopProcess isTerminating ifFalse: [EventLoopProcess terminate. EventLoopProcess := nil] ].
-	EventLoopProcess := self class isVMDisplayUsingSDL2 ifTrue: [ 
-		[ self eventLoopProcessWithVMWindow ] 
-		forkAt: Processor lowIOPriority
-	] ifFalse: [ 
-		self class hasPlugin ifTrue: [ 
-			[ self eventLoopProcessWithPlugin ] 
+
+	EventLoopProcess ifNotNil: [
+		EventLoopProcess isTerminating ifFalse: [
+			EventLoopProcess terminate.
+			EventLoopProcess := nil ] ].
+
+	EventLoopProcess := self class isVMDisplayUsingSDL2
+		ifTrue: [
+			[ self eventLoopProcessWithVMWindow ]
 			forkAt: Processor lowIOPriority ]
-		ifFalse: [ 
-			[ self eventLoopProcessWithoutPlugin ] 
-			forkAt: Processor lowIOPriority ].
-	].
+		ifFalse: [
+			self class hasPlugin
+				ifTrue: [
+					[ self eventLoopProcessWithPlugin ]
+					forkAt: Processor lowIOPriority ]
+				ifFalse: [
+					[ self eventLoopProcessWithoutPlugin ]
+					forkAt: Processor lowIOPriority ] ].
 
 	EventLoopProcess
 		name: 'SDL2 Event loop';
@@ -381,13 +382,29 @@ OSSDL2Driver >> setupEventLoop [
 ]
 
 { #category : #'system startup' }
-OSSDL2Driver >> shutDown [
-	"Reset WindowMap and JoystickMap when shuting down (otherwise there will be handlers 
+OSSDL2Driver >> shutDown: quitting [
+	"Reset WindowMap and JoystickMap when shuting down (otherwise there will be handlers
 	 remaining on restart)"
 
-	WindowMap := nil.
-	JoystickMap := nil.
-	EventLoopProcess ifNotNil: [ EventLoopProcess terminate ].
+	quitting ifTrue: [
+		WindowMap := nil.
+		JoystickMap := nil ].
+
+	self shutdownEventLoop
+]
+
+{ #category : #'events-processing' }
+OSSDL2Driver >> shutdownEventLoop [
+
+	EventLoopProcess ifNil: [ ^ self ].
+	EventLoopProcess terminate.
+	EventLoopProcess := nil
+]
+
+{ #category : #'system startup' }
+OSSDL2Driver >> startUp: resuming [
+
+	self setupEventLoop
 ]
 
 { #category : #'global events' }
@@ -402,12 +419,12 @@ OSSDL2Driver >> unregisterGlobalListener: globalListener [
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> unregisterWindowWithId: windowId [
 
-	WindowMapMutex critical: [ 
+	WindowMapMutex critical: [
 		WindowMap removeKey: windowId ifAbsent: [].
 	].
-	
+
 	"Does it make sense to keep the SDL event loop process running even if no OSWindow is currently open ?"
-	"WindowMap ifEmpty: [ 
+	"WindowMap ifEmpty: [
 		EventLoopProcess terminate.
 		EventLoopProcess := nil.
 	]."
@@ -481,11 +498,11 @@ OSSDL2Driver >> visitDropEvent: dropEvent [
 	Get the string, and decode it to a string using a utf8 decoder"
 	| fileName |
 	fileName := dropEvent file utf8StringFromCString.
-	
+
 	"Free the file handle after it has been read, as specified by SDL2
 	https://wiki.libsdl.org/SDL_DropEvent"
 	dropEvent file free.
-	
+
 	^ OSWindowDropEvent new
 		timestamp: dropEvent timestamp;
 		filePath: fileName
@@ -500,7 +517,7 @@ OSSDL2Driver >> visitFingerDownEvent: event [
 			position: event x @ event y;
 			delta: event dx @ event dy;
 			pressure: event pressure;
-			yourself.
+			yourself
 ]
 
 { #category : #'events-processing' }
@@ -512,7 +529,7 @@ OSSDL2Driver >> visitFingerMotionEvent: event [
 			position: event x @ event y;
 			delta: event dx @ event dy;
 			pressure: event pressure;
-			yourself.
+			yourself
 ]
 
 { #category : #'events-processing' }
@@ -524,7 +541,7 @@ OSSDL2Driver >> visitFingerUpEvent: event [
 			position: event x @ event y;
 			delta: event dx @ event dy;
 			pressure: event pressure;
-			yourself.
+			yourself
 ]
 
 { #category : #'global events' }

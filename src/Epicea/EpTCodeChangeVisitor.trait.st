@@ -27,26 +27,6 @@ EpTCodeChangeVisitor >> visitBehaviorNameChange: aChange [
 ]
 
 { #category : #visitor }
-EpTCodeChangeVisitor >> visitCategoryAddition: aChange [
-	^ self visitCategoryChange: aChange
-]
-
-{ #category : #visitor }
-EpTCodeChangeVisitor >> visitCategoryChange: aChange [
-	^ self visitCodeChange: aChange
-]
-
-{ #category : #visitor }
-EpTCodeChangeVisitor >> visitCategoryRemoval: aChange [
-	^ self visitCategoryChange: aChange
-]
-
-{ #category : #visitor }
-EpTCodeChangeVisitor >> visitCategoryRename: aChange [
-	^ self visitCategoryChange: aChange
-]
-
-{ #category : #visitor }
 EpTCodeChangeVisitor >> visitClassAddition: aChange [
 	^ self visitClassChange: aChange
 ]
@@ -92,13 +72,57 @@ EpTCodeChangeVisitor >> visitMethodRemoval: aChange [
 ]
 
 { #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ self visitPackageChange: aPackageAddition
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageChange: aChange [
+	^ self visitCodeChange: aChange
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self visitPackageChange: aPackageRemoval
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageRename: aPackageRename [
+
+	^ self visitPackageChange: aPackageRename
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageTagAddition: aPackageTagAddition [
+	^ self visitPackageTagChange: aPackageTagAddition
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageTagChange: aChange [
+
+	^ self visitCodeChange: aChange
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+	^ self visitPackageTagChange: aPackageTagRemoval
+]
+
+{ #category : #visitor }
+EpTCodeChangeVisitor >> visitPackageTagRename: aPackageTagRename [
+	^ self visitPackageTagChange: aPackageTagRename
+]
+
+{ #category : #visitor }
 EpTCodeChangeVisitor >> visitProtocolAddition: aProtocolAddition [
 	^ self visitProtocolChange: aProtocolAddition
 ]
 
 { #category : #visitor }
 EpTCodeChangeVisitor >> visitProtocolChange: aProtocolAddition [
-	^ self visitBehaviorChange: aProtocolAddition.
+	^ self visitBehaviorChange: aProtocolAddition
 ]
 
 { #category : #visitor }

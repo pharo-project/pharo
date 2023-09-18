@@ -37,7 +37,7 @@ SystemVersion class >> current [
 { #category : #'private - accessing' }
 SystemVersion class >> invalidBuildNumber [
 	"Return -1 to depict an invalid build number (allows to also accept 0 as build number)"
-	
+
 	^ -1
 ]
 
@@ -52,12 +52,12 @@ SystemVersion class >> major: major minor: minor patch: patch [
 ]
 
 { #category : #'instance creation' }
-SystemVersion class >> major: major minor: minor patch: patch suffix: aString [ 
+SystemVersion class >> major: major minor: minor patch: patch suffix: aString [
 	"Create a new instance of the receiver with the given major minor number and suffix.
 
-	 	SystemVersion major: 6 minor: 1 patch: 199 suffix: 'alpha'     
+	 	SystemVersion major: 6 minor: 1 patch: 199 suffix: 'alpha'
 	"
-	
+
 	^self major: major minor: minor patch: patch suffix: aString build: self invalidBuildNumber
 ]
 
@@ -81,9 +81,9 @@ SystemVersion class >> major: major minor: minor patch: patch suffix: aString bu
 SystemVersion class >> major: major minor: minor patch: patch suffix: aString build: build commitHash: hashString [
 	"Create a new instance of the receiver with the given major minor number and suffix.
 
-	 	SystemVersion major: 6 minor: 1 suffix: 'alpha'     
+	 	SystemVersion major: 6 minor: 1 suffix: 'alpha'
 	"
-	
+
 	^(self new)
 		major: major;
 		minor: minor;
@@ -107,7 +107,7 @@ SystemVersion >> build: aBuildNumber [
 ]
 
 { #category : #private }
-SystemVersion >> calculateHighestUpdate [ 
+SystemVersion >> calculateHighestUpdate [
 	|result|
 	result := (major * 10000) + (minor * 1000).
 	self hasValidBuildNumber ifTrue: [ result := result + build ].
@@ -150,38 +150,38 @@ SystemVersion >> date: newDate [
 SystemVersion >> datedVersion [
 	" E.g. 'Pharo2.0a of ''18 April 2012''' "
 
-	^ self version asString , ' of ' , self date printString.
+	^ self version asString , ' of ' , self date printString
 ]
 
 { #category : #accessing }
 SystemVersion >> dottedMajorMinor [
-	
+
 	^ self majorMinor: '.'
 ]
 
 { #category : #accessing }
 SystemVersion >> dottedMajorMinorPatch [
-	
-	^ self majorMinorPatch: '.'.
+
+	^ self majorMinorPatch: '.'
 ]
 
 { #category : #testing }
 SystemVersion >> hasMetadataIdentifiers [
 	"Return true if we have metadata identifiers (see rule 10 on semver.org) that need to be separated with a + sign"
-	
+
 	^self suffix notEmpty | self hasValidBuildNumber | self commitHash notEmpty
 ]
 
 { #category : #testing }
 SystemVersion >> hasValidBuildNumber [
 	"Return true if we have a valid build number"
-	
+
 	 ^self build ~= self class invalidBuildNumber
 ]
 
 { #category : #compatibility }
 SystemVersion >> highestUpdate [
-	 ^highestUpdate ifNil: [ highestUpdate := self calculateHighestUpdate ].
+	 ^highestUpdate ifNil: [ highestUpdate := self calculateHighestUpdate ]
 ]
 
 { #category : #compatibility }
@@ -192,21 +192,21 @@ SystemVersion >> highestUpdate: anInteger [
 { #category : #'accessing - version strings' }
 SystemVersion >> imageVersionString [
 	"Print the version compatible with naming the image."
-	
+
 	^String streamContents: [:str |
 		str nextPutAll: self type;
 			 nextPut: $-;
 			 nextPutAll: (self majorMinorPatch: '.').
-			
-		self hasMetadataIdentifiers ifTrue: [ str nextPut: $+ ].		
+
+		self hasMetadataIdentifiers ifTrue: [ str nextPut: $+ ].
 		self suffix ifNotEmpty: [ str nextPutAll: self suffix ].
-		self hasValidBuildNumber ifTrue: [ 
+		self hasValidBuildNumber ifTrue: [
 			self suffix ifNotEmpty: [ str nextPut: $.].
-			str nextPutAll: 'build.'; nextPutAll: self build asString ].	
+			str nextPutAll: 'build.'; nextPutAll: self build asString ].
 		self commitHash ifNotEmpty: [ str nextPutAll: '.sha.'; nextPutAll: self commitHash ].
-		
+
 		Smalltalk vm is32bit ifTrue: [ str nextPutAll: ' (32 Bit)' ]
-								   ifFalse: [ str nextPutAll: ' (64 Bit)' ].					
+								   ifFalse: [ str nextPutAll: ' (64 Bit)' ].
 	]
 ]
 
@@ -220,7 +220,7 @@ SystemVersion >> initialize [
 	suffix := ''.
 	build := self class invalidBuildNumber.
 	commitHash := ''.
-	date := Date today.
+	date := Date today
 ]
 
 { #category : #'accessing - properties' }
@@ -244,8 +244,8 @@ SystemVersion >> majorMinor: aSeparatingString [
 	"SystemVersion current majorMinor: ''"
 
 	^String streamContents: [:str |
-		str 
-			nextPutAll: self major printString; 
+		str
+			nextPutAll: self major printString;
 			nextPutAll: aSeparatingString;
 			nextPutAll: self minor printString ]
 ]
@@ -257,8 +257,8 @@ SystemVersion >> majorMinorPatch: aSeparatingString [
 	"SystemVersion current majorMinorPatch: ''"
 
 	^String streamContents: [:str |
-		str 
-			nextPutAll: self major printString; 
+		str
+			nextPutAll: self major printString;
 			nextPutAll: aSeparatingString;
 			nextPutAll: self minor printString;
 			nextPutAll: aSeparatingString;
@@ -267,7 +267,7 @@ SystemVersion >> majorMinorPatch: aSeparatingString [
 
 { #category : #accessing }
 SystemVersion >> majorMinorVersion [
-	
+
 	^ self type, self dottedMajorMinorPatch
 ]
 
@@ -303,10 +303,10 @@ SystemVersion >> printOn: stream [
 { #category : #'accessing - version strings' }
 SystemVersion >> shortVersionString [
 	"Print a short version string."
-	
+
 	self type ifNil: [^'No version set'].
 	^String streamContents: [:str |
-		str 
+		str
 			nextPutAll: self type;
 			nextPutAll: self major printString;
 			nextPut: $.;
@@ -347,12 +347,12 @@ SystemVersion >> type: anObject [
 { #category : #accessing }
 SystemVersion >> version [
 	"Answer the short version string. If the receiver needs upgrading, do it."
-	
+
 	^self shortVersionString
 ]
 
 { #category : #accessing }
 SystemVersion >> versionWithoutPatch [
-	
+
 	^ self type , (self majorMinor: '.')
 ]

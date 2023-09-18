@@ -51,6 +51,6 @@ FFIBoolean32 >> stackValueParameterClass [
 
 { #category : #accessing }
 FFIBoolean32 >> tfExternalType [
-	
+
 	^ TFDerivedType boolean32
 ]

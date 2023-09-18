@@ -14,7 +14,7 @@ Class {
 
 { #category : #testing }
 CoNegationFilter >> accepts: aCandidate [
-	
+
 	^ (negatedFilter accepts: aCandidate) not
 ]
 

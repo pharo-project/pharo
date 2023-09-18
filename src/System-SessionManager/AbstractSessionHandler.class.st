@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : #testing }
-AbstractSessionHandler class >> isAbstract [ 
-	
+AbstractSessionHandler class >> isAbstract [
+
 	^self == AbstractSessionHandler
 ]
 
@@ -23,7 +23,7 @@ AbstractSessionHandler >> handledId [
 { #category : #printing }
 AbstractSessionHandler >> printOn: aStream [
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $(;
 		nextPutAll: self handledId;
 		nextPut: $)

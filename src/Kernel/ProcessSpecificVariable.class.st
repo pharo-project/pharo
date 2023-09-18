@@ -23,7 +23,7 @@ Class {
 
 { #category : #'class initialization' }
 ProcessSpecificVariable class >> initialize [
-	self resetSoleInstance.
+	self resetSoleInstance
 ]
 
 { #category : #testing }
@@ -41,7 +41,7 @@ ProcessSpecificVariable class >> new [
 
 { #category : #'class initialization' }
 ProcessSpecificVariable class >> resetSoleInstance [
-	soleInstance := nil.
+	soleInstance := nil
 ]
 
 { #category : #accessing }

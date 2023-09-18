@@ -19,7 +19,7 @@ ClyMessageSendersQuery >> description [
 { #category : #execution }
 ClyMessageSendersQuery >> prepareStateBeforeExecution [
 	super prepareStateBeforeExecution.
-	
+
 	"Special selector indexes are required for lookup in method.
 	Here it is collected in advance to be used during execution
 	because after execution query become readonly object"
@@ -28,16 +28,16 @@ ClyMessageSendersQuery >> prepareStateBeforeExecution [
 
 { #category : #testing }
 ClyMessageSendersQuery >> selectsMethod: aMethod [
-	
+
 	selectors with: self specialSelectorIndexes do: [ :selector :specialIndex |
-		(aMethod hasSelector: selector specialSelectorIndex: specialIndex) 
+		(aMethod hasSelector: selector specialSelectorIndex: specialIndex)
 			ifTrue: [	^true] ].
-			
+
 	^false
 ]
 
 { #category : #accessing }
 ClyMessageSendersQuery >> specialSelectorIndexes [
-	^specialSelectorIndexes ifNil: [ 
+	^specialSelectorIndexes ifNil: [
 		specialSelectorIndexes := selectors collect: [:each | Smalltalk specialSelectorIndexOrNil: each]]
 ]

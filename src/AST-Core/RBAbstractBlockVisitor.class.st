@@ -28,7 +28,7 @@ RBAbstractBlockVisitor class >> visit: aTree anySatisfy: aBlock [
 
 { #category : #enumerating }
 RBAbstractBlockVisitor class >> visit: aTree detect: aBlock [
-	
+
 	^self visit: aTree detect: aBlock ifNone: [ NotFound signalFor: aBlock ]
 ]
 
@@ -42,7 +42,7 @@ RBAbstractBlockVisitor class >> visit: aTree detect: aBlock ifNone: anErrorBlock
 
 { #category : #enumerating }
 RBAbstractBlockVisitor class >> visit: aTree do: aBlock [
-	^self new 
+	^self new
 		visitBlock: aBlock;
 		visitNode: aTree
 ]

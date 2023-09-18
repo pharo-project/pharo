@@ -32,7 +32,7 @@ MemoryFileWriteStream >> closed [
 ]
 
 { #category : #accessing }
-MemoryFileWriteStream >> file: aMemoryFileSystemFile [ 
+MemoryFileWriteStream >> file: aMemoryFileSystemFile [
 	file := aMemoryFileSystemFile
 ]
 
@@ -50,8 +50,8 @@ MemoryFileWriteStream >> isBinary [
 ]
 
 { #category : #writing }
-MemoryFileWriteStream >> next: anInteger putAll: aCollection startingAt: anInteger3 [ 
-	
+MemoryFileWriteStream >> next: anInteger putAll: aCollection startingAt: anInteger3 [
+
 	self stream next: anInteger putAll: aCollection startingAt: anInteger3
 ]
 
@@ -72,8 +72,8 @@ MemoryFileWriteStream >> position [
 
 { #category : #positioning }
 MemoryFileWriteStream >> position: anInteger [
-	"Set the current position for accessing the objects to be anInteger, as long 
-	as anInteger is within the bounds of the receiver's contents. If it is not, 
+	"Set the current position for accessing the objects to be anInteger, as long
+	as anInteger is within the bounds of the receiver's contents. If it is not,
 	create an error notification."
 
 	self stream position: anInteger

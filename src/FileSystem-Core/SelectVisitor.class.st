@@ -46,6 +46,6 @@ SelectVisitor class >> select: aBlock [
 
 { #category : #visiting }
 SelectVisitor >> visitReference: anEntry [
-	(block value: anEntry) 
+	(block value: anEntry)
 		ifTrue: [ out nextPut: anEntry ]
 ]

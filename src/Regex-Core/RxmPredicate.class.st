@@ -25,8 +25,8 @@ RxmPredicate class >> with: unaryBlock [
 RxmPredicate >> bePerform: aSelector [
 	"Match any single character that answers true  to this message."
 
-	self predicate: 
-		[:char | 
+	self predicate:
+		[:char |
 		RxParser doHandlingMessageNotUnderstood: [char perform: aSelector]]
 ]
 
@@ -34,8 +34,8 @@ RxmPredicate >> bePerform: aSelector [
 RxmPredicate >> bePerformNot: aSelector [
 	"Match any single character that answers false to this message."
 
-	self predicate: 
-		[:char | 
+	self predicate:
+		[:char |
 		RxParser doHandlingMessageNotUnderstood: [(char perform: aSelector) not]]
 ]
 

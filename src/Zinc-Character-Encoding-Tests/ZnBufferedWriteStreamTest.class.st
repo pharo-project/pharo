@@ -4,20 +4,20 @@ Class {
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedWriteStreamTest >> testNextPutAllStartingAt [
 	| string |
-	string := String streamContents: [ :stringStream | 
+	string := String streamContents: [ :stringStream |
 		ZnBufferedWriteStream on: stringStream do: [ : bufferedStream |
 			bufferedStream sizeBuffer: 8.
 			bufferedStream next: 5 putAll: '--012345--' startingAt: 3.
-			bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6. 
+			bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6.
 			bufferedStream next: 5 putAll: '--012345--' startingAt: 3.
 			bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6.] ].
 	self assert: string equals: '01234567890123456789'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedWriteStreamTest >> testWriting [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |
@@ -27,7 +27,7 @@ ZnBufferedWriteStreamTest >> testWriting [
 	self assert: string equals: '0123456789'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZnBufferedWriteStreamTest >> testWritingOverflow [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |

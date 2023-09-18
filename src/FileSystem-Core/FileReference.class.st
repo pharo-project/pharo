@@ -28,7 +28,7 @@ Class {
 { #category : #'cross platform' }
 FileReference class >> / aString [
 	"Answer a reference to the argument resolved against the root of the current disk filesystem."
-	
+
 	^ FileSystem disk / aString
 ]
 
@@ -40,9 +40,9 @@ FileReference class >> fileSystem: aFilesystem path: aPath [
 { #category : #'instance creation' }
 FileReference class >> newTempFilePrefix: prefix suffix: suffix [
 	| tmpDir random fileName |
-	
+
 	tmpDir := FileLocator temp asFileReference.
-	[ 
+	[
 		random := UUID new asInteger asString.
 		fileName := prefix , random , suffix.
 		(tmpDir / fileName) exists ] whileTrue.
@@ -73,14 +73,14 @@ FileReference >> absolutePath [
 ]
 
 { #category : #accessing }
-FileReference >> accessTime [ 
+FileReference >> accessTime [
 	^ filesystem accessTimeOf: self path
 ]
 
 { #category : #converting }
 FileReference >> asAbsolute [
 	"Return the receiver as an absolute file reference."
-	
+
 	^ self isAbsolute
 		ifTrue: [ self ]
 		ifFalse: [ filesystem referenceTo: (filesystem resolve: path) ]
@@ -106,7 +106,7 @@ FileReference >> asPath [
 { #category : #streams }
 FileReference >> binaryReadStream [
 	"Answer a buffered binary read stream on the receiver"
-	
+
 	^ ZnBufferedReadStream on: (filesystem binaryReadStreamOn: self path)
 ]
 
@@ -118,7 +118,7 @@ FileReference >> binaryWriteStream [
 ]
 
 { #category : #accessing }
-FileReference >> changeTime [ 
+FileReference >> changeTime [
 	^ filesystem changeTimeOf: self path
 ]
 
@@ -130,12 +130,12 @@ FileReference >> containsReference: aReference [
 { #category : #operations }
 FileReference >> copyTo: aFileReference [
 	"Copy the receiver and create the argument, a file reference."
-	
+
 	"If you want to copy a file from a folder into a given folder, the argument should not be the future parent folder
-	but a file reference of the future location.  
-	Therefore use 
+	but a file reference of the future location.
+	Therefore use
 		(folder1 / 'foo.txt') copyTo: (folder2 / 'bar.txt')"
-		
+
 	self isDirectory
 		ifTrue: [ aFileReference ensureCreateDirectory ]
 		ifFalse: [ filesystem copy: path toReference: aFileReference ]
@@ -155,17 +155,17 @@ FileReference >> creationTime [
 
 { #category : #operations }
 FileReference >> delete [
-	"Deletes the referenced file or directory. If the directory is not empty, 
+	"Deletes the referenced file or directory. If the directory is not empty,
 	raises an error. Use #deleteAll to delete with the children."
 
-	(self isDirectory and:[self hasChildren]) 
+	(self isDirectory and:[self hasChildren])
 		ifTrue:[DirectoryIsNotEmpty signalWith: self].
 	filesystem delete: path
 ]
 
 { #category : #operations }
 FileReference >> deleteIfAbsent: aBlock [
-	self exists 
+	self exists
 		ifTrue: [ self delete ]
 		ifFalse: aBlock
 ]
@@ -207,7 +207,7 @@ FileReference >> exists [
 
 { #category : #versions }
 FileReference >> extractVersionNumberFrom: filename basename: basename extension: extension [
-	"Answer the version number written in filename considering 
+	"Answer the version number written in filename considering
 	that it consists of basename and extension.
 	For example filename=basename.10.extension will return 10.
 	filename=basename.extension without number will return 0
@@ -216,16 +216,16 @@ FileReference >> extractVersionNumberFrom: filename basename: basename extension
 	"ensure prefix basename."
 	| versionStart versionEnd |
 	(filename beginsWith: basename) ifFalse: [^nil].
-	(filename size > basename size and: [(filename at: basename size + 1) = $.]) 
+	(filename size > basename size and: [(filename at: basename size + 1) = $.])
 		ifFalse: [ ^nil ].
 	"ensure suffix .extension"
 	(filename endsWith: extension) ifFalse: [^nil].
 	(filename size > extension size and: [(filename at: filename size - extension size) = $.])
 		 ifFalse: [ ^nil ].
-	
+
 	versionStart := basename size + 2.
 	versionEnd := filename size - extension size - 1.
-	versionStart to: versionEnd do: [:i | 
+	versionStart to: versionEnd do: [:i |
 		(filename at: i) isDigit ifFalse: [ ^nil ] ].
 	versionStart > versionEnd ifTrue: [ ^0]. "means pattern baseline.extension"
 	^(filename copyFrom: versionStart to: versionEnd) asNumber
@@ -258,7 +258,7 @@ FileReference >> gid [
 FileReference >> hasChildren [
 	"Return whether the receiver has any children."
 	"FileSystem workingDirectory hasChildren"
-	
+
 	^ filesystem hasChildren: path
 ]
 
@@ -266,7 +266,7 @@ FileReference >> hasChildren [
 FileReference >> hasDirectories [
 	"Return whether the receiver has children that are directories."
 	"FileSystem workingDirectory hasDirectories"
-	
+
 	^ filesystem hasDirectories: path
 ]
 
@@ -274,7 +274,7 @@ FileReference >> hasDirectories [
 FileReference >> hasFiles [
 	"Return whether the receiver has children that are files."
 	"FileSystem workingDirectory hasFiles"
-	
+
 	^ filesystem hasFiles: path
 ]
 
@@ -297,7 +297,7 @@ FileReference >> isAbsolute [
 { #category : #testing }
 FileReference >> isBlock [
 	"Return a boolean indicating whether the File described by aPath is a block device"
-	
+
 	^ filesystem isBlock: path
 ]
 
@@ -388,7 +388,7 @@ FileReference >> lastFileFor: baseFileName extension: extension [
 ]
 
 { #category : #accessing }
-FileReference >> modificationTime [ 
+FileReference >> modificationTime [
 	"Returns the last date of modification of self"
 	^ filesystem modificationTimeOf: self path
 ]
@@ -396,24 +396,24 @@ FileReference >> modificationTime [
 { #category : #operations }
 FileReference >> moveTo: aReference [
 	"Move the receiver in the location passed as argument.
-	
+
 	(FileSystem disk workingDirectory / 'paf' ) ensureCreateFile.
-	(FileSystem disk workingDirectory / 'fooFolder') ensureCreateDirectory. 
+	(FileSystem disk workingDirectory / 'fooFolder') ensureCreateDirectory.
 	(FileSystem disk workingDirectory / 'paf' ) moveTo: (FileSystem disk workingDirectory / 'fooFolder' / 'paf')
-	
+
 	Note that the receiver is modified to point to the new location."
-	
+
 	| result |
-	result := self fileSystem 
+	result := self fileSystem
 		move: self path
 		to: aReference resolve.
 	result ifNotNil: [
-		self setFileSystem: result fileSystem path: result path ].
+		self setFileSystem: result fileSystem path: result path ]
 ]
 
 { #category : #utilities }
 FileReference >> nextNameFor: baseFileName extension: extension [
-  "Assumes a file name includes a version number encoded as '.' followed by digits 
+  "Assumes a file name includes a version number encoded as '.' followed by digits
    preceding the file extension, e.g., games.22.ston
    Increment the version number (of the largest one) and answer the new file name, e.g., games23.ston
    If a version number is not found, set the version to 1 and answer a new file name"
@@ -430,7 +430,7 @@ FileReference >> nextNameFor: baseFileName extension: extension [
 
 { #category : #utilities }
 FileReference >> nextVersion [
-	"Assumes a file (or folder) name includes a version number encoded as '.' followed by digits 
+	"Assumes a file (or folder) name includes a version number encoded as '.' followed by digits
 	preceding the file extension.  Increment the version number and answer the new file name.
 	If a version number is not found, return just the file"
 
@@ -447,7 +447,7 @@ FileReference >> nextVersion [
 	index := nameWithoutExtension size.
 	[ index > 0 and: [ (nameWithoutExtension at: index) isDigit ] ] whileTrue:
 		[ index := index - 1 ].
-	((index between: 1 and: nameWithoutExtension size - 1) and: [ (nameWithoutExtension at: index) = $. ]) ifTrue: 
+	((index between: 1 and: nameWithoutExtension size - 1) and: [ (nameWithoutExtension at: index) = $. ]) ifTrue:
 		[ nameWithoutExtension := nameWithoutExtension copyFrom: 1 to: index-1 ].
 
 	max := parent versionNumberFor: nameWithoutExtension extension: extension.
@@ -461,14 +461,14 @@ FileReference >> numberOfHardLinks [
 ]
 
 { #category : #streams }
-FileReference >> openWritable: aBoolean [ 
+FileReference >> openWritable: aBoolean [
 	^ filesystem open: path writable: aBoolean
 ]
 
 { #category : #printing }
 FileReference >> pathString [
 	"Return the full path name of the receiver."
-	
+
 	^ filesystem stringFromPath: (filesystem resolve: path)
 ]
 
@@ -498,15 +498,15 @@ FileReference >> readStream [
 
 { #category : #operations }
 FileReference >> renameTo: newBasename [
-	
+
 	| destinationPath |
-	destinationPath := self fileSystem 
-		rename: self 
+	destinationPath := self fileSystem
+		rename: self
 		to: self parent / newBasename.
-	
+
 	destinationPath ifNotNil: [
-		self 
-			setFileSystem: filesystem 
+		self
+			setFileSystem: filesystem
 			path: destinationPath ].
 	^ self
 ]
@@ -523,14 +523,14 @@ FileReference >> resolvePath: anObject [
 
 { #category : #resolving }
 FileReference >> resolveReference: aReference [
-	
+
 	^ (filesystem = aReference fileSystem or: [aReference isRelative])
 		ifTrue: [filesystem referenceTo: (path resolvePath: aReference path)]
 		ifFalse: [aReference]
 ]
 
 { #category : #resolving }
-FileReference >> resolveString: aString [ 
+FileReference >> resolveString: aString [
 	| thePath |
 	thePath := filesystem pathFromString: aString.
 	^ filesystem referenceTo: (path resolve: thePath)
@@ -558,7 +558,7 @@ FileReference >> symlinkUid: uid gid: gid [
 	"Set the owner and group of the receiver by numeric id.
 	An id of nil leaves it unchanged."
 
-	^filesystem file: self path symlinkUid: uid gid: gid.
+	^filesystem file: self path symlinkUid: uid gid: gid
 ]
 
 { #category : #accessing }
@@ -599,7 +599,7 @@ FileReference >> versionNumberFor: basename extension: extension [
 		childVersion := self extractVersionNumberFrom: child basename: basename extension: extension.
 		childVersion ifNotNil: [ maxVersion := maxVersion max: childVersion ]].
 	^maxVersion = 0
-		ifTrue: [ (self / (basename, '.', extension)) asFileReference exists 
+		ifTrue: [ (self / (basename, '.', extension)) asFileReference exists
 			ifTrue: [ 0 ]
 			ifFalse: [ nil ] ]
 		ifFalse: [ maxVersion ]
@@ -607,6 +607,6 @@ FileReference >> versionNumberFor: basename extension: extension [
 
 { #category : #streams }
 FileReference >> writeStream [
-	
+
 	^ self writeStreamEncoded: 'utf8'
 ]

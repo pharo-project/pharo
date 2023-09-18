@@ -9,7 +9,7 @@ Class {
 
 { #category : #coverage }
 PointTest >> classToBeTested [
-	
+
 	^ Point
 ]
 
@@ -145,7 +145,7 @@ PointTest >> testCloseTo [
 
 	self assert: (x closeTo: 0.00001).
 	self assert: (y closeTo: 0.00001).
-	
+
 	self assert: (x@y closeTo: (0.00001@0.00001))
 ]
 
@@ -158,7 +158,7 @@ PointTest >> testCloseToWithPrecision [
 
 	self assert: (x closeTo: 0.1 precision: 0.1).
 	self assert: (y closeTo: 0.1 precision: 0.1).
-	
+
 	self assert: (x@y closeTo: (0.1@0.1) precision: 0.1)
 ]
 
@@ -224,7 +224,7 @@ PointTest >> testInsideTriangleWithWith [
 	self assert:   ( (-2 @ -3) insideTriangle:  (-1 @ -1 ) with: (-1 @ -7) with: (-3 @ -3)).
 	self deny:    ( (-3 @ -1) insideTriangle:  (-1 @ -1 ) with: (-1 @ -7) with: (-3 @ -3)).
 	self deny:    ( (-3 @ -15) insideTriangle:  (-1 @ -1 ) with: (-1 @ -7) with: (-3 @ -3)).
-	self deny:    ( (0 @ -6) insideTriangle:  (-1 @ -1 ) with: (-1 @ -7) with: (-3 @ -3)).
+	self deny:    ( (0 @ -6) insideTriangle:  (-1 @ -1 ) with: (-1 @ -7) with: (-3 @ -3))
 ]
 
 { #category : #'tests - truncation and roundoff' }
@@ -234,25 +234,25 @@ PointTest >> testIsFloatPoint [
 	self deny: (-1 @ 1) isFloatPoint.
 	self deny: (1 @ -1) isFloatPoint.
 	self deny: (-1 @ -1) isFloatPoint.
-	
+
 	self deny: (1 @ 1.2) isFloatPoint.
 	self deny: (1.2 @ 1) isFloatPoint.
 	self assert: (1.2 @ 1.2) isFloatPoint.
-	
+
 	self deny: (-1 @ -1.2) isFloatPoint.
 	self deny: (-1.2 @ -1) isFloatPoint.
 	self assert: (-1.2 @ -1.2) isFloatPoint.
-	
+
 	self deny: (0 @ 0) isFloatPoint.
 	self deny: (0.0 @ 0) isFloatPoint.
 	self deny: (0 @ 0.0) isFloatPoint.
-	self assert: (0.0 @ 0.0) isFloatPoint.
+	self assert: (0.0 @ 0.0) isFloatPoint
 ]
 
 { #category : #'tests - geometry' }
 PointTest >> testIsInRectangle [
 
-	self assert: ((50@50) isInsideRectangle: (0@0 corner: 100@100)).
+	self assert: ((50@50) isInsideRectangle: (0@0 corner: 100@100))
 ]
 
 { #category : #'tests - geometry' }
@@ -260,9 +260,7 @@ PointTest >> testIsInRectangleFollowContainsPointSemantics [
 
 	self deny: ((100@100) isInsideRectangle: (0@0 corner: 100@100)).
 	self deny: ((99@100) isInsideRectangle: (0@0 corner: 100@100)).
-	self assert:  ((0@0) isInsideRectangle: (0@0 corner: 100@100)).
-
-
+	self assert:  ((0@0) isInsideRectangle: (0@0 corner: 100@100))
 ]
 
 { #category : #'tests - geometry' }
@@ -271,7 +269,7 @@ PointTest >> testIsInRectangleIsInside [
 	self assert: ((50@50) isInsideRectangle: (0@0 corner: 100@100)).
 	self assert: ((0@0) isInsideRectangle: (0@0 corner: 100@100)).
 	self assert: ((10@0) isInsideRectangle: (0@0 corner: 100@100)).
-	self assert: ((0@10) isInsideRectangle: (0@0 corner: 100@100)).
+	self assert: ((0@10) isInsideRectangle: (0@0 corner: 100@100))
 ]
 
 { #category : #'tests - geometry' }
@@ -279,8 +277,7 @@ PointTest >> testIsInRectangleIsOutside [
 
 	self deny: ((150@150) isInsideRectangle: (0@0 corner: 100@100)).
 	self deny: ((99@100) isInsideRectangle: (0@0 corner: 100@100)).
-	self assert: ((0@0) isInsideRectangle: (0@0 corner: 100@100)).
-	
+	self assert: ((0@0) isInsideRectangle: (0@0 corner: 100@100))
 ]
 
 { #category : #'tests - truncation and roundoff' }
@@ -290,14 +287,14 @@ PointTest >> testIsIntegerPoint [
 	self assert: (-1 @ 1) isIntegerPoint.
 	self assert: (1 @ -1) isIntegerPoint.
 	self assert: (-1 @ -1) isIntegerPoint.
-	
+
 	self deny: (1 @ 1.2) isIntegerPoint.
 	self deny: (1.2 @ 1) isIntegerPoint.
 	self deny: (1.2 @ 1.2) isIntegerPoint.
-	
+
 	self deny: (-1 @ -1.2) isIntegerPoint.
 	self deny: (-1.2 @ -1) isIntegerPoint.
-	self deny: (-1.2 @ -1.2) isIntegerPoint.
+	self deny: (-1.2 @ -1.2) isIntegerPoint
 ]
 
 { #category : #'tests - converting' }
@@ -305,24 +302,24 @@ PointTest >> testIsPoint [
 
 	self deny: nil isPoint.
 	self deny: 'a' isPoint.
-	self deny: 1 isPoint. 
-	self deny: -1 isPoint. 
+	self deny: 1 isPoint.
+	self deny: -1 isPoint.
 	'Test on a random class'.
 	self deny: Object new isPoint.
 	self assert: Point new isPoint.
 	self assert: (0 @ 0) isPoint.
 	self assert: (-1 @ -1) isPoint.
 	self assert: (1.2 @ 1.2) isPoint.
-	self assert: (-1.2 @ -1.2) isPoint.
+	self assert: (-1.2 @ -1.2) isPoint
 ]
 
 { #category : #'tests - testing' }
 PointTest >> testIsZero [
 
-	self assert: (0@0) isZero.	
+	self assert: (0@0) isZero.
 	self deny:  (0@1) isZero.
 	self deny:  (1@0) isZero.
-	self deny:  (1@1) isZero.
+	self deny:  (1@1) isZero
 ]
 
 { #category : #'tests - testing' }
@@ -418,7 +415,7 @@ PointTest >> testTheta [
 	tan := y  / x .
 	dir := tan arcTan.
       result :=  180.0 degreesToRadians + dir.
-      self assert: ((x @ y) theta - result) abs < 1e-15.
+      self assert: ((x @ y) theta - result) abs < 1e-15
 ]
 
 { #category : #'tests - geometry' }
@@ -428,19 +425,19 @@ PointTest >> testToIntersectsTo [
 	self assert: ( (1 @ 1) to: ( 1 @ 6) intersects: (1 @ 2) to: (1 @6) ).
 	self assert: ( (1 @ 1) to: ( 2 @ 6) intersects: (8 @ 6) to: (1 @ 1) ).
 	self assert: ( (5 @ 1) to: ( 1 @ 6) intersects: (1 @ 6) to: (9 @ 1) ).
-	self deny:  ( (1 @ 1) to: ( 1 @ 6) intersects: (2 @ 1) to: (2 @ 6) ). 
-	self deny:  ( (1 @ 1) to: ( 1 @ 6) intersects: (0 @7) to: (5 @ 7) ). 
-	self assert: ( (1 @ 1) to: ( 1 @ 6) intersects: (0 @ 2) to: (2 @ 2) ). 
-	
+	self deny:  ( (1 @ 1) to: ( 1 @ 6) intersects: (2 @ 1) to: (2 @ 6) ).
+	self deny:  ( (1 @ 1) to: ( 1 @ 6) intersects: (0 @7) to: (5 @ 7) ).
+	self assert: ( (1 @ 1) to: ( 1 @ 6) intersects: (0 @ 2) to: (2 @ 2) ).
+
 	self assert: ( (-1 @ -1) to: ( -1 @ -6) intersects: (-1 @ -1) to: (-2 @ -9) ).
 	self assert: ( (-1 @ -1) to: ( -1 @ -6) intersects: (-1 @ -2) to: (-1 @ -6) ).
 	self assert: ( (-1 @ -1) to: ( -2 @ -6) intersects: (-8 @ -6) to: (-1 @ -1) ).
 	self assert: ( (-5 @ -1) to: ( -1 @ -6) intersects: (-1 @ -6) to: (-9 @ -1) ).
-	self deny:  ( (-1 @ -1) to: (-1 @ -6) intersects: (-2 @ -1) to: (-2 @ -6) ). 
-	self deny:  ( (-1 @ -1) to: ( -1 @ -6) intersects: (-0 @ -7) to: (-5 @ -7) ). 
-	self assert: ( (-1 @ -1) to: ( -1 @ -6) intersects: (-0 @ -2) to: (-2 @ -2) ). 
-	
+	self deny:  ( (-1 @ -1) to: (-1 @ -6) intersects: (-2 @ -1) to: (-2 @ -6) ).
+	self deny:  ( (-1 @ -1) to: ( -1 @ -6) intersects: (-0 @ -7) to: (-5 @ -7) ).
+	self assert: ( (-1 @ -1) to: ( -1 @ -6) intersects: (-0 @ -2) to: (-2 @ -2) ).
+
 	"point line( 1@1 to: 1@1 ) not allowed "
-	self deny: ( (1 @ 1) to: ( 1 @ 1) intersects: (1@ 0) to: (1 @ 2) )."should be true if point line alowed" 
-	self assert: ( (1 @ 1) to: ( 1 @ 1) intersects: (1 @ 1) to: (1 @ 9) ).
+	self deny: ( (1 @ 1) to: ( 1 @ 1) intersects: (1@ 0) to: (1 @ 2) )."should be true if point line alowed"
+	self assert: ( (1 @ 1) to: ( 1 @ 1) intersects: (1 @ 1) to: (1 @ 9) )
 ]

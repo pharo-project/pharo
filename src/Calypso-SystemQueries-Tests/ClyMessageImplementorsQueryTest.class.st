@@ -32,7 +32,7 @@ ClyMessageImplementorsQueryTest >> targetSelector [
 ClyMessageImplementorsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope of: (self class >> self targetSelector) in: environment).
 	self deny: query checkEmptyResult.
-	
+
 	query scope: (ClyMethodScope of: (self class >> #messageImplementor2) in: environment).
 	self assert: query checkEmptyResult
 ]
@@ -48,12 +48,12 @@ ClyMessageImplementorsQueryTest >> testComparison [
 
 { #category : #tests }
 ClyMessageImplementorsQueryTest >> testFromClassScope [
-	
+
 	self queryFromScope: ClyBothMetaLevelClassScope of: self class.
-	
-	self assert: resultItems size equals: 2.	
+
+	self assert: resultItems size equals: 2.
 	self assert: (resultItems identityIncludes: (self class >> self targetSelector)).
-	self assert: (resultItems identityIncludes: (self class classSide >> self targetSelector)).
+	self assert: (resultItems identityIncludes: (self class classSide >> self targetSelector))
 ]
 
 { #category : #tests }
@@ -66,22 +66,22 @@ ClyMessageImplementorsQueryTest >> testFromMethodScope [
 
 { #category : #tests }
 ClyMessageImplementorsQueryTest >> testFromPackageScope [
-	
+
 	self queryFromScope: ClyPackageScope of: self class package.
-	
-	self assert: resultItems size equals: 3.	
+
+	self assert: resultItems size equals: 3.
 	self assert: (resultItems identityIncludes: self class >> self targetSelector).
 	self assert: (resultItems identityIncludes: self class classSide >> self targetSelector).
-	self assert: (resultItems identityIncludes: self class superclass >> self targetSelector).
+	self assert: (resultItems identityIncludes: self class superclass >> self targetSelector)
 ]
 
 { #category : #tests }
 ClyMessageImplementorsQueryTest >> testFromSystemScope [
 
 	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.
-	
-	self assert: resultItems size equals: 3.	
+
+	self assert: resultItems size equals: 3.
 	self assert: (resultItems identityIncludes: self class >> self targetSelector).
 	self assert: (resultItems identityIncludes: self class classSide >> self targetSelector).
-	self assert: (resultItems identityIncludes: self class superclass >> self targetSelector).
+	self assert: (resultItems identityIncludes: self class superclass >> self targetSelector)
 ]

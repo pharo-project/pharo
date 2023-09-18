@@ -11,7 +11,7 @@ CDNormalClassCategoryParserTest >> classDefinitionString [
 		instanceVariableNames: ''{instvar1} {instvar2}''
 		classVariableNames: ''{classvar1} {classvar2}''
 		category: #MyPackage'
-			format: { 
+			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
 				'instvar1' -> self firstInstanceVariableName.

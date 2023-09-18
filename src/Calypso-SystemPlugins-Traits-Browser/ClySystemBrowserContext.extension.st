@@ -4,7 +4,7 @@ Extension { #name : #ClySystemBrowserContext }
 ClySystemBrowserContext >> isSelectedClassUsesTraits [
 	| classItem |
 	classItem := self lastSelectedObjectIn: self selectedClassItems.
-	
+
 	^classItem isMarkedWith: ClyTraitUserTag
 ]
 

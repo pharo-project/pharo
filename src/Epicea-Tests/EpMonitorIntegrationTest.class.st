@@ -12,9 +12,15 @@ Class {
 	#category : #'Epicea-Tests-Integration'
 }
 
+{ #category : #asserting }
+EpMonitorIntegrationTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpMonitorIntegrationTest >> allLogEntriesWith: aClass [
-	
+
 	^ monitor log entries select: [ :each | each content class = aClass ]
 ]
 
@@ -33,20 +39,20 @@ EpMonitorIntegrationTest >> countLogEventsWith: aClass [
 { #category : #running }
 EpMonitorIntegrationTest >> setUp [
 	super setUp.
-	
+
 	logBuilder := EpTestLogBuilder new
 		useLogWithSessionStore;
 		yourself.
 	classFactory := ClassFactoryForTestCase new.
-	monitor := EpMonitor newWithLog: logBuilder log.
+	monitor := EpMonitor newWithLog: logBuilder log
 ]
 
 { #category : #running }
 EpMonitorIntegrationTest >> tearDown [
 
-	monitor disable.	
+	monitor disable.
 	classFactory cleanUp.
 	logBuilder cleanUp.
 
-	super tearDown.
+	super tearDown
 ]

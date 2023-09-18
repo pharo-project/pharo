@@ -36,7 +36,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyBrowserSearchDialogWindow class >> for: aBrowser [
-	^self new 
+	^self new
 		browser: aBrowser
 ]
 
@@ -68,7 +68,7 @@ ClyBrowserSearchDialogWindow >> defaultFocusMorph [
 
 { #category : #private }
 ClyBrowserSearchDialogWindow >> findObjectsSameAsFilter [
-	itemsView dataSource numberOfRows = 1 ifTrue: [ 
+	itemsView dataSource numberOfRows = 1 ifTrue: [
 		"single element means that it was found by filter and we can use it without extra search"
 		^ itemsView dataSource allElements collect: [:each | each actualObject] ].
 	^ itemsView findItemsSameAsFilter
@@ -87,8 +87,8 @@ ClyBrowserSearchDialogWindow >> itemsChanged [
 { #category : #initialization }
 ClyBrowserSearchDialogWindow >> newContentMorph [
 	itemsView := ClyQueryViewMorph for: self.
-	itemsView width: 250.
-		
+	itemsView width: 250 scaledByDisplayScaleFactor.
+
 	itemsView whenDoubleClickDo: [:ann | self ok ].
 	itemsView whenEnterKeyPressedDo: [:ann | self ok ].
 	itemsView whenEscapeKeyPressedDo: [:ann | self cancel ].
@@ -104,20 +104,20 @@ ClyBrowserSearchDialogWindow >> openOn: aQuery selecting: items withTitle: dialo
 
 	browser window openModal: self.
 
-	^["Following two lines should prevent special condition 
+	^["Following two lines should prevent special condition
 	when filter background process modifies current table data source.
-	During this process it first closes existing data source 
+	During this process it first closes existing data source
 	and only after that it sets up new filtered data source"
-	itemsView table cleanupFilter. "it ensures that filter process will not affect table anymore" 
-	itemsView dataSource isClosed ifTrue: [  
-		"This branch is consiquence of corner case when filter logic closes current data source 
+	itemsView table cleanupFilter. "it ensures that filter process will not affect table anymore"
+	itemsView dataSource isClosed ifTrue: [
+		"This branch is consiquence of corner case when filter logic closes current data source
 		but does not yet set up new filtered data source.
 		In that case any query of items from closed data source will fail.
 		And to avoid it we simply abort search request"
 		CmdCommandAborted signal ].
-	
+
 	self cancelled ifTrue: [ CmdCommandAborted signal ].
-	resultActionBlock value]	
+	resultActionBlock value]
 		ensure: [ itemsView closeDataSource]
 ]
 
@@ -129,7 +129,7 @@ ClyBrowserSearchDialogWindow >> openOn: aQuery withTitle: dialogTitle thenDo: re
 
 { #category : #requests }
 ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery [
-	
+
 	^ self requestMultipleObjects: dialogTitle from: aQuery selecting: #()
 ]
 
@@ -137,40 +137,40 @@ ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery
 ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery inScope: aScope [
 
 	aScope bindTo: browser navigationEnvironment.
-	
+
 	^self requestMultipleObjects: dialogTitle from: (aScope adoptQuery: aQuery)
 ]
 
 { #category : #requests }
 ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery selecting: items [
-	
-	self 
-		openOn: aQuery 
+
+	self
+		openOn: aQuery
 		selecting: items
 		withTitle: dialogTitle
-		thenDo: [ 
+		thenDo: [
 			itemsView selection isEmpty ifTrue: [ ^self findObjectsSameAsFilter ].
 			^itemsView selection actualObjects]
 ]
 
 { #category : #requests }
 ClyBrowserSearchDialogWindow >> requestSingleObject: dialogTitle from: aQuery [
-	
-	self 
+
+	self
 		openOn: aQuery
 		withTitle: dialogTitle
-		thenDo: [ 
-			itemsView selection isEmpty ifTrue: [ 
-				^self findObjectsSameAsFilter 
+		thenDo: [
+			itemsView selection isEmpty ifTrue: [
+				^self findObjectsSameAsFilter
 					ifEmpty: [ CmdCommandAborted signal ]
 					ifNotEmpty: [ :items | items first]].
-	
+
 			^itemsView selection lastSelectedItem actualObject]
 ]
 
 { #category : #requests }
 ClyBrowserSearchDialogWindow >> requestSingleObject: dialogTitle from: aQuery inScope: aScope [
-	
+
 	aScope bindTo: browser navigationEnvironment.
 
 	^self requestSingleObject: dialogTitle from: (aScope adoptQuery: aQuery)
@@ -183,7 +183,7 @@ ClyBrowserSearchDialogWindow >> showItemsOf: aQuery [
 	actualQuery := aQuery isBoundToEnvironment
 		ifTrue: [ aQuery ]
 		ifFalse: [ aQuery withScope: browser systemScope ]..
-	
+
 	itemsView showQuery: actualQuery semiAsync.
 	itemsView adoptForDialog
 ]

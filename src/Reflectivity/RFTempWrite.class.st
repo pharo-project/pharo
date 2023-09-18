@@ -27,5 +27,5 @@ RFTempWrite >> value [
 
 { #category : #accessing }
 RFTempWrite >> variableName: aSymbol [
-	variable := context temporaryVariableNamed: aSymbol
+	variable := context lookupVar: aSymbol
 ]

@@ -21,10 +21,10 @@ Month class >> august [
 ]
 
 { #category : #accessing }
-Month class >> daysInMonth: indexOrName forYear: yearInteger [ 
+Month class >> daysInMonth: indexOrName forYear: yearInteger [
 
 	| index |
-	index := indexOrName isInteger 
+	index := indexOrName isInteger
 				ifTrue: [indexOrName]
 				ifFalse: [self indexOfMonth: indexOrName].
 	^ (DaysInMonth at: index)
@@ -44,10 +44,10 @@ Month class >> february [
 ]
 
 { #category : #accessing }
-Month class >> indexOfMonth: aMonthName [ 
-	1 to: 12 do: [ :i | 
+Month class >> indexOfMonth: aMonthName [
+	1 to: 12 do: [ :i |
 		((MonthNames at: i) beginsWith:  aMonthName caseSensitive: false) ifTrue: [^i] ].
- 	self error: aMonthName , ' is not a recognized month name'.
+ 	self error: aMonthName , ' is not a recognized month name'
 ]
 
 { #category : #'instance creation' }
@@ -80,7 +80,7 @@ Month class >> month: month [
 	"Create a Month in the current year for the given <month>.
 	<month> may be a number or a String with the name of the month."
 
-	^ self 
+	^ self
 		year: DateAndTime now year
 		month: month
 ]
@@ -93,7 +93,7 @@ Month class >> month: month year: year [
 { #category : #accessing }
 Month class >> nameOfMonth: anIndex [
 
-	^ MonthNames at: anIndex.
+	^ MonthNames at: anIndex
 ]
 
 { #category : #'instance creation' }
@@ -117,7 +117,7 @@ Month class >> readFrom: aStream [
 	y nextPut: c.
 	[aStream atEnd] whileFalse: [y nextPut: aStream next].
 
-	^ self 
+	^ self
 		year: y contents asNumber
 		month: (Month indexOfMonth: m contents)
 
@@ -130,7 +130,7 @@ Month class >> september [
 ]
 
 { #category : #'instance creation' }
-Month class >> starting: aDateAndTime duration: aDuration [ 
+Month class >> starting: aDateAndTime duration: aDuration [
 	"Override - a each month has a defined duration"
 	| start adjusted days |
 	start := aDateAndTime asDateAndTime.
@@ -139,8 +139,8 @@ Month class >> starting: aDateAndTime duration: aDuration [
 				month: start month
 				day: 1
 				offset: aDateAndTime offset.
-	days := self 
-		daysInMonth: adjusted month 
+	days := self
+		daysInMonth: adjusted month
 		forYear: adjusted year.
 	^ super
 		starting: adjusted
@@ -165,7 +165,7 @@ Month >> asMonth [
 { #category : #accessing }
 Month >> daysInMonth [
 
-	^ self duration days.
+	^ self duration days
 ]
 
 { #category : #accessing }
@@ -175,21 +175,21 @@ Month >> index [
 ]
 
 { #category : #testing }
-Month >> name [ 
+Month >> name [
 
 	^ self monthName
 ]
 
 { #category : #accessing }
-Month >> previous [ 
+Month >> previous [
 
 	^ self class starting: (self start - 1)
 ]
 
 { #category : #printing }
-Month >> printOn: aStream [ 
+Month >> printOn: aStream [
 
-	aStream nextPutAll: self monthName; space; print: self year .
+	aStream nextPutAll: self monthName; space; print: self year
 ]
 
 { #category : #private }

@@ -9,21 +9,21 @@ Class {
 
 { #category : #execution }
 SycAbstractVariableCommand >> asRefactorings [
-	
+
 	^self
-		createRefactorings: RBAbstractInstanceVariableRefactoring 
+		createRefactorings: RBAbstractInstanceVariableRefactoring
 		using: [ :refactoring :var |
 			refactoring variable: var name class: selectedClass name ]
 ]
 
 { #category : #accessing }
-SycAbstractVariableCommand >> defaultMenuIconName [ 
+SycAbstractVariableCommand >> defaultMenuIconName [
 	^ #smallAdd
 ]
 
 { #category : #accessing }
 SycAbstractVariableCommand >> defaultMenuItemName [
-	
+
 	^'Abstract accessors'
 ]
 
@@ -31,6 +31,6 @@ SycAbstractVariableCommand >> defaultMenuItemName [
 SycAbstractVariableCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
-	selectedClass := aToolContext selectedClassSide.
+	selectedClass := aToolContext selectedVariables first definingClass.
 	variables := aToolContext selectedVariables
 ]

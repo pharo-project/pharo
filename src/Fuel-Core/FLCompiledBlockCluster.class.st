@@ -20,13 +20,9 @@ FLCompiledBlockCluster >> afterMaterializationStepWith: aDecoder [
 		cluster."
 	aDecoder configuration isMethodChangedWarningDisabled ifTrue: [
 		^ self ].
-	
+
 	objects
-		select: [ :block |
-			| method |
-			method := block method.
-			(method methodClass includesSelector: method selector) not or: [
-				(method methodClass compiledMethodAt: method selector) bytecodesHash ~= method bytecodesHash ] ]
+		select: [ :block | self shouldWarnThatMethodChangedFor: block ]
 		thenDo: [ :block |
 			FLMethodChanged
 				signalWith: block methodClass name
@@ -64,4 +60,15 @@ FLCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncoder [
 	anEncoder
 		encodeUint32: bytecode basicSize;
 		encodeBytes: bytecode
+]
+
+{ #category : #'serialize/materialize' }
+FLCompiledBlockCluster >> shouldWarnThatMethodChangedFor: aBlock [
+	| method currentMethod |
+	method := aBlock method.
+	(method methodClass includesSelector: method selector) ifFalse: [ ^ true ].
+	
+	currentMethod := method methodClass compiledMethodAt: method selector.
+	^ currentMethod bytecodesHash ~= method bytecodesHash or: [
+		currentMethod literals ~= method literals ]
 ]

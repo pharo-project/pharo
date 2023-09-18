@@ -34,7 +34,7 @@ KMDispatchChain >> dispatch: aKeyboardEvent [
 { #category : #initialization }
 KMDispatchChain >> dispatcher: aDispatcher [
 	dispatcher := aDispatcher.
-	self target: dispatcher target.
+	self target: dispatcher target
 ]
 
 { #category : #iterating }
@@ -50,7 +50,7 @@ KMDispatchChain >> do: aBlock [
 
 { #category : #initialization }
 KMDispatchChain >> startOn: anInitialTarget [
-	initialTarget := anInitialTarget.
+	initialTarget := anInitialTarget
 ]
 
 { #category : #iterating }

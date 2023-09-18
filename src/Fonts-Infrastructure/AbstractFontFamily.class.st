@@ -20,10 +20,10 @@ AbstractFontFamily class >> isAbstract [
 { #category : #'member lookup' }
 AbstractFontFamily >> closestMemberWithStretchValue: stretchValue weightValue: weightValue slantValue: slantValue [
 
-	"answer the member that has weight, slant and stretch values that most closely 
+	"answer the member that has weight, slant and stretch values that most closely
 	match those given by stretchValue, weightValue, and slantValue"
 
-	^ (self members asSortedCollection: [ :a :b | 
+	^ (self members asSortedCollection: [ :a :b |
 		   a
 			   isCloserMatchThan: b
 			   toStretch: stretchValue
@@ -54,7 +54,7 @@ AbstractFontFamily >> members [
 
 { #category : #printing }
 AbstractFontFamily >> printOn: aStream [
-	aStream 
+	aStream
 		print: self class name;
 		nextPut: $ ;
 		print: self familyName

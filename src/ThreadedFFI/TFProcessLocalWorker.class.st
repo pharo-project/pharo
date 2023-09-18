@@ -35,10 +35,36 @@ Class {
 	#category : #'ThreadedFFI-Worker'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TFProcessLocalWorker class >> initialize [
-	
+
 	worker := ProcessLocalVariable new
+]
+
+{ #category : #accessing }
+TFProcessLocalWorker class >> use: aWorker during: aBlock [
+	| oldWorker |
+	
+	oldWorker := self worker.
+	self worker: aWorker.
+	^ aBlock ensure: [ 
+		self worker: oldWorker ]
+]
+
+{ #category : #accessing }
+TFProcessLocalWorker class >> useMainThreadDuring: aBlock [ 
+
+	^ self 
+		use: TFMainThreadRunner uniqueInstance
+		during: aBlock
+]
+
+{ #category : #accessing }
+TFProcessLocalWorker class >> useSameThreadDuring: aBlock [ 
+
+	^ self 
+		use: TFSameThreadRunner uniqueInstance
+		during: aBlock
 ]
 
 { #category : #accessing }
@@ -66,11 +92,23 @@ TFProcessLocalWorker >> defaultWorker: aWorker [
 ]
 
 { #category : #executing }
-TFProcessLocalWorker >> invokeFunction: aTFExternalFunction withArguments: aCollection [ 
+TFProcessLocalWorker >> ensureInitialized [
+
+	self worker ensureInitialized
+]
+
+{ #category : #accessing }
+TFProcessLocalWorker >> forCallback [
 
 	^ self worker
-		invokeFunction: aTFExternalFunction 
-		withArguments: aCollection 
+]
+
+{ #category : #executing }
+TFProcessLocalWorker >> invokeFunction: aTFExternalFunction withArguments: aCollection [
+
+	^ self worker
+		invokeFunction: aTFExternalFunction
+		withArguments: aCollection
 ]
 
 { #category : #private }
@@ -78,12 +116,12 @@ TFProcessLocalWorker >> primitivePerformWorkerCall: aTFExternalFunction
 		withArguments: argumentHolder
 		withReturnHolder: aReturnHolder
 		usingSemaphore: anInteger [
-		
+
 	self error: 'Should not arrive here'
 ]
 
 { #category : #executing }
 TFProcessLocalWorker >> worker [
-		
+
 	^ self class worker ifNil: [ self defaultWorker ]
 ]

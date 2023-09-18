@@ -40,7 +40,7 @@ StdioStream >> next: n [
 	| readBuffer read startingAt |
 	readBuffer := ByteArray new: n.
 	startingAt := 1.
-	peekBuffer ifNotNil: [ 
+	peekBuffer ifNotNil: [
 		readBuffer at: 1 put: peekBuffer.
 		startingAt := startingAt + 1.
 		peekBuffer := nil ].
@@ -52,7 +52,7 @@ StdioStream >> next: n [
 
 { #category : #accessing }
 StdioStream >> peek [
-	"Answer the next element of the stream, but do not advance the stream pointer. 
+	"Answer the next element of the stream, but do not advance the stream pointer.
 	If the receiver is at the end, answer nil."
 
 	self atEnd ifTrue: [ ^ nil ].

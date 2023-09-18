@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-ClySubstringPattern class >> with: patternString caseSensitive: aBool [ 
+ClySubstringPattern class >> with: patternString caseSensitive: aBool [
 	^(self with: patternString)
 		isCaseSensitive: aBool
 ]
@@ -46,7 +46,7 @@ ClySubstringPattern >> hash [
 { #category : #initialization }
 ClySubstringPattern >> initialize [
 	super initialize.
-	
+
 	isCaseSensitive := false
 ]
 

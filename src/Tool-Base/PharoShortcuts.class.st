@@ -54,12 +54,13 @@ PharoShortcuts >> backwardLineShortcut [
 
 { #category : #'keymaps - editor edit' }
 PharoShortcuts >> backwardWordDeleteShortcut [
-
-	^ Character backspace shift
+	"Equivalent to: ctrl+backspace on Windows/Linux, option/alt+backspace on OSX"
+	^ Character backspace meta
 ]
 
 { #category : #'keymaps - editor navigation' }
 PharoShortcuts >> backwardWordShortcut [
+	"Equivalent to: ctrl+left on Windows/Linux, option/alt+left on OSX"
 	^ Character arrowLeft meta
 ]
 
@@ -174,7 +175,9 @@ PharoShortcuts >> delShortcut [
 { #category : #'keymaps - editor edit' }
 PharoShortcuts >> delWordShortcut [
 
-	^ Character delete shift asShortcut
+	^ (OSPlatform current isMacOS)
+		ifTrue: [ $d ctrl asShortcut ]
+		ifFalse: [ Character delete ctrl asShortcut ]
 ]
 
 { #category : #'keymaps - code' }
@@ -249,6 +252,7 @@ PharoShortcuts >> forwardLineShortcut [
 
 { #category : #'keymaps - editor navigation' }
 PharoShortcuts >> forwardWordShortcut [
+	"Equivalent to: ctrl+right on Windows/Linux, option/alt+right on OSX"
 	^ Character arrowRight meta
 ]
 
@@ -462,7 +466,8 @@ PharoShortcuts >> selectBackwardLineShortcut [
 
 { #category : #'keymaps - editor selection' }
 PharoShortcuts >> selectBackwardWordShortcut [
-	^ Character arrowLeft meta shift
+	"Equivalent to: ctrl+shift+left on Windows/Linux, option/alt+shift+left on OSX"
+	^ Character arrowLeft shift meta
 ]
 
 { #category : #'keymaps - editor selection' }
@@ -479,6 +484,7 @@ PharoShortcuts >> selectForwardLineShortcut [
 
 { #category : #'keymaps - editor selection' }
 PharoShortcuts >> selectForwardWordShortcut [
+	"Equivalent to: ctrl+shift+right on Windows/Linux, option/alt+shift+right on OSX"
 	^ Character arrowRight shift meta
 ]
 
@@ -508,7 +514,6 @@ PharoShortcuts >> selectPageUpShortcut [
 PharoShortcuts >> selectTextEndShortcut [
 
 	^ Character end shift meta
-	 
 ]
 
 { #category : #'keymaps - editor selection' }
@@ -536,7 +541,7 @@ PharoShortcuts >> setSearchStringShortcut [
 { #category : #'keymaps - debugger' }
 PharoShortcuts >> stepIntoShortcut [
 
-	^ $e meta 
+	^ $e meta
 ]
 
 { #category : #'keymaps - debugger' }
@@ -567,14 +572,12 @@ PharoShortcuts >> swapCharsShortcut [
 PharoShortcuts >> textEndShortcut [
 
 	^ Character end meta
-	 
 ]
 
 { #category : #'keymaps - editor navigation' }
 PharoShortcuts >> textStartShortcut [
 
 	^ Character home meta
-
 ]
 
 { #category : #'keymaps - editor style' }

@@ -15,10 +15,10 @@ RBCommentNodeVisitorTest >> testVisitDetect [
 	"comment 2"
 	"comment 3"
 	^true'.
-	
+
 	node := RBCommentNodeVisitor visit: tree detect: [ :n | n intersectsInterval: (20 to: 20) ].
-	
-	self 
+
+	self
 		assert: node contents equals: 'comment 2'
 ]
 
@@ -30,11 +30,11 @@ RBCommentNodeVisitorTest >> testVisitDo [
 	"comment 2"
 	"comment 3"
 	^true'.
-	
+
 	count := 0.
 	node := RBCommentNodeVisitor visit: tree do: [ :n | count := count + 1 ].
-	
-	self 
+
+	self
 		assert: count equals: 3
 ]
 
@@ -46,9 +46,9 @@ RBCommentNodeVisitorTest >> testVisitSelect [
 	"comment 2"
 	"comment 3"
 	^true'.
-	
+
 	node := RBCommentNodeVisitor visit: tree select: [ :n | n contents endsWith: '2'].
-	
-	self 
+
+	self
 		assert: node first contents equals: 'comment 2'
 ]

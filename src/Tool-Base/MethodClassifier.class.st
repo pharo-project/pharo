@@ -10,13 +10,26 @@ Class {
 	#instVars : [
 		'protocol'
 	],
+	#classVars : [
+		'ShouldAlwaysClassify'
+	],
 	#classInstVars : [
 		'prefixMapping',
 		'keywordSuffixMapping',
-		'pragmaMapping'
+		'pragmaMapping',
+		'exactMapping'
 	],
 	#category : #'Tool-Base-Utilities'
 }
+
+{ #category : #private }
+MethodClassifier class >> buildExactMapping [
+
+	exactMapping := Dictionary new
+		                at: 'setUp' put: 'running';
+		                at: 'tearDown' put: 'running';
+		                yourself
+]
 
 { #category : #private }
 MethodClassifier class >> buildKeywordSuffixMapping [
@@ -43,66 +56,70 @@ MethodClassifier class >> buildKeywordSuffixMapping [
 MethodClassifier class >> buildPragmaMapping [
 	pragmaMapping := Dictionary new
 		at: 'example' put: 'examples';
-		at: 'spec' put: 'specs';
-		at: 'spec:' put: 'specs';
 		at: 'symbolicVersion:' put: 'symbolic versions';
 		yourself
 ]
 
 { #category : #private }
 MethodClassifier class >> buildPrefixMapping [
+
 	prefixMapping := Dictionary new
-		at: 'accept' put: 'visiting';
-		at: 'accepts' put: 'testing';
-		at: 'add' put: 'adding';
-		at: 'as' put: 'converting';
-		at: 'assert' put: 'asserting';
-		at: 'at' put: 'accessing';
-		at: 'baseline' put: 'baselines';
-		at: 'bench' put: 'benchmarking';
-		at: 'benchmark' put: 'benchmarking';
-		at: 'can' put: 'testing';
-		at: 'compile' put: 'compiling';
-		at: 'copy' put: 'copying';
-		at: 'deny' put: 'asserting';
-		at: 'first' put: 'accessing';
-		at: 'format' put: 'formatting';
-		at: 'from' put: 'instance creation';
-		at: 'has' put: 'testing';
-		at: 'includes' put: 'testing';
-		at: 'index' put: 'accessing';
-		at: 'initialize' put: 'initialization';
-		at: 'is' put: 'testing';
-		at: 'last' put: 'accessing';
-		at: 'matches' put: 'testing';
-		at: 'max' put: 'accessing';
-		at: 'maximum' put: 'accessing';
-		at: 'min' put: 'accessing';
-		at: 'minimum' put: 'accessing';
-		at: 'needs' put: 'testing';
-		at: 'new' put: 'instance creation';
-		at: 'parse' put: 'parsing';
-		at: 'print' put: 'printing';
-		at: 'remove' put: 'removing';
-		at: 'render' put: 'rendering';
-		at: 'requires' put: 'testing';
-		at: 'reset' put: 'initialization';
-		at: 'set' put: 'initialization';
-		at: 'should' put: 'asserting';
-		at: 'shouldnt' put: 'asserting';
-		at: 'signal' put: 'signalling';
-		at: 'sort' put: 'sorting';
-		at: 'test' put: 'tests';
-		at: 'total' put: 'accessing';
-		at: 'version' put: 'versions';
-		at: 'visit' put: 'visiting';
-		at: 'write' put: 'writing';
-		yourself
+		                 at: 'accept' put: 'visiting';
+		                 at: 'accepts' put: 'testing';
+		                 at: 'add' put: 'adding';
+		                 at: 'as' put: 'converting';
+		                 at: 'assert' put: 'asserting';
+		                 at: 'at' put: 'accessing';
+		                 at: 'baseline' put: 'baselines';
+		                 at: 'bench' put: 'benchmarking';
+		                 at: 'benchmark' put: 'benchmarking';
+		                 at: 'can' put: 'testing';
+		                 at: 'compile' put: 'compiling';
+		                 at: 'copy' put: 'copying';
+		                 at: 'deny' put: 'asserting';
+		                 at: 'first' put: 'accessing';
+		                 at: 'format' put: 'formatting';
+		                 at: 'from' put: 'instance creation';
+		                 at: 'has' put: 'testing';
+		                 at: 'includes' put: 'testing';
+		                 at: 'index' put: 'accessing';
+		                 at: 'initialize' put: 'initialization';
+		                 at: 'is' put: 'testing';
+		                 at: 'last' put: 'accessing';
+		                 at: 'matches' put: 'testing';
+		                 at: 'max' put: 'accessing';
+		                 at: 'maximum' put: 'accessing';
+		                 at: 'min' put: 'accessing';
+		                 at: 'minimum' put: 'accessing';
+		                 at: 'needs' put: 'testing';
+		                 at: 'new' put: 'instance creation';
+		                 at: 'parse' put: 'parsing';
+		                 at: 'print' put: 'printing';
+		                 at: 'remove' put: 'removing';
+		                 at: 'render' put: 'rendering';
+		                 at: 'requires' put: 'testing';
+		                 at: 'reset' put: 'initialization';
+		                 at: 'set' put: 'initialization';
+		                 at: 'should' put: 'asserting';
+		                 at: 'shouldnt' put: 'asserting';
+		                 at: 'signal' put: 'signalling';
+		                 at: 'sort' put: 'sorting';
+		                 at: 'test' put: 'tests';
+		                 at: 'total' put: 'accessing';
+		                 at: 'version' put: 'versions';
+		                 at: 'visit' put: 'visiting';
+		                 at: 'write' put: 'writing';
+		                 yourself
 ]
 
 { #category : #classification }
 MethodClassifier class >> classify: aMethod [
 	^ self new classify: aMethod
+]
+
+{ #category : #classification }
+MethodClassifier class >> classify: aMethod fallbackProtocol: fallbackProtocol [
+	^ self new classify: aMethod fallbackProtocol: fallbackProtocol
 ]
 
 { #category : #classification }
@@ -112,11 +129,18 @@ MethodClassifier class >> classifyAll: aCollectionOfMethods [
 
 { #category : #private }
 MethodClassifier class >> clearMappings [
-	"self clearMappings"
 
-	prefixMapping := nil.
-	keywordSuffixMapping := nil.
-	pragmaMapping := nil.
+	<script>
+	prefixMapping := keywordSuffixMapping := pragmaMapping := exactMapping := nil
+]
+
+{ #category : #accessing }
+MethodClassifier class >> exactMapping [
+	"use a class inst var so subclasses can define custom mappings"
+
+	^ exactMapping ifNil: [
+		  self buildExactMapping.
+		  exactMapping ]
 ]
 
 { #category : #accessing }
@@ -130,9 +154,10 @@ MethodClassifier class >> keywordSuffixMapping [
 { #category : #accessing }
 MethodClassifier class >> pragmaMapping [
 	"use a class inst var so subclasses can define custom mappings"
+
 	^ pragmaMapping ifNil: [
-		self buildPragmaMapping.
-		pragmaMapping]
+		  self buildPragmaMapping.
+		  pragmaMapping ]
 ]
 
 { #category : #accessing }
@@ -143,24 +168,60 @@ MethodClassifier class >> prefixMapping [
 		prefixMapping]
 ]
 
+{ #category : #accessing }
+MethodClassifier class >> settingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #shouldAlwaysClassify)
+		parent: #Calypso;
+		label: 'Automatically classify methods instead of using the selected protocol.';
+		default: false;
+		description: 'If true, the system browser will try to classify the methods using their name instead of using the currently selected protocol.';
+		target: self
+]
+
+{ #category : #accessing }
+MethodClassifier class >> shouldAlwaysClassify [
+	"When enabled I'll try to classify all new methods in the code browser instead of using the selected protocol."
+
+	^ ShouldAlwaysClassify ifNil: [ ShouldAlwaysClassify := false ]
+]
+
+{ #category : #accessing }
+MethodClassifier class >> shouldAlwaysClassify: anObject [
+
+	ShouldAlwaysClassify := anObject
+]
+
 { #category : #classification }
 MethodClassifier class >> suggestProtocolFor: aMethod [
-	^ (self new suggestProtocolFor: aMethod) ifNil: [ 'as yet unclassified' ]
+
+	^ (self new suggestProtocolFor: aMethod) ifNil: [ Protocol unclassified ]
 ]
 
 { #category : #classification }
 MethodClassifier >> classify: aMethod [
 
+	self classify: aMethod fallbackProtocol: nil
+]
+
+{ #category : #classification }
+MethodClassifier >> classify: aMethod fallbackProtocol: fallbackProtocol [
+	"fallback protocol is the protocol that was selected at method creation.
+	It will only be used if standard rules do not find a protocol for this method or if automatic classification is disabled.
+	It allows to have consistency for well known method names / prefixes."
+
+	"If the #shouldAlwaysClassify setting is off, we classify only if the given protocol is nil"
+	(self class shouldAlwaysClassify or: [ fallbackProtocol isNil ]) ifFalse: [ ^ aMethod protocol: fallbackProtocol ].
+
 	self suggestProtocolFor: aMethod.
-	protocol ifNotNil: [ aMethod protocol: protocol ]
-
-
-
+	protocol ifNotNil: [ ^ aMethod protocol: protocol ].
+	fallbackProtocol ifNotNil: [ aMethod protocol: fallbackProtocol ]
 ]
 
 { #category : #classification }
 MethodClassifier >> classifyAll: aCollectionOfMethods [
-	
+
 	aCollectionOfMethods do: [ :method |
 		self resetProtocol.
 		self classify: method ]
@@ -168,23 +229,29 @@ MethodClassifier >> classifyAll: aCollectionOfMethods [
 
 { #category : #accessing }
 MethodClassifier >> listToFindProtocols [
-	^ #(#protocolAccessorFor: #protocolByKnownKeywordSuffix: 
-	#protocolByKnownPragma: #protocolByKnownPrefix: 
-	#protocolByOtherImplementors: #protocolInSuperclassProtocol:)
+
+	^ #( #protocolInSuperclassProtocol: #protocolByKnownMapping: #protocolAccessorFor: #protocolByKnownKeywordSuffix: #protocolByKnownPragma:
+	     #protocolByKnownPrefix: #protocolByOtherImplementors: )
+]
+
+{ #category : #accessing }
+MethodClassifier >> protocol [
+
+	^ protocol
 ]
 
 { #category : #'classification-rules' }
 MethodClassifier >> protocolAccessorFor: aMethod [
 	" If the method is a setter or getter for a  "
 	| names selector |
-	
+
 	names := aMethod methodClass allInstVarNames.
 	selector := aMethod selector.
-	
+
 	(selector endsWith: ':')
 		ifTrue: [ "selector might be a setter"
 			selector := selector allButLast ].
-	
+
 	(names includes: selector)
 		ifFalse: [ ^ self ].
 	protocol := 'accessing'
@@ -197,12 +264,17 @@ MethodClassifier >> protocolByKnownKeywordSuffix: aMethod [
 ]
 
 { #category : #'classification-rules' }
+MethodClassifier >> protocolByKnownMapping: aMethod [
+
+	self class exactMapping keysAndValuesDo: [ :selector :p | aMethod selector = selector ifTrue: [ protocol := p ] ]
+]
+
+{ #category : #'classification-rules' }
 MethodClassifier >> protocolByKnownPragma: aMethod [
 	self class pragmaMapping
-		keysAndValuesDo: [ :pragma :p | 
+		keysAndValuesDo: [ :pragma :p |
 			(aMethod hasPragmaNamed: pragma)
 				ifTrue: [ protocol := p] ]
-	
 ]
 
 { #category : #'classification-rules' }
@@ -213,21 +285,17 @@ MethodClassifier >> protocolByKnownPrefix: aMethod [
 
 { #category : #'classification-rules' }
 MethodClassifier >> protocolByOtherImplementors: aMethod [
+
 	| protocolBag |
-	
 	protocolBag := Bag new.
-	
-	aMethod implementors 
-		ifEmpty: [ ^ self ]
-		ifNotEmpty: [ :methods |
-			methods 
-				do: [ :method | 
-					((method protocol beginsWith: '*') or: [ method protocol = Protocol unclassified ])
-						ifFalse: [ protocolBag add: method protocol ]]
-				without: aMethod ].
-			
+
+	aMethod implementors ifEmpty: [ ^ self ] ifNotEmpty: [ :implementor |
+		implementor
+			do: [ :method | (method isExtension or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ]
+			without: aMethod ].
+
 	protocolBag ifEmpty: [ ^ self ].
-	protocol := protocolBag sortedCounts first value.
+	protocol := protocolBag sortedCounts first value
 ]
 
 { #category : #private }
@@ -236,9 +304,9 @@ MethodClassifier >> protocolForKnownKeywordSuffixOfSelector: aSelector [
 	from aSelector or that a keyword ends with or nil if there isn't one."
 
 	aSelector keywords
-		do: [ :each | 
+		do: [ :each |
 			self class keywordSuffixMapping
-				keysAndValuesDo: [ :suffix :p | 
+				keysAndValuesDo: [ :suffix :p |
 					(each = suffix or: [ each endsWith: suffix ])
 						ifTrue: [ ^ p ] ] ].
 	^ nil
@@ -253,7 +321,7 @@ MethodClassifier >> protocolForKnownPrefixOfSelector: aSelector [
 	| selectorString |
 	selectorString := aSelector asString.
 	self class prefixMapping
-		keysAndValuesDo: [ :prefix :p | 
+		keysAndValuesDo: [ :prefix :p |
 			(selectorString = prefix
 				or: [ (selectorString beginsWith: prefix)
 						and: [ (selectorString at: prefix size + 1) isLowercase not ] ])
@@ -273,11 +341,11 @@ MethodClassifier >> resetProtocol [
 ]
 
 { #category : #'smartSuggestions - support' }
-MethodClassifier >> suggestProtocolFor: aMethod [ 
+MethodClassifier >> suggestProtocolFor: aMethod [
 	| listToSearch index |
 	listToSearch := self listToFindProtocols.
 	index := 1.
-	[ protocol isNil and: [ index <= listToSearch size ] ] 
+	[ protocol isNil and: [ index <= listToSearch size ] ]
 	whileTrue: [ self perform: (listToSearch at: index) withArguments: {aMethod}.
 		index := index + 1 ].
 	^ protocol
@@ -285,17 +353,15 @@ MethodClassifier >> suggestProtocolFor: aMethod [
 
 { #category : #classification }
 MethodClassifier >> superclassProtocol: aMethod [
+
 	| currentClass |
 	currentClass := aMethod methodClass.
-	
+
 	[ currentClass superclass isNil ] whileFalse: [
 		currentClass := currentClass superclass.
-		(currentClass includesSelector: aMethod selector) 
-			ifTrue: [ 
-				| possibleProtocol |
-				possibleProtocol := (currentClass >> aMethod selector) protocol.
-				((possibleProtocol beginsWith: '*') or: 
-					(possibleProtocol asSymbol = currentClass package name))
-						ifFalse: [ ^ possibleProtocol ]]].
-	^ nil.
+		(currentClass includesSelector: aMethod selector) ifTrue: [
+			| possibleProtocol |
+			possibleProtocol := (currentClass >> aMethod selector) protocol.
+			(possibleProtocol isExtensionProtocol or: [ possibleProtocol name = currentClass package name ]) ifFalse: [ ^ possibleProtocol name ] ] ].
+	^ nil
 ]

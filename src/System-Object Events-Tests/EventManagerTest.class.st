@@ -20,7 +20,7 @@ addArg2: arg2 [
 
 { #category : #coverage }
 EventManagerTest >> classToBeTested [
-	
+
 	^ EventManager
 ]
 
@@ -69,7 +69,7 @@ EventManagerTest >> tearDown [
 	eventSource releaseActionMap.
 	eventSource := nil.
 	eventListener := nil.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'running - dependent action' }
@@ -152,10 +152,10 @@ EventManagerTest >> testNoArgumentEventDependentSuppliedArgument [
 { #category : #'running - dependent action supplied arguments' }
 EventManagerTest >> testNoArgumentEventDependentSuppliedArguments [
 
-	eventSource 
-		when: #anEvent 
-		send: #addArg1:addArg2: 
-		to: self 
+	eventSource
+		when: #anEvent
+		send: #addArg1:addArg2:
+		to: self
 		withArguments: #('hello' 'world').
 	eventSource triggerEvent: #anEvent.
 	self should: [(eventListener includes: 'hello') and: [eventListener includes: 'world']]
@@ -190,7 +190,7 @@ EventManagerTest >> testRemoveActionsTwiceForEvent [
 	eventSource removeActionsForEvent: #anEvent.
 	self assert: (eventSource hasActionForEvent: #anEvent) not.
 	eventSource removeActionsForEvent: #anEvent.
-	self assert: (eventSource hasActionForEvent: #anEvent) not.
+	self assert: (eventSource hasActionForEvent: #anEvent) not
 ]
 
 { #category : #'running - remove actions' }
@@ -207,6 +207,35 @@ EventManagerTest >> testRemoveActionsWithReceiver [
 	self assert: (action respondsTo: #receiver).
 	self assert: ((action receiver == self) not).
 	self assert: ((eventSource hasActionsWithReceiver: self) not)
+]
+
+{ #category : #'running - remove actions' }
+EventManagerTest >> testRemoveManyActionsSatisfying [
+	"See issue #14317--removing many actions wwould sometimes fail due to modification-under-iteration."
+
+	1 to: 10 do: [ :i |
+		eventSource
+			when: (#event , i printString) asSymbol
+			send: (#message , i printString) asSymbol
+			to: self ].
+	self assert: (eventSource hasActionsWithReceiver: self).
+	"Real code should use #removeActionsWithReceiver:, but this is a convenient condition to use here."
+	eventSource removeActionsSatisfying: [ :each | each receiver == self ].
+	self deny: (eventSource hasActionsWithReceiver: self)
+]
+
+{ #category : #'running - remove actions' }
+EventManagerTest >> testRemoveManyActionsWithReceiver [
+	"See issue #14317--removing many actions wwould sometimes fail due to modification-under-iteration."
+
+	1 to: 10 do: [ :i |
+		eventSource
+			when: (#event , i printString) asSymbol
+			send: (#message , i printString) asSymbol
+			to: self ].
+	self assert: (eventSource hasActionsWithReceiver: self).
+	eventSource removeActionsWithReceiver: self.
+	self deny: (eventSource hasActionsWithReceiver: self)
 ]
 
 { #category : #'running - dependent value' }

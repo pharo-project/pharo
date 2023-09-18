@@ -20,7 +20,7 @@ ReMultiplePeriodsTerminatingStatementRuleTest >> sampleMethod [
 ReMultiplePeriodsTerminatingStatementRuleTest >> testRule [
 	| critiques |
 	critiques := self myCritiques .
-	
+
 	self assert: critiques size equals: 2.
-	self assert: (self sourceAtChritique: critiques first) equals: '.  .'.
+	self assert: (self sourceAtChritique: critiques first) equals: '.  .'
 ]

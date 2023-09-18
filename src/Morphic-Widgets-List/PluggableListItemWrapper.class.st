@@ -29,7 +29,7 @@ PluggableListItemWrapper >> asString [
 { #category : #accessing }
 PluggableListItemWrapper >> contents [
 	getContentsSelector ifNil:[^#()].
-	^self sendToModel: getContentsSelector.
+	^self sendToModel: getContentsSelector
 ]
 
 { #category : #accessing }
@@ -40,7 +40,7 @@ PluggableListItemWrapper >> getContentsSelector [
 { #category : #accessing }
 PluggableListItemWrapper >> getContentsSelector: aSymbol [
 	self validateSelector: aSymbol.
-	getContentsSelector := aSymbol.
+	getContentsSelector := aSymbol
 ]
 
 { #category : #accessing }
@@ -51,7 +51,7 @@ PluggableListItemWrapper >> getStringSelector [
 { #category : #accessing }
 PluggableListItemWrapper >> getStringSelector: aSymbol [
 	self validateSelector: aSymbol.
-	getStringSelector := aSymbol.
+	getStringSelector := aSymbol
 ]
 
 { #category : #accessing }
@@ -68,27 +68,27 @@ PluggableListItemWrapper >> hasContentsSelector [
 { #category : #accessing }
 PluggableListItemWrapper >> hasContentsSelector: aSymbol [
 	self validateSelector: aSymbol.
-	hasContentsSelector := aSymbol.
+	hasContentsSelector := aSymbol
 ]
 
 { #category : #printing }
 PluggableListItemWrapper >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
-		nextPut: $(; 
-		print: self; 
+	aStream
+		nextPut: $(;
+		print: self;
 		nextPut: $)
 ]
 
 { #category : #private }
 PluggableListItemWrapper >> sendToModel: aSelector [
-	aSelector numArgs = 0 
+	aSelector numArgs = 0
 		ifTrue:[^model perform: aSelector].
-	aSelector numArgs = 1 
+	aSelector numArgs = 1
 		ifTrue:[^model perform: aSelector with: item].
-	aSelector numArgs = 2 
-		ifTrue:[^model perform: aSelector with: item with: self].
+	aSelector numArgs = 2
+		ifTrue:[^model perform: aSelector with: item with: self]
 ]
 
 { #category : #accessing }
@@ -103,5 +103,5 @@ PluggableListItemWrapper >> string: aString [
 
 { #category : #private }
 PluggableListItemWrapper >> validateSelector: aSymbol [
-	(aSymbol numArgs between: 0 and: 2) ifFalse:[^self error: 'Invalid pluggable selector'].
+	(aSymbol numArgs between: 0 and: 2) ifFalse:[^self error: 'Invalid pluggable selector']
 ]

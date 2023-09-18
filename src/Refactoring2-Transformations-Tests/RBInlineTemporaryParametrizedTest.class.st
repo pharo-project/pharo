@@ -13,39 +13,48 @@ RBInlineTemporaryParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBInlineTemporaryParametrizedTest >> constructor [ 
+RBInlineTemporaryParametrizedTest >> constructor [
 	^ #inline:from:in:
+]
+
+{ #category : #'failure tests' }
+RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryBadInterval [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (29 to: 100).
+				 #moveDefinition.
+				 RBClassDataForRefactoringTest })
+]
+
+{ #category : #'failure tests' }
+RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryMutlipleAssignment [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (58 to: 81).
+				 #moveDefinition.
+				 RBClassDataForRefactoringTest })
+]
+
+{ #category : #'failure tests' }
+RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryReadBeforeWritten [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (48 to: 56).
+				 #inlineTemporary.
+				 RBClassDataForRefactoringTest })
 ]
 
 { #category : #tests }
 RBInlineTemporaryParametrizedTest >> testInlineTemporary [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (24 to: 72) . #inlineMethod . RBRefactoryTestDataApp }.
-	
+		{ (24 to: 72) . #inlineMethod . RBClassDataForRefactoringTest }.
+
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMethod) equals: (self parseMethod: 'inlineMethod
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineMethod) equals: (self parseMethod: 'inlineMethod
 										^self
 													foo;
 													inlineMethod;
 													bar')
-]
-
-{ #category : #'failure tests' }
-RBInlineTemporaryParametrizedTest >> testInlineTemporaryBadInterval [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (29 to: 100) . #moveDefinition . RBRefactoryTestDataApp })
-]
-
-{ #category : #'failure tests' }
-RBInlineTemporaryParametrizedTest >> testInlineTemporaryMutlipleAssignment [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (60 to: 83) . #moveDefinition . RBRefactoryTestDataApp })
-]
-
-{ #category : #'failure tests' }
-RBInlineTemporaryParametrizedTest >> testInlineTemporaryReadBeforeWritten [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (48 to: 56) . #inlineTemporary . RBRefactoryTestDataApp })
 ]

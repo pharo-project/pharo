@@ -59,18 +59,25 @@ DeprecatedSlot >> printOn: aStream [
 
 { #category : #'meta-object-protocol' }
 DeprecatedSlot >> read: anObject [
-	SlotDeprecation new
-		context: thisContext;
-		explanation: self message;
-		signal.
+
+	"In case this is ShiftClassInstaller then we are migrating the instances and we should not raise a deprecation"
+	thisContext sender class = ShiftClassInstaller ifFalse: [
+		SlotDeprecation new
+			context: thisContext;
+			explanation: self message;
+			signal ].
 	super read: anObject
 ]
 
 { #category : #'meta-object-protocol' }
 DeprecatedSlot >> write: aValue to: anObject [
-	SlotDeprecation new
-		context: thisContext;
-		explanation: self message;
-		signal.
+
+	"In case this is ShiftClassInstaller then we are migrating the instances and we should not raise a deprecation"
+	thisContext sender class = ShiftClassInstaller ifFalse: [
+		SlotDeprecation new
+			context: thisContext;
+			explanation: self message;
+			signal ].
+
 	super write: aValue to: anObject
 ]

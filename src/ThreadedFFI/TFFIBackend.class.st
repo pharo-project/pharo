@@ -4,14 +4,13 @@ I am the FFI backend implemented by using TFFI
 Class {
 	#name : #TFFIBackend,
 	#superclass : #FFIBackend,
-	#type : #bytes,
 	#category : #'ThreadedFFI-Base'
 }
 
 { #category : #detecting }
 TFFIBackend class >> isAvailable [
-	
-	^ self new isAvailable 
+
+	^ self new isAvailable
 ]
 
 { #category : #accessing }
@@ -31,8 +30,8 @@ TFFIBackend >> allocate: byteSize [
 
 { #category : #'instance creation' }
 TFFIBackend >> calloutAPIClass [
-	
-	^ TFCalloutAPI 
+
+	^ TFCalloutAPI
 ]
 
 { #category : #'instance creation' }
@@ -68,18 +67,18 @@ TFFIBackend >> isAvailable [
 ]
 
 { #category : #'instance creation' }
-TFFIBackend >> loadSymbol: moduleSymbol module: module [ 
-	
+TFFIBackend >> loadSymbol: moduleSymbol module: module [
+
 	| encodedString |
 	encodedString := module ifNotNil: [ module utf8Encoded asString ].
-	
+
 	"The primitive is expected the module to be a utf8Encoded String."
 	^ self primLoadSymbol: moduleSymbol module: encodedString
 ]
 
 { #category : #callbacks }
-TFFIBackend >> lookupCallbackByAddress: address [ 
-	
+TFFIBackend >> lookupCallbackByAddress: address [
+
 	^ (TFCallbackQueue uniqueInstance lookupCallback: address) frontendCallback
 ]
 
@@ -92,10 +91,10 @@ TFFIBackend >> on: anObject float32At: offset [
 { #category : #accessing }
 TFFIBackend >> on: anObject float32At: offset put: value [
 
-	value isFloat ifFalse: [ 
+	value isFloat ifFalse: [
 		^ anObject float32AtOffset: offset - 1 put: value asFloat ].
 
-	self isReadOnlyObject ifTrue: [ 
+	self isReadOnlyObject ifTrue: [
 		^ self
 			  modificationForbiddenFor: #on:float32At:put:
 			  index: offset
@@ -113,22 +112,26 @@ TFFIBackend >> on: anObject float64At: offset [
 { #category : #accessing }
 TFFIBackend >> on: anObject float64At: offset put: value [
 
-	value isFloat ifFalse: [ 
+	value isFloat ifFalse: [
 		^ anObject float64AtOffset: offset - 1 put: value asFloat ].
 
-	self isReadOnlyObject ifTrue: [ 
+	self isReadOnlyObject ifTrue: [
 		^ self
 			  modificationForbiddenFor: #on:float64At:put:
 			  index: offset
 			  value: value ].
-		
+
 	^ self primitiveFailed
 ]
 
 { #category : #'instance creation' }
-TFFIBackend >> primLoadSymbol: moduleSymbol module: module [ 
+TFFIBackend >> primLoadSymbol: moduleSymbol module: module [
+
+	"The primitive is expected the module to be a utf8Encoded String."
 
 	<primitive: 'primitiveLoadSymbolFromModule'>
 
-	^ self primitiveFailed
+	^ SymbolNotFoundError
+		  symbolName: moduleSymbol
+		  module: (module ifNotNil: [ :m | m asByteArray utf8Decoded ])
 ]

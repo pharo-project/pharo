@@ -23,7 +23,7 @@ Class {
 { #category : #'instance creation' }
 ClyTaggedClassesQuery class >> by: tagName [
 
-	^self new 
+	^self new
 		tag: tagName
 ]
 

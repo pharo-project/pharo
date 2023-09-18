@@ -15,21 +15,21 @@ Class {
 
 { #category : #execution }
 ClyRestUntaggedClassesQuery >> buildResult: aQueryResult [
-	
+
 	| foundClasses |
-	scope packagesDo: [ :each | 
-		each tagsForClasses ifNotEmpty: [ 
+	scope packagesDo: [ :each |
+		each tagsForClasses ifNotEmpty: [
 			foundClasses := scope query: ClyUntaggedClassesQuery new.
 			^aQueryResult fillWith: foundClasses rawItems]]
 ]
 
 { #category : #execution }
 ClyRestUntaggedClassesQuery >> checkEmptyResult [
-	
-	scope packagesDo: [ :each | 
-		each tagsForClasses ifNotEmpty: [ 
+
+	scope packagesDo: [ :each |
+		each tagsForClasses ifNotEmpty: [
 			^scope isQueryEmpty: ClyUntaggedClassesQuery new]].
-	
+
 	^true
 ]
 
@@ -41,5 +41,6 @@ ClyRestUntaggedClassesQuery >> description [
 
 { #category : #testing }
 ClyRestUntaggedClassesQuery >> selectsClass: aClass [
-	^aClass tags isEmpty
+
+	^ aClass packageTag isNil
 ]

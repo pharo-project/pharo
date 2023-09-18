@@ -48,21 +48,6 @@ EpIconVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 ]
 
 { #category : #visitor }
-EpIconVisitor >> visitCategoryAddition: aCategoryChange [
-	^ self additionIcon
-]
-
-{ #category : #visitor }
-EpIconVisitor >> visitCategoryRemoval: aCategoryChange [
-	^ self removalIcon
-]
-
-{ #category : #visitor }
-EpIconVisitor >> visitCategoryRename: aCategoryChange [
-	^ self modificationIcon.
-]
-
-{ #category : #visitor }
 EpIconVisitor >> visitClassAddition: aClassCreatedChange [
 	^ self additionIcon
 ]
@@ -78,7 +63,7 @@ EpIconVisitor >> visitClassRemoval: aClassRemovedChange [
 ]
 
 { #category : #visitor }
-EpIconVisitor >> visitEvent: anEvent [ 
+EpIconVisitor >> visitEvent: anEvent [
 	^ self empty
 ]
 
@@ -115,6 +100,38 @@ EpIconVisitor >> visitMonticelloVersionSave: aChange [
 { #category : #visitor }
 EpIconVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 	^ self iconNamed: #package
+]
+
+{ #category : #visitor }
+EpIconVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ self additionIcon
+]
+
+{ #category : #visitor }
+EpIconVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self removalIcon
+]
+
+{ #category : #visitor }
+EpIconVisitor >> visitPackageRename: aPackageRename [
+	^ self modificationIcon
+]
+
+{ #category : #visitor }
+EpIconVisitor >> visitPackageTagAddition: aPackageTagAddition [
+	^ self additionIcon
+]
+
+{ #category : #visitor }
+EpIconVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+	^ self removalIcon
+]
+
+{ #category : #visitor }
+EpIconVisitor >> visitPackageTagRename: aPackageTagRename [
+	^ self modificationIcon
 ]
 
 { #category : #visitor }

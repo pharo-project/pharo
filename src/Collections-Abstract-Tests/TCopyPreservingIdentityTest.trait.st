@@ -13,8 +13,8 @@ TCopyPreservingIdentityTest >> nonEmpty [
 
 { #category : #'tests - copy' }
 TCopyPreservingIdentityTest >> testCopyReturnsIdentity [
-	
-	| copy | 
+
+	| copy |
 	copy := self nonEmpty copy.
-	self assert: self nonEmpty == copy.
+	self assert: self nonEmpty == copy
 ]

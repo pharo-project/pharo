@@ -102,6 +102,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 			'methodWithUndeclaredVar
 											^ undeclaredTestVar';
 		class: OCMockCompilationClass;
+		permitFaulty: true;
 		compile.
 
 	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
@@ -119,6 +120,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 			'methodWithUndeclaredVar
 											^ undeclaredTestVar';
 		class: OCMockCompilationClass;
+		permitFaulty: true;
 		compile.
 
 	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
@@ -129,9 +131,9 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 { #category : #tests }
 OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegisteredAsAssociation [
 	"Test describes current state of bootstrap where undeclared vars are encoded using associations.
-	It breaks introduced logic which explicitly return existing variable from Undeclared registry. 
+	It breaks introduced logic which explicitly return existing variable from Undeclared registry.
 	Compiler parts expect kind of variable and not a simple association.
-	The bootstrap will be updated at some point. But now this case needs to be supported: 
+	The bootstrap will be updated at some point. But now this case needs to be supported:
 		- declaring undefined var should update registered variable when its type is not undeclared var"
 	| newCompiledMethod undeclaredBinding |
 	Undeclared add: #undeclaredTestVar -> nil.
@@ -140,6 +142,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 			'methodWithUndeclaredVar
 											^ undeclaredTestVar';
 		class: OCMockCompilationClass;
+		permitFaulty: true;
 		compile.
 
 	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].

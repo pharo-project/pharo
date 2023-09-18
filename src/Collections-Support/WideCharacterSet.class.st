@@ -41,7 +41,7 @@ WideCharacterSet >> = anObject [
 ]
 
 { #category : #adding }
-WideCharacterSet >> add: aCharacter [ 
+WideCharacterSet >> add: aCharacter [
 	| val high low lowmap |
 	val := aCharacter asciiValue.
 	val < 256 ifTrue: [self byteArrayMap at: val + 1 put: 1].
@@ -57,7 +57,7 @@ WideCharacterSet >> add: aCharacter [
 WideCharacterSet >> bitmap: aMap at: shortInteger [
 	"access a single bit in aMap.
 	shortInteger should be between: 0 and: 16rFFFF"
-	
+
 	| collecIndex bitIndex |
 	collecIndex := shortInteger bitShift: -3.
 	bitIndex := shortInteger bitAnd: 7.
@@ -69,10 +69,10 @@ WideCharacterSet >> bitmap: aMap do: aBlock [
 	"Execute a block with each value (0 based) corresponding to set bits.
 	Implementation notes: this version works best for sparse maps.
 	It has (byte lowBit) inlined for speed."
-	
+
 	| byte byteOffset lowBits |
 	lowBits := #[1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 6 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 7 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 6 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 8 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 6 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 7 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 6 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1]. "The lowBits table gives a 1-based bitOffset"
-	1 to: aMap size do: [:i | 
+	1 to: aMap size do: [:i |
 		(byte := aMap at: i) = 0 ifFalse: [
 			byteOffset := (i bitShift: 3) - 9. "This byteOffset is -1 based"
 			["Evaluate the block with 0-based (byteOffset + bitOffset)"
@@ -86,7 +86,7 @@ WideCharacterSet >> byteArrayMap [
 	"return a ByteArray mapping each ascii value to a 1 if that ascii value is in the set, and a 0 if it isn't.
 	Intended for use by primitives only. (and comparison)
 	This version will answer a subset with only byte characters"
-	
+
 	| lowmap |
 	byteArrayMap ifNil: [
 		byteArrayMap := ByteArray new: 256.
@@ -100,7 +100,7 @@ WideCharacterSet >> byteArrayMap [
 WideCharacterSet >> clearBitmap: aMap at: shortInteger [
 	"clear a single bit in aMap.
 	shortInteger should be between: 0 and: 16rFFFF"
-	
+
 	| collecIndex bitIndex |
 	collecIndex := shortInteger bitShift: -3.
 	bitIndex := shortInteger bitAnd: 7.
@@ -110,12 +110,12 @@ WideCharacterSet >> clearBitmap: aMap at: shortInteger [
 { #category : #converting }
 WideCharacterSet >> complement [
 	"return a character set containing precisely the characters the receiver does not"
-	
+
 	^CharacterSetComplement of: self copy
 ]
 
 { #category : #enumerating }
-WideCharacterSet >> do: aBlock [ 
+WideCharacterSet >> do: aBlock [
 	map
 		keysAndValuesDo: [:index :lowmap |
 			| high16Bits |
@@ -137,7 +137,7 @@ WideCharacterSet >> findFirstInByteString: aByteString startingAt: startIndex [
 { #category : #testing }
 WideCharacterSet >> hasWideCharacters [
 	"Answer true if i contain any wide character"
-	
+
 	self do: [:e | e asciiValue >= 256 ifTrue: [^true]].
 	^false
 ]
@@ -148,14 +148,14 @@ WideCharacterSet >> hash [
 	Two equal objects should have equal hash.
 	Note: as the receiver can be equal to an ordinary CharacterSet,
 	the hash code must reflect this"
-	
+
 	^self hasWideCharacters
 		ifTrue: [map hash]
 		ifFalse: [self asCharacterSet hash]
 ]
 
 { #category : #testing }
-WideCharacterSet >> includes: aCharacter [ 
+WideCharacterSet >> includes: aCharacter [
 	| val high low |
 	val := aCharacter asciiValue.
 	high := val bitShift: -16.
@@ -181,7 +181,7 @@ WideCharacterSet >> postCopy [
 ]
 
 { #category : #removing }
-WideCharacterSet >> remove: aCharacter [ 
+WideCharacterSet >> remove: aCharacter [
 	| val high low lowmap |
 	val := aCharacter asciiValue.
 	val < 256 ifTrue: [self byteArrayMap at: val + 1 put: 0].
@@ -212,7 +212,7 @@ WideCharacterSet >> removeAll [
 WideCharacterSet >> setBitmap: aMap at: shortInteger [
 	"set a single bit in aMap.
 	shortInteger should be between: 0 and: 16rFFFF"
-	
+
 	| collecIndex bitIndex |
 	collecIndex := shortInteger bitShift: -3.
 	bitIndex := shortInteger bitAnd: 7.

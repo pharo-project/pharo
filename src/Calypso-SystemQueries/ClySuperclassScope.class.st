@@ -16,7 +16,7 @@ ClySuperclassScope class >> asInterestingClassScope [
 { #category : #accessing }
 ClySuperclassScope class >> classesRelatedTo: aClass do: aBlock [
 	aClass isRootInEnvironment ifTrue: [ ^self ].
-	
+
 	aBlock value: aClass superclass
 ]
 
@@ -38,7 +38,7 @@ ClySuperclassScope class >> defaultName [
 { #category : #'inherited scope' }
 ClySuperclassScope class >> inheritedScopeProvider [
 	<classAnnotation>
-	
+
 	^ClyInheritedScopeProviderAnnotation new
 ]
 

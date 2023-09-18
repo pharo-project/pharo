@@ -18,6 +18,6 @@ ClyOverriddenMethodGroupProviderTest >> groupProviderClass [
 { #category : #running }
 ClyOverriddenMethodGroupProviderTest >> setUpEnvironment [
 	super setUpEnvironment.
-	
+
 	environment addPlugin: ClyInheritanceAnalysisEnvironmentPlugin new
 ]

@@ -227,7 +227,7 @@ SocketStream >> binary [
 SocketStream >> bufferSize [
 	"Default buffer size is 4kb.
 	increased from earlier 2000 bytes."
-	
+
 	^bufferSize
 ]
 
@@ -312,7 +312,7 @@ SocketStream >> growInBuffer [
 { #category : #testing }
 SocketStream >> ifStale: aBlock [
 	self isConnected
-		ifFalse: aBlock
+		ifFalse: [ aBlock value ]
 ]
 
 { #category : #configuration }
@@ -352,7 +352,7 @@ SocketStream >> isDataAvailable [
 	If something really was available it is now in the inBuffer.
 	This is because there has been spurious
 	dataAvailable when there really is no data to get."
- 
+
 	self isInBufferEmpty ifFalse: [^true].
 	^socket dataAvailable
 		ifFalse: [false]
@@ -369,7 +369,7 @@ SocketStream >> isEmpty [
 { #category : #testing }
 SocketStream >> isInBufferEmpty [
 	"Any data in the buffer?"
- 
+
 	^lastRead + 1 = inNextToWrite
 ]
 
@@ -413,7 +413,7 @@ SocketStream >> next [
 { #category : #'stream in' }
 SocketStream >> next: anInteger [
 	"Read count elements and return them in a collection.
-	If the receiver is #atEnd before count elements were read, 
+	If the receiver is #atEnd before count elements were read,
 	return a smaller collection and don't signal ConnectionClosed."
 
 	^ self nextInto: (self streamBuffer: anInteger)
@@ -429,7 +429,7 @@ SocketStream >> next: n into: aCollection [
 
 { #category : #'stream in' }
 SocketStream >> next: requestedCount into: collection startingAt: startIndex [
-	"Read requestedCount objects into the given collection. 
+	"Read requestedCount objects into the given collection.
 	Return collection or a partial copy if less elements have been read."
 
 	| readCount |
@@ -496,7 +496,7 @@ SocketStream >> nextInto: aCollection [
 	"Read the next elements of the receiver into aCollection.
 	Return aCollection or a partial copy if less than aCollection
 	size elements have been read."
-	^self next: aCollection size into: aCollection startingAt: 1.
+	^self next: aCollection size into: aCollection startingAt: 1
 ]
 
 { #category : #'stream in' }
@@ -504,7 +504,7 @@ SocketStream >> nextInto: aCollection startingAt: startIndex [
 	"Read the next elements of the receiver into aCollection.
 	Return aCollection or a partial copy if less than aCollection
 	size elements have been read."
-	^self next: (aCollection size - startIndex+1) into: aCollection startingAt: startIndex.
+	^self next: (aCollection size - startIndex+1) into: aCollection startingAt: startIndex
 ]
 
 { #category : #'stream in' }
@@ -605,7 +605,7 @@ SocketStream >> peek: anInteger [
 	| start |
 	self receiveData: anInteger.
 	start := lastRead + 1.
-	^inBuffer copyFrom: start to: ((lastRead + anInteger) min: inNextToWrite - 1).
+	^inBuffer copyFrom: start to: ((lastRead + anInteger) min: inNextToWrite - 1)
 ]
 
 { #category : #'stream in' }
@@ -616,7 +616,7 @@ SocketStream >> peekFor: aCharacterOrByte [
 
 	| nextObject |
 	self atEnd ifTrue: [^false].
-	self isInBufferEmpty ifTrue: 
+	self isInBufferEmpty ifTrue:
 		[self receiveData.
 		self atEnd ifTrue: [^false]].
 	nextObject := inBuffer at: lastRead + 1.
@@ -662,7 +662,7 @@ SocketStream >> printOn: aStream [
 
 	aStream nextPutAll: self class name.
 	inBuffer ifNotNil: [
-		aStream 
+		aStream
 			nextPutAll: '[inbuf:';
 			print: (inBuffer size / 1024) rounded;
 			nextPutAll: 'kb/outbuf:';
@@ -672,10 +672,10 @@ SocketStream >> printOn: aStream [
 
 { #category : #'stream in' }
 SocketStream >> readInto: aCollection startingAt: startIndex count: anInteger [
-	"Read n objects into the given collection starting at startIndex. 
+	"Read n objects into the given collection starting at startIndex.
 	Return number of elements that have been read."
 
-	"Implementation note: This method DOES signal timeout if not 
+	"Implementation note: This method DOES signal timeout if not
 	enough elements are received. It does NOT signal
 	ConnectionClosed as closing the connection is the only way by
 	which partial data can be read."
@@ -688,10 +688,10 @@ SocketStream >> readInto: aCollection startingAt: startIndex count: anInteger [
 	amount := anInteger min: (inNextToWrite - lastRead - 1).
 	start := lastRead + 1.
 	lastRead := lastRead + amount.
-	aCollection 
-		replaceFrom: startIndex 
-		to: startIndex + amount-1 
-		with: inBuffer 
+	aCollection
+		replaceFrom: startIndex
+		to: startIndex + amount-1
+		with: inBuffer
 		startingAt: start.
 	^amount
 ]
@@ -703,7 +703,7 @@ SocketStream >> receiveAvailableData [
 	Return the position in the buffer where the
 	new data starts, regardless if anything
 	was read, see #adjustInBuffer."
-	
+
 	recentlyRead := socket receiveAvailableDataInto: inBuffer startingAt: inNextToWrite.
 	^self adjustInBuffer: recentlyRead
 ]
@@ -717,7 +717,7 @@ SocketStream >> receiveData [
 	Return the position in the buffer where the
 	new data starts, regardless if anything
 	was read, see #adjustInBuffer."
-	
+
 	recentlyRead := shouldSignal ifTrue: [
 		self shouldTimeout ifTrue: [
 				socket receiveDataSignallingTimeout: timeout
@@ -775,7 +775,7 @@ SocketStream >> receiveDataIfAvailable [
 SocketStream >> recentlyRead [
 	"Return the number of bytes read
 	during the last socket operation."
-	
+
 	^recentlyRead
 ]
 
@@ -828,9 +828,9 @@ SocketStream >> shouldSignal: aBoolean [
 	in this class will not honour timeouts (says so in their method comments).
 	Also, it is quite hard to understand what for example #upToEnd
 	should return to indicate a timeout.
-	
+
 	Wrap your use of SocketStream with a handler like:
-	
+
 	[stuff := mySocketStream next: 10]
 		on: ConnectionClosed, ConnectionTimedOut
 		do: [:ex |
@@ -900,7 +900,7 @@ SocketStream >> upTo: aCharacterOrByte [
 
 	"Note: The 100k limit below is compatible with the previous version though arguably incorrect. If you need unbounded behavior either up the argument or provide nil in which case we'll read until we get it or run out of memory"
 
-	^ binary 
+	^ binary
 		ifTrue: [self upTo: aCharacterOrByte asInteger limit: 100000]
 		ifFalse: [ self upTo: aCharacterOrByte asCharacter limit: 100000]
 ]
@@ -935,7 +935,7 @@ SocketStream >> upTo: aCharacterOrByte limit: nBytes [
 		].
 
 		"Check if we've exceeded the max. amount"
-		(nBytes notNil and:[inNextToWrite - lastRead > nBytes]) 
+		(nBytes notNil and:[inNextToWrite - lastRead > nBytes])
 			ifTrue:[^self nextAllInBuffer].
 	].
 
@@ -977,7 +977,7 @@ SocketStream >> upToAll: aStringOrByteArray limit: nBytes [
 	self receiveData.
 	recentlyRead > 0] whileTrue:[
 
-		"Data begins at lastRead + 1, we add searchedSoFar as offset and 
+		"Data begins at lastRead + 1, we add searchedSoFar as offset and
 		backs up sz - 1 so that we can catch any borderline hits."
 
 		index := inBuffer indexOfSubCollection: aStringOrByteArray
@@ -988,7 +988,7 @@ SocketStream >> upToAll: aStringOrByteArray limit: nBytes [
 			^ result
 		].
 		"Check if we've exceeded the max. amount"
-		(nBytes notNil and:[inNextToWrite - lastRead > nBytes]) 
+		(nBytes notNil and:[inNextToWrite - lastRead > nBytes])
 			ifTrue:[^self nextAllInBuffer].
 	].
 
@@ -1006,11 +1006,11 @@ SocketStream >> upToEnd [
 	"Answer all data coming in on the socket until the socket
 	is closed by the other end, or we get a timeout.
 	This means this method catches ConnectionClosed by itself.
-	
+
 	NOTE: Does not honour timeouts if shouldSignal is false!"
 
 	[[self isConnected] whileTrue: [self receiveData]]
 		on: ConnectionClosed
-		do: [:ex | "swallow it"]. 
+		do: [:ex | "swallow it"].
 	^self nextAllInBuffer
 ]

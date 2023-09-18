@@ -22,7 +22,7 @@ RGCommentDefinition class >> realClass: aClass [
 { #category : #comparing }
 RGCommentDefinition >> <= aRGCommentDefinition [
 	"Sort comment definition according to: 1) name of the class"
-	
+
 	^(self parentName <= aRGCommentDefinition parentName)
 ]
 
@@ -30,7 +30,7 @@ RGCommentDefinition >> <= aRGCommentDefinition [
 RGCommentDefinition >> asActive [
 
 	"Sets the receiver as active object, which will allow itself to retrieve its data from the class organization"
-	self annotationNamed: self class statusKey put: #active.
+	self annotationNamed: self class statusKey put: #active
 ]
 
 { #category : #'type of comments' }
@@ -39,9 +39,9 @@ RGCommentDefinition >> asHistorical [
 	"Sets the receiver as historical object, which will allow itself to retrieve its data using the sourcePointer"
 
 	self annotationNamed: self class statusKey put: #historical.
-	self sourcePointer ifNil: [ 
-		self realClass ifNotNil: [ :realClass | 
-			self sourcePointer: realClass organization commentSourcePointer ] ]
+	self sourcePointer ifNil: [
+		self realClass ifNotNil: [ :realClass |
+			self sourcePointer: realClass commentSourcePointer ] ]
 ]
 
 { #category : #'type of comments' }
@@ -52,14 +52,14 @@ RGCommentDefinition >> asPassive [
 ]
 
 { #category : #'stamp values' }
-RGCommentDefinition >> author [ 
+RGCommentDefinition >> author [
 
 	^self annotationNamed: self class authorKey
 		ifAbsentPut:[ self class parseAuthorAliasFrom: stamp ]
 ]
 
 { #category : #'stamp values' }
-RGCommentDefinition >> author: aString [ 
+RGCommentDefinition >> author: aString [
 
 	self annotationNamed: self class authorKey
 			put: aString
@@ -79,10 +79,10 @@ RGCommentDefinition >> commentDataPointers [
 { #category : #accessing }
 RGCommentDefinition >> content [
 
-	self isActive 
-		ifTrue: [ ^ self realClass organization classComment ].
+	self isActive
+		ifTrue: [ ^ self realClass comment ].
 	self isHistorical
-		ifTrue: [ ^ self contentAtPointer ifNil:[ self realClass ifNil:[ content ] ifNotNil:[ :rc| rc organization classComment ] ] ].	
+		ifTrue: [ ^ self contentAtPointer ifNil:[ self realClass ifNil:[ content ] ifNotNil:[ :rc| rc comment ] ] ].
 	^ content
 ]
 
@@ -104,7 +104,7 @@ RGCommentDefinition >> contentAtPointer [
 { #category : #'type of comments' }
 RGCommentDefinition >> fromActiveToHistorical [
 	"If the receiver was generated as an active comment, it can be converted to a historical one by reading the data of the real class (if exists)"
-	
+
 	self isActive ifTrue: [
 		self asHistorical ]
 ]
@@ -114,20 +114,18 @@ RGCommentDefinition >> fromActiveToPassive [
 	"If the receiver was generated as an active comment, it can be converted to a passive one by reading the data of the real class organization"
 
 	| realClass |
-	self isActive
-		ifFalse: [ ^ self ].
+	self isActive ifFalse: [ ^ self ].
 	realClass := self realClass.
-	realClass notNil
-		ifTrue: [ 
-			self content: realClass organization classComment.
-			self stamp: realClass organization commentStamp ].
+	realClass ifNotNil: [
+		self content: realClass comment.
+		self stamp: realClass commentStamp ].
 	self asPassive
 ]
 
 { #category : #accessing }
 RGCommentDefinition >> fullName [
 	"Keeps a unique description for the receiver. As annotation to avoid converting each time is invoked"
-	
+
 	^self annotationNamed: self class fullNameKey
 		ifAbsentPut:[ (self parentName, ' ', self name) asSymbol ]
 ]
@@ -148,8 +146,8 @@ RGCommentDefinition >> hasStamp [
 RGCommentDefinition >> isActive [
 
 	"A ring comment isActive when it needs to access the class organization for retrieving its data"
-	^(self annotationNamed: self class statusKey) 
-		ifNil:[ false ] 
+	^(self annotationNamed: self class statusKey)
+		ifNil:[ false ]
 		ifNotNil:[ :status| status == #active ]
 ]
 
@@ -174,8 +172,8 @@ RGCommentDefinition >> isFromTrait [
 RGCommentDefinition >> isHistorical [
 
 	"A ring comment can be used to point an old version of the receiver, in this case it will use the sourcePointer to retrieve its information"
-	^(self annotationNamed: self class statusKey) 
-		ifNil:[ false ] 
+	^(self annotationNamed: self class statusKey)
+		ifNil:[ false ]
 		ifNotNil:[ :status| status == #historical ]
 ]
 
@@ -183,8 +181,8 @@ RGCommentDefinition >> isHistorical [
 RGCommentDefinition >> isPassive [
 
 	"A ring comment isPassive by default.  In this case it will retrieve the data that was assigned in its creation"
-	^(self annotationNamed: self class statusKey) 
-		ifNil:[ true ] 
+	^(self annotationNamed: self class statusKey)
+		ifNil:[ true ]
 		ifNotNil:[ :status| status == #passive ]
 ]
 
@@ -192,7 +190,7 @@ RGCommentDefinition >> isPassive [
 RGCommentDefinition >> isSameRevisionAs: aRGCommentDefinition [
 	"This method look for equality of the properties of the receiver"
 	"A comment validates only its contents and not its stamp"
-	
+
 	^(super isSameRevisionAs: aRGCommentDefinition)
 		and:[ self content = aRGCommentDefinition content ]
 ]
@@ -216,7 +214,7 @@ RGCommentDefinition >> name [
 ]
 
 { #category : #printing }
-RGCommentDefinition >> printOn: aStream [ 
+RGCommentDefinition >> printOn: aStream [
 
 	self parentName ifNotNil: [
 		aStream nextPutAll: self parentName;
@@ -238,7 +236,7 @@ RGCommentDefinition >> sourceCode [
 { #category : #'source pointers' }
 RGCommentDefinition >> sourcePointer [
 	"Retrieves the sourcePointer for this definition if exists"
-	
+
 	^self annotationNamed:  self class sourcePointerKey
 ]
 
@@ -251,11 +249,11 @@ RGCommentDefinition >> sourcePointer: aNumber [
 { #category : #accessing }
 RGCommentDefinition >> stamp [
 	"Retrieves the user-alias + timestamp associated to the receiver (if exists)"
-	
-	self isActive 
-		ifTrue: [ ^ self realClass organization commentStamp ].
+
+	self isActive
+		ifTrue: [ ^ self realClass commentStamp ].
 	self isHistorical
-		ifTrue: [ ^ self stampAtPointer ifNil:[ self realClass ifNil:[ stamp ] ifNotNil:[ :rc| rc organization commentStamp ] ] ].	
+		ifTrue: [ ^ self stampAtPointer ifNil:[ self realClass ifNil:[ stamp ] ifNotNil:[ :rc| rc commentStamp ] ] ].
 	^ stamp
 ]
 
@@ -275,16 +273,16 @@ RGCommentDefinition >> stampAtPointer [
 ]
 
 { #category : #'stamp values' }
-RGCommentDefinition >> timeStamp [ 
+RGCommentDefinition >> timeStamp [
 
-	^ self annotationNamed: self class timeStampKey 
-		ifAbsentPut: [ self class 
-							parseTimestampFrom: self stamp 
+	^ self annotationNamed: self class timeStampKey
+		ifAbsentPut: [ self class
+							parseTimestampFrom: self stamp
 							default: (DateAndTime epoch) ]
 ]
 
 { #category : #'stamp values' }
-RGCommentDefinition >> timeStamp: aTimestamp [ 
+RGCommentDefinition >> timeStamp: aTimestamp [
 
 	self annotationNamed: self class timeStampKey
 			put: aTimestamp

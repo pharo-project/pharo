@@ -10,7 +10,7 @@ Character >> asKeyCombination [
 	| lowerCaseCombination |
 	self asLowercase = self ifTrue: [^ KMSingleKeyCombination from: self].
 	lowerCaseCombination := KMSingleKeyCombination from: self asLowercase.
-	^KMModifiedKeyCombination modifier: KMModifier shift character: lowerCaseCombination.
+	^KMModifiedKeyCombination modifier: KMModifier shift character: lowerCaseCombination
 ]
 
 { #category : #'*Keymapping-KeyCombinations' }

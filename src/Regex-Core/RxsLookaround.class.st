@@ -39,7 +39,7 @@ RxsLookaround >> dispatchTo: aBuilder [
 { #category : #'initialize - release' }
 RxsLookaround >> initializePiece: anRsxPiece [
 	super initialize.
-	piece := anRsxPiece.
+	piece := anRsxPiece
 ]
 
 { #category : #accessing }

@@ -116,7 +116,7 @@ FTCellSelectionModeStrategy >> selectablesToHighlightFromRow: aFTRow at: aRowInd
 	selectablesToColorMap := Dictionary new.
 	self flag: #pharoFixMe.	"Currently, the rows in FastTable have cells in submorphs, but the API should be improved to provide better cell iterations instead of letting external users touch row submorphs."
 	aFTRow submorphs
-		withIndexDo: [ :each :columnIndex | 
+		withIndexDo: [ :each :columnIndex |
 			| cellIndex |
 			(highligtedIndexes includes: (cellIndex := {aRowIndex . columnIndex})) ifTrue: [ selectablesToColorMap at: each put: primarySelectionIndex = cellIndex ] ].
 	^ selectablesToColorMap

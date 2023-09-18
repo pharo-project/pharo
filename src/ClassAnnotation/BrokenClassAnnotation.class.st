@@ -30,13 +30,13 @@ Class {
 
 { #category : #'instance creation' }
 BrokenClassAnnotation class >> forBadMethodReturn [
-	^self new 
+	^self new
 		errorString: 'Annotating method do not return an annotation instance'
 ]
 
 { #category : #'instance creation' }
 BrokenClassAnnotation class >> withError: anError [
-	^self new 
+	^self new
 		errorString: anError description
 ]
 
@@ -62,6 +62,6 @@ BrokenClassAnnotation >> errorString: anObject [
 { #category : #printing }
 BrokenClassAnnotation >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	self printDeclarationOn: aStream
 ]

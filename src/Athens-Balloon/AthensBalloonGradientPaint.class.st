@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 AthensBalloonGradientPaint class >> isAbstract [
-		
+
 	^ self == AthensBalloonGradientPaint
 ]
 

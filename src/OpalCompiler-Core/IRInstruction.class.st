@@ -34,12 +34,12 @@ IRInstruction class >> blockReturnTop [
 ]
 
 { #category : #'instance creation' }
-IRInstruction class >> createTempVectorNamed: aTempVectorName withVars: anArray [  
+IRInstruction class >> createTempVectorNamed: aTempVectorName withVars: anArray [
 
 	^ IRTempVector new
 		name: aTempVectorName;
 		vars: anArray;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -48,11 +48,11 @@ IRInstruction class >> popTop [
 ]
 
 { #category : #'instance creation' }
-IRInstruction class >> pushConsArray: aSize [ 
+IRInstruction class >> pushConsArray: aSize [
 	^IRPushArray new
 		size: aSize;
 		cons: true;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -66,14 +66,23 @@ IRInstruction class >> pushFullClosureCompiledBlock: compiledBlock copiedValues:
 	^IRPushFullClosure new
 			copiedValues: copiedValues;
 			compiledBlock: compiledBlock;
-			yourself.
+			yourself
+]
+
+{ #category : #'instance creation' }
+IRInstruction class >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues outerContextNeeded: aBoolean [
+	^IRPushFullClosure new
+			copiedValues: copiedValues;
+			compiledBlock: compiledBlock;
+			outerContextNeeded: aBoolean
+			yourself
 ]
 
 { #category : #'instance creation' }
 IRInstruction class >> pushInstVar: index [
 
-	^ IRPushInstVar new 
-			index:  index; 
+	^ IRPushInstVar new
+			index:  index;
 			yourself
 ]
 
@@ -94,11 +103,11 @@ IRInstruction class >> pushLiteralVariable: object [
 
 { #category : #'instance creation' }
 IRInstruction class >> pushNewArray: aSize [
-	
+
 	^IRPushArray new
 		size: aSize;
 		cons: false;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -111,12 +120,12 @@ IRInstruction class >> pushRemoteTemp: aName inVectorAt: nameOfVector [
 	^ IRPushRemoteTemp new
 		name: aName;
 		tempVectorName: nameOfVector;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
 IRInstruction class >> pushTemp: aName [
-	aName = 'self' ifTrue: [self error: 'use pushReceiver'].
+
 	^ IRPushTemp new
 		name: aName;
 		yourself
@@ -152,13 +161,13 @@ IRInstruction class >> send: selector toSuperOf: behavior [
 	^ IRSend new
 		selector: selector;
 		superOf: behavior;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
 IRInstruction class >> storeInstVar: index [
-	^ IRStoreInstVar new 
-		index: index; 
+	^ IRStoreInstVar new
+		index: index;
 		yourself
 ]
 
@@ -175,7 +184,7 @@ IRInstruction class >> storeRemoteTemp: aName inVectorAt: nameOfVector [
 	^ IRStoreRemoteTemp new
 		name: aName;
 		tempVectorName: nameOfVector;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -192,12 +201,12 @@ IRInstruction >> accept: aVisitor [
 
 { #category : #adding }
 IRInstruction >> addInstructionsAfter: aCollection [
-	sequence addInstructions: aCollection after: self.
+	sequence addInstructions: aCollection after: self
 ]
 
 { #category : #adding }
 IRInstruction >> addInstructionsBefore: aCollection [
-	sequence addInstructions: aCollection before: self.
+	sequence addInstructions: aCollection before: self
 ]
 
 { #category : #mapping }
@@ -217,7 +226,7 @@ IRInstruction >> bytecodeOffset [
 	| startpc |
 	startpc := self method compiledMethod initialPC.
 	self bytecodeIndex ifNil: [^startpc].
-	^self bytecodeIndex + startpc - 1.
+	^self bytecodeIndex + startpc - 1
 ]
 
 { #category : #testing }
@@ -233,7 +242,7 @@ IRInstruction >> children [
 { #category : #replacing }
 IRInstruction >> delete [
 	sequence ifNil: [self error: 'This node doesn''t have a sequence'].
-	sequence remove: self.
+	sequence remove: self
 ]
 
 { #category : #testing }
@@ -245,7 +254,7 @@ IRInstruction >> isBlockReturnTop [
 { #category : #testing }
 IRInstruction >> isGoto [
 	"is unconditional jump"
-	
+
 	^ false
 ]
 
@@ -258,7 +267,7 @@ IRInstruction >> isIf [
 { #category : #testing }
 IRInstruction >> isInstVarAccess [
 
-	^false.
+	^false
 ]
 
 { #category : #testing }
@@ -296,6 +305,12 @@ IRInstruction >> isRead [
 ]
 
 { #category : #testing }
+IRInstruction >> isRemovableByPop [
+
+	^ false
+]
+
+{ #category : #testing }
 IRInstruction >> isReturn [
 
 	^ false
@@ -308,7 +323,7 @@ IRInstruction >> isSelf [
 
 { #category : #testing }
 IRInstruction >> isSend [
-	^false.
+	^false
 ]
 
 { #category : #testing }
@@ -328,7 +343,7 @@ IRInstruction >> isTempVector [
 
 { #category : #accessing }
 IRInstruction >> method [
-	^sequence method.
+	^sequence method
 ]
 
 { #category : #accessing }
@@ -344,7 +359,7 @@ IRInstruction >> printOn: aStream [
 ]
 
 { #category : #replacing }
-IRInstruction >> replaceNode: aNode withNode: anotherNode [ 
+IRInstruction >> replaceNode: aNode withNode: anotherNode [
 	self error: 'I don''t store other nodes'
 ]
 
@@ -355,7 +370,7 @@ IRInstruction >> replaceWith: aNode [
 ]
 
 { #category : #replacing }
-IRInstruction >> replaceWithInstructions: aCollection [ 
+IRInstruction >> replaceWithInstructions: aCollection [
 
 	sequence ifNil: [self error: 'This node doesn''t have a sequence'].
 	sequence replaceNode: self withNodes: aCollection

@@ -7,16 +7,22 @@ Class {
 	#category : #'Polymorph-Widgets-Themes'
 }
 
+{ #category : #'class initialization' }
+Pharo3TabPanelBorderStyle class >> initialize [
+
+	self deprecatedAliases: { #Pharo3TabPanelBorder }
+]
+
 { #category : #drawing }
 Pharo3TabPanelBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Draw the border taking the currently selected tab into account.
 	Only works for top-positioned tabs for the moment."
-	
+
 	|w h r tab|
 	w := self width.
 	w isPoint ifTrue: [h := w y. w := w x] ifFalse:[h := w].
 	tab := self selectedTab.
-	tab ifNil: [	
+	tab ifNil: [
 		r := aRectangle topLeft + (w@0) corner: aRectangle topRight - (w@h negated).
 		aCanvas fillRectangle: r color: self color.
 		^self]. "top"

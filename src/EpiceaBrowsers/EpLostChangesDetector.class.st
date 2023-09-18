@@ -21,11 +21,8 @@ EpLostChangesDetector class >> enabled: aBoolean [
 	enabled := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 EpLostChangesDetector class >> initialize [
-	"
-	self initialize
-	"
 	SessionManager default registerToolClassNamed: self name
 ]
 
@@ -53,15 +50,15 @@ EpLostChangesDetector class >> newWithLog: aLog [
 EpLostChangesDetector class >> startUp: isImageStarting [
 
 	| detector |
-	(isImageStarting and: [ 
+	(isImageStarting and: [
 		self isEnabled and: [ "Detector can be disabled via system settings"
 		EpMonitor hasCurrent and: [ "Nothing to recover if wasn't recording"
-		EpMonitor current isEnabled and: [ 
+		EpMonitor current isEnabled and: [
 		Smalltalk isHeadless not ]]]])  "Can't browse if UI disabled"
 			ifFalse: [ ^ self ].
 
 	detector := self new.
-	
+
 	SessionManager default addDeferredStartupAction: [
 		(detector hasLostChanges and: [ self confirm: 'It seems your last Pharo session exited without saving some code. Do you want to recover it?' ])
 			ifTrue: [ detector openBrowserIfLostChanges ] ]
@@ -69,7 +66,7 @@ EpLostChangesDetector class >> startUp: isImageStarting [
 
 { #category : #testing }
 EpLostChangesDetector >> hasLostChanges [
-	
+
 	^ hasLostChanges
 ]
 
@@ -77,12 +74,12 @@ EpLostChangesDetector >> hasLostChanges [
 EpLostChangesDetector >> initializeWithLog: aLog [
 
 	self initialize.
-	
+
 	lastSessionFileStore := aLog store lowLevelFileStoreIfNone: [ nil ]. "Never nil?"
 	hasLostChanges :=
 		lastSessionFileStore
 			ifNil: [ false ]
-			ifNotNil: [ lastSessionFileStore isOutdated ].
+			ifNotNil: [ lastSessionFileStore isOutdated ]
 ]
 
 { #category : #accessing }
@@ -112,5 +109,5 @@ EpLostChangesDetector >> openBrowserIfLostChanges [
 	browser := EpLogBrowserPresenter newWithLog: lostChangesLog.
 	browser refresh.
 	browser withWindowDo: [ :w | w title: 'Epicea - Lost Changes Detected'].
-	browser open.
+	browser open
 ]

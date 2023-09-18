@@ -43,11 +43,11 @@ Delay class >> delaySchedulerClass [
 ]
 
 { #category : #settings }
-Delay class >> delaySchedulerClass: aSchedulerClass [ 
+Delay class >> delaySchedulerClass: aSchedulerClass [
 	| newScheduler oldScheduler |
 	self delaySchedulerClass = aSchedulerClass ifTrue:[ ^self ].
 	newScheduler := aSchedulerClass new.
-	(newScheduler respondsTo: #startTimerEventLoop) 
+	(newScheduler respondsTo: #startTimerEventLoop)
 		ifFalse: [ self error: 'New delay scheduler must respond to #startTimerEventLoop' ].
 	newScheduler startTimerEventLoop.
 	"To avoid lockup if a higher priority process preempts this method to schedule a delay,
@@ -55,7 +55,7 @@ Delay class >> delaySchedulerClass: aSchedulerClass [
 	oldScheduler := self scheduler.
 	self scheduler: newScheduler.
 	oldScheduler stopTimerEventLoop.
-	self inform: 'Delay scheduler set to ' , aSchedulerClass printString.
+	self inform: 'Delay scheduler set to ' , aSchedulerClass printString
 ]
 
 { #category : #'instance creation' }
@@ -67,7 +67,7 @@ Delay class >> forDuration: aDuration [
 { #category : #'instance creation' }
 Delay class >> forMilliseconds: aNumber [
 	"Return a new Delay for the given number of milliseconds. Sending 'wait' to this Delay will cause the sender's process to be suspended for approximately that length of time.
-	
+
 	WARNING: There may be a minimal delay time that depends on the system activity and setting of the idle process. See ProcessorScheduler class >> idleTime "
 
 	^ self new setDelay: aNumber forSemaphore: Semaphore new
@@ -79,83 +79,83 @@ Delay class >> forSeconds: aNumber [
 	^ self forMilliseconds: aNumber * 1000
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Delay class >> initialize [
-	"Delay initialize"
+
 	self scheduler ifNotNil: [ self scheduler stopTimerEventLoop ].
 	self scheduler: DelaySemaphoreScheduler new.
-	self scheduler startTimerEventLoop. 
-	SessionManager default 
-		registerSystemClassNamed: self name 
-		atPriority: 20.
+	self scheduler startTimerEventLoop.
+	SessionManager default
+		registerSystemClassNamed: self name
+		atPriority: 20
 ]
 
 { #category : #testing }
 Delay class >> nextWakeUpTime [
 
-	^ self scheduler nextWakeUpTime.
+	^ self scheduler nextWakeUpTime
 ]
 
 { #category : #'timer process' }
 Delay class >> restartTimerEventLoop [
 	self stopTimerEventLoop.
-	self startTimerEventLoop.
+	self startTimerEventLoop
 ]
 
 { #category : #scheduler }
 Delay class >> scheduler [
 
-	^ Scheduler.
+	^ Scheduler
 ]
 
 { #category : #scheduler }
 Delay class >> scheduler: anObject [
 
-	Scheduler := anObject.
+	Scheduler := anObject
 ]
 
 { #category : #'timer process' }
 Delay class >> schedulingProcess [
 
-	^ self scheduler schedulingProcess.
+	^ self scheduler schedulingProcess
 ]
 
 { #category : #snapshotting }
 Delay class >> shutDown [
 
-	self scheduler shutDown.
+	self scheduler shutDown
 ]
 
 { #category : #'timer process' }
 Delay class >> startTimerEventLoop [
 
-	self scheduler startTimerEventLoop.
+	self scheduler startTimerEventLoop
 ]
 
 { #category : #snapshotting }
 Delay class >> startUp [
 	"Restart active delay, if any, when resuming a snapshot."
 
-	self scheduler startUp.
+	self scheduler startUp
 ]
 
 { #category : #'timer process' }
 Delay class >> stopTimerEventLoop [
 
-	^ self scheduler stopTimerEventLoop.
+	^ self scheduler stopTimerEventLoop
 ]
 
 { #category : #settings }
 Delay class >> systemSettingOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder pickOne: #delaySchedulerClass)
 		parent: #pharoSystem ;
 		target: self;
 		label: 'Delay Scheduler' ;
 		domainValues: DelayNullScheduler allSubclasses ;
 		default: DelaySemaphoreScheduler;
-		description: 'Choose the class to use for Delay scheduling.' , 
+		description: 'Choose the class to use for Delay scheduling.' ,
 			String crlf, 'You can observe which is running from Tools > Process Browser.'
 ]
 
@@ -182,7 +182,7 @@ Delay >> delaySemaphore [
 { #category : #testing }
 Delay >> isExpired [
 
-	^ delaySemaphore isSignaled 
+	^ delaySemaphore isSignaled
 ]
 
 { #category : #public }
@@ -203,31 +203,31 @@ Delay >> printOn: aStream [
 		print: millisecondDelayDuration;
 		nextPutAll: ' msecs'.
 	beingWaitedOn
-		ifTrue: [ 
+		ifTrue: [
 			aStream
 				nextPutAll: '; ';
 				print: self millisecondsToGo;
 				nextPutAll: ' msecs remaining' ].
-	aStream nextPutAll: ')'.
+	aStream nextPutAll: ')'
 ]
 
 { #category : #public }
 Delay >> resumptionTick [
 	"The tick semantics (e.g. millisecond/microsecond) depends on the ticker its derived from."
-	
+
 	^resumptionTick
 ]
 
 { #category : #public }
 Delay >> resumptionTickAdjustFrom: oldBaseTick to: newBaseTick [
-	resumptionTick := resumptionTick - oldBaseTick + newBaseTick.
+	resumptionTick := resumptionTick - oldBaseTick + newBaseTick
 ]
 
 { #category : #private }
 Delay >> schedule [
 	"Schedule this delay."
-	
-	self class scheduler schedule: self.
+
+	self class scheduler schedule: self
 ]
 
 { #category : #private }
@@ -244,7 +244,7 @@ Delay >> setDelay: milliseconds forSemaphore: aSemaphore [
 	millisecondDelayDuration := milliseconds asInteger.
 	millisecondDelayDuration < 0 ifTrue: [self error: 'delay times cannot be negative'].
 	delaySemaphore := aSemaphore.
-	beingWaitedOn := false.
+	beingWaitedOn := false
 ]
 
 { #category : #'private - timing priority process' }
@@ -279,7 +279,7 @@ Delay >> timingPriorityUnschedule [
 
 { #category : #private }
 Delay >> unschedule [
-	self class scheduler unschedule: self.
+	self class scheduler unschedule: self
 ]
 
 { #category : #delaying }
@@ -287,5 +287,5 @@ Delay >> wait [
 	"Schedule this Delay, then wait on its semaphore. The current process will be suspended for the amount of time specified when this Delay was created."
 
 	self schedule.
-	[delaySemaphore wait] ifCurtailed:[self unschedule].
+	[delaySemaphore wait] ifCurtailed:[self unschedule]
 ]

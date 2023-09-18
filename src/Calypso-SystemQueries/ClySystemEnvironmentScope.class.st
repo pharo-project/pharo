@@ -22,7 +22,7 @@ ClySystemEnvironmentScope >> asRBEnvironment [
 
 { #category : #queries }
 ClySystemEnvironmentScope >> classesDo: aBlock [
-	
+
 	self system classes do: aBlock
 ]
 
@@ -38,38 +38,38 @@ ClySystemEnvironmentScope >> includesMethodsAffectedBy: aSystemAnnouncement [
 
 { #category : #testing }
 ClySystemEnvironmentScope >> isCurrentImage [
-	
+
 	^self system == ClySystemEnvironment currentImage
 ]
 
 { #category : #queries }
 ClySystemEnvironmentScope >> methodsDo: aBlock [
-	
-	self classesDo: [:class | 
+
+	self classesDo: [:class |
 		class instanceSide localMethods do: aBlock.
 		class classSide localMethods do: aBlock]
 ]
 
 { #category : #queries }
 ClySystemEnvironmentScope >> packagesDo: aBlock [
-	
+
 	self system packages do: aBlock
 ]
 
 { #category : #queries }
 ClySystemEnvironmentScope >> processesDo: aBlock [
-	
+
 	self system allProcesses do: aBlock
 ]
 
 { #category : #'accessing - projects' }
-ClySystemEnvironmentScope >> projectQueryFor: aScope [ 
-	
+ClySystemEnvironmentScope >> projectQueryFor: aScope [
+
 	^ environment system projectManager projectQueryFor: aScope
 ]
 
 { #category : #queries }
 ClySystemEnvironmentScope >> projectsDo: aBlock [
-	
+
 	self system projects do: aBlock
 ]

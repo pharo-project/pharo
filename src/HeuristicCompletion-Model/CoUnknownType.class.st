@@ -21,12 +21,12 @@ CoUnknownType >> hash [
 
 { #category : #accessing }
 CoUnknownType >> instanceSide [
-	
+
 	^ self
 ]
 
 { #category : #lookup }
-CoUnknownType >> lookupSelector: aString [ 
-	
+CoUnknownType >> lookupSelector: aString [
+
 	^ nil
 ]

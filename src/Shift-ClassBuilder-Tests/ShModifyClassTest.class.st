@@ -8,17 +8,18 @@ Class {
 ShModifyClassTest >> testEmptyClass [
 	builder name: #ShCBEmptyClass.
 	result := builder build.
-	
+
 	self validateResult.
 	self validateSuperclass: Object.
-	self validateMethods: #()
+	self validateMethods: #().
+	self assert: result hasComment.
 ]
 
 { #category : #tests }
 ShModifyClassTest >> testEmptyClassWithMethods [
 	builder name: #ShCBEmptyClassWithMethods.
 	result := builder build.
-	
+
 	self validateResult.
 	self validateSuperclass: Object.
 	self validateMethods: #(aMethod anotherMethod:)

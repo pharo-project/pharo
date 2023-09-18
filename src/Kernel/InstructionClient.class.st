@@ -18,7 +18,7 @@ InstructionClient >> addMappedInlinePrimitiveHandler: handler at: bytecodeNumber
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> blockReturnConstant: value [ 
+InstructionClient >> blockReturnConstant: value [
 	"Return Constant From Block bytecode."
 ]
 
@@ -71,19 +71,19 @@ InstructionClient >> jump: offset [
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> jump: offset if: condition [ 
+InstructionClient >> jump: offset if: condition [
 	"Conditional Jump bytecode."
 ]
 
 { #category : #'instruction decoding' }
 InstructionClient >> jump: offset if: condition withInterpreter: anInterpreter [
-	
+
 	^ self jump: offset if: condition
 ]
 
 { #category : #'instruction decoding' }
 InstructionClient >> jump: offset withInterpreter: anInterpreter [
-	
+
 	^ self jump: offset
 ]
 
@@ -94,11 +94,11 @@ InstructionClient >> mappedInlinePrimitive: extensionBytecodeNumber [
 	extensionHandler := (mappedInlinePrimitiveHandlers
 		 at: extensionBytecodeNumber
 		 ifAbsent: [ ^ self unusedBytecode ]).
-	self perform: extensionHandler.
+	self perform: extensionHandler
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> methodReturnConstant: value [ 
+InstructionClient >> methodReturnConstant: value [
 	"Return Constant bytecode."
 ]
 
@@ -119,12 +119,12 @@ InstructionClient >> pc: aPC [
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> popIntoLiteralVariable: anAssociation [ 
+InstructionClient >> popIntoLiteralVariable: anAssociation [
 	"Remove Top Of Stack And Store Into Literal Variable bytecode."
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> popIntoReceiverVariable: offset [ 
+InstructionClient >> popIntoReceiverVariable: offset [
 	"Remove Top Of Stack And Store Into Instance Variable bytecode."
 ]
 
@@ -134,7 +134,7 @@ InstructionClient >> popIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIn
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> popIntoTemporaryVariable: offset [ 
+InstructionClient >> popIntoTemporaryVariable: offset [
 	"Remove Top Of Stack And Store Into Temporary Variable bytecode."
 ]
 
@@ -164,7 +164,7 @@ InstructionClient >> pushConstant: value [
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> pushFullClosure: aCollection numCopied: anInteger receiverOnStack: aFalse ignoreOuterContext: aFalse4 [ 
+InstructionClient >> pushFullClosure: aCollection numCopied: anInteger receiverOnStack: aFalse ignoreOuterContext: aFalse4 [
 	"Push Full Closure bytecode."
 ]
 
@@ -174,7 +174,7 @@ InstructionClient >> pushLiteralVariable: anAssociation [
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> pushNewArrayOfSize: numElements [ 
+InstructionClient >> pushNewArrayOfSize: numElements [
 	"Push New Array of size numElements bytecode."
 ]
 
@@ -185,7 +185,7 @@ InstructionClient >> pushReceiver [
 
 { #category : #'instruction decoding' }
 InstructionClient >> pushReceiverVariable: offset [
-	"Push Contents Of the Receiver's Instance Variable Whose Index 
+	"Push Contents Of the Receiver's Instance Variable Whose Index
 	is the argument, offset, On Top Of Stack bytecode."
 ]
 
@@ -196,26 +196,26 @@ InstructionClient >> pushRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex
 
 { #category : #'instruction decoding' }
 InstructionClient >> pushTemporaryVariable: offset [
-	"Push Contents Of Temporary Variable Whose Index Is the 
+	"Push Contents Of Temporary Variable Whose Index Is the
 	argument, offset, On Top Of Stack bytecode."
 ]
 
 { #category : #'instruction decoding' }
 InstructionClient >> send: selector super: supered numArgs: numberArguments [
-	"Send Message With Selector, selector, bytecode. The argument, 
-	supered, indicates whether the receiver of the message is specified with 
-	'super' in the source method. The arguments of the message are found in 
-	the top numArguments locations on the stack and the receiver just 
+	"Send Message With Selector, selector, bytecode. The argument,
+	supered, indicates whether the receiver of the message is specified with
+	'super' in the source method. The arguments of the message are found in
+	the top numArguments locations on the stack and the receiver just
 	below them."
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> storeIntoLiteralVariable: anAssociation [ 
+InstructionClient >> storeIntoLiteralVariable: anAssociation [
 	"Store Top Of Stack Into Literal Variable Of Method bytecode."
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> storeIntoReceiverVariable: offset [ 
+InstructionClient >> storeIntoReceiverVariable: offset [
 	"Store Top Of Stack Into Instance Variable Of Method bytecode."
 ]
 
@@ -225,7 +225,7 @@ InstructionClient >> storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVector
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> storeIntoTemporaryVariable: offset [ 
+InstructionClient >> storeIntoTemporaryVariable: offset [
 	"Store Top Of Stack Into Temporary Variable Of Method bytecode."
 ]
 

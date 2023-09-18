@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-FileAlreadyExistsException class >> signalOnFile: aFile [ 
-	
+FileAlreadyExistsException class >> signalOnFile: aFile [
+
 	self new
 		file: aFile;
 		signal
@@ -25,7 +25,7 @@ FileAlreadyExistsException >> file [
 
 { #category : #accessing }
 FileAlreadyExistsException >> file: aFile [
-	
+
 	file := aFile
 ]
 

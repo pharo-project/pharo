@@ -4,6 +4,12 @@ Class {
 	#category : #'Epicea-Tests-Model'
 }
 
+{ #category : #asserting }
+EpAsEpiceaRingDefinitionTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpAsEpiceaRingDefinitionTest >> definitions [
 	"FIX: it should not have this external dependency to Fuel code entities."
@@ -11,7 +17,7 @@ EpAsEpiceaRingDefinitionTest >> definitions [
 	^ {	(FLSerializer >> #serialize).
 		(Object >> #fuelAccept:).
 		FLSerializer.
-		FLSerializer class. 
+		FLSerializer class.
 		FLTGlobalClassOrTraitSerializationTest.
 		FLTGlobalClassOrTraitSerializationTest classTrait.
 		} collect: [:each | each asEpiceaRingDefinition]

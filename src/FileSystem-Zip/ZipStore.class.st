@@ -22,16 +22,16 @@ ZipStore >> close [
 	| archive fs stream |
 	archive := ZipArchive new.
 	fs := FileSystem store: self.
-	fs root allChildren do: 
-		[ :each | 
-		each isFile ifTrue: 
-			[ each readStreamDo: 
-				[ :output | 
+	fs root allChildren do:
+		[ :each |
+		each isFile ifTrue:
+			[ each readStreamDo:
+				[ :output |
 				archive addString: output contents as: each path printString ] ] ].
 	archive
 		writeTo: (stream := WriteStream on: ByteArray new);
 		close.
-	self reference writeStreamDo: 
+	self reference writeStreamDo:
 		[ :output | output nextPutAll: stream contents ]
 ]
 
@@ -59,15 +59,15 @@ ZipStore >> open [
 		ifFalse: [ ^ self ].
 	archive := ZipArchive new.
 	self reference
-		binaryReadStreamDo: [ :input | 
+		binaryReadStreamDo: [ :input |
 			archive readFrom: input contents readStream.
 			archive members
-				do: [ :member | 
+				do: [ :member |
 					| path |
 					path := self pathFromMember: member.
 					member isDirectory
 						ifTrue: [ self ensureCreateDirectory: path ]
-						ifFalse: [ 
+						ifFalse: [
 							self ensureCreateDirectory: path parent.
 							(self createFile: path) member: member ] ] ].
 	^ self

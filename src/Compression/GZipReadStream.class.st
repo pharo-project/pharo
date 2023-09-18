@@ -25,16 +25,16 @@ GZipReadStream class >> saveContents: fullFileName [
 
 	| buffer newName |
 	newName := fullFileName asFileReference basenameWithoutExtension.
-	newName asFileReference binaryWriteStreamDo: [ :unzipped | 
+	newName asFileReference binaryWriteStreamDo: [ :unzipped |
 			fullFileName asFileReference
-				binaryReadStreamDo: [ :readStream | 
+				binaryReadStreamDo: [ :readStream |
 					self with: readStream
-						do: [ :zipped | 
+						do: [ :zipped |
 							buffer := ByteArray new: 50000.
 							'Extracting ' , fullFileName
 								displayProgressFrom: 0
 								to: zipped sourceStream size
-								during: [ :bar | 
+								during: [ :bar |
 									[ zipped atEnd ]
 										whileFalse: [ bar current: zipped sourceStream position.
 											unzipped nextPutAll: (zipped nextInto: buffer) ] ] ] ] ].
@@ -42,10 +42,10 @@ GZipReadStream class >> saveContents: fullFileName [
 ]
 
 { #category : #unzipping }
-GZipReadStream class >> unzip: fullFileName [ 
+GZipReadStream class >> unzip: fullFileName [
 	"Unzip the contents of the file specified by the full path name or file reference fullFileName to the current working directory
 	To unzip a .zip go to the class ZipArchive"
-	
+
 	^ self unzip: fullFileName to: FileSystem disk workingDirectory
 ]
 
@@ -55,15 +55,15 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 	GZipReadStream unzip:'/aPath/zip.gz' to: '/aPath'
 	GZipReadStream unzip:'zip.gz' to: '/aPath'
 	GZipReadStream unzip:'/aPath/zip.gz' asFileReference to: '/aPath' asFileReference
-	
+
 	To unzip a .zip go to the class ZipArchive"
 
 	| buffer newName |
 	newName := fullFileName asFileReference basenameWithoutExtension.
 	pathName asFileReference ensureCreateDirectory / newName
-		binaryWriteStreamDo: [ :unzipped | 
+		binaryWriteStreamDo: [ :unzipped |
 			self with: fullFileName asFileReference binaryReadStream
-				do: [ :zipped | 
+				do: [ :zipped |
 					buffer := ByteArray new: 50000.
 					[ zipped atEnd ] whileFalse: [ unzipped nextPutAll: (zipped nextInto: buffer) ] ] ].
 	^ newName
@@ -74,8 +74,8 @@ GZipReadStream class >> viewContents: fullFileName [
 	"Open the decompressed contents of the .gz file with the given name."
 
 	| file |
-	(file := fullFileName asFileReference) binaryReadStreamDo: 
-		[ :aStream | self with: aStream do: 
+	(file := fullFileName asFileReference) binaryReadStreamDo:
+		[ :aStream | self with: aStream do:
 			[ :aGzStream | UIManager default edit: aGzStream upToEnd label: 'Decompressed contents of: ' , file basename ] ]
 ]
 
@@ -86,13 +86,13 @@ GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	super on: aCollection from: firstIndex to: lastIndex.
 	crc := 16rFFFFFFFF.
 	magic := self nextBits: 16.
-	(magic = GZipMagic) 
+	(magic = GZipMagic)
 		ifFalse:[^self error:'Not a GZipped stream'].
 	method := self nextBits: 8.
 	(method = GZipDeflated)
 		ifFalse:[^self error:'Bad compression method'].
 	flags := self nextBits: 8.
-	(flags anyMask: GZipEncryptFlag) 
+	(flags anyMask: GZipEncryptFlag)
 		ifTrue:[^self error:'Cannot decompress encrypted stream'].
 	(flags anyMask: GZipReservedFlags)
 		ifTrue:[^self error:'Cannot decompress stream with unknown flags'].
@@ -101,7 +101,7 @@ GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	self nextBits: 8. "extra flags"
 	self nextBits: 8. "OS type"
 	(flags anyMask: GZipContinueFlag) "Number of multi-part archive - ignored"
-		ifTrue:[self nextBits: 16]. 
+		ifTrue:[self nextBits: 16].
 	(flags anyMask: GZipExtraField) "Extra fields - ignored"
 		ifTrue:[	length := self nextBits: 16.
 				1 to: length do:[:i| self nextBits: 8]].
@@ -114,7 +114,7 @@ GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 { #category : #crc }
 GZipReadStream >> updateCrc: oldCrc from: start to: stop in: aCollection [
 	"Answer an updated CRC for the range of bytes in aCollection"
-	^ZipWriteStream updateCrc: oldCrc from: start to: stop in: aCollection.
+	^ZipWriteStream updateCrc: oldCrc from: start to: stop in: aCollection
 ]
 
 { #category : #crc }

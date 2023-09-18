@@ -21,7 +21,7 @@ Class {
 { #category : #profiling }
 AbstractWorldRenderer class >> closeRenderingProfileLogFile [
 
-	RenderingProfilingLogOutput ifNotNil: [ 
+	RenderingProfilingLogOutput ifNotNil: [
 		RenderingProfilingLogOutput close.
 		RenderingProfilingLogOutput := nil ]
 ]
@@ -42,14 +42,14 @@ AbstractWorldRenderer class >> detectCorrectOneForWorld: aWorld [
 { #category : #profiling }
 AbstractWorldRenderer class >> disableRenderingProfileLogFile [
 	<script>
-	
+
 	self isLoggingRenderingProfileToFile: false
 ]
 
 { #category : #profiling }
 AbstractWorldRenderer class >> enableRenderingProfileLogFile [
 	<script>
-	
+
 	self isLoggingRenderingProfileToFile: true
 ]
 
@@ -68,7 +68,7 @@ AbstractWorldRenderer class >> initialize [
 ]
 
 { #category : #testing }
-AbstractWorldRenderer class >> isAbstract [ 
+AbstractWorldRenderer class >> isAbstract [
 
 	^ self == AbstractWorldRenderer
 ]
@@ -132,7 +132,7 @@ AbstractWorldRenderer class >> mainWorldRenderer [
 ]
 
 { #category : #accessing }
-AbstractWorldRenderer class >> priority [ 
+AbstractWorldRenderer class >> priority [
 
 	^ 0
 ]
@@ -140,36 +140,39 @@ AbstractWorldRenderer class >> priority [
 { #category : #'system startup' }
 AbstractWorldRenderer class >> shutDown: quitting [
 
-	quitting ifFalse: [ ^ self ].
+	MainWorldRenderer ifNotNil: [ :aRenderer |
+		aRenderer shutDown: quitting ].
 
-	[ MainWorldRenderer ifNotNil: [ :e | e deactivate ] ] ensure: [ 
-		MainWorldRenderer := nil ]
+	quitting ifFalse: [ ^ self ].
+	MainWorldRenderer := nil
 ]
 
 { #category : #profiling }
 AbstractWorldRenderer class >> startProfilingRenderingTime [
 	<script>
-	
+
 	self isProfilingRenderingTime: true
 ]
 
 { #category : #'system startup' }
 AbstractWorldRenderer class >> startUp: isANewSession [
 
-	isANewSession ifTrue: [ MainWorldRenderer := nil ]
+	isANewSession ifTrue: [ MainWorldRenderer := nil ].
+	MainWorldRenderer ifNotNil: [
+		MainWorldRenderer startUp: isANewSession ]
 ]
 
 { #category : #profiling }
 AbstractWorldRenderer class >> stopProfilingRenderingTime [
 	<script>
-	
+
 	self isProfilingRenderingTime: false
 ]
 
 { #category : #activation }
 AbstractWorldRenderer >> activate [
 
-	alreadyActivated ifTrue: [ 
+	alreadyActivated ifTrue: [
 		"Maybe I need to change the title of the window after saving the image"
 		^ self updateWindowTitle ].
 
@@ -265,14 +268,14 @@ AbstractWorldRenderer >> drawDuring: aBlock [
 { #category : #profiling }
 AbstractWorldRenderer >> formatRenderingTimeMeasurement: measurement [
 
-	^ '[{1}]{2}: {3} ms' format: { 
+	^ '[{1}]{2}: {3} ms' format: {
 			  self class name.
 			  measurement key.
 			  (measurement value printPaddedWith: Character space to: 5) }
 ]
 
 { #category : #accessing }
-AbstractWorldRenderer >> icon: aForm [ 
+AbstractWorldRenderer >> icon: aForm [
 
 	self subclassResponsibility
 ]
@@ -301,17 +304,17 @@ AbstractWorldRenderer >> logRenderingTimeMeasurements: measurements [
 
 { #category : #events }
 AbstractWorldRenderer >> requestStopTextEditing [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #events }
-AbstractWorldRenderer >> requestTextEditingAt: aRectangle [ 
-	
+AbstractWorldRenderer >> requestTextEditingAt: aRectangle [
+
 	self subclassResponsibility
 ]
 
 { #category : #operations }
-AbstractWorldRenderer >> restoreMorphicDisplay [ 
+AbstractWorldRenderer >> restoreMorphicDisplay [
 
 	world
 		extent: self actualScreenSize;
@@ -320,10 +323,20 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 		resizeBackgroundMorph;
 		submorphsDo: [ :each | each displayExtentChanged ];
 		fullRepaintNeeded.
-		
+
 	world defer: [Cursor normal show].
-		
-	world layoutChanged.
+
+	world layoutChanged
+]
+
+{ #category : #'system startup' }
+AbstractWorldRenderer >> shutDown: quitting [
+
+	quitting ifTrue: [ self deactivate ]
+]
+
+{ #category : #'system startup' }
+AbstractWorldRenderer >> startUp: resuming [
 ]
 
 { #category : #rendering }
@@ -351,7 +364,7 @@ AbstractWorldRenderer >> usableArea [
 ]
 
 { #category : #'display box access' }
-AbstractWorldRenderer >> viewBox [ 
+AbstractWorldRenderer >> viewBox [
 
 	^ 0@0 corner: self actualScreenSize
 ]

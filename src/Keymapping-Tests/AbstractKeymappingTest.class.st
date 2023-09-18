@@ -24,7 +24,7 @@ AbstractKeymappingTest class >> isAbstract [
 ]
 
 { #category : #utilities }
-AbstractKeymappingTest >> eventKey: character [ 
+AbstractKeymappingTest >> eventKey: character [
 	^ self eventKey: character
 		alt: false
 		ctrl: false
@@ -46,24 +46,24 @@ AbstractKeymappingTest >> eventKey: character alt: useAlt ctrl: useCtrl command:
 	| event modifier code |
 	event := KeyboardEvent new.
 	modifier := 0.
-	
-	useShift 
+
+	useShift
 		ifTrue: [ modifier := modifier + 8].
-	useCtrl 
+	useCtrl
 		ifTrue: [ modifier := modifier + 16].
-	useAlt 
+	useAlt
 		ifTrue: [ modifier := modifier + 32].
 	useCommand
 		ifTrue: [ modifier := modifier + 64].
-	
+
 	code := character asInteger.
-	event 
+	event
 		setType: #keystroke
 		buttons: modifier
 		position:  0@0
 		keyValue: code
 		charCode: code
-		hand: nil 
+		hand: nil
 		stamp: Time now.
 	event key: (KeyboardKey fromCharacter: character).
 	^ event

@@ -29,7 +29,7 @@ KMShortcutSetting class >> settingInputWidgetForNode: aSettingNode [
 ]
 
 { #category : #setting }
-KMShortcutSetting >> accept: aShortcut [ 
+KMShortcutSetting >> accept: aShortcut [
 	self keymap shortcut: aShortcut
 ]
 

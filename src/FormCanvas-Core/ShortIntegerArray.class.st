@@ -16,7 +16,7 @@ ShortIntegerArray class >> initialize [
 	LastSaveOrder := self new: 2.
 	LastSaveOrder at: 1 put: 42.
 	LastSaveOrder at: 2 put: 13.
-	
+
 	SessionManager default
 		registerSystemClassNamed: self name
 ]
@@ -29,9 +29,9 @@ ShortIntegerArray class >> new: n [
 { #category : #'startup - shutdown' }
 ShortIntegerArray class >> startUp [
 	"Check if the word order has changed from the last save"
-	((LastSaveOrder at: 1) = 42 and:[(LastSaveOrder at: 2) = 13]) 
+	((LastSaveOrder at: 1) = 42 and:[(LastSaveOrder at: 2) = 13])
 		ifTrue:[^self]. "Okay"
-	((LastSaveOrder at: 2) = 42 and:[(LastSaveOrder at: 1) = 13]) 
+	((LastSaveOrder at: 2) = 42 and:[(LastSaveOrder at: 1) = 13])
 		ifTrue:[^self swapShortObjects]. "Reverse guys"
 	^self error:'This must never happen'
 ]
@@ -47,7 +47,7 @@ ShortIntegerArray >> at: index [
 
 	<primitive: 143>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
-	self errorNonIntegerIndex.
+	self errorNonIntegerIndex
 ]
 
 { #category : #accessing }
@@ -56,7 +56,7 @@ ShortIntegerArray >> at: index put: value [
 
 	<primitive: 144>
 	index isInteger
-		ifTrue: [ 
+		ifTrue: [
 			(index between: 1 and: self size)
 				ifTrue: [ self errorImproperStore ]
 				ifFalse: [ self errorSubscriptBounds: index ] ].
@@ -73,7 +73,7 @@ ShortIntegerArray >> pvtAt: index [
 	"Private -- for swapping only"
 	<primitive: 143>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
-	self errorNonIntegerIndex.
+	self errorNonIntegerIndex
 ]
 
 { #category : #private }
@@ -82,7 +82,7 @@ ShortIntegerArray >> pvtAt: index put: value [
 
 	<primitive: 144>
 	index isInteger
-		ifTrue: [ 
+		ifTrue: [
 			(index between: 1 and: self size)
 				ifTrue: [ self errorImproperStore ]
 				ifFalse: [ self errorSubscriptBounds: index ] ].
@@ -114,14 +114,14 @@ ShortIntegerArray >> swapBytePairsHacky [
 	hack := Form new hackBits: self.	"The implementation is a hack, but fast for large ranges"
 	blt := (BitBlt toForm: hack) sourceForm: hack.
 	blt combinationRule: Form reverse.	"XOR"
-		
+
 	blt
 		sourceY: 0;
 		destY: 0;
 		height: hack height;
 		width: 1.
 	#((0 1) (1 0) (0 1) (2 3)(3 2)(2 3))
-		do: [:array | [:a :b| blt sourceX: a; destX: b; copyBits ] valueWithArguments: array ].
+		do: [:array | [:a :b| blt sourceX: a; destX: b; copyBits ] valueWithArguments: array ]
 ]
 
 { #category : #private }
@@ -156,6 +156,6 @@ ShortIntegerArray >> write: shortInteger on: aStream [
 { #category : #'objects from disk' }
 ShortIntegerArray >> writeOn: aStream [
 	aStream nextInt32Put: self basicSize.
-	1 to: self basicSize do: [ :i | 
+	1 to: self basicSize do: [ :i |
 		self write: (self basicAt: i) on: aStream ]
 ]

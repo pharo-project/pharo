@@ -65,12 +65,12 @@ RubCursor class >> rubricSettingsOn: aBuilder [
 	(aBuilder group: #'Rubric cursor')
 		parent: #Rubric;
 		label: 'Cursor';
-		with: [ 
+		with: [
 					(aBuilder setting: #cursorWithFixedColor)
 						target: self;
 						default: false;
 						label: 'Fixed color';
-						with: [ 
+						with: [
 									(aBuilder setting: #defaultColor)
 										target: self;
 										default: Color lightGray;
@@ -118,7 +118,7 @@ RubCursor >> addAlarmAt: millisecs [
 	(self stayVisible not and: [ self textArea hasFocus ])
 		ifFalse: [ ^ self ].
 	self world
-		ifNotNil: [ :wld | 
+		ifNotNil: [ :wld |
 			wld
 				addAlarm: #hideShow
 				withArguments: #()
@@ -144,7 +144,7 @@ RubCursor >> defaultBounds [
 ]
 
 { #category : #initialization }
-RubCursor >> defaultColor [ 
+RubCursor >> defaultColor [
 	^ Color transparent
 ]
 
@@ -163,12 +163,12 @@ RubCursor >> ensureFor: millisecs [
 
 { #category : #blinking }
 RubCursor >> hideShow [
-	self textArea canChangeText 
+	self textArea canChangeText
 		ifFalse: [ ^ self beNotVisible ].
-	self stayVisible 
+	self stayVisible
 		ifTrue: [ ^ self beVisible ].
 	self isBlinkingCursor
-		ifTrue: [ 
+		ifTrue: [
 			self switchColor.
 			self addAlarm ]
 		ifFalse: [ self beVisible ]
@@ -185,13 +185,13 @@ RubCursor >> isBlinkingCursor [
 ]
 
 { #category : #'submorphs - accessing' }
-RubCursor >> noteNewOwner: aMorph [ 
+RubCursor >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self textArea announcer when: MorphGotFocus send: #whenGotFocus: to: self.
 	self textArea announcer when: MorphLostFocus send: #whenLostFocus: to: self.
 	self textArea announcer when: RubExtentChanged send: #whenTextAreaExtentChanged: to: self.
 	self textArea announcer when: RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self.
-	self textArea announcer when: RubTextStyleChanged send: #whenTextAreaTextStyleChanged: to: self.
+	self textArea announcer when: RubTextStyleChanged send: #whenTextAreaTextStyleChanged: to: self
 ]
 
 { #category : #accessing }
@@ -202,7 +202,7 @@ RubCursor >> period [
 { #category : #blinking }
 RubCursor >> removeAlarm [
 	self world
-		ifNotNil: [ :wld | 
+		ifNotNil: [ :wld |
 			wld removeAlarm: #hideShow for: self ]
 ]
 
@@ -227,7 +227,7 @@ RubCursor >> stayVisible: aBoolean [
 RubCursor >> switchColor [
 	self color = self invisibleCursorColor
 		ifTrue: [ self color: self actualCursorColor ]
-		ifFalse: [ self beNotVisible ].
+		ifFalse: [ self beNotVisible ]
 ]
 
 { #category : #accessing }
@@ -253,7 +253,7 @@ RubCursor >> updateBounds [
 	self textArea ifNil: [ ^self ].
 	line := self textArea selectionStop textLine.
 	x := self textArea selectionStop left.
-	
+
 	self position: x @ line top.
 	self extent: self class defaultWidth @ (line height + 1)
 ]
@@ -271,7 +271,7 @@ RubCursor >> updateVisibility [
 
 { #category : #accessing }
 RubCursor >> visibleCursorColor [
-	self class cursorWithFixedColor 
+	self class cursorWithFixedColor
 		ifTrue: [ ^ self class defaultColor ].
 	^ visibleCursorColor ifNil: [ self defaultVisibleCursorColor ]
 ]
@@ -290,7 +290,7 @@ RubCursor >> whenGotFocus: anAnnouncement [
 { #category : #'event handling' }
 RubCursor >> whenLostFocus: anAnnouncement [
 	self stayVisible
-		ifFalse: [ 
+		ifFalse: [
 			self removeAlarm.
 			self beNotVisible ]
 ]
@@ -308,5 +308,5 @@ RubCursor >> whenTextAreaSelectionChanged: anAnnouncement [
 
 { #category : #'event handling' }
 RubCursor >> whenTextAreaTextStyleChanged: anAnnouncement [
-	self updateBounds.
+	self updateBounds
 ]

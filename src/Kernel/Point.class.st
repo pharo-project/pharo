@@ -43,44 +43,44 @@ Class {
 }
 
 { #category : #'instance creation' }
-Point class >> x: xInteger y: yInteger [ 
+Point class >> x: xInteger y: yInteger [
 	"Answer an instance of me with coordinates xInteger and yInteger."
 
 	^ self basicNew setX: xInteger setY: yInteger
 ]
 
 { #category : #arithmetic }
-Point >> * arg [ 
+Point >> * arg [
 	"Answer a Point that is the product of the receiver and arg."
 	"((2@2) * (100@200)) >>> (200@400)"
 	"((2@2) * 200) >>> (400@400)"
-	
+
 	arg isPoint ifTrue: [^ (x * arg x) @ (y * arg y)].
 	^ arg adaptToPoint: self andSend: #*
 ]
 
 { #category : #arithmetic }
-Point >> + arg [ 
+Point >> + arg [
 	"Answer a Point that is the sum of the receiver and arg."
 	"((2@2) + (100@200)) >>> (102@202)"
 	"((2@2) + 200) >>> (202@202)"
-	
+
 	arg isPoint ifTrue: [^ (x + arg x) @ (y + arg y)].
 	^ arg adaptToPoint: self andSend: #+
 ]
 
 { #category : #arithmetic }
-Point >> - arg [ 
+Point >> - arg [
 	"Answer a Point that is the difference of the receiver and arg."
 	"((2@2) - (100@200)) >>> (-98@ -198)"
 	"((2@2) - 200) >>> (-198@ -198)"
-	
+
 	arg isPoint ifTrue: [^ (x - arg x) @ (y - arg y)].
 	^ arg adaptToPoint: self andSend: #-
 ]
 
 { #category : #arithmetic }
-Point >> / arg [ 
+Point >> / arg [
 	"Answer a Point that is the quotient of the receiver and arg."
 
 	arg isPoint ifTrue: [^ (x / arg x) @ (y / arg y)].
@@ -88,7 +88,7 @@ Point >> / arg [
 ]
 
 { #category : #arithmetic }
-Point >> // arg [ 
+Point >> // arg [
 	"Answer a Point that is the quotient of the receiver and arg."
 
 	arg isPoint ifTrue: [^ (x // arg x) @ (y // arg y)].
@@ -96,16 +96,16 @@ Point >> // arg [
 ]
 
 { #category : #comparing }
-Point >> < aPoint [ 
+Point >> < aPoint [
 	"Answer whether the receiver is above and to the left of aPoint."
 	"((100@200) < (330@400)) >>> true"
 	"((100@200) < (330@100)) >>> false"
-	
+
 	^ x < aPoint x and: [y < aPoint y]
 ]
 
 { #category : #comparing }
-Point >> <= aPoint [ 
+Point >> <= aPoint [
 	"Answer whether the receiver is neither below nor to the right of aPoint."
 
 	^ x <= aPoint x and: [y <= aPoint y]
@@ -115,8 +115,7 @@ Point >> <= aPoint [
 Point >> = aPoint [
 
 	^ self species = aPoint species
-		ifTrue: [ x = aPoint x and: [ y = aPoint y ]]
-		ifFalse: [ false ]
+		and: [ x = aPoint x and: [ y = aPoint y ]]
 ]
 
 { #category : #comparing }
@@ -134,7 +133,7 @@ Point >> >= aPoint [
 ]
 
 { #category : #arithmetic }
-Point >> \\ arg [ 
+Point >> \\ arg [
 	"Answer a Point that is the mod of the receiver and arg."
 
 	arg isPoint ifTrue: [^ (x \\ arg x) @ (y \\ arg y)].
@@ -176,7 +175,7 @@ Point >> asFloatPoint [
 	to floats using #asFloat. If x and y are already represented
 	by floats return myself, otherwise create a new Point instance."
 	"((30/3)@(2/2)) asFloatPoint >>> (10.0@1.0)"
-	
+
 	self isFloatPoint
 		ifTrue: [ ^ self ].
 	^ x asFloat @ y asFloat
@@ -187,23 +186,16 @@ Point >> asIntegerPoint [
 	"Convert me to an integer point transforming both of my coordinates
 	to integers using #asInteger. If x and y are already represented
 	by integers return myself, otherwise create a new Point instance."
-	
+
 	self isIntegerPoint
 		ifTrue: [ ^ self ].
 	^ x asInteger @ y asInteger
 ]
 
 { #category : #converting }
-Point >> asMargin [
-	"Return a margin instance based on the receiver. aMargin is an object representing either 1, 2 or 4 numbers. It represents the space between a rectangular area and this rectangular area augmented by the margin"
-	
-	^ Margin fromPoint: self
-]
-
-{ #category : #converting }
 Point >> asNonFractionalPoint [
 	"Convert a point to a float point if necessary i.e., if one of its constituents are fractions."
-	
+
 	(x isFraction or: [ y isFraction ])
 		ifTrue: [ ^ x asFloat @ y asFloat ]
 ]
@@ -215,7 +207,7 @@ Point >> asPoint [
 ]
 
 { #category : #private }
-Point >> bitShiftPoint: bits [ 
+Point >> bitShiftPoint: bits [
 	x := x bitShift: bits.
 	y := y bitShift: bits
 ]
@@ -225,7 +217,7 @@ Point >> ceiling [
 	"Answer a Point that is the receiver's x and y ceiling. Answer the receiver if its coordinates are already integral."
 	"(100@200) ceiling >>> (100@200)"
 	"(100.1@200.9) ceiling >>> (101@201)"
-	
+
 	self isIntegerPoint ifTrue: [ ^ self ].
 	^ x ceiling @ y ceiling
 ]
@@ -233,10 +225,10 @@ Point >> ceiling [
 { #category : #comparing }
 Point >> closeTo: aPoint [
 	"Return whether the receiver is close to the argument aPoint. The precision for point holding floats is defined by Float >> #closeTo:precision:. For points holding integer, closeTo: corresponds to equalsTo:"
-	
+
 	"((100@200) closeTo: (100@200)) >>> true"
 	"((100@201) closeTo: (100@200)) >>> false"
-	
+
  	^ (x closeTo: aPoint x) and: [ y closeTo: aPoint y ]
 ]
 
@@ -246,15 +238,15 @@ Point >> closeTo: aPoint precision: aPrecision [
 ]
 
 { #category : #'rectangle creation' }
-Point >> corner: aPoint [ 
+Point >> corner: aPoint [
 	"Answer a Rectangle whose origin is the receiver and whose corner is aPoint. This is one of the infix ways of expressing the creation of a rectangle."
 	"(10@10 corner: 100@100) >>> (10@10 corner: 100@100)"
-	
+
 	^ Rectangle origin: self corner: aPoint
 ]
 
 { #category : #'point functions' }
-Point >> crossProduct: aPoint [ 
+Point >> crossProduct: aPoint [
 	"Answer a number that is the cross product of the receiver and the argument, aPoint."
 
 	^ (x * aPoint y) - (y * aPoint x)
@@ -278,7 +270,7 @@ Point >> directionToLineFrom: p1 to: p2 [
 ]
 
 { #category : #'point functions' }
-Point >> dotProduct: aPoint [ 
+Point >> dotProduct: aPoint [
 	"Answer a number that is the dot product of the receiver and the argument, aPoint. That is, the two points are multipled and the coordinates of the result summed."
 
 	^ (x * aPoint x) + (y * aPoint y)
@@ -291,7 +283,7 @@ Point >> eightNeighbors [
 ]
 
 { #category : #'rectangle creation' }
-Point >> extent: aPoint [ 
+Point >> extent: aPoint [
 	"Answer a Rectangle whose origin is the receiver and whose extent is aPoint. This is one of the infix ways of expressing the creation of a rectangle."
 
 	^ Rectangle origin: self extent: aPoint
@@ -310,7 +302,7 @@ Point >> floor [
 	"Answer a Point that is the receiver's x and y floor. Answer the receiver if its coordinates are already integral."
 	"(100@200) floor >>> (100@200)"
 	"(100.1@200.9) floor >>> (100@200)"
-	
+
 	self isIntegerPoint ifTrue: [ ^ self ].
 	^ x floor @ y floor
 ]
@@ -319,7 +311,7 @@ Point >> floor [
 Point >> fourDirections [
 	"Return vertices for a square centered at 0 asPoint with the receiver as first corner.
 	Returns the four rotation of the reciever in counter clockwise order with the receiver appearing last."
-	
+
 	^ Array with: self leftRotated
 			with: self negated
 			with: self rightRotated
@@ -335,7 +327,7 @@ Point >> fourNeighbors [
 ]
 
 { #category : #'point functions' }
-Point >> grid: aPoint [ 
+Point >> grid: aPoint [
 	"Answer a Point to the nearest rounded grid modules specified by aPoint."
 	| newX newY |
 	newX := x + (aPoint x // 2) truncateTo: aPoint x.
@@ -348,7 +340,7 @@ Point >> guarded [
 	"Return a positive nonzero extent."
 	"(100@200) guarded >>> (100@200)"
 	"(0@5) guarded >>> (1@5)"
-	
+
 	^self max: 1@1
 ]
 
@@ -360,7 +352,7 @@ Point >> hash [
 ]
 
 { #category : #'point functions' }
-Point >> insideTriangle: p1 with: p2 with: p3 [ 
+Point >> insideTriangle: p1 with: p2 with: p3 [
 	"Return true if the receiver is within the triangle defined by the three coordinates.
 	Note: This method computes the barycentric coordinates for the receiver and tests those coordinates."
 
@@ -393,12 +385,12 @@ Point >> isFloatPoint [
 	"(1@2.2) isFloatPoint >>> false"
 	"(1.3@2.2) isFloatPoint >>> true"
 	"((1/3)@(2/2)) isFloatPoint >>> false"
-	
+
 	^ x isFloat and: [ y isFloat ]
 ]
 
 { #category : #testing }
-Point >> isInsideCircle: a with: b with: c [ 
+Point >> isInsideCircle: a with: b with: c [
 	"Returns true if self is inside the circle defined by the points a, b, c. See Guibas and Stolfi (1985) p.107"
 	^ (a dotProduct: a)
 		* (b triangleArea: c with: self) - ((b dotProduct: b)
@@ -408,15 +400,15 @@ Point >> isInsideCircle: a with: b with: c [
 ]
 
 { #category : #testing }
-Point >> isInsideRectangle: aRectangle [ 
+Point >> isInsideRectangle: aRectangle [
 	"Answer true whether the receiver is inside the argument (following Rectangle>>#containsPoint: semantics"
-	
+
 	"(50@50 isInsideRectangle: (0@0 corner: 100@100)) >>> true"
 	"(0@0 isInsideRectangle: (0@0 corner: 100@100)) >>> true"
 	"(0@10 isInsideRectangle: (0@0 corner: 100@100)) >>> true"
 	"(100@100 isInsideRectangle: (0@0 corner: 100@100))>>> false"
 	"(100@90 isInsideRectangle: (0@0 corner: 100@100))>>> false"
-	
+
 	^ aRectangle containsPoint: self
 ]
 
@@ -457,7 +449,7 @@ Point >> max [
 ]
 
 { #category : #comparing }
-Point >> max: aPoint [ 
+Point >> max: aPoint [
 	"Answer the lower right corner of the rectangle uniquely defined by the receiver and the argument, aPoint."
 	"((100@200) max: (330@400)) >>> (330@400)"
 	"((100@200) max: (30@400)) >>> (100@400)"
@@ -468,29 +460,29 @@ Point >> max: aPoint [
 Point >> min [
 	"Answer a number that is the minimum of the x and y of the receiver."
 	"(100@200) min >>> 100"
-	
+
 	^ self x min: self y
 ]
 
 { #category : #comparing }
-Point >> min: aPoint [ 
+Point >> min: aPoint [
 	"Answer the upper left corner of the rectangle uniquely defined by the receiver and the argument, aPoint."
 	"((100@200) min: (330@400)) >>> (100@200)"
 	"((100@200) min: (30@400)) >>> (30@200)"
-	
+
 	^ (x min: aPoint x) @ (y min: aPoint y)
 ]
 
 { #category : #comparing }
-Point >> min: aMin max: aMax [ 
+Point >> min: aMin max: aMax [
 
 	^ (self min: aMin) max: aMax
 ]
 
 { #category : #'point functions' }
-Point >> nearestPointAlongLineFrom: p1 to: p2 [ 
+Point >> nearestPointAlongLineFrom: p1 to: p2 [
 	"Note this will give points beyond the endpoints."
-	
+
 	| x21 y21 t x1 y1 |
 	p1 x = p2 x ifTrue: [ ^ p1 x @ y ].
 	p1 y = p2 y ifTrue: [ ^ x @ p1 y ].
@@ -516,8 +508,8 @@ Point >> negated [
 ]
 
 { #category : #'point functions' }
-Point >> octantOf: otherPoint [ 
-	"Return 1..8 indicating relative direction to otherPoint.  
+Point >> octantOf: otherPoint [
+	"Return 1..8 indicating relative direction to otherPoint.
 	1=ESE, 2=SSE, ... etc. clockwise to 8=ENE"
 
 	| quad moreHoriz |
@@ -526,15 +518,15 @@ Point >> octantOf: otherPoint [
 	(y = otherPoint y and: [ x < otherPoint x ]) ifTrue: [ ^ 8 ].
 	quad := self quadrantOf: otherPoint.
 	moreHoriz := (x - otherPoint x) abs >= (y - otherPoint y) abs.
-	^ (quad even eqv: moreHoriz) 
+	^ (quad even eqv: moreHoriz)
 		ifTrue: [ quad * 2 ]
 		ifFalse: [ quad * 2 - 1 ]
 ]
 
 { #category : #printing }
-Point >> printOn: aStream [ 
+Point >> printOn: aStream [
 	"The receiver prints on aStream in terms of infix notation."
-	
+
 	aStream nextPut: $(.
 	x printOn: aStream.
 	aStream nextPut: $@.
@@ -543,7 +535,7 @@ Point >> printOn: aStream [
 			"Avoid ambiguous @- construct"
 			aStream space].
 	y printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #'point functions' }
@@ -559,15 +551,15 @@ Point >> quadrantOf: otherPoint [
 Point >> reciprocal [
 	"Answer a Point with coordinates that are the reciprocals of mine."
 	"(100@200) reciprocal >>> ((1/100)@(1/200))"
-	
+
 	^ x reciprocal @ y reciprocal
 ]
 
 { #category : #'rectangle creation' }
-Point >> rectangle: aPoint [ 
+Point >> rectangle: aPoint [
 	"Answer a Rectangle that encompasses the receiver and aPoint. This is the most general infix way to create a rectangle."
 
-	^ Rectangle 
+	^ Rectangle
 		point: self
 		point: aPoint
 ]
@@ -587,9 +579,9 @@ Point >> rightRotated [
 
 { #category : #'truncation and round off' }
 Point >> roundDownTo: grid [
-	"Answer a Point that is the receiver's x and y rounded to grid x and 
+	"Answer a Point that is the receiver's x and y rounded to grid x and
 	grid y by lower value (toward negative infinity)."
-	
+
 	| gridPoint |
 	gridPoint := grid asPoint.
 	^ (x roundDownTo: gridPoint x) @ (y roundDownTo: gridPoint y)
@@ -597,9 +589,9 @@ Point >> roundDownTo: grid [
 
 { #category : #'truncation and round off' }
 Point >> roundTo: grid [
-	"Answer a Point that is the receiver's x and y rounded to grid x and 
+	"Answer a Point that is the receiver's x and y rounded to grid x and
 	grid y."
-	
+
 	| gridPoint |
 	gridPoint := grid asPoint.
 	^ (x roundTo: gridPoint x) @ (y roundTo: gridPoint y)
@@ -607,9 +599,9 @@ Point >> roundTo: grid [
 
 { #category : #'truncation and round off' }
 Point >> roundUpTo: grid [
-	"Answer a Point that is the receiver's x and y rounded to grid x and 
+	"Answer a Point that is the receiver's x and y rounded to grid x and
 	grid y by upper value (toward infinity)."
-	
+
 	| gridPoint |
 	gridPoint := grid asPoint.
 	^ (x roundUpTo: gridPoint x) @ (y roundUpTo: gridPoint y)
@@ -624,7 +616,7 @@ Point >> rounded [
 ]
 
 { #category : #transforming }
-Point >> scaleBy: factorPoint [ 
+Point >> scaleBy: factorPoint [
 	"Answer a Point scaled by factor (an instance of Point)."
 	 "(200@200 scaleBy: 2@3) >>> (400@600)"
 	^(factorPoint x * x) @ (factorPoint y * y)
@@ -633,8 +625,8 @@ Point >> scaleBy: factorPoint [
 { #category : #transforming }
 Point >> scaleFrom: rect1 to: rect2 [
 	"Produce a point stretched according to the stretch from rect1 to rect2"
-	
-	^ rect2 topLeft + 
+
+	^ rect2 topLeft +
 			(((x-rect1 left) * rect2 width // rect1 width)
 				@ ((y-rect1 top) * rect2 height // rect1 height))
 ]
@@ -644,28 +636,28 @@ Point >> scaleTo: anExtent [
 	"Return a Point scalefactor for shrinking a thumbnail of the receiver's extent to fit within anExtent. self and anExtent are expected to have positive nonZero x and y."
     "(200@200 scaleTo: 400@400) >>> (2.0@2.0)"
 	 "(40@40 scaleTo: 400@400) >>> (10.0@10.0)"
-	
-    | factor  sX sY | 
+
+    | factor  sX sY |
     factor :=  3.0 reciprocal. "EccentricityThreshhold reciprical"
     sX := anExtent x / self  x asFloat.
     sY :=  anExtent y / self  y asFloat.
     sX = sY ifTrue: [ ^ sX @ sY ]. "Same aspect ratio"
-    ^ sX < sY 
-        ifTrue: [ sX @ (sX max: sY * factor) ] 
+    ^ sX < sY
+        ifTrue: [ sX @ (sX max: sY * factor) ]
         ifFalse: [ (sY max: sX * factor ) @ sY  ]
 ]
 
 { #category : #private }
-Point >> setX: xValue setY: yValue [ 
+Point >> setX: xValue setY: yValue [
 	x := xValue.
 	y := yValue
 ]
 
 { #category : #geometry }
-Point >> sideOf: otherPoint [ 
+Point >> sideOf: otherPoint [
 	"Returns #left, #right or #center if the otherPoint lies to the left, right or on the line given by the vector from 0@0 to self"
 	"((0@0) sideOf: (100@100)) >>> #center"
-	
+
 	| side |
 	side := (self crossProduct: otherPoint) sign.
 	^ { #right . #center . #left } at: side + 2
@@ -685,7 +677,7 @@ Point >> sortsBefore: otherPoint [
 ]
 
 { #category : #'point functions' }
-Point >> squaredDistanceTo: aPoint [ 
+Point >> squaredDistanceTo: aPoint [
 	"Answer the distance between aPoint and the receiver."
 	| delta |
 	delta := aPoint - self.
@@ -693,31 +685,31 @@ Point >> squaredDistanceTo: aPoint [
 ]
 
 { #category : #printing }
-Point >> storeOn: aStream [ 
+Point >> storeOn: aStream [
 	"x@y printed form is good for storing too"
 	aStream nextPut: $(.
 	self printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #geometry }
-Point >> to: end1 intersects: start2 to: end2 [ 
+Point >> to: end1 intersects: start2 to: end2 [
 	"Returns true if the linesegment from start1 (=self) to end1 intersects with the segment from start2 to end2, otherwise false."
-	
+
 	| start1 sideStart sideEnd |
 	start1 := self.
 	(((start1 = start2 or: [ end1 = end2 ]) or: [ start1 = end2 ]) or: [ start2 = end1 ]) ifTrue: [ ^ true ].
-	sideStart := start1 
+	sideStart := start1
 		to: end1
 		sideOf: start2.
-	sideEnd := start1 
+	sideEnd := start1
 		to: end1
 		sideOf: end2.
 	sideStart = sideEnd ifTrue: [ ^ false ].
-	sideStart := start2 
+	sideStart := start2
 		to: end2
 		sideOf: start1.
-	sideEnd := start2 
+	sideEnd := start2
 		to: end2
 		sideOf: end1.
 	sideStart = sideEnd ifTrue: [ ^ false ].
@@ -725,16 +717,16 @@ Point >> to: end1 intersects: start2 to: end2 [
 ]
 
 { #category : #geometry }
-Point >> to: end sideOf: otherPoint [ 
+Point >> to: end sideOf: otherPoint [
 	"Returns #left, #right, #center if the otherPoint lies to the left, right or on the line given by the vector from self to end"
 	^ end - self sideOf: otherPoint - self
 ]
 
 { #category : #transforming }
-Point >> translateBy: delta [ 
+Point >> translateBy: delta [
 	"Answer a Point translated by delta (an instance of Point)."
 	"((100@200) translateBy: 5@10) >>> (105@210)"
-	
+
 	^ (delta x + x) @ (delta y + y)
 ]
 
@@ -750,7 +742,7 @@ Point >> triangleArea: b with: c [
 ]
 
 { #category : #'truncation and round off' }
-Point >> truncateTo: grid [ 
+Point >> truncateTo: grid [
 	"Answer a Point that is the receiver's x and y truncated to grid x and grid y."
 	| gridPoint |
 	gridPoint := grid asPoint.
@@ -783,6 +775,6 @@ Point >> x [
 Point >> y [
 	"Answer the y coordinate."
 	"(100@200) y >>> 200"
-	
+
 	^ y
 ]

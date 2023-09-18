@@ -44,7 +44,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtError [
 	collection := self nonEmpty.
 	nonExistantKey := self keyNotIn .
 
-	self should: [collection associationAt: nonExistantKey] raise: Error.
+	self should: [collection associationAt: nonExistantKey] raise: Error
 ]
 
 { #category : #'tests - dictionary assocition access' }
@@ -54,7 +54,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtIfAbsent [
 	collection := self nonEmpty.
 	keyIn := collection keys anyOne.
 
-	result := collection associationAt: keyIn ifAbsent: [888]. 
+	result := collection associationAt: keyIn ifAbsent: [888].
 
 	self assert: (result key) = keyIn.
 	self assert: (result value ) = (collection at: keyIn ).
@@ -82,7 +82,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtIfPresent [
 	self assert: result = #present.
 
 	result := collection associationAt: self keyNotIn ifPresent: [:assoc | {#present. assoc}].
-	self assert: result isNil.
+	self assert: result isNil
 ]
 
 { #category : #'tests - dictionary assocition access' }

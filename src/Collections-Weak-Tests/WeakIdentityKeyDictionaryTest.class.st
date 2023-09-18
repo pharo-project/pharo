@@ -21,7 +21,7 @@ WeakIdentityKeyDictionaryTest >> classToBeTested [
 { #category : #tests }
 WeakIdentityKeyDictionaryTest >> testFinalizeValuesWhenLastChainContinuesAtFront [
 	| objectWithHashModulo dictionary capacity a b c |
-	objectWithHashModulo := [ :requestedHash :modulo | 
+	objectWithHashModulo := [ :requestedHash :modulo |
 	| object |
 	[ object := Object new.
 	object hash \\ modulo = requestedHash ] whileFalse.
@@ -41,10 +41,10 @@ WeakIdentityKeyDictionaryTest >> testFinalizeValuesWhenLastChainContinuesAtFront
 	self assert: (dictionary array at: 1) key identicalTo: c.
 	a := nil.
 	Smalltalk garbageCollect.
-	dictionary finalizeValues.
+
 	self assert: (dictionary includesKey: b).
 	self assert: (dictionary includesKey: c).
-	self assert: dictionary slowSize equals: 2
+	self assert: dictionary size equals: 2
 ]
 
 { #category : #tests }

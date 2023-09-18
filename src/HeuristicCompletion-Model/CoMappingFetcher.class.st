@@ -14,8 +14,8 @@ Class {
 }
 
 { #category : #accessing }
-CoMappingFetcher >> collectBlock: aBlockClosure [ 
-	
+CoMappingFetcher >> collectBlock: aBlockClosure [
+
 	collectBlock := aBlockClosure
 ]
 

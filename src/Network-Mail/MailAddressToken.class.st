@@ -18,13 +18,13 @@ MailAddressToken class >> type: type  text: text [
 
 { #category : #printing }
 MailAddressToken >> printOn: aStream [
-	
-	aStream 
+
+	aStream
 		nextPut: $[;
 	 	print: self type ;
 		nextPut: $|;
 		nextPutAll: self text;
-		nextPut: $].
+		nextPut: $]
 ]
 
 { #category : #accessing }
@@ -40,5 +40,5 @@ MailAddressToken >> type [
 { #category : #private }
 MailAddressToken >> type: type0  text: text0 [
 	type := type0.
-	text := text0.
+	text := text0
 ]

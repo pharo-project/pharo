@@ -19,7 +19,7 @@ OupsDebuggerSystemTest >> createDummyDebugRequestForNotUIProcess [
 	| exception nonUIProcess |
 	nonUIProcess := [  1+1 ] newProcess.
 	[ Exception signal ] on: Exception do: [ :e | exception := e ].
-	^ (OupsDummyDebugRequest newForException: exception) process: nonUIProcess; yourself.
+	^ (OupsDummyDebugRequest newForException: exception) process: nonUIProcess; yourself
 ]
 
 { #category : #tests }
@@ -34,12 +34,20 @@ OupsDebuggerSystemTest >> createDummyDebugRequestForUIProcess [
 		  yourself
 ]
 
+{ #category : #private }
+OupsDebuggerSystemTest >> performTest [
+	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
+
+	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
+	self perform: testSelector asSymbol
+]
+
 { #category : #running }
 OupsDebuggerSystemTest >> setUp [
 	super setUp.
-	
+
 	"Put here a common initialization logic for tests"
-	debuggerSystem := OupsDummyDebuggerSystem new.
+	debuggerSystem := OupsDummyDebuggerSystem new
 ]
 
 { #category : #tests }
@@ -55,7 +63,7 @@ OupsDebuggerSystemTest >> testEnsureExceptionIn [
 	OupsDebuggerSystem basicNew ensureExceptionIn: session.
 	self assert: session exception notNil.
 	self assert: session exception class equals: OupsNullException.
-	
+
 	session := DebugSession new exception: #tag.
 	OupsDebuggerSystem basicNew ensureExceptionIn: session.
 	self assert: session exception equals: #tag
@@ -108,6 +116,6 @@ OupsDebuggerSystemTest >> testUIProcessIsRecognised [
 	request := self createDummyDebugRequestForUIProcess.
 	request debugSession errorWasInUIProcess: true.
 	debuggerSystem spawnNewUIProcessIfNecessary: request.
-		
+
 	self assert: debuggerSystem newUIProcessSpawned
 ]

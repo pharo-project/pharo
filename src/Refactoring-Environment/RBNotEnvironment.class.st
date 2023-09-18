@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #testing }
-RBNotEnvironment >> definesClass: aClass [ 
+RBNotEnvironment >> definesClass: aClass [
 	^ (environment definesClass: aClass) not
 ]
 
@@ -22,27 +22,27 @@ RBNotEnvironment >> description [
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesCategory: aCategory [ 
+RBNotEnvironment >> includesCategory: aCategory [
 	^(self classNamesFor: aCategory) isNotEmpty
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesClass: aClass [ 
+RBNotEnvironment >> includesClass: aClass [
 	(environment includesClass: aClass) ifFalse: [^true].
 	^false
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesPackage: aRPackage [ 
+RBNotEnvironment >> includesPackage: aRPackage [
 	^ (environment includesPackage: aRPackage) not
 ]
 
 { #category : #testing }
 RBNotEnvironment >> includesProtocol: aProtocol in: aClass [
-	^ (aClass organization protocolOrganizer
-		getProtocolNamed: aProtocol
-		ifNone: [ ^ false ]) methodSelectors
-		anySatisfy: [ :selector | self includesSelector: selector in: aClass ]
+
+	(aClass hasProtocol: aProtocol) ifFalse: [ ^ false ].
+
+	^ (aClass selectorsInProtocol: aProtocol) anySatisfy: [ :selector | self includesSelector: selector in: aClass ]
 ]
 
 { #category : #testing }
@@ -57,7 +57,7 @@ RBNotEnvironment >> not [
 
 { #category : #accessing }
 RBNotEnvironment >> packages [
-	^ self rootEnvironment packages 
+	^ self rootEnvironment packages
 		select: [ :package | self includesPackage: package ]
 ]
 

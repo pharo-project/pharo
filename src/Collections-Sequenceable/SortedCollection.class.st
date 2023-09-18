@@ -77,7 +77,7 @@ SortedCollection class >> newFromArray: anArray [
 ]
 
 { #category : #'instance creation' }
-SortedCollection class >> sortBlock: aBlock [ 
+SortedCollection class >> sortBlock: aBlock [
 	"Answer an instance of me such that its elements are sorted according to the criterion specified in aBlock."
 
 	^ self sortUsing: aBlock
@@ -104,9 +104,7 @@ SortedCollection >> = aSortedCollection [
 	and if our blocks are the same, and if our elements are the same."
 
 	self species = aSortedCollection species ifFalse: [ ^ false ].
-	^ sortBlock = aSortedCollection sortBlock
-		ifTrue: [ super = aSortedCollection ]
-		ifFalse: [ false ]
+	^ sortBlock = aSortedCollection sortBlock and: [ super = aSortedCollection ]
 ]
 
 { #category : #adding }
@@ -135,14 +133,14 @@ SortedCollection >> at: anInteger put: anObject [
 ]
 
 { #category : #enumerating }
-SortedCollection >> collect: aBlock [ 
-	"Evaluate aBlock with each of my elements as the argument. Collect the 
+SortedCollection >> collect: aBlock [
+	"Evaluate aBlock with each of my elements as the argument. Collect the
 	resulting values into an OrderedCollection. Answer the new collection.
-	We cannot assume that the result is sorted, because aBlock can transform the 
+	We cannot assume that the result is sorted, because aBlock can transform the
 	elements in arbitrary ways.  Thus, we must override the superclass in order
 	to produce an OrderedCollection instead of a SortedCollection."
 
-	| newCollection | 
+	| newCollection |
 	newCollection := OrderedCollection new: self size.
 	self do: [:each | newCollection addLast: (aBlock value: each)].
 	^ newCollection
@@ -156,18 +154,18 @@ SortedCollection >> copyEmpty [
 ]
 
 { #category : #private }
-SortedCollection >> defaultSort: i to: j [ 
+SortedCollection >> defaultSort: i to: j [
 	"Sort elements i through j of self to be nondescending according to
 	sortBlock."	"Assume the default sort block ([:x :y | x <= y])."
 
 	| di dij dj tt ij k l n |
 	"The prefix d means the data at that index."
-	(n := j + 1  - i) <= 1 ifTrue: [^self].	"Nothing to sort." 
+	(n := j + 1  - i) <= 1 ifTrue: [^self].	"Nothing to sort."
 	 "Sort di,dj."
 	di := array at: i.
 	dj := array at: j.
 	(di <= dj) "i.e., should di precede dj?"
-		ifFalse: 
+		ifFalse:
 			[array swap: i with: j.
 			 tt := di.
 			 di := dj.
@@ -177,9 +175,9 @@ SortedCollection >> defaultSort: i to: j [
 			[ij := (i + j) // 2.  "ij is the midpoint of i and j."
 			 dij := array at: ij.  "Sort di,dij,dj.  Make dij be their median."
 			 (di <= dij) "i.e. should di precede dij?"
-			   ifTrue: 
+			   ifTrue:
 				[(dij <= dj) "i.e., should dij precede dj?"
-				  ifFalse: 
+				  ifFalse:
 					[array swap: j with: ij.
 					 dij := dj]]
 			   ifFalse:  "i.e. di should come after dij"
@@ -197,7 +195,7 @@ SortedCollection >> defaultSort: i to: j [
 				   whileTrue.  "i.e. while dij succeeds dk"
 				  k <= l]
 				   whileTrue:
-					[array swap: k with: l]. 
+					[array swap: k with: l].
 	"Now l<k (either 1 or 2 less), and di through dl are all less than or equal to dk
 	through dj.  Sort those two segments."
 				self defaultSort: i to: l.
@@ -205,11 +203,11 @@ SortedCollection >> defaultSort: i to: j [
 ]
 
 { #category : #enumerating }
-SortedCollection >> flatCollect: aBlock [ 
+SortedCollection >> flatCollect: aBlock [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
 	of collection for each element. Equivalent to the lisp's mapcan"
-	
+
 	^ self flatCollect: aBlock as: OrderedCollection
 ]
 
@@ -232,14 +230,14 @@ SortedCollection >> indexForInserting: newObject [
 	| index low high |
 	low := firstIndex.
 	high := lastIndex.
-	sortBlock 
+	sortBlock
 		ifNil: [[index := high + low // 2.  low > high]
-			whileFalse: 
+			whileFalse:
 				[((array at: index) <= newObject)
 					ifTrue: [low := index + 1]
 					ifFalse: [high := index - 1]]]
 		ifNotNil: [[index := high + low // 2.  low > high]
-			whileFalse: 
+			whileFalse:
 				[(sortBlock value: (array at: index) value: newObject)
 					ifTrue: [low := index + 1]
 					ifFalse: [high := index - 1]]].
@@ -255,11 +253,11 @@ SortedCollection >> insert: anObject before: spot [
 SortedCollection >> intersection: aCollection [
 	^ (self class sortBlock: sortBlock)
 		addAll: (self asSet intersection: aCollection);
-		yourself.
+		yourself
 ]
 
 { #category : #splitjoin }
-SortedCollection >> join: aCollection [ 
+SortedCollection >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
 	"Curiously addAllLast: does not trigger a reSort, so we must do it here."
 	^ (super join: aCollection) reSort; yourself
@@ -269,7 +267,7 @@ SortedCollection >> join: aCollection [
 SortedCollection >> median [
 	"Return the middle element, or as close as we can get."
 	"{1 . 2 . 3 . 4 . 5} asSortedCollection  median >>> 3"
-	
+
 	| size middle |
  	size := self size.
  	middle := (size + 1) // 2.
@@ -284,28 +282,28 @@ SortedCollection >> reSort [
 ]
 
 { #category : #sorting }
-SortedCollection >> sort: aSortBlock [ 
+SortedCollection >> sort: aSortBlock [
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."
- 
+
  	super sort: aSortBlock.
  	sortBlock := aSortBlock
 ]
 
 { #category : #private }
-SortedCollection >> sort: i to: j [ 
+SortedCollection >> sort: i to: j [
 	"Sort elements i through j of self to be nondescending according to
 	sortBlock."
 
 	| di dij dj tt ij k l n |
 	sortBlock ifNil: [^self defaultSort: i to: j].
 	"The prefix d means the data at that index."
-	(n := j + 1  - i) <= 1 ifTrue: [^self].	"Nothing to sort." 
+	(n := j + 1  - i) <= 1 ifTrue: [^self].	"Nothing to sort."
 	 "Sort di,dj."
 	di := array at: i.
 	dj := array at: j.
 	(sortBlock value: di value: dj) "i.e., should di precede dj?"
-		ifFalse: 
+		ifFalse:
 			[array swap: i with: j.
 			 tt := di.
 			 di := dj.
@@ -315,9 +313,9 @@ SortedCollection >> sort: i to: j [
 			[ij := (i + j) // 2.  "ij is the midpoint of i and j."
 			 dij := array at: ij.  "Sort di,dij,dj.  Make dij be their median."
 			 (sortBlock value: di value: dij) "i.e. should di precede dij?"
-			   ifTrue: 
+			   ifTrue:
 				[(sortBlock value: dij value: dj) "i.e., should dij precede dj?"
-				  ifFalse: 
+				  ifFalse:
 					[array swap: j with: ij.
 					 dij := dj]]
 			   ifFalse:  "i.e. di should come after dij"
@@ -335,7 +333,7 @@ SortedCollection >> sort: i to: j [
 				   whileTrue.  "i.e. while dij succeeds dk"
 				  k <= l]
 				   whileTrue:
-					[array swap: k with: l]. 
+					[array swap: k with: l].
 	"Now l<k (either 1 or 2 less), and di through dl are all less than or equal to dk
 	through dj.  Sort those two segments."
 				self sort: i to: l.
@@ -344,15 +342,15 @@ SortedCollection >> sort: i to: j [
 
 { #category : #accessing }
 SortedCollection >> sortBlock [
-	"Answer the blockContext which is the criterion for sorting elements of 
+	"Answer the blockContext which is the criterion for sorting elements of
 	the receiver."
 
 	^sortBlock
 ]
 
 { #category : #accessing }
-SortedCollection >> sortBlock: aBlock [ 
-	"Make the argument, aBlock, be the criterion for ordering elements of the 
+SortedCollection >> sortBlock: aBlock [
+	"Make the argument, aBlock, be the criterion for ordering elements of the
 	receiver."
 
 	sortBlock := aBlock.

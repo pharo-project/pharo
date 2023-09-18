@@ -16,11 +16,11 @@ BecomeTest >> testBecome [
 
 	a become: b.
 
-	self 
+	self
 		assert: a equals: 'cd';
 		assert: b equals: 'ab';
 		assert: c equals: 'cd';
-		assert: d equals: 'ab'.
+		assert: d equals: 'ab'
 ]
 
 { #category : #testing }
@@ -35,11 +35,11 @@ BecomeTest >> testBecomeForward [
 
 	a becomeForward: b.
 
-	self 
+	self
 		assert: a equals: 'cd';
 		assert: b equals: 'cd';
 		assert: c equals: 'cd';
-		assert: d equals: 'cd'.
+		assert: d equals: 'cd'
 ]
 
 { #category : #testing }
@@ -92,10 +92,10 @@ BecomeTest >> testBecomeForwardHash [
 
 	a becomeForward: b.
 
-	self 
+	self
 		assert: a hash equals: hb;
 		assert: b hash equals: hb;
-		assert: c hash equals: hb.
+		assert: c hash equals: hb
 ]
 
 { #category : #testing }
@@ -112,9 +112,9 @@ BecomeTest >> testBecomeForwardIdentityHash [
 
 	a becomeForward: b.
 
-	self 
+	self
 		assert: a identityHash equals: ha;
-		assert: b identityHash equals: ha.
+		assert: b identityHash equals: ha
 ]
 
 { #category : #testing }
@@ -131,7 +131,7 @@ BecomeTest >> testBecomeHash [
 
 	a become: b.
 
-	self 
+	self
 		assert: a hash equals: hb;
 		assert: b hash equals: ha;
 		assert: c hash equals: hb;
@@ -151,8 +151,8 @@ BecomeTest >> testBecomeIdentityHash [
 
 	a become: b.
 
-	self 
+	self
 		assert: a identityHash equals: c identityHash;
 		assert: b identityHash equals: d identityHash;
-		deny: a identityHash equals: b identityHash.
+		deny: a identityHash equals: b identityHash
 ]

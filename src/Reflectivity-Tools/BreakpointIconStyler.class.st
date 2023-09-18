@@ -7,6 +7,12 @@ Class {
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
+{ #category : #testing }
+BreakpointIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
 { #category : #defaults }
 BreakpointIconStyler >> highlightColor [
 	^(Color red alpha: 0.1)
@@ -14,7 +20,7 @@ BreakpointIconStyler >> highlightColor [
 
 { #category : #defaults }
 BreakpointIconStyler >> iconBlock: aNode [
-	 ^ [ :seg | 
+	 ^ [ :seg |
 	   aNode breakpoints do: [ :breakpoint | breakpoint remove ].
 	   seg delete ]
 ]

@@ -26,7 +26,7 @@ TextVariableLink >> = anotherObject [
 { #category : #comparing }
 TextVariableLink >> hash [
 
-	^(super hash + variableName hash) hashMultiply 
+	^(super hash + variableName hash) hashMultiply
 ]
 
 { #category : #accessing }

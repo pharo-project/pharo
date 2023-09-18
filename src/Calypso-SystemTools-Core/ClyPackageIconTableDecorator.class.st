@@ -10,7 +10,7 @@ Class {
 { #category : #decoration }
 ClyPackageIconTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
-	
+
 	anItemCellMorph definitionIcon: #package
 ]
 

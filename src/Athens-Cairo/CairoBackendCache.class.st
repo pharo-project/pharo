@@ -25,7 +25,7 @@ Class {
 
 { #category : #'session management' }
 CairoBackendCache class >> checkSession [
-	session == Smalltalk session ifFalse: [ 
+	session == Smalltalk session ifFalse: [
 		soleInstance := nil.
 		session := Smalltalk session ]
 ]
@@ -36,7 +36,7 @@ CairoBackendCache class >> flush [
 ]
 
 { #category : #'instance creation' }
-CairoBackendCache class >> new [ 
+CairoBackendCache class >> new [
 	self error: 'Use #soleInstance'
 ]
 
@@ -47,7 +47,7 @@ CairoBackendCache class >> soleInstance [
 ]
 
 { #category : #accessing }
-CairoBackendCache >> at: anObject [ 
+CairoBackendCache >> at: anObject [
 
 	^ cache at: anObject  ifAbsent: nil
 ]
@@ -68,7 +68,7 @@ CairoBackendCache >> flush [
 CairoBackendCache >> for: anObject at: key ifAbsentPut: aBlock [
 
 	| subCache |
-	subCache := cache 
+	subCache := cache
 		at: anObject
 		ifAbsentPut: [ WeakIdentityKeyDictionary new ].
 

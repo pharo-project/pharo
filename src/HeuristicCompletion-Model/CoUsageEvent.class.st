@@ -41,7 +41,7 @@ CoUsageEvent >> isDynamicContext: anObject [
 
 { #category : #accessing }
 CoUsageEvent >> numberOfTypedCharacter [
-	
+
 	^ typedToken size
 ]
 

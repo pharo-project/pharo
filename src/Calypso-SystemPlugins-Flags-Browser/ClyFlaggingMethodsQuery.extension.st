@@ -4,7 +4,7 @@ Extension { #name : #ClyFlaggingMethodsQuery }
 ClyFlaggingMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	| icon |
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
-	
+
 	icon := anItemCellMorph definitionIcon: #flag.
 	icon setBalloonText: 'There are methods with flag'
 ]

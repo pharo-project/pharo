@@ -27,12 +27,12 @@ OCASTClosureAnalyzer >> visitArgumentNode: aVariableNode [
 OCASTClosureAnalyzer >> visitBlockNode: aBlockNode [
 	"here look at the temps and make copying vars / tempVector out of them"
 	self visitArgumentNodes: aBlockNode arguments.
-	scope := aBlockNode scope.	
+	scope := aBlockNode scope.
 	scope moveEscapingWritesToTempVector.
 	scope copyEscapingReads.
 	self visitNode: aBlockNode body.
 	aBlockNode temporaries do: [ :each | self lookupAndFixBinding: each ].
-	scope := scope popScope.
+	scope := scope popScope
 ]
 
 { #category : #visiting }
@@ -43,14 +43,14 @@ OCASTClosureAnalyzer >> visitLocalVariableNode: aVariableNode [
 	var isTempVectorTemp ifTrue: [ | vectorVar |
 		vectorVar := scope lookupVar: var vectorName.
 		scope addCopyingTempToAllScopesUpToDefTemp: vectorVar].
-	var isCopying ifTrue: [scope addCopyingTempToAllScopesUpToDefTemp: var].
+	var isCopying ifTrue: [scope addCopyingTempToAllScopesUpToDefTemp: var]
 ]
 
 { #category : #visiting }
 OCASTClosureAnalyzer >> visitMethodNode: aMethodNode [
 	"here look at the temps and make copying vars / tempVector out of them"
 	self visitArgumentNodes: aMethodNode arguments.
-	scope := aMethodNode scope.	
+	scope := aMethodNode scope.
 	scope moveEscapingWritesToTempVector.
 	scope copyEscapingReads.
 	self visitNode: aMethodNode body.

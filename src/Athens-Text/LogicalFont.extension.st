@@ -6,7 +6,7 @@ LogicalFont >> asFreetypeFont [
 ]
 
 { #category : #'*Athens-Text' }
-LogicalFont >> getGlyphWidth: aCharacter [ 
+LogicalFont >> getGlyphWidth: aCharacter [
 	^ self realFont getGlyphWidth: aCharacter
 ]
 
@@ -26,6 +26,6 @@ LogicalFont >> getPreciseHeight [
 ]
 
 { #category : #'*Athens-Text' }
-LogicalFont >> glyphRendererOn: anAthensBalloonSurface [ 
+LogicalFont >> glyphRendererOn: anAthensBalloonSurface [
 	^ self realFont glyphRendererOn: anAthensBalloonSurface
 ]

@@ -18,15 +18,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBReturnNode class >> start: returnInteger value: aValueNode [ 
-	^self new 
+RBReturnNode class >> start: returnInteger value: aValueNode [
+	^self new
 		start: returnInteger;
 		value: aValueNode
 ]
 
 { #category : #'instance creation' }
 RBReturnNode class >> value: aNode [
-	^self new 
+	^self new
 		value: aNode
 ]
 
@@ -55,15 +55,15 @@ RBReturnNode >> containsReturn [
 ]
 
 { #category : #matching }
-RBReturnNode >> copyInContext: aDictionary [ 
+RBReturnNode >> copyInContext: aDictionary [
 	^ self class new
 		value: (self value copyInContext: aDictionary);
 		yourself
 ]
 
 { #category : #comparing }
-RBReturnNode >> equalTo: anObject withMapping: aDictionary [ 
-	^self class = anObject class 
+RBReturnNode >> equalTo: anObject withMapping: aDictionary [
+	^self class = anObject class
 		and: [self value equalTo: anObject value withMapping: aDictionary]
 ]
 
@@ -79,8 +79,9 @@ RBReturnNode >> initialize [
 	start := 0
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBReturnNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
 	^self value isFaulty
 ]
 
@@ -90,7 +91,7 @@ RBReturnNode >> isReturn [
 ]
 
 { #category : #matching }
-RBReturnNode >> match: aNode inContext: aDictionary [ 
+RBReturnNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^value match: aNode value inContext: aDictionary
 ]
@@ -108,7 +109,7 @@ RBReturnNode >> removeNode: aNode [
 ]
 
 { #category : #replacing }
-RBReturnNode >> replaceNode: aNode withNode: anotherNode [ 
+RBReturnNode >> replaceNode: aNode withNode: anotherNode [
 	value == aNode ifTrue: [ self value: anotherNode ]
 ]
 
@@ -139,7 +140,7 @@ RBReturnNode >> value [
 ]
 
 { #category : #accessing }
-RBReturnNode >> value: anExpression [ 
+RBReturnNode >> value: anExpression [
 	value := anExpression.
 	value parent: self
 ]

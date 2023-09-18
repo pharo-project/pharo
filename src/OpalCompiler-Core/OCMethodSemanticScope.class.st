@@ -17,25 +17,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-OCMethodSemanticScope class >> targetingClass: aClass [ 
-	^self new 
+OCMethodSemanticScope class >> targetingClass: aClass [
+	^self new
 		targetClass: aClass
-]
-
-{ #category : #converting }
-OCMethodSemanticScope >> asDoItScope [
-	^self asDoItScopeForReceiver: nil
-]
-
-{ #category : #'code compilation' }
-OCMethodSemanticScope >> compileMethodFromASTBy: aCompiler [
-	^aCompiler compileMethodFromAST
-]
-
-{ #category : #'code compilation' }
-OCMethodSemanticScope >> parseASTBy: aParser [
-
-	^aParser parseMethod
 ]
 
 { #category : #accessing }

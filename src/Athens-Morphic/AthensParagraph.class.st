@@ -17,27 +17,27 @@ Class {
 }
 
 { #category : #accessing }
-AthensParagraph >> caretRect [ 
+AthensParagraph >> caretRect [
 
 	^ (0@0 corner: 0@0)
 ]
 
 { #category : #selection }
-AthensParagraph >> characterBlockForIndex: index [ 
+AthensParagraph >> characterBlockForIndex: index [
 
 	^ self defaultCharacterBlock
 ]
 
 { #category : #composition }
-AthensParagraph >> compose: aText style: aTextStyle from: startingIndex in: aRectangle [ 
+AthensParagraph >> compose: aText style: aTextStyle from: startingIndex in: aRectangle [
 	text := aText.
 	textStyle := aTextStyle
-	
+
 	self shouldBeImplemented
 ]
 
 { #category : #private }
-AthensParagraph >> compose: aText style: aTextStyle in: rect [ 
+AthensParagraph >> compose: aText style: aTextStyle in: rect [
 
 	text := aText.
 	textStyle := aTextStyle.
@@ -53,13 +53,13 @@ AthensParagraph >> defaultCharacterBlock [
 ]
 
 { #category : #drawing }
-AthensParagraph >> drawOnAthensCanvas: canvas bounds: aRectangle [ 
+AthensParagraph >> drawOnAthensCanvas: canvas bounds: aRectangle [
 
 	| renderer |
 	"self halt."
 "	canvas
-		clipBy: aRectangle 
-		during: [  
+		clipBy: aRectangle
+		during: [
 "			renderer := AthensTextRenderer new.
 			renderer render: text lines: lines on: canvas.
 "		].
@@ -88,7 +88,7 @@ AthensParagraph >> findReplaceSelectionRegex: aRegex [
 ]
 
 { #category : #accessing }
-AthensParagraph >> focused [ 
+AthensParagraph >> focused [
 	^ false
 ]
 
@@ -96,7 +96,7 @@ AthensParagraph >> focused [
 AthensParagraph >> focused: bool [
 
 	"why we should care?"
-	
+
 	"self flag: #ooo"
 ]
 
@@ -113,7 +113,7 @@ AthensParagraph >> secondarySelection: aSubstring [
 ]
 
 { #category : #selection }
-AthensParagraph >> selectionColor: anUndefinedObject [ 
+AthensParagraph >> selectionColor: anUndefinedObject [
 	self shouldBeImplemented
 ]
 
@@ -142,6 +142,6 @@ AthensParagraph >> text [
 ]
 
 { #category : #accessing }
-AthensParagraph >> textOwner: anUndefinedObject [ 
+AthensParagraph >> textOwner: anUndefinedObject [
 	self shouldBeImplemented
 ]

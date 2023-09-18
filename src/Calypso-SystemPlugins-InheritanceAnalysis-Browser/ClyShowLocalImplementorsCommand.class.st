@@ -41,7 +41,7 @@ ClyShowLocalImplementorsCommand >> createQueryScope [
 
 	| classes scope |
 	classes := methods collect: [ :each | each origin].
-	
+
 	scope := self createInheritanceScopeFrom: classes.
 	scope := scope withMetaLevel: ClyClassScope.
 	^scope
@@ -52,7 +52,7 @@ ClyShowLocalImplementorsCommand >> execute [
 
 	| selectors query |
 	selectors := methods collect: [ :each | each selector].
-	
+
 	query := 	ClyMessageImplementorsQuery ofAny: selectors from: self createQueryScope.
 	browser spawnQueryBrowserOn: query withState: [:queryBrowser |
 		self selectMethodsIn: queryBrowser ]
@@ -61,7 +61,7 @@ ClyShowLocalImplementorsCommand >> execute [
 { #category : #execution }
 ClyShowLocalImplementorsCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	browser := aToolContext browser
 ]
 

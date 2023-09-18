@@ -24,7 +24,7 @@ RottenTestsSet >> add: aRottenTest [
 ]
 
 { #category : #adding }
-RottenTestsSet >> addAll: aCollection [ 
+RottenTestsSet >> addAll: aCollection [
 	aCollection do: [ :rottenTest |
 		self add: rottenTest ]
 ]
@@ -33,7 +33,7 @@ RottenTestsSet >> addAll: aCollection [
 RottenTestsSet >> addCompiledMethod: aCompiledMethod [
 	aCompiledMethod origin isTrait
 		ifFalse: [ self add: (RottenTest compiledMethod: aCompiledMethod) ]
-		ifTrue: [ self add: (RottenTestImplementedInTrait compiledMethod: aCompiledMethod) ].
+		ifTrue: [ self add: (RottenTestImplementedInTrait compiledMethod: aCompiledMethod) ]
 ]
 
 { #category : #'accessing-computed' }
@@ -72,11 +72,6 @@ RottenTestsSet >> rottenTestForCompiledMethod: aCompiledMethod ifPresent: ifPres
 { #category : #accessing }
 RottenTestsSet >> rottenTests [
 	^ rottenTests
-]
-
-{ #category : #accessing }
-RottenTestsSet >> testsRunCount [
-	^ testsRunCount
 ]
 
 { #category : #accessing }

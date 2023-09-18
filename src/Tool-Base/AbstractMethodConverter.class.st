@@ -23,7 +23,7 @@ AbstractMethodConverter class >> method: aMessage [
 { #category : #protocol }
 AbstractMethodConverter >> getText [
 
-	method ifNil: [ ^ '' ].	
+	method ifNil: [ ^ '' ].
 	^ self internalGetText
 ]
 
@@ -32,7 +32,7 @@ AbstractMethodConverter >> getTextFor: aMethod [
 
 	method := aMethod.
 	method ifNil: [ ^ '' ].
-	
+
 	^ self internalGetText
 ]
 

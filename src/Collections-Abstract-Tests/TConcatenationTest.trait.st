@@ -8,7 +8,7 @@ Trait {
 
 { #category : #requirements }
 TConcatenationTest >> empty [
-	self explicitRequirement.
+	self explicitRequirement
 ]
 
 { #category : #requirements }

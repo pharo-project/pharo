@@ -37,7 +37,7 @@ SDL_SysWMinfo >> info: anObject [
 ]
 
 { #category : #testing }
-SDL_SysWMinfo >> isWindows [ 
+SDL_SysWMinfo >> isWindows [
 
 	^ self subsystem = SDL_SYSWM_WINDOWS
 ]

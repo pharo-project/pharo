@@ -25,7 +25,7 @@ FreeTypeCacheLinkedList >> add: link before: otherLink [
 
 	| savedLink |
 	firstLink == otherLink ifTrue: [ ^self addFirst: link ].
-	otherLink 
+	otherLink
 		ifNotNil:[
 			savedLink := otherLink previousLink.
 			link nextLink: otherLink.
@@ -36,10 +36,10 @@ FreeTypeCacheLinkedList >> add: link before: otherLink [
 ]
 
 { #category : #adding }
-FreeTypeCacheLinkedList >> addFirst: aLink [ 
+FreeTypeCacheLinkedList >> addFirst: aLink [
 	"Add aLink to the beginning of the receiver's list. Answer aLink."
 
-	self isEmpty 
+	self isEmpty
 		ifTrue: [ ^lastLink :=firstLink := aLink ].
 	aLink nextLink: firstLink.
 	aLink previousLink: nil.
@@ -49,10 +49,10 @@ FreeTypeCacheLinkedList >> addFirst: aLink [
 ]
 
 { #category : #adding }
-FreeTypeCacheLinkedList >> addLast: aLink [ 
+FreeTypeCacheLinkedList >> addLast: aLink [
 	"Add aLink to the end of the receiver's list. Answer aLink."
 
-	self isEmpty 
+	self isEmpty
 		ifTrue: [ ^firstLink := lastLink := aLink ].
 	aLink previousLink: lastLink.
 	aLink nextLink: nil.
@@ -64,7 +64,7 @@ FreeTypeCacheLinkedList >> addLast: aLink [
 { #category : #reordering }
 FreeTypeCacheLinkedList >> moveDown: aLink [
 	|  e1 e2 e3 e4  |
-	
+
 	(e3 := aLink nextLink) ifNil:[^self].
 	e2 := aLink.
 	e4 := e3 nextLink.
@@ -79,7 +79,7 @@ FreeTypeCacheLinkedList >> moveDown: aLink [
 ]
 
 { #category : #removing }
-FreeTypeCacheLinkedList >> remove: aLink ifAbsent: aBlock [  
+FreeTypeCacheLinkedList >> remove: aLink ifAbsent: aBlock [
 
 	| prev next |
 	prev := aLink previousLink.
@@ -89,20 +89,20 @@ FreeTypeCacheLinkedList >> remove: aLink ifAbsent: aBlock [
 	aLink == firstLink ifTrue:[firstLink := next].
 	aLink == lastLink ifTrue:[lastLink := prev].
 	aLink nextLink: nil.
-	aLink previousLink: nil.		
+	aLink previousLink: nil.
 	^ aLink
 ]
 
 { #category : #removing }
 FreeTypeCacheLinkedList >> removeFirst [
-	"Remove the first element and answer it. If the receiver is empty, create 
+	"Remove the first element and answer it. If the receiver is empty, create
 	an error notification."
 
 	| oldLink |
 	self emptyCheck.
 	oldLink := firstLink.
 	oldLink previousLink: nil.
-	lastLink == firstLink ifTrue: [ 
+	lastLink == firstLink ifTrue: [
 		lastLink := firstLink := nil.
 		oldLink nextLink: nil.
 		^ oldLink ].
@@ -116,14 +116,14 @@ FreeTypeCacheLinkedList >> removeFirst [
 
 { #category : #removing }
 FreeTypeCacheLinkedList >> removeLast [
-	"Remove the first element and answer it. If the receiver is empty, create 
+	"Remove the first element and answer it. If the receiver is empty, create
 	an error notification."
 
 	| oldLink |
 	self emptyCheck.
 	oldLink := lastLink.
 	oldLink nextLink: nil.
-	lastLink == firstLink ifTrue: [ 
+	lastLink == firstLink ifTrue: [
 		lastLink := firstLink := nil.
 		oldLink previousLink: nil.
 		^ oldLink ].

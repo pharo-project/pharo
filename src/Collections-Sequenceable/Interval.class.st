@@ -68,8 +68,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-Interval class >> from: startInteger to: stopInteger [ 
-	"Answer an instance of me, starting at startNumber, ending at 
+Interval class >> from: startInteger to: stopInteger [
+	"Answer an instance of me, starting at startNumber, ending at
 	stopNumber, and with an interval increment of 1."
 
 	^self new
@@ -79,8 +79,8 @@ Interval class >> from: startInteger to: stopInteger [
 ]
 
 { #category : #'instance creation' }
-Interval class >> from: startInteger to: stopInteger by: stepInteger [ 
-	"Answer an instance of me, starting at startNumber, ending at 
+Interval class >> from: startInteger to: stopInteger by: stepInteger [
+	"Answer an instance of me, starting at startNumber, ending at
 	stopNumber, and with an interval increment of stepNumber."
 
 	^self new
@@ -104,7 +104,7 @@ Interval class >> new [
 ]
 
 { #category : #'instance creation' }
-Interval class >> newFrom: aCollection [ 
+Interval class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 
     | newInterval n |
@@ -168,7 +168,7 @@ Interval >> = anObject [
 ]
 
 { #category : #adding }
-Interval >> add: newObject [ 
+Interval >> add: newObject [
 	"Adding to an Interval is not allowed."
 
 	self shouldNotImplement
@@ -187,7 +187,7 @@ Interval >> asOpenInterval [
 	"Return a new interval representing the open version of the receiver.
 	In other words, the new inteval does not contain the upper and lower boundaries of the receiver
 	"
-	
+
 	"(1 to: 10) asOpenInterval >>> (2 to: 9)"
 	"(10 to: 1 by: -1) asOpenInterval >>> (9 to: 2)"
 
@@ -204,7 +204,7 @@ Interval >> at: anInteger [
 ]
 
 { #category : #accessing }
-Interval >> at: anInteger put: anObject [ 
+Interval >> at: anInteger put: anObject [
 	"Storing into an Interval is not allowed."
 
 	self error: 'you can not store into an interval'
@@ -243,7 +243,7 @@ Interval >> do: aBlock [
 ]
 
 { #category : #accessing }
-Interval >> extent [ 
+Interval >> extent [
 	"Answer the max - min of the receiver interval."
 	"(10 to: 50) extent"
 
@@ -251,7 +251,7 @@ Interval >> extent [
 ]
 
 { #category : #accessing }
-Interval >> first [ 
+Interval >> first [
 	"Refer to the comment in SequenceableCollection|first."
 
 	^start
@@ -308,7 +308,7 @@ Interval >> isSelfEvaluating [
 ]
 
 { #category : #accessing }
-Interval >> last [ 
+Interval >> last [
 	"Answer the last element of the receiver. Pay attention, last is not equivalent to stop in certain situations. See below."
 	"(1 to: 10 by: 2) last >>> 9"
 	"(0 to: 10 by: 2) last >>> 10"
@@ -339,7 +339,7 @@ Interval >> printOn: aStream [
 Interval >> rangeIncludes: aNumber [
 	"Return true if aNumber lies anywhere between the interval bounds.
 	This is a fast O(1) bounds check.
-	
+
 	Beware: because #rangeIncludes: only considers the sign of the step, not its magnitude, it also returns true for values that are not actual elements of the interval.
 	For precise element inclusion with arbitrary step, use #includes:."
 
@@ -349,14 +349,14 @@ Interval >> rangeIncludes: aNumber [
 ]
 
 { #category : #removing }
-Interval >> remove: newObject [ 
+Interval >> remove: newObject [
 	"Removing from an Interval is not allowed."
 
 	self error: 'elements cannot be removed from an Interval'
 ]
 
 { #category : #enumerating }
-Interval >> reverseDo: aBlock [ 
+Interval >> reverseDo: aBlock [
 	"Evaluate aBlock for each element of my interval, in reverse order.
 	Implementation notes: see do: for an explanation on loop detail"
 
@@ -378,12 +378,6 @@ Interval >> setFrom: startInteger to: stopInteger by: stepInteger [
 	step isZero ifTrue: [ ^ DomainError signal: 'Zero size steps not allowed' ]
 ]
 
-{ #category : #copying }
-Interval >> shuffled [
-	"Return an array that contains my elements shuffled in a random order"
-	^ self asArray shuffle
-]
-
 { #category : #accessing }
 Interval >> size [
 	"Answer how many elements the receiver contains."
@@ -401,7 +395,7 @@ Interval >> size [
 Interval >> sort: aBlock [
 	"What sorting an Interval means is not clear."
 
-	self shouldNotImplement.
+	self shouldNotImplement
 ]
 
 { #category : #sorting }
@@ -414,7 +408,7 @@ Interval >> sorted [
 { #category : #sorting }
 Interval >> sorted: aSortBlockOrNil [
 	"Return a new sequenceable collection which contains the same elements as self but its elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if the first element should preceed the second one. If aSortBlock is nil then <= is used for comparison. We convert the interval to an array because intervals can't be changed."
-	
+
 	^self asArray sort: aSortBlockOrNil
 ]
 
@@ -429,12 +423,12 @@ Interval >> stop [
 	"Return the stop element of an interval. Pay attention this is not necessary the same as the last element."
 	"(1 to: 10 by: 2) last >>> 9"
 	"(1 to: 10 by: 2) stop >>> 10"
-	
+
 	^ stop
 ]
 
 { #category : #printing }
-Interval >> storeOn: aStream [ 
+Interval >> storeOn: aStream [
 	aStream nextPut: $(;
 	 	store: start;
 	 	nextPutAll: ' to: ';

@@ -65,13 +65,13 @@ DTFilterableListPresenter >> displayBlock: aBlock [
 { #category : #api }
 DTFilterableListPresenter >> displayColor: aBlock [
 
-	self listPresenter displayColor: aBlock.
+	self listPresenter displayColor: aBlock
 ]
 
 { #category : #accessing }
-DTFilterableListPresenter >> displayIcon: aFullBlockClosure [ 
+DTFilterableListPresenter >> displayIcon: aFullBlockClosure [
 
-	self listPresenter displayIcon: aFullBlockClosure 
+	self listPresenter displayIcon: aFullBlockClosure
 ]
 
 { #category : #private }
@@ -80,14 +80,14 @@ DTFilterableListPresenter >> filterList [
 
 	self unselectAll.
 	self filterStrings
-		ifEmpty: [ 
+		ifEmpty: [
 			self listPresenter
 				items: initialItems.
 			^ self ].
 	self listPresenter
 		items:
 			(initialItems
-				select: [ :each | 
+				select: [ :each |
 					self filterStrings
 						anySatisfy: [ :any | any match: (self listPresenter display value: each) ] ])
 ]
@@ -96,8 +96,8 @@ DTFilterableListPresenter >> filterList [
 DTFilterableListPresenter >> filterStrings [
 
 	^ (self filterTextInput text splitOn: $|)
-		reject: #isEmpty
-		thenCollect: [ :pattern | pattern , '*' ]
+		  reject: #isEmpty
+		  thenCollect: [ :pattern | '*' , pattern , '*' ]
 ]
 
 { #category : #accessing }
@@ -122,7 +122,7 @@ DTFilterableListPresenter >> help: aString [
 DTFilterableListPresenter >> initialize [
 
 	super initialize.
-	initialItems := #().
+	initialItems := #()
 ]
 
 { #category : #initialization }
@@ -177,7 +177,7 @@ DTFilterableListPresenter >> listPresenter [
 DTFilterableListPresenter >> resetFilter [
 
 	self filterTextInput text: ''.
-	self listPresenter items: initialItems.
+	self listPresenter items: initialItems
 ]
 
 { #category : #actions }

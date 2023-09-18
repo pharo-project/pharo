@@ -12,9 +12,3 @@ Class {
 	#superclass : #CDClassDefinitionNode,
 	#category : #'ClassParser-Model'
 }
-
-{ #category : #visitor }
-CDTraitDefinitionNode >> acceptVisitor: aProgramNodeVisitor [
-	
-	self visitTraitDefinition: self
-]

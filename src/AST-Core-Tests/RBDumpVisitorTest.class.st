@@ -18,7 +18,7 @@ RBDumpVisitorTest >> testAPI [
 
 	| node |
 	node := self parseExpression: 'self foo'.
-	self 
+	self
 		assert: (RBDumpVisitor new visit: node) contents
 		equals:  'RBMessageNode receiver: (RBVariableNode named: #self) selector: #foo'
 ]
@@ -113,13 +113,13 @@ RBDumpVisitorTest >> testDumpOnObjectMethod [
 RBDumpVisitorTest >> testDumpOnSelfClassMethods [
 
 	| methods node dumpedNode |
-	methods := { 
+	methods := {
 		           (self class >> #testAssignmentNodeDump).
 		           (self class >> #uselessMethod).
 		           (self class >> #testVariableNodeDump).
 		           (self class >> #testThisContextNodeDump).
 		           (self class >> #testReturnNodeDump) }.
-	methods do: [ :each | 
+	methods do: [ :each |
 		node := each ast.
 		dumpedNode := self compiler evaluate: node dump.
 		self assert: dumpedNode class equals: RBMethodNode.

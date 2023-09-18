@@ -56,13 +56,13 @@ FFICallout class >> initializeTypeAliases [
 		uint32 			FFIUInt32
 		int64 				FFIInt64
 		uint64 			FFIUInt64
-		" aliases to common C compiler types.. some of them are platform dependent, 
-		  some is not.. to be sorted out later "		
+		" aliases to common C compiler types.. some of them are platform dependent,
+		  some is not.. to be sorted out later "
 		signedByte 		int8
 		unsignedByte 	uint8
 		signedShort 		int16
 		unsignedShort 	uint16
-		signedChar 		int8  
+		signedChar 		int8
 		unsignedChar 	uint8
 		schar 				int8
 		uchar 				uint8
@@ -80,7 +80,7 @@ FFICallout class >> initializeTypeAliases [
 		int 				int32
 		"unsigned for sizes.. usually same size as platform's word size"
 		size_t 			FFISizeT
-		"character type. uint8 <-> accepts Character/Smallint as argument, converts 
+		"character type. uint8 <-> accepts Character/Smallint as argument, converts
 		 return to Character "
 		Character 		FFICharacterType
 		char 				FFICharacterType
@@ -97,7 +97,6 @@ FFICallout class >> initializeTypeAliases [
 		oop 				FFIOop
 		ByteArray       FFIOop
 		ExternalAddress FFIOop)
-	
 ]
 
 { #category : #accessing }
@@ -110,8 +109,8 @@ FFICallout >> aliasForType: aTypeName [
 	| alias |
 
 	alias := aTypeName.
-	(requestor notNil and: [ requestor respondsTo: #externalTypeAlias: ]) 
-		ifTrue: [ 
+	(requestor notNil and: [ requestor respondsTo: #externalTypeAlias: ])
+		ifTrue: [
 			alias := requestor externalTypeAlias: aTypeName.
 			alias ifNil: [ alias := aTypeName ] ].
 	" internal aliases "
@@ -126,13 +125,13 @@ FFICallout >> beNonStrict [
 
 { #category : #configuration }
 FFICallout >> beStrict [
-	
+
 	self beStrict: true
 ]
 
 { #category : #configuration }
 FFICallout >> beStrict: aBoolean [
-	
+
 	self options at: #optStrict put: aBoolean
 ]
 
@@ -143,7 +142,7 @@ FFICallout >> fnSpec [
 
 { #category : #'argument loaders' }
 FFICallout >> indirectLoader: aLoader byIndex: anIndex [
-	"I do not have a case where it is used, so I don't know how to implement it. 
+	"I do not have a case where it is used, so I don't know how to implement it.
 	 I will wait until an use case emerge..."
 	^ self notYetImplemented
 ]
@@ -151,7 +150,7 @@ FFICallout >> indirectLoader: aLoader byIndex: anIndex [
 { #category : #initialization }
 FFICallout >> initialize [
 	super initialize.
-	options := Dictionary new.
+	options := Dictionary new
 ]
 
 { #category : #configuration }
@@ -171,16 +170,16 @@ FFICallout >> loaderForArgNamed: argName [
 	| loader |
 	"try getting the argument from the method arguments"
 	loader := self loaderFromMethodArgsNamed: argName.
-	loader ifNil: [ 
+	loader ifNil: [
 		"special case, receiver argument"
 		argName = 'self' ifTrue: [ loader := self receiverArgumentLoader ].
-		loader ifNil: [ 
+		loader ifNil: [
 			"Ask the requestor for the argument"
 			loader := requestor ffiInstVarArgument: argName generator: self.
 			loader ifNil: [ | binding |
 				binding := requestor ffiBindingOf: argName.
 				binding ifNil: [ FFIVariableNameNotFound signalFor: argName].
-				loader := FFIClassVariableArgument new 
+				loader := FFIClassVariableArgument new
 					argName: argName;
 					yourself ] ] ].
 	^ loader
@@ -199,13 +198,12 @@ FFICallout >> loaderFromMethodArgsNamed: argName [
 	| index |
 	methodArgs ifNil: [ ^ nil ].
 	index := methodArgs indexOf: argName ifAbsent: [ nil ].
-	^ index ifNotNil: [ 
+	^ index ifNotNil: [
 		"ok, this is a method argument"
-		^ FFIMethodArgument new 
+		^ FFIMethodArgument new
 			argName: argName;
 			index: index;
-			yourself ].
-
+			yourself ]
 ]
 
 { #category : #accessing }
@@ -230,20 +228,18 @@ FFICallout >> methodArgs: anArray [
 
 { #category : #accessing }
 FFICallout >> namedFnSpec: namedFn [
-	fnSpec := self newSpecParser parseNamedFunction: namedFn.
-	
+	fnSpec := self newSpecParser parseNamedFunction: namedFn
 ]
 
 { #category : #accessing }
 FFICallout >> newSpecParser [
 	^ FFIFunctionParser new requestor: self
-
 ]
 
 { #category : #accessing }
 FFICallout >> optionAt: optionName [
-	^ self options 
-		at: optionName 
+	^ self options
+		at: optionName
 		ifAbsent: false
 ]
 
@@ -259,15 +255,15 @@ FFICallout >> options: anObject [
 
 { #category : #accessing }
 FFICallout >> parseOptions: optionsArray [
-	"parse an array, which is a sequence of options in a form of: 
-	
+	"parse an array, which is a sequence of options in a form of:
+
 	#( + option1 option2 option3: param3  - option5 -option6: ... )
-	
+
 	each time the #+ is seen, the options which follow it will be subject for inclusion
 	and, correspondingly, if #- seen, then they will be excluded	.
 
 	By default, (if none of #+ or #- specified initially), all options are subject for inclusion.
-	
+
 	If in inclusion mode, non-unary options will put the following element as its unary symbols counterparts value, rather than true.
 	"
 
@@ -275,12 +271,12 @@ FFICallout >> parseOptions: optionsArray [
 	include := true.
 	rs := optionsArray readStream.
 	[(option := rs next) isNil]
-		whileFalse: [ 
+		whileFalse: [
 			option
 				caseOf:
 					{(#+ -> [ include := true ]).
 					(#- -> [ include := false ])}
-				otherwise: [ 
+				otherwise: [
 					(option beginsWith: 'opt') not
 						ifTrue: [ ^ self error: 'Invalid option name ' , option , ', must begin with ''opt''' ].
 					option numArgs > 1
@@ -315,15 +311,15 @@ FFICallout >> requestor: aRequestor [
 
 { #category : #accessing }
 FFICallout >> resolutionMode [
-	
+
 	^ (self optionAt: #optStrict)
 		ifTrue: [ FFIStrictResolutionMode new ]
 		ifFalse: [ FFIInferenceResolutionMode new ]
 ]
 
 { #category : #accessing }
-FFICallout >> resolveExternalType: anObject [ 
-	^ (self resolveType: anObject) externalType 
+FFICallout >> resolveExternalType: anObject [
+	^ (self resolveType: anObject) externalType
 ]
 
 { #category : #configuration }
@@ -333,15 +329,15 @@ FFICallout >> resolveStringEncodingStrategy [
 	encodingOptions := (self options associations
 		select: [ :e | (e key beginsWith: 'optStringEncoding') and: [ e value ] ]
 		thenCollect: [ :e | e key allButFirst: 'optStringEncoding' size ]) asSet.
-	
+
 	"Do not take into account optStringEncodingMandatory as an encoding"
 	encodingOptions remove: 'Mandatory' ifAbsent: [  ].
-	
+
 	encodingOptions size > 1 ifTrue: [ self error: 'Conflicting string encoding options' ].
-	
+
 	(self isMandatoryStringEncoding and: [ encodingOptions isEmpty ])
 		ifTrue: [ self error: 'String encoding option not specified' ].
-	
+
 	^ encodingOptions isEmpty
 		ifTrue: [ FFILegacyStringEncodingStrategy new ]
 		ifFalse: [ FFIStringEncodingStrategy forEncoding: encodingOptions anyOne ]
@@ -352,31 +348,31 @@ FFICallout >> resolveType: aTypeName [
 	" a type name could be
 	 - a class variable name
 	- a class name
-	- a type name 
+	- a type name
 	- a type name, followed by arbitrary number pointer chars - $*"
 	| name newName resolver binding ptrArity |
-	
+
 	newName := aTypeName.
 	ptrArity := 0.
 	"resolve aliases and pointers"
-	[ 
+	[
 		name := newName asString trimRight.
 		newName := self aliasForType: name.
-		newName last = $* ifTrue: [ 
+		newName last = $* ifTrue: [
 			ptrArity := ptrArity + 1.
 			newName := newName allButLast ].
-		name = newName 
+		name = newName
 	] whileFalse.
 
-	resolver := requestor 
-		ifNotNil: [ 
+	resolver := requestor
+		ifNotNil: [
 			requestor isClass
 				ifTrue: [ requestor instanceSide ]
 				ifFalse: [ requestor ] ]
 		ifNil: [ self class ].
-		
+
 	binding := resolver ffiBindingOf: name asSymbol.
-	binding ifNotNil: [ 
+	binding ifNotNil: [
 		^ (binding value asExternalTypeOn: self) pointerArity: ptrArity ].
 
 	^ self error: 'Unable to resolve external type: ' , aTypeName asString
@@ -391,18 +387,23 @@ FFICallout >> resolveUntypedArgument: anArgument [
 { #category : #accessing }
 FFICallout >> sender: aSenderContext [
 	| nArgs |
-	self requestor: aSenderContext compiledCode method methodClass.
-	nArgs := aSenderContext compiledCode method numArgs.
-	methodArgs := aSenderContext compiledCode method argumentNames.
+	self requestor: aSenderContext homeMethod methodClass.
+	nArgs := aSenderContext homeMethod numArgs.
+	methodArgs := aSenderContext homeMethod argumentNames.
 	self receiver: aSenderContext receiver.
-	self assert: (methodArgs size = nArgs).
+	self assert: (methodArgs size = nArgs)
+]
 
+{ #category : #asserting }
+FFICallout >> shouldAutoReleaseReturnedValue [
+
+	^ self optionAt: #optAutoReleaseReturnedValue
 ]
 
 { #category : #configuration }
 FFICallout >> stringEncodingStrategy [
 
-	^ stringEncodingStrategy ifNil: [ 
+	^ stringEncodingStrategy ifNil: [
 		stringEncodingStrategy := self resolveStringEncodingStrategy ]
 ]
 
@@ -419,6 +420,6 @@ FFICallout >> typeName: aName pointerArity: ptrArity [
 
 { #category : #errors }
 FFICallout >> unsupportedUntypedLiteral: aLiteral [
-	
+
 	FFIUnsupportedUntypedLiteral signalFor: aLiteral
 ]

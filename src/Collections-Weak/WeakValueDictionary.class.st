@@ -102,7 +102,7 @@ WeakValueDictionary >> valuesDo: aBlock [
 	a reference to the value to facilitate debugging"
 
 	tally = 0 ifTrue: [ ^ self ].
-	1 to: array size do: [ :eachIndex | 
+	1 to: array size do: [ :eachIndex |
 		(array at: eachIndex) value
 			ifNotNil: [ :assocValue | aBlock value: assocValue enclosedElement ] ]
 ]

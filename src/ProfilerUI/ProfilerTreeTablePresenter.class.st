@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #specs }
-ProfilerTreeTablePresenter class >> adapterName [ 
+ProfilerTreeTablePresenter class >> adapterName [
 
 	^ #ProfilerTreeTableAdapter
 ]
@@ -19,20 +19,19 @@ ProfilerTreeTablePresenter class >> adapterName [
 { #category : #'api - selection' }
 ProfilerTreeTablePresenter >> emptySelection [
 	self withAdapterPerformOrDefer: [ :anAdapter |
-		 anAdapter widget emptySelection ].
-	
+		 anAdapter widget emptySelection ]
 ]
 
 { #category : #'expanding-collapsing' }
 ProfilerTreeTablePresenter >> expandAllSuchThat: aBlock [
 
-	self withAdapterPerformOrDefer: [ :anAdapter | 
+	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget expandAllSuchThat: aBlock ]
 ]
 
 { #category : #'expanding-collapsing' }
 ProfilerTreeTablePresenter >> expandNodesOver: aNumber [
-	self rememberingSelectedNodeDo: [ 
+	self rememberingSelectedNodeDo: [
 		self collapseAll.
 		self expandAllSuchThat: [ :item | item weight asFloat >= aNumber asFloat ] ]
 ]
@@ -40,7 +39,7 @@ ProfilerTreeTablePresenter >> expandNodesOver: aNumber [
 { #category : #'expanding-collapsing' }
 ProfilerTreeTablePresenter >> hideNodesUnder: aNumber [
 
-	self rememberingExpandedAndSelectedNodesDo: [ 
+	self rememberingExpandedAndSelectedNodesDo: [
 		viewModel hideNodesUnder: aNumber asFloat.
 		self reset ]
 ]
@@ -59,7 +58,7 @@ ProfilerTreeTablePresenter >> initialize [
 { #category : #'expanding-collapsing' }
 ProfilerTreeTablePresenter >> rememberingExpandedAndSelectedNodesDo: aBlock [
 
-	self rememberingSelectedNodeDo: [ 
+	self rememberingSelectedNodeDo: [
 		self rememberingExpandedNodesDo: aBlock ]
 ]
 
@@ -67,7 +66,7 @@ ProfilerTreeTablePresenter >> rememberingExpandedAndSelectedNodesDo: aBlock [
 ProfilerTreeTablePresenter >> rememberingExpandedNodesDo: aBlock [
 
 	| expanded |
-	self withAdapterPerformOrDefer: [ :anAdapter | 
+	self withAdapterPerformOrDefer: [ :anAdapter |
 		expanded := anAdapter widget currentlyExpanded.
 		aBlock value.
 		expanded do: [ :n | anAdapter widget expandNodePath: n relativePath ] ]
@@ -77,13 +76,13 @@ ProfilerTreeTablePresenter >> rememberingExpandedNodesDo: aBlock [
 ProfilerTreeTablePresenter >> rememberingSelectedNodeDo: aBlock [
 
 	| selected widget |
-	self withAdapterPerformOrDefer: [ :anAdapter | 
+	self withAdapterPerformOrDefer: [ :anAdapter |
 		widget := anAdapter widget.
 		selected := widget selectedMorph complexContents.
 		aBlock value.
 
 		self emptySelection.
-		selected ifNotNil: [ 
+		selected ifNotNil: [
 			self selectPath: selected relativePath scrollToSelection: true ] ]
 ]
 
@@ -106,7 +105,7 @@ ProfilerTreeTablePresenter >> scrollSelectionIntoView [
 ]
 
 { #category : #'api - selection' }
-ProfilerTreeTablePresenter >> selectNodePath: aCollection [ 
+ProfilerTreeTablePresenter >> selectNodePath: aCollection [
 
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget selectNodePath: aCollection ]
@@ -116,14 +115,14 @@ ProfilerTreeTablePresenter >> selectNodePath: aCollection [
 ProfilerTreeTablePresenter >> selectPath: aPath scrollToSelection: shouldScrollToSelection [
 
 	self selectNodePath: aPath.
-	self withAdapterPerformOrDefer: [ :anAdapter | 
+	self withAdapterPerformOrDefer: [ :anAdapter |
 		shouldScrollToSelection ifTrue: [ adapter scrollToSelection ] ]
 ]
 
 { #category : #'api - selection' }
 ProfilerTreeTablePresenter >> selectedItem [
 
-	self withAdapterPerformOrDefer: [ :anAdapter | 
+	self withAdapterPerformOrDefer: [ :anAdapter |
 		^ anAdapter selectedItem ]
 ]
 
@@ -141,6 +140,6 @@ ProfilerTreeTablePresenter >> viewModel [
 { #category : #adapter }
 ProfilerTreeTablePresenter >> whenSelectedItemChangedSend: aSymbol to: anObject [
 
-	self withAdapterPerformOrDefer: [ :anAdapter | 
+	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget model onSelectionChangeSend: aSymbol to: anObject ]
 ]

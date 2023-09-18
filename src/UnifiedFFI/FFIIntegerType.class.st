@@ -15,7 +15,7 @@ FFIIntegerType >> defaultReturnOnError [
 
 { #category : #callbacks }
 FFIIntegerType >> extractFromCallbackOn: aCallbackArgumentReader [
- 
+
 	^ aCallbackArgumentReader extractIntegerType
 ]
 

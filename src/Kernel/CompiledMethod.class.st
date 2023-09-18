@@ -1,14 +1,10 @@
 "
-Specific version of compiled code for method's.
+Specific version of compiled code for methods. They encode only the method's bytecodes and literals, blocks have each a CompiledBlock.
 
-CompiledMethod instances can be in two forms:
-- up until Pharo 6, they encode both the method and the inner closures bytecodes and literals.
-- since Pharo 6, they encode only the method's bytecodes and literals.
+In addition the execution mechanics, a compiled method has two extra literals. The last literal is the class in which the method is installed. The last but one literal is either the method's selector or an AdditionalMethodState instance. AdditionalMethodState instances are used to encode pragmas and properties.
 
-In addition the execution mechanics, a compiled method have two extra optional literals. The last literal, optional if there are no super sends, is the class in which the method is installed. The last but one literal is either the method's selector or an AdditionalMethodState instance. AdditionalMethodState instances are used to encode additional state to a method, as for example the pragmas.
-
-The bytecode encodes the trailer at the end, in most cases it has 4 bytes encoding the sourcer pointer (see CompiledMethodTrailer).
-Thus endPC of a compiled method is not the size of the bytecode, but the size minus the length of the trailer.
+The bytecode encodes the trailer at the end, see #trailerSize for the current size used.
+Thus endPC of a compiled method is not the size of the bytecode, but the size minus the fixed length of the trailer.
 
 "
 Class {
@@ -23,18 +19,6 @@ CompiledMethod class >> abstractMarker [
 	^ #subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> basicNew [
-
-	self error: 'CompiledMethods may only be created with newMethod:header:'
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> basicNew: size [
-
-	self error: 'CompiledMethods may only be created with newMethod:header:'
-]
-
 { #category : #'class initialization' }
 CompiledMethod class >> checkBytecodeSetConflictsInMethodsWith: aBlock [
 
@@ -46,15 +30,7 @@ CompiledMethod class >> checkBytecodeSetConflictsInMethodsWith: aBlock [
 { #category : #'class initialization' }
 CompiledMethod class >> checkIsValidBytecodeEncoder: aBytecodeEncoderSubclass [
 	(aBytecodeEncoderSubclass inheritsFrom: BytecodeEncoder) ifFalse:
-		[self error: 'A bytecode set encoder is expected to be a subclass of BytecodeEncoder'].
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> cleanUpSourceInTrailers [
-
-	self allInstances do: [:e | e isInstalled ifFalse: [e embeddSourceInTrailer]].  
-	"pay attention since embeddSourceInTrailer creates a new compiled method. So iterating while
-	changing it is a bad idea. This is why we use allInstances do and not allInstancesDo:"
+		[self error: 'A bytecode set encoder is expected to be a subclass of BytecodeEncoder']
 ]
 
 { #category : #constants }
@@ -143,7 +119,7 @@ CompiledMethod class >> installPrimaryBytecodeSet: aBytecodeEncoderSubclass [
 	PrimaryBytecodeSetEncoderClass == aBytecodeEncoderSubclass ifTrue:
 		[ ^self ].
 	self checkIsValidBytecodeEncoder: aBytecodeEncoderSubclass.
-	self checkBytecodeSetConflictsInMethodsWith: [:m| 
+	self checkBytecodeSetConflictsInMethodsWith: [:m|
 		m usesPrimaryBytecodeSet and: [m encoderClass ~~ aBytecodeEncoderSubclass]].
 	PrimaryBytecodeSetEncoderClass := aBytecodeEncoderSubclass
 ]
@@ -153,7 +129,7 @@ CompiledMethod class >> installSecondaryBytecodeSet: aBytecodeEncoderSubclass [
 	PrimaryBytecodeSetEncoderClass == aBytecodeEncoderSubclass ifTrue:
 		[ ^ self ].
 	self checkIsValidBytecodeEncoder: aBytecodeEncoderSubclass.
-	self checkBytecodeSetConflictsInMethodsWith: [ :m | 
+	self checkBytecodeSetConflictsInMethodsWith: [ :m |
 		m usesSecondaryBytecodeSet and: [ m encoderClass ~~ aBytecodeEncoderSubclass ] ].
 	SecondaryBytecodeSetEncoderClass := aBytecodeEncoderSubclass
 ]
@@ -175,71 +151,12 @@ CompiledMethod class >> new [
 ]
 
 { #category : #'instance creation' }
-CompiledMethod class >> newBytes: numberOfBytes trailerBytes: trailer nArgs: nArgs nTemps: nTemps nStack: stackSize nLits: nLits primitive: primitiveIndex [
-	"Answer an instance of me. The header is specified by the message 
-	 arguments. The remaining parts are not as yet determined."
-	| method pc |
-	nArgs > 15 ifTrue:
-		[^self error: 'Cannot compile -- too many arguments'].
-	nTemps > 63 ifTrue:
-		[^self error: 'Cannot compile -- too many temporary variables'].	
-	nLits > 65535 ifTrue:
-		[^self error: 'Cannot compile -- too many literals'].
-
-	method := trailer
-				createMethod: numberOfBytes
-				class: self
-				header:    (nArgs bitShift: 24)
-						+ (nTemps bitShift: 18)
-						+ ((nTemps + stackSize) > SmallFrame ifTrue: [1 bitShift: 17] ifFalse: [0])
-						+ nLits
-						+ (primitiveIndex > 0 ifTrue: [1 bitShift: 16] ifFalse: [0]).
-	primitiveIndex > 0 ifTrue:
-		[pc := method initialPC.
-		 method
-			at: pc + 0 put: method encoderClass callPrimitiveCode;
-			at: pc + 1 put: (primitiveIndex bitAnd: 16rFF);
-			at: pc + 2 put: (primitiveIndex bitShift: -8)].
-	^method
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> newBytes: numberOfBytes trailerBytes: trailer nArgs: nArgs nTemps: nTemps nStack: stackSize nLits: nLits primitive: primitiveIndex flag: flag [
-	"Answer an instance of me. The header is specified by the message 
-	 arguments. The remaining parts are not as yet determined."
-	| method pc |
-	nArgs > 15 ifTrue:
-		[^self error: 'Cannot compile -- too many arguments'].
-	nTemps > 63 ifTrue:
-		[^self error: 'Cannot compile -- too many temporary variables'].	
-	nLits > 65535 ifTrue:
-		[^self error: 'Cannot compile -- too many literals'].
-
-	method := trailer
-				createMethod: numberOfBytes
-				class: self
-				header:    (nArgs bitShift: 24)
-						+ (nTemps bitShift: 18)
-						+ ((nTemps + stackSize) > SmallFrame ifTrue: [1 bitShift: 17] ifFalse: [0])
-						+ nLits
-						+ (primitiveIndex > 0 ifTrue: [1 bitShift: 16] ifFalse: [0])
-						+ (flag ifTrue: [1 bitShift: 29] ifFalse: [0]).
-	primitiveIndex > 0 ifTrue:
-		[pc := method initialPC.
-		 method
-			at: pc + 0 put: method encoderClass callPrimitiveCode;
-			at: pc + 1 put: (primitiveIndex bitAnd: 16rFF);
-			at: pc + 2 put: (primitiveIndex bitShift: -8)].
-	^method
-]
-
-{ #category : #'instance creation' }
 CompiledMethod class >> newFrom: aCompiledMethod [
 	| inst |
 	inst := super basicNew: aCompiledMethod size.
 	1 to: aCompiledMethod size do: [:index |
 		inst at: index put: (aCompiledMethod at: index)].
-	^ inst.
+	^ inst
 ]
 
 { #category : #'instance creation' }
@@ -249,32 +166,11 @@ CompiledMethod class >> newInstanceFrom: oldInstance variable: variable size: in
 	the receiver's instVars"
 	| new |
 	new := self newFrom: oldInstance.
-	1 to: instSize do: 
+	1 to: instSize do:
 		[:offset |  (map at: offset) > 0 ifTrue:
 			[new instVarAt: offset
 					put: (oldInstance instVarAt: (map at: offset))]].
 	^new
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> primitive: primNum numArgs: numArgs numTemps: numTemps stackSize: stackSize literals: literals bytecodes: bytecodes trailer: trailerBytes [
-	"Create method with given attributes.  numTemps includes numArgs.  stackSize does not include numTemps."
-
-	| compiledMethod |
-	compiledMethod := self
-		newBytes: bytecodes size
-		trailerBytes: trailerBytes 
-		nArgs: numArgs
-		nTemps: numTemps
-		nStack: 0
-		nLits: literals size
-		primitive: primNum.
-	(WriteStream with: compiledMethod)
-		position: compiledMethod initialPC - 1;
-		nextPutAll: bytecodes.
-	literals withIndexDo: [:obj :i | compiledMethod literalAt: i put: obj].
-	compiledMethod needsFrameSize: stackSize.
-	^ compiledMethod
 ]
 
 { #category : #'class initialization' }
@@ -288,34 +184,18 @@ CompiledMethod class >> subclassResponsibilityMarker [
 	^ #subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> toReturnConstant: index trailerBytes: trailer [
-	"Answer an instance of me that is a quick return of the constant
-	indexed in (true false nil -1 0 1 2)."
-
-	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 256 + index
+{ #category : #constants }
+CompiledMethod class >> trailerSize [
+	"we use the last 5 byte to store the source pointer"
+	^ 5
 ]
 
-{ #category : #'instance creation' }
-CompiledMethod class >> toReturnField: field trailerBytes: trailer [
-	"Answer an instance of me that is a quick return of the instance variable 
-	indexed by the argument, field."
+{ #category : #queries }
+CompiledMethod >> allIgnoredNotImplementedSelectors [
 
-	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 264 + field
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> toReturnSelf [
-	"Answer an instance of me that is a quick return of the instance (^self)."
-
-	^ self toReturnSelfTrailerBytes: CompiledMethodTrailer empty
-]
-
-{ #category : #'instance creation' }
-CompiledMethod class >> toReturnSelfTrailerBytes: trailer [
-	"Answer an instance of me that is a quick return of the instance (^self)."
-
-	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 256
+	^ (self pragmaAt: #ignoreNotImplementedSelectors:)
+		  ifNotNil: [ :pragma | pragma argumentAt: 1 ]
+		  ifNil: [ #(  ) ]
 ]
 
 { #category : #'source code management' }
@@ -329,10 +209,11 @@ CompiledMethod >> cachePragmas [
 	self pragmas do: [ :pragma | pragma class addToCache: pragma ]
 ]
 
-{ #category : #'accessing - backward compatible' }
+{ #category : #deprecated }
 CompiledMethod >> category [
-	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
-	^ self methodClass organization categoryOfElement: self selector
+
+	self deprecated: 'Use #protocolName instead.' transformWith: '`@rcv category' -> '`@rcv protocolName'.
+	^ self protocolName
 ]
 
 { #category : #accessing }
@@ -344,15 +225,21 @@ CompiledMethod >> classBinding [
 { #category : #accessing }
 CompiledMethod >> classBinding: aBinding [
        "sets the association to the class that I am installed in"
-       ^self literalAt: self numLiterals put: aBinding.
+       ^self literalAt: self numLiterals put: aBinding
+]
+
+{ #category : #'source code management' }
+CompiledMethod >> clearSourcePointer [
+	"we use #setSourcePointer: to not clear the property #source"
+	self setSourcePointer: 0
 ]
 
 { #category : #accessing }
 CompiledMethod >> codeForNoSource [
 	"if everything fails, decompile the bytecode"
-	"If there is no compiler, we cannot decompile it"	
+	"If there is no compiler, we cannot decompile it"
 	Smalltalk hasCompiler ifFalse: [ ^ nil ].
-	
+
 	 ^(self compiler decompileMethod: self) formattedCode
 ]
 
@@ -362,33 +249,9 @@ CompiledMethod >> containsHalt [
 	^ self hasProperty: #containsHalt
 ]
 
-{ #category : #'source code management' }
-CompiledMethod >> copyWithSource: aString [
-	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString)
-]
-
-{ #category : #initialization }
-CompiledMethod >> copyWithTrailerBytes: trailer [
-"Testing:
-	(CompiledMethod compiledMethodAt: #copyWithTrailerBytes:)
-		tempNamesPut: 'copy end '
-"
-	| copy end start penultimateLiteral |
-	start := self initialPC.
-	end := self endPC.
-	copy := trailer createMethod: end - start + 1 class: self class header: self header.
-	1 to: self numLiterals do: [:i | copy literalAt: i put: (self literalAt: i)].
-	(penultimateLiteral := self penultimateLiteral) isMethodProperties ifTrue:
-		[copy penultimateLiteral: (penultimateLiteral copy
-									setMethod: copy;
-									yourself)].
-	start to: end do: [:i | copy at: i put: (self at: i)].
-	^copy
-]
-
 { #category : #accessing }
-CompiledMethod >> defaultSelector [ 
-	"Invent and answer an appropriate message selector (a Symbol) for me, 
+CompiledMethod >> defaultSelector [
+	"Invent and answer an appropriate message selector (a Symbol) for me,
 	that is, one that will parse with the correct number of arguments."
 
 	^ #DoIt numArgs: self numArgs
@@ -396,24 +259,13 @@ CompiledMethod >> defaultSelector [
 
 { #category : #printing }
 CompiledMethod >> displayStringOn: aStream [
-	aStream print: self methodClass; nextPutAll: '>>'; store: self selector.
-]
-
-{ #category : #'source code management' }
-CompiledMethod >> embeddSourceInTrailer [
-	"When receiver is deinstalled from its class, its not managed anymore by development tools
-	and it's hard to predict, how long a method could stay in the image, because if it contains blocks,
-	they could still reference it. 
-	Therefore we trying to preserve as much as we can , actually by embedding the method's source code into its trailer
-	"
-	self trailer hasSourcePointer ifTrue: [
-		^self becomeForward: (self copyWithSource: self sourceCode)]
+	aStream print: self methodClass; nextPutAll: '>>'; store: self selector
 ]
 
 { #category : #accessing }
 CompiledMethod >> endPC [
-	"Answer the index of the last bytecode, as the trailer size varies we have to delegate"
-	^ self trailer endPC
+	"Answer the index of the last bytecode"
+	^ self size - self class trailerSize
 ]
 
 { #category : #accessing }
@@ -432,25 +284,25 @@ CompiledMethod >> getPreambleFrom: aFileStream at: position [
 CompiledMethod >> getSourceFromFile [
 	"PLEASE Note: clients should always call #sourceCode"
 	"Read the source code from file, determining source file index and
-	file position from the last 3 bytes of this method."
+	file position from the last bytes of this method (size defined in #trailerSize)."
 
-	^ [ SourceFiles sourceCodeAt: self sourcePointer ] on: Error do: [ '' ]
+	^ [ SourceFiles sourceCodeAt: self sourcePointer ] on: Error do: [ nil ]
 ]
 
 { #category : #'source code management' }
 CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 	| oldKeywords newKeywords source newSource oldSelector start |
 	source := self sourceCode.
-	
+
 	source ifNil: [ ^ nil ].
-	
+
 	oldSelector := self selector.
 	oldSelector = newSelector ifTrue: [ ^ source ].
-	
+
 	oldKeywords := oldSelector keywords.
 	newKeywords := (newSelector ifNil: [self defaultSelector]) keywords.
 	[oldKeywords size = newKeywords size] assert.
-	
+
 	newSource := source.
 	start := 1.
 	oldKeywords with: newKeywords do: [:oldKey :newKey| |pos|
@@ -465,6 +317,13 @@ CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 CompiledMethod >> hasComment [
 	"check if this method has a method comment"
 	^self comment isEmptyOrNil not
+]
+
+{ #category : #testing }
+CompiledMethod >> hasNonLocalReturn [
+	"Answer whether any block has a method-return ('^') in its code."
+	self allBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
+	^false
 ]
 
 { #category : #testing }
@@ -487,40 +346,28 @@ CompiledMethod >> hasProperty: aKey [
 
 	| extendedMethodState |
 	^ (extendedMethodState := self penultimateLiteral) isMethodProperties
-		  ifTrue: [  extendedMethodState includesProperty: aKey ]
-		  ifFalse: [ false ]
+		  and: [  extendedMethodState includesProperty: aKey ]
 ]
 
 { #category : #accessing }
 CompiledMethod >> hasSourceCode [
 
-	"Retrieve or reconstruct the source code for this method."
-	| trailer source |
-	trailer := self trailer.
-	trailer sourceCode ifNotNil: [:code | ^ true ].
-	trailer hasSourcePointer ifFalse: [^ false].
-
-	"Situation normal;  read the sourceCode from the file"
-	source := [self getSourceFromFile]
-				on: Error
-				do: [ :ex | ex return: nil].
-	source isEmptyOrNil ifTrue: [^ false].			
-	^ true
+	^ self sourceCodeOrNil isNotNil
 ]
 
 { #category : #testing }
 CompiledMethod >> hasSourcePointer [
-	^ self trailer hasSourcePointer
+	^ self sourcePointer ~= 0
 ]
 
 { #category : #testing }
 CompiledMethod >> isAbstract [
 	"Answer true if I am abstract"
-	
+
 	| marker |
 	marker := self markerOrNil ifNil: [^false].
-	
-	^marker == self class subclassResponsibilityMarker 
+
+	^marker == self class subclassResponsibilityMarker
 		or: [ marker == self class explicitRequirementMarker ]
 ]
 
@@ -536,6 +383,12 @@ CompiledMethod >> isClassSide [
 ]
 
 { #category : #testing }
+CompiledMethod >> isClassified [
+
+	^ self protocol isUnclassifiedProtocol not
+]
+
+{ #category : #testing }
 CompiledMethod >> isCompiledMethod [
 
 	^ true
@@ -548,12 +401,12 @@ CompiledMethod >> isConflict [
 
 { #category : #testing }
 CompiledMethod >> isDeprecated [
-	
+
 	^ self sendsAnySelectorOf: #(
-			#deprecated: 
+			#deprecated:
 			#deprecated:transformWith:
 			#deprecated:transformWith:when:
-			#deprecated:on:in: 
+			#deprecated:on:in:
 			#deprecated:on:in:transformWith:
 			#deprecated:on:in:transformWith:when:)
 ]
@@ -589,18 +442,25 @@ CompiledMethod >> isFaulty [
 	| ast |
 	"fast pre-check: all methods with syntax errors reference this symbol"
   	(self refersToLiteral: #signalSyntaxError:) ifFalse: [ ^false].
-	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
-	ast := self methodClass compiler 
+
+	"Check the ast in cache, if any"
+	ast := self propertyAt: #ast ifAbsent: [].
+
+	ast ifNil: [
+		"Warning, the following does not work for doit methods because this assumes `noPrefix:false` "
+		ast := self methodClass compiler
 				source: self sourceCode;
-				options: #(+ optionParseErrors);
-				parse.
-	^ ast isFaulty.
+				parse ].
+	^ ast isFaulty
 ]
 
 { #category : #testing }
 CompiledMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
-	^ self origin isTrait and: [ self origin ~= self methodClass ]
+
+	| origin |
+	origin := self origin.
+	^ origin isTrait and: [ origin ~= self methodClass ]
 ]
 
 { #category : #testing }
@@ -615,9 +475,9 @@ CompiledMethod >> isInstalled [
 
 { #category : #testing }
 CompiledMethod >> isOverridden [
-	| selector| 
+	| selector|
 	selector := self selector.
-	self methodClass allSubclassesDo: [:each | 
+	self methodClass allSubclassesDo: [:each |
 		(each includesSelector: selector)
 			ifTrue: [ ^ true ]].
 	^ false
@@ -644,8 +504,8 @@ CompiledMethod >> isRequired [
 { #category : #testing }
 CompiledMethod >> isRequired: marker [
 	marker ifNil: [^ false].
-	(self isExplicitlyRequired: marker) ifTrue: [^ true]. 
-	(self isSubclassResponsibility: marker) ifTrue: [^ true]. 
+	(self isExplicitlyRequired: marker) ifTrue: [^ true].
+	(self isSubclassResponsibility: marker) ifTrue: [^ true].
 	^ false
 ]
 
@@ -653,13 +513,6 @@ CompiledMethod >> isRequired: marker [
 CompiledMethod >> isReturnField [
 	"Answer whether the receiver is a quick return of an instance variable."
 	^ self primitive between: 264 and: 519
-]
-
-{ #category : #testing }
-CompiledMethod >> isReturnSpecial [
-	"Answer whether the receiver is a quick return of self or constant."
-
-	^ self primitive between: 256 and: 263
 ]
 
 { #category : #printing }
@@ -678,12 +531,6 @@ CompiledMethod >> isSubclassResponsibility: marker [
 	^ marker == self class subclassResponsibilityMarker
 ]
 
-{ #category : #testing }
-CompiledMethod >> isTaggedWith: aSymbol [
-	"Not methods tags implemented by protocols. Look #tags comment"
-	^self protocol == aSymbol
-]
-
 { #category : #'source code management' }
 CompiledMethod >> linesOfCode [
 	"An approximate measure of lines of code.
@@ -699,11 +546,6 @@ CompiledMethod >> linesOfCode [
 CompiledMethod >> literalsToSkip [
 
 	^ 2
-]
-
-{ #category : #lookup }
-CompiledMethod >> lookupVar: aString [ 
-	^self ast scope lookupVar: aString
 ]
 
 { #category : #private }
@@ -741,7 +583,7 @@ CompiledMethod >> penultimateLiteral [
 	"Answer the penultimate literal of the receiver, which holds either
 	 the receiver's selector or its properties (which will hold the selector)."
 	| pIndex |
-	^(pIndex := self numLiterals - 1) > 0 
+	^(pIndex := self numLiterals - 1) > 0
 		ifTrue: [self literalAt: pIndex]
 		ifFalse: [nil]
 ]
@@ -751,7 +593,7 @@ CompiledMethod >> penultimateLiteral: anObject [
 	"Answer the penultimate literal of the receiver, which holds either
 	 the receiver's selector or its properties (which will hold the selector)."
 	| pIndex |
-	(pIndex := self numLiterals - 1) > 0 
+	(pIndex := self numLiterals - 1) > 0
 		ifTrue: [self literalAt: pIndex put: anObject]
 		ifFalse: [self error: 'insufficient literals']
 ]
@@ -776,7 +618,7 @@ CompiledMethod >> pragmaAt: aKey [
 { #category : #literals }
 CompiledMethod >> pragmaRefersToLiteral: literal [
 
-	^ self penultimateLiteral isMethodProperties and: [ 
+	^ self penultimateLiteral isMethodProperties and: [
 		  self pragmas anySatisfy: [ :pragma | pragma refersToLiteral: literal ] ]
 ]
 
@@ -798,32 +640,22 @@ CompiledMethod >> pragmasDo: aBlock [
 { #category : #'debugger support' }
 CompiledMethod >> prepareForSimulationWith: numArgs [
 	"This method changes the argument count of a CompiledMethod header to numArgs, its temporary count to numArgs + 1 and change the code handling primitive error to store the error code in the unique temporary of the method"
-			
+
 	| newHeader |
-	newHeader := (((self header bitAnd: 2r01110000000000111111111111111111) 
+	newHeader := (((self header bitAnd: 2r01110000000000111111111111111111)
 			bitOr: (numArgs bitShift: 24))
 			bitOr: (numArgs + 1 bitShift: 18)).
 	newHeader := newHeader + (self class headerFlagForEncoder: self encoderClass).
 	self objectAt: 1 put: newHeader.
-	
+
 	self encoderClass prepareMethod: self forSimulationWith: numArgs
 ]
 
-{ #category : #accessing }
-CompiledMethod >> primitive [
-	"Answer the primitive index associated with the receiver.
-	 Zero indicates that this is not a primitive method."
-	| initialPC |
-	^(self header anyMask: 65536) "Is the hasPrimitive? flag set?"
-		ifTrue: [(self at: (initialPC := self initialPC) + 1) + ((self at: initialPC + 2) bitShift: 8)]
-		ifFalse: [0]
-]
-
 { #category : #printing }
-CompiledMethod >> printOn: aStream [ 
+CompiledMethod >> printOn: aStream [
 	"Overrides method inherited from the byte arrayed collection."
 
-	aStream print: self methodClass; nextPutAll: '>>'; print: self selector.
+	aStream print: self methodClass; nextPutAll: '>>'; print: self selector
 ]
 
 { #category : #printing }
@@ -863,12 +695,16 @@ CompiledMethod >> properties [
 { #category : #accessing }
 CompiledMethod >> properties: aMethodProperties [
 	"Set the method-properties of the receiver to aMethodProperties."
-	self literalAt: self numLiterals - 1
-		put: (aMethodProperties isEmpty
-				ifTrue: [aMethodProperties selector]
-				ifFalse: [aMethodProperties
-							setMethod: self;
-							yourself])
+
+	self
+		literalAt: self numLiterals - 1
+		put:
+			(aMethodProperties
+				ifEmpty: [ aMethodProperties selector ]
+				ifNotEmpty: [
+			 		aMethodProperties
+				 		setMethod: self;
+				 		yourself ])
 ]
 
 { #category : #'accessing - pragmas & properties' }
@@ -890,8 +726,16 @@ CompiledMethod >> propertyAt: propName ifAbsent: aBlock [
 { #category : #'accessing - pragmas & properties' }
 CompiledMethod >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
-	
+
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
+]
+
+{ #category : #'accessing - pragmas & properties' }
+CompiledMethod >> propertyAt: propName ifPresent: aBlock [
+	| propertiesOrSelector |
+	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
+		ifTrue: [propertiesOrSelector at: propName ifPresent: aBlock]
+		ifFalse: [nil]
 ]
 
 { #category : #'accessing - pragmas & properties' }
@@ -928,27 +772,40 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 		[propertiesOrSelector propertyKeysAndValuesDo: aBlock]
 ]
 
-{ #category : #accessing }
+{ #category : #protocols }
 CompiledMethod >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
 
-	^ self category
+	^ self methodClass protocolOfSelector: self selector
 ]
 
-{ #category : #accessing }
-CompiledMethod >> protocol: aString [
-	^ self methodClass organization classify: self selector under: aString
+{ #category : #protocols }
+CompiledMethod >> protocol: aProtocol [
+	^ self methodClass classify: self selector under: aProtocol
+]
+
+{ #category : #protocols }
+CompiledMethod >> protocolName [
+	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
+
+	^ self methodClass protocolNameOfSelector: self selector
 ]
 
 { #category : #scanning }
-CompiledMethod >> readsField: varIndex [ 
+CompiledMethod >> readsField: varIndex [
 	"Answer whether the receiver loads the instance variable indexed by the argument."
 	self isReturnField ifTrue: [^self returnField = (varIndex - 1)].
 	^ super readsField: varIndex
 ]
 
 { #category : #evaluating }
-CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: anObject [
+CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: aMethod [
+	"execute aMethod.
+	This method takes aMethod as an argument so we can call primitive 188.
+	Clients should use #valueWithReceiver:arguments:
+	
+	We have this method here in addition to ProtoObject>>#withArgs:executeMethod:
+	so we can execute a method without sending a message to aReceiver"
 	<primitive: 188>
 	self primitiveFailed
 ]
@@ -956,7 +813,7 @@ CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: anOb
 { #category : #literals }
 CompiledMethod >> refersToLiteral: aLiteral [
 	"Answer true if any literal in this method is literal, even if embedded in array structure."
-	
+
 	^(self pragmaRefersToLiteral: aLiteral) or: [ super refersToLiteral: aLiteral]
 ]
 
@@ -975,6 +832,9 @@ CompiledMethod >> removeProperty: propName [
 									(Association
 										key: propName
 										value: value)).
+
+	"Remove unneded AdditionalMethodState"
+	self penultimateLiteral size = 0 ifTrue: [ self penultimateLiteral: self selector ].
 	^value
 ]
 
@@ -993,7 +853,7 @@ CompiledMethod >> removeProperty: propName ifAbsent: aBlock [
 
 { #category : #accessing }
 CompiledMethod >> returnField [
-	"Answer the index of the instance variable returned by a quick return 
+	"Answer the index of the instance variable returned by a quick return
 	method."
 	| prim |
 	prim := self primitive.
@@ -1007,7 +867,7 @@ CompiledMethod >> selector [
 	"Answer a method's selector.  This is either the penultimate literal,
 	 or, if the method has any properties or pragmas, the selector of
 	 the MethodProperties stored in the penultimate literal."
-	| penultimateLiteral | 
+	| penultimateLiteral |
 	^(penultimateLiteral := self penultimateLiteral) isMethodProperties
 		ifTrue: [penultimateLiteral selector]
 		ifFalse: [penultimateLiteral]
@@ -1018,7 +878,7 @@ CompiledMethod >> selector: aSelector [
 	"Set a method's selector.  This is either the penultimate literal,
 	 or, if the method has any properties or pragmas, the selector of
 	 the MethodProperties stored in the penultimate literal."
-	| penultimateLiteral nl | 
+	| penultimateLiteral nl |
 	(penultimateLiteral := self penultimateLiteral) isMethodProperties
 		ifTrue: [penultimateLiteral selector: aSelector]
 		ifFalse: [(nl := self numLiterals) < 2 ifTrue:
@@ -1028,40 +888,52 @@ CompiledMethod >> selector: aSelector [
 
 { #category : #'source code management' }
 CompiledMethod >> setSourcePointer: srcPointer [
-	"We can't change the trailer of existing method, since it could have completely different format. 	
-	Therefore we need to generate a copy with new trailer, containing scrPointer, and then become it."
 
-	| trailer copy |
-	trailer := CompiledMethodTrailer new sourcePointer: srcPointer.
-	copy := self copyWithTrailerBytes: trailer.
-	"If possible do a replace in place as an optimization"
-	(self trailer class == trailer class and: [ self size = copy size ])
-		ifTrue: [ 
-			| start |
-			start := self endPC + 1.
-			self replaceFrom: start to: self size with: copy startingAt: start ]
-		ifFalse: [ self becomeForward: copy ].
-	^ self
+	| trailerBytes trailerSize start |
+	"Drop the #source property if any"
+	self removeProperty: #source.
+	trailerSize := self class trailerSize.
+	trailerBytes := srcPointer asByteArrayOfSize: trailerSize.
+	start := self size - trailerSize.
+	start + 1 to: self size do: [:n | self at: n put: (trailerBytes at: n - start) ]
 ]
 
 { #category : #accessing }
 CompiledMethod >> sourceCode [
 	"Retrieve or reconstruct the source code for this method."
 
-	| trailer |
-	trailer := self trailer.
-	trailer sourceCode ifNotNil: [:code | ^ code ].
-	trailer hasSourcePointer ifFalse: [ ^ self codeForNoSource ].
+	^ self sourceCodeOrNil
+		  ifNotNil: [ :code | ^ code ]
+		  ifNil: [ self codeForNoSource ]
+]
 
-	^ self getSourceFromFile ifEmpty: [ self codeForNoSource ]
+{ #category : #accessing }
+CompiledMethod >> sourceCodeOrNil [
+	"Retrieve the source code for this method, or return nil."
+
+	self propertyAt: #source ifPresent:  [ :code | ^ code ].
+	self hasSourcePointer ifFalse: [ ^ nil ].
+	^ self getSourceFromFile
 ]
 
 { #category : #'source code management' }
 CompiledMethod >> sourcePointer [
 	"Answer the integer which can be used to find the source file and position for this method.
 	The actual interpretation of this number is up to the SourceFileArray stored in the global variable SourceFiles."
+	| trailerBytes trailerSize start |
+	trailerSize := self class trailerSize.
+	trailerBytes := ByteArray new: trailerSize.
+	start := self size - trailerSize.
+	start + 1 to: self size do: [:n | trailerBytes at: n - start put: (self at: n) ].
+	^ trailerBytes asInteger
+]
 
-	^ self trailer sourcePointer
+{ #category : #'source code management' }
+CompiledMethod >> sourcePointer: srcPointer [
+
+	"Drop the #source property if any"
+	self removeProperty: #source.
+	self setSourcePointer: srcPointer
 ]
 
 { #category : #'debugger support' }
@@ -1093,29 +965,6 @@ CompiledMethod >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'accessing - tags' }
-CompiledMethod >> tagWith: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose. 
-	This method should apply new tag. All existing tags should not be changed. 
-	But now we could only implemented tags with protocols. 	
-	So tagging method with tag removes all existing tags and add new one. 
-	It should not be problem with single tag scenario which are now defined by single protocol"
-	
-	self protocol: aSymbol
-]
-
-{ #category : #'accessing - tags' }
-CompiledMethod >> tags [
-	"Any method could be tagged with multiple symbols for user purpose. 
-	For now we only define API to manage them implemented on top of method protocols.
-	Protocol unclassified means that method is not tagged by anything"
-	| protocol |
-	protocol := self protocol.
-	protocol ifNil: [ ^#() ].
-	protocol = Protocol unclassified ifTrue: [ ^#() ].
-	^{protocol}
-]
-
 { #category : #'source code management' }
 CompiledMethod >> tempNames [
 	"on the level of the compiled method, tempNames includes argument names"
@@ -1124,33 +973,33 @@ CompiledMethod >> tempNames [
 
 { #category : #accessing }
 CompiledMethod >> trailer [
-	"Answer the receiver's trailer"
-	^ CompiledMethodTrailer new method: self
+	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
-{ #category : #'accessing - tags' }
-CompiledMethod >> untagFrom: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose. 
-	This method should remove given tag from it. All other tags should not be changed. 
-	But now we could implemented tags with protocols which allow only tag for method.
-	And to remove tag from method we must change it protocol to Protocol unclassified"
-	self protocol = aSymbol ifTrue: [ 
-		self protocol: Protocol unclassified]
+{ #category : #protocols }
+CompiledMethod >> unclassify [
+
+	self protocol: Protocol unclassified
 ]
 
 { #category : #testing }
 CompiledMethod >> usesUndeclareds [
-	"this is mixing Undeclareds and Obsoletes, maybe we should have two methods"	
-	self withAllNestedLiteralsDo: [ :literal | 
+	"this is mixing Undeclareds and Obsoletes, maybe we should have two methods"
+	self withAllNestedLiteralsDo: [ :literal |
 		literal class == UndeclaredVariable ifTrue: [ ^ true ].
-		(literal isBlock not and: [ 
-			 literal value isBehavior and: [ literal value isObsolete ] ]) 
+		(literal isBlock not and: [
+			 literal value isBehavior and: [ literal value isObsolete ] ])
 			ifTrue: [ ^ true ] ].
 	^ false
 ]
 
 { #category : #evaluating }
-CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [ 
+CompiledMethod >> valueWithReceiver: aReceiver [
+	^self receiver: aReceiver withArguments: #() executeMethod: self
+]
+
+{ #category : #evaluating }
+CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [
 	^self receiver: aReceiver withArguments: anArray executeMethod: self
 ]
 

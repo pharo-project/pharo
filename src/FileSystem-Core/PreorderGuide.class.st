@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #showing }
-PreorderGuide >> pushAll: aCollection [ 
+PreorderGuide >> pushAll: aCollection [
 	aCollection reverseDo: [ :each | work add: each ]
 ]
 
@@ -30,10 +30,10 @@ PreorderGuide >> show: aReference [
 
 { #category : #showing }
 PreorderGuide >> visitNextEntry: entry [
-	
+
 	entry isFile
 		ifTrue: [ visitor visitFile: entry ]
-		ifFalse: [ 
+		ifFalse: [
 			visitor visitDirectory: entry.
 			(self shouldVisitChildrenOf: entry)
 				ifTrue: [ self pushAll: entry reference entries ]]

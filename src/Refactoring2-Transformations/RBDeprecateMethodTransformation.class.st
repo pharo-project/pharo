@@ -44,12 +44,12 @@ Class {
 	#instVars : [
 		'newSelector'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
 RBDeprecateMethodTransformation class >> deprecateMethod: aSelector in: aClass using: newSelector [
-	^ self new 
+	^ self new
 		deprecateMethod: aSelector
 		in: aClass
 		using: newSelector;
@@ -66,10 +66,20 @@ RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aS
 		yourself
 ]
 
+{ #category : #preconditions }
+RBDeprecateMethodTransformation >> applicabilityPreconditions [ 
+
+	^ (RBCondition definesSelector: selector in: class)
+		& (RBCondition canUnderstand: newSelector in: class)
+		& (RBCondition
+							withBlock: [selector numArgs = newSelector numArgs or: [ newSelector numArgs = 0 ]]
+							errorString: 'The new selectors should have the same number of arguments as the old one, or not have them at all')
+]
+
 { #category : #executing }
 RBDeprecateMethodTransformation >> buildTransformations [
 	| node parseTree method start |
-	
+
 	method := class methodFor: selector.
 	parseTree := method parseTree.
 	start := parseTree body statements first start.
@@ -85,9 +95,9 @@ RBDeprecateMethodTransformation >> buildTransformations [
 { #category : #accessing }
 RBDeprecateMethodTransformation >> callDeprecationMethod [
 
-	^ 'self 
+	^ 'self
 		deprecated: ''Use ' , newSelector storeString , ' instead''
-		on: 	''' , Date today asString , ''' 
+		on: 	''' , Date today asString , '''
 		in: ''' , SystemVersion current imageVersionString , ''''
 ]
 
@@ -95,21 +105,11 @@ RBDeprecateMethodTransformation >> callDeprecationMethod [
 RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass using: newSel [
 	selector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
-	class := self model classObjectFor: aClass.
-]
-
-{ #category : #preconditions }
-RBDeprecateMethodTransformation >> preconditions [
-
-	^ (RBCondition definesSelector: selector in: class) 
-		& (RBCondition canUnderstand: newSelector in: class)
-		& (RBCondition 
-							withBlock: [selector numArgs = newSelector numArgs or: [ newSelector numArgs = 0 ]]
-							errorString: 'The new selectors should have the same number of arguments as the old one, or not have them at all').
+	class := self model classObjectFor: aClass
 ]
 
 { #category : #printing }
-RBDeprecateMethodTransformation >> storeOn: aStream [ 
+RBDeprecateMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

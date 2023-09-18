@@ -7,7 +7,7 @@ String >> asDraggableMorph [
 ]
 
 { #category : #'*Morphic-Base' }
-String >> asMorph [ 
+String >> asMorph [
 	"Answer the receiver as a StringMorph"
 
 	^ StringMorph contents: self
@@ -16,7 +16,7 @@ String >> asMorph [
 ]
 
 { #category : #'*Morphic-Base' }
-String >> asStringMorph [ 
+String >> asStringMorph [
 	"Answer the receiver as a StringMorph"
 
 	^ StringMorph contents: self
@@ -37,7 +37,7 @@ String >> heightToDisplayInList: aList [
 ]
 
 { #category : #'*Morphic-Base' }
-String >> indentationIfBlank: aBlock [ 
+String >> indentationIfBlank: aBlock [
 	"Answer the number of leading tabs in the receiver.  If there are
 	 no visible characters, pass the number of tabs to aBlock and return its value."
 	| reader leadingTabs lastSeparator cr tab ch |
@@ -47,7 +47,7 @@ String >> indentationIfBlank: aBlock [
 	leadingTabs := 0.
 	[ reader atEnd not and: [ (ch := reader next) = tab ] ] whileTrue: [ leadingTabs := leadingTabs + 1 ].
 	lastSeparator := leadingTabs + 1.
-	[ reader atEnd not and: [ ch isSeparator and: [ ch ~= cr ] ] ] whileTrue: 
+	[ reader atEnd not and: [ ch isSeparator and: [ ch ~= cr ] ] ] whileTrue:
 		[ lastSeparator := lastSeparator + 1.
 		ch := reader next ].
 	(lastSeparator = self size or: [ ch = cr ]) ifTrue: [ ^ aBlock value: leadingTabs ].

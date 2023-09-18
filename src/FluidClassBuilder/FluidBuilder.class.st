@@ -48,19 +48,19 @@ Class {
 
 { #category : #testing }
 FluidBuilder class >> isAbstract [
-		
+
 	^ self == FluidBuilder
 ]
 
 { #category : #building }
 FluidBuilder >> build [
 	"Return a class that is not installed in the system."
-	
+
 	^ self shiftClassBuilder build
 ]
 
 { #category : #'class side' }
-FluidBuilder >> classSlots: aCollection [ 
+FluidBuilder >> classSlots: aCollection [
 	classSlotsToBuild := aCollection collect: [ :e | e asSlot ]
 ]
 
@@ -70,7 +70,7 @@ FluidBuilder >> classSlotsToBuild [
 ]
 
 { #category : #'class side' }
-FluidBuilder >> classTraits: aCollection [ 
+FluidBuilder >> classTraits: aCollection [
 	classTraitsToBuild := aCollection asTraitComposition
 ]
 
@@ -80,55 +80,47 @@ FluidBuilder >> classTraitsToBuild [
 ]
 
 { #category : #copying }
-FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [ 
+FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [
 
 	| oldClass |
 	oldClass := anEnvironment at: nameToBuild ifAbsent: [ ^ self ].
-	
+
 	classSlotsToBuild := oldClass class slots.
 	classTraitsToBuild := oldClass class traitComposition
 ]
 
 { #category : #copying }
-FluidBuilder >> fillInstanceSideFromClass: aClass [ 
-	
+FluidBuilder >> fillInstanceSideFromClass: aClass [
+
 	| tag |
 
-	slotsToBuild := aClass slots.	
+	slotsToBuild := aClass slots.
 	uses := aClass traitComposition.
 	self package: aClass package name.
 
 	tag := (aClass package classTagForClass: aClass).
-	tag ifNotNil: [ :s | 
-		s isRoot ifFalse: [self tag: (aClass package classTagForClass: aClass) name ]].
+	tag ifNotNil: [ :s |
+		s isRoot ifFalse: [self tag: (aClass package classTagForClass: aClass) name ]]
 ]
 
 { #category : #building }
-FluidBuilder >> fillShiftClassBuilder [ 
+FluidBuilder >> fillShiftClassBuilder [
 
-	shiftClassBuilder := ShiftClassBuilder new.
-	shiftClassBuilder	
-		buildEnvironment: ShSmalltalkGlobalsEnvironment new;
-		name: nameToBuild.
-	
-	shiftClassBuilder slots: slotsToBuild.	
-	shiftClassBuilder traitComposition: uses asTraitComposition.
-	
-	(tagToBuild isNil or: [ tagToBuild isEmpty ])
-		ifTrue: [ shiftClassBuilder category: packageName ]
-		ifFalse: [ tagToBuild isEmpty 
-						ifFalse: [ shiftClassBuilder category: packageName, '-', tagToBuild asString ]
-						ifTrue: [ shiftClassBuilder category: packageName ]
-		].
-	
-	shiftClassBuilder classSlots: classSlotsToBuild.
-	shiftClassBuilder classTraitComposition: classTraitsToBuild.
+	shiftClassBuilder := ShiftClassBuilder new
+		                     name: nameToBuild;
+		                     slots: slotsToBuild;
+		                     traitComposition: uses;
+		                     package: packageName;
+		                     tag: tagToBuild;
+		                     classSlots: classSlotsToBuild;
+		                     classTraitComposition: classTraitsToBuild;
+		                     yourself
 ]
 
 { #category : #building }
 FluidBuilder >> fluidInstall [
 	"Install the class in the system environment, method #fluidInstall is implemented in behavior, too"
-	
+
 	^ self install
 ]
 
@@ -138,36 +130,36 @@ FluidBuilder >> initialize [
 	super initialize.
 	slotsToBuild := #().
 	classSlotsToBuild := #().
-	
+
 	uses := TaEmptyComposition new.
 	classTraitsToBuild := uses classComposition.
-	
+
 "	#packageName . #tagToBuild"
 ]
 
 { #category : #building }
 FluidBuilder >> install [
 	"Install the class in the system environment"
-	
+
 	^ ShiftClassInstaller new makeWithBuilder: self shiftClassBuilder
 ]
 
 { #category : #'accessing - mandatory' }
 FluidBuilder >> nameToBuild [
 	"mandatory"
-	
+
 	^ nameToBuild
 ]
 
 { #category : #'accessing - mandatory' }
-FluidBuilder >> nameToBuild: aSymbol [ 
+FluidBuilder >> nameToBuild: aSymbol [
 	nameToBuild := aSymbol
 ]
 
 { #category : #API }
 FluidBuilder >> package: aString [
 
-	packageName := aString.
+	packageName := aString
 ]
 
 { #category : #'accessing - mandatory' }
@@ -177,7 +169,7 @@ FluidBuilder >> packageToBuild [
 ]
 
 { #category : #building }
-FluidBuilder >> shiftClassBuilder [ 
+FluidBuilder >> shiftClassBuilder [
 
 	^ shiftClassBuilder ifNil: [ shiftClassBuilder := self fillShiftClassBuilder ]
 ]
@@ -215,15 +207,15 @@ FluidBuilder >> tagToBuild [
 { #category : #API }
 FluidBuilder >> trait: aTraitComposition [
 
-	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg' 
+	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg'
 						-> '`@receiver traits: `@arg'.
-						
+
 	^ self traits: aTraitComposition
 ]
 
 { #category : #API }
 FluidBuilder >> traits: anArray [
-	
+
 	uses := anArray asTraitComposition.
 	classTraitsToBuild := uses classComposition
 ]
@@ -237,8 +229,8 @@ FluidBuilder >> traitsToBuild [
 { #category : #deprecated }
 FluidBuilder >> uses: aTraitComposition [
 
-	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg' 
+	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg'
 						-> '`@receiver traits: `@arg'.
-						
+
 	^ self traits: aTraitComposition
 ]

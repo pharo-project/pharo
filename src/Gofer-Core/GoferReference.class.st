@@ -19,7 +19,7 @@ GoferReference class >> isAbstract [
 { #category : #'instance creation' }
 GoferReference class >> name: aString [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeName: aString;
 		yourself
 ]
@@ -64,14 +64,14 @@ GoferReference >> matches: aResolvedReference [
 { #category : #accessing }
 GoferReference >> name [
 	"Answer the name of this reference."
-	
+
 	^ name
 ]
 
 { #category : #accessing }
 GoferReference >> packageName [
 	"Answer the package name."
-	
+
 	self subclassResponsibility
 ]
 
@@ -111,7 +111,7 @@ GoferReference >> workingCopy [
 GoferReference >> workingCopyIfAbsent: aBlock [
 	"Answer a working copy or throw an error if not present."
 
-	^ MCWorkingCopy allManagers
-		detect: [ :each | self packageName = each packageName ]
-		ifNone: aBlock
+	^ MCWorkingCopy allWorkingCopies
+		  detect: [ :each | self packageName = each packageName ]
+		  ifNone: aBlock
 ]

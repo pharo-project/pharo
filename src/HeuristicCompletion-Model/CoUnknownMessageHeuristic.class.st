@@ -27,6 +27,4 @@ CoUnknownMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext
 	^ CoGlobalSelectorFetcher new
 			astNode: aNode;
 			yourself
-
-
 ]

@@ -70,7 +70,7 @@ EpLogBrowserToolbarPresenter >> refresh [
 { #category : #refreshing }
 EpLogBrowserToolbarPresenter >> statusString [
 	^ String
-		streamContents: [ :stream | 
+		streamContents: [ :stream |
 			| filtered total |
 			filtered := logBrowserPresenter filteredEntriesCount.
 			total := logBrowserPresenter totalEntriesCount.

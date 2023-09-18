@@ -31,7 +31,7 @@ NestedDictionaryTest >> testAtAtIfAbsentPut [
 	d at: #first42 at: #second42 ifAbsentPut: [ 0 ].
 	self assert: (d at: #first at: #second42) equals: 142.
 	self assert: (d at: #first42 at: #second) equals: 42.
-	self assert: (d at: #first42 at: #second42) equals: 0.
+	self assert: (d at: #first42 at: #second42) equals: 0
 ]
 
 { #category : #tests }

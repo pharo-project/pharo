@@ -99,7 +99,7 @@ Class {
 FT2GlyphSlot class >> fromFace: anFT2Face [
 	^(super new)
 		loadFrom: anFT2Face;
-		yourself.
+		yourself
 ]
 
 { #category : #'accessing - convenience' }
@@ -170,7 +170,7 @@ FT2GlyphSlot >> fillFromGlyphSlotRec: aGlyphRec [
 { #category : #'accessing - fields' }
 FT2GlyphSlot >> format [
 
-	^ format 
+	^ format
 ]
 
 { #category : #'accessing - convenience' }
@@ -250,7 +250,7 @@ FT2GlyphSlot >> outline: anOutline [
 { #category : #'accessing - convenience' }
 FT2GlyphSlot >> roundedPixelLinearAdvance [
 	"Answer the scaled linearAdvance, rounded to whole pixels"
-	
+
 	^ linearHorizontalAdvance rounded @ linearVerticalAdvance rounded
 ]
 

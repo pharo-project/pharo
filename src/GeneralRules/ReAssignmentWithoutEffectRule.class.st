@@ -3,14 +3,14 @@ This smell arises when a statement such as x := x is found. This statement has n
 "
 Class {
 	#name : #ReAssignmentWithoutEffectRule,
-	#superclass : #ReNodeMatchRule,
+	#superclass : #ReNodeRewriteRule,
 	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }
 ReAssignmentWithoutEffectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'AssignmentWithoutEffectRule'
 ]
 
@@ -22,7 +22,7 @@ ReAssignmentWithoutEffectRule >> group [
 { #category : #initialization }
 ReAssignmentWithoutEffectRule >> initialize [
 	super initialize.
-	self  matches: '`var := `var'
+	self  replace: 	'`var := `var' with: ''
 ]
 
 { #category : #accessing }

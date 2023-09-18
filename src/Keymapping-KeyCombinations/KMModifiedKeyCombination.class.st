@@ -36,7 +36,7 @@ KMModifiedKeyCombination class >> modifier: aModifier character: aCharacter [
 { #category : #comparing }
 KMModifiedKeyCombination >> = aShortcut [
 	super = aShortcut
-		ifFalse: [ ^ false ]. 
+		ifFalse: [ ^ false ].
 	 modifier = aShortcut modifier
 		ifFalse: [ ^ false ].
 	aShortcut character = character
@@ -50,7 +50,7 @@ KMModifiedKeyCombination >> alt [
 ]
 
 { #category : #matching }
-KMModifiedKeyCombination >> beginsWith: aKMShortcut [ 
+KMModifiedKeyCombination >> beginsWith: aKMShortcut [
 
 	^ self = aKMShortcut
 ]
@@ -61,8 +61,8 @@ KMModifiedKeyCombination >> character [
 ]
 
 { #category : #accessing }
-KMModifiedKeyCombination >> character: aCharacter [ 
-	character := aCharacter.
+KMModifiedKeyCombination >> character: aCharacter [
+	character := aCharacter
 ]
 
 { #category : #combining }
@@ -88,13 +88,13 @@ KMModifiedKeyCombination >> hash [
 { #category : #accessing }
 KMModifiedKeyCombination >> key [
 
-	^ self character key.
+	^ self character key
 ]
 
 { #category : #matching }
 KMModifiedKeyCombination >> matchesEvent: aKeyboardEvent [
 
-	^ (self modifier matchesEvent: aKeyboardEvent) 
+	^ (self modifier matchesEvent: aKeyboardEvent)
 		and: [self character matchesEvent: aKeyboardEvent]
 ]
 
@@ -105,7 +105,7 @@ KMModifiedKeyCombination >> meta [
 
 { #category : #combining }
 KMModifiedKeyCombination >> modifiedBy: aModifier [
-	^self character asKeyCombination modifiedBy: modifier + aModifier.
+	^self character asKeyCombination modifiedBy: modifier + aModifier
 ]
 
 { #category : #accessing }
@@ -120,13 +120,13 @@ KMModifiedKeyCombination >> modifier: aModifier [
 
 { #category : #'accessing - platform' }
 KMModifiedKeyCombination >> platformCharacter [
-	
+
 	^ self character key
 ]
 
 { #category : #'accessing - platform' }
 KMModifiedKeyCombination >> platformModifier [
-	
+
 	^ self modifier
 ]
 
@@ -134,7 +134,7 @@ KMModifiedKeyCombination >> platformModifier [
 KMModifiedKeyCombination >> printOn: aStream [
 	modifier printOn: aStream.
 	aStream << ' + '.
-	character printOn: aStream.
+	character printOn: aStream
 ]
 
 { #category : #combining }

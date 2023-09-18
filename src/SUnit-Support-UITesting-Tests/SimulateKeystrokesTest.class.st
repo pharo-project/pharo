@@ -15,7 +15,7 @@ SimulateKeystrokesTest >> testSimulateCmdKeystroke [
 	self simulateKeyStrokes: 'var := 3.' inWorld: ws world.
 	self simulateKeyStroke: $s meta inWorld: ws world.
 	self assert: ws hasUnacceptedEdits equals:false.
-	ws delete.
+	ws delete
 ]
 
 { #category : #tests }
@@ -27,7 +27,7 @@ SimulateKeystrokesTest >> testSimulateKeystroke [
 	textMorph takeKeyboardFocus.
 	self simulateKeyStroke: $s inWorld: textMorph world.
 	self assert: textMorph contents asString equals: 's'.
-	textMorph delete.
+	textMorph delete
 ]
 
 { #category : #tests }
@@ -39,5 +39,5 @@ SimulateKeystrokesTest >> testSimulateKeystrokes [
 	textMorph takeKeyboardFocus.
 	self simulateKeyStrokes: 'hello' inWorld: textMorph world.
 	self assert: textMorph contents asString equals: 'hello'.
-	textMorph delete.
+	textMorph delete
 ]

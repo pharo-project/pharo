@@ -4,71 +4,123 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : #'building suites' }
 RBCopyPackageParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBCopyPackageRefactoring };
 		yourself
 ]
 
+{ #category : #running }
+RBCopyPackageParametrizedTest >> addMethodWithRefTo: classRefName inClass: className [
+
+	(RBAddMethodTransformation
+		 sourceCode: (String streamContents: [ :stream |
+				  stream
+					  << 'foo';
+					  cr;
+					  << '	^ ';
+					  << classRefName ])
+		 in: className asSymbol
+		 withProtocol: #accessing ) execute
+]
+
 { #category : #accessing }
-RBCopyPackageParametrizedTest >> constructor [ 
+RBCopyPackageParametrizedTest >> constructor [
 	^ #copyPackage:in:
 ]
 
-{ #category : #'failure tests' }
-RBCopyPackageParametrizedTest >> testBadName [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{#'Refactoring-Tests-Core' . #'Refactoring-Tests-Core'}).
+{ #category : #accessing }
+RBCopyPackageParametrizedTest >> createPackageNamed: packageName withClasses: aCollection [
+
+	self packageOrganizer ensurePackage: packageName.
+
+	aCollection do: [ :className |
+		| refactoring |
+		refactoring := RBInsertNewClassTransformation
+			               addClass: className
+			               superclass: #Object
+			               subclasses: #(  )
+			               category: packageName.
+		refactoring execute ]
 ]
 
-{ #category : #tests }
-RBCopyPackageParametrizedTest >> testCopyPackage [
-	| refactoring aModel |
-	refactoring := (self createRefactoringWithArguments: 
-		{ #'Refactoring-Tests-Changes' . #'Refactoring-Tests-Changes1'}).
-	aModel := refactoring model.
-	
-	self executeRefactoring: refactoring.
-	
-	self assert: (aModel packageNamed: #'Refactoring-Tests-Changes1') isNotNil.
-	self assert: (aModel classNamed: #RBRefactoringChangeTestCopy) category equals: #'Refactoring-Tests-Changes1'.
-	self assert: (aModel classNamed: #RBRefactoringChangeTestCopy) instanceVariableNames asArray
-		equals: #( 'changes' 'workingEnvironment' 'changeFactory').
-	self assert: (aModel classNamed: #RBRefactoringChangeManagerTestCopy) category equals: #'Refactoring-Tests-Changes1'.
+{ #category : #accessing }
+RBCopyPackageParametrizedTest >> removePackageNamed: packageName [
+
+	RPackageOrganizer default removePackageNamed: packageName
+]
+
+{ #category : #running }
+RBCopyPackageParametrizedTest >> setUp [
+	super setUp.
+	model := self defaultNamespaceClass new.
+	self
+		createPackageNamed: 'RefactoringSmallPackageForTest'
+		withClasses: #('RBFTTest1' 'RBFTTest2').
+	self addMethodWithRefTo: 'RBFTTest2' inClass: 'RBFTTest1'
+]
+
+{ #category : #running }
+RBCopyPackageParametrizedTest >> tearDown [
+
+	(RBRefactoryChangeFactory instance removePackageNamed: 'RefactoringSmallPackageForTest')
+		execute.
+	super tearDown
 ]
 
 { #category : #tests }
 RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
-	self skip.
-	"We should use a small package for this tests and it should have references to its classes
-	so that we can check it. 
-	
-	See https://github.com/pharo-project/pharo/issues/11524"
-	self timeLimit: 2 minutes.
-	refactoring := (self createRefactoringWithArguments: 
-		{ #'Refactoring-Changes' . #'RRefactoring-Changes2'}).
-	aModel := refactoring model.
-	
-	self executeRefactoring: refactoring.
-	
-	self assert: (aModel classNamed: #RBClassCategoryChangeCopy) category 
-		equals: #'RRefactoring-Changes2'.
-	self assert: (aModel classNamed: #RBAddProtocolChangeCopy) superclass name 
-		equals: #RBRefactoryProtocolChangeCopy.
 
-	"We should create a little package and this package should have a class pointing to another class of this package.
-	and we should check that the refactored version points to the class copied version.
-	This is what this version is doing: 
-	
-	self  assert: ((aModel classNamed: #RBCoreClassesHelpCopy) classSide parseTreeFor: #pages) 
-		equals: (self parseMethod: 'pages
-	^ #(RBASTClassesHelpCopy RBRefactoringClassesHelpCopy RBBrowserEnvironmentsClassesHelpCopy)')"
+	self timeLimit: 2 minutes.
+	refactoring := (self createRefactoringWithArguments: { #'RefactoringSmallPackageForTest' . #'RefactoringCOPYSmallPackageForTest'}).
+	self executeRefactoring: (refactoring classMappings: { #RBFTTest1 -> #BarFTTest1 . #RBFTTest2 -> #BarFTTest2 } asDictionary).
+	aModel := refactoring model.
+
+	self
+		assert: (aModel classNamed: #BarFTTest1) category
+		equals: #'RefactoringCOPYSmallPackageForTest'.
+	self
+		assert: (aModel classNamed: #BarFTTest2) superclass name
+		equals: #Object.
+
+	self
+		assert: ((aModel classNamed: #BarFTTest1) parseTreeForSelector: #foo)
+		equals: (self parseMethod: 'foo
+			^ BarFTTest2')
+]
+
+{ #category : #tests }
+RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
+	| refactoring aModel |
+
+	refactoring := (self createRefactoringWithArguments: { #'RefactoringSmallPackageForTest' . #'RefactoringCOPYSmallPackageForTest'}).
+	self executeRefactoring: (refactoring classMappings: { #RBFTTest1 -> #BarFTTest1 . #RBFTTest2 -> #BarFTTest2 } asDictionary).
+	aModel := refactoring model.
+	self
+		assert: (aModel includesClassNamed: #BarFTTest1)
+		description: 'It test that class was copied'.
+	self
+		assert: (aModel includesClassNamed: #BarFTTest2)
+		description: 'It test that class was copied'.
+	self
+		assert: (aModel includesClassNamed: #RBFTTest1)
+		description: 'It test that original class where we copied from is still there'.
+	self
+		assert: (aModel includesClassNamed: #RBFTTest2)
+		description: 'It test that original class where we copied from is still there'
 ]
 
 { #category : #'failure tests' }
-RBCopyPackageParametrizedTest >> testExistingPackage [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes'})
+RBCopyPackageParametrizedTest >> testFailureBadName [
+	self shouldFail: (self createRefactoringWithArguments:
+		{#'Refactoring-Tests-Core' . #'Refactoring-Tests-Core'})
+]
+
+{ #category : #'failure tests' }
+RBCopyPackageParametrizedTest >> testFailureExistingPackage [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #'Refactoring-Tests-Core'. #'Refactoring-Tests-Changes' })
 ]

@@ -21,7 +21,7 @@ ManyTestResourceTestCase class >> shouldInheritSelectors [
 { #category : #utilities }
 ManyTestResourceTestCase >> clearOuterResourceStateDuring: aBlock [
 	"This self-testing test must clear the outer state of its resources before starting and after finishing, so that it can construct test cases and suites of itself and test them."
-	
+
 	self
 		assert: SimpleTestResourceA1 isAlreadyAvailable
 		description: 'The resource was not set up for the test'.

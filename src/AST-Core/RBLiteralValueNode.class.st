@@ -24,24 +24,24 @@ RBLiteralValueNode class >> value: aValue [
 ]
 
 { #category : #'instance creation' }
-RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition [ 
+RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition [
  	^ self new
 		value: aValue start: aPosition stop: anotherPosition;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
-RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition  source: aString [ 
+RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition  source: aString [
  	^ self new
 		value: aValue start: aPosition stop: anotherPosition source: aString;
-		yourself.
+		yourself
 ]
 
 { #category : #comparing }
-RBLiteralValueNode >> = anObject [ 
-	^ super = anObject 
+RBLiteralValueNode >> = anObject [
+	^ super = anObject
 		and: [ self value = anObject value
-		and: [ self value class = anObject value class 
+		and: [ self value class = anObject value class
 		and: [ self value species = anObject value species ] ] ]
 ]
 
@@ -88,13 +88,13 @@ RBLiteralValueNode >> value [
 RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 
 	value := aValue.
-	start := aPosition. 
-	stop := anotherPosition.
+	start := aPosition.
+	stop := anotherPosition
 ]
 
 { #category : #initialization }
-RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition source: aString [ 
+RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition source: aString [
 
 	self value: aValue start: aPosition stop: anotherPosition.
-	sourceText := aString.
+	sourceText := aString
 ]

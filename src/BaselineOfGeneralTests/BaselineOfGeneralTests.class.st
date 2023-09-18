@@ -12,14 +12,13 @@ BaselineOfGeneralTests >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			package: 'Debugging-Utils-Tests';
-			package: 'Tests';
 			package: 'NumberParser-Tests';
 			package: 'AST-Core-Tests';			
 			package: 'RPackage-Tests';
 			package: 'Monticello-Tests';	"required by MonticelloMocks"
 			package: 'System-Installers-Tests' ;
 			package: 'MonticelloMocks';
-			package: 'Fuel-Tests-Core';
+			package: 'Fuel-Core-Tests';
 			package: 'FormCanvas-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
@@ -38,7 +37,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Fonts-Infrastructure-Tests';
 			
 			package: 'Graphics-Tests';
-			package: 'HelpSystem-Tests';
 
 			package: 'Morphic-Tests';
 			
@@ -63,6 +61,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Tool-FileList-Tests';
 			package: 'Tool-Finder-Tests';
 			package: 'Tool-Profilers-Tests';
+			package: 'Tool-ImageCleaner-Tests';
 			package: 'Tool-Workspace-Tests';
 			package: 'Tools-CodeNavigation-Tests';
 			package: 'Tools-Tests';

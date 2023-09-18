@@ -75,7 +75,7 @@ RubAdornmentDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 	(bnds topRight + (0 @ size)).
 	(bnds topRight - (size @ 0))}.
 	polygonPath := anAthensCanvas
-		createPath: [ :builder | 
+		createPath: [ :builder |
 			builder
 				absolute;
 				moveTo: vertices first.

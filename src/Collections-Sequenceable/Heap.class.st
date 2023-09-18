@@ -73,71 +73,10 @@ Class {
 
 { #category : #accessing }
 Heap class >> defaultSortBlock [
-	"Cache the default sort block here. Since the sortBlock is used to compare instances, a single instance 
+	"Cache the default sort block here. Since the sortBlock is used to compare instances, a single instance
 	 for the default block helps us."
-	^ sortBlock ifNil: [ 
+	^ sortBlock ifNil: [
 		sortBlock := [ :a :b | a <= b]]
-]
-
-{ #category : #examples }
-Heap class >> heapExample [	
-	"self heapExample"
-	"Create a sorted collection of numbers, remove the elements
-	sequentially and add new objects randomly.
-	Note: This is the kind of benchmark a heap is designed for."
-	
-	^ String streamContents: [ :str | 
-		| n rnd array time sorted |
-		n := 5000. "# of elements to sort"
-		rnd := Random new.
-		array := (1 to: n) collect:[:i| rnd next].
-		"First, the heap version"
-		time := Time millisecondsToRun:[
-		sorted := self withAll: array.
-			1 to: n do:[:i| 
-				sorted removeFirst.
-				sorted add: rnd next].
-	].
-	str << 'Time for Heap: ' << time printString <<' msecs '; cr.
-	"The quicksort version"
-	time := Time millisecondsToRun:[
-		sorted := SortedCollection withAll: array.
-		1 to: n do:[:i| 
-			sorted removeFirst.
-			sorted add: rnd next].
-	].
-	str << 'Time for SortedCollection: '<< time printString << ' msecs'.]
-]
-
-{ #category : #examples }
-Heap class >> heapSortExample [	
-	"self heapSortExample"
-	"Sort a random collection of Floats and compare the results with
-	SortedCollection (using the quick-sort algorithm) and 
-	ArrayedCollection>>mergeSortFrom:to:by: (using the merge-sort algorithm)."
-	
-	^ String streamContents: [ :str | 
-		| n rnd array  time sorted |
-		n := 10000. "# of elements to sort"
-		rnd := Random new.
-		array := (1 to: n) collect:[:i| rnd next].
-		"First, the heap version"
-		time := Time millisecondsToRun:[
-			sorted := Heap withAll: array.
-			1 to: n do:[:i| sorted removeFirst].
-		].
-	str << 'Time for heap-sort: ' << time printString << ' msecs ';cr.
-	"The quicksort version"
-	time := Time millisecondsToRun:[
-		sorted := SortedCollection withAll: array.
-	].
-	str << 'Time for quick-sort: ' << time printString <<' msecs '; cr.
-	"The merge-sort version"
-	time := Time millisecondsToRun:[
-		array mergeSortFrom: 1 to: array size by: [:v1 :v2| v1 <= v2].
-	].
-	str << 'Time for merge-sort: ' << time printString  << ' msecs'; cr.
-	]
 ]
 
 { #category : #'instance creation' }
@@ -203,16 +142,16 @@ Heap >> array [
 { #category : #accessing }
 Heap >> at: index [
 	"Heap are not designed to be accessed sequentially."
-	
-	self shouldNotImplement.
+
+	self shouldNotImplement
 ]
 
 { #category : #accessing }
 Heap >> at: index put: newObject [
 	"Heap are not designed to be accessed sequentially.
 	Please consider using #add: instead."
-	
-	self shouldNotImplement.
+
+	self shouldNotImplement
 ]
 
 { #category : #enumerating }
@@ -253,7 +192,7 @@ Heap >> downHeap: anIndex [
 		(j < tally and:[self sorts: (array at: j+1) before: (array at: j)])
 				ifTrue:[ j := j + 1].
 		"check if position k is ok"
-		(self sorts: value before: (array at: j)) 
+		(self sorts: value before: (array at: j))
 			ifTrue:[	"yes -> break loop"
 					n := k - 1]
 			ifFalse:[	"no -> make room at j by moving j-th element to k-th position"
@@ -262,7 +201,7 @@ Heap >> downHeap: anIndex [
 					"and try again with j"
 					k := j]].
 	array at: k put: value.
-	self updateObjectIndex: k.
+	self updateObjectIndex: k
 ]
 
 { #category : #private }
@@ -304,7 +243,7 @@ Heap >> fullySort [
 { #category : #growing }
 Heap >> grow [
 	"Become larger."
-	self growTo: self size + self growSize.
+	self growTo: self size + self growSize
 ]
 
 { #category : #growing }
@@ -325,7 +264,7 @@ Heap >> growTo: newSize [
 { #category : #accessing }
 Heap >> indexUpdateBlock: aBlockOrNil [
 
-	indexUpdateBlock := aBlockOrNil.
+	indexUpdateBlock := aBlockOrNil
 ]
 
 { #category : #testing }
@@ -348,8 +287,8 @@ Heap >> isSorted [
 	| lastElm elm |
 	self isEmpty ifTrue: [^ true].
 	lastElm := self first.
-	2 to: self size do: 
-		[:index | 
+	2 to: self size do:
+		[:index |
 		elm := self at: index.
 		lastElm <= elm ifFalse: [^ false].
 		lastElm := elm].
@@ -363,8 +302,8 @@ Heap >> isSortedBy: aBlock [
 	| lastElm elm |
 	self isEmpty ifTrue: [^ true].
 	lastElm := self first.
-	2 to: self size do: 
-		[:index | 
+	2 to: self size do:
+		[:index |
 		elm := self at: index.
 		(aBlock value: lastElm value: elm) ifFalse: [^ false].
 		lastElm := elm].
@@ -373,7 +312,7 @@ Heap >> isSortedBy: aBlock [
 
 { #category : #sorting }
 Heap >> mergeFirst: first middle: middle last: last into: dst by: aBlock [
-	"Private. Merge the sorted ranges [first..middle] and [middle+1..last] 
+	"Private. Merge the sorted ranges [first..middle] and [middle+1..last]
 	of the receiver into the range [first..last] of dst."
 
 	| i1 i2 val1 val2 out |
@@ -405,8 +344,8 @@ Heap >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 	does only half as many comparisons as heapsort or quicksort."
 
 	"Details: recursively split the range to be sorted into two halves,
-	mergesort each half, then merge the two halves together. An extra 
-	copy of the data is used as temporary storage and successive merge 
+	mergesort each half, then merge the two halves together. An extra
+	copy of the data is used as temporary storage and successive merge
 	phases copy data back and forth between the receiver and this copy.
 	The recursion is set up so that the final merge is performed into the
 	receiver, resulting in the receiver being completely sorted."
@@ -417,15 +356,15 @@ Heap >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 	[stopIndex <= self size] assert. "bad stop index"
 	self
 		mergeSortFrom: startIndex
-		to: stopIndex 
-		src: self copy 
-		dst: self 
+		to: stopIndex
+		src: self copy
+		dst: self
 		by: aBlock
 ]
 
 { #category : #sorting }
 Heap >> mergeSortFrom: first to: last src: src dst: dst by: aBlock [
-	"Private. Split the range to be sorted in half, sort each half, and 
+	"Private. Split the range to be sorted in half, sort each half, and
 	merge the two half-ranges into dst."
 
 	| middle |
@@ -473,16 +412,16 @@ Heap >> privateReverseSort [
 Heap >> reSort [
 	"Resort the entire heap"
 	self isEmpty ifTrue:[^self].
-	tally // 2 to: 1 by: -1 do:[:i| self downHeap: i].
+	tally // 2 to: 1 by: -1 do:[:i| self downHeap: i]
 ]
 
 { #category : #removing }
 Heap >> remove: oldObject ifAbsent: aBlock [
-	"Remove oldObject as one of the receiver's elements. If several of the 
-	elements are equal to oldObject, only one is removed. If no element is 
-	equal to oldObject, answer the result of evaluating anExceptionBlock. 
+	"Remove oldObject as one of the receiver's elements. If several of the
+	elements are equal to oldObject, only one is removed. If no element is
+	equal to oldObject, answer the result of evaluating anExceptionBlock.
 	Otherwise, answer the argument, oldObject."
-	1 to: tally do:[:i| 
+	1 to: tally do:[:i|
 		(array at: i) = oldObject ifTrue:[^self privateRemoveAt: i]].
 	^aBlock value
 ]
@@ -504,13 +443,13 @@ Heap >> removeFirst [
 { #category : #private }
 Heap >> setCollection: aCollection [
 	array := aCollection.
-	tally := 0.
+	tally := 0
 ]
 
 { #category : #private }
 Heap >> setCollection: aCollection tally: newTally [
 	array := aCollection.
-	tally := newTally.
+	tally := newTally
 ]
 
 { #category : #accessing }
@@ -528,7 +467,7 @@ Heap >> sort [
 ]
 
 { #category : #sorting }
-Heap >> sort: aSortBlock [ 
+Heap >> sort: aSortBlock [
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."
 
@@ -546,24 +485,24 @@ Heap >> sortBlock [
 { #category : #accessing }
 Heap >> sortBlock: aBlock [
 	sortBlock := aBlock.
-	self reSort.
+	self reSort
 ]
 
 { #category : #sorting }
 Heap >> sorted [
-	"Return a new sequenceable collection which contains the same elements as self but its 
+	"Return a new sequenceable collection which contains the same elements as self but its
 elements are sorted in ascending order using the #'<=' operator."
-	
+
 	^self sorted: [ :a :b| a <= b ]
 ]
 
 { #category : #sorting }
 Heap >> sorted: aSortBlockOrNil [
-	"Return a new sequenceable collection which contains the same elements as self but its 
-elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if 
-the first element should preceed the second one. If aSortBlock is nil then <= is used for 
+	"Return a new sequenceable collection which contains the same elements as self but its
+elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if
+the first element should preceed the second one. If aSortBlock is nil then <= is used for
 comparison."
-	
+
 	^self copy sort: aSortBlockOrNil
 ]
 
@@ -573,13 +512,13 @@ Heap >> sorts: element1 before: element2 [
 	This method defines the sort order in the receiver"
 	^sortBlock == nil
 		ifTrue:[element1 <= element2]
-		ifFalse:[sortBlock value: element1 value: element2].
+		ifFalse:[sortBlock value: element1 value: element2]
 ]
 
 { #category : #growing }
 Heap >> trim [
 	"Remove any empty slots in the receiver."
-	self growTo: self size.
+	self growTo: self size
 ]
 
 { #category : #private }
@@ -590,13 +529,13 @@ Heap >> upHeap: anIndex [
 	anIndex = 0 ifTrue:[^self].
 	k := anIndex.
 	value := array at: anIndex.
-	[ (k > 1) and:[self sorts: value before: (tmp := array at: (kDiv2 := k bitShift: -1))] ] 
+	[ (k > 1) and:[self sorts: value before: (tmp := array at: (kDiv2 := k bitShift: -1))] ]
 		whileTrue:[
 			array at: k put: tmp.
 			self updateObjectIndex: k.
 			k := kDiv2].
 	array at: k put: value.
-	self updateObjectIndex: k.
+	self updateObjectIndex: k
 ]
 
 { #category : #private }

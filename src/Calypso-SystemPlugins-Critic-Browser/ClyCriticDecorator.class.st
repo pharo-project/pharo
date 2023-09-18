@@ -30,9 +30,9 @@ Class {
 ClyCriticDecorator >> adoptBrowserToolLayout [
 
 	originalToolPanel := PanelMorph new.
-	originalToolPanel 
+	originalToolPanel
 		name: 'original tool elements';
-		color: Color transparent;		
+		color: Color transparent;
 		borderWidth: 0;
 		layoutPolicy: browserTool layoutPolicy.
 	browserTool submorphs do: [ :each | originalToolPanel addMorphBack: each ].
@@ -52,7 +52,7 @@ ClyCriticDecorator >> buildCriticalTextSegmentsFor: anObject [
 	^criticView dataSource allElements
 		select: [ :critique | critique hasProperty: ClySourceNodeCritiqueIntervalProperty ]
 		thenCollect: [ :critique |
-			interval := critique getProperty: ClySourceNodeCritiqueIntervalProperty.		
+			interval := critique getProperty: ClySourceNodeCritiqueIntervalProperty.
 			segment := ClyCriticalTextSegmentMorph
 				from: interval start
 				to: interval stop + 1.
@@ -80,7 +80,7 @@ ClyCriticDecorator >> changeStateOf: aQueryView by: aBlock [
 ClyCriticDecorator >> createCriticView [
 
 	criticView := ClyQueryViewMorph for: self.
-	criticView 
+	criticView
 		name: 'critiques table';
 		hResizing: #spaceFill;
 		vResizing: #rigid;
@@ -96,26 +96,26 @@ ClyCriticDecorator >> criticView [
 
 { #category : #decoration }
 ClyCriticDecorator >> decorateTool [
-	| newScope |	
-	criticView ifNil: [ self prepare].	
+	| newScope |
+	criticView ifNil: [ self prepare].
 	newScope := browserTool criticAnalysisScope.
-	(analysisScope isNil or: [ newScope basisObjects ~= analysisScope basisObjects]) ifTrue: [ 
+	(analysisScope isNil or: [ newScope basisObjects ~= analysisScope basisObjects]) ifTrue: [
 		analysisScope := newScope.
 		self updateCriticView].
-	
+
 	self refreshCritiques
 ]
 
 { #category : #controlling }
 ClyCriticDecorator >> hideCritiques [
- 
+
 	criticView delete.
 	browserTool removePaneSplitters.
-	originalToolPanel layoutFrame bottomFraction: 1; bottomOffset: 0.
+	originalToolPanel layoutFrame bottomFraction: 1; bottomOffset: 0
 ]
 
 { #category : #controlling }
-ClyCriticDecorator >> ignoreNavigationDuring: aBlock [ 
+ClyCriticDecorator >> ignoreNavigationDuring: aBlock [
 	aBlock value
 ]
 
@@ -136,13 +136,13 @@ ClyCriticDecorator >> refreshCritiques [
 
 	"Big literal methods (who are containing big strings ot byte arrays) should not
 	 run critiques (not needed, and very time consuming)"
-	(self analyzedObject isCompiledMethod 
+	(self analyzedObject isCompiledMethod
 		and: [ self analyzedObject isBigLiteralMethod ])
 		ifTrue: [ ^ self ].
 
 	browserTool decorateByCritic: self.
-	
-	criticView dataSource isEmpty 
+
+	criticView dataSource isEmpty
 		ifTrue: [ self hideCritiques ]
 		ifFalse: [ self showCritiques ].
 	(criticView dataSource hasMetaProperty: ClyBackgroundProcessingTag)
@@ -153,7 +153,7 @@ ClyCriticDecorator >> refreshCritiques [
 { #category : #controlling }
 ClyCriticDecorator >> showCritiques [
 	criticView owner ifNotNil: [ ^self ].
-	
+
 	originalToolPanel layoutFrame bottomFraction: 0.8.
 	browserTool addMorph: criticView fullFrame: ((0@0.8 corner: 1@1) asLayoutFrame).
 	browserTool addPaneSplitters
@@ -161,15 +161,15 @@ ClyCriticDecorator >> showCritiques [
 
 { #category : #controlling }
 ClyCriticDecorator >> toolWasRemoved [
-	
+
 	criticView ifNotNil: [ criticView closeDataSource ]
 ]
 
 { #category : #controlling }
 ClyCriticDecorator >> updateCriticView [
-	
+
 	| critiqueQuery |
-	
+
 	critiqueQuery := (ClyAllBasisCritiqueQuery from: analysisScope) async.
 	criticView showQuery: critiqueQuery
 ]

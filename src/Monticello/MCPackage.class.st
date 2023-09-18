@@ -9,7 +9,8 @@ Class {
 	#name : #MCPackage,
 	#superclass : #Object,
 	#instVars : [
-		'name'
+		'name',
+		'environment'
 	],
 	#category : #'Monticello-Base'
 }
@@ -27,12 +28,25 @@ MCPackage >> = other [
 { #category : #accessing }
 MCPackage >> correspondingRPackage [
 
-	^ RPackageOrganizer default packageNamed: self name asSymbol ifAbsent: [ nil ]
+	^ self environment organization packageNamed: self name asSymbol ifAbsent: [ nil ]
 ]
 
 { #category : #printing }
 MCPackage >> displayStringOn: aStream [
 	aStream nextPutAll: self name
+]
+
+{ #category : #accessing }
+MCPackage >> environment [
+	"Allows to have MCPackage that are link to system packages from a non default package organizer."
+
+	^ environment ifNil: [ self class environment ]
+]
+
+{ #category : #accessing }
+MCPackage >> environment: anObject [
+
+	environment := anObject
 ]
 
 { #category : #'working copies' }
@@ -112,5 +126,6 @@ MCPackage >> unload [
 
 { #category : #'working copies' }
 MCPackage >> workingCopy [
-	^ MCWorkingCopy forPackage: self.
+
+	^ MCWorkingCopy ensureForPackage: self
 ]

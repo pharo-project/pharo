@@ -1,6 +1,17 @@
 "
-Common superclass for User Interface themes. Provides methods for creating new morphs in a standard way, various ""services"" like a file dialog, message dialogs etc. and also methods for customising aspects of the appearance of various morphs.
+Common superclass for User Interface themes.
+Provides methods for creating new morphs in a standard way, various ""services"" like a file dialog, message dialogs etc. and also methods for customising aspects of the appearance of various morphs.
+
 Though conceptually abstract, no code is ""missing"". Subclasses, therefore, should override the aspects they wish to change.
+
+## Architecture
+
+In the new implementation now I have a color palette. My color palette is the one responsible for caching the colors to avoid re-allocations. The colors are defined in the UIThemeColorConfigurator class. Each theme, dark and light, have their own color configurator subclass. The palette obtains the colors from there and then caches them using a Dictionary.
+
+## How to create your own theme
+
+If you wish to have another custom theme, First you need to define your own color configurator class, see the comment of the abstract class UIThemeColorConfigurator. This is done by sublcassing UIThemeColorConfigurator and defining the missing abstract methods.
+Once you have your color configurator, you need to subclass Me and only re-define my class side method `colorConfiguratorClass` returning the class of your defined color configurator.
 "
 Class {
 	#name : #UITheme,
@@ -11,14 +22,12 @@ Class {
 		'soundTheme',
 		'focusIndicator',
 		'windowActiveDropShadowStyle',
-		'useScrollbarThumbShadow'
+		'useScrollbarThumbShadow',
+		'colorPalette'
 	],
 	#classVars : [
 		'Builder',
 		'Current'
-	],
-	#classInstVars : [
-		'defaultSettings'
 	],
 	#category : #'Polymorph-Widgets-Themes'
 }
@@ -30,21 +39,6 @@ UITheme class >> allThemeClasses [
 
 	^(self allSubclasses reject: [:c | c isAbstract]) asSortedCollection: [:a :b |
 		a themeName <= b themeName]
-]
-
-{ #category : #accessing }
-UITheme class >> baseColor [
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-UITheme class >> basePassiveBackgroundColor [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-UITheme class >> baseSelectionColor [ 
-	^ self subclassResponsibility
 ]
 
 { #category : #query }
@@ -66,7 +60,13 @@ UITheme class >> builder [
 UITheme class >> cleanUp [
 
 	"avoid old references to morphs that should be garbage-collected"
-	UITheme current focusIndicator: nil.
+	self current focusIndicator: nil
+]
+
+{ #category : #configuration }
+UITheme class >> colorConfiguratorClass [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -92,7 +92,7 @@ UITheme class >> current: aUITheme [
 
 	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings |
 		polymorphSystemSettings desktopColor: aUITheme desktopColor ].
-	
+
 	self class environment at: #NECPreferences ifPresent: [ :necPreferences |
 		necPreferences backgroundColor: aUITheme windowColor ].
 
@@ -106,35 +106,15 @@ UITheme class >> current: aUITheme [
 	self currentWorld themeChanged.
 	(SystemWindow allSubInstances select:[:e | e owner isNil]) do: [ :each | each themeChanged ].
 
-	SystemAnnouncer uniqueInstance announce: UIThemeChanged
+	SystemAnnouncer announce: UIThemeChanged
 ]
 
 { #category : #accessing }
 UITheme class >> currentSettings [
+
 	"Answer the current ui theme settings."
 
 	^ self current settings
-]
-
-{ #category : #accessing }
-UITheme class >> darkBaseColor [
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-UITheme class >> defaultSettings [
-	"Answer the default settings for the theme."
-	
-	^defaultSettings ifNil: [
-		self defaultSettings: self newDefaultSettings.
-		defaultSettings]
-]
-
-{ #category : #accessing }
-UITheme class >> defaultSettings: aThemeSettings [
-	"Set the default settings for the theme."
-	
-	defaultSettings := aThemeSettings
 ]
 
 { #category : #'class initialization' }
@@ -142,7 +122,7 @@ UITheme class >> initialize [
 
 	self current class = UITheme
 		ifTrue: [self current: nil
-			"due to change to being abstract"].
+			"due to change to being abstract"]
 ]
 
 { #category : #testing }
@@ -160,16 +140,6 @@ UITheme class >> isCurrent [
 ]
 
 { #category : #accessing }
-UITheme class >> lightBaseColor [
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-UITheme class >> lightSelectionColor [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
 UITheme class >> newBuilder [
 	"Answer a new builder morph."
 
@@ -183,50 +153,11 @@ UITheme class >> newDefault [
 	^self new
 ]
 
-{ #category : #accessing }
-UITheme class >> newDefaultSettings [
-	self setPreferredPreferences.
-	
-	^ThemeSettings new
-		buttonColor: Color gray;
-		scrollbarColor: Color gray;
-		menuColor: self baseColor;
-		menuTitleColor: self baseColor;
-		windowColor: self baseColor;
-		selectionColor: self lightSelectionColor;
-		menuSelectionColor: self baseSelectionColor;
-		progressBarColor: self baseColor;
-		standardColorsOnly: true;
-		autoSelectionColor: false;
-		preferRoundCorner: false;
-		fadedBackgroundWindows: false;
-		flatMenu: true
-]
-
-{ #category : #accessing }
-UITheme class >> resetAllDefaultSettings [
-	"Reset the default settings of all themes"
-	"self resetAllDefaultSettings"
-	self withAllSubclassesDo: [:cls | cls defaultSettings: nil]
-]
-
 { #category : #'initialize-release' }
 UITheme class >> resetBuilder [
 	<script>
-	
+
 	Builder := nil
-]
-
-{ #category : #accessing }
-UITheme class >> resetDefaultSettings [
-	"Reset the default settings to use the original values."
-
-	self defaultSettings: nil
-]
-
-{ #category : #settings }
-UITheme class >> setPreferredPreferences [ 
-	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -239,11 +170,6 @@ UITheme class >> themeName [
 	"Answer the friendly name of the theme."
 
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-UITheme class >> veryLightSelectionColor [ 
-	^ self subclassResponsibility
 ]
 
 { #category : #services }
@@ -302,62 +228,71 @@ UITheme >> autoMenuColor [
 { #category : #'accessing - colors' }
 UITheme >> backgroundColor [
 
-	^ Color white
+	^ colorPalette backgroundColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> balloonBackgroundColor [
 
-	^self lightBaseColor
+	^ colorPalette balloonBackgroundColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> balloonTextColor [
 
-	^self textColor
+	^ colorPalette balloonTextColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> baseColor [
-	^ self class baseColor
+
+	^ colorPalette baseColor
 ]
 
 { #category : #'basic-colors' }
 UITheme >> baseColorFor: aWidget [
 
-	^ self class baseColor
+	^ colorPalette baseColorFor: aWidget
 ]
 
 { #category : #private }
 UITheme >> basePassiveBackgroundColorFor: aButton [
-	^ self class basePassiveBackgroundColor
+
+	^ colorPalette basePassiveBackgroundColor
 ]
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> baseScrollbarColorFor: aScrollbar [
+
 	"Return the scrollbar last pane colour or that of our settings if unavailable"
-	
-	^ aScrollbar lastPaneColor 
-		ifNil: [ self scrollbarColor ]
+
+	^ colorPalette baseScrollbarColorFor: aScrollbar
+]
+
+{ #category : #'accessing - colors' }
+UITheme >> baseSelectionColor [
+
+	^ colorPalette baseSelectionColor
 ]
 
 { #category : #private }
 UITheme >> baseSelectionColorFor: aButton [
-	^ self class baseSelectionColor
+
+	^ colorPalette baseSelectionColor
 ]
 
 { #category : #scrollbars }
-UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger color: aColor [ 
-	"PRIVATE - create an arrow with aSymbolDirectionDirection,  
+UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger color: aColor [
+	"PRIVATE - create an arrow with aSymbolDirectionDirection,
 	finalSizeInteger and aColor.
 	aSymbolDirectionDirection = #top, #bottom. #left or #right .
-	Try with:  
+	Try with:
 	(UITheme current
-		basicCreateArrowOfDirection: #top 
-		size: 32 
-		color: Color lightGreen) asMorph openInHand. 
+		basicCreateArrowOfDirection: #top
+		size: 32
+		color: Color lightGreen) asMorph openInHand.
 	Fixed to work with translucent colours."
-	
+
 	|form resizeFactor arrow resizedForm |
 	resizeFactor := 4.
 	form := Form
@@ -372,15 +307,15 @@ UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger 
 		color: (aColor alphaMixed: 0.7 with: Color black).
 	arrow fullDrawOn: form getCanvas.
 	resizedForm := form
-		magnify: form boundingBox
-		by: 1 / resizeFactor
+		magnifyBy: 1 / resizeFactor
 		smoothing: 4.
 	^resizedForm trimBordersOfColor: Color transparent
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> borderColor [ 
-	^ Color gray
+UITheme >> borderColor [
+
+	^ colorPalette borderColor
 ]
 
 { #category : #accessing }
@@ -393,76 +328,30 @@ UITheme >> builder [
 	^ self class builder
 ]
 
-{ #category : #'border-styles' }
-UITheme >> buttonBorderStyleFor: aButton [
-	aButton borderStyle: BorderStyle thinGray
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonBottomLeftForm [
-	"Answer the form to use for the bottom left of a button."
-
-	^self forms at: #buttonBottomLeft ifAbsent: [Form extent: 11@11 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonBottomMiddleForm [
-	"Answer the form to use for the bottom middle of a button."
-
-	^self forms at: #buttonBottomMiddle ifAbsent: [Form extent: 1@11 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonBottomRightForm [
-	"Answer the form to use for the bottom right of a button."
-
-	^self forms at: #buttonBottomRight ifAbsent: [Form extent: 11@11 depth: Display depth]
-]
-
 { #category : #'accessing - colors' }
-UITheme >> buttonColor [ 
-	^ self settings buttonColor
+UITheme >> buttonColor [
+
+	^ colorPalette buttonColor
 ]
 
 { #category : #'basic-colors' }
 UITheme >> buttonColorFor: aButton [
+
 	"Answer the colour for the given button."
 
-	^self settings standardColorsOnly
-		ifTrue: [self buttonColor]
-		ifFalse: [ aButton colorToUse ]
-]
-
-{ #category : #'fill-styles - buttons' }
-UITheme >> buttonColouredFillStyleFor: aButton [
-	"Return the coloured button fillStyle for the given button."
-	
-	|round roundCorners tl t tr l m r bl b br|
-	round := aButton wantsRoundedCorners.
-	roundCorners := aButton roundedCorners.
-	tl := (round and: [roundCorners includes: 1]) ifTrue: [self buttonSelectedTopLeftForm] ifFalse: [self buttonSquareSelectedTopLeftForm].
-	t := self buttonSelectedTopMiddleForm.
-	tr:= (round and: [roundCorners includes: 4]) ifTrue: [self buttonSelectedTopRightForm] ifFalse: [self buttonSquareSelectedTopRightForm].
-	l := self buttonSelectedMiddleLeftForm. m := self buttonColouredMiddleColor. r := self buttonSelectedMiddleRightForm.
-	bl := (round and: [roundCorners includes: 2]) ifTrue: [self buttonSelectedBottomLeftForm] ifFalse: [self buttonSquareSelectedBottomLeftForm].
-	b := self buttonSelectedBottomMiddleForm.
-	br := (round and: [roundCorners includes: 3]) ifTrue: [self buttonSelectedBottomRightForm] ifFalse: [self buttonSquareSelectedBottomRightForm].
-	^self
-		multiFormFillStyleFrom: {tl. t. tr. l. m. r. bl. b. br}
-		in: aButton bounds
+	^ colorPalette buttonColorFor: aButton
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonColouredMiddleColor [
-	"Return the middle area colour for a coloured button fillStyle."
-	
-	^Color r: 102 g: 127 b: 168 range: 255
+
+	^ colorPalette buttonColouredMiddleColor
 ]
 
 { #category : #'border-styles - buttons' }
 UITheme >> buttonCornerStyleIn: aThemedMorph [
 	"Allow for themes to override default behaviour."
-	
+
 	^ #square
 ]
 
@@ -475,9 +364,8 @@ UITheme >> buttonDisabledBorderStyleFor: aButton [
 
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonDisabledFillStyleFor: aButton [
-	"Return the disabled button fillStyle for the given color."
 
-	^self buttonNormalFillStyleFor: aButton
+	^ SolidFillStyle color: Color transparent
 ]
 
 { #category : #'fill-styles - buttons' }
@@ -526,7 +414,7 @@ UITheme >> buttonLabelForText: aTextOrString [
 				t := TextMorph new newContents: aTextOrString.
 				t
 					extent: t optimalExtent;
-					margins: (Margin left: 0 right: 0 top: 0 bottom: 1);
+					margins: (Margin left: 0 right: 0 top: 0 bottom: 1 scaledByDisplayScaleFactor);
 					lock]
 ]
 
@@ -534,46 +422,33 @@ UITheme >> buttonLabelForText: aTextOrString [
 UITheme >> buttonLabelInsetFor: aButton [
 	"Answer the inset to use for a button's label."
 
-	|left right|
+	|left top right bottom|
 	^aButton wantsRoundedCorners
-		ifTrue: [left := ((aButton roundedCorners includesAnyOf: #(1 2)) ifTrue: [8] ifFalse: [4]).
-				right := ((aButton roundedCorners includesAnyOf: #(3 4)) ifTrue: [8] ifFalse: [4]).
-				Margin left: left top: 2 right: right bottom: 2]		
-		ifFalse: [3@2]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonMiddleLeftForm [
-	"Answer the form to use for the middle left of a button."
-
-	^self forms at: #buttonMiddleLeft ifAbsent: [Form extent: 11@1 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonMiddleRightForm [
-	"Answer the form to use for the middle right of a button."
-
-	^self forms at: #buttonMiddleRight ifAbsent: [Form extent: 11@1 depth: Display depth]
+		ifTrue: [left := ((aButton roundedCorners includesAnyOf: #(1 2)) ifTrue: [8] ifFalse: [4]) scaledByDisplayScaleFactor.
+				right := ((aButton roundedCorners includesAnyOf: #(3 4)) ifTrue: [8] ifFalse: [4]) scaledByDisplayScaleFactor.
+				top := bottom := 2 scaledByDisplayScaleFactor.
+				Margin left: left top: top right: right bottom: bottom]
+		ifFalse: [(3@2) scaledByDisplayScaleFactor]
 ]
 
 { #category : #defaults }
 UITheme >> buttonMinHeight [
 	"Answer the minumum height of a button for this theme."
-	
+
 	^ 18 * self displayScaleFactor
 ]
 
 { #category : #defaults }
 UITheme >> buttonMinWidth [
 	"Answer the minumum width of a button for this theme."
-	
-	^24
+
+	^24 scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles - buttons' }
 UITheme >> buttonMouseOverBorderStyleFor: aButton [
 	"Return the mouse over button borderStyle for the given button."
-	
+
 	^self buttonNormalBorderStyleFor: aButton
 ]
 
@@ -596,35 +471,15 @@ UITheme >> buttonNormalBorderStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonNormalFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
-	
+
 	(aButton valueOfProperty: #noFill ifAbsent: [false]) ifTrue: [^ SolidFillStyle color: Color transparent ].
 	^ self normalFillStyleFor: aButton height: aButton height
 ]
 
 { #category : #'fill-styles - buttons' }
-UITheme >> buttonPlainFillStyleFor: aButton [
-	"Return the plain button fillStyle for the given button."
-	
-	|round roundCorners tl t tr l m r bl b br|
-	round := aButton wantsRoundedCorners.
-	roundCorners := aButton roundedCorners.
-	tl := (round and: [roundCorners includes: 1]) ifTrue: [self buttonTopLeftForm] ifFalse: [self buttonSquareTopLeftForm].
-	t := self buttonTopMiddleForm.
-	tr:= (round and: [roundCorners includes: 4]) ifTrue: [self buttonTopRightForm] ifFalse: [self buttonSquareTopRightForm].
-	l := self buttonMiddleLeftForm. m := self buttonPlainMiddleColor. r := self buttonMiddleRightForm.
-	bl := (round and: [roundCorners includes: 2]) ifTrue: [self buttonBottomLeftForm] ifFalse: [self buttonSquareBottomLeftForm].
-	b := self buttonBottomMiddleForm.
-	br := (round and: [roundCorners includes: 3]) ifTrue: [self buttonBottomRightForm] ifFalse: [self buttonSquareBottomRightForm].
-	^self
-		multiFormFillStyleFrom: {tl. t. tr. l. m. r. bl. b. br}
-		in: aButton bounds
-]
-
-{ #category : #'fill-styles - buttons' }
 UITheme >> buttonPlainMiddleColor [
-	"Return the middle area colour for a plain button fillStyle."
-	
-	^Color r: 211 g: 211 b: 211 range: 255
+
+	^ colorPalette buttonPlainMiddleColor
 ]
 
 { #category : #'border-styles - buttons' }
@@ -637,15 +492,8 @@ UITheme >> buttonPressedBorderStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonPressedFillStyleFor: aButton [
 	"Return the button pressed fillStyle for the given button."
-		
+
 	^self buttonSelectedFillStyleFor: aButton
-]
-
-{ #category : #defaults }
-UITheme >> buttonPressedLabelInsetFor: aButton [
-	"Answer the inset to use for a button's label when pressed."
-
-	^self buttonLabelInsetFor: aButton
 ]
 
 { #category : #'border-styles - buttons' }
@@ -653,27 +501,6 @@ UITheme >> buttonSelectedBorderStyleFor: aButton [
 	"Return the selected button borderStyle for the given button."
 
 	^self buttonNormalBorderStyleFor: aButton
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSelectedBottomLeftForm [
-	"Answer the form to use for the bottom left of a selected button."
-
-	^self forms at: #buttonSelectedBottomLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSelectedBottomMiddleForm [
-	"Answer the form to use for the bottom middle of a selected button."
-
-	^self forms at: #buttonSelectedBottomMiddle ifAbsent: [Form extent: 1@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSelectedBottomRightForm [
-	"Answer the form to use for the bottom right of a selected button."
-
-	^self forms at: #buttonSelectedBottomRight ifAbsent: [Form extent: 12@12 depth: Display depth]
 ]
 
 { #category : #'border-styles - buttons' }
@@ -686,29 +513,15 @@ UITheme >> buttonSelectedDisabledBorderStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonSelectedDisabledFillStyleFor: aButton [
 	"Return the button selected disabled fillStyle for the given color."
-	
+
 	^self buttonSelectedFillStyleFor: aButton
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
-	
+
 	^ SolidFillStyle color: (self lightSelectionColorFor: aButton)
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSelectedMiddleLeftForm [
-	"Answer the form to use for the middle left of a selected button."
-
-	^self forms at: #buttonSelectedMiddleLeft ifAbsent: [Form extent: 12@1 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSelectedMiddleRightForm [
-	"Answer the form to use for the middle right of a selected button."
-
-	^self forms at: #buttonSelectedMiddleRight ifAbsent: [Form extent: 12@1 depth: Display depth]
 ]
 
 { #category : #'border-styles - buttons' }
@@ -721,7 +534,7 @@ UITheme >> buttonSelectedMouseOverBorderStyleFor: aButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> buttonSelectedMouseOverFillStyleFor: aButton [
 	"Return the button selected mouse over fillStyle for the given color."
-	
+
 	^self buttonSelectedFillStyleFor: aButton
 ]
 
@@ -739,107 +552,10 @@ UITheme >> buttonSelectedPressedFillStyleFor: aButton [
 	^self buttonNormalFillStyleFor: aButton
 ]
 
-{ #category : #'fill-styles' }
-UITheme >> buttonSelectedTopLeftForm [
-	"Answer the form to use for the top left of a selected button."
-
-	^self forms at: #buttonSelectedTopLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSelectedTopMiddleForm [
-	"Answer the form to use for the top middle of a selected button."
-
-	^self forms at: #buttonSelectedTopMiddle ifAbsent: [Form extent: 1@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSelectedTopRightForm [
-	"Answer the form to use for the top right of a selected button."
-
-	^self forms at: #buttonSelectedTopRight ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSquareBottomLeftForm [
-	"Answer the form to use for the bottom left of a square button."
-
-	^self forms at: #buttonSquareBottomLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSquareBottomRightForm [
-	"Answer the form to use for the bottom right of a square button."
-
-	^self forms at: #buttonSquareBottomRight ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSquareSelectedBottomLeftForm [
-	"Answer the form to use for the bottom left of a selected square button."
-
-	^self forms at: #buttonSquareSelectedBottomLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSquareSelectedBottomRightForm [
-	"Answer the form to use for the bottom right of a selected square button."
-
-	^self forms at: #buttonSquareSelectedBottomRight ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSquareSelectedTopLeftForm [
-	"Answer the form to use for the top left of a selected square button."
-
-	^self forms at: #buttonSquareSelectedTopLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSquareSelectedTopRightForm [
-	"Answer the form to use for the top right of a selected square button."
-
-	^self forms at: #buttonSquareSelectedTopRight ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSquareTopLeftForm [
-	"Answer the form to use for the top left of a square button."
-
-	^self forms at: #buttonSquareTopLeft ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonSquareTopRightForm [
-	"Answer the form to use for the top right of a square button."
-
-	^self forms at: #buttonSquareTopRight ifAbsent: [Form extent: 12@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonTopLeftForm [
-	"Answer the form to use for the top left of a button."
-
-	^self forms at: #buttonTopLeft ifAbsent: [Form extent: 11@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonTopMiddleForm [
-	"Answer the form to use for the top middle of a button."
-
-	^self forms at: #buttonTopMiddle ifAbsent: [Form extent: 1@12 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> buttonTopRightForm [
-	"Answer the form to use for the top right of a button."
-
-	^self forms at: #buttonTopRight ifAbsent: [Form extent: 11@12 depth: Display depth]
-]
-
 { #category : #'accessing - colors' }
 UITheme >> caretColor [
-	^ Color blue
+
+	^ colorPalette caretColor
 ]
 
 { #category : #services }
@@ -869,14 +585,14 @@ UITheme >> checkboxButtonDisabledBorderStyleFor: aCheckboxButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonDisabledFillStyleFor: aCheckboxButton [
 	"Return the disabled checkbox button fillStyle for the given button."
-	
+
 	^self checkboxButtonNormalFillStyleFor: aCheckboxButton
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonLabelNormalFillStyleFor: aCheckboxButton label: aLabel [
 	"Return the selected disabled checkbox button fillStyle for the given button."
-	
+
 	^ aLabel color
 ]
 
@@ -885,14 +601,14 @@ UITheme >> checkboxButtonNormalBorderStyleFor: aChecboxButton [
 	"Return the normal checkbox button borderStyle for the given button."
 
 	^BorderStyle simple
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: Color transparent
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonNormalFillStyleFor: aCheckboxButton [
 	"Return the normal checkbox button fillStyle for the given checkbox button."
-	
+
 	^(ImageFillStyle form: self checkboxForm) origin: aCheckboxButton topLeft
 ]
 
@@ -913,21 +629,21 @@ UITheme >> checkboxButtonSelectedDisabledBorderStyleFor: aCheckboxButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonSelectedDisabledFillStyleFor: aCheckboxButton [
 	"Return the selected disabled checkbox button fillStyle for the given button."
-	
+
 	^self checkboxButtonSelectedFillStyleFor:  aCheckboxButton
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> checkboxButtonSelectedFillStyleFor: aCheckboxButton [
 	"Return the selected checkbox button fillStyle for the given checkbox button."
-	
+
 	^(ImageFillStyle form: self checkboxSelectedForm) origin: aCheckboxButton topLeft
 ]
 
 { #category : #'border-styles - buttons' }
 UITheme >> checkboxCornerStyleFor: aCheckbox [
 	"Answer the corner style for checkbox buttons."
-	
+
 	^#square
 ]
 
@@ -960,7 +676,7 @@ UITheme >> checkboxLabelForText: aTextOrString [
 		ifFalse: [|t|
 				t := TextMorph new newContents: aTextOrString.
 				t extent: t optimalExtent].
-	^morph 
+	^morph
 		vResizing: #shrinkWrap;
 		hResizing: #spaceFill;
 		lock
@@ -970,7 +686,7 @@ UITheme >> checkboxLabelForText: aTextOrString [
 UITheme >> checkboxMarkerForm [
 	"Answer the form to use for a checkbox marker."
 
-	^self forms at: #checkboxMarker ifAbsent: [Form extent: 12@12 depth: Display depth]
+	^ self iconNamed: #checkboxMarkerForm
 ]
 
 { #category : #'fill-styles - buttons' }
@@ -1008,15 +724,15 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 			title: aString;
 			selectedColor: aColor.
 	d extent: d initialExtent.
-	d announcer when: ColorChanged do: [:ann | 
+	d announcer when: ColorChanged do: [:ann |
 		aBlock value: ann newColor].
 	d openModal.
-	
+
 	newColor := d  cancelled
 		ifTrue: [aColor]
 		ifFalse: [d selectedColor].
-				
-	aBlock value: newColor.
+
+	aBlock value: newColor
 ]
 
 { #category : #services }
@@ -1056,7 +772,7 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 		fileNameText: pathFileReference basename;
 		initialize;
 		title: title;
-		answerPathName.	
+		answerPathName.
 	exts ifNotNil: [ dialog validExtensions: exts ].
 	path ifNotNil: [ dialog selectPath: pathFileReference pathString ].
 	^ dialog openModal answer ifNotNil: #asFileReference
@@ -1111,7 +827,7 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 		answerPathName.
 	patterns
 		ifNotNil: [ dialog
-				fileSelectionBlock: [ :de | 
+				fileSelectionBlock: [ :de |
 					(dialog defaultFileSelectionBlock value: de)
 						and: [ de isDirectory or: [ patterns anySatisfy: [ :pat | pat match: de name ] ] ] ] ].
 	path ifNotNil: [ dialog selectPath: path ].
@@ -1163,7 +879,8 @@ UITheme >> chooseOrRequestIn: aThemedMorph title: title labels: labels values: v
 
 { #category : #'accessing - colors' }
 UITheme >> classExtensionColor [
-	^ Color gray darker
+
+	^ colorPalette classExtensionColor
 ]
 
 { #category : #'label-styles' }
@@ -1172,101 +889,11 @@ UITheme >> configureDialogWindowLabelAreaFrameFor: aWindow [
 
 	|frame|
 	self configureWindowLabelAreaFrameFor: aWindow.
-	aWindow labelArea ifNil: [^ self].	
+	aWindow labelArea ifNil: [^ self].
 	frame := aWindow labelArea layoutFrame.
 	frame
 		leftOffset: 0;
 		rightOffset: 0
-]
-
-{ #category : #configure }
-UITheme >> configureDropListMorph: aMorph [
-	"This also uses the fillStyle hack :(
-	 check at: #dropListNormalFillStyleFor: for changing style"
-]
-
-{ #category : #configure }
-UITheme >> configureLabelMorph: aMorph [
-]
-
-{ #category : #configure }
-UITheme >> configureLazyListMorph: listMorph [ 
-	self configureScrollPane: listMorph.
-]
-
-{ #category : #configure }
-UITheme >> configureMorphTreeMorph: aMorph [
-	aMorph preferedPaneColor: Color white.
-	aMorph 
-		rowColorForEven: Color white
-		odd: Color white.
-]
-
-{ #category : #configure }
-UITheme >> configurePluggableButtonMorph: aMorph [
-	"This will not work because it is using the #normalFillStyle hack :(
-	 So, go check the #buttonNormalFillStyleFor: method, which is the one that 
-	 actually does something (he and his siblings)"
-]
-
-{ #category : #configure }
-UITheme >> configurePluggableListMorph: listMorph [ 
-	self configureScrollPane: listMorph.
-]
-
-{ #category : #configure }
-UITheme >> configurePluggableTextFieldMorph: textFieldMorph [
-]
-
-{ #category : #configure }
-UITheme >> configurePluggableTextMorph: textMorph [ 
-	textMorph 
-		color: Color white;
-		borderWidth: 1.
-]
-
-{ #category : #configure }
-UITheme >> configureScrollPane: aMorph [
-	aMorph color: Color white.
-]
-
-{ #category : #configure }
-UITheme >> configureSystemWindow: aWindow [ 
-	aWindow basicBorderColor: Color lightGray.
-	aWindow basicBorderWidth: 1.
-	aWindow color: Color lightGray lighter lighter lighter.	
-	self
-		configureWindowBorderFor: aWindow;
-		configureWindowDropShadowFor: aWindow.
-]
-
-{ #category : #configure }
-UITheme >> configureTextMorph: textMorph [
-]
-
-{ #category : #'*Polymorph-Widgets-Themes' }
-UITheme >> configureWatcherWindowLabelAreaFor: aWindow [
-	"Configure the label area for the given Watcher window."
-
-	|padding|
-	padding := 0.
-	aWindow labelArea
-		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0).
-	aWindow hasCloseBox ifTrue: [aWindow addCloseBox. padding := padding + 1].
-"	aWindow hasCollapseBox ifTrue: [aWindow addCollapseBox. padding := padding + 1].
-	aWindow hasExpandBox ifTrue: [aWindow addExpandBox. padding := padding + 1].
-	aWindow hasMenuBox ifTrue: [padding := padding - 1].
-"	aWindow labelArea
-		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
-	aWindow basicLabel ifNotNil: [:label | aWindow labelArea addMorphBack: label; hResizing: #shrinkWrap].
-	aWindow labelArea
-		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
-	padding > 0 ifTrue: [
-		aWindow labelArea
-			addMorphBack: (Morph new extent: (aWindow boxExtent x * padding) @ 0)].
-"	aWindow hasMenuBox ifTrue: [aWindow addMenuControl]."
-	aWindow labelArea
-		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0)
 ]
 
 { #category : #'border-styles' }
@@ -1275,7 +902,7 @@ UITheme >> configureWindowBorderFor: aWindow [
 
 	aWindow roundedCorners: #(1 2 3 4).
 	aWindow borderStyle: (BorderStyle
-		width: 1 color: Color lightGray)
+		width: 1 scaledByDisplayScaleFactor color: Color lightGray)
 ]
 
 { #category : #'border-styles' }
@@ -1308,10 +935,10 @@ UITheme >> configureWindowLabelAreaFor: aWindow [
 	aWindow hasMenuBox ifTrue: [padding := padding - paddingStep].
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
-	aWindow basicLabel ifNotNil: [:label | 
+	aWindow basicLabel ifNotNil: [:label |
 		label color: self textColor.
-		aWindow labelArea 
-			addMorphBack: label; 
+		aWindow labelArea
+			addMorphBack: label;
 			hResizing: #shrinkWrap ].
 	aWindow labelArea
 		addMorphBack: (Morph new extent: aWindow class borderWidth @ 0; hResizing: #spaceFill).
@@ -1330,14 +957,14 @@ UITheme >> configureWindowLabelAreaFrameFor: aWindow [
 	"Configure the layout frame for the label area for the given window."
 
 	|frame windowBorderWidth|
-	aWindow labelArea ifNil: [^ self].	
+	aWindow labelArea ifNil: [^ self].
 	windowBorderWidth := aWindow class borderWidth.
 	aWindow labelArea
 		layoutPolicy: RowLayout new;
 		cellPositioning: #topCenter;
 		hResizing: #spaceFill;
 		wrapCentering: #topLeft;
-		layoutInset: (Margin left: 0 top: windowBorderWidth right: 0 bottom: 1).
+		layoutInset: (Margin left: 0 top: windowBorderWidth right: 0 bottom: 1 scaledByDisplayScaleFactor).
 	frame := LayoutFrame identity bottomFraction: 0 ; topOffset: aWindow labelHeight negated.
 	aWindow labelArea layoutFrame: frame
 ]
@@ -1354,7 +981,7 @@ UITheme >> controlButtonDisabledBorderStyleFor: aButton [
 UITheme >> controlButtonDisabledFillStyleFor: aButton [
 	"Return the disabled control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonSelectedFillStyleFor: aButton
 ]
 
@@ -1362,7 +989,7 @@ UITheme >> controlButtonDisabledFillStyleFor: aButton [
 UITheme >> controlButtonLabelInsetFor: aButton [
 	"Answer the inset to use for a control button's label."
 
-	^2
+	^2 scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles - buttons' }
@@ -1377,7 +1004,7 @@ UITheme >> controlButtonMouseOverBorderStyleFor: aButton [
 UITheme >> controlButtonMouseOverFillStyleFor: aButton [
 	"Return the mouse over control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonNormalFillStyleFor: aButton
 ]
 
@@ -1393,7 +1020,7 @@ UITheme >> controlButtonNormalBorderStyleFor: aButton [
 UITheme >> controlButtonNormalFillStyleFor: aButton [
 	"Return the normal control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self buttonSelectedFillStyleFor: aButton
 ]
 
@@ -1409,7 +1036,7 @@ UITheme >> controlButtonPressedBorderStyleFor: aButton [
 UITheme >> controlButtonPressedFillStyleFor: aButton [
 	"Return the pressed button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonSelectedFillStyleFor: aButton
 ]
 
@@ -1425,7 +1052,7 @@ UITheme >> controlButtonSelectedDisabledBorderStyleFor: aButton [
 UITheme >> controlButtonSelectedDisabledFillStyleFor: aButton [
 	"Return the selected disabled control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonSelectedFillStyleFor: aButton
 ]
 
@@ -1433,7 +1060,7 @@ UITheme >> controlButtonSelectedDisabledFillStyleFor: aButton [
 UITheme >> controlButtonSelectedFillStyleFor: aButton [
 	"Return the selected control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self buttonNormalFillStyleFor: aButton
 ]
 
@@ -1449,7 +1076,7 @@ UITheme >> controlButtonSelectedMouseOverBorderStyleFor: aButton [
 UITheme >> controlButtonSelectedMouseOverFillStyleFor: aButton [
 	"Return the selected mouse over control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonSelectedFillStyleFor: aButton
 ]
 
@@ -1465,7 +1092,7 @@ UITheme >> controlButtonSelectedPressedBorderStyleFor: aButton [
 UITheme >> controlButtonSelectedPressedFillStyleFor: aButton [
 	"Return the selected pressed button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
-	
+
 	^self controlButtonNormalFillStyleFor: aButton
 ]
 
@@ -1484,13 +1111,13 @@ UITheme >> createArrowImagesCache [
 ]
 
 { #category : #scrollbars }
-UITheme >> createArrowOfDirection: aSymbol in: aRectangle [ 
+UITheme >> createArrowOfDirection: aSymbol in: aRectangle [
 	"PRIVATE - create an arrow bounded in aRectangle"
 
 	| arrow vertices |
 	vertices := self scrollBarButtonArrowVertices: aRectangle.
 	""
-	arrow := PolygonMorph 
+	arrow := PolygonMorph
 				vertices: vertices
 				color: Color transparent
 				borderWidth: 0
@@ -1498,30 +1125,20 @@ UITheme >> createArrowOfDirection: aSymbol in: aRectangle [
 	""
 	arrow bounds: (arrow bounds insetBy: (aRectangle width / 6) rounded).
 	""
-	aSymbol == #right 
+	aSymbol == #right
 		ifTrue: [arrow rotationDegrees: arrow rotationDegrees + 90].
-	aSymbol == #bottom 
+	aSymbol == #bottom
 		ifTrue: [arrow rotationDegrees: arrow rotationDegrees + 180].
-	aSymbol == #left 
+	aSymbol == #left
 		ifTrue: [arrow rotationDegrees: arrow rotationDegrees + 270].
 	""
 	^arrow
 ]
 
 { #category : #scrollbars }
-UITheme >> createArrowOfDirection: aSymbolDirection size: finalSizeInteger color: aColor [ 
-	"Defer to current UITheme if available."
-	
-	^self
-		scrollbarArrowOfDirection: aSymbolDirection
-		size: finalSizeInteger
-		color: aColor
-]
-
-{ #category : #scrollbars }
 UITheme >> createBoxImagesCache [
 	"Creates the cache to store the arrow forms"
-	
+
 	^ LRUCache new
 		maximumWeight: 20;
 		factory: [ :key |
@@ -1530,7 +1147,7 @@ UITheme >> createBoxImagesCache [
 ]
 
 { #category : #scrollbars }
-UITheme >> createBoxIn: aRectangle [ 
+UITheme >> createBoxIn: aRectangle [
 	"PRIVATE - create an box bounded in aRectangle"
 	| box |
 	box := Morph new.
@@ -1541,12 +1158,12 @@ UITheme >> createBoxIn: aRectangle [
 ]
 
 { #category : #scrollbars }
-UITheme >> createBoxOfSize: finalSizeInteger color: aColor [ 
-	"PRIVATE - create a box with finalSizeInteger and aColor  
-	 
-	Try with:  
-	(UITheme current createBoxOfSize: 32 color: Color lightGreen) 
-          asMorph openInHand.  
+UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
+	"PRIVATE - create a box with finalSizeInteger and aColor
+
+	Try with:
+	(UITheme current createBoxOfSize: 32 color: Color lightGreen)
+          asMorph openInHand.
 	"
 	| resizeFactor outerBox innerBox resizedForm |
 	resizeFactor := 4.
@@ -1559,8 +1176,7 @@ UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
 	outerBox addMorphCentered: innerBox.
 	""
 	resizedForm := outerBox imageForm
-				magnify: outerBox imageForm boundingBox
-				by: 1 / resizeFactor
+				magnifyBy: 1 / resizeFactor
 				smoothing: 4.
 	""
 	^ (resizedForm replaceColor: aColor withColor: Color transparent)
@@ -1570,7 +1186,7 @@ UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
 { #category : #'label-styles' }
 UITheme >> createCloseBoxFor: aSystemWindow [
 	"Answer a button for closing the window."
-	
+
 	^(self
 		newCloseControlIn: aSystemWindow
 		for: aSystemWindow
@@ -1582,7 +1198,7 @@ UITheme >> createCloseBoxFor: aSystemWindow [
 { #category : #'label-styles' }
 UITheme >> createCollapseBoxFor: aSystemWindow [
 	"Answer a button for minimising the window."
-	
+
 	|form msb|
 	form := self windowMinimizeForm.
 	msb := MultistateButtonMorph new extent: form extent.
@@ -1609,7 +1225,7 @@ UITheme >> createCollapseBoxFor: aSystemWindow [
 { #category : #'label-styles' }
 UITheme >> createExpandBoxFor: aSystemWindow [
 	"Answer a button for maximising/restoring the window."
-	
+
 	|form msb|
 	form := self windowMaximizeForm.
 	msb := MultistateButtonMorph new extent: form extent.
@@ -1636,14 +1252,14 @@ UITheme >> createExpandBoxFor: aSystemWindow [
 { #category : #'label-styles' }
 UITheme >> createMenuBoxFor: aSystemWindow [
 	"Answer a button for the window menu."
-	
+
 "	^aSystemWindow createBox
 		labelGraphic: (self windowMenuIconFor: aSystemWindow);
 		extent: aSystemWindow boxExtent;
 		actWhen: #buttonDown;
 		actionSelector: #offerWindowMenu;
 		setBalloonText: 'window menu' translated"
-	
+
 	|form msb|
 	form := self windowMenuForm.
 	msb := MultistateButtonMorph new extent: form extent.
@@ -1671,7 +1287,8 @@ UITheme >> createMenuBoxFor: aSystemWindow [
 
 { #category : #accessing }
 UITheme >> currentSettings [
-	^ self class currentSettings
+
+	^ settings
 ]
 
 { #category : #services }
@@ -1690,37 +1307,28 @@ UITheme >> customQuestionIn: aThemedMorph text: labelText yesText: yesText noTex
 			default: defaultOption) openModal answer
 ]
 
-{ #category : #services }
-UITheme >> customQuestionIn: aThemedMorph text: labelText yesText: yesText noText: noText title: aString [
-	"Answer the result of a question dialog with the given label, button labels and title."
-
-	self questionSound play.
-	^((CustomQuestionDialogWindow newWithTheme: aThemedMorph theme)
-			textFont: self textFont;
-			title: aString;
-			text: labelText;
-			yesText: yesText help: nil;
-			noText: noText help: nil) dialog answer
-]
-
 { #category : #'accessing - colors' }
 UITheme >> dangerBackgroundColor [
-	^ self dangerTextColor darker darker
+
+	^ colorPalette dangerBackgroundColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> dangerTextColor [
-	^ Color red darker darker
+
+	^ colorPalette dangerTextColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> darkBaseColor [
-	^ self class darkBaseColor
+
+	^ colorPalette darkBaseColor
 ]
 
 { #category : #private }
 UITheme >> darkBaseColorFor: aButton [
-	^ self class darkBaseColor
+
+	^ self darkBaseColor
 ]
 
 { #category : #defaults }
@@ -1748,9 +1356,22 @@ UITheme >> defaultMenuTitleColor [
 
 { #category : #initialization }
 UITheme >> defaultSettings [
-	"Answer the default settings."
 
-	^self class defaultSettings copy
+	^ ThemeSettings new
+		buttonColor: Color gray;
+		scrollbarColor: Color gray;
+		menuColor: self baseColor;
+		menuTitleColor: self baseColor;
+		windowColor: self baseColor;
+		selectionColor: self lightSelectionColor;
+		menuSelectionColor: self baseSelectionColor;
+		progressBarColor: self baseColor;
+		standardColorsOnly: true;
+		autoSelectionColor: false;
+		preferRoundCorner: false;
+		fadedBackgroundWindows: false;
+		flatMenu: true;
+		yourself
 ]
 
 { #category : #initialization }
@@ -1782,7 +1403,7 @@ UITheme >> denySound [
 { #category : #'fill-styles' }
 UITheme >> desktopColor [
 
-	^(Color r: 240 g: 240 b: 240 range: 255)
+	^ colorPalette desktopColor
 ]
 
 { #category : #'fill-styles' }
@@ -1808,14 +1429,14 @@ UITheme >> desktopImageLayout [
 { #category : #'fill-styles' }
 UITheme >> dialogWindowActiveFillStyleFor: aWindow [
 	"Return the window active fillStyle for the given window."
-	
+
 	^self windowActiveFillStyleFor: aWindow
 ]
 
 { #category : #'fill-styles' }
 UITheme >> dialogWindowInactiveFillStyleFor: aWindow [
 	"Return the window active fillStyle for the given window."
-	
+
 	^self windowInactiveFillStyleFor: aWindow
 ]
 
@@ -1828,55 +1449,72 @@ UITheme >> dialogWindowPreferredCornerStyleFor: aDialogWindow [
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffAdditionalLineBackgroundColor [
+
 	"Answer the color used to show additions in a diff view."
-	^ Color green alpha: 0.2
+
+	^ colorPalette diffAdditionalLineBackgroundColor
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffAdditionalTextInLineBackgroundColor [
+
 	"Answer the color used to show addition highlights in a text line."
-	^ self diffAdditionalLineBackgroundColor alpha: 0.4
+
+	^ colorPalette diffAdditionalTextInLineBackgroundColor
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffEdgeColor [
+
 	"Answer the color used to show the border of the changes."
-	^ Color gray alpha: 0.3
+
+	^ colorPalette diffEdgeColor
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffJoinColor [
+
 	"Answer the color used for the join bar."
-	^ Color paleBlue duller
+
+	^ colorPalette diffJoinColor
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffMapColor [
+
 	"Answer the color used for the mapping bar on the left side."
-	^ self backgroundColor
+
+	^ colorPalette diffMapColor
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffModificatedLineBackgroundColor [
+
 	"Answer the color used to show changes."
-	^ Color yellow alpha: 0.2
+
+	^ colorPalette diffModificatedLineBackgroundColor
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffRemovalHighlightColor [
+
 	"Answer the color used to show removal highligths."
-	^ self diffRemovedLinesBackgroundColor alpha: 0.4
+
+	^ colorPalette diffRemovalHighlightColor
 ]
 
 { #category : #'basic-colors - diffs' }
 UITheme >> diffRemovedLinesBackgroundColor [
+
 	"Answer the color used to show removals in a diff view."
-	^ Color red alpha: 0.2
+
+	^ colorPalette diffRemovedLinesBackgroundColor
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> disabledColor [ 
-	^ Color gray
+UITheme >> disabledColor [
+
+	^ colorPalette disabledColor
 ]
 
 { #category : #'label-styles' }
@@ -1887,19 +1525,26 @@ UITheme >> disabledItemStyle [
 	^#plain
 ]
 
+{ #category : #'basic-colors' }
+UITheme >> disabledLabelColor [
+
+	^ colorPalette disabledLabelColor
+]
+
 { #category : #'accessing - colors' }
-UITheme >> disabledTextColor [ 
-	^ self disabledColor
+UITheme >> disabledTextColor [
+
+	^ colorPalette disabledTextColor
 ]
 
 { #category : #accessing }
 UITheme >> displayScaleFactor [
-	
+
 	^ self currentWorld displayScaleFactor
 ]
 
 { #category : #accessing }
-UITheme >> dockingBarBorderWidth [ 
+UITheme >> dockingBarBorderWidth [
 	^ 0
 ]
 
@@ -1916,10 +1561,10 @@ UITheme >> drawTabGroupFinishingFor: aTabGroupMorph on: aCanvas [
 { #category : #'border-styles' }
 UITheme >> drawTextAdornmentFor: aPluggableTextMorph color: aColor on: aCanvas [
 	"Indicate edit status for the given morph."
-	
+
 	|bounds size fillStyle|
 	bounds := aPluggableTextMorph innerBounds.
-	size := 25.
+	size := 25 scaledByDisplayScaleFactor.
 	fillStyle := (GradientFillStyle ramp: {
 			0.0->(self backgroundColor alpha: 0.01).
 			0.8->aColor.
@@ -1933,21 +1578,10 @@ UITheme >> drawTextAdornmentFor: aPluggableTextMorph color: aColor on: aCanvas [
 ]
 
 { #category : #'border-styles' }
-UITheme >> drawTextAdornmentsFor: aPluggableTextMorph on: aCanvas [
-	"Indicate edit status for the given morph."
-
-	(aPluggableTextMorph hasEditingConflicts or: [ aPluggableTextMorph hasValidText not ])
-		ifTrue: [ ^ self drawTextAdornmentFor: aPluggableTextMorph color: Color red on: aCanvas ].
-	aPluggableTextMorph hasUnacceptedEdits
-		ifTrue: [ aPluggableTextMorph model wantsVisualFeedback
-				ifTrue: [ ^ self drawTextAdornmentFor: aPluggableTextMorph color: Color orange on: aCanvas ] ]
-]
-
-{ #category : #'border-styles' }
 UITheme >> drawWindowActiveDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the active drop shadow for the given window."
-	
-	
+
+
 	^self windowActiveDropShadowStyle == #diffuse
 		ifTrue: [self drawWindowDiffuseDropShadowFor: aSystemWindow on: aCanvas]
 		ifFalse: [self drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas]
@@ -1956,12 +1590,12 @@ UITheme >> drawWindowActiveDropShadowFor: aSystemWindow on: aCanvas [
 { #category : #'border-styles' }
 UITheme >> drawWindowDiffuseDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the diffuse drop shadow for the given window."
-	
+
 	|or b r o gc|
 	or := self windowActiveDropShadowOffsetRectangleFor: aSystemWindow.
 	o := or bottom.
 	(aSystemWindow roundedCorners includesAnyOf: #(2 3))
-		ifTrue: [o := o + 2].
+		ifTrue: [o := o + 2 scaledByDisplayScaleFactor].
 	b := aSystemWindow bounds expandBy: or.
 	gc := {Color black alpha: 0.6. Color transparent}.
 	r := b topLeft extent: o asPoint.
@@ -2021,37 +1655,37 @@ UITheme >> drawWindowDiffuseDropShadowFor: aSystemWindow on: aCanvas [
 { #category : #'border-styles' }
 UITheme >> drawWindowInactiveDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the inactive drop shadow for the given window."
-	
+
 	self drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas
 ]
 
 { #category : #'border-styles' }
 UITheme >> drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the plain drop shadow for the given window."
-	
+
 	|blOffset brOffset trOffset|
 	(aSystemWindow owner notNil and: [aSystemWindow owner isHandMorph])
 		ifTrue: [^self]. "skip if being dragged"
-	blOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 2])	
-		ifTrue: [7] ifFalse: [1].
-	brOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 3])	
-		ifTrue: [7] ifFalse: [1].
-	trOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 4])	
-		ifTrue: [7] ifFalse: [1].
+	blOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 2])
+		ifTrue: [7 scaledByDisplayScaleFactor] ifFalse: [1 scaledByDisplayScaleFactor].
+	brOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 3])
+		ifTrue: [7 scaledByDisplayScaleFactor] ifFalse: [1 scaledByDisplayScaleFactor].
+	trOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 4])
+		ifTrue: [7 scaledByDisplayScaleFactor] ifFalse: [1 scaledByDisplayScaleFactor].
 	aCanvas
 		fillRectangle: (aSystemWindow bounds bottomLeft + (blOffset @ 0)
-						corner: aSystemWindow bounds bottomRight - (brOffset @ -1))
+						corner: aSystemWindow bounds bottomRight - (brOffset @ -1 scaledByDisplayScaleFactor))
 		fillStyle: aSystemWindow shadowColor;
 		fillRectangle: (aSystemWindow bounds topRight + (0 @ trOffset)
-						corner: aSystemWindow bounds bottomRight + (1 @ brOffset negated))
+						corner: aSystemWindow bounds bottomRight + (1 scaledByDisplayScaleFactor @ brOffset negated))
 		fillStyle: aSystemWindow shadowColor.
 	aCanvas
 		clipBy: (aSystemWindow bounds bottomRight - brOffset
-			corner: aSystemWindow bounds bottomRight + (1@1))
+			corner: aSystemWindow bounds bottomRight + (1@1) scaledByDisplayScaleFactor)
 			during: [:c | ((RoundedBorderStyle new
 							baseColor: aSystemWindow shadowColor;
-							width: 1) cornerRadius: brOffset - 1)
-							frameRectangle: (aSystemWindow bounds translateBy: 1)
+							width: 1 scaledByDisplayScaleFactor) cornerRadius: brOffset - 1 scaledByDisplayScaleFactor)
+							frameRectangle: (aSystemWindow bounds translateBy: 1 scaledByDisplayScaleFactor)
 							on: c]
 ]
 
@@ -2062,7 +1696,7 @@ UITheme >> dropListButtonLabelFor: aDropList [
 	^AlphaImageMorph new
 		image: (ScrollBarMorph
 			arrowOfDirection: #bottom
-			size: aDropList buttonWidth - 3
+			size: aDropList buttonWidth - 3 scaledByDisplayScaleFactor
 			color: aDropList paneColor darker);
 		enabled: aDropList enabled
 ]
@@ -2070,8 +1704,8 @@ UITheme >> dropListButtonLabelFor: aDropList [
 { #category : #'border-styles - buttons' }
 UITheme >> dropListControlButtonWidth [
 	"Answer the width of a drop list control button for this theme."
-	
-	^ 18
+
+	^ 18 scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles' }
@@ -2084,7 +1718,7 @@ UITheme >> dropListDisabledBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> dropListDisabledFillStyleFor: aDropList [
 	"Return the disabled fillStyle for the given drop list."
-	
+
 	^ self textEditorDisabledFillStyleFor: aDropList
 ]
 
@@ -2102,8 +1736,8 @@ UITheme >> dropListFocusIndicatorCornerRadiusFor: aDropList [
 	for the drop list for themes that support this."
 
 	^aDropList wantsRoundedCorners
-		ifTrue: [7]
-		ifFalse: [2]
+		ifTrue: [7 scaledByDisplayScaleFactor]
+		ifFalse: [2 scaledByDisplayScaleFactor]
 ]
 
 { #category : #defaults }
@@ -2116,8 +1750,8 @@ UITheme >> dropListFont [
 { #category : #defaults }
 UITheme >> dropListInsetFor: aDropList [
 	"Answer the inset to use for drop-list layout."
-	
-	^ Margin left: 6 top: 0 right: 0 bottom: 0
+
+	^ Margin left: 6 scaledByDisplayScaleFactor top: 0 right: 0 bottom: 0
 ]
 
 { #category : #'border-styles' }
@@ -2130,8 +1764,8 @@ UITheme >> dropListNormalBorderStyleFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> dropListNormalFillStyleFor: aDropList [
 	"Return the normal fillStyle for the given drop list."
-	
-	^ SolidFillStyle color: Color white
+
+	^ colorPalette dropListNormalFillStyleFor: aDropList
 ]
 
 { #category : #'border-styles' }
@@ -2139,27 +1773,21 @@ UITheme >> dropListNormalListBorderStyleFor: aDropList [
 	"Return the normal borderStyle for the list of the given given drop list"
 
 	^BorderStyle inset
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: aDropList paneColor
 ]
 
 { #category : #'fill-styles' }
 UITheme >> dropListNormalListFillStyleFor: aDropList [
 	"Return the normal fillStyle for the list of the given drop list."
-	
-	^Color white
-]
 
-{ #category : #defaults }
-UITheme >> editableDropListMargins [
-	"Answer the text margins for an editable drop list for this theme."
-	^ Margin left: 0 top: 3 right: 2 bottom: 1
+	^ colorPalette dropListNormalListFillStyleFor: aDropList
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> enabledColor [
 
-	^ Color black
+	^ colorPalette enabledColor
 ]
 
 { #category : #services }
@@ -2181,14 +1809,15 @@ UITheme >> enterOrRequestIn: aThemedMorph title: title labels: labels values: va
 
 { #category : #'basic-colors' }
 UITheme >> errorPopperBackgroundColor [
-	^ Color paleRed
+
+	^ colorPalette errorPopperBackgroundColor
 ]
 
 { #category : #'border-styles - buttons' }
 UITheme >> expanderTitleControlButtonWidth [
 	"Answer the width of an expander title control button for this theme."
-	
-	^20
+
+	^20 scaledByDisplayScaleFactor
 ]
 
 { #category : #defaults }
@@ -2201,7 +1830,7 @@ UITheme >> expanderTitleInsetFor: aDropList [
 { #category : #'fill-styles' }
 UITheme >> expanderTitleNormalFillStyleFor: anExpanderTitle [
 	"Return the normal expander title fillStyle for the given expander title."
-	
+
 	^ self buttonNormalFillStyleFor: anExpanderTitle
 ]
 
@@ -2243,8 +1872,8 @@ UITheme >> focusIndicatorCornerRadiusFor: aMorph [
 	for the morph for themes that support this."
 
 	^aMorph wantsRoundedCorners
-		ifTrue: [6]
-		ifFalse: [2]
+		ifTrue: [6 scaledByDisplayScaleFactor]
+		ifFalse: [2 scaledByDisplayScaleFactor]
 ]
 
 { #category : #'morph creation' }
@@ -2256,15 +1885,8 @@ UITheme >> focusIndicatorMorphFor: aMorph [
 				ifTrue: [self focusIndicator ~~ aMorph]
 				ifFalse: [self focusIndicator key ~~ aMorph]])
 		ifTrue: [self focusIndicator: aMorph ->(self newFocusIndicatorMorphFor: aMorph)].
-	^self focusIndicator value 
+	^self focusIndicator value
 		privateBounds: aMorph focusBounds
-]
-
-{ #category : #accessing }
-UITheme >> forms [
-	"Answer the value of forms"
-
-	^ forms
 ]
 
 { #category : #accessing }
@@ -2274,10 +1896,22 @@ UITheme >> forms: anObject [
 	forms := anObject
 ]
 
+{ #category : #private }
+UITheme >> formsForCurrentDisplayScaleFactor [
+
+	^ self formsForScale: self currentWorld displayScaleFactor
+]
+
+{ #category : #private }
+UITheme >> formsForScale: scale [
+
+	^ forms at: scale ifAbsentPut: [ self newFormsForScale: scale ]
+]
+
 { #category : #'accessing - colors' }
 UITheme >> ghostTextColor [
 
-	^ Color lightGray
+	^ colorPalette ghostTextColor
 ]
 
 { #category : #'border-styles' }
@@ -2294,7 +1928,7 @@ UITheme >> groupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a group panel."
 
 	^ SimpleBorderStyle new
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: ((self baseColorFor: aGroupPanel))
 ]
 
@@ -2307,6 +1941,13 @@ UITheme >> handlesWindowDropShadowInHandFor: aSystemWindow [
 		aSystemWindow isActive]
 ]
 
+{ #category : #'basic-colors' }
+UITheme >> highlightTextColor [
+	"I am a color used to have a text color that is more visible than the classic text color to do some highlights."
+
+	^ colorPalette highlightTextColor
+]
+
 { #category : #'icons-utilities' }
 UITheme >> icons [
 	^ Smalltalk ui icons
@@ -2317,68 +1958,21 @@ UITheme >> initialize [
 	"Initialize the receiver."
 
 	super initialize.
-	self
-		initializeForms;
-		settings: self defaultSettings.
+	colorPalette := UIThemePalette new
+		colorConfigurator: self class colorConfiguratorClass new;
+		yourself.
+	forms := Dictionary new.
+
+	self initializeDefaultSettings.
+	colorPalette themeSettings: settings.
+
 	self windowActiveDropShadowStyle: #diffuse
 ]
 
 { #category : #initialization }
-UITheme >> initializeForms [
-	"Initialize the receiver's image forms."
+UITheme >> initializeDefaultSettings [
 
-	self forms: Dictionary new.
-	self forms
-		at: #checkboxMarker put: self newCheckboxMarkerForm;
-		at: #radioButtonMarker put: self newRadioButtonMarkerForm;
-		at: #treeExpanded put: self newTreeExpandedForm;
-		at: #treeUnexpanded put: self newTreeUnexpandedForm;
-		at: #windowClose put: self newWindowCloseForm;
-		at: #windowMinimize put: self newWindowMinimizeForm;
-		at: #windowMaximize put: self newWindowMaximizeForm;
-		at: #windowMenu put: self newWindowMenuForm;
-		at: #windowCloseOver put: self newWindowCloseOverForm;
-		at: #windowMinimizeOver put: self newWindowMinimizeOverForm;
-		at: #windowMaximizeOver put: self newWindowMaximizeOverForm;
-		at: #sbHThumbLeft put: self newScrollbarThumbLeftForm;
-		at: #sbHThumbMiddle put: self newScrollbarThumbHorizontalMiddleForm;
-		at: #sbHThumbRight put: self newScrollbarThumbRightForm;
-		at: #sbVThumbTop put: self newScrollbarThumbTopForm;
-		at: #sbVThumbMiddle put: self newScrollbarThumbVerticalMiddleForm;
-		at: #sbVThumbBottom put: self newScrollbarThumbBottomForm;
-		at: #buttonTopLeft put: self newButtonTopLeftForm;
-		at: #buttonTopMiddle put: self newButtonTopMiddleForm;
-		at: #buttonTopRight put: self newButtonTopRightForm;
-		at: #buttonMiddleLeft put: self newButtonMiddleLeftForm;
-		at: #buttonMiddleRight put: self newButtonMiddleRightForm;
-		at: #buttonBottomLeft put: self newButtonBottomLeftForm;
-		at: #buttonBottomMiddle put: self newButtonBottomMiddleForm;
-		at: #buttonBottomRight put: self newButtonBottomRightForm;
-		at: #buttonSquareTopLeft put: self newButtonSquareTopLeftForm;
-		at: #buttonSquareTopRight put: self newButtonSquareTopRightForm;
-		at: #buttonSquareBottomLeft put: self newButtonSquareBottomLeftForm;
-		at: #buttonSquareBottomRight put: self newButtonSquareBottomRightForm;
-		at: #buttonSelectedTopLeft put: self newButtonSelectedTopLeftForm;
-		at: #buttonSelectedTopMiddle put: self newButtonSelectedTopMiddleForm;
-		at: #buttonSelectedTopRight put: self newButtonSelectedTopRightForm;
-		at: #buttonSelectedMiddleLeft put: self newButtonSelectedMiddleLeftForm;
-		at: #buttonSelectedMiddleRight put: self newButtonSelectedMiddleRightForm;
-		at: #buttonSelectedBottomLeft put: self newButtonSelectedBottomLeftForm;
-		at: #buttonSelectedBottomMiddle put: self newButtonSelectedBottomMiddleForm;
-		at: #buttonSelectedBottomRight put: self newButtonSelectedBottomRightForm;
-		at: #buttonSquareSelectedTopLeft put: self newButtonSquareSelectedTopLeftForm;
-		at: #buttonSquareSelectedTopRight put: self newButtonSquareSelectedTopRightForm;
-		at: #buttonSquareSelectedBottomLeft put: self newButtonSquareSelectedBottomLeftForm;
-		at: #buttonSquareSelectedBottomRight put: self newButtonSquareSelectedBottomRightForm;
-		at: #radioButton put: self newRadioButtonForm;
-		at: #radioButtonSelected put: self newRadioButtonSelectedForm;
-		at: #checkbox put: self newCheckboxForm;
-		at: #checkboxSelected put: self newCheckboxSelectedForm;
-		at: #windowClosePassive put: self newWindowInactiveControlForm;
-		at: #windowMinimizePassive put: self newWindowInactiveControlForm;
-		at: #windowMaximizePassive put: self newWindowInactiveControlForm;
-		at: #windowMenuPassive put: self newWindowMenuPassiveForm;
-		at: #windowMenuOver put: self newWindowMenuOverForm
+	settings := self defaultSettings
 ]
 
 { #category : #accessing }
@@ -2388,13 +1982,14 @@ UITheme >> labelAreaLayout [
 
 { #category : #'label-styles' }
 UITheme >> labelDisabledColorFor: aLabel [
-	"Answer the color to use for a label when disabled."
+	"^ aLabel owner ifNil: [ aLabel paneColor muchDarker ] ifNotNil: [
+	aLabel owner color isTransparent ifTrue: [ aLabel owner paneColor muchDarker ]
+	ifFalse: [ aLabel owner color muchDarker ] ]"
 
-	^aLabel owner
-		ifNil: [aLabel paneColor muchDarker]
-		ifNotNil: [aLabel owner color isTransparent
-					ifTrue: [aLabel owner paneColor muchDarker]
-					ifFalse: [aLabel owner color muchDarker]].
+	"This method was overriden in the dark theme with the difference that the colors were
+	converted using muchLighter"
+
+	^ self disabledLabelColor
 ]
 
 { #category : #defaults }
@@ -2407,38 +2002,49 @@ UITheme >> labelFont [
 { #category : #accessing }
 UITheme >> lessConspicuousColorFrom: aColor [
 
-	^	aColor alphaMixed: 0.5 with: Color white
+	^ colorPalette lessConspicuousColorFrom: aColor
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> lightBackgroundColor [ 
-	^ Color veryLightGray muchLighter
+UITheme >> lightBackgroundColor [
+
+	^ colorPalette lightBackgroundColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> lightBaseColor [
 
-	^ self class lightBaseColor
+	^ colorPalette lightBaseColor
 ]
 
 { #category : #private }
 UITheme >> lightColorFor: aButton [
-	^ self class lightBaseColor
+
+	^ self lightBaseColor
+]
+
+{ #category : #accessing }
+UITheme >> lightSelectionColor [
+
+	^ colorPalette lightSelectionColor
 ]
 
 { #category : #private }
 UITheme >> lightSelectionColorFor: aMorph [
-	^ self class lightSelectionColor
+
+	^ self lightSelectionColor
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> lineNumberColor [ 
-	^ Color gray muchDarker
+UITheme >> lineNumberColor [
+
+	^ colorPalette lineNumberColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> listBackgroundColor [
-	^ self backgroundColor
+
+	^ colorPalette listBackgroundColor
 ]
 
 { #category : #'border-styles' }
@@ -2451,7 +2057,7 @@ UITheme >> listDisabledBorderStyleFor: aList [
 { #category : #'fill-styles' }
 UITheme >> listDisabledFillStyleFor: aList [
 	"Return the disabled fillStyle for the given list."
-	
+
 	^ self textEditorDisabledFillStyleFor: aList
 ]
 
@@ -2474,22 +2080,22 @@ UITheme >> listNormalBorderStyleFor: aList [
 	"Return the normal borderStyle for the given list"
 
 	^BorderStyle simple
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: aList paneColor
 ]
 
 { #category : #'fill-styles' }
 UITheme >> listNormalFillStyleFor: aList [
+
 	"Return the normal fillStyle for the given list."
-	
-	^Color white
+
+	^ colorPalette listNormalFillStyleFor: aList
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> listTextColor [
-	"Answer the list text color to use."
 
-	^Color black
+	^ colorPalette listTextColor
 ]
 
 { #category : #services }
@@ -2512,12 +2118,13 @@ UITheme >> menuBarFont [
 
 { #category : #'accessing - colors' }
 UITheme >> menuBorderColor [
-	^  self settings menuBorderColor
+
+	^ colorPalette menuBorderColor
 ]
 
 { #category : #accessing }
-UITheme >> menuBorderWidth [ 
-	^  self settings menuBorderWidth * self displayScaleFactor
+UITheme >> menuBorderWidth [
+	^  self settings menuBorderWidth
 ]
 
 { #category : #'label-styles' }
@@ -2529,9 +2136,8 @@ UITheme >> menuCloseForm [
 
 { #category : #'accessing - colors' }
 UITheme >> menuColor [
-	"Answer the menu color to use."
 
-	^self settings menuColor
+	^ colorPalette menuColor
 ]
 
 { #category : #'fill-styles' }
@@ -2555,7 +2161,7 @@ UITheme >> menuColorFor: aThemedMorph [
 { #category : #'fill-styles' }
 UITheme >> menuFillStyleFor: aMenu [
 	"Return the fillStyle for the given menu."
-	
+
 	| bc fill |
 	bc := aMenu valueOfProperty: #basicColor ifAbsent: [self settings derivedMenuColor].
 	fill := GradientFillStyle ramp: {0.0 -> (bc alphaMixed: 0.2 with: Color white). 1.0 -> bc}.
@@ -2563,7 +2169,7 @@ UITheme >> menuFillStyleFor: aMenu [
 		radial: false;
 		origin: aMenu topLeft;
 		direction: 0 @ aMenu height.
-	^ fill.
+	^ fill
 ]
 
 { #category : #defaults }
@@ -2577,9 +2183,7 @@ UITheme >> menuFont [
 UITheme >> menuItemDisabledTextColorFor: aMenuItem [
 	"Answer the color to use for disabled menu item text."
 
-	^((aMenuItem color luminance - aMenuItem owner color luminance) abs < 0.3)
-		ifTrue: [aMenuItem owner color contrastingBlackAndWhiteColor muchDarker]
-		ifFalse: [aMenuItem owner color muchDarker]
+	^ colorPalette menuItemDisabledTextColorFor: aMenuItem
 ]
 
 { #category : #'border-styles - buttons' }
@@ -2644,7 +2248,8 @@ UITheme >> menuItemSelectedTextColorFor: aMenuItem [
 
 { #category : #'accessing - colors' }
 UITheme >> menuKeyboardFocusColor [
-	^ self settings menuKeyboardFocusColor
+
+	^ colorPalette menuKeyboardFocusColor
 ]
 
 { #category : #'label-styles' }
@@ -2656,18 +2261,20 @@ UITheme >> menuPinForm [
 
 { #category : #'accessing - colors' }
 UITheme >> menuSelectionColor [
-	^ self settings menuSelectionColor
+
+	^ colorPalette menuSelectionColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> menuShadowColor [
-	^ self settings menuShadowColor
+
+	^ colorPalette menuShadowColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> menuTitleColor [
-	"Answer the menu title color to use."
-	^self settings menuTitleColor
+
+	^ colorPalette menuTitleColor
 ]
 
 { #category : #'fill-styles' }
@@ -2749,14 +2356,14 @@ UITheme >> morphTreeColumnFillStyleFor: aMorph [
 ]
 
 { #category : #'fill-styles' }
-UITheme >> morphTreeSplitterNormalFillStyleFor: aSplitter [	
+UITheme >> morphTreeSplitterNormalFillStyleFor: aSplitter [
 	^ self splitterNormalFillStyleFor: aSplitter
 ]
 
 { #category : #'fill-styles' }
 UITheme >> morphTreeSplitterPressedFillStyleFor: aSplitter [
 	"Return the pressed splitter fillStyle for the given splitter."
-	
+
 	|aColor|
 	aColor := aSplitter paneColor twiceDarker.
 	^(GradientFillStyle ramp: {
@@ -2770,135 +2377,19 @@ UITheme >> morphTreeSplitterPressedFillStyleFor: aSplitter [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> mouseOverColor [ 
+UITheme >> mouseOverColor [
 	"This color is used when hovering a raw of a list / table.
-	This color should be different from the default background color and from the raw alternate color
+	This color should be different from the default background color and from the raw
+	alternate color
 	(see FTTableContainerMorph>>#alternateRowsColor."
-	
-	^ self backgroundColor darker darker
-]
 
-{ #category : #'fill-styles' }
-UITheme >> multiFormFillStyleFrom: anArray cornerWidths: widthArray in: aRectangle [
-	"Answer a composite fill style from the given forms and central colour
-	in the given bounds. Use the widths specified for the portion of the
-	corner forms to display."
-	
-	|tl tm tr ml mr bl bm br c tlw trw blw brw|
-	tl := anArray first. tlw:= widthArray first.
-	tm := anArray second.
-	tr := anArray third. trw := widthArray second.
-	ml  := anArray fourth.
-	c := anArray fifth.
-	mr  := anArray sixth.
-	bl := anArray seventh. blw := widthArray third.
-	bm := anArray eighth.
-	br := anArray ninth. brw := widthArray fourth.
-	^CompositeFillStyle fillStyles: {
-		(ImageFillStyle form: tl)
-			origin: aRectangle topLeft;
-			extent: tlw@tl height.
-		(AlphaInfiniteForm with: tm)
-			origin: aRectangle topLeft + (tlw@0);
-			extent: (aRectangle width - trw - tlw)@tm height.
-		(ImageFillStyle form: tr)
-			origin: aRectangle topRight - (tr width@0);
-			extent: trw@tr height;
-			offset: (tr width - trw)@0.
-		(AlphaInfiniteForm with: ml)
-			origin: aRectangle topLeft + (0@tl height);
-			extent: ml width@(aRectangle height - tl height - bl height).
-		(ColorFillStyle color: c)
-			origin: aRectangle topLeft + (tlw@tl height);
-			extent: aRectangle extent - (tlw@tl height) - (brw@br height).
-		(AlphaInfiniteForm with: mr)
-			origin: aRectangle topRight + (trw negated@tr height);
-			extent: mr width@(aRectangle height - tr height - br height).
-		(ImageFillStyle form: bl)
-			origin: aRectangle bottomLeft - (0@bl height);
-			extent: blw@bl height.
-		(AlphaInfiniteForm with: bm)
-			origin: aRectangle bottomLeft - (blw negated@bl height);
-			extent: (aRectangle width - blw - brw)@bm height.
-		(ImageFillStyle form: br)
-			origin: aRectangle bottomRight - br extent;
-			extent: brw@br height;
-			offset: (br width - brw)@0}
-]
-
-{ #category : #'fill-styles' }
-UITheme >> multiFormFillStyleFrom: anArray in: aRectangle [
-	"Answer a composite fill style from the given forms and central colour
-	in the given bounds."
-	
-	|tl tm tr ml mr bl bm br c|
-	tl := anArray first.
-	tm := anArray second.
-	tr := anArray third.
-	ml  := anArray fourth.
-	c := anArray fifth.
-	mr  := anArray sixth.
-	bl := anArray seventh.
-	bm := anArray eighth.
-	br := anArray ninth.
-	^CompositeFillStyle fillStyles: {
-		(ImageFillStyle form: tl) origin: aRectangle topLeft.
-		(AlphaInfiniteForm with: tm)
-			origin: aRectangle topLeft + (tl width@0);
-			extent: (aRectangle width - tl width - tr width)@tm height.
-		(ImageFillStyle form: tr)
-			origin: aRectangle topRight - (tr width@0).
-		(AlphaInfiniteForm with: ml)
-			origin: aRectangle topLeft + (0@tl height);
-			extent: ml width@(aRectangle height - tl height - bl height).
-		(ColorFillStyle color: c)
-			origin: aRectangle topLeft + tl extent;
-			extent: aRectangle extent - tl extent - br extent.
-		(AlphaInfiniteForm with: mr)
-			origin: aRectangle topRight + (tr width negated@tr height);
-			extent: mr width@(aRectangle height - tr height - br height).
-		(ImageFillStyle form: bl) origin: aRectangle bottomLeft - (0@bl height).
-		(AlphaInfiniteForm with: bm)
-			origin: aRectangle bottomLeft - (bl width negated@bl height);
-			extent: (aRectangle width - bl width - br width)@bm height.
-		(ImageFillStyle form: br)
-			origin: aRectangle bottomRight - br extent}
-]
-
-{ #category : #'fill-styles' }
-UITheme >> multiFormTopFillStyleFrom: anArray in: aRectangle [
-	"Answer a composite fill style from the given forms and central colour
-	in the given bounds. Only top and middle sections are considered."
-	
-	|tl tm tr ml mr c|
-	tl := anArray first.
-	tm := anArray second.
-	tr := anArray third.
-	ml  := anArray fourth.
-	c := anArray fifth.
-	mr  := anArray sixth.
-	^CompositeFillStyle fillStyles: {
-		(ImageFillStyle form: tl) origin: aRectangle topLeft.
-		(AlphaInfiniteForm with: tm)
-			origin: aRectangle topLeft + (tl width@0);
-			extent: (aRectangle width - tl width - tr width)@tm height.
-		(ImageFillStyle form: tr)
-			origin: aRectangle topRight - (tr width@0).
-		(AlphaInfiniteForm with: ml)
-			origin: aRectangle topLeft + (0@tr height);
-			extent: ml width@(aRectangle height - tl height).
-		(ColorFillStyle color: c)
-			origin: aRectangle topLeft + tl extent;
-			extent: aRectangle extent - tl extent - (mr width @0).
-		(AlphaInfiniteForm with: mr)
-			origin: aRectangle topRight + (tr width negated@tr height);
-			extent: mr width@(aRectangle height - tr height)}
+	^ colorPalette mouseOverColor
 ]
 
 { #category : #'morph creation' }
 UITheme >> newAlphaImageIn: aThemedMorph image: aForm help: helpText [
 	"Answer an alpha image morph."
-	
+
 	|answer|
 	answer := AlphaImageMorph new
 		hResizing: #rigid;
@@ -2922,7 +2413,7 @@ UITheme >> newAlphaSelectorIn: aThemedMorph for: aModel getAlpha: getSel setAlph
 ]
 
 { #category : #'morph creation' }
-UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel font: aFont help: helpText [ 
+UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel font: aFont help: helpText [
 	"Answer a text entry for the given model.
 	Object conversion will be automatic based on the class of
 	object returned after performing the get selector, aClass
@@ -2932,7 +2423,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: s
 		for: aModel
 		get: getSel
 		set: setSel
-		class: aClass 
+		class: aClass
 		getEnabled: enabledSel
 		font: aFont
 		help: helpText
@@ -2962,14 +2453,14 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 		cornerStyle: (self textEntryCornerStyleIn: aThemedMorph);
 		hResizing: #spaceFill;
 		vResizing: #rigid;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		setBalloonText: helpText;
 		entryCompletion: anEntryCompletion.
 	^pt
 ]
 
 { #category : #'morph creation' }
-UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel help: helpText [ 
+UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel help: helpText [
 	"Answer a text entry for the given model.
 	Object conversion will be automatic based on the class of
 	object returned after performing the get selector, aClass
@@ -3008,7 +2499,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 UITheme >> newBalloonHelpIn: aThemedMorph contents: aTextStringOrMorph for: aMorph corner: cornerSymbol [
 	"Answer a new balloon help morph with the given text
 	and positioning for aMorph."
-	
+
 	^SimpleBalloonMorph
 		string: aTextStringOrMorph
 		for: aMorph
@@ -3030,39 +2521,6 @@ UITheme >> newBracketSliderIn: aThemedMorph for: aModel getValue: getSel setValu
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		setBalloonText: helpText
-]
-
-{ #category : #initialization }
-UITheme >> newButtonBottomLeftForm [
-	"Answer the form for the bottom left of a button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 3716317826 4291743438 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 2842718320 4290953922 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 1784635231 4255886251 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 978802519 4170157967 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 374427985 3815599469 4291611852 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 41975936 1699499084 4168973693 4293190884 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 0 154745145 2891010385 4271873951 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 0 16777216 675299392 3764280926 4290098613 4293980400 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 0 0 33554432 1295332661 3595850836 4253583496 4292993505 4294309365 4294309365 4294309365 4294309365 4294309365 0 0 0 33554432 640626479 2688433726 4083574374 4289835441 4293125091 4294506744 4294572537 4294572537 0 0 0 0 16777216 138428480 1546267178 3510780482 3981989976 4184895600 4270360712 4288651167 0 0 0 0 0 0 33554432 338044454 941629472 1511989023 2268016431 3124575549)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonBottomMiddleForm [
-	"Answer the form for the bottom middle of a button."
-
-	^(Form
-	extent: 1@12
-	depth: 32
-	fromArray: #( 4292072403 4292401368 4292664540 4292927712 4293190884 4293454056 4293717228 4294046193 4294309365 4294572537 4289506476 3443342653)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonBottomRightForm [
-	"Answer the form for the bottom right of a button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4291282887 3548216701 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4290230199 2607574124 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4238187933 1616731485 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4119365768 962156889 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4290756543 3697895785 374427985 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4292730333 4118378873 1666010445 41975936 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4254175633 2790215503 154745145 0 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4293848814 4289177511 3663288665 675299392 16777216 0 4294309365 4294309365 4294309365 4294309365 4294309365 4292467161 4253188738 3545453395 1295332661 33554432 0 0 4294572537 4294572537 4294440951 4292861919 4289309097 4066797158 2655010880 640626479 33554432 0 0 0 4288519581 4270294919 4168052591 3965081174 3477291843 1546267178 138428480 16777216 0 0 0 0 3107864126 2268016431 1511989023 941629472 338044454 33554432 0 0 0 0 0 0)
-	offset: 0@0)
 ]
 
 { #category : #'morph creation' }
@@ -3118,237 +2576,6 @@ UITheme >> newButtonLabelIn: aThemedMorph for: aModel label: aString getEnabled:
 		getEnabledSelector: enabledSel
 ]
 
-{ #category : #initialization }
-UITheme >> newButtonMiddleLeftForm [
-	"Answer the form for the middle left of a button."
-
-	^(Form
-	extent: 12@1
-	depth: 32
-	fromArray: #( 3968305031 4292138196 4292138196 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonMiddleRightForm [
-	"Answer the form for the middle right of a button."
-
-	^(Form
-	extent: 12@1
-	depth: 32
-	fromArray: #( 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 3934750599)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSelectedBottomLeftForm [
-	"Answer the form for the bottom left of a selected button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 3713688967 4284841382 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 2840812155 4284841122 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 1783452780 4251022487 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 977750885 4166608772 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 373704285 3813365101 4285499564 4286092476 4286092476 4286092476 4286092476 4286092476 4286092476 4286092476 4286092476 4286092476 33554560 1698382676 4166082166 4286224317 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 0 154745173 2889761365 4267668108 4286685125 4286685125 4286685125 4286685125 4286685125 4286685125 4286685125 4286685125 0 16777216 674444102 3762375258 4285103772 4286948554 4286948554 4286948554 4286948554 4286948554 4286948554 4286948554 0 0 33554432 1294675516 3594273360 4250231929 4286619071 4287277775 4287277775 4287277775 4287277775 4287277775 0 0 0 33554432 640165935 2687513663 4081274461 4285169818 4286882243 4287606740 4287606740 4287606740 0 0 0 0 16777216 134234176 1545872426 3509597758 3980150095 4182267235 4267009399 4284642698 0 0 0 0 0 0 33554432 338044454 941629472 1511791647 2267424813 3123524408)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSelectedBottomMiddleForm [
-	"Answer the form for the bottom middle of a selected button."
-
-	^(Form
-	extent: 1@12
-	depth: 32
-	fromArray: #( 4284907432 4285171117 4285500082 4285763767 4286092732 4286356417 4286685381 4286948810 4287278031 4287606996 4285038229 3442226232)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSelectedBottomRightForm [
-	"Answer the form for the bottom right of a selected button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284775331 3545850757 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 4285170861 4284643228 2605931385 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 4285499826 4233915791 1615745901 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4116079488 961039463 4286092476 4286092476 4286092476 4286092476 4286092476 4286092476 4286092476 4286092476 4286092476 4285169827 3695858538 373704285 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 4286092472 4115618674 1664828245 33554560 4286685125 4286685125 4286685125 4286685125 4286685125 4286685125 4286685125 4286685125 4250495363 2789098069 154745173 0 4286948554 4286948554 4286948554 4286948554 4286948554 4286948554 4286882504 4284642962 3661580376 674444102 16777216 0 4287277775 4287277775 4287277775 4287277775 4287277775 4286421177 4250034292 3543876175 1294675516 33554432 0 0 4287606740 4287606740 4287540947 4286750399 4284906131 4064496988 2654025280 640165935 33554432 0 0 0 4284445576 4266943863 4165424226 3963307086 3476109119 1545872426 134234176 16777216 0 0 0 0 3106812728 2267424813 1511791647 941629472 338044454 33554432 0 0 0 0 0 0)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSelectedMiddleLeftForm [
-	"Answer the form for the middle left of a selected button."
-
-	^(Form
-	extent: 12@1
-	depth: 32
-	fromArray: #( 3965347464 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSelectedMiddleRightForm [
-	"Answer the form for the middle right of a selected button."
-
-	^(Form
-	extent: 12@1
-	depth: 32
-	fromArray: #( 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 3931727240)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSelectedTopLeftForm [
-	"Answer the form for the top left of a selected button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 0 0 0 0 0 0 33554431 362719975 1268031205 2541850575 3279521477 3765271736 0 0 0 0 0 111848191 2407633100 4049957547 4266548622 4284838039 4287271854 4290099916 0 0 0 16777471 814060743 3581116602 4266877583 4288982209 4292730856 4292994026 4292994026 4292994026 0 0 16777471 1903987394 4099960739 4285430685 4291349978 4292270819 4292270819 4292270819 4292270819 4292270819 0 0 713067455 4083709352 4288259003 4291547356 4291547356 4291547356 4291547356 4291547356 4291547356 4291547356 0 75464703 3580787373 4287535542 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 33554431 2389802158 4251744930 4290297809 4290297809 4290297809 4290297809 4290297809 4290297809 4290297809 4290297809 4290297809 258373546 4016337568 4286878386 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 1097823911 4200558234 4287207349 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 2070376603 4284182168 4286155693 4288654276 4288654276 4288654276 4288654276 4288654276 4288654276 4288654276 4288654276 4288654276 3160435603 4284314525 4284577696 4287668413 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 3780930190 4284578211 4284578211 4285301417 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSelectedTopMiddleForm [
-	"Answer the form for the top middle of a selected button."
-
-	^(Form
-	extent: 1@12
-	depth: 32
-	fromArray: #( 3966269361 4291941599 4292994026 4292205027 4291547356 4290889943 4290297809 4289640652 4289114568 4288588740 4288128705 4286353587)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSelectedTopRightForm [
-	"Answer the form for the top right of a selected button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 3748625849 3262810310 2441121744 1184342758 295085538 33554431 0 0 0 0 0 0 4290099916 4287271854 4284904087 4266680208 4016534958 2156237519 75464703 0 0 0 0 0 4292994026 4292994026 4292994026 4292730856 4288981953 4250297491 3463873727 646616786 16777471 0 0 0 4292270819 4292270819 4292270819 4292270819 4292270819 4291284185 4285233565 4066800809 1551994565 16777471 0 0 4291547356 4291547356 4291547356 4291547356 4291547356 4291547356 4291547356 4287929784 4016798124 545033153 0 0 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 4287009457 3379658160 61516543 0 4290297809 4290297809 4290297809 4290297809 4290297809 4290297809 4290297809 4290297809 4290166480 4234639009 2003992240 33554431 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4286286508 3949425826 258373546 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4286747057 4167135387 896300710 4288654276 4288654276 4288654276 4288654276 4288654276 4288654276 4288654276 4288654276 4288654276 4285760937 4250693017 1785229980 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4287471035 4284446367 4284314268 2841668498 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4285038503 4284578211 4284578211 3663554701)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSquareBottomLeftForm [
-	"Answer the form for the bottom left of a square button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 3968305031 4292138196 4292138196 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 3967976066 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 3967778687 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 3967449722 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 3967252343 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 3966923378 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 3966660206 4293783021 4293783021 4293783021 4293783021 4293783021 4293783021 4293783021 4293783021 4293717228 4293717228 4293717228 3966397034 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 3966133862 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 3830929239 4293783021 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 2502963248 4252596601 4289309097 4289506476 4289506476 4289506476 4289506476 4289506476 4289506476 4289506476 4289506476 4289506476 622599196 2352034097 3409854014 3443342653 3443342653 3443342653 3443342653 3443342653 3443342653 3443342653 3443342653 3443342653)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSquareBottomRightForm [
-	"Answer the form for the bottom right of a square button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 4292072403 3934750599 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292401368 4292335575 3934421634 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 3934158462 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 3933895290 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 3933632118 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 4293454056 3933368946 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 3933039981 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 4294046193 3932776809 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 3932447844 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 4294572537 4293388263 3780400212 4289506476 4289506476 4289506476 4289506476 4289506476 4289506476 4289506476 4289506476 4289506476 4289243304 4235556213 2452565807 3443342653 3443342653 3443342653 3443342653 3443342653 3443342653 3443342653 3443342653 3443342653 3393076798 2352034097 622599196)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSquareSelectedBottomLeftForm [
-	"Answer the form for the bottom left of a selected square button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 3965347464 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 3965215874 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 3964952703 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 3964821113 4285763767 4285763767 4285763767 4285763767 4285763767 4285763767 4285763767 4285763767 4285763767 4285763767 4285763767 3964623476 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 3964426350 4286421953 4286421953 4286421953 4286421953 4286356417 4286356417 4286356417 4286356417 4286356417 4286356417 4286356417 3964294248 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 4286685381 4286685381 4286685381 3964097124 4287014602 4287014602 4287014602 4287014346 4287014346 4287014346 4287014346 4287014346 4287014346 4287014346 4287014346 3963833950 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 3829154896 4287211978 4287607252 4287606996 4287606996 4287606996 4287606996 4287606996 4287606996 4287606996 4287606996 4287606996 2502502958 4249705579 4284972435 4285038229 4285038229 4285038229 4285038229 4285038229 4285038229 4285038229 4285038229 4285038229 622599196 2351311407 3408802615 3442226232 3442226232 3442226232 3442226232 3442226232 3442226232 3442226232 3442226232 3442226232)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSquareSelectedBottomRightForm [
-	"Answer the form for the bottom right of a selected square button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 4284907432 3931727240 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285171117 4285170861 3931595651 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 3931464061 4285763767 4285763767 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 4285763511 3931200888 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 3931003251 4286356417 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 4286356160 3930871661 4286685381 4286685381 4286685381 4286685381 4286685381 4286685381 4286685381 4286685381 4286685381 4286685381 4286685381 3930674280 4286948810 4286948810 4286948810 4286948810 4286948810 4286948810 4286948810 4286948810 4286948810 4286948810 4286948810 3930476899 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 3930345054 4287606996 4287606996 4287606996 4287606996 4287606996 4287606996 4287606996 4287541460 4287541460 4287541460 4286948549 3778691918 4285038229 4285038229 4285038229 4285038485 4285038485 4285038485 4285038485 4285038485 4285038485 4284841105 4232796519 2452040237 3442226232 3442226232 3442226232 3442226232 3442226232 3442226232 3442226232 3442226232 3442226232 3392025400 2351311407 622599196)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSquareSelectedTopLeftForm [
-	"Answer the form for the top left of a selected square button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 630892779 3329853638 3949492146 3966269361 3966269361 3966269361 3966269361 3966269361 3966269361 3966269361 3966269361 3966269361 3028455632 4282141565 4285561500 4291744478 4291876062 4291876062 4291876062 4291876062 4291876062 4291876062 4291876062 4291876062 3916792766 4281944439 4289771209 4292928234 4292928234 4292928234 4292928234 4292928234 4292994026 4292994026 4292994026 4292994026 3966992312 4282207868 4289705673 4292139234 4292205027 4292205027 4292205027 4292205027 4292205027 4292205027 4292205027 4292205027 3966860723 4282537089 4289311174 4291481564 4291481564 4291481564 4291481564 4291481564 4291481564 4291547356 4291547356 4291547356 3966598062 4282800518 4288785346 4290889686 4290889686 4290889686 4290889686 4290889686 4290889686 4290889686 4290889686 4290889686 3966334888 4283129739 4288456639 4290232273 4290232273 4290232273 4290232273 4290232273 4290297809 4290297809 4290297809 4290297809 3966268835 4283393168 4288062397 4289640396 4289640652 4289640652 4289640652 4289640652 4289640652 4289640652 4289640652 4289640652 3966071197 4283722133 4287799227 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 3965874072 4283985818 4287405242 4288523204 4288523204 4288588740 4288588740 4288588740 4288588740 4288588740 4288588740 4288588740 3965741971 4284314782 4287208120 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 3965544845 4284578467 4285893551 4286288050 4286288050 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSquareSelectedTopRightForm [
-	"Answer the form for the top right of a selected square button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 3966269361 3966269361 3966269361 3966269361 3966269361 3966269105 3966269105 3966269105 3966269105 3949492146 3246098890 547072752 4291941599 4291941599 4291941599 4291941599 4291941599 4291941599 4291941599 4291941599 4291810270 4285298585 4282338943 2927923665 4292994026 4292994026 4292994026 4292994026 4292994026 4292994283 4292994283 4292994283 4292994283 4289442502 4281878647 3883238334 4292205027 4292270819 4292270819 4292270819 4292270819 4292270819 4292270819 4292270819 4292270819 4289442758 4282207868 3933503928 4291547356 4291547356 4291547356 4291547356 4291547356 4291547356 4291612893 4291612893 4291612893 4289048003 4282471297 3933240756 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 4290889943 4288653760 4282800518 3933043629 4290297809 4290297809 4290297809 4290297809 4290297809 4290298066 4290298066 4290298066 4290298066 4288325054 4283063947 3932911528 4289640652 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4289706189 4287930812 4283393168 3932714660 4289114568 4289114568 4289114568 4289114568 4289114568 4289114568 4289180360 4289180360 4289180360 4287602105 4283656596 3932516765 4288588740 4288588740 4288654532 4288654532 4288654532 4288654532 4288654532 4288654532 4288654532 4287339448 4283985817 3932319385 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4288128705 4288194497 4288194497 4287142327 4284314782 3932187795 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4286353587 4285827758 4284578467 3931924878)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSquareTopLeftForm [
-	"Answer the form for the top left of a square button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 633520834 3333994680 3954422707 3971199923 3971199923 3971199923 3971199923 3971199923 3971199923 3971199923 3971199923 3971199923 3032004792 4289243304 4290822336 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 3920736689 4289374890 4292730333 4294111986 4294111986 4294111986 4294111986 4294111986 4294111986 4294111986 4294111986 4294111986 3970805165 4289638062 4292796126 4293783021 4293848814 4293848814 4293848814 4293848814 4293848814 4293848814 4293848814 4293848814 3970476200 4289901234 4292664540 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 3970278821 4290164406 4292532954 4293322470 4293322470 4293322470 4293322470 4293322470 4293322470 4293322470 4293322470 4293322470 3970015649 4290493371 4292532954 4293190884 4293190884 4293190884 4293125091 4293125091 4293190884 4293190884 4293190884 4293190884 3969686684 4290756543 4292467161 4292993505 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 3969423512 4291019715 4292467161 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 3969160340 4291282887 4292467161 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 3968831375 4291546059 4292467161 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 3968568203 4291809231 4292203989 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonSquareTopRightForm [
-	"Answer the form for the top right of a square button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 3971199923 3971199923 3971199923 3971199923 3971199923 3971199923 3971199923 3971199923 3971199923 3954422707 3250240186 549042617 4293651435 4293651435 4293651435 4293651435 4293651435 4293651435 4293651435 4293651435 4293585642 4290690750 4289243304 2931341496 4294111986 4294111986 4294111986 4294111986 4294111986 4294111986 4294111986 4294111986 4294111986 4292598747 4289374890 3887182257 4293848814 4293848814 4293848814 4293848814 4293848814 4293848814 4293848814 4293848814 4293848814 4292664540 4289638062 3937184940 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4292532954 4289901234 3936987561 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 4292467161 4290164406 3936658596 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4292401368 4290427578 3936329631 4293059298 4293059298 4293059298 4293059298 4293059298 4292993505 4292993505 4292993505 4292993505 4292335575 4290690750 3936132252 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292401368 4291019715 3935803287 4292796126 4292796126 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292401368 4291282887 3935540115 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292467161 4291546059 3935276943 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292203989 4291809231 3935013771)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonTopLeftForm [
-	"Answer the form for the top left of a button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 0 0 0 0 0 0 33554431 365151171 1270791870 2545662907 3283663032 3770004917 0 0 0 0 0 111848106 2411247800 4054954417 4272729260 4290427578 4291546059 4292796126 0 0 0 33554431 817083315 3585192369 4273058225 4292401368 4293980400 4294111986 4294111986 4294111986 0 0 33554431 1907076011 4105022893 4290953922 4293454056 4293848814 4293848814 4293848814 4293848814 4293848814 0 0 715696296 4088179884 4292269782 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 0 79675327 3584402853 4291940817 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 33554431 2392628380 4256938939 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 261724569 4020281504 4292006610 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 1099795853 4205488810 4292269782 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 2072413830 4290361785 4292006610 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 3163196042 4291217094 4291611852 4292664540 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 3784150413 4291809231 4291809231 4292006610 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonTopMiddleForm [
-	"Answer the form for the top middle of a button."
-
-	^(Form
-	extent: 1@12
-	depth: 32
-	fromArray: #( 3971199923 4293585642 4294111986 4293848814 4293585642 4293322470 4293190884 4293059298 4292927712 4292796126 4292796126 4292335575)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newButtonTopRightForm [
-	"Answer the form for the top right of a button."
-
-	^(Form
-	extent: 12@12
-	depth: 32
-	fromArray: #( 3753227701 3266885816 2445065404 1187103169 298042307 33554431 0 0 0 0 0 0 4292796126 4291546059 4290427578 4272729260 4021334192 2159655353 75464575 0 0 0 0 0 4294111986 4294111986 4294111986 4293980400 4292401368 4256346802 3467817650 649113776 33554431 0 0 0 4293848814 4293848814 4293848814 4293848814 4293848814 4293388263 4290822336 4071534254 1554886061 33554431 0 0 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4292072403 4020873641 548055722 0 0 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 4293388263 4291611852 3382944675 67108863 0 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293125091 4239701172 2006686619 33554431 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4291809231 3953041054 261724569 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292927712 4292072403 4171473827 898206089 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4291875024 4256215216 1787069572 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292796126 4292532954 4291611852 4290822336 2843968387 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4292335575 4291940817 4291809231 4291677645 3666380936)
-	offset: 0@0)
-]
-
 { #category : #'morph creation' }
 UITheme >> newCancelButtonIn: aThemedMorph for: aModel [
 	"Answer a new cancel button."
@@ -3362,17 +2589,6 @@ UITheme >> newCancelButtonIn: aThemedMorph for: aModel [
 		getEnabled: nil
 		label: 'Cancel' translated
 		help: 'Cancel changes and close the window' translated
-]
-
-{ #category : #initialization }
-UITheme >> newCheckboxForm [
-	"Answer the form for a normal checkbox."
-
-	^(Form
-	extent: 14@14
-	depth: 32
-	fromArray: #( 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 594242411 3918960278 4138774704 4138774704 4138774704 4138774704 4138774704 4138774704 4138774704 4138774704 4138774704 4138774704 3919026071 594242411 2575072380 4292467161 4294177779 4294177779 4294177779 4294177779 4294177779 4294177779 4294177779 4294177779 4294177779 4294177779 4292467161 2524806525 2658695288 4292664540 4293651435 4293651435 4293651435 4293651435 4293651435 4293651435 4293651435 4293651435 4293651435 4293651435 4292664540 2608429433 2658432116 4292532954 4293322470 4293322470 4293322470 4293322470 4293322470 4293322470 4293322470 4293322470 4293322470 4293322470 4292532954 2608232054 2658366323 4292467161 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4293059298 4292467161 2608100468 2658037358 4292532954 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292532954 2607771503 2657839979 4292138196 4292138196 4292138196 4292138196 4292138196 4292138196 4292138196 4292138196 4292138196 4292138196 4292138196 4292138196 2607639917 2657642600 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 2607442538 2657313635 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 4293190884 2607113573 2657116256 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 4293717228 2606850401 2606455643 4294046193 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294309365 4294046193 2556255581 1311978291 4237003659 4289967027 4289967027 4289967027 4289967027 4289967027 4289967027 4289967027 4289967027 4289967027 4289967027 4237003659 1278555445 50331648 1210986030 1647917369 1647917369 1647917369 1647917369 1647917369 1647917369 1647917369 1647917369 1647917369 1647917369 1210986030 50331648)
-	offset: 0@0)
 ]
 
 { #category : #'morph creation' }
@@ -3411,24 +2627,6 @@ UITheme >> newCheckboxIn: aThemedMorph for: aModel getSelected: getSel setSelect
 	^answer
 ]
 
-{ #category : #initialization }
-UITheme >> newCheckboxMarkerForm [
-	"Answer a new checkbox marker form."
-
-	^ self iconNamed: #checkboxMarkerForm
-]
-
-{ #category : #initialization }
-UITheme >> newCheckboxSelectedForm [
-	"Answer the form for a selected checkbox."
-
-	^(Form
-	extent: 14@14
-	depth: 32
-	fromArray: #( 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 16777215 591416973 3914425236 4134435746 4134435746 4134435746 4134435746 4134435746 4134435746 4134435746 4134435746 4134435746 4134435746 3914425236 591416973 2571195527 4289245124 4293125612 4293125612 4293125612 4293125612 4293125612 4293125612 4293125612 4293125612 4293125612 4293125612 4289245124 2520929417 2655015551 4289114053 4291744479 4291744479 4291744479 4291744479 4291744479 4291744479 4291744479 4291744479 4291744479 4291744479 4289114053 2604684160 2654949242 4288456640 4290560980 4290560980 4290560980 4290560980 4290560980 4290560980 4290560980 4290560980 4290560980 4290560980 4288456640 2604748668 2654817654 4287799485 4289443276 4289443276 4289443276 4289443276 4289443276 4289443276 4289443276 4289443276 4289443276 4289443276 4287799485 2604486007 2654686063 4287273914 4288457669 4288457669 4288457669 4288457669 4288457669 4288457669 4288457669 4288457669 4288457669 4288457669 4287273914 2604420207 2654816618 4284907433 4284907433 4284907433 4284907433 4284907433 4284907433 4284907433 4284907433 4284907433 4284907433 4284907433 4284907433 2604484971 2654619492 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 2604353637 2654684509 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 4286092732 2604352863 2654487128 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 4286685382 2604221017 2603892560 4287146187 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287278031 4287146187 2553626706 1310531626 4232599666 4284512149 4284512149 4284512149 4284512149 4284512149 4284512149 4284512149 4284512149 4284512149 4284512149 4232599666 1276977451 50331648 1210064935 1646208047 1646208047 1646208047 1646208047 1646208047 1646208047 1646208047 1646208047 1646208047 1646208047 1210064935 50331648)
-	offset: 0@0)
-]
-
 { #category : #'morph creation' }
 UITheme >> newCloseButtonIn: aThemedMorph for: aModel [
 	"Answer a new close button."
@@ -3447,7 +2645,7 @@ UITheme >> newCloseButtonIn: aThemedMorph for: aModel [
 { #category : #'morph creation' }
 UITheme >> newCloseControlIn: aThemedMorph for: aModel action: aValuable help: helpText [
 	"Answer a button for closing things."
-	
+
 	|form msb|
 	form := self windowCloseForm.
 	msb := MultistateButtonMorph new extent: form extent.
@@ -3505,7 +2703,7 @@ UITheme >> newColumnIn: aThemedMorph for: controls [
 		vResizing: #spaceFill;
 		fillStyle: Color transparent; "non pane color tracking"
 		changeTableLayout;
-		cellInset: 8;
+		cellInset: 8 scaledByDisplayScaleFactor;
 		cellPositioning: #leftCenter.
 	controls do: [:m | answer addMorphBack: m].
 	^answer
@@ -3599,9 +2797,24 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 	^ BorderedMorph new
 		fillStyle: Color transparent;
 		borderStyle: (SimpleBorderStyle new
-			 width: 1;
+			 width: 1 scaledByDisplayScaleFactor;
 			baseColor: (self baseSelectionColorFor: aMorph));
 		bounds: aMorph focusBounds
+]
+
+{ #category : #private }
+UITheme >> newFormsForScale: scale [
+
+	| size color |
+
+	size := (9 * scale) truncated.
+	color := Color gray: 0.5327468230694037.
+	^ Dictionary new
+		at: #treeExpanded put: (self newTreeForm: true size: size color: color);
+		at: #treeUnexpanded put: (self newTreeForm: false size: size color: color);
+		at: #whiteTreeExpanded put: (self newTreeForm: true size: size color: Color white);
+		at: #whiteTreeUnexpanded put: (self newTreeForm: false size: size color: Color white);
+		yourself
 ]
 
 { #category : #'morph creation' }
@@ -3857,7 +3070,7 @@ UITheme >> newListIn: aThemedMorph for: aModel list: listSelector selected: getS
 		autoDeselect: false;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		color: Color white;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		getEnabledSelector: enabledSel;
@@ -3881,7 +3094,7 @@ UITheme >> newListIn: aThemedMorph for: aModel list: listSelector selected: getS
 		autoDeselect: false;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		color: Color white;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		getIconSelector: iconSelector;
@@ -3896,21 +3109,6 @@ UITheme >> newMenuIn: aThemedMorph for: aModel [
 	^MenuMorph new
 		defaultTarget: aModel;
 		color: (self menuColorFor: aThemedMorph)
-]
-
-{ #category : #'morph creation' }
-UITheme >> newMorphDropListIn: aThemedMorph for: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel help: helpText [
-	"Answer a morph drop list for the given model."
-
-	^self
-		newMorphDropListIn: aThemedMorph
-		for: aModel
-		list: listSel
-		getSelected: getSel
-		setSelected: setSel
-		getEnabled: enabledSel
-		useIndex: true
-		help: helpText
 ]
 
 { #category : #'morph creation' }
@@ -3946,7 +3144,7 @@ UITheme >> newMorphListIn: aThemedMorph for: aModel list: listSelector getSelect
 		autoDeselect: false;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		color: Color white;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		getEnabledSelector: enabledSel;
@@ -4007,8 +3205,8 @@ UITheme >> newPanelIn: aThemedMorph [
 
 	^PanelMorph new
 		changeTableLayout;
-		layoutInset: 4;
-		cellInset: 8;
+		layoutInset: 4 scaledByDisplayScaleFactor;
+		cellInset: 8 scaledByDisplayScaleFactor;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		yourself
 ]
@@ -4024,17 +3222,6 @@ UITheme >> newPluggableDialogWindowIn: aThemedMorph title: title for: contentMor
 		contentMorph: contentMorph.
 	contentMorph ifNotNil: [answer model: nil].
 	^answer
-]
-
-{ #category : #initialization }
-UITheme >> newRadioButtonForm [
-	"Answer the form for a normal radio button."
-
-	^(Form
-	extent: 14@14
-	depth: 32
-	fromArray: #( 16777215 16777215 16777215 198234320 2645865652 3568415153 4072521149 4055875519 3551637937 2578756788 164021958 16777215 16777215 16777215 16777215 16777215 1437906100 4038506166 4292598747 4293914607 4294111986 4294111986 4293914607 4292598747 4021728950 1303556786 16777215 16777215 16777215 1386916522 4257465283 4293388263 4293651435 4293651435 4293651435 4293651435 4293651435 4293651435 4293388263 4240556481 1219144362 16777215 195207842 4038177201 4293125091 4293256677 4293256677 4293256677 4293256677 4293256677 4293256677 4293256677 4293256677 4293059298 3987713967 144678815 2627640990 4291875024 4292993505 4292993505 4292993505 4292993505 4292993505 4292993505 4292993505 4292993505 4292993505 4292993505 4291743438 2459803037 3584139681 4292072403 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292861919 4292006610 3500056222 3970476200 4291809231 4292467161 4292532954 4292532954 4292532954 4292532954 4292532954 4292532954 4292532954 4292532954 4292467161 4291809231 3919947173 3919749794 4292203989 4292203989 4292203989 4292203989 4292203989 4292203989 4292203989 4292203989 4292203989 4292203989 4292203989 4292203989 3869154974 3515846543 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 4292664540 3431697291 2289333364 4291480266 4293125091 4293125091 4293125091 4293125091 4293125091 4293125091 4293125091 4293125091 4293125091 4293125091 4291151301 2154918257 189154886 3817178501 4293256677 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293585642 4293059298 3766583681 189154886 16777215 960906822 4120221077 4293322470 4294111986 4294111986 4294111986 4294111986 4294111986 4294111986 4293256677 4103180689 927549769 16777215 16777215 16777215 910048830 3682039671 4290756543 4293256677 4294572537 4294506744 4293190884 4273847741 3648287860 893337407 16777215 16777215 16777215 16777215 16777215 169482778 1799570243 3042202708 3681710706 3664867697 3025359699 1799636036 169482778 16777215 16777215 16777215)
-	offset: 0@0)
 ]
 
 { #category : #'morph creation' }
@@ -4056,24 +3243,6 @@ UITheme >> newRadioButtonIn: aThemedMorph for: aModel getSelected: getSel setSel
 	^answer
 ]
 
-{ #category : #initialization }
-UITheme >> newRadioButtonMarkerForm [
-	"Answer a new radio button marker form. We make it empty because we already have the selected radio button take care of the state."
-
-	^ self iconNamed: #radioButtonMarkerForm
-]
-
-{ #category : #initialization }
-UITheme >> newRadioButtonSelectedForm [
-	"Answer the form for a selected radio button."
-
-	^(Form
-	extent: 14@14
-	depth: 32
-	fromArray: #( 16777215 16777215 16777215 195273727 2641329849 3563221416 4067918510 4051207088 3546444457 2574352313 160337634 16777215 16777215 16777215 16777215 16777215 1433764797 4033509543 4289442502 4292467941 4292928234 4292928234 4292467941 4289442502 4016797863 1299613120 16777215 16777215 16777215 1383498170 4252665514 4291152600 4291744478 4291744478 4291744478 4291744478 4291744478 4291744478 4291087064 4235822507 1216120505 16777215 192187321 4033181089 4290232016 4290560980 4290560980 4290560980 4290560980 4290560980 4290560980 4290560980 4290560980 4290100687 3982914979 140541887 2623959968 4286746800 4289574859 4289574859 4289574859 4289574859 4289574859 4289574859 4289574859 4289574859 4289574859 4289574859 4286549679 2456319395 3579801242 4286353071 4288654533 4288654533 4288654533 4288654533 4288654533 4288654533 4288654533 4288654533 4288654533 4288654533 4286089901 3495980954 3965612183 4284709539 4286944951 4287011000 4287011000 4287011000 4287011000 4287011000 4287011000 4287011000 4287011000 4286813622 4284643746 3915280279 3915345555 4284973226 4284973226 4284973226 4284973226 4284973226 4284973226 4284973226 4284973226 4284973226 4284973226 4284973226 4284973226 3864947858 3512362887 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 4285500082 3428345476 2286835828 4285433514 4286026683 4286026683 4286026683 4286026683 4286026683 4286026683 4286026683 4286026683 4286026683 4286026683 4285235879 2152552048 187582022 3813958010 4286421439 4286553283 4286553283 4286553283 4286553283 4286553283 4286553283 4286553283 4286553283 4286355645 3763494776 187582022 16777215 959790667 4116343939 4286685122 4287014603 4287014603 4287014603 4287014603 4287014603 4287014603 4286619329 4099500930 926039117 16777215 16777215 16777215 908735550 3679148137 4285630628 4286882500 4287541204 4287541204 4286816707 4268787875 3645527655 892024127 16777215 16777215 16777215 16777215 16777215 169482778 1798387264 3040494156 3679082084 3662239075 3023716940 1798452800 169482778 16777215 16777215 16777215)
-	offset: 0@0)
-]
-
 { #category : #'morph creation' }
 UITheme >> newRowIn: aThemedMorph for: controls [
 	"Answer a morph laid out with a row of controls."
@@ -4085,7 +3254,7 @@ UITheme >> newRowIn: aThemedMorph for: controls [
 		fillStyle: Color transparent; "non pane color tracking"
 		changeTableLayout;
 		listDirection: #leftToRight;
-		cellInset: 8;
+		cellInset: 8 scaledByDisplayScaleFactor;
 		cellPositioning: #center.
 	controls do: [:m | answer addMorphBack: m].
 	^answer
@@ -4122,80 +3291,14 @@ UITheme >> newScrollPaneIn: aThemedMorph for: aMorph [
 		yourself
 ]
 
-{ #category : #initialization }
-UITheme >> newScrollbarThumbBottomForm [
-	"Answer the form for the bottom of a scrollbar thumb."
-
-	^(Form
-	extent: 13@7
-	depth: 32
-	fromArray: #( 4284182411 4287142063 4287931577 4287602613 4287208113 4286879149 4286484649 4286155685 4285761185 4285432221 4285103257 4284577427 4282669690 4284182411 4286287012 4287931577 4287602613 4287208113 4286879149 4286484649 4286155685 4285761185 4285432221 4285103257 4284182670 4282669690 2906411633 4284445326 4287536820 4287602613 4287208113 4286879149 4286484649 4286155685 4285761185 4285432221 4285103257 4283261825 3023720303 2033601901 4284182411 4285037205 4287339698 4287208113 4286879149 4286484649 4286155685 4285761185 4285432221 4283919242 4282801275 2503363949 1149473452 2755548019 4284050825 4284248204 4285958562 4286681770 4286484649 4286155685 4285037464 4283656069 4282998397 3023720559 1262704758 0 422725477 2083867754 2671004523 4283787654 4283656068 4283656325 4283392897 4283195776 3023786609 2688176497 926700403 73298833 0 0 0 1345735788 1999981163 2671004523 2671004523 2671004523 2167753578 1580616556 171134054 0 0)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newScrollbarThumbHorizontalMiddleForm [
-	"Answer the form for the middle of a horizontal scrollbar thumb."
-
-	^(Form
-	extent: 1@13
-	depth: 32
-	fromArray: #( 4284182411 4288326078 4287931577 4287602613 4287208113 4286879149 4286484649 4286155685 4285761185 4285432221 4285103257 4284709013 4282669690)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newScrollbarThumbLeftForm [
-	"Answer the form for the left hand side of a scrollbar thumb."
-
-	^(Form
-	extent: 7@13
-	depth: 32
-	fromArray: #( 0 0 1149473452 2033601901 2906411633 4284182411 4284182411 0 422725477 2755548019 4284182411 4284445326 4286287012 4287142063 0 2083867754 4284050825 4285037205 4287536820 4287931577 4287931577 1345735788 2671004523 4284248204 4287339698 4287602613 4287602613 4287602613 1999981163 4283787654 4285958562 4287208113 4287208113 4287208113 4287208113 2671004523 4283656068 4286681770 4286879149 4286879149 4286879149 4286879149 2671004523 4283656325 4286484649 4286484649 4286484649 4286484649 4286484649 2671004523 4283392897 4286155685 4286155685 4286155685 4286155685 4286155685 2167753578 4283195776 4285037464 4285761185 4285761185 4285761185 4285761185 1580616556 3023786609 4283656069 4285432221 4285432221 4285432221 4285432221 171134054 2688176497 4282998397 4283919242 4285103257 4285103257 4285103257 0 926700403 3023720559 4282801275 4283261825 4284182670 4284577427 0 73298833 1262704758 2503363949 3023720303 4282669690 4282669690)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newScrollbarThumbRightForm [
-	"Answer the form for the right hand side of a scrollbar thumb."
-
-	^(Form
-	extent: 7@13
-	depth: 32
-	fromArray: #( 4284182411 4284182411 2587118699 1396330353 211462590 0 0 4287010734 4285629341 4284182411 4284182411 2033601901 0 0 4287931577 4287931577 4286682026 4284313740 4284050825 1261587049 0 4287602613 4287602613 4287602613 4286418855 4283919239 2587118699 422725477 4287208113 4287208113 4287208113 4287208113 4284971669 4283787654 1345735788 4286879149 4286879149 4286879149 4286879149 4285629597 4283656068 1832209003 4286484649 4286484649 4286484649 4286484649 4285695391 4283458947 1999981163 4286155685 4286155685 4286155685 4286155685 4285169048 4283392897 1916095595 4285761185 4285761185 4285761185 4285761185 4284379535 4283195776 1345735788 4285432221 4285432221 4285432221 4285037464 4283195775 2671004523 758270315 4285103257 4285103257 4284905878 4283327362 4282998397 1664502380 0 4284380048 4283853961 4282932861 4282801275 2419477869 171134054 0 4282669690 4282669690 2755021932 2436846708 322261099 0 0)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newScrollbarThumbTopForm [
-	"Answer the form for the top of a scrollbar thumb."
-
-	^(Form
-	extent: 13@7
-	depth: 32
-	fromArray: #( 0 0 0 422725477 1345735788 1832209003 1999981163 1916095595 1345735788 758270315 0 0 0 0 0 1261587049 2587118699 4283787654 4283656068 4283458947 4283392897 4283195776 2671004523 1664502380 171134054 0 211462590 2033601901 4284050825 4283919239 4284971669 4285629597 4285695391 4285169048 4284379535 4283195775 4282998397 2419477869 322261099 1396330353 4284182411 4284313740 4286418855 4287208113 4286879149 4286484649 4286155685 4285761185 4285037464 4283327362 4282801275 2436846708 2587118699 4284182411 4286682026 4287602613 4287208113 4286879149 4286484649 4286155685 4285761185 4285432221 4284905878 4282932861 2755021932 4284182411 4285629341 4287931577 4287602613 4287208113 4286879149 4286484649 4286155685 4285761185 4285432221 4285103257 4283853961 4282669690 4284182411 4287010734 4287931577 4287602613 4287208113 4286879149 4286484649 4286155685 4285761185 4285432221 4285103257 4284380048 4282669690)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newScrollbarThumbVerticalMiddleForm [
-	"Answer the form for the middle of a vertical scrollbar thumb."
-
-	^(Form
-	extent: 13@1
-	depth: 32
-	fromArray: #( 4284182411 4288326078 4287931577 4287602613 4287208113 4286879149 4286484649 4286155685 4285761185 4285432221 4285103257 4284709013 4282669690)
-	offset: 0@0)
-]
-
 { #category : #'morph creation' }
 UITheme >> newSeparatorIn: aThemedMorph [
 	"Answer a new horizontal separator."
 
 	^SeparatorMorph new
 		fillStyle: Color transparent;
-		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1);
-		extent: 2@2;
+		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1 scaledByDisplayScaleFactor);
+		extent: (2@2) scaledByDisplayScaleFactor;
 		hResizing: #spaceFill
 ]
 
@@ -4214,7 +3317,7 @@ UITheme >> newSliderIn: aThemedMorph for: aModel getValue: getSel setValue: setS
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap;
 		setBalloonText: helpText;
-		minHeight: 16
+		minHeight: 16 scaledByDisplayScaleFactor
 ]
 
 { #category : #'morph creation' }
@@ -4255,14 +3358,14 @@ UITheme >> newTabGroupIn: aThemedMorph for: labelsAndControls [
 { #category : #'morph creation' }
 UITheme >> newTaskListButtonIn: aTasklist for: aTask [
 	"Answer a tasklist button morph for the given task."
-	
+
 	|lm lab button |
 	lab := (self buttonLabelForText: (aTask label contractTo: 40)).
 	aTask isActive
 		ifTrue: [ lab emphasis: 1 "1 -> bold" ].
 	lm := self
 		newRowIn: aTasklist
-		for: {(aTask icon ifNil: [self smallWindowIcon]) asMorph. lab}.
+		for: {(aTask icon ifNil: [self iconNamed: #smallWindow]) asMorph. lab}.
 	button := self
 		newButtonIn: aTasklist
 		for: aTask morph
@@ -4303,8 +3406,8 @@ UITheme >> newTaskbarThumbnailIn: aThemedMorph for: aWindow [
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
 		changeTableLayout;
-		layoutInset: 8;
-		cellInset: 4;
+		layoutInset: 8 scaledByDisplayScaleFactor;
+		cellInset: 4 scaledByDisplayScaleFactor;
 		addMorphBack: thumb;
 		addMorphBack: ((self
 			buttonLabelForText: (aWindow labelString truncateWithElipsisTo: 50))
@@ -4333,7 +3436,7 @@ UITheme >> newTextEditorIn: aThemedMorph for: aModel getText: getSel setText: se
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		removeProperty: #theme
 ]
 
@@ -4406,7 +3509,7 @@ UITheme >> newTitleIn: aThemedMorph label: aString for: control [
 		self newLabelIn: aThemedMorph label: aString.
 		control})
 		cellPositioning: #leftCenter;
-		cellInset: 2
+		cellInset: 2 scaledByDisplayScaleFactor
 ]
 
 { #category : #'morph creation' }
@@ -4427,7 +3530,7 @@ UITheme >> newToolSpacerIn: aThemedMorph [
 	^Morph new
 		borderWidth: 0;
 		color: Color transparent;
-		extent: 3@3
+		extent: (3@3) scaledByDisplayScaleFactor
 ]
 
 { #category : #'morph creation' }
@@ -4436,8 +3539,8 @@ UITheme >> newToolbarHandleIn: aThemedMorph [
 
 	^PanelMorph new
 		fillStyle: Color transparent; "non pane color tracking"
-		borderStyle: (BorderStyle raised baseColor: Color blue; width: 1);
-		extent: 4@3;
+		borderStyle: (BorderStyle raised baseColor: Color blue; width: 1 scaledByDisplayScaleFactor);
+		extent: (4@3) scaledByDisplayScaleFactor;
 		vResizing: #spaceFill
 ]
 
@@ -4448,7 +3551,7 @@ UITheme >> newToolbarIn: aThemedMorph [
 	|bar|
 	bar := PanelMorph new
 		changeTableLayout;
-		layoutInset: 0@1;
+		layoutInset: (0@1) scaledByDisplayScaleFactor;
 		listDirection: #leftToRight;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap.
@@ -4469,21 +3572,28 @@ UITheme >> newToolbarIn: aThemedMorph for: controls [
 	^answer
 ]
 
-{ #category : #initialization }
-UITheme >> newTreeExpandedForm [
-	"Answer a new form for an expanded tree item."
+{ #category : #private }
+UITheme >> newTreeForm: expanded size: size color: color [
 
-	^(Form
-	extent: 9@9
-	depth: 32
-	fromArray: #( 1049135240 2290649224 2290649224 2290649224 2290649224 2290649224 2290649224 2290649224 1200130184 478709896 4169697416 4287137928 4287137928 4287137928 4287137928 4287137928 4236806280 646482056 16777215 2508753032 4287137928 4287137928 4287137928 4287137928 4287137928 2726856840 16777215 16777215 495487112 4186474632 4287137928 4287137928 4287137928 4236806280 612927624 16777215 16777215 16777215 2542307464 4287137928 4287137928 4287137928 2676525192 16777215 16777215 16777215 16777215 478709896 4169697416 4287137928 4220029064 579373192 16777215 16777215 16777215 16777215 16777215 2424866952 4287137928 2626193544 16777215 16777215 16777215 16777215 16777215 16777215 394823816 4018702472 529041544 16777215 16777215 16777215 16777215 16777215 16777215 16777215 864585864 16777215 16777215 16777215 16777215)
-	offset: 0@0)
+	| rectangle insetDivisor triangleRectangle rectangleScaled triangleRectangleScaled vertices formCanvas |
+
+	rectangle := 0 asPoint extent: size asPoint.
+	insetDivisor := 13.
+	triangleRectangle := rectangle insetBy: rectangle extent / insetDivisor.
+	rectangleScaled := rectangle scaleBy: insetDivisor.
+	triangleRectangleScaled := triangleRectangle scaleBy: insetDivisor.
+	vertices := expanded
+		ifTrue: [ { triangleRectangleScaled topLeft. triangleRectangleScaled bottomCenter. triangleRectangleScaled topRight } ]
+		ifFalse: [ { triangleRectangleScaled topLeft. triangleRectangleScaled rightCenter. triangleRectangleScaled bottomLeft } ].
+	formCanvas := FormCanvas extent: rectangleScaled extent.
+	formCanvas drawPolygon: vertices fillStyle: color.
+	^ formCanvas form magnifyBy: insetDivisor reciprocal smoothing: insetDivisor
 ]
 
 { #category : #'morph creation' }
 UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getSelector changeSelected: setSelector [
 	"Answer a new tree morph."
-	
+
 	^TreeListMorph new
 		selectionColor: self selectionColor;
 		font: self listFont;
@@ -4495,22 +3605,11 @@ UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getS
 		keystroke: nil;
 		cornerStyle: aThemedMorph preferredCornerStyle;
 		"color: Color white;"
-		borderStyle: (BorderStyle inset width: 1);
+		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		autoDeselect: false;
 		yourself
-]
-
-{ #category : #initialization }
-UITheme >> newTreeUnexpandedForm [
-	"Answer a new form for an unexpanded tree item."
-
-	^(Form
-	extent: 9@9
-	depth: 32
-	fromArray: #( 1049135240 461932680 16777215 16777215 16777215 16777215 16777215 16777215 16777215 2324203656 4152920200 2458421384 428378248 16777215 16777215 16777215 16777215 16777215 2357758088 4287137928 4287137928 4152920200 2408089736 394823816 16777215 16777215 16777215 2391312520 4287137928 4287137928 4287137928 4287137928 4119365768 2324203656 344492168 16777215 2408089736 4287137928 4287137928 4287137928 4287137928 4287137928 4287137928 3968370824 780699784 2391312520 4287137928 4287137928 4287137928 4287137928 4236806280 2659747976 529041544 16777215 2357758088 4287137928 4287137928 4253583496 2810742920 646482056 16777215 16777215 16777215 2324203656 4253583496 2777188488 696813704 16777215 16777215 16777215 16777215 16777215 1200130184 663259272 16777215 16777215 16777215 16777215 16777215 16777215 16777215)
-	offset: 0@0)
 ]
 
 { #category : #'morph creation' }
@@ -4519,23 +3618,9 @@ UITheme >> newVerticalSeparatorIn: aThemedMorph [
 
 	^SeparatorMorph new
 		fillStyle: Color transparent;
-		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1);
-		extent: 2@2;
+		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1 scaledByDisplayScaleFactor);
+		extent: (2@2) scaledByDisplayScaleFactor;
 		vResizing: #spaceFill
-]
-
-{ #category : #initialization }
-UITheme >> newWindowCloseForm [
-	"Answer a new form for a window close box."
-
-	^ self iconNamed: #windowCloseForm
-]
-
-{ #category : #initialization }
-UITheme >> newWindowCloseOverForm [
-	"Answer a new form for a window menu box."
-
-	^ self newWindowCloseForm
 ]
 
 { #category : #'morph creation' }
@@ -4557,67 +3642,10 @@ UITheme >> newWindowIn: aThemedMorph for: aModel title: titleString [
 ]
 
 { #category : #initialization }
-UITheme >> newWindowInactiveControlForm [
-	"Answer a new form for an inactive window control box."
-
-	^(Form
-	extent: 16@16
-	depth: 32
-	fromArray: #( 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4291677645 4288585374 4286085240 4284243036 4284243036 4286085240 4288585374 4291677645 0 0 0 0 0 0 0 4289572269 4285756275 4286479998 4288716960 4289835441 4289835441 4288716960 4286479998 4285756275 4289572269 0 0 0 0 0 4289506476 4284835173 4287335307 4290559164 4292598747 4293322470 4293322470 4292598747 4290559164 4287335307 4284703587 4289506476 0 0 0 4291546059 4285493103 4286414205 4288980132 4291217094 4292335575 4292598747 4292598747 4292335575 4291282887 4288980132 4286282619 4285493103 4291546059 0 0 4288980132 4285361517 4287466893 4288782753 4289835441 4290295992 4290295992 4290427578 4290164406 4289835441 4288782753 4287466893 4285361517 4288980132 0 0 4286282619 4286611584 4288059030 4288716960 4289177511 4289572269 4289835441 4289835441 4289703855 4289374890 4288782753 4288059030 4286611584 4286282619 0 0 4285164138 4287664272 4288782753 4289374890 4289835441 4290427578 4290624957 4290624957 4290559164 4290032820 4289374890 4288914339 4287664272 4285164138 0 0 4285361517 4288322202 4289703855 4290295992 4290822336 4291414473 4291677645 4291677645 4291414473 4291085508 4290427578 4289703855 4288453788 4285624689 0 0 4287072135 4288716960 4290427578 4291217094 4291677645 4292203989 4292598747 4292598747 4292335575 4291809231 4291217094 4290427578 4288716960 4287203721 0 0 4288980132 4288256409 4290624957 4291677645 4292335575 4292927712 4293256677 4293256677 4293059298 4292598747 4291809231 4290822336 4288256409 4289177511 0 0 4291677645 4287664272 4290295992 4292006610 4293059298 4293454056 4293585642 4293585642 4293454056 4293125091 4292203989 4290427578 4287730065 4291677645 0 0 4293256677 4290032820 4288124823 4291217094 4292796126 4293322470 4293717228 4293717228 4293454056 4292927712 4291677645 4288256409 4290032820 4293256677 0 0 0 4293454056 4290032820 4288322202 4289967027 4291546059 4292598747 4292664540 4291677645 4290295992 4288716960 4290032820 4293454056 0 0 0 0 0 4293322470 4292203989 4289835441 4288782753 4288322202 4288453788 4288980132 4289835441 4292335575 4293322470 0 0 0 0 0 0 0 4293059298 4293585642 4293717228 4293585642 4293585642 4293585642 4293585642 4293059298 0 0 0 0)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMaximizeForm [
-	"Answer a new form for a window maximize box."
-
-	^ self iconNamed: #windowMaximizeForm
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMaximizeOverForm [
-	"Answer a new form for a window menu box."
-
-	^ self newWindowMaximizeForm
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMenuForm [
-	"Answer a new form for a window menu box."
-
-	^ self iconNamed: #windowMenuForm
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMenuOverForm [
-	"Answer a new form for a window menu box when the mouse is over it."
-
-	^(Form
-	extent: 24@16
-	depth: 32
-	fromArray: #( 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4293257970 4287735753 4284054189 4281884573 4281490073 4281555866 4281555866 4281555866 4281555866 4281555866 4281555866 4281555866 4281555866 4281490073 4281884573 4284054189 4287735753 4293257970 0 0 0 0 0 4293192178 4286026172 4283462312 4287538375 4289970905 4290759648 4291088354 4291022817 4291022817 4291088354 4291088354 4291022817 4291022817 4291088354 4290759648 4289970905 4287538375 4283462312 4286026172 4293192178 0 0 0 0 4287735753 4283265191 4288721616 4292074729 4293060849 4293455092 4293652469 4293652469 4293652469 4293652469 4293652469 4293652469 4293652469 4293652469 4293455092 4293060849 4292074729 4288721616 4283265191 4287801545 0 0 0 0 4284185518 4286420927 4290233820 4291877352 4292468972 4292535021 4292535021 4292535021 4292534765 4292534765 4292534765 4292534765 4292535021 4292535021 4292535021 4292468972 4291877352 4290233820 4286420927 4284185518 0 0 0 0 4282476193 4288261581 4290759648 4291351268 4291680231 4291746023 4291811559 4291811559 4291746023 4291680231 4291680231 4291746023 4291811559 4291811559 4291746023 4291680231 4291351268 4290759648 4288261581 4282476193 0 0 0 0 4282673314 4289116371 4291614438 4292403180 4292797935 4292929264 4293060849 4292929264 4292995056 4293060849 4293060849 4292995056 4292929264 4293060849 4292929264 4292797935 4292403180 4291614438 4289116371 4282607522 0 0 0 0 4284645809 4288655823 4291746023 4293323763 4294244090 4294638589 4294507004 4294638589 4294572796 4294638589 4294638589 4294572796 4294638589 4294507004 4294638589 4294244090 4293323763 4291746023 4288655823 4284645809 0 0 0 0 4287669960 4284514224 4290891232 4293323763 4294704381 4294835710 4294901503 4294901503 4294901503 4294901503 4294901503 4294901503 4294901503 4294901503 4294835710 4294704381 4293323763 4290891232 4284514224 4287669960 0 0 0 0 4292600558 4286880962 4283988397 4288392910 4291285731 4292468972 4292600558 4292600558 4292600558 4292600558 4292600558 4292600558 4292600558 4292600558 4292732143 4291811559 4288392910 4283988397 4286880962 4292600558 0 0 0 0 4292535021 4292600558 4288524495 4284777138 4281884573 4281029782 4281161367 4281161367 4281161367 4281161367 4281161367 4281161367 4281161367 4281161367 4281029782 4282015902 4284777138 4288524495 4292600558 4292535021 0 0 0 0 0 4292403180 4292403180 4292534765 4292535021 4293060849 4293060849 4293060849 4293060849 4293060849 4293060849 4293060849 4293060849 4293060849 4292797935 4292535021 4292534765 4292468972 4292403180 0 0 0 0 0 0 0 4292206058 4292535021 4292600558 4292863472 4292863472 4292863472 4292863472 4292863472 4292863472 4292863472 4292863472 4292863472 4292929264 4292600558 4292535021 4292206058 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-	offset: 0@0)
-]
-
-{ #category : #initialization }
 UITheme >> newWindowMenuPassiveForm [
 	"Answer a new form for a window menu box."
 
 	^ self iconNamed: #windowMenuInactive
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMinimizeForm [
-	"Answer a new form for a window minimize box."
-
-	^ self iconNamed: #windowMinimizeForm
-]
-
-{ #category : #initialization }
-UITheme >> newWindowMinimizeOverForm [
-	"Answer a new form for a window menu box."
-
-	^ self newWindowMinimizeForm
 ]
 
 { #category : #'morph creation' }
@@ -4644,19 +3672,6 @@ UITheme >> normalFillStyleFor: aMorph height: anInteger [
 	^ SolidFillStyle color: (self lightColorFor: aMorph)
 ]
 
-{ #category : #private }
-UITheme >> normalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [	
-	| top bottom |
-	top := aColor darker.
-	bottom := aColor.
-	^(GradientFillStyle ramp: {
-			0.0->top.
-			0.7->bottom.})
-		origin: aMorph bounds origin;
-		direction: 0 @ anInteger;
-		radial: false
-]
-
 { #category : #accessing }
 UITheme >> numberOfStepsForAnimations [
 	^ self animationSettings numberOfSteps
@@ -4664,7 +3679,7 @@ UITheme >> numberOfStepsForAnimations [
 
 { #category : #cursor }
 UITheme >> overTextCursorFor: aTextMorph [
-	"Answer the pointer cursor when over an active text 
+	"Answer the pointer cursor when over an active text
 	(answer nil if no particular cursor is wanted)."
 
 	^ Cursor overEditableText
@@ -4693,8 +3708,10 @@ UITheme >> passwordEntryIn: aThemedMorph text: aStringOrText title: aString entr
 
 { #category : #'basic-colors' }
 UITheme >> patchworkUIThemeColorFor: aWindowOrModel [
+
 	"Answer the colour for the given window."
-	^ self settings windowColor
+
+	^ colorPalette patchworkUIThemeColorFor: aWindowOrModel
 ]
 
 { #category : #'border-styles' }
@@ -4702,14 +3719,14 @@ UITheme >> plainGroupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a plain group panel."
 
 	^SimpleBorderStyle new
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: Color transparent
 ]
 
 { #category : #copying }
 UITheme >> postCopy [
 	"Copy the settings too."
-	
+
 	super postCopy.
 	self settings: self settings copy
 ]
@@ -4737,15 +3754,16 @@ UITheme >> progressBarBorderStyleFor: aProgressBar [
 	|c|
 	c := self progressBarColorFor: aProgressBar.
 	^BorderStyle simple
-		width: 1;
-		baseColor: c darker
+		width: 1 scaledByDisplayScaleFactor;
+		baseColor: c
 ]
 
 { #category : #'basic-colors' }
 UITheme >> progressBarColorFor: aProgressBar [
+
 	"Answer the colour for the given progress bar."
 
-	^self settings progressBarColor
+	^ colorPalette progressBarColorFor: aProgressBar
 ]
 
 { #category : #'fill-styles' }
@@ -4755,9 +3773,10 @@ UITheme >> progressBarFillStyleFor: aProgressBar [
 
 { #category : #'basic-colors' }
 UITheme >> progressBarProgressColorFor: aProgressBar [
+
 	"Answer the colour for the progress part of the given progress bar."
 
-	^self settings progressBarProgressColor
+	^ colorPalette progressBarProgressColorFor: aProgressBar
 ]
 
 { #category : #'fill-styles' }
@@ -4804,7 +3823,7 @@ UITheme >> questionWithoutCancelIn: aThemedMorph text: aStringOrText title: aStr
 UITheme >> radioButtonCornerStyleFor: aRadioButton [
 	"Answer the corner style for radio buttons.
 	Answer square when not disabled since the form is rounded."
-	
+
 	^aRadioButton enabled
 		ifTrue: [#square]
 		ifFalse: [#rounded]
@@ -4820,7 +3839,7 @@ UITheme >> radioButtonDisabledBorderStyleFor: aRadioButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> radioButtonDisabledFillStyleFor: aRadioButton [
 	"Return the disabled radio button fillStyle for the given button."
-	
+
 	^self radioButtonNormalFillStyleFor: aRadioButton
 ]
 
@@ -4835,7 +3854,7 @@ UITheme >> radioButtonForm [
 UITheme >> radioButtonMarkerForm [
 	"Answer the form to use for a radio button marker."
 
-	^(self forms at: #radioButtonMarker ifAbsent: [Form extent: 12@12 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self iconNamed: #radioButtonMarkerForm
 ]
 
 { #category : #'border-styles - buttons' }
@@ -4848,7 +3867,7 @@ UITheme >> radioButtonNormalBorderStyleFor: aRadioButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> radioButtonNormalFillStyleFor: aRadioButton [
 	"Return the normal radio button fillStyle for the given button."
-	
+
 	^(ImageFillStyle form: self radioButtonForm) origin: aRadioButton topLeft
 ]
 
@@ -4869,14 +3888,14 @@ UITheme >> radioButtonSelectedDisabledBorderStyleFor: aRadioButton [
 { #category : #'fill-styles - buttons' }
 UITheme >> radioButtonSelectedDisabledFillStyleFor: aRadioButton [
 	"Return the selected disabled radio button fillStyle for the given button."
-	
+
 	^self radioButtonNormalFillStyleFor: aRadioButton
 ]
 
 { #category : #'fill-styles - buttons' }
 UITheme >> radioButtonSelectedFillStyleFor: aRadioButton [
 	"Return the selected radio button fillStyle for the given button."
-	
+
 	^(ImageFillStyle form: self radioButtonSelectedForm) origin: aRadioButton topLeft
 ]
 
@@ -4889,25 +3908,22 @@ UITheme >> radioButtonSelectedForm [
 
 { #category : #'fill-styles' }
 UITheme >> resizerGripNormalFillStyleFor: aResizer [
-	"Return the normal fillStyle for the given resizer.
-	For the moment, answer a transparent colour for no drawing,
-	non transparent to draw as normal."
-	
-	^Color transparent
+
+	^ colorPalette resizerGripNormalFillStyleFor: aResizer
 ]
 
 { #category : #scrollbars }
-UITheme >> scrollBarButtonArrowVertices: aRectangle [ 
+UITheme >> scrollBarButtonArrowVertices: aRectangle [
 	^ self verticesForComplexArrow: aRectangle
 ]
 
 { #category : #'morph creation' }
 UITheme >> scrollBarDownButtonBoundsFor: aScrollbar [
-	
+
 	| extent position |
-	
+
 	extent := aScrollbar buttonExtent.
-	position := aScrollbar innerBounds bottomRight - extent.	
+	position := aScrollbar innerBounds bottomRight - extent.
 
 	^ position extent: extent
 ]
@@ -4929,51 +3945,51 @@ UITheme >> scrollPaneNormalBorderStyleFor: aScrollPane [
 	"Return the normal borderStyle for the given scroll pane."
 
 	^BorderStyle simple
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: aScrollPane paneColor
 ]
 
 { #category : #'label-styles' }
 UITheme >> scrollbarArrowOfDirection: aSymbol size: finalSizeInteger color: aColor [
 	"Answer a new scrollbar arrow form (normally cached by Scrollbar)."
-	
+
 	^self basicCreateArrowOfDirection: aSymbol size: finalSizeInteger color: aColor
 ]
 
 { #category : #'border-styles - scrollbars' }
 UITheme >> scrollbarButtonCornerStyleIn: aThemedMorph [
 	"Allow for themes to override default behaviour."
-	
+
 	^#square
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> scrollbarColor [
-	^ self settings scrollbarColor
+
+	^ colorPalette scrollbarColor
 ]
 
 { #category : #'basic-colors' }
 UITheme >> scrollbarColorFor: aScrollbar [
+
 	"Answer the colour for the given scrollbar."
 
-	^self settings standardColorsOnly
-		ifTrue: [self settings scrollbarColor]
-		ifFalse: [aScrollbar lastPaneColor
-					 ifNil: [Color white]]
+	^ colorPalette scrollbarColorFor: aScrollbar
 ]
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarImageColorFor: aScrollbar [
+
 	"Return the scrollbar image colour (on buttons) for the given scrollbar."
-	
-	^(self baseScrollbarColorFor: aScrollbar) darker
+
+	^ colorPalette scrollbarImageColorFor: aScrollbar
 ]
 
 { #category : #defaults }
 UITheme >> scrollbarMinimumThumbThickness [
-	"Answer the minumum width or height of a scrollbar thumb 
+	"Answer the minumum width or height of a scrollbar thumb
 	as appropriate to its orientation."
-	
+
 	^15 * self displayScaleFactor
 ]
 
@@ -5087,34 +4103,14 @@ UITheme >> scrollbarNormalButtonBorderStyleFor: aScrollbar [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarNormalButtonFillStyleFor: aScrollbar [
 	"Return the normal scrollbar button fillStyle for the given scrollbar."
-	
+
 	^ self scrollbarNormalThumbFillStyleFor: aScrollbar
 ]
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarNormalFillStyleFor: aScrollbar [
-	"Return the normal scrollbar fillStyle for the given scrollbar."
-	
-	^ "(self glamorousBaseColorFor: aScrollbar) muchLighter"
-	Color r: 245 g: 245 b: 245 range: 255
-]
 
-{ #category : #'fill-styles - scrollbars' }
-UITheme >> scrollbarNormalHorizontalThumbFillStyleFor: aScrollbar [
-	"Return the normal scrollbar horizontal thumb fillStyle for the given scrollbar."
-	
-	|s l m r|
-	s := aScrollbar slider.
-	l := self scrollbarThumbLeftForm.
-	m := self scrollbarThumbHorizontalMiddleForm.
-	r := self scrollbarThumbRightForm.
-	^CompositeFillStyle fillStyles: {
-		(ImageFillStyle form: l) origin: s topLeft.
-		(AlphaInfiniteForm with: m)
-			origin: s topLeft + (l width@0);
-			extent: (s width - l width - r width)@m height.
-		(ImageFillStyle form: r)
-			origin: s topRight - (r width@0)}
+	^ colorPalette scrollbarNormalFillStyleFor: aScrollbar
 ]
 
 { #category : #'border-styles - scrollbars' }
@@ -5122,7 +4118,7 @@ UITheme >> scrollbarNormalThumbBorderStyleFor: aScrollbar [
 	"Return the normal thumb borderStyle for the given scrollbar."
 
 	^ BorderStyle simple
-		width: 1;
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: Color transparent
 ]
 
@@ -5132,26 +4128,8 @@ UITheme >> scrollbarNormalThumbFillStyleFor: aScrollbar [
 	^ self normalFillStyleFor: aScrollbar height: aScrollbar height
 ]
 
-{ #category : #'fill-styles - scrollbars' }
-UITheme >> scrollbarNormalVerticalThumbFillStyleFor: aScrollbar [
-	"Return the normal scrollbar vertical thumb fillStyle for the given scrollbar."
-	
-	|s t m b|
-	s := aScrollbar slider.
-	t := self scrollbarThumbTopForm.
-	m := self scrollbarThumbVerticalMiddleForm.
-	b := self scrollbarThumbBottomForm.
-	^CompositeFillStyle fillStyles: {
-		(ImageFillStyle form: t) origin: s topLeft.
-		(AlphaInfiniteForm with: m)
-			origin: s topLeft + (0@t height);
-			extent: m width@(s height - t height - b height).
-		(ImageFillStyle form: b)
-			origin: s bottomLeft - (0@b height)}
-]
-
 { #category : #'border-styles - scrollbars' }
-UITheme >> scrollbarPagingAreaCornerStyleIn: aThemedMorph [	
+UITheme >> scrollbarPagingAreaCornerStyleIn: aThemedMorph [
 	^#square
 ]
 
@@ -5171,14 +4149,14 @@ UITheme >> scrollbarPressedButtonBorderStyleFor: aScrollbar [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarPressedButtonFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar button fillStyle for the given scrollbar."
-	
+
 	^self scrollbarPressedThumbFillStyleFor: aScrollbar
 ]
 
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarPressedFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar fillStyle for the given scrollbar."
-	
+
 	^self scrollbarNormalFillStyleFor: aScrollbar
 ]
 
@@ -5192,7 +4170,7 @@ UITheme >> scrollbarPressedThumbBorderStyleFor: aScrollbar [
 { #category : #'fill-styles - scrollbars' }
 UITheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar thumb fillStyle for the given scrollbar."
-	
+
 	^self scrollbarNormalThumbFillStyleFor: aScrollbar
 ]
 
@@ -5200,106 +4178,62 @@ UITheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 UITheme >> scrollbarThickness [
 	"Answer the width or height of a scrollbar as appropriate to
 	its orientation."
-	
+
 	^13 * self displayScaleFactor
-]
-
-{ #category : #'fill-styles' }
-UITheme >> scrollbarThumbBottomForm [
-	"Answer the form to use for the bottom of a vertical scrollbar."
-
-	^self forms at: #sbVThumbBottom ifAbsent: [Form extent: 13@7 depth: Display depth]
 ]
 
 { #category : #'border-styles - scrollbars' }
 UITheme >> scrollbarThumbCornerStyleIn: aThemedMorph [
 	"Allow for themes to override default behaviour."
-	
+
 	^#square
-]
-
-{ #category : #'fill-styles' }
-UITheme >> scrollbarThumbHorizontalMiddleForm [
-	"Answer the form to use for the middle of a horizontal scrollbar."
-
-	^self forms at: #sbHThumbMiddle ifAbsent: [Form extent: 1@13 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> scrollbarThumbLeftForm [
-	"Answer the form to use for the left of a horizontal scrollbar."
-
-	^self forms at: #sbHThumbLeft ifAbsent: [Form extent: 7@13 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> scrollbarThumbRightForm [
-	"Answer the form to use for the right of a horizontal scrollbar."
-
-	^self forms at: #sbHThumbRight ifAbsent: [Form extent: 7@13 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> scrollbarThumbTopForm [
-	"Answer the form to use for the top of a vertical scrollbar."
-
-	^self forms at: #sbVThumbTop ifAbsent: [Form extent: 13@7 depth: Display depth]
-]
-
-{ #category : #'fill-styles' }
-UITheme >> scrollbarThumbVerticalMiddleForm [
-	"Answer the form to use for the middle of a vertical scrollbar."
-
-	^self forms at: #sbVThumbMiddle ifAbsent: [Form extent: 13@1 depth: Display depth]
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> secondarySelectionColor [
-	^ Color r: 0.927 g: 0.962 b: 0.995 alpha: 1.0
+
+	^ colorPalette secondarySelectionColor
 ]
 
 { #category : #private }
 UITheme >> selectedFillStyleFor: aMorph height: anInteger [
-	
+
 
 	^ SolidFillStyle color: (self lightSelectionColorFor:  aMorph)
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> selectedItemListTextColor [
+
 	"Answer the color for the selected item in a list text."
 
-	^ self textColor
+	^ colorPalette selectedItemListTextColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> selectionBarColor [
 
-	^ self settings selectionBarColor
+	^ colorPalette selectionBarColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> selectionColor [
+
 	"Answer the selection color to use.."
 
-	^ self settings selectionColor
-]
-
-{ #category : #defaults }
-UITheme >> selectionColorForFrame: frame [ 
-
-	^ self selectionColor
+	^ colorPalette selectionColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> selectionTextColor [
- ^ self settings selectionTextColor
+
+	^ colorPalette selectionTextColor
 ]
 
 { #category : #'fill-styles' }
 UITheme >> separatorFillStyleFor: aSeparator [
 	"Return the separator fillStyle for the given separator."
-	
+
 	^ SolidFillStyle color: (self baseColorFor: aSeparator) darker
 ]
 
@@ -5309,9 +4243,9 @@ UITheme >> setSystemProgressMorphDefaultParameters: aProgressMorph [
 	aProgressMorph color: self settings derivedMenuColor.
 	self settings preferRoundCorner
 		ifTrue: [aProgressMorph useRoundedCorners].
-	aProgressMorph borderWidth: self menuBorderWidth * self displayScaleFactor.
+	aProgressMorph borderWidth: self menuBorderWidth.
 	aProgressMorph borderColor: self menuBorderColor.
-	aProgressMorph updateColor.
+	aProgressMorph updateColor
 ]
 
 { #category : #accessing }
@@ -5331,7 +4265,7 @@ UITheme >> settings: anObject [
 { #category : #accessing }
 UITheme >> shStyleTable [
 
-	"Styling depends on shout. If it is not present, means there is no style 
+	"Styling depends on shout. If it is not present, means there is no style
 	 table to apply"
 	^ (self class environment classNamed: #SHRBTextStyler)
 		ifNotNil: [ :aClass | aClass perform: self shStyleTableName ]
@@ -5359,7 +4293,7 @@ UITheme >> sliderDisabledBorderStyleFor: aSlider [
 { #category : #'fill-styles' }
 UITheme >> sliderDisabledFillStyleFor: aSlider [
 	"Return the disabled fillStyle for the given slider."
-	
+
 	^ self textEditorDisabledFillStyleFor: aSlider
 ]
 
@@ -5368,15 +4302,16 @@ UITheme >> sliderNormalBorderStyleFor: aSlider [
 	"Return the normal slider borderStyle for the given text editor."
 
 	^BorderStyle inset
-		width: 1;
-		baseColor: aSlider paneColor twiceDarker
+		width: 1 scaledByDisplayScaleFactor;
+		baseColor: aSlider paneColor
 ]
 
 { #category : #'fill-styles' }
 UITheme >> sliderNormalFillStyleFor: aSlider [
+
 	"Return the normal fillStyle for the given slider."
-	
-	^ SolidFillStyle color: Color white
+
+	^ colorPalette sliderNormalFillStyleFor: aSlider
 ]
 
 { #category : #accessing }
@@ -5397,14 +4332,14 @@ UITheme >> soundTheme: anObject [
 { #category : #'fill-styles' }
 UITheme >> splitterNormalFillStyleFor: aSplitter [
 	"Return the normal splitter fillStyle for the given splitter."
-	
+
 	^ SolidFillStyle color: Color transparent
 ]
 
 { #category : #'fill-styles' }
 UITheme >> splitterPressedFillStyleFor: aSplitter [
 	"Return the pressed splitter fillStyle for the given splitter."
-	
+
 	|aColor|
 	aColor := self baseColorFor: aSplitter.
 	^ (GradientFillStyle ramp: {0.0->aColor lighter. 0.9-> aColor})
@@ -5416,39 +4351,35 @@ UITheme >> splitterPressedFillStyleFor: aSplitter [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> spotlightWindowColor [ 
-	^ self selectionColor muchDarker
-]
+UITheme >> spotlightWindowColor [
 
-{ #category : #defaults }
-UITheme >> statusFont [
-	"Answer the status font to use."
-
-	^((TextStyle named: #BitstreamVeraSansMono) ifNil: [TextStyle default])
-		fontOfPointSize: 8
+	^ colorPalette spotlightWindowColor
 ]
 
 { #category : #'basic-colors' }
 UITheme >> subgroupColorFrom: paneColor [
+
 	"Answer the colour for a subgroup given the pane colour."
 
-	^ self lightColorFor: paneColor" self class baseColor"
+	^ colorPalette subgroupColorFrom: paneColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> successBackgroundColor [
-	^ self successTextColor lighter lighter
+
+	^ colorPalette successBackgroundColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> successTextColor [
-	^ Color r: 0 g: 0.5 b: 0
+
+	^ colorPalette successTextColor
 ]
 
 { #category : #'border-styles' }
 UITheme >> tabGroupCornerStyleIn: aThemedMorph [
 	"Allow for themes to override default behaviour."
-	
+
 	^aThemedMorph
 		ifNil: [#square]
 		ifNotNil: [:tm | tm preferredCornerStyle]
@@ -5457,7 +4388,10 @@ UITheme >> tabGroupCornerStyleIn: aThemedMorph [
 { #category : #defaults }
 UITheme >> tabLabelInsetFor: aButton [
 	"Answer the inset to use for a tab label."
-	^ Margin left: 8 top: 2 right: 8 bottom: 2
+	| left top right bottom |
+	left := right := 8 scaledByDisplayScaleFactor.
+	top := bottom := 2 scaledByDisplayScaleFactor.
+	^ Margin left: left top: top right: right bottom: bottom
 ]
 
 { #category : #'border-styles' }
@@ -5487,8 +4421,8 @@ UITheme >> tabLabelSelectedFillStyleFor: aTabLabel [
 
 { #category : #'border-styles' }
 UITheme >> tabPanelBorderStyleFor: aTabGroup [
-	^ Pharo3TabPanelBorderStyle new 
-		width: 1;
+	^ Pharo3TabPanelBorderStyle new
+		width: 1 scaledByDisplayScaleFactor;
 		baseColor: ((self darkBaseColorFor: aTabGroup));
 		tabSelector: aTabGroup tabSelectorMorph
 ]
@@ -5503,48 +4437,47 @@ UITheme >> tabSelectorCellInsetFor: aTabSelector [
 { #category : #defaults }
 UITheme >> tabSelectorMorphMinExtentFor: aTabSelectorMorph [
 	"Answer the min extent of the given tab selector."
-	
-	^aTabSelectorMorph basicMinExtent + (8 @ 1)
+
+	^aTabSelectorMorph basicMinExtent + (8 @ 1) scaledByDisplayScaleFactor
 ]
 
 { #category : #'fill-styles' }
 UITheme >> taskListFillStyleFor: aTasklist [
-	
+
 	| aColor result |
 	aColor := aTasklist color.
 	result := GradientFillStyle ramp: {
 			0.0->aColor whiter whiter. 0.2->aColor lighter.
 			0.8->aColor darker. 1.0->aColor blacker}.
-	^ result		
+	^ result
 		origin: aTasklist topLeft;
 		direction: 0 @ aTasklist height;
 		radial: false;
-		yourself.
+		yourself
 ]
 
 { #category : #'basic-colors' }
 UITheme >> taskbarActiveButtonColorFor: aButton [
+
 	"Answer the colour for the given active taskbar button."
 
-	^self scrollbarColor alphaMixed: 0.7 with: Color white
+	^ colorPalette taskbarActiveButtonColorFor: aButton
 ]
 
 { #category : #'basic-colors' }
 UITheme >> taskbarButtonColorFor: aButton [
-	"Answer the colour for the given taskbar button." 
-	^ self windowColorFor: aButton model
+
+	"Answer the colour for the given taskbar button."
+
+	^ colorPalette taskbarButtonColorFor: aButton
 ]
 
 { #category : #'basic-colors' }
 UITheme >> taskbarButtonLabelColorFor: aButton [
+
 	"Answer the colour for the label of the given taskbar button."
 
-	^aButton model
-		ifNil: [super taskbarButtonLabelColorFor: aButton]
-		ifNotNil: [:win |
-			win isActive
-				ifTrue: [Color black]
-				ifFalse: [Color gray darker]]
+	^ colorPalette taskbarButtonLabelColorFor: aButton
 ]
 
 { #category : #'fill-styles - taskbar' }
@@ -5568,22 +4501,26 @@ UITheme >> taskbarItemDisabledFillStyleFor: aButton [
 
 { #category : #'basic-colors' }
 UITheme >> taskbarItemLabelColorForCollapsed: aButton [
-	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
-	
-	^Color darkGray
+
+	"Answer the colour for the label of the given taskbar button, given that the corresponding
+	window is collapsed."
+
+	^ colorPalette taskbarItemLabelColorForCollapsed: aButton
 ]
 
 { #category : #'basic-colors' }
 UITheme >> taskbarItemLabelColorForExpanded: aButton [
-	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
-	
-	^ Color black
+
+	"Answer the colour for the label of the given taskbar button, given that the corresponding
+	window is collapsed."
+
+	^ colorPalette taskbarItemLabelColorForExpanded: aButton
 ]
 
 { #category : #'border-styles - taskbar' }
 UITheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 	"Return the mouse over taskbar item borderStyle for the given button."
-	
+
 	^ self buttonMouseOverBorderStyleFor: aButton
 ]
 
@@ -5604,7 +4541,7 @@ UITheme >> taskbarItemNormalBorderStyleFor: aButton [
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemNormalFillStyleFor: aButton [
 	"Return the normal taskbar item fillStyle for the given button."
-	
+
 	^ self buttonNormalFillStyleFor: aButton
 ]
 
@@ -5618,7 +4555,7 @@ UITheme >> taskbarItemPressedBorderStyleFor: aButton [
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemPressedFillStyleFor: aButton [
 	"Return the taskbar item pressed fillStyle for the given button."
-		
+
 	^ self buttonPressedFillStyleFor: aButton
 ]
 
@@ -5639,14 +4576,14 @@ UITheme >> taskbarItemSelectedDisabledBorderStyleFor: aButton [
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemSelectedDisabledFillStyleFor: aButton [
 	"Return the taskbar item selected disabled fillStyle for the given color."
-	
+
 	^ self buttonSelectedDisabledFillStyleFor: aButton
 ]
 
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemSelectedFillStyleFor: aButton [
 	"Return the taskbar item button fillStyle for the given button."
-	
+
 	^ self buttonSelectedFillStyleFor: aButton
 ]
 
@@ -5660,7 +4597,7 @@ UITheme >> taskbarItemSelectedMouseOverBorderStyleFor: aButton [
 { #category : #'fill-styles - taskbar' }
 UITheme >> taskbarItemSelectedMouseOverFillStyleFor: aButton [
 	"Return the taskbar item selected mouse over fillStyle for the given color."
-	
+
 	^ self buttonSelectedMouseOverFillStyleFor: aButton
 ]
 
@@ -5680,15 +4617,16 @@ UITheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
 
 { #category : #'basic-colors' }
 UITheme >> taskbarMinimizedButtonColorFor: aButton [
+
 	"Answer the colour for the given minimized taskbar button."
 
-	^Color transparent
+	^ colorPalette taskbarMinimizedButtonColorFor: aButton
 ]
 
 { #category : #'border-styles' }
 UITheme >> taskbarThumbnailCornerStyleFor: aMorph [
 	"Answer the corner style for the taskbar thumbnail/tasklist."
-	
+
 	^#square
 ]
 
@@ -5698,13 +4636,15 @@ UITheme >> taskbarThumbnailNormalBorderStyleFor: aWindow [
 ]
 
 { #category : #'accessing - colors' }
-UITheme >> textColor [ 
-	^ Color black
+UITheme >> textColor [
+
+	^ colorPalette textColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> textColorForNonStandardBackground [
-	^ self textColor
+
+	^ colorPalette textColorForNonStandardBackground
 ]
 
 { #category : #'border-styles' }
@@ -5717,21 +4657,8 @@ UITheme >> textEditorDisabledBorderStyleFor: aTextEditor [
 { #category : #'fill-styles' }
 UITheme >> textEditorDisabledFillStyleFor: aTextEditor [
 	"Return the disabled fillStyle for the given text editor."
-	
+
 	^self basePassiveBackgroundColorFor: aTextEditor
-]
-
-{ #category : #services }
-UITheme >> textEditorIn: aThemedMorph text: aStringOrText title: aString entryText: defaultEntryText [
-	"Answer the result of a text editor (multiline) dialog ( a string or nil if cancelled)
-	with the given label and title."
-
-	^self
-		textEditorIn: aThemedMorph
-		text: aStringOrText
-		title: aString
-		entryText: defaultEntryText
-		entryHeight: 64
 ]
 
 { #category : #services }
@@ -5757,15 +4684,16 @@ UITheme >> textEditorNormalBorderStyleFor: aTextEditor [
 
 { #category : #'fill-styles' }
 UITheme >> textEditorNormalFillStyleFor: aTextEditor [
+
 	"Return the normal fillStyle for the given text editor."
-	
-	^Color white
+
+	^ colorPalette textEditorNormalFillStyleFor: aTextEditor
 ]
 
 { #category : #'border-styles - buttons' }
 UITheme >> textEntryCornerStyleIn: aThemedMorph [
 	"Answer the corner style to use for text entry morphs."
-	
+
 	^#square
 ]
 
@@ -5796,39 +4724,10 @@ UITheme >> textEntryIn: aThemedMorph text: aStringOrText title: aString entryTex
 			entryCompletion: anEntryCompletion) openModal entryText
 ]
 
-{ #category : #'border-styles' }
-UITheme >> textFieldDisabledBorderStyleFor: aTextField [
-	"Return the disabled text field borderStyle for the given text field."
-
-	^self textEditorDisabledBorderStyleFor: aTextField
-]
-
-{ #category : #'fill-styles' }
-UITheme >> textFieldDisabledFillStyleFor: aTextField [
-	"Return the disabled fillStyle for the given text field."
-	
-	^self textEditorDisabledFillStyleFor: aTextField
-]
-
-{ #category : #'border-styles' }
-UITheme >> textFieldNormalBorderStyleFor: aTextField [
-	"Return the normal text field borderStyle for the given text field."
-
-	^self textEditorNormalBorderStyleFor: aTextField
-]
-
 { #category : #'fill-styles' }
 UITheme >> textFieldNormalFillStyleFor: aTextField [
-	"Return the normal fillStyle for the given text field."
-	
-	^ Color white
-]
 
-{ #category : #'border-styles' }
-UITheme >> textFocusBoundsFor: aPluggableTextMorph [
-	"Answer the bounds for drawing the focus indication."
-
-	^aPluggableTextMorph bounds
+	^ colorPalette textFieldNormalFillStyleFor: aTextField
 ]
 
 { #category : #defaults }
@@ -5842,22 +4741,25 @@ UITheme >> textFont [
 UITheme >> treeExpandedForm [
 	"Answer the form to use for an expanded tree item."
 
-	^(self forms at: #treeExpanded ifAbsent: [Form extent: 10@9 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self formsForCurrentDisplayScaleFactor at: #treeExpanded
 ]
 
 { #category : #'basic-colors' }
 UITheme >> treeLineColorsFrom: aColor [
+
 	"Answer the colours to use for the tree lines.
 	The given colour is the preferred colour."
 
-	^{aColor. Color transparent}
+	^ colorPalette treeLineColorsFrom: aColor
 ]
 
 { #category : #'basic-colors' }
 UITheme >> treeLineDashes [
 	"Answer the dash lengths to use for the tree lines."
 
-	^#(1 1)
+	| length |
+	length := 1 scaledByDisplayScaleFactor.
+	^ { length. length }
 ]
 
 { #category : #defaults }
@@ -5871,12 +4773,13 @@ UITheme >> treeLineWidth [
 UITheme >> treeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item."
 
-	^(self forms at: #treeUnexpanded ifAbsent: [Form extent: 10@9 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self formsForCurrentDisplayScaleFactor at: #treeUnexpanded
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> unfocusedSelectionColor [
-	^ self settings unfocusedSelectionColor
+
+	^ colorPalette unfocusedSelectionColor
 ]
 
 { #category : #scrollbars }
@@ -5888,19 +4791,10 @@ UITheme >> updateScrollBarButtonAspect: aMorph color: aColor [
 	aMorph color: aColor
 ]
 
-{ #category : #scrollbars }
-UITheme >> updateScrollBarButtonsAspect: aCollection color: aColor [ 
-	"update aCollection of morphs with aColor"
-	
-	
-	aCollection
-		do: [:each | self updateScrollBarButtonAspect: each color: aColor]
-]
-
 { #category : #initialization }
 UITheme >> updateWorldDockingBars [
 	"Update the world docking bar gradients."
-	
+
 	self currentWorld mainDockingBars do: [:d |
 		d
 			color: (self worldMainDockingBarColorFor: d);
@@ -5911,7 +4805,8 @@ UITheme >> updateWorldDockingBars [
 
 { #category : #'accessing - colors' }
 UITheme >> urlColor [
-	^ Color fromHexString: '03A9F4'
+
+	^ colorPalette urlColor
 ]
 
 { #category : #accessing }
@@ -5923,23 +4818,16 @@ UITheme >> useAnimation: aBoolean [
 UITheme >> useScrollbarThumbShadow [
 	"Answer whether a shadow morph should be displayed when
 	dragging a scrollbar thumb."
-	
+
 	"If for some reason it's nil, reinitialice to 'false'."
-	
+
 	useScrollbarThumbShadow ifNil:[useScrollbarThumbShadow:=false].
 
 	^useScrollbarThumbShadow
 ]
 
-{ #category : #'fill-styles - scrollbars' }
-UITheme >> useScrollbarThumbShadow: aBoolean [
-	"Sets whether the scrollbar must show a shadow of the original position before dragging."
-
-	useScrollbarThumbShadow := aBoolean.
-]
-
 { #category : #scrollbars }
-UITheme >> verticesForComplexArrow: aRectangle [ 
+UITheme >> verticesForComplexArrow: aRectangle [
 	"PRIVATE - answer a collection of vertices to draw a complex arrow"
 
 	|r vertices aux b c|
@@ -5957,87 +4845,49 @@ UITheme >> verticesForComplexArrow: aRectangle [
 	^vertices
 ]
 
-{ #category : #scrollbars }
-UITheme >> verticesForSimpleArrow: aRectangle [ 
-	"PRIVATE - answer a collection of vertices to draw a simple arrow"
-	| vertices |
-	vertices := OrderedCollection new.
-	""
-	vertices add: aRectangle bottomLeft.
-	vertices add: aRectangle center x @ (aRectangle top + (aRectangle width / 8)).
-	vertices add: aRectangle bottomRight.
-	vertices add: aRectangle bottomRight + (0@0.01).
-	""
-	^ vertices
-]
+{ #category : #'basic-colors' }
+UITheme >> veryLightSelectionColor [
 
-{ #category : #private }
-UITheme >> veryLightFillStyleFor: aMorph height: anInteger [
-	"Return the very light button fillStyle for the given button."
-	
-	^ SolidFillStyle color: (self veryLightSelectionColorFor: aMorph)
+	^ colorPalette veryLightSelectionColor
 ]
 
 { #category : #private }
 UITheme >> veryLightSelectionColorFor: aMorph [
-	^ self class veryLightSelectionColor
+
+	^ colorPalette veryLightSelectionColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> warningBackgroundColor [
-	^ Color yellow
+
+	^ colorPalette warningBackgroundColor
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> warningTextColor [
-	^ Color yellow muchDarker
-]
 
-{ #category : #'*Polymorph-Widgets-Themes' }
-UITheme >> watcherWindowActiveFillStyleFor: aWindow [
-
-	^ SolidFillStyle color: (Color veryVeryLightGray alpha: 0.6)
-]
-
-{ #category : #'*Polymorph-Widgets-Themes' }
-UITheme >> watcherWindowInactiveFillStyleFor: aWindow [
-
-	^ SolidFillStyle color: (Color veryVeryLightGray alpha: 0.6)
+	^ colorPalette warningTextColor
 ]
 
 { #category : #'label-styles' }
 UITheme >> whiteTreeExpandedForm [
 	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^ self forms 
-		at: #whiteTreeExpanded 
-		ifAbsent: [ | f |
-			f := self treeExpandedForm deepCopy.
-			f replaceColor: Color white withColor: Color transparent.
-			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
-			self forms at: #whiteTreeExpanded put: f.
-			self whiteTreeExpandedForm]
+	^ self formsForCurrentDisplayScaleFactor at: #whiteTreeExpanded
 ]
 
 { #category : #'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^ self forms 
-		at: #whiteTreeUnexpanded
-		ifAbsent: [ | f |
-			f := self treeUnexpandedForm deepCopy.
-			f replaceColor: Color white withColor: Color transparent.
-			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
-			self forms at: #whiteTreeUnexpanded put: f.
-			self whiteTreeUnexpandedForm]
+	^ self formsForCurrentDisplayScaleFactor at: #whiteTreeUnexpanded
 ]
 
 { #category : #'border-styles' }
 UITheme >> windowActiveDropShadowOffsetRectangleFor: aSystemWindow [
 	"Answer a rectangle describing the offsets for each corner
 	of the the active window bounds for the drop shadow area."
-	
+
 	^self windowActiveDropShadowStyle == #diffuse
 		ifTrue: [self windowDiffuseDropShadowOffsetRectangleFor: aSystemWindow]
 		ifFalse: [self windowPlainDropShadowOffsetRectangleFor: aSystemWindow]
@@ -6046,7 +4896,7 @@ UITheme >> windowActiveDropShadowOffsetRectangleFor: aSystemWindow [
 { #category : #accessing }
 UITheme >> windowActiveDropShadowStyle [
 	"Answer the style of drop shadow to use for active windows."
-	
+
 	^windowActiveDropShadowStyle
 ]
 
@@ -6060,14 +4910,15 @@ UITheme >> windowActiveDropShadowStyle: anObject [
 { #category : #'fill-styles' }
 UITheme >> windowActiveFillStyleFor: aWindow [
 	"We do not want the lighting effect when the window goes inactive"
-	^SolidFillStyle color: self class baseColor
+	^SolidFillStyle color: self baseColor
 ]
 
 { #category : #'fill-styles' }
 UITheme >> windowActiveLabelFillStyleFor: aWindow [
+
 	"Return the window active label fillStyle for the given window."
-	
-	^Color black
+
+	^ colorPalette windowActiveLabelFillStyleFor: aWindow
 ]
 
 { #category : #'fill-styles' }
@@ -6091,14 +4942,14 @@ UITheme >> windowBottomOffset [
 UITheme >> windowCloseForm [
 	"Answer the form to use for the close button of a window."
 
-	^(self forms at: #windowClose ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowCloseForm
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowCloseOverForm [
 	"Answer the form to use for mouse over window close buttons"
 
-	^(self forms at: #windowCloseOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowCloseForm
 ]
 
 { #category : #'label-styles - windows' }
@@ -6118,24 +4969,25 @@ UITheme >> windowCloseSound [
 { #category : #'morph creation' }
 UITheme >> windowCollapseBoxLayoutFor: aWindow [
 
-	^ LayoutFrame new 
-		leftFraction: 1; 
+	^ LayoutFrame new
+		leftFraction: 1;
 		leftOffset: aWindow boxExtent x negated;
 		yourself
 ]
 
 { #category : #'accessing - colors' }
 UITheme >> windowColor [
+
 	"Answer the window color to use."
 
-	^self settings windowColor
+	^ colorPalette windowColor
 ]
 
 { #category : #'basic-colors' }
-UITheme >> windowColorFor: aWindowOrModel [ 
+UITheme >> windowColorFor: aWindowOrModel [
 	"Answer the colour for the given window."
 
-	^ self settings windowColor
+	^ colorPalette windowColorFor: aWindowOrModel
 ]
 
 { #category : #'border-styles' }
@@ -6143,35 +4995,26 @@ UITheme >> windowDiffuseDropShadowOffsetRectangleFor: aSystemWindow [
 	"Answer a rectangle describing the offsets for each corner
 	of the the active window bounds for the drop shadow area
 	when the difuse style is used."
-	
-	^8@4 corner: 8@10
+
+	^ (8@4) scaledByDisplayScaleFactor corner: (8@10) scaledByDisplayScaleFactor
 ]
 
 { #category : #'fill-styles' }
 UITheme >> windowEdgeNormalFillStyleFor: anEdgeGrip [
-	"Return the normal window edge fillStyle for the given edge grip."
-	
-	^Color transparent
+
+	^ colorPalette windowEdgeNormalFillStyleFor: anEdgeGrip
 ]
 
 { #category : #'fill-styles' }
 UITheme >> windowEdgePressedFillStyleFor: anEdgeGrip [
 	"Return the pressed window edge fillStyle for the given edge grip."
-	
+
 	^self windowEdgeNormalFillStyleFor: anEdgeGrip
 ]
 
 { #category : #'fill-styles' }
 UITheme >> windowExtentChangedFor: aWindow [
 	"Update any extent related visuals."
-]
-
-{ #category : #'border-styles' }
-UITheme >> windowInactiveDropShadowOffsetRectangleFor: aSystemWindow [
-	"Answer a rectangle describing the offsets for each corner
-	of the the inactive window bounds for the drop shadow area."
-	
-	^self windowPlainDropShadowOffsetRectangleFor: aSystemWindow
 ]
 
 { #category : #'fill-styles' }
@@ -6183,7 +5026,7 @@ UITheme >> windowInactiveFillStyleFor: aWindow [
 { #category : #'fill-styles' }
 UITheme >> windowInactiveLabelFillStyleFor: aWindow [
 	"Return the window inactive label fillStyle for the given window."
-	
+
 	^ self fadedBackgroundWindows
 		ifTrue: [ aWindow paneColorToUse alphaMixed: 0.6 with: Color black ]
 		ifFalse: [ self windowActiveLabelFillStyleFor: aWindow ]
@@ -6220,14 +5063,14 @@ UITheme >> windowLeftOffset [
 UITheme >> windowMaximizeForm [
 	"Answer the form to use for the maximize button of a window."
 
-	^(self forms at: #windowMaximize ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMaximizeForm
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowMaximizeOverForm [
 	"Answer the form to use for mouse over window maximize buttons"
 
-	^(self forms at: #windowMaximizeOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMaximizeForm
 ]
 
 { #category : #'label-styles - windows' }
@@ -6248,21 +5091,14 @@ UITheme >> windowMaximizeSound [
 UITheme >> windowMenuForm [
 	"Answer the form to use for the menu button of a window."
 
-	^(self forms at: #windowMenu ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMenuForm
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowMenuIconFor: aWindow [
 	"Answer the menu icon for the given window."
-	
+
 	^ self windowMenuForm
-]
-
-{ #category : #'label-styles - windows' }
-UITheme >> windowMenuOverForm [
-	"Answer the form to use for mouse over window menu buttons"
-
-	^(self forms at: #windowMenuOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles - windows' }
@@ -6276,14 +5112,14 @@ UITheme >> windowMenuPassiveForm [
 UITheme >> windowMinimizeForm [
 	"Answer the form to use for the minimize button of a window."
 
-	^(self forms at: #windowMinimize ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMinimizeForm
 ]
 
 { #category : #'label-styles - windows' }
 UITheme >> windowMinimizeOverForm [
 	"Answer the form to use for mouse over window minimize buttons"
 
-	^(self forms at: #windowMinimizeOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
+	^ self iconNamed: #windowMinimizeForm
 ]
 
 { #category : #'label-styles - windows' }
@@ -6314,7 +5150,7 @@ UITheme >> windowPaneBorderStyleFor: aMorph in: aSystemWindow [
 
 	^BorderStyle simple
 		color: aSystemWindow paneColor;
-		width: (aMorph borderWidth = 0 ifTrue: [0] ifFalse: [1])
+		width: (aMorph borderWidth = 0 ifTrue: [0] ifFalse: [1 scaledByDisplayScaleFactor])
 ]
 
 { #category : #'border-styles' }
@@ -6322,7 +5158,7 @@ UITheme >> windowPlainDropShadowOffsetRectangleFor: aSystemWindow [
 	"Answer a rectangle describing the offsets for each corner
 	of the the active window bounds for the drop shadow area
 	when the plain style is used."
-	
+
 	^aSystemWindow shadowOffset negated corner: aSystemWindow shadowOffset
 ]
 
@@ -6359,9 +5195,10 @@ UITheme >> windowRightOffset [
 
 { #category : #'accessing - colors' }
 UITheme >> windowShadowColor [
+
 	"Answer the window shadow color to use."
 
-	^ Color gray
+	^ colorPalette windowShadowColor
 ]
 
 { #category : #defaults }
@@ -6381,15 +5218,16 @@ UITheme >> worldMainDockingBarBorderStyleFor: aDockingBar [
 
 { #category : #'basic-colors' }
 UITheme >> worldMainDockingBarColorFor: aDockingBar [
+
 	"Answer the base colour to use for a world main docking bar in this theme."
 
-	^self settings derivedMenuColor
+	^ colorPalette worldMainDockingBarColorFor: aDockingBar
 ]
 
 { #category : #'fill-styles' }
 UITheme >> worldMainDockingBarNormalFillStyleFor: aDockingBar [
 	"Return the world main docking bar fillStyle for the given docking bar."
-	
+
 	|aColor|
 	aColor := aDockingBar originalColor alpha: 0.7.
 	^(GradientFillStyle ramp: {

@@ -27,8 +27,6 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> assertMethodReturnValue: metho
 OCASTTranslatorMappingForFullBlockClosuresTest >> setUp [
 	super setUp.
 	compiler := OpalCompiler new
-		options: #(+optionEmbeddSources);
-		yourself
 ]
 
 { #category : #tests }

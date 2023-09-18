@@ -13,8 +13,24 @@ RBRemoveHierarchyMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #accessing }
-RBRemoveHierarchyMethodParametrizedTest >> constructor [ 
+RBRemoveHierarchyMethodParametrizedTest >> constructor [
 	^ #removeMethods:from:
+]
+
+{ #category : #'failure tests' }
+RBRemoveHierarchyMethodParametrizedTest >> testFailureRemoveNonExistantMethod [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #( #msg7 ).
+				 RBBasicLintRuleTestData })
+]
+
+{ #category : #'failure tests' }
+RBRemoveHierarchyMethodParametrizedTest >> testFailureRemoveReferenced [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #( #msg1 ).
+				 RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
@@ -29,14 +45,4 @@ RBRemoveHierarchyMethodParametrizedTest >> testRemoveMethod [
 	self deny: ((refactoring model classNamed: #RBSharedPoolForTestData) directlyDefinesMethod: selectors first).
 	self deny: ((refactoring model classNamed: #RBSharedPoolForTestData1) directlyDefinesMethod: selectors first).
 	self deny: ((refactoring model classNamed: #RBSharedPoolForTestData2) directlyDefinesMethod: selectors first)
-]
-
-{ #category : #'failure tests' }
-RBRemoveHierarchyMethodParametrizedTest >> testRemoveNonExistantMethod [
-	self shouldFail: (self createRefactoringWithArguments: { #(#msg7) . RBBasicLintRuleTestData})
-]
-
-{ #category : #'failure tests' }
-RBRemoveHierarchyMethodParametrizedTest >> testRemoveReferenced [
-	self shouldFail: (self createRefactoringWithArguments: { #(#msg1) . RBBasicLintRuleTestData })
 ]

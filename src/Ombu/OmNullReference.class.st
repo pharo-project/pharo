@@ -30,19 +30,19 @@ OmNullReference >> isNull [
 
 { #category : #printing }
 OmNullReference >> printOn: aStream [
-	aStream 
+	aStream
 		nextPutAll: 'null:reference'
 ]
 
 { #category : #'ston persistence' }
-OmNullReference >> stonContainSubObjects [ 
+OmNullReference >> stonContainSubObjects [
 	^ false
 ]
 
 { #category : #'ston persistence' }
 OmNullReference >> stonOn: stonWriter [
 
-	stonWriter 
-		writeObject: self 
+	stonWriter
+		writeObject: self
 		streamShortList: [ :writer |  ]
 ]

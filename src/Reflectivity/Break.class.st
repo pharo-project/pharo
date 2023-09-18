@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #break }
-Break class >> break [ 
+Break class >> break [
 	<debuggerCompleteToSender>
 	self signal
 ]

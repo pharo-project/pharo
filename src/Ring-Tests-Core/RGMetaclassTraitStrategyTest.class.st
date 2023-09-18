@@ -8,22 +8,22 @@ Class {
 RGMetaclassTraitStrategyTest >> testCreationByMethod [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newMetaclassTrait.
-	self assert: (anRGBehavior isBehavior).	
-	self assert: (anRGBehavior behaviorStrategy isMetaclassTraitStrategy).
+	self assert: (anRGBehavior isBehavior).
+	self assert: (anRGBehavior behaviorStrategy isMetaclassTraitStrategy)
 ]
 
 { #category : #tests }
 RGMetaclassTraitStrategyTest >> testKind [
 
 	| strategy |
-	
+
 	strategy := RGBehavior newMetaclassTrait behaviorStrategy.
 	self deny: strategy isClassStrategy.
 	self deny: strategy isMetaclassStrategy.
 	self deny: strategy isTraitStrategy.
-	self assert: strategy isMetaclassTraitStrategy.
+	self assert: strategy isMetaclassTraitStrategy
 ]
 
 { #category : #tests }

@@ -14,11 +14,12 @@ Class {
 ClyReflectivityCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	| node |
-	^ self showReflectivityCommands and: [ 
-		  self isAbstract not and: [ 
+	^ self showReflectivityCommands and: [
+		  self isAbstract not and: [
 			  node := aBrowserContext lastSelectedSourceNode.
-			  node isCommentNode not and: [ 
-				  node isPragma not and: [ node isSequence not ] ] ] ]
+			  node isNotNil and: [
+				  node isCommentNode not and: [
+					  node isPragma not and: [ node isSequence not ] ] ] ] ]
 ]
 
 { #category : #activation }
@@ -29,14 +30,14 @@ ClyReflectivityCommand class >> contextMenuOrder [
 
 { #category : #testing }
 ClyReflectivityCommand class >> isAbstract [
-	^self == ClyReflectivityCommand 
+	^self == ClyReflectivityCommand
 ]
 
 { #category : #activation }
 ClyReflectivityCommand class >> methodContextMenuActivation [
 
 	<classAnnotation>
-	^ SycReflectivityMenuActivation 
+	^ SycReflectivityMenuActivation
 		byItemOf: ClyReflectivityMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
 ]
 
@@ -70,7 +71,7 @@ ClyReflectivityCommand class >> showReflectivityCommands: aBoolean [
 { #category : #activation }
 ClyReflectivityCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
-	^SycReflectivityMenuActivation 
+
+	^SycReflectivityMenuActivation
 		byItemOf: ClyReflectivityMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]

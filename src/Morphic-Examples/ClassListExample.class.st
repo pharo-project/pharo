@@ -25,8 +25,8 @@ ClassListExample >> keyStroke: anEvent from: aTreeMorph [
 ]
 
 { #category : #accessing }
-ClassListExample >> menu: menu shifted: b [ 
-	"Set up the menu to apply to the receiver's, 
+ClassListExample >> menu: menu shifted: b [
+	"Set up the menu to apply to the receiver's,
 	honoring the #shifted boolean"
 	super menu: menu shifted: b.
 	menu addLine.
@@ -45,9 +45,9 @@ ClassListExample >> openOn: aClass [
 	self rootClass: aClass.
 	window := StandardWindow new model: self.
 	window title: aClass name, ' hierarchy'.
-	window 
+	window
 		addMorph: self treeMorph
-		fullFrame: LayoutFrame identity.						
+		fullFrame: LayoutFrame identity.
 	window themeChanged.
 	window openInWorld.
 	^ window

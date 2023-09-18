@@ -24,7 +24,7 @@ CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResults [
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 	completion fetch: 1.
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
-	
+
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
@@ -45,7 +45,7 @@ CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResults [
 
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
-	
+
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
@@ -54,7 +54,7 @@ CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResultsWhenCaseInsens
 
 	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'ba').
 	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'B').
-	
+
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
@@ -70,7 +70,7 @@ CoResultSetTest >> testCompletionWithNoElementsToFetchShouldNotHaveMore [
 	| c |
 	c := CoResultSet fetcher: (CoInstanceVariableFetcher new
 			completionClass: self completionClass).
-	c fetchAll.	
+	c fetchAll.
 	self deny: c hasMoreElements
 ]
 
@@ -91,7 +91,7 @@ CoResultSetTest >> testFilterCompletionAfterFetchingShouldNarrowResults [
 
 { #category : #tests }
 CoResultSetTest >> testFilterTwiceWithSameCompletionShouldReturnSameResults [
-	
+
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 	completion fetch: 2.
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').

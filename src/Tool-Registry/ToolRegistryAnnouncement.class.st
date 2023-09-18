@@ -14,7 +14,7 @@ Class {
 { #category : #'instance creation' }
 ToolRegistryAnnouncement class >> tool: aTool name: aSymbol [
 
-	^ self new 
+	^ self new
 		tool: aTool;
 		name: aSymbol;
 		yourself

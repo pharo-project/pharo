@@ -78,10 +78,10 @@ ReflectivityExamples >> exampleBlockNoValue [
 { #category : #examples }
 ReflectivityExamples >> exampleBlockOptimized [
 	"block with temp vector inside a optized block"
-	^ 1==1 ifTrue: [ 
+	^ 1==1 ifTrue: [
 		  | var1 var2 |
-		
-		  #( 1 2 ) collect: [ :each | 
+
+		  #( 1 2 ) collect: [ :each |
 			  var1 := 1.
 			  var2 := 1.
 			  var1 + var2 ] ]
@@ -196,7 +196,7 @@ ReflectivityExamples >> exampleSendNoReturn [
 
 	| collection |
 	collection := OrderedCollection newFrom: {3 . 4}.
-	collection removeAt:1.
+	collection removeAt:1
 ]
 
 { #category : #examples }
@@ -231,7 +231,7 @@ ReflectivityExamples >> initialize [
 
 { #category : #initialization }
 ReflectivityExamples >> removeTemporaryMethods [
-	
+
 	self class removeSelector: #methodToBeRemoved.
 	self class removeSelector: #methodToBeModified.
 	self class removeSelector: #stubMethod

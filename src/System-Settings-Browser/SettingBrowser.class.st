@@ -192,26 +192,15 @@ Class {
 	#category : #'System-Settings-Browser'
 }
 
-{ #category : #'private helpers' }
-SettingBrowser class >> allSettingsState [
-	"
-	Workspace openContents: self allSettingsState label: 'Current Setting assignments' 
-	"
-	| declList |
-	declList := (self currentNodeList select: [ :node | node item hasValue])
-		collect: [ :node | node item ].
-	^ String streamContents: [:s | declList do: [:d | d settingStoreOn: s] ]
-]
-
 { #category : #opening }
 SettingBrowser class >> browse: aCollectionOfKeywords [
-	"open a SettingBrowser view which is able to browse all settings 
+	"open a SettingBrowser view which is able to browse all settings
 	that are declared with a pragma keyword which is at least
 	one of the string contained in aCollectionOfKeywords
 	example:
 	(SettingBrowser browse: #('systemsettings'))
 	browse all settings which make use of the pragma keyword 'systemsettings'
-	
+
 	Note that the default setting pragma keyword is 'systemsettings'
 	"
 	(self forKeywords: aCollectionOfKeywords) open
@@ -236,7 +225,7 @@ SettingBrowser class >> forKeywords: aCollectionOfKeywords [
 { #category : #accessing }
 SettingBrowser class >> initialExtent [
 	"Initial extent of the SettingBrowser window"
-	^ 900@600
+	^ (900@600) scaledByDisplayScaleFactor
 ]
 
 { #category : #'world menu' }
@@ -283,7 +272,7 @@ SettingBrowser class >> searchedTextList [
 ]
 
 { #category : #accessing }
-SettingBrowser class >> settingsKeywords [ 
+SettingBrowser class >> settingsKeywords [
 	^ (Pragma allNamed: #settingPragmaProcessor) collect: [:p | p method selector]
 ]
 
@@ -292,38 +281,26 @@ SettingBrowser class >> taskbarIconName [
 	^#smallConfiguration
 ]
 
-{ #category : #'private helpers' }
-SettingBrowser class >> viewAllSettings [
-	"self viewAllSettings"
-	Smalltalk tools workspace openContents: self allSettingsState label: 'Current Setting assignments'
-]
-
-{ #category : #'help system' }
-SettingBrowser class >> wikiStyleHelp [
-	<wikiStyleHelp: #'The setting browser'>
-	^ self comment
-]
-
 { #category : #menu }
 SettingBrowser >> about [
 	self inform: 'Here you can browse, query and change all system settings' translated
 ]
 
 { #category : #accessing }
-SettingBrowser >> acceptableKeywords: aCollectionOfRegExps [ 
+SettingBrowser >> acceptableKeywords: aCollectionOfRegExps [
 	self treeHolder acceptableKeywords: aCollectionOfRegExps
 ]
 
 { #category : #accessing }
 SettingBrowser >> addToSearchedTextList: aString [
-	(self searchedTextList includes: aString) 
+	(self searchedTextList includes: aString)
 		ifFalse: [self searchedTextList size > 5 ifTrue: [self searchedTextList removeFirst].
 		self searchedTextList add: aString]
 ]
 
 { #category : #accessing }
-SettingBrowser >> addToStatus: aText [ 
-	self status nextPutAll: aText.
+SettingBrowser >> addToStatus: aText [
+	self status nextPutAll: aText
 ]
 
 { #category : #accessing }
@@ -345,7 +322,7 @@ SettingBrowser >> applyFilters [
 ]
 
 { #category : #'user interface' }
-SettingBrowser >> buildWindowIn: aWindow [ 
+SettingBrowser >> buildWindowIn: aWindow [
 	| statusView toolBar treeMorph toolBarY gap packageListView statusViewHeight |
 	treeMorph := self treeMorphIn: aWindow.
 	statusView := self statusViewIn: aWindow.
@@ -354,23 +331,23 @@ SettingBrowser >> buildWindowIn: aWindow [
 	gap := 1.
 	packageListView := self packageListViewIn: aWindow.
 	toolBarY := toolBar minExtent y + gap.
-	aWindow 
+	aWindow
 		addMorph: toolBar
-		fullFrame: ((0 @ 0 corner: 1 @ 0) asLayoutFrame 
+		fullFrame: ((0 @ 0 corner: 1 @ 0) asLayoutFrame
 						topOffset: gap;
 						bottomOffset: toolBarY + gap).
-	aWindow 
+	aWindow
 		addMorph: treeMorph
-		fullFrame: ((0 @ 0 corner: 1 @ 0.99) asLayoutFrame 
+		fullFrame: ((0 @ 0 corner: 1 @ 0.99) asLayoutFrame
 				topOffset: toolBarY + gap + gap;
 				bottomOffset: statusViewHeight negated).
-	aWindow 
+	aWindow
 		addMorph: statusView
-		fullFrame: ((0 @ 0.99 corner: 0.75 @ 1) asLayoutFrame 
+		fullFrame: ((0 @ 0.99 corner: 0.75 @ 1) asLayoutFrame
 				topOffset: statusViewHeight negated).
-	aWindow 
+	aWindow
 		addMorph: packageListView
-		fullFrame: ((0.75 @ 0.99 corner: 1 @ 1) asLayoutFrame 
+		fullFrame: ((0.75 @ 0.99 corner: 1 @ 1) asLayoutFrame
 				topOffset: statusViewHeight negated).
 	^ aWindow
 ]
@@ -378,8 +355,8 @@ SettingBrowser >> buildWindowIn: aWindow [
 { #category : #updating }
 SettingBrowser >> changePackageSet: aSet [
 	"
-	This method allow for restricting the settings displayed in the browser. 
-	Opening a setting browser display all the setting. 
+	This method allow for restricting the settings displayed in the browser.
+	Opening a setting browser display all the setting.
 	SettingBrowser new changePackageSet: { (RPackageOrganizer default packageNamed: 'GT-Playground') }; open
 	"
 	aSet ~= self viewedPackages
@@ -389,14 +366,14 @@ SettingBrowser >> changePackageSet: aSet [
 ]
 
 { #category : #updating }
-SettingBrowser >> changeSearchedText: aString [ 
+SettingBrowser >> changeSearchedText: aString [
 	self searchedText: aString.
 	self applyFilters.
 	^ true
 ]
 
 { #category : #'user interface' }
-SettingBrowser >> choosePackagesIn: aWindow [ 
+SettingBrowser >> choosePackagesIn: aWindow [
 	"Method called when one presses the 'Choose packages' buttong.
 	This button restrict the set of setting to be considered. By selecting one or more packages, only the setting of these packages are displayed."
 	| result list |
@@ -427,7 +404,7 @@ SettingBrowser >> exportAllSettings: actions by: groupSize withBasename: aString
 	index := 1.
 	actions
 		groupsOf: groupSize
-		atATimeDo: [ :setting | 
+		atATimeDo: [ :setting |
 			self exportSettings: setting toFileNamed: aString , index printString , '.st'.
 			index := index + 1 ].
 	self
@@ -438,20 +415,20 @@ SettingBrowser >> exportAllSettings: actions by: groupSize withBasename: aString
 { #category : #export }
 SettingBrowser >> exportSettings [
 	| title nodes actions   |
-	
+
 	nodes := self treeHolder nodeList.
 	title := 'Exporting settings'.
 	title
-		displayProgressFrom: 1 
-		to: nodes size 
-		during: [:bar | actions := nodes collectWithIndex: [:e :i | 
+		displayProgressFrom: 1
+		to: nodes size
+		during: [:bar | actions := nodes collectWithIndex: [:e :i |
 											bar current: i.
-											bar label: (String streamContents: [:s | 
+											bar label: (String streamContents: [:s |
 															s << title << ' (' << (e item label) << ')']).
 											e item exportSettingAction ]].
-		
+
 	actions := actions reject: [:e | e isNil ].
-	self exportAllSettings: actions by: 50 withBasename: 'exported_settings'.
+	self exportAllSettings: actions by: 50 withBasename: 'exported_settings'
 ]
 
 { #category : #export }
@@ -471,11 +448,11 @@ SettingBrowser >> getViewedPackageNames [
 	^ Text
 		streamContents: [:s | self viewedPackages
 				ifEmpty: [s nextPutAll: 'All packages' translated]
-				ifNotEmpty: [:selections | 
+				ifNotEmpty: [:selections |
 					(selections asSet = self allPackagesWithSettings asSet)
 						ifTrue: [s nextPutAll: 'All packages']
 						ifFalse: [selections
-								do: [:package | 
+								do: [:package |
 									s nextPutAll: package packageName.
 									s nextPut: Character space]]]]
 ]
@@ -483,7 +460,7 @@ SettingBrowser >> getViewedPackageNames [
 { #category : #'user interface' }
 SettingBrowser >> helpDeclaringAndManagingSettings [
 	"Open up a workspace with explanatory info in it about the Setting Browser"
-	UIManager default edit: 'To be documented here later' label: 'Declaring and managing settings' translated.
+	UIManager default edit: 'To be documented here later' label: 'Declaring and managing settings' translated
 ]
 
 { #category : #'user interface' }
@@ -520,7 +497,7 @@ SettingBrowser >> keyDown: anEvent from: aTreeMorph [
 	c = $a
 		ifTrue: [^ self expandAll].
 	c = $A
-		ifTrue: [^ self collapseAll]. 
+		ifTrue: [^ self collapseAll].
 	self selectedNode
 		ifNotNil: [:current | current keyDown: anEvent from: aTreeMorph.
 			current settingDeclaration hasDefault
@@ -538,21 +515,21 @@ SettingBrowser >> loadSettings [
 ]
 
 { #category : #menu }
-SettingBrowser >> menu: menu shifted: b [ 
-	"Set up the menu to apply to the receiver's, 
+SettingBrowser >> menu: menu shifted: b [
+	"Set up the menu to apply to the receiver's,
 	honoring the #shifted boolean"
 	menu
-		add: 'Expand all (a)' 
+		add: 'Expand all (a)'
 		target: self
-		selector: #expandAll. 
+		selector: #expandAll.
 	menu
-		add: 'Collapse all (A)' 
-		target: self 
+		add: 'Collapse all (A)'
+		target: self
 		selector: #collapseAll.
 	self selectedNode
-		ifNotNil: [:current | 
+		ifNotNil: [:current |
 			menu
-				add: 'Expand all from here' 
+				add: 'Expand all from here'
 				target: self
 				selector: #expandAllFromNode:
 				argument: current.
@@ -564,7 +541,7 @@ SettingBrowser >> menu: menu shifted: b [
 				ifTrue: [
 					menu addLine.
 					menu
-						add: 'Set to default (d)' 
+						add: 'Set to default (d)'
 						target: self
 						selector: #menuSetToDefault:
 						argument: current].
@@ -573,7 +550,7 @@ SettingBrowser >> menu: menu shifted: b [
 					current settingDeclaration hasDefault
 						ifFalse: [  menu addLine ].
 					menu
-						add: 'Empty list (e)' 
+						add: 'Empty list (e)'
 						target: self
 						selector: #menuEmptyList:
 						argument: current]].
@@ -583,7 +560,7 @@ SettingBrowser >> menu: menu shifted: b [
 { #category : #menu }
 SettingBrowser >> menuEmptyList: aTreeNode [
 	| v |
-	(v := aTreeNode settingDeclaration) hasEditableList 
+	(v := aTreeNode settingDeclaration) hasEditableList
 		ifTrue: [v emptyList. self updateList]
 ]
 
@@ -602,14 +579,14 @@ SettingBrowser >> newTreeHolder [
 
 { #category : #'user interface' }
 SettingBrowser >> open [
-	
+
 	Cursor wait
 		showWhile: [ | window |window := StandardWindow new model: self.
 			window title: self windowTitle.
 			self buildWindowIn: window.
 			window themeChanged.
 			window openInWorld.
-			(window findDeeplyA: self treeMorphClass)  takeKeyboardFocus. 
+			(window findDeeplyA: self treeMorphClass)  takeKeyboardFocus.
 			^ window]
 ]
 
@@ -624,7 +601,7 @@ SettingBrowser >> packageListViewIn: aWindow [
 	^ aWindow
 				newTextEditorFor: self
 				getText: #getViewedPackageNames
-				setText: #setViewedPackageNames:.
+				setText: #setViewedPackageNames:
 ]
 
 { #category : #accessing }
@@ -639,7 +616,7 @@ SettingBrowser >> regexpSearch [
 
 { #category : #accessing }
 SettingBrowser >> regexpSearch: aBoolean [
-	self class regexpSearch: aBoolean.
+	self class regexpSearch: aBoolean
 ]
 
 { #category : #initialization }
@@ -650,12 +627,18 @@ SettingBrowser >> release [
 	status := nil.
 	searchedText := nil.
 	viewedPackages := nil.
-	super release.
+	super release
 ]
 
 { #category : #accessing }
 SettingBrowser >> rootNodes [
 	^ roots ifNil: [roots := self treeHolder settingTreeRoots]
+]
+
+{ #category : #accessing }
+SettingBrowser >> rootNodes: aCollection [
+
+	roots := aCollection
 ]
 
 { #category : #accessing }
@@ -665,7 +648,7 @@ SettingBrowser >> searchedText [
 
 { #category : #accessing }
 SettingBrowser >> searchedText: aString [
-	searchedText := aString.
+	searchedText := aString
 ]
 
 { #category : #accessing }
@@ -688,14 +671,14 @@ SettingBrowser >> setAllToDefault [
 ]
 
 { #category : #accessing }
-SettingBrowser >> setDescription: aText [ 
+SettingBrowser >> setDescription: aText [
 	self status reset.
 	self addToStatus: aText.
 	self changed: #getDescription
 ]
 
 { #category : #'user interface' }
-SettingBrowser >> setViewedPackageNames: aText [ 
+SettingBrowser >> setViewedPackageNames: aText [
 	| allViewed |
 	allViewed := Set new.
 	aText asString substrings
@@ -713,7 +696,7 @@ SettingBrowser >> settingNodeOfDeclaration: aSettingDeclaration [
 ]
 
 { #category : #updating }
-SettingBrowser >> settingValueChanged: aSetting [ 
+SettingBrowser >> settingValueChanged: aSetting [
 	aSetting realValue = true
 		ifTrue: [self openPathFrom: aSetting].
 	aSetting realValue = false
@@ -725,7 +708,7 @@ SettingBrowser >> settingValueChanged: aSetting [
 ]
 
 { #category : #'user interface' }
-SettingBrowser >> settingsKeywords [ 
+SettingBrowser >> settingsKeywords [
 	^ self class settingsKeywords
 ]
 
@@ -758,7 +741,7 @@ SettingBrowser >> textFilter [
 ]
 
 { #category : #'user interface' }
-SettingBrowser >> toolBarIn: aMorph [ 
+SettingBrowser >> toolBarIn: aMorph [
 	| toolBar |
 	toolBar := aMorph newToolbar: {
 	aMorph
@@ -777,19 +760,19 @@ SettingBrowser >> toolBarIn: aMorph [
 				list: #searchedTextList
 				selected: #searchedText
 				changeSelected: #changeSearchedText:
-				useIndex: false 
+				useIndex: false
 				addToList: #addToSearchedTextList:
 				class: String
-				getEnabled: nil) hResizing: #spaceFill; 
+				getEnabled: nil) hResizing: #spaceFill;
 				ghostText: 'Hit return to accept' translated.
 	aMorph
 			newCheckboxFor: self
 			getSelected: #regexpSearch
 			setSelected: #regexpSearch:
 			getEnabled: nil
-			label: 'Regexp' 
+			label: 'Regexp'
 			help: 'Filter according to a regular expression' translated.
-	aMorph newToolSpacer.	
+	aMorph newToolSpacer.
 	aMorph newToolSpacer.
 	(aMorph
 				newButtonFor: self
@@ -797,7 +780,7 @@ SettingBrowser >> toolBarIn: aMorph [
 				action: #choosePackagesIn:
 				arguments: {aMorph}
 				getEnabled: nil
-				label: 'Choose packages' translated 
+				label: 'Choose packages' translated
 				help: 'Per default, SettingBrowser shows all the setting of the system. You can restrict what is displayed to some packages that contains setting definitions.' translated).
 	(aMorph
 				newButtonFor: self
@@ -805,7 +788,7 @@ SettingBrowser >> toolBarIn: aMorph [
 				action: #storeSettings
 				arguments: nil
 				getEnabled: nil
-				label: 'Store Settings' translated 
+				label: 'Store Settings' translated
 				help: 'Store the current settings' translated).
 	(aMorph
 				newButtonFor: self
@@ -813,7 +796,7 @@ SettingBrowser >> toolBarIn: aMorph [
 				action: #loadSettings
 				arguments: nil
 				getEnabled: nil
-				label: 'Load Settings' translated 
+				label: 'Load Settings' translated
 				help: 'Load the current settings from the disk' translated).
 	aMorph newToolSpacer}.
 	^ toolBar
@@ -833,7 +816,7 @@ SettingBrowser >> treeHolder [
 ]
 
 { #category : #'user interface' }
-SettingBrowser >> treeMorphIn: aMorph [ 
+SettingBrowser >> treeMorphIn: aMorph [
 	| treeMorph |
 	treeMorph := (self treeMorphClass on: self)
 		getMenuSelector: #menu:shifted:;
@@ -861,7 +844,7 @@ SettingBrowser >> updateAccordingTo: aFilter [
 	self rootNodes removeAllSuchThat: [:n | (aFilter keepSettingTreeNode: n) not and: [n isEmpty]].
 	]
 		on: RegexSyntaxError
-		do: [:ex | 
+		do: [:ex |
 			self setDescription: 'Regular expression syntax error, see `documentation'' protocol of RxParser class for user''s guide'].
 	self expandAll
 ]
@@ -872,23 +855,23 @@ SettingBrowser >> updateList [
 		self treeHolder updateList.
 		self changed: #getDescription.
 		self changed: #getViewedPackageNames.
-		super updateList].
+		super updateList]
 ]
 
 { #category : #updating }
 SettingBrowser >> updateStatusWith: aMessage [
 	self addToStatus: aMessage.
-	self addToStatus: Character cr.
+	self addToStatus: Character cr
 ]
 
 { #category : #accessing }
-SettingBrowser >> viewedLabelOfSetting: aSettingDeclaration [ 
+SettingBrowser >> viewedLabelOfSetting: aSettingDeclaration [
 	| node |
 	node := self settingNodeOfDeclaration: aSettingDeclaration.
-	^ node 
+	^ node
 		ifNil: [aSettingDeclaration label]
 		ifNotNil: [(node allChildren notEmpty and: [aSettingDeclaration hasValue])
-				ifTrue: [aSettingDeclaration label, '...'] 
+				ifTrue: [aSettingDeclaration label, '...']
 				ifFalse: [aSettingDeclaration label]]
 ]
 

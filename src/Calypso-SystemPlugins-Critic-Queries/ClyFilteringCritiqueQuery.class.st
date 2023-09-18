@@ -32,7 +32,7 @@ ClyFilteringCritiqueQuery >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
-		
+
 	^baseCritiqueQuery = anObject baseCritiqueQuery
 ]
 
@@ -48,10 +48,10 @@ ClyFilteringCritiqueQuery >> baseCritiqueQuery: aCritiqueQuery [
 
 { #category : #execution }
 ClyFilteringCritiqueQuery >> buildResult: aQueryResult [
-		
+
 	| allCritiques filtered |
 	allCritiques := baseCritiqueQuery execute.
-	
+
 	filtered := allCritiques items select: [:each | self selectsCritique: each].
 
 	aQueryResult fillWith: filtered
@@ -62,8 +62,8 @@ ClyFilteringCritiqueQuery >> checkEmptyResult [
 
 	| allCritiques |
 	allCritiques := baseCritiqueQuery execute.
-	
-	^(allCritiques items 
+
+	^(allCritiques items
 		anySatisfy: [:each | self selectsCritique: each]) not
 ]
 
@@ -77,7 +77,7 @@ ClyFilteringCritiqueQuery >> hash [
 { #category : #initialization }
 ClyFilteringCritiqueQuery >> initialize [
 	super initialize.
-	
+
 	baseCritiqueQuery := ClyAllBasisCritiqueQuery new
 ]
 

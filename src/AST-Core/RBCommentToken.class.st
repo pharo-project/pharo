@@ -14,7 +14,7 @@ Class {
 RBCommentToken class >> value: aString start: aStartPosition stop: aStopPosition [
 	^self new value: aString;
 		   		 start: aStartPosition;
-				 stop: aStopPosition.
+				 stop: aStopPosition
 ]
 
 { #category : #accessing }

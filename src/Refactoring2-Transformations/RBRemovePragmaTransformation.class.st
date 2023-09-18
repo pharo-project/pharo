@@ -24,7 +24,7 @@ Class {
 	#instVars : [
 		'pragma'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -48,33 +48,40 @@ RBRemovePragmaTransformation class >> pragma: aPragmaDefinition inMethod: aSelec
 		yourself
 ]
 
+{ #category : #preconditions }
+RBRemovePragmaTransformation >> applicabilityPreconditions [
+
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [
+				   | pragmaNode |
+				   pragmaNode := self parserClass parsePragma: pragma.
+				   self definingMethod pragmas anySatisfy: [ :e |
+					   e selector = pragmaNode selector ] ]
+			   errorString:
+				   ('Method named <1s> does not have a pragma named <2s>'
+					    expandMacrosWith: selector
+					    with: (self parserClass parsePragma: pragma) selector))
+]
+
+{ #category : #preconditions }
+RBRemovePragmaTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
 { #category : #api }
 RBRemovePragmaTransformation >> pragma: aPragmaDefinition inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
 	selector := aSelector.
-	pragma := aPragmaDefinition.
-]
-
-{ #category : #preconditions }
-RBRemovePragmaTransformation >> preconditions [
-	^ (RBCondition
-		withBlock: [ self definingClass isNotNil ]
-		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		&
-			(RBCondition
-				withBlock: [ self definingClass canUnderstand: selector ]
-				errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		&
-			(RBCondition
-				withBlock: [ | pragmaNode |
-					pragmaNode := self parserClass parsePragma: pragma.
-					self definingMethod pragmas
-						anySatisfy: [ :e | e selector = pragmaNode selector ] ]
-				errorString:
-					('Method named <1s> does not have a pragma named <2s>'
-						expandMacrosWith: selector
-						with: (self parserClass parsePragma: pragma) selector))
+	pragma := aPragmaDefinition
 ]
 
 { #category : #executing }
@@ -90,7 +97,7 @@ RBRemovePragmaTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBRemovePragmaTransformation >> storeOn: aStream [ 
+RBRemovePragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

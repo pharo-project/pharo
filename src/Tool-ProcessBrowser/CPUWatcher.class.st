@@ -39,19 +39,16 @@ CPUWatcher class >> cpuWatcherEnabled: aBoolean [
 	CpuWatcherEnabled = aBoolean ifTrue: [^ self].
 	CpuWatcherEnabled := aBoolean.
 	self monitorPreferenceChanged
-
 ]
 
 { #category : #accessing }
 CPUWatcher class >> current [
 	^CurrentCPUWatcher
-
 ]
 
 { #category : #accessing }
 CPUWatcher class >> currentWatcherProcess [
 	^CurrentCPUWatcher ifNotNil: [ CurrentCPUWatcher watcherProcess ]
-
 ]
 
 { #category : #monitoring }
@@ -64,7 +61,7 @@ CPUWatcher class >> dumpTallyOnTranscript [
 
 { #category : #'class initialization' }
 CPUWatcher class >> initialize [
-	SessionManager default 
+	SessionManager default
 		registerToolClassNamed: self name
 ]
 
@@ -72,7 +69,6 @@ CPUWatcher class >> initialize [
 CPUWatcher class >> isMonitoring [
 
 	^CurrentCPUWatcher notNil and: [ CurrentCPUWatcher isMonitoring ]
-
 ]
 
 { #category : #setting }
@@ -89,8 +85,7 @@ CPUWatcher class >> pigFinding [
 
 { #category : #setting }
 CPUWatcher class >> pigFinding: aBoolean [
-	PigFinding := aBoolean.
-
+	PigFinding := aBoolean
 ]
 
 { #category : #accessing }
@@ -100,7 +95,7 @@ CPUWatcher class >> processBrowser [
 
 { #category : #'system startup' }
 CPUWatcher class >> shutDown [
-	self stopMonitoring.
+	self stopMonitoring
 ]
 
 { #category : #'startup - shutdown' }
@@ -120,12 +115,11 @@ CPUWatcher class >> startMonitoringPeriod: pd rate: rt threshold: th [
 		threshold: th;
 		yourself.
 	^CurrentCPUWatcher
-
 ]
 
 { #category : #'system startup' }
 CPUWatcher class >> startUp [
-	self monitorPreferenceChanged.
+	self monitorPreferenceChanged
 ]
 
 { #category : #monitoring }
@@ -133,8 +127,7 @@ CPUWatcher class >> stopMonitoring [
 	"CPUWatcher stopMonitoring"
 
 	CurrentCPUWatcher ifNotNil: [ CurrentCPUWatcher stopMonitoring. ].
-	CurrentCPUWatcher := nil.
-
+	CurrentCPUWatcher := nil
 ]
 
 { #category : #'porcine capture' }
@@ -145,11 +138,10 @@ CPUWatcher >> catchThePig: aProcess [
 
 	(self processBrowser isUIProcess: aProcess)
 		ifTrue: [ "aProcess debugWithTitle: 'Interrupted from the CPUWatcher'." ]
-		ifFalse: [ 
+		ifFalse: [
 			rules second ifFalse: [ ^self ].
 			self processBrowser suspendProcess: aProcess.
 			self openWindowForSuspendedProcess: aProcess ]
-
 ]
 
 { #category : #'process operations' }
@@ -159,13 +151,13 @@ CPUWatcher >> debugProcess: aProcess [
 	aProcess priority >= uiPriority ifTrue: [
 		self processBrowser setProcess: aProcess toPriority: uiPriority - 1
 	].
-	self processBrowser debugProcess: aProcess.
+	self processBrowser debugProcess: aProcess
 ]
 
 { #category : #'process operations' }
 CPUWatcher >> debugProcess: aProcess fromMenu: aMenuMorph [
 	aMenuMorph delete.
-	self debugProcess: aProcess.
+	self debugProcess: aProcess
 ]
 
 { #category : #'porcine capture' }
@@ -199,7 +191,7 @@ CPUWatcher >> monitorProcessPeriod: secs sampleRate: msecs [
 		self class pigFinding ifTrue: [
 			self findThePig ]
 	] repeat ] forkAt: Processor highestPriority.
-	Processor yield 
+	Processor yield
 ]
 
 { #category : #'porcine capture' }
@@ -208,12 +200,12 @@ CPUWatcher >> openMorphicWindowForSuspendedProcess: aProcess [
 	menu := UIManager default newMenuIn: self for: self.
 	"nickname  allow-stop  allow-debug"
 	rules := self  processBrowser nameAndRulesFor: aProcess.
-	menu add: 'Dismiss this menu' 
-		target: menu 
-		selector: #delete; 
+	menu add: 'Dismiss this menu'
+		target: menu
+		selector: #delete;
 		addLine.
-	menu add: 'Open Process Browser' 
-		target: self processBrowser 
+	menu add: 'Open Process Browser'
+		target: self processBrowser
 		selector: #open.
 	menu add: 'Resume'
 		target: self
@@ -235,14 +227,12 @@ CPUWatcher >> openMorphicWindowForSuspendedProcess: aProcess [
 What do you want to do with it?'.
 	menu stayUp: true.
 	menu popUpInWorld
-
 ]
 
 { #category : #'porcine capture' }
 CPUWatcher >> openWindowForSuspendedProcess: aProcess [
 
-	 UIManager default defer: [ self openMorphicWindowForSuspendedProcess: aProcess ] 
-	
+	 UIManager default defer: [ self openMorphicWindowForSuspendedProcess: aProcess ]
 ]
 
 { #category : #accessing }
@@ -253,7 +243,7 @@ CPUWatcher >> processBrowser [
 { #category : #'process operations' }
 CPUWatcher >> resumeProcess: aProcess fromMenu: aMenuMorph [
 	aMenuMorph delete.
-	self processBrowser resumeProcess: aProcess.
+	self processBrowser resumeProcess: aProcess
 ]
 
 { #category : #'startup - shutdown' }
@@ -278,7 +268,7 @@ CPUWatcher >> tally [
 { #category : #'process operations' }
 CPUWatcher >> terminateProcess: aProcess fromMenu: aMenuMorph [
 	aMenuMorph delete.
-	self processBrowser terminateProcess: aProcess.
+	self processBrowser terminateProcess: aProcess
 ]
 
 { #category : #accessing }

@@ -16,38 +16,27 @@ Class {
 }
 
 { #category : #testing }
-OCDoItSemanticScope class >> isAbstract [ 
-	^self = OCDoItSemanticScope 
-]
-
-{ #category : #converting }
-OCDoItSemanticScope >> asDoItScope [
-	^self
-]
-
-{ #category : #'code compilation' }
-OCDoItSemanticScope >> compileMethodFromASTBy: aCompiler [
-	^aCompiler compileDoItFromAST
+OCDoItSemanticScope class >> isAbstract [
+	^self = OCDoItSemanticScope
 ]
 
 { #category : #'code evaluation' }
 OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 
-	^self receiver withArgs: #() executeMethod: doItMethod
+	^ self receiver withArgs: #() executeMethod: doItMethod 
 ]
 
 { #category : #testing }
-OCDoItSemanticScope >> isDoItScope [ 
+OCDoItSemanticScope >> isDoItScope [
 	^true
-]
-
-{ #category : #parsing }
-OCDoItSemanticScope >> parseASTBy: aParser [
-
-	^aParser parseDoIt
 ]
 
 { #category : #accessing }
 OCDoItSemanticScope >> receiver [
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+OCDoItSemanticScope >> targetClass [
+	^ self receiver class
 ]

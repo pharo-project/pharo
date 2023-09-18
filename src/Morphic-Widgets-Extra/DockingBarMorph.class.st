@@ -35,8 +35,8 @@ Class {
 { #category : #examples }
 DockingBarMorph class >> example [
 	"self example"
-	
-	DockingBarMorph new 
+
+	DockingBarMorph new
 		addMorph: (SimpleButtonMorph new
                                            label: 'Say hello';
                                            target: [UIManager inform: 'Hello'];
@@ -50,39 +50,39 @@ DockingBarMorph class >> example [
                                            target: [DockingBarMorph allInstances last delete];
                                            actionSelector: #value);
 	adhereToBottom;
-	openInWorld.
+	openInWorld
 ]
 
 { #category : #examples }
 DockingBarMorph class >> exampleWithMenu [
 	"self exampleWithMenu"
-	
-	DockingBarMorph new 
-		add: 'Foo' 
-		font:  StandardFonts defaultFont 
+
+	DockingBarMorph new
+		add: 'Foo'
+		font:  StandardFonts defaultFont
 		icon: MenuMorph pushPinImage
 		help: 'No idea' subMenu: nil;
-		add: 'Bar' 
-		font:  StandardFonts defaultFont 
+		add: 'Bar'
+		font:  StandardFonts defaultFont
 		icon: MenuMorph pushPinImage
 		help: 'No idea' subMenu: nil;
 	adhereToTop;
-	openInWorld.
+	openInWorld
 ]
 
 { #category : #'dropping/grabbing' }
-DockingBarMorph >> aboutToBeGrabbedBy: aHand [ 
+DockingBarMorph >> aboutToBeGrabbedBy: aHand [
 	"The morph is about to be grabbed, make it float"
 	self beFloating.
 	self updateBounds.
 	self updateColor.
 	(self bounds containsPoint: aHand position)
-		ifFalse: [self center: aHand position].
+		ifFalse: [self center: aHand position]
 ]
 
 { #category : #'events-processing' }
-DockingBarMorph >> activate: evt [ 
-	"Receiver should be activated; e.g., so that control passes  
+DockingBarMorph >> activate: evt [
+	"Receiver should be activated; e.g., so that control passes
 	correctly."
 	evt hand newMouseFocus: self.
 	self takeKeyboardFocus
@@ -127,7 +127,7 @@ DockingBarMorph >> add: wordingString icon: aForm help: helpString action: anAct
 	item contents: wordingString.
 	item keyText: aText.
 	anAction
-		ifNotNil: [ :act | 
+		ifNotNil: [ :act |
 			item
 				target: act receiver;
 				selector: act selector;
@@ -140,7 +140,7 @@ DockingBarMorph >> add: wordingString icon: aForm help: helpString action: anAct
 { #category : #construction }
 DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph [
 	"Append the given submenu with the given label."
-	
+
 	self add: wordingString icon: aForm help: helpString subMenu: aMenuMorph action: nil keyText: nil
 ]
 
@@ -156,7 +156,7 @@ DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMen
 		keyText: aText;
 		yourself.
 	anAction
-		ifNotNil: [ :act | 
+		ifNotNil: [ :act |
 			item
 				target: act receiver;
 				selector: act selector;
@@ -166,21 +166,21 @@ DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMen
 ]
 
 { #category : #construction }
-DockingBarMorph >> add: wordingString icon: aForm subMenu: aMenuMorph [ 
+DockingBarMorph >> add: wordingString icon: aForm subMenu: aMenuMorph [
 	"Append the given submenu with the given label."
 
 	^ self add: wordingString icon: aForm help: nil subMenu: aMenuMorph
 ]
 
 { #category : #construction }
-DockingBarMorph >> add: aString subMenu: aMenuMorph [ 
+DockingBarMorph >> add: aString subMenu: aMenuMorph [
 	"Append the given submenu with the given label."
 	self add: aString icon: nil subMenu: aMenuMorph
 ]
 
 { #category : #accessing }
-DockingBarMorph >> addBlankIconsIfNecessary: anIcon [ 
-	"If any of my items have an icon, ensure that all do by using 
+DockingBarMorph >> addBlankIconsIfNecessary: anIcon [
+	"If any of my items have an icon, ensure that all do by using
 	anIcon for those that don't"
 	self items
 		reject: [:each | each hasIconOrMarker]
@@ -188,8 +188,8 @@ DockingBarMorph >> addBlankIconsIfNecessary: anIcon [
 ]
 
 { #category : #menu }
-DockingBarMorph >> addCustomMenuItems: aMenu hand: aHandMorph [ 
-	"Populate aMenu with appropriate menu items for a  
+DockingBarMorph >> addCustomMenuItems: aMenu hand: aHandMorph [
+	"Populate aMenu with appropriate menu items for a
 	yellow-button (context menu) click."
 	super addCustomMenuItems: aMenu hand: aHandMorph.
 
@@ -207,11 +207,11 @@ DockingBarMorph >> addLine [
 
 	submorphs isEmpty ifTrue: [^ self].
 	(self lastSubmorph isKindOf: DockingBarMenuLineMorph)
-		ifFalse: [self addMorphBack: DockingBarMenuLineMorph new].
+		ifFalse: [self addMorphBack: DockingBarMenuLineMorph new]
 ]
 
 { #category : #construction }
-DockingBarMorph >> addSpace: sizePointOrNumber [ 
+DockingBarMorph >> addSpace: sizePointOrNumber [
 	"Add a new space of the given size to the receiver."
 	| space |
 	space := Morph new.
@@ -223,17 +223,17 @@ DockingBarMorph >> addSpace: sizePointOrNumber [
 
 { #category : #construction }
 DockingBarMorph >> addSpacer [
-	"Add a new spacer to the receiver. 
-	 
+	"Add a new spacer to the receiver.
+
 	Spacer are objects that try to use as much space as they can"
 	self
 		addMorphBack: (AlignmentMorph newSpacer: Color transparent)
 ]
 
 { #category : #'private - accessing' }
-DockingBarMorph >> adhereTo: edgeSymbol [ 
-	"Private - Instruct the receiver to adhere to the given edge.  
-	 
+DockingBarMorph >> adhereTo: edgeSymbol [
+	"Private - Instruct the receiver to adhere to the given edge.
+
 	Options: #left #top #right #bottom or #none"
 	(#(#left #top #right #bottom #none ) includes: edgeSymbol)
 		ifFalse: [^ self error: 'invalid option'].
@@ -269,7 +269,7 @@ DockingBarMorph >> adhereToTop [
 { #category : #accessing }
 DockingBarMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
-	
+
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	originalColor :=  paneColor.
@@ -284,7 +284,7 @@ DockingBarMorph >> autoGradient [
 ]
 
 { #category : #accessing }
-DockingBarMorph >> autoGradient: aBoolean [ 
+DockingBarMorph >> autoGradient: aBoolean [
 	"Instruct the receiver to fill the owner or not"
 	autoGradient := aBoolean.
 	self updateColor
@@ -293,7 +293,7 @@ DockingBarMorph >> autoGradient: aBoolean [
 { #category : #menu }
 DockingBarMorph >> autoGradientString [
 	"Answer the string to be shown in a menu to represent the  'resistsRemoval' status"
-	
+
 	^ (self autoGradient) ->  'auto gradient' translated
 ]
 
@@ -304,10 +304,10 @@ DockingBarMorph >> avoidVisibleBordersAtEdge [
 ]
 
 { #category : #accessing }
-DockingBarMorph >> avoidVisibleBordersAtEdge: aBoolean [ 
+DockingBarMorph >> avoidVisibleBordersAtEdge: aBoolean [
 	"Instruct the receiver to avoid showing the borders at edge"
 	avoidVisibleBordersAtEdge := aBoolean.
-self updateLayoutProperties.
+self updateLayoutProperties
 ]
 
 { #category : #menu }
@@ -323,7 +323,7 @@ DockingBarMorph >> beFloating [
 ]
 
 { #category : #accessing }
-DockingBarMorph >> color: aColor [ 
+DockingBarMorph >> color: aColor [
 	"Set the receiver's color."
 	super color: aColor.
 	originalColor := aColor asColor.
@@ -353,7 +353,7 @@ DockingBarMorph >> delete [
 ]
 
 { #category : #control }
-DockingBarMorph >> deleteIfPopUp: evt [ 
+DockingBarMorph >> deleteIfPopUp: evt [
 	evt
 		ifNotNil: [evt hand releaseMouseFocus: self]
 ]
@@ -373,10 +373,10 @@ DockingBarMorph >> edgeToAdhereTo [
 ]
 
 { #category : #accessing }
-DockingBarMorph >> extent: aPoint [ 
+DockingBarMorph >> extent: aPoint [
 	"Change the receiver's extent.
 	optimized to not keep updating the (gradient) color!"
-	
+
 	|old|
 	old := self extent.
 	super extent: aPoint.
@@ -391,7 +391,7 @@ DockingBarMorph >> fillsOwner [
 ]
 
 { #category : #accessing }
-DockingBarMorph >> fillsOwner: aBoolean [ 
+DockingBarMorph >> fillsOwner: aBoolean [
 	"Instruct the receiver to fill the owner or not"
 	fillsOwner := aBoolean.
 self updateLayoutProperties
@@ -409,7 +409,7 @@ DockingBarMorph >> gradientRamp [
 ]
 
 { #category : #'private - layout' }
-DockingBarMorph >> gradientRamp: colorRamp [ 
+DockingBarMorph >> gradientRamp: colorRamp [
 	gradientRamp := colorRamp.
 	self updateColor
 ]
@@ -430,7 +430,7 @@ DockingBarMorph >> handleFocusEvent: evt [
 	"What remains are mouse buttons and moves"
 	evt isMove ifFalse:[^self handleEvent: evt]. "handle clicks outside by regular means"
 	"Now it's getting tricky. On #mouseMove we might transfer control to *either* the currently active submenu or the pop up owner, if any. Since the active sub menu is always displayed upfront check it first."
-	selectedItem ifNotNil:[(selectedItem activateSubmenu: evt) ifTrue:[^self]].
+	selectedItem ifNotNil:[(selectedItem activateSubmenu: evt) ifTrue:[^self]]
 ]
 
 { #category : #'events-processing' }
@@ -544,7 +544,7 @@ DockingBarMorph >> justDroppedInto: aMorph event: anEvent [
 { #category : #'events-processing' }
 DockingBarMorph >> keyDown: anEvent [
 	"Handle menu navigation"
-	
+
 	"Left arrow key"
 	anEvent keyValue = 28 ifTrue: [ self moveSelectionRight: -1 event: anEvent ].
 	"Right arrow key"
@@ -556,7 +556,7 @@ DockingBarMorph >> keyDown: anEvent [
 
 { #category : #'wiw support' }
 DockingBarMorph >> morphicLayerNumber [
-	"helpful for insuring some morphs always appear in front of or 
+	"helpful for insuring some morphs always appear in front of or
 	behind others. smaller numbers are in front"
 	^ 11
 ]
@@ -573,9 +573,9 @@ DockingBarMorph >> mouseDown: anEvent [
 { #category : #'events-processing' }
 DockingBarMorph >> mouseUp: evt [
 	"If we click on a selected item with an action we want to execute the action and deselect the menu item."
-	
+
 	super mouseUp: evt.
-	
+
 	self selectedItem ifNil: [ ^ self ]. "No selected item"
 	self selectedItem selector ifNil: [ ^ self ]. "No action for the selected item"
 	(self selectedItem containsPoint: evt cursorPoint) ifFalse: [ ^ self ]. "The user did not clicked on the selected menu item"
@@ -593,7 +593,7 @@ DockingBarMorph >> moveSelectionRight: direction event: anEvent [
 	| index |
 	index := (submorphs indexOf: selectedItem ifAbsent: [ 1 - direction ]) + direction.
 	submorphs
-		do: [ :unused | 
+		do: [ :unused |
 			"Ensure finite"
 			| m |
 			m := submorphs atWrap: index.
@@ -606,23 +606,23 @@ DockingBarMorph >> moveSelectionRight: direction event: anEvent [
 
 { #category : #construction }
 DockingBarMorph >> newMenuItem [
-	
+
 	^ DockingBarMenuItemMorph new
 ]
 
 { #category : #'submorphs - accessing' }
-DockingBarMorph >> noteNewOwner: aMorph [ 
+DockingBarMorph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.
 
 	self submorphs
-		do: [:each | each adjustLayoutBounds].
+		do: [:each | each adjustLayoutBounds]
 ]
 
 { #category : #accessing }
 DockingBarMorph >> originalColor [
 	"Answer the original color."
-	
+
 	^originalColor
 ]
 
@@ -636,19 +636,19 @@ DockingBarMorph >> ownerChanged [
 { #category : #accessing }
 DockingBarMorph >> popUpOwner [
 	"For compatibility with other menu"
-	
+
 	^ nil
 ]
 
 { #category : #'private - accessing' }
-DockingBarMorph >> predominantDockingBarsOfChastes: predominantChastes [ 
-	"Private - Answer a collection of the docking bar of my owner  
-	that are predominant to the receiver.  
-	 
-	By 'predominant' we mean docking bar that have the right to  
-	get a position before the receiver.  
-	 
-	The predominance of individual living in the same chaste is  
+DockingBarMorph >> predominantDockingBarsOfChastes: predominantChastes [
+	"Private - Answer a collection of the docking bar of my owner
+	that are predominant to the receiver.
+
+	By 'predominant' we mean docking bar that have the right to
+	get a position before the receiver.
+
+	The predominance of individual living in the same chaste is
 	determinated by the arrival order. "
 
 	| allDockingBars byChaste byArrival |
@@ -658,7 +658,7 @@ DockingBarMorph >> predominantDockingBarsOfChastes: predominantChastes [
 
 	byChaste := allDockingBars select: [:each | predominantChastes includes: each edgeToAdhereTo].
 	(predominantChastes includes: self edgeToAdhereTo) ifFalse: [^ byChaste].
-	byChaste := byChaste reject: [:each | each edgeToAdhereTo = self edgeToAdhereTo].	
+	byChaste := byChaste reject: [:each | each edgeToAdhereTo = self edgeToAdhereTo].
 	byArrival := allDockingBars select: [:each | each edgeToAdhereTo = self edgeToAdhereTo].
 	byArrival := byArrival copyAfter: self.
 	^ byChaste , byArrival
@@ -676,7 +676,7 @@ DockingBarMorph >> roundedCorners [
 		ifTrue: [^ #(2 3 )].
 	self isAdheringToBottom
 		ifTrue: [^ #(1 4 )].
-	self isAdheringToLeft 
+	self isAdheringToLeft
 		ifTrue: [^ #(3 4 )].
 	self isAdheringToRight
 		ifTrue: [^ #(1 2 )].
@@ -684,7 +684,7 @@ DockingBarMorph >> roundedCorners [
 ]
 
 { #category : #control }
-DockingBarMorph >> selectItem: aMenuItem event: anEvent [ 
+DockingBarMorph >> selectItem: aMenuItem event: anEvent [
 	selectedItem
 		ifNotNil: [selectedItem deselect: anEvent].
 	selectedItem := aMenuItem.
@@ -761,10 +761,10 @@ DockingBarMorph >> updateExtent [
 	| margin usedHeight |
 	self fullBounds.
 	self fillsOwner ifFalse: [ ^ self ].
-	
+
 	"Nil check because there is probably a race condition here making the CI fail a lot."
 	self owner
-		ifNotNil: [ :anOwner | 
+		ifNotNil: [ :anOwner |
 			margin := self avoidVisibleBordersAtEdge ifTrue: [ self borderWidth * 2 ] ifFalse: [ 0 ].
 			self isHorizontal ifTrue: [ self width: anOwner width + margin ].
 			self isVertical
@@ -774,7 +774,7 @@ DockingBarMorph >> updateExtent [
 
 { #category : #'private - layout' }
 DockingBarMorph >> updateLayoutProperties [
-	"private - update the layout properties based on adhering,  
+	"private - update the layout properties based on adhering,
 	fillsOwner and avoidVisibleBordersAtEdge preferencs"
 
 	(self isHorizontal or: [self isFloating])
@@ -785,7 +785,7 @@ DockingBarMorph >> updateLayoutProperties [
 	self vResizing: #shrinkWrap.
 	self fillsOwner ifTrue: [
 			self isHorizontal ifTrue: [self hResizing: #spaceFill].
-			self isVertical ifTrue: [self vResizing: #spaceFill]].
+			self isVertical ifTrue: [self vResizing: #spaceFill]]
 ]
 
 { #category : #'private - layout' }
@@ -795,7 +795,7 @@ DockingBarMorph >> updatePosition [
 	(called twice if adhereing)"
 
 	self owner
-		ifNotNil: [ :anOwner | 
+		ifNotNil: [ :anOwner |
 			| edgeSymbol margin usedHeight |
 			edgeSymbol := self edgeToAdhereTo.
 			edgeSymbol == #none
@@ -825,7 +825,7 @@ DockingBarMorph >> updatePosition [
 ]
 
 { #category : #'private - accessing' }
-DockingBarMorph >> usedHeightByPredominantDockingBarsOfChastes: predominantChastes [ 
+DockingBarMorph >> usedHeightByPredominantDockingBarsOfChastes: predominantChastes [
 	"Private - convenience"
 	^(self predominantDockingBarsOfChastes: predominantChastes)
 		ifEmpty: [0]
@@ -833,7 +833,7 @@ DockingBarMorph >> usedHeightByPredominantDockingBarsOfChastes: predominantChast
 ]
 
 { #category : #'private - accessing' }
-DockingBarMorph >> usedWidthByPredominantDockingBarsOfChastes: predominantChastes [ 
+DockingBarMorph >> usedWidthByPredominantDockingBarsOfChastes: predominantChastes [
 	"Private - convenience"
 	^(self predominantDockingBarsOfChastes: predominantChastes)
 		ifEmpty: [0]
@@ -847,7 +847,7 @@ DockingBarMorph >> wantsGradientByDefault [
 
 { #category : #testing }
 DockingBarMorph >> wantsToBeTopmost [
-	"Answer if the receiver want to be one of the topmost objects in 
+	"Answer if the receiver want to be one of the topmost objects in
 	its owner"
 	^ true
 ]
@@ -856,6 +856,6 @@ DockingBarMorph >> wantsToBeTopmost [
 DockingBarMorph >> wantsYellowButtonMenu [
 	"Answer true if the receiver wants a yellow button menu.
 	Fixed for when defaultYellowButtonMenuEnabled setting is off"
-	
+
 	^ self defaultYellowButtonMenuEnabled
 ]

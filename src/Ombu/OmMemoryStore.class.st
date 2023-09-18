@@ -34,9 +34,10 @@ OmMemoryStore class >> withAllContents: aCollection [
 
 { #category : #'instance creation' }
 OmMemoryStore class >> withAllEntries: aCollection [
-	^ self new
-		in: [ :store | aCollection do: [ :entry | store newEntry: entry ] ];
-		yourself
+	| store |
+	store := self new. 
+	aCollection do: [ :entry | store newEntry: entry ].
+	^ store 
 ]
 
 { #category : #accessing }
@@ -45,7 +46,7 @@ OmMemoryStore >> entries [
 ]
 
 { #category : #enumerating }
-OmMemoryStore >> entriesDo: aBlockClosure [ 
+OmMemoryStore >> entriesDo: aBlockClosure [
 	entries do: aBlockClosure
 ]
 
@@ -59,7 +60,7 @@ OmMemoryStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: a
 	entry := entries
 		at: aReference localName asInteger
 		ifAbsent: [ ^ absentBlockClosure value ].
-		
+
 	^ presentBlockClosure cull: entry
 ]
 
@@ -82,8 +83,8 @@ OmMemoryStore >> initializeWithGlobalName: aName [
 
 	self initialize.
 	globalName := aName.
-	
-	entries := OrderedCollection new.
+
+	entries := OrderedCollection new
 ]
 
 { #category : #writing }
@@ -93,13 +94,13 @@ OmMemoryStore >> newEntry: anEntry [
 	localName := (entries size + 1) asString.
 	newReference := self referenceToLocalName: localName.
 	anEntry tags at: self selfReferenceKey put: newReference.
-	entries add: anEntry.
+	entries add: anEntry
 ]
 
 { #category : #refreshing }
 OmMemoryStore >> refresh [
 	"Nothing to refresh"
-	
+
 	^ self
 ]
 

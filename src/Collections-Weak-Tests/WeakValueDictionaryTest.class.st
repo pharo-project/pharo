@@ -60,8 +60,8 @@ WeakValueDictionaryTest >> testAtIfAbsentPutWithGarbageCollectedValue [
 				at: self keyWithGarbageCollectedValue
 				ifAbsentPut: [ 42 ])
 		equals: 42.
-		
-	self assert: (dictionary includes: 42).
+
+	self assert: (dictionary includes: 42)
 ]
 
 { #category : #tests }
@@ -109,7 +109,7 @@ WeakValueDictionaryTest >> testAtIfPresentWithGarbageCollectedValue [
 			(dictionary
 				at: self keyWithGarbageCollectedValue
 				ifPresent: [ 42 ])
-		equals: nil.
+		equals: nil
 ]
 
 { #category : #tests }
@@ -166,5 +166,5 @@ WeakValueDictionaryTest >> testSizeWithGarbageCollectedValue [
 
 	self
 		assert: self dictionaryWithGarbageCollectedValue size
-		equals: 0.
+		equals: 0
 ]

@@ -12,15 +12,15 @@ Class {
 }
 
 { #category : #'instance creation' }
-CoCollectionFetcher class >> onCollection: aCollection [ 
-	
+CoCollectionFetcher class >> onCollection: aCollection [
+
 	^ self new
 		collection: aCollection;
 		yourself
 ]
 
 { #category : #accessing }
-CoCollectionFetcher >> collection: aCollection [ 
+CoCollectionFetcher >> collection: aCollection [
 	collection := aCollection
 ]
 

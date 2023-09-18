@@ -30,10 +30,10 @@ SystemNavigation >> allBehaviorsDo: aBlock [
 ]
 
 { #category : #query }
-SystemNavigation >> allCallsOn: aSymbol [ 
+SystemNavigation >> allCallsOn: aSymbol [
 	"Answer a Collection of all the methods that call on the provided symbol even deeply embedded in literal array."
 	"self new allCallsOn: #allCallsOn:"
-	
+
 	^ self allReferencesTo: aSymbol
 ]
 
@@ -61,7 +61,7 @@ SystemNavigation >> allClasses [
 { #category : #query }
 SystemNavigation >> allClassesAndTraits [
 	"Answer all the classes and traits present in the image. Note that metaclasses are not part of the answer"
-	
+
 	^ self environment allClassesAndTraits
 ]
 
@@ -72,7 +72,7 @@ SystemNavigation >> allClassesDo: aBlock [
 ]
 
 { #category : #query }
-SystemNavigation >> allClassesImplementing: aSelector [  
+SystemNavigation >> allClassesImplementing: aSelector [
 	"Answer all classes that implement the message aSelector."
 	^self allBehaviors select: [:class | class includesSelector: aSelector]
 ]
@@ -81,14 +81,17 @@ SystemNavigation >> allClassesImplementing: aSelector [
 SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"Answer all protocols on instance or class side"
 
-	^self allClasses flatCollectAsSet: [ :class | instanceSide ifTrue: [class protocols] ifFalse: [ class class protocols ] ]
+	^ self allClasses flatCollectAsSet: [ :class |
+		  instanceSide
+			  ifTrue: [ class protocolNames ]
+			  ifFalse: [ class class protocolNames ] ]
 ]
 
 { #category : #private }
 SystemNavigation >> allGlobalRefsOn: aSymbol [
 	"Answer all references to globals"
 	"self new allGlobalRefsOn: #ActiveWorld"
-	
+
 	| binding|
 	binding := self environment bindingOf: aSymbol.
 	binding ifNil: [ ^ #() ].
@@ -98,7 +101,7 @@ SystemNavigation >> allGlobalRefsOn: aSymbol [
 { #category : #query }
 SystemNavigation >> allImplementedMessages [
 	"Answer a Collection of all the messages that are implemented in the system."
-	
+
 	^Symbol selectorTable
 ]
 
@@ -113,17 +116,18 @@ SystemNavigation >> allImplementorsOf: aSelector [
 
 { #category : #query }
 SystemNavigation >> allMethods [
+	"all methods, including copies from Traits"
 	^ self environment allMethods
 ]
 
 { #category : #query }
-SystemNavigation >> allMethodsSelect: aBlock [ 
+SystemNavigation >> allMethodsSelect: aBlock [
 	"Answer a SortedCollection of each method that, when used as the block  argument to aBlock, gives a true result."
-	
+
 	| aCollection |
 	aCollection := OrderedCollection new.
-	self allBehaviorsDo: [:class | 
-		class	methodsDo: [:m | 
+	self allBehaviorsDo: [:class |
+		class	methodsDo: [:m |
 			(aBlock value: m) ifTrue: [aCollection add: m]]].
 	^ aCollection
 ]
@@ -131,15 +135,15 @@ SystemNavigation >> allMethodsSelect: aBlock [
 { #category : #query }
 SystemNavigation >> allObjects [
 	"Answer an Array of all objects in the system.  Fail if there isn't enough memory to instantiate the result."
-	
+
 	<primitive: 178>
 	^ self primitiveFailed
 ]
 
 { #category : #query }
-SystemNavigation >> allObjectsDo: aBlock [ 
+SystemNavigation >> allObjectsDo: aBlock [
 	"Evaluate the argument, aBlock, for each object in the system, excluding immediates such as SmallInteger and Character."
-	
+
 	self allObjectsOrNil
 		ifNotNil: [ :allObjects| allObjects do: aBlock ]
 		ifNil: [ self error:'Error allocating a big enough array for all objects' ]
@@ -148,7 +152,7 @@ SystemNavigation >> allObjectsDo: aBlock [
 { #category : #query }
 SystemNavigation >> allObjectsOrNil [
 	"Answer an Array of all objects in the system.  Fail if there isn't enough memory to instantiate the result and answer nil."
-	
+
 	<primitive: 178>
 	^ nil
 ]
@@ -159,7 +163,7 @@ SystemNavigation >> allPrimitiveMethods [
 
 	^self allMethods
 		select: [ :method | method isPrimitive ]
-		thenCollect: [ :method | method methodClass name , ' ' , 
+		thenCollect: [ :method | method methodClass name , ' ' ,
 			     method selector , ' ', method primitive printString ]
 ]
 
@@ -177,7 +181,7 @@ SystemNavigation >> allReferencesTo: aLiteral [
 { #category : #query }
 SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
 	"Perform aBlock on all the references to aLiteral."
-	
+
 	| symbol |
 	symbol := aLiteral isSymbol.
 	self allBehaviorsDo: [ :class |
@@ -209,7 +213,7 @@ SystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 ]
 
 { #category : #'message sends' }
-SystemNavigation >> allSendersOf: selector [ 
+SystemNavigation >> allSendersOf: selector [
 	^self allReferencesTo: selector
 ]
 
@@ -218,10 +222,10 @@ SystemNavigation >> allSentMessages [
 	"Answer the set of selectors which are sent somewhere in the system."
 	| sent |
 	sent := IdentitySet new.
-	self allBehaviorsDo: [:each | 
+	self allBehaviorsDo: [:each |
 				each selectors
 					do: [:sel | "Include all sels, but not if sent by self"
-						(each compiledMethodAt: sel) literalsDo: [:m | 
+						(each compiledMethodAt: sel) literalsDo: [:m |
 								(m isSymbol) ifTrue: ["might be sent"
 										m == sel ifFalse: [sent add: m]].
 								(m isMemberOf: Array) ifTrue: ["might be performed"
@@ -235,24 +239,40 @@ SystemNavigation >> allSentMessages [
 ]
 
 { #category : #query }
-SystemNavigation >> allUnimplementedCalls [
+SystemNavigation >> allSentNotImplementedSelectors [
 
 	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
 
-	^ self allMethods select: [ :meth | 
+	^ self allMethods select: [ :method |
 		  | ignored |
-		  ignored := (meth pragmaAt: #ignoreUnimplementedCalls:)
-			             ifNotNil: [ :pragma | pragma argumentAt: 1 ]
-			             ifNil: [ #(  ) ].
-		  meth messages anySatisfy: [ :m | 
+		  ignored := method allIgnoredNotImplementedSelectors.
+
+		  method messages anySatisfy: [ :m |
 			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
 ]
 
 { #category : #query }
-SystemNavigation >> allUnsentMessagesIn: selectorSet [ 
+SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
+
+	Symbol allSymbolTablesDo: [ :e |
+		(e beginsWith: aString)
+			ifTrue: [ aBlock value: e  ] ]
+]
+
+{ #category : #query }
+SystemNavigation >> allUnimplementedCalls [
+	"call is not a good term here, these are selectors"
+	self
+		deprecated: 'Changed selector for coherency'
+		transformWith: '`@receiver allUnimplementedCalls' -> '`@receiver allSentNotImplementedSelectors'.
+	^self allSentNotImplementedSelectors
+]
+
+{ #category : #query }
+SystemNavigation >> allUnsentMessagesIn: selectorSet [
 	"Answer the subset of selectorSet which are not sent anywhere in the system. As allSentMessages does not recurse into nested Arrays, filter with #allCallsOn, which does"
-	
-	^ (selectorSet copyWithoutAll: self allSentMessages) 
+
+	^ (selectorSet copyWithoutAll: self allSentMessages)
 			select: [ :each | (self allCallsOn: each) isEmpty ]
 ]
 
@@ -263,7 +283,7 @@ SystemNavigation >> environment [
 
 { #category : #accessing }
 SystemNavigation >> environment: aSystemDictionary [
-	
+
 	environment := aSystemDictionary
 ]
 
@@ -289,20 +309,12 @@ SystemNavigation >> initialize [
 ]
 
 { #category : #query }
-SystemNavigation >> installedMethodsWithIncorrectTrailerKind [
-
-	^ self allMethodsSelect:
-		[ :each | (#(#SourcePointer #VarLengthSourcePointer #NativeCodeTrailer) 
-							includes: each trailer kind) not and: [ each isInstalled ] ]
-]
-
-{ #category : #query }
 SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 	"This answers all the instance side methods that has NIL as the key in their last literal. There should be none (only class side methods have this)"
 
 	^ self
-		allMethodsSelect: [ :each | 
-			(((each literalAt: each numLiterals) key isNil 
+		allMethodsSelect: [ :each |
+			(((each literalAt: each numLiterals) key isNil
 					and: [ (each literalAt: each numLiterals) value isMeta not ])
 						and: [ each methodClass ~= UndefinedObject ]) and: [ each isInstalled ] ]
 ]
@@ -313,22 +325,28 @@ SystemNavigation >> isUnsentMessage: selector [
 		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
 ]
 
+{ #category : #query }
+SystemNavigation >> methods [
+	"all methods, but without those installed by Traits"
+	^ self environment methods
+]
+
 { #category : #'identifying obsoletes' }
 SystemNavigation >> methodsReferencingObsoleteClasses [
 	"Returns all methods that reference obsolete behaviors"
-	
+
 	| obsClasses |
 	obsClasses := self obsoleteClasses.
-	
+
 	^Array streamContents: [ :methods |
-		obsClasses keysAndValuesDo: 
-			[ :index :each | | obsRefs | 
+		obsClasses keysAndValuesDo:
+			[ :index :each | | obsRefs |
 			obsRefs := each pointersToExcept: obsClasses.
-			obsRefs do: [ :ref | 
+			obsRefs do: [ :ref |
 				"Figure out if it may be a global"
-				(ref isVariableBinding and: [ref key isString	"or Symbol"]) 
+				(ref isVariableBinding and: [ref key isString	"or Symbol"])
 					ifTrue: [
-						(ref pointersTo) do: [ :meth | 
+						(ref pointersTo) do: [ :meth |
 							meth isCompiledMethod
 								ifTrue: [methods nextPut: meth]]]]]]
 ]
@@ -361,17 +379,17 @@ SystemNavigation >> obsoleteClasses [
 	obs := OrderedCollection new.
 	Smalltalk garbageCollect.
 	Metaclass
-		allInstancesDo: [ :m | 
+		allInstancesDo: [ :m |
 			| c |
 			c := m soleInstance.
 			(c notNil and: [ c isObsolete ])
 				ifTrue: [ obs add: c ] ].
-	^ obs asArray	
-		
+	^ obs asArray
+
 "Likely in a ClassDict or Pool...
 (Association allInstances select: [:a | (a value isKindOf: Class) and: [a value isObsolete]]) asArray
-"	
-	
+"
+
 "Obsolete class refs or super pointer in last lit of a method...
 | n l found |
 SystemNavigation new browseAllSelect:
@@ -383,4 +401,54 @@ SystemNavigation new browseAllSelect:
 			ifTrue: [found := true]].
 	found]
 "
+]
+
+{ #category : #removing }
+SystemNavigation >> removeClass: aClass [
+	"Remove the selected class from the system, at interactive user request.  Make certain the user really wants to do this, since it is not reversible.  Answer true if removal actually happened."
+
+	| message className classToRemove result |
+	aClass ifNil: [ ^ false ].
+	classToRemove := aClass instanceSide.
+	className := classToRemove name.
+	message := self removeClassMessageFor: className.
+	(result := self confirm: message)
+		ifTrue: [
+			classToRemove subclasses notEmpty
+				ifTrue: [
+					(self confirm: 'class has subclasses: ' , message)
+						ifFalse: [ ^ false ] ].
+			classToRemove removeFromSystem ].
+	^ result
+]
+
+{ #category : #removing }
+SystemNavigation >> removeClassMessageFor: className [
+	^ 'Are you certain that you
+want to REMOVE the class ' , className
+		,
+			'
+from the system?'
+]
+
+{ #category : #removing }
+SystemNavigation >> removeMethod: aMethod inClass: aClass [
+	"If a message is selected, create a Confirmer so the user can verify that
+	the currently selected message should be removed from the system. If
+	so, remove it. "
+	| messageName confirmation |
+
+	aMethod ifNil: [^ false].
+	messageName := aMethod selector.
+	confirmation := self confirmRemovalOf: messageName on: aClass.
+	confirmation = 3
+		ifTrue: [^ false].
+	(aClass includesLocalSelector: messageName)
+		ifTrue: [ aClass removeSelector: messageName ].
+
+	"In case organization not cached"
+	confirmation = 2
+		ifTrue: [self browseAllSendersOf: messageName].
+
+	^ true
 ]

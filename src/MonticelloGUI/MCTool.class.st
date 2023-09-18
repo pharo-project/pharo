@@ -35,25 +35,9 @@ MCTool class >> mcVersionCache [
 		ifNil: [ MCVersionCache := LRUCache new maximumWeight: 32 ]
 ]
 
-{ #category : #utilities }
-MCTool class >> newRepository [
-	"Create a new monticello repository"
-	| types index |
-	types := MCRepository allConcreteSubclasses asArray.
-	index := UIManager default chooseFrom: (types collect: [:ea | ea description])
-				title: 'Repository type:'.
-	^ index = 0 ifFalse: [(types at: index) morphicConfigure]
-]
-
 { #category : #'morphic ui' }
 MCTool >> accept [
 	" do nothing by default"
-]
-
-{ #category : #utilities }
-MCTool >> allManagers [
-
-	^ MCWorkingCopy allManagers 
 ]
 
 { #category : #'morphic ui' }
@@ -297,6 +281,11 @@ MCTool >> performButtonAction: anActionSelector enabled: anEnabledSelector [
 { #category : #'morphic ui' }
 MCTool >> preferredColor [  
 	^ (Color r: 0.627 g: 0.69 b: 0.976)
+]
+
+{ #category : #accessing }
+MCTool >> selectedClassOrMetaClass [
+	^nil
 ]
 
 { #category : #'morphic ui' }

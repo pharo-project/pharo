@@ -19,7 +19,7 @@ GuideTest class >> isAbstract [
 { #category : #asserting }
 GuideTest >> assertVisitedIs: anArray [
 	visited with: anArray do:
-		[:entry :basename | 
+		[:entry :basename |
 		self assert: entry reference basename equals: basename]
 ]
 

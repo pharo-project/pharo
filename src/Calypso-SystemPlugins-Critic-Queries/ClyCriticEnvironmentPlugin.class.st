@@ -47,7 +47,7 @@ ClyCriticEnvironmentPlugin class >> isEnabled [
 
 { #category : #settings }
 ClyCriticEnvironmentPlugin class >> isEnabled: aBoolean [
-	aBoolean 
+	aBoolean
 		ifTrue: [ self enableMethodGroup ]
 		ifFalse: [ self disableMethodGroup ]
 ]
@@ -76,14 +76,14 @@ ClyCriticEnvironmentPlugin class >> settingsOn: aBuilder [
 { #category : #'method groups' }
 ClyCriticEnvironmentPlugin >> collectMethodGroupProviders [
 	providesMethodGroup ifFalse: [ ^#() ].
-	
+
 	^{ClyCriticMethodGroupProvider new}
 ]
 
 { #category : #initialization }
 ClyCriticEnvironmentPlugin >> initialize [
 	super initialize.
-	
+
 	providesMethodGroup := self class providesMethodGroupByDefault
 ]
 

@@ -16,7 +16,7 @@ DTRFTPlugin class >> pluginName [
 { #category : #'api - accessing' }
 DTRFTPlugin class >> pluginResultClass [
 	"Returns the class that this plugin instantiate for its results."
-	^ DTRTFResult 
+	^ DTRTFResult
 ]
 
 { #category : #'api - accessing' }
@@ -35,7 +35,7 @@ DTRFTPlugin >> analyse: aTestClass [
 DTRFTPlugin >> analyseTestFrom: aDTpluginConfiguration [
 	|result|
 	result := self pluginResultClass new.
-	aDTpluginConfiguration items do: [ :testClass | 
+	aDTpluginConfiguration items do: [ :testClass |
 		result add: (self analyse: testClass) ].
 	^ result
 ]

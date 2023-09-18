@@ -19,7 +19,7 @@ Announcement class >> , anAnnouncementClass [
 
 { #category : #public }
 Announcement class >> - anotherAnnouncement [
-	"Create an announcement set containing the receiver 
+	"Create an announcement set containing the receiver
 	and anotherAnnouncement as exclusion."
 
 	^ AnnouncementSetWithExclusions new
@@ -55,6 +55,6 @@ Announcement >> asAnnouncement [
 Announcement >> prepareForDelivery [
 	"This method will be executed once before subscriptions delivery.
 	If nobody subscribed on me this method will not be called.
-	It allows to put some heavy initialization logic here. It will be executed only 
+	It allows to put some heavy initialization logic here. It will be executed only
 	if there is interest on me"
 ]

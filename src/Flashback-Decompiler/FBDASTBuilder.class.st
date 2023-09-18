@@ -118,10 +118,10 @@ FBDASTBuilder >> codeMessage: selector receiver: rcvr arguments:args [
 
 { #category : #building }
 FBDASTBuilder >> codeMethod: selector arguments: args body: body pragmas: pragmas class: class [
-	^ ((RBMethodNode selector: selector arguments: args body: body)
+
+	^ (RBMethodNode selector: selector arguments: args body: body)
 		pragmas: pragmas;
-		methodClass: class;
-		yourself) doSemanticAnalysis
+		doSemanticAnalysisIn: class
 ]
 
 { #category : #building }
@@ -134,7 +134,7 @@ FBDASTBuilder >> codeRepeatNode: body [
 	^ (self
 		codeMessage: #repeat
 		receiver: (self codeBlock: body)
-		arguments: #() ) 
+		arguments: #() )
 			propertyAt: #reconstructed put: true;
 			yourself
 ]

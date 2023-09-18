@@ -25,13 +25,10 @@ Class {
 
 { #category : #baseline }
 BaselineOfUI >> baseline: spec [ 
-    
-	<baseline>
+    <baseline>
 
 	| repository |
-	 
-	repository := self packageRepositoryURL.
-       
+	repository := self packageRepositoryURL.       
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 		
@@ -46,22 +43,15 @@ BaselineOfUI >> baseline: spec [
 		self specBase: spec.		
 		
 		spec package: 'StartupPreferences'.		
-		
-		spec package: 'Debugger-Actions'.
-
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
-
 		spec package: 'Morphic-Widgets-Tree'.
 
 		spec baseline: 'Keymapping' with: [ 
 			spec 
 				repository: repository;
 				loads: 'ui' ].
-
 		spec package: 'WebBrowser-Core'.
-
-		spec package: 'HelpSystem-Core'.
 	].
 ]
 

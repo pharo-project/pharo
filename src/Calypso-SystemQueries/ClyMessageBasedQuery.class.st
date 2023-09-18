@@ -36,7 +36,7 @@ ClyMessageBasedQuery class >> of: aSelector from: aScope [
 
 { #category : #'instance creation' }
 ClyMessageBasedQuery class >> ofAny: selectors [
-	^self new 
+	^self new
 		selectors: selectors
 ]
 

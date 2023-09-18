@@ -2,9 +2,9 @@ Extension { #name : #DateAndTimeUnixEpochTest }
 
 { #category : #'*Kernel-Tests-Extended' }
 DateAndTimeUnixEpochTest >> testAsMonth [
-	self 
+	self
 		assert: aDateAndTime asMonth
-		equals: (Month year: 1970 month: 'January').
+		equals: (Month year: 1970 month: 'January')
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

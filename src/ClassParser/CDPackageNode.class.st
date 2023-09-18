@@ -10,12 +10,6 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
-{ #category : #visitor }
-CDPackageNode >> acceptVisitor: aProgramNodeVisitor [
-	
-	aProgramNodeVisitor visitPackage: self
-]
-
 { #category : #accessing }
 CDPackageNode >> packageName [
 	^ packageName
@@ -27,9 +21,9 @@ CDPackageNode >> packageName: anObject [
 ]
 
 { #category : #accessing }
-CDPackageNode >> value [ 
+CDPackageNode >> value [
 	"to be compatible with the default CDClassDefinitionNode definition.
 	There a package is just an RBLiteralNode and it may be a PackageNode too."
-	
+
 	^ packageName
 ]

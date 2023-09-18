@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'comment'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -38,17 +38,10 @@ RBAddClassCommentTransformation class >> model: aRBModel comment: aString in: aC
 ]
 
 { #category : #api }
-RBAddClassCommentTransformation >> comment: aString in: aClassName [ 
+RBAddClassCommentTransformation >> comment: aString in: aClassName [
 
 	self className: aClassName.
 	comment := aString
-]
-
-{ #category : #preconditions }
-RBAddClassCommentTransformation >> preconditions [
-	"no preconditions needed"
-	
-	^ self emptyCondition
 ]
 
 { #category : #executing }
@@ -58,7 +51,7 @@ RBAddClassCommentTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBAddClassCommentTransformation >> storeOn: aStream [ 
+RBAddClassCommentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

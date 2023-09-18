@@ -11,7 +11,7 @@ Class {
 EpContentStringVisitor >> displayBrowserOperation: aBrowserOperationEvent [
 
 	^ String streamContents: [ :stream |
-		stream 
+		stream
 			print: aBrowserOperationEvent entryReferences size;
 			nextPutAll: ' code changes produced' ]
 ]
@@ -21,10 +21,22 @@ EpContentStringVisitor >> printProtocol: protocol sourceCode: sourceCode [
 
 	^ String streamContents: [ :stream |
 		stream
-			nextPutAll: '"protocol: '; 
+			nextPutAll: '"protocol: ';
 			print: protocol;
 			nextPut: $"; cr; cr;
 			nextPutAll: sourceCode ]
+]
+
+{ #category : #private }
+EpContentStringVisitor >> printTag: aTagName package: aPackageName [
+
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: '"Package: ';
+			  nextPutAll: aPackageName;
+			  nextPut: $";
+			  lf;
+			  nextPutAll: aTagName ]
 ]
 
 { #category : #visitor }

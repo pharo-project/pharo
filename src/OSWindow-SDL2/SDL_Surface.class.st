@@ -107,7 +107,7 @@ SDL_Surface >> format [
 { #category : #'accessing - structure variables' }
 SDL_Surface >> format: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_FORMAT put: anObject getHandle.
+	handle pointerAt: OFFSET_FORMAT put: anObject getHandle
 ]
 
 { #category : #finalization }
@@ -148,7 +148,7 @@ SDL_Surface >> lock_data [
 { #category : #'accessing - structure variables' }
 SDL_Surface >> lock_data: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_LOCK_DATA put: anObject getHandle.
+	handle pointerAt: OFFSET_LOCK_DATA put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -172,7 +172,7 @@ SDL_Surface >> map [
 { #category : #'accessing - structure variables' }
 SDL_Surface >> map: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_MAP put: anObject getHandle.
+	handle pointerAt: OFFSET_MAP put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }
@@ -196,7 +196,7 @@ SDL_Surface >> pixels [
 { #category : #'accessing - structure variables' }
 SDL_Surface >> pixels: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_PIXELS put: anObject getHandle.
+	handle pointerAt: OFFSET_PIXELS put: anObject getHandle
 ]
 
 { #category : #finalization }
@@ -235,7 +235,7 @@ SDL_Surface >> userdata [
 { #category : #'accessing - structure variables' }
 SDL_Surface >> userdata: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_USERDATA put: anObject getHandle.
+	handle pointerAt: OFFSET_USERDATA put: anObject getHandle
 ]
 
 { #category : #'accessing - structure variables' }

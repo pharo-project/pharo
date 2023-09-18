@@ -14,13 +14,11 @@ Class {
 
 { #category : #private }
 HDCoverageReport >> addTestsIn: aTestAsserter to: aSet [
-	(aTestAsserter isKindOf: TestSuite) ifTrue: [
-		aTestAsserter tests
-			do: [ :each | self addTestsIn: each to: aSet ] ].
+
+	(aTestAsserter isKindOf: TestSuite) ifTrue: [ aTestAsserter tests do: [ :each | self addTestsIn: each to: aSet ] ].
 	(aTestAsserter isKindOf: TestCase) ifTrue: [
 		(aTestAsserter class respondsTo: #packageNamesUnderTest) ifTrue: [
-			aTestAsserter class packageNamesUnderTest
-				do: [ :each | aSet add: (RPackage organizer packageNamed: each) ] ] ].
+			aTestAsserter class packageNamesUnderTest do: [ :each | aSet add: (self packageOrganizer packageNamed: each) ] ] ].
 	^ aSet
 ]
 
@@ -144,7 +142,7 @@ HDCoverageReport >> methodsIn: aPackage [
 	^ aPackage methods reject: [ :method | 
 		(self ignoredSelectors includes: method selector)
 			or: [ method compiledMethod isAbstract
-			or: [ method compiledMethod refersToLiteral: #ignoreForCoverage ] ] ]
+			or: [ method compiledMethod hasPragmaNamed: #ignoreForCoverage ] ] ]
 ]
 
 { #category : #private }

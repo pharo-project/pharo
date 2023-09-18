@@ -112,7 +112,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyQuery class >> as: aQueryResultClass [
-	^self new 
+	^self new
 		requiredResult: aQueryResultClass
 ]
 
@@ -120,7 +120,7 @@ ClyQuery class >> as: aQueryResultClass [
 ClyQuery class >> mergeOwnInstances: queries [
 	"Subclasses should return collection of queries merged from given array.
 	For example two AllClasses queries from same package scope can be merged.
-	They can be represented by single AllClasses query 
+	They can be represented by single AllClasses query
 	from unified scope of both packages from original queries"
 	self subclassResponsibility
 ]
@@ -141,7 +141,7 @@ ClyQuery class >> unionFrom: subqueries as: aQueryResult [
 ]
 
 { #category : #composition }
-ClyQuery >> , anotherQuery [ 
+ClyQuery >> , anotherQuery [
 	self subclassResponsibility
 ]
 
@@ -151,8 +151,8 @@ ClyQuery >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class	ifFalse: [ ^ false ].
-		
-	^ requiredResult = anObject requiredResult	
+
+	^ requiredResult = anObject requiredResult
 		and: [scope = anObject scope]
 ]
 
@@ -195,7 +195,7 @@ ClyQuery >> defaultResult [
 
 { #category : #printing }
 ClyQuery >> description [
-	^String streamContents: [:s | 
+	^String streamContents: [:s |
 		s nextPutAll: self class name.
 		s nextPut: $(.
 		self printExtraInfoOn: s.
@@ -205,8 +205,8 @@ ClyQuery >> description [
 { #category : #accessing }
 ClyQuery >> ensureScope: aScope [
 	scope == ClyUnknownScope instance ifTrue: [ ^self scope: aScope ].
-	
-	scope == aScope ifFalse: [ 
+
+	scope == aScope ifFalse: [
 		self error: 'Scope modification is forbidden. Query is bound to scope forever' ]
 ]
 
@@ -231,13 +231,13 @@ ClyQuery >> executesQuery: aTypedQueryClass [
 
 { #category : #converting }
 ClyQuery >> filteredBy: anItemFilter [
-	^ClyFilterQuery for: self filter: anItemFilter.
+	^ClyFilterQuery for: self filter: anItemFilter
 ]
 
 { #category : #execution }
 ClyQuery >> fixStateBeforeExecution [
 	"Here the query should become readonly object together with all required internal state. By default it is only instance itself. But subclasses like composite query force additional objects (subqueries) to fix their state.
-	If query needs additional state for execution 
+	If query needs additional state for execution
 	it should retrieve it in prepare method which is executed before readonly fix"
 	self prepareStateBeforeExecution.
 	self beReadOnlyObject.
@@ -246,7 +246,7 @@ ClyQuery >> fixStateBeforeExecution [
 
 { #category : #printing }
 ClyQuery >> fullDescription [
-	
+
 	^self description, ' from ',
 		(scope isBasedOnEmptyBasis ifTrue: [ 'empty scope'] ifFalse: [ scope description])
 ]
@@ -321,7 +321,7 @@ ClyQuery >> openBrowserCursorFor: anItemObserver [
 
 { #category : #execution }
 ClyQuery >> prepareNewResult [
-	
+
 	^requiredResult prepareNewFor: self in: self environment
 ]
 
@@ -339,17 +339,17 @@ ClyQuery >> printExtraInfoOn: aStream [
 ClyQuery >> printOn: aStream [
 	| position |
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
 	position := aStream position.
 	self printExtraInfoOn: aStream.
-	aStream position = position 
+	aStream position = position
 		ifTrue: [ aStream skip: -1; nextPut: $  ]
 		ifFalse: [ aStream nextPutAll: ') ' ].
 	aStream nextPutAll: 'from '.
-	scope isBasedOnEmptyBasis 
+	scope isBasedOnEmptyBasis
 		ifTrue: [ aStream nextPutAll: 'empty scope']
-		ifFalse: [ scope printDescriptionOn: aStream].
+		ifFalse: [ scope printDescriptionOn: aStream]
 ]
 
 { #category : #accessing }
@@ -400,17 +400,17 @@ ClyQuery >> scope [
 
 { #category : #accessing }
 ClyQuery >> scope: aScope [
-	aScope isBoundToEnvironment ifFalse: [ 
+	aScope isBoundToEnvironment ifFalse: [
 		^self error: 'Query should be always initialized with scope bound to concrete environment' ].
-	(aScope supportsQuery: self) ifFalse: [ 
+	(aScope supportsQuery: self) ifFalse: [
 		self error: 'Given scope do not support given query! Try use #adoptQuery:' ].
-	
+
 	scope := aScope
 ]
 
 { #category : #converting }
 ClyQuery >> semiAsync [
-	^self async 
+	^self async
 		asyncResult: ClySemiAsyncQueryResult new
 ]
 

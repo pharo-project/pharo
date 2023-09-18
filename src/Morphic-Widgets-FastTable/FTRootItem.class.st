@@ -25,7 +25,7 @@ FTRootItem >> children [
 ]
 
 { #category : #accessing }
-FTRootItem >> children: aCollectionOfItem [ 
+FTRootItem >> children: aCollectionOfItem [
 	children := aCollectionOfItem
 ]
 

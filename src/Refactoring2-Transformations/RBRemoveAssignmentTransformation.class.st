@@ -24,7 +24,7 @@ Class {
 		'variableName',
 		'value'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
 { #category : #api }
@@ -51,26 +51,40 @@ RBRemoveAssignmentTransformation class >> variable: aVariableName value: anExpre
 ]
 
 { #category : #preconditions }
-RBRemoveAssignmentTransformation >> preconditions [
+RBRemoveAssignmentTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		& (RBCondition
-			withBlock: [ self definingClass canUnderstand: selector ]
-			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		& (RBCondition
-			withBlock: [ (self definingMethod allChildren
-				select: #isVariable thenCollect: #name)
-				anySatisfy: [ :e | e asString = variableName ] ]
-			errorString: ('Method named <1s> does not have an assignment for variable named <2s>'
-				expandMacrosWith: selector with: variableName))
-		& (RBCondition
-			withBlock: [ (self definingMethod allChildren
-				select: #isAssignment thenCollect: #variable)
-				anySatisfy: [ :e | e name asString = variableName ] ]
-			errorString: ('Method named <1s> does not have an assignment for variable named <2s>'
-				expandMacrosWith: selector with: variableName))
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [
+				   (self definingMethod allChildren
+					    select: #isVariable
+					    thenCollect: #name) anySatisfy: [ :e |
+					   e asString = variableName ] ]
+			   errorString:
+				   ('Method named <1s> does not have an assignment for variable named <2s>'
+					    expandMacrosWith: selector
+					    with: variableName)) & (RBCondition
+		   withBlock: [
+			   (self definingMethod allChildren
+				    select: [ :each | each isAssignment ]
+				    thenCollect: [ :var | var variable ]) anySatisfy: [ :e |
+				   e name asString = variableName ] ]
+		   errorString:
+			   ('Method named <1s> does not have an assignment for variable named <2s>'
+				    expandMacrosWith: selector
+				    with: variableName))
+]
+
+{ #category : #preconditions }
+RBRemoveAssignmentTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
 { #category : #executing }
@@ -83,7 +97,7 @@ RBRemoveAssignmentTransformation >> privateTransform [
 		ifTrue: [ assignments first ]
 		ifFalse: [ valueNode := self parserClass parseExpression: value.
 			assignments
-				detectMax: [ :node | 
+				detectMax: [ :node |
 					((node allChildren collect: [:each | each class])
 						intersection: (valueNode allChildren collect: [:each | each class])) size ] ].
 	nodeToRemove parent removeNode: nodeToRemove.
@@ -91,7 +105,7 @@ RBRemoveAssignmentTransformation >> privateTransform [
 ]
 
 { #category : #printing }
-RBRemoveAssignmentTransformation >> storeOn: aStream [ 
+RBRemoveAssignmentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

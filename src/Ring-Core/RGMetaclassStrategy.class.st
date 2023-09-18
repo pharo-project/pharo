@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #visiting }
-RGMetaclassStrategy >> acceptVisitor: aVisitor [ 
+RGMetaclassStrategy >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitMetaclass: self owner
 ]
@@ -39,7 +39,7 @@ RGMetaclassStrategy >> baseClass: anRGClass [
 
 { #category : #'private - backend access' }
 RGMetaclassStrategy >> bindingOf: varName [
-	
+
 	^ self baseClass bindingOf: varName
 ]
 
@@ -65,14 +65,14 @@ RGMetaclassStrategy >> comment [
 RGMetaclassStrategy >> defaultMetaClass [
 
 	"will be set correctly together with baseClass"
-	^ RGUnresolvedValue new default: nil.
+	^ RGUnresolvedValue new default: nil
 ]
 
 { #category : #'private - backend access' }
 RGMetaclassStrategy >> definition [
 	"Refer to the comment in ClassDescription|definition."
 
-	^ String streamContents: 
+	^ String streamContents:
 		[:strm |
 		strm print: self.
 		self owner hasTraitComposition ifTrue: [
@@ -80,26 +80,26 @@ RGMetaclassStrategy >> definition [
 				crtab;
 				nextPutAll: 'uses: ';
 				print: self traitComposition ].
-		
+
 		(self owner slotsNeedFullDefinition or: [ ClassDefinitionPrinter showFluidClassDefinition ])
-			ifFalse: [  
+			ifFalse: [
 						strm
 							crtab;
 							nextPutAll: 'instanceVariableNames: ';
 							store: self owner instanceVariablesString]
-			ifTrue: [ 
+			ifTrue: [
 						strm
 							crtab;
 							nextPutAll: 'slots: ';
 							nextPutAll: self owner slotDefinitionString]]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : #initialization }
 RGMetaclassStrategy >> initialize [
 
 	baseClass := RGUnresolvedValue recursive.
-	
-	super initialize.
+
+	super initialize
 ]
 
 { #category : #'private - backend access' }
@@ -135,19 +135,19 @@ RGMetaclassStrategy >> isMetaclassStrategy [
 RGMetaclassStrategy >> makeResolved [
 
 	"try to set the correct name before resolving of it"
-	((self owner hasUnresolved: #name) and: [ self baseClass isRingResolved and: [ self baseClass hasResolvedName ] ]) ifTrue: [ 
+	((self owner hasUnresolved: #name) and: [ self baseClass isRingResolved and: [ self baseClass hasResolvedName ] ]) ifTrue: [
 		self owner pvtName: (self baseClass name, ' class') asSymbol.
 		 ].
-	
+
 	super makeResolved markAsRingResolved.
-	
-	baseClass := self baseClass.
+
+	baseClass := self baseClass
 ]
 
 { #category : #'private - backend access' }
 RGMetaclassStrategy >> metaclass [
 
-	"temporary" 
+	"temporary"
 	^ self
 ]
 
@@ -161,10 +161,10 @@ RGMetaclassStrategy >> package [
 RGMetaclassStrategy >> pvtAsMetaclassTrait [
 
 	| newMetaclassTrait |
-	
+
 	(self owner resolvedProperties includesAnyOf: #(superclass traitComposition))
 		ifTrue: [self error: 'This class cannot be converted to trait'].
-		
+
 	"TODO: check empty layout"
 	newMetaclassTrait := RGMetaclassTrait unresolvedWithParent: self owner parent.
 	newMetaclassTrait copyPropertiesFrom: self owner.
@@ -172,7 +172,7 @@ RGMetaclassStrategy >> pvtAsMetaclassTrait [
 	(self owner hasResolvedName)
 		ifTrue: [ newMetaclassTrait pvtName: ((self owner name withoutSuffix: ' class'), ' classTrait') asSymbol ].
 	newMetaclassTrait pvtLocalMethods: self owner localMethods.
-	
+
 	^ newMetaclassTrait
 ]
 
@@ -193,8 +193,8 @@ RGMetaclassStrategy >> pvtBaseClass: anRGClass [
 { #category : #'private - backend access' }
 RGMetaclassStrategy >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#baseClass -> baseClass. 
+	^ super pvtResolvableProperties, {
+		#baseClass -> baseClass.
    	}
 ]
 
@@ -207,7 +207,7 @@ RGMetaclassStrategy >> referencedBehaviors [
 { #category : #'private - backend access' }
 RGMetaclassStrategy >> sibling [
 
-	^ self baseClass.
+	^ self baseClass
 ]
 
 { #category : #testing }

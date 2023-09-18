@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [ 
-	
+EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [
+
 	^ (superLayout extendEphemeron: aScope)
 		host: aClass;
 		yourself

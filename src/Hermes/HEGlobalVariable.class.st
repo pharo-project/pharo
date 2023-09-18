@@ -14,20 +14,20 @@ Class {
 
 { #category : #accessing }
 HEGlobalVariable class >> tag [
-	^ 7.
+	^ 7
 ]
 
 { #category : #converting }
 HEGlobalVariable >> asLiteralIn: env [
 	| bind |
 	bind := env newClass bindingOf: value.
-	
+
 	bind ifNotNil: [ ^ bind ].
-	
+
 	^UndeclaredVariable registeredWithName: value
 ]
 
 { #category : #accessing }
 HEGlobalVariable >> value: aClassVariable [
-	value := aClassVariable name.
+	value := aClassVariable name
 ]

@@ -24,19 +24,19 @@ RFOperationReification >> genForRBArrayNode [
 
 { #category : #generate }
 RFOperationReification >> genForRBAssignmentNode [
-	entity variable isLocalVariable ifTrue: [  
+	entity variable isLocalVariable ifTrue: [
 		^RBParser parseExpression: ('RFTempWrite new
-			assignedValue: RFNewValueReificationVar; 
+			assignedValue: RFNewValueReificationVar;
 			context: thisContext;
 			variableName: #{1}.' format: {entity variable name})].
-		
-	entity variable isInstanceVariable ifTrue: [  
+
+	entity variable isInstanceVariable ifTrue: [
 		^RBParser parseExpression: ('RFSlotWrite new
-			assignedValue: RFNewValueReificationVar; 
+			assignedValue: RFNewValueReificationVar;
 			object: self;
 			variableName: #{1}.' format: {entity variable name})].
 
-	entity variable variable isLiteralVariable ifTrue: [ | ast |	
+	entity variable variable isLiteralVariable ifTrue: [ | ast |
 		ast := RBParser parseExpression: ('RFGlobalWrite new
 			assignedValue: RFNewValueReificationVar;
 			variable: #toReplace.').
@@ -49,11 +49,11 @@ RFOperationReification >> genForRBAssignmentNode [
 RFOperationReification >> genForRBBlockNode [
 	"we just compile the block again"
 	| blockNode |
-	
+
 	blockNode := RBParser parseExpression: entity formattedCode.
-	^RBMessageNode 
+	^RBMessageNode
 		receiver: (RBVariableNode named: #RFBlockOperation)
-		selector: #block: 
+		selector: #block:
 		arguments: {blockNode}
 ]
 
@@ -71,9 +71,9 @@ RFOperationReification >> genForRBLiteralValueNode [
 
 { #category : #generate }
 RFOperationReification >> genForRBMessageNode [
-	^RBParser parseExpression: ('RFMessageOperation 
-			receiver: RFReceiverReificationVar 
-			selector: #{1} 
+	^RBParser parseExpression: ('RFMessageOperation
+			receiver: RFReceiverReificationVar
+			selector: #{1}
 			arguments: RFArgumentsReificationVar.' format: {entity selector})
 ]
 
@@ -83,10 +83,10 @@ RFOperationReification >> genForRBMethodNode [
 	ast := RBParser parseExpression: 'RFMethodOperation new
 			receiver: self;
 			method: #toReplace;
-			arguments: RFArgumentsReificationVar.'.	
-	
-	ast messages second arguments: {(RBLiteralNode value: entity methodNode method)}.
-	^ast.
+			arguments: RFArgumentsReificationVar.'.
+
+	ast messages second arguments: {(RBLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
+	^ast
 ]
 
 { #category : #generate }
@@ -98,24 +98,24 @@ RFOperationReification >> genForRBReturnNode [
 
 { #category : #generate }
 RFOperationReification >> genForRBVariableNode [
-	entity isInstanceVariable ifTrue: [  
-		^RBParser parseExpression: ('RFSlotRead new 
+	entity isInstanceVariable ifTrue: [
+		^RBParser parseExpression: ('RFSlotRead new
 			object: self;
 			variableName: #{1}.' format: {entity name})].
-		
+
 	entity isLocalVariable ifTrue: [
-		^RBParser parseExpression: ('RFTempRead new 
+		^RBParser parseExpression: ('RFTempRead new
 			context: thisContext;
 			variableName: #{1}.' format: {entity name})].
-	
-	entity variable isLiteralVariable ifTrue: [ | ast |	
+
+	entity variable isLiteralVariable ifTrue: [ | ast |
 			ast := RBParser parseExpression: 'RFGlobalRead new
 				variable: #toReplace'.
 			ast arguments: {(RBLiteralNode value: entity binding)}.
 
-			^ast. 
+			^ast.
 		].
-		
+
 	self error: 'not supported'
 ]
 
@@ -125,14 +125,14 @@ RFOperationReification >> preambleForArray: aNode [
 	preamble := OrderedCollection new.
 	arguments := OrderedCollection new.
 
-	(1 to: aNode size) reverseWithIndexDo: [:each :index |  
+	(1 to: aNode size) reverseWithIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
 			preamble add:  (RFStorePopIntoTempNode named: name).
 	].
-	
+
 	self flag: #pharoTodo. "for #instead we do not need to build the stack up again as the array creation bytecode is missing"
-	(1 to: aNode size) withIndexDo: [:each :index |  
+	(1 to: aNode size) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
 			arguments add:  (RBVariableNode named: name).
@@ -154,16 +154,16 @@ RFOperationReification >> preambleForMessage: aNode [
 	preamble := OrderedCollection new.
 	arguments := OrderedCollection new.
 
-	(1 to: aNode numArgs) reverseWithIndexDo: [:each :index |  
+	(1 to: aNode numArgs) reverseWithIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
 			preamble add:  (RFStorePopIntoTempNode named: name).
 	].
-	
-	preamble 
+
+	preamble
 		add: (RFStoreIntoTempNode named: #RFReceiverReificationVar).
-	
-	(1 to: aNode numArgs) withIndexDo: [:each :index |  
+
+	(1 to: aNode numArgs) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
 			arguments add:  (RBVariableNode named: name).

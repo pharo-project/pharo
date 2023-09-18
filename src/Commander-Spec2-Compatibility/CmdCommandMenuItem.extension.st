@@ -3,7 +3,7 @@ Extension { #name : #CmdCommandMenuItem }
 { #category : #'*Commander-Spec2-Compatibility' }
 CmdCommandMenuItem >> addToMenuPresenter: aSpMenuPresenter [
 	aSpMenuPresenter
-		addItem: [ :anItem | 
+		addItem: [ :anItem |
 			anItem
 				name: self name;
 				icon: self icon;

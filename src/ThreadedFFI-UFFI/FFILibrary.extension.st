@@ -1,13 +1,13 @@
 Extension { #name : #FFILibrary }
 
 { #category : #'*ThreadedFFI-UFFI' }
-FFILibrary >> callbackRunningStrategy [ 
-	
+FFILibrary >> callbackRunningStrategy [
+
 	^ TFCallbackForkRunStrategy new
 ]
 
 { #category : #'*ThreadedFFI-UFFI' }
-FFILibrary >> runner [ 
-	
-	^ TFSameThreadRunner uniqueInstance  
+FFILibrary >> runner [
+
+	^ TFSameThreadRunner uniqueInstance
 ]

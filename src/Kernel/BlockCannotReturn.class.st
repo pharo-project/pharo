@@ -13,7 +13,7 @@ Class {
 { #category : #signalling }
 BlockCannotReturn class >> result: anObject from: homeContext [
 
-	^self new 
+	^self new
 		result: anObject;
 		home: homeContext;
 		signal

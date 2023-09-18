@@ -44,7 +44,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyDataSourceSelection class >> fromRoot: aDataSource items: dataSourceItems [
-	^self new 
+	^self new
 		rootDataSource: aDataSource;
 		items: dataSourceItems
 ]
@@ -59,7 +59,7 @@ ClyDataSourceSelection >> asDesiredSelection [
 
 	| itemsCopy |
 	itemsCopy := items collect: [ :each | each copy childrenDataSource: nil].
-	^ClyDesiredSelection fromRoot: rootDataSource items: itemsCopy.
+	^ClyDesiredSelection fromRoot: rootDataSource items: itemsCopy
 ]
 
 { #category : #converting }
@@ -76,7 +76,7 @@ ClyDataSourceSelection >> asSelectedItemsOf: itemTypeClass [
 	self isEmpty ifTrue: [ ^self ].
 	resultItems := items select: [ :each | each isBasedOnItemType: itemTypeClass ].
 	resultItems = items ifTrue: [ ^self ].
-	
+
 	^self class fromRoot: self rootDataSource items: resultItems
 ]
 
@@ -87,22 +87,22 @@ ClyDataSourceSelection >> asSelectedParentsOf: itemTypeClass [
 	self isEmpty ifTrue: [ ^self ].
 	currentItems := items select: [ :each | each isBasedOnItemType: itemTypeClass].
 	currentItems = items ifTrue: [ ^self ].
-	parents := items 
-		reject: [:each | each isBasedOnItemType: itemTypeClass ] 
+	parents := items
+		reject: [:each | each isBasedOnItemType: itemTypeClass ]
 		thenCollect: [ :each |each findParentItemOf: itemTypeClass ].
 	resultSet := parents asSet.
 	resultSet remove: nil ifAbsent: [].
 	resultSet addAll: currentItems.
-	
-	
-	"We want to save root of lastSelectedItem as lastSelectedItem of new selection. 
+
+
+	"We want to save root of lastSelectedItem as lastSelectedItem of new selection.
 	This item should be first according to FastTable logic".
 	resultItems := resultSet asOrderedCollection.
 	lastSelectedItem := self lastSelectedItem.
-	(resultSet includes: lastSelectedItem) ifTrue: [ 
+	(resultSet includes: lastSelectedItem) ifTrue: [
 		resultItems remove: lastSelectedItem.
-		resultItems addFirst: lastSelectedItem].	
-	
+		resultItems addFirst: lastSelectedItem].
+
 	^self class fromRoot: self rootDataSource items: resultItems
 ]
 
@@ -113,14 +113,14 @@ ClyDataSourceSelection >> asSelectedRoots [
 	self isEmpty ifTrue: [ ^self ].
 	roots := items collect: [ :each | each rootParentItem ] as: Set.
 	roots = items ifTrue: [ ^self ].
-	
-	"We want to save root of lastSelectedItem as lastSelectedItem of new selection. 
+
+	"We want to save root of lastSelectedItem as lastSelectedItem of new selection.
 	This item should be first according to FastTable logic"
 	lastSelectedRoot := self lastSelectedItem rootParentItem.
 	roots remove: lastSelectedRoot.
 	resultItems := OrderedCollection with: lastSelectedRoot.
 	resultItems addAll: roots.
-	
+
 	^self class fromRoot: self rootDataSource items: resultItems
 ]
 
@@ -145,9 +145,9 @@ ClyDataSourceSelection >> detachedItems [
 	"Selection manages own items in the way that they should not be in long use from outside.
 	For example when items data source is changed my items could have null environment item inside
 	accouring to selection update logic. So users should not break because of that.
-	If users want to use selection items for long time (for example browser context wants) 
+	If users want to use selection items for long time (for example browser context wants)
 	then they should ask for #detachedItems"
-	
+
 	^items collect: [:each | each copy]
 ]
 
@@ -163,11 +163,11 @@ ClyDataSourceSelection >> groupItemsByType [
 
 	| groups |
 	groups := IdentityDictionary new.
-	
+
 	items do: [ :each | | group |
 		group := groups at: each type ifAbsentPut: [ OrderedCollection new ].
 		group add: each actualObject].
-	
+
 	^groups
 ]
 
@@ -196,7 +196,7 @@ ClyDataSourceSelection >> includesItemsOf: itemTypeClass [
 { #category : #testing }
 ClyDataSourceSelection >> isBasedOnItemType: aClass [
 
-	^self isEmpty 
+	^self isEmpty
 		ifTrue: [ rootDataSource isBasedOnQueryOf: aClass ]
 		ifFalse: [ self lastSelectedItem isBasedOnItemType: aClass  ]
 ]
@@ -215,10 +215,10 @@ ClyDataSourceSelection >> isMultipleSelected [
 ClyDataSourceSelection >> isSameAs: anotherSelection [
 
 	self size = anotherSelection size ifFalse: [ ^false ].
-	
-	items with: anotherSelection items do: [ :myItem :anotherItem | 
+
+	items with: anotherSelection items do: [ :myItem :anotherItem |
 		myItem actualObject == anotherItem actualObject ifFalse: [ ^false ]].
-	
+
 	^true
 ]
 
@@ -246,20 +246,20 @@ ClyDataSourceSelection >> lastSelectedItem [
 { #category : #printing }
 ClyDataSourceSelection >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
 	items do: [ :each | aStream nextPutAll: each name; nextPutAll: '; ' ].
 	items ifNotEmpty: [ aStream skip: -2 ].
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #controlling }
-ClyDataSourceSelection >> restoreDesiredSelectionWith: newDataSourceItems silently: aBool [ 
+ClyDataSourceSelection >> restoreDesiredSelectionWith: newDataSourceItems silently: aBool [
 
 	items := newDataSourceItems.
 
 	self restoreTableSelectionSilently: aBool.
-	
+
 	aBool ifFalse: [self ensureVisibleLastItem]
 ]
 
@@ -267,9 +267,9 @@ ClyDataSourceSelection >> restoreDesiredSelectionWith: newDataSourceItems silent
 ClyDataSourceSelection >> restoreTableSelection [
 	| actualSelectionChanged |
 	actualSelectionChanged := items anySatisfy: #isRemoved.
-	
+
 	self restoreTableSelectionSilently: actualSelectionChanged not.
-	
+
 	^actualSelectionChanged
 ]
 
@@ -279,10 +279,10 @@ ClyDataSourceSelection >> restoreTableSelectionSilently: silentSelection [
 	| selectionIndexes |
 	items := items reject: [ :each | each isRemoved ].
 	selectionIndexes := items collect: [:each | each globalPosition].
-	
-	self 
-		setUpSelectedRows: selectionIndexes 
-		in: rootDataSource table 
+
+	self
+		setUpSelectedRows: selectionIndexes
+		in: rootDataSource table
 		silently: silentSelection
 ]
 
@@ -298,9 +298,9 @@ ClyDataSourceSelection >> rootDataSource: anObject [
 
 { #category : #controlling }
 ClyDataSourceSelection >> selectItems: dataSourceItems [
-	
+
 	| newSelectionIsSame |
-	newSelectionIsSame := (dataSourceItems collect: #actualObject as: IdentitySet) = 
+	newSelectionIsSame := (dataSourceItems collect: #actualObject as: IdentitySet) =
 		(items collect: #actualObject as: IdentitySet).
 
 	items := dataSourceItems.
@@ -344,17 +344,17 @@ ClyDataSourceSelection >> uniformActualObjects [
 	| lastItem |
 	self isEmpty ifTrue: [ ^#() ].
 	lastItem := self lastSelectedItem.
-	
-	^(items allSatisfy: [:each | each isSameKindAs: lastItem ]) 
+
+	^(items allSatisfy: [:each | each isSameKindAs: lastItem ])
 		ifTrue: [ items collect: [:each | each actualObject] ]
 		ifFalse: [{lastItem actualObject}]
 ]
 
 { #category : #controlling }
 ClyDataSourceSelection >> updateIfDirty [
-	
+
 	rootDataSource isDirty ifTrue: [ rootDataSource runUpdate ].
-	items do: [ :each | each ownerDataSource isDirty 
+	items do: [ :each | each ownerDataSource isDirty
 		ifTrue: [ each ownerDataSource runUpdate] ]
 ]
 
@@ -363,10 +363,10 @@ ClyDataSourceSelection >> updateItemsWhichBelongsTo: aDataSource [
 	| relatedItems actualSelectionChanged |
 	relatedItems := items select: [ :each | each belongsToDataSource: aDataSource].
 	aDataSource updateItems: relatedItems.
-	
+
 	actualSelectionChanged := relatedItems anySatisfy: #isRemoved.
-	
+
 	self restoreTableSelectionSilently: actualSelectionChanged not.
-	
+
 	^actualSelectionChanged
 ]

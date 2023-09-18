@@ -19,8 +19,8 @@ EpLogNode >> globalName [
 { #category : #initialization }
 EpLogNode >> initialize [
 	super initialize.
-	
-	referencedNodes := Set new.
+
+	referencedNodes := Set new
 ]
 
 { #category : #testing }
@@ -63,7 +63,7 @@ EpLogNode >> referencedGlobalNames [
 	firstEntry := self log firstEntryIfAbsent: [ ^ self referencedGlobalNamesIfEmptyLog ].
 	priorReference := firstEntry tags at: EpLog priorReferenceKey ifAbsent: [ ^ #() ].
 	priorReference isNull ifTrue: [ ^ #() ].
-	
+
 	"Could happen when monitor's ombu file is removed externally"
 	priorReference globalName = self globalName ifTrue: [ ^ #() ].
 
@@ -79,7 +79,7 @@ EpLogNode >> referencedGlobalNamesIfEmptyLog [
 { #category : #accessing }
 EpLogNode >> referencedNodes [
 	"Answer the referenced nodes, that were populated previously by #populateReferencedNodesWith:"
-	
+
 	^ referencedNodes
 ]
 

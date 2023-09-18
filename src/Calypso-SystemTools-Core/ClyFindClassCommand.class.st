@@ -23,8 +23,8 @@ ClyFindClassCommand >> defaultMenuItemName [
 ClyFindClassCommand >> execute [
 
 	| class |
-	class := browser searchDialog 
+	class := browser searchDialog
 		requestSingleObject: 'Choose class' from: ClyAllClassesQuery sorted.
-	
+
 	browser selectClass: class
 ]

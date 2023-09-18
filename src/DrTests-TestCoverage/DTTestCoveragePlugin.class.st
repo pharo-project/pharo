@@ -40,12 +40,13 @@ DTTestCoveragePlugin >> allowMultipleSelectionInSecondList [
 { #category : #api }
 DTTestCoveragePlugin >> defineData: aDTpluginConfiguration [
 
-	methods := aDTpluginConfiguration items flatCollect: [ :p | 
-		           p methods reject: [ :meth | 
+	methods := aDTpluginConfiguration items flatCollect: [ :p |
+		           p methods reject: [ :meth |
 			           meth isTestMethod or: [meth methodClass isTestCase] ] ].
-	methods := methods reject: [ :meth | meth isSubclassResponsibility ].
-	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [ 
-		               :p | p classes ].
+	methods := methods reject: [ :method | method isAbstract or: [ (method hasPragmaNamed: #ignoreForCoverage) ] ] .
+	
+	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [
+		               :p | p classes ]
 ]
 
 { #category : #accessing }
@@ -55,8 +56,14 @@ DTTestCoveragePlugin >> firstListLabel [
 
 { #category : #api }
 DTTestCoveragePlugin >> itemsToBeAnalysedFor: packagesSelected [
-	^ RPackage organizer packages
-		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
+
+	^ self packageOrganizer packages select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
+]
+
+{ #category : #ui }
+DTTestCoveragePlugin >> pluginPresenterClass [
+
+	^ DTCoveragePluginPresenter
 ]
 
 { #category : #accessing }
@@ -71,28 +78,31 @@ DTTestCoveragePlugin >> resultButtonHelp [
 
 { #category : #api }
 DTTestCoveragePlugin >> runForConfiguration: aDTpluginConfiguration [
+
 	| suite collector coverage notExecuted result |
 	result := self pluginResultClass new.
 	self defineData: aDTpluginConfiguration.
 	suite := self suiteFor: testClasses.
-	collector := CoverageCollector new.
+	collector := DTCoverageCollector new.
 	collector methods: methods.
-	coverage := collector runOn: [ self runTestSuites: {suite} ].
+	coverage := collector runOn: [ self runTestSuites: { suite } ].
 	notExecuted := coverage uncoveredMethods.
-	notExecuted isEmpty
-		ifTrue: [ result percent: 1s2 ]
-		ifFalse: [ result
-				percent: 1s2 - (notExecuted size / methods size asScaledDecimal: 2);
-				methodList: notExecuted ].
+
+	methods ifNotEmpty: [
+		result
+			percent: 1s2 - (notExecuted size / methods size asScaledDecimal: 2);
+			methodList: notExecuted;
+			partiallyCoveredMethods: coverage partiallyCoveredMethods ].
 	^ result
 ]
 
 { #category : #api }
 DTTestCoveragePlugin >> runSuite: aTestSuite withResult: aResult [
 
-	aTestSuite when: TestAnnouncement do: [ :testAnnouncement | 
-		self announceStatusChanged: ('Running test {1}.' format: { testAnnouncement test asString }) ].
-	[ aTestSuite run: aResult ] ensure: [ 
+	aTestSuite when: TestAnnouncement do: [ :testAnnouncement |
+		self announceStatusChanged: ('Running test {1}.' format: { testAnnouncement test asString }) ]
+	for: self.
+	[ aTestSuite run: aResult ] ensure: [
 		aTestSuite unsubscribe: TestAnnouncement ]
 ]
 
@@ -103,7 +113,7 @@ DTTestCoveragePlugin >> runTestSuites: testSuites [
 	CurrentExecutionEnvironment
 		runTestsBy: [ testSuites
 				do: [ :testSuite | self runSuite: testSuite withResult: result ]
-				displayingProgress: 'Running Tests' ].
+				displayingProgress: 'Running Tests' ]
 ]
 
 { #category : #accessing }
@@ -130,12 +140,12 @@ DTTestCoveragePlugin >> startButtonLabel [
 
 { #category : #api }
 DTTestCoveragePlugin >> suiteFor: classesSelected [
-
 	"Return the suite for all the selected test case classes"
-
-	^ TestSuite new in: [ :suite | 
-		  classesSelected do: [ :each | 
-			  each isAbstract ifFalse: [ 
+	
+	| suite |
+	suite :=  TestSuite new.
+	classesSelected do: [ :each |
+			  each isAbstract ifFalse: [
 				  each isTestCase ifTrue: [ each addToSuiteFromSelectors: suite ] ] ].
-		  suite name: 'Test' ]
+	^ suite name: 'Test'
 ]

@@ -25,7 +25,7 @@ Class {
 
 { #category : #'instance creation' }
 CompositeAnnotationContext class >> with: contextCollection [
-	^self new 
+	^self new
 		parts: contextCollection
 ]
 
@@ -40,7 +40,7 @@ CompositeAnnotationContext >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
-	
+
 	^ parts = anObject parts
 ]
 
@@ -69,9 +69,9 @@ CompositeAnnotationContext >> parts: anObject [
 { #category : #printing }
 CompositeAnnotationContext >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
-	parts do: [ :each | 
+	parts do: [ :each |
 		each printOn: aStream.
 		aStream nextPutAll: ', ' ].
 	aStream skip: -1; nextPut: $)

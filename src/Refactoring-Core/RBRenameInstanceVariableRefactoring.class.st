@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenameInstanceVariableRefactoring class >> model: aRBNamespace rename: aVarName to: aName in: aClass [ 
+RBRenameInstanceVariableRefactoring class >> model: aRBNamespace rename: aVarName to: aName in: aClass [
 	^ self new
 		model: aRBNamespace;
 		rename: aVarName
@@ -90,10 +90,23 @@ RBRenameInstanceVariableRefactoring >> newName: anObject [
 
 { #category : #preconditions }
 RBRenameInstanceVariableRefactoring >> preconditions [
-	^(RBCondition isValidInstanceVariableName: newName for: class) 
-		& (RBCondition definesInstanceVariable: variableName in: class) 
-			& (RBCondition hierarchyOf: class definesVariable: newName) not 
+	^(RBCondition isValidInstanceVariableName: newName for: class)
+		& (RBCondition definesInstanceVariable: variableName in: class)
+			& (RBCondition hierarchyOf: class definesVariable: newName) not
 			& (RBCondition isGlobal: newName in: self model) not
+]
+
+{ #category : #transforming }
+RBRenameInstanceVariableRefactoring >> privateTransform [
+	renameAccessors ifTrue: [
+		self removeOldAccessors
+	].
+
+	class renameInstanceVariable: variableName to: newName around: [ self renameReferences ].
+
+	renameAccessors ifFalse: [ ^ self ].
+	self addNewAccessors.
+	self renameAccessorsReferences
 ]
 
 { #category : #transforming }
@@ -138,30 +151,34 @@ RBRenameInstanceVariableRefactoring >> renameAccessorsReferences [
 	senders
 		do: [ :each | each source: (each source copyReplaceAll: variableName asString with: newName asString asTokens: false) ].
 	senders
-		do: [ :each | 
+		do: [ :each |
 			(each selector = newName or: [ each selector asString = (newName asString , ':') ])
-				ifFalse: [ (model classNamed: class name) compile: each source classified: each protocols ] ]
+				ifFalse: [ self generateChangesFor:
+								(RBAddMethodTransformation
+									sourceCode: each source
+									in: (model classNamed: class name)
+									withProtocol: each protocols) ] ]
 ]
 
 { #category : #transforming }
 RBRenameInstanceVariableRefactoring >> renameReferences [
 	| replacer classes |
-	replacer := self parseTreeRewriterClass 
+	replacer := self parseTreeRewriterClass
 				rename: variableName
 				to: newName
-				handler: 
-					[self 
-						refactoringError: ('<1s> is already defined as a method or block temporary <n> variable in this class or one of its subclasses' 
+				handler:
+					[self
+						refactoringError: ('<1s> is already defined as a method or block temporary <n> variable in this class or one of its subclasses'
 								expandMacrosWith: newName)].
 	classes := class withAllSubclasses, (class isTrait ifTrue: [class users asArray ] ifFalse: [{}]).
-	self 
+	self
 		convertClasses: classes
 		select: [:aClass | aClass whichSelectorsReferToInstanceVariable: variableName]
 		using: replacer
 ]
 
 { #category : #printing }
-RBRenameInstanceVariableRefactoring >> storeOn: aStream [ 
+RBRenameInstanceVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
@@ -172,17 +189,4 @@ RBRenameInstanceVariableRefactoring >> storeOn: aStream [
 		nextPutAll: ''' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBRenameInstanceVariableRefactoring >> transform [
-	renameAccessors ifTrue: [ 
-		self removeOldAccessors 
-	].
-	
-	class renameInstanceVariable: variableName to: newName around: [ self renameReferences ].
-	
-	renameAccessors ifFalse: [ ^ self ].
-	self addNewAccessors.
-	self renameAccessorsReferences.
 ]

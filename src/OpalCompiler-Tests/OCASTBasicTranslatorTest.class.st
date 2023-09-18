@@ -18,8 +18,8 @@ OCASTBasicTranslatorTest >> testInitialInstanceIsEmpty [
 
 { #category : #'tests - errors' }
 OCASTBasicTranslatorTest >> testSyntaxError [
-	
+
 	self
 		should: [ self compileSource: 'foo (']
-		raise: SyntaxErrorNotification
+		raise: CodeError
 ]

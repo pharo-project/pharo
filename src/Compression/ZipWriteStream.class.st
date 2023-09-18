@@ -79,7 +79,7 @@ ZipWriteStream class >> printRegressionStats: stats from: fd [
 		ifTrue: [ ^ self ].
 	compressed := stats at: #compressedSize ifAbsent: [ 0 ].
 	numFiles := stats at: #numFiles ifAbsent: [ 0 ].
-	
+
 	SystemNotification signal: (String streamContents: [ :aStream |
 		aStream nextPutAll: fd fullName asString; cr.
 		aStream tab; nextPutAll: 'Files compressed: '; nextPutAll: numFiles asStringWithCommas; cr.
@@ -117,7 +117,7 @@ ZipWriteStream class >> updateCrc: oldCrc from: start to: stop in: aCollection [
 ZipWriteStream >> close [
 	self deflateBlock.
 	self flushBlock: true.
-	encoder close.
+	encoder close
 ]
 
 { #category : #accessing }
@@ -191,9 +191,9 @@ ZipWriteStream >> encodeLiteral: lit [
 ZipWriteStream >> encodeMatch: length distance: dist [
 	"Encode the given match of length length starting at dist bytes ahead"
 	| literal distance |
-	dist > 0 
+	dist > 0
 		ifFalse:[^self error:'Distance must be positive'].
-	length < MinMatch 
+	length < MinMatch
 		ifTrue:[^self error:'Match length must be at least ', MinMatch printString].
 	litCount := litCount + 1.
 	matchCount := matchCount + 1.
@@ -218,7 +218,7 @@ ZipWriteStream >> finish [
 	"Finish pending operation. Do not close output stream."
 	self deflateBlock.
 	self flushBlock: true.
-	encoder flush.
+	encoder flush
 ]
 
 { #category : #'fixed blocks' }
@@ -276,10 +276,10 @@ ZipWriteStream >> flushBlock: lastBlock [
 		using: blTree
 		and: blFreq.
 	VerboseLevel > 1
-		ifTrue: [ 
+		ifTrue: [
 			SystemNotification signal:
 					(String
-						streamContents: [ :stream | 
+						streamContents: [ :stream |
 							stream
 								nextPutAll: 'Block sizes (S/F/D):' space;
 								print: storedLength // 8;
@@ -352,7 +352,7 @@ ZipWriteStream >> initialize [
 	distances := WordArray new: WindowSize.
 	literalFreq := WordArray new: MaxLiteralCodes.
 	distanceFreq := WordArray new: MaxDistCodes.
-	self initializeNewBlock.
+	self initializeNewBlock
 ]
 
 { #category : #initialization }
@@ -362,7 +362,7 @@ ZipWriteStream >> initializeNewBlock [
 	distanceFreq atAllPut: 0.
 	literalFreq at: EndBlock+1 put: 1.
 	litCount := 0.
-	matchCount := 0.
+	matchCount := 0
 ]
 
 { #category : #private }
@@ -370,7 +370,7 @@ ZipWriteStream >> moveContentsToFront [
 	"Need to update crc here"
 	self updateCrc.
 	super moveContentsToFront.
-	crcPosition := position + 1.
+	crcPosition := position + 1
 ]
 
 { #category : #initialization }
@@ -382,7 +382,7 @@ ZipWriteStream >> on: aCollectionOrStream [
 	encoder isBinary
 		ifTrue:[super on: ByteArray new]
 		ifFalse:[super on: String new].
-	self writeHeader.
+	self writeHeader
 ]
 
 { #category : #initialization }
@@ -391,7 +391,7 @@ ZipWriteStream >> release [
 	literals := distances := literalFreq := distanceFreq := nil.
 	self updateCrc.
 	encoder flushBits.
-	self writeFooter.
+	self writeFooter
 ]
 
 { #category : #'dynamic blocks' }
@@ -414,7 +414,7 @@ ZipWriteStream >> scanBitLength: bitLength repeatCount: repeatCount into: anArra
 			anArray at: Repeat3To6+1 put: (anArray at: Repeat3To6+1) + 1.
 			count := (count - 6) max: 0].
 		count > 0 ifTrue:[anArray at: bitLength+1 put: (anArray at: bitLength+1) + count].
-	].
+	]
 ]
 
 { #category : #'dynamic blocks' }
@@ -427,12 +427,12 @@ ZipWriteStream >> scanBitLengths: bits into: anArray [
 	lastCount := 1.
 	2 to: bits size do:[:i|
 		value := bits at: i.
-		value = lastValue 
+		value = lastValue
 			ifTrue:[lastCount := lastCount + 1]
 			ifFalse:[self scanBitLength: lastValue repeatCount: lastCount into: anArray.
 					lastValue := value.
 					lastCount := 1]].
-	self scanBitLength: lastValue repeatCount: lastCount into: anArray.
+	self scanBitLength: lastValue repeatCount: lastCount into: anArray
 ]
 
 { #category : #'dynamic blocks' }
@@ -458,14 +458,14 @@ ZipWriteStream >> sendBitLength: bitLength repeatCount: repeatCount tree: aTree 
 			encoder nextBits: 2 put: (count min: 6) - 3.
 			count := (count - 6) max: 0].
 		count timesRepeat:[self sendBitLength: bitLength tree: aTree].
-	].
+	]
 ]
 
 { #category : #'dynamic blocks' }
 ZipWriteStream >> sendBitLength: bitLength tree: aTree [
 	"Send the given bitLength"
-	encoder nextBits: (aTree bitLengthAt: bitLength) 
-		put: (aTree codeAt: bitLength).
+	encoder nextBits: (aTree bitLengthAt: bitLength)
+		put: (aTree codeAt: bitLength)
 ]
 
 { #category : #'dynamic blocks' }
@@ -474,16 +474,16 @@ ZipWriteStream >> sendBitLengthTree: blTree [
 	| blIndex bitLength |
 	MaxBitLengthCodes to: 4 by: -1 do:[:maxIndex|
 		blIndex := BitLengthOrder at: maxIndex.
-		bitLength := blIndex <= blTree maxCode 
+		bitLength := blIndex <= blTree maxCode
 			ifTrue:[blTree bitLengthAt: blIndex] ifFalse:[0].
 		(maxIndex = 4 or:[bitLength > 0]) ifTrue:[
 			encoder nextBits: 4 put: maxIndex - 4.
 			1 to: maxIndex do:[:j|
 				blIndex := BitLengthOrder at: j.
-				bitLength := blIndex <= blTree maxCode 
+				bitLength := blIndex <= blTree maxCode
 					ifTrue:[blTree bitLengthAt: blIndex] ifFalse:[0].
 				encoder nextBits: 3 put: bitLength].
-			^self]].
+			^self]]
 ]
 
 { #category : #'dynamic blocks' }
@@ -495,20 +495,20 @@ ZipWriteStream >> sendCompressedBlock: litTree with: distTree [
 			with: (ReadStream on: distances from: 1 to: litCount)
 			with: litTree
 			with: distTree.
-	sum = (blockPosition - blockStart) ifFalse:[self error:'Wrong number of bytes'].
+	sum = (blockPosition - blockStart) ifFalse:[self error:'Wrong number of bytes']
 ]
 
 { #category : #'dynamic blocks' }
 ZipWriteStream >> sendDynamicBlock: blTree literalTree: lTree distanceTree: dTree bitLengths: bits [
 	"Send a block using dynamic huffman trees"
 	self sendLiteralTree: lTree distanceTree: dTree using: blTree bitLengths: bits.
-	self sendCompressedBlock: lTree with: dTree.
+	self sendCompressedBlock: lTree with: dTree
 ]
 
 { #category : #'fixed blocks' }
 ZipWriteStream >> sendFixedBlock [
 	"Send a block using fixed huffman trees"
-	self sendCompressedBlock: FixedLiteralTree with: FixedDistanceTree.
+	self sendCompressedBlock: FixedLiteralTree with: FixedDistanceTree
 ]
 
 { #category : #'dynamic blocks' }
@@ -523,12 +523,12 @@ ZipWriteStream >> sendLiteralTree: lTree distanceTree: dTree using: blTree bitLe
 	lastCount := 1.
 	2 to: bits size do:[:i|
 		value := bits at: i.
-		value = lastValue 
+		value = lastValue
 			ifTrue:[lastCount := lastCount + 1]
 			ifFalse:[self sendBitLength: lastValue repeatCount: lastCount tree: blTree.
 					lastValue := value.
 					lastCount := 1]].
-	self sendBitLength: lastValue repeatCount: lastCount tree: blTree.
+	self sendBitLength: lastValue repeatCount: lastCount tree: blTree
 ]
 
 { #category : #'stored blocks' }
@@ -541,7 +541,7 @@ ZipWriteStream >> sendStoredBlock [
 	encoder nextBits: 16 put: (inBytes bitXor: 16rFFFF).
 	encoder flushBits.
 	1 to: inBytes do:[:i|
-		encoder nextBytePut: (collection byteAt: blockStart+i)].
+		encoder nextBytePut: (collection byteAt: blockStart+i)]
 ]
 
 { #category : #encoding }
@@ -552,7 +552,7 @@ ZipWriteStream >> shouldFlush [
 	litCount = literals size ifTrue:[^true]. "We *must* flush"
 	(litCount bitAnd: 16rFFF) = 0 ifFalse:[^false]. "Only check every N kbytes"
 	matchCount * 10 <= litCount ifTrue:[
-		"This is basically random data. 
+		"This is basically random data.
 		There is no need to flush early since the overhead
 		for encoding the trees will add to the overall size"
 		^false].
@@ -567,10 +567,10 @@ ZipWriteStream >> shouldFlush [
 { #category : #'stored blocks' }
 ZipWriteStream >> storedBlockSize [
 	"Compute the length for the current block when stored as is"
-	^3 "block type bits" 
+	^3 "block type bits"
 		+ (8 - (encoder bitPosition + 3 bitAnd: 7) bitAnd: 7)"skipped bits to byte boundary"
-			+ 32 "byte length + chksum" 
-				+ (blockPosition - blockStart * 8) "actual data bits".
+			+ 32 "byte length + chksum"
+				+ (blockPosition - blockStart * 8) "actual data bits"
 ]
 
 { #category : #private }
@@ -578,7 +578,7 @@ ZipWriteStream >> updateCrc [
 	crcPosition <= position ifTrue:[
 		bytesWritten := bytesWritten + position - crcPosition + 1.
 		crc := self updateCrc: crc from: crcPosition to: position in: collection.
-		crcPosition := position + 1].
+		crcPosition := position + 1]
 ]
 
 { #category : #private }
@@ -589,7 +589,7 @@ ZipWriteStream >> updateCrc: oldCrc from: start to: stop in: aCollection [
 { #category : #initialization }
 ZipWriteStream >> writeFooter [
 	"Write footer information if necessary"
-	crc := crc bitXor: 16rFFFFFFFF.
+	crc := crc bitXor: 16rFFFFFFFF
 ]
 
 { #category : #initialization }

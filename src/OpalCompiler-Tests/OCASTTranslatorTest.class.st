@@ -12,6 +12,17 @@ Class {
 }
 
 { #category : #'building suites' }
+OCASTTranslatorTest class >> inliningOptionsFor: enableOption [
+
+	^ {
+		  #(  ). "No options supplied"
+		  { enableOption }. "Explicitly enable this type of inlining"
+		  #( #optionInlineNone ). "Disable all inlining"
+		  "Disable all inlining, *but* the specific option is also set (and should be ignored). See bug #14323."
+		  { enableOption. #optionInlineNone }}
+]
+
+{ #category : #'building suites' }
 OCASTTranslatorTest class >> testParameters [
 
 	^ super testParameters
@@ -24,15 +35,16 @@ OCASTTranslatorTest >> compilationContext [
 
 	| context |
 	context := CompilationContext new
-		encoderClass: self encoder;
-		bindings: globals;
-		yourself.
+		           encoderClass: self encoder;
+		           bindings: globals;
+		           yourself.
+	self optimization ifNotNil: [ :a | context parseOptions: #( #+ ) , a ].
 	^ context
 ]
 
 { #category : #support }
 OCASTTranslatorTest >> compileExample: aSelector [
-	
+
 	^ self compileSource: (OCOpalExamples>> aSelector) sourceCode
 ]
 
@@ -41,7 +53,12 @@ OCASTTranslatorTest >> compileSource: source [
 	| ir ast |
 	ast := RBParser parseMethod: source.
 	ast compilationContext: self compilationContext.
-	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
+	ast compiler
+		class: OCOpalExamples;
+		bindings: globals;
+		doSemanticAnalysis.
+	ast checkFaulty: nil.
+	ir := ast ir.
 	^ 	method := ir compiledMethod
 ]
 
@@ -132,7 +149,7 @@ OCASTTranslatorTest >> setUp [
 
 	super setUp.
 	instance := OCOpalExamples new.
-	globals := SystemDictionary new.
+	globals := SystemDictionary new
 ]
 
 { #category : #running }
@@ -206,13 +223,6 @@ OCASTTranslatorTest >> testExamplePrimitiveModuleError [
 	ast := method parseTree.
 	ir := ast ir.
 	self assert: ir tempKeys equals: #(#errorCode)
-]
-
-{ #category : #'tests - simple' }
-OCASTTranslatorTest >> testSendSpecialBinaryMessage [
-
-	self assert: (Smalltalk specialSelectors includes: #+).
-	self assert: (self testExample: #exampleReturn1plus2) equals: 3
 ]
 
 { #category : #support }

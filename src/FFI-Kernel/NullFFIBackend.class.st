@@ -4,7 +4,6 @@ I am a null implementation of a FFIBackend
 Class {
 	#name : #NullFFIBackend,
 	#superclass : #FFIBackend,
-	#type : #bytes,
 	#category : #'FFI-Kernel'
 }
 
@@ -45,14 +44,14 @@ NullFFIBackend >> integerOfObject: anObject at: byteOffset size: nBytes signed: 
 ]
 
 { #category : #'instance creation' }
-NullFFIBackend >> loadSymbol: moduleSymbol module: module [ 
+NullFFIBackend >> loadSymbol: moduleSymbol module: module [
 
-	^ self primitiveFailed
+	^ Error signal: 'Null FFI Backend'
 ]
 
 { #category : #callbacks }
-NullFFIBackend >> lookupCallbackByAddress: address [ 
-	
+NullFFIBackend >> lookupCallbackByAddress: address [
+
 	^ self error: 'Null FFI backend does not know about callback in address ' , address printString
 ]
 

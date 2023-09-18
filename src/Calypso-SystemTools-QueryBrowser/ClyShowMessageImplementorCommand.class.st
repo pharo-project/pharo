@@ -20,28 +20,28 @@ Class {
 { #category : #activation }
 ClyShowMessageImplementorCommand class >> methodBrowserToolbarActivation [
 	<classAnnotation>
-	
+
 	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyShowMessageImplementorCommand class >> methodMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyShowMessageImplementorCommand class >> methodShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $m meta for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyShowMessageImplementorCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
-	
+
 	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
 ]
 
@@ -50,12 +50,12 @@ ClyShowMessageImplementorCommand class >> sourceCodeShortcutActivation [
 	"it is not supported yet. Look senders command"
 
 	"<commandActivator>
-	
+
 	^ClyShortcutCommandActivator by: $m meta for: ClySourceCodeContext"
 ]
 
 { #category : #accessing }
-ClyShowMessageImplementorCommand >> defaultMenuIconName [ 
+ClyShowMessageImplementorCommand >> defaultMenuIconName [
 	^ #smallFind
 ]
 
@@ -75,6 +75,6 @@ ClyShowMessageImplementorCommand >> execute [
 { #category : #execution }
 ClyShowMessageImplementorCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	browser := aToolContext browser
 ]

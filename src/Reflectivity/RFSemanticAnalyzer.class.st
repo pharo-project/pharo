@@ -14,20 +14,20 @@ RFSemanticAnalyzer >> analyseForLinks: aNode generator: aGenerator [
 
 	aNode propertyAt: #preambles put: aGenerator preamble.
 	aNode preambles do: [:each | self visitNode: each].
-	
-	aNode hasMetalinkBefore ifTrue: [  
+
+	aNode hasMetalinkBefore ifTrue: [
 		aNode propertyAt: #beforeHooks put: aGenerator beforeHooks.
  		aNode beforeHooks do: [:each | self visitNode: each]].
-	
-	aNode hasMetalinkAfter ifTrue: [    
+
+	aNode hasMetalinkAfter ifTrue: [
 		aNode propertyAt: #postambles put: aGenerator postamble.
 		aNode postambles do: [:each | self visitNode: each].
 		aNode propertyAt: #afterHooks put: aGenerator afterHooks.
 		aNode afterHooks do: [:each | self visitNode: each]].
-	
-	aNode hasMetalinkInstead ifTrue: [  
+
+	aNode hasMetalinkInstead ifTrue: [
 		aNode propertyAt: #insteadHooks put: aGenerator insteadHooks.
- 		aNode insteadHooks do: [:each | self visitNode: each]].
+ 		aNode insteadHooks do: [:each | self visitNode: each]]
 ]
 
 { #category : #visiting }
@@ -36,7 +36,7 @@ RFSemanticAnalyzer >> analyseForLinksForNodes: aNode [
 	aNode hasMetalink
 		ifFalse: [ ^ self ].
 	generator := HookGenerator node: aNode.
-	self analyseForLinks: aNode generator: generator.
+	self analyseForLinks: aNode generator: generator
 ]
 
 { #category : #visiting }
@@ -46,7 +46,7 @@ RFSemanticAnalyzer >> analyseForLinksForVariables: aVariableNode [
 	variable hasMetalink
 		ifFalse: [ ^ self ].
 	generator := HookGeneratorForVariables entity: variable node: aVariableNode.
-	self analyseForLinks: variable generator: generator.
+	self analyseForLinks: variable generator: generator
 ]
 
 { #category : #api }
@@ -63,15 +63,15 @@ RFSemanticAnalyzer >> visitAssignmentNode: aNode [
 
 { #category : #visiting }
 RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
-	
-	scope := OCMethodScope new outerScope: compilationContext scope.
+
+	scope := OCMethodScope new outerScope: self outerScope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
-	(aMethodNode hasProperty: #wrapperMethod) 
+	(aMethodNode hasProperty: #wrapperMethod)
 		ifTrue: [self declareTemporaryNode: (RBVariableNode named: #RFReifyValueVar)].
 	self analyseForLinksForNodes: aMethodNode.
-	self visitNode: aMethodNode body.
+	self visitNode: aMethodNode body
 ]
 
 { #category : #visiting }
@@ -82,23 +82,23 @@ RFSemanticAnalyzer >> visitNode: aNode [
 ]
 
 { #category : #visiting }
-RFSemanticAnalyzer >> visitStoreIntoTempNode: aNode [ 
+RFSemanticAnalyzer >> visitStoreIntoTempNode: aNode [
 	| name var |
 	name := aNode name.
-	var := scope lookupVarForDeclaration: name.
-	var	ifNil: [ 
+	var := scope lookupVar: name.
+	var	ifNil: [
 			var := scope addTemp: (TemporaryVariable named: aNode name) ].
-	aNode binding: var.
+	aNode binding: var
 ]
 
 { #category : #visiting }
-RFSemanticAnalyzer >> visitStorePopIntoTempNode: aNode [ 
+RFSemanticAnalyzer >> visitStorePopIntoTempNode: aNode [
 	| name var |
 	name := aNode name.
-	var := scope lookupVarForDeclaration: name.
-	var	ifNil: [ 
+	var := scope lookupVar: name.
+	var	ifNil: [
 			var := scope addTemp: (TemporaryVariable named: aNode name) ].
-	aNode binding: var.
+	aNode binding: var
 ]
 
 { #category : #visiting }

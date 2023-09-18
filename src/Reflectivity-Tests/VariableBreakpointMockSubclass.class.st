@@ -10,7 +10,7 @@ Class {
 	#category : #'Reflectivity-Tests-Data'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 VariableBreakpointMockSubclass >> initialize [
 	super initialize.
 	v2 := 0

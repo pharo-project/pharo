@@ -15,13 +15,14 @@ ReUnclassifiedMethodsRule class >> checksMethod [
 { #category : #accessing }
 ReUnclassifiedMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'UnclassifiedMethodsRule'
 ]
 
 { #category : #running }
 ReUnclassifiedMethodsRule >> basicCheck: aMethod [
-	^ aMethod protocol = Protocol unclassified
+
+	^ aMethod isClassified not
 ]
 
 { #category : #accessing }

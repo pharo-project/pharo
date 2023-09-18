@@ -42,24 +42,29 @@ RBVariableNodeTest >> testIsDefinedByBlock [
 
 { #category : #tests }
 RBVariableNodeTest >> testIsDefinition [
+
 	| ast temps |
-	ast := self class compiler
-		parse:
-			'myMethod: arg
-  | test |
+	ast := self class compiler parse: 'myMethod: arg
+  | test testCopied testTempVector|
   test := 2.
   test.
+  [ testCopied. testTempVector := 1 ].
   ^test'.
-	temps := ast allChildren select: [:each | each isTempVariable].
-	
+	temps := ast allChildren select: [ :each | each isTempVariable ].
+
 	"arguments define variables"
 	self assert: ast arguments first isDefinition.
 	"this is the || definition"
+	self assert: temps first variable class identicalTo: TemporaryVariable.
 	self assert: temps first isDefinition.
+	self assert: temps second variable class identicalTo: CopiedLocalVariable.
+	self assert: temps second isDefinition.
+	self assert: temps third variable class identicalTo: OCVectorTempVariable .
+	self assert: temps third isDefinition.
 	"all the rest are just uses"
-	self deny: temps second isDefinition.
-	self deny: temps third isDefinition.
-	self deny: temps fourth isDefinition
+	self deny: temps fourth isDefinition.
+	self deny: (temps at: 5) isDefinition.
+	self deny: (temps at: 6) isDefinition
 ]
 
 { #category : #tests }
@@ -82,16 +87,16 @@ RBVariableNodeTest >> testStartForReplacement02 [
 
 	| source tree dTemporary |
 	source := 'foo
-	|a b c de 
-	
+	|a b c de
+
 d|
 	de := 4'.
 	tree := self parseMethod: source.
 	dTemporary := tree body temporaries last.
 	self assert: dTemporary name equals: #d.
 	self assert: (source copyFrom: dTemporary start to: dTemporary stop) equals: 'd'.
-	self assert: (source copyFrom: dTemporary startForReplacement to: dTemporary stop) equals: ' 
-	
+	self assert: (source copyFrom: dTemporary startForReplacement to: dTemporary stop) equals: '
+
 d'.
-	self assert: (dTemporary start - dTemporary startForReplacement) equals: 4
+	self assert: (dTemporary start - dTemporary startForReplacement) equals: 2
 ]

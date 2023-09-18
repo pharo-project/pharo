@@ -21,15 +21,10 @@ RPackage class >> defaultSortFunctionForCalypso [
 { #category : #'*Calypso-SystemQueries' }
 RPackage >> definesOverridesOf: aMethod [
 
-	aMethod origin isInstanceSide 
-		ifTrue: [  
-			(self definesOverridesOf: aMethod in: classDefinedSelectors) ifTrue: [^true].
-			(self definesOverridesOf: aMethod in: classExtensionSelectors) ifTrue: [^true]]
-		ifFalse: [ 
-			(self definesOverridesOfClassSide: aMethod in: metaclassDefinedSelectors) ifTrue: [^true].
-			(self definesOverridesOfClassSide: aMethod in: metaclassExtensionSelectors) ifTrue: [^true]].
-	
-	^false
+	(self definesOverridesOf: aMethod in: definedSelectors) ifTrue: [ ^ true ].
+	(self definesOverridesOf: aMethod in: extensionSelectors) ifTrue: [ ^ true ].
+
+	^ false
 ]
 
 { #category : #'*Calypso-SystemQueries' }
@@ -38,26 +33,9 @@ RPackage >> definesOverridesOf: aMethod in: classAndSelectors [
 	| methodClass selector |
 	methodClass := aMethod origin.
 	selector := aMethod selector.
-	
-	classAndSelectors keysAndValuesDo: [ :className :selectors |
-		((selectors includes: selector) 
-			and: [ (Smalltalk globals classNamed: className) inheritsFrom: methodClass ])
-				ifTrue: [ ^true ] ].
-	^false
-]
 
-{ #category : #'*Calypso-SystemQueries' }
-RPackage >> definesOverridesOfClassSide: aMethod in: classAndSelectors [
-
-	| methodClass selector |
-	methodClass := aMethod origin.
-	selector := aMethod selector.
-	
-	classAndSelectors keysAndValuesDo: [ :className :selectors |
-		((selectors includes: selector) 
-			and: [ (Smalltalk globals classNamed: className) classSide inheritsFrom: methodClass ])
-				ifTrue: [ ^true ] ].
-	^false
+	classAndSelectors keysAndValuesDo: [ :class :selectors | ((selectors includes: selector) and: [ class inheritsFrom: methodClass ]) ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #'*Calypso-SystemQueries' }
@@ -72,7 +50,7 @@ RPackage >> isAboutPackage: aPackage [
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage class >> itemsSortOrderForCalypso [ 
+RPackage class >> itemsSortOrderForCalypso [
 	^10
 ]
 
@@ -86,6 +64,6 @@ RPackage class >> prepareClassGroupQueryFrom: aPackage in: aNavigationEnvironmen
 RPackage class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 	^{
 		ClyAllClassesQuery from: ClyPackageScope ofAll: packages in: aNavigationEnvironment.
-		ClyAllClassesQuery from: ClyPackageExtensionScope ofAll: packages in: aNavigationEnvironment 
+		ClyAllClassesQuery from: ClyPackageExtensionScope ofAll: packages in: aNavigationEnvironment
 	}
 ]

@@ -37,8 +37,8 @@ Class {
 
 { #category : #accessing }
 ClyMethodVisibilityLevel class >> allAvailableFor: items [
-	
-	^ self allSubclasses select: [ :each | 
+
+	^ self allSubclasses select: [ :each |
 		each isActiveByDefault and: (each canBeAppliedForClasses: items) ]
 ]
 
@@ -54,7 +54,7 @@ ClyMethodVisibilityLevel class >> isActiveByDefault [
 
 { #category : #'instance creation' }
 ClyMethodVisibilityLevel class >> of: aClassScope [
-	^self new 
+	^self new
 		visibleClassScope: aClassScope
 ]
 
@@ -71,10 +71,10 @@ ClyMethodVisibilityLevel >> deactivateExtraScope [
 { #category : #controlling }
 ClyMethodVisibilityLevel >> detectActiveState [
 
-	extraClassScope classesDo: [:each | 
-		(visibleClassScope includesClass: each) ifTrue: [ 
+	extraClassScope classesDo: [:each |
+		(visibleClassScope includesClass: each) ifTrue: [
 			^isActive := true ] ].
-	
+
 	isActive := false
 ]
 

@@ -19,16 +19,16 @@ ReBasicScenarioExceptionStrategyTest >> testLog [
 	| critiques |
 
 	ReExceptionStrategy current: ReLogExceptionStrategy.
-	
+
 	self
 		shouldnt: [
 			critiques := self validationScenario  ]
 		raise: MyTestError.
-		
+
 	self assert: critiques isNotEmpty.
 	self assert: (
 		critiques anySatisfy: [ :crit |
-		 (crit isKindOf: ReExceptionProperty) and: [ 
+		 (crit isKindOf: ReExceptionProperty) and: [
 			crit message includesSubstring: self errorMessage ] ])
 ]
 
@@ -36,7 +36,7 @@ ReBasicScenarioExceptionStrategyTest >> testLog [
 ReBasicScenarioExceptionStrategyTest >> testPass [
 
 	ReExceptionStrategy current: RePassExceptionStrategy.
-	
+
 	self
 		should: [ self validationScenario  ]
 		raise: MyTestError
@@ -45,7 +45,7 @@ ReBasicScenarioExceptionStrategyTest >> testPass [
 { #category : #helpers }
 ReBasicScenarioExceptionStrategyTest >> validationScenario [
 	| critiques |
-	
+
 	critiques := Set new.
 
 	[ MyTestError signal: self errorMessage ]
@@ -56,6 +56,6 @@ ReBasicScenarioExceptionStrategyTest >> validationScenario [
 				about: self
 				forPropertiesDo: [ :prop |
 					critiques add: prop ] ].
-			
+
 	^ critiques
 ]

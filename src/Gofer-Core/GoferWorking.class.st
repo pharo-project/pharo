@@ -39,7 +39,7 @@ GoferWorking >> initialize [
 GoferWorking >> initializeOn: aGofer [
 
 	super initializeOn: aGofer.
-	aGofer references 
+	aGofer references
 		do: [ :each | self addReference: each ]
 ]
 

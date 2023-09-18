@@ -1,6 +1,6 @@
 Class {
 	#name : #RedTest,
-	#superclass : #UtilityTest,
+	#superclass : #MockTest,
 	#classInstVars : [
 		'ignoreTest'
 	],

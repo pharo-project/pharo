@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-AthensFontChange class >> font: aFont [ 
+AthensFontChange class >> font: aFont [
 	^ self new font: aFont
 ]
 
@@ -26,6 +26,7 @@ AthensFontChange >> font: aFont [
 ]
 
 { #category : #rendering }
-AthensFontChange >> renderOn: anAthensTextRenderer [ 
-	anAthensTextRenderer setCurrentFont: font.
+AthensFontChange >> renderOn: anAthensTextRenderer [
+
+	anAthensTextRenderer setCurrentFont: font
 ]

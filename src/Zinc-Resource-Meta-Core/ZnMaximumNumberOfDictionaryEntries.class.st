@@ -16,6 +16,6 @@ Class {
 { #category : #accessing }
 ZnMaximumNumberOfDictionaryEntries >> default [
 	"The default maximum number dictionary entries to accept."
-	
+
 	^ 256
 ]

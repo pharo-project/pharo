@@ -69,28 +69,26 @@ ThreadSafeTranscript >> characterLimit [
 ]
 
 { #category : #streaming }
-ThreadSafeTranscript >> clear [ 
-"	Clear all characters by resetting the stream and voiding any previously flagged deferredEndEntry.
-	Redisplays the view by signalling for #step to send #changed: .
-"	
-	self 
-		critical: [ 
-			deferredClear := true.
-			deferredEndEntry := false.
-			stream reset ]
+ThreadSafeTranscript >> clear [
+	"Clear all characters by resetting the stream and voiding any previously flagged deferredEndEntry.
+	Redisplays the view by signalling for #step to send #changed:"
+
+	self critical: [
+		deferredClear := true.
+		deferredEndEntry := false.
+		stream := String new writeStream ]
 ]
 
 { #category : #streaming }
 ThreadSafeTranscript >> close [
 	self flush.
 	self critical: [ stream close ]
-	
 ]
 
 { #category : #'protected low level' }
-ThreadSafeTranscript >> contents [ 
-"	Cannot directly return == stream contents == since Morphic assumes multiple calls will return 
-	the same value within the one cycle.  WorldState>>runStepMethodsIn:  sends #step to 
+ThreadSafeTranscript >> contents [
+"	Cannot directly return == stream contents == since Morphic assumes multiple calls will return
+	the same value within the one cycle.  WorldState>>runStepMethodsIn:  sends #step to
 	do == stepContents := stream contents ==.
 "
 	^ stepContents
@@ -99,14 +97,14 @@ ThreadSafeTranscript >> contents [
 { #category : #streaming }
 ThreadSafeTranscript >> cr [
 	"Output a cr on the receiver, buffered and not yet shown"
-	
+
 	self nextPut: Character cr
 ]
 
 { #category : #streaming }
 ThreadSafeTranscript >> crShow: anObject [
 	"Output anObject asString on the receiver preceded by a cr and show the output"
-	
+
 	self critical: [ self cr; show: anObject ]
 ]
 
@@ -114,7 +112,7 @@ ThreadSafeTranscript >> crShow: anObject [
 ThreadSafeTranscript >> critical: block [
 	"Execute block making sure only one thread accesses the receiver"
 
-	^ accessSemaphore critical: block 
+	^ accessSemaphore critical: block
 ]
 
 { #category : #accessing }
@@ -124,41 +122,38 @@ ThreadSafeTranscript >> doItContext [
 
 { #category : #streaming }
 ThreadSafeTranscript >> endEntry [
-"	
+"
 	The next #stepGlobal message (usually invoked by Morhic stepping) will raise an #appendEntry update and reset the stream.
-"  
-  	self critical: [ deferredEndEntry := true ].
+"
+  	self critical: [ deferredEndEntry := true ]
 ]
 
 { #category : #streaming }
 ThreadSafeTranscript >> flush [
 	self endEntry
-
 ]
 
 { #category : #'ui building' }
 ThreadSafeTranscript >> initialExtent [
-	
-	^447@300
+
+	^ (447@300) scaledByDisplayScaleFactor
 ]
 
 { #category : #initialization }
 ThreadSafeTranscript >> initialize [
- 
+
 	super initialize.
 	accessSemaphore := Mutex new.
 	stream := String new writeStream.
 	deferredClear := false.
 	deferredEndEntry := false.
-	stepContents := ''.
-
-	
+	stepContents := ''
 ]
 
 { #category : #'self evaluating' }
 ThreadSafeTranscript >> isSelfEvaluating [
 
-	^self == Transcript 
+	^self == Transcript
 		ifTrue: [ true ]
 		ifFalse: [ super isSelfEvaluating ]
 ]
@@ -188,7 +183,7 @@ ThreadSafeTranscript >> nextPutAll: value [
 { #category : #streaming }
 ThreadSafeTranscript >> print: anObject [
 	"Output anObject asString on the receiver, buffered, not yet shown"
-	
+
 	self nextPutAll: anObject asString
 ]
 
@@ -205,14 +200,14 @@ ThreadSafeTranscript >> selectedClassOrMetaClass [
 ]
 
 { #category : #updating }
-ThreadSafeTranscript >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
+ThreadSafeTranscript >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	^ false
 ]
 
 { #category : #streaming }
 ThreadSafeTranscript >> show: anObject [
 	"Output anObject asString on the receiver and show the output"
-	
+
 	self critical: [ self print: anObject; endEntry ]
 ]
 
@@ -225,35 +220,34 @@ ThreadSafeTranscript >> space [
 
 { #category : #updating }
 ThreadSafeTranscript >> stepGlobal [
-"	The superclass method Model>>step indicates a convention that might be used to interoperate 
-	synchronously with the UI-thread.  However when multiple Transcript windows are open, their 
-	PluggableTextMorphs share a single instance, from the global Transcript.  To avoid potential trouble, 
-	this method should not be named #step.  
-	
-	As well, we need this method to execute even when no Transcript windows are open, so the stream 
-	continues to be reset periodically, otherwise it would grow indefinitely. So this method is invoked 
-	from WorldState>>runStepMethodsIn:. 
+"	The superclass method Model>>step indicates a convention that might be used to interoperate
+	synchronously with the UI-thread.  However when multiple Transcript windows are open, their
+	PluggableTextMorphs share a single instance, from the global Transcript.  To avoid potential trouble,
+	this method should not be named #step.
+
+	As well, we need this method to execute even when no Transcript windows are open, so the stream
+	continues to be reset periodically, otherwise it would grow indefinitely. So this method is invoked
+	from WorldState>>runStepMethodsIn:.
 "
 
 	"Next three lines required temporarily to initialize instance variables added to existing instance"
 	deferredClear ifNil: [ deferredClear := false ].
 	deferredEndEntry ifNil: [ deferredEndEntry := false ].
 	stepContents ifNil: [ stepContents := '' ].
-	
-	deferredClear ifTrue: 
-	[ 	deferredClear := false.  
+
+	deferredClear ifTrue:
+	[ 	deferredClear := false.
 		stepContents := ''.
 		self changed: #clearText.
 	].
-	deferredEndEntry ifTrue: 
-	[	deferredEndEntry := false.  	
-		self critical: 
+	deferredEndEntry ifTrue:
+	[	deferredEndEntry := false.
+		self critical:
 		[	stepContents := stream contents.
-			stream resetContents.	
+			stream resetContents.
 		].
-		self changed: #appendEntry.	
-	].
-	
+		self changed: #appendEntry.
+	]
 ]
 
 { #category : #streaming }

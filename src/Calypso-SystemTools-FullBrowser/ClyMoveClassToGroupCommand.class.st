@@ -20,41 +20,41 @@ Class {
 { #category : #activation }
 ClyMoveClassToGroupCommand class >> browserContextMenuActivation [
 	<classAnnotation>
-	
+
 	^ SycClassMenuActivation byRootGroupItemOrder: 1000 for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
-	
-	^CmdDragAndDropActivation 
-		for: ClyClass asCalypsoItemContext 
+
+	^CmdDragAndDropActivation
+		for: ClyClass asCalypsoItemContext
 		toDropIn: RPackage asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation2 [
 	<classAnnotation>
-	
-	^CmdDragAndDropActivation 
-		for: ClyClass asCalypsoItemContext 
+
+	^CmdDragAndDropActivation
+		for: ClyClass asCalypsoItemContext
 		toDropIn: ClyTaggedClassGroup asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 	<classAnnotation>
-	
-	^CmdDragAndDropActivation 
-		for: ClyClass asCalypsoItemContext 
+
+	^CmdDragAndDropActivation
+		for: ClyClass asCalypsoItemContext
 		toDropIn: ClyNoTagClassGroup asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyMoveClassToGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
-	
+
 	^CmdShortcutActivation by: $m meta, $c meta for: ClyFullBrowserClassContext
 ]
 
@@ -69,12 +69,12 @@ ClyMoveClassToGroupCommand >> classGroup: anObject [
 ]
 
 { #category : #accessing }
-ClyMoveClassToGroupCommand >> defaultMenuIconName [ 
+ClyMoveClassToGroupCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
 { #category : #accessing }
-ClyMoveClassToGroupCommand >> defaultMenuItemName [ 
+ClyMoveClassToGroupCommand >> defaultMenuItemName [
 	^'Move to package'
 ]
 
@@ -96,6 +96,6 @@ ClyMoveClassToGroupCommand >> prepareExecutionInDropContext: aToolContext [
 ClyMoveClassToGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	"class group could be package. In this activation it is only make sense to request user for package"
-	
+
 	classGroup := aToolContext requestSinglePackage: 'Choose package'
 ]

@@ -26,17 +26,17 @@ ISOLanguageDefinition class >> buildIso3166CodesTables [
 	"ISOLanguageDefinition buildIso3166CodesTables"
 	| rawdata stream country isoa2 isoa3 unNumeric macName macCode windowsName windowsCode empty table |
 	rawdata := self iso3166Codes.
-	table := OrderedCollection new: 200. 
+	table := OrderedCollection new: 200.
 	stream := rawdata readStream.
 	empty := 160 asCharacter asString.
-	[stream atEnd] whileFalse: 
+	[stream atEnd] whileFalse:
 		[country := stream nextLine.
 		isoa2 := stream nextLine.
 		isoa3 := stream nextLine.
 		unNumeric := stream nextLine.
 		windowsName := stream nextLine.
 		windowsName = empty ifTrue: [windowsName := nil].
-		windowsCode := stream nextLine. 
+		windowsCode := stream nextLine.
 		windowsCode = empty ifTrue: [windowsCode := nil].
 		macName := stream nextLine.
 		macName = empty ifTrue: [macName := nil].
@@ -49,8 +49,8 @@ ISOLanguageDefinition class >> buildIso3166CodesTables [
 { #category : #'private - ISO 3166' }
 ISOLanguageDefinition class >> initISO3LanguageTable [
 	"self  initISO3LanguageTable"
-	
-	^ self readISOLanguagesFrom: self isoLanguages readStream.
+
+	^ self readISOLanguagesFrom: self isoLanguages readStream
 ]
 
 { #category : #private }
@@ -60,9 +60,9 @@ ISOLanguageDefinition class >> initISOCountries [
 	iso3166Table := self buildIso3166CodesTables.
 	ISO2Countries := Dictionary new.
 	ISO3Countries := Dictionary new.
-	iso3166Table do: [:entry | 
+	iso3166Table do: [:entry |
 		ISO2Countries at: (entry at: 2) put: (entry at: 1).
-		ISO3Countries at: (entry at: 3) put: (entry at: 1)].
+		ISO3Countries at: (entry at: 3) put: (entry at: 1)]
 ]
 
 { #category : #'class initialization' }

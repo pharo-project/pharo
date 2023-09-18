@@ -23,19 +23,19 @@ KMBuffer class >> resetUniqueInstance [
 
 { #category : #accessing }
 KMBuffer class >> uniqueInstance [
-	^uniqueInstance ifNil: [ uniqueInstance := self new ].
+	^uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #accessing }
 KMBuffer class >> uniqueInstance: aBuffer [
-	uniqueInstance := aBuffer.
+	uniqueInstance := aBuffer
 ]
 
 { #category : #adding }
 KMBuffer >> addEvent: anEvent [
 
 	buffer add: anEvent.
-	currentEvent := anEvent.
+	currentEvent := anEvent
 ]
 
 { #category : #accessing }
@@ -47,24 +47,24 @@ KMBuffer >> buffer [
 KMBuffer >> clearBuffer [
 
 	currentEvent := nil.
-	buffer removeAll.
+	buffer removeAll
 ]
 
 { #category : #matching }
 KMBuffer >> completeMatch [
 
 	currentEvent ifNotNil:[ currentEvent wasHandled: true ].
-	self clearBuffer.
+	self clearBuffer
 ]
 
 { #category : #initialization }
 KMBuffer >> initialize [
-	buffer := OrderedCollection new.
+	buffer := OrderedCollection new
 ]
 
 { #category : #matching }
 KMBuffer >> partialMatch [
 
 	KMLog logPartialMatch: currentEvent.
-	currentEvent ifNotNil:[ currentEvent wasHandled: true ].
+	currentEvent ifNotNil:[ currentEvent wasHandled: true ]
 ]

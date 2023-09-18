@@ -12,35 +12,35 @@ Class {
 }
 
 { #category : #'instance creation' }
-EpBehaviorCopy class >> fromBehavior: aClass newName: aName [ 
+EpBehaviorCopy class >> fromBehavior: aClass newName: aName [
 
 	^ self basicNew
-		initializeWithBehavior: aClass 
+		initializeWithBehavior: aClass
 		newName: aName;
 		yourself
 ]
 
 { #category : #visitor }
-EpBehaviorCopy >> accept: aVisitor [ 
+EpBehaviorCopy >> accept: aVisitor [
 	^ aVisitor visitBehaviorCopy: self
 ]
 
 { #category : #accessing }
 EpBehaviorCopy >> definition [
-	
+
 	^ definition
 ]
 
 { #category : #initialize }
 EpBehaviorCopy >> initializeWithBehavior: aClass newName: aName [
 	self initialize.
-	
+
 	definition := aClass asEpiceaRingDefinition.
 	newName := aName asSymbol
 ]
 
 { #category : #accessing }
 EpBehaviorCopy >> newName [
-	
+
 	^ newName
 ]

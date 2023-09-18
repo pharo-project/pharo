@@ -23,7 +23,7 @@ Class {
 
 { #category : #private }
 EndianDetector class >> calcEndianness [
-	"Store the least significant word of the float with 1; on big endian machines 
+	"Store the least significant word of the float with 1; on big endian machines
 	 this is the second word"
 
 	| float |
@@ -38,26 +38,18 @@ EndianDetector class >> calcEndianness [
 { #category : #accessing }
 EndianDetector class >> endianness [
 
-	EndianCache ifNil: [EndianCache := self calcEndianness].
-	^ EndianCache
-]
-
-{ #category : #'class initialization' }
-EndianDetector class >> initialize [
-
-	SessionManager default
-		registerSystemClassNamed: self name
+	^ EndianCache ifNil: [ EndianCache := self calcEndianness ]
 ]
 
 { #category : #testing }
 EndianDetector class >> isBigEndian [
-	
+
 	^ self isLittleEndian not
 ]
 
 { #category : #testing }
 EndianDetector class >> isLittleEndian [
-	
+
 	^ self endianness == #little
 ]
 

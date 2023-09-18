@@ -14,19 +14,19 @@ Class {
 { #category : #exceptioninstantiator }
 NewUndeclaredWarning class >> signal: undeclaredName in: originName [
 
-	^ self new 
+	^ self new
 		undeclaredName: undeclaredName;
 		originName: originName;
-		signal.
+		signal
 ]
 
 { #category : #accessing }
 NewUndeclaredWarning >> messageText [
 	^String streamContents: [ :str |
-		originName putOn: str.		
+		originName putOn: str.
 		str nextPutAll: ' ('.
 		undeclaredName putOn: str.
-		str nextPutAll: ' is Undeclared)' ].
+		str nextPutAll: ' is Undeclared)' ]
 ]
 
 { #category : #accessing }

@@ -132,7 +132,7 @@ FT2FFILibrary class >> initialize [
 
 { #category : #'error handling' }
 FT2FFILibrary class >> translateErrorCode: aCode [
-	^ ErrorCodeTable at: aCode ifAbsent: [ 'Unknown Error code' ].
+	^ ErrorCodeTable at: aCode ifAbsent: [ 'Unknown Error code' ]
 ]
 
 { #category : #'accessing - platform' }

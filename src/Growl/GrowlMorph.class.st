@@ -35,14 +35,14 @@ Class {
 
 { #category : #'instance creation' }
 GrowlMorph class >> contents: contentString [
-	
+
 	^ self label: '' contents: contentString
 ]
 
 { #category : #settings }
 GrowlMorph class >> growlPositionChoices [
 
-	^#(topRight 'top right' 
+	^#(topRight 'top right'
 		bottomLeft 'bottom left'
 		bottomRight 'bottom right'
 		topLeft 'topLeft') pairsCollect: [:a :b | b -> a]
@@ -52,7 +52,7 @@ GrowlMorph class >> growlPositionChoices [
 GrowlMorph class >> growlSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #growl)
-		label: 'Popup notification';  
+		label: 'Popup notification';
 		parent: #appearance;
 		description: 'All settings concerned with the notifications popup look''n feel';
 		with: [
@@ -73,13 +73,13 @@ GrowlMorph class >> growlSettingsOn: aBuilder [
 { #category : #settings }
 GrowlMorph class >> growlTypeChoices [
 
-	^#(growl 'Growl Morph' 
+	^#(growl 'Growl Morph'
 		window 'Dialog window') pairsCollect: [:a :b | b -> a]
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> label: aString contents: contentString [
-	
+
 	^ self new
 		label: aString contents: contentString;
 		yourself
@@ -88,31 +88,31 @@ GrowlMorph class >> label: aString contents: contentString [
 { #category : #'instance creation' }
 GrowlMorph class >> openWithContents: contentString [
 
-	^ self openWithLabel: '' 
-		contents: contentString 
-		backgroundColor: nil 
+	^ self openWithLabel: ''
+		contents: contentString
+		backgroundColor: nil
 		labelColor: nil
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString [
 
-	^ self openWithLabel: aString 
-		contents: contentString 
-		backgroundColor: nil 
+	^ self openWithLabel: aString
+		contents: contentString
+		backgroundColor: nil
 		labelColor: nil
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString backgroundColor: aColor labelColor: aLabelColor [
-	
-	^ self type = #window 
+
+	^ self type = #window
 		ifTrue: [ MessageDialogWindow new message: contentString ]
-		ifFalse: [ 
+		ifFalse: [
 			| anInstance |
 			anInstance := self label: aString contents: contentString.
 			aColor ifNotNil: [ anInstance backgroundColor: aColor ].
-			aLabelColor ifNotNil: [ 
+			aLabelColor ifNotNil: [
 				anInstance labelColor: aLabelColor.
 				anInstance contentsColor: aLabelColor ].
 			anInstance openInWorld ]
@@ -120,10 +120,10 @@ GrowlMorph class >> openWithLabel: aString contents: contentString backgroundCol
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString color: aColor [
-	
-	^ self openWithLabel: aString 
-		contents: contentString 
-		backgroundColor: aColor 
+
+	^ self openWithLabel: aString
+		contents: contentString
+		backgroundColor: aColor
 		labelColor: nil
 ]
 
@@ -176,7 +176,7 @@ GrowlMorph >> actionBlock: aBlock [
 { #category : #internal }
 GrowlMorph >> activeGrowlMorphs [
 
-	^self currentWorld submorphs select: [ :morph | morph isKindOf: GrowlMorph ].
+	^self currentWorld submorphs select: [ :morph | morph isKindOf: GrowlMorph ]
 ]
 
 { #category : #accessing }
@@ -194,7 +194,7 @@ GrowlMorph >> alpha: newAlpha [
 	self allMorphsDo: [:m |
 		m borderColor: (self nextColorStep: m borderColor).
 		m color: (self nextColorStep: m color)].
-	self borderColor isTransparent ifTrue: [self delete].
+	self borderColor isTransparent ifTrue: [self delete]
 ]
 
 { #category : #accessing }
@@ -243,7 +243,7 @@ GrowlMorph >> defaultBackgroundColor [
 
 { #category : #default }
 GrowlMorph >> defaultBorderColor [
-	
+
 	^ self theme growlBorderColorFor: self
 ]
 
@@ -254,7 +254,7 @@ GrowlMorph >> defaultTextStyle [
 
 { #category : #default }
 GrowlMorph >> defaultVanishDelay [
-	
+
 	^ 1  seconds
 ]
 
@@ -273,9 +273,9 @@ GrowlMorph >> handlesMouseDown: evt [
 GrowlMorph >> initialize [
 	super initialize.
  	self  borderStyle: (BorderStyle color: self defaultBorderColor width: 1).
-	
+
 	self setProperty: #autoFitContents toValue: false.
- 
+
 	self initializeLabelAttributes.
 	self initializeContentsAttributes.
 	self vanishDelay: self defaultVanishDelay.
@@ -286,12 +286,12 @@ GrowlMorph >> initialize [
 
 { #category : #initialization }
 GrowlMorph >> initializeContentsAttributes [
-	contentsAttr := TextColor color: self contentsColor.
+	contentsAttr := TextColor color: self contentsColor
 ]
 
 { #category : #initialization }
 GrowlMorph >> initializeLabelAttributes [
-	labelAttr := TextColor color: self labelColor.
+	labelAttr := TextColor color: self labelColor
 ]
 
 { #category : #internal }
@@ -306,7 +306,7 @@ GrowlMorph >> label: labelString contents: contentsString [
 	self streamDo: [ :w |
 		w withAttributes: self labelAttributes do: [w nextPutAll: labelString asString; cr].
 		w withAttributes: self contentsAttributes do: [w nextPutAll: contentsString asString].
-		].
+		]
 ]
 
 { #category : #initialization }
@@ -323,7 +323,7 @@ GrowlMorph >> labelColor [
 GrowlMorph >> labelColor: aColor [
 	"when you set this labelColor, it takes precedence over theme one. In certain case (such as for green as in SUnit) it is needed, normally you do not need it."
 	labelColor := aColor.
-	labelAttr color: self labelColor.
+	labelAttr color: self labelColor
 ]
 
 { #category : #default }
@@ -335,7 +335,7 @@ GrowlMorph >> minimumExtent [
 GrowlMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	evt yellowButtonPressed ifTrue: [^ self].
-	actionBlock ifNotNil: [actionBlock valueWithPossibleArgs: { self }].
+	actionBlock ifNotNil: [actionBlock valueWithPossibleArgs: { self }]
 ]
 
 { #category : #initialization }
@@ -358,7 +358,7 @@ GrowlMorph >> resetAlpha [
 GrowlMorph >> resetVanishTimer [
 
 	vanishTime := DateAndTime now + self vanishDelay.
-	self resetAlpha.
+	self resetAlpha
 ]
 
 { #category : #stepping }
@@ -368,7 +368,7 @@ GrowlMorph >> step [
 		self resetAlpha.
 		^ self].
 	vanishTime ifNotNil: [DateAndTime now < vanishTime ifTrue: [^self]].
-	self alpha: self alpha - 0.05.
+	self alpha: self alpha - 0.05
 ]
 
 { #category : #stepping }
@@ -383,7 +383,7 @@ GrowlMorph >> streamDo: aBlock [
 	self extent: self minimumExtent.
 	self height: (paragraph extent y + (self borderWidth * 2) + (margins ifNil: [0] ifNotNil: [margins top + margins bottom]) + 2).
 
-	self vanishDelay: ((((self contents size /50)seconds)+1 seconds) max: self defaultVanishDelay).
+	self vanishDelay: ((((self contents size /50)seconds)+1 seconds) max: self defaultVanishDelay)
 ]
 
 { #category : #position }
@@ -404,11 +404,11 @@ GrowlMorph >> unoccupiedPosition [
 GrowlMorph >> unoccupiedPositionBottomLeft [
 
 	| startPos area rect morphs |
-	
+
 	startPos := 10 negated @ (self height + 10).
 	area := self currentWorld clearArea.
 	rect := (area bottomLeft - startPos) extent: self extent.
-	
+
 	morphs := self activeGrowlMorphs.
 	[self is: rect saneWithRespectTo: morphs] whileFalse: [
 		rect := rect translateBy: 0@(-10).
@@ -421,12 +421,12 @@ GrowlMorph >> unoccupiedPositionBottomLeft [
 GrowlMorph >> unoccupiedPositionBottomRight [
 
 	| startPos area rect morphs |
-	
+
 	startPos := (self width + 10 ) @ (self height + 10).
 	area := self currentWorld clearArea.
 	rect := (area bottomRight - startPos) extent: self extent.
-	
-	morphs := self activeGrowlMorphs.	
+
+	morphs := self activeGrowlMorphs.
 	[self is: rect saneWithRespectTo: morphs] whileFalse: [
 		rect := rect translateBy: 0@(-10).
 		rect top < 0 ifTrue: [^ area bottomRight - startPos ]
@@ -438,11 +438,11 @@ GrowlMorph >> unoccupiedPositionBottomRight [
 GrowlMorph >> unoccupiedPositionTopLeft [
 
 	| startPos area rect morphs |
-	
+
 	startPos := 10@10.
 	area := self currentWorld clearArea.
 	rect := area topLeft + (startPos) extent: self extent.
-	
+
 	morphs := self activeGrowlMorphs.
 	[self is: rect saneWithRespectTo: morphs] whileFalse: [
 		rect := rect translateBy: 0@10.
@@ -455,12 +455,12 @@ GrowlMorph >> unoccupiedPositionTopLeft [
 GrowlMorph >> unoccupiedPositionTopRight [
 
 	| startPos area rect morphs |
-	
+
 	startPos := (self width + 10 @ 10 negated).
 	area := self currentWorld clearArea.
 	rect := (area topRight - startPos) extent: self extent.
-	
-	morphs := self activeGrowlMorphs.	
+
+	morphs := self activeGrowlMorphs.
 	[self is: rect saneWithRespectTo: morphs] whileFalse: [
 		rect := rect translateBy: 0@10.
 		rect bottom > area height ifTrue: [^ (area topRight - startPos) ]

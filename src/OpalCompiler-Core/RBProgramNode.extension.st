@@ -1,34 +1,9 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asDoItForContext: aContext [
-	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context"
-
-	^ self asDoit semanticScope:
-		  (OCContextualDoItSemanticScope targetingContext: aContext)
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asDoit [
-	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
-	| methodNode |
-	
-	methodNode := RBMethodNode 
-		selector: #DoIt
-		body: self asSequenceNode transformLastToReturn.
-	methodNode source: methodNode formattedCode.
-	^methodNode
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asSequenceNode [
-	^RBSequenceNode statements: {self}
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> doSemanticAnalysis [
 	self methodNode ifNil: [ ^self ].
-	^ self methodNode doSemanticAnalysis.
+	^ self methodNode doSemanticAnalysis
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -43,8 +18,9 @@ RBProgramNode >> irInstruction [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> isClean [
-	^ self children allSatisfy: [ :child | child isClean ]
+RBProgramNode >> isAccessingSelf [
+	"return true if accessing an ivar, self or super"
+	^ self children anySatisfy: [ :child | child isAccessingSelf ]
 ]
 
 { #category : #'*OpalCompiler-Core' }

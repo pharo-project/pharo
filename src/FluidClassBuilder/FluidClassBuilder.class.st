@@ -57,11 +57,11 @@ FluidClassBuilder >> fillInstanceSideFromClass: aClass [
 ]
 
 { #category : #building }
-FluidClassBuilder >> fillShiftClassBuilder [ 
+FluidClassBuilder >> fillShiftClassBuilder [
 
 	super fillShiftClassBuilder.
-	
-	shiftClassBuilder 
+
+	shiftClassBuilder
 		superclass: superclassToBuild;
 		sharedVariables: sharedVariables;
 		sharedPoolsCollectionOfSymbols: sharedPools;

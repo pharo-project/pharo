@@ -21,7 +21,7 @@ ClyDeprecationEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 { #category : #'item decoration' }
 ClyDeprecationEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
-	aMethod isDeprecated ifTrue: [ 
+	aMethod isDeprecated ifTrue: [
 		anItem markWith: ClyDeprecatedItemTag]
 ]
 

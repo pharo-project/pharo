@@ -4,12 +4,7 @@ Extension { #name : #Object }
 Object >> actionForEvent: anEventSelector [
     "Answer the action to be evaluated when <anEventSelector> has been triggered."
 
-	| actions |
-	actions := self actionMap
-		at: anEventSelector asSymbol
-		ifAbsent: [^nil].
- 
-	^ actions asMinimalRepresentation
+	^ self actionForEvent: anEventSelector ifAbsent: [nil]
 ]
 
 { #category : #'*System-Object Events' }
@@ -21,8 +16,9 @@ ifAbsent: anExceptionBlock [
 	actions := self actionMap
 		at: anEventSelector asSymbol
 		ifAbsent: [nil].
-	actions ifNil: [^anExceptionBlock value].
-	^ actions asMinimalRepresentation
+	^actions
+		ifNil: [anExceptionBlock value]
+		ifNotNil: [:act | act asMinimalRepresentation ]
 ]
 
 { #category : #'*System-Object Events' }
@@ -91,17 +87,16 @@ forEvent: anEventSelector [
 { #category : #'*System-Object Events' }
 Object >> removeActionsForEvent: anEventSelector [
 
-    | map |
-    map := self actionMap.
-    map removeKey: anEventSelector asSymbol ifAbsent: [].
-    map isEmpty
-        ifTrue: [self releaseActionMap]
+	| map |
+	map := self actionMap.
+	map removeKey: anEventSelector asSymbol ifAbsent: [  ].
+	map ifEmpty: [ self releaseActionMap ]
 ]
 
 { #category : #'*System-Object Events' }
 Object >> removeActionsSatisfying: aBlock [
 
-	self actionMap keysDo:
+	self actionMap copy keysDo:
 		[:eachEventSelector |
 			self
    				removeActionsSatisfying: aBlock
@@ -110,7 +105,7 @@ Object >> removeActionsSatisfying: aBlock [
 ]
 
 { #category : #'*System-Object Events' }
-Object >> removeActionsSatisfying: aOneArgBlock 
+Object >> removeActionsSatisfying: aOneArgBlock
 forEvent: anEventSelector [
 
     self
@@ -123,12 +118,8 @@ forEvent: anEventSelector [
 { #category : #'*System-Object Events' }
 Object >> removeActionsWithReceiver: anObject [
 
-	self actionMap copy keysDo:
-		[:eachEventSelector |
-			self
-   				removeActionsSatisfying: [:anAction | anAction receiver == anObject]
-				forEvent: eachEventSelector
-		]
+	self removeActionsSatisfying: [ :anAction |
+		anAction receiver == anObject ]
 ]
 
 { #category : #'*System-Object Events' }
@@ -143,18 +134,12 @@ forEvent: anEventSelector [
 ]
 
 { #category : #'*System-Object Events' }
-Object >> setActionSequence: actionSequence
-forEvent: anEventSelector [
+Object >> setActionSequence: actionSequence forEvent: anEventSelector [
 
-    | action |
-    action := actionSequence asMinimalRepresentation.
-    action 
-	  ifNil:
-            [self removeActionsForEvent: anEventSelector]
-        ifNotNil:
-            [self updateableActionMap
-                at: anEventSelector asSymbol
-                put: action]
+	actionSequence asMinimalRepresentation
+		ifNil: [ self removeActionsForEvent: anEventSelector ]
+		ifNotNil: [ :action |
+			self updateableActionMap at: anEventSelector asSymbol put: action ]
 ]
 
 { #category : #'*System-Object Events' }
@@ -168,7 +153,7 @@ Object >> triggerEvent: anEventSelector [
 Object >> triggerEvent: anEventSelector
 with: anObject [
 
-    ^self 
+    ^self
 		triggerEvent: anEventSelector
 		withArguments: { anObject }
 ]
@@ -188,13 +173,13 @@ Object >> updateableActionMap [
 ]
 
 { #category : #'*System-Object Events' }
-Object >> when: anEventSelector evaluate: anAction [ 
+Object >> when: anEventSelector evaluate: anAction [
 
 	| actions |
 	actions := self actionSequenceForEvent: anEventSelector.
 	(actions includes: anAction)
 		ifTrue: [^ self].
-	self 
+	self
 		setActionSequence: (actions copyWith: anAction)
 		forEvent: anEventSelector
 ]
@@ -203,7 +188,7 @@ Object >> when: anEventSelector evaluate: anAction [
 Object >> when: anEventSelector
 send: aMessageSelector
 to: anObject [
- 
+
     self
         when: anEventSelector
         evaluate: (WeakMessageSend
@@ -216,7 +201,7 @@ Object >> when: anEventSelector
 send: aMessageSelector
 to: anObject
 with: anArg [
- 
+
     self
         when: anEventSelector
         evaluate: (WeakMessageSend
@@ -230,7 +215,7 @@ Object >> when: anEventSelector
 send: aMessageSelector
 to: anObject
 withArguments: anArgArray [
- 
+
     self
         when: anEventSelector
         evaluate: (WeakMessageSend

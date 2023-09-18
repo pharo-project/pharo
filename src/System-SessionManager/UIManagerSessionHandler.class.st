@@ -17,9 +17,9 @@ Class {
 { #category : #'class initialization' }
 UIManagerSessionHandler class >> initialize [
 	"has to be executed at the end of the user category"
-	SessionManager default 
+	SessionManager default
 		register: self uniqueInstance
-		inCategory: SessionManager default userCategory  
+		inCategory: SessionManager default userCategory
 		atPriority: SmallInteger maxVal
 ]
 
@@ -38,12 +38,12 @@ UIManagerSessionHandler >> shutdown: isImageQuitting [
 
 	"Prepare the shutdown and the next startup"
 
-	UIManager default: StartupUIManager new.
+	UIManager default: StartupUIManager new
 ]
 
 { #category : #handlers }
 UIManagerSessionHandler >> startup: isImageStarting [
 	"Install the right UIManager"
-	
-	UIManager default: UIManager forCurrentSystemConfiguration.
+
+	UIManager default: UIManager forCurrentSystemConfiguration
 ]

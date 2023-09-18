@@ -17,7 +17,7 @@ Class {
 { #category : #decorated }
 ChunkReadStream >> basicNext [
 
-	nextChar = self terminatorMark 
+	nextChar = self terminatorMark
 		ifTrue: [ decoratedStream next ].
 	^ nextChar
 ]
@@ -30,9 +30,9 @@ ChunkReadStream >> basicNextChunk [
 	out := (String new: 1000) writeStream.
 	self skipSeparators.
 	[ (ch := decoratedStream next) isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			ch == self terminatorMark
-				ifTrue: [ 
+				ifTrue: [
 					decoratedStream peek == self terminatorMark
 						ifTrue: [ decoratedStream next	"skip doubled terminator" ]
 						ifFalse: [ ^ out contents	"terminator is not doubled; we're done!" ] ].
@@ -47,19 +47,19 @@ ChunkReadStream >> decodeString: string andRuns: runsRaw [
 	(strm peekFor: $()
 		ifFalse: [ ^ nil ].
 	runLength := OrderedCollection new.
-	[ 
+	[
 	strm skipSeparators.
 	strm peekFor: $) ] whileFalse: [ runLength add: (Number readFrom: strm) ].
 	runValues := OrderedCollection new.
 	[ strm atEnd ]
-		whileFalse: [ 
+		whileFalse: [
 			runValues add: (Number readFrom: strm).
 			strm next ].
 	newString := WideString new: string size.
 	index := 1.
 	runLength
 		with: runValues
-		do: [ :length :leadingChar | 
+		do: [ :length :leadingChar |
 			index to: index + length - 1 do: [ :pos | newString at: pos put: (string at: pos) ].
 			index := index + length ].
 	^ newString
@@ -106,7 +106,7 @@ ChunkReadStream >> parseLangTagFor: aString [
 
 { #category : #decorated }
 ChunkReadStream >> position [
-	
+
 	^ decoratedStream position - (nextChar ifNil: [0] ifNotNil: [1])
 ]
 
@@ -119,7 +119,7 @@ ChunkReadStream >> readUpToEndOfStyleChunk [
 { #category : #initialization }
 ChunkReadStream >> reset [
 	nextChar := nil.
-	decoratedStream reset.
+	decoratedStream reset
 ]
 
 { #category : #public }

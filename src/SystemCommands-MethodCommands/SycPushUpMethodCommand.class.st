@@ -5,24 +5,19 @@ Class {
 	#name : #SycPushUpMethodCommand,
 	#superclass : #SysRefactoringMethodCommand,
 	#instVars : [
-		'superclass'
+		'refactoringScopes'
 	],
 	#category : #'SystemCommands-MethodCommands'
 }
 
 { #category : #execution }
 SycPushUpMethodCommand >> asRefactorings [
-	| refactoring |
-	refactoring :=  RBPullUpMethodRefactoring 
-		model: model
-		pullUp: (methods collect: [ :each | each selector ])
-		from: methods first origin.
-	refactoring superClass: superclass.
-	^ OrderedCollection with: refactoring
+
+	self shouldNotImplement
 ]
 
 { #category : #accessing }
-SycPushUpMethodCommand >> defaultMenuIconName [ 
+SycPushUpMethodCommand >> defaultMenuIconName [
 	^ #up
 ]
 
@@ -32,23 +27,23 @@ SycPushUpMethodCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycPushUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	self selectMethodsAndSuperclass.
+SycPushUpMethodCommand >> executeRefactorings [
+
+	(RBPushUpMethodDriver
+		 model: model
+		 scopes: refactoringScopes
+		 pushUp: methods) runRefactoring
+]
+
+{ #category : #testing }
+SycPushUpMethodCommand >> isComplexRefactoring [
+
+	^ false
 ]
 
 { #category : #execution }
-SycPushUpMethodCommand >> selectMethodsAndSuperclass [
-	| dialog class classes |
-	class := methods first origin.
-	classes := class allSuperclasses removeAllSuchThat: [ :each | each == Object or: [ each == ProtoObject ] ].
-	dialog := RBSelectClassAndMethodsPresenter 
-			label: 'Methods to be pull up'
-			dropLabel: 'Pull up methods of ', class name, ' to:'
-			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
-			selecting: methods asOrderedCollection
-			dropItems: classes
-			acceptBlock: [ :item :items | superclass := item.
-				methods := items ].
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+SycPushUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+	refactoringScopes := aToolContext refactoringScopes
 ]

@@ -33,11 +33,11 @@ TermInfoCharacter >> set: aString [
 { #category : #styling }
 TermInfoCharacter >> setBackgroundColor: aColor [
 
-	self set: aColor asTerminfoCharacterBackground , 'm'.
+	self set: aColor asTerminfoCharacterBackground , 'm'
 ]
 
 { #category : #styling }
-TermInfoCharacter >> setFontColor: aColor [ 
+TermInfoCharacter >> setFontColor: aColor [
 
 	self set: aColor asTerminfoCharacterFont, 'm'
 ]

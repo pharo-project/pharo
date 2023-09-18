@@ -8,7 +8,7 @@ Class {
 ClapCodeEvaluatorTest >> testEvaluateAliasMultipleArguments [
 	context := ClapCodeEvaluator evaluate activateWith: #('eval'
 		'''(2+3)''' 'class' 'printString' ', String space ,' '(2+3)' 'class' 'printString').
-	
+
 	self assertSuccess.
 	self
 		assert: self outputString
@@ -18,7 +18,7 @@ ClapCodeEvaluatorTest >> testEvaluateAliasMultipleArguments [
 { #category : #tests }
 ClapCodeEvaluatorTest >> testEvaluateAliasSingleArgument [
 	context := ClapCodeEvaluator evaluate activateWith: #('eval' '1 class').
-	
+
 	self assertSuccess.
 	self
 		assert: self outputString
@@ -30,7 +30,7 @@ ClapCodeEvaluatorTest >> testEvaluatePipeIn [
 	context := (ClapCodeEvaluator evaluate activationWith: #('evaluate'))
 		setStdio: (ClapPluggableStdio onByteArraysWithInput: 'Object class class class class');
 		execute.
-	
+
 	self assertSuccess.
 	self
 		assert: self outputString

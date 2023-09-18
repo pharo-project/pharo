@@ -20,7 +20,7 @@ Class {
 
 { #category : #private }
 HiColumnController >> cellBoundsForRow: rowIndex inPage: pageIndex [
-	
+
 	| rowIndexRelativeToRuler rowIndexRelativeToPage rowIndexOfFirstNodeInPage |
 	rowIndexRelativeToRuler := (self ruler nodeAtRow: rowIndex) rulerPoint y.
 	rowIndexOfFirstNodeInPage := self rowIndexOfFirstItemAtPage: pageIndex.
@@ -50,7 +50,7 @@ HiColumnController >> cellMorphAtValue: aValue [
 { #category : #private }
 HiColumnController >> checkSession [
 
-	session == Smalltalk session 
+	session == Smalltalk session
 		ifFalse: [ self reset ]
 ]
 
@@ -74,7 +74,7 @@ HiColumnController >> initialize [
 	renderer := HiSimpleRenderer new.
 	pageSize := 30.
 	session := Smalltalk session.
-	self reset.
+	self reset
 ]
 
 { #category : #private }
@@ -130,7 +130,7 @@ HiColumnController >> reset [
 	"Reset the internal state with the purpose to regenerate the visualization the next time #cellMorphFor: is executed."
 
 	cellMorphByRowIndex := Dictionary new.
-	formByPageIndex := Dictionary new.
+	formByPageIndex := Dictionary new
 ]
 
 { #category : #private }
@@ -149,7 +149,7 @@ HiColumnController >> rowIndexOfFirstItemAtPage: pageIndex [
 HiColumnController >> rowIntervalAtPage: pageIndex [
 	"Answer the interval of row indices that correspond to the specified page index."
 
-	^ 	(self rowIndexOfFirstItemAtPage: pageIndex) to: 
+	^ 	(self rowIndexOfFirstItemAtPage: pageIndex) to:
 		(((pageIndex + 1) * self pageSize) min: self ruler numberOfRows)
 ]
 

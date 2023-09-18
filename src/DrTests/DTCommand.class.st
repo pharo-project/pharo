@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-DTCommand class >> isAbstract [ 
+DTCommand class >> isAbstract [
 
 	^self name = #DTCommand
 ]

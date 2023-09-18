@@ -23,7 +23,7 @@ ClyPackageScope >> asRBEnvironment [
 
 { #category : #queries }
 ClyPackageScope >> classGroupProvidersDo: aBlock [
-	
+
 	| providers |
 	environment pluginsDo: [ :plugin |
 		providers := plugin collectClassGroupProviders.
@@ -34,13 +34,13 @@ ClyPackageScope >> classGroupProvidersDo: aBlock [
 ClyPackageScope >> classGroupsDo: aBlock [
 
 	self classGroupProvidersDo: [ :groupProvider |
-		groupProvider classGroupsIn: self do: [:group | 
+		groupProvider classGroupsIn: self do: [:group |
 			aBlock value: group] ]
 ]
 
 { #category : #queries }
 ClyPackageScope >> classesDo: aBlock [
-	self packagesDo: [ :package | 
+	self packagesDo: [ :package |
 		package definedClasses do: aBlock]
 ]
 
@@ -48,10 +48,10 @@ ClyPackageScope >> classesDo: aBlock [
 ClyPackageScope >> includesClassGroupsAffectedBy: aSystemAnnouncement [
 
 	| providers |
-	basisObjects do: [ :eachPackage | 
+	basisObjects do: [ :eachPackage |
 		environment pluginsDo: [ :plugin |
 			providers := plugin collectClassGroupProviders.
-			providers do: [ :eachProvider | 
+			providers do: [ :eachProvider |
 				(eachProvider providesGroupsAffectedBy: aSystemAnnouncement inScope: self)
 					ifTrue: [^true]]]].
 	^false
@@ -59,11 +59,11 @@ ClyPackageScope >> includesClassGroupsAffectedBy: aSystemAnnouncement [
 
 { #category : #queries }
 ClyPackageScope >> methodsDo: aBlock [
-	self classesDo: [:class | 
+	self classesDo: [:class |
 		class localMethods do: aBlock.
 		class classSide localMethods do: aBlock].
-	
-	self packagesDo: [ :package | 
+
+	self packagesDo: [ :package |
 		package extensionMethods do: aBlock ]
 ]
 

@@ -19,7 +19,7 @@ ClassOrganizationChunk class >> contents: someContents behaviorName: behaviorNam
 ]
 
 { #category : #'instance creation' }
-ClassOrganizationChunk class >> contents: someContents organizer: aClassOrganizer [ 
+ClassOrganizationChunk class >> contents: someContents organizer: aClassOrganizer [
 	^self new
 			contents: someContents;
 			organizer: aClassOrganizer;
@@ -40,10 +40,19 @@ ClassOrganizationChunk >> description [
 
 { #category : #importing }
 ClassOrganizationChunk >> importFor: aRequestor logSource: logSource [
-	(self existsBehavior)
-		ifFalse: [ self error: ('Cannot change organization of unexistent behavior {1}' format: { behaviorName asString } ) ]. 
-		
-	self targetClass organization changeFromString: contents
+
+	| targetClass protocolSpecs |
+	self existsBehavior ifFalse: [ self error: ('Cannot change organization of unexistent behavior {1}' format: { behaviorName asString }) ].
+
+	targetClass := self targetClass.
+	protocolSpecs := contents parseLiterals.
+
+	targetClass resetProtocols.
+
+	"If nothing was scanned and I had no elements before, then default me"
+	(protocolSpecs isEmpty and: [ targetClass protocols isEmpty ]) ifTrue: [ ^ self ].
+
+	protocolSpecs do: [ :spec | (targetClass addProtocol: (Protocol named: spec first)) methodSelectors: spec allButFirst asSet ]
 ]
 
 { #category : #testing }

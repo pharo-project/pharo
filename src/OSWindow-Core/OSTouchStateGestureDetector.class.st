@@ -31,14 +31,14 @@ OSTouchStateGestureDetector >> createEventEnding [
 ]
 
 { #category : #preconditions }
-OSTouchStateGestureDetector >> hasGoodNumberOfFingers [ 
+OSTouchStateGestureDetector >> hasGoodNumberOfFingers [
 	^ eventHandler fingerCount = self necessaryFingers
 ]
 
 { #category : #initialization }
 OSTouchStateGestureDetector >> initialize [
 	super initialize.
-	modeActivated := false.
+	modeActivated := false
 ]
 
 { #category : #preconditions }

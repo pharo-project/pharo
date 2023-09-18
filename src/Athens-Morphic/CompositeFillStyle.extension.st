@@ -1,6 +1,6 @@
 Extension { #name : #CompositeFillStyle }
 
 { #category : #'*Athens-Morphic' }
-CompositeFillStyle >> asAthensPaintOn: aCanvas [ 
+CompositeFillStyle >> asAthensPaintOn: aCanvas [
 	^ AthensCompositePaint new fromFillStyles: fillStyles on: aCanvas
 ]

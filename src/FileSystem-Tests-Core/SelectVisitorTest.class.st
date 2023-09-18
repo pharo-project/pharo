@@ -12,7 +12,7 @@ Class {
 SelectVisitorTest >> testBreadthFirst [
 	| entries |
 	entries := SelectVisitor breadthFirst: self root.
-	self 
+	self
 		assertEntries: entries
 		are: #(
 				'/alpha'
@@ -28,7 +28,7 @@ SelectVisitorTest >> testBreadthFirst [
 SelectVisitorTest >> testBreadthFirstSelect [
 	| entries |
 	entries := SelectVisitor breadthFirst: self root select: [ :node| node name endsWith: #a].
-	self 
+	self
 		assertEntries: entries
 		are: #(
 				'/alpha'
@@ -43,7 +43,7 @@ SelectVisitorTest >> testBreadthFirstSelect [
 SelectVisitorTest >> testPostorder [
 	| entries |
 	entries := SelectVisitor postorder: self root.
-	self 
+	self
 		assertEntries: entries
 		are: #(
 				'/alpha/beta/delta'
@@ -59,7 +59,7 @@ SelectVisitorTest >> testPostorder [
 SelectVisitorTest >> testPostorderSelect [
 	| entries |
 	entries := SelectVisitor postorder: self root select: [ :node| node name endsWith: #a].
-	self 
+	self
 		assertEntries: entries
 		are: #(
 				'/alpha/beta/delta'
@@ -74,7 +74,7 @@ SelectVisitorTest >> testPostorderSelect [
 SelectVisitorTest >> testPreorder [
 	| entries |
 	entries := SelectVisitor preorder: self root.
-	self 
+	self
 		assertEntries: entries
 		are: #(
 				'/alpha'
@@ -90,7 +90,7 @@ SelectVisitorTest >> testPreorder [
 SelectVisitorTest >> testPreorderSelect [
 	| entries |
 	entries := SelectVisitor preorder: self root select: [ :node| node name endsWith: #a].
-	self 
+	self
 		assertEntries: entries
 		are: #(
 				'/alpha'

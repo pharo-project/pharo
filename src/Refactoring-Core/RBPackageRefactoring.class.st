@@ -20,7 +20,7 @@ RBPackageRefactoring class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-RBPackageRefactoring class >> model: aRBModel packageName: aName [ 
+RBPackageRefactoring class >> model: aRBModel packageName: aName [
 	^ self new
 		model: aRBModel;
 		packageName: aName;
@@ -31,6 +31,18 @@ RBPackageRefactoring class >> model: aRBModel packageName: aName [
 RBPackageRefactoring class >> packageName: aName [
 	^ self new
 		packageName: aName
+]
+
+{ #category : #accessing }
+RBPackageRefactoring >> newName [
+
+	^ newName
+]
+
+{ #category : #accessing }
+RBPackageRefactoring >> newName: anObject [
+
+	newName := anObject
 ]
 
 { #category : #accessing }
@@ -46,9 +58,10 @@ RBPackageRefactoring >> packageName: anObject [
 ]
 
 { #category : #preconditions }
-RBPackageRefactoring >> preconditions [ 
-	^ (RBCondition withBlock: [ [ RPackage organizer includesPackageNamed: packageName ]
-			on: Error 
-			do: [ :e | self refactoringError: e messageText ]
-		])
+RBPackageRefactoring >> preconditions [
+
+	^ RBCondition
+		  withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+			  self packageOrganizer hasPackage: packageName ]
+		  errorString: 'The package ' , packageName , ' does not exists in the system'
 ]

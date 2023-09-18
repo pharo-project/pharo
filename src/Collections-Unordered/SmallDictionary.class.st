@@ -53,14 +53,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-SmallDictionary class >> new: aSize [ 
+SmallDictionary class >> new: aSize [
 	"Ignore the size"
 
 	^self basicNew initialize
 ]
 
 { #category : #'instance creation' }
-SmallDictionary class >> newFrom: aDict [ 
+SmallDictionary class >> newFrom: aDict [
 	"Answer an instance of me containing the same associations as aDict.
 	 Error if any key appears twice."
 	| newDictionary |
@@ -76,9 +76,9 @@ SmallDictionary class >> newFrom: aDict [
 { #category : #'instance creation' }
 SmallDictionary class >> newFromKeys: keys andValues: values [
 	"Create a dictionary from the keys and values arguments which should have the same length."
-	
+
 	"(SmallDictionary newFromKeys: #(#x #y) andValues: #(3 6)) >>> (SmallDictionary new at: #x put: 3; at: #y put: 6 ;yourself)"
-	
+
 	| dict |
 	dict := self new.
 	keys with: values do: [ :k :v | dict at: k put: v ].
@@ -86,7 +86,7 @@ SmallDictionary class >> newFromKeys: keys andValues: values [
 ]
 
 { #category : #'instance creation' }
-SmallDictionary class >> newFromPairs: anArray [ 
+SmallDictionary class >> newFromPairs: anArray [
 	"Answer an instance of me associating (anArray at:i) to (anArray at: i+i) for each odd i.  anArray must have an even number of entries."
 
 	| newDictionary |
@@ -116,21 +116,21 @@ SmallDictionary >> = aDictionary [
 ]
 
 { #category : #adding }
-SmallDictionary >> add: anAssociation [ 
+SmallDictionary >> add: anAssociation [
 	self at: anAssociation key put: anAssociation value.
 	^anAssociation
 ]
 
 { #category : #adding }
 SmallDictionary >> addAll: aKeyedCollection [
-	aKeyedCollection == self 
+	aKeyedCollection == self
 		ifFalse: [
 			aKeyedCollection keysAndValuesDo: [:key :value | self at: key put: value]].
 	^aKeyedCollection
 ]
 
 { #category : #accessing }
-SmallDictionary >> associationAt: key [ 
+SmallDictionary >> associationAt: key [
 	"Returns an association for the given key.
 
 	Modifying the association won't affect the receiver because it
@@ -140,7 +140,7 @@ SmallDictionary >> associationAt: key [
 ]
 
 { #category : #accessing }
-SmallDictionary >> associationAt: key ifAbsent: aBlock [ 
+SmallDictionary >> associationAt: key ifAbsent: aBlock [
 	"Answer an association for the given key.
 	If the key is not found, return the result of evaluating aBlock.
 
@@ -150,9 +150,9 @@ SmallDictionary >> associationAt: key ifAbsent: aBlock [
 	| index value |
 	index := keys indexOf: key.
 	index = 0 ifTrue: [ ^ aBlock value].
-	
+
 	value := values at: index.
-	^ key->value.
+	^ key->value
 ]
 
 { #category : #accessing }
@@ -187,37 +187,37 @@ SmallDictionary >> associations [
 
 	Modifying the associations won't affect the receiver because it
 	isn't implemented with associations like Dictionary."
-	
+
 	^Array new: self size streamContents: [ :stream |
  		self associationsDo: [ :each | stream nextPut: each ] ]
 ]
 
 { #category : #enumerating }
-SmallDictionary >> associationsDo: aBlock [ 
+SmallDictionary >> associationsDo: aBlock [
 	"Evaluate aBlock for each association for the receiver.
 
 	Modifying the associations won't affect the receiver because it
 	isn't implemented with associations like Dictionary."
-	
+
 	self keysAndValuesDo: [:key :value | aBlock value: key -> value]
 ]
 
 { #category : #enumerating }
-SmallDictionary >> associationsSelect: aBlock [ 
+SmallDictionary >> associationsSelect: aBlock [
 	"Evaluate aBlock with each of my associations as the argument. Collect
 	into a new dictionary, only those associations for which aBlock evaluates
 	to true."
 
 	| newCollection |
 	newCollection := self species new.
-	self associationsDo: 
-		[:each | 
+	self associationsDo:
+		[:each |
 		(aBlock value: each) ifTrue: [newCollection add: each]].
 	^newCollection
 ]
 
 { #category : #accessing }
-SmallDictionary >> at: key [ 
+SmallDictionary >> at: key [
 	"Answer the value associated with the key."
 
 	^ self at: key ifAbsent: [self errorKeyNotFound: key]
@@ -241,7 +241,7 @@ SmallDictionary >> at: firstKey at: secondKey [
 { #category : #'nested dictionaries' }
 SmallDictionary >> at: firstKey at: secondKey ifAbsent: aZeroArgBlock [
 		"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. Execute aZeroArgBlock in case one of the key is wrong."
-		
+
 	| subDictionary |
 	subDictionary := self at: firstKey ifAbsent: [ ^ aZeroArgBlock value ].
 	^ subDictionary at: secondKey ifAbsent: aZeroArgBlock
@@ -259,21 +259,21 @@ SmallDictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 { #category : #'nested dictionaries' }
 SmallDictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
-	
+
 	| subDictionary |
 	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
 	^ subDictionary at: secondKey put: aValue
 ]
 
 { #category : #accessing }
-SmallDictionary >> at: key ifAbsent: aBlock [ 
+SmallDictionary >> at: key ifAbsent: aBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock."
 
 	| index |
 	index := self findIndexForKey:  key.
 	index = 0 ifTrue: [^ aBlock value].
-	
+
 	^ values at: index.
 
 	"| assoc |
@@ -285,12 +285,12 @@ SmallDictionary >> at: key ifAbsent: aBlock [
 { #category : #accessing }
 SmallDictionary >> at: key ifAbsentPut: aBlock [
 	"Return the value at the given key.
-	If the key is not included in the receiver store and return the result 
+	If the key is not included in the receiver store and return the result
 	of evaluating aBlock as the new value."
-	
+
 	| index |
 	index := self findIndexForKey:  key.
-	^ index = 0 
+	^ index = 0
 		ifFalse: [values at: index]
 		ifTrue: [self privateAt: key put: aBlock value]
 ]
@@ -333,7 +333,7 @@ SmallDictionary >> at: key ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
 ]
 
 { #category : #putting }
-SmallDictionary >> at: key put: value [ 
+SmallDictionary >> at: key put: value [
 	"Set the value at key to be anObject.  If key is not found, create a
 	new entry for key and set is value to anObject. Answer anObject."
 
@@ -345,23 +345,26 @@ SmallDictionary >> at: key put: value [
 ]
 
 { #category : #accessing }
-SmallDictionary >> at: key update: updateBlock [ 
+SmallDictionary >> at: key update: updateBlock [
 	"I am used to update the value at a given key, or if the key does not exist, to throw an error"
-	self at: key update: updateBlock initial: [ self errorKeyNotFound: key ].
+	self at: key update: updateBlock initial: [ self errorKeyNotFound: key ]
 ]
 
 { #category : #accessing }
 SmallDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
-	"I am used to update the value at a given key. The updateBlock is passed 
+	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
 	If the key does not exist, store the value of the initBlocktOrValue.
 	initBlocktOrValue can be a block in case the initial value is expencive to compute.
 	I use findElementOrNil: to avoid looking up the key twice."
 	| index |
 	index := self findIndexForKey: key.
-	(index = 0)
+	index = 0
 		ifTrue:  [ self at: key put: initBlocktOrValue value]
-		ifFalse: [ (values at: index) in: [ :val | values at: index put: (updateBlock value: val) ] ]
+		ifFalse: [ 
+					| val |
+					val := (values at: index).
+					values at: index put: (updateBlock value: val) ]
 ]
 
 { #category : #accessing }
@@ -380,7 +383,7 @@ SmallDictionary >> capacity [
 ]
 
 { #category : #enumerating }
-SmallDictionary >> collect: aBlock [ 
+SmallDictionary >> collect: aBlock [
 	"Evaluate aBlock with each of my values as the argument.  Collect the
 	resulting values into a collection that is like me. Answer with the new
 	collection."
@@ -393,17 +396,17 @@ SmallDictionary >> collect: aBlock [
 ]
 
 { #category : #adding }
-SmallDictionary >> declare: key from: aDictionary [ 
-	"Add key to the receiver. If key already exists, do nothing. If aDictionary 
-	includes key, then remove it from aDictionary and use its association as 
+SmallDictionary >> declare: key from: aDictionary [
+	"Add key to the receiver. If key already exists, do nothing. If aDictionary
+	includes key, then remove it from aDictionary and use its association as
 	the element of the receiver."
 
 	(self includesKey: key) ifTrue: [^ self].
 	(aDictionary includesKey: key)
-		ifTrue: 
+		ifTrue:
 			[self add: (aDictionary associationAt: key).
 			aDictionary removeKey: key]
-		ifFalse: 
+		ifFalse:
 			[self add: key -> nil]
 ]
 
@@ -412,24 +415,24 @@ SmallDictionary >> difference: aCollection [
 	"Answer the set theoretic difference of two collections. This is a specialized version for Dictionaries keeping the keys of the objects. At a slightly higher price of an additional Set to track duplicates."
 
 	| other result duplicates |
-	
+
 	other := aCollection asSet.
 	duplicates := Set new.
 	result := self class new: self size.
-	
+
 	self keysAndValuesDo: [ :key :value|
 		((other includes: value) not and: [ (duplicates includes: value) not ])
-			ifTrue: [ 
+			ifTrue: [
 				duplicates add: value.
 				result at: key put: value]].
-	
+
 	^ result
 ]
 
 { #category : #enumerating }
 SmallDictionary >> do: aBlock [
 
-	^ self valuesDo: aBlock.
+	^ self valuesDo: aBlock
 ]
 
 { #category : #accessing }
@@ -453,8 +456,8 @@ SmallDictionary >> errorValueNotFound: value [
 ]
 
 { #category : #private }
-SmallDictionary >> findIndexForKey: aKey [ 
-	^ keys indexOf: aKey.
+SmallDictionary >> findIndexForKey: aKey [
+	^ keys indexOf: aKey
 ]
 
 { #category : #private }
@@ -463,13 +466,13 @@ SmallDictionary >> growKeysAndValues [
 ]
 
 { #category : #private }
-SmallDictionary >> growTo: aSize [ 
+SmallDictionary >> growTo: aSize [
 	| newKeys newValues |
 	newKeys := Array new: aSize.
 	newValues := Array new: aSize.
 	1 to: size
-		do: 
-			[:i | 
+		do:
+			[:i |
 			newKeys at: i put: (keys at: i).
 			newValues at: i put: (values at: i)].
 	keys := newKeys.
@@ -479,8 +482,8 @@ SmallDictionary >> growTo: aSize [
 { #category : #testing }
 SmallDictionary >> hasBindingThatBeginsWith: aString [
 	"Answer true if the receiver has a key that begins with aString, false otherwise"
-	
-	self keysDo:[:each | 
+
+	self keysDo:[:each |
 		(each beginsWith: aString)
 			ifTrue:[^true]].
 	^false
@@ -494,7 +497,7 @@ SmallDictionary >> includes: aValue [
 
 { #category : #testing }
 SmallDictionary >> includesAssociation: anAssociation [
-  ^ (self   
+  ^ (self
       associationAt: anAssociation key
       ifAbsent: [ ^ false ]) value = anAssociation value
 ]
@@ -535,7 +538,7 @@ SmallDictionary >> isHealthy [
 	| uniqueKeys |
 	uniqueKeys := self setClass new: self size.
 	keys
-		do: [ :each | 
+		do: [ :each |
 			each
 				ifNotNil: [
 					(uniqueKeys includes: each)
@@ -545,8 +548,8 @@ SmallDictionary >> isHealthy [
 ]
 
 { #category : #accessing }
-SmallDictionary >> keyAtIdentityValue: value [ 
-	"Answer the key that is the external name for the argument, value. If 
+SmallDictionary >> keyAtIdentityValue: value [
+	"Answer the key that is the external name for the argument, value. If
 	there is none, answer nil.
 	Note: There can be multiple keys with the same value. Only one is returned."
 
@@ -555,20 +558,20 @@ SmallDictionary >> keyAtIdentityValue: value [
 
 { #category : #accessing }
 SmallDictionary >> keyAtIdentityValue: value ifAbsent: exceptionBlock [
-	"Answer the key that is the external name for the argument, value. If 
+	"Answer the key that is the external name for the argument, value. If
 	there is none, answer the result of evaluating exceptionBlock.
 	Note: There can be multiple keys with the same value. Only one is returned."
- 	
+
 	| index |
 	index := (values identityIndexOf: value).
-	index = 0 
+	index = 0
 		ifTrue: [ ^ exceptionBlock value].
-	^ keys at: index.
+	^ keys at: index
 ]
 
 { #category : #accessing }
-SmallDictionary >> keyAtValue: value [ 
-	"Answer the key that is the external name for the argument, value. If 
+SmallDictionary >> keyAtValue: value [
+	"Answer the key that is the external name for the argument, value. If
 	there is none, answer nil."
 
 	^self keyAtValue: value ifAbsent: [self errorValueNotFound: value]
@@ -576,16 +579,16 @@ SmallDictionary >> keyAtValue: value [
 
 { #category : #accessing }
 SmallDictionary >> keyAtValue: value ifAbsent: exceptionBlock [
-	"Answer the key that is the external name for the argument, value. If 
+	"Answer the key that is the external name for the argument, value. If
 	there is none, answer the result of evaluating exceptionBlock.
 	: Use =, not ==, so stings like 'this' can be found.  Note that MethodDictionary continues to use == so it will be fast."
-	
+
 	| index |
 	index := (values indexOf: value).
-	index = 0 
+	index = 0
 		ifTrue: [ ^ exceptionBlock value].
-		
-	^ keys at: index.
+
+	^ keys at: index
 ]
 
 { #category : #accessing }
@@ -599,7 +602,7 @@ SmallDictionary >> keyForIdentity: aValue [
 { #category : #accessing }
 SmallDictionary >> keys [
 	"Answer an Array containing the receiver's keys."
-	
+
 	^ keys copyFrom: 1 to: size
 ]
 
@@ -623,7 +626,7 @@ SmallDictionary >> keysAndValuesRemove: keyValueBlock [
 ]
 
 { #category : #enumerating }
-SmallDictionary >> keysDo: aBlock [ 
+SmallDictionary >> keysDo: aBlock [
 	1 to: size do: [:i | aBlock value: (keys at: i)]
 ]
 
@@ -655,7 +658,7 @@ SmallDictionary >> printElementsOn: aStream [
 	| noneYet |
 	aStream nextPut: $(.
 	noneYet := true.
-	self associationsDo: [ :each | 
+	self associationsDo: [ :each |
 			noneYet
 				ifTrue: [ noneYet := false ]
 				ifFalse: [ aStream space ].
@@ -664,7 +667,7 @@ SmallDictionary >> printElementsOn: aStream [
 ]
 
 { #category : #private }
-SmallDictionary >> privateAt: key put: value [ 
+SmallDictionary >> privateAt: key put: value [
 	size == keys size ifTrue: [self growKeysAndValues].
 	size := size + 1.
 	keys at: size put: key.
@@ -674,22 +677,22 @@ SmallDictionary >> privateAt: key put: value [
 { #category : #removing }
 SmallDictionary >> remove:anAssociation [
 
-	self removeKey:anAssociation key.
+	self removeKey:anAssociation key
 ]
 
 { #category : #removing }
-SmallDictionary >> remove: oldObject ifAbsent: anExceptionBlock [ 
+SmallDictionary >> remove: oldObject ifAbsent: anExceptionBlock [
 	self removeKey: oldObject key ifAbsent: anExceptionBlock.
 	^oldObject
 ]
 
 { #category : #removing }
 SmallDictionary >> removeAll [
-	self initialize.
+	self initialize
 ]
 
 { #category : #removing }
-SmallDictionary >> removeKey: key [ 
+SmallDictionary >> removeKey: key [
 	"Remove key from the receiver.
 	If key is not in the receiver, notify an error."
 
@@ -697,19 +700,19 @@ SmallDictionary >> removeKey: key [
 ]
 
 { #category : #removing }
-SmallDictionary >> removeKey: key ifAbsent: aBlock [ 
-	"Remove key (and its associated value) from the receiver. If key is not in 
-	the receiver, answer the result of evaluating aBlock. Otherwise, answer 
+SmallDictionary >> removeKey: key ifAbsent: aBlock [
+	"Remove key (and its associated value) from the receiver. If key is not in
+	the receiver, answer the result of evaluating aBlock. Otherwise, answer
 	the value externally named by key."
 
 	| index value |
 	index := self findIndexForKey:  key.
 	index = 0 ifTrue: [^aBlock value].
-	
+
 	value := values at: index.
 	index to: size - 1
-		do: 
-			[:i | 
+		do:
+			[:i |
 			keys at: i put: (keys at: i + 1).
 			values at: i put: (values at: i + 1)].
 	keys at: size put: nil.
@@ -719,15 +722,15 @@ SmallDictionary >> removeKey: key ifAbsent: aBlock [
 ]
 
 { #category : #enumerating }
-SmallDictionary >> select: aBlock [ 
+SmallDictionary >> select: aBlock [
 	"Evaluate aBlock with each of my values as the argument. Collect into a
 	new dictionary, only those associations for which aBlock evaluates to
 	true."
 
 	| newCollection |
 	newCollection := self copyEmpty.
-	self associationsDo: 
-		[:each | 
+	self associationsDo:
+		[:each |
 		(aBlock value: each value) ifTrue: [newCollection add: each]].
 	^newCollection
 ]
@@ -749,7 +752,7 @@ SmallDictionary >> storeOn: aStream [
 	aStream nextPutAll: self class name.
 	aStream nextPutAll: ' new)'.
 	noneYet := true.
-	self associationsDo: [ :each | 
+	self associationsDo: [ :each |
 			noneYet
 				ifTrue: [ noneYet := false ]
 				ifFalse: [ aStream nextPut: $; ].
@@ -762,13 +765,13 @@ SmallDictionary >> storeOn: aStream [
 { #category : #accessing }
 SmallDictionary >> values [
 	"Answer a Collection containing the receiver's values."
-	^Array 
-		new: self size 
+	^Array
+		new: self size
 		streamContents: [ :out | self valuesDo: [:value | out nextPut: value]]
 ]
 
 { #category : #enumerating }
-SmallDictionary >> valuesDo: aBlock [ 
+SmallDictionary >> valuesDo: aBlock [
 	"Evaluate aBlock for each of the receiver's values."
 
 1 to: size do: [:i | aBlock value: (values at: i)]

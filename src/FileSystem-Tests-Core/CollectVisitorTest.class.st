@@ -11,7 +11,7 @@ Class {
 CollectVisitorTest >> testBreadthFirst [
 	| entries |
 	entries := CollectVisitor breadthFirst: self root.
-	self 
+	self
 		assertEntries: entries
 		are: #(
 				'/alpha'
@@ -27,7 +27,7 @@ CollectVisitorTest >> testBreadthFirst [
 CollectVisitorTest >> testPostorder [
 	| entries |
 	entries := CollectVisitor postorder: self root.
-	self 
+	self
 		assertEntries: entries
 		are: #(
 				'/alpha/beta/delta'
@@ -43,7 +43,7 @@ CollectVisitorTest >> testPostorder [
 CollectVisitorTest >> testPreorder [
 	| entries |
 	entries := CollectVisitor preorder: self root.
-	self 
+	self
 		assertEntries: entries
 		are: #(
 				'/alpha'

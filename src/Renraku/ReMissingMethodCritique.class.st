@@ -15,7 +15,7 @@ Class {
 { #category : #'instance creation' }
 ReMissingMethodCritique class >> for: anEntity by: aRule class: aClass selector: aSymbol [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeRule: aRule target: anEntity class: aClass selector: aSymbol;
 		yourself
 ]
@@ -37,8 +37,8 @@ ReMissingMethodCritique >> beSubclassResponsibility [
 { #category : #accessing }
 ReMissingMethodCritique >> change [
 	"an 'add method' change that create the missing method"
-	
-	^ (RBRefactoryChangeFactory instance) 
+
+	^ (RBRefactoryChangeFactory instance)
 		addMethodSource: (self methodHeader), String cr, String tab, source
 		in: class
 ]
@@ -55,8 +55,8 @@ ReMissingMethodCritique >> initializeRule: aRule target: anEntity class: aClass 
 	self initializeRule: aRule target: anEntity.
 	class := aClass.
 	selector :=  aSymbol.
-	
-	tinyHint := class == self entity 
+
+	tinyHint := class == self entity
 		ifTrue: [ selector ]
 		ifFalse: [ class name, '>>#', selector ]
 ]
@@ -66,12 +66,12 @@ ReMissingMethodCritique >> methodHeader [
 
 	^ ($: split: selector) allButLast
 		  ifEmpty: [ selector ]
-		  ifNotEmpty: [ :keywords | 
+		  ifNotEmpty: [ :keywords |
 			  | index argumentNames |
 			  argumentNames := (class subclasses anyOne >> selector)
 				                   argumentNames.
 			  index := 0.
-			  keywords inject: '' into: [ :header :keyword | 
+			  keywords inject: '' into: [ :header :keyword |
 				  index := index + 1.
 				  header , keyword , ': ' , (argumentNames at: index) , ' ' ] ]
 ]

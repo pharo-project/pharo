@@ -3,7 +3,7 @@ Extension { #name : #DateAndTime }
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> asDosTimestamp [
 
-	^ (DosTimestamp fromDateAndTime: self) value.
+	^ (DosTimestamp fromDateAndTime: self) value
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -18,7 +18,7 @@ DateAndTime >> asFileNameCompatibleString [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> asLocal [
-	
+
 	^ (self offset = self class localOffset)
 		ifTrue: [self]
 		ifFalse: [self offset: self class localOffset]
@@ -40,7 +40,7 @@ DateAndTime >> asNanoSeconds [
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> asSeconds [
  	"Return the number of seconds since the epoch"
- 
+
  	^ (self - (self class epoch)) asSeconds
 ]
 
@@ -59,20 +59,20 @@ DateAndTime >> asYear [
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> date: aDate time: aTime [
 
-	^ self 
+	^ self
 		year: aDate year
 		month: aDate monthName
-		day: aDate dayOfMonth 
-		hour: aTime hour 
-		minute: aTime minute 
+		day: aDate dayOfMonth
+		hour: aTime hour
+		minute: aTime minute
 		second: aTime second
 		nanoSecond: aTime nanoSecond
-		offset: self localOffset.
+		offset: self localOffset
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> day [
- 
+
  	^ self dayOfYear
 ]
 
@@ -107,7 +107,7 @@ DateAndTime >> dayOfYear [
 	"This code was contributed by Dan Ingalls. It is equivalent to the terser
 		^ jdn - (Year year: self year) start julianDayNumber + 1 but much quicker."
 
-	
+
 	^ self dayMonthYearDo:
 		[ :d :m :y | | monthStart |
 			monthStart := #(1 32 60 91 121 152 182 213 244 274 305 335) at: m.
@@ -126,16 +126,16 @@ DateAndTime >> daysInMonth [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> daysInYear [
- 
+
  	"Answer the number of days in the year represented by the receiver."
- 
+
  	^ self asYear daysInYear
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> daysLeftInYear [
  	"Answer the number of days in the year after the date of the receiver."
- 
+
  	^ self daysInYear - self dayOfYear
 ]
 
@@ -145,7 +145,7 @@ DateAndTime class >> dosEpoch [
 
 	^ self basicNew
 		ticks: #(2444240 0 0) offset: Duration zero;
-		yourself.
+		yourself
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -156,14 +156,14 @@ DateAndTime >> duration [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> firstDayOfMonth [
- 
+
  	^ self asMonth start day
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> fromDosTimestamp: anInteger [
 
-	^ (DosTimestamp on: anInteger) asDateAndTime.
+	^ (DosTimestamp on: anInteger) asDateAndTime
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -217,7 +217,7 @@ DateAndTime class >> fuzzyReadFrom: aStream [
 	(ch isNil or: [ch isDigit]) ifTrue: [ ch := $. ].
 	second := (buffer readStream upTo: ch) asInteger.
 	buffer := '000000000' copy.
-	(ch = $.) ifTrue: [ 
+	(ch = $.) ifTrue: [
 		nanos := buffer writeStream.
 		[ aStream atEnd | ((ch := aStream next) = $+) | (ch = $-) ]
 			whileFalse: [ nanos nextPut: ch. ].
@@ -240,7 +240,7 @@ DateAndTime class >> fuzzyReadFrom: aStream [
 		second: second
 		nanoSecond:  nanos
 
-		offset: offset.
+		offset: offset
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -251,9 +251,9 @@ DateAndTime >> hour [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> hour12 [
-	"Answer an <integer> between 1 and 12, inclusive, representing the hour 
+	"Answer an <integer> between 1 and 12, inclusive, representing the hour
 	of the day in the 12-hour clock of the local time of the receiver."
-	
+
 	^ self hour24 - 1 \\ 12 + 1
 ]
 
@@ -261,20 +261,20 @@ DateAndTime >> hour12 [
 DateAndTime >> hour24 [
 	"Answer a number that represents the number of complete hours in the receiver's time part,
 	 after the number of complete days has been removed."
- 
+
  	^ self localSeconds // SecondsInHour \\ 24
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> hours [
- 
+
  	^ self hour
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> isLeapYear [
 
-	^ Year isLeapYear: self year.
+	^ Year isLeapYear: self year
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -289,19 +289,19 @@ DateAndTime >> middleOf: aDuration [
 
 	| duration |
 	duration := aDuration asDuration.
-	^ Timespan starting: (self - (duration / 2)) duration: duration.
+	^ Timespan starting: (self - (duration / 2)) duration: duration
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> minutes [
- 
+
  	^ self minute
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> month [
 
-	^ self dayMonthYearDo: [ :d :m :y | m ].
+	^ self dayMonthYearDo: [ :d :m :y | m ]
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -312,8 +312,8 @@ DateAndTime >> monthAbbreviation [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> monthIndex [
- 
- 
+
+
  	^ self month
 ]
 
@@ -327,7 +327,7 @@ DateAndTime >> monthName [
 DateAndTime >> noon [
 	"Answer a DateAndTime starting at noon"
 
-	^ self dayMonthYearDo: 
+	^ self dayMonthYearDo:
 		[ :d :m :y | self class year: y month: m day: d hour: 12 minute: 0 second: 0 offset: offset]
 ]
 
@@ -346,7 +346,7 @@ DateAndTime >> printHMSOn: aStream [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> printHMSOn: aStream separatedBy: aSeparator [
-	
+
 	BasicDatePrinter default printHMS: self separatedBy: aSeparator on: aStream
 ]
 
@@ -360,7 +360,7 @@ DateAndTime >> printHMSWithDashesOn: aStream [
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> printMSOn: aStream [
 	"Print just mm:ss"
-	
+
 	self minute printOn: aStream base: 10 length: 2 padded: true.
 	aStream nextPut: $:.
 	self second printOn: aStream base: 10 length: 2 padded: true
@@ -382,7 +382,7 @@ DateAndTime >> printYMDOn: aStream [
 	"Print just YYYY-MM-DD part.
 	If the year is negative, prints out '-YYYY-MM-DD'."
 
-	^ self printYMDOn: aStream withLeadingSpace: false.
+	^ self printYMDOn: aStream withLeadingSpace: false
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -408,24 +408,24 @@ DateAndTime >> printYMDOn: aStream withLeadingSpace: printLeadingSpaceToo [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> readFrom: aStream [
-	"Parse and return a new DateAndTime instance from stream, 
+	"Parse and return a new DateAndTime instance from stream,
 	as a Date, an optional Time and an optional TimeZone offset.
 	The time defaults to midnight, the timezone to the local offset"
 	"self readFrom: '2013-03-04T23:47:52.876+01:00' readStream"
 
-	^self readFrom: aStream defaultOffset: self localOffset.
+	^self readFrom: aStream defaultOffset: self localOffset
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> readFrom: aStream defaultOffset: defaultOffset [
-	"Parse and return a new DateAndTime instance from stream, 
+	"Parse and return a new DateAndTime instance from stream,
 	as a Date, an optional Time and an optional TimeZone offset.
 	The time defaults to midnight, the timezone to defaultOffset"
 	"self readFrom: '2013-03-04T23:47:52.876+01:00' readStream"
 
 	| date time offset |
 	date := Date readFrom: aStream.
-	[ aStream atEnd or: [ '0123456789Z+-' includes: aStream peek ] ] 
+	[ aStream atEnd or: [ '0123456789Z+-' includes: aStream peek ] ]
 		whileFalse: [ aStream next ].
   	('0123456789' includes: aStream peek)
 		ifTrue: [ time := Time readFrom: aStream ]
@@ -462,20 +462,20 @@ DateAndTime class >> readOptionalSeparatorFrom: stream [
 DateAndTime class >> readSeparateDateAndTimeFrom: stream [
 	"Read a separate Date and Time from stream to instanciate the receiver.
 	See also #printSeparateDateAndTimeOn:"
-	
+
 	| date time |
 	stream skipSeparators.
 	date := Date readFrom: stream.
 	stream skipSeparators.
 	time := Time readFrom: stream.
-	^ self 
+	^ self
 		date: date
 		time: time
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> readTimezoneOffsetFrom: stream [
-	"Read and return an optional timezone offset in the form of 
+	"Read and return an optional timezone offset in the form of
 	[+|-]hh[[separator]mm[[separator]ss]] or Z from stream as a duration.
 	If there is no offset, return the local offset."
 
@@ -484,7 +484,7 @@ DateAndTime class >> readTimezoneOffsetFrom: stream [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> readTimezoneOffsetFrom: stream default: defaultOffset [
-	"Read and return an optional timezone offset in the form of 
+	"Read and return an optional timezone offset in the form of
 	[+|-]hh[[separator]mm[[separator]ss]] or Z from stream as a duration.
 	If there is no offset, return the defaultOffset."
 
@@ -496,10 +496,10 @@ DateAndTime class >> readTimezoneOffsetFrom: stream default: defaultOffset [
 			sign := stream next = $- ifTrue: [ -1 ] ifFalse: [ 1 ].
 			hour := self readTwoDigitIntegerFrom: stream.
 			(self readOptionalSeparatorFrom: stream)
-				ifNotNil: [ 
+				ifNotNil: [
 					minute := self readTwoDigitIntegerFrom: stream.
 					(self readOptionalSeparatorFrom: stream)
-						ifNotNil: [ 
+						ifNotNil: [
 							second := Integer readFrom: stream ] ].
 			Duration seconds: sign * ((hour * 3600) + (minute * 60) + second) ]
 		ifFalse: [ defaultOffset ]
@@ -535,7 +535,7 @@ DateAndTime >> rounded [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> seconds [
- 
+
  	^ self second
 ]
 
@@ -571,7 +571,7 @@ DateAndTime >> timeZoneName [
 DateAndTime >> to: anEnd [
 	"Answer a Timespan. anEnd conforms to protocol DateAndTime or protocol Timespan"
 
-	^ Timespan starting: self ending: (anEnd asDateAndTime).
+	^ Timespan starting: self ending: (anEnd asDateAndTime)
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -580,7 +580,7 @@ DateAndTime >> to: anEnd by: aDuration [
 
 	^ (Schedule starting: self ending: (anEnd asDateAndTime))
 		schedule: (Array with: aDuration asDuration);
-		yourself.
+		yourself
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -613,12 +613,12 @@ DateAndTime class >> totalSeconds [
 DateAndTime >> translateTo: anOffset [
 	"Keep myself's representation and move it to another timezone offset.
 	Note that unlike #offset: this WILL change the absolute time in UTC
-	
+
 	|t|
 	t := DateAndTime now.
 	t = (t offset: 2 hours).
 	t = (t translateTo: 2 hours).
-	" 
+	"
 	self dayMonthYearDo: [ :day :month :year|
 		^ self class
 			year: year
@@ -640,7 +640,7 @@ DateAndTime >> translateToUTC [
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> truncated [
 	"Answer a date and time to the nearest preceding whole second"
-	
+
 	^ self species basicNew ticks: { julianDayNumber. seconds. 0 } offset: offset
 ]
 
@@ -676,11 +676,11 @@ DateAndTime class >> year: year day: dayOfYear hour: hour minute: minute second:
 		hour: hour
 		minute: minute
 		second: second
-		offset: self localOffset.
+		offset: self localOffset
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-DateAndTime class >> year: year day: dayOfYear hour: hour minute: minute second: second offset: offset [ 
+DateAndTime class >> year: year day: dayOfYear hour: hour minute: minute second: second offset: offset [
 	"Return a DataAndTime"
 
 	| y d |
@@ -710,8 +710,8 @@ DateAndTime class >> year: year month: month day: day [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> year: year month: month day: day hour: hour minute: minute [
-	"Return a DateAndTime" 
-	
+	"Return a DateAndTime"
+
 	^ self
  		year: year
  		month: month
@@ -723,8 +723,8 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> year: year month: month day: day hour: hour minute: minute offset: anOffset [
-	"Return a DateAndTime" 
-	
+	"Return a DateAndTime"
+
 	^ self
  		year: year
  		month: month
@@ -773,10 +773,10 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 			((367 * r) quo: 12) -
 			((3 * s) quo: 4) +
 			(day - 32075).
-			
+
 	localSeconds :=  hour * 60 + minute * 60 + second.
 	utcSeconds := localSeconds - utcOffset asSeconds.
-	
+
 	^self basicNew
 		setJdn: julianDayNumber
 		seconds: utcSeconds

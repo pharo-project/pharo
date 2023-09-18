@@ -18,25 +18,25 @@ ClyOverriddenMethodTableDecorator class >> browserPluginClass [
 { #category : #decoration }
 ClyOverriddenMethodTableDecorator class >> createMultiIconMorph [
 
-	^Morph new 
+	^Morph new
 		changeTableLayout;
 		listDirection: #topToBottom;
 		listCentering: #center;
 		wrapCentering: #center;
-		extent: 16@16;
+		extent: 16@16 * self currentWorld displayScaleFactor;
 		color: Color transparent
 ]
 
 { #category : #decoration }
-ClyOverriddenMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [ 
-	
+ClyOverriddenMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
+
 	| commands |
 	commands := OrderedCollection new: 2.
-	(itemContext lastSelectedItem isMarkedWith: ClyOverriddenMethodTag) ifTrue: [ 
+	(itemContext lastSelectedItem isMarkedWith: ClyOverriddenMethodTag) ifTrue: [
 		commands add: ClyShowOverridingMethodsCommand new].
-	(itemContext lastSelectedItem isMarkedWith: ClyOverridingMethodTag) ifTrue: [ 
+	(itemContext lastSelectedItem isMarkedWith: ClyOverridingMethodTag) ifTrue: [
 		commands add: ClyShowOverriddenMethodsCommand new].
-	
+
 	self decorateTableCell: anItemCellMorph withCommands: commands inContext: itemContext
 ]
 
@@ -49,9 +49,9 @@ ClyOverriddenMethodTableDecorator class >> decorateTableCell: anItemCellMorph wi
 
 	| panel activator button |
 	panel := self createMultiIconMorph.
-	commands do: [ :each | 
-		activator := CmdCommandActivator new 
-			command: each; 
+	commands do: [ :each |
+		activator := CmdCommandActivator new
+			command: each;
 			context: itemContext.
 		button := each createTableCellButtonUsing: activator.
 		button hResizing: #spaceFill.

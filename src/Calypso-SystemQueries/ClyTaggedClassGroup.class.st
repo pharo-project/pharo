@@ -35,20 +35,20 @@ ClyTaggedClassGroup class >> isEditableGroup [
 ClyTaggedClassGroup class >> withClassesFrom: aPackageScope taggedBy: tagName [
 	| classQuery |
 	classQuery := ClyTaggedClassesQuery by: tagName from: aPackageScope.
-	^ClyTaggedClassGroup named: tagName on: classQuery.
+	^ClyTaggedClassGroup named: tagName on: classQuery
 ]
 
 { #category : #operations }
 ClyTaggedClassGroup >> importClass: aClass [
 	| newPackages |
 	super importClass: aClass.
-	
+
 	newPackages := OrderedCollection new.
-	classQuery scope packagesDo: [ :each | 
+	classQuery scope packagesDo: [ :each |
 		each = aClass package ifFalse: [ newPackages add: each ]].
 	newPackages size > 1 ifTrue: [ ^self error: 'You should select single package for import!' ].
-	newPackages ifNotEmpty: [ newPackages first addClass: aClass]. 
-	aClass tagWith: self tag
+	newPackages ifNotEmpty: [ newPackages first addClass: aClass].
+	aClass packageTag: self tag
 ]
 
 { #category : #operations }
@@ -61,14 +61,12 @@ ClyTaggedClassGroup >> removeWithClasses [
 
 { #category : #operations }
 ClyTaggedClassGroup >> renameClassTagTo: newTag [
-	self classes do: [ :each |
-		each tagWith: newTag.
-		each untagFrom: self tag].
-	
-	classQuery scope packagesDo: [ :each | 
-		(each tagsForClasses includes: newTag) 
-			ifFalse: [ each addClassTag: newTag ].
-		each removeClassTag: self tag]
+
+	self classes do: [ :class | class packageTag: newTag ].
+
+	classQuery scope packagesDo: [ :package |
+		(package tagsForClasses includes: newTag) ifFalse: [ package addClassTag: newTag ].
+		package removeClassTag: self tag ]
 ]
 
 { #category : #accessing }

@@ -14,6 +14,12 @@ ToggleWithTextMenuItemShortcut class >> canBeUsed [
 	^ true
 ]
 
+{ #category : #'class initialization' }
+ToggleWithTextMenuItemShortcut class >> initialize [
+
+	self deprecatedAliases: { #ToggleMenuItemShortcutWithText }
+]
+
 { #category : #accessing }
 ToggleWithTextMenuItemShortcut class >> priority [
 	"Lowest priority... last to be choosen"
@@ -23,7 +29,7 @@ ToggleWithTextMenuItemShortcut class >> priority [
 { #category : #drawing }
 ToggleWithTextMenuItemShortcut >> drawOn: aCanvas [
 	| keyBounds |
-	
+
 	keyBounds := self boundsForKeyText: self keyText font: self owner fontToUse.
 	self owner
 		drawText: keyText

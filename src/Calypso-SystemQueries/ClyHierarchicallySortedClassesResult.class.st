@@ -44,7 +44,7 @@ ClyHierarchicallySortedClassesResult class >> isExpandedHierarchy [
 
 { #category : #'instance creation' }
 ClyHierarchicallySortedClassesResult class >> with: aClassHierarchy [
-	^self new 
+	^self new
 		hierarchy: aClassHierarchy
 ]
 
@@ -61,13 +61,13 @@ ClyHierarchicallySortedClassesResult >> = anObject [
 ClyHierarchicallySortedClassesResult >> buildItemFor: aClass from: aHierarchyMap depth: currentDepth [
 
 	| item childDepth children subTreeSize childItem |
-	item := ClyBrowserItem named: aClass name with: aClass. 
+	item := ClyBrowserItem named: aClass name with: aClass.
 	item depth: currentDepth.
 	items add: item.
 	childDepth := currentDepth + 1.
 	children := aHierarchyMap childrenOf: aClass.
 	subTreeSize := children size.
-	children do: [ :child | 
+	children do: [ :child |
 		childItem := self buildItemFor: child from: aHierarchyMap depth: childDepth.
 		subTreeSize := subTreeSize + childItem localHierarchySize].
 	item localHierarchySize: subTreeSize.
@@ -80,8 +80,8 @@ ClyHierarchicallySortedClassesResult >> fillWith: classes [
 	| hierarchyMap |
 	items := OrderedCollection new: classes size.
 	hierarchyMap := hierarchy buildFrom: classes.
-	
-	hierarchyMap rootsDo: [ :root | 
+
+	hierarchyMap rootsDo: [ :root |
 		self buildItemFor: root from: hierarchyMap depth: 0]
 ]
 
@@ -105,18 +105,18 @@ ClyHierarchicallySortedClassesResult >> hierarchy: anObject [
 { #category : #initialization }
 ClyHierarchicallySortedClassesResult >> initialize [
 	super initialize.
-	
+
 	hierarchy := ClySubclassHierarchy new
 ]
 
 { #category : #converting }
 ClyHierarchicallySortedClassesResult >> sortedBy: aSortFunction [
-	^self copy 
+	^self copy
 		hierarchy: (hierarchy sortedBy: aSortFunction)
 ]
 
 { #category : #converting }
 ClyHierarchicallySortedClassesResult >> withInverseHierarchy [
-	^self copy 
+	^self copy
 		hierarchy: hierarchy inverted
 ]

@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #helpers }
-EDEmergencyDebuggerTest >> errorText: error [ 	
+EDEmergencyDebuggerTest >> errorText: error [
 	| errStream |
 	errStream := WriteStream on: Text new.
 	errStream cr.
@@ -83,7 +83,7 @@ EDEmergencyDebuggerTest >> testComposePromptWith [
 	self assert: (rs upTo: Character cr) equals: ed separator asString.
 	self assert: rs next equals: $>.
 	self assert: rs next equals: Character space.
-	self assert: rs upToEnd equals: 'prompt'.
+	self assert: rs upToEnd equals: 'prompt'
 ]
 
 { #category : #'text - composition' }
@@ -97,39 +97,39 @@ EDEmergencyDebuggerTest >> testComposeStackTest [
 	| rs ws stack |
 	ed composeStackText.
 	rs := ed stackText asString readStream.
-	
+
 	self assert: rs next equals: Character cr.
 	self assert: (rs upTo: Character cr) equals: ed separator asString.
 	self
 		assert: (rs upTo: Character cr)
 		equals:
 			'STACK (' , ed stackSelectionIndex printString , '/'
-				, debugAPI stackSize printString , ')'.				
+				, debugAPI stackSize printString , ')'.
 	self assert: (rs upTo: Character cr) equals: ed separator asString.
-	
-	
+
+
 	stack := debugAPI stack copyFrom: 1 to: debugAPI displayStackSize.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 1) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 2) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 3) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 4) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 5) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	self assert: rs atEnd
 ]
 
@@ -138,39 +138,39 @@ EDEmergencyDebuggerTest >> testComposeStackText [
 	| rs ws stack |
 	ed composeStackText.
 	rs := ed stackText asString readStream.
-	
+
 	self assert: rs next equals: Character cr.
 	self assert: (rs upTo: Character cr) equals: ed separator asString.
 	self
 		assert: (rs upTo: Character cr)
 		equals:
 			'STACK (' , ed stackSelectionIndex printString , '/'
-				, debugAPI stackSize printString , ')'.				
+				, debugAPI stackSize printString , ')'.
 	self assert: (rs upTo: Character cr) equals: ed separator asString.
-	
-	
+
+
 	stack := debugAPI stack copyFrom: 1 to: debugAPI displayStackSize.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 1) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 2) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 3) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 4) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	ws := WriteStream on: String new.
 	(stack at: 5) printWithArgsValueOn: ws.
 	self assert: (rs upTo: Character cr) equals: ws contents.
-	
+
 	self assert: rs atEnd
 ]
 
@@ -192,7 +192,7 @@ EDEmergencyDebuggerTest >> testDebugAPI [
 
 { #category : #'debug API' }
 EDEmergencyDebuggerTest >> testDefaultDebugAPI [
-	
+
 	self assert: EDEmergencyDebugger debugAPI identicalTo: EDDebuggingAPI
 ]
 
@@ -207,7 +207,7 @@ EDEmergencyDebuggerTest >> testFromError [
 	|error|
 	error := self zeroDivideErrorInstance.
 	self assert: ed originalError isNil.
-	self assert: ed errorText equals: Text new.	
+	self assert: ed errorText equals: Text new.
 	ed fromError: error.
 	self assert: ed originalError identicalTo: error.
 	self assert: ed errorText equals: (self errorText: error)
@@ -220,7 +220,7 @@ EDEmergencyDebuggerTest >> testInitialMethodVersion [
 
 { #category : #setup }
 EDEmergencyDebuggerTest >> testIsRunning [
-	
+
 	"This is a new Ed, we did not call #debug: so it is not running"
 	self deny: EDEmergencyDebugger new isRunning.
 	"This Ed, we called #debug: in the test setup so it is running"
@@ -228,19 +228,19 @@ EDEmergencyDebuggerTest >> testIsRunning [
 ]
 
 { #category : #'api - stack' }
-EDEmergencyDebuggerTest >> testMoveDownInStack [ 
+EDEmergencyDebuggerTest >> testMoveDownInStack [
 	|selectionIndexBefore shortStackIndexBefore|
 	selectionIndexBefore := ed stackSelectionIndex.
 	shortStackIndexBefore := ed shortStackIndex.
 	ed moveDownInStack.
-	self assert: ed stackSelectionIndex 
+	self assert: ed stackSelectionIndex
 			equals: ((selectionIndexBefore + 1) min: debugAPI stackSize).
 	self assert: ed shortStackIndex equals: (shortStackIndexBefore + 1).
 	self assert: ed methodVersionSelectionIndex equals: 0
 ]
 
 { #category : #'api - stack' }
-EDEmergencyDebuggerTest >> testMoveDownInStackFromLastElement [ 
+EDEmergencyDebuggerTest >> testMoveDownInStackFromLastElement [
 	|selectionIndexBefore shortStackIndexBefore|
 	ed stackSelectionIndex: debugAPI stackSize.
 	selectionIndexBefore := ed stackSelectionIndex.
@@ -251,7 +251,7 @@ EDEmergencyDebuggerTest >> testMoveDownInStackFromLastElement [
 ]
 
 { #category : #'api - stack' }
-EDEmergencyDebuggerTest >> testMoveUpInStack [ 
+EDEmergencyDebuggerTest >> testMoveUpInStack [
 	ed stackSelectionIndex: debugAPI stackSize.
 	ed shortStackIndex: debugAPI stackSize.
 	ed moveUpInStack.
@@ -261,7 +261,7 @@ EDEmergencyDebuggerTest >> testMoveUpInStack [
 ]
 
 { #category : #'api - stack' }
-EDEmergencyDebuggerTest >> testMoveUpInStackFromFirstElement [ 
+EDEmergencyDebuggerTest >> testMoveUpInStackFromFirstElement [
 	|selectionIndexBefore shortStackIndexBefore|
 	selectionIndexBefore := ed stackSelectionIndex.
 	shortStackIndexBefore := ed shortStackIndex.
@@ -281,9 +281,9 @@ EDEmergencyDebuggerTest >> testNewTextStream [
 
 { #category : #'methods version' }
 EDEmergencyDebuggerTest >> testRevertCurrentMethodToSelectedVersion [
-	|secondContext originalPC newContext| 
+	|secondContext originalPC newContext|
 	secondContext := ed shortStack second.
-	originalPC := secondContext pc.	
+	originalPC := secondContext pc.
 	ed stackSelectionIndex: 2.
 	ed shortStackIndex: 2.
 	ed methodVersionSelectionIndex: 1.
@@ -295,13 +295,13 @@ EDEmergencyDebuggerTest >> testRevertCurrentMethodToSelectedVersion [
 	self assert: ed methodVersionSelectionIndex equals: 1.
 	self assert: newContext pc < originalPC.
 	self assert: newContext method sourceCode equals: secondContext method sourceCode.
-	
+
 	"When the context is restarted, the interpreter automatically steps over
 	so-called uninteresting bytecodes, i.e., bytecodes that are not sends nor returns.
 	The test method, originally EDMockObjectForTests>>#m:, starts with an equality check
 	that is 2 bytecodes long, then the interpreter stops on the first send.
-	The PC should be equal to the method's initial PC + 2."  
-	self assert: ed shortStack first pc 
+	The PC should be equal to the method's initial PC + 2."
+	self assert: ed shortStack first pc
 	     equals: ed shortStack first method initialPC + 2
 ]
 
@@ -347,8 +347,8 @@ EDEmergencyDebuggerTest >> testShiftUpShortStack [
 ]
 
 { #category : #'api - stack' }
-EDEmergencyDebuggerTest >> testShortStack [ 
-	self assert: ed shortStack size equals: 5.	
+EDEmergencyDebuggerTest >> testShortStack [
+	self assert: ed shortStack size equals: 5.
 	self assertCollection: (session stackOfSize: 5) hasSameElements: ed shortStack
 ]
 
@@ -377,7 +377,7 @@ EDEmergencyDebuggerTest >> testShowSelectedMethodVersion [
 
 { #category : #setup }
 EDEmergencyDebuggerTest >> testTerminate [
-	
+
 	ed terminate.
 	self deny: ed isRunning
 ]
@@ -407,32 +407,32 @@ EDEmergencyDebuggerTest >> testUpdateShortStackForDisplay [
 { #category : #'text - helpers' }
 EDEmergencyDebuggerTest >> testWriteSectionTitleOn [
 	| expectedTextStream actualTextStream |
-	
+
 	expectedTextStream := WriteStream on: Text new.
 	ed writeSeparatorOn: expectedTextStream.
 	expectedTextStream << 'TEST'.
 	expectedTextStream cr.
-	ed writeSeparatorOn: expectedTextStream. 
-	
-	actualTextStream := WriteStream on: Text new.	
+	ed writeSeparatorOn: expectedTextStream.
+
+	actualTextStream := WriteStream on: Text new.
 	ed writeSectionTitle: 'TEST' on: actualTextStream.
 
-	self assert: actualTextStream contents asString 
+	self assert: actualTextStream contents asString
 		  equals: expectedTextStream contents asString
 ]
 
 { #category : #'text - helpers' }
 EDEmergencyDebuggerTest >> testWriteSeparatorOn [
 	| expectedTextStream actualTextStream |
-	
+
 	expectedTextStream := WriteStream on: Text new.
 	expectedTextStream << ed separator.
 	expectedTextStream cr.
-	
-	actualTextStream := WriteStream on: Text new.	
+
+	actualTextStream := WriteStream on: Text new.
 	ed writeSeparatorOn: actualTextStream.
 
-	self assert: actualTextStream contents asString 
+	self assert: actualTextStream contents asString
 		  equals: expectedTextStream contents asString
 ]
 

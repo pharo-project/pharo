@@ -20,6 +20,6 @@ ClyAllMethodsQueryTest >> testCheckIfEmpty [
 ClyAllMethodsQueryTest >> testFromSingleClass [
 
 	self queryFromScope: ClyClassScope of: ClyClass1FromP1Mock.
-	
+
 	self assert: foundSelectors equals: #(#instanceSideVar1ReaderMethod #instanceSideVar1WriterMethod #instanceSideVar2 #superclassTag1Method #tag1Method1)
 ]

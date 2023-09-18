@@ -9,7 +9,7 @@ Class {
 
 { #category : #printing }
 TimeProfilerNode >> asString [
-	^ String streamContents: [:s | self item printOn: s total: model tally totalTime: model time tallyExact: false] 
+	^ String streamContents: [:s | self item printOn: s total: model tally totalTime: model time tallyExact: false]
 ]
 
 { #category : #actions }
@@ -21,11 +21,6 @@ TimeProfilerNode >> browseItem [
 { #category : #'accessing - computed' }
 TimeProfilerNode >> childrenItems [
 	^ (self item sonsOver: model threshold) asSortedCollection
-]
-
-{ #category : #actions }
-TimeProfilerNode >> exploreItem [
-	self item inspect
 ]
 
 { #category : #actions }
@@ -41,14 +36,11 @@ TimeProfilerNode >> keyDown: anEvent from: aTreeMorph [
 		ifTrue: [self browseItem. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
-
 ]
 
 { #category : #'ui specific' }
-TimeProfilerNode >> menu: menu shifted: b [ 
+TimeProfilerNode >> menu: menu shifted: b [
 	menu
 		add: 'Browse (b)'
 		target: self
@@ -56,28 +48,20 @@ TimeProfilerNode >> menu: menu shifted: b [
 	menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem.
-	menu
-		add: 'Explore (I)'
-		target: self
-		selector: #exploreItem.
-
+		selector: #inspectItem
 ]
 
 { #category : #'accessing - computed' }
 TimeProfilerNode >> methodClass [
-	^self item method methodClass 
-	
+	^self item method methodClass
 ]
 
 { #category : #'accessing - computed' }
-TimeProfilerNode >> percentage [ 
-	^ self item tally asFloat / model time * 100.0 roundTo: 0.1.
-
+TimeProfilerNode >> percentage [
+	^ self item tally asFloat / model time * 100.0 roundTo: 0.1
 ]
 
 { #category : #'accessing - computed' }
 TimeProfilerNode >> selector [
-	^self item method selector 
-	
+	^self item method selector
 ]

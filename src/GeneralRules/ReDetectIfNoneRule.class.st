@@ -21,7 +21,7 @@ Class {
 { #category : #accessing }
 ReDetectIfNoneRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
-	
+
 	^'DetectIfNoneRule'
 ]
 
@@ -36,22 +36,22 @@ ReDetectIfNoneRule >> initialize [
 	self
 		replace: '``@collection contains: [:`each | | `@temps | ``@.Statements]'
 		with: '``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]';
-		
+
 		replace: '(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) isNil'
 		with: '(``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]) not';
-		
+
 		replace: '(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) = nil'
 		with: '(``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]) not';
-		
+
 		replace: '(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) == nil'
 		with: '(``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]) not';
-		
+
 		replace: '(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) notNil'
 		with: '``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]';
-		
+
 		replace: '(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) ~= nil'
 		with: '``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]';
-		
+
 		replace: '(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) ~~ nil'
 		with: '``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]'
 ]
@@ -62,6 +62,6 @@ ReDetectIfNoneRule >> name [
 ]
 
 { #category : #accessing }
-ReDetectIfNoneRule >> rationale [ 
+ReDetectIfNoneRule >> rationale [
 	^ 'Replaces detect:ifNone: and contains: by anySatisfy:'
 ]

@@ -126,7 +126,7 @@ LinkedList >> add: aLinkOrObject afterLink: otherLink [
 	aLink := aLinkOrObject asLink.
 	otherLink nextLink: aLink.
 	aLink nextLink:  savedLink.
-	^aLink.
+	^aLink
 ]
 
 { #category : #adding }
@@ -144,7 +144,7 @@ LinkedList >> add: aLinkOrObject beforeLink: otherLink [
 	| currentLink|
 
 	firstLink == otherLink ifTrue: [^ self addFirst: aLinkOrObject].
-	
+
 	currentLink := firstLink.
 	[currentLink == nil] whileFalse: [
 		currentLink nextLink == otherLink ifTrue: [
@@ -160,7 +160,7 @@ LinkedList >> add: aLinkOrObject beforeLink: otherLink [
 ]
 
 { #category : #adding }
-LinkedList >> addFirst: aLinkOrObject [ 
+LinkedList >> addFirst: aLinkOrObject [
 	"Add aLink to the beginning of the receiver's list. Answer aLink."
 	|aLink|
 	aLink := aLinkOrObject asLink.
@@ -195,7 +195,7 @@ LinkedList >> at: index put: anObject [
 ]
 
 { #category : #accessing }
-LinkedList >> at: index putLink: aLink [ 
+LinkedList >> at: index putLink: aLink [
 	| previousLink nextLink |
 	"Please don't put a link which is already in the list, or you will create an infinite loop"
 	(self validIndex: index)
@@ -207,7 +207,7 @@ LinkedList >> at: index putLink: aLink [
 			^ aLink].
 	previousLink := self linkAt: index - 1.
 	nextLink := previousLink nextLink nextLink.
-	
+
 	nextLink ifNil: [
 		aLink nextLink: self lastLink
 	] ifNotNil: [
@@ -225,9 +225,9 @@ LinkedList >> at: index putLink: aLink [
 ]
 
 { #category : #enumerating }
-LinkedList >> collect: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	Collect the resulting values into a collection like the receiver. Answer  
+LinkedList >> collect: aBlock [
+	"Evaluate aBlock with each of the receiver's elements as the argument.
+	Collect the resulting values into a collection like the receiver. Answer
 	the new collection."
 
 	| aLink newCollection |
@@ -246,7 +246,7 @@ LinkedList >> collect: collectBlock thenReject: rejectBlock [
 	| newCollection newElement |
 	newCollection := self class new.
 	self
-		do: [ :each | 
+		do: [ :each |
 			newElement := collectBlock value: each.
 			(rejectBlock value: newElement)
 				ifFalse: [ newCollection add: newElement ] ].
@@ -260,7 +260,7 @@ LinkedList >> collect: collectBlock thenSelect: selectBlock [
 	| newCollection newElement |
 	newCollection := self class new.
 	self
-		do: [ :each | 
+		do: [ :each |
 			newElement := collectBlock value: each.
 			(selectBlock value: newElement)
 				ifTrue: [ newCollection add: newElement ] ].
@@ -274,7 +274,7 @@ LinkedList >> copyWith: newElement [
 
 { #category : #copying }
 LinkedList >> copyWithout: oldElement [
-	|newInst| 
+	|newInst|
 	newInst := self class new.
 	self do: [:each | each = oldElement ifFalse: [newInst add: each]].
 	^newInst
@@ -292,14 +292,14 @@ LinkedList >> do: aBlock [
 
 { #category : #accessing }
 LinkedList >> first [
-	"Answer the first link. Create an error notification if the receiver is 
+	"Answer the first link. Create an error notification if the receiver is
 	empty."
 ^self firstLink value
 ]
 
 { #category : #accessing }
 LinkedList >> firstLink [
-	"Answer the first link. Create an error notification if the receiver is 
+	"Answer the first link. Create an error notification if the receiver is
 	empty."
 
 	self emptyCheck.
@@ -309,13 +309,13 @@ LinkedList >> firstLink [
 { #category : #accessing }
 LinkedList >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
 	"Answer the index of the first occurrence of anElement after start
-	within the receiver. If the receiver does not contain anElement, 
+	within the receiver. If the receiver does not contain anElement,
 	answer the 	result of evaluating the argument, exceptionBlock."
-			
-	|currentLink index|		
+
+	|currentLink index|
 	currentLink := self linkAt: start ifAbsent: [nil].
 	index := start.
-	[currentLink isNil ] 
+	[currentLink isNil ]
 		whileFalse: [currentLink value = anElement value ifTrue: [^index].
 					currentLink := currentLink nextLink.
 					index := index +1].
@@ -330,7 +330,7 @@ LinkedList >> isEmpty [
 
 { #category : #accessing }
 LinkedList >> last [
-	"Answer the last link. Create an error notification if the receiver is 
+	"Answer the last link. Create an error notification if the receiver is
 	empty."
 
 
@@ -339,7 +339,7 @@ LinkedList >> last [
 
 { #category : #accessing }
 LinkedList >> lastLink [
-	"Answer the last link. Create an error notification if the receiver is 
+	"Answer the last link. Create an error notification if the receiver is
 	empty."
 
 	self emptyCheck.
@@ -363,15 +363,15 @@ LinkedList >> linkAt: index ifAbsent: errorBlock [
 ]
 
 { #category : #private }
-LinkedList >> linkOf: anObject [ 
+LinkedList >> linkOf: anObject [
 	^ self
 		linkOf: anObject
 		ifAbsent: [self error: 'No such element']
 ]
 
 { #category : #private }
-LinkedList >> linkOf: anObject ifAbsent: errorBlock [ 
-	
+LinkedList >> linkOf: anObject ifAbsent: errorBlock [
+
 	self
 		linksDo: [:el | el value = anObject
 				ifTrue: [^ el]].
@@ -396,7 +396,36 @@ LinkedList >> postCopy [
 	firstLink ifNotNil: [
 		aLink := firstLink := firstLink copy.
 		[aLink nextLink isNil] whileFalse: [aLink nextLink: (aLink := aLink nextLink copy)].
-		lastLink := aLink].
+		lastLink := aLink]
+]
+
+{ #category : #enumerating }
+LinkedList >> rechain: aBlock [
+	"Enumerates through the LinkedList replacing each link by the chain of links returned by the block or removing the link if nil is returned. Returning the same link preserves it, but returning any other link of the list WILL result in an infinite loop."
+
+	| aLink lastLinkKnown firstLinkKnown outputLink |
+	aLink := firstLink.
+	firstLinkKnown := nil.
+	lastLinkKnown := nil.
+	[ aLink == nil ] whileFalse: [
+		(aBlock value: aLink) ifNotNil: [ :output |
+			
+			outputLink := output asLink.
+			firstLinkKnown
+				ifNil: [ firstLinkKnown := outputLink ]
+				ifNotNil: [ lastLinkKnown nextLink: outputLink ].
+
+			"If the returned link is the same as the original, do not consider it as a chain. Otherwise add the entire chain"
+			outputLink == aLink ifFalse: [
+				[ outputLink nextLink ] whileNotNil: [
+					outputLink := outputLink nextLink ] ].
+
+			lastLinkKnown := outputLink ].
+		"Get the next link, then make sure that lastLinkKnown is actually the end of the list."
+		aLink := aLink nextLink.
+		lastLinkKnown ifNotNil: [ lastLinkKnown nextLink: nil ] ].
+	firstLink := firstLinkKnown.
+	lastLink := lastLinkKnown
 ]
 
 { #category : #enumerating }
@@ -406,7 +435,7 @@ LinkedList >> reject: rejectBlock [
 	| newCollection |
 	newCollection := self class new.
 	self
-		do: [ :each | 
+		do: [ :each |
 			(rejectBlock value: each)
 				ifFalse: [ newCollection add: each ] ].
 	^ newCollection
@@ -419,16 +448,16 @@ LinkedList >> reject: rejectBlock thenCollect: collectBlock [
 	| newCollection |
 	newCollection := self class new.
 	self
-		do: [ :each | 
+		do: [ :each |
 			(rejectBlock value: each)
 				ifFalse: [ newCollection add: (collectBlock value: each) ] ].
 	^ newCollection
 ]
 
 { #category : #removing }
-LinkedList >> remove: aLinkOrObject ifAbsent: aBlock [ 
+LinkedList >> remove: aLinkOrObject ifAbsent: aBlock [
 	"Remove aLink from the receiver. If it is not there, answer the result of evaluating aBlock."
-	
+
 	| link |
 	link := self linkOf: aLinkOrObject ifAbsent: [^aBlock value].
 	self removeLink: link ifAbsent: [^aBlock value].
@@ -443,7 +472,7 @@ LinkedList >> removeAll [
 ]
 
 { #category : #removing }
-LinkedList >> removeAllSuchThat: aBlock [ 
+LinkedList >> removeAllSuchThat: aBlock [
 	"Evaluate aBlock for each element and remove all that elements from
 	the receiver for that aBlock evaluates to true.  For LinkedLists, it's safe to use do:."
 
@@ -452,7 +481,7 @@ LinkedList >> removeAllSuchThat: aBlock [
 
 { #category : #removing }
 LinkedList >> removeFirst [
-	"Remove the first element and answer it. If the receiver is empty, create 
+	"Remove the first element and answer it. If the receiver is empty, create
 	an error notification."
 
 	| oldLink |
@@ -467,7 +496,7 @@ LinkedList >> removeFirst [
 
 { #category : #removing }
 LinkedList >> removeLast [
-	"Remove the receiver's last element and answer it. If the receiver is 
+	"Remove the receiver's last element and answer it. If the receiver is
 	empty, create an error notification."
 
 	| oldLink aLink |
@@ -490,7 +519,7 @@ LinkedList >> removeLink: aLink [
 ]
 
 { #category : #removing }
-LinkedList >> removeLink: aLink ifAbsent: aBlock [  
+LinkedList >> removeLink: aLink ifAbsent: aBlock [
 	"Remove aLink from the receiver. If it is not there, answer the result of
 	evaluating aBlock."
 
@@ -512,14 +541,14 @@ LinkedList >> removeLink: aLink ifAbsent: aBlock [
 ]
 
 { #category : #enumerating }
-LinkedList >> select: aBlock [ 
-	"Reimplemennt #select: for speedup on linked lists. 
+LinkedList >> select: aBlock [
+	"Reimplemennt #select: for speedup on linked lists.
 	The super implemention accesses the linkes by index, thus causing an O(n^2)"
-	
+
 	| newCollection |
 	newCollection := self class new.
-	self do: [ :each | 
-		(aBlock value: each) 
+	self do: [ :each |
+		(aBlock value: each)
 			ifTrue: [ newCollection add: each ]].
 	^newCollection
 ]
@@ -531,7 +560,7 @@ LinkedList >> select: selectBlock thenCollect: collectBlock [
 	| newCollection |
 	newCollection := self class new.
 	self
-		do: [ :each | 
+		do: [ :each |
 			(selectBlock value: each)
 				ifTrue: [ newCollection add: (collectBlock value: each) ] ].
 	^ newCollection
@@ -542,7 +571,7 @@ LinkedList >> select: selectBlock thenDo: doBlock [
 	"Optimized version of SequenceableCollection>>#select:thenDo:"
 
 	self
-		do: [ :each | 
+		do: [ :each |
 				(selectBlock value: each)
 					ifTrue: [ doBlock value: each ] ]
 ]
@@ -563,7 +592,7 @@ LinkedList >> sort: aBlock [
 	self isEmpty ifTrue: [ ^self ].
 	aLinkedList := LinkedList newFrom: (self asArray sort: aBlock).
 	firstLink := aLinkedList firstLink.
-	lastLink := aLinkedList lastLink.
+	lastLink := aLinkedList lastLink
 ]
 
 { #category : #private }
@@ -577,14 +606,14 @@ LinkedList >> swap: ix1 with: ix2 [
 	"Reimplemented, super would create an infinite loop"
 	| minIx maxIx link1Prev link2Prev link1 link2 link1Next link2Next newLink2Next |
 	((self validIndex: ix1) and: [self validIndex: ix2])	ifFalse: [^ self errorOutOfBounds].
-	
+
 	"Get edge case out of the way"
 	ix1 = ix2 ifTrue: [^ self ].
-	
-	"Sort indexes to make boundary-checks easier" 
+
+	"Sort indexes to make boundary-checks easier"
 	minIx := ix1 min: ix2.
 	maxIx := ix2 max: ix1.
-	
+
 	link1Prev := (minIx = 1) ifFalse: [self linkAt: minIx -1].
 	link1 := link1Prev ifNotNil: [ link1Prev nextLink]
 				ifNil: [self linkAt: minIx].
@@ -592,7 +621,7 @@ LinkedList >> swap: ix1 with: ix2 [
 	link2Prev := self linkAt: maxIx -1.
 	link2 := link2Prev nextLink.
 	link2Next := link2 nextLink.
-	
+
 	"Link at start being swapped"
 	link1 = firstLink ifTrue: [firstLink := link2.] ifFalse: [link1Prev nextLink: link2].
 	"Link at end being swapped"
@@ -601,7 +630,7 @@ LinkedList >> swap: ix1 with: ix2 [
 	newLink2Next := (link1 nextLink = link2) ifTrue: [link1] ifFalse: [link2Prev nextLink: link1.
 		link1Next].
 	link1 nextLink: link2Next.
-	link2 nextLink: newLink2Next.
+	link2 nextLink: newLink2Next
 ]
 
 { #category : #private }

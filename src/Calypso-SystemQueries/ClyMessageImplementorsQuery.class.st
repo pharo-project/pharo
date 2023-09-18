@@ -16,7 +16,7 @@ ClyMessageImplementorsQuery >> description [
 { #category : #testing }
 ClyMessageImplementorsQuery >> selectsMethod: aMethod [
 
-	"is implementor if it is implemented in the same class 
+	"is implementor if it is implemented in the same class
 	 that is defined (to exclude trait users)"
 	^ (selectors includes: aMethod selector)
 		and: [  aMethod origin = aMethod methodClass ]

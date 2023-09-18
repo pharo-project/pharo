@@ -1,9 +1,9 @@
 Extension { #name : #PositionableStream }
 
 { #category : #'*Graphics-Primitives' }
-PositionableStream >> nextWordsInto: aBitmap [ 
-	"Fill the word based buffer from my collection. 
-	Stored on stream as Big Endian. Optimized for speed. 
+PositionableStream >> nextWordsInto: aBitmap [
+	"Fill the word based buffer from my collection.
+	Stored on stream as Big Endian. Optimized for speed.
 	Read in BigEndian, then restoreEndianness."
 	| blt pos source byteSize |
 	collection class isBytes

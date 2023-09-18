@@ -12,44 +12,44 @@ Class {
 }
 
 { #category : #parsing }
-CDAbstractClassDefinitionParser class >> fromASTNode: aNode [ 
-	
+CDAbstractClassDefinitionParser class >> fromASTNode: aNode [
+
 	^ self new parseRootNode: aNode
 ]
 
 { #category : #testing }
 CDAbstractClassDefinitionParser class >> isAbstract [
-		
+
 	^ self == CDAbstractClassDefinitionParser
 ]
 
 { #category : #'instance creation' }
-CDAbstractClassDefinitionParser class >> parse: aString [ 
-	
+CDAbstractClassDefinitionParser class >> parse: aString [
+
 	^ self new parse: aString
 ]
 
 { #category : #internal }
 CDAbstractClassDefinitionParser >> beClassDefinition [
-		
+
 	classDefinition := CDClassDefinitionNode new
 ]
 
 { #category : #internal }
 CDAbstractClassDefinitionParser >> beClassSideTraitDefinition [
-		
+
 	classDefinition := CDClassSideTraitDefinitionNode new
 ]
 
 { #category : #internal }
 CDAbstractClassDefinitionParser >> beMetaclassDefinition [
-		
+
 	classDefinition := CDMetaclassDefinitionNode new
 ]
 
 { #category : #internal }
 CDAbstractClassDefinitionParser >> beTraitDefinition [
-		
+
 	classDefinition := CDTraitDefinitionNode new
 ]
 
@@ -76,7 +76,7 @@ CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 	instanceVariablesString := aNode value.
 	slots := instanceVariablesString substrings.
 	slotNodes := slots
-		collect: [ :slotName | 
+		collect: [ :slotName |
 			| start |
 			start := aNode start
 				+ (instanceVariablesString findString: slotName).
@@ -93,11 +93,11 @@ CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 CDAbstractClassDefinitionParser >> handleMetaclassName: aNode [
 	"we are in situation ClassX class << ClassZ class
 				slots: {xxxx} so grab the class"
-				
-	aNode handleMetaclassName: self		
-	
+
+	aNode handleMetaclassName: self
+
 	"| className classNode node |
-	node := aNode receiver arguments first. 
+	node := aNode receiver arguments first.
 	className := node receiver binding value class name.
 	classNode := self classNameNodeClass new
 		originalNode: node;
@@ -107,19 +107,19 @@ CDAbstractClassDefinitionParser >> handleMetaclassName: aNode [
 ]
 
 { #category : #parsing }
-CDAbstractClassDefinitionParser >> handlePackage: aNode [ 
-	
+CDAbstractClassDefinitionParser >> handlePackage: aNode [
+
 	classDefinition packageNameNode: aNode astNode: aNode
 ]
 
 { #category : #parsing }
-CDAbstractClassDefinitionParser >> handleSharedPoolsFromNode: aNode [ 
+CDAbstractClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	^ self subclassResponsibility
 ]
 
 { #category : #parsing }
-CDAbstractClassDefinitionParser >> handleSharedVariableNames: aNode [ 
-	
+CDAbstractClassDefinitionParser >> handleSharedVariableNames: aNode [
+
 	| slots slotNodes classVariablesString |
 	classVariablesString := aNode value.
 	slots := classVariablesString substrings.
@@ -136,36 +136,34 @@ CDAbstractClassDefinitionParser >> handleSharedVariableNames: aNode [
 ]
 
 { #category : #parsing }
-CDAbstractClassDefinitionParser >> handleSuperclassNode: aNode [ 
+CDAbstractClassDefinitionParser >> handleSuperclassNode: aNode [
 	^ self subclassResponsibility
 ]
 
 { #category : #parsing }
 CDAbstractClassDefinitionParser >> handleTraitUsesFromNode: aNode [
-	
+
 	| traitComposition |
 	aNode isDynamicArray and: [aNode allStatements ifEmpty: [ ^ self ]].
- 	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.	
-	classDefinition traitDefinition: traitComposition.
+ 	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.
+	classDefinition traitDefinition: traitComposition
 ]
 
 { #category : #parsing }
 CDAbstractClassDefinitionParser >> parse: aString [
 	| expressionTree |
 	expressionTree := self parserClass parseExpression: aString.
-	[expressionTree doSemanticAnalysis] 
-		on: OCUndeclaredVariableWarning 
-		do: [ :ex | ex resume: ex declareUndefined ].
+	expressionTree doSemanticAnalysis.
 	^ self parseRootNode: expressionTree
 ]
 
 { #category : #parsing }
-CDAbstractClassDefinitionParser >> parseRootNode: aNode [ 
+CDAbstractClassDefinitionParser >> parseRootNode: aNode [
 	^ self subclassResponsibility
 ]
 
 { #category : #parsing }
-CDAbstractClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
+CDAbstractClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	^ self subclassResponsibility
 ]
 
@@ -185,6 +183,6 @@ CDAbstractClassDefinitionParser >> slotNodeClass [
 ]
 
 { #category : #parsing }
-CDAbstractClassDefinitionParser >> visitMessageNode: aNode [ 
+CDAbstractClassDefinitionParser >> visitMessageNode: aNode [
 	^ self subclassResponsibility
 ]

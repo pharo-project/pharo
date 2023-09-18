@@ -37,7 +37,7 @@ CircularMemoryLogger class >> fromSton: stonReader [
 
 	| logger |
 	logger := self basicNew.
-	stonReader parseListDo: [ :each :idx | 
+	stonReader parseListDo: [ :each :idx |
 		idx = 1 ifFalse: [ self error: 'Invalid STON' ].
 		logger
 			name: (each at: #name);
@@ -112,38 +112,37 @@ CircularMemoryLogger >> basicReset [
 	recordings := Array new: entryCount.
 	fullBuffer := false.
 	loopCount := 0.
-	index := 0.
+	index := 0
 ]
 
 { #category : #initialization }
 CircularMemoryLogger >> entryCount: anInteger [
 
-	mutex critical: [ 
+	mutex critical: [
 		entryCount := anInteger.
 		self basicReset ]
 ]
 
 { #category : #initialization }
-CircularMemoryLogger >> initialize [ 
+CircularMemoryLogger >> initialize [
 
 	entryCount := 5000.
 	index := 0.
-	super initialize.
-
+	super initialize
 ]
 
 { #category : #utilities }
 CircularMemoryLogger >> nextPut: aSignal [
 
-	mutex critical: [ 
+	mutex critical: [
 		index := index >= entryCount
-			         ifTrue: [ 
+			         ifTrue: [
 				         fullBuffer := true.
 				         loopCount := loopCount + 1.
 				         1 ]
 			         ifFalse: [ index + 1 ].
 		recordings at: index put: aSignal ].
-	
+
 	"The announcement is passed forward so that potential viewers
 	can refresh when something changes. we do not create another announcement
 	because it is not needed given that the only thing that can happen is
@@ -151,14 +150,14 @@ CircularMemoryLogger >> nextPut: aSignal [
 	self announcer announce: aSignal
 ]
 
-{ #category : #utilities }
+{ #category : #accessing }
 CircularMemoryLogger >> recordings [
 	"It answers a copy of the recorded collection to not grant
-	access to the users to a shared resource that should only be 
+	access to the users to a shared resource that should only be
 	modified via the mutex"
 
 	^ fullBuffer
-		  ifTrue: [ 
+		  ifTrue: [
 		  recordings sorted: [ :a :b | a timestamp < b timestamp ] ]
 		  ifFalse: [ recordings first: index ]
 ]

@@ -14,15 +14,51 @@ overriden from RBAddVariableTransformation and RBRemoveVariableAccessorTransform
 Class {
 	#name : #RBPushDownVariableTransformation,
 	#superclass : #RBCompositeVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring2-Transformations-Model-Unused'
 }
 
-{ #category : #converting }
-RBPushDownVariableTransformation >> asRefactoring [
+{ #category : #preconditions }
+RBPushDownVariableTransformation >> applicabilityPreconditionsForClassVariable [
+	"it does not perform when two subclasses (and/or their subclasses) accesses this variable"
 
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
+	^ RBCondition
+		  definesClassVariable: variableName
+		  in: self definingClass
+]
+
+{ #category : #preconditions }
+RBPushDownVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
+
+	^ RBCondition
+		  definesInstanceVariable: variableName
+		  in: self definingClass
+]
+
+{ #category : #preconditions }
+RBPushDownVariableTransformation >> breakingChangePreconditionsForClassVariable [
+
+	^ RBCondition withBlock: [
+		  | numSubclassesAccessing |
+		  numSubclassesAccessing := self definingClass subclasses count: [
+			                            :subclass |
+			                            subclass withAllSubclasses anySatisfy: [
+				                            :e |
+				                            (e
+					                             whichSelectorsReferToClassVariable:
+					                             variableName) isNotEmpty or: [
+					                            (e classSide
+						                             whichSelectorsReferToClassVariable:
+						                             variableName) isNotEmpty ] ] ].
+		  numSubclassesAccessing < 2 ]
+]
+
+{ #category : #preconditions }
+RBPushDownVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
+
+	^ RBCondition
+		  accessesInstanceVariable: variableName
+		  in: self definingClass
+		  showIn: self
 ]
 
 { #category : #executing }
@@ -35,7 +71,7 @@ RBPushDownVariableTransformation >> buildTransformations [
 				class: className
 				classVariable: isClassVariable);
 		addAll: (self variableDefinitionsInHierarchy
-			collect: [ :each | 
+			collect: [ :each |
 				RBAddVariableTransformation
 				model: self model
 				variable: variableName
@@ -50,33 +86,12 @@ RBPushDownVariableTransformation >> preconditions [
 	(and/or their subclasses) access this variable"
 
 	^ isClassVariable
-		ifTrue: [ self preconditionsForClassVariable ]
-		ifFalse: [ self preconditionsForInstanceVariable ]
-]
-
-{ #category : #preconditions }
-RBPushDownVariableTransformation >> preconditionsForClassVariable [
-	"it does not perform when two subclasses (and/or their subclasses) accesses this variable"
-
-	^ (RBCondition definesClassVariable: variableName in: self definingClass)
-		& (RBCondition withBlock: [
-			| numSubclassesAccessing |
-			numSubclassesAccessing := self definingClass subclasses count: [ :subclass |
-				subclass withAllSubclasses anySatisfy: [ :e |
-					(e whichSelectorsReferToClassVariable: variableName) isNotEmpty
-					or: [ (e classSide whichSelectorsReferToClassVariable: variableName) isNotEmpty ] ] ].
-			numSubclassesAccessing < 2 ])
-]
-
-{ #category : #preconditions }
-RBPushDownVariableTransformation >> preconditionsForInstanceVariable [
-
-	^ (RBCondition definesInstanceVariable: variableName in: self definingClass) 
-		& (RBCondition accessesInstanceVariable: variableName in: self definingClass showIn: self)
+		ifTrue: [ self applicabilityPreconditionsForClassVariable ]
+		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
 ]
 
 { #category : #printing }
-RBPushDownVariableTransformation >> storeOn: aStream [ 
+RBPushDownVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -94,7 +109,7 @@ RBPushDownVariableTransformation >> variable: aVariableName class: aClassName cl
 
 	variableName := aVariableName.
 	isClassVariable := aBoolean.
-	className := aClassName.
+	className := aClassName
 ]
 
 { #category : #private }

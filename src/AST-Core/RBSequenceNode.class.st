@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBSequenceNode class >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [ 
+RBSequenceNode class >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [
 	^(self new)
 		leftBar: leftInteger
 			temporaries: variableNodes
@@ -33,12 +33,12 @@ RBSequenceNode class >> leftBar: leftInteger temporaries: variableNodes rightBar
 ]
 
 { #category : #'instance creation' }
-RBSequenceNode class >> statements: statementNodes [ 
+RBSequenceNode class >> statements: statementNodes [
 	^self temporaries: #() statements: statementNodes
 ]
 
 { #category : #'instance creation' }
-RBSequenceNode class >> temporaries: variableNodes statements: statementNodes [ 
+RBSequenceNode class >> temporaries: variableNodes statements: statementNodes [
 	^(self new)
 		temporaries: variableNodes;
 		statements: statementNodes;
@@ -46,7 +46,7 @@ RBSequenceNode class >> temporaries: variableNodes statements: statementNodes [
 ]
 
 { #category : #comparing }
-RBSequenceNode >> = anObject [ 
+RBSequenceNode >> = anObject [
 	"Can't send = to the temporaries and statements collection since they might change from arrays to OCs"
 
 	self == anObject ifTrue: [^true].
@@ -186,7 +186,7 @@ RBSequenceNode >> addTemporariesNamed: aCollection [
 ]
 
 { #category : #'adding nodes' }
-RBSequenceNode >> addTemporaryNamed: aString [ 
+RBSequenceNode >> addTemporaryNamed: aString [
 	| variableNode |
 	variableNode := RBVariableNode named: aString.
 	variableNode parent: self.
@@ -225,7 +225,7 @@ RBSequenceNode >> bestNodeFor: anInterval [
 
 	| node intersectingStatements |
 	" if the interval contains myself precisely, return self "
-	(self start == anInterval first and: [ self stop == anInterval last ]) 
+	(self start == anInterval first and: [ self stop == anInterval last ])
 		ifTrue: [ ^ self ].
 
 	intersectingStatements := self statementsIntersectingInterval:
@@ -233,14 +233,14 @@ RBSequenceNode >> bestNodeFor: anInterval [
 	" if the interval intersects more than one of my statements, return self "
 	intersectingStatements size > 1 ifTrue: [ ^ self ].
 
-	intersectingStatements do: [ :statement | 
-		(statement intersectsInterval: anInterval)
-			ifTrue: [ ^ statement bestNodeFor: anInterval ]
-			ifFalse: [ ^ statement ] ]. "anInterval intersects the statement's final period"
+	intersectingStatements do: [ :statement |
+		^ (statement intersectsInterval: anInterval)
+			ifTrue: [ statement bestNodeFor: anInterval ]
+			ifFalse: [ statement ] ]. "anInterval intersects the statement's final period"
 
 	node := super bestNodeFor: anInterval.
-	node == self ifTrue: [ 
-		(temporaries isEmpty and: [ statements size == 1 ]) ifTrue: [ 
+	node == self ifTrue: [
+		(temporaries isEmpty and: [ statements size == 1 ]) ifTrue: [
 			^ statements first ] ].
 	^ node
 ]
@@ -254,7 +254,7 @@ RBSequenceNode >> children [
 ]
 
 { #category : #matching }
-RBSequenceNode >> copyInContext: aDictionary [ 
+RBSequenceNode >> copyInContext: aDictionary [
 	^ self class new
 		temporaries: (self copyList: self temporaries inContext: aDictionary);
 		statements: (self copyList: self statements inContext: aDictionary);
@@ -262,17 +262,17 @@ RBSequenceNode >> copyInContext: aDictionary [
 ]
 
 { #category : #testing }
-RBSequenceNode >> defines: aName [ 
+RBSequenceNode >> defines: aName [
 	^temporaries anySatisfy: [:each | each name = aName]
 ]
 
 { #category : #testing }
-RBSequenceNode >> directlyUses: aNode [ 
+RBSequenceNode >> directlyUses: aNode [
 	^false
 ]
 
 { #category : #comparing }
-RBSequenceNode >> equalTo: anObject withMapping: aDictionary [ 
+RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	self statements size = anObject statements size ifFalse: [^false].
 	self statements
@@ -311,7 +311,7 @@ RBSequenceNode >> hash [
 ]
 
 { #category : #private }
-RBSequenceNode >> indexOfNode: aNode [ 
+RBSequenceNode >> indexOfNode: aNode [
 	"Try to find the node by first looking for ==, and then for ="
 
 	^(1 to: statements size) detect: [:each | (statements at: each) == aNode]
@@ -327,19 +327,21 @@ RBSequenceNode >> initialize [
 	temporaries := OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : #errors }
 RBSequenceNode >> isFaulty [
+	self isError ifTrue: [ ^ true ].
+	(self temporaries anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true ].
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : #testing }
-RBSequenceNode >> isLast: aNode [ 
+RBSequenceNode >> isLast: aNode [
 	| last |
 	statements isEmpty ifTrue: [^false].
 	last := statements last.
-	^last == aNode or: 
-			[last isMessage and: 
-					[(#(#ifTrue:ifFalse: #ifFalse:ifTrue:) includes: last selector) 
+	^last == aNode or:
+			[last isMessage and:
+					[(#(#ifTrue:ifFalse: #ifFalse:ifTrue:) includes: last selector)
 						and: [last arguments anySatisfy: [:each | each isLast: aNode]]]]
 ]
 
@@ -364,20 +366,20 @@ RBSequenceNode >> leftBar: anInteger [
 ]
 
 { #category : #initialization }
-RBSequenceNode >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [ 
+RBSequenceNode >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [
 	leftBar := leftInteger.
 	self temporaries: variableNodes.
 	rightBar := rightInteger
 ]
 
 { #category : #matching }
-RBSequenceNode >> match: aNode inContext: aDictionary [ 
+RBSequenceNode >> match: aNode inContext: aDictionary [
 	self class = aNode class ifFalse: [^false].
-	^(self 
+	^(self
 		matchList: temporaries
 		against: aNode temporaries
-		inContext: aDictionary) and: 
-				[self 
+		inContext: aDictionary) and:
+				[self
 					matchList: statements
 					against: aNode statements
 					inContext: aDictionary]
@@ -401,19 +403,19 @@ RBSequenceNode >> postCopy [
 ]
 
 { #category : #testing }
-RBSequenceNode >> references: aVariableName [ 
+RBSequenceNode >> references: aVariableName [
 	^statements anySatisfy: [:each | each references: aVariableName]
 ]
 
 { #category : #replacing }
 RBSequenceNode >> removeDeadCode [
-	(self isUsed ifTrue: [statements size - 1] ifFalse: [statements size]) 
+	(self isUsed ifTrue: [statements size - 1] ifFalse: [statements size])
 		to: 1
 		by: -1
-		do: 
-			[:i | 
-			(statements at: i) isImmediateNode 
-				ifTrue: 
+		do:
+			[:i |
+			(statements at: i) isImmediateNode
+				ifTrue:
 					[self clearReplacements.
 					statements removeAt: i]].
 	super removeDeadCode
@@ -425,20 +427,20 @@ RBSequenceNode >> removeNode: aNode [
 ]
 
 { #category : #accessing }
-RBSequenceNode >> removeTemporaryNamed: aName [ 
+RBSequenceNode >> removeTemporaryNamed: aName [
 	temporaries := temporaries reject: [:each | each name = aName]
 ]
 
 { #category : #replacing }
-RBSequenceNode >> replaceNode: aNode withNode: anotherNode [ 
-	self statements: (statements 
+RBSequenceNode >> replaceNode: aNode withNode: anotherNode [
+	self statements: (statements
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]]).
-	self temporaries: (temporaries 
+	self temporaries: (temporaries
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
 { #category : #replacing }
-RBSequenceNode >> replaceNode: aNode withNodes: aCollection [ 
+RBSequenceNode >> replaceNode: aNode withNodes: aCollection [
 	| index newStatements |
 	self clearReplacements.
 	index := self indexOfNode: aNode.
@@ -463,7 +465,7 @@ RBSequenceNode >> rightBar: anInteger [
 
 { #category : #accessing }
 RBSequenceNode >> start [
-	^ leftBar 
+	^ leftBar
 		ifNil: [statements isEmpty ifTrue: [1] ifFalse: [statements first start]]
 ]
 
@@ -473,7 +475,7 @@ RBSequenceNode >> statements [
 ]
 
 { #category : #accessing }
-RBSequenceNode >> statements: stmtCollection [ 
+RBSequenceNode >> statements: stmtCollection [
 	statements := stmtCollection.
 	statements do: [:each | each parent: self]
 ]
@@ -485,17 +487,17 @@ RBSequenceNode >> statementsIntersectingInterval: anInterval [
 	found := #(  ) asOrderedCollection.
 
 	" search for statements intersecting anInterval, consider final periods as part of the statement "
-	statements doWithIndex: [ :statement :index | 
-		((statement intersectsInterval: anInterval) or: [ 
-			 (periods at: index ifAbsent: [ 0 ]) == anInterval first ]) 
+	statements doWithIndex: [ :statement :index |
+		((statement intersectsInterval: anInterval) or: [
+			 (periods at: index ifAbsent: [ 0 ]) == anInterval first ])
 			ifTrue: [ found add: statement ] ].
 	^ found
 ]
 
 { #category : #accessing }
 RBSequenceNode >> stop [
-	^{  
-	temporaries isEmpty ifTrue: [0] ifFalse: [ self temporaries last stop]. 
+	^{
+	temporaries isEmpty ifTrue: [0] ifFalse: [ self temporaries last stop].
 	periods isEmpty ifTrue: [0] ifFalse: [periods last].
 	statements isEmpty ifTrue: [0] ifFalse: [statements last stop]
 	} max
@@ -507,7 +509,7 @@ RBSequenceNode >> temporaries [
 ]
 
 { #category : #accessing }
-RBSequenceNode >> temporaries: tempCollection [ 
+RBSequenceNode >> temporaries: tempCollection [
 	temporaries := tempCollection.
 	temporaries do: [:each | each parent: self]
 ]
@@ -531,19 +533,19 @@ RBSequenceNode >> transformLastToReturn [
 ]
 
 { #category : #testing }
-RBSequenceNode >> uses: aNode [ 
+RBSequenceNode >> uses: aNode [
 	statements isEmpty ifTrue: [^false].
 	aNode == statements last ifFalse: [^false].
 	^self isUsed
 ]
 
 { #category : #querying }
-RBSequenceNode >> whichNodeIsContainedBy: anInterval [ 
+RBSequenceNode >> whichNodeIsContainedBy: anInterval [
 	| node |
 	node := super whichNodeIsContainedBy: anInterval.
-	node == self 
-		ifTrue: 
-			[(temporaries isEmpty and: [statements size == 1]) 
+	node == self
+		ifTrue:
+			[(temporaries isEmpty and: [statements size == 1])
 				ifTrue: [^statements first]].
 	^node
 ]

@@ -9,12 +9,12 @@ Class {
 
 { #category : #api }
 DAReversePackageNode >> childNodeClassFor: anItem [
-	^ DAReverseDependentPackageNode 
+	^ DAReverseDependentPackageNode
 ]
 
 { #category : #accessing }
 DAReversePackageNode >> children [
-	^ (self content usersOfPackage 
+	^ (self content usersOfPackage
 		collect: [ :each | each asPackageDependencyWrapper ]) asSortedCollection
 ]
 

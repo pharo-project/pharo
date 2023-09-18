@@ -23,7 +23,7 @@ LocaleIDTest >> germanLocaleID [
 LocaleIDTest >> testComparision [
 
 	self deny: self germanLocaleID equals: self frenchLocaleID.
-	self assert: self germanLocaleID equals: self germanLocaleID.
+	self assert: self germanLocaleID equals: self germanLocaleID
 ]
 
 { #category : #tests }
@@ -31,7 +31,7 @@ LocaleIDTest >> testFromISOString [
 
 	| locale |
 	locale := LocaleID isoString: 'en-us'.
-	self 
+	self
 		assert: locale isoLanguage equals: 'en';
 		assert: locale isoCountry equals: 'us'
 ]
@@ -41,7 +41,7 @@ LocaleIDTest >> testFromSingleISOString [
 
 	| locale |
 	locale := LocaleID isoString: 'en'.
-	self 
+	self
 		assert: locale isoLanguage equals: 'en';
 		assert: locale isoCountry isNil
 ]
@@ -50,7 +50,7 @@ LocaleIDTest >> testFromSingleISOString [
 LocaleIDTest >> testHashing [
 
 	self assert: self germanLocaleID hash equals: self germanLocaleID hash.
-	self assert: self frenchLocaleID hash equals: self frenchLocaleID hash.
+	self assert: self frenchLocaleID hash equals: self frenchLocaleID hash
 ]
 
 { #category : #tests }
@@ -66,7 +66,7 @@ LocaleIDTest >> testInstanceCreationWithISOLanguageAndCountry [
 
 	|locale|
 	locale := LocaleID isoLanguage: 'zh' isoCountry: 'CN'.
-	self 
+	self
 		assert: locale isoLanguage equals: 'zh';
 		assert: locale isoCountry equals: 'CN'
 ]
@@ -76,7 +76,7 @@ LocaleIDTest >> testPosixNameConversion [
 
 	| locale |
 	locale := LocaleID posixName: 'en_us'.
-	self 
+	self
 		assert: locale isoLanguage equals: 'en';
 		assert: locale isoCountry equals: 'us'
 ]
@@ -85,6 +85,6 @@ LocaleIDTest >> testPosixNameConversion [
 LocaleIDTest >> testPrintString [
 
 	| locale |
-	locale := LocaleID isoString: 'en-us'.	
+	locale := LocaleID isoString: 'en-us'.
 	self assert: locale printString equals: 'en-us'
 ]

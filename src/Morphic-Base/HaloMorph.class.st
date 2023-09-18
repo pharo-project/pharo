@@ -43,9 +43,9 @@ HaloMorph class >> classicHaloSpecifications [
 		---------				------		-----------		-------------------------------		---------------"
 	(addMenuHandle:		left			top				(red)							none)
 	(addDismissHandle:		leftCenter	top				(red		muchLighter)			#haloDismissIcon)
-	(addGrabHandle:			center		top				(black)							none)
+	(addGrabHandle:			center		top				(gray)							none)
 	(addDragHandle:			rightCenter	top				(brown)							none)
-	(addDupHandle:			right		top				(green)							none)	
+	(addDupHandle:			right		top				(green)							none)
 	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		none)
 	(addGrowHandle:		right		bottom			(yellow)						none)
 	(addScaleHandle:		right		bottom			(lightOrange)					none)
@@ -55,7 +55,7 @@ HaloMorph class >> classicHaloSpecifications [
 
 	(addRecolorHandle:		right		bottomCenter	(magenta darker)				none)
 
-	(addRotateHandle:		left			bottom			(blue)							none))
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							none))
 ]
 
 { #category : #'halo theme' }
@@ -88,7 +88,7 @@ HaloMorph class >> customHaloSpecifications [
 	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSizeIcon)
 	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyleIcon)
 	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)				#haloFontEmphIcon)
-	(addRotateHandle:		left			bottom			(blue)							#haloRotIcon)
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
 
 	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebugIcon) )
 
@@ -99,9 +99,9 @@ HaloMorph class >> customHaloSpecifications [
 
 	(addTileHandle:			left			bottomCenter	(lightBrown)					#haloTileIcon)
 	(addViewHandle:			left			center			(cyan)							#haloViewIcon)
-	(addGrabHandle:			center		top				(black)							#haloGrabIcon)
+	(addGrabHandle:			center		top				(gray)							#haloGrabIcon)
 	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
-	(addDupHandle:			right		top				(green)							#haloDupIcon)	
+	(addDupHandle:			right		top				(green)							#haloDupIcon)
 	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon)
 	(addFewerHandlesHandle:	left		topCenter		(paleBuff)						#haloFewerHandlesIcon)
 	(addPaintBgdHandle:		right		center			(lightGray)						#haloPaintIcon)
@@ -119,7 +119,7 @@ HaloMorph class >> haloEnclosesFullBounds: aBoolean [
 ]
 
 { #category : #'halo theme' }
-HaloMorph class >> haloSpecFromArray: anArray [ 
+HaloMorph class >> haloSpecFromArray: anArray [
 	| aColor |
 	aColor := Color.
 	anArray fourth
@@ -135,12 +135,12 @@ HaloMorph class >> haloSpecFromArray: anArray [
 { #category : #'halo theme' }
 HaloMorph class >> haloSpecificationsForWorld [
 	| desired |
-	"Answer a list of HaloSpecs that describe which halos 
-	are to be used on a world halo, what they should 
+	"Answer a list of HaloSpecs that describe which halos
+	are to be used on a world halo, what they should
 	look like, and where they should be situated"
 
 	desired := #(addDebugHandle: addMenuHandle:   addHelpHandle:  addRecolorHandle:).
-	^ self currentHaloSpecifications 
+	^ self currentHaloSpecifications
 		select: [:spec | desired includes: spec addHandleSelector]
 ]
 
@@ -166,11 +166,11 @@ HaloMorph class >> iconicHaloSpecifications [
 	(addCollapseHandle:		left			topCenter		(tan)							#haloCollapseIcon)
 	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebugIcon)
 	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismissIcon)
-	(addRotateHandle:		left			bottom			(blue)							#haloRotIcon)
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
 	(addMenuHandle:		leftCenter	top				(red)							#haloMenuIcon)
-	(addGrabHandle:			center		top				(black)							#haloGrabIcon)
+	(addGrabHandle:			center		top				(gray)							#haloGrabIcon)
 	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
-	(addDupHandle:			right		top				(green)							#haloDupIcon)	
+	(addDupHandle:			right		top				(green)							#haloDupIcon)
 	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon)
 	(addGrowHandle:		right		bottom			(yellow)						#haloScaleIcon)
 	(addScaleHandle:		right		bottom			(lightOrange)					#haloScaleIcon)
@@ -182,13 +182,13 @@ HaloMorph class >> iconicHaloSpecifications [
 
 { #category : #'class initialization' }
 HaloMorph class >> initialize [
-	
+
 	self installHaloTheme: #iconicHaloSpecifications
 ]
 
 { #category : #'halo theme' }
 HaloMorph class >> installHaloTheme: haloSpecificationsSelector [
-	^ CurrentHaloSpecifications := self allHaloSpecsFromArray: (self perform: haloSpecificationsSelector).
+	^ CurrentHaloSpecifications := self allHaloSpecsFromArray: (self perform: haloSpecificationsSelector)
 ]
 
 { #category : #settings }
@@ -215,11 +215,11 @@ HaloMorph class >> simpleFullHaloSpecifications [
 		---------				------		-----------		-------------------------------		---------------"
 	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebugIcon)
 	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismissIcon)
-	(addRotateHandle:		left			bottom			(blue)							#haloRotIcon)
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
 	(addMenuHandle:		leftCenter	top				(red)							#haloMenuIcon)
-	(addGrabHandle:			center		top				(black)							#halograbIcon)
+	(addGrabHandle:			center		top				(gray)							#halograbIcon)
 	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
-	(addDupHandle:			right		top				(green)							#haloDupIcon)	
+	(addDupHandle:			right		top				(green)							#haloDupIcon)
 	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon')
 	(addGrowHandle:		right		bottom			(yellow)						#haloScaleIcon)
 	(addScaleHandle:		right		bottom			(lightOrange)					#haloScaleIcon)
@@ -265,7 +265,7 @@ HaloMorph >> addCollapseHandle: handleSpec [
 { #category : #handles }
 HaloMorph >> addDebugHandle: handleSpec [
 
-	self class haloWithDebugHandle ifTrue: [ 
+	self class haloWithDebugHandle ifTrue: [
 		self
 			addHandle: handleSpec
 			on: #mouseDown
@@ -308,7 +308,7 @@ HaloMorph >> addDirectionHandles [
 ]
 
 { #category : #handles }
-HaloMorph >> addDismissHandle: handleSpec [ 
+HaloMorph >> addDismissHandle: handleSpec [
 	"Add the dismiss handle according to the spec, unless my target resists
 	dismissal "
 	| dismissHandle |
@@ -318,7 +318,7 @@ HaloMorph >> addDismissHandle: handleSpec [
 						on: #mouseDown
 						send: #mouseDownInDimissHandle:with:
 						to: self.
-			dismissHandle 
+			dismissHandle
 				on: #mouseUp
 				send: #maybeDismiss:with:
 				to: self.
@@ -352,7 +352,7 @@ HaloMorph >> addDupHandle: haloSpec [
 { #category : #handles }
 HaloMorph >> addFontEmphHandle: haloSpec [
 
-	innerTarget isTextMorph ifTrue: [ 
+	innerTarget isTextMorph ifTrue: [
 		self
 			addHandle: haloSpec
 			on: #mouseDown
@@ -363,7 +363,7 @@ HaloMorph >> addFontEmphHandle: haloSpec [
 { #category : #handles }
 HaloMorph >> addFontSizeHandle: haloSpec [
 
-	innerTarget isTextMorph ifTrue: [ 
+	innerTarget isTextMorph ifTrue: [
 		self
 			addHandle: haloSpec
 			on: #mouseDown
@@ -374,7 +374,7 @@ HaloMorph >> addFontSizeHandle: haloSpec [
 { #category : #handles }
 HaloMorph >> addFontStyleHandle: haloSpec [
 
-	innerTarget isTextMorph ifTrue: [ 
+	innerTarget isTextMorph ifTrue: [
 		self
 			addHandle: haloSpec
 			on: #mouseDown
@@ -398,7 +398,7 @@ HaloMorph >> addGrabHandle: haloSpec [
 { #category : #private }
 HaloMorph >> addGraphicalHandle: formKey at: aPoint on: eventName send: selector to: recipient [
 	"Add the supplied form as a graphical handle centered at the given point, and set it up to respond to the given event by sending the given selector to the given recipient. Return the handle."
-	
+
 	| handle |
 	handle := self addGraphicalHandleFrom: formKey at: aPoint.
 	handle on: eventName send: selector to: recipient.
@@ -409,10 +409,10 @@ HaloMorph >> addGraphicalHandle: formKey at: aPoint on: eventName send: selector
 { #category : #private }
 HaloMorph >> addGraphicalHandleFrom: formKey at: aPoint [
 	"Add the supplied form as a graphical handle centered at the given point. Return the handle."
-	
+
 	| handle aForm |
 	aForm := Smalltalk ui icons
-		iconNamed: formKey 
+		iconNamed: formKey
 		ifNone: [ self iconNamed: #solidMenuIcon ].
 	handle := ImageMorph new form: aForm; bounds: (Rectangle center: aPoint extent: aForm extent).
 	handle wantsYellowButtonMenu: false.
@@ -424,7 +424,7 @@ HaloMorph >> addGraphicalHandleFrom: formKey at: aPoint [
 { #category : #handles }
 HaloMorph >> addGrowHandle: haloSpec [
 
-	target shouldFlex ifFalse: 
+	target shouldFlex ifFalse:
 		[ (self addHandle: haloSpec
 				on: #mouseDown send: #startGrow:with: to: self)
 				on: #mouseMove send: #doGrow:with: to: self ]
@@ -432,9 +432,9 @@ HaloMorph >> addGrowHandle: haloSpec [
 ]
 
 { #category : #private }
-HaloMorph >> addHandle: handleSpec on: eventName send: selector to: recipient [ 
-	"Add a handle within the halo box as per the haloSpec, and set 
-	it up to respond to the given event by sending the given 
+HaloMorph >> addHandle: handleSpec on: eventName send: selector to: recipient [
+	"Add a handle within the halo box as per the haloSpec, and set
+	it up to respond to the given event by sending the given
 	selector to the given recipient. Return the handle."
 	| handle aPoint |
 	aPoint := self
@@ -452,9 +452,9 @@ HaloMorph >> addHandle: handleSpec on: eventName send: selector to: recipient [
 ]
 
 { #category : #private }
-HaloMorph >> addHandleAt: aPoint color: aColor icon: iconName on: eventName send: selector to: recipient [ 
-	"Add a handle centered at the given point with the given color, 
-	and set it up to respond to the given event by sending the 
+HaloMorph >> addHandleAt: aPoint color: aColor icon: iconName on: eventName send: selector to: recipient [
+	"Add a handle centered at the given point with the given color,
+	and set it up to respond to the given event by sending the
 	given selector to the given recipient. Return the handle."
 	| handle |
 	handle := self createHandleAt: aPoint color: aColor iconName: iconName.
@@ -519,7 +519,7 @@ HaloMorph >> addMenuHandle: haloSpec [
 { #category : #private }
 HaloMorph >> addName [
 	"Add a name readout at the bottom of the halo."
-	
+
 	self addNameBeneath: self basicBox string: target externalName
 ]
 
@@ -529,17 +529,17 @@ HaloMorph >> addNameBeneath: outerRectangle string: aString [
 
 	| namePosition w |
 	w := self world ifNil:[target world].
-	
+
 	nameMorph := StringMorph contents: aString font: StandardFonts haloFont.
-	nameMorph 
+	nameMorph
 	wantsYellowButtonMenu: false;
 	color: self theme balloonTextColor;
 	backgroundColor: self theme balloonBackgroundColor;
 	target: innerTarget.
-	
+
 	namePosition := outerRectangle bottomCenter -
 		((nameMorph width // 2) @ (self handleSize negated // 2 - 1)).
-		
+
 	nameMorph position: (namePosition min: w viewBox bottomRight - nameMorph extent y + 2).
 	self addMorph: nameMorph.
 	^ nameMorph
@@ -568,7 +568,7 @@ HaloMorph >> addRotateHandle: haloSpec [
 { #category : #handles }
 HaloMorph >> addScaleHandle: haloSpec [
 
-	target shouldFlex ifTrue: [ 
+	target shouldFlex ifTrue: [
 		(self
 			 addHandle: haloSpec
 			 on: #mouseDown
@@ -612,14 +612,14 @@ HaloMorph >> addSimpleHandlesTo: aHaloMorph box: aBox [
 	aHandle on: #mouseMove send: #doRot:with: to: self.
 
 	target shouldFlex
-		ifTrue: [ 
+		ifTrue: [
 			(self
 				 addGraphicalHandle: #scaleIcon
 				 at: aBox bottomRight
 				 on: #mouseDown
 				 send: #startScale:with:
 				 to: self) on: #mouseMove send: #doScale:with: to: self ]
-		ifFalse: [ 
+		ifFalse: [
 			(self
 				 addGraphicalHandle: #scaleIcon
 				 at: aBox bottomRight
@@ -641,7 +641,7 @@ HaloMorph >> basicBox [
 	            @ (self height + self handleSize + 8 max: minSide).
 	aBox := Rectangle center: self center extent: anExtent.
 	w := self world ifNil: [ target outermostWorldMorph ].
-	^ w ifNil: [ aBox ] ifNotNil: [ 
+	^ w ifNil: [ aBox ] ifNotNil: [
 		  aBox
 			  intersect: (w viewBox insetBy: 8 @ 8)
 			  ifNone: [ self error: 'should not happen' ] ]
@@ -662,7 +662,7 @@ HaloMorph >> basicBoxForSimpleHalos [
 HaloMorph >> borderStyle [
 	"Answer the border style to use for the receiver.
 	Depends on the target and on some settings."
-	
+
 	^(target notNil and: [self showBoundsInHalo and: [target isWorldMorph not]])
 		ifTrue: [super borderStyle]
 		ifFalse: [SimpleBorderStyle width: 0 color: Color transparent]
@@ -673,10 +673,10 @@ HaloMorph >> changed [
 	"Quicker to invalidate handles individually if target is large (especially the world)"
 
 	self extent > (200 @ 200)
-		ifTrue: [ 
-			(target notNil and: [ target ~~ self world ]) ifTrue: [ 
+		ifTrue: [
+			(target notNil and: [ target ~~ self world ]) ifTrue: [
 				"Invalidate 4 outer strips first, thus subsuming separate damage."
-				(self fullBounds areasOutside: target bounds) do: [ :r | 
+				(self fullBounds areasOutside: target bounds) do: [ :r |
 					self invalidRect: r ] ].
 			self submorphsDo: [ :m | m changed ] ]
 		ifFalse: [ super changed ]
@@ -693,8 +693,8 @@ HaloMorph >> containsPoint: aPoint [
 HaloMorph >> containsPoint: aPoint event: anEvent [
 	"Blue buttons are handled by the halo"
 
-	(anEvent isMouse and: [ 
-		 anEvent isMouseDown and: [ anEvent blueButtonPressed ] ]) ifFalse: [ 
+	(anEvent isMouse and: [
+		 anEvent isMouseDown and: [ anEvent isSpecialGesture ] ]) ifFalse: [
 		^ super containsPoint: aPoint event: anEvent ].
 	^ bounds containsPoint: anEvent position
 ]
@@ -712,13 +712,13 @@ HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [
 			handle borderColor: aColor muchDarker.
 			self setColor: aColor toHandle: handle
 			]
-		ifFalse: [ 
+		ifFalse: [
 			handle := EllipseMorph newBounds: bou color: aColor.
 			handle borderWidth: 0 ].
 	handle wantsYellowButtonMenu: false.
 	iconName
 		ifNotNil: [ ( self iconNamed: iconName )
-				ifNotNil: [ :form | 
+				ifNotNil: [ :form |
 					| image |
 
 					image := ImageMorph new.
@@ -759,7 +759,7 @@ HaloMorph >> doDebug: evt with: menuHandle [
 	| menu |
 	"self obtainHaloForEvent: evt andRemoveAllHandlesBut: nil."
 	self world displayWorld.
-	evt shiftPressed ifTrue: 
+	evt shiftPressed ifTrue:
 		[self delete.
 		^ innerTarget inspectInMorphic: evt].
 
@@ -861,7 +861,7 @@ HaloMorph >> doRecolor: evt with: aHandle [
 HaloMorph >> doRot: evt with: rotHandle [
 	"Update the rotation of my target if it is rotatable. Keep the relevant command object up to date."
 
-	| degrees |	
+	| degrees |
 	growingOrRotating ifFalse: [^self].
 	evt hand obtainHalo: self.
 	degrees := (evt cursorPoint - (target pointInWorld: target referencePosition)) degrees.
@@ -894,13 +894,13 @@ HaloMorph >> doScale: evt with: scaleHandle [
 	self setColor: colorToUse toHandle: scaleHandle.
 	scaleHandle
 		submorphsDo: [:m | m color: colorToUse contrastingBlackAndWhiteColor].
-	scaleHandle position: newHandlePos.
+	scaleHandle position: newHandlePos
 ]
 
 { #category : #events }
 HaloMorph >> dragTarget: event [
 	"Begin dragging the target"
-	
+
 	| thePoint |
 	thePoint := target point: event position - positionOffset from: owner.
 	target setConstrainedPosition: thePoint hangOut: true.
@@ -911,7 +911,7 @@ HaloMorph >> dragTarget: event [
 HaloMorph >> drawSubmorphsOn: aCanvas [
 
 	| alpha |
-	(alpha := self magicAlpha) = 1.0 ifTrue: [ 
+	(alpha := self magicAlpha) = 1.0 ifTrue: [
 		^ super drawSubmorphsOn: aCanvas ].
 	^ super drawSubmorphsOn: (aCanvas asAlphaBlendingCanvas: alpha)
 ]
@@ -922,15 +922,15 @@ HaloMorph >> endInteraction [
 
 	| m |
 	(target isInWorld not or: [owner isNil]) ifTrue: [^self].
-	[target isFlexMorph and: [target hasNoScaleOrRotation]] whileTrue: 
+	[target isFlexMorph and: [target hasNoScaleOrRotation]] whileTrue:
 			[m := target firstSubmorph.
 			target removeFlexShell.
 			target := m].
-	self isInWorld 
-		ifTrue: 
+	self isInWorld
+		ifTrue:
 			["make sure handles show in front, even if flex shell added"
 			self comeToFront.
-			self addHandles].
+			self addHandles]
 ]
 
 { #category : #settings }
@@ -970,7 +970,7 @@ HaloMorph >> handleListenEvent: anEvent [
 { #category : #private }
 HaloMorph >> handleSize [
 
-	^ 30
+	^ 30 scaledByDisplayScaleFactor
 ]
 
 { #category : #'meta-actions' }
@@ -990,9 +990,8 @@ HaloMorph >> handleSpecialGesture: event [
 ]
 
 { #category : #'meta-actions' }
-HaloMorph >> handlerForBlueButtonDown: anEvent [
-	"Blue button was clicked within the receiver"
-
+HaloMorph >> handlerForSpecialGestureDown:  anEvent [
+	"The special gesture for halo has been done"
 	^ self
 ]
 
@@ -1013,7 +1012,7 @@ HaloMorph >> innerTarget [
 ]
 
 { #category : #testing }
-HaloMorph >> isHaloMorph [ 
+HaloMorph >> isHaloMorph [
 
 	^ true
 ]
@@ -1059,14 +1058,14 @@ HaloMorph >> maybeDismiss: evt with: dismissHandle [
 	| confirmed |
 	evt hand obtainHalo: self.
 	(dismissHandle containsPoint: evt cursorPoint)
-		ifTrue: [ 
-			target resistsRemoval ifTrue: [ 
+		ifTrue: [
+			target resistsRemoval ifTrue: [
 				confirmed := self confirm: 'Really throw this away?' translated.
 				confirmed ifFalse: [ ^ self ] ].
 			evt hand removeHalo.
 			self delete.
 			target dismissViaHalo ]
-		ifFalse: [ 
+		ifFalse: [
 			self delete.
 			target addHalo: evt ]
 ]
@@ -1157,7 +1156,7 @@ HaloMorph >> positionDirectionShaft: shaft [
 	"Pretty crude and slow approach at present, but a stake in the ground"
 	alphaRadians := target heading degreesToRadians.
 	unitVector := alphaRadians sin @ alphaRadians cos negated.
-	shaft setVertices: { 
+	shaft setVertices: {
 			(unitVector * 6 + directionArrowAnchor). "6 = radius of deadeye circle"
 			(unitVector * self directionArrowLength + directionArrowAnchor) }
 ]
@@ -1197,7 +1196,7 @@ HaloMorph >> prepareToTrackCenterOfRotation: evt with: rotationHandle [
 	evt hand obtainHalo: self.
 	evt shiftPressed
 		ifTrue: [ self removeAllHandlesBut: rotationHandle ]
-		ifFalse: [ 
+		ifFalse: [
 			rotationHandle setProperty: #dragByCenterOfRotation toValue: true.
 			self startDrag: evt with: rotationHandle ]
 ]
@@ -1224,7 +1223,7 @@ HaloMorph >> setCenterOfRotation: evt with: rotationHandle [
 	| localPt |
 	evt hand obtainHalo: self.
 	evt hand showTemporaryCursor: nil.
-	(rotationHandle hasProperty: #dragByCenterOfRotation) ifFalse: [ 
+	(rotationHandle hasProperty: #dragByCenterOfRotation) ifFalse: [
 		localPt := innerTarget transformFromWorld globalPointToLocal:
 			           rotationHandle center.
 		innerTarget setRotationCenterFrom: localPt ].
@@ -1233,12 +1232,12 @@ HaloMorph >> setCenterOfRotation: evt with: rotationHandle [
 ]
 
 { #category : #private }
-HaloMorph >> setColor: aColor toHandle: aHandle [ 
-	"private - change the color to the given handle, applying the 
+HaloMorph >> setColor: aColor toHandle: aHandle [
+	"private - change the color to the given handle, applying the
 	alternate look if corresponds"
 	aHandle color: aColor.
 	self gradientHalo
-		ifTrue: [| fill | 
+		ifTrue: [| fill |
 			fill := GradientFillStyle ramp: {0.0 -> aColor muchLighter. 1.0 -> aColor darker}.
 			fill origin: aHandle topLeft.
 			fill direction: aHandle extent.
@@ -1274,7 +1273,7 @@ HaloMorph >> setTarget: aMorph [
 	innerTarget := target renderedMorph.
 	innerTarget wantsDirectionHandles
 		ifTrue: [self showDirectionHandles: true addHandles: false].
-	target hasHalo: true.
+	target hasHalo: true
 ]
 
 { #category : #settings }
@@ -1292,7 +1291,7 @@ HaloMorph >> showDirectionHandles: wantToShow [
 { #category : #private }
 HaloMorph >> showDirectionHandles: wantToShow addHandles: needHandles [
 
-	directionArrowAnchor := wantToShow 
+	directionArrowAnchor := wantToShow
 				ifTrue: [target referencePositionInWorld	"not nil means show"]
 				ifFalse: [nil].
 	needHandles ifTrue: [self addHandles]
@@ -1315,7 +1314,7 @@ HaloMorph >> startDrag: evt with: dragHandle [
 	"Drag my target without removing it from its owner."
 
 	self obtainHaloForEvent: evt andRemoveAllHandlesBut: dragHandle.
-	positionOffset := dragHandle center - (target point: target position in: owner).
+	positionOffset := dragHandle center - (target point: target position in: owner)
 ]
 
 { #category : #private }
@@ -1343,7 +1342,7 @@ HaloMorph >> startRot: evt with: rotHandle [
 	angleOffset := evt cursorPoint - (target pointInWorld: target referencePosition).
 	angleOffset := Point
 			r: angleOffset r
-			degrees: angleOffset degrees - target rotationDegrees.
+			degrees: angleOffset degrees - target rotationDegrees
 ]
 
 { #category : #private }
@@ -1397,15 +1396,15 @@ HaloMorph >> target [
 HaloMorph >> target: aMorph [
 
 	self setTarget: aMorph.
-	target ifNotNil: [self addHandles].
+	target ifNotNil: [self addHandles]
 ]
 
 { #category : #private }
 HaloMorph >> trackCenterOfRotation: anEvent with: rotationHandle [
-	(rotationHandle hasProperty: #dragByCenterOfRotation) 
+	(rotationHandle hasProperty: #dragByCenterOfRotation)
 		ifTrue:[^self doDrag: anEvent with: rotationHandle].
 	anEvent hand obtainHalo: self.
-	rotationHandle center: anEvent cursorPoint.
+	rotationHandle center: anEvent cursorPoint
 ]
 
 { #category : #private }
@@ -1427,7 +1426,7 @@ HaloMorph >> transferHalo: event [
 
 { #category : #copying }
 HaloMorph >> veryDeepFixupWith: deepCopier [
-	"If target and arguments fields were weakly copied, fix them here. 
+	"If target and arguments fields were weakly copied, fix them here.
 	 If they were in the tree being copied, fix them up, otherwise point to the originals!"
 
 	super veryDeepFixupWith: deepCopier.
@@ -1447,23 +1446,23 @@ HaloMorph >> veryDeepInner: deepCopier [
 	positionOffset := positionOffset veryDeepCopyWith: deepCopier.
 	angleOffset := angleOffset veryDeepCopyWith: deepCopier.
 	growingOrRotating := growingOrRotating veryDeepCopyWith: deepCopier.
-	directionArrowAnchor := directionArrowAnchor.	 
+	directionArrowAnchor := directionArrowAnchor.
 	haloBox := haloBox.
 	originalExtent := originalExtent.
-	nameMorph := nameMorph.
+	nameMorph := nameMorph
 ]
 
 { #category : #'event handling' }
 HaloMorph >> wantsKeyboardFocusFor: aSubmorph [
 	"To allow the name to be edited in the halo in the old tty way; when we morphic-text-ize the name editing, presumably this method should be removed"
-	
+
 	^ true
 ]
 
 { #category : #accessing }
 HaloMorph >> wantsToBeTopmost [
 	"Answer if the receiver want to be one of the topmost objects in its owner"
-	
+
 	^ true
 ]
 

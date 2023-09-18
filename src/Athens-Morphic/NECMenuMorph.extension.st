@@ -1,6 +1,6 @@
 Extension { #name : #NECMenuMorph }
 
 { #category : #'*Athens-Morphic' }
-NECMenuMorph >> drawOnAthensCanvas: anAthensCanvas [ 
+NECMenuMorph >> drawOnAthensCanvas: anAthensCanvas [
 	self drawOnCanvasWrapperFor: anAthensCanvas
 ]

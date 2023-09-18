@@ -15,8 +15,17 @@ FractionTest >> assert: a classAndValueEquals: b [
 
 { #category : #coverage }
 FractionTest >> classToBeTested [
-	
+
 	^ Fraction
+]
+
+{ #category : #'tests - arithmetic' }
+FractionTest >> testAbs [
+
+	self assert: (3 / 4) abs equals: 3 / 4.
+	self assert: (1 / 3) abs equals: 1 / 3.
+	self assert: (-1 / 3) abs equals: 1 / 3.
+	self assert: (-3 / 4) abs equals: 3 / 4
 ]
 
 { #category : #'tests - conversions' }
@@ -59,7 +68,7 @@ FractionTest >> testAsLargerPowerOfTwo [
 	"Non-reduced non-power of two"
 	self assert: (Fraction numerator: (2 raisedTo: 160) -1 denominator: (2 raisedTo: 80)) asLargerPowerOfTwo equals: (2 raisedTo: 80).
 
-	
+
 "Error condition: numerator is 0"
 	self should: [(Fraction numerator: 0 denominator: 1) asLargerPowerOfTwo] raise: DomainError.
 "Errro condition: Negative fraction"
@@ -115,7 +124,7 @@ FractionTest >> testAsSmallerPowerOfTwo [
 	"Non-reduced non-power of two"
 	self assert: (Fraction numerator: (2 raisedTo: 160) +1 denominator: (2 raisedTo: 80)) asSmallerPowerOfTwo equals: (2 raisedTo: 80).
 
-	
+
 "Error condition: numerator is 0"
 	self should: [(Fraction numerator: 0 denominator: 1) asSmallerPowerOfTwo] raise: DomainError.
 "Errro condition: Negative fraction"
@@ -139,9 +148,9 @@ FractionTest >> testCeiling [
 
 { #category : #'tests - basic' }
 FractionTest >> testDenominator [
-	
+
 	self assert: (1 / 2) denominator  equals: 2.
-	self assert: 1 denominator  equals: 1.
+	self assert: 1 denominator  equals: 1
 ]
 
 { #category : #'tests - conversions' }
@@ -252,19 +261,19 @@ FractionTest >> testIvalidReadFrom [
 	self should: [Fraction readFromString: '(3/2)'] raise: Error description: 'parenthesis are not allowed'.
 	self should: [Fraction readFromString: ' 3/25'] raise: Error description: 'leading spaces are not allowed before numerator'.
 	self should: [Fraction readFromString: '22/ 3'] raise: Error description: 'leading spaces are not allowed before denominator'.
-	
+
 	"These behaviours are questionnable, but that's currently how it works:"
 	self assert: (Fraction readFromString: '12345with some trailing characters') = 12345 description: 'non numeric trailing characters interrupt decoding'.
 	self assert: (Fraction readFromString: '1 / 2') = 1 description: 'A space behind numerator interrupt decoding'.
 	self assert: (Fraction readFromString: '22.0/3') = 22 description: 'decimal point interrupt decoding'.
-	self assert: (Fraction readFromString: '23s0/3') = 23 description: 'scale specification interrupt decoding'.
+	self assert: (Fraction readFromString: '23s0/3') = 23 description: 'scale specification interrupt decoding'
 ]
 
 { #category : #'tests - basic' }
 FractionTest >> testNumerator [
-	
+
 	self assert: (1 / 2) numerator equals: 1.
-	self assert: 1 numerator equals: 1.
+	self assert: 1 numerator equals: 1
 ]
 
 { #category : #'tests - mathematical functions' }
@@ -286,7 +295,7 @@ FractionTest >> testReadFrom [
 	self assert: (Fraction readFromString: '2e3/3') = (2000/3) description: 'numerator can specify an exponent'.
 	self assert: (Fraction readFromString: '3/1e4') = (3/10000) description: 'denominator can specify an exponent'.
 	self assert: (Fraction readFromString: '16rA0/3') = (160/3) description: 'numerator can specify a radix'.
-	self assert: (Fraction readFromString: '1/3r22') = (1/8) description: 'denominator can specify a radix'.
+	self assert: (Fraction readFromString: '1/3r22') = (1/8) description: 'denominator can specify a radix'
 ]
 
 { #category : #'tests - sinuses' }
@@ -312,7 +321,7 @@ FractionTest >> testRounded [
 
 { #category : #'tests - rounding' }
 FractionTest >> testRounding [
-	
+
 	self assert: ((6/90) round: 2) equals: 7/100
 ]
 

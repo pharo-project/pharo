@@ -27,7 +27,7 @@ TFExternalSemaphore >> index [
 
 { #category : #initialization }
 TFExternalSemaphore >> initialize [
-	
+
 	super initialize.
 	semaphore := Semaphore new.
 	index := Smalltalk registerExternalObject: semaphore
@@ -37,8 +37,7 @@ TFExternalSemaphore >> initialize [
 TFExternalSemaphore >> release [
 
 	super release.
-	Smalltalk unregisterExternalObject: semaphore.
-
+	Smalltalk unregisterExternalObject: semaphore
 ]
 
 { #category : #initialization }

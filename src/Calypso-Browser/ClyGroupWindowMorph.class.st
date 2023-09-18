@@ -10,12 +10,12 @@ Class {
 
 { #category : #updating }
 ClyGroupWindowMorph >> activateWindow: aWindow [
-	
+
 	| index |
-	(self tabGroup pages includes: aWindow) ifTrue: [ 
+	(self tabGroup pages includes: aWindow) ifTrue: [
 		index := self tabGroup pages indexOf: aWindow.
 		^self tabGroup selectedPageIndex: index].
-	
+
 	self addWindow: aWindow.
 	aWindow activate; announceOpened
 ]
@@ -24,7 +24,7 @@ ClyGroupWindowMorph >> activateWindow: aWindow [
 ClyGroupWindowMorph >> activeWindow [
 	self tabGroup pages size = 0 ifTrue: [ ^nil].
 	self tabGroup selectedPageIndex <= 0 ifTrue: [ ^nil ].
-	
+
 	^self tabGroup pages at: self tabGroup selectedPageIndex
 ]
 
@@ -57,9 +57,9 @@ ClyGroupWindowMorph >> update: aSymbol  with: anObject [
 
 { #category : #updating }
 ClyGroupWindowMorph >> updateMainWindowTitle [
-	
+
 	| activeWindow |
-		
+
 	activeWindow := self activeWindow ifNil: [^self].
 
 	self window ifNotNil: [:w | w  setLabel: activeWindow label]

@@ -12,7 +12,7 @@ Class {
 
 { #category : #'instance creation' }
 EpCompositeRefactoring class >> withAll: someRefactorings [
-	^ self basicNew 	
+	^ self basicNew
 		initializeWith: someRefactorings;
 		yourself
 ]
@@ -30,7 +30,7 @@ EpCompositeRefactoring >> childrenRefactorings [
 ]
 
 { #category : #initializing }
-EpCompositeRefactoring >> initializeWith: someRefactorings [ 
+EpCompositeRefactoring >> initializeWith: someRefactorings [
 	self initialize.
 	childrenRefactorings := someRefactorings collect: [:each | each asEpiceaEvent]
 ]

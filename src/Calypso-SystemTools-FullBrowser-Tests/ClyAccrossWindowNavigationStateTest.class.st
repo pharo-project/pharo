@@ -8,7 +8,7 @@ Class {
 ClyAccrossWindowNavigationStateTest >> restoreBrowserInstance [
 
 	self snapshotState.
-	
+
 	browser := navigationState createBrowser
 ]
 
@@ -20,17 +20,17 @@ ClyAccrossWindowNavigationStateTest >> snapshotState [
 
 { #category : #tests }
 ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithNavigationEnvironment [
-	
+
 	self restoreBrowserInstance.
-	
+
 	self assert: browser navigationEnvironment equals: environment
 ]
 
 { #category : #tests }
 ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithNavigationHistory [
-	
+
 	self restoreBrowserInstance.
-	
+
 	self assert: browser navigationHistory equals: navigationState navigationHistory
 ]
 
@@ -49,9 +49,9 @@ ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithPlugins [
 ClyAccrossWindowNavigationStateTest >> testPluginsWithoutBrowser [
 
 	browser addPlugin: ClyStandardBrowserPlugin new.
-	
+
 	self snapshotState.
-	
+
 	self assert: navigationState browserPlugins first browser isNil
 ]
 
@@ -59,7 +59,7 @@ ClyAccrossWindowNavigationStateTest >> testPluginsWithoutBrowser [
 ClyAccrossWindowNavigationStateTest >> testRetrievesBrowserEnvironment [
 
 	self snapshotState.
-	
+
 	self assert: navigationState navigationEnvironment equals: environment
 ]
 
@@ -67,15 +67,15 @@ ClyAccrossWindowNavigationStateTest >> testRetrievesBrowserEnvironment [
 ClyAccrossWindowNavigationStateTest >> testRetrievesBrowserState [
 
 	self snapshotState.
-	
+
 	self assert: (navigationState browserState isKindOf: ClyBrowserState )
 ]
 
 { #category : #tests }
 ClyAccrossWindowNavigationStateTest >> testRetrievesNavigationHistory [
-	
+
 	self snapshotState.
-	
+
 	self assert: navigationState navigationHistory equals: browser navigationHistory
 ]
 
@@ -83,8 +83,8 @@ ClyAccrossWindowNavigationStateTest >> testRetrievesNavigationHistory [
 ClyAccrossWindowNavigationStateTest >> testRetrievesPlugins [
 
 	browser addPlugin: ClyStandardBrowserPlugin new.
-	
+
 	self snapshotState.
-	
+
 	self assert: navigationState browserPlugins first class equals: ClyStandardBrowserPlugin
 ]

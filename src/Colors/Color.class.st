@@ -113,19 +113,19 @@ Color class >> colorFrom: parm [
 	"(Color colorFrom: #(0.0 0.0 1.0)) >>> (Color blue)"
 
 	| aColor firstParm |
-	(parm isKindOf: Color)
+	(parm isKindOf: self)
 		ifTrue: [ ^ parm ].
 	parm isSymbol
 		ifTrue: [ ^ self perform: parm ].
 	parm isString
 		ifTrue: [ ^ self fromString: parm ].
-	((parm isKindOf: SequenceableCollection) and: [ parm size > 0 ])
+	((parm isKindOf: SequenceableCollection) and: [ parm isNotEmpty ])
 		ifTrue: [ firstParm := parm first.
 			(firstParm isKindOf: Number)
 				ifTrue: [ ^ self fromRgbTriplet: parm ].
 			aColor := self colorFrom: firstParm.
 			parm
-				doWithIndex: [ :sym :ind | 
+				doWithIndex: [ :sym :ind |
 					ind > 1
 						ifTrue: [ aColor := aColor perform: sym ] ].
 			^ aColor ].
@@ -143,7 +143,7 @@ Color class >> colorFromPixelValue: p depth: d [
 	d = 4 ifTrue: [ ^ IndexedColors at: (p bitAnd: 15) + 1 ].
 	d = 2 ifTrue: [ ^ IndexedColors at: (p bitAnd: 3) + 1 ].
 	d = 1 ifTrue: [ ^ IndexedColors at: (p bitAnd: 1) + 1 ].
-	d = 16 | (d = 15)
+	(d = 16 or: [d = 15])
 		ifTrue: [ "five bits per component"
 			r := (p bitShift: -10) bitAnd: 31.
 			g := (p bitShift: -5) bitAnd: 31.
@@ -236,7 +236,7 @@ Color class >> defaultColors2 [
 		#brown. 0.6. 0.2. 0.
 		#orange. 1.0. 0.6. 0.
 		#lightRed. 1.0. 0.8. 0.8.
-		
+
 		}
 ]
 
@@ -278,8 +278,7 @@ Color class >> defaultColors4 [
 Color class >> fromArray: colorDef [
 	colorDef size = 3
 			ifTrue: [^self r: (colorDef at: 1) g: (colorDef at: 2) b: (colorDef at: 3)].
-	colorDef size = 0
-			ifTrue: [^self transparent].
+	colorDef ifEmpty: [^self transparent].
 	colorDef size = 4
 			ifTrue: [^(self r: (colorDef at: 1) g: (colorDef at: 2) b: (colorDef at: 3)) alpha: (colorDef at: 4)].
 	self error: 'Undefined color definition'
@@ -296,11 +295,11 @@ Color class >> fromHexString: aColorHex [
 	red := (Integer readFrom: (hexString first: 2) base: 16) / 255.
 	green := (Integer readFrom: (hexString copyFrom: 3 to: 4) base: 16) / 255.
 	blue := (Integer readFrom: (hexString copyFrom: 5 to: 6) base: 16) / 255.
-	
-	alpha := hexString size = 8 
+
+	alpha := hexString size = 8
 		ifFalse: [ 1.0 ]
 		ifTrue: [ (Integer readFrom: (hexString copyFrom: 7 to: 8) base: 16) / 255 ].
-	
+
 	^ self r: red g: green b: blue alpha: alpha
 ]
 
@@ -367,7 +366,7 @@ Color class >> h: hue s: saturation l: lightness [
 { #category : #'instance creation' }
 Color class >> h: hue s: saturation l: lightness alpha: alpha [
 	"Create a color with the given hue, saturation, lightness, and alpha. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and lightness are numbers in [0.0..1.0] where larger values are more saturated or lighter colors. The difference with brightness in the HSV coordinates is that colors go from black at lightness 0, through vivid hues at lightness 0.5, to white at lightness 1. For example, (Color h: 0 s: 1 l: 0.5) is pure red."
-	
+
 	^ self basicNew
 		initializeHue: hue
 			saturation: saturation
@@ -381,7 +380,7 @@ Color class >> h: hue s: saturation v: brightness [
 	"Create a color with the given hue, saturation, and brightness. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and brightness are numbers in [0.0..1.0] where larger values are more saturated or brighter colors. For example, (Color h: 0 s: 1 v: 1) is pure red."
 	"Note: By convention, brightness is abbreviated 'v' to to avoid confusion with blue."
 	"(Color h: 0 s: 1 v: 1) >>> (Color r: 1 g: 0 b:0)"
-	
+
 	^ self h: hue s: saturation v: brightness alpha: 1.0
 ]
 
@@ -389,7 +388,7 @@ Color class >> h: hue s: saturation v: brightness [
 Color class >> h: hue s: saturation v: brightness alpha: alpha [
 	"Create a color with the given hue, saturation, brightness, and alpha. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and brightness are numbers in [0.0..1.0] where larger values are more saturated or brighter colors. For example, (Color h: 0 s: 1 v: 1 alpha: 1) is pure red."
 	"(Color h: 0 s: 1 v: 1 alpha: 1) >>> Color red "
-	
+
 	^ self basicNew
 		initializeHue: hue saturation: saturation brightness: brightness alpha: alpha ;
 		yourself
@@ -428,23 +427,22 @@ Color class >> initialize [
 	color models used here, see Chapter 17 of Foley and van Dam,
 	Fundamentals of Interactive Computer Graphics, Addison-Wesley,
 	1982."
+
 	ComponentMask := 1023.
-	HalfComponentMask := 512.	"used to round up in integer calculations"
-	ComponentMax := 1023.0.	"a Float used to normalize components"
+	HalfComponentMask := 512. "used to round up in integer calculations"
+	ComponentMax := 1023.0. "a Float used to normalize components"
 	RedShift := 20.
 	GreenShift := 10.
 	BlueShift := 0.
-	
-	self 
+
+	self
 		initializeIndexedColors;
 		initializeColorRegistry;
-		initializeGrayToIndexMap.
-	
-	SessionManager default registerGuiClassNamed: self name
+		initializeGrayToIndexMap
 ]
 
 { #category : #'private - initialization' }
-Color class >> initializeColorRegistry [ 
+Color class >> initializeColorRegistry [
 	| values|
 	ColorRegistry := IdentityDictionary new.
 	values := self defaultColors, self defaultColors2, self defaultColors3, self defaultColors4.
@@ -456,7 +454,7 @@ Color class >> initializeColorRegistry [
 		blue := values at: index +3.
 		color :=  self  r: red g: green b: blue .
 		self registerColor: color named: colorName ].
-	self registerColor: (self r: 0 g: 0 b: 0 alpha: 0.0) named: #transparent.
+	self registerColor: (self r: 0 g: 0 b: 0 alpha: 0.0) named: #transparent
 ]
 
 { #category : #'private - initialization' }
@@ -469,12 +467,12 @@ Color class >> initializeGrayToIndexMap [
 	grayLevels := OrderedCollection new.
 	grayIndices := OrderedCollection new.
 	"Note: skip the first entry, which is reserved for transparent"
-	2 
+	2
 		to: IndexedColors size
-		do: 
-			[ :i | 
+		do:
+			[ :i |
 			c := IndexedColors at: i.
-			c saturation = 0.0 ifTrue: 
+			c saturation = 0.0 ifTrue:
 				[ "c is a gray"
 				grayLevels add: c privateBlue >> 2.	"top 8 bits; R, G, and B are the same"
 				grayIndices add: i - 1 ] ].	"pixel values are zero-based"
@@ -483,20 +481,20 @@ Color class >> initializeGrayToIndexMap [
 
 	"for each gray level in [0..255], select the closest match"
 	GrayToIndexMap := ByteArray new: 256.
-	0 
+	0
 		to: 255
-		do: 
-			[ :level | 
+		do:
+			[ :level |
 			distToClosest := 10000.	"greater than distance to any real gray"
-			1 
+			1
 				to: grayLevels size
-				do: 
-					[ :i | 
+				do:
+					[ :i |
 					dist := (level - (grayLevels at: i)) abs.
-					dist < distToClosest ifTrue: 
+					dist < distToClosest ifTrue:
 						[ distToClosest := dist.
 						indexOfClosest := grayIndices at: i ] ].
-			GrayToIndexMap 
+			GrayToIndexMap
 				at: level + 1
 				put: indexOfClosest ]
 ]
@@ -510,103 +508,103 @@ Color class >> initializeIndexedColors [
 	a := Array new: 256.
 
 	"1-bit colors (monochrome)"
-	a 
+	a
 		at: 1
-		put: (self 
+		put: (self
 				r: 1.0
 				g: 1.0
 				b: 1.0).	"white or transparent"
-	a 
+	a
 		at: 2
-		put: (self 
+		put: (self
 				r: 0.0
 				g: 0.0
 				b: 0.0).	"black"
 
 	"additional colors for 2-bit color"
-	a 
+	a
 		at: 3
-		put: (self 
+		put: (self
 				r: 1.0
 				g: 1.0
 				b: 1.0).	"opaque white"
-	a 
+	a
 		at: 4
-		put: (self 
+		put: (self
 				r: 0.5
 				g: 0.5
 				b: 0.5).	"1/2 gray"
 
 	"additional colors for 4-bit color"
-	a 
+	a
 		at: 5
-		put: (self 
+		put: (self
 				r: 1.0
 				g: 0.0
 				b: 0.0).	"red"
-	a 
+	a
 		at: 6
-		put: (self 
+		put: (self
 				r: 0.0
 				g: 1.0
 				b: 0.0).	"green"
-	a 
+	a
 		at: 7
-		put: (self 
+		put: (self
 				r: 0.0
 				g: 0.0
 				b: 1.0).	"blue"
-	a 
+	a
 		at: 8
-		put: (self 
+		put: (self
 				r: 0.0
 				g: 1.0
 				b: 1.0).	"cyan"
-	a 
+	a
 		at: 9
-		put: (self 
+		put: (self
 				r: 1.0
 				g: 1.0
 				b: 0.0).	"yellow"
-	a 
+	a
 		at: 10
-		put: (self 
+		put: (self
 				r: 1.0
 				g: 0.0
 				b: 1.0).	"magenta"
-	a 
+	a
 		at: 11
-		put: (self 
+		put: (self
 				r: 0.125
 				g: 0.125
 				b: 0.125).	"1/8 gray"
-	a 
+	a
 		at: 12
-		put: (self 
+		put: (self
 				r: 0.25
 				g: 0.25
 				b: 0.25).	"2/8 gray"
-	a 
+	a
 		at: 13
-		put: (self 
+		put: (self
 				r: 0.375
 				g: 0.375
 				b: 0.375).	"3/8 gray"
-	a 
+	a
 		at: 14
-		put: (self 
+		put: (self
 				r: 0.625
 				g: 0.625
 				b: 0.625).	"5/8 gray"
-	a 
+	a
 		at: 15
-		put: (self 
+		put: (self
 				r: 0.75
 				g: 0.75
 				b: 0.75).	"6/8 gray"
-	a 
+	a
 		at: 16
-		put: (self 
+		put: (self
 				r: 0.875
 				g: 0.875
 				b: 0.875).	"7/8 gray"
@@ -614,15 +612,15 @@ Color class >> initializeIndexedColors [
 	"additional colors for 8-bit color"
 	"24 more shades of gray (1/32 increments but not repeating 1/8 increments)"
 	index := 17.
-	1 
+	1
 		to: 31
-		do: 
-			[ :v | 
-			v \\ 4 = 0 ifFalse: 
+		do:
+			[ :v |
+			v \\ 4 = 0 ifFalse:
 				[ grayVal := v / 32.0.
-				a 
+				a
 					at: index
-					put: (Color 
+					put: (self
 							r: grayVal
 							g: grayVal
 							b: grayVal).
@@ -633,23 +631,23 @@ Color class >> initializeIndexedColors [
 	 previous colors, but this simplifies the mapping between RGB colors
 	 and color map indices. This color cube spans indices 40 through 255
 	 (indices 41-256 in this 1-based array)."
-	0 
+	0
 		to: 5
-		do: 
-			[ :r | 
-			0 
+		do:
+			[ :r |
+			0
 				to: 5
-				do: 
-					[ :g | 
-					0 
+				do:
+					[ :g |
+					0
 						to: 5
-						do: 
-							[ :b | 
+						do:
+							[ :b |
 							index := 41 + (36 * r + (6 * b) + g).
 							index > 256 ifTrue: [ self error: 'index out of range in color table compuation' ].
-							a 
+							a
 								at: index
-								put: (self 
+								put: (self
 										r: r
 										g: g
 										b: b
@@ -806,14 +804,14 @@ Color class >> purple [
 Color class >> r: r g: g b: b [
 	"Return a color with the given r, g, and b components in the range [0.0..1.0]."
 	"(Color r: 1 g: 1 b: 1) >>> Color white"
-	
+
 	^ self r: r g: g b: b alpha: 1.0
 ]
 
 { #category : #'instance creation' }
 Color class >> r: r g: g b: b alpha: alpha [
 	"Return a color with the given r, g, and b components in the range [0.0..1.0]."
-	
+
 	^ self basicNew
 		initializeRed: r green: g blue: b alpha: alpha ;
 		yourself
@@ -841,34 +839,27 @@ Color class >> red [
 
 { #category : #'private - initialization' }
 Color class >> registerColor: aColor named: aName [
-	ColorRegistry at: aName put: aColor.
+	ColorRegistry at: aName put: aColor
 ]
 
 { #category : #accessing }
 Color class >> registeredColorNames [
 	"Returns all the available names of named colors."
-	
+
 	^ ColorRegistry keys collect: [ :each | each asString ]
 ]
 
 { #category : #accessing }
 Color class >> registeredNameOf: aColor [
 	"Return the name of a color if it has a name, else #unnamed"
-	
+
 	| colorName |
 	colorName := #unnamed.
 	ColorRegistry
-		keysAndValuesDo: [ :key :value | 
+		keysAndValuesDo: [ :key :value |
 			value = aColor
 				ifTrue: [ colorName := key ] ].
 	^ colorName
-]
-
-{ #category : #'system startup' }
-Color class >> shutDown [
-	"Color shutDown"
-	CachedColormaps := nil.	"Maps to translate between color depths"
-	MaskingMap := nil	"Maps all colors except transparent to black for creating a mask"
 ]
 
 { #category : #'accessing - defaults' }
@@ -886,7 +877,7 @@ Color class >> transparent [
 { #category : #accessing }
 Color class >> unregisterColorNamed: aName [
 	"Remove the color named aName from the list of named colors."
-	
+
 	ColorRegistry removeKey: aName ifAbsent: nil
 ]
 
@@ -1046,25 +1037,25 @@ Color >> alpha [
 ]
 
 { #category : #transformations }
-Color >> alpha: aFloat [ 
+Color >> alpha: aFloat [
 	"Answer a new Color with the given amount of opacity ('alpha')."
 
 	^ self class r: self red g: self green b: self blue alpha: aFloat
 ]
 
 { #category : #transformations }
-Color >> alphaMixed: proportion with: aColor [ 
-	"Answer this color mixed with the given color. The proportion, a number 
-	between 0.0 and 1.0, determines what what fraction of the receiver to  
-	use in the mix. For example, 0.9 would yield a color close to the  
-	receiver. This method uses RGB interpolation; HSV interpolation can lead 
+Color >> alphaMixed: proportion with: aColor [
+	"Answer this color mixed with the given color. The proportion, a number
+	between 0.0 and 1.0, determines what what fraction of the receiver to
+	use in the mix. For example, 0.9 would yield a color close to the
+	receiver. This method uses RGB interpolation; HSV interpolation can lead
 	to surprises.  Mixes the alphas (for transparency) also."
 	| frac1 frac2 |
-	frac1 := proportion asFloat 
+	frac1 := proportion asFloat
 		min: 1.0
 		max: 0.0.
 	frac2 := 1.0 - frac1.
-	^ self class 
+	^ self class
 		r: self red * frac1 + (aColor red * frac2)
 		g: self green * frac1 + (aColor green * frac2)
 		b: self blue * frac1 + (aColor blue * frac2)
@@ -1082,7 +1073,7 @@ Color >> asColorref [
 	"Convert the receiver into a colorref, i.e, a number embedding r,g,b on 24 bits"
 	"(Color red asColorref) >>> 255"
 	"(Color white asColorref) >>>  16777215"
-	
+
 	^(self red * 255) asInteger + ((self green * 255) asInteger << 8) + ((self blue * 255) asInteger << 16)
 ]
 
@@ -1104,20 +1095,20 @@ Color >> asHexString [
 { #category : #converting }
 Color >> asNontranslucentColor [
 	"Set the transparency of the receiver to opaque."
-	
-	^ self alpha: 1.0.
+
+	^ self alpha: 1.0
 ]
 
 { #category : #converting }
 Color >> asRGBInteger [
 
-	^	(self red * 255) asInteger + 
-			((self green * 255) asInteger << 8) + 
+	^	(self red * 255) asInteger +
+			((self green * 255) asInteger << 8) +
 				((self blue * 255) asInteger << 16)
 ]
 
 { #category : #transformations }
-Color >> atLeastAsLuminentAs: aFloat [ 
+Color >> atLeastAsLuminentAs: aFloat [
 	| revisedColor |
 	revisedColor := self.
 	[ revisedColor luminance < aFloat ] whileTrue: [ revisedColor := revisedColor slightlyLighter ].
@@ -1125,7 +1116,7 @@ Color >> atLeastAsLuminentAs: aFloat [
 ]
 
 { #category : #transformations }
-Color >> atMostAsLuminentAs: aFloat [ 
+Color >> atMostAsLuminentAs: aFloat [
 	| revisedColor |
 	revisedColor := self.
 	[ revisedColor luminance > aFloat ] whileTrue: [ revisedColor := revisedColor slightlyDarker ].
@@ -1140,49 +1131,49 @@ Color >> attemptToMutateError [
 ]
 
 { #category : #converting }
-Color >> basicPixelValueForDepth: d [ 
+Color >> basicPixelValueForDepth: d [
 	"Returns an integer representing the bits that appear in a single pixel of this color in a Form of the given depth. The depth must be one of 1, 2, 4, 8, 16, or 32. Contrast with pixelWordForDepth: and bitPatternForDepth:, which return either a 32-bit word packed with the given pixel value or a multiple-word Bitmap containing a pattern. The inverse is the class message colorFromPixelValue:depth:"
 	"Details: For depths of 8 or less, the result is a colorMap index. For depths of 16 and 32, it is a direct color value with 5 or 8 bits per color component."
 	"Transparency: The pixel value zero is reserved for transparent. For depths greater than 8, black maps to the darkest possible blue."
 	| rgbBlack val |
 	d = 8 ifTrue: [ ^ self closestPixelValue8 ].	"common case"
-	d < 8 ifTrue: 
+	d < 8 ifTrue:
 		[ d = 4 ifTrue: [ ^ self closestPixelValue4 ].
 		d = 2 ifTrue: [ ^ self closestPixelValue2 ].
 		d = 1 ifTrue: [ ^ self closestPixelValue1 ] ].
 	rgbBlack := 1.	"closest black that is not transparent in RGB"
-	d = 16 ifTrue: 
+	d = 16 ifTrue:
 		[ "five bits per component; top bits ignored"
 		val := (((rgb bitShift: -15) bitAnd: 31744) bitOr: ((rgb bitShift: -10) bitAnd: 992)) bitOr: ((rgb bitShift: -5) bitAnd: 31).
-		^ val = 0 
+		^ val = 0
 			ifTrue: [ rgbBlack ]
 			ifFalse: [ val ] ].
-	d = 32 ifTrue: 
+	d = 32 ifTrue:
 		[ "eight bits per component; top 8 bits set to all ones (opaque alpha)"
 		val := LargePositiveInteger new: 4.
-		val 
+		val
 			at: 3
 			put: ((rgb bitShift: -22) bitAnd: 255).
-		val 
+		val
 			at: 2
 			put: ((rgb bitShift: -12) bitAnd: 255).
-		val 
+		val
 			at: 1
 			put: ((rgb bitShift: -2) bitAnd: 255).
-		val 
+		val
 			at: 4
 			put: 255.	"opaque alpha"
 		^ val ].
-	d = 12 ifTrue: 
+	d = 12 ifTrue:
 		[ "for indexing a color map with 4 bits per color component"
 		val := (((rgb bitShift: -18) bitAnd: 3840) bitOr: ((rgb bitShift: -12) bitAnd: 240)) bitOr: ((rgb bitShift: -6) bitAnd: 15).
-		^ val = 0 
+		^ val = 0
 			ifTrue: [ rgbBlack ]
 			ifFalse: [ val ] ].
-	d = 9 ifTrue: 
+	d = 9 ifTrue:
 		[ "for indexing a color map with 3 bits per color component"
 		val := (((rgb bitShift: -21) bitAnd: 448) bitOr: ((rgb bitShift: -14) bitAnd: 56)) bitOr: ((rgb bitShift: -7) bitAnd: 7).
-		^ val = 0 
+		^ val = 0
 			ifTrue: [ rgbBlack ]
 			ifFalse: [ val ] ].
 	self error: 'unknown pixel depth: ' , d printString
@@ -1191,13 +1182,13 @@ Color >> basicPixelValueForDepth: d [
 { #category : #'accessing - higher level' }
 Color >> beOpaque [
 	"Set the transparency of the receiver to opaque, i.e. alpha to 1.0."
-	
+
 	^ self alpha: 1.0
 ]
 
 { #category : #transformations }
 Color >> blacker [
-	
+
 	^ self alphaMixed: 0.8333 with: self class black
 ]
 
@@ -1301,9 +1292,9 @@ Color >> contrastingColorAdjustment [
 	"Answer darker or lighter color depending on the luminance."
 
 	self isTransparent ifTrue: [ ^ self ].
-	
+
 	^ self luminance > 0.5
-		ifTrue: [ self darker ] 
+		ifTrue: [ self darker ]
 		ifFalse:  [ self lighter ]
 ]
 
@@ -1312,7 +1303,7 @@ Color >> dansDarker [
 	"Return a darker shade of the same color.
 	An attempt to do better than the current darker method.
 	(now obsolete, since darker has been changed to do this. -dew)"
-	^ self class 
+	^ self class
 		h: self hue s: self saturation v: (self brightness - 0.16 max: 0.0)
 ]
 
@@ -1336,7 +1327,7 @@ Color >> diff: theOther [
 	"Returns a number between 0.0 and 1.0"
 	"(Color red diff: Color red) >>> 0.0"
 	"(Color white diff: Color black ) >>> 1.0"
-	
+
 	^ ((self privateRed - theOther privateRed) abs
 		+ (self privateGreen - theOther privateGreen) abs
 		+ (self privateBlue - theOther privateBlue) abs)
@@ -1351,11 +1342,11 @@ Color >> dominantColor [
 { #category : #transformations }
 Color >> duller [
 	"Answer a darker, desaturated color.  If the original color isn't very saturated, desaturate it by less (otherwise will just end up with grey)."
-	
+
 	| sat adjust |
-	(sat := self saturation) > 0.3
-		ifTrue: [adjust := -0.1]
-		ifFalse: [adjust := 0.1 - sat max: 0.0].
+	adjust := (sat := self saturation) > 0.3
+		          ifTrue: [ -0.1 ]
+		          ifFalse: [ 0.1 - sat max: 0.0 ].
 	^ self adjustSaturation: adjust brightness: -0.1
 
 	"^ self adjustSaturation: -0.03 brightness: -0.2"
@@ -1373,7 +1364,7 @@ Color >> green [
 	"Return the green component of this color, a float in the range [0.0..1.0]."
 	"Color red green >>> 0.0"
 	"(Color r: 0.5 g: 0.5 b: 1) green >>>  0.5004887585532747"
-	
+
 	^ self privateGreen asFloat / ComponentMax
 ]
 
@@ -1392,7 +1383,7 @@ Color >> hslSaturation [
 	chroma := self chroma.
 	"Chroma is zero for black and white, which are the two cases of division by zero below."
 	chroma isZero ifTrue: [ ^ chroma ].
-	
+
 	^ chroma / (1.0 - (self lightness * 2.0 - 1.0) abs)
 ]
 
@@ -1414,9 +1405,11 @@ Color >> hsvSaturation [
 { #category : #accessing }
 Color >> hue [
 	"Return the hue of this color, an angle in the range [0.0..360.0]."
+
 	"Color red hue >>> 0.0"
+
 	"(Color r: 0.5 g: 0.5 b: 1) hue >>> 240.0"
-	
+
 	| r g b max min span h |
 	r := self privateRed.
 	g := self privateGreen.
@@ -1425,12 +1418,12 @@ Color >> hue [
 	min := (r min: g) min: b.
 	span := (max - min) asFloat.
 	span = 0.0 ifTrue: [ ^ 0.0 ].
-	r = max 
-		ifTrue: [ h := (g - b) asFloat / span * 60.0 ]
-		ifFalse: 
-			[ g = max 
-				ifTrue: [ h := 120.0 + ((b - r) asFloat / span * 60.0) ]
-				ifFalse: [ h := 240.0 + ((r - g) asFloat / span * 60.0) ] ].
+	h := r = max
+		     ifTrue: [ (g - b) asFloat / span * 60.0 ]
+		     ifFalse: [
+			     g = max
+				     ifTrue: [ 120.0 + ((b - r) asFloat / span * 60.0) ]
+				     ifFalse: [ 240.0 + ((r - g) asFloat / span * 60.0) ] ].
 	h < 0.0 ifTrue: [ h := 360.0 + h ].
 	^ h
 ]
@@ -1446,7 +1439,7 @@ Color >> indexInMap: aColorMap [
 	aColorMap size = 512 ifTrue: [^ (self pixelValueForDepth: 9) + 1].
 	aColorMap size = 4096 ifTrue: [^ (self pixelValueForDepth: 12) + 1].
 	aColorMap size = 32768 ifTrue: [^ (self pixelValueForDepth: 16) + 1].
-	self error: 'unknown pixel depth'.
+	self error: 'unknown pixel depth'
 ]
 
 { #category : #initialization }
@@ -1454,11 +1447,10 @@ Color >> initializeHue: hue saturation: saturation brightness: brightness alpha:
 	"Initialize this color to the given hue, saturation, and brightness. See the comment in the instance creation method for details."
 
 	| s v hf i f p q t |
-	rgb == nil
-		ifFalse: [ self attemptToMutateError ].
+	rgb ifNotNil: [ self attemptToMutateError ].
 	s := saturation asFloat min: 1.0 max: 0.0.
 	v := brightness asFloat min: 1.0 max: 0.0.
-	
+
 	"zero saturation yields gray with the given brightness"
 	s = 0.0 ifTrue: [
 		^ self
@@ -1466,52 +1458,52 @@ Color >> initializeHue: hue saturation: saturation brightness: brightness alpha:
 			green: v
 			blue: v
 			alpha: anAlpha ].
-	
+
 	hf := hue asFloat \\ 360.0 / 60.0.
 	i := hf asInteger.	"integer part of hue"
 	f := hf fractionPart.	"fractional part of hue"
-		
+
 	p := (1.0 - s) * v.
 	q := (1.0 - (s * f)) * v.
 	t := (1.0 - (s * (1.0 - f))) * v.
-	
+
 	0 = i
-		ifTrue: [ 
+		ifTrue: [
 			^ self
 				initializeRed: v
 				green: t
 				blue: p
 				alpha: anAlpha ].
 	1 = i
-		ifTrue: [ 
+		ifTrue: [
 			^ self
 				initializeRed: q
 				green: v
 				blue: p
 				alpha: anAlpha ].
 	2 = i
-		ifTrue: [ 
+		ifTrue: [
 			^ self
 				initializeRed: p
 				green: v
 				blue: t
 				alpha: anAlpha ].
 	3 = i
-		ifTrue: [ 
+		ifTrue: [
 			^ self
 				initializeRed: p
 				green: q
 				blue: v
 				alpha: anAlpha ].
 	4 = i
-		ifTrue: [ 
+		ifTrue: [
 			^ self
 				initializeRed: t
 				green: p
 				blue: v
 				alpha: anAlpha ].
 	5 = i
-		ifTrue: [ 
+		ifTrue: [
 			^ self
 				initializeRed: v
 				green: p
@@ -1525,43 +1517,78 @@ Color >> initializeHue: hue saturation: saturation lightness: lightness alpha: a
 	"Initialize this color to the given hue, saturation, and lightness. See the comment in the instance creation method for details."
 
 	| s l hf i f lo hi up dn |
-	rgb == nil
-		ifFalse: [ self attemptToMutateError ].
+	rgb ifNotNil: [ self attemptToMutateError ].
 	s := saturation asFloat min: 1.0 max: 0.0.
 	l := lightness asFloat min: 1.0 max: 0.0.
 
 	"zero saturation yields gray with the given lightness"
-	s = 0.0
-		ifTrue: [ ^ self initializeRed: l green: l blue: l alpha: anAlpha ].
+	s = 0.0 ifTrue: [
+		^ self
+			  initializeRed: l
+			  green: l
+			  blue: l
+			  alpha: anAlpha ].
 
 	hf := hue asFloat \\ 360.0 / 60.0.
-	i := hf asInteger.	"integer part of hue"
-	f := hf fractionPart.	"fractional part of hue"
+	i := hf asInteger. "integer part of hue"
+	f := hf fractionPart. "fractional part of hue"
 
 	"Color components follow a step function between levels hi & lo with sloped transitions up & dn. Each component is phased according to hue."
-	hi := l < 0.5 ifTrue: [(1.0 + s) * l] ifFalse: [l + s - (l * s)].
+	hi := l < 0.5
+		      ifTrue: [ 1.0 + s * l ]
+		      ifFalse: [ l + s - (l * s) ].
 	lo := 2.0 * l - hi.
-	up := (hi - lo) * f + lo.
-	dn := (lo - hi) * f + hi.
+	up := hi - lo * f + lo.
+	dn := lo - hi * f + hi.
 
-	0 = i ifTrue: [ ^ self initializeRed: hi green: up blue: lo alpha: anAlpha ].
-	1 = i ifTrue: [ ^ self initializeRed: dn green: hi blue: lo alpha: anAlpha ].
-	2 = i ifTrue: [ ^ self initializeRed: lo green: hi blue: up alpha: anAlpha ].
-	3 = i ifTrue: [ ^ self initializeRed: lo green: dn blue: hi alpha: anAlpha ].
-	4 = i ifTrue: [ ^ self initializeRed: up green: lo blue: hi alpha: anAlpha ].
-	5 = i ifTrue: [ ^ self initializeRed: hi green: lo blue: dn alpha: anAlpha ].
+	0 = i ifTrue: [
+		^ self
+			  initializeRed: hi
+			  green: up
+			  blue: lo
+			  alpha: anAlpha ].
+	1 = i ifTrue: [
+		^ self
+			  initializeRed: dn
+			  green: hi
+			  blue: lo
+			  alpha: anAlpha ].
+	2 = i ifTrue: [
+		^ self
+			  initializeRed: lo
+			  green: hi
+			  blue: up
+			  alpha: anAlpha ].
+	3 = i ifTrue: [
+		^ self
+			  initializeRed: lo
+			  green: dn
+			  blue: hi
+			  alpha: anAlpha ].
+	4 = i ifTrue: [
+		^ self
+			  initializeRed: up
+			  green: lo
+			  blue: hi
+			  alpha: anAlpha ].
+	5 = i ifTrue: [
+		^ self
+			  initializeRed: hi
+			  green: lo
+			  blue: dn
+			  alpha: anAlpha ].
 	self error: 'implementation error'
 ]
 
 { #category : #initialization }
-Color >> initializePrivateRed: r green: g blue: b [ 
+Color >> initializePrivateRed: r green: g blue: b [
 	"Initialize this color's r, g, and b components to the given values in the range [0..ComponentMax].  Encoded in a single variable as 3 integers in [0..1023]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := ((r 
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := ((r
 		min: ComponentMask
-		max: 0) bitShift: RedShift) + ((g 
+		max: 0) bitShift: RedShift) + ((g
 			min: ComponentMask
-			max: 0) bitShift: GreenShift) + (b 
+			max: 0) bitShift: GreenShift) + (b
 			min: ComponentMask
 			max: 0).
 	cachedDepth := nil.
@@ -1569,23 +1596,35 @@ Color >> initializePrivateRed: r green: g blue: b [
 ]
 
 { #category : #initialization }
-Color >> initializeRed: r green: g blue: b alpha: anAlpha [ 
+Color >> initializeRed: r green: g blue: b alpha: anAlpha [
 	"Initialize this color's r, g, and b components to the given values in the range [0.0..1.0].  Encoded in a single variable as 3 integers in [0..1023]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := (((r * ComponentMax) rounded bitAnd: ComponentMask) bitShift: RedShift) + (((g * ComponentMax) rounded bitAnd: ComponentMask) bitShift: GreenShift) + ((b * ComponentMax) rounded bitAnd: ComponentMask).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := (((r * ComponentMax) rounded bitAnd: ComponentMask) bitShift:
+		        RedShift)
+	       +
+		       (((g * ComponentMax) rounded bitAnd: ComponentMask)
+			        bitShift: GreenShift)
+	       + ((b * ComponentMax) rounded bitAnd: ComponentMask).
 	cachedDepth := nil.
 	cachedBitPattern := nil.
-	self setAlpha: anAlpha.
+	self setAlpha: anAlpha
 ]
 
 { #category : #initialization }
-Color >> initializeRed: r green: g blue: b range: range [ 
+Color >> initializeRed: r green: g blue: b range: range [
 	"Initialize this color's r, g, and b components to the given values in the range [0..r]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := ((r * ComponentMask // range bitAnd: ComponentMask) bitShift: RedShift) + ((g * ComponentMask // range bitAnd: ComponentMask) bitShift: GreenShift) + (b * ComponentMask // range bitAnd: ComponentMask).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := ((r * ComponentMask // range bitAnd: ComponentMask) bitShift:
+		        RedShift)
+	       +
+		       ((g * ComponentMask // range bitAnd: ComponentMask)
+			        bitShift: GreenShift)
+	       + (b * ComponentMask // range bitAnd: ComponentMask).
 	cachedDepth := nil.
 	cachedBitPattern := nil.
-	self setAlpha: 1.0.
+	self setAlpha: 1.0
 ]
 
 { #category : #testing }
@@ -1597,7 +1636,7 @@ Color >> isBitmapFill [
 { #category : #testing }
 Color >> isBlack [
 	"Return true if the receiver represents black"
-	
+
 	^ rgb = 0
 ]
 
@@ -1616,7 +1655,7 @@ Color >> isGradientFill [
 { #category : #testing }
 Color >> isGray [
 	"Return true if the receiver represents a shade of gray"
-	
+
 	^(self privateRed = self privateGreen) and: [self privateRed = self privateBlue]
 ]
 
@@ -1628,7 +1667,7 @@ Color >> isOpaque [
 { #category : #testing }
 Color >> isOrientedFill [
 	"Return true if the receiver keeps an orientation (e.g., origin, direction, and normal)"
-	
+
 	^false
 ]
 
@@ -1651,7 +1690,7 @@ Color >> isTranslucent [
 { #category : #testing }
 Color >> isTranslucentButNotTransparent [
 	"Answer true if this any of this morph is translucent but not transparent."
-	
+
 	^ self isTranslucent and: [ self isTransparent not ]
 ]
 
@@ -1694,7 +1733,7 @@ Color >> luminance [
 ]
 
 { #category : #wheels }
-Color >> mix: color2 shades: thisMany [ 
+Color >> mix: color2 shades: thisMany [
 	"Return an array of thisMany colors from self to color2. Very useful for displaying color based on a variable in your program.  "
 	"(Color red mix: Color green shades: 12) inspect"
 	| redInc greenInc blueInc out rr gg bb |
@@ -1705,9 +1744,9 @@ Color >> mix: color2 shades: thisMany [
 	rr := self red.
 	gg := self green.
 	bb := self blue.
-	out := (1 to: thisMany) collect: 
-		[ :num | | c | 
-		c := self class 
+	out := (1 to: thisMany) collect:
+		[ :num | | c |
+		c := self class
 			r: rr
 			g: gg
 			b: bb.
@@ -1715,23 +1754,23 @@ Color >> mix: color2 shades: thisMany [
 		gg := gg + greenInc.
 		bb := bb + blueInc.
 		c ].
-	out 
+	out
 		at: out size
 		put: color2.	"hide roundoff errors"
 	^ out
 ]
 
 { #category : #transformations }
-Color >> mixed: proportion with: aColor [ 
-	"Mix with another color and do not preserve transpareny.  Only use this for extracting the RGB value and mixing it.  All other callers should use instead: 
+Color >> mixed: proportion with: aColor [
+	"Mix with another color and do not preserve transpareny.  Only use this for extracting the RGB value and mixing it.  All other callers should use instead:
 	aColor alphaMixed: proportion with: anotherColor
 	"
 	| frac1 frac2 |
-	frac1 := proportion asFloat 
+	frac1 := proportion asFloat
 		min: 1.0
 		max: 0.0.
 	frac2 := 1.0 - frac1.
-	^ self class 
+	^ self class
 		r: self red * frac1 + (aColor red * frac2)
 		g: self green * frac1 + (aColor green * frac2)
 		b: self blue * frac1 + (aColor blue * frac2)
@@ -1746,7 +1785,7 @@ Color >> muchDarker [
 { #category : #transformations }
 Color >> muchLighter [
 
-	^ self alphaMixed: 0.233 with: Color white
+	^ self alphaMixed: 0.233 with: self class white
 ]
 
 { #category : #accessing }
@@ -1757,7 +1796,7 @@ Color >> name [
 { #category : #transformations }
 Color >> negated [
 	"Return an RGB inverted color"
-	^Color
+	^ self class
 		r: 1.0 - self red
 		g: 1.0 - self green
 		b: 1.0 - self blue
@@ -1780,46 +1819,39 @@ Color >> paler [
 ]
 
 { #category : #'pixels handling' }
-Color >> pixelValueForDepth: d [ 
-		 
+Color >> pixelValueForDepth: d [
+
 		"Return the pixel value for this color at the given depth. Translucency only works in RGB; this color will appear either opaque or transparent at all other depths."
 	| basicPixelWord |
 	( d < 32 and:[ self isTransparent ] ) ifTrue: [ ^ 0 ].
 	basicPixelWord := self basicPixelValueForDepth: d.
-	^ d < 32 
+	^ d < 32
 		ifTrue: [ basicPixelWord ]
 		ifFalse: [ (basicPixelWord bitAnd: 16777215) bitOr: (alpha bitShift: 24) ]
 ]
 
 { #category : #'pixels handling' }
-Color >> pixelWordFor: depth filledWith: pixelValue [ 
+Color >> pixelWordFor: depth filledWith: pixelValue [
 	"Return to a 32-bit word that concatenates enough copies of the given pixel value to fill the word (i.e., 32/depth copies). Depth should be one of 1, 2, 4, 8, 16, or 32. The pixel value should be an integer in 0..2^depth-1."
+
 	| halfword |
 	depth = 32 ifTrue: [ ^ pixelValue ].
-	depth = 16 
-		ifTrue: [ halfword := pixelValue ]
-		ifFalse: 
-			[ halfword := pixelValue * (#(
-					65535
-					21845
-					#-
-					4369
-					#-
-					#-
-					#-
-					257
-				) at: depth)	"replicates at every bit"	"replicates every 2 bits"	"replicates every 4 bits"	"replicates every 8 bits" ].
+	halfword := depth = 16
+		            ifTrue: [ pixelValue ]
+		            ifFalse: [
+			            pixelValue
+			            * (#( 65535 21845 #- 4369 #- #- #- 257 ) at: depth) "replicates at every bit" "replicates every 2 bits" "replicates every 4 bits" "replicates every 8 bits" ].
 	^ halfword bitOr: (halfword bitShift: 16)
 ]
 
 { #category : #'pixels handling' }
-Color >> pixelWordForDepth: depth [ 
+Color >> pixelWordForDepth: depth [
 	"Return to a 32-bit word that concatenates enough copies of the receiver's pixel value to fill the word (i.e., 32/depth copies). Depth should be one of 1, 2, 4, 8, 16, or 32. The pixel value should be an integer in 0..2^depth-1."
 	| pixelValue basicPixelWord |
 	self isTransparent ifTrue: [ ^ 0 ].
 	pixelValue := self pixelValueForDepth: depth.
 	basicPixelWord := self pixelWordFor: depth filledWith: pixelValue.
-	^ depth < 32 
+	^ depth < 32
 		ifTrue: [ basicPixelWord ]
 		ifFalse: [ (basicPixelWord bitAnd: 16777215) bitOr: (alpha bitShift: 24) ]
 ]
@@ -1829,7 +1861,7 @@ Color >> printOn: aStream [
 	| name |
 	(name := self name).
 	name = #unnamed
-		ifFalse: [ 
+		ifFalse: [
 			^ aStream
 				nextPutAll: 'Color ';
 				nextPutAll: name ].
@@ -1908,7 +1940,7 @@ Color >> red [
 { #category : #other }
 Color >> rgbTriplet [
 	"Returns an array composed of the three color float components."
-	
+
 	"Color black rgbTriplet >>> #(0.0 0.0 0.0)"
 	"Color red rgbTriplet >>> #(1.0 0.0 0.0)"
 	^ Array
@@ -1920,7 +1952,7 @@ Color >> rgbTriplet [
 { #category : #accessing }
 Color >> saturation [
 	"Return the saturation of this color, a value between 0.0 and 1.0.
-	
+
 	Saturation is a scaling of chroma so that the whole [0..1] range is acceptable for any value of brightness/lightness.
 	See #hslSaturation and #hsvSaturation; this method returns HSV saturation for compatibility."
 
@@ -1942,19 +1974,19 @@ Color >> scaledPixelValue32 [
 
 { #category : #accessing }
 Color >> setAlpha: aFloat [
-	alpha := ((255.0 * aFloat) asInteger  min: 255) max: 0.
+	alpha := ((255.0 * aFloat) asInteger  min: 255) max: 0
 ]
 
 { #category : #private }
-Color >> setHue: hue saturation: saturation brightness: brightness [ 
+Color >> setHue: hue saturation: saturation brightness: brightness [
 	"Initialize this color to the given hue, saturation, and brightness. See the comment in the instance creation method for details."
 	| s v hf i f p q t |
 	s := (saturation asFloat max: 0.0) min: 1.0.
 	v := (brightness asFloat max: 0.0) min: 1.0.
 
 	"zero saturation yields gray with the given brightness"
-	s = 0.0 ifTrue: 
-		[ ^ self 
+	s = 0.0 ifTrue:
+		[ ^ self
 			setRed: v
 			green: v
 			blue: v ].
@@ -1966,33 +1998,33 @@ Color >> setHue: hue saturation: saturation brightness: brightness [
 	p := (1.0 - s) * v.
 	q := (1.0 - (s * f)) * v.
 	t := (1.0 - (s * (1.0 - f))) * v.
-	0 = i ifTrue: 
-		[ ^ self 
+	0 = i ifTrue:
+		[ ^ self
 			setRed: v
 			green: t
 			blue: p ].
-	1 = i ifTrue: 
-		[ ^ self 
+	1 = i ifTrue:
+		[ ^ self
 			setRed: q
 			green: v
 			blue: p ].
-	2 = i ifTrue: 
-		[ ^ self 
+	2 = i ifTrue:
+		[ ^ self
 			setRed: p
 			green: v
 			blue: t ].
-	3 = i ifTrue: 
-		[ ^ self 
+	3 = i ifTrue:
+		[ ^ self
 			setRed: p
 			green: q
 			blue: v ].
-	4 = i ifTrue: 
-		[ ^ self 
+	4 = i ifTrue:
+		[ ^ self
 			setRed: t
 			green: p
 			blue: v ].
-	5 = i ifTrue: 
-		[ ^ self 
+	5 = i ifTrue:
+		[ ^ self
 			setRed: v
 			green: p
 			blue: q ].
@@ -2000,40 +2032,50 @@ Color >> setHue: hue saturation: saturation brightness: brightness [
 ]
 
 { #category : #private }
-Color >> setPrivateRed: r green: g blue: b [ 
+Color >> setPrivateRed: r green: g blue: b [
 	"Initialize this color's r, g, and b components to the given values in the range [0..ComponentMax].  Encoded in a single variable as 3 integers in [0..1023]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := ((r 
-		min: ComponentMask
-		max: 0) bitShift: RedShift) + ((g 
-			min: ComponentMask
-			max: 0) bitShift: GreenShift) + (b 
-			min: ComponentMask
-			max: 0).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := ((r min: ComponentMask max: 0) bitShift: RedShift)
+	       + ((g min: ComponentMask max: 0) bitShift: GreenShift)
+	       + (b min: ComponentMask max: 0).
 	cachedDepth := nil.
 	cachedBitPattern := nil
 ]
 
 { #category : #private }
-Color >> setRGB: rgb0 [ 
-	rgb == nil ifFalse: [ self attemptToMutateError ].
+Color >> setRGB: rgb0 [
+
+	rgb ifNotNil: [ self attemptToMutateError ].
 	rgb := rgb0
 ]
 
 { #category : #private }
-Color >> setRed: r green: g blue: b [ 
+Color >> setRed: r green: g blue: b [
 	"Initialize this color's r, g, and b components to the given values in the range [0.0..1.0].  Encoded in a single variable as 3 integers in [0..1023]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := (((r * ComponentMax) rounded bitAnd: ComponentMask) bitShift: RedShift) + (((g * ComponentMax) rounded bitAnd: ComponentMask) bitShift: GreenShift) + ((b * ComponentMax) rounded bitAnd: ComponentMask).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := (((r * ComponentMax) rounded bitAnd: ComponentMask) bitShift:
+		        RedShift)
+	       +
+		       (((g * ComponentMax) rounded bitAnd: ComponentMask)
+			        bitShift: GreenShift)
+	       + ((b * ComponentMax) rounded bitAnd: ComponentMask).
 	cachedDepth := nil.
 	cachedBitPattern := nil
 ]
 
 { #category : #private }
-Color >> setRed: r green: g blue: b range: range [ 
+Color >> setRed: r green: g blue: b range: range [
 	"Initialize this color's r, g, and b components to the given values in the range [0..r]."
-	rgb == nil ifFalse: [ self attemptToMutateError ].
-	rgb := ((r * ComponentMask // range bitAnd: ComponentMask) bitShift: RedShift) + ((g * ComponentMask // range bitAnd: ComponentMask) bitShift: GreenShift) + (b * ComponentMask // range bitAnd: ComponentMask).
+
+	rgb ifNotNil: [ self attemptToMutateError ].
+	rgb := ((r * ComponentMask // range bitAnd: ComponentMask) bitShift:
+		        RedShift)
+	       +
+		       ((g * ComponentMask // range bitAnd: ComponentMask)
+			        bitShift: GreenShift)
+	       + (b * ComponentMask // range bitAnd: ComponentMask).
 	cachedDepth := nil.
 	cachedBitPattern := nil
 ]
@@ -2091,7 +2133,7 @@ Color >> storeArrayValuesOn: aStream [
 	aStream space.
 	(self blue roundTo: 0.001) storeOn: aStream.
 	aStream space.
-	(self alpha roundTo: 0.001) storeOn: aStream.
+	(self alpha roundTo: 0.001) storeOn: aStream
 ]
 
 { #category : #printing }
@@ -2138,19 +2180,19 @@ Color >> veryMuchLighter [
 ]
 
 { #category : #wheels }
-Color >> wheel: thisMany [ 
+Color >> wheel: thisMany [
 	"An array of thisMany colors around the color wheel starting at self and ending all the way around the hue space just before self.  Array is of length thisMany.  Very useful for displaying color based on a variable in your program.  "
 	"(Color wheel: 8) inspect"
 	"(Color wheel: 8) withIndexDo: [:c :i | Display fill: (i*10@20 extent: 10@20) fillColor: c]"
-	
+
 	| sat bri step hue |
 	sat := self saturation.
 	bri := self brightness.
 	hue := self hue.
 	step := 360.0 / (thisMany max: 1).
-	^ (1 to: thisMany) collect: 
-		[ :num | | c | 
-		c := self class 
+	^ (1 to: thisMany) collect:
+		[ :num | | c |
+		c := self class
 			h: hue
 			s: sat
 			v: bri.	"hue is taken mod 360"

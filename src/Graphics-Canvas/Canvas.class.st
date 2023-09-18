@@ -26,7 +26,7 @@ Class {
 
 { #category : #converting }
 Canvas >> asShadowDrawingCanvas [
-	^self asShadowDrawingCanvas: (Color black alpha: 0.5).
+	^self asShadowDrawingCanvas: (Color black alpha: 0.5)
 ]
 
 { #category : #converting }
@@ -35,13 +35,13 @@ Canvas >> asShadowDrawingCanvas: aColor [
 ]
 
 { #category : #'drawing - support' }
-Canvas >> cache: aRectangle using: aCache during: aBlock [ 
+Canvas >> cache: aRectangle using: aCache during: aBlock [
 	"Cache the execution of aBlock by the given cache.
 	Note: At some point we may want to actually *create* the cache here;
 		for now we're only using it."
 
-	(aCache notNil 
-		and: [(aCache isForm) and: [aCache extent = aRectangle extent]]) 
+	(aCache notNil
+		and: [(aCache isForm) and: [aCache extent = aRectangle extent]])
 			ifTrue: [^self paintImage: aCache at: aRectangle origin].
 	aBlock value: self
 ]
@@ -78,7 +78,7 @@ Canvas >> depth [
 ]
 
 { #category : #testing }
-Canvas >> doesRoundedCorners [ 
+Canvas >> doesRoundedCorners [
 
 	^ true
 ]
@@ -110,8 +110,8 @@ Canvas >> drawImage: aForm at: aPoint sourceRect: sourceRect [
 { #category : #'drawing - general' }
 Canvas >> drawMorph: aMorph [
 	"Draw the receiver morph on the receiver"
-	
-	"Changed to improve performance. Have seen a 30% improvement."	
+
+	"Changed to improve performance. Have seen a 30% improvement."
 	(aMorph fullBounds intersects: self clipRect)
 		ifFalse: [^self].
 	self draw: aMorph
@@ -193,13 +193,13 @@ Canvas >> extent [
 Canvas >> fillColor: aColor [
 	"Fill the receiver with the given color.
 	Note: This method should be named differently since it is intended to fill the background and thus fills even if the color is transparent"
-	^self fillRectangle: self clipRect color: (aColor alpha: 1.0).
+	^self fillRectangle: self clipRect color: (aColor alpha: 1.0)
 ]
 
 { #category : #'drawing - ovals' }
 Canvas >> fillOval: r color: c [
 
-	self fillOval: r color: c borderWidth: 0 borderColor: Color transparent.
+	self fillOval: r color: c borderWidth: 0 borderColor: Color transparent
 ]
 
 { #category : #'drawing - ovals' }
@@ -225,14 +225,14 @@ Canvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor
 Canvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 	"Fill the given rectangle with the given, non-composite, fill style
 	Note: The default implementation does not recognize any enhanced fill styles."
-	
-	self fillRectangle: aRectangle color: aFillStyle asColor.
+
+	self fillRectangle: aRectangle color: aFillStyle asColor
 ]
 
 { #category : #'drawing - rectangles' }
 Canvas >> fillRectangle: r color: c [
 	"Fill the rectangle using the given color"
-	^self 
+	^self
 		frameAndFillRectangle: r
 		fillColor: c
 		borderWidth: 0
@@ -242,7 +242,7 @@ Canvas >> fillRectangle: r color: c [
 { #category : #'drawing - rectangles' }
 Canvas >> fillRectangle: aRectangle fillStyle: aFillStyle [
 	"Fill the given rectangle. Double-dispatched via the fill style."
-	
+
 	aFillStyle fillRectangle: aRectangle on: self
 ]
 
@@ -251,8 +251,8 @@ Canvas >> fillRectangle: aRectangle fillStyle: aFillStyle borderStyle: aBorderSt
 	"Fill the given rectangle."
        aFillStyle isTransparent ifFalse: [
                self fillRectangle: (aRectangle insetBy: aBorderStyle width) fillStyle: aFillStyle ].
-       
-       (aBorderStyle notNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ].
+
+       (aBorderStyle notNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ]
 ]
 
 { #category : #initialization }
@@ -296,25 +296,25 @@ Canvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth
 		pt := r topLeft + (bw // 2).
 		self line: pt to: pt + ((r extent x - bw x)@0) width: borderWidth color: topLeftColor.
 		self line: pt to: pt + (0@(r extent y - bw y)) width: borderWidth color: topLeftColor.
-	].
+	]
 ]
 
 { #category : #'drawing - ovals' }
 Canvas >> frameOval: r color: c [
 
-	self fillOval: r color: Color transparent borderWidth: 1 borderColor: c.
+	self fillOval: r color: Color transparent borderWidth: 1 borderColor: c
 ]
 
 { #category : #'drawing - ovals' }
 Canvas >> frameOval: r width: w color: c [
 
-	self fillOval: r color: Color transparent borderWidth: w borderColor: c.
+	self fillOval: r color: Color transparent borderWidth: w borderColor: c
 ]
 
 { #category : #'drawing - rectangles' }
 Canvas >> frameRectangle: r color: c [
 
-	self frameRectangle: r width: 1 color: c.
+	self frameRectangle: r width: 1 color: c
 ]
 
 { #category : #'drawing - rectangles' }
@@ -458,7 +458,7 @@ Canvas >> isVisible: aRectangle [
 { #category : #drawing }
 Canvas >> line: pt1 to: pt2 color: c [
 
-	self line: pt1 to: pt2 width: 1 color: c.
+	self line: pt1 to: pt2 width: 1 color: c
 ]
 
 { #category : #drawing }
@@ -468,7 +468,7 @@ Canvas >> line: pt1 to: pt2 width: w color: c [
 ]
 
 { #category : #drawing }
-Canvas >> line: pt1 to: pt2 width: width color: color1 dashLength: s1 secondColor: color2 secondDashLength: s2 startingOffset: startingOffset [ 
+Canvas >> line: pt1 to: pt2 width: width color: color1 dashLength: s1 secondColor: color2 secondDashLength: s2 startingOffset: startingOffset [
 	"Draw a line using the given width, colors and dash lengths.
 	Originally written by Stephan Rudlof; tweaked by Dan Ingalls
 	to use startingOffset for sliding offset as in 'ants' animations.
@@ -479,31 +479,31 @@ Canvas >> line: pt1 to: pt2 width: width color: color1 dashLength: s1 secondColo
 	dist = 0 ifTrue: [^startingOffset].
 	s1 = 0 & (s2 = 0) ifTrue: [^startingOffset].
 	deltaBig := pt2 - pt1.
-	colors := { 
+	colors := {
 				color1.
 				color2}.
-	segLens := { 
+	segLens := {
 				s1 asFloat.
 				s2 asFloat}.
-	nextPhase := { 
+	nextPhase := {
 				2.
 				1}.
 
 	"Figure out what phase we are in and how far, given startingOffset."
 	segmentOffset := startingOffset \\ (s1 + s2).
-	segmentLength := segmentOffset < s1 
-		ifTrue: 
+	segmentLength := segmentOffset < s1
+		ifTrue:
 			[phase := 1.
 			s1 - segmentOffset]
-		ifFalse: 
+		ifFalse:
 			[phase := 2.
 			 s1 + s2 - segmentOffset].
 	startPoint := pt1.
 	distDone := 0.0.
-	[distDone < dist] whileTrue: 
+	[distDone < dist] whileTrue:
 			[segmentLength := segmentLength min: dist - distDone.
 			endPoint := startPoint + (deltaBig * segmentLength / dist).
-			self 
+			self
 				line: startPoint truncated
 				to: endPoint truncated
 				width: width
@@ -516,9 +516,9 @@ Canvas >> line: pt1 to: pt2 width: width color: color1 dashLength: s1 secondColo
 ]
 
 { #category : #drawing }
-Canvas >> line: pt1 to: pt2 width: w1 color: c1 stepWidth: s1 secondWidth: w2 secondColor: c2 secondStepWidth: s2 [ 
-	"Draw a line using the given width, colors and steps; both steps can  
-	have different stepWidths (firstStep, secondStep), draw widths and  
+Canvas >> line: pt1 to: pt2 width: w1 color: c1 stepWidth: s1 secondWidth: w2 secondColor: c2 secondStepWidth: s2 [
+	"Draw a line using the given width, colors and steps; both steps can
+	have different stepWidths (firstStep, secondStep), draw widths and
 	colors."
 	| bigSteps offsetPoint dist p1p2Vec deltaBig delta1 delta2 lastPoint bigStep |
 	s1 = 0 & (s2 = 0) ifTrue: [^ self].
@@ -531,15 +531,15 @@ Canvas >> line: pt1 to: pt2 width: w1 color: c1 stepWidth: s1 secondWidth: w2 se
 	delta1 := deltaBig * (s1 / bigStep).
 	delta2 := deltaBig * (s2 / bigStep).
 	dist <= s1
-		ifTrue: 
+		ifTrue:
 			[self
 				line: pt1 rounded
 				to: pt2 rounded
 				width: w1
 				color: c1.
 			^ self].
-	0 to: bigSteps truncated - 1 do: 
-		[:bigStepIx | 
+	0 to: bigSteps truncated - 1 do:
+		[:bigStepIx |
 		self
 			line: (pt1 + (offsetPoint := deltaBig * bigStepIx)) rounded
 			to: (pt1 + (offsetPoint := offsetPoint + delta1)) rounded
@@ -560,7 +560,7 @@ Canvas >> line: pt1 to: pt2 width: w1 color: c1 stepWidth: s1 secondWidth: w2 se
 				to: pt2 rounded
 				width: w1
 				color: c1]
-		ifFalse: 
+		ifFalse:
 			[self
 				line: lastPoint rounded
 				to: (lastPoint + delta1) rounded
@@ -574,7 +574,7 @@ Canvas >> line: pt1 to: pt2 width: w1 color: c1 stepWidth: s1 secondWidth: w2 se
 ]
 
 { #category : #drawing }
-Canvas >> line: pt1 to: pt2 width: width colors: colors dashes: dashes startingOffset: startingOffset [ 
+Canvas >> line: pt1 to: pt2 width: width colors: colors dashes: dashes startingOffset: startingOffset [
 	"Draw a line using the given width, colors and dash lengths.
 	Dash lengths are considered as multiples of width."
 
@@ -585,7 +585,7 @@ Canvas >> line: pt1 to: pt2 width: width colors: colors dashes: dashes startingO
 	(dashes allSatisfy: [:d | d = 0]) ifTrue: [^startingOffset].
 	deltaBig := pt2 - pt1.
 	segLens := dashes collect: [:d | d * width].
-	
+
 	"Figure out what phase we are in and how far, given startingOffset."
 	segmentOffset := startingOffset \\ segLens sum.
 	lens := segLens readStream.
@@ -603,11 +603,11 @@ Canvas >> line: pt1 to: pt2 width: width colors: colors dashes: dashes startingO
 				distDone := distDone + segmentLength.
 				phase := phase \\ segLens size + 1.
 				segmentLength :=  (segLens at: phase)].
-	[distDone < dist] whileTrue: 
+	[distDone < dist] whileTrue:
 			[segmentLength := segmentLength min: dist - distDone.
 			endPoint := startPoint + (deltaBig * segmentLength / dist).
 			ep := startPoint + (deltaBig * (segmentLength - width max: 0) / dist).
-			self 
+			self
 				line: startPoint truncated
 				to: ep truncated
 				width: width
@@ -727,7 +727,7 @@ Canvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock sm
 
 { #category : #other }
 Canvas >> translateBy:aPoint clippingTo:aRect during:aBlock [
-	^aBlock value:(self copyOffset:aPoint clipRect:aRect).
+	^aBlock value:(self copyOffset:aPoint clipRect:aRect)
 ]
 
 { #category : #'drawing - support' }
@@ -739,8 +739,8 @@ Canvas >> translateBy: delta during: aBlock [
 { #category : #'drawing - support' }
 Canvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlock [
 	"Set a new origin and clipping rectangle only during the execution of aBlock."
-	self translateBy: newOrigin - self origin 
-		clippingTo: (aRectangle translateBy: self origin negated) 
+	self translateBy: newOrigin - self origin
+		clippingTo: (aRectangle translateBy: self origin negated)
 		during: aBlock
 ]
 
@@ -757,7 +757,7 @@ Canvas >> translucentImage: aForm at: aPoint sourceRect: sourceRect [
 	"Draw a translucent image using the best available way of representing translucency.
 	Note: This will be fixed in the future."
 
-	(self depth < 32 or:[aForm isTranslucent not]) 
+	(self depth < 32 or:[aForm isTranslucent not])
 		ifTrue:[^self paintImage: aForm at: aPoint sourceRect: sourceRect].
 	self image: aForm
 		at: aPoint

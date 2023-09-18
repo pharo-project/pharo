@@ -7,9 +7,9 @@ Trait {
 }
 
 { #category : #'menu & halo' }
-TEnableOnHaloMenu >> addToggleItemsToHaloMenu: aCustomMenu [ 
+TEnableOnHaloMenu >> addToggleItemsToHaloMenu: aCustomMenu [
 	"Add toggle-items to the halo menu"
-	
+
 	super addToggleItemsToHaloMenu: aCustomMenu.
 	aCustomMenu
 		addUpdating: #enabledString
@@ -34,7 +34,7 @@ TEnableOnHaloMenu >> enabled: aBoolean [
 { #category : #enablement }
 TEnableOnHaloMenu >> enabledString [
 	"Answer the string to be shown in a menu to represent the 'enabled' status"
-	
+
 	^ (self enabled) -> 'enabled' translated
 ]
 

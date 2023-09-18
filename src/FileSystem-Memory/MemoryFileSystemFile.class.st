@@ -38,11 +38,11 @@ MemoryFileSystemFile >> at: index put: anObject [
 ]
 
 { #category : #'stream-protocol' }
-MemoryFileSystemFile >> at: index read: aCollection startingAt: start count: count [ 
+MemoryFileSystemFile >> at: index read: aCollection startingAt: start count: count [
 	| max stop |
 	max := size - index + 1 min: count.
 	stop := start + max - 1.
-	aCollection 
+	aCollection
 		replaceFrom: start
 		to: stop
 		with: bytes
@@ -184,7 +184,7 @@ MemoryFileSystemFile >> updateSize: newSize [
 { #category : #'stream-protocol' }
 MemoryFileSystemFile >> writeStreamDo: aBlock [
 	ByteArray
-		streamContents: [ :aStream | 
+		streamContents: [ :aStream |
 			aBlock value: aStream.
 			bytes := aStream contents ].
 	self updateSize: bytes size

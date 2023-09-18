@@ -15,7 +15,13 @@ Class {
 DAPackageAnalyzerDiffTreePresenter class >> newWith: oldRelationGraph on: newRelationGraph [
 	^ self new
 		initializeWith: oldRelationGraph on: newRelationGraph;
-		yourself.
+		yourself
+]
+
+{ #category : #specs }
+DAPackageAnalyzerDiffTreePresenter class >> title [
+
+	^ 'Package Dependencies Analysis Diff'
 ]
 
 { #category : #initialization }
@@ -26,8 +32,8 @@ DAPackageAnalyzerDiffTreePresenter >> buildRoots [
 
 { #category : #specs }
 DAPackageAnalyzerDiffTreePresenter >> defaultLayout [
-	
-	^ SpBoxLayout newTopToBottom 
+
+	^ SpBoxLayout newTopToBottom
 		add: #treeDiff;
 		yourself
 ]
@@ -39,8 +45,8 @@ DAPackageAnalyzerDiffTreePresenter >> extent [
 
 { #category : #initialization }
 DAPackageAnalyzerDiffTreePresenter >> initializePresenters [
-	
-	treeDiff := self newTree.
+
+	treeDiff := self newTree
 ]
 
 { #category : #initialization }
@@ -49,16 +55,8 @@ DAPackageAnalyzerDiffTreePresenter >> initializeWith: oldRelationGraph on: newRe
 		oldRelationGraph: oldRelationGraph;
 		newRelationGraph: newRelationGraph.
 	packageRelationGraphDiff make.
-	
-	self buildRoots
-	
-	
-]
 
-{ #category : #protocol }
-DAPackageAnalyzerDiffTreePresenter >> title [
-	^ 'Package Dependencies Analysis Diff'
-	
+	self buildRoots
 ]
 
 { #category : #accessing }

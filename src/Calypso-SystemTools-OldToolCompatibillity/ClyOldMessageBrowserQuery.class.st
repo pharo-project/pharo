@@ -49,7 +49,7 @@ ClyOldMessageBrowserQuery >> criteriaString: anObject [
 ClyOldMessageBrowserQuery >> decorateResultMethodEditor: aMethodEditor [
 
 	criteriaString ifNil: [ ^self ].
-	
+
 	aMethodEditor selectStringAsInMessageBrowser: criteriaString
 ]
 
@@ -64,7 +64,7 @@ ClyOldMessageBrowserQuery >> installedMethods [
 
 	| onlyMethods actualMethods |
 	onlyMethods := methods select: [ :each | each isCompiledMethod ].
-	
+
 	actualMethods := self filterInstalledMethods: onlyMethods, extraMethods.
 	^actualMethods, (methods reject: [ :each | each isCompiledMethod ])
 ]
@@ -75,7 +75,7 @@ ClyOldMessageBrowserQuery >> selectsMethod: aMethod [
 	(super selectsMethod: aMethod) ifTrue: [ ^true ].
 	criteriaBlock ifNil: [ ^false ].
 
-	extraMethods removeAllSuchThat: [ :each | 
+	extraMethods removeAllSuchThat: [ :each |
 		each calypsoEnvironmentType checkCalypsoItem: each isEqualTo: aMethod].
 
 	result := criteriaBlock value: aMethod.

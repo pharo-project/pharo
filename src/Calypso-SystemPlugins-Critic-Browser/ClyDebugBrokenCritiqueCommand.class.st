@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 ClyDebugBrokenCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
-	
+
 	^aCriticContext hasSelectedItems and: [
 		aCriticContext lastSelectedItem isMarkedWith: ClyBrokenCritiqueTag]
 ]
@@ -18,14 +18,14 @@ ClyDebugBrokenCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 { #category : #activation }
 ClyDebugBrokenCritiqueCommand class >> criticTableIconActivation [
 	<classAnnotation>
-	
+
 	^ClyTableIconCommandActivation for: ReProperty asCalypsoItemContext
 ]
 
 { #category : #'table decoration' }
 ClyDebugBrokenCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 	super decorateTableCell: anItemCellMorph with: aMorph.
-	
+
 	anItemCellMorph definitionIcon: #exception
 ]
 

@@ -26,10 +26,10 @@ ClyRunTestsFromMethodsCommand >> defaultMenuIcon [
 
 	| fullResult |
 	fullResult := self testResult.
-	runTestCases do: [ :each | 
+	runTestCases do: [ :each |
 		fullResult concreteResultOf: runTestCases first ifPresent: [:testResult |
 			^testResult createIcon ]].
-	
+
 	^fullResult createIcon
 ]
 
@@ -41,7 +41,7 @@ ClyRunTestsFromMethodsCommand >> execute [
 { #category : #execution }
 ClyRunTestsFromMethodsCommand >> readParametersFromContext: aToolContext [
 	super readParametersFromContext: aToolContext.
-	
+
 	runTestCases := aToolContext selectedClasses
 ]
 
@@ -50,9 +50,9 @@ ClyRunTestsFromMethodsCommand >> runTest: testSelector of: testClass [
 
 	| testResult |
 	testResult := testClass debug: testSelector.
-	
+
 	self
-		notifyUserAboutResults: testResult 
+		notifyUserAboutResults: testResult
 		with: 'Method: ' , testClass asString , '>>#' , testSelector asString
 ]
 
@@ -61,8 +61,8 @@ ClyRunTestsFromMethodsCommand >> runTestItem: testItem [
 
 	| testSelector |
 	testSelector := self testSelectorOf: testItem.
-	
-	(self targetTestCasesFor: testItem) do: [ :each | 
+
+	(self targetTestCasesFor: testItem) do: [ :each |
 		self runTest: testSelector of: each ]
 ]
 
@@ -71,11 +71,11 @@ ClyRunTestsFromMethodsCommand >> targetTestCasesFor: testItem [
 	| fullResult itemTestCases |
 	itemTestCases := IdentitySet new.
 	fullResult := self testResultOf: testItem.
-	
+
 	runTestCases do: [:each |
-		fullResult concreteResultOf: each ifPresent: [ :concreteResult | 
+		fullResult concreteResultOf: each ifPresent: [ :concreteResult |
 			itemTestCases add: each ]].
-	
+
 	^itemTestCases ifEmpty: [fullResult testCases ]
 ]
 

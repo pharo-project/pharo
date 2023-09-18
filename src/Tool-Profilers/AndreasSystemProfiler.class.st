@@ -86,7 +86,7 @@ AndreasSystemProfiler class >> exampleSpyOnWorld [
 AndreasSystemProfiler class >> spyFor: seconds [
 	"Run the system profiler for the specified number of seconds"
 
-	^self spyOn: [ (Delay forSeconds: seconds) wait ].
+	^self spyOn: [ (Delay forSeconds: seconds) wait ]
 ]
 
 { #category : #spying }
@@ -102,18 +102,18 @@ AndreasSystemProfiler class >> spyOn: aBlock [
 { #category : #spying }
 AndreasSystemProfiler class >> spyOnWorldFor: seconds [
 	"Run the system profiler for the specified number of seconds,
-	 spying on the morphic world in which it was launched. 
+	 spying on the morphic world in which it was launched.
 	 Handy for running Workspace do-its."
 
 	^self spyOn: [  | deadline |
 		deadline := Time totalSeconds + seconds.
-		MorphicRenderLoop new doOneCycleWhile: [Time totalSeconds < deadline] ].
+		MorphicRenderLoop new doOneCycleWhile: [Time totalSeconds < deadline] ]
 ]
 
 { #category : #reporting }
 AndreasSystemProfiler >> doReport [
 	"Report the results of this profiler run"
-	UIManager default edit: self report label: 'Spy Results'.
+	UIManager default edit: self report label: 'Spy Results'
 ]
 
 { #category : #reporting }
@@ -123,19 +123,19 @@ AndreasSystemProfiler >> report [
 ]
 
 { #category : #reporting }
-AndreasSystemProfiler >> report: strm [ 
-	"Print a report, with cutoff percentage of each element of the tree 
+AndreasSystemProfiler >> report: strm [
+	"Print a report, with cutoff percentage of each element of the tree
 	(leaves, roots, tree)=2, on the stream, strm."
 
 	self report: strm cutoff: 1
 ]
 
 { #category : #reporting }
-AndreasSystemProfiler >> report: strm cutoff: threshold [ 
+AndreasSystemProfiler >> report: strm cutoff: threshold [
 	tallyRoot ifNil: [ strm nextPutAll: 'The profiler has not been run'. ^ self ].
-	
+
 	tallyRoot tally isZero
-		ifTrue: [ strm nextPutAll: ' - no tallies obtained' ] 
+		ifTrue: [ strm nextPutAll: ' - no tallies obtained' ]
 		ifFalse: [
 			strm nextPutAll: 'Reporting - ', totalTally asStringWithCommas,' tallies, ',
 							 totalTime asStringWithCommas, ' msec.'; cr; cr.
@@ -145,7 +145,7 @@ AndreasSystemProfiler >> report: strm cutoff: threshold [
 	totalTime isZero ifFalse: [
 		self reportGCStatsOn: strm.
 		self reportProcessStatsOn: strm.
-	].
+	]
 ]
 
 { #category : #reporting }
@@ -196,8 +196,7 @@ AndreasSystemProfiler >> reportGCStatsOn: str [
 	str	cr.
 	str	nextPutAll: '	root table	';
 		nextPutAll: rootOverflows asStringWithCommas; nextPutAll:' overflows'.
-	str cr.
-
+	str cr
 ]
 
 { #category : #reporting }
@@ -214,8 +213,7 @@ AndreasSystemProfiler >> reportProcessStatsOn: str [
 	str tab; nextPutAll: 'Total process switches: ', totalSwitches printString; cr.
 	str tab; nextPutAll: 'Without Profiler: ', actualSwitches printString; cr.
 	str tab; nextPutAll: 'Stack page overflows: ', pageOverflows printString; cr.
-	str tab; nextPutAll: 'Stack page divorces: ', pageDivorces printString; cr.
-
+	str tab; nextPutAll: 'Stack page divorces: ', pageDivorces printString; cr
 ]
 
 { #category : #profiling }
@@ -242,18 +240,16 @@ AndreasSystemProfiler >> runProfilerProcess [
 			leaf := tallyRoot tally: (process suspendedContext ifNil: [ thisContext ] ) by: tallyTicks.
 			method ifNotNil: [ leaf tallyMethod: method by: tallyTicks ].
 		].
-	].
-
+	]
 ]
 
 { #category : #profiling }
 AndreasSystemProfiler >> spyOn: aBlock [
-	"Profile system activity during execution of aBlock. 
+	"Profile system activity during execution of aBlock.
 	The argument is the desired samples per *milli* second.
 	Mostly for polymorphism with MessageTally."
 	self startProfiling.
 	aBlock ensure: [ self stopProfiling ]
-
 ]
 
 { #category : #profiling }
@@ -266,14 +262,13 @@ AndreasSystemProfiler >> startProfiling [
 	[Time millisecondClockValue >= t0] whileFalse.
 	ticksPerMSec := Smalltalk highResClock.
 	[Time millisecondClockValue >= (t0 + 100)] whileFalse.
-	ticksPerMSec := (Smalltalk highResClock - ticksPerMSec) 
+	ticksPerMSec := (Smalltalk highResClock - ticksPerMSec)
 			// (Time millisecondClockValue - t0).
 	"Try to get 10 samples per msec"
 	ticks := ticksPerMSec // 10.
 	startTime := Time millisecondClockValue.
 	vmStats := Smalltalk vm getParameters.
-	profilerProcess := [ self runProfilerProcess ] forkAt: Processor timingPriority - 1.
-
+	profilerProcess := [ self runProfilerProcess ] forkAt: Processor timingPriority - 1
 ]
 
 { #category : #profiling }
@@ -282,12 +277,11 @@ AndreasSystemProfiler >> stopProfiling [
 	Smalltalk profileSemaphore: nil.
 	Smalltalk profileStart: 0. "<- profile stops now"
 	totalTime := Time millisecondClockValue - startTime.
-	Smalltalk vm getParameters keysAndValuesDo: [ :idx :value | 
+	Smalltalk vm getParameters keysAndValuesDo: [ :idx :value |
 		value isInteger ifTrue: [ vmStats at: idx put: (value - ((vmStats at: idx) ifNil: [ 0 ])) ].
 	].
 	profilerProcess ifNotNil: [
 		profilerProcess suspend.
 		profilerProcess := nil.
-	].
-
+	]
 ]

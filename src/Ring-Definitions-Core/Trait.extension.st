@@ -11,8 +11,8 @@ Trait >> asRingDefinition [
 		        category: self category;
 		        superclassName: #Trait;
 		        traitCompositionSource: self traitCompositionString;
-		        comment: self organization classComment;
-		        stamp: self organization commentStamp;
+		        comment: self comment;
+		        stamp: self commentStamp;
 		        definitionSource: self definitionString;
 		        withMetaclass.
 
@@ -33,12 +33,12 @@ Trait >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoo
 
 	methodsBoolean
 		ifTrue: [ self
-				methodsDo: [ :mth | 
+				methodsDo: [ :mth |
 					rgMethod := mth asActiveRingDefinition.
 					aRGSlice loadMethod: rgMethod inClass: rgClass using: packageKeys
 					].
 			self classSide
-				methodsDo: [ :mth | 
+				methodsDo: [ :mth |
 					rgMethod := mth asActiveRingDefinition.
 					aRGSlice loadMethod: rgMethod inClass: rgClass classSide using: packageKeys
 					]

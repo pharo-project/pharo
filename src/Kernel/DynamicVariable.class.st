@@ -25,7 +25,7 @@ DynamicVariable >> value: anObject during: aBlock [
 	^ [ activeProcess
 			psValueAt: index
 			put: anObject.
-		aBlock value ] ensure: [ 
+		aBlock value ] ensure: [
 			activeProcess
 				psValueAt: index
 				put: oldValue ]

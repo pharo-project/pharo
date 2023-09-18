@@ -8,7 +8,7 @@ Class {
 OCASTWhileFalseTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineWhile . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineWhile))
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -24,7 +24,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlock [
 		withFirstBlock: '[ temp := temp + 1. temp > 4 ]'
 		withSecondBlock: '[ ]'.
 
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -43,7 +43,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlockWithTemp [
 			intemp > 4 ]'
 		withSecondBlock: '[ ]'.
 
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -59,7 +59,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlock [
 		withFirstBlock: '[ temp > 4 ]'
 		withSecondBlock: '[ temp := temp + 1 ]'.
 
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -77,7 +77,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlockWithTemp [
 			intemp := temp + 1.
 			temp := intemp ]'.
 
-	self assert: result equals: 5.
+	self assert: result equals: 5
 ]
 
 { #category : #'tests - blocks - optimized' }
@@ -92,5 +92,5 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseReturnsNil [
 		withFirstBlock: '[ temp := temp + 1. temp > 4 ]'
 		withSecondBlock: '[ ]'.
 
-	self assert: result equals: nil.
+	self assert: result equals: nil
 ]

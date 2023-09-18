@@ -66,7 +66,7 @@ ClyGroupedVariablesResult class >> withDefaultHierarchy [
 { #category : #'instance creation' }
 ClyGroupedVariablesResult class >> withHierarchy: aClassHierarchy [
 
-	^self new 
+	^self new
 		hierarchy: aClassHierarchy
 ]
 
@@ -76,7 +76,7 @@ ClyGroupedVariablesResult >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^false ].
-	
+
 	^ hierarchy = anObject hierarchy
 ]
 
@@ -84,7 +84,7 @@ ClyGroupedVariablesResult >> = anObject [
 ClyGroupedVariablesResult >> fillWith: variables [
 	| typedGroups |
 	typedGroups := self groupVariablesByTypeAndDefinition: variables.
-	
+
 	self fillWithGroupedVariables: typedGroups
 ]
 
@@ -102,14 +102,14 @@ ClyGroupedVariablesResult >> fillWithVariables: varsPerClass type: varTypeClass 
 	classMap doInOrder: [ :eachClass |
 		vars := varsPerClass at: eachClass.
 		declarationGroup := ClyVarDefinitionMethodGroup
-			withMethodsFrom: methodQueryScope 
+			withMethodsFrom: methodQueryScope
 			referencedAny: varTypeClass definedIn: eachClass.
 		items add: declarationGroup asCalypsoBrowserItem.
 		vars do: [:each | | varGroup |
 			varGroup := ClyVariableMethodGroup withMethodsFrom: methodQueryScope referencedVar: each.
 			varItem := varGroup asCalypsoBrowserItem.
 			varItem depth: 1.
-			items add: varItem] 
+			items add: varItem]
 	]
 ]
 
@@ -118,11 +118,11 @@ ClyGroupedVariablesResult >> groupVariablesByTypeAndDefinition: variables [
 
 	| groups varsPerClass typedVars |
 	groups := IdentityDictionary new.
-	variables do: [ :var | 
+	variables do: [ :var |
 		typedVars := groups at: var class ifAbsentPut: [ IdentityDictionary new ].
-		varsPerClass := typedVars 
+		varsPerClass := typedVars
 			at: var definingClass ifAbsentPut: [ self containerForItemsSortedByName ].
-		varsPerClass add: var].	
+		varsPerClass add: var].
 	^groups
 ]
 

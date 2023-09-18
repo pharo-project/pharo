@@ -30,13 +30,13 @@ ClyManagedProject class >> checkCalypsoItem: aProject isSameAs: aProject2 [
 
 { #category : #'instance creation' }
 ClyManagedProject class >> for: aProject named: aString managedBy: aPackageManager [
-	^self new 
+	^self new
 		name: aString;
 		manager: aPackageManager;
 		project: aProject
 ]
 
 { #category : #queries }
-ClyManagedProject class >> prepareClassQueriesFrom: projects in: aNavigationEnvironment [ 
+ClyManagedProject class >> prepareClassQueriesFrom: projects in: aNavigationEnvironment [
 	^{ClyAllClassesQuery from: ClyProjectScope ofAll: projects in: aNavigationEnvironment }
 ]

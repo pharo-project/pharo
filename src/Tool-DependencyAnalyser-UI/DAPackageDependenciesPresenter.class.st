@@ -15,14 +15,20 @@ DAPackageDependenciesPresenter class >> collections [
 { #category : #'instance creation' }
 DAPackageDependenciesPresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
-			(RPackageOrganizer default packages
+			(self packageOrganizer packages
 				select: [ :package | match match: package packageName asString ]
-				thenCollect: [ :package | package packageName ]) ) 
+				thenCollect: [ :package | package packageName ]) )
 ]
 
 { #category : #examples }
 DAPackageDependenciesPresenter class >> system [
-	^ (self onPackagesNamed: self systemPackages) open 
+	^ (self onPackagesNamed: self systemPackages) open
+]
+
+{ #category : #specs }
+DAPackageDependenciesPresenter class >> title [
+
+	^ 'Dependecy Analyser'
 ]
 
 { #category : #initialization }

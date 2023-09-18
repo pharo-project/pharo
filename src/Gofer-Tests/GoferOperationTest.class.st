@@ -10,12 +10,6 @@ Class {
 	#category : #'Gofer-Tests-Tests'
 }
 
-{ #category : #utilities }
-GoferOperationTest >> allManagers [
-
-	^ MCWorkingCopy allManagers
-]
-
 { #category : #accessing }
 GoferOperationTest >> environment [
 	^ environment
@@ -42,13 +36,13 @@ GoferOperationTest >> hasClass: aSymbol selector: aSelector [
 { #category : #utilities }
 GoferOperationTest >> hasPackage: aString [
 
-	^ self allManagers anySatisfy: [ :package | package packageName = aString ]
+	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :package | package packageName = aString ]
 ]
 
 { #category : #utilities }
 GoferOperationTest >> hasVersion: aString [
 
-	^ self allManagers anySatisfy: [ :version | version ancestry ancestorString = aString ]
+	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :version | version ancestry ancestorString = aString ]
 ]
 
 { #category : #running }
@@ -62,7 +56,7 @@ GoferOperationTest >> setUp [
 { #category : #running }
 GoferOperationTest >> setUpEnvironment [
 
-	environment := self class environment.
+	environment := self class environment
 ]
 
 { #category : #running }
@@ -85,13 +79,13 @@ GoferOperationTest >> testCleanup [
 		package: 'GoferFoo';
 		load.
 	class := environment classNamed: #GoferFoo.
-	environment organization addCategory: #'GoferFoo-Empty'.
-	class organization addCategory: #empty.
-	class class organization addCategory: #empty.
+	environment organization ensureTagNamed: #Empty inPackageNamed: #GoferFoo.
+	class addProtocol: #empty.
+	class class addProtocol: #empty.
 	gofer cleanup.
-	self deny: (Smalltalk organization categories includes: #'GoferFoo-Empty').
-	self deny: (class organization categories includes: #'GoferFoo-Empty').
-	self deny: (class class organization categories includes: #'GoferFoo-Empty')
+	self deny: (self packageOrganizer hasTag: #Empty inPackage: #GoferFoo).
+	self deny: (class hasProtocol: #'GoferFoo-Empty').
+	self deny: (class class hasProtocol: #'GoferFoo-Empty')
 ]
 
 { #category : #tests }
@@ -103,7 +97,7 @@ GoferOperationTest >> testCommit [
 		package: 'GoferFoo';
 		load.
 	gofer := Gofer new.
-	gofer 
+	gofer
 		disablePackageCache;
 		repository: repository;
 		package: 'GoferFoo';
@@ -114,7 +108,7 @@ GoferOperationTest >> testCommit [
 { #category : #tests }
 GoferOperationTest >> testFetch [
 
-	gofer 
+	gofer
 		package: 'GoferFoo';
 		fetch
 ]

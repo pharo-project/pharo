@@ -104,10 +104,7 @@ MCOrganizationDefinition >> isOrganizationDefinition [
 
 { #category : #installing }
 MCOrganizationDefinition >> postloadOver: oldDefinition [
-	SystemOrganization categories:
-		(self
-			reorderCategories: SystemOrganization categories
-			original: (oldDefinition ifNil: [#()] ifNotNil: [oldDefinition categories]))
+	"Nothing to do"
 ]
 
 { #category : #private }
@@ -149,8 +146,6 @@ MCOrganizationDefinition >> summary [
 
 { #category : #unloading }
 MCOrganizationDefinition >> unload [
-	categories
-		do: [ :category | 
-			(SystemOrganization isEmptyCategoryNamed: category)
-				ifTrue: [ SystemOrganization removeCategory: category ] ]
+
+	categories do: [ :category | (self packageOrganizer isEmptyCategoryNamed: category) ifTrue: [ self packageOrganizer removeCategory: category ] ]
 ]

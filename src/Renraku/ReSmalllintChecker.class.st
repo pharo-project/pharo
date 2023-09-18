@@ -45,29 +45,24 @@ ReSmalllintChecker >> checkClass: aClass [
 
 { #category : #private }
 ReSmalllintChecker >> checkMethodsForClass: aClass [
-	
-	environment
-		selectorsForClass: aClass
-		do: [ :selector | | method ast |
-			method := aClass>>selector.
-			self getCritiquesAbout: method by: methodRules.
-			nodeRules do: [ :r |
-				ast := method ast.
-				"for rewrite rules, we run every rule on a copy of the ast"
-				r isRewriteRule ifTrue: [ ast := ast copy  ].
-				ast nodesDo: [ :node |
-						r
-							check: node
-							forCritiquesDo: [ :crit |
-								crit sourceAnchor initializeEnitity: method.
-								self addCritique: crit ] ] ]]
+
+	environment methodsForClass: aClass do: [ :method |
+		| ast |
+		self getCritiquesAbout: method by: methodRules.
+		nodeRules do: [ :r |
+			ast := method ast.
+			"for rewrite rules, we run every rule on a copy of the ast"
+			r isRewriteRule ifTrue: [ ast := ast copy ].
+			ast nodesDo: [ :node |
+				r check: node forCritiquesDo: [ :crit |
+					crit sourceAnchor initializeEnitity: method.
+					self addCritique: crit ] ] ] ]
 ]
 
 { #category : #private }
 ReSmalllintChecker >> checkPackage: aPackage [
 
-	(environment includesPackage: aPackage) ifTrue: [
-		self getCritiquesAbout: aPackage by: packageRules ]
+	(environment includesPackage: aPackage) ifTrue: [ self getCritiquesAbout: aPackage by: packageRules ]
 ]
 
 { #category : #manifest }
@@ -93,7 +88,7 @@ ReSmalllintChecker >> falsePositiveOf: aRule [
 	rId := aRule class uniqueIdentifierName.
 	rV := aRule class identifierMinorVersionNumber.
 	^ ruleCritiques
-		select: [ :critique | 
+		select: [ :critique |
 			| entity |
 
 			entity := critique sourceAnchor entity.
@@ -110,7 +105,7 @@ ReSmalllintChecker >> getCritiquesAbout: anEntity by: rules [
 			check: anEntity
 			forCritiquesDo: [ :crit |
 				self addCritique: crit ] ]
-			
+
 			on: Error
 			do: [ :er | ReSettings showErrors ifTrue: [ er pass ]  ] ]
 ]
@@ -141,8 +136,8 @@ ReSmalllintChecker >> isToDo: aCritic forRuleId: ruleId versionId: versionId [
 ]
 
 { #category : #manifest }
-ReSmalllintChecker >> isTruePositive: aCritic forRuleId: ruleId versionId: versionId [ 
-	
+ReSmalllintChecker >> isTruePositive: aCritic forRuleId: ruleId versionId: versionId [
+
 	^ (self manifestBuilderOf: aCritic)
 			containsTruePositive: aCritic onRule:  ruleId version: versionId
 ]
@@ -159,7 +154,7 @@ ReSmalllintChecker >> manifestBuilderOfClass: aClass [
 	key := aClass instanceSide category.
 	^ manifestClassCache
 		at: key
-		ifAbsentPut: [ 
+		ifAbsentPut: [
 			(self builderManifestClass hasManifestFor: aClass)
 				ifTrue: [ self builderManifestClass of: aClass ]
 				ifFalse: [ nil ] ]
@@ -167,15 +162,11 @@ ReSmalllintChecker >> manifestBuilderOfClass: aClass [
 
 { #category : #accessing }
 ReSmalllintChecker >> manifestBuilderOfMethod: aMethod [
-	| key cl |
-	cl := aMethod methodClass.
-	key := cl name , aMethod category asString.
-	^ manifestClassCache
-		at: key
-		ifAbsentPut: [ 
-			(self builderManifestClass hasManifestFor: aMethod)
-				ifTrue: [ self builderManifestClass of: aMethod ]
-				ifFalse: [ nil ] ]
+
+	^ manifestClassCache at: aMethod methodClass name , aMethod protocolName ifAbsentPut: [
+		  (self builderManifestClass hasManifestFor: aMethod)
+			  ifTrue: [ self builderManifestClass of: aMethod ]
+			  ifFalse: [ nil ] ]
 ]
 
 { #category : #accessing }
@@ -184,7 +175,7 @@ ReSmalllintChecker >> manifestBuilderOfPackage: aPackage [
 	key := aPackage packageName.
 	^ manifestClassCache
 		at: key
-		ifAbsentPut: [ 
+		ifAbsentPut: [
 			(self builderManifestClass hasPackageNamed: key)
 				ifTrue: [ self builderManifestClass ofPackageNamed: key ]
 				ifFalse: [ nil ] ]
@@ -198,7 +189,7 @@ ReSmalllintChecker >> reParseRule [
 	classRules := Set new.
 	packageRules := Set new.
 
-	self rule do: [ :r | 
+	self rule do: [ :r |
 		r class checksMethod ifTrue: [ methodRules add: r ].
 		r class checksNode ifTrue: [ nodeRules add: r ].
 		r class checksClass ifTrue: [ classRules add: r ] ]
@@ -230,7 +221,7 @@ ReSmalllintChecker >> resetResult [
 
 { #category : #accessing }
 ReSmalllintChecker >> rule [
-	
+
 	^ (rule isKindOf: RBCompositeLintRule)
 		ifTrue: [ rule leaves ]
 		ifFalse: [ rule ]
@@ -247,16 +238,16 @@ ReSmalllintChecker >> runRules: aCompositeRule onPackage: aPackage [
 
 	rule := aCompositeRule.
 	environment := RBPackageEnvironment package: aPackage.
-	self run.
+	self run
 ]
 
 { #category : #actions }
 ReSmalllintChecker >> runRules: aCompositeRule onPackage: aPackage withoutTestCase: avoidTestCases [
 	rule := aCompositeRule.
 	environment := RBPackageEnvironment package: aPackage.
-	
+
 	environment := environment withoutClasses: (environment classes select: #isManifest).
-	avoidTestCases 
+	avoidTestCases
 		ifTrue: [ environment := environment withoutClasses: (environment classes select: #isTestCase) ].
 	self run
 ]
@@ -270,7 +261,7 @@ ReSmalllintChecker >> toDoOf: aRule [
 	rId := aRule class uniqueIdentifierName.
 	rV := aRule class identifierMinorVersionNumber.
 	^ ruleCritiques
-		select: [ :critique | 
+		select: [ :critique |
 			| entity |
 
 			entity := critique sourceAnchor entity.

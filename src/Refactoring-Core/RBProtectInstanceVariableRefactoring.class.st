@@ -21,7 +21,7 @@ RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 				with: '`method ^' , variableName
 				with: ('`method: `arg <1s> := `arg' expandMacrosWith: variableName)
 				with: ('`method: `arg ^<1s> := `arg' expandMacrosWith: variableName))
-			do: [ :aNode :answer | 
+			do: [ :aNode :answer |
 				(class subclassRedefines: aNode selector)
 					ifFalse: [ answer add: aNode selector ].
 				answer ].
@@ -32,9 +32,9 @@ RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 ]
 
 { #category : #transforming }
-RBProtectInstanceVariableRefactoring >> inline: aSelector [ 
-	self onError: 
-			[self performCompositeRefactoring: (RBInlineAllSendersRefactoring 
+RBProtectInstanceVariableRefactoring >> inline: aSelector [
+	self onError:
+			[self generateChangesFor: (RBInlineAllSendersRefactoring
 						model: self model
 						sendersOf: aSelector
 						in: class)]
@@ -47,7 +47,7 @@ RBProtectInstanceVariableRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBProtectInstanceVariableRefactoring >> transform [
+RBProtectInstanceVariableRefactoring >> privateTransform [
 	self setOption: #inlineExpression toUse: [:ref :string | true].
 	self getterSetterMethods do: [:each | self inline: each]
 ]

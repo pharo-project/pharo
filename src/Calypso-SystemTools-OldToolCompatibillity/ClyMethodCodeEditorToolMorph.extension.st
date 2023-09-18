@@ -8,7 +8,7 @@ ClyMethodCodeEditorToolMorph >> findFirstOccurrenceOf: searchedString in: textTo
 	[ (firstIndex > 1) and: [ (textToSearchIn at: (firstIndex - 1)) isAlphaNumeric ] ]
 		whileTrue: [
 			firstIndex := textToSearchIn findString: searchedString startingAt: firstIndex +1 ].
-		
+
 	^ firstIndex
 ]
 
@@ -17,12 +17,12 @@ ClyMethodCodeEditorToolMorph >> findString: searchedString asSelectorIn: aString
 	"Return the interval that corresponds to the portion of aString "
 	"This method takes care of finding complete match to searchedString. "
 	| string interval firstIndex |
-	
+
 	searchedString ifNil: [ ^ 0 to: 0 ].
 	aString isEmptyOrNil ifTrue: [ ^0 to: 0 ].
 	string := aString asString.
 	interval := 0 to: 0.
-	
+
 	(searchedString includes: $:)
 		ifTrue: [ | list |
 			list := searchedString substrings: ':'.
@@ -30,12 +30,12 @@ ClyMethodCodeEditorToolMorph >> findString: searchedString asSelectorIn: aString
 				ifTrue: [" binary selector "
 					firstIndex := self findFirstOccurrenceOf: searchedString in: string.
 					firstIndex isZero
-						ifFalse: [ interval := firstIndex to: (firstIndex+searchedString size-1) ] ] 
-					
+						ifFalse: [ interval := firstIndex to: (firstIndex+searchedString size-1) ] ]
+
 				ifFalse: [
 					| lastIndex |
-					firstIndex := self findFirstOccurrenceOf: list first, ':' in: string. 
-					firstIndex >0 ifTrue: [ 
+					firstIndex := self findFirstOccurrenceOf: list first, ':' in: string.
+					firstIndex >0 ifTrue: [
 								lastIndex := string findString: list last,':' startingAt: firstIndex+ (list first size -1).
 								interval := firstIndex to: (lastIndex + list last size) ] ] ]
 		ifFalse: [
@@ -50,7 +50,7 @@ ClyMethodCodeEditorToolMorph >> findString: searchedString asSelectorIn: aString
 ClyMethodCodeEditorToolMorph >> selectStringAsInMessageBrowser: criteriaString [
 
 	| interval |
-	interval := (self findAnySelectorInSourceCode: {criteriaString}) 
+	interval := (self findAnySelectorInSourceCode: {criteriaString})
 			ifEmpty: [ self findString: criteriaString asSelectorIn: self pendingText].
 	textMorph setSelection: interval
 ]

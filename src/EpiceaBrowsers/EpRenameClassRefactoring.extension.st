@@ -3,10 +3,10 @@ Extension { #name : #EpRenameClassRefactoring }
 { #category : #'*EpiceaBrowsers' }
 EpRenameClassRefactoring >> summaryOn: aWriteStream [
 	"Write a string summarizing myself."
-	
-	aWriteStream 
+
+	aWriteStream
 		nextPutAll: 'Rename ';
 		nextPutAll: oldName;
 		nextPutAll: ' into ';
-		nextPutAll: newName.
+		nextPutAll: newName
 ]

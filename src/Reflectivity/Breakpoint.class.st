@@ -71,7 +71,7 @@ Breakpoint class >> breakOnAST: aNode inObject: anObject [
 { #category : #accessing }
 Breakpoint class >> browseAll [
 	<script>
-	
+
 	| methods |
 	methods := self all flatCollect: [ :breakpoint | breakpoint link methods ].
 	Smalltalk tools messageList browse: methods
@@ -81,7 +81,7 @@ Breakpoint class >> browseAll [
 Breakpoint class >> checkBreakConditionValue: aValue [
 
 	(aValue isKindOf: Boolean) ifTrue: [ ^ aValue ].
-	Error signal: 'Breakpoint condition returned a non boolean value'.
+	Error signal: 'Breakpoint condition returned a non boolean value'
 ]
 
 { #category : #cleanup }
@@ -116,7 +116,7 @@ Breakpoint class >> debugWorldMenuOn: aBuilder [
 { #category : #'system announcements' }
 Breakpoint class >> handleClassRemoved: anAnnouncement [
 
-	self all copy do: [ :breakpoint | 
+	self all copy do: [ :breakpoint |
 		breakpoint link methods
 			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
 			ifFound: [ breakpoint removeFromClass: anAnnouncement classRemoved ] ]
@@ -141,7 +141,7 @@ Breakpoint class >> initialize [
 Breakpoint class >> isInstalledIn: aMethod [
 
 	self all do: [ :breakpoint |
-		breakpoint link methods 
+		breakpoint link methods
 			detect: [ :m | m == aMethod ]
 			ifFound: [ ^ true ]
 	].
@@ -153,10 +153,10 @@ Breakpoint class >> isInstalledIn: aMethod [
 Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
 
 	| announcement |
-	announcement := BreakpointAdded 
+	announcement := BreakpointAdded
 		on: aBreakpoint
 		nodes: aBreakpoint link nodes.
-	SystemAnnouncer uniqueInstance announce: announcement
+	SystemAnnouncer announce: announcement
 ]
 
 { #category : #'observers - experimental' }
@@ -166,7 +166,7 @@ Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: n
 	announcement := BreakpointHit
 		on: aBreakpoint
 		nodes: {node}.
-	SystemAnnouncer uniqueInstance announce: announcement
+	SystemAnnouncer announce: announcement
 ]
 
 { #category : #'observers - experimental' }
@@ -176,7 +176,7 @@ Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
 	announcement := BreakpointRemoved
 		on: aBreakpoint
 		nodes: nodes.
-	SystemAnnouncer uniqueInstance announce: announcement
+	SystemAnnouncer announce: announcement
 ]
 
 { #category : #'class initialization' }
@@ -193,17 +193,17 @@ Breakpoint class >> registerInterestToSystemAnnouncement [
 Breakpoint class >> registerObserver: anObject [
 	"Do not use this method, it is there for compatibility with old users.
 	Instead, register your object yourself to 'SystemAnnouncer uniqueInstance' like below, but only for the announcements you need"
-	
-	SystemAnnouncer uniqueInstance 
+
+	SystemAnnouncer uniqueInstance
 		when: BreakpointAdded send: #update: to: anObject;
 		when: BreakpointHit send: #update: to: anObject;
 		when: BreakpointRemoved send: #update: to: anObject
 ]
 
 { #category : #cleanup }
-Breakpoint class >> removeAll [ 
+Breakpoint class >> removeAll [
 	<script>
-	
+
 	self all copy do: #remove
 ]
 
@@ -225,7 +225,7 @@ Breakpoint class >> removeFrom: aNode [
 { #category : #cleanup }
 Breakpoint class >> removeFromMethod: aMethod [
 
-	self all copy do: [ :breakpoint | 
+	self all copy do: [ :breakpoint |
 		breakpoint link methods
 			detect: [ :m | m == aMethod ]
 			ifFound: [ breakpoint removeFromMethod: aMethod ] ]
@@ -235,14 +235,14 @@ Breakpoint class >> removeFromMethod: aMethod [
 Breakpoint class >> unregisterObserver: anObject [
 	"Do not use this method, it is there for compatibility with old users.
 	Instead, unsubscribe yourself from 'SystemAnnouncer uniqueInstance' directly (like shown below)"
-	
+
 	SystemAnnouncer uniqueInstance unsubscribe: anObject
 ]
 
 { #category : #api }
 Breakpoint >> breakInContext: aContext node: aNode [
 	 <debuggerCompleteToSender>
-	
+
 	 self class notifyBreakpointHit: self inContext: aContext node: aNode.
 	 self isEnabled ifFalse: [ ^ self ].
 	 self onCount ifTrue: [ (self increaseCount = self breakOnCount) ifFalse: [^ self]].
@@ -270,19 +270,19 @@ Breakpoint >> breakLinkConditional [
 { #category : #api }
 Breakpoint >> breakOnCount [
 
-	^breakOnCount ifNil:[ breakOnCount := 0].
+	^breakOnCount ifNil:[ breakOnCount := 0]
 ]
 
 { #category : #api }
 Breakpoint >> breakOnCount: anInterger [
 
-	breakOnCount := anInterger.
+	breakOnCount := anInterger
 ]
 
 { #category : #TODO }
 Breakpoint >> condition [
 	"this method doesnt really work well yet because the condition is not just the condition text but a collection"
-	^ condition .
+	^ condition
 ]
 
 { #category : #api }
@@ -320,20 +320,20 @@ Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 
 { #category : #accessing }
 Breakpoint >> count [
-	^count ifNil: [ count := 0 ].
+	^count ifNil: [ count := 0 ]
 ]
 
 { #category : #accessing }
 Breakpoint >> count: anInteger [
-	
-	^count := anInteger.
+
+	^count := anInteger
 ]
 
 { #category : #api }
 Breakpoint >> createCondition [
 
 	self condition: self requestConditionBlock .
-	
+
 	"condition := aCondition.
 	self link: self breakLinkConditional"
 ]
@@ -358,13 +358,13 @@ Breakpoint >> generateConditionBlockFrom: aString [
 	| conditionBlockProducerMethodAST |
 	conditionBlockProducerMethodAST := self conditionBlockProducerMethodAST: aString.
 
-	^ ((conditionBlockProducerMethodAST generateWithSource) valueWithReceiver: nil arguments: {}).
+	^ conditionBlockProducerMethodAST generateMethod valueWithReceiver: nil
 ]
 
 { #category : #accessing }
 Breakpoint >> group [
 	"returns the group of the breakpoint"
-	^ group.
+	^ group
 ]
 
 { #category : #api }
@@ -372,23 +372,22 @@ Breakpoint >> group: aBreakpointGroup [
 	"puts the breakpoint in a new group and sets the group variable to that group"
 	group removeBreakpoint: self.
 	aBreakpointGroup addBreakpoint: self.
-	^ group := aBreakpointGroup.
+	^ group := aBreakpointGroup
 ]
 
 { #category : #private }
 Breakpoint >> increaseCount [
 
-	^self count: (self count + 1).
+	^self count: (self count + 1)
 ]
 
 { #category : #initialization }
 Breakpoint >> initialize [
-	
+
 	self class initializeSlots: self.
 	options := #(+ optionCompileOnLinkInstallation).
 	BreakpointGroup newBreakpoint: self.
-	group := BreakpointGroup ungroupedBreakpointsGroup.
-
+	group := BreakpointGroup ungroupedBreakpointsGroup
 ]
 
 { #category : #install }
@@ -472,7 +471,7 @@ Breakpoint >> onCount: aBoolean [
 { #category : #api }
 Breakpoint >> once [
 
-	^ once ifNil: [ once := false ].
+	^ once ifNil: [ once := false ]
 ]
 
 { #category : #api }
@@ -511,11 +510,10 @@ Breakpoint >> remove [
 Breakpoint >> removeFromBreakpointGroups [
 	"just in case the breakpoint is not removed correctly this will remove the reference to the group"
  	group := nil.
-	
+
 	"old code needed when groups are not using weak sets"
 	"self group removeBreakpoint: self.
 	BreakpointGroup allBreakpointsGroup removeBreakpoint: self."
-
 ]
 
 { #category : #removing }
@@ -540,7 +538,7 @@ Breakpoint >> removeFromNodeProperty [
 Breakpoint >> requestConditionBlock [
 	| script |
 	script := 'true'.
-	script := UIManager default 
+	script := UIManager default
 		request: 'This expression will be evaluated in the context of the position of this breakpoint.
 		You can use variables, globals, `thisContext`, `self` and `super`.
 		`:=` and Pool variables are not supported`'
@@ -576,7 +574,7 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 	receiverSuperclassValueNode := self parserClass
 		parseExpression: 'ThisContext receiver class superclass'.
 	allMessageNodes
-		do: [ :msgNode | 
+		do: [ :msgNode |
 			msgNode receiver isSuperVariable
 				ifTrue: [ rewriter
 						replaceTree: msgNode
@@ -598,7 +596,7 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 	allUndeclaredVariableSymbols := (allUndeclaredVariableNodes
 		collect: [ :varNode | varNode name ]) asSet asArray.
 	allUndeclaredVariableSymbols
-		withIndexDo: [ :tempName :index | 
+		withIndexDo: [ :tempName :index |
 			rewriter2
 				replace: tempName
 				with: '(ThisContext readVariableNamed: #' , tempName , ')' ].

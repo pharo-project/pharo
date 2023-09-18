@@ -14,7 +14,7 @@ Class {
 { #category : #factory }
 OSWindowGenericRendererExample >> createEventHandler [
 	"You should override this method with your own event handler"
-	^ OSWindowGenericRendererExampleEventHandler new 
+	^ OSWindowGenericRendererExampleEventHandler new
 		example: self
 ]
 
@@ -31,7 +31,7 @@ OSWindowGenericRendererExample >> destroy [
 
 { #category : #accessing }
 OSWindowGenericRendererExample >> enqueueRender [
-	OSWindowRenderThread enqueueOperation: [ 
+	OSWindowRenderThread enqueueOperation: [
 		renderer ifNotNil: [ self redrawAndPresent ].
 	]
 ]
@@ -54,13 +54,13 @@ OSWindowGenericRendererExample >> open [
 		extent: self defaultExtent;
 		resizable: false;
 		windowCentered: true.
-		
+
 	window := OSWindowAnimated createWithAttributes: attrs.
-	
+
 	renderer := window newGenericRenderer.
 	self initializeWithRenderer.
-	
-	window eventHandler: (self createEventHandler).
+
+	window eventHandler: (self createEventHandler)
 ]
 
 { #category : #'instance creation' }
@@ -76,5 +76,5 @@ OSWindowGenericRendererExample >> redraw [
 { #category : #'instance creation' }
 OSWindowGenericRendererExample >> redrawAndPresent [
 	self redraw.
-	self present.
+	self present
 ]

@@ -48,15 +48,15 @@ MetaLinkAnonymousClassBuilder >> anonymousClassForObject: anObject [
 { #category : #accessing }
 MetaLinkAnonymousClassBuilder >> classAccessorsForAnonymousClasses [
 	^{'class
-		thisContext sender methodClass == MetaLinkAnonymousClassBuilder 
+		thisContext sender methodClass == MetaLinkAnonymousClassBuilder
 			ifTrue:[^self realClass].
 		^self originalClass'.
-		
+
 	'originalClass
 		^super class superclass'.
-		
+
 	'realClass
-		^super class'				
+		^super class'
 	}
 ]
 
@@ -72,7 +72,7 @@ MetaLinkAnonymousClassBuilder >> compileMethodFrom: aNode in: anAnonymousClass [
 	selector := aNode methodNode selector.
 	(anAnonymousClass methodDict at: selector ifAbsent: [ nil ]) ifNotNil: [ :compiledMethod | ^ compiledMethod ].
 	source := aNode methodNode source.
-	anAnonymousClass compile: source.	
+	anAnonymousClass compile: source.
 	^ anAnonymousClass >> selector
 ]
 
@@ -89,7 +89,7 @@ MetaLinkAnonymousClassBuilder >> compiledMethodsOfSelector: selector inClasses: 
 		collect: [ :ac | ac compiledMethodAt: selector ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 MetaLinkAnonymousClassBuilder >> initialize [
 	classes := Dictionary new.
 	migratedObjects := WeakIdentityKeyDictionary new
@@ -126,14 +126,14 @@ MetaLinkAnonymousClassBuilder >> newAnonymousSubclassFor: aClass [
 { #category : #creation }
 MetaLinkAnonymousClassBuilder >> removeMethodNode: aNode fromObject: anObject [
 	anObject class isAnonymous ifFalse:[^self].
-	anObject class removeSelector: aNode methodNode selector.
+	anObject class removeSelector: aNode methodNode selector
 ]
 
 { #category : #accessing }
 MetaLinkAnonymousClassBuilder >> soleInstanceOf: anAnonymousClass [
 	| weakArray |
 	anAnonymousClass
-		ifNil: [ 
+		ifNil: [
 			"Because anonymous subclasses are weakly referenced by the builder,
 			we assume other tools could do the same and ask for the sole instance
 			of a nilled reference (e.g., recovered from a weak array).

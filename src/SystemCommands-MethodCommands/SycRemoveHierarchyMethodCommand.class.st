@@ -11,14 +11,14 @@ Class {
 { #category : #converting }
 SycRemoveHierarchyMethodCommand >> asRefactorings [
 	| refactoring |
-	refactoring :=  RBRemoveHierarchyMethodRefactoring  
-		removeMethods: (methods collect: [:each | each selector]) 
+	refactoring :=  RBRemoveHierarchyMethodRefactoring
+		removeMethods: (methods collect: [:each | each selector])
 		from: methods first origin.
 	^ OrderedCollection with: refactoring
 ]
 
 { #category : #accessing }
-SycRemoveHierarchyMethodCommand >> defaultMenuIconName [ 
+SycRemoveHierarchyMethodCommand >> defaultMenuIconName [
 	^ #remove
 ]
 

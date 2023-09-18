@@ -6,7 +6,7 @@ Class {
 	#superclass : #RBSmalllintTestSuperclassObject,
 	#traits : 'TAssertable',
 	#classTraits : 'TAssertable classTrait',
-	#category : #'Refactoring-Tests-Critics'
+	#category : #'Refactoring-Tests-Critics-Base'
 }
 
 { #category : #asserting }

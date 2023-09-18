@@ -12,18 +12,18 @@ Class {
 
 { #category : #'instance creation' }
 FTExampleMethodTableDataSource class >> for: aClass [
-	^ self basicNew 
+	^ self basicNew
 		initializeClass: aClass;
 		yourself
 ]
 
 { #category : #accessing }
-FTExampleMethodTableDataSource >> cellColumn: column row: rowIndex [ 
+FTExampleMethodTableDataSource >> cellColumn: column row: rowIndex [
 	column id = '#' ifTrue: [ ^ FTCellMorph new addMorph: rowIndex asMorph ].
 	column id = 'Name' ifTrue: [ ^ self nameColumn: column row: rowIndex ].
 	column id = 'Protocol' ifTrue: [ ^ self protocolColumn: column row: rowIndex ].
 	column id = 'Origin' ifTrue: [ ^ self originColumn: column row: rowIndex ].
-	
+
 	self error: 'Invalid column'
 ]
 
@@ -46,21 +46,21 @@ FTExampleMethodTableDataSource >> initializeClass: aClass [
 
 { #category : #accessing }
 FTExampleMethodTableDataSource >> menuColumn: column row: rowIndex [
-	rowIndex = 0 ifTrue: [ 
-		"I could answer a menu without selection, but in this case I will just answer nil, 
+	rowIndex = 0 ifTrue: [
+		"I could answer a menu without selection, but in this case I will just answer nil,
 		 which means 'no menu'"
 		^ nil ].
 
 	"protocols do not have associated menu"
 	column id = 'Name' ifTrue: [ ^ self nameMenuColumn: column row: rowIndex ].
-	column id = 'Origin' ifTrue: [ ^ self originMenuColumn: column row: rowIndex ].	
+	column id = 'Origin' ifTrue: [ ^ self originMenuColumn: column row: rowIndex ].
 
 	^ nil
 ]
 
 { #category : #accessing }
 FTExampleMethodTableDataSource >> nameColumn: column row: rowIndex [
-	^ FTCellMorph new  
+	^ FTCellMorph new
 		color: (self colorFor: rowIndex);
 		cellInset: 5;
 		addMorphBack: (self iconFor: rowIndex) asMorph;
@@ -73,7 +73,7 @@ FTExampleMethodTableDataSource >> nameMenuColumn: column row: rowIndex [
 	| method menu |
 	method := (self elementAt: rowIndex) method.
 	menu := UIManager default newMenuIn: self table for: self.
-	menu add: ('Browse ', (method methodClass name), '>>#', method selector) 
+	menu add: ('Browse ', (method methodClass name), '>>#', method selector)
 		target: method
 		selector: #browse.
 	menu add: ('Inspect #', (method methodClass name), '>>#', method selector)
@@ -85,7 +85,7 @@ FTExampleMethodTableDataSource >> nameMenuColumn: column row: rowIndex [
 
 { #category : #accessing }
 FTExampleMethodTableDataSource >> originColumn: column row: rowIndex [
-	^ FTCellMorph new 
+	^ FTCellMorph new
 		color: (self colorFor: rowIndex);
 		addMorph: (self elementAt: rowIndex) origin name asMorph;
 		yourself
@@ -96,7 +96,7 @@ FTExampleMethodTableDataSource >> originMenuColumn: column row: rowIndex [
 	| method menu |
 	method := (self elementAt: rowIndex) method.
 	menu := UIManager default newMenuIn: self table for: self.
-	menu add: ('Browse ', (method methodClass name)) 
+	menu add: ('Browse ', (method methodClass name))
 		target: method methodClass
 		selector: #browse.
 
@@ -114,7 +114,7 @@ FTExampleMethodTableDataSource >> protocolColumn: column row: rowIndex [
 { #category : #accessing }
 FTExampleMethodTableDataSource >> searchText: aString [
 	aString isEmptyOrNil ifTrue: [ ^ #() ].
-	
+
 	self elements withIndexDo: [ :each :index |
 		( each name beginsWith: aString)
 			ifTrue: [ ^ { index } ] ].

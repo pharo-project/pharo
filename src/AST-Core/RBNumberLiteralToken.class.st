@@ -13,10 +13,10 @@ Class {
 
 { #category : #testing }
 RBNumberLiteralToken >> isNumberLiteralToken [
-	^true.
+	^true
 ]
 
 { #category : #printing }
-RBNumberLiteralToken >> storeOn: aStream [ 
+RBNumberLiteralToken >> storeOn: aStream [
 	aStream nextPutAll: source
 ]

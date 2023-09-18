@@ -30,7 +30,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyToolbarMorph class >> of: aBrowser [
-	^self new 
+	^self new
 		browser: aBrowser
 ]
 
@@ -41,7 +41,7 @@ ClyToolbarMorph >> addNewItem: aMorph [
 	offsetX := self submorphs
 		           inject: 0
 		           into: [ :sum :each | sum + each extent x ].
-	offsetY := 5.
+	offsetY := 5 scaledByDisplayScaleFactor.
 	self addMorphBack: aMorph.
 	self computeFullBounds.
 	self minHeight: self defaultHeight.
@@ -61,7 +61,7 @@ ClyToolbarMorph >> browser: anObject [
 
 { #category : #initialization }
 ClyToolbarMorph >> defaultHeight [
-	^30
+	^ 30 * self currentWorld displayScaleFactor
 ]
 
 { #category : #initialization }
@@ -85,7 +85,7 @@ ClyToolbarMorph >> updateItems [
 	| menu |
 	menu := CmdMenu activatedBy: ClyToolbarActivation.
 	browser navigationContextsDo: [ :eachContext | menu buildInContext: eachContext].
-	
+
 	self hide.
 	self removeAllMorphs.
 	self initialize.

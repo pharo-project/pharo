@@ -18,8 +18,3 @@ VTermOutputFont >> = aFont [
 VTermOutputFont >> hash [
 	^ self color hash
 ]
-
-{ #category : #styling }
-VTermOutputFont >> setInDriver: aVTermOutputDriver [
-	aVTermOutputDriver setFontColor: color.
-]

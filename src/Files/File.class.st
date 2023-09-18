@@ -439,10 +439,10 @@ File class >> connectToFile: filePointer writable: writableFlag [
 	It is the responsibility of the caller to coordinate closing the file."
 
 	<primitive: 'primitiveConnectToFile' module: 'FilePlugin' error: error>
-	error = #'bad argument' ifTrue: [ 
-		(filePointer isKindOf: ByteArray) ifFalse: 
+	error = #'bad argument' ifTrue: [
+		(filePointer isKindOf: ByteArray) ifFalse:
 			[ ^self error: 'filePointer must be a ByteArray' ].
-		(writableFlag isKindOf: Boolean) ifFalse: 
+		(writableFlag isKindOf: Boolean) ifFalse:
 			[ ^self error: 'writableFlag must be a boolean' ] ].
 	^ self primitiveFailed
 ]
@@ -454,10 +454,10 @@ File class >> connectToFileDescriptor: fileDescriptor writable: writableFlag [
 	It is the responsibility of the caller to coordinate closing the file."
 
 	<primitive: 'primitiveConnectToFileDescriptor' module: 'FilePlugin' error: error>
-	error = #'bad argument' ifTrue: [ 
-		fileDescriptor isInteger ifFalse: 
+	error = #'bad argument' ifTrue: [
+		fileDescriptor isInteger ifFalse:
 			[ ^self error: 'fileDescriptor must be an integer' ].
-		(writableFlag isKindOf: Boolean) ifFalse: 
+		(writableFlag isKindOf: Boolean) ifFalse:
 			[ ^self error: 'writableFlag must be a boolean' ] ].
 	^ self primitiveFailed
 ]
@@ -470,7 +470,7 @@ File class >> corruptValue [
 
 { #category : #'primitives - path' }
 File class >> createDirectory: fullPath [
-	"Create a directory named by the given path. 
+	"Create a directory named by the given path.
 	Fail if the path is bad or if a file or directory by that name already exists."
 
  	<primitive: 'primitiveDirectoryCreate' module: 'FilePlugin'>
@@ -485,7 +485,7 @@ File class >> decodePathString: aByteArray [
 
 { #category : #'primitives - path' }
 File class >> deleteDirectory: fullPath [
-	"Delete the directory named by the given path. 
+	"Delete the directory named by the given path.
 	Fail if the path is bad or if a directory by that name does not exist."
 
  	<primitive: 'primitiveDirectoryDelete' module: 'FilePlugin'>
@@ -503,9 +503,9 @@ File class >> deleteFile: fullPathString [
 		retryWithGC: [ self primDeleteFile: utf8Path ]
 		until: [ :result | result notNil ]
 		forFileNamed: fullPathString.
-	(self primExists: utf8Path) ifTrue: 
+	(self primExists: utf8Path) ifTrue:
 		[ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,
-			'. Check the file is not open.') signal ].
+			'. Check the file is not open.') signal ]
 ]
 
 { #category : #'primitives - path' }
@@ -539,8 +539,8 @@ File class >> file: pathString posixPermissions: anInteger [
 File class >> file: pathString symlinkUid: uidInteger gid: gidInteger [
 	"Set the owner and group of pathString by numeric id."
 
-	^self primFile: (self encodePathString: pathString) 
-		symlinkUid: (uidInteger ifNil: [ -1 ]) 
+	^self primFile: (self encodePathString: pathString)
+		symlinkUid: (uidInteger ifNil: [ -1 ])
 		gid: (gidInteger ifNil: [ -1 ])
 ]
 
@@ -549,7 +549,7 @@ File class >> file: pathString uid: uidInteger gid: gidInteger [
 	"Set the owner and group of pathString by numeric id.
 	An id of nil leaves it unchanged."
 
-	^self primFile: (self encodePathString: pathString) 
+	^self primFile: (self encodePathString: pathString)
 		uid: (uidInteger ifNil: [ -1 ])
 		gid: (gidInteger ifNil: [ -1 ])
 ]
@@ -565,7 +565,7 @@ File class >> fileAttribute: aString number: attributeNumber [
 { #category : #attributes }
 File class >> fileAttributeNumberMap [
 	"Answer a mapping of attribute number to name for #primFileAttribute:number:"
-	
+
 	^#(
 		#targetName
 		#mode
@@ -595,7 +595,7 @@ File class >> fileAttributes: aString mask: attributeMask [
 	mask := attributeMask bitAnd: 2r11.
 	mask = 1 ifTrue: [ statAttributes := attributes ].
 	mask = 3 ifTrue: [ statAttributes := attributes at: 1 ].
-	(statAttributes isNotNil and: [ (statAttributes at: 1) isNotNil ]) ifTrue: 
+	(statAttributes isNotNil and: [ (statAttributes at: 1) isNotNil ]) ifTrue:
 		[ statAttributes at: 1 put: (self decodePathString: (statAttributes at: 1)) ].
 	^attributes
 ]
@@ -640,7 +640,7 @@ File class >> flush: id [
 	On Windows this and primSync: do the same thing."
 
 	<primitive: 'primitiveFileFlush' module: 'FilePlugin'>
-	
+
 	"We can't ignore fflush() failing, because it can fail for any of the
 	reasons write() can."
 	self primitiveFailed
@@ -677,8 +677,7 @@ File class >> getPosition: id [
 { #category : #'class initialization' }
 File class >> initialize [
 
-	SessionManager default registerSystemClassNamed: self name.
-	self reset.
+	self reset
 ]
 
 { #category : #'primitives - errors' }
@@ -707,7 +706,7 @@ File class >> isDirectory: aPath [
 
 	^[ self modeIsDirectory: (self modeOf: aPath) ]
 		on: FileDoesNotExistException
-		do: [ false ].
+		do: [ false ]
 ]
 
 { #category : #'primitives - file modes' }
@@ -730,7 +729,7 @@ File class >> isFile: aPathString [
 
 	^[ (self modeIsDirectory: (self modeOf: aPathString)) not ]
 		on: FileDoesNotExistException
-		do: [ false ].
+		do: [ false ]
 ]
 
 { #category : #'primitives - file modes' }
@@ -773,39 +772,39 @@ File class >> lookupDirectory: fullPath filename: fileName [
 
 	"Look up <fileName> (a simple file name) in the directory identified by <fullPath> and return an array containing:
 
-	<fileName> 			
+	<fileName>
 	<creationTime> 			(in seconds since the start of the Smalltalk time epoch)
 	<modificationTime> 	(in seconds since the start of the Smalltalk time epoch)
 	<dirFlag> 				DirFlag is true if the entry is a directory
 	<fileSize> 				FileSize the file size in bytes or zero for directories
-	<posixPermissions> 	Numeric Notation 
+	<posixPermissions> 	Numeric Notation
 	<symLinkFlag>			seemingly, symLinkFlag is true if the entry is a symLink
 
-	On Unix, the empty path denotes '/'. 
+	On Unix, the empty path denotes '/'.
    On Macs and PCs, it is the container of the system volumes."
 
  	<primitive: 'primitiveDirectoryEntry' module: 'FilePlugin'>
-	
+
 	^ #badDirectoryPath
 ]
 
 { #category : #'primitives - path' }
 File class >> lookupEntryIn: fullPath index: index [
-	"Look up the index-th entry of the directory with the given fully-qualified path 
+	"Look up the index-th entry of the directory with the given fully-qualified path
 	(i.e., starting from the root of the file hierarchy) and return an array containing:
 
 	<name> <creationTime> <modificationTime> <dirFlag> <fileSize>
 
-	The empty string enumerates the top-level files or drives. (For example, on Unix, the empty 
+	The empty string enumerates the top-level files or drives. (For example, on Unix, the empty
 	path enumerates the contents of '/'. On Macs and PCs, it enumerates the mounted volumes/drives.)
 
-	The creation and modification times are in seconds since the start of the Smalltalk time epoch. 
-	DirFlag is true if the entry is a directory. FileSize the file size in bytes or zero for directories. 
-	The primitive returns nil when index is past the end of the directory. It fails if the given path 
+	The creation and modification times are in seconds since the start of the Smalltalk time epoch.
+	DirFlag is true if the entry is a directory. FileSize the file size in bytes or zero for directories.
+	The primitive returns nil when index is past the end of the directory. It fails if the given path
 	is bad."
 
  	<primitive: 'primitiveDirectoryLookup' module: 'FilePlugin' error: errorCode >
-	
+
 	^ #badDirectoryPath
 ]
 
@@ -861,7 +860,7 @@ File class >> modeIsSymlink: aMode [
 { #category : #'primitives - file modes' }
 File class >> modeOf: aPathString [
 	"Answer the statBuf.st_mode for the supplied path"
-	
+
 	^self fileAttribute: aPathString number: 2
 ]
 
@@ -920,7 +919,7 @@ File class >> primClosedir: directoryPointerBytes [
 
 { #category : #'primitives - path' }
 File class >> primDeleteFile: aFileName [
-	"Delete the file of the given name. 
+	"Delete the file of the given name.
 	Return self if the primitive succeeds, nil otherwise."
 
 	<primitive: 'primitiveFileDelete' module: 'FilePlugin'>
@@ -932,7 +931,7 @@ File class >> primExists: aByteArray [
 	"Answer a boolean indicating whether the supplied file exists."
 
 	<primitive: 'primitiveFileExists' module: 'FileAttributesPlugin' error: error>
-	^self signalError: error for: aByteArray.
+	^self signalError: error for: aByteArray
 ]
 
 { #category : #'primitives - file attributes' }
@@ -965,7 +964,7 @@ File class >> primFileAttribute: aByteArray number: attributeNumber [
 	For backward compatibility (on Unix) with FileReference if the file doesn't exist, and the specified path is a (broken) symbolic link, answer the requested attribute for the symbolic link.
 
 stat() information:
-	
+
 	1: name
 	2: mode
 	3: ino
@@ -992,12 +991,12 @@ symbolic link information
 	<primitive: 'primitiveFileAttribute' module: 'FileAttributesPlugin' error: error>
 	"FilePlugin>>primitiveDirectoryEntry would return the symbolic link attributes if the symbolic link was broken.  This was due to the incorrect implementation of attempting to retrieve symbolic link information.
 	If the old behaviour is required, the logic is:
-	
+
 		(error isPrimitiveError and: [attributeNumber ~= 16 and: [error errorCode = self cantStatPath and: [
 					self platformSupportsSymbolicLinksEgUnix]]]) ifTrue:
 						[DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath]"
-	error isPrimitiveError ifTrue: [ 
-		(attributeNumber = 16 and: [ error errorCode = self unsupportedOperation ]) ifTrue: 
+	error isPrimitiveError ifTrue: [
+		(attributeNumber = 16 and: [ error errorCode = self unsupportedOperation ]) ifTrue:
 			"If symlinks aren't supported, answer false"
 			[ ^false ]].
 	^self signalError: error for: aByteArray
@@ -1014,7 +1013,7 @@ Bit 2: use lstat() (instead of stat())
 On error, answer an error code (Integer).
 
 stat() information:
-	
+
 	1: name
 	2: mode
 	3: ino
@@ -1041,7 +1040,7 @@ access() information
 { #category : #private }
 File class >> primFileMasks [
 	"Answer an array of well known masks:
-	
+
 	1: S_IFMT
 	2: S_IFSOCK
 	3: S_IFLNK
@@ -1149,12 +1148,12 @@ File class >> register: anObject [
 
 { #category : #registry }
 File class >> registry [
-	^Registry ifNil: [Registry := WeakRegistry new]
+	^Registry ifNil: [Registry := FinalizationRegistry new]
 ]
 
 { #category : #'primitives - path' }
-File class >> rename: oldFileFullName to: newFileFullName [ 
-	"Rename the file of the given name to the new name. Fail if there is no file of the old name 
+File class >> rename: oldFileFullName to: newFileFullName [
+	"Rename the file of the given name to the new name. Fail if there is no file of the old name
 	or if there is an existing file with the new name."
 
 	<primitive: 'primitiveFileRename' module: 'FilePlugin'>
@@ -1189,7 +1188,7 @@ File class >> retryWithGC: execBlock until: testBlock forFileNamed: fullName [
 	(testBlock value: blockValue) ifTrue: [ ^ blockValue ].
 
 	"Optimization: See if we have a file with the given name. Not really needed"
-	foundIt := self registry keys "hold on strongly for now" 
+	foundIt := self registry keys "hold on strongly for now"
 		anySatisfy: [:file| file name sameAs: fullName].
 	foundIt ifFalse:[^blockValue].
 
@@ -1197,7 +1196,7 @@ File class >> retryWithGC: execBlock until: testBlock forFileNamed: fullName [
 	blockValue := execBlock value.
 	(testBlock value: blockValue) ifTrue: [ ^ blockValue ].
 	Smalltalk garbageCollect.
-	^execBlock value.
+	^execBlock value
 ]
 
 { #category : #'primitives - file modes' }
@@ -1256,21 +1255,21 @@ File class >> signalError: error for: aByteArray [
 
 	error ifNil: [ ^self primitiveFailed ].
 	error isSymbol ifTrue: [ ^self primitiveFailed: error ].
-	error isPrimitiveError ifFalse: [ 
+	error isPrimitiveError ifFalse: [
 		"We shouldn't ever get here"
 		^self primitiveFailed. ].
 
 	pathString := self decodePathString: aByteArray asByteArray.
 	errorNumber := error errorCode.
-	errorNumber = self stringTooLong ifTrue: 
+	errorNumber = self stringTooLong ifTrue:
 		[ ^IllegalFileName signalWith: pathString ].
-	errorNumber = self cantStatPath ifTrue: 
+	errorNumber = self cantStatPath ifTrue:
 		[ ^FileDoesNotExistException signalWith: pathString ].
-	errorNumber = self getAttributesFailed ifTrue: 
+	errorNumber = self getAttributesFailed ifTrue:
 		[ ^FileDoesNotExistException signalWith: pathString ].
-	errorNumber = self unsupportedOperation ifTrue: 
+	errorNumber = self unsupportedOperation ifTrue:
 		[ ^FileAttributeNotSupported signalWith: pathString ].
-	^FileException signalWith: pathString.
+	^FileException signalWith: pathString
 ]
 
 { #category : #'primitives - file' }
@@ -1390,23 +1389,23 @@ File >> basename [
 ]
 
 { #category : #'open/close' }
-File >> basicOpenForWrite: writeMode [ 
+File >> basicOpenForWrite: writeMode [
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
-	
+
 	writeMode ifTrue: [ self checkWritableFilesystem ].
 
 	^ self class
 		retryWithGC: [ self class open: name utf8Encoded writable: writeMode ]
-		until:[ :id | id notNil ] 
+		until:[ :id | id notNil ]
 		forFileNamed: name
 ]
 
 { #category : #testing }
 File >> checkDoesNotExist [
 	"This method implements a backwards compatible logic to #newFileNamed:
-	
+
 	If the file does not exist, this method has no effect, and returns self.
-	
+
 	If the file exists, it will throw a FileAlreadyExistsException.
 	If unhandled, this will open a pop-up asking the user to enter a new name or to override the existing file.
 	In this case, this method returns a new file with the options selected by the user.
@@ -1420,15 +1419,15 @@ File >> checkWritableFilesystem [
 
 	"We need to check if the image is in the read-only mode"
 
-	SessionManager default currentSession isReadOnlyAccessMode ifTrue: [ 
-		ReadOnlyFileException signal: 'Attempt to open file ', name, ' as writable on a read-only file system'].
+	SessionManager default currentSession isReadOnlyAccessMode ifTrue: [
+		ReadOnlyFileException signal: 'Attempt to open file ', name, ' as writable on a read-only file system']
 ]
 
 { #category : #'open/close' }
 File >> delete [
 	"Delete the receiver"
 
-	^self class deleteFile: name.
+	^self class deleteFile: name
 ]
 
 { #category : #testing }
@@ -1496,7 +1495,7 @@ File >> openForWrite: writeMode [
 
 { #category : #streaming }
 File >> readStream [
-	
+
 	^ self openForRead
 ]
 

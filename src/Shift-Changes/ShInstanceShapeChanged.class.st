@@ -11,15 +11,15 @@ Class {
 
 { #category : #testing }
 ShInstanceShapeChanged >> hasChangeInstanceSideShape [
-	^ true.
+	^ true
 ]
 
 { #category : #testing }
 ShInstanceShapeChanged >> hasToMigrateInstances [
-	^ true.
+	^ true
 ]
 
 { #category : #testing }
 ShInstanceShapeChanged >> propagateToSubclasses: anotherBuilder [
-	anotherBuilder changes add: self.
+	anotherBuilder changes add: self
 ]

@@ -20,41 +20,41 @@ OSTextInputEvent >> accept: aVisitor [
 { #category : #initialization }
 OSTextInputEvent >> initialize [
 	super initialize.
-	modifiers := OSStateModifiers new.
+	modifiers := OSStateModifiers new
 ]
 
 { #category : #accessing }
 OSTextInputEvent >> modifiers [
-	
+
 	^ modifiers
 ]
 
 { #category : #accessing }
 OSTextInputEvent >> modifiers: anObject [
-	
+
 	modifiers := anObject
 ]
 
 { #category : #accessing }
 OSTextInputEvent >> position [
-	
+
 	^ position
 ]
 
 { #category : #accessing }
 OSTextInputEvent >> position: anObject [
-	
+
 	position := anObject
 ]
 
 { #category : #accessing }
 OSTextInputEvent >> text [
-	
+
 	^ text
 ]
 
 { #category : #accessing }
 OSTextInputEvent >> text: anObject [
-	
+
 	text := anObject
 ]

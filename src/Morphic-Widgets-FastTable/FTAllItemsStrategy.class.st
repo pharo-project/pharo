@@ -72,7 +72,7 @@ FTAllItemsStrategy >> initializeNewSearch [
 FTAllItemsStrategy >> matchingFilter: anItem [
 	((anItem children collect: [ :it | self matchingFilter: it ]) reject: #isNil)
 		ifNotEmpty:
-			[ :coll | 
+			[ :coll |
 			^ (self newStaticItemFrom: anItem)
 				children: coll asArray;
 				dataSource: anItem dataSource;
@@ -128,7 +128,7 @@ FTAllItemsStrategy >> searchIn: item [
 { #category : #action }
 FTAllItemsStrategy >> unexpandAllChildOf: anItem [
 	anItem children
-		do: [ :item | 
+		do: [ :item |
 			item isExpanded
 				ifTrue: [ self unexpandAllChildOf: item ].
 			item collapse ]  displayingProgress: [:each | 'Rearanging ' , each name]

@@ -50,11 +50,21 @@ Class {
 
 { #category : #'intance creation' }
 RBDeprecateMethodRefactoring class >> deprecateMethod: aSelector in: aClass using: newSelector [
-	^ self new 
+	^ self new
 		deprecateMethod: aSelector
 			in: aClass
 			using: newSelector;
 		yourself
+]
+
+{ #category : #'intance creation' }
+RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSelector in: aClass [
+	"partial initialized refactoring"
+	
+	^ self new
+		  model: aRBSmalltalk;
+		  deprecateMethod: aSelector in: aClass;
+		  yourself
 ]
 
 { #category : #'intance creation' }
@@ -68,17 +78,22 @@ RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSele
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodRefactoring >> applicabilityConditions [
+RBDeprecateMethodRefactoring >> applicabilityPreconditions [
 
-	^ RBCondition definesSelector: oldSelector in: class
+	^ (RBCondition
+		   withBlock: [
+		   newSelector isEmptyOrNil or: [ newSelector = oldSelector ] ]
+		   errorString:
+		   'The new selectors cannot be an empty string or same as the old selector.') not
+		& (RBCondition definesSelector: oldSelector in: class)
 ]
 
 { #category : #preconditions }
-RBDeprecateMethodRefactoring >> breakingChangeConditions [
+RBDeprecateMethodRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition canUnderstand: newSelector in: class) & (RBCondition
-		   withBlock: [ 
-			   oldSelector numArgs = newSelector numArgs or: [ 
+		   withBlock: [
+			   oldSelector numArgs = newSelector numArgs or: [
 				   newSelector numArgs = 0 ] ]
 		   errorString:
 		   'The new selectors should have the same number of arguments as the old one, or not have them at all')
@@ -87,41 +102,71 @@ RBDeprecateMethodRefactoring >> breakingChangeConditions [
 { #category : #transforming }
 RBDeprecateMethodRefactoring >> callDeprecationMethod [
 
-	^ 'self 
+	^ 'self
 		deprecated: ''Use ' , newSelector storeString , ' instead''
-		on: 	''' , Date today asString , ''' 
+		on: 	''' , Date today asString , '''
 		in: ''' , SystemVersion current imageVersionString , ''''
 ]
 
 { #category : #initialization }
-RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: newSel [
+RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass [
+	"partial initialization"
+	
 	oldSelector := aSelector asSymbol.
-	newSelector := newSel asSymbol.
-	class := self classObjectFor: aClass.
+	class := self classObjectFor: aClass
+]
+
+{ #category : #initialization }
+RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: newSel [
+
+	self deprecateMethod: aSelector in: aClass.
+	newSelector := newSel
 ]
 
 { #category : #execution }
 RBDeprecateMethodRefactoring >> generateChanges [
 
-	self applicabilityConditions check ifFalse: [ 
+	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [ 
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+			self breakingChangePreconditions errorString ].
 
-	self transform.
+	self privateTransform.
 	^ self changes
+]
+
+{ #category : #accessing }
+RBDeprecateMethodRefactoring >> newSelector: aString [
+
+	newSelector := aString asSymbol
 ]
 
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
+{ #category : #transforming }
+RBDeprecateMethodRefactoring >> privateTransform [
+
+	| node parseTree method |
+	method := class methodFor: oldSelector.
+	parseTree := method parseTree.
+	node := self parserClass parseExpression: self callDeprecationMethod.
+	parseTree body addNodeFirst: node.
+
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			 sourceCode: parseTree newSource
+			 in: class
+			 withProtocol: method protocols)
 ]
 
 { #category : #printing }
-RBDeprecateMethodRefactoring >> storeOn: aStream [ 
+RBDeprecateMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
@@ -133,15 +178,4 @@ RBDeprecateMethodRefactoring >> storeOn: aStream [
 		nextPutAll: ' using: #';
 		nextPutAll: newSelector.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBDeprecateMethodRefactoring >> transform [
-
-	| node parseTree method |
-	method := class methodFor: oldSelector.
-	parseTree := method parseTree.
-	node := self parserClass parseExpression: self callDeprecationMethod.
-	parseTree body addNodeFirst: node.
-	class compile: parseTree newSource classified: method protocols
 ]

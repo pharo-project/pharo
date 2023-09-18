@@ -35,14 +35,21 @@ Class {
 	#category : #'Refactoring-Core-Transformation'
 }
 
+{ #category : #displaying }
+RBGeneratePrintOnTransformation class >> basicMenuItemString [
+
+	^ 'Generate printOn:'
+]
+
 { #category : #'instance creation' }
 RBGeneratePrintOnTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
-{ #category : #accessing }
-RBGeneratePrintOnTransformation class >> kind [ 
-	^ 'Transformation'
+{ #category : #testing }
+RBGeneratePrintOnTransformation class >> isTransformation [
+
+	^ true
 ]
 
 { #category : #'instance creation' }
@@ -53,37 +60,41 @@ RBGeneratePrintOnTransformation class >> model: aNamespace className: aClass var
 { #category : #preconditions }
 RBGeneratePrintOnTransformation >> preconditions [
 	"Checks that the class actually defines all the variables that will be part of the printOn:."
-	
+
 	^ variables
-		  inject: self emptyCondition
-		  into: [ :condition :variable | 
+		  inject: self trueCondition
+		  into: [ :condition :variable |
 			  condition
 			  &
 			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
-{ #category : #accessing }
-RBGeneratePrintOnTransformation >> theClass [
-	^ (self classObjectFor: className) instanceSide
-]
-
 { #category : #transforming }
-RBGeneratePrintOnTransformation >> transform [
+RBGeneratePrintOnTransformation >> privateTransform [
 	| method |
 	method := self parserClass
 		parseMethod:
 			'printOn: aStream
 		"Generate a string representation of the receiver based on its instance variables."
-		
+
 		super printOn: aStream'.
 	variables
-		do: [ :each | 
+		do: [ :each |
 			method body
 				addNode:
 					(self parserClass
 						parseExpression:
 							('aStream nextPutAll: '' <1s>: ''; print: <1s>' expandMacrosWith: each)) ].
-	self theClass compile: method formattedCode classified: #(printing)
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			sourceCode: method formattedCode
+			in: self theClass
+			withProtocol: #printing)
+]
+
+{ #category : #accessing }
+RBGeneratePrintOnTransformation >> theClass [
+	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #accessing }

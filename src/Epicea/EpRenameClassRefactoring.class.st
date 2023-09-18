@@ -22,17 +22,17 @@ EpRenameClassRefactoring class >> rename: oldName to: newName [
 { #category : #converting }
 EpRenameClassRefactoring >> asRBRefactoring [
 
-	^ RBRenameClassRefactoring new 
-		className: oldName 
+	^ RBRenameClassRefactoring new
+		className: oldName
 		newName: newName
 ]
 
 { #category : #initialization }
 EpRenameClassRefactoring >> initializeFrom: anOldName to: aNewName [
 	self initialize.
-	
+
 	oldName := anOldName.
-	newName := aNewName.
+	newName := aNewName
 ]
 
 { #category : #accessing }

@@ -14,20 +14,20 @@ Class {
 { #category : #'instance creation' }
 ReflectivityCodeMorph class >> compiledMethod: aCompiledMethod [
 
-	^self new addSourceCode: aCompiledMethod; yourself.
+	^self new addSourceCode: aCompiledMethod; yourself
 ]
 
 { #category : #accessing }
 ReflectivityCodeMorph >> addSourceCode: aCompiledMethod [
 	|editor|
-	
+
 	self compiledMethod: aCompiledMethod.
-	
+
 	editor := self newScrolledText.
 	editor hResizing: #spaceFill; vResizing: #spaceFill.
-	
+
 	self textModel setText: aCompiledMethod sourceCode.
-	self addMorph: editor.
+	self addMorph: editor
 ]
 
 { #category : #accessing }
@@ -59,10 +59,10 @@ ReflectivityCodeMorph >> drawOn: aCanvas [
 
 { #category : #drawing }
 ReflectivityCodeMorph >> drawTitleOn: aCanvas [
-	aCanvas drawString: self compiledMethod methodClass asString 
-		in: (self bounds insetBy: (Margin left: 10 top: 10 right: 2 bottom: 10)) 
+	aCanvas drawString: self compiledMethod methodClass asString
+		in: (self bounds insetBy: (Margin left: 10 top: 10 right: 2 bottom: 10))
 		font: (LogicalFont familyName: self familyName pointSize: 11)
-		color: self theme textColor.
+		color: self theme textColor
 ]
 
 { #category : #accessing }
@@ -81,8 +81,8 @@ ReflectivityCodeMorph >> initialize [
 		hResizing: #spaceFill;
 		vResizing: #rigid;
 		height: 150;
-		layoutInset: (Margin top: 30 left: 2 bottom: 2 right: 2); 
-		cellInset: 1.
+		layoutInset: (Margin top: 30 left: 2 bottom: 2 right: 2);
+		cellInset: 1
 ]
 
 { #category : #'instance creation' }

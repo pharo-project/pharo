@@ -62,7 +62,7 @@ AsciiCharset class >> isFinalQuote: char [
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isFormatOther: char [ 
+AsciiCharset class >> isFormatOther: char [
 	^ false
 ]
 
@@ -78,7 +78,7 @@ AsciiCharset class >> isLetter: aCharacter [
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isLetterModifier: char [ 
+AsciiCharset class >> isLetterModifier: char [
 	^ false
 ]
 
@@ -118,7 +118,7 @@ AsciiCharset class >> isOpenPunctuation: char [
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isOtherLetter: char [ 
+AsciiCharset class >> isOtherLetter: char [
 	^ false
 ]
 
@@ -158,12 +158,12 @@ AsciiCharset class >> isSpacingCombiningMark: char [
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isSurrogateOther: char [ 
+AsciiCharset class >> isSurrogateOther: char [
 	^ false
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isTitlecaseLetter: char [ 
+AsciiCharset class >> isTitlecaseLetter: char [
 	^ false
 ]
 

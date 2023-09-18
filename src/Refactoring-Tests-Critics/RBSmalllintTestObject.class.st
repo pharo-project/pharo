@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'temporaryVariable'
 	],
-	#category : #'Refactoring-Tests-Critics'
+	#category : #'Refactoring-Tests-Critics-Base'
 }
 
 { #category : #'accessing - good' }
@@ -35,7 +35,7 @@ RBSmalllintTestObject >> assignmentInBlock [
 { #category : #methods }
 RBSmalllintTestObject >> assignmentInIfTrue [
 	| variable |
-	self isVariable 
+	self isVariable
 		ifTrue: [variable := self]
 		ifFalse: [variable := self printString].
 	^variable
@@ -51,7 +51,7 @@ RBSmalllintTestObject >> assignmentWithoutEffect [
 { #category : #methods }
 RBSmalllintTestObject >> atIfAbsent [
 	^ Smalltalk at: #MyTest
-		ifAbsent: 
+		ifAbsent:
 			[| collection |
 			collection := #().
 			Smalltalk at: #MyTest put: collection]
@@ -97,8 +97,8 @@ RBSmalllintTestObject >> collectionMessagesToExternalObject [
 RBSmalllintTestObject >> collectionProtocol [
 	| newCollection |
 	newCollection := OrderedCollection new.
-	(1 to: 10) asOrderedCollection do: 
-			[:each | 
+	(1 to: 10) asOrderedCollection do:
+			[:each |
 			| new |
 			new := each * 2.
 			newCollection add: new].
@@ -111,8 +111,8 @@ RBSmalllintTestObject >> consistencyCheck [
 ]
 
 { #category : #methods }
-RBSmalllintTestObject >> debbuggingMessageSent [
-	self rearmOneShot
+RBSmalllintTestObject >> debuggingMessageSent [
+	self isThisEverCalled
 ]
 
 { #category : #methods }
@@ -127,11 +127,11 @@ RBSmalllintTestObject >> emptyExceptionHandler [
 
 { #category : #methods }
 RBSmalllintTestObject >> endTrueFalse [
-	self isVariable 
-		ifTrue: 
+	self isVariable
+		ifTrue:
 			[self printString.
 			self isVariable printString]
-		ifFalse: 
+		ifFalse:
 			[self printString.
 			^4]
 ]
@@ -155,7 +155,7 @@ RBSmalllintTestObject >> equivalentSuperclassMethods [
 	^ (
 		self
 		identityHash
-		).
+		)
 ]
 
 { #category : #methods }
@@ -188,8 +188,8 @@ RBSmalllintTestObject >> fullBlocks [
 
 { #category : #methods }
 RBSmalllintTestObject >> guardingClause [
-	self isSymbol 
-		ifFalse: 
+	self isSymbol
+		ifFalse:
 			[self printString.
 			self isSymbol printString]
 ]
@@ -306,10 +306,10 @@ RBSmalllintTestObject >> multiplePeriodsTerminatingStatement [
 { #category : #methods }
 RBSmalllintTestObject >> noMoveDefinition [
 	| temp |
-	^(self collect: 
-			[:each | 
+	^(self collect:
+			[:each |
 			temp := each printString.
-			temp , temp]) 
+			temp , temp])
 		select: [:each | temp := each size + temp]
 ]
 
@@ -351,12 +351,12 @@ RBSmalllintTestObject >> precedence [
 ]
 
 { #category : #methods }
-RBSmalllintTestObject >> referencesConditionFor: aClass [ 
+RBSmalllintTestObject >> referencesConditionFor: aClass [
 	| environment association |
-	^(RBCondition withBlock: 
+	^(RBCondition withBlock:
 			[association := Smalltalk globals associationAt: aClass name
 						ifAbsent: [self refactoringError: 'Could not find class'].
-			environment := (self environment referencesTo: association) 
+			environment := (self environment referencesTo: association)
 						| (self environment referencesTo: aClass name).
 			environment isEmpty])
 		errorMacro: aClass , ' is referenced.<n>Browse references?';
@@ -413,8 +413,8 @@ RBSmalllintTestObject >> shouldntRaiseException [
 { #category : #methods }
 RBSmalllintTestObject >> sizeCheck [
 	self isEmpty
-		ifFalse: [self do: 
-					[:each | 
+		ifFalse: [self do:
+					[:each |
 					]]
 ]
 
@@ -449,7 +449,7 @@ RBSmalllintTestObject >> tempsReadBeforeWritten [
 
 { #category : #methods }
 RBSmalllintTestObject >> testMethod1 [
-	^self testMethod1 
+	^self testMethod1
 		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))
 ]
 
@@ -553,11 +553,13 @@ RBSmalllintTestObject >> unclassifiedMethods [
 
 { #category : #methods }
 RBSmalllintTestObject >> uncommonMessageSend [
+	<ignoreNotImplementedSelectors: #(#false)>
 	true false
 ]
 
 { #category : #methods }
 RBSmalllintTestObject >> uncommonMessageSend2 [
+	<ignoreNotImplementedSelectors: #(Object)>
 	|a|
 	a:=3
 	Object new.
@@ -588,7 +590,7 @@ RBSmalllintTestObject >> variableAssignedLiteral [
 RBSmalllintTestObject >> whileTrue [
 	| i |
 	i := 1.
-	[i < self size] whileTrue: 
+	[i < self size] whileTrue:
 			[(self at: i) printString.
 			i := i + 1]
 ]

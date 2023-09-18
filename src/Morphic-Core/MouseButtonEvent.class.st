@@ -11,10 +11,28 @@ Class {
 }
 
 { #category : #accessing }
+MouseButtonEvent >> asPseudoDoubleClickEvent [
+
+	| pseudoEvent secondEvent |
+	pseudoEvent := MouseButtonPseudoDoubleClickEvent new copyFrom: self.
+	secondEvent := self copy.
+	secondEvent setPosition:
+		(self hand ifNil: [ self position ] ifNotNil: [ :h | h cursorPoint ]).
+	pseudoEvent secondEvent: secondEvent.
+	^ pseudoEvent
+]
+
+{ #category : #accessing }
 MouseButtonEvent >> blueButtonChanged [
 	"Answer true if the blue mouse button has changed. This is the third mouse button or cmd+click on the Mac."
 
 	^ whichButton anyMask: self class blueButton
+]
+
+{ #category : #accessing }
+MouseButtonEvent >> isSpecialGesture [
+	"This is the gesture to open the Halos"
+	^ self blueButtonPressed or: [self redButtonPressed & self altKeyPressed & self shiftPressed]
 ]
 
 { #category : #accessing }
@@ -40,14 +58,14 @@ MouseButtonEvent >> setType: evtType position: evtPos which: button buttons: evt
 	source := evtHand.
 	wasHandled := false.
 	whichButton := button.
-	timeStamp := stamp.
+	timeStamp := stamp
 ]
 
 { #category : #printing }
 MouseButtonEvent >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream space.
-	whichButton storeOn: aStream.
+	whichButton storeOn: aStream
 ]
 
 { #category : #accessing }

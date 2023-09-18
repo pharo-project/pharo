@@ -22,7 +22,7 @@ SycMoveMethodsToClassCommand class >> methods: methods class: targetClass [
 ]
 
 { #category : #accessing }
-SycMoveMethodsToClassCommand >> defaultMenuIconName [ 
+SycMoveMethodsToClassCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
@@ -33,10 +33,11 @@ SycMoveMethodsToClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycMoveMethodsToClassCommand >> execute [
-	methods 
+
+	methods
 		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: targetClass ]
 		thenDo: [ :each | each execute ].
-	methods do: [ :each | each origin organization removeEmptyCategories ].
+	methods do: [ :each | each origin removeEmptyProtocols ]
 ]
 
 { #category : #'drag and drop support' }
@@ -49,7 +50,7 @@ SycMoveMethodsToClassCommand >> prepareExecutionInDropContext: aToolContext [
 { #category : #execution }
 SycMoveMethodsToClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
+
 	targetClass := aToolContext requestSingleClass: 'Choose class'.
 	targetClass := aToolContext currentMetaLevelOf: targetClass
 ]

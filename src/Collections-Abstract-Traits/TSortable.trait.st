@@ -20,8 +20,8 @@ TSortable >> isSorted [
 	| lastElm elm |
 	self isEmpty ifTrue: [^ true].
 	lastElm := self first.
-	2 to: self size do: 
-		[:index | 
+	2 to: self size do:
+		[:index |
 		elm := self at: index.
 		lastElm <= elm ifFalse: [^ false].
 		lastElm := elm].
@@ -35,8 +35,8 @@ TSortable >> isSortedBy: aBlock [
 	| lastElm elm |
 	self isEmpty ifTrue: [^ true].
 	lastElm := self first.
-	2 to: self size do: 
-		[:index | 
+	2 to: self size do:
+		[:index |
 		elm := self at: index.
 		(aBlock value: lastElm value: elm) ifFalse: [^ false].
 		lastElm := elm].
@@ -45,7 +45,7 @@ TSortable >> isSortedBy: aBlock [
 
 { #category : #sorting }
 TSortable >> mergeFirst: first middle: middle last: last into: dst by: aBlock [
-	"Private. Merge the sorted ranges [first..middle] and [middle+1..last] 
+	"Private. Merge the sorted ranges [first..middle] and [middle+1..last]
 	of the receiver into the range [first..last] of dst."
 
 	| i1 i2 val1 val2 out |
@@ -77,8 +77,8 @@ TSortable >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 	does only half as many comparisons as heapsort or quicksort."
 
 	"Details: recursively split the range to be sorted into two halves,
-	mergesort each half, then merge the two halves together. An extra 
-	copy of the data is used as temporary storage and successive merge 
+	mergesort each half, then merge the two halves together. An extra
+	copy of the data is used as temporary storage and successive merge
 	phases copy data back and forth between the receiver and this copy.
 	The recursion is set up so that the final merge is performed into the
 	receiver, resulting in the receiver being completely sorted."
@@ -89,15 +89,15 @@ TSortable >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 	[stopIndex <= self size] assert. "bad stop index"
 	self
 		mergeSortFrom: startIndex
-		to: stopIndex 
-		src: self copy 
-		dst: self 
+		to: stopIndex
+		src: self copy
+		dst: self
 		by: aBlock
 ]
 
 { #category : #sorting }
 TSortable >> mergeSortFrom: first to: last src: src dst: dst by: aBlock [
-	"Private. Split the range to be sorted in half, sort each half, and 
+	"Private. Split the range to be sorted in half, sort each half, and
 	merge the two half-ranges into dst."
 
 	| middle |
@@ -116,7 +116,7 @@ TSortable >> sort [
 ]
 
 { #category : #sorting }
-TSortable >> sort: aSortBlock [ 
+TSortable >> sort: aSortBlock [
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."
 
@@ -128,18 +128,18 @@ TSortable >> sort: aSortBlock [
 
 { #category : #sorting }
 TSortable >> sorted [
-	"Return a new sequenceable collection which contains the same elements as self but its 
+	"Return a new sequenceable collection which contains the same elements as self but its
 elements are sorted in ascending order using the #'<=' operator."
-	
+
 	^self sorted: [ :a :b| a <= b ]
 ]
 
 { #category : #sorting }
 TSortable >> sorted: aSortBlockOrNil [
-	"Return a new sequenceable collection which contains the same elements as self but its 
-elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if 
-the first element should preceed the second one. If aSortBlock is nil then <= is used for 
+	"Return a new sequenceable collection which contains the same elements as self but its
+elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if
+the first element should preceed the second one. If aSortBlock is nil then <= is used for
 comparison."
-	
+
 	^self copy sort: aSortBlockOrNil
 ]

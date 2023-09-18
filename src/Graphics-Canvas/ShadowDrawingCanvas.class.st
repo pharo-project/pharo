@@ -39,7 +39,7 @@ ShadowDrawingCanvas >> mapColor: aColor [
 { #category : #initialization }
 ShadowDrawingCanvas >> on: aCanvas [
 	myCanvas := aCanvas.
-	shadowColor := Color black.
+	shadowColor := Color black
 ]
 
 { #category : #accessing }

@@ -22,7 +22,7 @@ Integer class >> basicNew [
 ]
 
 { #category : #'instance creation' }
-Integer class >> byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4 [ 
+Integer class >> byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4 [
 	"Depending on high-order byte copy directly into a LargeInteger,
 	or build up a SmallInteger by shifting"
 	| value |
@@ -55,12 +55,12 @@ Integer class >> new [
 
 { #category : #'instance creation' }
 Integer class >> new: length neg: neg [
-	"Answer an instance of a large integer whose size is length. neg is a flag 
+	"Answer an instance of a large integer whose size is length. neg is a flag
 	determining whether the integer is negative or not."
 
-	neg 
-		ifTrue: [^LargeNegativeInteger new: length]
-		ifFalse: [^LargePositiveInteger new: length]
+	^ neg
+		  ifTrue: [ LargeNegativeInteger new: length ]
+		  ifFalse: [ LargePositiveInteger new: length ]
 ]
 
 { #category : #reading }
@@ -82,9 +82,9 @@ Integer >> & aNumber [
 
 { #category : #arithmetic }
 Integer >> * aNumber [
-	"Refer to the comment in Number * " 
+	"Refer to the comment in Number * "
 	aNumber isInteger ifTrue:
-		[^ self digitMultiply: aNumber 
+		[^ self digitMultiply: aNumber
 					neg: self negative ~~ aNumber negative].
 	^ aNumber adaptToInteger: self andSend: #*
 ]
@@ -93,9 +93,9 @@ Integer >> * aNumber [
 Integer >> + aNumber [
 	"Refer to the comment in Number + "
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [^ (self digitAdd: aNumber) normalize]
-			ifFalse: [^ self digitSubtract: aNumber]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ (self digitAdd: aNumber) normalize]
+			  ifFalse: [ self digitSubtract: aNumber]].
 	aNumber isFraction ifTrue:
 		[^Fraction numerator: self * aNumber denominator + aNumber numerator denominator: aNumber denominator].
 	^ aNumber adaptToInteger: self andSend: #+
@@ -105,9 +105,9 @@ Integer >> + aNumber [
 Integer >> - aNumber [
 	"Refer to the comment in Number - "
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [^ self digitSubtract: aNumber]
-			ifFalse: [^ (self digitAdd: aNumber) normalize]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self digitSubtract: aNumber]
+			  ifFalse: [ (self digitAdd: aNumber) normalize]].
 	aNumber isFraction ifTrue:
 		[^Fraction numerator: self * aNumber denominator - aNumber numerator denominator: aNumber denominator].
 	^ aNumber adaptToInteger: self andSend: #-
@@ -119,53 +119,52 @@ Integer >> / aNumber [
 	| quoRem |
 	aNumber isInteger ifTrue:
 		[quoRem := self digitDiv: aNumber neg: self negative ~~ aNumber negative.
-		(quoRem at: 2) = 0
-			ifTrue: [^ (quoRem at: 1) normalize]
-			ifFalse: [^ (Fraction numerator: self denominator: aNumber) reduced]].
+		^ (quoRem at: 2) = 0
+			ifTrue: [ (quoRem at: 1) normalize]
+			ifFalse: [ (Fraction numerator: self denominator: aNumber) reduced]].
 	^ aNumber adaptToInteger: self andSend: #/
 ]
 
 { #category : #arithmetic }
-Integer >> // aNumber [ 
+Integer >> // aNumber [
 	| q |
 	aNumber = 0 ifTrue: [^ (ZeroDivide dividend: self) signal"<- Chg"].
 	self = 0 ifTrue: [^ 0].
 	q := self quo: aNumber.
 	"Refer to the comment in Number|//."
-	(q negative
+	^ (q negative
 		ifTrue: [q * aNumber ~= self]
 		ifFalse: [q = 0 and: [self negative ~= aNumber negative]])
-		ifTrue: [^ q - 1"Truncate towards minus infinity."]
-		ifFalse: [^ q]
+		ifTrue: [ q - 1"Truncate towards minus infinity."]
+		ifFalse: [ q]
 ]
 
 { #category : #comparing }
 Integer >> < aNumber [
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [self negative
-						ifTrue: [^ (self bytesCompare: aNumber) > 0]
-						ifFalse: [^ (self bytesCompare: aNumber) < 0]]
-			ifFalse: [^ self negative]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self negative
+						    ifTrue: [ (self bytesCompare: aNumber) > 0]
+						    ifFalse: [ (self bytesCompare: aNumber) < 0]]
+			  ifFalse: [ self negative]].
 	^ aNumber adaptToInteger: self andCompare: #<
 ]
 
 { #category : #'bit manipulation' }
 Integer >> << shiftAmount [
 	"left shift"
-	
-	shiftAmount < 0 ifTrue: [self error: 'negative arg'].
+
 	^ self bitShift: shiftAmount
 ]
 
 { #category : #comparing }
 Integer >> <= aNumber [
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [self negative
-						ifTrue: [^ (self bytesCompare: aNumber) >= 0]
-						ifFalse: [^ (self bytesCompare: aNumber) <= 0]]
-			ifFalse: [^ self negative]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self negative
+						    ifTrue: [ (self bytesCompare: aNumber) >= 0]
+						    ifFalse: [ (self bytesCompare: aNumber) <= 0]]
+			  ifFalse: [ self negative]].
 	^ aNumber adaptToInteger: self andCompare: #<=
 ]
 
@@ -173,44 +172,42 @@ Integer >> <= aNumber [
 Integer >> = aNumber [
 	aNumber isNumber ifFalse: [^ false].
 	aNumber isInteger ifTrue:
-		[aNumber negative == self negative
-			ifTrue: [^ (self bytesCompare: aNumber) = 0]
-			ifFalse: [^ false]].
+		[^ aNumber negative == self negative
+			and: [ (self bytesCompare: aNumber) = 0]].
 	^ aNumber adaptToInteger: self andCompare: #=
 ]
 
 { #category : #comparing }
 Integer >> > aNumber [
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [self negative
-						ifTrue: [^(self bytesCompare: aNumber) < 0]
-						ifFalse: [^(self bytesCompare: aNumber) > 0]]
-			ifFalse: [^ aNumber negative]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self negative
+						    ifTrue: [(self bytesCompare: aNumber) < 0]
+						    ifFalse: [(self bytesCompare: aNumber) > 0]]
+			  ifFalse: [ aNumber negative]].
 	^ aNumber adaptToInteger: self andCompare: #>
 ]
 
 { #category : #comparing }
 Integer >> >= aNumber [
 	aNumber isInteger ifTrue:
-		[self negative == aNumber negative
-			ifTrue: [self negative
-						ifTrue: [^(self bytesCompare: aNumber) <= 0]
-						ifFalse: [^(self bytesCompare: aNumber) >= 0]]
-			ifFalse: [^ aNumber negative]].
+		[^ self negative == aNumber negative
+			  ifTrue: [ self negative
+						    ifTrue: [(self bytesCompare: aNumber) <= 0]
+						    ifFalse: [(self bytesCompare: aNumber) >= 0]]
+			  ifFalse: [ aNumber negative]].
 	^ aNumber adaptToInteger: self andCompare: #>=
 ]
 
 { #category : #'bit manipulation' }
 Integer >> >> shiftAmount [
 	"right shift"
-	
-	shiftAmount < 0 ifTrue: [self error: 'negative arg'].
+
 	^ self bitShift: 0 - shiftAmount
 ]
 
 { #category : #arithmetic }
-Integer >> \\\ anInteger [ 
+Integer >> \\\ anInteger [
 	"a modulo method for use in DSA. Be careful if you try to use this elsewhere."
 
 	^self \\ anInteger
@@ -233,17 +230,17 @@ Integer >> alignedTo: anInteger [
 ]
 
 { #category : #'bit manipulation' }
-Integer >> allMask: mask [ 
-	"Treat the argument as a bit mask. Answer whether all of the bits that 
+Integer >> allMask: mask [
+	"Treat the argument as a bit mask. Answer whether all of the bits that
 	are 1 in the argument are 1 in the receiver."
 
 	^mask = (self bitAnd: mask)
 ]
 
 { #category : #'bit manipulation' }
-Integer >> anyBitOfMagnitudeFrom: start to: stopArg [ 
+Integer >> anyBitOfMagnitudeFrom: start to: stopArg [
 	"Tests for any magnitude bits in the interval from start to stopArg."
-	"Primitive fixed in LargeIntegers v1.2. If you have an earlier version 
+	"Primitive fixed in LargeIntegers v1.2. If you have an earlier version
 	comment out the primitive call (using this ST method then)."
 	| magnitude firstDigitIx lastDigitIx rightShift leftShift stop |
 	<primitive: 'primAnyBitFromTo' module:'LargeIntegers'>
@@ -258,7 +255,7 @@ Integer >> anyBitOfMagnitudeFrom: start to: stopArg [
 	rightShift := (start - 1 \\ 8) negated.
 	leftShift := 7 - (stop - 1 \\ 8).
 	firstDigitIx = lastDigitIx
-		ifTrue: [| digit mask | 
+		ifTrue: [| digit mask |
 			mask := (255 bitShift: rightShift negated)
 						bitAnd: (255 bitShift: leftShift negated).
 			digit := magnitude byteAt: firstDigitIx.
@@ -282,8 +279,8 @@ Integer >> anyBitOfMagnitudeFrom: start to: stopArg [
 ]
 
 { #category : #'bit manipulation' }
-Integer >> anyMask: mask [ 
-	"Treat the argument as a bit mask. Answer whether any of the bits that 
+Integer >> anyMask: mask [
+	"Treat the argument as a bit mask. Answer whether any of the bits that
 	are 1 in the argument are 1 in the receiver."
 
 	^0 ~= (self bitAnd: mask)
@@ -300,18 +297,18 @@ Integer >> asByteArray [
 ]
 
 { #category : #'converting - arrays' }
-Integer >> asByteArrayOfSize: aSize [ 
+Integer >> asByteArrayOfSize: aSize [
 	"Answer a ByteArray of aSize with my value, most-significant byte first."
 	| answer digitPos |
 	aSize < self bytesCount ifTrue: [ self error: 'number to large for byte array' ].
 	answer := ByteArray new: aSize.
 	digitPos := 1.
-	aSize 
+	aSize
 		to: aSize - self bytesCount + 1
 		by: -1
-		do: 
-			[ :pos | 
-			answer 
+		do:
+			[ :pos |
+			answer
 				at: pos
 				put: (self byteAt: digitPos).
 			digitPos := digitPos + 1 ].
@@ -371,7 +368,7 @@ Integer >> asScaledDecimal [
 	^ ScaledDecimal newFromNumber: self scale: 0
 ]
 
-{ #category : #'*Kernel-Chronology' }
+{ #category : #converting }
 Integer >> asSeconds [
 	^ Duration seconds: self
 ]
@@ -389,7 +386,7 @@ Integer >> asSmallerPowerOfTwo [
 Integer >> asStringWithCommas [
 	"123456789 asStringWithCommas"
 	"-123456789 asStringWithCommas"
-	^ String streamContents: [:stream | 
+	^ String streamContents: [:stream |
 		self printWithCommasOn: stream ]
 ]
 
@@ -397,7 +394,7 @@ Integer >> asStringWithCommas [
 Integer >> asStringWithCommasSigned [
 	"123456789 asStringWithCommasSigned"
 	"-123456789 asStringWithCommasSigned"
-	^ String streamContents: [:stream | 
+	^ String streamContents: [:stream |
 		self printWithCommasSignedOn: stream ]
 ]
 
@@ -418,8 +415,8 @@ Integer >> asTwoCharacterString [
 ]
 
 { #category : #'bit manipulation' }
-Integer >> bitAnd: n [ 
-	"Answer an Integer whose bits are the logical AND of the receiver's bits  
+Integer >> bitAnd: n [
+	"Answer an Integer whose bits are the logical AND of the receiver's bits
 	and those of the argument, n."
 	| norm |
 	<primitive: 'primDigitBitAnd' module:'LargeIntegers'>
@@ -436,9 +433,9 @@ Integer >> bitAt: anInteger [
 	self is considered an infinite sequence of bits, so anInteger can be any strictly positive integer.
 	Bit at position 1 is the least significant bit.
 	Negative numbers are in two-complements.
-	
+
 	This is a naive implementation that can be refined in subclass for speed"
-	
+
 	^(self bitShift: 1 - anInteger) bitAnd: 1
 ]
 
@@ -448,7 +445,7 @@ Integer >> bitAt: anInteger put: value [
 	The bit value should be 0 or 1, otherwise raise an Error.
 	The bits are indexed starting at 1 for the least significant bit.
 	For negative integers, operate on 2-complement representation."
-	
+
 	| b |
 	b := self bitAt: anInteger.
 	b = value ifTrue: [^self].
@@ -458,7 +455,7 @@ Integer >> bitAt: anInteger put: value [
 ]
 
 { #category : #'bit manipulation' }
-Integer >> bitClear: aMask [ 
+Integer >> bitClear: aMask [
 	"Answer an Integer equal to the receiver, except with all bits cleared that are set in aMask."
 
 	^ (self bitOr: aMask) - aMask
@@ -469,7 +466,7 @@ Integer >> bitInvert [
 	"Answer an Integer whose bits are the logical negation of the receiver's bits.
 	Numbers are interpreted as having 2's-complement representation."
 
-	^ -1 - self.
+	^ -1 - self
 ]
 
 { #category : #'bit manipulation' }
@@ -480,8 +477,8 @@ Integer >> bitInvert32 [
 ]
 
 { #category : #'bit manipulation' }
-Integer >> bitOr: n [ 
-	"Answer an Integer whose bits are the logical OR of the receiver's bits  
+Integer >> bitOr: n [
+	"Answer an Integer whose bits are the logical OR of the receiver's bits
 	and those of the argument, n."
 	| norm |
 	<primitive: 'primDigitBitOr' module:'LargeIntegers'>
@@ -493,23 +490,23 @@ Integer >> bitOr: n [
 ]
 
 { #category : #'bit manipulation' }
-Integer >> bitShift: shiftCount [ 
-	"Answer an Integer whose value (in twos-complement representation) is  
-	the receiver's value (in twos-complement representation) shifted left by 
-	the number of bits indicated by the argument. Negative arguments  
+Integer >> bitShift: shiftCount [
+	"Answer an Integer whose value (in twos-complement representation) is
+	the receiver's value (in twos-complement representation) shifted left by
+	the number of bits indicated by the argument. Negative arguments
 	shift right. Zeros are shifted in from the right in left shifts."
 	| magnitudeShift |
 	magnitudeShift := self bitShiftMagnitude: shiftCount.
-	^ ((self negative and: [shiftCount negative])
-		and: [self anyBitOfMagnitudeFrom: 1 to: shiftCount negated])
+	^ (self negative and: [shiftCount negative
+		and: [self anyBitOfMagnitudeFrom: 1 to: shiftCount negated]])
 		ifTrue: [magnitudeShift - 1]
 		ifFalse: [magnitudeShift]
 ]
 
 { #category : #'bit manipulation' }
-Integer >> bitShiftMagnitude: shiftCount [ 
-	"Answer an Integer whose value (in magnitude representation) is  
-	the receiver's value (in magnitude representation) shifted left by  
+Integer >> bitShiftMagnitude: shiftCount [
+	"Answer an Integer whose value (in magnitude representation) is
+	the receiver's value (in magnitude representation) shifted left by
 	the number of bits indicated by the argument. Negative arguments
 	shift right. Zeros are shifted in from the right in left shifts."
 	| rShift |
@@ -525,17 +522,17 @@ Integer >> bitShiftMagnitude: shiftCount [
 { #category : #'bit manipulation' }
 Integer >> bitString [
 	"Returns a string representing the receiver in binary form"
-	"2 bitString 
+	"2 bitString
 		'0000000000000000000000000000010'
-	
-	-1 bitString	 
+
+	-1 bitString
 		'1111111111111111111111111111111'
-	
-	-2 bitString 
+
+	-2 bitString
 		'1111111111111111111111111111110'
 	"
 
-      ^(self bitStringLength to: 1 by: -1) 
+      ^(self bitStringLength to: 1 by: -1)
 		collect: [:i | Character value: $0 charCode + (self bitAt: i)] as: String
 ]
 
@@ -548,8 +545,8 @@ Integer >> bitStringLength [
 ]
 
 { #category : #'bit manipulation' }
-Integer >> bitXor: n [ 
-	"Answer an Integer whose bits are the logical XOR of the receiver's bits  
+Integer >> bitXor: n [
+	"Answer an Integer whose bits are the logical XOR of the receiver's bits
 	and those of the argument, n."
 	| norm |
 	<primitive: 'primDigitBitXor' module:'LargeIntegers'>
@@ -566,13 +563,13 @@ Integer >> byteAt: index [
 ]
 
 { #category : #accessing }
-Integer >> byteAt: index put: value [ 
+Integer >> byteAt: index put: value [
 	^ self subclassResponsibility
 ]
 
 { #category : #private }
-Integer >> bytesCompare: arg [ 
-	"Compare the magnitude of self with that of arg.   
+Integer >> bytesCompare: arg [
+	"Compare the magnitude of self with that of arg.
 	Return a code of 1, 0, -1 for self >, = , < arg"
 	| len arglen argDigit selfDigit |
 	<primitive: 'primDigitCompare' module:'LargeIntegers'>
@@ -582,7 +579,7 @@ Integer >> bytesCompare: arg [
 				ifTrue: [^ -1]
 				ifFalse: [^ 1]].
 	[len > 0]
-		whileTrue: 
+		whileTrue:
 			[(argDigit := arg byteAt: len) ~= (selfDigit := self byteAt: len)
 				ifTrue: [argDigit < selfDigit
 						ifTrue: [^ 1]
@@ -597,7 +594,7 @@ Integer >> bytesCount [
 ]
 
 { #category : #'truncation and round off' }
-Integer >> ceiling [ 
+Integer >> ceiling [
 	"Refer to the comment in Number|ceiling."
 ]
 
@@ -630,7 +627,7 @@ Integer >> decimalDigitLength [
 	"Return how many digits are necessary to print this number in base 10.
 	This does not count any place for minus sign, radix prefix or whatever.
 	Result is not defined from negative numbers."
-	
+
 	^ self numberOfDigitsInBase: 10
 ]
 
@@ -641,20 +638,20 @@ Integer >> denominator [
 ]
 
 { #category : #private }
-Integer >> digitAdd: arg [ 
+Integer >> digitAdd: arg [
 	| len arglen accum sum |
 	<primitive: 'primDigitAdd' module:'LargeIntegers'>
 	accum := 0.
 	(len := self bytesCount) < (arglen := arg bytesCount) ifTrue: [len := arglen].
 	"Open code max: for speed"
 	sum := Integer new: len neg: self negative.
-	1 to: len do: 
-		[:i | 
+	1 to: len do:
+		[:i |
 		accum := (accum bitShift: -8)
 					+ (self byteAt: i) + (arg byteAt: i).
 		sum byteAt: i put: (accum bitAnd: 255)].
 	accum > 255
-		ifTrue: 
+		ifTrue:
 			[sum := sum growby: 1.
 			sum at: sum bytesCount put: (accum bitShift: -8)].
 	^ sum
@@ -675,7 +672,7 @@ Integer >> digitAt: anExponent base: base [
 ]
 
 { #category : #private }
-Integer >> digitDiv: arg neg: ng [ 
+Integer >> digitDiv: arg neg: ng [
 	"Answer with an array of (quotient, remainder)."
 	| quo rem ql d div dh dnh dl qhi qlo j l hi lo r3 a t |
 	<primitive: 'primDigitDivNegative' module:'LargeIntegers'>
@@ -699,8 +696,8 @@ Integer >> digitDiv: arg neg: ng [
 	dnh := dl = 1
 				ifTrue: [0]
 				ifFalse: [div byteAt: dl - 1].
-	1 to: ql do: 
-		[:k | 
+	1 to: ql do:
+		[:k |
 		"maintain quo*arg+rem=self"
 		"Estimate rem/div by dividing the leading to bytes of rem by dh."
 		"The estimate is q = qhi*16+qlo, where qhi and qlo are nibbles."
@@ -710,10 +707,10 @@ Integer >> digitDiv: arg neg: ng [
 			= dh
 			ifTrue: [qhi := qlo := 15
 				"i.e. q=255"]
-			ifFalse: 
-				["Compute q = (r1,r2)//dh, t = (r1,r2)\\dh.  
-				Note that r1,r2 are bytes, not nibbles.  
-				Be careful not to generate intermediate results exceeding 13  
+			ifFalse:
+				["Compute q = (r1,r2)//dh, t = (r1,r2)\\dh.
+				Note that r1,r2 are bytes, not nibbles.
+				Be careful not to generate intermediate results exceeding 13
 				bits."
 				"r2 := (rem digitAt: j - 1)."
 				t := ((rem byteAt: j)
@@ -733,32 +730,32 @@ Integer >> digitDiv: arg neg: ng [
 				hi := (hi bitShift: -4)
 							+ (lo bitShift: -8).
 				lo := lo bitAnd: 255.
-				"Correct overestimate of q.  
+				"Correct overestimate of q.
 				Max of 2 iterations through loop -- see Knuth vol. 2"
 				r3 := j < 3
 							ifTrue: [0]
 							ifFalse: [rem byteAt: j - 2].
 				[(t < hi
 					or: [t = hi and: [r3 < lo]])
-					and: 
+					and:
 						["i.e. (t,r3) < (hi,lo)"
 						qlo := qlo - 1.
 						lo := lo - dnh.
 						lo < 0
-							ifTrue: 
+							ifTrue:
 								[hi := hi - 1.
 								lo := lo + 256].
 						hi >= dh]]
 					whileTrue: [hi := hi - dh].
 				qlo < 0
-					ifTrue: 
+					ifTrue:
 						[qhi := qhi - 1.
 						qlo := qlo + 16]].
 		"Subtract q*div from rem"
 		l := j - dl.
 		a := 0.
-		1 to: div bytesCount do: 
-			[:i | 
+		1 to: div bytesCount do:
+			[:i |
 			hi := (div byteAt: i)
 						* qhi.
 			lo := a + (rem byteAt: l) - ((hi bitAnd: 15)
@@ -769,13 +766,13 @@ Integer >> digitDiv: arg neg: ng [
 			a := lo // 256 - (hi bitShift: -4).
 			l := l + 1].
 		a < 0
-			ifTrue: 
+			ifTrue:
 				["Add div back into rem, decrease q by 1"
 				qlo := qlo - 1.
 				l := j - dl.
 				a := 0.
-				1 to: div bytesCount do: 
-					[:i | 
+				1 to: div bytesCount do:
+					[:i |
 					a := (a bitShift: -8)
 								+ (rem byteAt: l) + (div byteAt: i).
 					rem byteAt: l put: (a bitAnd: 255).
@@ -790,7 +787,7 @@ Integer >> digitDiv: arg neg: ng [
 ]
 
 { #category : #private }
-Integer >> digitLogic: arg op: op length: len [ 
+Integer >> digitLogic: arg op: op length: len [
 	| i result neg1 neg2 rneg z1 z2 rz b1 b2 b |
 	neg1 := self negative.
 	neg2 := arg negative.
@@ -841,7 +838,7 @@ Integer >> digitLogic: arg op: op length: len [
 ]
 
 { #category : #private }
-Integer >> digitLshift: shiftCount [ 
+Integer >> digitLshift: shiftCount [
 	| carry rShift mask len result digit byteShift bitShift highBit |
 	(highBit := self highBitOfMagnitude) = 0 ifTrue: [^ 0].
 	len := highBit + shiftCount + 7 // 8.
@@ -858,8 +855,8 @@ Integer >> digitLshift: shiftCount [
 	rShift := bitShift - 8.
 	mask := 255 bitShift: 0 - bitShift.
 	1 to: byteShift do: [:i | result byteAt: i put: 0].
-	1 to: len - byteShift do: 
-		[:i | 
+	1 to: len - byteShift do:
+		[:i |
 		digit := self byteAt: i.
 		result byteAt: i + byteShift put: (((digit bitAnd: mask)
 				bitShift: bitShift)
@@ -869,7 +866,7 @@ Integer >> digitLshift: shiftCount [
 ]
 
 { #category : #private }
-Integer >> digitMultiply: arg neg: ng [ 
+Integer >> digitMultiply: arg neg: ng [
 	| prod prodLen carry digit k ab |
 	<primitive: 'primDigitMultiplyNegative' module:'LargeIntegers'>
 	(arg bytesCount = 1 and: [(arg byteAt: 1)
@@ -882,12 +879,12 @@ Integer >> digitMultiply: arg neg: ng [
 	prod := Integer new: prodLen neg: ng.
 	"prod starts out all zero"
 	1 to: self bytesCount do: [:i | (digit := self byteAt: i) ~= 0
-			ifTrue: 
+			ifTrue:
 				[k := i.
 				carry := 0.
 				"Loop invariant: 0<=carry<=0377, k=i+j-1"
-				1 to: arg bytesCount do: 
-					[:j | 
+				1 to: arg bytesCount do:
+					[:j |
 					ab := (arg byteAt: j)
 								* digit + carry + (prod byteAt: k).
 					carry := ab bitShift: -8.
@@ -898,7 +895,7 @@ Integer >> digitMultiply: arg neg: ng [
 ]
 
 { #category : #private }
-Integer >> digitRshift: anInteger bytes: b lookfirst: a [ 
+Integer >> digitRshift: anInteger bytes: b lookfirst: a [
 	 "Shift right 8*b+anInteger bits, 0<=n<8.
 	Discard all digits beyond a, and all zeroes at or below a."
 	| n x r f m digit count i |
@@ -918,20 +915,20 @@ Integer >> digitRshift: anInteger bytes: b lookfirst: a [
 	x := (self byteAt: b + 1) bitShift: n.
 	b + 1 to: count do:
 		[:j | digit := self byteAt: j + 1.
-		r byteAt: j - b put: (((digit bitAnd: m) bitShift: f) bitOr: x) 
+		r byteAt: j - b put: (((digit bitAnd: m) bitShift: f) bitOr: x)
 			"Avoid values > 8 bits".
 		x := digit bitShift: n].
 	^r
 ]
 
 { #category : #private }
-Integer >> digitSubtract: arg [ 
+Integer >> digitSubtract: arg [
 	| smaller larger z sum sl al ng |
 	<primitive: 'primDigitSubtract' module:'LargeIntegers'>
 	sl := self bytesCount.
 	al := arg bytesCount.
 	(sl = al
-		ifTrue: 
+		ifTrue:
 			[[(self byteAt: sl)
 				= (arg byteAt: sl) and: [sl > 1]]
 				whileTrue: [sl := sl - 1].
@@ -939,20 +936,20 @@ Integer >> digitSubtract: arg [
 			(self byteAt: sl)
 				< (arg byteAt: sl)]
 		ifFalse: [sl < al])
-		ifTrue: 
+		ifTrue:
 			[larger := arg.
 			smaller := self.
 			ng := self negative == false.
 			sl := al]
-		ifFalse: 
+		ifFalse:
 			[larger := self.
 			smaller := arg.
 			ng := self negative].
 	sum := Integer new: sl neg: ng.
 	z := 0.
 	"Loop invariant is -1<=z<=1"
-	1 to: sl do: 
-		[:i | 
+	1 to: sl do:
+		[:i |
 		z := z + (larger byteAt: i) - (smaller byteAt: i).
 		sum byteAt: i put: z - (z // 256 * 256).
 		"sign-tolerant form of (z bitAnd: 255)"
@@ -963,19 +960,19 @@ Integer >> digitSubtract: arg [
 { #category : #accessing }
 Integer >> digitSum [
     "Returns the digit sum of the receiver"
-    
+
     ^self abs asString inject: 0 into: [:value :new| value + new digitValue]
 ]
 
 { #category : #testing }
-Integer >> even [ 
+Integer >> even [
 	"Refer to the comment in Number|even."
 
 	^((self byteAt: 1) bitAnd: 1) = 0
 ]
 
 { #category : #'truncation and round off' }
-Integer >> floor [ 
+Integer >> floor [
 	"Refer to the comment in Number|floor."
 ]
 
@@ -988,9 +985,9 @@ Integer >> gcd: anInteger [
 	u := self abs max: (v := anInteger abs).
 	v := self abs min: v.
 	[v class == SmallInteger]
-		whileFalse: 
+		whileFalse:
 			[(uHat := u bitShift: (k := higher - u highBit)) class == SmallInteger
-				ifFalse: 
+				ifFalse:
 					[k := k - 1.
 					uHat := uHat bitShift: -1].
 			vHat := v bitShift: k.
@@ -1001,16 +998,16 @@ Integer >> gcd: anInteger [
 			"Test quotient"
 			[(vPrime := vHat + d) ~= 0
 				and: [(vPrimePrime := vHat + c) ~= 0 and: [(q := uHat + a // vPrimePrime) = (uHat + b // vPrime)]]]
-				whileTrue: 
+				whileTrue:
 					["Emulate Euclid"
 					c := a - (q * (a := c)).
 					d := b - (q * (b := d)).
 					vHat := uHat - (q * (uHat := vHat))].
 			"Multiprecision step"
 			b = 0
-				ifTrue: 
+				ifTrue:
 					[v := u rem: (u := v)]
-				ifFalse: 
+				ifFalse:
 					[t := u * a + (v * b).
 					v := u * c + (v * d).
 					u := t]].
@@ -1036,9 +1033,9 @@ Integer >> hashMultiply [
 
 { #category : #converting }
 Integer >> hex [
-	"Returns a string representation of the receiver as hex, prefixed with 16r.  
+	"Returns a string representation of the receiver as hex, prefixed with 16r.
 	DO NOT CHANGE THIS!  The Cog VMMaker depends on this."
-	
+
 	"Consider using any of
 		printStringHex
 		printStringBase: 16
@@ -1046,20 +1043,39 @@ Integer >> hex [
 		storeStringHex
 		storeStringBase: 16
 		storeStringBase: 16 length: 11 padded: true"
-		
-	"12 hex >>> '16rC'"	
-	"10 hex >>> '16rA'"	
-	"-10 hex >>> '-16rA'"	
-		
+
+	"12 hex >>> '16rC'"
+	"10 hex >>> '16rA'"
+	"-10 hex >>> '-16rA'"
+
+	^ self storeStringBase: 16
+]
+
+{ #category : #converting }
+Integer >> hexString [
+	"Returns a string representation of the receiver as hexadecimal, prefixed with 16r."
+
+	"Consider using any of
+		printStringHex
+		printStringBase: 16
+		printStringBase: 16 length: 8 padded: true
+		storeStringHex
+		storeStringBase: 16
+		storeStringBase: 16 length: 11 padded: true"
+
+	"12 hexString >>> '16rC'"
+	"10 hexString >>> '16rA'"
+	"-10 hexString >>> '-16rA'"
+
 	^ self storeStringBase: 16
 ]
 
 { #category : #'bit manipulation' }
 Integer >> highBit [
-	"Answer the index of the high order bit of the receiver, or zero if the  
-	receiver is zero. Raise an error if the receiver is negative, since  
-	negative integers are defined to have an infinite number of leading 1's 
-	in 2's-complement arithmetic. Use >>highBitOfMagnitude if you want to  
+	"Answer the index of the high order bit of the receiver, or zero if the
+	receiver is zero. Raise an error if the receiver is negative, since
+	negative integers are defined to have an infinite number of leading 1's
+	in 2's-complement arithmetic. Use >>highBitOfMagnitude if you want to
 	get the highest bit of the magnitude."
 
 	^ self subclassResponsibility
@@ -1067,9 +1083,38 @@ Integer >> highBit [
 
 { #category : #'bit manipulation' }
 Integer >> highBitOfMagnitude [
-	"Answer the index of the high order bit of the magnitude of the  
+	"Answer the index of the high order bit of the magnitude of the
 	receiver, or zero if the receiver is zero."
 	^ self subclassResponsibility
+]
+
+{ #category : #converting }
+Integer >> humanReadableSISizeOn: aStream [
+	"Print a SI representation of myself on the argument. See humanReadableSIByteSize for better comment."
+
+	| exponent base |
+	base := 1000.
+	self < base
+		ifTrue: [ ^ aStream print: self; space; nextPut: $B ].
+	exponent := (self log / base log) asInteger.
+	(self / (base ** exponent)) printOn: aStream showingDecimalPlaces: 2.
+	aStream
+		space;
+		nextPut: ('kMGTPE' at: exponent);
+		nextPut: $B
+]
+
+{ #category : #converting }
+Integer >> humanReadableSISizeString [
+	"Return the receiver as a string with SI binary (International System of Units) file size, e.g. '50 KB'. It means that it takes 1000 and not 1024 as unit as humanReadableByteSizeString does."
+
+	"(1000 * 1000 * 1000) humanReadableSISizeString >>> '1.00 GB'"
+	"(1000 * 1000 * 1000) humanReadableByteSizeString >>> '953 MB'"
+	"(1024 * 1024 * 1024) humanReadableSISizeString >>> '1.07 GB'"
+
+
+	^ String streamContents: [ :s|
+		self humanReadableSISizeOn: s ]
 ]
 
 { #category : #testing }
@@ -1124,15 +1169,15 @@ Integer >> lowBit [
 ]
 
 { #category : #'bit manipulation' }
-Integer >> noMask: mask [ 
-	"Treat the argument as a bit mask. Answer whether none of the bits that 
+Integer >> noMask: mask [
+	"Treat the argument as a bit mask. Answer whether none of the bits that
 	are 1 in the argument are 1 in the receiver."
 
 	^0 = (self bitAnd: mask)
 ]
 
 { #category : #'truncation and round off' }
-Integer >> normalize [ 
+Integer >> normalize [
 	"SmallInts OK; LgInts override"
 	^ self
 ]
@@ -1146,7 +1191,7 @@ Integer >> numberOfDigits [
 ]
 
 { #category : #printing }
-Integer >> numberOfDigitsInBase: b [ 
+Integer >> numberOfDigitsInBase: b [
 	"Return how many digits are necessary to print this number in base b.
 	This does not count any place for minus sign, radix prefix or whatever.
 	Note that this algorithm may cost a few operations on LargeInteger."
@@ -1155,7 +1200,7 @@ Integer >> numberOfDigitsInBase: b [
 	self negative ifTrue: [^self negated numberOfDigitsInBase: b].
 	self < b ifTrue: [^1].
 	b isPowerOfTwo ifTrue: [^self highBit + b highBit - 2 quo: b highBit - 1].
-	
+
 	"A conversion from base 2 to base b has to be performed.
 	This algorithm avoids Float computations like (self log: b) floor + 1,
 	1) because they are inexact
@@ -1169,7 +1214,7 @@ Integer >> numberOfDigitsInBase: b [
 		ifTrue: [((q highBit - 1) * 1233 >> 12) + 1. "This is because (2 log)/(10 log)*4096 is slightly greater than 1233"]
 		ifFalse: [q highBit quo: b highBit].
 	total := total + nDigits.
-	
+
 	"See how many digits remains above these first nDigits guess"
 	(q := q quo: (b raisedToInteger: nDigits)) < b] whileFalse.
 	^q = 0
@@ -1186,9 +1231,9 @@ Integer >> numerator [
 { #category : #printing }
 Integer >> print: positiveNumberString on: aStream prefix: prefix length: minimum padded: zeroFlag [
 	"Return a String based on concatenation of positiveNumberString with prefix then padded by 0 is zeroFlag is set for a minimum length."
-	
+
 	"(String streamContents: [:s | 10 print: '10' on: s prefix: 'zz' length: 4 padded: true] ) >>> 'zz10'"
-	
+
 
 	| padLength |
 	padLength := minimum - positiveNumberString size - prefix size.
@@ -1205,17 +1250,17 @@ Integer >> printHexByteOn: characterWriteStream [
 	"Assuming the receiver is a byte value [0, 255],
 	print a 2 character hexadecimal representation on characterWriteStream
 	using the uppercase alphabet."
-	
+
 	(self between: 0 and: 255)
 		ifTrue: [
 			| highNibble lowNibble hexDigits |
 			highNibble := self bitShift: -4.
 			lowNibble := self bitAnd: 15.
 			hexDigits := '0123456789ABCDEF'.
-			characterWriteStream 
+			characterWriteStream
 				nextPut: (hexDigits at: highNibble + 1);
 				nextPut: (hexDigits at: lowNibble + 1) ]
-		ifFalse: [ 
+		ifFalse: [
 			self error: 'byte value between 0 and 255 expected' ]
 ]
 
@@ -1224,40 +1269,40 @@ Integer >> printLowercaseHexByteOn: characterWriteStream [
 	"Assuming the receiver is a byte value [0, 255],
 	print a 2 character hexadecimal representation on characterWriteStream
 	using the lowercase alphabet."
-	
+
 	(self between: 0 and: 255)
 		ifTrue: [
 			| highNibble lowNibble hexDigits |
 			highNibble := self bitShift: -4.
 			lowNibble := self bitAnd: 15.
 			hexDigits := '0123456789abcdef'.
-			characterWriteStream 
+			characterWriteStream
 				nextPut: (hexDigits at: highNibble + 1);
 				nextPut: (hexDigits at: lowNibble + 1) ]
-		ifFalse: [ 
+		ifFalse: [
 			self error: 'byte value between 0 and 255 expected' ]
 ]
 
 { #category : #'printing - numerative' }
 Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 	"Return a String representation of this number in base b with a minimum length and padded by 0 if zeroFlag is set"
-	
+
 	"(String streamContents: [ :s | 10 printOn: s base: 10 length: 4 padded: true] ) >>> '0010'"
 	"(String streamContents: [ :s | -10 printOn: s base: 10 length: 4 padded: true] ) >>> '-010'"
-	
 
-	| prefix |	
+
+	| prefix |
 	prefix := self negative ifTrue: ['-'] ifFalse: [ '' ].
-	self 
-		print: (self abs printStringBase: base) 
-		on: aStream 
-		prefix: prefix 
-		length: minimum 
+	self
+		print: (self abs printStringBase: base)
+		on: aStream
+		prefix: prefix
+		length: minimum
 		padded: zeroFlag
 ]
 
 { #category : #'printing - numerative' }
-Integer >> printOn: aStream base: b nDigits: n [ 
+Integer >> printOn: aStream base: b nDigits: n [
 	"Append a representation of this number in base b on aStream using nDigits.
 	self must be positive."
 
@@ -1265,17 +1310,17 @@ Integer >> printOn: aStream base: b nDigits: n [
 ]
 
 { #category : #printing }
-Integer >> printOn: outputStream base: baseInteger showRadix: flagBoolean [ 
-	"Write a sequence of characters that describes the receiver in radix 
-	baseInteger with optional radix specifier. 
+Integer >> printOn: outputStream base: baseInteger showRadix: flagBoolean [
+	"Write a sequence of characters that describes the receiver in radix
+	baseInteger with optional radix specifier.
 	The result is undefined if baseInteger less than 2 or greater than 36."
-	
+
 	| tempString startPos |
 
 	tempString := self printStringRadix: baseInteger.
-	flagBoolean 
+	flagBoolean
 		ifTrue: [ ^ outputStream nextPutAll: tempString ].
-		
+
 	startPos := (tempString indexOf: $r ifAbsent: [ self error: 'radix indicator not found.' ]) + 1.
 	self negative ifTrue: [ outputStream nextPut: $-] .
 	outputStream nextPutAll: (tempString copyFrom: startPos to: tempString size)
@@ -1284,20 +1329,20 @@ Integer >> printOn: outputStream base: baseInteger showRadix: flagBoolean [
 { #category : #printing }
 Integer >> printOn: aStream showingDecimalPlaces: placesDesired [
 	"Same as super, but provides a faster implementation because fraction part and rounding are trivial."
-	
+
 	self printOn: aStream base: 10.
-	
+
 	placesDesired <= 0 ifTrue: [ ^ self ].
-	
+
 	aStream nextPut: $..
 	placesDesired timesRepeat: [ aStream nextPut: $0 ]
 ]
 
 { #category : #printing }
-Integer >> printPaddedWith: aCharacter to: anInteger [ 
-	"Answer the string containing the ASCII representation of the receiver 
+Integer >> printPaddedWith: aCharacter to: anInteger [
+	"Answer the string containing the ASCII representation of the receiver
 	padded on the left with aCharacter to be at least anInteger characters."
-	
+
 	^ self
 		printPaddedWith: aCharacter
 		to: anInteger
@@ -1305,11 +1350,11 @@ Integer >> printPaddedWith: aCharacter to: anInteger [
 ]
 
 { #category : #printing }
-Integer >> printPaddedWith: aCharacter to: anInteger base: aRadix [ 
-	"Answer the string containing the ASCII representation of the receiver 
+Integer >> printPaddedWith: aCharacter to: anInteger base: aRadix [
+	"Answer the string containing the ASCII representation of the receiver
 	padded on the left with aCharacter to be at least anInteger characters."
 	| aStream padding digits |
-	
+
 	aStream := (String new: 10) writeStream.
 	self
 		printOn: aStream
@@ -1326,12 +1371,12 @@ Integer >> printPaddedWith: aCharacter to: anInteger base: aRadix [
 Integer >> printSeparatedBy: aDelimiter every: offset signed: printSigned base: base on: aStream [
 	| digits |
 	digits := self abs printStringBase: base.
-	
-	self signBit = 1 
-		ifTrue: [ aStream nextPut: $- ] 
+
+	self signBit = 1
+		ifTrue: [ aStream nextPut: $- ]
 		ifFalse: [ printSigned ifTrue: [ aStream nextPut: $+ ] ].
-	
-	1 to: digits size do: [ :i | 
+
+	1 to: digits size do: [ :i |
 		aStream nextPut: (digits at: i).
 		(i < digits size and: [ (i - digits size) \\ offset = 0 ])
 			ifTrue: [ aStream nextPut: aDelimiter ] ]
@@ -1345,7 +1390,7 @@ Integer >> printSeparatedBy: aDelimiter every: offset signed: printSigned on: aS
 { #category : #printing }
 Integer >> printString [
 	"For Integer, prefer the stream version to the string version for efficiency"
-	
+
 	^String streamContents: [:str | self printOn: str base: 10]
 ]
 
@@ -1360,7 +1405,7 @@ Integer >> printStringHex [
 	"Returns the hex digit part of the integer when printed in hexadecimal format."
 	"30 printStringHex >>> '1E'"
 	"30 hex >>> '16r1E'"
-		
+
 	^ self printStringBase: 16
 ]
 
@@ -1380,22 +1425,22 @@ Integer >> printStringPadded: minimal [
 ]
 
 { #category : #printing }
-Integer >> printStringRadix: baseInteger [ 
-	"Return a string containing a sequence of characters that represents the 
-	numeric value of the receiver in the radix specified by the argument.  
-	If the receiver is negative, a minus sign ('-') is prepended to the 
-	sequence of characters. 
+Integer >> printStringRadix: baseInteger [
+	"Return a string containing a sequence of characters that represents the
+	numeric value of the receiver in the radix specified by the argument.
+	If the receiver is negative, a minus sign ('-') is prepended to the
+	sequence of characters.
 	The result is undefined if baseInteger less than 2 or greater than 36."
-	
+
 	| tempString |
-	
+
 	baseInteger = 10
 		ifTrue: [
 			tempString := self storeStringBase: baseInteger.
-			self negative
-				ifTrue: [^ '-10r' , (tempString copyFrom: 2 to: tempString size)]
-				ifFalse: [^ '10r' , tempString]].
-			
+			^ self negative
+				ifTrue: [ '-10r' , (tempString copyFrom: 2 to: tempString size) ]
+				ifFalse: [ '10r' , tempString ]].
+
 	^ self storeStringBase: baseInteger
 ]
 
@@ -1414,10 +1459,10 @@ Integer >> printWithCommasSignedOn: aStream [
 ]
 
 { #category : #arithmetic }
-Integer >> quo: aNumber [ 
+Integer >> quo: aNumber [
 	"Refer to the comment in Number quo: "
 	| ng quo |
-	aNumber isInteger ifTrue: 
+	aNumber isInteger ifTrue:
 		[ng := self negative == aNumber negative == false.
 		quo := (self digitDiv: aNumber neg: ng) at: 1.
 		^ quo normalize].
@@ -1425,7 +1470,7 @@ Integer >> quo: aNumber [
 ]
 
 { #category : #'printing - numerative' }
-Integer >> radix: base [ 
+Integer >> radix: base [
 	^ self printStringBase: base
 ]
 
@@ -1470,12 +1515,12 @@ Integer >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 { #category : #'truncation and round off' }
 Integer >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal. Integers there are already rounded."
- 
+
 	^self
 ]
 
 { #category : #'truncation and round off' }
-Integer >> rounded [ 
+Integer >> rounded [
 	"Refer to the comment in Number|rounded."
 ]
 
@@ -1483,8 +1528,8 @@ Integer >> rounded [
 Integer >> storeOn: aStream [
 	self < 0
 		ifTrue: [ aStream space ].
-		
-	super storeOn: aStream.
+
+	super storeOn: aStream
 ]
 
 { #category : #'printing - numerative' }
@@ -1500,7 +1545,7 @@ Integer >> storeOn: aStream base: base [
 		ifTrue: [aStream nextPut: $-. self negated]
 		ifFalse: [self].
 	base = 10 ifFalse: [aStream nextPutAll: base printString; nextPut: $r].
-	aStream nextPutAll: (integer printStringBase: base).
+	aStream nextPutAll: (integer printStringBase: base)
 ]
 
 { #category : #'printing - numerative' }
@@ -1515,7 +1560,7 @@ Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 Integer >> storeStringBase: base length: minimum padded: zeroFlag [
 	"(10 storeStringBase: 16 length: 6 padded: true) >>> '16r00A'"
 
-	^ String streamContents: [:s| 
+	^ String streamContents: [:s|
 			self storeOn: s base: base length: minimum padded: zeroFlag ]
 ]
 
@@ -1528,20 +1573,20 @@ Integer >> storeStringHex [
 ]
 
 { #category : #enumerating }
-Integer >> timesRepeat: aBlock [ 
-	"Evaluate the argument, aBlock, the number of times represented by the 
+Integer >> timesRepeat: aBlock [
+	"Evaluate the argument, aBlock, the number of times represented by the
 	receiver."
 
 	| count |
 	count := 1.
 	[count <= self]
-		whileTrue: 
+		whileTrue:
 			[aBlock value.
 			count := count + 1]
 ]
 
 { #category : #'truncation and round off' }
-Integer >> truncated [ 
+Integer >> truncated [
 	"Refer to the comment in Number|truncated."
 ]
 

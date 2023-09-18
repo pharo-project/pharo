@@ -26,6 +26,7 @@ Class {
 		'name',
 		'url',
 		'icons',
+		'scale',
 		'reportNotFound'
 	],
 	#classVars : [
@@ -38,8 +39,8 @@ Class {
 ThemeIcons class >> availablePacks [
 	"Retrieve all packs available in local disk"
 	^ { self current }, (self destinationPath exists
-		ifTrue: [  
-			(self destinationPath allChildrenMatching: '*.zip') 
+		ifTrue: [
+			(self destinationPath allChildrenMatching: '*.zip')
 				select: [ :each | each base ~= self current name  ]
 				thenCollect: [ :each | self named: each base ] ]
 		ifFalse: [ #() ])
@@ -52,17 +53,17 @@ ThemeIcons class >> baseUrl [
 
 { #category : #settings }
 ThemeIcons class >> createFetchButtonUpdating: listMorph [
-	^ (Smalltalk ui theme 
+	^ (Smalltalk ui theme
 		newButtonIn: self
 		for: self
-		getState: nil 
+		getState: nil
 		action: nil
 		arguments: nil
 		getEnabled: nil
 		getLabel: nil
 		help: 'Fetch icon pack from remote repository' translated)
 		label: 'Fetch from remote';
-		actionBlock: [ 
+		actionBlock: [
 			self uiFetchPacks.
 			listMorph update: #availablePacks ];
 		yourself
@@ -70,7 +71,7 @@ ThemeIcons class >> createFetchButtonUpdating: listMorph [
 
 { #category : #settings }
 ThemeIcons class >> createIconPackList [
-	^ (Smalltalk ui theme 
+	^ (Smalltalk ui theme
 		newDropListIn: Morph new
 		for: self
 		list: #availablePacks
@@ -88,15 +89,15 @@ ThemeIcons class >> createIconPackList [
 { #category : #settings }
 ThemeIcons class >> createSettingRow [
 	| list |
-	^ Smalltalk ui theme 
-		newRowIn: self 
+	^ Smalltalk ui theme
+		newRowIn: self
 		for: {
 			list := self createIconPackList.
 			self createFetchButtonUpdating: list }
 ]
 
 { #category : #'instance creation' }
-ThemeIcons class >> current [ 
+ThemeIcons class >> current [
 	"WARNING: Direct access to this method is ill-adviced, use Smalltalk ui icons instead."
 	^ Current ifNil: [ Current := self loadDefault ]
 ]
@@ -105,27 +106,27 @@ ThemeIcons class >> current [
 ThemeIcons class >> current: aPack [
 	aPack hasIcons ifFalse: [ aPack loadIconsFromUrl ].
 	Current := aPack.
-	SystemAnnouncer uniqueInstance announce: IconSetChanged
+	SystemAnnouncer announce: IconSetChanged
 ]
 
 { #category : #accessing }
 ThemeIcons class >> destinationPath [
-	^ 'icon-packs' asFileReference
+	^ FileLocator localDirectory / 'icon-packs'
 ]
 
 { #category : #accessing }
 ThemeIcons class >> fetchPacks [
 	"Retrieve all packs available from repository"
 	| jsonList |
-	
-	[ jsonList := ZnClient new 
+
+	[ jsonList := ZnClient new
 		get: 'https://api.github.com/repos/pharo-project/pharo-icon-packs/branches';
-		contents ] 
-	on: Error do: [ :e | 
+		contents ]
+	on: Error do: [ :e |
 		"in case of error (no inet connection, for example) I retrieve just current icon set"
 		e crTrace.
 		^ { self current } ].
-	^ (STON fromString: jsonList) 
+	^ (STON fromString: jsonList)
 		collect: [ :each | | packName |
 			"Ensure we have just one instance of current pack"
 			packName := each at: 'name'.
@@ -137,33 +138,33 @@ ThemeIcons class >> fetchPacks [
 
 { #category : #private }
 ThemeIcons class >> loadDefault [
-	^ self new 
-	name: 'idea11';
+	^ self new
+	name: 'svgPack';
 	loadIconsFromUrl;
-	yourself.
+	yourself
 ]
 
 { #category : #'instance creation' }
-ThemeIcons class >> named: aString [ 
+ThemeIcons class >> named: aString [
 	^ self new name: aString
 ]
 
 { #category : #'class initialization' }
 ThemeIcons class >> reset [
 	<script>
-	
+
 	Current := nil
 ]
 
 { #category : #settings }
-ThemeIcons class >> settingsOn: aBuilder [ 
+ThemeIcons class >> settingsOn: aBuilder [
 	<systemsettings>
 
 	(aBuilder setting: #current)
 		parent: #appearance;
 		order: 2;
 		label: 'Icon Set';
-		default: (ThemeIcons named: 'idea11');
+		default: (ThemeIcons named: 'svgPack');
 		target: self;
 		dialog: [ self createSettingRow ]
 ]
@@ -172,18 +173,18 @@ ThemeIcons class >> settingsOn: aBuilder [
 ThemeIcons class >> uiFetchPacks [
 	| choosenPacks remotePacks |
 
-	UIManager default 
-		informUser: 'Retrieving available packs from remote repository' 
+	UIManager default
+		informUser: 'Retrieving available packs from remote repository'
 		during: [ remotePacks := self fetchPacks ].
-		
-	choosenPacks := (TickDialogWindow 
+
+	choosenPacks := (TickDialogWindow
 		itemsList: remotePacks
-		itemsHeaderName: nil 
-		wrapBlockOrSelector: #name 
+		itemsHeaderName: nil
+		wrapBlockOrSelector: #name
 		title: 'Remote available icon packs')
 		chooseFromOwner: self currentWorld.
 	choosenPacks ifNil: [ ^ self ].
-	UIManager default informUserDuring: [ :bar | 
+	UIManager default informUserDuring: [ :bar |
 		choosenPacks do: [ :each |
 			bar label: 'Retrieving "', each name, '" icon set from remote repository'.
 			each downloadFromUrl ]]
@@ -228,14 +229,14 @@ ThemeIcons >> blankIcon [
 ]
 
 { #category : #utilities }
-ThemeIcons >> blankIconOfWidth: aNumber [ 
+ThemeIcons >> blankIconOfWidth: aNumber [
 
 	"We hard-code the most used cases to avoid symbol creation"
 
 	aNumber == 16 ifTrue: [ ^ self icons
 		at: #blank16
 		ifAbsentPut: [Form extent: 16 @ 1 depth: 8] ].
-	
+
 	aNumber == 10 ifTrue: [ ^ self icons
 		at: #blank10
 		ifAbsentPut: [Form extent: 10 @ 1 depth: 8] ].
@@ -253,18 +254,18 @@ ThemeIcons >> defaultUrl [
 { #category : #'reflective operations' }
 ThemeIcons >> doesNotUnderstand: aMessage [
 	"WARNING: This is "
-	aMessage selector isUnary 
-		ifTrue: [ ^ self iconNamed: aMessage selector ].	
+	aMessage selector isUnary
+		ifTrue: [ ^ self iconNamed: aMessage selector ].
 	^ super doesNotUnderstand: aMessage
 ]
 
 { #category : #loading }
 ThemeIcons >> downloadFromUrl [
 	| zipArchive |
-	self class destinationPath ensureCreateDirectory. 	
+	self class destinationPath ensureCreateDirectory.
 	zipArchive := self class destinationPath / (self name, '.zip').
-	zipArchive exists 
-		ifFalse: [ 
+	zipArchive exists
+		ifFalse: [
 			ZnClient new
 				url: self url;
 				downloadTo: zipArchive ].
@@ -273,11 +274,11 @@ ThemeIcons >> downloadFromUrl [
 ]
 
 { #category : #utilities }
-ThemeIcons >> form16x16FromContents: aByteArray [ 
+ThemeIcons >> form16x16FromContents: aByteArray [
 	^ Form
 	extent: 16@16
 	depth: 32
-	fromArray: aByteArray 
+	fromArray: aByteArray
 	offset: 0@0
 ]
 
@@ -287,40 +288,40 @@ ThemeIcons >> hasIcons [
 ]
 
 { #category : #comparing }
-ThemeIcons >> hash [ 
-	
+ThemeIcons >> hash [
+
 	^ self name hash
 ]
 
 { #category : #accessing }
 ThemeIcons >> iconNamed: aSymbol [
-	^ (self 
-		iconNamed: aSymbol 
-		ifNone: [ 
-			self isReportingNotFound 
-				ifTrue: [ 
+	^ (self
+		iconNamed: aSymbol
+		ifNone: [
+			self isReportingNotFound
+				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
-					self notFoundIcon ]
-				ifFalse: [ self blankIcon ]]) scaledByDisplayScaleFactor
+					self notFoundIcon scaledByDisplayScaleFactor ]
+				ifFalse: [ self blankIcon scaledByDisplayScaleFactor ]])
 ]
 
 { #category : #accessing }
 ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 
-	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon ].
+	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ].
 	"Trying the old way"
-	
-	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [ 
-		self icons 
-			at: (aSymbol allButLast: 4) asSymbol 
-			ifPresent: [ :icon | ^ icon ] 
+
+	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [
+		self icons
+			at: (aSymbol allButLast: 4) asSymbol
+			ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ]
 	].
 
 	^ aBlock value
 ]
 
 { #category : #accessing }
-ThemeIcons >> icons [ 
+ThemeIcons >> icons [
 	^ icons ifNil: [ icons := Dictionary new: 0 ]
 ]
 
@@ -331,18 +332,27 @@ ThemeIcons >> isReportingNotFound [
 
 { #category : #loading }
 ThemeIcons >> loadIconsFromUrl [
+
+	^ self loadIconsFromUrlUsingScale: 1
+]
+
+{ #category : #loading }
+ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
 	| newIcons zipArchive |
-	
+
 	newIcons := IdentityDictionary new.
 	zipArchive := self downloadFromUrl.
-	((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*.png')
+
+	(((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*scale' , newScale asFloat asString) anyOne
+	allChildrenMatching: '*.png')
 		reject: [ :each | each base beginsWith: '.' ]
-		thenDo: [ :each | 
-			[ newIcons 	
+		thenDo: [ :each |
+			[ newIcons
 				at: each base asSymbol
 				put: (self readPNGFrom: each) ]
 			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
 	icons := newIcons.
+	scale := newScale
 ]
 
 { #category : #accessing }
@@ -363,15 +373,20 @@ ThemeIcons >> notFoundIcon [
 ]
 
 { #category : #printing }
-ThemeIcons >> printOn: stream [ 
+ThemeIcons >> printOn: stream [
 	super printOn: stream.
 	stream << $( << self name << $)
 ]
 
 { #category : #private }
 ThemeIcons >> readPNGFrom: aReference [
-	^ aReference binaryReadStreamDo: [ :stream | 
+	^ aReference binaryReadStreamDo: [ :stream |
 		PNGReadWriter formFromStream: stream ]
+]
+
+{ #category : #accessing }
+ThemeIcons >> scale [
+	^ scale ifNil: [ scale := 1 ]
 ]
 
 { #category : #accessing }

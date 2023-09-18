@@ -37,7 +37,7 @@ FixedFaceFont >> baseKern [
 ]
 
 { #category : #accessing }
-FixedFaceFont >> characterFormAt: character [ 
+FixedFaceFont >> characterFormAt: character [
 	^ baseFont characterFormAt: substitutionCharacter
 ]
 
@@ -52,7 +52,7 @@ FixedFaceFont >> descentKern [
 ]
 
 { #category : #displaying }
-FixedFaceFont >> displayErrorOn: aCanvas length: length at: aPoint kern: kernDelta [ 
+FixedFaceFont >> displayErrorOn: aCanvas length: length at: aPoint kern: kernDelta [
 	| maskedString |
 	maskedString := String new: length.
 	maskedString atAllPut: substitutionCharacter.
@@ -81,7 +81,7 @@ FixedFaceFont >> displayErrorOn: aCanvas length: length at: aPoint kern: kernDel
 ]
 
 { #category : #displaying }
-FixedFaceFont >> displayPasswordOn: aCanvas length: length at: aPoint kern: kernDelta [ 
+FixedFaceFont >> displayPasswordOn: aCanvas length: length at: aPoint kern: kernDelta [
 	| maskedString |
 	maskedString := String new: length.
 	maskedString atAllPut: substitutionCharacter.
@@ -110,21 +110,21 @@ FixedFaceFont >> displayPasswordOn: aCanvas length: length at: aPoint kern: kern
 ]
 
 { #category : #displaying }
-FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [ 
+FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
 	| size |
 	size := stopIndex - startIndex + 1.
-	^ self perform: displaySelector withArguments: (Array with: aDisplayContext with: size with: aPoint with: kernDelta with: aPoint y + self ascent).
+	^ self perform: displaySelector withArguments: (Array with: aDisplayContext with: size with: aPoint with: kernDelta with: aPoint y + self ascent)
 ]
 
 { #category : #displaying }
 FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
 	| size |
 	size := stopIndex - startIndex + 1.
-	^ self perform: displaySelector withArguments: (Array with: aDisplayContext with: size with: aPoint with: kernDelta with: baselineY).
+	^ self perform: displaySelector withArguments: (Array with: aDisplayContext with: size with: aPoint with: kernDelta with: baselineY)
 ]
 
 { #category : #displaying }
-FixedFaceFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta from: fromFont [ 
+FixedFaceFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta from: fromFont [
 	| destPoint |
 	destPoint := self
 				displayString: aString
@@ -158,7 +158,7 @@ FixedFaceFont >> emphasized: emph [
 { #category : #initialization }
 FixedFaceFont >> errorFont [
 	displaySelector := #displayErrorOn:length:at:kern:baselineY:.
-	substitutionCharacter := $?.
+	substitutionCharacter := $?
 ]
 
 { #category : #accessing }
@@ -167,14 +167,14 @@ FixedFaceFont >> familyName [
 ]
 
 { #category : #accessing }
-FixedFaceFont >> fontSize: aNumber [ 
+FixedFaceFont >> fontSize: aNumber [
 	self baseFont: (StrikeFont familyName: baseFont familyName size: aNumber) copy
 ]
 
 { #category : #private }
 FixedFaceFont >> glyphInfoOf: aCharacter into: glyphInfoArray [
 
-	^ baseFont glyphInfoOf: substitutionCharacter into: glyphInfoArray.
+	^ baseFont glyphInfoOf: substitutionCharacter into: glyphInfoArray
 ]
 
 { #category : #accessing }
@@ -222,10 +222,10 @@ FixedFaceFont >> pointSize [
 
 { #category : #caching }
 FixedFaceFont >> releaseCachedState [
-	baseFont releaseCachedState.
+	baseFont releaseCachedState
 ]
 
 { #category : #measuring }
-FixedFaceFont >> widthOf: aCharacter [ 
+FixedFaceFont >> widthOf: aCharacter [
 	^ baseFont widthOf: substitutionCharacter
 ]

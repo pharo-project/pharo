@@ -51,7 +51,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testDelayWaitTimeoutCompleted [
 	completed := Semaphore new.
 	delay := DelayWaitTimeout new setDelay: 100 forSemaphore: completed.
 	completed signal.
-	
+
 	delay waitOnCompletion: [ status := #completed ] onTimeout: [ status := #timedOut ].
 	self assert: status equals: #completed
 ]
@@ -74,7 +74,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testDurationLessThanMaxTicks [
 		- ticks are in microseconds"
 	| delay |
 	delay := Delay new setDelay: 789"ms" forSemaphore: Semaphore new.
-	
+
 
 	scheduler simulate_vmMilliseconds: 100.
 	scheduler schedule: delay.
@@ -99,30 +99,30 @@ DelayBasicSchedulerMicrosecondTickerTest >> testDurationMoreThanMaxTicks [
 DelayBasicSchedulerMicrosecondTickerTest >> testForMilliseconds [
 	| delay |
 	delay := Delay forMilliseconds: 1000.
-	
+
 	scheduler simulate_vmMilliseconds: 100.
 	scheduler schedule: delay.
 
 	scheduler simulate_vmMilliseconds: 1099.
 	self deny: delay isExpired.
-	
+
 	scheduler simulate_vmMilliseconds: 1100.
-	self assert: delay isExpired.
+	self assert: delay isExpired
 ]
 
 { #category : #tests }
 DelayBasicSchedulerMicrosecondTickerTest >> testForSeconds [
 	| delay |
 	delay := Delay forSeconds: 1.
-	
+
 	scheduler simulate_vmMilliseconds: 100.
 	scheduler schedule: delay.
 
 	scheduler simulate_vmMilliseconds: 1099.
 	self deny: delay isExpired.
-	
+
 	scheduler simulate_vmMilliseconds: 1100.
-	self assert: delay isExpired.
+	self assert: delay isExpired
 ]
 
 { #category : #tests }
@@ -132,7 +132,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testHeapBackwards [
 	delay2 := Delay forMilliseconds: 2.
 	delay3 := Delay forMilliseconds: 3.
 	delay4 := Delay forMilliseconds: 4.
-	
+
 	scheduler schedule: delay4.		"activeDelay=delay4, suspendedDelays=()"
 	scheduler schedule: delay3.		"activeDelay=delay3, suspendedDelays=(delay4)"
 	scheduler schedule: delay2.		"activeDelay=delay2, suspendedDelays=(delay3,delay4)"
@@ -141,7 +141,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testHeapBackwards [
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay2.
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay3.
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay4.
-	self assert: suspendedDelaysHeap removeFirstOrNil equals: nil.
+	self assert: suspendedDelaysHeap removeFirstOrNil equals: nil
 ]
 
 { #category : #tests }
@@ -151,7 +151,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testHeapForwards [
 	delay2 := Delay forMilliseconds: 2.
 	delay3 := Delay forMilliseconds: 3.
 	delay4 := Delay forMilliseconds: 4.
-	
+
 	scheduler schedule: delay1. 	"activeDelay=delay1, suspendedDelays=()"
 	scheduler schedule: delay2.		"activeDelay=delay1, suspendedDelays=(delay2)"
 	scheduler schedule: delay3.		"activeDelay=delay1, suspendedDelays=(delay2,delay3)"
@@ -160,26 +160,26 @@ DelayBasicSchedulerMicrosecondTickerTest >> testHeapForwards [
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay2.
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay3.
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay4.
-	self assert: suspendedDelaysHeap removeFirstOrNil equals: nil.
+	self assert: suspendedDelaysHeap removeFirstOrNil equals: nil
 ]
 
 { #category : #tests }
 DelayBasicSchedulerMicrosecondTickerTest >> testMillisecondsToGo [
 	| delay |
 	delay := Delay forMilliseconds: 100.
-	
+
 	scheduler simulate_vmMilliseconds: 100.
 	scheduler schedule: delay.
 
 	scheduler simulate_vmMilliseconds: 160.
-	self assert: delay millisecondsToGo equals: 40.
+	self assert: delay millisecondsToGo equals: 40
 ]
 
 { #category : #tests }
 DelayBasicSchedulerMicrosecondTickerTest >> testMillisecondsToGoExpired [
 	| delay |
 	delay := Delay forMilliseconds: 100.
-	
+
 	scheduler simulate_vmMilliseconds: 1.
 	scheduler schedule: delay.
 
@@ -195,13 +195,13 @@ DelayBasicSchedulerMicrosecondTickerTest >> testMultiSchedule [
 	scheduler schedule: delay.
 	self assert: delay beingWaitedOn.
 	self should:[ scheduler schedule: delay ] raise: Error.
-	
+
 	"Check that after that error, still accepting new items to schedule."
 	"Run in a separate process in case #schedule: blocks"
 	[	anotherDelay := Delay forMilliseconds: 1000.
 		scheduler schedule: anotherDelay.
 		] forkAt: Processor activePriority + 1.
-	self assert: anotherDelay beingWaitedOn.
+	self assert: anotherDelay beingWaitedOn
 ]
 
 { #category : #tests }
@@ -210,15 +210,15 @@ DelayBasicSchedulerMicrosecondTickerTest >> testSimpleOneDelay [
 	Event loop priority takes So it takes priority over following code"
 	|delay|
 	delay := Delay new setDelay: 2"ms" forSemaphore: Semaphore new.
-	 
+
 	scheduler simulate_vmMilliseconds: 10.
 	self deny: delay beingWaitedOn.
 	scheduler schedule: delay.
 	self assert: delay beingWaitedOn.
 
 	scheduler simulate_vmMilliseconds: 11.
-	self deny: delay isExpired. 
-	
+	self deny: delay isExpired.
+
 	scheduler simulate_vmMilliseconds: 12.
 	self assert: delay isExpired
 ]
@@ -230,27 +230,27 @@ DelayBasicSchedulerMicrosecondTickerTest >> testSimpleTwoDelays [
 	delay1 := Delay new setDelay: 2"ms" forSemaphore: Semaphore new.
 	delay2 := Delay new setDelay: 4"ms" forSemaphore: Semaphore new.
 
-	scheduler simulate_vmMilliseconds: 10.	
+	scheduler simulate_vmMilliseconds: 10.
 	self deny: delay1 beingWaitedOn.
 	self deny: delay2 beingWaitedOn.
 	scheduler schedule: delay1.
 	scheduler schedule: delay2.
 	self assert: delay1 beingWaitedOn.
 	self assert: delay2 beingWaitedOn.
-	
+
 	scheduler simulate_vmMilliseconds: 11.
-	self deny: delay1 isExpired. 
-	self deny: delay2 isExpired. 
-	
+	self deny: delay1 isExpired.
+	self deny: delay2 isExpired.
+
 	scheduler simulate_vmMilliseconds: 12.
 	self assert: delay1 isExpired.
-	self deny: delay2 isExpired. 
-	
+	self deny: delay2 isExpired.
+
 	scheduler simulate_vmMilliseconds: 13.
-	self deny: delay2 isExpired. 
-	
+	self deny: delay2 isExpired.
+
 	scheduler simulate_vmMilliseconds: 14.
-	self assert: delay2 isExpired.
+	self assert: delay2 isExpired
 ]
 
 { #category : #tests }
@@ -271,7 +271,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testStoppedSchedulerExpiresRemaining
 	delay2 := Delay new setDelay: 99 forSemaphore: Semaphore new.
 	delay3 := Delay new setDelay: 999 forSemaphore: Semaphore new.
 
-	scheduler simulate_vmMilliseconds: 10.	
+	scheduler simulate_vmMilliseconds: 10.
 	scheduler schedule: delay1.
 	scheduler schedule: delay2.
 	scheduler schedule: delay3.
@@ -281,8 +281,8 @@ DelayBasicSchedulerMicrosecondTickerTest >> testStoppedSchedulerExpiresRemaining
 
 	scheduler simulate_vmMilliseconds: 25.
 	self assert: delay1 isExpired.
-	self deny: delay2 isExpired. 
-	self deny: delay3 isExpired. 
+	self deny: delay2 isExpired.
+	self deny: delay3 isExpired.
 
 	scheduler stopTimerEventLoop.
 	self assert: delay2 isExpired.
@@ -295,23 +295,23 @@ DelayBasicSchedulerMicrosecondTickerTest >> testSuspendForSnapshot [
 	Event loop priority takes So it takes priority over following code"
 	|delay|
 	delay := Delay new setDelay: 2"ms" forSemaphore: Semaphore new.
-	 
+
 	scheduler simulate_vmMilliseconds: 10.
 	self deny: delay beingWaitedOn.
 	scheduler schedule: delay.
 	self assert: delay beingWaitedOn.
 	self assert: delay millisecondsToGo equals: 2.
-	
+
 	scheduler shutDown. "e.g. by snapshot"
 
-	self assert: delay millisecondsToGo equals: 0.	
+	self assert: delay millisecondsToGo equals: 0.
 	scheduler simulate_vmMilliseconds: 20.
 	self assert: delay millisecondsToGo equals: 0.
 	self deny: delay isExpired.
-	
+
 	scheduler startUp.
 	self assert: delay millisecondsToGo equals: 2.
 	self deny: delay isExpired.
 	scheduler simulate_vmMilliseconds: 23.
-	self assert: delay isExpired.
+	self assert: delay isExpired
 ]

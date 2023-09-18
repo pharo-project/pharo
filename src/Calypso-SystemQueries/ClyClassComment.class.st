@@ -47,13 +47,13 @@ ClyClassComment class >> match: aClassComment forQueryBrowserFilter: aQueryBrows
 
 { #category : #'instance creation' }
 ClyClassComment class >> of: aClass [
-	^self new 
+	^self new
 		definingClass: aClass
 ]
 
 { #category : #printing }
 ClyClassComment class >> printSystemPathTo: aClassComment [
-	^aClassComment definingClass package name, ' / ' , aClassComment definingClass name
+	^aClassComment definingClass packageName, ' / ' , aClassComment definingClass name
 ]
 
 { #category : #comparing }
@@ -87,8 +87,8 @@ ClyClassComment >> hash [
 { #category : #printing }
 ClyClassComment >> printOn: aStream [
 	super printOn: aStream.
-	
+
 	aStream nextPut: $(.
 	definingClass printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]

@@ -68,7 +68,7 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludes [
 	" test the comportement in presence of elements 'includes' but not 'identityIncludes' "
 	" can not be used by collections that can't include elements for wich copy doesn't return another instance "
 	| collection anElement |
-	
+
 	collection := self collectionWithCopyNonIdentical.
 	anElement := collection anyOne copy.
 
@@ -78,10 +78,10 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludes [
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIdentityIncludesNonSpecificComportement [
 	"Test the same comportement than #includes:"
-	
-	| collection |	
+
+	| collection |
 	collection := self nonEmpty.
-	
+
 	self deny: (collection identityIncludes: self elementNotIn).
 	self assert: (collection identityIncludes: collection anyOne)
 ]
@@ -103,14 +103,14 @@ TIncludesWithIdentityCheckTest >> testIncludesAnyAllThere [
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesAnyNoneThere [
-	
+
 	self deny: (self nonEmpty includesAny: self empty).
 	self deny: (self nonEmpty includesAny: { self elementNotIn. self anotherElementNotIn })
 ]
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesElementIsNotThere [
-	
+
 	self deny: (self nonEmpty includes: self elementNotIn).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotIn)
@@ -118,6 +118,6 @@ TIncludesWithIdentityCheckTest >> testIncludesElementIsNotThere [
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesElementIsThere [
-	
+
 	self assert: (self nonEmpty includes: self nonEmpty anyOne)
 ]

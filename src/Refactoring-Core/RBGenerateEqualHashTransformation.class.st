@@ -47,14 +47,21 @@ Class {
 	#category : #'Refactoring-Core-Transformation'
 }
 
+{ #category : #displaying }
+RBGenerateEqualHashTransformation class >> basicMenuItemString [
+
+	^ 'Generate equal and hash'
+]
+
 { #category : #'instance creation' }
 RBGenerateEqualHashTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
-{ #category : #accessing }
-RBGenerateEqualHashTransformation class >> kind [ 
-	^ 'Transformation'
+{ #category : #testing }
+RBGenerateEqualHashTransformation class >> isTransformation [
+
+	^ true
 ]
 
 { #category : #'instance creation' }
@@ -64,14 +71,15 @@ RBGenerateEqualHashTransformation class >> model: aNamespace className: aClass v
 
 { #category : #transforming }
 RBGenerateEqualHashTransformation >> accessorForVariable: aString [
+
 	| refactoring |
 	refactoring := RBCreateAccessorsForVariableTransformation
-		model: self model
-		variable: aString
-		class: self theClass
-		classVariable: false.
+		               model: self model
+		               variable: aString
+		               class: self theClass
+		               classVariable: false.
 	refactoring createGetterAccessor.
-	^ refactoring getterMethod
+	^ refactoring getterMethodName
 ]
 
 { #category : #transforming }
@@ -86,7 +94,7 @@ RBGenerateEqualHashTransformation >> compileEqual [
 		self class = anObject class ifFalse: [ ^ false ]'.
 	statement := nil.
 	variables reversed
-		do: [ :each | 
+		do: [ :each |
 			| accessor |
 			accessor := self accessorForVariable: each.
 			comparison := RBMessageNode
@@ -111,7 +119,11 @@ RBGenerateEqualHashTransformation >> compileEqual [
 	method
 		addNode: statement;
 		addReturn.
-	self theClass compile: method formattedCode classified: #(comparing)
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			sourceCode: method formattedCode
+			in: self theClass
+			withProtocol: #comparing)
 ]
 
 { #category : #transforming }
@@ -123,7 +135,7 @@ RBGenerateEqualHashTransformation >> compileHash [
 		"Answer an integer value that is related to the identity of the receiver."'.
 	statement := nil.
 	variables reversed
-		do: [ :each | 
+		do: [ :each |
 			hash := RBMessageNode
 				receiver: (RBVariableNode named: each)
 				selector: #hash.
@@ -136,7 +148,11 @@ RBGenerateEqualHashTransformation >> compileHash [
 	method
 		addNode: statement;
 		addReturn.
-	self theClass compile: method formattedCode classified: #(comparing)
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			sourceCode: method formattedCode
+			in: self theClass
+			withProtocol: #comparing)
 ]
 
 { #category : #preconditions }
@@ -144,22 +160,22 @@ RBGenerateEqualHashTransformation >> preconditions [
 	"Checks that the class actually defines all the variables that will be part of the hash."
 
 	^ variables
-		  inject: self emptyCondition
-		  into: [ :condition :variable | 
+		  inject: self trueCondition
+		  into: [ :condition :variable |
 			  condition
 			  &
 			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
+{ #category : #transforming }
+RBGenerateEqualHashTransformation >> privateTransform [
+	self compileHash.
+	self compileEqual
+]
+
 { #category : #accessing }
 RBGenerateEqualHashTransformation >> theClass [
 	^ (self classObjectFor: className) instanceSide
-]
-
-{ #category : #transforming }
-RBGenerateEqualHashTransformation >> transform [
-	self compileHash.
-	self compileEqual
 ]
 
 { #category : #accessing }

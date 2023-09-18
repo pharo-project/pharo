@@ -19,8 +19,8 @@ OverridesDeprecatedMethodRuleTest >> setUp [
 	super setUp.
 	testClass := Object newAnonymousSubclass.
 	testSubclass := testClass newAnonymousSubclass.
-	
-	testClass compile: self methodName, ' self deprecated: ''method is deprecated'''.
+
+	testClass compile: self methodName, ' self deprecated: ''method is deprecated'''
 ]
 
 { #category : #running }
@@ -37,7 +37,7 @@ OverridesDeprecatedMethodRuleTest >> testBasicCheck [
 	| testMethod |
 	testMethod := testSubclass >> (
 		testSubclass compile: self methodName).
-		
+
 	self assert: (OverridesDeprecatedMethodRule new check: testMethod) isNotEmpty
 ]
 

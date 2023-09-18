@@ -15,9 +15,9 @@ Class {
 	#category : #'Keymapping-Pragmas'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 KMPragmaKeymapBuilder class >> initialize [
-	<script>
+
 	self uniqueInstance reset
 ]
 
@@ -39,12 +39,12 @@ KMPragmaKeymapBuilder class >> pragmas [
 { #category : #'system-events' }
 KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
-	SystemAnnouncer uniqueInstance 
+	SystemAnnouncer uniqueInstance
 		unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak 
-		when: MethodAdded, MethodModified, MethodRemoved 
-		send: #methodAnnouncementReceived: 
-		to: self.
+	SystemAnnouncer uniqueInstance weak
+		when: MethodAdded, MethodModified, MethodRemoved
+		send: #methodAnnouncementReceived:
+		to: self
 ]
 
 { #category : #'instance creation' }
@@ -68,7 +68,7 @@ KMPragmaKeymapBuilder >> collectRegistrations [
 	| menu |
 	menu := PragmaMenuAndShortcutRegistration model: self.
 	self pragmas
-		do: [ :prg | 
+		do: [ :prg |
 			prg methodClass instanceSide
 				perform: prg methodSelector
 				with:
@@ -80,18 +80,18 @@ KMPragmaKeymapBuilder >> collectRegistrations [
 
 { #category : #private }
 KMPragmaKeymapBuilder >> interpretRegistration: aRegistration [
-	
+
 	aRegistration handOutItems do: [:item || node |
-		node := KMKeymapBuilder 
+		node := KMKeymapBuilder
 					for: item shortcut
 					platform: item platform.
-		item help 
+		item help
 			ifNil: [
 				node
 					category: item category
 					shortcut: item default
 					do: item action ]
-			ifNotNil:[ 
+			ifNotNil:[
 				node
 					category: item category
 					shortcut: item default
@@ -125,14 +125,14 @@ KMPragmaKeymapBuilder >> pragmas [
 
 	"Return all pragmas which keyword is self pragmaKeyword"
 
-	^ (self pragmaKeywords flatCollect: [ :each | Pragma allNamed: each ]) 
+	^ (self pragmaKeywords flatCollect: [ :each | Pragma allNamed: each ])
 		  select: [ :prg | prg methodSelector numArgs = 1 ]
 ]
 
 { #category : #dependencies }
 KMPragmaKeymapBuilder >> release [
 	model := nil.
-	super release.
+	super release
 ]
 
 { #category : #initialization }

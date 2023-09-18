@@ -57,9 +57,9 @@ OSSDL2GenericRenderer >> createRenderTargetTextureWithExtent: anExtent [
 { #category : #initialization }
 OSSDL2GenericRenderer >> createSDL2Renderer [
 	renderer := backendWindow sdl2Window createAcceleratedRenderer.
-	
+
 	self useNoBlending;
-		color: Color white.
+		color: Color white
 ]
 
 { #category : #private }
@@ -97,10 +97,10 @@ OSSDL2GenericRenderer >> createTextureForObjectWithExtent:  anExtent [
 
 { #category : #deleting }
 OSSDL2GenericRenderer >> destroy [
-	(renderer isNotNil and: [renderer isNull not]) ifTrue: [ 
+	(renderer isNotNil and: [renderer isNull not]) ifTrue: [
 		renderer destroy
 	].
-	renderer := nil.
+	renderer := nil
 ]
 
 { #category : #rendering }
@@ -138,11 +138,11 @@ OSSDL2GenericRenderer >> fillRectangle: aRectangle [
 { #category : #clipping }
 OSSDL2GenericRenderer >> fullClippingExtent [
 
-	^ ExternalAddress allocate: 8 bytesDuring: [ :buffer | 
+	^ ExternalAddress allocate: 8 bytesDuring: [ :buffer |
 		  | result |
 		  renderer getLogicalSizeW: buffer h: buffer + 4.
 		  result := (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5).
-		  (result x = 0 and: [ result y = 0 ]) ifTrue: [ 
+		  (result x = 0 and: [ result y = 0 ]) ifTrue: [
 			  renderer getOutputSizeW: buffer h: buffer + 4.
 			  result := (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5) ].
 		  result ]
@@ -259,7 +259,7 @@ OSSDL2GenericRenderer >> textureForObjectCache [
 
 { #category : #rendering }
 OSSDL2GenericRenderer >> useAdditiveColorBlending [
-	self setBlendMode: SDL_BLENDMODE_ADD.
+	self setBlendMode: SDL_BLENDMODE_ADD
 ]
 
 { #category : #rendering }
@@ -301,5 +301,5 @@ OSSDL2GenericRenderer >> withRenderTarget: aRenderTargetTexture do: aBlock [
 	aBlock ensure: [
 		currentRenderTarget := oldRenderTarget.
 		renderer setRenderTarget: (currentRenderTarget ifNil: [SDL_Texture null]).
-	].
+	]
 ]

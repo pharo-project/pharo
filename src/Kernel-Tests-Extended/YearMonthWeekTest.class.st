@@ -19,7 +19,7 @@ YearMonthWeekTest >> setUp [
 	restoredTimeZone := DateAndTime localTimeZone.
 
 	Week startDay: #Sunday.
-	DateAndTime localTimeZone: (TimeZone timeZones detect: [:tz | tz abbreviation = 'GMT']).
+	DateAndTime localTimeZone: (TimeZone timeZones detect: [:tz | tz abbreviation = 'GMT'])
 ]
 
 { #category : #running }
@@ -70,7 +70,7 @@ YearMonthWeekTest >> testIsLeapYear [
 	self deny: (Year isLeapYear: 2001).
 	self assert: (Year isLeapYear: 2004).
 	self deny: (Year isLeapYear: 2100).
-	self deny: (Year isLeapYear: 2002).
+	self deny: (Year isLeapYear: 2002)
 ]
 
 { #category : #tests }

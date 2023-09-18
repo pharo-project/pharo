@@ -12,7 +12,7 @@ Class {
 
 { #category : #paths }
 ZnFileSystemUtils class >> baseNameFor: fileName [
-	^ fileName asFileReference basename 
+	^ fileName asFileReference basename
 ]
 
 { #category : #streams }
@@ -20,7 +20,7 @@ ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
 	| fileReference |
 	fileReference := fileName asFileReference.
 	^ (fileReference respondsTo: #binaryReadWriteStream)
-		ifTrue: [ fileReference binaryReadWriteStream ]
+		ifTrue: [ fileReference perform: #binaryReadWriteStream ]
 		ifFalse: [ fileReference writeStream binary ]
 ]
 
@@ -48,12 +48,12 @@ ZnFileSystemUtils class >> binaryWriteStreamFor: fileName do: block [
 	fileReference := fileName asFileReference.
 	^ (fileReference respondsTo: #binaryWriteStreamDo:ifPresent:)
 		ifTrue: [
-			fileName asFileReference 
-				binaryWriteStreamDo: block 
+			fileName asFileReference
+				binaryWriteStreamDo: block
 				ifPresent: [ FileExists signalWith: fileReference ] ]
-		ifFalse: [ 
-			fileReference isFile 
-				ifTrue: [ FileExists signalWith: fileReference ] 
+		ifFalse: [
+			fileReference isFile
+				ifTrue: [ FileExists signalWith: fileReference ]
 				ifFalse: [ | binaryStream |
 					binaryStream := self binaryWriteStreamFor: fileName.
 					[ block value: binaryStream ] ensure: [ binaryStream close ] ] ]
@@ -92,12 +92,11 @@ ZnFileSystemUtils class >> downloadPathTo: directoryOrFileName for: baseName [
 	downloadPath := directoryOrFileName asFileReference.
 	^ downloadPath isDirectory
 		ifTrue: [
-			baseName ifNil: [ 
-				self error: 'Not enough information to construct a download path' ]. 
+			baseName ifNil: [
+				self error: 'Not enough information to construct a download path' ].
 			(downloadPath / baseName) fullName ]
-		ifFalse: [ 
+		ifFalse: [
 			directoryOrFileName ]
-	
 ]
 
 { #category : #paths }
@@ -112,7 +111,7 @@ ZnFileSystemUtils class >> extensionFor: fileName [
 
 { #category : #streams }
 ZnFileSystemUtils class >> fileNamed: fileName do: block [
-	^ fileName asFileReference 
+	^ fileName asFileReference
 		writeStreamDo: block
 ]
 
@@ -123,7 +122,7 @@ ZnFileSystemUtils class >> fileSizeFor: fileName [
 
 { #category : #streams }
 ZnFileSystemUtils class >> fileStreamFor: fileName [
-	^ fileName asFileReference 
+	^ fileName asFileReference
 		writeStream
 ]
 
@@ -134,7 +133,7 @@ ZnFileSystemUtils class >> fullNameFor: fileName [
 
 { #category : #queries }
 ZnFileSystemUtils class >> modificationTimeFor: path [
-	^ path asFileReference entry modificationTime 
+	^ path asFileReference entry modificationTime
 ]
 
 { #category : #streams }
@@ -143,32 +142,32 @@ ZnFileSystemUtils class >> newBinaryFileNamed: fileName do: block [
 	fileReference := fileName asFileReference.
 	^ (fileReference respondsTo: #binaryWriteStreamDo:ifPresent:)
 		ifTrue: [
-			fileName asFileReference 
-				binaryWriteStreamDo: block 
+			fileName asFileReference
+				binaryWriteStreamDo: block
 				ifPresent: [ FileExists signalWith: fileReference ] ]
-		ifFalse: [ 
-			fileReference isFile 
-				ifTrue: [ FileExists signalWith: fileReference ] 
+		ifFalse: [
+			fileReference isFile
+				ifTrue: [ FileExists signalWith: fileReference ]
 				ifFalse: [ block value: (self binaryFileStreamFor: fileName) ] ]
 ]
 
 { #category : #streams }
 ZnFileSystemUtils class >> newFileNamed: fileName do: block [
-	^ fileName asFileReference 
-		writeStreamDo: block 
+	^ fileName asFileReference
+		writeStreamDo: block
 		ifPresent: [ FileExists signalWith: fileName asFileReference ]
 ]
 
 { #category : #streams }
 ZnFileSystemUtils class >> oldFileNamed: fileName do: block [
-	^ fileName asFileReference 
+	^ fileName asFileReference
 		readStreamDo: block
 		ifAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
 ]
 
 { #category : #streams }
 ZnFileSystemUtils class >> oldFileStreamFor: fileName [
-	^ fileName asFileReference 
+	^ fileName asFileReference
 		readStreamIfAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
 ]
 
@@ -179,14 +178,14 @@ ZnFileSystemUtils class >> readStreamFor: fileName [
 
 { #category : #streams }
 ZnFileSystemUtils class >> readStreamFor: fileName do: block [
-	^ fileName asFileReference 
+	^ fileName asFileReference
 		readStreamDo: block
 		ifAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
 ]
 
 { #category : #streams }
 ZnFileSystemUtils class >> writeStreamFor: fileName do: block [
-	^ fileName asFileReference 
-		writeStreamDo: block 
+	^ fileName asFileReference
+		writeStreamDo: block
 		ifPresent: [ FileExists signalWith: fileName asFileReference ]
 ]

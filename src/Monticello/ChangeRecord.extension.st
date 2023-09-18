@@ -10,7 +10,7 @@ ChangeRecord >> asMCMethodDefinition [
 		className: class
 		classIsMeta: meta
 		selector: self methodSelector
-		category: category
+		category: protocol
 		timeStamp: stamp
 		source: self string
 ]

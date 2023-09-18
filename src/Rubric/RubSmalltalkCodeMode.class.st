@@ -42,17 +42,22 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		selector: #doIt;
 		help: nil;
 		iconName: #smallDoIt.
-	(aBuilder item: #'Print it' translated)
+	(aBuilder item: #'Do & print it' translated)
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
 		iconName: #smallPrintIt.
-	(aBuilder item: #'Inspect it' translated)
+	(aBuilder item: #'Do & inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
 		iconName: #smallInspectIt.
-	(aBuilder item: #'Basic Inspect it' translated)
+	(aBuilder item: #'Do & browse its class' translated)
+		keyText: 'b';
+		selector: #browseFullClass;
+		help: nil;
+		iconName: #smallSystemBrowser.
+	(aBuilder item: #'Do & basic inspect it' translated)
 		keyText: 'I';
 		selector: #basicInspectIt;
 		help: nil;
@@ -64,7 +69,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		iconName: #smallDebug.
 	(aBuilder item: #'Profile it' translated)
 		selector: #tallyIt;
-		iconName: #smallDebug;
+		iconName: #smallProfile;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
@@ -106,10 +111,28 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		help: nil;
-		iconName: #smallCopy;
+		iconName: #smallCopy.
+	(aBuilder item: #'Indent' translated)
+		keyText: 'R';
+		selector: #indent;
+		help: nil.
+	(aBuilder item: #'Outdent' translated)
+		keyText: 'L';
+		selector: #outdent;
+		help: nil.
+	(aBuilder item: #'Widen selection' translated)
+		keyText: '2';
+		selector: #widenSelectionOfIt;
+		help: nil;
+		iconName: #smallFullscreen.
+	(aBuilder item: #'Compare selection to clipboard' translated)
+		keyText: 'C';
+		selector: #compareToClipboard;
+		help: nil;
+		iconName: #diff;
 		withSeparatorAfter.
 	aBuilder model
-		ifNotNil: [ :mod | 
+		ifNotNil: [ :mod |
 			mod model
 				ifNotNil: [ (aBuilder item: #Accept translated)
 						keyText: 's';
@@ -170,7 +193,7 @@ RubSmalltalkCodeMode >> parseSource: aString [
 { #category : #shout }
 RubSmalltalkCodeMode >> shoutAboutToStyle: myShoutStyler [
 	^ self model isNil
-		or: [ 
+		or: [
 			(self model interactionModel respondsTo: #shoutAboutToStyle:) not
 				or: [ self model interactionModel shoutAboutToStyle: self ] ]
 ]
@@ -202,7 +225,7 @@ RubSmalltalkCodeMode >> updateTextAreaWhenUnplugged [
 { #category : #shout }
 RubSmalltalkCodeMode >> withShoutStyler [
 	self textArea withDecoratorNamed: #shoutStyler.
-	self updateStyler.
+	self updateStyler
 ]
 
 { #category : #shout }

@@ -22,8 +22,8 @@ FLVersion class >> current [
 	^ Current ifNil: [
 		Current := self
 			newWithMajor: 5
-			minor: 0
-			patch: 6 ]
+			minor: 2
+			patch: 0 ]
 ]
 
 { #category : #'instance creation' }
@@ -32,6 +32,21 @@ FLVersion class >> newWithMajor: majorNumber minor: minorNumber patch: patchNumb
 		initializeWithMajor: majorNumber minor: minorNumber patch: patchNumber;
 		initialize;
 		yourself
+]
+
+{ #category : #comparing }
+FLVersion >> <= aVersion [
+	self class ~= aVersion class ifTrue: [ ^ false ].
+	
+	self major > aVersion major ifTrue: [ ^ false ].
+	self major < aVersion major ifTrue: [ ^ true ].
+	
+	self minor > aVersion minor ifTrue: [ ^ false ].
+	self minor < aVersion minor ifTrue: [ ^ true ].
+	
+	self patch > aVersion patch ifTrue: [ ^ false ].
+	
+	^ true
 ]
 
 { #category : #comparing }

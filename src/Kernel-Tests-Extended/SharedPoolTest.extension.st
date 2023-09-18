@@ -4,7 +4,7 @@ Extension { #name : #SharedPoolTest }
 SharedPoolTest >> testPoolUsers [
 	| result |
 	result := ChronologyConstants poolUsers.
-	self assert: result asSet equals: {Date. DateAndTime. Duration. Month. Time. TimeZone. Week. LocalTimeZone . AbstractTimeZone. ExampleForTestWithSharedPool } asSet.
+	self assert: result asSet equals: {Date. DateAndTime. Duration. Month. Time. TimeZone. Week. LocalTimeZone . AbstractTimeZone. ExampleForTestWithSharedPool } asSet
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

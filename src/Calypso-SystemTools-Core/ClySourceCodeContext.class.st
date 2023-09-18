@@ -62,20 +62,23 @@ ClySourceCodeContext >> executeCommand: aCommand by: aCommandActivator [
 
 	aCommand isComplexRefactoring ifTrue: [
 		aCommand confirmRefactoringInContext: self by: aCommandActivator].
-	
+
 	aCommand execute
 ]
 
 { #category : #testing }
 ClySourceCodeContext >> isArgOrTempVariableSelected [
-	^ self selectedSourceNode isLocalVariable
+
+	| sourceNode |
+	sourceNode := self selectedSourceNode.
+	^ sourceNode isTempVariable or: [ sourceNode isArgumentVariable ]
 ]
 
 { #category : #testing }
 ClySourceCodeContext >> isAssignmentSelected [
 	| node |
 	node := self selectedSourceNode.
-	[node notNil] whileTrue: [ 
+	[node notNil] whileTrue: [
 		node isAssignment ifTrue: [ ^true ].
 		node := node parent].
 	^false
@@ -87,8 +90,8 @@ ClySourceCodeContext >> isClassSelected [
 	| node |
 	node := self selectedSourceNode.
 	node isVariable ifFalse: [ ^false ].
-	
-	^node binding isLiteralVariable 
+
+	^node binding isLiteralVariable
 		and: [ node binding isGlobalClassNameBinding ]
 ]
 
@@ -97,9 +100,9 @@ ClySourceCodeContext >> isGlobalVariableSelected [
 	| node binding |
 	node := self selectedSourceNode.
 	node isVariable ifFalse: [ ^false ].
-	
+
 	binding := node binding.
-	
+
 	^binding isGlobalVariable
 ]
 
@@ -110,7 +113,7 @@ ClySourceCodeContext >> isMessageSelected [
 ]
 
 { #category : #testing }
-ClySourceCodeContext >> isMethodSelected [ 
+ClySourceCodeContext >> isMethodSelected [
 	^false
 ]
 
@@ -125,7 +128,7 @@ ClySourceCodeContext >> isVariableSelected [
 	self isClassSelected ifTrue: [ ^ false ].
 	node := self selectedSourceNode.
 	node isVariable ifFalse: [ ^ false ].
-	
+
 	^ node isLiteralVariable | node isInstanceVariable
 ]
 

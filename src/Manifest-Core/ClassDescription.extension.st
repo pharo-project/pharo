@@ -3,18 +3,18 @@ Extension { #name : #ClassDescription }
 { #category : #'*Manifest-Core' }
 ClassDescription >> criticClass [
 	"Return the class of the receiver for the critic browser. This behavior may be folded later by changing the name of this method or using another one."
-	
+
 	^ self
 ]
 
 { #category : #'*Manifest-Core' }
 ClassDescription >> criticNameOn: aStream [
 	"This behavior may be folded later by changing the name of this method or using another one."
-	
-	aStream 
-		<< self name 
-		<< ' (' 
-		<< self category 
+
+	aStream
+		<< self name
+		<< ' ('
+		<< self category
 		<< ')'
 ]
 
@@ -27,5 +27,6 @@ ClassDescription >> manifestBuilderForRuleChecker: aRuleChecker [
 
 { #category : #'*Manifest-Core' }
 ClassDescription >> mcWorkingCopy [
-	MCWorkingCopy managersForClass:  self do: [: package | ^ package ]
+
+	MCWorkingCopy workingCopiesForClass: self do: [ :package | ^ package ]
 ]

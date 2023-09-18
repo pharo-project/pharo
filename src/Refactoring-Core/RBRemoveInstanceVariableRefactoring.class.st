@@ -1,8 +1,3 @@
-"
-I am a refactoring for removing instance variables.
-
-My precondition verifies that there is no reference to this instance  variable.
-"
 Class {
 	#name : #RBRemoveInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
@@ -20,22 +15,46 @@ RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 ]
 
 { #category : #preconditions }
+RBRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
+
+	^ RBCondition directlyDefinesInstanceVariable: variableName asString in: class
+]
+
+{ #category : #preconditions }
+RBRemoveInstanceVariableRefactoring >> breakingChangePreconditions [ 
+
+	^ (RBCondition hierarchyOf: class referencesInstanceVariable: variableName) not
+	
+]
+
+{ #category : #preconditions }
+RBRemoveInstanceVariableRefactoring >> generateChanges [
+	
+	self applicabilityPreconditions check ifFalse: [
+		^ RBApplicabilityChecksFailedError signal:
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangePreconditions errorString ].
+
+	self privateTransform.
+	^ self changes
+]
+
+{ #category : #preconditions }
 RBRemoveInstanceVariableRefactoring >> preconditions [
 
-	| references |
-
-	references := RBCondition hierarchyOf: class referencesInstanceVariable: variableName.
-	class realClass
-		ifNil: [ references errorMacro: ( '<1s> is referenced.' expandMacrosWith: variableName ) ]
-		ifNotNil: [ references
-				errorMacro: ( '<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName );
-				errorBlock:
-						[ self openBrowserOn: ( RBBrowserEnvironment new instVarRefsTo: variableName in: class realClass ) ]
-			].
-	^ ( RBCondition definesInstanceVariable: variableName asString in: class ) & references not
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : #transforming }
-RBRemoveInstanceVariableRefactoring >> transform [
+RBRemoveInstanceVariableRefactoring >> privateTransform [
+	
+	
 	class removeInstanceVariable: variableName
+]
+
+{ #category : #accessing }
+RBRemoveInstanceVariableRefactoring >> refactoredClass [
+	^ class
 ]

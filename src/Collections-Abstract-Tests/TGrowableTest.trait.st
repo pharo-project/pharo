@@ -14,18 +14,18 @@ TGrowableTest >> element [
 
 { #category : #requirements }
 TGrowableTest >> elementNotIn [
-	
-	^ self explicitRequirement
-]
-
-{ #category : #requirements }
-TGrowableTest >> empty [ 
 
 	^ self explicitRequirement
 ]
 
 { #category : #requirements }
-TGrowableTest >> nonEmpty [ 
+TGrowableTest >> empty [
+
+	^ self explicitRequirement
+]
+
+{ #category : #requirements }
+TGrowableTest >> nonEmpty [
 
 	^ self explicitRequirement
 ]
@@ -44,19 +44,19 @@ TGrowableTest >> test0FixtureRequirementsOfTGrowableTest [
 
 { #category : #'tests - growable' }
 TGrowableTest >> testAddEmptyGrows [
-	
+
 	| oldSize |
 	oldSize := self empty size.
 	self empty add: self element.
-	self assert: (self empty size) = (oldSize + 1).
+	self assert: (self empty size) = (oldSize + 1)
 ]
 
 { #category : #'tests - growable' }
 TGrowableTest >> testAddNonEmptyGrowsWhenNewElement [
-	
+
 	| oldSize |
 	oldSize := self nonEmpty size.
-	
+
 	self nonEmpty add: self elementNotIn.
-	self assert: (self nonEmpty size) > oldSize.
+	self assert: (self nonEmpty size) > oldSize
 ]

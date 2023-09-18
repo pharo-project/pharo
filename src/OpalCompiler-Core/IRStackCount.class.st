@@ -33,7 +33,7 @@ IRStackCount class >> startAt: pos [
 { #category : #comparing }
 IRStackCount >> = other [
 
-	^ self class == other class 
+	^ self class == other class
 	  and: [start = other start
 	  and: [position = other position
 	  and: [length = other size]]]
@@ -69,7 +69,7 @@ IRStackCount >> pop [
 { #category : #affecting }
 IRStackCount >> pop: n [
 
-	(position := position - n) < 0 
+	(position := position - n) < 0
 		ifTrue: [self error: 'stack underflow in bytecode generator']
 ]
 
@@ -81,12 +81,12 @@ IRStackCount >> position [
 
 { #category : #printing }
 IRStackCount >> printOn: aStream [
-	
+
 	super printOn: aStream.
 	aStream
 		nextPutAll: ' start '; print: start;
 		nextPutAll: ' stop '; print: position;
-		nextPutAll: ' max '; print: length.
+		nextPutAll: ' max '; print: length
 ]
 
 { #category : #affecting }
@@ -96,7 +96,7 @@ IRStackCount >> push [
 
 { #category : #affecting }
 IRStackCount >> push: n [
-	(position := position + n) > length 
+	(position := position + n) > length
 		ifTrue: [length := position]
 ]
 

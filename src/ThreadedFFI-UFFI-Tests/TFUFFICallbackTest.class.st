@@ -32,16 +32,16 @@ TFUFFICallbackTest >> returnAnswer [
 ]
 
 { #category : #running }
-TFUFFICallbackTest >> setUp [ 
-	
+TFUFFICallbackTest >> setUp [
+
 	super setUp.
 	oldExceptionHandler := self ffiLibrary uniqueInstance runner exceptionHandler.
-	self ffiLibrary uniqueInstance runner exceptionHandler: TFTestCallbackExceptionHandler new.
+	self ffiLibrary uniqueInstance runner exceptionHandler: TFTestCallbackExceptionHandler new
 ]
 
 { #category : #tests }
 TFUFFICallbackTest >> shortCallout [
-	
+
 	^ self ffiCall: #(int shortCallout())
 ]
 
@@ -65,18 +65,17 @@ TFUFFICallbackTest >> sumInt:a andInt: b [
 
 { #category : #running }
 TFUFFICallbackTest >> tearDown [
-	
-	self ffiLibrary uniqueInstance runner exceptionHandler: oldExceptionHandler.
-	super tearDown.
 
+	self ffiLibrary uniqueInstance runner exceptionHandler: oldExceptionHandler.
+	super tearDown
 ]
 
 { #category : #tests }
 TFUFFICallbackTest >> testCallbackAsFunction [
 	| callback fun definition runner |
-	
+
 	runner := self ffiLibrary uniqueInstance runner.
-	
+
 	callback := self
 		newCallbackWithSignature: #(float (int a, float b))
 		block: [ :a :b | a + b ].
@@ -85,8 +84,8 @@ TFUFFICallbackTest >> testCallbackAsFunction [
 		parameterTypes: {TFBasicType sint. TFBasicType float.}
 		returnType: TFBasicType float.
 
-	fun := TFExternalFunction 
-		fromAddress: callback getHandle 
+	fun := TFExternalFunction
+		fromAddress: callback getHandle
 		definition: definition.
 
 	self assert: (runner invokeFunction: fun withArguments: {1. 2.0}) equals: 3.0
@@ -102,7 +101,6 @@ TFUFFICallbackTest >> testCallbackInLoop [
 		block: [ :a | a + 1 ].
 
 	self assert: (self callbackInALoop: callback) equals: 42
-
 ]
 
 { #category : #tests }
@@ -115,7 +113,6 @@ TFUFFICallbackTest >> testCallbackInLoopUsingSubclassOfFFICallback [
 		yourself.
 
 	self assert: (self callbackInALoop: callback) equals: 42
-
 ]
 
 { #category : #tests }
@@ -125,7 +122,6 @@ TFUFFICallbackTest >> testCallbackInSingleFunction [
 
 	callback := self newCallbackWithSignature: #(int (int a)) block: [ :a | a + 1 ].
 	self assert: (self singleCallToCallback: callback value: 3) equals: 5
-
 ]
 
 { #category : #tests }
@@ -138,7 +134,6 @@ TFUFFICallbackTest >> testCallbackInSingleFunctionUsingSubclassOfFFICallback [
 		yourself.
 
 	self assert: (self singleCallToCallback: callback value: 3) equals: 5
-
 ]
 
 { #category : #tests }
@@ -156,13 +151,12 @@ TFUFFICallbackTest >> testCallbackWithErrorHanlded [
 		parameterTypes: {TFBasicType sint.}
 		returnType: TFBasicType sint.
 
-	fun := TFExternalFunction 
-		fromAddress: callback getHandle 
+	fun := TFExternalFunction
+		fromAddress: callback getHandle
 		definition: definition.
 
 	UIManager nonInteractiveDuring: [
 		self assert: (runner invokeFunction: fun withArguments: {1}) equals: -1]
-
 ]
 
 { #category : #tests }
@@ -178,8 +172,7 @@ TFUFFICallbackTest >> testCallbacksInOtherThread [
 	callback := self newCallbackWithSignature: #(int (int a)) block: [ :a | semaphore signal. a + 1 ].
 	self callbackFromAnotherThread: callback.
 	semaphore wait.
-	
-	1 second wait.
-	self assert: self getValue equals: 43	
 
+	1 second wait.
+	self assert: self getValue equals: 43
 ]

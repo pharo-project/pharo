@@ -19,7 +19,6 @@ DATarjanAlgorithm >> initialize [
 	stronglyConnectedComponents := OrderedCollection new.
 	stack := Stack new.
 	runningIndex := 0
-
 ]
 
 { #category : #private }
@@ -29,7 +28,7 @@ DATarjanAlgorithm >> isRootNode: aPDPackage [
 
 { #category : #private }
 DATarjanAlgorithm >> popStackAndUpdateCurrentSCC: aRelation until: aPDPackage [
-	| currentNode |	
+	| currentNode |
 	[ currentNode := stack pop.
 	currentNode
 		inStack: false;
@@ -47,7 +46,7 @@ DATarjanAlgorithm >> push: aPDPackage [
 { #category : #running }
 DATarjanAlgorithm >> run: aPDPackageRelation [
 	aPDPackageRelation packages
-		do: [ :package | 
+		do: [ :package |
 			package isTarjanUndefined
 				ifTrue: [ self traverse: package ] ]
 		displayingProgress: 'Finding SCCs'
@@ -72,7 +71,7 @@ DATarjanAlgorithm >> traverse: aPDPackage [
 	self push: aPDPackage.
 	self traverseChildrenOf: aPDPackage.
 	(self isRootNode: aPDPackage)
-		ifTrue: [ 
+		ifTrue: [
 			aRelation := self startNewSCC.
 			self popStackAndUpdateCurrentSCC: aRelation until: aPDPackage ]
 ]
@@ -80,12 +79,12 @@ DATarjanAlgorithm >> traverse: aPDPackage [
 { #category : #private }
 DATarjanAlgorithm >> traverseChildrenOf: aPDPackage [
 	aPDPackage dependencies
-		do: [ :dependency | 
+		do: [ :dependency |
 			dependency target isTarjanUndefined
-				ifTrue: [ 
+				ifTrue: [
 					self traverse: dependency target.
 					aPDPackage tarjanLowLink: (aPDPackage tarjanLowLink min: dependency target tarjanLowLink) ]
-				ifFalse: [ 
+				ifFalse: [
 					dependency target isInStack
 						ifTrue: [ aPDPackage tarjanLowLink: (aPDPackage tarjanLowLink min: dependency target tarjanIndex) ] ] ]
 ]

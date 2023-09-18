@@ -40,10 +40,10 @@ FreeTypeCacheTest >> setUp [
 		linearAdvance: 10000;
 		yourself.
 	fullCache := FreeTypeCache new.
-	fullCache 
+	fullCache
 		maximumSize: (10*(fullCache sizeOf: font1YGlyph)).
 	1 to: 10 do:[:i |
-		fullCache atFont: font1 charCode: i type: FreeTypeCacheGlyph put: font1YGlyph].
+		fullCache atFont: font1 charCode: i type: FreeTypeCacheGlyph put: font1YGlyph]
 ]
 
 { #category : #tests }
@@ -51,37 +51,37 @@ FreeTypeCacheTest >> testConstants [
 
 	| constants |
 	constants := { FreeTypeCacheWidth . FreeTypeCacheGlyphMono . FreeTypeCacheGlyphLCD . FreeTypeCacheGlyph }.
-	
+
 	self assert: constants asSet size equals: constants size. "no 2 have same value"
 	self assert: (constants detect: [ :x | x isNil ] ifNone: [ ]) isNil "no value is nil"
 ]
 
 { #category : #tests }
 FreeTypeCacheTest >> testEntriesRemovedFIFO [
- 
+
 	cache maximumSize: 10 * (cache sizeOf: font1XGlyph).
 	1 to: 10 do:[:i |
-		cache 
-			atFont: font1 
-			charCode: (1000-i) 
-			type: FreeTypeCacheGlyph 
+		cache
+			atFont: font1
+			charCode: (1000-i)
+			type: FreeTypeCacheGlyph
 			put: font1XGlyph].
 	self validateCollections: cache.
 	11 to: 1000 do:[:i |
-		cache 
-			atFont: font1 
-			charCode: (1000-i) 
-			type: FreeTypeCacheGlyph 
+		cache
+			atFont: font1
+			charCode: (1000-i)
+			type: FreeTypeCacheGlyph
 			put: font1XGlyph.
 		self validateSizes: cache.
 		self validateCollections: cache.
 		"i-9 to: i do:[:i2 |
-			self 
+			self
 				shouldnt: [cache atFont: font1 charCode: 1000-i2 type: FreeTypeCacheGlyph]
 				raise: Error]."
-		self 
+		self
 			should: [cache atFont: font1 charCode: 1000-(i-10) type: FreeTypeCacheGlyph]
-			raise: Error].  
+			raise: Error].
 	self validateSizes: cache
 ]
 
@@ -121,18 +121,18 @@ FreeTypeCacheTest >> testFreeTypeCacheEntry [
 { #category : #tests }
 FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
 	"This test is weak because it depends in the rendering of Morphic and Rubrik"
-	"This test breaks 95% of times"	
+	"This test breaks 95% of times"
 
 	self timeLimit: 20 seconds.
-	
-	10 timesRepeat: [  
+
+	10 timesRepeat: [
 		 | sem text canvases blocky |
 
 		sem := Semaphore new.
 		text := (String loremIpsum: 25*1024).
 		FreeTypeCache current removeAll.
 		canvases := OrderedCollection new.
-			
+
 		blocky := [  | canvas |
 			canvas := FormCanvas extent: 1000@1000.
 			canvases add: canvas.
@@ -142,28 +142,28 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
 					bounds: (0@0 corner: canvas form extent);
 					fullDrawOn: canvas.
 			sem signal ].
-			
+
 		blocky forkAt: 39.
 		blocky forkAt: 39.
 		blocky forkAt: 39.
-		
-		sem 
+
+		sem
 			wait;
 			wait;
-			wait.	
-			
-		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ]) 
+			wait.
+
+		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ])
 	]
 ]
 
 { #category : #tests }
 FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
 	"This test is weak because it depends in the rendering of Morphic and Rubrik"
-	"This test breaks 95% of times"	
+	"This test breaks 95% of times"
 
 	self timeLimit: 20 seconds.
-	
-	10 timesRepeat: [  
+
+	10 timesRepeat: [
 		 | sem text canvases blocky widthAsk |
 
 		sem := Semaphore new.
@@ -175,7 +175,7 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
 			1 to: text size do: [ :i | StandardFonts codeFont widthOf: (text at: i). i % 50 = 0 ifTrue: [ Processor yield ]].
 			sem signal ].
 
-			
+
 		blocky := [  | canvas |
 			canvas := FormCanvas extent: 1000@1000.
 			canvases add: canvas.
@@ -185,19 +185,19 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
 					bounds: (0@0 corner: canvas form extent);
 					fullDrawOn: canvas.
 			sem signal ].
-			
+
 		blocky forkAt: 39.
 		blocky forkAt: 39.
 		blocky forkAt: 39.
 		widthAsk forkAt: 39.
-		
-		sem 
+
+		sem
 			wait;
 			wait;
 			wait;
-			wait.	
-			
-		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ]) 
+			wait.
+
+		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ])
 	]
 ]
 
@@ -433,7 +433,7 @@ FreeTypeCacheTest >> testRemoveAll [
 FreeTypeCacheTest >> testRemoveAllForFont [
 
 	| fifo |
-	fullCache maximumSize: nil.	
+	fullCache maximumSize: nil.
 	1 to: 100 do:[:i |
 		fullCache atFont: font1 charCode: i type: 1 put: font1XGlyph].
 	1 to: 100 do:[:i |
@@ -457,7 +457,7 @@ FreeTypeCacheTest >> testRemoveAllForFont [
 FreeTypeCacheTest >> testRemoveAllForType [
 
 	| fifo |
-	fullCache maximumSize: nil.	
+	fullCache maximumSize: nil.
 	1 to: 100 do:[:i |
 		fullCache atFont: font1 charCode: i type: 1 put: font1XGlyph].
 	1 to: 100 do:[:i |

@@ -1,7 +1,7 @@
 Extension { #name : #TimeProfiler }
 
 { #category : #'*ProfilerUI' }
-TimeProfiler >> blockCodeFrom: aString [ 
+TimeProfiler >> blockCodeFrom: aString [
 	^ 'self runBlock: [', aString, ']'
 ]
 
@@ -28,12 +28,12 @@ TimeProfiler >> stopProfiling [
 
 { #category : #'*ProfilerUI' }
 TimeProfiler >> tallyRoot [
-	^ rootMessageTally 
+	^ rootMessageTally
 ]
 
 { #category : #'*ProfilerUI' }
 TimeProfiler >> totalTime [
-	^ rootMessageTally 
+	^ rootMessageTally
 		ifNotNil: [rootMessageTally time]
 		ifNil: [ self error: 'profiler has not yet been run' ]
 ]

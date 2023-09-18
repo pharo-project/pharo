@@ -25,12 +25,12 @@ ReExceptionStrategyBaseTest >> errorMessage [
 { #category : #running }
 ReExceptionStrategyBaseTest >> setUp [
 	super setUp.
-	currentStrategy := ReExceptionStrategy current.
+	currentStrategy := ReExceptionStrategy current
 ]
 
 { #category : #running }
 ReExceptionStrategyBaseTest >> tearDown [
-	
+
 	ReExceptionStrategy current: currentStrategy.
-	super tearDown.
+	super tearDown
 ]

@@ -34,13 +34,13 @@ TextTest >> example2 [
 { #category : #examples }
 TextTest >> replacementExample3 [
   "For a Text t, the following assertion should always hold:
-     t string size = t run size 
-   This test examines the preservation of this assertion for in-place replacement 
+     t string size = t run size
+   This test examines the preservation of this assertion for in-place replacement
    Here, the replacement text is shorteer than the text that is shall replace."
    | replacement startPos length startPosInRep string2 |
    text := (string := 'This is again simple text' copy) asText.
    "Without the copy, we would modify a constant that the compiler attached at the compiled method."
-   startPos := string findString: 'simple'. 
+   startPos := string findString: 'simple'.
    length  := 'simple' size.
    replacement := (string2 := 'both simple and short') asText.
    startPosInRep :=  string2 findString: 'short'.
@@ -55,7 +55,7 @@ TextTest >> setUp [
 	text addAttribute: TextEmphasis bold from: 1 to: 5.
 	text addAttribute: TextColor blue from: 1 to: 5.
 	text addAttribute: TextEmphasis underlined from: 7 to: 8.
-	text addAttribute: TextColor red from: 7 to: 13.
+	text addAttribute: TextColor red from: 7 to: 13
 ]
 
 { #category : #'tests - error' }
@@ -79,10 +79,9 @@ TextTest >> testAdjacentRunsWithIdentitcalAttributes [
 	ts nextPutAll: 'ghijk'.
 	text := ts contents.
 	rangeOfBold := text find:  TextEmphasis bold.
-	text removeAttribute: TextEmphasis bold from: rangeOfBold first to: rangeOfBold last. 
+	text removeAttribute: TextEmphasis bold from: rangeOfBold first to: rangeOfBold last.
    "Now, check that only one run is left and that it has the correct size."
 	self assert: text runs runs size = 1 & (text runs size = text string size)
-
 ]
 
 { #category : #tests }
@@ -113,20 +112,16 @@ TextTest >> testAppend [
 TextTest >> testAsNumber [
 	self assert: '123' asText asNumber equals: 123.
 	self assert: '1.23e2' asText asNumber equals: 123.
-	self assert: '2r1000' asText asNumber equals: 8.
-
-
+	self assert: '2r1000' asText asNumber equals: 8
 ]
 
 { #category : #tests }
 TextTest >> testAsString [
 	self assert: text asString equals: 'Pharo is cool'
-
-
 ]
 
 { #category : #tests }
-TextTest >> testAt [ 
+TextTest >> testAt [
 	string withIndexDo: [ :char :index |
 		self assert: (text at: index) equals: char]
 ]
@@ -149,31 +144,27 @@ TextTest >> testExampleText1 [
     | text1 text2 atts1 atts2 |
 	text1 := self example1: 10. " here we will loose the attribute bold "
 	text2 := self example1: 50. " here we have a larger buffer and will not loose text attributes "
-	atts1 := text1 runs copyFrom: 6 to: 10. 
-	atts2 := text2 runs copyFrom: 6 to: 10. 
+	atts1 := text1 runs copyFrom: 6 to: 10.
+	atts2 := text2 runs copyFrom: 6 to: 10.
 
 	self assert: atts1 equals: atts2
-      
 ]
 
 { #category : #tests }
 TextTest >> testExampleText2 [
 	"a Text looses its attributes when it is reversed "
-	
+
 	| text1 text2 |
 	text1 := self example2.
 	text2 := text1 reversed reversed.
 	self assert: text1 runs equals: text2 runs
- 
-
 ]
 
 { #category : #tests }
 TextTest >> testFindStringStartingAt [
 	self assert: (text findString: 'Pharo' startingAt: 1) equals: 1.
 	self assert: (text findString: 'cool' startingAt: 1) equals: 10.
-	self assert: (text findString: 'Pharo' startingAt: 2) equals: 0.
-	
+	self assert: (text findString: 'Pharo' startingAt: 2) equals: 0
 ]
 
 { #category : #tests }
@@ -182,9 +173,7 @@ TextTest >> testFindStringStartingAtCaseSensitive [
 	self assert: (text findString: 'pharo' startingAt: 1 caseSensitive: true) equals: 0.
 
 	self assert: (text findString: 'COOL' startingAt: 1  caseSensitive: false) equals: 10.
-	self assert: (text findString: 'COOL' startingAt: 1  caseSensitive: true) equals: 0.
-
-	
+	self assert: (text findString: 'COOL' startingAt: 1  caseSensitive: true) equals: 0
 ]
 
 { #category : #tests }
@@ -194,7 +183,7 @@ TextTest >> testGtDisplayOn [
 	hello := 'Hello Pharo' asText.
 	exp := String streamContents: [:s | hello printOn: s].
 	res := String streamContents: [:s | hello displayStringOn: s].
-	self assert: res equals: exp.
+	self assert: res equals: exp
 ]
 
 { #category : #tests }
@@ -204,8 +193,7 @@ TextTest >> testHowManyMatch [
 	self assert: (text howManyMatch: 'P') equals: 1.
 	self assert: (text howManyMatch: 'p') equals: 0.
 	self assert: (text howManyMatch: 'is') equals: 0.
-	self assert: (text howManyMatch: 'cool') equals: 0.
-
+	self assert: (text howManyMatch: 'cool') equals: 0
 ]
 
 { #category : #tests }
@@ -233,7 +221,6 @@ TextTest >> testIncludesSubstringCaseSensitive [
 TextTest >> testLineCount [
 	text := Text streamContents: [:str | str << 'Pharo' << Character cr << 'is' << Character cr << 'cool'].
 	self assert: text lineCount equals: 3
-	
 ]
 
 { #category : #tests }
@@ -274,7 +261,7 @@ TextTest >> testRangeOfStartingAt [
 	self assert: (text rangeOf: TextColor red startingAt: 7) equals: (7 to: 13).
 	self assert: (text rangeOf: TextEmphasis underlined startingAt: 7) equals: (7 to: 8).
 	self assert: (text rangeOf: TextEmphasis underlined startingAt: 8) equals: (7 to: 8).
-	self deny: (text rangeOf: TextEmphasis underlined startingAt: 5) equals: (7 to: 8).
+	self deny: (text rangeOf: TextEmphasis underlined startingAt: 5) equals: (7 to: 8)
 ]
 
 { #category : #'tests - error' }
@@ -296,7 +283,7 @@ TextTest >> testReplaceFromToWith [
 	self assert: text string equals: 'Pharo is hot'.
 	self assert: text size equals: 12.
 	"check attribute is has expected"
-	10 to: 12 do: [ :index | 
+	10 to: 12 do: [ :index |
 		| attr |
 		attr := text attributesAt: index.
 		self assert: attr size equals: 1.
@@ -306,7 +293,7 @@ TextTest >> testReplaceFromToWith [
 { #category : #tests }
 TextTest >> testReplacementAtStartPos1 [
 	"For a Text t, the following assertion should always hold:
-     t string size = t run size 
+     t string size = t run size
 	This test examines the preservation of this assertion for in-place replacement"
 	| replacement  length  |
 	text := 'This is a simple text' copy asText.
@@ -320,7 +307,7 @@ TextTest >> testReplacementAtStartPos1 [
 { #category : #tests }
 TextTest >> testReplacementAtStartPos2 [
   	"For a Text t, the following assertion should always hold:
-     t string size = t run size 
+     t string size = t run size
 	 This test examines the preservation of this assertion for in-place replacement."
 	| replacement  length  |
 	text := 'This is a simple text' copy asText.
@@ -334,8 +321,8 @@ TextTest >> testReplacementAtStartPos2 [
 { #category : #'tests - error' }
 TextTest >> testReplacementAtStartPos3 [
 	"For a Text t, the following assertion should always hold:
-		t string size = t run size 
-	This test examines the preservation of this assertion for in-place replacement 
+		t string size = t run size
+	This test examines the preservation of this assertion for in-place replacement
 	Here, the replacement text is shorter than the text that is shall replace."
    |  replacement  length  |
    text := 'This is a simple text' copy asText.
@@ -350,12 +337,12 @@ TextTest >> testRuns [
 	| attributes |
 	attributes := RunArray new: 13 withAll: TextColor red.
 	text runs: attributes.
-	
+
 	attributes := RunArray new: 12 withAll: TextColor red.
 	self should: [ text runs: attributes ] raise: Error.
 
 	attributes := RunArray new: 14 withAll: TextColor red.
-	self should: [ text runs: attributes ] raise: Error.
+	self should: [ text runs: attributes ] raise: Error
 ]
 
 { #category : #'tests - error' }
@@ -397,7 +384,7 @@ TextTest >> testTextEmphasisRangeDetection1 [
            ].
     ------------- "
 
-	self assert: 
+	self assert:
 		((1 to: text size) allSatisfy:
 			[:idx | | range |
 				range := text rangeOf: boldStyle startingAt: idx.
@@ -418,10 +405,10 @@ TextTest >> testTextEmphasisRangeDetection2 [
 	text addAttribute: TextEmphasis italic from: startPos - 2 to: startPos + 5.
 	searchedStyle := TextEmphasis italic.
 
-  "uncomment the following statement for examine failures: " 
+  "uncomment the following statement for examine failures: "
   "-----------------------
        (1 to: text size) do:
-           [:idx | | range | 
+           [:idx | | range |
               range := text rangeOf: searchedStyle startingAt: idx.
              Transcript show: startPos; show: ' -- '; show: idx printString; show: '  '; show: range printString; show: range size printString; show: ((idx between: startPos - 2 and: startPos -2 + 7)
                   ifTrue:
@@ -430,7 +417,7 @@ TextTest >> testTextEmphasisRangeDetection2 [
                     [range first = idx & (range size = 0)]) printString; cr.
            ].
    ----------------------- "
-	self assert: 
+	self assert:
 			((1 to: text size) allSatisfy:
 				[:idx | | range |
 					range := text rangeOf: searchedStyle startingAt: idx.
@@ -454,7 +441,7 @@ TextTest >> testTextEmphasisRangeDetection3 [
 	"Uncomment the following statement to examine failures:"
  	"-----------------------
        (1 to: text size) do:
-           [:idx | | range | 
+           [:idx | | range |
               range := text rangeOf: searchedStyle startingAt: idx.
              Transcript show: startPos;
 					show: ' -- ';
@@ -470,7 +457,7 @@ TextTest >> testTextEmphasisRangeDetection3 [
                    					 [range first = idx & (range size = 0)]) printString; cr.
            ].
    ----------------------- "
-	self assert: 
+	self assert:
        ((1 to: text size) allSatisfy:
            [:idx | | range |
               range := text rangeOf: searchedStyle startingAt: idx.
@@ -484,20 +471,20 @@ TextTest >> testTextEmphasisRangeDetection3 [
 { #category : #tests }
 TextTest >> testTextEmphasisRangeDetection4 [
 	"This tests the detection of the range of a text attribute.
-	 Here the searched attribute spans three runs. The the range to be detected extends to 
+	 Here the searched attribute spans three runs. The the range to be detected extends to
 	 the end of the text . The objective of the test is whether the entire range is always found."
 
 	| startPos searchedStyle |
 	text := 'This is a text with attriute bold for some characters' asText.
 	startPos := text findString: 'bold' startingAt: 1.
-	text addAttribute: TextEmphasis bold from: startPos to: startPos + 3.	
+	text addAttribute: TextEmphasis bold from: startPos to: startPos + 3.
 	text addAttribute: TextEmphasis italic from: startPos - 2 to: text size.
 	searchedStyle := TextEmphasis italic.
 
 	"Uncomment the following statement to examine failures:"
  	"-----------------------------------------
        (1 to: text size) do:
-           [:idx | | range | 
+           [:idx | | range |
               range := text rangeOf: searchedStyle startingAt: idx.
              Transcript show: startPos;
 					show: ' -- ';
@@ -515,7 +502,7 @@ TextTest >> testTextEmphasisRangeDetection4 [
            ].
    -------------------------------"
 
-	self assert: 
+	self assert:
        ((1 to: text size) allSatisfy:
            [:idx | | range |
               range := text rangeOf: searchedStyle startingAt: idx.
@@ -527,12 +514,12 @@ TextTest >> testTextEmphasisRangeDetection4 [
 { #category : #tests }
 TextTest >> testTextReplacement1 [
 	"For a Text t, the following assertion should always hold:
-     t string size = t run size 
+     t string size = t run size
 	This test examines the preservation of this assertion for in-place replacement"
    | replacement startPos length startPosInRep string2 |
    text := (string := 'This is a simple text' copy) asText.
    "Without the copy, we would modify a constant that the compiler attached at the compiled method."
-   startPos := string findString: 'simple'. 
+   startPos := string findString: 'simple'.
    length  := 'simple' size.
    replacement := (string2 := 'both simple and short*') asText.
    startPosInRep :=  string2 findString: 'short'.
@@ -543,13 +530,13 @@ TextTest >> testTextReplacement1 [
 { #category : #tests }
 TextTest >> testTextReplacement2 [
 	"For a Text t, the following assertion should always hold:
-     	t string size = t run size 
+     	t string size = t run size
     This test examines the preservation of this assertion for in-place replacement.
     Here, the replacement text has trailing characters."
 	| replacement startPos length startPosInRep string2 |
 	text := (string := 'This is simple text' copy) asText.
 	"Without the copy, we would modify a constant that the compiler attached at the compiled method."
-	startPos := string findString: 'simple'. 
+	startPos := string findString: 'simple'.
 	length := 'simple' size.
 	replacement := (string2 := 'both simple and short*************') asText.
 	startPosInRep :=  string2 findString: 'short'.
@@ -560,8 +547,8 @@ TextTest >> testTextReplacement2 [
 { #category : #'tests - error' }
 TextTest >> testTextReplacement3 [
 	"For a Text t, the following assertion should always hold:
-		t string size = t run size 
-	This test examines the preservation of this assertion for in-place replacement 
+		t string size = t run size
+	This test examines the preservation of this assertion for in-place replacement
 	Here, the replacement text is shorteer than the text that is shall replace."
 	self should: [ self replacementExample3 ] raise: Error
 ]
@@ -570,10 +557,9 @@ TextTest >> testTextReplacement3 [
 TextTest >> testUnembellished [
 	| anotherText |
 	self deny: text unembellished.
-	anotherText := 'Hello' asText 
+	anotherText := 'Hello' asText
 		addAttribute: TextEmphasis bold.
 	self assert: anotherText unembellished.
 	anotherText addAttribute: TextFontChange font2.
-	self deny: anotherText unembellished.
-
+	self deny: anotherText unembellished
 ]

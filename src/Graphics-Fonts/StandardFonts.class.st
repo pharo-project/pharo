@@ -89,7 +89,7 @@ StandardFonts class >> defaultFont: aFont [
 	aStyle := aFont textStyle ifNil: [^ self].
 	newDefaultStyle := aStyle copy.
 	newDefaultStyle defaultFontIndex: (aStyle fontIndexOf: aFont).
-	TextSharedInformation at: #DefaultTextStyle put: newDefaultStyle.
+	TextSharedInformation at: #DefaultTextStyle put: newDefaultStyle
 ]
 
 { #category : #'small font fixing' }
@@ -98,10 +98,10 @@ StandardFonts class >> fixSmallDejaVuPunctuationMarks [
 	| fb |
 	StandardFonts setFontsToStyleNamed: #small. "To be sure we use the small font"
 	fb :=StandardFonts defaultFont emphasized: 1. "copy the bold font"
-	"For each punctuation mark, replace the corresponding glyph with the one found in the bold font" 
+	"For each punctuation mark, replace the corresponding glyph with the one found in the bold font"
 	#($. $: $; $' $` $, $")
 		do: [:ch |
-			StandardFonts defaultFont characterFormAt: ch put: (fb characterFormAt: ch) deepCopy].
+			StandardFonts defaultFont characterFormAt: ch put: (fb characterFormAt: ch) deepCopy]
 ]
 
 { #category : #styles }
@@ -112,12 +112,12 @@ StandardFonts class >> fontsSpecForStyleNamed: aSymbol [
 	regular := self pointSizeForStyleNamed: aSymbol.
 	big := self bigPointSizeForStyleNamed: aSymbol.
 	^ {
-			{#defaultFont:. k. regular }. 
+			{#defaultFont:. k. regular }.
 			{#codeFont:. k. regular }.
-			{#listFont:. k. regular }. 
-			{#menuFont:. k. regular }. 
-			{#windowTitleFont:. k. big }. 
-			{#balloonFont:. k. small }. 
+			{#listFont:. k. regular }.
+			{#menuFont:. k. regular }.
+			{#windowTitleFont:. k. big }.
+			{#balloonFont:. k. small }.
 			{#haloFont:. k. small }.
 			{#buttonFont:. k. regular } }
 ]
@@ -157,8 +157,8 @@ StandardFonts class >> menuFont [
 
 { #category : #'font accessing' }
 StandardFonts class >> menuFont: aFont [
-	aFont ~= MenuFont 
-		ifTrue: [ MenuFont := aFont ].
+	aFont ~= MenuFont
+		ifTrue: [ MenuFont := aFont ]
 ]
 
 { #category : #styles }
@@ -171,8 +171,8 @@ StandardFonts class >> pointSizeForStyleNamed: aSymbol [
 	self pointSizeForStyleNamed: #Huge.
 	self pointSizeForStyleNamed: #xxxxx.
 	"
-	^ (#(#(#small 9) #(#medium 12) #(#large 14) #(veryLarge 18) #(huge 24)) 
-		detect: [:info | info first asUppercase = aSymbol asUppercase] ifNone: []) 
+	^ (#(#(#small 9) #(#medium 12) #(#large 14) #(veryLarge 18) #(huge 24))
+		detect: [:info | info first asUppercase = aSymbol asUppercase] ifNone: [])
 			ifNotNil: [:info | info second]
 ]
 
@@ -196,14 +196,14 @@ StandardFonts class >> printStandardSystemFonts [
 			print: font height;
 			cr
 		]].
-	UIManager default  
+	UIManager default
 		longMessage: string
-		title: 'Current system font settings' translated.
+		title: 'Current system font settings' translated
 ]
 
 { #category : #'font accessing' }
 StandardFonts class >> setAllStandardFontsTo: aFont [
-	self systemFontAspects do: [:selector | StandardFonts perform: (selector, ':') asSymbol with: aFont].
+	self systemFontAspects do: [:selector | StandardFonts perform: (selector, ':') asSymbol with: aFont]
 ]
 
 { #category : #menu }
@@ -228,11 +228,11 @@ StandardFonts class >> setDefaultFonts: defaultFontsSpec [
 StandardFonts class >> setFontsFromSpec: fontsSpec [
 	"set some fonts by interpreting fontsSpec.
 	fontsSpec is a collection.
-	Each fontsSpec element is an array with 3 elements: 
+	Each fontsSpec element is an array with 3 elements:
 	(1) the font accessor (i.e. #codeFont:)
 	(2) the font family (i.e. 'Arial')
 	(3) the font point size.
-	To see an example of fontsSpec, inspect the result of 
+	To see an example of fontsSpec, inspect the result of
 	StandardFonts getCurrentFontsSpec.
 	"
 	| fontNames map emphases |
@@ -241,7 +241,7 @@ StandardFonts class >> setFontsFromSpec: fontsSpec [
 	map := IdentityDictionary new.
 	emphases := IdentityDictionary new.
 	fontNames
-		do: [:originalName | 
+		do: [:originalName |
 			| decoded style |
 			decoded := TextStyle decodeStyleName: originalName.
 			style := map
@@ -292,10 +292,10 @@ StandardFonts class >> setFontsToVeryLarge [
 StandardFonts class >> setSmallBitmapFonts [
 
 	| sans fixed |
-	
+
 	sans := 'Bitmap Source Sans Pro'.
 	fixed := 'Bitmap Source Code Pro'.
-	
+
 	self defaultFont: (LogicalFont familyName: sans pointSize: 10).
 	self codeFont: (LogicalFont familyName: fixed pointSize: 10).
 	self listFont: (LogicalFont familyName: sans pointSize: 10).
@@ -303,7 +303,7 @@ StandardFonts class >> setSmallBitmapFonts [
 	self buttonFont: (LogicalFont familyName: sans pointSize: 10).
  	self windowTitleFont: (LogicalFont familyName: sans pointSize: 11).
 	self balloonFont: (LogicalFont familyName: sans pointSize: 9).
- 	self haloFont: (LogicalFont familyName: sans pointSize: 9).
+ 	self haloFont: (LogicalFont familyName: sans pointSize: 9)
 ]
 
 { #category : #styles }

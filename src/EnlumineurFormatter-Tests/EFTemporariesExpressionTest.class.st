@@ -130,7 +130,7 @@ EFTemporariesExpressionTest >> testCommentNotBasicFormat [
 	self
 		assert: source
 		equals:
-			'| d "comment     
+			'| d "comment
 " e |'
 ]
 

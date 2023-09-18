@@ -4,10 +4,16 @@ Class {
 	#category : #'EpiceaBrowsers-Tests-Filters'
 }
 
+{ #category : #asserting }
+EpFilterTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
 { #category : #running }
 EpFilterTest >> assert: aFilter accepts: anEvent rejects: anotherEvent [
 	self assert: (aFilter accepts: anEvent).
-	self deny: (aFilter accepts: anotherEvent).
+	self deny: (aFilter accepts: anotherEvent)
 ]
 
 { #category : #resources }
@@ -38,11 +44,11 @@ EpFilterTest >> refactoring [
 { #category : #tests }
 EpFilterTest >> testAnd [
 	| aFilter |
-	aFilter := EpAndFilter withAll: { 
-		EpPluggableFilter codeChangeFilter. 
+	aFilter := EpAndFilter withAll: {
+		EpPluggableFilter codeChangeFilter.
 		EpPluggableFilter methodFilter }.
-	
-	self 
+
+	self
 		assert: aFilter
 		accepts: self methodAddition
 		rejects: self classAddition
@@ -50,13 +56,13 @@ EpFilterTest >> testAnd [
 
 { #category : #tests }
 EpFilterTest >> testEquality [
-	self 
+	self
 		assert: EpPluggableFilter methodFilter
 		equals: EpPluggableFilter methodFilter.
-	
-	self 
+
+	self
 		assert: (EpOrFilter withAll: EpPluggableFilter allFilters)
-		equals: (EpOrFilter withAll: EpPluggableFilter allFilters).
+		equals: (EpOrFilter withAll: EpPluggableFilter allFilters)
 ]
 
 { #category : #tests }
@@ -68,8 +74,8 @@ EpFilterTest >> testLogBrowserOperation [
 ]
 
 { #category : #tests }
-EpFilterTest >> testMethod [	
-	self 
+EpFilterTest >> testMethod [
+	self
 		assert: EpPluggableFilter methodFilter
 		accepts: self methodAddition
 		rejects: self classAddition
@@ -79,10 +85,10 @@ EpFilterTest >> testMethod [
 EpFilterTest >> testNoTrigger [
 	| expressionEvaluationWithTrigger |
 	expressionEvaluationWithTrigger := self classAddition.
-	expressionEvaluationWithTrigger tags 
-		at: EpLog triggererReferenceKey 
+	expressionEvaluationWithTrigger tags
+		at: EpLog triggererReferenceKey
 		put: (OmReference globalName: 'test' localName: '1').
-				
+
 	self
 		assert: EpPluggableFilter noTriggerFilter
 		accepts: self classAddition

@@ -66,17 +66,17 @@ NewHandleMorph >> step [
 	| eventSource |
 	eventSource := hand lastEvent.
 	eventSource anyButtonPressed
-		ifTrue: [ 
+		ifTrue: [
 			waitingForClickInside := false.
 			self position: eventSource cursorPoint - (self extent // 2).
 			pointBlock value: self center ]
-		ifFalse: [ 
+		ifFalse: [
 			waitingForClickInside
-				ifTrue: [ 
-					(self containsPoint: eventSource cursorPoint) ifFalse: [ 
-						"mouse wandered out before clicked" 
+				ifTrue: [
+					(self containsPoint: eventSource cursorPoint) ifFalse: [
+						"mouse wandered out before clicked"
 						^ self delete ] ]
-				ifFalse: [ 
+				ifFalse: [
 					lastPointBlock value: self center.
 					^ self delete ] ]
 ]

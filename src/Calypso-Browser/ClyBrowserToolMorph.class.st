@@ -140,7 +140,7 @@ Class {
 { #category : #'instance creation' }
 ClyBrowserToolMorph class >> for: aBrowser inContext: aBrowserContext [
 
-	^self new 
+	^self new
 		browser: aBrowser;
 		context: aBrowserContext;
 		setUpModelFromContext;
@@ -154,7 +154,7 @@ ClyBrowserToolMorph class >> isAbstract [
 
 { #category : #testing }
 ClyBrowserToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
-	"Subclasses can define extra condition 
+	"Subclasses can define extra condition
 	to check that they can be opened in particular browser context instance.
 	By default it is always true"
 	^true
@@ -173,8 +173,8 @@ ClyBrowserToolMorph >> activationPriority [
 { #category : #accessing }
 ClyBrowserToolMorph >> activationPriorityInNonActiveContext [
 	"when tool is shown in not active browser context it should be in less priority for activating tabs"
-	^isManagedByUser 
-		ifTrue: [ self activationPriority ] 
+	^isManagedByUser
+		ifTrue: [ self activationPriority ]
 		ifFalse: [Float negativeInfinity ]
 ]
 
@@ -190,24 +190,24 @@ ClyBrowserToolMorph >> addDecorator: aBrowserToolDecorator [
 ]
 
 { #category : #building }
-ClyBrowserToolMorph >> addNotebookPageOn: aNotebook [ 
+ClyBrowserToolMorph >> addNotebookPageOn: aNotebook [
 	| menu |
-	
+
 	menu := CmdMenu activatedBy: ClyBrowserTabCommandActivation.
 	menu buildInContext: context.
-	
-	containerTab := ClyNotebookPageMorph 
+
+	containerTab := ClyNotebookPageMorph
 		newLabel: self defaultTitle
 		icon: self defaultIcon
 		provider: [ self buildPageAndDecorate ].
 	containerTab beCloseable.
 	containerTab actions: menu buildBrowserNotebookActions.
 	containerTab model: self.
-	
-	aNotebook 
-		addPage: containerTab 
+
+	aNotebook
+		addPage: containerTab
 		label: containerTab labelMorph.
-	
+
 	^ containerTab
 ]
 
@@ -227,7 +227,7 @@ ClyBrowserToolMorph >> attachToSystem [
 
 { #category : #accessing }
 ClyBrowserToolMorph >> backgroundColor [
-	
+
 	^ containerTab backgroundColor
 ]
 
@@ -250,6 +250,7 @@ ClyBrowserToolMorph >> browser [
 
 { #category : #accessing }
 ClyBrowserToolMorph >> browser: aBrowser [
+
 	browser := aBrowser
 ]
 
@@ -270,7 +271,7 @@ ClyBrowserToolMorph >> buildAndDecorate [
 	self isBuilt ifTrue: [ ^self ] "somehow tab manager can call building process multiple times".
 	self setUpParametersFromModel.
 	self decorateContainerTab.
-	self build. 
+	self build.
 	self buildStatusBar.
 	self applyDecorations.
 	self attachToSystem
@@ -281,7 +282,7 @@ ClyBrowserToolMorph >> buildPageAndDecorate [
 
 	self setUpParametersFromModel.
 	self decorateContainerTab.
-	self build. 
+	self build.
 	self buildStatusBar.
 	self applyDecorations.
 	self attachToSystem
@@ -291,18 +292,18 @@ ClyBrowserToolMorph >> buildPageAndDecorate [
 ClyBrowserToolMorph >> buildStatusBar [
 
 	statusBar := ClyStatusBarMorph new.
-	statusBar 
+	statusBar
 		width: browser width. "it is required because tool is build in background"
 "		color: self theme windowColor."
 	self addMorphBack: statusBar.
-	
+
 	self fillStatusBar
 ]
 
 { #category : #controlling }
 ClyBrowserToolMorph >> cleanAfterRemove [
 
- 	self detachFromSystem.		
+ 	self detachFromSystem.
  	decorators do: [ :each | each toolWasRemoved ]
 ]
 
@@ -337,16 +338,16 @@ ClyBrowserToolMorph >> copyForBrowserStateSnapshot [
 { #category : #building }
 ClyBrowserToolMorph >> createTab [
 	| menu |
-	
+
 	menu := CmdMenu activatedBy: ClyBrowserTabCommandActivation.
 	menu buildInContext: context.
-	
+
 	containerTab := TabMorph
 		label: self defaultTitle
 		icon: self defaultIcon
 		retrievingBlock: [ self buildAndDecorate ]
 		actions: menu buildBrowserTabActions.
-	
+
 	containerTab model: self.
 	^ containerTab
 ]
@@ -356,7 +357,7 @@ ClyBrowserToolMorph >> decorateContainerTab [
 ]
 
 { #category : #initialization }
-ClyBrowserToolMorph >> defaultBorderWidth [ 
+ClyBrowserToolMorph >> defaultBorderWidth [
 	^0
 ]
 
@@ -368,7 +369,7 @@ ClyBrowserToolMorph >> defaultColor [
 { #category : #initialization }
 ClyBrowserToolMorph >> defaultIcon [
 	self defaultIconName ifNil: [ ^nil ].
-	
+
 	^self iconNamed: self defaultIconName
 ]
 
@@ -379,14 +380,14 @@ ClyBrowserToolMorph >> defaultIconName [
 
 { #category : #initialization }
 ClyBrowserToolMorph >> defaultTitle [
-	^context hasSelectedItems 
+	^context hasSelectedItems
 		ifTrue: [ context lastSelectedItem name]
 		ifFalse: [ self class name]
 ]
 
 { #category : #controlling }
 ClyBrowserToolMorph >> deselectTab [
-	
+
 	containerTab removeFromSelection
 ]
 
@@ -397,7 +398,7 @@ ClyBrowserToolMorph >> detachFromSystem [
 { #category : #building }
 ClyBrowserToolMorph >> fillStatusBar [
 
-	self belongsToCurrentBrowserContext ifFalse: [ 
+	self belongsToCurrentBrowserContext ifFalse: [
 		statusBar addContextItem: (ClyToolContextNavigatorMorph for: self) ]
 ]
 
@@ -422,20 +423,20 @@ ClyBrowserToolMorph >> initialize [
 { #category : #testing }
 ClyBrowserToolMorph >> isBuilt [
 	containerTab ifNil: [ ^ false ].
-	self flag: #TODO. "This patch is to ensure compatibility while working. 
+	self flag: #TODO. "This patch is to ensure compatibility while working.
 	Ensure to remove later."
-	(containerTab respondsTo: #isRendered) ifTrue: [ 
+	(containerTab respondsTo: #isRendered) ifTrue: [
 		 ^ containerTab isRendered ].
 	^ containerTab morph == self
 ]
 
 { #category : #testing }
 ClyBrowserToolMorph >> isCommandAvailable: aCommand [
-	"A double dispatch mechanism to allow tools to validate commands that can be 
+	"A double dispatch mechanism to allow tools to validate commands that can be
 	 executed on it. Subclasses can override me to perform the proper dispatch."
-	"Previous definition was: aCommand canBeExecutedInTool: self but it led to an error 
+	"Previous definition was: aCommand canBeExecutedInTool: self but it led to an error
 	since canBeExecutedInTool: did not exist"
-	
+
 	^ true
 ]
 
@@ -451,7 +452,7 @@ ClyBrowserToolMorph >> isExtraSelectionRequested [
 	(it should be simple #meta modifier. But we don't have it"
 	| lastEvent |
 	lastEvent := (self activeHand ifNil: [ ^ false ])lastEvent.
-	^ lastEvent isMouse and: [ lastEvent isMouseDown 
+	^ lastEvent isMouse and: [ lastEvent isMouseDown
 		and: [lastEvent commandKeyPressed or: [ lastEvent controlKeyPressed ]]]
 ]
 
@@ -473,16 +474,25 @@ ClyBrowserToolMorph >> isSimilarTo: anotherBrowserTool [
 { #category : #testing }
 ClyBrowserToolMorph >> isTabSelected [
 	| selectedTab |
-	
+
 	selectedTab := containerTab owner
 		ifNotNil: [ :aMorph | aMorph selectedTab ].
 	^ selectedTab = containerTab
 ]
 
+{ #category : #testing }
+ClyBrowserToolMorph >> isValidInContext: aClyFullBrowserContext [
+	" Tell if the current tool is still valid for the given context. If so, the tool will be reused instead of being rebuilt or discarded.
+	Every subclass should redefine this method to tell when the tool is still valid or not.
+	This method is there to replace #isSimilarTo: that needs tool instantiation to do the comparison."
+
+	^ false
+]
+
 { #category : #controlling }
 ClyBrowserToolMorph >> okToClose [
 	self hasUnacceptedEdits ifFalse: [ ^true ].
-	
+
 	^browser confirmDiscardChanges
 ]
 
@@ -494,7 +504,7 @@ ClyBrowserToolMorph >> printContext [
 { #category : #building }
 ClyBrowserToolMorph >> rebuildStatusBar [
 	self isBuilt ifFalse: [ ^self ].
-	
+
 	statusBar clear.
 	self fillStatusBar
 ]
@@ -502,7 +512,7 @@ ClyBrowserToolMorph >> rebuildStatusBar [
 { #category : #controlling }
 ClyBrowserToolMorph >> removeFromBrowser [
 
-	containerTab delete
+	containerTab owner removePage: containerTab
 ]
 
 { #category : #initialization }
@@ -573,7 +583,7 @@ ClyBrowserToolMorph >> update [
 
 { #category : #controlling }
 ClyBrowserToolMorph >> updateDirtyState [
-	
+
 	self hasUnacceptedEdits == isDirty ifTrue: [ ^ self ].
 
 	isDirty := self hasUnacceptedEdits.
@@ -592,7 +602,7 @@ ClyBrowserToolMorph >> wantsStayInDifferentContext [
 	self hasUnacceptedEdits ifTrue: [ ^ true ].
 	(self isTabSelected and: [ self isExtraSelectionRequested ]) ifTrue: [ ^ true ].
 	self belongsToRemovedBrowserContext ifTrue: [ ^ false ].
-	
+
 	^ isManagedByUser
 ]
 

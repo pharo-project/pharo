@@ -34,7 +34,7 @@ ObjectsAsMethodsTest >> testAnswer42 [
 ]
 
 { #category : #testing }
-ObjectsAsMethodsTest >> testDNU [ 
+ObjectsAsMethodsTest >> testDNU [
 
 	self should: [self foo] raise: MessageNotUnderstood
 ]

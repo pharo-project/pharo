@@ -25,20 +25,20 @@ Class {
 { #category : #testing }
 TCPSocketEchoTest >> clientSend: message [
 	"Send message to the local TCP echo service and return the result"
-	
+
 	| socket |
 	socket := Socket newTCP.
-	^ [ 
+	^ [
 		socket connectTo: self localhost port: self port.
 		socket sendData: message.
-		socket receiveData ] 
+		socket receiveData ]
 			ensure: [ socket closeAndDestroy ]
 ]
 
 { #category : #accessing }
 TCPSocketEchoTest >> localhost [
 	"Return the host address where the TCP echo service runs, the local host address"
-	
+
 	^ NetNameResolver localHostAddress
 ]
 
@@ -52,7 +52,7 @@ TCPSocketEchoTest >> port [
 { #category : #testing }
 TCPSocketEchoTest >> runServer [
 	"Run and return a local TCP echo server"
-	
+
 	^ self withTCPEchoServer: [ :process | process ]
 ]
 
@@ -60,13 +60,13 @@ TCPSocketEchoTest >> runServer [
 TCPSocketEchoTest >> testEcho [
 	| socket message result |
 	socket := Socket newTCP.
-	[ 
+	[
 		self withTCPEchoServer: [ :process |
-			message := 'Testing ', 99 atRandom asString. 
+			message := 'Testing ', 99 atRandom asString.
 			socket connectTo: self localhost port: self port.
 			socket sendData: message.
 			result := socket receiveData.
-			self assert: result equals: message ]  
+			self assert: result equals: message ]
 	] ensure: [ socket closeAndDestroy ].
 	"At this point the server is still running, ask it to kill itself"
 	self clientSend: #quit
@@ -76,23 +76,23 @@ TCPSocketEchoTest >> testEcho [
 TCPSocketEchoTest >> withTCPEchoServer: block [
 	"Run a local TCP echo server on localhost:port and execute block.
 	Optionally pass the new process to block. When quit is received, stop the server"
-	
+
 	| serverSocket serverLoop process |
 	serverSocket := Socket newTCP.
 	serverSocket listenOn: self port backlogSize: 10.
 	serverLoop := true.
-	process := [ 
-		[ [ serverLoop ] whileTrue: [ 
-			(serverSocket waitForAcceptFor: 60) 
+	process := [
+		[ [ serverLoop ] whileTrue: [
+			(serverSocket waitForAcceptFor: 60)
 				ifNotNil: [ :clientSocket | | result |
-					[ [ 
+					[ [
 						result := clientSocket receiveData.
 						result asLowercase = #quit
 							ifTrue: [ clientSocket sendData: 'Quiting'. serverLoop := false ]
 							ifFalse: [ clientSocket sendData: result ] ]
-						ensure: [ clientSocket closeAndDestroy ] ] 
+						ensure: [ clientSocket closeAndDestroy ] ]
 							forkAt: Processor lowIOPriority named: 'TCP echo connection' ] ] ]
-				ensure: [ serverSocket closeAndDestroy ] ] 
+				ensure: [ serverSocket closeAndDestroy ] ]
 					forkAt: Processor highIOPriority named: 'TCP echo server'.
 	^ block cull: process
 ]

@@ -54,16 +54,16 @@ HiRuler class >> new [
 
 { #category : #'instance creation' }
 HiRuler class >> withValues: aSequenceableCollection [
-	
+
 	^ self basicNew
 		initializeWithValues: aSequenceableCollection;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
 HiRuler >> addLinkFrom: aNode to: anotherNode [
 	"Add a HiLink to the ruler from aNode to anotherNode. The link will occupy a free point in the ruler for each intermediate row from the origin to the target node."
-	
+
 	| intermediatePoints newLink |
 	intermediatePoints := (aNode intermediateRowIndicesTo: anotherNode)
 		collect: [ :row | ((elementsByRow at: row) size + 1) @ row ].
@@ -78,18 +78,18 @@ HiRuler >> addLinkFrom: aNode to: anotherNode [
 		(elementsByRow at: aPoint y) addLast: newLink.
 		(linksByRow at: aPoint y) add: newLink ].
 	(linksByRow at: anotherNode rulerPoint y) add: newLink.
-	
+
 	aNode addOutgoingLink: newLink.
 	anotherNode addIncomingLink: newLink.
 	links add: newLink.
-	
+
 	^ newLink
 ]
 
 { #category : #accessing }
 HiRuler >> addNodeFor: aValue [
 	"Add the node for aValue. The node will occupy a free point in the ruler in the corresponding row.
-	
+
 	Constraints:
 	- aValue must belong to the initial list of values used when creating the ruler instance.
 	- aValue must be added exactly once as node.
@@ -105,7 +105,7 @@ HiRuler >> addNodeFor: aValue [
 	nodeByRow at: rowIndex put: newNode.
 	nodeByValue at: aValue put: newNode.
 	valueByRow at: rowIndex put: aValue. "TODO: Remove... too much redundancy"
-	
+
 	^ newNode
 ]
 
@@ -115,7 +115,7 @@ HiRuler >> elementsByRow [
 ]
 
 { #category : #initialization }
-HiRuler >> initializeWithValues: aSequenceableCollection [ 
+HiRuler >> initializeWithValues: aSequenceableCollection [
 
 	self initialize.
 	valueByRow := aSequenceableCollection.
@@ -128,9 +128,9 @@ HiRuler >> initializeWithValues: aSequenceableCollection [
 
 	elementsByRow := Array new: valueByRow size.
 	linksByRow := Array new: valueByRow size.
-	1 to: valueByRow size do: [ :index | 
+	1 to: valueByRow size do: [ :index |
 		elementsByRow at: index put: LinkedList new.
-		linksByRow at: index put: LinkedList new ].
+		linksByRow at: index put: LinkedList new ]
 ]
 
 { #category : #accessing }
@@ -170,7 +170,7 @@ HiRuler >> nodes [
 { #category : #accessing }
 HiRuler >> numberOfColumns [
 
-	^ elementsByRow 
+	^ elementsByRow
 		ifEmpty: [ 0 ]
 		ifNotEmpty: [ elementsByRow max: #size ]
 ]

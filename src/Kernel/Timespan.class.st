@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-Timespan class >> current [ 
+Timespan class >> current [
 
 	^ self starting: DateAndTime now
 ]
@@ -26,7 +26,7 @@ Timespan class >> new [
 ]
 
 { #category : #'instance creation' }
-Timespan class >> starting: aDateAndTime [ 
+Timespan class >> starting: aDateAndTime [
 
 	^ self starting: aDateAndTime duration: Duration zero
 ]
@@ -37,20 +37,20 @@ Timespan class >> starting: aDateAndTime duration: aDuration [
 	^ self basicNew
   		start: aDateAndTime asDateAndTime;
  		duration: aDuration;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
 Timespan class >> starting: startDateAndTime ending: endDateAndTime [
 
-	^ self 
-		starting: startDateAndTime 
-		duration: (endDateAndTime asDateAndTime - startDateAndTime).
+	^ self
+		starting: startDateAndTime
+		duration: (endDateAndTime asDateAndTime - startDateAndTime)
 ]
 
 { #category : #arithmetic }
 Timespan >> + operand [
-	"operand conforms to protocol Duration" 	
+	"operand conforms to protocol Duration"
 
 	^ self species starting: (self start + operand) duration: self duration
 ]
@@ -59,9 +59,9 @@ Timespan >> + operand [
 Timespan >> - operand [
 	"operand conforms to protocol DateAndTime or protocol Duration"
 
-	^ (operand respondsTo: #asDateAndTime) 
+	^ (operand respondsTo: #asDateAndTime)
 	 	ifTrue: [ self start - operand ]
-	 	ifFalse: [ self + (operand negated) ].
+	 	ifFalse: [ self + (operand negated) ]
 ]
 
 { #category : #arithmetic }
@@ -72,13 +72,13 @@ Timespan >> < comparand [
 
 { #category : #comparing }
 Timespan >> = comparand [
-	^ self species = comparand species 
-		and: [ self start = comparand start 
+	^ self species = comparand species
+		and: [ self start = comparand start
 				and: [ self duration = comparand duration ]]
 ]
 
 { #category : #accessing }
-Timespan >> asDate [ 
+Timespan >> asDate [
 
 	^ start asDate
 ]
@@ -98,7 +98,7 @@ Timespan >> asDuration [
 { #category : #converting }
 Timespan >> asSeconds [
  	"Answer the seconds since the epoch: 1 January 1901"
- 
+
  	^ start asSeconds
 ]
 
@@ -136,7 +136,7 @@ Timespan >> hash [
 ]
 
 { #category : #accessing }
-Timespan >> julianDayNumber [ 
+Timespan >> julianDayNumber [
 
 	^ start julianDayNumber
 ]
@@ -171,31 +171,31 @@ Timespan >> offset [
 
 { #category : #accessing }
 Timespan >> offset: anOffset [
-	"Answer a <Timespan> equivalent to the receiver but with its local time 
+	"Answer a <Timespan> equivalent to the receiver but with its local time
 	being offset from UTC by offset.
 	Unlike #translateTo: this will NOT change the absolute in UTC "
 
-	^ self class 
-		starting: (self start offset: anOffset) 
+	^ self class
+		starting: (self start offset: anOffset)
 		duration: self duration
 ]
 
 { #category : #accessing }
-Timespan >> previous [ 
+Timespan >> previous [
 
 	^ self class starting: (start - duration) duration: duration
 ]
 
 { #category : #printing }
-Timespan >> printOn: aStream [ 
+Timespan >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPut: $(;
 		print: start;
 		nextPut: $D;
 		print: duration;
-		nextPut: $).
+		nextPut: $)
 ]
 
 { #category : #accessing }
@@ -213,7 +213,7 @@ Timespan >> start: aDateAndTime [
 ]
 
 { #category : #accessing }
-Timespan >> year [ 
+Timespan >> year [
 
 	^ start year
 ]

@@ -24,13 +24,13 @@ AthensTextRenderSpecExamples class >> testSpecWindow [
 { #category : #tests }
 AthensTextRenderSpecExamples class >> testWindowRender [
 	<example>
-	
+
 	| surf win |
 	win := self testSpecWindow.
 	surf := self surfaceClass extent: win extent.
 	win position: 0@0.
 
-	surf drawDuring: [ :canvas | 
+	surf drawDuring: [ :canvas |
 		canvas pathTransform scaleBy: 1.
 		canvas fullDrawMorph: win.
 	].

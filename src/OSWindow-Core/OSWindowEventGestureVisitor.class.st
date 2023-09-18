@@ -10,7 +10,7 @@ Class {
 
 { #category : #visiting }
 OSWindowEventGestureVisitor >> handleGestureEvent: anEvent [
-	self handleEvent: anEvent.
+	self handleEvent: anEvent
 ]
 
 { #category : #'visiting - two fingers gestures' }

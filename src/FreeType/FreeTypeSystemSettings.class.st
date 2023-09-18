@@ -96,11 +96,11 @@ o NONE: use the original glyph shapes without snapping their features to pixel b
 
 { #category : #settings }
 FreeTypeSystemSettings class >> ft2LibraryVersion [
-	^ Smalltalk ui theme 
-		newLabelIn: self 
-		for: self 
-		label: 'Available version: ', FT2Version current asString 
-		getEnabled: nil.
+	^ Smalltalk ui theme
+		newLabelIn: self
+		for: self
+		label: 'Available version: ', FT2Version current asString
+		getEnabled: nil
 ]
 
 { #category : #settings }
@@ -114,7 +114,7 @@ FreeTypeSystemSettings class >> noFt2Library [
 ]
 
 { #category : #settings }
-FreeTypeSystemSettings class >> noFt2Library: aBoolean [ 
+FreeTypeSystemSettings class >> noFt2Library: aBoolean [
 
 	"ignore it for now"
 ]

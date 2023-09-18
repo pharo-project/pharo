@@ -44,9 +44,9 @@ ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
 	"Service method to extract all contents of a zip."
 	| directory |
 	directory := (UIManager default chooseDirectoryFrom: aFileReferenceOrFileName asFileReference) ifNil: [^ self].
-	^ (self new) 
+	^ (self new)
 		readFrom: aFileReferenceOrFileName;
-		extractAllTo: directory.
+		extractAllTo: directory
 ]
 
 { #category : #constants }
@@ -62,7 +62,7 @@ ZipArchive class >> findEndOfCentralDirectoryFrom: stream [
 	fileLength := stream position.
 	"If the file length is less than 18 for the EOCD length plus 4 for the signature, we have a problem"
 	fileLength < 22 ifTrue: [^ self error: 'file is too short'].
-	
+
 	seekOffset := 0.
 	pos := 0.
 	data := ByteArray new: 4100.
@@ -84,26 +84,26 @@ ZipArchive class >> findEndOfCentralDirectoryFrom: stream [
 { #category : #'testing - file format' }
 ZipArchive class >> isZipArchive: file [
 	"Answer whether the given file represents a valid zip file. The argument file can be a String, FileReference or an open binary read stream.
-	
+
 	See ZipArchiveTest>>testisZipArchive for examples."
 
 	| stream eocdPosition |
 	stream := file isStream
 		ifTrue: [ file ]
 		ifFalse: [ file asFileReference binaryReadStream ].
-		
+
 	stream size < 22 ifTrue: [ ^ false ].
-	
+
 	eocdPosition := self findEndOfCentralDirectoryFrom: stream.
 	stream ~= file ifTrue: [ stream close ].
-	
+
 	^ eocdPosition > 0
 ]
 
 { #category : #constants }
 ZipArchive class >> validSignatures [
 	"Return the valid signatures for a zip file"
-	^Array 
+	^Array
 		with: LocalFileHeaderSignature
 		with: CentralDirectoryFileHeaderSignature
 		with: EndOfCentralDirectorySignature
@@ -129,7 +129,7 @@ ZipArchive >> extractAllTo: aDirectory [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
 	UIManager default
-		informUserDuring: [:bar | 
+		informUserDuring: [:bar |
 			bar max: self numberOfMembers.
 			self extractAllTo: aDirectory informing: bar ]
 ]
@@ -151,7 +151,7 @@ ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 	barValue := 0.
 	self members
 		select: #isDirectory
-		thenDo: [ :entry | 
+		thenDo: [ :entry |
 			| dir shouldUpdateInfos lastUpdate |
 			lastUpdate := 0.
 			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
@@ -166,7 +166,7 @@ ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 				ifTrue: [ bar value: barValue ] ].
 	self members
 		reject: #isDirectory
-		thenDo: [ :entry | 
+		thenDo: [ :entry |
 			| shouldUpdateInfos lastUpdate |
 			lastUpdate := 0.
 			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
@@ -253,7 +253,7 @@ ZipArchive >> readFrom: aStreamOrFile [
 
 { #category : #private }
 ZipArchive >> readMembersFrom: stream named: fileName [
-	
+
 	[ | signature newMember |
 		newMember := self memberClass newFromZipFile: stream named: fileName.
 		signature := self readSignatureFrom: stream.
@@ -270,7 +270,7 @@ ZipArchive >> readMembersFrom: stream named: fileName [
 ZipArchive >> readSignatureFrom: stream [
 	"Returns next signature from given stream, leaves stream positioned afterwards."
 
-	| signatureData | 
+	| signatureData |
 	signatureData := ByteArray new: 4.
 	stream next: 4 into: signatureData.
 	({ CentralDirectoryFileHeaderSignature . LocalFileHeaderSignature . EndOfCentralDirectorySignature }
@@ -296,7 +296,7 @@ ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 
 	| endianStream |
 	aStream nextPutAll: EndOfCentralDirectorySignature.
-	
+
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	endianStream nextLittleEndianNumber: 2 put: 0. "diskNumber"
 	endianStream nextLittleEndianNumber: 2 put: 0. "diskNumberWithStartOfCentralDirectory"
@@ -305,7 +305,7 @@ ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 	endianStream nextLittleEndianNumber: 4 put: writeEOCDOffset - writeCentralDirectoryOffset. "size of central dir"
 	endianStream nextLittleEndianNumber: 4 put: writeCentralDirectoryOffset. "offset of central dir"
 	endianStream nextLittleEndianNumber: 2 put: zipFileComment size. "zip file comment"
-	
+
 	zipFileComment isEmpty ifFalse: [ aStream nextPutAll: zipFileComment ]
 ]
 
@@ -327,7 +327,7 @@ ZipArchive >> writeTo: stream prepending: aString [
 
 { #category : #writing }
 ZipArchive >> writeTo: stream prependingFile: aFileReferenceOrFileName [
-	
+
 	aFileReferenceOrFileName asFileReference binaryReadStreamDo: [ :prepended | | buffer |
 	buffer := ByteArray new: (prepended size min: 32768).
 	[ prepended atEnd ]
@@ -338,7 +338,7 @@ ZipArchive >> writeTo: stream prependingFile: aFileReferenceOrFileName [
 				count: buffer size.
 			stream next: bytesRead putAll: buffer startingAt: 1 ].
 		 ].
-	
+
 	self writeTo: stream
 ]
 

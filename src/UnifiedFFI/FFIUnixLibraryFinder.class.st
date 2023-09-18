@@ -10,8 +10,8 @@ Class {
 
 { #category : #accessing }
 FFIUnixLibraryFinder >> basePaths [
-		
-	^ { 
+
+	^ {
 	Smalltalk imageDirectory fullName.
 	Smalltalk vm directory }
 ]

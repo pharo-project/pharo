@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 FTExampleMethodModel class >> method: aMethod [
-	^ self basicNew 
+	^ self basicNew
 		initializeMethod: aMethod;
 		yourself
 ]
@@ -57,5 +57,5 @@ FTExampleMethodModel >> origin [
 
 { #category : #accessing }
 FTExampleMethodModel >> protocol [
-	^ self method protocol
+	^ self method protocolName
 ]

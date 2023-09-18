@@ -11,12 +11,12 @@ Class {
 { #category : #activation }
 ClyInvertMethodVisibilityHierarchyCommand class >> browserContextMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyInheritedMethodGroup asCalypsoItemContext
 ]
 
 { #category : #accessing }
-ClyInvertMethodVisibilityHierarchyCommand >> defaultMenuItemName [ 
+ClyInvertMethodVisibilityHierarchyCommand >> defaultMenuItemName [
 	^'Invert hierarchy'
 ]
 

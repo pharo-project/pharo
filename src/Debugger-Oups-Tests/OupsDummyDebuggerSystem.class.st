@@ -15,7 +15,7 @@ Class {
 
 { #category : #accessing }
 OupsDummyDebuggerSystem >> callsToHandleDebugRequest [
-	^callsToHandleDebugRequest ifNil: [ callsToHandleDebugRequest := 0 ].
+	^callsToHandleDebugRequest ifNil: [ callsToHandleDebugRequest := 0 ]
 ]
 
 { #category : #accessing }
@@ -64,7 +64,7 @@ OupsDummyDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
 ]
 
 { #category : #helpers }
-OupsDummyDebuggerSystem >> spawnNewUIProcess [ 
+OupsDummyDebuggerSystem >> spawnNewUIProcess [
 	"For testing purposes. Does not actually spawn a new UI process. Just record that this method was called"
 	newUIProcessSpawned := true
 ]

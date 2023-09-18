@@ -36,13 +36,13 @@ Class {
 }
 
 { #category : #accessing }
-HEMethod >> bytecode: anObject [
-	bytecode := anObject
+HEMethod >> bytecode [
+	^ bytecode
 ]
 
 { #category : #accessing }
-HEMethod >> bytecodes [
-	^ bytecode
+HEMethod >> bytecode: anObject [
+	bytecode := anObject
 ]
 
 { #category : #accessing }
@@ -60,7 +60,7 @@ HEMethod >> headerFor: anEnvironment [
 	| encoderClass|
 	"When a method is deserialized its header should be recalculated"
 	encoderClass := anEnvironment classNamed: encoderClassName.
-	
+
 	^ (CompiledMethod headerFlagForEncoder: encoderClass) + (numArgs bitShift: 24) + (numTemps bitShift: 18) + literals size + (hasPrimitive bitShift: 16)
 ]
 
@@ -108,8 +108,8 @@ HEMethod >> readFrom: aReader [
 
 	name := aReader readByteSymbol.
 	className := aReader readByteSymbol.
-	protocol := aReader readByteSymbol.
-		
+	protocol := Protocol named: (aReader readByteSymbol).
+
 	encoderClassName := aReader readByteString.
 	numArgs := aReader readUInt32.
 	numTemps := aReader readUInt32.
@@ -120,4 +120,9 @@ HEMethod >> readFrom: aReader [
 	numberOfLiterals := aReader readInt32.
 	literals := Array new: numberOfLiterals.
 	1 to: numberOfLiterals do: [ :idx | literals at:idx put: (HEExportedLiteral readFrom: aReader) ]
+]
+
+{ #category : #accessing }
+HEMethod >> selector [
+	^ self name
 ]

@@ -7,6 +7,12 @@ Class {
 	#category : #'Epicea-Model'
 }
 
+{ #category : #testing }
+EpBehaviorChange class >> isAbstract [
+
+	^ self == EpBehaviorChange
+]
+
 { #category : #comparing }
 EpBehaviorChange >> = other [
 
@@ -15,7 +21,7 @@ EpBehaviorChange >> = other [
 
 { #category : #accessing }
 EpBehaviorChange >> affectedPackageName [
-	
+
 	^  self behaviorAffected package
 ]
 
@@ -30,9 +36,9 @@ EpBehaviorChange >> behaviorAffectedName [
 ]
 
 { #category : #testing }
-EpBehaviorChange >> doesOverride: aCodeChange [ 
-	
-	^ aCodeChange class = self class and: [ 
+EpBehaviorChange >> doesOverride: aCodeChange [
+
+	^ aCodeChange class = self class and: [
 		aCodeChange behaviorAffectedName = self behaviorAffectedName ]
 ]
 
@@ -52,7 +58,7 @@ EpBehaviorChange >> printOn: aStream [
 
 	super printOn: aStream.
 
-	aStream 
+	aStream
 		nextPut: $(;
 		nextPutAll: self behaviorAffectedName;
 		nextPut: $)

@@ -16,10 +16,10 @@ TRGBehaviorTest >> testBehavior [
 	self assert: (newBehavior allSlots isEmpty).
 	self assert: (newBehavior bindingOf: #someVariable) isNil.
 	self assert: (newBehavior classVariablesBindings isEmpty).
-	
+
 	self deny: (newBehavior isRingFullyUnresolved).
 
-	self deny: newBehavior hasTraitComposition.
+	self deny: newBehavior hasTraitComposition
 ]
 
 { #category : #tests }
@@ -35,7 +35,7 @@ TRGBehaviorTest >> testBehaviorWithCategorizedMethods [
 	self assert: newBehavior ask protocols isEmpty.
 	method := RGMethod named: #someMethod parent: newBehavior.
 	newBehavior addLocalMethod: method.
-	self assert: (newBehavior hasResolved: #tagsForMethods).
+	self assert: (newBehavior hasResolved: #tagsForMethods)
 ]
 
 { #category : #tests }
@@ -48,7 +48,7 @@ TRGBehaviorTest >> testBehaviorWithMethods [
 	newBehavior isTrait
 		ifFalse: [ self assert: (newBehavior hasUnresolved: #superclass) ].
 	self assert: newBehavior localMethods isEmpty.
-	1 to: 10 do: [ :i | 
+	1 to: 10 do: [ :i |
 		| m |
 		m := RGMethod
 			named: 'method' , i asString
@@ -104,7 +104,7 @@ TRGBehaviorTest >> testBehaviorWithProtocols [
 	newBehavior isTrait
 		ifFalse: [ self assert: (newBehavior hasUnresolved: #superclass) ].
 	self assert: newBehavior methods isEmpty.
-	1 to: 10 do: [ :i | 
+	1 to: 10 do: [ :i |
 		newBehavior addProtocol: ('protocol' , i asString) asSymbol ].
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 	self assert: (newBehavior protocols allSatisfy: #isSymbol).
@@ -119,28 +119,28 @@ TRGBehaviorTest >> testBehaviorWithProtocols [
 { #category : #tests }
 TRGBehaviorTest >> testBehaviorWithUnategorizedMethod [
 	| newBehavior method |
-	
+
 	newBehavior := self behaviorClass named: #SomeClass.
 	self assert: newBehavior name equals: #SomeClass.
 	self assert: (newBehavior hasUnresolvedAll: #(localMethods protocols)).
-	newBehavior isTrait ifFalse: [  
+	newBehavior isTrait ifFalse: [
 		self assert: (newBehavior hasUnresolved: #superclass).].
 	self assert: (newBehavior methods isEmpty).
 	self assert: (newBehavior protocols isEmpty).
 
-	method := RGMethod named: #someMethod parent: newBehavior. 
+	method := RGMethod named: #someMethod parent: newBehavior.
 	newBehavior addLocalMethod: method.
-	
+
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 	newBehavior cleanProtocols.
 
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
-	
+	self assert: newBehavior protocols first equals: Protocol unclassified.
+
 	newBehavior cleanLocalMethods.
-	self assert: (newBehavior protocols isEmpty).
+	self assert: (newBehavior protocols isEmpty)
 ]
 
 { #category : #tests }
@@ -160,31 +160,31 @@ TRGBehaviorTest >> testBehaviorWithUnategorizedMethods [
 	newBehavior addLocalMethod: method2.
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 	newBehavior cleanProtocols.
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 	newBehavior cleanLocalMethods.
 	self assert: newBehavior protocols isEmpty
 ]
 
 { #category : #tests }
 TRGBehaviorTest >> testCopyForBehaviorDefinition [
-	
+
 	| env aClass copy |
-	
+
 	env := RGEnvironment new.
 	aClass := env ensureClassNamed: #SomeClass.
 	aClass superclass: (env ensureClassNamed: #SomeSuperclass).
 	aClass tagWith: #tag1.
 	aClass tagWith: #tag2.
-		
+
 	copy := aClass copyForBehaviorDefinition.
-	
-	self deny: copy == aClass. 
-	self deny: copy superclass == aClass superclass. 
+
+	self deny: copy == aClass.
+	self deny: copy superclass == aClass superclass.
 	self assert: copy superclass name equals: #SomeSuperclass.
-	self assert: copy tags sorted equals: #(tag1 tag2).
+	self assert: copy tags sorted equals: #(tag1 tag2)
 ]
 
 { #category : #tests }
@@ -192,15 +192,15 @@ TRGBehaviorTest >> testHasMethods [
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
 	self deny: newBehavior hasMethods.
-	1 to: 10 do: [ :i | 
+	1 to: 10 do: [ :i |
 		| m |
 		m := RGMethod
 			named: 'method' , i asString
 			parent: newBehavior.
 		newBehavior addLocalMethod: m ].
-	self assert: newBehavior hasMethods.	
+	self assert: newBehavior hasMethods.
 	newBehavior cleanLocalMethods.
-	self deny: newBehavior hasMethods.
+	self deny: newBehavior hasMethods
 ]
 
 { #category : #tests }
@@ -208,7 +208,7 @@ TRGBehaviorTest >> testIsBehavior [
 
 	| newBehavior |
 	newBehavior := self behaviorClass unnamed.
-	
+
 	self assert: newBehavior isBehavior
 ]
 
@@ -219,7 +219,7 @@ TRGBehaviorTest >> testMakeReslolvedResolvesEverything [
 
 	behavior := self behaviorClass unnamed.
 	behavior makeResolved.
-	self assert: behavior unresolvedProperties isEmpty.
+	self assert: behavior unresolvedProperties isEmpty
 ]
 
 { #category : #tests }
@@ -252,6 +252,6 @@ TRGBehaviorTest >> testProtocols [
 
 	| newBehavior |
 	newBehavior := self behaviorClass unnamed.
-	
-	self assert: newBehavior asYetUnclassifiedProtocolName isSymbol.
+
+	self assert: newBehavior asYetUnclassifiedProtocolName isSymbol
 ]
