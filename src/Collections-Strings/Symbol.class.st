@@ -22,7 +22,7 @@ s1 asSymbol == s2 asSymbol. ""true""
 Comparing Symbols takes less time than comparing Strings.
 
 ```
-[ #stringA = #stringB ] bench. ""26,812,864 per second""
+[ #stringA = #stringB ] bench. ""26,812,864 per second ""
 [ 'StringA' = 'StringB' ] bench. ""3,492,987 per second""
 ```
 "
