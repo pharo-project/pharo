@@ -1,14 +1,16 @@
 Class {
-	#name : #BreakpointAnnouncement,
-	#superclass : #SystemAnnouncement,
+	#name : 'BreakpointAnnouncement',
+	#superclass : 'SystemAnnouncement',
 	#instVars : [
 		'breakpoint',
 		'nodes'
 	],
-	#category : #'Reflectivity-Breakpoints'
+	#category : 'Reflectivity-Breakpoints',
+	#package : 'Reflectivity',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BreakpointAnnouncement class >> on: aBreakpoint nodes: nodes [
 	^ self new
 		breakpoint: aBreakpoint;
@@ -16,51 +18,51 @@ BreakpointAnnouncement class >> on: aBreakpoint nodes: nodes [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointAnnouncement >> affectsMethod: aMethod [
 
 	^ self link methods anySatisfy: [:each | each compiledMethod == aMethod compiledMethod ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointAnnouncement >> affectsMethods [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointAnnouncement >> affectsMethodsDefinedInClass: aClass [
 	^ self link methods
 		anySatisfy: [ :each | each methodClass isNotNil and: [ each origin == aClass ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
 	^ self link methods
 		anySatisfy:
 			[ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointAnnouncement >> breakpoint [
 	^ breakpoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointAnnouncement >> breakpoint: anObject [
 	breakpoint := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointAnnouncement >> link [
 	^ self breakpoint link
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointAnnouncement >> nodes [
 	^ nodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointAnnouncement >> nodes: anObject [
 	nodes := anObject
 ]

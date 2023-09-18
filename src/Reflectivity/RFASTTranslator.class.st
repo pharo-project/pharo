@@ -2,12 +2,14 @@
 subclass of Opal that takes links into account
 "
 Class {
-	#name : #RFASTTranslator,
-	#superclass : #OCASTTranslator,
-	#category : #'Reflectivity-Compiler'
+	#name : 'RFASTTranslator',
+	#superclass : 'OCASTTranslator',
+	#category : 'Reflectivity-Compiler',
+	#package : 'Reflectivity',
+	#tag : 'Compiler'
 }
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> emitMessageNode: aMessageNode [
 
 	(aMessageNode isCascaded and: [(aMessageNode hasProperty: #hook) not])
@@ -24,7 +26,7 @@ RFASTTranslator >> emitMessageNode: aMessageNode [
 	self emitMetaLinkAfterNoEnsure: aMessageNode
 ]
 
-{ #category : #reflectivity }
+{ #category : 'reflectivity' }
 RFASTTranslator >> emitMetaLinkAfterEnsure: aNode [
 	| ensureBlock compiledBlock |
 
@@ -42,7 +44,7 @@ RFASTTranslator >> emitMetaLinkAfterEnsure: aNode [
 	methodBuilder send: #ensure:
 ]
 
-{ #category : #reflectivity }
+{ #category : 'reflectivity' }
 RFASTTranslator >> emitMetaLinkAfterNoEnsure: aNode [
 
 	aNode hasMetalinkAfter ifFalse: [ ^self ].
@@ -50,23 +52,23 @@ RFASTTranslator >> emitMetaLinkAfterNoEnsure: aNode [
 	aNode afterHooks do: [ :each | self visitEffectNode: each ]
 ]
 
-{ #category : #reflectivity }
+{ #category : 'reflectivity' }
 RFASTTranslator >> emitMetaLinkBefore: aNode [
 	aNode hasMetalinkBefore ifFalse: [ ^self ].
 	aNode beforeHooks do: [ :hook | self visitEffectNode: hook ]
 ]
 
-{ #category : #reflectivity }
+{ #category : 'reflectivity' }
 RFASTTranslator >> emitMetaLinkInstead: aNode [
 	self visitNode: aNode insteadHooks
 ]
 
-{ #category : #reflectivity }
+{ #category : 'reflectivity' }
 RFASTTranslator >> emitPreamble: aNode [
 	aNode preambles do: [ :pre | self visitNode: pre]
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitArrayNode: anArrayNode [
 
 	| elementNodes |
@@ -83,7 +85,7 @@ RFASTTranslator >> visitArrayNode: anArrayNode [
 	self emitMetaLinkAfterNoEnsure: anArrayNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitAssignmentNode: anAssignmentNode [
 	self visitNode: anAssignmentNode value.
 	self emitPreamble: anAssignmentNode.
@@ -101,7 +103,7 @@ RFASTTranslator >> visitAssignmentNode: anAssignmentNode [
 	self emitMetaLinkAfterNoEnsure: anAssignmentNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
 	aBlockNode isError ifTrue: [self emitRuntimeError: aBlockNode ].
@@ -122,7 +124,7 @@ RFASTTranslator >> visitBlockNode: aBlockNode [
 	self emitMetaLinkAfterNoEnsure: aBlockNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitCascadeNode: aCascadeNode [
 	self visitNode: aCascadeNode receiver.
 
@@ -139,7 +141,7 @@ RFASTTranslator >> visitCascadeNode: aCascadeNode [
 	self emitMetaLinkAfterNoEnsure: aCascadeNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 
 	"We are visiting a scope that is not a block, but inlined in the outer context.
@@ -170,7 +172,7 @@ RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 	methodBuilder popMap
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	self emitPreamble: aRBLiteralArrayNode.
 	self emitMetaLinkBefore: aRBLiteralArrayNode.
@@ -180,7 +182,7 @@ RFASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	self emitMetaLinkAfterNoEnsure: aRBLiteralArrayNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitLiteralNode: aLiteralNode [
 	self emitPreamble: aLiteralNode.
 	self emitMetaLinkBefore: aLiteralNode.
@@ -190,7 +192,7 @@ RFASTTranslator >> visitLiteralNode: aLiteralNode [
 	self emitMetaLinkAfterNoEnsure: aLiteralNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitMessageNode: aMessageNode [
 
 	aMessageNode isInlined
@@ -208,7 +210,7 @@ RFASTTranslator >> visitMessageNode: aMessageNode [
 		ifFalse: [ self emitMessageNode: aMessageNode ]
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitMethodNode: aMethodNode [
 	"I ignore all links when I am primitive as ReflectiveMethod compiles a wrapper"
 
@@ -250,7 +252,7 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 		methodBuilder pushReceiver ; returnTop ]
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitPragmaNode: aPragmaNode [
 
 	self emitPreamble: aPragmaNode.
@@ -261,7 +263,7 @@ RFASTTranslator >> visitPragmaNode: aPragmaNode [
 	self emitMetaLinkAfterNoEnsure: aPragmaNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitReturnNode: aReturnNode [
 
 	self visitNode: aReturnNode value.
@@ -272,7 +274,7 @@ RFASTTranslator >> visitReturnNode: aReturnNode [
 		ifFalse: [ methodBuilder returnTop ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFASTTranslator >> visitSequenceNode: aSequenceNode [
 	| statements |
 
@@ -293,7 +295,7 @@ RFASTTranslator >> visitSequenceNode: aSequenceNode [
 	]
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitSequenceWithAfter: aSequenceNode [
 	| wrappedBlock compiledBlock |
 	wrappedBlock := RBBlockNode body: (RBSequenceNode statements: aSequenceNode statements).
@@ -307,14 +309,14 @@ RFASTTranslator >> visitSequenceWithAfter: aSequenceNode [
 	self emitMetaLinkAfterEnsure: aSequenceNode
 ]
 
-{ #category : #reflectivity }
+{ #category : 'reflectivity' }
 RFASTTranslator >> visitStoreIntoTempNode: aNode [
 	"we store the TOS into the temp defined by the reification node"
 
 	aNode binding emitStore: methodBuilder
 ]
 
-{ #category : #reflectivity }
+{ #category : 'reflectivity' }
 RFASTTranslator >> visitStorePopIntoTempNode: aNode [
 	"we store the TOS into the temp defined by the reification node"
 
@@ -322,7 +324,7 @@ RFASTTranslator >> visitStorePopIntoTempNode: aNode [
 	methodBuilder popTop
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitVariableNode: aVariableNode [
 	self emitPreamble: aVariableNode.
 	self emitMetaLinkBefore: aVariableNode.
@@ -332,7 +334,7 @@ RFASTTranslator >> visitVariableNode: aVariableNode [
 	self emitMetaLinkAfterNoEnsure: aVariableNode
 ]
 
-{ #category : #reflectivity }
+{ #category : 'reflectivity' }
 RFASTTranslator >> visitVariableValue: aVariable [
 	self emitPreamble: aVariable.
 	self emitMetaLinkBefore: aVariable.
