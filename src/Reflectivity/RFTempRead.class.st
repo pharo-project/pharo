@@ -2,30 +2,32 @@
 I model temp read
 "
 Class {
-	#name : #RFTempRead,
-	#superclass : #RFVariableRead,
+	#name : 'RFTempRead',
+	#superclass : 'RFVariableRead',
 	#instVars : [
 		'context'
 	],
-	#category : #'Reflectivity-Operations'
+	#category : 'Reflectivity-Operations',
+	#package : 'Reflectivity',
+	#tag : 'Operations'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFTempRead >> context [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFTempRead >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 RFTempRead >> value [
 	^variable readInContext: context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFTempRead >> variableName: aSymbol [
 	variable := context lookupVar: aSymbol
 ]

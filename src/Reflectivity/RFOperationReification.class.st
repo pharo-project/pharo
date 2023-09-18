@@ -2,27 +2,29 @@
 I reify operations like message send, variable read, assignment....
 "
 Class {
-	#name : #RFOperationReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFOperationReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFOperationReification class >> entities [
 	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. RBLiteralNode. RBBlockNode . RBLiteralArrayNode. RBArrayNode}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFOperationReification class >> key [
 	^#operation
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFOperationReification >> genForRBArrayNode [
 	^RBVariableNode named: #RFReifyValueVar
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFOperationReification >> genForRBAssignmentNode [
 	entity variable isLocalVariable ifTrue: [
 		^RBParser parseExpression: ('RFTempWrite new
@@ -45,7 +47,7 @@ RFOperationReification >> genForRBAssignmentNode [
 	self error: 'not supported'
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFOperationReification >> genForRBBlockNode [
 	"we just compile the block again"
 	| blockNode |
@@ -57,19 +59,19 @@ RFOperationReification >> genForRBBlockNode [
 		arguments: {blockNode}
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFOperationReification >> genForRBLiteralArrayNode [
 	"same as #value, no need to wrap as the literal understands #value"
 	^RBLiteralArrayNode value: entity value
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFOperationReification >> genForRBLiteralValueNode [
 	"same as #value, no need to wrap as the literal understands #value"
 	^RBLiteralNode value: entity value
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFOperationReification >> genForRBMessageNode [
 	^RBParser parseExpression: ('RFMessageOperation
 			receiver: RFReceiverReificationVar
@@ -77,7 +79,7 @@ RFOperationReification >> genForRBMessageNode [
 			arguments: RFArgumentsReificationVar.' format: {entity selector})
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFOperationReification >> genForRBMethodNode [
 	| ast |
 	ast := RBParser parseExpression: 'RFMethodOperation new
@@ -89,14 +91,14 @@ RFOperationReification >> genForRBMethodNode [
 	^ast
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFOperationReification >> genForRBReturnNode [
 	^RBParser parseExpression: 'RFReturnOperation new
 			context: thisContext;
 			returnValue: RFReifyValueVar'
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFOperationReification >> genForRBVariableNode [
 	entity isInstanceVariable ifTrue: [
 		^RBParser parseExpression: ('RFSlotRead new
@@ -119,7 +121,7 @@ RFOperationReification >> genForRBVariableNode [
 	self error: 'not supported'
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFOperationReification >> preambleForArray: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -143,12 +145,12 @@ RFOperationReification >> preambleForArray: aNode [
 	^ preamble
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFOperationReification >> preambleForAssignment: aNode [
 	^RFStoreIntoTempNode named: #RFNewValueReificationVar
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFOperationReification >> preambleForMessage: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -174,7 +176,7 @@ RFOperationReification >> preambleForMessage: aNode [
 	^ preamble
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFOperationReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -184,7 +186,7 @@ RFOperationReification >> preambleForMethod: aNode [
 	^ preamble
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFOperationReification >> preambleForReturn: aNode [
 	^RFStoreIntoTempNode named: #RFReifyValueVar
 ]

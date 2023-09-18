@@ -1,6 +1,6 @@
-Extension { #name : #HashedCollection }
+Extension { #name : 'HashedCollection' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 HashedCollection >> metaLinkOptions [
 	^{
 	#findElementOrNil: -> #( + optionCompileOnLinkInstallation).
