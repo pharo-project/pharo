@@ -357,15 +357,6 @@ RPackageOrganizer >> hasTag: aTag inPackage: aPackage [
 	^ (self ensurePackage: aPackage) hasTag: aTag
 ]
 
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> includesCategory: aString [
-	"Tests if a category is already included."
-
-	^ self categories
-		  ifNil: [ false ]
-		  ifNotNil: [ :categories | categories includes: aString ]
-]
-
 { #category : 'initialization' }
 RPackageOrganizer >> initialize [
 

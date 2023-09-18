@@ -52,6 +52,14 @@ RPackageOrganizer >> globalPackageOf: aClass [
 ]
 
 { #category : '*Deprecated12' }
+RPackageOrganizer >> includesCategory: aString [
+	"Tests if a category is already included."
+
+	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
+	^ self categories includes: aString
+]
+
+{ #category : '*Deprecated12' }
 RPackageOrganizer >> includesPackage: aPackage [
 
 	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.

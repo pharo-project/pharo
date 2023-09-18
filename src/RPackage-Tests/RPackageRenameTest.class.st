@@ -64,7 +64,7 @@ RPackageRenameTest >> testRenamePackage [
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
 	self assert: ((package classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 	self assert: class category equals: #'TestRename-TAG'.
-	self deny: (self packageOrganizer includesCategory: #Test1).
+	self deny: (self packageOrganizer hasPackage: #Test1).
 	self deny: (MCWorkingCopy hasPackageNamed: #Test1).
 
 	workingCopy := MCWorkingCopy forPackageNamed: 'TestRename'.
