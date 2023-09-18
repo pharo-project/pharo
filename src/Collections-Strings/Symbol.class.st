@@ -30,10 +30,10 @@ Class {
 	#name : #Symbol,
 	#superclass : #String,
 	#classVars : [
-		'NewSymbols',
-		'SelectorTable',
-		'StrictComparison',
-		'SymbolTable'
+		#NewSymbols,
+		#SelectorTable,
+		#StrictComparison,
+		#SymbolTable
 	],
 	#category : #'Collections-Strings-Base'
 }
