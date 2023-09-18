@@ -6,38 +6,39 @@ Therefore the new created PackageOrganizer is not registered to listen to event.
 
 "
 Class {
-	#name : #RPackageOrganizerTest,
-	#superclass : #RPackageTestCase,
-	#category : #'RPackage-Tests'
+	#name : 'RPackageOrganizerTest',
+	#superclass : 'RPackageTestCase',
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
 
 	self environment at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> p1Name [
 	^ 'RPackageTestP1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> p2Name [
 	^ 'RPackageTestP2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> p3Name [
 	^ 'RPackageTestP3'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageOrganizerTest >> quadrangleClass [
 	^ self organizer environment at: #QuadrangleForTesting
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testAccessingPackage [
 
 	| p1 |
@@ -46,21 +47,21 @@ RPackageOrganizerTest >> testAccessingPackage [
 	self should: [ self organizer packageNamed: #P22 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testCreateNewPackageWithConflictRaisesConflictException [
 
 	self organizer createPackageNamed: 'P1'.
 	self should: [ self organizer createPackageNamed: 'P1' ] raise: RPackageConflictError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
 
 	self organizer createPackageNamed: 'P1'.
 	self assert: (self organizer hasPackage: 'P1')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
 	| p1 |
@@ -71,14 +72,14 @@ RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 	self assert: (self organizer packageNamed: self p1Name) definedClasses size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testEmpty [
 
 	self assert: self organizer packageNames size equals: 1.
 	self assert: (self organizer packageNames includes: RPackage defaultPackageName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 
 	| p1 p2 c1 |
@@ -94,7 +95,7 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 	self assert: (p1 extendedClasses includes: c1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testFullRegistration [
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
@@ -128,7 +129,7 @@ RPackageOrganizerTest >> testFullRegistration [
 	self deny: (p1 includesClass: a2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testHasPackage [
 
 	| organizer packageFromOtherOrganizer name package |
@@ -146,14 +147,14 @@ RPackageOrganizerTest >> testHasPackage [
 	self deny: (organizer hasPackage: packageFromOtherOrganizer)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 	self createNewPackageNamed: 'P1'.
 	self should: [ (RPackage named: 'P1') register ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
 
 	| package1 |
@@ -164,7 +165,7 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
 	self should: [ self createNewPackageNamed: 'P1-T1' ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 
 	| package1 package2 |
@@ -175,7 +176,7 @@ RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 	self should: [ package2 ensureTag: #T1 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
@@ -190,7 +191,7 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	self assert: self organizer packageNames size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRegisteredPackages [
 
 	| p1 p2 p3 |
@@ -204,7 +205,7 @@ RPackageOrganizerTest >> testRegisteredPackages [
 		self assert: (self organizer packages includes: package) ]
 ]
 
-{ #category : #'tests - extending' }
+{ #category : 'tests - extending' }
 RPackageOrganizerTest >> testRegistrationExtendingPackages [
 
 	| p |
@@ -216,7 +217,7 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 
 	| organizer package1 package2 package3 package4 class tag1 tag2 |
@@ -263,7 +264,7 @@ RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 	self deny: (organizer hasPackage: package4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRemovePackage [
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
@@ -297,7 +298,7 @@ RPackageOrganizerTest >> testRemovePackage [
 	self deny: (self organizer packageOf: a3) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRenameUpdateTheOrganizer [
 	"test that when we rename a category, the organizer dictionary is update with this new name, so that we can access the package with this new name as key"
 
@@ -310,7 +311,7 @@ RPackageOrganizerTest >> testRenameUpdateTheOrganizer [
 	self deny: (self organizer hasPackage: #Test1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testTestPackageNames [
 
 	| packages |
@@ -323,7 +324,7 @@ RPackageOrganizerTest >> testTestPackageNames [
 	self assert: (self organizer testPackageNames allSatisfy: #isSymbol)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testTestPackages [
 
 	| packages |
@@ -336,7 +337,7 @@ RPackageOrganizerTest >> testTestPackages [
 	self assert: (self organizer testPackages allSatisfy: #isTestPackage)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageOrganizerTest >> testUnregister [
 
 	| p1 p2 p3 |
@@ -353,7 +354,7 @@ RPackageOrganizerTest >> testUnregister [
 	self assert: self organizer packageNames size equals: 1
 ]
 
-{ #category : #'tests - extending' }
+{ #category : 'tests - extending' }
 RPackageOrganizerTest >> testUnregistrationExtendingPackages [
 
 	| p |

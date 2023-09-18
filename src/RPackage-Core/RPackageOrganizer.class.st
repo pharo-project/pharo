@@ -220,20 +220,6 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 ]
 
 { #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categories [
-
-	^ categoryMap keys
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categoriesMatching: matchString [
-	"Return all matching categories"
-
-	self categories ifNil: [ ^ #(  ) ].
-	^ self categories select: [ :c | matchString match: c ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> categoryOfBehavior: behavior [
 	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
 
@@ -399,19 +385,6 @@ RPackageOrganizer >> listAtCategoryNamed: categoryName [
 	"Answer the array of elements associated with the name, categoryName."
 
 	^ (categoryMap at: categoryName ifAbsent: [ Array new ]) asArray
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> orderedTraitsIn: category [
-	"Answer an OrderedCollection containing references to the traits in the
-	category whose name is the argument, category (a string). The traits
-	are ordered so they can be filed in."
-
-	| behaviors traits |
-	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
-	traits := behaviors select: [ :each | each isTrait ].
-	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
-	^ traits asArray
 ]
 
 { #category : 'system integration' }
@@ -588,13 +561,6 @@ RPackageOrganizer >> removeBehavior: behavior [
 ]
 
 { #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeCategoriesMatching: matchString [
-	"Remove all matching categories with their classes"
-
-	(self categoriesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
 RPackageOrganizer >> removeCategory: aCategory [
 	"Remove the category named, cat. Create an error notificiation if the
 	category has any elements in it."
@@ -649,15 +615,6 @@ RPackageOrganizer >> removePackage: aPackage [
 	SystemAnnouncer announce: (PackageRemoved to: package).
 
 	^ package
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeSystemCategory: category [
-	"remove all the classes and traits associated with the category"
-
-	(self orderedTraitsIn: category) , (self superclassOrder: category) reverseDo: [ :each | each removeFromSystem ].
-
-	self removeCategory: category
 ]
 
 { #category : 'system integration' }
@@ -722,18 +679,6 @@ RPackageOrganizer >> stopNotification [
 
 	self class environment at: #MCWorkingCopy ifPresent: [:wc |
 		wc removeDependent: self]
-]
-
-{ #category : 'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> superclassOrder: category [
-	"Answer an OrderedCollection containing references to the classes in the
-	category whose name is the argument, category (a string). The classes
-	are ordered with superclasses first so they can be filed in."
-
-	| behaviors classes |
-	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
-	classes := behaviors select: [ :each | each isBehavior ].
-	^ Class superclassOrder: classes
 ]
 
 { #category : 'system integration' }

@@ -1,6 +1,26 @@
 Extension { #name : 'RPackageOrganizer' }
 
 { #category : '*Deprecated12' }
+RPackageOrganizer >> categories [
+
+	| categories |
+	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
+	categories := Set new.
+	self packages do: [ :p |
+		categories add: p name.
+		categories addAll: (p classTags collect: [ :tag | tag categoryName ]) ].
+
+	^ categories asArray
+]
+
+{ #category : '*Deprecated12' }
+RPackageOrganizer >> categoriesMatching: matchString [
+
+	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
+	^ self categories select: [ :c | matchString match: c ]
+]
+
+{ #category : '*Deprecated12' }
 RPackageOrganizer >> categoryOfElement: behaviorName [
 
 	self deprecated: 'Use #categoryOfBehavior: instead' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv categoryOfBehavior: `@arg'.
