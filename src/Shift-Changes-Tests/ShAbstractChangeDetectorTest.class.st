@@ -71,6 +71,7 @@ ShAbstractChangeDetectorTest >> setUp [
 			               superclass: superClass;
 			               traitComposition: usedTrait;
 			               slots: { #ivar1 };
+			               classSlots: { #classVar1 };
 			               layoutClass: FixedLayout;
 			               package: self packageName ].
 
