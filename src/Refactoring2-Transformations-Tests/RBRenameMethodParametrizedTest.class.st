@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRenameMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRenameMethodRefactoring };
@@ -12,18 +14,18 @@ RBRenameMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodParametrizedTest >> constructor [
 	^ #renameMethod:in:to:permutation:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameMethodParametrizedTest >> testFailureWithNonCorrectNumberOfArgs [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #checkClass: . RBBasicLintRuleTestData . #checkClass . (1 to: 1) })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -47,7 +49,7 @@ RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 		equals: #RBTDummy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 	| refactoring class |
 	model := (RBClassModelFactory rbNamespace onEnvironment: (RBPackageEnvironment packageName: 'Refactoring-DataForTesting')).
@@ -63,7 +65,7 @@ RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 '	^classBlock value: aSmalllintContext value: result')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -87,7 +89,7 @@ RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #demoExampleCall), ' ^self demoRenameMethod: 2 PermuteArgs: 1')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenamePermuteArgs [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -105,7 +107,7 @@ RBRenameMethodParametrizedTest >> testRenamePermuteArgs [
 		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #exampleCall), '<sampleInstance> ^self rename: 2 two: 1')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenamePrimitive [
 	| refactoring count |
 	count := 0.
@@ -123,7 +125,7 @@ RBRenameMethodParametrizedTest >> testRenamePrimitive [
 	self assert: count equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameTestMethod [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -147,7 +149,7 @@ RBRenameMethodParametrizedTest >> testRenameTestMethod [
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameTestMethod1 [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:

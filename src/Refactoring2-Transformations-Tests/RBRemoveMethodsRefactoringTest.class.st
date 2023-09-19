@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveMethodsRefactoringTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveMethodsRefactoringTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodsRefactoringTest >> testFailureMethodHasReferences [
 
 	self shouldWarn: (RBRemoveMethodsRefactoring
@@ -12,7 +14,7 @@ RBRemoveMethodsRefactoringTest >> testFailureMethodHasReferences [
 								from: RBBasicLintRuleTestData )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodsRefactoringTest >> testFailureNonExistantSelector [
 
 	self shouldFail: (RBRemoveMethodsRefactoring
@@ -20,7 +22,44 @@ RBRemoveMethodsRefactoringTest >> testFailureNonExistantSelector [
 								from: RBLintRuleTestData )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+RBRemoveMethodsRefactoringTest >> testRemovingMethodsFromDifferentClasses [
+
+	| package class anotherClass methodWithoutRefs methodReferencing anotherMethodWithoutRefs |
+	package := RBPackageEnvironment packageName:
+		           RBBasicLintRuleTestData packageName.
+	model := RBNamespace onEnvironment: package.
+	class := model classFor: RBBasicLintRuleTestData.
+	methodWithoutRefs := 'someDemoMethod' asSymbol.
+	methodReferencing := 'onlyReferenceToSomeDemoMethod' asSymbol.
+	anotherClass := model classFor: RBTransformationDummyRuleTest.
+	anotherMethodWithoutRefs := 'justAUnreferencedMethodForTesting' asSymbol.
+
+	self assert: (class definesMethod: methodWithoutRefs).
+	self assert: (class definesMethod: methodReferencing).
+	self assert: (anotherClass definesMethod: anotherMethodWithoutRefs).
+
+	(RBCompositeRefactoring new
+		model: model;
+		refactorings: { 
+			RBRemoveMethodsRefactoring
+				model: model
+				selectors: { methodWithoutRefs . methodReferencing }
+				from: class
+			.
+			RBRemoveMethodsRefactoring
+				model: model
+				selectors: { anotherMethodWithoutRefs }
+				from: anotherClass 
+		} 
+	) generateChanges.
+
+	self deny: (class definesMethod: methodWithoutRefs).
+	self deny: (class definesMethod: methodReferencing ).
+	self deny: (anotherClass definesMethod: anotherMethodWithoutRefs)
+]
+
+{ #category : 'tests' }
 RBRemoveMethodsRefactoringTest >> testRemovingMethodsThatOnlyReferenceThemselves [
 
 	| package class methodWithRef methodReferencing |

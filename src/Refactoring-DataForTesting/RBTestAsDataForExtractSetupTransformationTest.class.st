@@ -1,30 +1,32 @@
 Class {
-	#name : #RBTestAsDataForExtractSetupTransformationTest,
-	#superclass : #TestCase,
+	#name : 'RBTestAsDataForExtractSetupTransformationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'aString'
 	],
-	#category : #'Refactoring-DataForTesting-ForTestRelatedOperation'
+	#category : 'Refactoring-DataForTesting-ForTestRelatedOperation',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'ForTestRelatedOperation'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBTestAsDataForExtractSetupTransformationTest >> accessToAClass [
 	RBClassDataForRefactoringTest new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTestAsDataForExtractSetupTransformationTest >> someMethod [
 	#'some.initializations'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample1 [
 	self accessToAClass.
 	aString := 'Example'.
 	self assert: 4 > 5 equals: false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample2 [
 	"Example"
 	self accessToAClass.
@@ -32,7 +34,7 @@ RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample2 [
 	self assert: true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample3 [
 	"Example"
 	self accessToAClass.
@@ -41,19 +43,19 @@ RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample3 [
 	self deny: false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample4 [
 	self assert: true.
 	self deny: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample5 [
 	self someMethod.
 	self assert: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample6 [
 	| aString2 aNumber |
 	aString2 := 'Some string'.
@@ -64,7 +66,7 @@ RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample6 [
 	self assert: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample7 [
 	| aString2 aNumber |
 	aString2 := 'sa'.
@@ -73,7 +75,7 @@ RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample7 [
 	self assert: aString2 isNotEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTestAsDataForExtractSetupTransformationTest >> testExtractSetupExample8 [
 	| aString2 aNumber |
 	aString2 := 'Some string'.

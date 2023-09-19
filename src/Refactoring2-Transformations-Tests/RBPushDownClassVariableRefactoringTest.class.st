@@ -1,10 +1,12 @@
 Class {
-	#name : #RBPushDownClassVariableRefactoringTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBPushDownClassVariableRefactoringTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPushDownClassVariableRefactoringTest >> testFailureModelPushDownToMultipleSubclassesFailure [
 
 	model defineClass: 'Object << #SomeClass

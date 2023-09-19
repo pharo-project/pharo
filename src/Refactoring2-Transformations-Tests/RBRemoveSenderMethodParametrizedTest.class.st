@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveSenderMethodParametrizedTest,
-	#superclass : #RBWithDifferentsArgumentsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRemoveSenderMethodParametrizedTest',
+	#superclass : 'RBWithDifferentsArgumentsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSenderMethodParametrizedTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -14,7 +16,7 @@ RBRemoveSenderMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveSenderMethodParametrizedTest >> testFailureClassDoesNotExist [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -25,7 +27,7 @@ RBRemoveSenderMethodParametrizedTest >> testFailureClassDoesNotExist [
 				 #RBMessageSendTransformationTest })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveSenderMethodParametrizedTest >> testFailureIsDirectlyUsed [
 
 	| refactoring |
@@ -39,7 +41,7 @@ RBRemoveSenderMethodParametrizedTest >> testFailureIsDirectlyUsed [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveSenderMethodParametrizedTest >> testFailureIsDirectlyUsed2 [
 
 	| refactoring |
@@ -53,7 +55,7 @@ RBRemoveSenderMethodParametrizedTest >> testFailureIsDirectlyUsed2 [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveSenderMethodParametrizedTest >> testFailureMethodDoesNotExist [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -64,7 +66,7 @@ RBRemoveSenderMethodParametrizedTest >> testFailureMethodDoesNotExist [
 				 #RBClassDataForRefactoringTest })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveSenderMethodParametrizedTest >> testFailureNonExistantSelector [
 
 	self shouldFail: (self createRefactoringWithArguments:
@@ -73,7 +75,7 @@ RBRemoveSenderMethodParametrizedTest >> testFailureNonExistantSelector [
 		#RBClassDataForRefactoringTest})
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSenderMethodParametrizedTest >> testRemoveMessageInsideBlock [
 
 	| refactoring |
@@ -94,7 +96,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveMessageInsideBlock [
 			^anObject]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded2Message [
 
 	| refactoring transformedMethod afterRefactoring1 afterRefactoring2 |
@@ -121,7 +123,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded2Message [
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded3Message [
 
 	| refactoring transformedMethod afterRefactoring1 afterRefactoring2 |
@@ -166,7 +168,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded3Message [
 	self assert: (transformedMethod = afterRefactoring1 or: [transformedMethod = afterRefactoring2])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascadedMessage [
 
 	| refactoring |
@@ -188,7 +190,7 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascadedMessage [
 	aBlock value')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSenderMethodParametrizedTest >> testRemoveSimpleSenderOfMessage [
 
 	| refactoring transformedMethod afterRefactoring1 afterRefactoring2 |

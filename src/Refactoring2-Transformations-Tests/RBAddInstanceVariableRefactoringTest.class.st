@@ -1,17 +1,19 @@
 Class {
-	#name : #RBAddInstanceVariableRefactoringTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddInstanceVariableRefactoringTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddInstanceVariableRefactoringTest >> setUp [
 
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddInstanceVariableRefactoringTest >> testFailureAlreadyExistingName [
 
 	self shouldFail: (RBAddInstanceVariableRefactoring
@@ -22,7 +24,7 @@ RBAddInstanceVariableRefactoringTest >> testFailureAlreadyExistingName [
 			 class: #RBTransformationRuleTestData)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddInstanceVariableRefactoringTest >> testFailureModelAlreadyExistingName [
 
 	self shouldFail: (RBAddInstanceVariableRefactoring
@@ -31,7 +33,7 @@ RBAddInstanceVariableRefactoringTest >> testFailureModelAlreadyExistingName [
 			 class: #Bar)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddInstanceVariableRefactoringTest >> testFailureModelMetaclassAlreadyExistingName [
 
 	(model metaclassNamed: #Foo) addInstanceVariable: 'instVarName1'.
@@ -42,7 +44,7 @@ RBAddInstanceVariableRefactoringTest >> testFailureModelMetaclassAlreadyExisting
 			 class: #'Bar class')
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddInstanceVariableRefactoringTest >> testFailureNewExistingName [
 
 	| refactoring |
@@ -60,7 +62,7 @@ RBAddInstanceVariableRefactoringTest >> testFailureNewExistingName [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddInstanceVariableRefactoringTest >> testFailureNewHierarchyExistingName [
 
 	| refactoring |

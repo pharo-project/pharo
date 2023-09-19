@@ -1,15 +1,17 @@
 Class {
-	#name : #RBRemoveClassTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveClassTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveClassTransformationTest class >> defaultTimeLimit [
 	^20 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassTransformationTest >> testCanRemoveReferencedClass [
 
 	| refactoring package |
@@ -35,7 +37,7 @@ RBRemoveClassTransformationTest >> testCanRemoveReferencedClass [
 	"In Pharo subclasses are removed now in the model this is unclear."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassTransformationTest >> testCanRemoveSuperclass [
 
 	| refactoring package |
@@ -60,7 +62,7 @@ RBRemoveClassTransformationTest >> testCanRemoveSuperclass [
 	"In Pharo subclasses are removed now in the model this is unclear."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassTransformationTest >> testCanRemoveUnreferencedClass [
 
 	| refactoring package |

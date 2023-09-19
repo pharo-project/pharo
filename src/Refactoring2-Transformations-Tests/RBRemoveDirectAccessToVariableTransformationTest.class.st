@@ -1,17 +1,19 @@
 Class {
-	#name : #RBRemoveDirectAccessToVariableTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveDirectAccessToVariableTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBRemoveDirectAccessToVariableTransformationTest >> setUp [
 
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 
 	| refactoring class |
@@ -36,7 +38,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 				redo := OrderedCollection new')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 
 	self
@@ -49,7 +51,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 				 class: #RBFooLintRuleTestData)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccessors [
 
 	self
@@ -62,7 +64,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccesso
 				 class: #RBTransformationRuleTestData)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 
 	| class |
@@ -77,7 +79,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 		equals: (self parseMethod: 'foo ^ self instVarName2: 3')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -110,7 +112,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 	sendersCache := IdentityDictionary new')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveDirectAccessToVariableTransformationTest >> testTransform [
 
 	| transformation class |

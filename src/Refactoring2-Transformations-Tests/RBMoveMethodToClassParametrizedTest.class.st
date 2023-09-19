@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMoveMethodToClassParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBMoveMethodToClassParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodToClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveMethodToClassRefactoring };
@@ -12,12 +14,12 @@ RBMoveMethodToClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodToClassParametrizedTest >> constructor [
 	^ #method:class:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveMethodToClassParametrizedTest >> testFailureMethodAlreadyDefined [
 
 	| method someClass |

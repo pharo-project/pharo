@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameAndDeprecateClassTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRenameAndDeprecateClassTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameAndDeprecateClassTransformationTest >> testTransform [
 
 	| transformation class |
