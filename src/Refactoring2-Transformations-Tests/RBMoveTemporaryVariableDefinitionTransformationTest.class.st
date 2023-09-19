@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMoveTemporaryVariableDefinitionTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBMoveTemporaryVariableDefinitionTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
@@ -13,7 +15,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMethodDoesNotExist [
 							inClass: #RBDummyLintRuleTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 
 	| transformation class |
@@ -40,7 +42,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 										temp odd]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 
 	| transformation class |
@@ -67,7 +69,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 							yourself')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 
 	| transformation |
@@ -83,7 +85,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 			 inClass: #RBClassDataForRefactoringTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation

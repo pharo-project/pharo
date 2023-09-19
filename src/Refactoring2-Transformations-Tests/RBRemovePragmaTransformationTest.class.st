@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemovePragmaTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemovePragmaTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRemovePragmaTransformationTest >> methodAfter [
 
 	| variable |
@@ -12,7 +14,7 @@ RBRemovePragmaTransformationTest >> methodAfter [
 	variable byteAt: 1
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRemovePragmaTransformationTest >> methodBefore [
 	<pragmaForTesting: 34>
 
@@ -21,7 +23,7 @@ RBRemovePragmaTransformationTest >> methodBefore [
 	variable byteAt: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation
@@ -30,7 +32,7 @@ RBRemovePragmaTransformationTest >> testClassDoesNotExist [
 			 inClass: #RBPragmaTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation
@@ -39,7 +41,7 @@ RBRemovePragmaTransformationTest >> testMethodDoesNotExist [
 			 inClass: #RBRemovePragmaTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testPragmaDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation
@@ -48,7 +50,7 @@ RBRemovePragmaTransformationTest >> testPragmaDoesNotExist [
 			 inClass: #RBRemovePragmaTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -67,7 +69,7 @@ RBRemovePragmaTransformationTest >> testRefactoring [
 		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testTransform [
 
 	| transformation class |

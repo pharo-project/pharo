@@ -1,32 +1,34 @@
 Class {
-	#name : #RBAbstractTransformationTest,
-	#superclass : #RBAbstractEnvTestCase,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAbstractTransformationTest',
+	#superclass : 'RBAbstractEnvTestCase',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 RBAbstractTransformationTest >> changeMockClass [
 
 	^ RBRefactoringChangeMock
 ]
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 RBAbstractTransformationTest >> objectClassVariable [
 
 	^ Object classPool keys detect: [:each | true]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractTransformationTest >> parseMethod: aString [
 	^ self parserClass parseMethod: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractTransformationTest >> parserClass [
 	^ RBParser
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAbstractTransformationTest >> performAndUndoChange: aChange do: aBlock [
 	"Perform a change in the system silently, evaluate aBlock and then undo the change again."
 
@@ -36,14 +38,14 @@ RBAbstractTransformationTest >> performAndUndoChange: aChange do: aBlock [
 		aBlock ensure: [ undo execute ] ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAbstractTransformationTest >> setUp [
 
 	super setUp.
 	model := RBNamespace new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractTransformationTest >> testAPI [
 	"all classes must implement #storeOn: and #transform"
 
@@ -63,7 +65,7 @@ RBAbstractTransformationTest >> testAPI [
 	self assertEmpty: incompleteTransformations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArguments [
 
 	| selector permutations args trans selectorString |
@@ -77,7 +79,7 @@ RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgum
 	self assert: selectorString equals: 'a123: ``@arg1 b123: ``@arg2 c123: ``@arg3 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgumentsWhenAllNewArguments [
 
 	| selector permutations args trans selectorString |
@@ -93,7 +95,7 @@ RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgum
 	self assert: selectorString equals: 'a123: ``@arg1 c123: (5) b123: ([ :each | each + 2 ]) '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgumentsWhenArgsPermuted [
 
 	| selector permutations args trans selectorString |
@@ -107,7 +109,7 @@ RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgum
 	self assert: selectorString equals: 'b123: ``@arg2 a123: ``@arg3 c123: ``@arg1 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgumentsWhenNewArgumentAdded [
 
 	| selector permutations args trans selectorString |
@@ -121,7 +123,7 @@ RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgum
 	self assert: selectorString equals: 'b123: ``@arg2 a123: (OrderedCollection new) c123: ``@arg1 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgumentsWhenNoArguments [
 
 	| selector permutations args trans selectorString |

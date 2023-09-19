@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveClassPushStateToSubclassesTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveClassPushStateToSubclassesTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassPushStateToSubclassesTest >> testRemoveNotEmptySuperclassPushDownInstanceVariables [
 
 	| refactoring subclass removedClassName subclassName |
@@ -29,7 +31,7 @@ RBRemoveClassPushStateToSubclassesTest >> testRemoveNotEmptySuperclassPushDownIn
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassPushStateToSubclassesTest >> testShouldWarnWhenRemovingClassWithReferences [
 
 	| refactoring |

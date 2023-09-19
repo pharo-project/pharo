@@ -2,8 +2,8 @@
 I'm a model for user interaction for the rename method refactoring.
 "
 Class {
-	#name : #RBRenameMethodDriver,
-	#superclass : #RBDriver,
+	#name : 'RBRenameMethodDriver',
+	#superclass : 'RBDriver',
 	#instVars : [
 		'class',
 		'originalMessage',
@@ -12,36 +12,38 @@ Class {
 		'command',
 		'postAction'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRenameMethodDriver >> canAddArgs [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRenameMethodDriver >> canEditName [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRenameMethodDriver >> canRemoveArgs [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRenameMethodDriver >> canRenameArgs [
 	^ true
 ]
 
-{ #category : #'To be removed' }
+{ #category : 'To be removed' }
 RBRenameMethodDriver >> command: aCommand andPostAction: aClosure [ 
 	command := aCommand. "may be not needed"
 	postAction := aClosure
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 RBRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
 	model := aModel.
 	originalMessage := aMessage.
@@ -49,13 +51,13 @@ RBRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 	class := aClass
 ]
 
-{ #category : #'To be removed' }
+{ #category : 'To be removed' }
 RBRenameMethodDriver >> newMessage [
 
 	^ newMessage
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBRenameMethodDriver >> refactoring [
 	"here we do not fully configure the refactoring because we are missing information such as the signature.
 	Since we want to let the refactoring validate input we need to create it upfront then configure later."
@@ -63,7 +65,7 @@ RBRenameMethodDriver >> refactoring [
 	^ RBRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
 ]
 
-{ #category : #'To be removed' }
+{ #category : 'To be removed' }
 RBRenameMethodDriver >> requestNewMessage [
 
 	| methodName dialog  |
@@ -81,7 +83,7 @@ RBRenameMethodDriver >> requestNewMessage [
 	^ methodName
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBRenameMethodDriver >> runRefactoring [
 
 	refactoring := self refactoring.
@@ -102,7 +104,7 @@ RBRenameMethodDriver >> runRefactoring [
 			do: [ :err | self furtherActionFor: (RBOverrideMethod new refactoring: refactoring).  err return ]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 RBRenameMethodDriver >> scopes: refactoringScope model: aModel renameMethodSignature: aMessage in: aClass [
 
 	scopes := refactoringScope.

@@ -1,17 +1,19 @@
 Class {
-	#name : #RBTransformationsTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBTransformationsTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBTransformationsTest >> setUp [
 
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testAddClassTransform [
 
 	| transformation class |
@@ -25,7 +27,7 @@ RBTransformationsTest >> testAddClassTransform [
 	self assert: class comment equals: 'New comment for class'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testAddMethodCommentTransform [
 
 	| transformation method |
@@ -44,7 +46,7 @@ RBTransformationsTest >> testAddMethodCommentTransform [
 		equals: 'New comment for method'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testAddMethodTransform [
 
 	| transformation class |
@@ -59,7 +61,7 @@ RBTransformationsTest >> testAddMethodTransform [
 		equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testAddProtocolTransform [
 
 	| transformation |
@@ -70,7 +72,7 @@ RBTransformationsTest >> testAddProtocolTransform [
 	self assert: transformation model changes changes size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testAddTemporaryVariableTransform [
 
 	| transformation class |
@@ -90,7 +92,7 @@ RBTransformationsTest >> testAddTemporaryVariableTransform [
 		equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testAddVariableAccessorTransform [
 
 	| transformation class |
@@ -111,7 +113,7 @@ RBTransformationsTest >> testAddVariableAccessorTransform [
 		equals: (self parseMethod: 'instVar: anObject instVar := anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testAddVariableTransform [
 
 	| transformation class |
@@ -127,7 +129,7 @@ RBTransformationsTest >> testAddVariableTransform [
 	self assert: (class directlyDefinesInstanceVariable: 'asdf')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testCompositeTransform [
 
 	| transformation newClassName class |
@@ -159,7 +161,7 @@ RBTransformationsTest >> testCompositeTransform [
 		equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testCustomTransform [
 
 	| transformation newClassName class |
@@ -186,7 +188,7 @@ RBTransformationsTest >> testCustomTransform [
 	self assert: (class directlyDefinesInstanceVariable: 'asdf')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testDeprecateClassTransform [
 
 	| transformation class |
@@ -216,7 +218,7 @@ RBTransformationsTest >> testDeprecateClassTransform [
 				^ Smalltalk ui icons iconNamed: #packageDelete')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testMoveInstanceVariableToClassTransform [
 
 	| transformation oldClass newClass |
@@ -247,7 +249,7 @@ RBTransformationsTest >> testMoveInstanceVariableToClassTransform [
 	self assert: (newClass directlyDefinesInstanceVariable: 'asdf')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testPullUpVariableTransform [
 
 	| transformation |
@@ -267,7 +269,7 @@ RBTransformationsTest >> testPullUpVariableTransform [
 			 directlyDefinesInstanceVariable: 'result')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testPushDownVariableTransform [
 
 	| transformation |
@@ -280,7 +282,7 @@ RBTransformationsTest >> testPushDownVariableTransform [
 		self assert: (each directlyDefinesInstanceVariable: 'foo1') ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testRemoveClassTransform [
 
 	| transformation newClass superclass |
@@ -300,7 +302,7 @@ RBTransformationsTest >> testRemoveClassTransform [
 			 includes: newClass) not
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testRemoveMessageSendTransform [
 
 	| transformation class |
@@ -319,7 +321,7 @@ RBTransformationsTest >> testRemoveMessageSendTransform [
 	aBlock value')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testRemoveMethodTransform [
 
 	| transformation class |
@@ -334,7 +336,7 @@ RBTransformationsTest >> testRemoveMethodTransform [
 	self deny: (class directlyDefinesMethod: #one)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testRemoveVariableTransform [
 
 	| transformation class |
@@ -350,7 +352,7 @@ RBTransformationsTest >> testRemoveVariableTransform [
 	self deny: (class directlyDefinesInstanceVariable: 'instVar')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testRenameClassTransform [
 
 	| transformation class newClassName oldClassName |
@@ -385,7 +387,7 @@ RBTransformationsTest >> testRenameClassTransform [
 		equals: (self parseMethod: 'reference ^ RBNewDummyClassName new')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testRenameTemporaryTransform [
 
 	| transformation class |
@@ -418,7 +420,7 @@ RBTransformationsTest >> testRenameTemporaryTransform [
 			 e name = #temp2 ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTransformationsTest >> testRenameVariableTransform [
 
 	| transformation class |
