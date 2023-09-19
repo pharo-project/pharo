@@ -60,7 +60,7 @@ ClassDescription >> categoryOfElement: aSelector ifAbsent: aBlock [
 	self
 		deprecated: 'Use #protocolNameOfSelector: instead.'
 		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv protocolNameOfSelector: `@arg1) ifNil: `@arg2'.
-	^ (self protocolNameOfSelector: aSelector) ifNil: aBlock
+	^ (self protocolNameOfSelector: aSelector) ifNil: [ aBlock value ]
 ]
 
 { #category : '*Deprecated12' }

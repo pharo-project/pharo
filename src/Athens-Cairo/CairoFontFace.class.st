@@ -8,8 +8,8 @@ I am not useful for direct use nor providing any functionality. My only purpose 
 
 "
 Class {
-	#name : #CairoFontFace,
-	#superclass : #FFIExternalObject,
+	#name : 'CairoFontFace',
+	#superclass : 'FFIExternalObject',
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
@@ -19,16 +19,18 @@ Class {
 		'AthensCairoDefinitions',
 		'AthensFT2Constants'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontFace class >> boldEmphasisCode [
 
 	^ 1
 ]
 
-{ #category : #finalizing }
+{ #category : 'finalizing' }
 CairoFontFace class >> destroy: handle [
 
 "
@@ -37,7 +39,7 @@ void                cairo_font_face_destroy             (cairo_font_face_t *font
 	^ self ffiCall: #( void cairo_font_face_destroy (void* handle))
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 CairoFontFace class >> finalizeResourceData: handle [
 
 	handle isNull ifTrue: [ ^ self ].
@@ -45,7 +47,7 @@ CairoFontFace class >> finalizeResourceData: handle [
 	handle beNull.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CairoFontFace class >> fromFreetypeFace: aFace [
 	| handle cairoFace |
 	handle := aFace getHandle.
@@ -54,13 +56,13 @@ CairoFontFace class >> fromFreetypeFace: aFace [
 	^ cairoFace initializeWithFreetypeFace: aFace
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontFace class >> italicEmphasisCode [
 
 	^ 2
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CairoFontFace class >> primFtFace: aFace loadFlags: flags [
 
 "
@@ -73,12 +75,12 @@ load_flags: flags to pass to FT_Load_Glyph when loading glyphs from the font. Th
 	^ self ffiCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(void * aFace , int flags ))
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CairoFontFace >> initialize [
 	self autoRelease
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CairoFontFace >> initializeWithFreetypeFace: aFace [
 	
 	FFIExternalResourceManager addResource: self.
@@ -87,7 +89,7 @@ CairoFontFace >> initializeWithFreetypeFace: aFace [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontFace >> primSetSynthesizeEmphasis: flags [
 "
 void
@@ -97,28 +99,28 @@ cairo_ft_font_face_set_synthesize (cairo_font_face_t *font_face,
 	^ self ffiCall: #( void cairo_ft_font_face_set_synthesize(self, int flags ))
 ]
 
-{ #category : #'external resource management' }
+{ #category : 'external resource management' }
 CairoFontFace >> resourceData [
 	
 	^ handle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontFace >> status [
 	^ self ffiCall: #(int cairo_font_face_status (self))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontFace >> synthesizeBold [
 	self primSetSynthesizeEmphasis: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontFace >> synthesizeBoldAndOblique [
 	self primSetSynthesizeEmphasis: 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontFace >> synthesizeEmphasis: emphasisCode [
 
 	emphasisCode = (self class boldEmphasisCode | self class italicEmphasisCode)
@@ -129,7 +131,7 @@ CairoFontFace >> synthesizeEmphasis: emphasisCode [
 		ifTrue: [ ^ self synthesizeOblique ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontFace >> synthesizeOblique [
 	self primSetSynthesizeEmphasis: 2
 ]

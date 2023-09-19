@@ -1,29 +1,31 @@
 Class {
-	#name : #MetacelloScriptGitBasedDownloadNotification,
-	#superclass : #Notification,
+	#name : 'MetacelloScriptGitBasedDownloadNotification',
+	#superclass : 'Notification',
 	#instVars : [
 		'projectPath',
 		'versionString'
 	],
-	#category : #'Metacello-Core-Scripts'
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptGitBasedDownloadNotification >> projectPath [
 	^ projectPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptGitBasedDownloadNotification >> projectPath: anObject [
 	projectPath := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptGitBasedDownloadNotification >> versionString [
 	^ versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptGitBasedDownloadNotification >> versionString: anObject [
 	versionString := anObject
 ]

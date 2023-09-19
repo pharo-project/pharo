@@ -1,13 +1,15 @@
 Class {
-	#name : #MetacelloVersionConstructor,
-	#superclass : #MetacelloAbstractVersionConstructor,
+	#name : 'MetacelloVersionConstructor',
+	#superclass : 'MetacelloAbstractVersionConstructor',
 	#instVars : [
 		'errorMap'
 	],
-	#category : #'Metacello-Core-Constructors'
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionConstructor class >> on: aConfig [
 
 	^(self new)
@@ -15,7 +17,7 @@ MetacelloVersionConstructor class >> on: aConfig [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionConstructor class >> on: aConfig project: aProject [
 
 	^(self new)
@@ -23,7 +25,7 @@ MetacelloVersionConstructor class >> on: aConfig project: aProject [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloVersionConstructor >> calculate: aConfig project: aProject [
     | versionMap symbolicVersionMap executionBlock pragmaDict |
     self setProject: aProject.
@@ -65,7 +67,7 @@ MetacelloVersionConstructor >> calculate: aConfig project: aProject [
             symbolicVersionMap at: symbolic put: versionString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> collectAllSymbolicVersionsFromVersionPragmasInto: symbolicVersionMap using: executionBlock [
 	| defined versionPragmaDict versionString |
 	versionPragmaDict := self extractSymbolicVersionPragmas.
@@ -83,7 +85,7 @@ MetacelloVersionConstructor >> collectAllSymbolicVersionsFromVersionPragmasInto:
 			self reset ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> collectAllVersionsFromVersionImportPragmasInto: versionMap using: executionBlock satisfiedPragmas: pragmaDict [
     | defined done completed count |
     done := false.
@@ -144,7 +146,7 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionImportPragmasInto: v
                     self reset ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> collectAllVersionsFromVersionPragmasInto: versionMap using: executionBlock [
     | defined versionPragmaDict |
     versionPragmaDict := self extractVersionPragmas.
@@ -173,7 +175,7 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionPragmasInto: version
             self reset ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> collectDefaultSymbolicVersionsFromVersionPragmasFrom: versionPragmaDict into: symbolicVersionMap using: executionBlock [
 	| defined versionString |
 	versionPragmaDict
@@ -194,17 +196,17 @@ MetacelloVersionConstructor >> collectDefaultSymbolicVersionsFromVersionPragmasF
 					self reset ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> commonDefaultSymbolicVersionResolverBlock [
 	^ self defaultSymbolicVersionResolverBlock: (ConfigurationOf new project: self project)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> defaultSymbolicVersionResolverBlock [
 	^ self defaultSymbolicVersionResolverBlock: self configuration
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> defaultSymbolicVersionResolverBlock: receiver [
 	^ [ :symbolicVrsn :pragma | 
 	| result |
@@ -218,13 +220,13 @@ MetacelloVersionConstructor >> defaultSymbolicVersionResolverBlock: receiver [
 	result ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionConstructor >> errorMap [
     errorMap ifNil: [ errorMap := Dictionary new ].
     ^ errorMap
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloVersionConstructor >> on: aConfig [
 
 	| cacheKey |
@@ -238,7 +240,7 @@ MetacelloVersionConstructor >> on: aConfig [
 	self setProject: project.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloVersionConstructor >> on: aConfig project: aProject [
     | cacheKey cachedProject |
     cacheKey := aConfig class.
@@ -256,7 +258,7 @@ MetacelloVersionConstructor >> on: aConfig project: aProject [
     self setProject: aProject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> specResolverBlock [
 	^ [ :versionSpec :pragma | 
 	(pragma argumentAt: 1) = versionSpec versionString
@@ -269,7 +271,7 @@ MetacelloVersionConstructor >> specResolverBlock [
 						ifTrue: [ blockList do: [ :block | self with: versionSpec during: block ] ] ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> symbolicVersionResolverBlock [
 	^ [ :symbolicVrsn :pragma | 
 	| result |
@@ -287,7 +289,7 @@ MetacelloVersionConstructor >> symbolicVersionResolverBlock [
 	result ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloVersionConstructor >> validateVersionString: versionString againstSpec: versionSpec [
 
 	versionString = versionSpec versionString
@@ -303,7 +305,7 @@ MetacelloVersionConstructor >> validateVersionString: versionString againstSpec:
 								, versionSpec versionString printString) ].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> verifyVersionImportPragmas: pragmaDict definedIn: versionMap [
     pragmaDict copy
         keysAndValuesDo: [ :versionString :pragmaColl | 

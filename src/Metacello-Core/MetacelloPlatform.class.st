@@ -1,70 +1,72 @@
 Class {
-	#name : #MetacelloPlatform,
-	#superclass : #Object,
+	#name : 'MetacelloPlatform',
+	#superclass : 'Object',
 	#instVars : [
 		'bypassProgressBars'
 	],
 	#classVars : [
 		'Current'
 	],
-	#category : #'Metacello-Core-Model'
+	#category : 'Metacello-Core-Model',
+	#package : 'Metacello-Core',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPlatform class >> current [
 	Current
 		ifNil: [Current := MetacelloPlatform new].
 	^ Current
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MetacelloPlatform class >> initialize [
   "noop ... use #select"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 MetacelloPlatform class >> select [
   Current := self new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 MetacelloPlatform class >> unselect [
   MetacelloPlatform current class = self
     ifTrue: [ Current := nil ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPlatform >> authorName [
 
 	Smalltalk at: #Author ifPresent: [:cl | ^cl perform: #initials ].
 	^'no developer initials'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPlatform >> authorName: aString [
 	"Used by SmalltalkCI"
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPlatform >> bypassProgressBars [
 
 	bypassProgressBars == nil ifTrue: [ bypassProgressBars := false ].
 	^ bypassProgressBars
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPlatform >> bypassProgressBars: anObject [
 	bypassProgressBars := anObject
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 MetacelloPlatform >> clearCurrentVersionCache [
 	MetacelloClearStackCacheNotification signal: #(#currentVersion #currentVersionAgainst: #currentVersionInfo)
 ]
 
-{ #category : #'package cache' }
+{ #category : 'package cache' }
 MetacelloPlatform >> clearPackageCache [
   "make sure that the package cache is empty, by hook or by crook"
 
@@ -80,18 +82,18 @@ MetacelloPlatform >> clearPackageCache [
         do: [ :ignore |  ] ]
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPlatform >> closeZipArchive: anArchive [
 	"do nothing"
 ]
 
-{ #category : #notification }
+{ #category : 'notification' }
 MetacelloPlatform >> collection: aCollection do: aBlock displaying: aString [
 
 	aCollection do: aBlock
 ]
 
-{ #category : #'user interaction' }
+{ #category : 'user interaction' }
 MetacelloPlatform >> confirm: aString [
 	
 	^(Smalltalk hasClassNamed: #UIManager)
@@ -102,13 +104,13 @@ MetacelloPlatform >> confirm: aString [
 			true ]
 ]
 
-{ #category : #reflection }
+{ #category : 'reflection' }
 MetacelloPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> createBitbucketRepository: aRepositorySpec [
 	| cl |
 	
@@ -116,7 +118,7 @@ MetacelloPlatform >> createBitbucketRepository: aRepositorySpec [
  	^ cl location: aRepositorySpec description
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> createDictionaryRepository: aRepositorySpec [
 	| description headerSize globalName |
  
@@ -134,14 +136,14 @@ MetacelloPlatform >> createDictionaryRepository: aRepositorySpec [
 					yourself) ]
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> createDirectoryRepository: aRepositorySpec [
 	^ MCDirectoryRepository new
 		directory: (self fileHandleOn: aRepositorySpec description);
 		yourself
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> createFiletreeRepository: aRepositorySpec [
 	| cl description headerSize |
 	
@@ -155,7 +157,7 @@ MetacelloPlatform >> createFiletreeRepository: aRepositorySpec [
 		yourself
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> createGithubRepository: aRepositorySpec [
 	| cl |
 	
@@ -163,7 +165,7 @@ MetacelloPlatform >> createGithubRepository: aRepositorySpec [
 	^ cl location: aRepositorySpec description
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> createHttpRepository: aRepositorySpec [
 	^ MCHttpRepository
         location: aRepositorySpec description
@@ -171,7 +173,7 @@ MetacelloPlatform >> createHttpRepository: aRepositorySpec [
         password: aRepositorySpec password
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> createRepository: aRepositorySpec [
 
 	^ MCRepository 
@@ -179,7 +181,7 @@ MetacelloPlatform >> createRepository: aRepositorySpec [
 		on: self
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> createTonelRepository: aRepositorySpec [
 	| cl description headerSize |
 	
@@ -193,21 +195,21 @@ MetacelloPlatform >> createTonelRepository: aRepositorySpec [
 		yourself
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPlatform >> defaultDirectory [
 	"Get the image default directory"
 	
 	^self fileDirectoryClass default
 ]
 
-{ #category : #'package cache' }
+{ #category : 'package cache' }
 MetacelloPlatform >> defaultPackageCache [
   "Apparently the MCCacheRepository api is changing in Pharo"
 
   ^ MCCacheRepository default
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 MetacelloPlatform >> defaultPlatformAttributes [
   | versionString |
   Smalltalk
@@ -226,19 +228,19 @@ MetacelloPlatform >> defaultPlatformAttributes [
   ^ #(#'gemstone')
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloPlatform >> defaultRepositoryDescription [
     ^ 'http://www.squeaksource.com/MetacelloRepository'
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPlatform >> deleteFileNamed: filePath [
 	<ignoreNotImplementedSelectors: #(containingDirectory localNameFor:)>
 
 	(self fileDirectoryClass on: filePath) containingDirectory deleteFileNamed: (self fileDirectoryClass localNameFor: filePath)
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirectoryPath [
 	"Get a handle on the following path: anotherDirectoryPath/adirectoryPath"
 	<ignoreNotImplementedSelectors: #(directoryNamed:)>
@@ -246,20 +248,20 @@ MetacelloPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirect
 	^ anotherDirectoryPath directoryNamed: adirectoryPath
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPlatform >> disableUndefinedSybolUpdates [
   "noop for most platforms - needed for GemStone"
 
   ^ nil
 ]
 
-{ #category : #notification }
+{ #category : 'notification' }
 MetacelloPlatform >> do: aBlock displaying: aString [
 
 	aBlock value
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPlatform >> downloadErrorFileNameFor: zipFileName [
   | pid |
   pid := self processPID.
@@ -267,7 +269,7 @@ MetacelloPlatform >> downloadErrorFileNameFor: zipFileName [
     , '.err'
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPlatform >> downloadJSON: url eTagsCache: eTagsCache eTagsKey: eTagsKey username: username pass: pass [
   "return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
 
@@ -276,21 +278,21 @@ MetacelloPlatform >> downloadJSON: url eTagsCache: eTagsCache eTagsKey: eTagsKey
   ^ self downloadJSON: url username: username pass: pass
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPlatform >> downloadJSON: url username: username pass: pass [
   "return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
 
   self subclassResponsibility
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPlatform >> downloadZipArchive: url to: outputFileName [
   "download zip archive from <url> into <outputFileName>"
 
   self subclassResponsibility
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPlatform >> ensureDirectoryExists: aDirectoryHandle [
 	"Ensure the directory exists."
 	<ignoreNotImplementedSelectors: #(assureExistence)>
@@ -298,14 +300,14 @@ MetacelloPlatform >> ensureDirectoryExists: aDirectoryHandle [
 	^ aDirectoryHandle assureExistence ; yourself
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPlatform >> extractRepositoryFrom: zipFile to: directory [
     "unzip <zipFile> into <directory>"
 
     self subclassResponsibility
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> extractTypeFromDescription: description [
   description == nil
     ifTrue: [ ^ nil ].
@@ -326,51 +328,51 @@ MetacelloPlatform >> extractTypeFromDescription: description [
   ^ 'http'
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPlatform >> fileDirectoryClass [
 	^ Smalltalk at: #FileDirectory
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPlatform >> fileHandleOn: aPath [
 	"Get an handle on a file."
 
 	^ self fileDirectoryClass on: aPath
 ]
 
-{ #category : #'git support' }
+{ #category : 'git support' }
 MetacelloPlatform >> gitBranchNameFor: aDirectory [
   "return current branch for git repository located at <aDirectory>, if <aDirectory> is not a git repository, return nil"
 
   ^ nil
 ]
 
-{ #category : #'git support' }
+{ #category : 'git support' }
 MetacelloPlatform >> gitCommitShaFor: aDirectory [
   "return SHA for git repository located at <aDirectory>, if <aDirectory> is not a git repository, return nil"
 
   ^ nil
 ]
 
-{ #category : #reflection }
+{ #category : 'reflection' }
 MetacelloPlatform >> globalNamed: globalName [
 
 	^Smalltalk at: globalName
 ]
 
-{ #category : #reflection }
+{ #category : 'reflection' }
 MetacelloPlatform >> globalNamed: globalName ifAbsent: absentBlock [
 
 	^Smalltalk at: globalName ifAbsent: absentBlock
 ]
 
-{ #category : #monticello }
+{ #category : 'monticello' }
 MetacelloPlatform >> newVersionForWorkingCopy: aWorkingCopy [
 	<ignoreNotImplementedSelectors: #(newVersion)>
   ^ aWorkingCopy newVersion
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPlatform >> parentDirectoryOf: aFileHandler [
 	"Get the parent directory of this file."
 	<ignoreNotImplementedSelectors: #(containingDirectory)>
@@ -378,7 +380,7 @@ MetacelloPlatform >> parentDirectoryOf: aFileHandler [
 	^ aFileHandler containingDirectory
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 MetacelloPlatform >> primeStackCacheWith: aDictionary doing: noArgBlock [
 
 	self 
@@ -386,43 +388,43 @@ MetacelloPlatform >> primeStackCacheWith: aDictionary doing: noArgBlock [
 		defaultDictionary: aDictionary
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPlatform >> processPID [
   "return pid of process as string if available"
 
   ^ ''
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPlatform >> recursiveDelete: aDirectory [
 	"delete this directory and all children of it"
 
 	^  aDirectory recursiveDelete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPlatform >> reenableUndefinedSybolUpdates: undefinedSymbols [
   "noop for most platforms - needed for GemStone"
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPlatform >> registerPackageNamed: packageName [
 	<ignoreNotImplementedSelectors: #(registerPackageName:)>
   ^ (Smalltalk at: #'PackageInfo') registerPackageName: packageName
 ]
 
-{ #category : #system }
+{ #category : 'system' }
 MetacelloPlatform >> selectorForPragma: aPragma [
 	^ aPragma selector
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 MetacelloPlatform >> stackCacheFor: cacheName at: key doing: aBlock [
 
 	^self stackCacheFor: cacheName cacheClass: Dictionary at: key doing: aBlock
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 MetacelloPlatform >> stackCacheFor: cacheName cacheClass: cacheClass at: key doing: aBlock [
 
 	self 
@@ -440,7 +442,7 @@ MetacelloPlatform >> stackCacheFor: cacheName cacheClass: cacheClass at: key doi
 		defaultDictionary: nil
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPlatform >> string: aString includesSubstring: aSubstring [
 	<ignoreNotImplementedSelectors: #(includesSubString:)>
 
@@ -449,25 +451,25 @@ MetacelloPlatform >> string: aString includesSubstring: aSubstring [
 	^aString includesSubString: aSubstring
 ]
 
-{ #category : #system }
+{ #category : 'system' }
 MetacelloPlatform >> suspendSystemUpdateEventsDuring: aBlock [
 	<ignoreNotImplementedSelectors: #(doSilently:)>
 	"Wraps call to the system evetn manager to tell it that we want to suspend events during execution of aBlock"
 	(Smalltalk at: #SystemChangeNotifier) uniqueInstance doSilently: aBlock
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPlatform >> tempFileFor: aName suffix: aSuffixString [
 	^ '/tmp/' , aName , aSuffixString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPlatform >> timestamp [
 
 	^DateAndTime now printString
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 MetacelloPlatform >> transact: aBlock [
 	"On GemStone, we want to optionally abort before command execution and commit after 
 	 common execution. Other plaforms don't need to do anything special.
@@ -476,7 +478,7 @@ MetacelloPlatform >> transact: aBlock [
 	aBlock value
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 MetacelloPlatform >> useStackCacheDuring: aBlock defaultDictionary: defaultDictionary [
 	| dict |
 	dict := MetacelloStackCacheNotification signal.

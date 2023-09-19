@@ -1,6 +1,6 @@
-Extension { #name : #UndefinedObject }
+Extension { #name : 'UndefinedObject' }
 
-{ #category : #'*AST-Core' }
+{ #category : '*AST-Core' }
 UndefinedObject >> formatter [
 
 	^ RBProgramNode formatterClass new

@@ -1,14 +1,16 @@
 Class {
-	#name : #MetacelloGenericProjectSpec,
-	#superclass : #MetacelloProjectSpec,
+	#name : 'MetacelloGenericProjectSpec',
+	#superclass : 'MetacelloProjectSpec',
 	#instVars : [
 		'projectPackage',
 		'repositories'
 	],
-	#category : #'Metacello-Core-Specs'
+	#category : 'Metacello-Core-Specs',
+	#package : 'Metacello-Core',
+	#tag : 'Specs'
 }
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloGenericProjectSpec >> compareEqual: aMetacelloProjectSpec [
     "'projectPackage repositories'"
 
@@ -16,19 +18,19 @@ MetacelloGenericProjectSpec >> compareEqual: aMetacelloProjectSpec [
         and: [ self repositories compareEqual: aMetacelloProjectSpec repositories ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloGenericProjectSpec >> determineCurrentVersionForLoad [
     self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGenericProjectSpec >> getRepositories [
     "raw access to iv"
 
     ^ repositories
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloGenericProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
   "'projectPackage repositories'"
 
@@ -38,12 +40,12 @@ MetacelloGenericProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
         or: [ self repositories hasNoLoadConflicts: aMetacelloProjectSpec repositories ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloGenericProjectSpec >> hasRepository [
     ^ self repositorySpecs notEmpty
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloGenericProjectSpec >> load [
 
     (MetacelloLookupProjectSpecForLoad new
@@ -51,12 +53,12 @@ MetacelloGenericProjectSpec >> load [
         yourself) signal performLoad
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloGenericProjectSpec >> loadVersion: aVersionOrNil [
     self subclassResponsibility
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloGenericProjectSpec >> mergeMap [
     | map |
     map := super mergeMap.
@@ -64,7 +66,7 @@ MetacelloGenericProjectSpec >> mergeMap [
     ^ map
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloGenericProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
   self
     repositories:
@@ -73,12 +75,12 @@ MetacelloGenericProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
         ifFalse: [ self repositories mergeSpec: anotherRepositories ])
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloGenericProjectSpec >> mergeScriptRepository: anotherSpec [
     self repositories: anotherSpec repositories
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloGenericProjectSpec >> mergeSpec: anotherSpec [
   | newSpec map anotherRepositories |
   newSpec := super mergeSpec: anotherSpec.
@@ -88,93 +90,93 @@ MetacelloGenericProjectSpec >> mergeSpec: anotherSpec [
   ^ newSpec
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloGenericProjectSpec >> metacelloRegistrationHash [
     "projectPackage (ignored) repositories"
 
     ^ super metacelloRegistrationHash bitXor: self repositories metacelloRegistrationHash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGenericProjectSpec >> name: aString [
     super name: aString.
     self projectPackage: nil
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloGenericProjectSpec >> nonOverridable [
     ^ super nonOverridable , #(#'projectPackage' #'repositories')
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloGenericProjectSpec >> postCopy [
     super postCopy.
     repositories := repositories copy.
     projectPackage := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGenericProjectSpec >> projectPackage [
     self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGenericProjectSpec >> projectPackage: aProjectPackage [
     self shouldBeMutable.
     projectPackage := aProjectPackage
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloGenericProjectSpec >> projectPackage: aBlock constructor: aVersionConstructor [
     aVersionConstructor projectPackageForProject: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGenericProjectSpec >> repositories [
     repositories ifNil: [ repositories := self project repositoriesSpec ].
     ^ repositories
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGenericProjectSpec >> repositories: anObject [
     self shouldBeMutable.
     repositories := anObject.
     self projectPackage: nil
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloGenericProjectSpec >> repositories: aBlock constructor: aVersionConstructor [
     aVersionConstructor repositoriesForProject: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGenericProjectSpec >> repository: aStringOrMetacelloRepositorySpec [
     self repositories repository: aStringOrMetacelloRepositorySpec.
     self projectPackage: nil
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloGenericProjectSpec >> repository: anObject constructor: aVersionConstructor [
     aVersionConstructor repositoryForProject: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGenericProjectSpec >> repository: aString username: username password: password [
     self repositories repository: aString username: username password: password.
     self projectPackage: nil
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloGenericProjectSpec >> repository: aString username: username password: password constructor: aVersionConstructor [
     aVersionConstructor repositoryForProject: aString username: username password: password
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloGenericProjectSpec >> repositoryDescriptions [
     ^ self repositorySpecs collect: [ :repoSpec | repoSpec description ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloGenericProjectSpec >> repositorySpecs [
     repositories ifNil: [ ^ #() ].
     ^ self repositories map values
