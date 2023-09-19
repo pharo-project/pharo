@@ -119,33 +119,15 @@ RBNamespace >> addProtocolNamed: aString in: aClass [
 { #category : 'accessing' }
 RBNamespace >> allClassesDo: aBlock [
 
-	| seen evalBlock |
-
-	seen := Set new.
-	evalBlock := [ :each |
-	seen add: each first name.
-	aBlock
-		value: each first;
-		value: each last
-	].
-	newClasses do: evalBlock.
-	changedClasses do: evalBlock.
-	environment
-		classesDo: [ :each |
-			each isObsolete
-				ifFalse: [ | class |
-
-					class := each instanceSide.
-					( ( seen includes: class name ) or: [ self hasRemoved: ( self classNameFor: class ) ] )
-						ifFalse: [ ( class := self classFor: each )
-								ifNotNil: [ seen add: class name.
-									aBlock
-										value: class;
-										value: class classSide
-									]
-							]
-					]
-			]
+	| classes |
+	classes := Set new: 4096.
+	environment classesDo: [ :class | class isObsolete ifFalse: [self classFor: class]  ].
+	classes addAll: newClasses values flattened.
+	classes addAll: changedClasses value flattened.
+	
+	classes do: [ :rbClass |
+			(self hasRemoved: (self classNameFor: rbClass)) ifFalse: [
+			aBlock value: rbClass] ]
 ]
 
 { #category : 'accessing' }
