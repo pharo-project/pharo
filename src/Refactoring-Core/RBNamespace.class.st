@@ -120,7 +120,7 @@ RBNamespace >> addProtocolNamed: aString in: aClass [
 RBNamespace >> allClassesDo: aBlock [
 
 	| classes |
-	classes := IdentitySet new: 4096.
+	classes := Set new: 4096.
 	environment classesDo: [ :class | class isObsolete ifFalse: [self classFor: class]  ].
 	classes addAll: newClasses values flattened.
 	classes addAll: changedClasses value flattened.
