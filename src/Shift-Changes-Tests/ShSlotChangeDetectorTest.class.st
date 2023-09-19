@@ -1,26 +1,23 @@
-"
-A ShLayoutChangeDetectorTest is a test class for testing the behavior of ShLayoutChangeDetector
-"
 Class {
-	#name : 'ShLayoutChangeDetectorTest',
+	#name : 'ShSlotChangeDetectorTest',
 	#superclass : 'ShAbstractChangeDetectorTest',
 	#category : 'Shift-Changes-Tests',
 	#package : 'Shift-Changes-Tests'
 }
 
 { #category : 'tests' }
-ShLayoutChangeDetectorTest >> testChangeOfLayoutIsDetected [
+ShSlotChangeDetectorTest >> testChangeInSlotsIsDetected [
 
-	newBuilder layoutClass: ImmediateLayout.
+	newBuilder slots: { #ivar1. #ivar2 }.
 
 	self denyEmpty: self newComparer compareClass.
 	self assertChangeAreDetected
 ]
 
 { #category : 'tests' }
-ShLayoutChangeDetectorTest >> testNoChangeOfLayoutDetected [
+ShSlotChangeDetectorTest >> testNoChangeInSlotsDetected [
 
-	newBuilder layoutClass: FixedLayout.
+	newBuilder slots: { #ivar1 }.
 
 	self assertEmpty: self newComparer compareClass.
 	self assertChangeArentDetected

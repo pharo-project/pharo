@@ -3,7 +3,9 @@ Class {
 	#superclass : 'TestCase',
 	#instVars : [
 		'newBuilder',
-		'originClass'
+		'originClass',
+		'usedTrait',
+		'superClass'
 	],
 	#category : 'Shift-Changes-Tests',
 	#package : 'Shift-Changes-Tests'
@@ -18,7 +20,7 @@ ShAbstractChangeDetectorTest class >> isAbstract [
 { #category : 'running' }
 ShAbstractChangeDetectorTest >> actualClass [
 
-	^ self subclassResponsibility
+	^ self class environment at: (self class name withoutSuffix: #Test) asSymbol
 ]
 
 { #category : 'tests' }
@@ -42,7 +44,7 @@ ShAbstractChangeDetectorTest >> newComparer [
 { #category : 'accessing' }
 ShAbstractChangeDetectorTest >> packageName [
 
-	^ #'Shift-Changes-Package-For-Test'
+	^ #'Shift-Tests-Changes-Package-For-Test'
 ]
 
 { #category : 'running' }
@@ -50,10 +52,25 @@ ShAbstractChangeDetectorTest >> setUp [
 
 	super setUp.
 
+	usedTrait := self class classInstaller make: [ :builder |
+		             builder
+			             beTrait;
+			             name: #TShTestForClass;
+			             slots: #( tivar1 );
+			             package: self packageName ].
+
+	superClass := self class classInstaller make: [ :builder |
+		              builder
+			              name: #ShSuperTestForClass;
+			              slots: { #superIvar1 };
+			              package: self packageName ].
 
 	originClass := self class classInstaller make: [ :builder |
 		               builder
 			               name: #ShTestForClass;
+			               superclass: superClass;
+			               traitComposition: usedTrait;
+			               slots: { #ivar1 };
 			               layoutClass: FixedLayout;
 			               package: self packageName ].
 
