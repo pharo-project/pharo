@@ -2,12 +2,13 @@
 I know how to detect a change in the layout of a class.
 "
 Class {
-	#name : #ShLayoutChangeDetector,
-	#superclass : #ShAbstractInstanceSideClassChangeDetector,
-	#category : #'Shift-Changes'
+	#name : 'ShLayoutChangeDetector',
+	#superclass : 'ShAbstractInstanceSideClassChangeDetector',
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShLayoutChangeDetector >> initialize [
 	super initialize.
 	builderAccessor := [ :e | e layoutDefinition layoutClass ].

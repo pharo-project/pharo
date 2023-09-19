@@ -2,12 +2,13 @@
 I detect if there is a change in the superclass
 "
 Class {
-	#name : #ShSuperclassChangedDetector,
-	#superclass : #ShAbstractInstanceSideClassChangeDetector,
-	#category : #'Shift-Changes'
+	#name : 'ShSuperclassChangedDetector',
+	#superclass : 'ShAbstractInstanceSideClassChangeDetector',
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShSuperclassChangedDetector >> initialize [
 	super initialize.
 	builderAccessor := [ :e | e superclass ].
