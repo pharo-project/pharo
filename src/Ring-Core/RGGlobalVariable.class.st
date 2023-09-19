@@ -2,41 +2,43 @@
 A global variable definition
 "
 Class {
-	#name : #RGGlobalVariable,
-	#superclass : #RGObject,
-	#category : #'Ring-Core-Kernel'
+	#name : 'RGGlobalVariable',
+	#superclass : 'RGObject',
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RGGlobalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 
 	^ aProgramNodeVisitor visitGlobalVariableNode: aNode
 ]
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGGlobalVariable >> addoptToParentStub [
 
 	super addoptToParentStub.
 	self parent addGlobalVariable: self
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 RGGlobalVariable >> analyzeRead: aRBVariableNode by: anOCASTSemanticAnalyzer [
 ]
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGGlobalVariable >> defaultParentStub [
 
 	^ self defaultEnvironmentStub
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGGlobalVariable >> isGlobalVariable [
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGGlobalVariable >> isSuperVariable [
 
 	^ false

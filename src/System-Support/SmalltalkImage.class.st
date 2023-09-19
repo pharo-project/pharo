@@ -1552,13 +1552,6 @@ SmalltalkImage >> removeSelector: descriptor [
 ]
 
 { #category : 'class and trait names' }
-SmalltalkImage >> renameClass: aClass as: newName [
-	"Rename the class, aClass, to have the title newName."
-
-	^globals renameClass: aClass as: newName
-]
-
-{ #category : 'class and trait names' }
 SmalltalkImage >> renameClass: aClass from: oldName [
 	"Rename the class, aClass, to have the title newName."
 

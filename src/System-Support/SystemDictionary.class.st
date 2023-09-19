@@ -371,37 +371,17 @@ SystemDictionary >> removeKey: key ifAbsent: aBlock [
 ]
 
 { #category : 'renaming' }
-SystemDictionary >> renameClass: aClass as: newName [
-	"Rename the class, aClass, to have the title newName."
-
-	^ self renameClass: aClass from: aClass name to: newName
-]
-
-{ #category : 'renaming' }
 SystemDictionary >> renameClass: aClass from: oldName [
-	"Rename the class, aClass, to have the title newName."
-
-	^ self renameClass: aClass from: oldName to: aClass name
-]
-
-{ #category : 'renaming' }
-SystemDictionary >> renameClass: aClass from: oldName to: newName [
-	"Rename the class, aClass, to have the title newName."
 
 	| oldref |
 	oldref := self associationAt: oldName.
 	self removeKey: oldName.
-	oldref key: newName.
+	oldref key: aClass name.
 	self add: oldref. "Old association preserves old refs"
-	SessionManager default renamedClass: aClass from: oldName to: newName.
+	SessionManager default renamedClass: aClass from: oldName to: aClass name.
 	self flushClassNameCache.
-	self flag: #package. "There is no need to give the category"
-	SystemAnnouncer uniqueInstance
-		classRenamed: aClass
-		from: oldName
-		to: newName
-		inCategory: aClass category.
-	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: newName ]
+	SystemAnnouncer uniqueInstance classRenamed: aClass from: oldName to: aClass name.
+	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: aClass name ]
 ]
 
 { #category : 'renaming' }

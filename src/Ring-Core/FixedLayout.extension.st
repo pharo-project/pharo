@@ -1,6 +1,6 @@
-Extension { #name : #FixedLayout }
+Extension { #name : 'FixedLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 FixedLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
