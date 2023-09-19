@@ -1,10 +1,12 @@
 Class {
-	#name : #RBInstanceVariableStillReferenced,
-	#superclass : #RBBreakingChangeReport,
-	#category : #'Refactoring-UI-Drivers'
+	#name : 'RBInstanceVariableStillReferenced',
+	#superclass : 'RBBreakingChangeReport',
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBInstanceVariableStillReferenced >> browse [
 	"This is not satisfactory because not connected to any UI element."
 	SystemNavigation default 
@@ -12,7 +14,7 @@ RBInstanceVariableStillReferenced >> browse [
 		from: self refactoring refactoredClass realClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBInstanceVariableStillReferenced >> refactoring: aRefactoring [
 
 	refactoring := aRefactoring.

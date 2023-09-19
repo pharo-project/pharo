@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMethodStillCalled,
-	#superclass : #RBBreakingChangeReport,
-	#category : #'Refactoring-UI-Drivers'
+	#name : 'RBMethodStillCalled',
+	#superclass : 'RBBreakingChangeReport',
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBMethodStillCalled >> browse [
 	"This is not satisfactory because not connected to any UI element."
 
