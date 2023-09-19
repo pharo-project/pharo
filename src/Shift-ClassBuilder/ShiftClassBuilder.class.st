@@ -544,6 +544,12 @@ ShiftClassBuilder >> slotsFromString: aString [
 ]
 
 { #category : 'accessing' }
+ShiftClassBuilder >> slotsWithTraits [
+
+	^ self builderEnhancer slotsForBuilder: self
+]
+
+{ #category : 'accessing' }
 ShiftClassBuilder >> superclass [
 
 	^ superclass ifNil: [ superclassName ifNotNil: [ self classNamed: self superclassName ] ]

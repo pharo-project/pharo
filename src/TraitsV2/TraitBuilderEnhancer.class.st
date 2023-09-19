@@ -8,15 +8,17 @@ I inject the methods from TraitedClass to the generated metaclass.
 Also I add all the slots and methods in the trait composition.
 "
 Class {
-	#name : #TraitBuilderEnhancer,
-	#superclass : #ShDefaultBuilderEnhancer,
+	#name : 'TraitBuilderEnhancer',
+	#superclass : 'ShDefaultBuilderEnhancer',
 	#instVars : [
 		'builder'
 	],
-	#category : #'TraitsV2-Class-Builder'
+	#category : 'TraitsV2-Class-Builder',
+	#package : 'TraitsV2',
+	#tag : 'Class-Builder'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitBuilderEnhancer class >> isApplicableFor: aBuilder [
 
 	aBuilder metaSuperclass = Trait ifTrue: [ ^ true ].
@@ -31,7 +33,7 @@ TraitBuilderEnhancer class >> isApplicableFor: aBuilder [
 	^ false
 ]
 
-{ #category : #'class modifications' }
+{ #category : 'class modifications' }
 TraitBuilderEnhancer >> afterMethodsCompiled: aBuilder [
 	"we need to remove the categories leftover after removing Traits"
 
@@ -44,7 +46,7 @@ TraitBuilderEnhancer >> afterMethodsCompiled: aBuilder [
 	aBuilder newClass rebuildMethodDictionary
 ]
 
-{ #category : #migrating }
+{ #category : 'migrating' }
 TraitBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 
 	(self isTraitedMetaclass: aBuilder)
@@ -62,7 +64,7 @@ TraitBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 	aBuilder newClass traitUsers do: [:e | e rebuildMethodDictionary]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitBuilderEnhancer >> allSlotsForBuilder: aBuilder [
 
 	| resultingSlots |
@@ -74,7 +76,7 @@ TraitBuilderEnhancer >> allSlotsForBuilder: aBuilder [
 	^ resultingSlots
 ]
 
-{ #category : #migrating }
+{ #category : 'migrating' }
 TraitBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 	aBuilder oldClass ifNil: [ ^ self ].
 
@@ -89,7 +91,7 @@ TraitBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 	aBuilder newMetaclass users: aBuilder oldMetaclass users.
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 TraitBuilderEnhancer >> classCreated: aBuilder [
 
 	(self isTraitedMetaclass: aBuilder)
@@ -101,24 +103,24 @@ TraitBuilderEnhancer >> classCreated: aBuilder [
 	builder newMetaclass traitComposition: self classTraitComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitBuilderEnhancer >> classTraitComposition [
 	^ builder classTraitComposition asTraitComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitBuilderEnhancer >> classTraitCompositionOf: aBuilder [
 
 	^ aBuilder classTraitComposition asTraitComposition
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TraitBuilderEnhancer >> classTraitCompositionOfClass: aClass [
 
 	^ aClass class traitComposition asTraitComposition
 ]
 
-{ #category : #'class modifications' }
+{ #category : 'class modifications' }
 TraitBuilderEnhancer >> configureClass: newClass superclass: superclass withLayoutType: layoutType slots: slots [
 	| resultingSlots |
 	self validateTraitComposition: self traitComposition ofClass: builder oldClass.
@@ -128,7 +130,7 @@ TraitBuilderEnhancer >> configureClass: newClass superclass: superclass withLayo
 	newClass superclass: superclass withLayoutType: layoutType slots: resultingSlots
 ]
 
-{ #category : #'class modifications' }
+{ #category : 'class modifications' }
 TraitBuilderEnhancer >> configureMetaclass: newMetaclass superclass: superclass withLayoutType: aLayoutType slots: classSlots [
 	| resultingSlots |
 	self validateTraitComposition: self classTraitComposition ofClass: builder oldMetaclass.
@@ -140,7 +142,7 @@ TraitBuilderEnhancer >> configureMetaclass: newMetaclass superclass: superclass 
 	newMetaclass superclass: superclass withLayoutType: aLayoutType slots: resultingSlots
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TraitBuilderEnhancer >> eliminateDuplicates: aSlotCollection withSuperclassSlots: superclassSlots [
 	| resultingSlots |
 	resultingSlots := OrderedCollection new.
@@ -154,7 +156,7 @@ TraitBuilderEnhancer >> eliminateDuplicates: aSlotCollection withSuperclassSlots
 	^ resultingSlots asArray
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 
 	(aBuilder superclass isNil and: [ aClass superclass isNil ])
@@ -166,7 +168,7 @@ TraitBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 	aBuilder metaclassClass: aClass class class
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitBuilderEnhancer >> initializeBuilder: aBuilder [
 	super initializeBuilder: aBuilder.
 
@@ -175,13 +177,13 @@ TraitBuilderEnhancer >> initializeBuilder: aBuilder [
 	aBuilder addChangeComparer: TraitCompositionChangedDetector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitBuilderEnhancer >> isTraitedMetaclass: aBuilder [
 
 	^ aBuilder metaclassClass includesBehavior: TraitedMetaclass
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 TraitBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [
 
 	"Traits does not have instances"
@@ -191,7 +193,7 @@ TraitBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstall
 	super migrateInstancesTo: aClass installer: aShiftClassInstaller
 ]
 
-{ #category : #'class modifications' }
+{ #category : 'class modifications' }
 TraitBuilderEnhancer >> newMetaclass: aBuilder [
 
 	(aBuilder traitComposition asTraitComposition isNotEmpty or: [ aBuilder classTraitComposition asTraitComposition isNotEmpty or: [ aBuilder superclass class class = TraitedMetaclass]])
@@ -203,7 +205,7 @@ TraitBuilderEnhancer >> newMetaclass: aBuilder [
 	^ super newMetaclass: aBuilder
 ]
 
-{ #category : #'class modifications' }
+{ #category : 'class modifications' }
 TraitBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
 
 	super propagateChangesToRelatedClasses: newClass installer: installer.
@@ -217,30 +219,42 @@ TraitBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: in
 	newClass users do: [ :each | installer remake: each instanceSide ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+TraitBuilderEnhancer >> slotsForBuilder: aBuilder [
+
+	| resultingSlots |
+	resultingSlots := aBuilder layoutDefinition slots asOrderedCollection.
+
+	aBuilder traitComposition asTraitComposition slotsCopy do: [ :slot |
+		(resultingSlots anySatisfy: [ :slot2 | slot name = slot2 name ]) ifFalse: [ resultingSlots add: slot ] ].
+
+	^ resultingSlots
+]
+
+{ #category : 'accessing' }
 TraitBuilderEnhancer >> traitComposition [
 	^ builder traitComposition asTraitComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitBuilderEnhancer >> traitCompositionOf: aBuilder [
 
 	^ aBuilder traitComposition asTraitComposition
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TraitBuilderEnhancer >> traitCompositionOfClass: aClass [
 
 	^ aClass traitComposition asTraitComposition
 ]
 
-{ #category : #migrating }
+{ #category : 'migrating' }
 TraitBuilderEnhancer >> validateRedefinition: anOldClass [
 	(anOldClass isNotNil and: [ anOldClass isTrait ~= builder isTrait ])
 		ifTrue: [ self error: 'A class should not be redefined as a trait. First remove it from the system.' ]
 ]
 
-{ #category : #validating }
+{ #category : 'validating' }
 TraitBuilderEnhancer >> validateTraitComposition: aTraitComposition ofClass: aClass [
 
 	^ (aTraitComposition allTraits includes: aClass) ifTrue: [ self error: 'Cyclic Trait composition' ]

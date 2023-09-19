@@ -109,6 +109,12 @@ ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer
 	newClass subclasses do: [ :e | installer remake: e ]
 ]
 
+{ #category : 'accessing' }
+ShDefaultBuilderEnhancer >> slotsForBuilder: aBuilder [
+
+	^ aBuilder layoutDefinition slots
+]
+
 { #category : 'class modifications' }
 ShDefaultBuilderEnhancer >> validateRedefinition: anOldClass [
 	"Subclasses can validate that the new definition is coherent with the old class"
