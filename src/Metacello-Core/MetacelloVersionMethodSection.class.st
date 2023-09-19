@@ -1,23 +1,25 @@
 Class {
-	#name : #MetacelloVersionMethodSection,
-	#superclass : #MetacelloMethodSection,
+	#name : 'MetacelloVersionMethodSection',
+	#superclass : 'MetacelloMethodSection',
 	#instVars : [
 		'block',
 		'versionSpec',
 		'parent',
 		'methodSections'
 	],
-	#category : #'Metacello-Core-Constructors'
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> addMethodSection: methodSection [
 
 	methodSection parent: self.
 	self methodSections add: methodSection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> attributeOrPath [
     ^ self parent == nil
         ifTrue: [ 
@@ -27,7 +29,7 @@ MetacelloVersionMethodSection >> attributeOrPath [
         ifFalse: [ self attributePath ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> attributePath [
     | path |
     path := MetacelloMethodSectionPath with: self attributes.
@@ -36,34 +38,34 @@ MetacelloVersionMethodSection >> attributePath [
         ifFalse: [ self parent attributePath , path ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> block [
 	^ block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> block: anObject [
 	block := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> methodSections [
 
 	methodSections ifNil: [ methodSections := OrderedCollection new ].
 	^methodSections
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> parent [
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> parent: anObject [
 	parent := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionMethodSection >> printOn: aStream [
   aStream
     nextPutAll: self class name asString;
@@ -72,19 +74,19 @@ MetacelloVersionMethodSection >> printOn: aStream [
   aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> topParent [
 	self parent == nil
 		ifTrue: [ ^ self ].
 	^ self parent topParent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> versionSpec [
 	^ versionSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSection >> versionSpec: anObject [
 	versionSpec := anObject
 ]

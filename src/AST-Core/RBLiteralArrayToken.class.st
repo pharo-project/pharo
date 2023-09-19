@@ -3,17 +3,19 @@ I am the start of a literal array, normal literal arrays `#()` or byte arrays `#
 
 "
 Class {
-	#name : #RBLiteralArrayToken,
-	#superclass : #RBValueToken,
-	#category : #'AST-Core-Tokens'
+	#name : 'RBLiteralArrayToken',
+	#superclass : 'RBValueToken',
+	#category : 'AST-Core-Tokens',
+	#package : 'AST-Core',
+	#tag : 'Tokens'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLiteralArrayToken >> isForByteArray [
 	^value last = $[
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLiteralArrayToken >> isLiteralArrayToken [
 	^true
 ]
