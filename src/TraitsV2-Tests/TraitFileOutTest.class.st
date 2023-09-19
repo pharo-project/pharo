@@ -55,7 +55,7 @@ TraitFileOutTest >> tearDown [
 	dir := FileSystem workingDirectory.
 	self createdClassesAndTraits , self resourceClassesAndTraits do: [ :each | (dir / each asString , 'st') ensureDelete ].
 	(dir / self packageName , 'st') ensureDelete.
-	(self packageOrganizer packageNamed: self packageName ifAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+	self packageOrganizer packageNamed: self packageName ifPresent: [ :package | package removeFromSystem ].
 	"Ensure cleaning of obsoletes refs"
 	ca := cb := ta := tb := tc := td := nil.
 	super tearDown

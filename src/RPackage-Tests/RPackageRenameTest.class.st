@@ -125,35 +125,6 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 ]
 
 { #category : 'tests' }
-RPackageRenameTest >> testRenamePackageUppercase [
-	"Test that we do rename the package as expected."
-
-	| package pkg oldWorkingCopy |
-	"preparation: creation of a pkg and its associated mcworkingcopy"
-	[
-	package := self packageOrganizer ensurePackage: 'Test1'.
-	oldWorkingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	self assert: (self packageOrganizer hasPackage: #Test1).
-	self assert: (MCWorkingCopy hasPackageNamed: #Test1) isNotNil.
-
-	"renaming"
-	package renameTo: 'TEST1'.
-
-	pkg := self packageOrganizer packageNamed: 'Test1' ifAbsent: [ nil ].
-	self assert: pkg isNil.
-	self assert: 'TEST1' asPackage isNotNil.
-	self deny: 'TEST1' asPackage mcWorkingCopy equals: oldWorkingCopy.
-	self assert: 'TEST1' asPackage mcWorkingCopy isNotNil.
-	self assert: (self packageOrganizer hasPackage: #TEST1).
-	self assert: (MCWorkingCopy hasPackageNamed: #TEST1) isNotNil ] ensure: [ "cleaning"
-		'TEST1' asPackage removeFromSystem.
-		self deny: (self packageOrganizer hasPackage: #TEST1).
-		self deny: (MCWorkingCopy hasPackageNamed: #TEST1).
-		self deny: (self packageOrganizer hasPackage: #Test1).
-		self deny: (MCWorkingCopy hasPackageNamed: #Test1) ]
-]
-
-{ #category : 'tests' }
 RPackageRenameTest >> testRenamePackageWithExtensions [
 
 	| package class extendedPackage extension |

@@ -307,10 +307,6 @@ RPackage >> ensureTag: aTag [
 
 	(self hasTag: aTag) ifTrue: [ ^ self classTagNamed: tagName ].
 
-
-	self flag: #package. "We are checking because currently there is a bug that we cannot have a package that has the same name as a package and tag. So we first want to ensure we do not have a package of the same name. When this limitation will be removed in the future we should remove the next check."
-	self name = tagName ifFalse: [ self organizer validateCanBeAddedPackageName: self name , '-' , tagName tagName: nil ].
-
 	newTag := RPackageTag package: self name: tagName.
 	classTags add: newTag.
 
@@ -731,11 +727,6 @@ RPackage >> removeEmptyTags [
 
 { #category : 'removing' }
 RPackage >> removeFromSystem [
-
-	| categories |
-	categories := (self classTags collect: [ :each | each categoryName ] as: Set)
-		              add: self name;
-		              yourself.
 
 	self definedClasses do: #removeFromSystem.
 	self extensionMethods do: #removeFromSystem.

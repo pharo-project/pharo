@@ -34,8 +34,7 @@ ClassDescriptionTest >> createTestClass [
 { #category : 'running' }
 ClassDescriptionTest >> tearDown [
 
-	(RPackageOrganizer default packageNamed: self compilationTestPackageName ifAbsent: [ nil ])
-		ifNotNil: [ :package | package removeFromSystem ].
+	RPackageOrganizer default packageNamed: self compilationTestPackageName ifPresent: [ :package | package removeFromSystem ].
 
 	super tearDown
 ]

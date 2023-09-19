@@ -236,7 +236,7 @@ RPackageTest >> testIsTestPackage [
 	"Happy case: test package 'MockPackage-Tests' must contain -Tests suffix."
 	self assert: packages first isTestPackage equals: true.
 
-	"Package 'MockPackage-tests' is not test package, since it has lowercase suffix."
+	"Package 'MockPackage2-tests' is not test package, since it has lowercase suffix."
 	self assert: packages second isTestPackage  equals: false.
 
 	"Happy case: regular package 'MockPackage' without -Tests suffix is not a test package."

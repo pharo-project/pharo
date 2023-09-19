@@ -80,6 +80,21 @@ RPackageOrganizerTest >> testEmpty [
 ]
 
 { #category : 'tests' }
+RPackageOrganizerTest >> testEnsurePackageManagesDifferentCase [
+
+	| package1 package2 |
+	package1 := self organizer ensurePackage: #Package1.
+	package2 := self organizer ensurePackage: #PaCkaGe1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package1"
+	self assert: package1 identicalTo: package2.
+	self assert: package2 name equals: #Package1.
+	self assert: (self organizer packageNamed: #Package1) identicalTo: package1.
+	self assert: (self organizer packageNamed: #PaCKaGe1) identicalTo: package1.
+	self assert: (self organizer packageNamed: #PackagE1) identicalTo: package1
+]
+
+{ #category : 'tests' }
 RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 
 	| p1 p2 c1 |
@@ -148,6 +163,68 @@ RPackageOrganizerTest >> testHasPackage [
 ]
 
 { #category : 'tests' }
+RPackageOrganizerTest >> testHasPackageCaseInsensitive [
+
+	self organizer ensurePackage: #Package1.
+
+	self assert: (self organizer hasPackage: #Package1).
+	self assert: (self organizer hasPackage: #PackaGe1).
+	self deny: (self organizer hasPackage: #Packae1)
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamed [
+
+	| package |
+	package := self organizer ensurePackage: #Package1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package"
+	self assert: package name equals: #Package1.
+	self assert: (self organizer packageNamed: #Package1) identicalTo: package
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamedIfAbsent [
+
+	| package |
+	package := self organizer ensurePackage: #Package1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package"
+	self assert: package name equals: #Package1.
+	self assert: (self organizer packageNamed: #Package1 ifAbsent: [ self fail ]) identicalTo: package.
+	self assert: (self organizer packageNamed: #Package ifAbsent: [ true ])
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamedIfPresent [
+
+	| package |
+	package := self organizer ensurePackage: #Package1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package"
+	self assert: package name equals: #Package1.
+	self assert: (self organizer packageNamed: #Package1 ifPresent: [ :package2 | package2 name ]) equals: package name.
+	self assert: (self organizer packageNamed: #Package ifPresent: [ self fail ]) isNil
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamedWithDifferentCase [
+
+	| package |
+	package := self organizer ensurePackage: #Package1.
+
+	self assert: self organizer packages size equals: 2. "Unpackaged + Package"
+	self assert: package name equals: #Package1.
+	self assert: (self organizer packageNamed: #PacKAge1) identicalTo: package
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testPackageNamedWithoutMatchingPackage [
+
+	self should: [ self organizer packageNamed: #PacKAge1 ] raise: NotFound
+]
+
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 	self createNewPackageNamed: 'P1'.
@@ -156,24 +233,30 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 { #category : 'tests' }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
+	"In the past we could not have package-tag with the same name than a package but now it is possible"
 
-	| package1 |
-	self flag: #package. "This is a limitiation of the system organizer. I hope to kill this limitiation before p12 release."
+	| package1 package2 tag |
 	package1 := self createNewPackageNamed: 'P1'.
-	package1 ensureTag: #T1.
+	tag := package1 ensureTag: #T1.
 
-	self should: [ self createNewPackageNamed: 'P1-T1' ] raise: Error
+	package2 := self createNewPackageNamed: #'P1-T1'.
+
+	self assert: package2 name equals: #'P1-T1'.
+	self assert: package1 name equals: #P1.
+	self assert: tag name equals: #T1
 ]
 
 { #category : 'tests' }
 RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 
-	| package1 package2 |
-	self flag: #package. "This is a limitiation of the system organizer. I hope to kill this limitiation before p12 release."
-	package1 := self createNewPackageNamed: 'P1-T1'.
+	| package1 package2 tag |
+	package1 := self createNewPackageNamed: #P1.
+	package2 := self createNewPackageNamed: #'P1-T1'.
+	tag := package1 ensureTag: #T1.
 
-	package2 := self createNewPackageNamed: 'P1'.
-	self should: [ package2 ensureTag: #T1 ] raise: Error
+	self assert: package2 name equals: #'P1-T1'.
+	self assert: package1 name equals: #P1.
+	self assert: tag name equals: #T1
 ]
 
 { #category : 'tests' }
