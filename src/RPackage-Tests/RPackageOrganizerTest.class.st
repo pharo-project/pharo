@@ -203,8 +203,8 @@ RPackageOrganizerTest >> testPackageNamedIfPresent [
 
 	self assert: self organizer packages size equals: 2. "Unpackaged + Package"
 	self assert: package name equals: #Package1.
-	self assert: (self organizer packageNamed: #Package1 ifPresent: [ :package | package name ]) equals: package name.
-	self assert: (self organizer packageNamed: #Package ifPresent: [ :package | self fail ]) isNil
+	self assert: (self organizer packageNamed: #Package1 ifPresent: [ :package2 | package2 name ]) equals: package name.
+	self assert: (self organizer packageNamed: #Package ifPresent: [ self fail ]) isNil
 ]
 
 { #category : 'tests' }
