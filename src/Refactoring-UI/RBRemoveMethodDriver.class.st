@@ -5,7 +5,6 @@ Class {
 	#name : 'RBRemoveMethodDriver',
 	#superclass : 'RBDriver',
 	#instVars : [
-		'class',
 		'refactoring',
 		'methods',
 		'senders'
@@ -91,19 +90,17 @@ RBRemoveMethodDriver >> runRefactoring [
 ]
 
 { #category : 'initialization' }
-RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod for: aClass [
+RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod [
 	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
-	methods := {aMethod}.
-	class := aClass
+	methods := { aMethod }
 ]
 
 { #category : 'initialization' }
-RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods for: aClass [
+RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods [
 	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
-	methods := aMethods.
-	class := aClass
+	methods := aMethods
 ]

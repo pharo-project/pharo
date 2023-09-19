@@ -2,31 +2,32 @@
 I am a command to push up given methods
 "
 Class {
-	#name : #SycPushUpMethodCommand,
-	#superclass : #SysRefactoringMethodCommand,
+	#name : 'SycPushUpMethodCommand',
+	#superclass : 'SysRefactoringMethodCommand',
 	#instVars : [
 		'refactoringScopes'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushUpMethodCommand >> asRefactorings [
 
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushUpMethodCommand >> defaultMenuIconName [
 	^ #up
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushUpMethodCommand >> defaultMenuItemName [
 	^'Push up'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushUpMethodCommand >> executeRefactorings [
 
 	(RBPushUpMethodDriver
@@ -35,13 +36,13 @@ SycPushUpMethodCommand >> executeRefactorings [
 		 pushUp: methods) runRefactoring
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycPushUpMethodCommand >> isComplexRefactoring [
 
 	^ false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.

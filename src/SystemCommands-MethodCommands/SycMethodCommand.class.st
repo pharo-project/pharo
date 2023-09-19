@@ -7,50 +7,51 @@ Internal Representation and Key Implementation Points.
 	methods:		<Colletion of<CompiledMethod>>
 "
 Class {
-	#name : #SycMethodCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycMethodCommand',
+	#superclass : 'CmdCommand',
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'methods'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMethodCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMethodSelected
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMethodCommand class >> for: methods [
 	^self new
 		methods: methods
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMethodCommand class >> isAbstract [
 	^self = SycMethodCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodCommand >> methods [
 	^ methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodCommand >> methods: anObject [
 	methods := anObject
 ]
 
-{ #category : #'activation - drag and drop' }
+{ #category : 'activation - drag and drop' }
 SycMethodCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.
 
 	methods := aToolContext selectedMethods
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	methods := aToolContext selectedMethods

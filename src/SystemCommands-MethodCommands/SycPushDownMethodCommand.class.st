@@ -2,31 +2,32 @@
 I am a command to push down given methods
 "
 Class {
-	#name : #SycPushDownMethodCommand,
-	#superclass : #SysRefactoringMethodCommand,
+	#name : 'SycPushDownMethodCommand',
+	#superclass : 'SysRefactoringMethodCommand',
 	#instVars : [
 		'refactoringScopes'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushDownMethodCommand >> asRefactorings [
 
 	^ self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushDownMethodCommand >> defaultMenuIconName [
 	^ #down
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushDownMethodCommand >> defaultMenuItemName [
 	^'Push down'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushDownMethodCommand >> executeRefactorings [
 
 	(RBPushDownMethodDriver
@@ -35,13 +36,13 @@ SycPushDownMethodCommand >> executeRefactorings [
 		pushDown: methods) runRefactoring
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycPushDownMethodCommand >> isComplexRefactoring [
 
 	^ false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	refactoringScopes := aToolContext refactoringScopes
