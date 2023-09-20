@@ -728,8 +728,8 @@ RPackage >> removeEmptyTags [
 { #category : 'removing' }
 RPackage >> removeFromSystem [
 
-	self definedClasses do: #removeFromSystem.
-	self extensionMethods do: #removeFromSystem.
+	self classTags do: [ :tag | tag removeFromSystem ].
+	self extensionMethods do: [ :method | method removeFromSystem ].
 
 	self unregister
 ]
@@ -793,6 +793,8 @@ RPackage >> removeTag: aTag [
 	tag := aTag isString
 		       ifTrue: [ self classTagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
+
+	tag classes do: [ :class | class removeFromSystem ].
 
 	classTags remove: tag ifAbsent: [ ^ self ].
 

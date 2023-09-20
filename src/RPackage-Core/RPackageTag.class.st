@@ -167,6 +167,13 @@ RPackageTag >> removeFromPackage [
 ]
 
 { #category : 'accessing' }
+RPackageTag >> removeFromSystem [
+	"Remove the tag and its content from the system"
+
+	self package removeTag: self
+]
+
+{ #category : 'accessing' }
 RPackageTag >> renameTo: newTagName [
 
 	| oldCategoryName newCategoryName oldTagName |
