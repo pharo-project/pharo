@@ -18,26 +18,28 @@ Here are some example of my protocol:
 
 "
 Class {
-	#name : #Magnitude,
-	#superclass : #Object,
-	#category : #'Kernel-Numbers'
+	#name : 'Magnitude',
+	#superclass : 'Object',
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Magnitude >> < aMagnitude [
 	"Answer whether the receiver is less than the argument."
 
 	^self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Magnitude >> <= aMagnitude [
 	"Answer whether the receiver is less than or equal to the argument."
 
 	^(self > aMagnitude) not
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Magnitude >> = aMagnitude [
 	"Compare the receiver with the argument and answer with true if the
 	receiver is equal to the argument. Otherwise answer false."
@@ -45,21 +47,21 @@ Magnitude >> = aMagnitude [
 	^self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Magnitude >> > aMagnitude [
 	"Answer whether the receiver is greater than the argument."
 
 	^aMagnitude < self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Magnitude >> >= aMagnitude [
 	"Answer whether the receiver is greater than or equal to the argument."
 
 	^aMagnitude <= self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Magnitude >> beBetween: minValue and: maxValue [
 	"Answer my value constrained to the interval [minValue ; maxValue]
 	I take care of the situation where minValue > maxValue"
@@ -74,7 +76,7 @@ Magnitude >> beBetween: minValue and: maxValue [
 		ifFalse: [ (self min: minValue) max: maxValue ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Magnitude >> between: min and: max [
 	"Answer whether the receiver is less than or equal to the argument, max,
 	and greater than or equal to the argument, min."
@@ -82,14 +84,14 @@ Magnitude >> between: min and: max [
 	^self >= min and: [self <= max]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Magnitude >> hash [
 	"Hash must be redefined whenever = is redefined."
 
 	^self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Magnitude >> max: aMagnitude [
 	"Answer the receiver or the argument, whichever has the greater
 	magnitude."
@@ -99,7 +101,7 @@ Magnitude >> max: aMagnitude [
 		ifFalse: [aMagnitude]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Magnitude >> min: aMagnitude [
 	"Answer the receiver or the argument, whichever has the lesser
 	magnitude."
@@ -109,7 +111,7 @@ Magnitude >> min: aMagnitude [
 		ifFalse: [aMagnitude]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Magnitude >> min: maxValue max: minValue [
 	"Take the minimum between self and maxValue, then the maximum with minValue"
 	"(10 min: 20 max: 5) >>> 10"

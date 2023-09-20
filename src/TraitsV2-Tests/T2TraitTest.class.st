@@ -2,12 +2,13 @@
 Unit test for trait handling
 "
 Class {
-	#name : #T2TraitTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> createT1 [
 	| t1 |
 	t1 := self newTrait: #T1 with: 'a b c' asSlotCollection.
@@ -26,7 +27,7 @@ T2TraitTest >> createT1 [
 	^ t1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> createT2 [
 	| t2 |
 	t2 := self newTrait: #T2 with: 'd e f' asSlotCollection.
@@ -45,7 +46,7 @@ T2TraitTest >> createT2 [
 	^ t2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> createT3 [
 	| t3 |
 
@@ -70,7 +71,7 @@ T2TraitTest >> createT3 [
 	^ t3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testClassHavingAnInstanceVariableUsersDifferenThanUsers [
 	| t1 aClass |
 
@@ -83,7 +84,7 @@ T2TraitTest >> testClassHavingAnInstanceVariableUsersDifferenThanUsers [
 	self assert: (aClass class slotNamed: #users) definingClass equals: t1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testClassTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	| t3 aClass |
 
@@ -98,7 +99,7 @@ T2TraitTest >> testClassTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	self assert: (aClass class >> #aClassMethod) traitSource equals: t3 class asTraitComposition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testClassTraits [
 	| t1 t2 aClass |
 	<ignoreNotImplementedSelectors: #(otherSelector otherSelector2 anAlias aSelector)>
@@ -130,7 +131,7 @@ T2TraitTest >> testClassTraits [
 	self assert: aClass aSelector equals: 21
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testClassUsesTrait [
 	| t1 superclass subclass |
 	t1 := self newTrait: #T1 with: {}.
@@ -143,7 +144,7 @@ T2TraitTest >> testClassUsesTrait [
 	self assert: (subclass usesTraitLocally: t1) not
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 	| t1 aClass |
 
@@ -154,7 +155,7 @@ T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 	self assert: (aClass class allSlots noneSatisfy: [:e | e name = #users])
 ]
 
-{ #category : #'tests - empty' }
+{ #category : 'tests - empty' }
 T2TraitTest >> testEmptyCompositionManagesTEmpty [
 
 	| t1 |
@@ -163,7 +164,7 @@ T2TraitTest >> testEmptyCompositionManagesTEmpty [
 	self assert: t1 hasEmptyComposition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testIndirectSequence [
 	| t1 t2 t3 c1 obj |
 	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2)>
@@ -184,7 +185,7 @@ T2TraitTest >> testIndirectSequence [
 	self assert: obj getValues2 equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testMethodsAddedInMetaclass [
 	| t1 c1 |
 
@@ -194,7 +195,7 @@ T2TraitTest >> testMethodsAddedInMetaclass [
 	self assertCollection: c1 class selectors sorted equals: TraitedClass selectors sorted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
 	| t1 c1 c2 |
 
@@ -205,7 +206,7 @@ T2TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
 	self assertCollection: c2 class selectors sorted equals: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSuperclass [
 	| t1 c1 c2 t2 |
 
@@ -221,7 +222,7 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSuperc
 	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperclass [
 	| t1 c1 c2 t2 |
 
@@ -237,21 +238,21 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperc
 	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testRedefiningAClassAsTraitShouldRaiseError [
 
 	self newClass: #C1.
 	self should: [ self newTrait: #C1 with: #() ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testRedefiningATraitAsAClassShouldRaiseError [
 
 	self newTrait: #C1 with: #().
 	self should: [ 	self newClass: #C1 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 	| t1 t2 c1 |
 
@@ -266,7 +267,7 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 	self deny: (c1 class includesSelector: #traits)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 	| t1 t2 c2 c1 |
 
@@ -284,7 +285,7 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 	self assert: (c2 class includesSelector: #traits)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testRemovingTraitsUpdatesCategories [
 
 	| t1 t2 c1 |
@@ -297,7 +298,7 @@ T2TraitTest >> testRemovingTraitsUpdatesCategories [
 	c1 class selectors do: [ :selector | self assert: (c1 class includesSelector: selector) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testSelectorsWithExplicitOrigin [
 	"Obtain the subset of selectors that are defined either locally or inherited from traits. But, exclude selectors of methods from implicit traits such as TraitedClass"
 	| t1 c1 |
@@ -310,7 +311,7 @@ T2TraitTest >> testSelectorsWithExplicitOrigin [
 	self assertCollection: c1 class selectorsWithExplicitOrigin hasSameElements: #(classSideMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testSelectorsWithExplicitOriginNoTrait [
 	"Obtain the subset of selectors that are defined either locally or inherited from traits. But, exclude selectors of methods from implicit traits such as TraitedClass"
 	| c1 |
@@ -321,7 +322,7 @@ T2TraitTest >> testSelectorsWithExplicitOriginNoTrait [
 	self assertCollection: c1 class selectorsWithExplicitOrigin hasSameElements: #(classSideMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testSequence [
 	| t1 t2 c1 obj |
 	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2 )>
@@ -341,7 +342,7 @@ T2TraitTest >> testSequence [
 	self assert: obj getValues2 equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
 
 	| t1 c1 |
@@ -352,7 +353,7 @@ T2TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
 	self should: [ t1 classTrait traitComposition: c1 ] raise: Error.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testSlotsAreNotDuplicated [
 	| t1 t2 c1 |
 	t1 :=  self newTrait: #T1 with: 'a' asSlotCollection.
@@ -363,7 +364,7 @@ T2TraitTest >> testSlotsAreNotDuplicated [
 	self assert: c1 traitComposition slots size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testSubclasses [
 	| t1 t2 |
 
@@ -380,7 +381,7 @@ T2TraitTest >> testSubclasses [
 	self deny: t2 hasSubclasses.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testTraitHaveUsersInstanceVariable [
 	| t1 aClass |
 
@@ -392,7 +393,7 @@ T2TraitTest >> testTraitHaveUsersInstanceVariable [
 	self assert: (aClass slotNamed: #users) definingClass equals: t1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	| t3 aClass |
 
@@ -407,7 +408,7 @@ T2TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	self assert: (aClass >> #aMethod) traitSource equals: t3 asTraitComposition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitTest >> testUsingTraitInAnonymousSubClassAndRedefiningIt [
 	| t1 aClass |
 

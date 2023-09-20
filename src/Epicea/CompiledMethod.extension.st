@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Epicea-Ring' }
+{ #category : '*Epicea-Ring' }
 CompiledMethod >> asEpiceaRingDefinition [
 
 	^ (RGMethodDefinition named: self selector)

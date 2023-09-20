@@ -1,22 +1,24 @@
 Class {
-	#name : #RBMoveVariableDefinitionParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBMoveVariableDefinitionParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBMoveVariableDefinitionParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveVariableDefinitionToSmallestValidScopeRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveVariableDefinitionParametrizedTest >> constructor [
 	^ #bindTight:in:selector:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveVariableDefinitionParametrizedTest >> testFailureInvalidSelector [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -25,7 +27,7 @@ RBMoveVariableDefinitionParametrizedTest >> testFailureInvalidSelector [
 				 #caller3 })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveVariableDefinitionParametrizedTest >> testFailureNoMoveDefinition [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -34,7 +36,7 @@ RBMoveVariableDefinitionParametrizedTest >> testFailureNoMoveDefinition [
 				 #noMoveDefinition })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveVariableDefinitionParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -51,7 +53,7 @@ RBMoveVariableDefinitionParametrizedTest >> testFailureNonExistantName [
 				 #displayName })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
@@ -71,7 +73,7 @@ RBMoveVariableDefinitionParametrizedTest >> testMoveDefinition [
 										temp odd]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveVariableDefinitionParametrizedTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:

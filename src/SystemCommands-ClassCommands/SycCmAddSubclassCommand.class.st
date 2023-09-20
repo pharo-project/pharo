@@ -2,12 +2,13 @@
 I am a command to create new subclass og given class (my targetClass)
 "
 Class {
-	#name : #SycCmAddSubclassCommand,
-	#superclass : #SycCmNewClassCreationCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycCmAddSubclassCommand',
+	#superclass : 'SycCmNewClassCreationCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycCmAddSubclassCommand >> executeRefactoring [
 
 	| refactoring |
@@ -19,23 +20,23 @@ SycCmAddSubclassCommand >> executeRefactoring [
 	refactoring execute.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmAddSubclassCommand >> icon [
 	^self iconNamed:#add
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCmAddSubclassCommand >> isApplicable [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmAddSubclassCommand >> name [
 	^'New subclass'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmAddSubclassCommand >> order [
 	^ 10100.1
 ]

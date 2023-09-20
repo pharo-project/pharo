@@ -1,10 +1,12 @@
 Class {
-	#name : #FLConfigurationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Configuration'
+	#name : 'FLConfigurationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Configuration',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Configuration'
 }
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testDecorateStreamFactory [
 
 	| byteConverterStream string |
@@ -39,7 +41,7 @@ FLConfigurationTest >> testDecorateStreamFactory [
 	self assert: string equals: 'foo'
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testDecorateStreamFactoryMustAcceptSingleArgument [
 	{
 		[].
@@ -61,7 +63,7 @@ FLConfigurationTest >> testDecorateStreamFactoryMustAcceptSingleArgument [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testDecorateStreamFactoryMustBeBlock [
 	{
 		#streamFactory:.
@@ -83,7 +85,7 @@ FLConfigurationTest >> testDecorateStreamFactoryMustBeBlock [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testDecorateStreamFactoryWhenStreamFactoryNotSet [
 	self
 		should: [ FLSerializer new decorateStreamFactory: [ :stream ] ]
@@ -93,7 +95,7 @@ FLConfigurationTest >> testDecorateStreamFactoryWhenStreamFactoryNotSet [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLConfigurationTest >> testEnvironment [
 	| materializerEnvironment serializerEnvironment |
 	serializerEnvironment := Dictionary new.
@@ -110,13 +112,13 @@ FLConfigurationTest >> testEnvironment [
 	self deny: serializer environment identicalTo: materializer environment
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLConfigurationTest >> testEnvironmentDefault [
 	self assert: FLSerializer new environment identicalTo: self class environment.
 	self assert: FLMaterializer new environment identicalTo: self class environment
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLConfigurationTest >> testEnvironmentHasAtLeastUndefinedObject [
 	serializer := FLSerializer new
 		environment: Dictionary new;
@@ -131,7 +133,7 @@ FLConfigurationTest >> testEnvironmentHasAtLeastUndefinedObject [
 	self assert: (materializer environment at: #UndefinedObject) identicalTo: UndefinedObject
 ]
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLConfigurationTest >> testEnvironmentWhenAlreadySet [
 	serializer := FLSerializer new
 		environment: self environmentOfTest;
@@ -149,7 +151,7 @@ FLConfigurationTest >> testEnvironmentWhenAlreadySet [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-convenience' }
+{ #category : 'tests-configuring-convenience' }
 FLConfigurationTest >> testFilePath [
 	| fileName materialized |
 	fileName := 'test_file_name'.
@@ -168,7 +170,7 @@ FLConfigurationTest >> testFilePath [
 	self assert: materialized equals: 'abc'
 ]
 
-{ #category : #'tests-configuring-convenience' }
+{ #category : 'tests-configuring-convenience' }
 FLConfigurationTest >> testFilePathWhenStreamFactoryAlreadySet [
 	serializer := FLSerializer new
 		filePath: 'filename';
@@ -178,7 +180,7 @@ FLConfigurationTest >> testFilePathWhenStreamFactoryAlreadySet [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-convenience' }
+{ #category : 'tests-configuring-convenience' }
 FLConfigurationTest >> testFilePathWrong [
 	 self
 		should: [ self serializer filePath: 'filename' asFileReference ]
@@ -191,7 +193,7 @@ FLConfigurationTest >> testFilePathWrong [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-convenience' }
+{ #category : 'tests-configuring-convenience' }
 FLConfigurationTest >> testOnStream [
 	| stream materialized |
 	stream := (ByteArray new: 100) writeStream.
@@ -208,7 +210,7 @@ FLConfigurationTest >> testOnStream [
 	self assert: materialized equals: 'abc'
 ]
 
-{ #category : #'tests-configuring-convenience' }
+{ #category : 'tests-configuring-convenience' }
 FLConfigurationTest >> testOnStreamDoesNotCloseStream [
 	| stream |
 	stream := FLFilePoolTestResource current writeStreamForFilePath: 'test'.
@@ -223,7 +225,7 @@ FLConfigurationTest >> testOnStreamDoesNotCloseStream [
 	self assert: stream closed
 ]
 
-{ #category : #'tests-configuring-convenience' }
+{ #category : 'tests-configuring-convenience' }
 FLConfigurationTest >> testOnStreamWithReuse [
 	| stream1 stream2 materialized |
 	stream1 := (ByteArray new: 5) writeStream.
@@ -252,7 +254,7 @@ FLConfigurationTest >> testOnStreamWithReuse [
 	self assert: materialized equals: 'efg'
 ]
 
-{ #category : #'tests-configuring-convenience' }
+{ #category : 'tests-configuring-convenience' }
 FLConfigurationTest >> testOnStreamWrong [
 	 self
 		should: [ self serializer onStream: 'filename' ]
@@ -263,7 +265,7 @@ FLConfigurationTest >> testOnStreamWrong [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFactory [
 	| string |
 	string := String new: 3.
@@ -280,7 +282,7 @@ FLConfigurationTest >> testStreamFactory [
 	self assert: materializer streamFactory value upToEnd equals: 'foo'
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFactoryDefault [
 	self
 		should: [ FLSerializer new streamFactory ]
@@ -290,7 +292,7 @@ FLConfigurationTest >> testStreamFactoryDefault [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFactoryMustAcceptNoArguments [
 	{
 		[ :a ].
@@ -312,7 +314,7 @@ FLConfigurationTest >> testStreamFactoryMustAcceptNoArguments [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFactoryMustBeBlock [
 	{
 		#streamFactory:.
@@ -334,7 +336,7 @@ FLConfigurationTest >> testStreamFactoryMustBeBlock [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFactoryWhenAlreadySet [
 	self
 		should: [ self serializer streamFactory: [] ]
@@ -344,7 +346,7 @@ FLConfigurationTest >> testStreamFactoryWhenAlreadySet [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFinalizer [
 	| contents |
 	serializer := FLSerializer new
@@ -355,7 +357,7 @@ FLConfigurationTest >> testStreamFinalizer [
 	self assert: contents equals: 'foo'
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFinalizerDefault [
 
 	<ignoreNotImplementedSelectors: #( _log )>
@@ -376,7 +378,7 @@ FLConfigurationTest >> testStreamFinalizerDefault [
 	self assert: log _log first equals: #close
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFinalizerMustAcceptSingleArgument [
 	{
 		[].
@@ -398,7 +400,7 @@ FLConfigurationTest >> testStreamFinalizerMustAcceptSingleArgument [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFinalizerMustBeBlock [
 	{
 		#streamFinalizer:.
@@ -420,7 +422,7 @@ FLConfigurationTest >> testStreamFinalizerMustBeBlock [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-stream' }
+{ #category : 'tests-configuring-stream' }
 FLConfigurationTest >> testStreamFinalizerWhenAlreadySet [
 	self serializer streamFinalizer: [ :x ].
 	self materializer streamFinalizer: [ :x ].

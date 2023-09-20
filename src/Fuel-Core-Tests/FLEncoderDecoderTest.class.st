@@ -1,15 +1,17 @@
 Class {
-	#name : #FLEncoderDecoderTest,
-	#superclass : #TestCase,
+	#name : 'FLEncoderDecoderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'encoder',
 		'stream',
 		'decoder'
 	],
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FLEncoderDecoderTest >> assertIdentityOf: aSmallInteger using: anArray [
 	stream resetToStart.
 	
@@ -20,7 +22,7 @@ FLEncoderDecoderTest >> assertIdentityOf: aSmallInteger using: anArray [
 	self assert: (decoder perform: anArray second) identicalTo: aSmallInteger
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLEncoderDecoderTest >> setUp [
 	super setUp.
 	
@@ -34,7 +36,7 @@ FLEncoderDecoderTest >> setUp [
 		useDuring: [ decoder := FLDecoder new ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderDecoderTest >> testSmallIntegerSerializationForAllBitsWith16Bits [
 	1
 		to: 15
@@ -46,7 +48,7 @@ FLEncoderDecoderTest >> testSmallIntegerSerializationForAllBitsWith16Bits [
 				using: #(encodeUint16: nextEncodedUint16) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderDecoderTest >> testSmallIntegerSerializationForAllBitsWith24Bits [
 	1
 		to: 23
@@ -66,7 +68,7 @@ FLEncoderDecoderTest >> testSmallIntegerSerializationForAllBitsWith24Bits [
 				using: #(encodeInt24: nextEncodedInt24) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderDecoderTest >> testSmallIntegerSerializationForAllBitsWith32Bits [
 	1
 		to: 30
@@ -88,7 +90,7 @@ FLEncoderDecoderTest >> testSmallIntegerSerializationForAllBitsWith32Bits [
 					using: #(encodeInt32: nextEncodedInt32) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderDecoderTest >> testSmallIntegerSerializationForAllBitsWith64Bits [
 	1
 		to: 60
@@ -110,7 +112,7 @@ FLEncoderDecoderTest >> testSmallIntegerSerializationForAllBitsWith64Bits [
 					using: #(encodeInt64: nextEncodedInt64) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderDecoderTest >> testSmallIntegerSerializationForAllBitsWith8Bits [
 	1
 		to: 7

@@ -7,8 +7,8 @@ Before start rendering, you must set:
 
 "
 Class {
-	#name : #CairoFreetypeFontRenderer,
-	#superclass : #Object,
+	#name : 'CairoFreetypeFontRenderer',
+	#superclass : 'Object',
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
@@ -23,20 +23,22 @@ Class {
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFreetypeFontRenderer >> advance [
 	^ advance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFreetypeFontRenderer >> advance: aPoint [
 	advance := aPoint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFreetypeFontRenderer >> applyKerningOn: aGlyphs of: aString from: start to: end [
 	"Apply kerning on a glyphs that represent aString from
 	start to end"
@@ -51,13 +53,13 @@ CairoFreetypeFontRenderer >> applyKerningOn: aGlyphs of: aString from: start to:
 		previous := current ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFreetypeFontRenderer >> canvas: aCairoCanvas [
 
 	canvas := aCairoCanvas
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFreetypeFontRenderer >> convertString: utf8String len: strlen ofFont: aScaledFont toGlyphs: glyphs numGlyphs: numGlyphs x: x y: y [
 "
 all of this for using
@@ -77,7 +79,7 @@ http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font
 			NULL))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFreetypeFontRenderer >> font: aFreetypeFont [
 
 	font := CairoScaledFont fromFreetypeFont: aFreetypeFont.
@@ -85,29 +87,29 @@ CairoFreetypeFontRenderer >> font: aFreetypeFont [
 	originalFont := aFreetypeFont
 ]
 
-{ #category : #'accessing - font metrics' }
+{ #category : 'accessing - font metrics' }
 CairoFreetypeFontRenderer >> fontAscent [
 	^ fontExtents ascent
 ]
 
-{ #category : #'accessing - font metrics' }
+{ #category : 'accessing - font metrics' }
 CairoFreetypeFontRenderer >> fontHeight [
 	^ fontExtents height
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFreetypeFontRenderer >> freeGlyphs: glyphs [
 	^ self ffiCall: #( void cairo_glyph_free (void *glyphs))
 ]
 
-{ #category : #'accessing - font metrics' }
+{ #category : 'accessing - font metrics' }
 CairoFreetypeFontRenderer >> getGlyphWidth: aCharacter [
 	utfConverter convert: aCharacter asString from: 1 to: 1.
 	font getExtentsOf: utfConverter buffer into: glyphExtents.
 	^ glyphExtents x_advance
 ]
 
-{ #category : #'accessing - font metrics' }
+{ #category : 'accessing - font metrics' }
 CairoFreetypeFontRenderer >> glyphsOf: aString from: start to: end [
 	| len ptr glyphs lenValue glyphsSize utf8Len error |
 
@@ -149,20 +151,20 @@ CairoFreetypeFontRenderer >> glyphsOf: aString from: start to: end [
 	^ glyphs
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CairoFreetypeFontRenderer >> initialize [
 	utfConverter := CairoUTF8Converter new.
 	advance := 0@0.
 	glyphExtents := CairoTextExtents new
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 CairoFreetypeFontRenderer >> render: aString [
 
 	^ self renderCharacters: aString from: 1 to: aString size
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 CairoFreetypeFontRenderer >> renderCharacters: aString from: start to: end [
 	| glyphs |
 
@@ -171,7 +173,7 @@ CairoFreetypeFontRenderer >> renderCharacters: aString from: start to: end [
 	^ self advance
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 CairoFreetypeFontRenderer >> renderGlyphs: cairoGlyphs [
 
 	font lock.
@@ -184,7 +186,7 @@ CairoFreetypeFontRenderer >> renderGlyphs: cairoGlyphs [
 	font unlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFreetypeFontRenderer >> setColor: aColor [
 	(canvas setPaint: aColor )
 ]

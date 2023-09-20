@@ -2,52 +2,54 @@
 Mock for dependency testing
 "
 Class {
-	#name : #MCMockDependentItem,
-	#superclass : #MCMock,
+	#name : 'MCMockDependentItem',
+	#superclass : 'MCMock',
 	#instVars : [
 		'name',
 		'provides',
 		'requires'
 	],
-	#category : #'Monticello-Mocks'
+	#category : 'Monticello-Mocks',
+	#package : 'Monticello',
+	#tag : 'Mocks'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMockDependentItem >> <= other [
 	^ self name <= other name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDependentItem >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDependentItem >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDependentItem >> provides: anArray [
 
 	provides := anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDependentItem >> provisions [
 
 	^ provides ifNil: [#()]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMockDependentItem >> requirements [
 
 	^ requires ifNil: [#()]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDependentItem >> requires: anArray [
 
 	requires := anArray

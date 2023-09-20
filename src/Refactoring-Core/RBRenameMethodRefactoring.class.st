@@ -30,15 +30,17 @@ refactoring execute
 ```
 "
 Class {
-	#name : #RBRenameMethodRefactoring,
-	#superclass : #RBChangeMethodNameRefactoring,
+	#name : 'RBRenameMethodRefactoring',
+	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
 		'hasPermutedArguments'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^ self new
 		model: aRBSmalltalk;
@@ -49,7 +51,7 @@ RBRenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector i
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^ self new
 		renameMethod: aSelector
@@ -58,7 +60,7 @@ RBRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 		permutation: aMap
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameMethodRefactoring >> applicabilityPreconditions [
 
 	^ self newNameDoesNotRequireRefactoringPreconditions not & (RBCondition
@@ -67,13 +69,13 @@ RBRenameMethodRefactoring >> applicabilityPreconditions [
 			   , ' doesn''t have the correct number of arguments.')
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameMethodRefactoring >> breakingChangePreconditions [
 
 	^ self doesNotOverrideExistingMethodPrecondition 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBRenameMethodRefactoring >> generateChanges [
 
 	
@@ -88,7 +90,7 @@ RBRenameMethodRefactoring >> generateChanges [
 	^ self changes
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRenameMethodRefactoring >> hasPermutedArguments [
 
 	^ hasPermutedArguments
@@ -96,25 +98,25 @@ RBRenameMethodRefactoring >> hasPermutedArguments [
 		ifNotNil: [ hasPermutedArguments ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRenameMethodRefactoring >> implementorsCanBePrimitives [
 	^self hasPermutedArguments not
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	super modifyImplementorParseTree: parseTree in: aClass.
 	self renameArgumentsIn: parseTree
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameMethodRefactoring >> myConditions [
 	^RBCondition withBlock: [oldSelector numArgs = newSelector numArgs]
 		errorString: newSelector printString
 				, ' doesn''t have the correct number of arguments.'
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
 	"this could be part of skippingRefactoringPrecondition meaning that there is no need to execute it."
 
@@ -129,7 +131,7 @@ RBRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
 		   errorString: 'The arguments are <1?:not >permuted')
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBRenameMethodRefactoring >> parseTreeRewriterInstance [
 
 	^ self hasPermutedArguments
@@ -140,18 +142,18 @@ RBRenameMethodRefactoring >> parseTreeRewriterInstance [
 				  with: newSelector ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameMethodRefactoring >> preconditions [
 
 	^ self newNameDoesNotRequireRefactoringPreconditions | super preconditions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodRefactoring >> refactoredClass [
 	^ class
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.

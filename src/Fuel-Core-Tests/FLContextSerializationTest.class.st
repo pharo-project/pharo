@@ -2,43 +2,45 @@
 SUnit tests for fuel serialization of methods contexts
 "
 Class {
-	#name : #FLContextSerializationTest,
-	#superclass : #FLSerializationTest,
+	#name : 'FLContextSerializationTest',
+	#superclass : 'FLSerializationTest',
 	#instVars : [
 		'thisContextSample'
 	],
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'closures for testing' }
+{ #category : 'closures for testing' }
 FLContextSerializationTest class >> blockClosureContextTesting [
 	^ [self class] asContext
 ]
 
-{ #category : #'closures for testing' }
+{ #category : 'closures for testing' }
 FLContextSerializationTest class >> blockClosureContextTestingWithSender: aSenderContext [
 	^ [self class] asContextWithSender: aSenderContext
 ]
 
-{ #category : #'closures for testing' }
+{ #category : 'closures for testing' }
 FLContextSerializationTest class >> blockClosureContextWithOutPointerTesting [
 	| string |
 	string := 'test'.
 	^ [self class. string asUppercase] asContext
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLContextSerializationTest class >> thisContextSample [
 	^ thisContext copy
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLContextSerializationTest >> setUp [
 	super setUp.
 	thisContextSample := self class thisContextSample.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLContextSerializationTest >> testContext [
 	"This test should be improved"
 	| context1  materializedContext1  |
@@ -54,7 +56,7 @@ FLContextSerializationTest >> testContext [
 	context1 assertWellMaterializedInto: materializedContext1 in: self.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLContextSerializationTest >> testContextThisContext [
 	| materializedContext context |
 	context := thisContextSample.
@@ -73,7 +75,7 @@ FLContextSerializationTest >> testContextThisContext [
 	"etc...."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLContextSerializationTest >> testContextWithClosure [
 	"This test should be improved"
 	| context1  materializedContext1  |
@@ -82,7 +84,7 @@ FLContextSerializationTest >> testContextWithClosure [
 	context1 assertWellMaterializedInto: materializedContext1 in: self.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLContextSerializationTest >> testContextWithClosureAndSender [
 	"This test should be improved"
 	| context1  materializedContext2  context2 |
@@ -100,7 +102,7 @@ FLContextSerializationTest >> testContextWithClosureAndSender [
 	context2 assertWellMaterializedInto: materializedContext2 in: self.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLContextSerializationTest >> testContextWithClosureContextWithOutPointerTesting [
 	"This test should be improved"
 
@@ -112,7 +114,7 @@ FLContextSerializationTest >> testContextWithClosureContextWithOutPointerTesting
 	context1 assertWellMaterializedInto: materializedContext1 in: self
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLContextSerializationTest >> testContextWithNilPc [
 	"This test should be improved"
 	| context1  materializedContext1  |
@@ -128,7 +130,7 @@ FLContextSerializationTest >> testContextWithNilPc [
 	context1 assertWellMaterializedInto: materializedContext1 in: self.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLContextSerializationTest >> testContextWithSender [
 	"This test should be improved"
 	| context1 context2 materializedContext1 |
@@ -154,7 +156,7 @@ FLContextSerializationTest >> testContextWithSender [
 	context1 assertWellMaterializedInto: materializedContext1 in: self.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLContextSerializationTest >> testContextWithTemp [
 	"This test should be improved"
 
@@ -176,7 +178,7 @@ FLContextSerializationTest >> testContextWithTemp [
 	context1 assertWellMaterializedInto: materializedContext1 in: self
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLContextSerializationTest >> testDoIt [
 
 	"Serialization of DoIt methods should be possible by default.

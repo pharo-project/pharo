@@ -2,28 +2,30 @@
 SUnit tests to tests conflicts for instance variables and class variable names
 "
 Class {
-	#name : #IVsAndClassVarNamesConflictTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'IVsAndClassVarNamesConflictTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'classFactory'
 	],
-	#category : #'Kernel-Tests-Classes'
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 IVsAndClassVarNamesConflictTest >> setUp [
 	super setUp.
 	classFactory := ClassFactoryForTestCase new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 IVsAndClassVarNamesConflictTest >> tearDown [
 
 	classFactory cleanUp.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingCapitalizedInstanceVariables [
 
 	| class |
@@ -33,7 +35,7 @@ IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingCapitalizedIn
 	self assert: (testingEnvironment keys includes: class name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingClasseVariablesBeginingWithLowerCaseCharacters [
 
 	| class |

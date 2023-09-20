@@ -4,15 +4,17 @@ By default each Slot corresponds to an instance variable and vice versa. Hence t
 
 "
 Class {
-	#name : #IndexedSlot,
-	#superclass : #Slot,
+	#name : 'IndexedSlot',
+	#superclass : 'Slot',
 	#instVars : [
 		'index'
 	],
-	#category : #'Kernel-Variables'
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 IndexedSlot >> = other [
 	self == other
 		ifTrue: [ ^ true ].
@@ -21,34 +23,34 @@ IndexedSlot >> = other [
 			and: [ name = other name ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 IndexedSlot >> hasSameDefinitionAs: other [
 	"Definiton does not contain index"
 	^super = other
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 IndexedSlot >> hash [
 	^ (self species hash bitXor: self name hash) bitXor: (self index ifNil: [ 0 ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IndexedSlot >> index [
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IndexedSlot >> index: anIndex [
 	index := anIndex
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IndexedSlot >> isVirtual [
 	"indexed slots are the only not virtual slots for now"
 	^false
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 IndexedSlot >> object: anObject instVarAt: anIndex [
 	"Primitive. Answer a fixed variable in an object. The numbering of the
 	 variables corresponds to the named instance variables. Fail if the index
@@ -60,7 +62,7 @@ IndexedSlot >> object: anObject instVarAt: anIndex [
 	^thisContext object: anObject instVarAt: anIndex
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 IndexedSlot >> object: anObject instVarAt: anIndex put: aValue [
 	"Primitive. Store a value into a fixed variable in the argument anObject.
 	 The numbering of the variables corresponds to the named instance
@@ -75,12 +77,12 @@ IndexedSlot >> object: anObject instVarAt: anIndex put: aValue [
 	^thisContext object: anObject instVarAt: anIndex put: aValue
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 IndexedSlot >> read: anObject [
 	^ self object: anObject instVarAt: index
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 IndexedSlot >> write: aValue to: anObject [
 	^ self object: anObject instVarAt: index put: aValue
 ]

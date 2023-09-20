@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveMethodRefactoringTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveMethodRefactoringTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveMethodRefactoringTest >> testFailureRemoveReferenced [
 
 	self shouldWarn: (RBRemoveMethodRefactoring
@@ -13,7 +15,7 @@ RBRemoveMethodRefactoringTest >> testFailureRemoveReferenced [
 			 from: #RBBasicLintRuleTestData)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveMethodRefactoringTest >> testFailureRemoveSameMethodButSendsSuper [
 
 	<expectedFailure>
@@ -23,7 +25,7 @@ RBRemoveMethodRefactoringTest >> testFailureRemoveSameMethodButSendsSuper [
 			 from: #'RBBasicLintRuleTestData class')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodRefactoringTest >> testJustSendsSuper [
 
 	| refactoring selector |
@@ -39,7 +41,7 @@ RBRemoveMethodRefactoringTest >> testJustSendsSuper [
 	self assert: (refactoring justSendsSuper: selector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodRefactoringTest >> testJustSendsSuperFailing [
 
 	| refactoring selector |
@@ -54,7 +56,7 @@ RBRemoveMethodRefactoringTest >> testJustSendsSuperFailing [
 	self deny: (refactoring justSendsSuper: selector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodRefactoringTest >> testModelRecursiveMethodThatIsNotReferencedFromOtherMethods [
 
 	| class otherClass selector |
@@ -80,7 +82,7 @@ RBRemoveMethodRefactoringTest >> testModelRecursiveMethodThatIsNotReferencedFrom
 	self deny: (class definesMethod: selector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodRefactoringTest >> testSendersIncludesSuperCalls [
 
 	| refactoring |
@@ -91,7 +93,7 @@ RBRemoveMethodRefactoringTest >> testSendersIncludesSuperCalls [
 	self denyEmpty: (refactoring sendersOf: #justSuperSendInSubclass)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodRefactoringTest >> testSendersOfUnsentMessage [
 
 	| refactoring rbclasses rbNamespace2 |

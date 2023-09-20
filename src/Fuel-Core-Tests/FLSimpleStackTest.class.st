@@ -1,10 +1,12 @@
 Class {
-	#name : #FLSimpleStackTest,
-	#superclass : #TestCase,
-	#category : #'Fuel-Core-Tests-Collections'
+	#name : 'FLSimpleStackTest',
+	#superclass : 'TestCase',
+	#category : 'Fuel-Core-Tests-Collections',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Collections'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLSimpleStackTest >> testCapacity [
 	| stack |
 	stack := FLSimpleStack new: 3.
@@ -14,7 +16,7 @@ FLSimpleStackTest >> testCapacity [
 	self assert: 5 equals: stack capacity
 ]
 
-{ #category : #'tests-adding' }
+{ #category : 'tests-adding' }
 FLSimpleStackTest >> testGrow [
 	| stack |
 	stack := FLSimpleStack new: 1.
@@ -23,12 +25,12 @@ FLSimpleStackTest >> testGrow [
 	self assert: 1 < stack capacity
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLSimpleStackTest >> testIsEmpty [
 	self assert: FLSimpleStack new isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLSimpleStackTest >> testPop [
 	| stack |
 	stack := FLSimpleStack new.
@@ -37,7 +39,7 @@ FLSimpleStackTest >> testPop [
 	self assert: stack isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLSimpleStackTest >> testPush [
 
 	| stack |

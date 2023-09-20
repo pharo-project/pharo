@@ -7,17 +7,19 @@ Additional notes:
 Error>defaultAction uses an explicit test for the presence of the Debugger class to decide whether or not it is in development mode.  In the future, TFEI hopes to enhance the semantics of #defaultAction to improve support for pluggable default handlers.
 "
 Class {
-	#name : #Error,
-	#superclass : #Exception,
-	#category : #'Kernel-Exceptions'
+	#name : 'Error',
+	#superclass : 'Exception',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Error class >> captureIfSignalledWhenStepping [
 	^self == Error
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 Error >> isResumable [
 	"Determine whether an exception is resumable."
 

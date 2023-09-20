@@ -1,10 +1,12 @@
 Class {
-	#name : #RBOverrideMethod,
-	#superclass : #RBBreakingChangeReport,
-	#category : #'Refactoring-UI-Drivers'
+	#name : 'RBOverrideMethod',
+	#superclass : 'RBBreakingChangeReport',
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBOverrideMethod >> browse [
 	"This is not satisfactory because not connected to any UI element."
 	SpConfirmDialog new 
@@ -18,7 +20,7 @@ RBOverrideMethod >> browse [
 		openDialog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBOverrideMethod >> refactoring: aRefactoring [
 
 	refactoring := aRefactoring

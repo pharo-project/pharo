@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveMethodsInHierarchyRefactoringTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveMethodsInHierarchyRefactoringTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveMethodsInHierarchyRefactoringTest >> testFailureRemoveNonExistantMethod [
 
 	self shouldFail: (RBRemoveMethodsInHierarchyRefactoring
@@ -12,7 +14,7 @@ RBRemoveMethodsInHierarchyRefactoringTest >> testFailureRemoveNonExistantMethod 
 			 from: RBBasicLintRuleTestData)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveMethodsInHierarchyRefactoringTest >> testFailureRemoveReferenced [
 
 	self shouldWarn: (RBRemoveMethodsInHierarchyRefactoring
@@ -20,7 +22,7 @@ RBRemoveMethodsInHierarchyRefactoringTest >> testFailureRemoveReferenced [
 				 from: RBBasicLintRuleTestData)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodsInHierarchyRefactoringTest >> testRemoveMethod [
 	| refactoring selectors |
 	selectors := Array with: 'msg4' asSymbol.

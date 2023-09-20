@@ -2,14 +2,16 @@
 I test the serialization of traits as *external* objects, i.e. the traits has to be present in the image at materialization time.
 "
 Class {
-	#name : #FLGlobalTraitSerializationTest,
-	#superclass : #FLTraitSerializationTest,
+	#name : 'FLGlobalTraitSerializationTest',
+	#superclass : 'FLTraitSerializationTest',
 	#traits : 'FLTGlobalClassOrTraitSerializationTest',
 	#classTraits : 'FLTGlobalClassOrTraitSerializationTest classTrait',
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalTraitSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVariable [
 	"Tests materialization of a class and a trait not defined in the image.
 	The class uses the trait.

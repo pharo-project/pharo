@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddParameterParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBAddParameterParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddParameterParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddParameterTransformation };
@@ -13,18 +15,18 @@ RBAddParameterParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddParameterParametrizedTest >> constructor [
 	^ #addParameterToMethod:in:newSelector:permutation:newArgs:
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddParameterParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 	| oldSelector newSelector refactoring class newArg |
 	oldSelector := ('called:' , 'on:') asSymbol.
@@ -51,7 +53,7 @@ RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
 	| oldSelector newSelector refactoring class newArg |
 	oldSelector := ('called:' , 'on:') asSymbol.
@@ -76,7 +78,7 @@ RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddParameterThatReferencesABlockWithInstanceVariableReference [
 
 	| refactoring class oldSelector newSelector newArg |
@@ -99,7 +101,7 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesABlockWithInstan
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddParameterThatReferencesGlobalAndLiteral [
 
 	| refactoring class oldSelector newSelector newArg |
@@ -121,7 +123,7 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesGlobalAndLiteral
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddParameterThatReferencesInstanceVariable [
 
 	| refactoring class oldSelector newSelector newArg |
@@ -144,7 +146,7 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesInstanceVariable
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddParameterThatReferencesModelGlobal [
 
 	| refactoring class oldSelector newSelector newArg |
@@ -166,7 +168,7 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesModelGlobal [
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddParameterThatReferencesSelf [
 
 	| refactoring class oldSelector newSelector newArg |
@@ -189,7 +191,7 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesSelf [
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddTwoParameters [
 
 	| refactoring class oldSelector newSelector newArgs |
@@ -212,7 +214,7 @@ RBAddParameterParametrizedTest >> testAddTwoParameters [
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddParameterParametrizedTest >> testFailureBadDefaultValueForNewArgument [
 
 	| newArg |
@@ -233,7 +235,7 @@ RBAddParameterParametrizedTest >> testFailureBadDefaultValueForNewArgument [
 				 { newArg } })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddParameterParametrizedTest >> testFailureInvalidNumArgsOfNewSelector [
 
 	| newArg |
@@ -246,7 +248,7 @@ RBAddParameterParametrizedTest >> testFailureInvalidNumArgsOfNewSelector [
 				 { newArg } })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddParameterParametrizedTest >> testFailureModelBadInitializationCode [
 
 	| refactoring newArg |
@@ -265,7 +267,7 @@ RBAddParameterParametrizedTest >> testFailureModelBadInitializationCode [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddParameterParametrizedTest >> testFailureModelNonExistantName [
 
 	| refactoring newArg |
@@ -282,7 +284,7 @@ RBAddParameterParametrizedTest >> testFailureModelNonExistantName [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddParameterParametrizedTest >> testFailureNonExistantName [
 
 	| newArg |
@@ -295,7 +297,7 @@ RBAddParameterParametrizedTest >> testFailureNonExistantName [
 				 { newArg } })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddParameterParametrizedTest >> testFailurePrimitiveMethods [
 
 	| refactoring newArg |
@@ -321,7 +323,7 @@ RBAddParameterParametrizedTest >> testFailurePrimitiveMethods [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddParameterParametrizedTest >> testFailureUseExistingNewSelector [
 
 	| newArg |

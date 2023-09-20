@@ -1,15 +1,25 @@
 Class {
-	#name : #RBRemoveClassDriver,
-	#superclass : #RBDriver,
+	#name : 'RBRemoveClassDriver',
+	#superclass : 'RBDriver',
 	#instVars : [
 		'refactoring',
 		'classes',
 		'users'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'resources' }
+RBRemoveClassDriver >> configureRefactoring [
+
+	refactoring := RBRemoveClassRefactoring
+		               model: model
+		               classNames: (classes collect: [ :cl | cl name ])
+]
+
+{ #category : 'execution' }
 RBRemoveClassDriver >> runRefactoring [
 
 	| select |
@@ -18,14 +28,14 @@ RBRemoveClassDriver >> runRefactoring [
 	[
 	users := refactoring senders.
 
-	users size = 0
-		ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
-		ifFalse: [ 
+	users
+		ifEmpty: [ self openPreviewWithChanges: refactoring generateChanges ]
+		ifNotEmpty: [ 
 		
 		select := SpSelectDialog new 
-			title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames;
+			title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
 			label: 'Select a strategy';
-			items: (RBRemoveMethodChoice subclasses collect: [ :each | each  new driver: self]);
+			items: (RBRemoveClassChoice subclasses collect: [ :each | each  new driver: self]);
 			display: [ :each | each description ];
 			displayIcon: [ :each | self iconNamed: each systemIconName ];
 			openModal.
@@ -42,7 +52,7 @@ RBRemoveClassDriver >> runRefactoring [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RBRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 	
 	scopes := refactoringScopes.

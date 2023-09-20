@@ -9,31 +9,32 @@ Internal Representation and Key Implementation Points.
 	package:		<RPackage>
 "
 Class {
-	#name : #SycMoveMethodsToPackageCommand,
-	#superclass : #SycMethodRepackagingCommand,
+	#name : 'SycMoveMethodsToPackageCommand',
+	#superclass : 'SycMethodRepackagingCommand',
 	#instVars : [
 		'package'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMoveMethodsToPackageCommand class >> for: methods to: aPackage [
 	^(self for: methods)
 		package: aPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToPackageCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToPackageCommand >> defaultMenuItemName [
 	^'Move to package'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMoveMethodsToPackageCommand >> execute [
 
 	methods do: [ :each |
@@ -41,7 +42,7 @@ SycMoveMethodsToPackageCommand >> execute [
 		each origin removeEmptyProtocols ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMoveMethodsToPackageCommand >> moveMethod: aMethod toPackage: aPackage [
 
 	| existingPackage willBeExtension |
@@ -55,23 +56,23 @@ SycMoveMethodsToPackageCommand >> moveMethod: aMethod toPackage: aPackage [
 		ifFalse: [ self classifyMethod: aMethod ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToPackageCommand >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToPackageCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMoveMethodsToPackageCommand >> prepareExecutionInDropContext: aToolContext [
 	super prepareExecutionInDropContext: aToolContext.
 	package := aToolContext lastSelectedPackage
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMoveMethodsToPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

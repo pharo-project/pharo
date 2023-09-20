@@ -1,6 +1,6 @@
-Extension { #name : #Boolean }
+Extension { #name : 'Boolean' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Boolean >> valueSelector [
 	^#value
 ]

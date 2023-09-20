@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveAllMessageSendsTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveAllMessageSendsTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveAllMessageSendsTransformationTest >> testClassDoesNotExist [
 
 	| trans |
@@ -15,7 +17,7 @@ RBRemoveAllMessageSendsTransformationTest >> testClassDoesNotExist [
 	self should: [ trans generateChanges ] raise: trans refactoringErrorClass.
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveAllMessageSendsTransformationTest >> testFailureNonExistantSelector [
 
 	| trans |
@@ -26,7 +28,7 @@ RBRemoveAllMessageSendsTransformationTest >> testFailureNonExistantSelector [
 	self should: [ trans generateChanges ] raise: trans refactoringErrorClass.
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveAllMessageSendsTransformationTest >> testMethodDoesNotExist [
 		
 	| trans |
@@ -37,7 +39,7 @@ RBRemoveAllMessageSendsTransformationTest >> testMethodDoesNotExist [
 	self should: [ trans generateChanges ] raise: trans refactoringErrorClass.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAllMessageSendsTransformationTest >> testRemoveMessageInsideBlock [
 
 	| trans |
@@ -56,7 +58,7 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveMessageInsideBlock [
 			^anObject]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascaded2Message [
 
 	| transformedMethod afterRefactoring1 afterRefactoring2 trans |
@@ -80,7 +82,7 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascaded2Messag
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascaded3Message [
 
 	| transformedMethod afterRefactoring1 afterRefactoring2 trans |
@@ -122,7 +124,7 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascaded3Messag
 	self assert: (transformedMethod = afterRefactoring1 or: [ transformedMethod = afterRefactoring2])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascadedMessage [
 
 	| trans |
@@ -138,7 +140,7 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascadedMessage
 			aBlock value')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAllMessageSendsTransformationTest >> testRemoveSimpleSenderOfMessage [
 
 	|  transformedMethod afterRefactoring1 afterRefactoring2 trans |

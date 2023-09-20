@@ -1,17 +1,19 @@
 Class {
-	#name : #RBCopyPackageParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBCopyPackageParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBCopyPackageParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBCopyPackageRefactoring };
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBCopyPackageParametrizedTest >> addMethodWithRefTo: classRefName inClass: className [
 
 	(RBAddMethodTransformation
@@ -25,12 +27,12 @@ RBCopyPackageParametrizedTest >> addMethodWithRefTo: classRefName inClass: class
 		 withProtocol: #accessing ) execute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCopyPackageParametrizedTest >> constructor [
 	^ #copyPackage:in:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCopyPackageParametrizedTest >> createPackageNamed: packageName withClasses: aCollection [
 
 	self packageOrganizer ensurePackage: packageName.
@@ -45,13 +47,13 @@ RBCopyPackageParametrizedTest >> createPackageNamed: packageName withClasses: aC
 		refactoring execute ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCopyPackageParametrizedTest >> removePackageNamed: packageName [
 
 	RPackageOrganizer default removePackageNamed: packageName
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBCopyPackageParametrizedTest >> setUp [
 	super setUp.
 	model := self defaultNamespaceClass new.
@@ -61,7 +63,7 @@ RBCopyPackageParametrizedTest >> setUp [
 	self addMethodWithRefTo: 'RBFTTest2' inClass: 'RBFTTest1'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBCopyPackageParametrizedTest >> tearDown [
 
 	(RBRefactoryChangeFactory instance removePackageNamed: 'RefactoringSmallPackageForTest')
@@ -69,7 +71,7 @@ RBCopyPackageParametrizedTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
 
@@ -91,7 +93,7 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 			^ BarFTTest2')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 	| refactoring aModel |
 
@@ -112,13 +114,13 @@ RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 		description: 'It test that original class where we copied from is still there'
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBCopyPackageParametrizedTest >> testFailureBadName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{#'Refactoring-Tests-Core' . #'Refactoring-Tests-Core'})
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBCopyPackageParametrizedTest >> testFailureExistingPackage [
 
 	self shouldFail: (self createRefactoringWithArguments:

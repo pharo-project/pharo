@@ -1,20 +1,22 @@
 Class {
-	#name : #RGTraitComposition,
-	#superclass : #RGObject,
+	#name : 'RGTraitComposition',
+	#superclass : 'RGObject',
 	#instVars : [
 		'transformations'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitComposition >> addTransformation: anRGTraitTransformation [
 
 	self parent announceDefinitionChangeDuring: [
 		self backend forBehavior addTransformation: anRGTraitTransformation to: self ]
 ]
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGTraitComposition >> addoptToParentStub [
 
 	super addoptToParentStub.
@@ -22,26 +24,26 @@ RGTraitComposition >> addoptToParentStub [
 	self environment backend createUnresolvedClassGroupFor: self parent
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitComposition >> cleanTransformations [
 
 	self parent announceDefinitionChangeDuring: [
 		self backend forBehavior cleanTransformationsFor: self ]
 ]
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGTraitComposition >> defaultParentStub [
 
 	^ self defaultClassStub
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> defaultTransformations [
 
 	^ OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitComposition >> initialize [
 
 	super initialize.
@@ -49,7 +51,7 @@ RGTraitComposition >> initialize [
 	transformations := self unresolvedValue: self defaultTransformations
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitComposition >> initializeUnresolved [
 
 	super initializeUnresolved.
@@ -57,13 +59,13 @@ RGTraitComposition >> initializeUnresolved [
 	transformations := self unresolvedValue: self defaultTransformations
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGTraitComposition >> isTraitComposition [
 
 	^ true
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGTraitComposition >> makeResolved [
 
 	super makeResolved.
@@ -71,14 +73,14 @@ RGTraitComposition >> makeResolved [
 	transformations := self transformations markAsRingResolved
 ]
 
-{ #category : #'queries - methods' }
+{ #category : 'queries - methods' }
 RGTraitComposition >> methods [
 
 	^ Array streamContents: [ :stream |
 		self transformationsDo: [ :transformation | stream nextPutAll: transformation methods ]]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtAddTransformation: anRGTraitTransformation [
 
 	self environment verifyOwnership: anRGTraitTransformation.
@@ -89,13 +91,13 @@ RGTraitComposition >> pvtAddTransformation: anRGTraitTransformation [
 	transformations add: anRGTraitTransformation
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtCleanTransformations [
 
 	transformations := self defaultTransformations
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtRemoveTransformation: anRGTraitTransformation [
 
 	self environment verifyOwnership: anRGTraitTransformation.
@@ -103,7 +105,7 @@ RGTraitComposition >> pvtRemoveTransformation: anRGTraitTransformation [
 	transformations remove: anRGTraitTransformation
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
@@ -111,13 +113,13 @@ RGTraitComposition >> pvtResolvableProperties [
 	}
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtTransformationsDo: aBlock [
 
 	transformations value do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> referencedBehaviors [
 
 	^ self transformations collect: [ :each |
@@ -126,14 +128,14 @@ RGTraitComposition >> referencedBehaviors [
 			ifFalse: [ each subject ] ]
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitComposition >> removeTransformation: anRGTraitTransformation [
 
 	self parent announceDefinitionChangeDuring: [
 		self backend forBehavior removeTransformation: anRGTraitTransformation from: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> traitCompositionString [
 
 	self transformations isEmpty ifTrue: [ ^ '{}' ].
@@ -144,13 +146,13 @@ RGTraitComposition >> traitCompositionString [
 			separatedBy: [ stream nextPutAll: ' + ' ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> traits [
 
 	^ self transformations collect: [:each | each trait ]
 ]
 
-{ #category : #'queries - transformations' }
+{ #category : 'queries - transformations' }
 RGTraitComposition >> transformations [
 
 	| allTransformations |
@@ -159,13 +161,13 @@ RGTraitComposition >> transformations [
 	^ allTransformations
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitComposition >> transformationsDo: aBlock [
 
 	self backend forBehavior transformationsFor: self do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> usedTraits [
 
 	^ self transformations flatCollect: [ :each |

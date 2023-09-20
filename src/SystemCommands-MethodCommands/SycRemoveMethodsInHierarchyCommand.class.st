@@ -3,12 +3,13 @@ I am a command to remove given methods and the ones in the subclasses.
 
 "
 Class {
-	#name : #SycRemoveMethodsInHierarchyCommand,
-	#superclass : #SysRefactoringMethodCommand,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycRemoveMethodsInHierarchyCommand',
+	#superclass : 'SysRefactoringMethodCommand',
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 SycRemoveMethodsInHierarchyCommand >> asRefactorings [
 
 	| refactoring |
@@ -18,16 +19,16 @@ SycRemoveMethodsInHierarchyCommand >> asRefactorings [
 	^ OrderedCollection with: refactoring
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethodsInHierarchyCommand >> defaultMenuIconName [
 	^ #remove
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethodsInHierarchyCommand >> defaultMenuItemName [
 	^'Remove and the ones in subclasses'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycRemoveMethodsInHierarchyCommand >> setUpModelFromContext: aToolContext [
 ]

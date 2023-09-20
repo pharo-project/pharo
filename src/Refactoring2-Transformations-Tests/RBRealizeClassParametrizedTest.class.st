@@ -1,17 +1,19 @@
 Class {
-	#name : #RBRealizeClassParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBRealizeClassParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBRealizeClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRealizeClassTransformation };
 		yourself
 ]
 
-{ #category : #builder }
+{ #category : 'builder' }
 RBRealizeClassParametrizedTest >> addSomeAbstractMethods [
 	(model classNamed: #RBFooLintRuleTestData)
 		compile: 'bar ^ self subclassResponsibility'
@@ -21,12 +23,12 @@ RBRealizeClassParametrizedTest >> addSomeAbstractMethods [
 		classified: #(#accessing)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRealizeClassParametrizedTest >> constructor [
 	^ #model:className:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRealizeClassParametrizedTest >> testClassWithoutChanges [
 	self proceedThroughWarning: [
 		self executeRefactoring:
@@ -34,7 +36,7 @@ RBRealizeClassParametrizedTest >> testClassWithoutChanges [
 	self assert: model changes changes isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRealizeClassParametrizedTest >> testRealizeAbstractClass [
 	| class |
 	class := model classNamed: #RBFooLintRuleTestData.
@@ -53,7 +55,7 @@ RBRealizeClassParametrizedTest >> testRealizeAbstractClass [
 		self shouldBeImplemented')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRealizeClassParametrizedTest >> testRealizeClass [
 	| class |
 	class := model classNamed: #RBFooLintRuleTestData.
@@ -70,7 +72,7 @@ RBRealizeClassParametrizedTest >> testRealizeClass [
 		self shouldBeImplemented')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRealizeClassParametrizedTest >> testRealizeWithAbstractSubclass [
 	| class |
 	class := model classNamed: #RBTransformationRuleTestData.

@@ -1,6 +1,6 @@
-Extension { #name : #Trait }
+Extension { #name : 'Trait' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 Trait >> asClassDefinition [
 	"We do not dispatch on the printer because in fact MC only support the oldPharo syntax. 
 	This syntax is hijacked to store the full definition of a slot in case of complex slots: 
@@ -33,7 +33,7 @@ Trait >> asClassDefinition [
 	^ definition
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 Trait >> classDefinitions [
 	| definitions |
 	definitions := OrderedCollection with: self asClassDefinition.

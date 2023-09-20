@@ -2,23 +2,25 @@
 SUnit tests for basic serialization that is zipped
 "
 Class {
-	#name : #FLGZippedBasicSerializationTest,
-	#superclass : #FLBasicSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLGZippedBasicSerializationTest',
+	#superclass : 'FLBasicSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FLGZippedBasicSerializationTest >> setUpStreamStrategy [
 	streamStrategy := FLGZipStrategy newWithTarget: FLByteArrayStreamStrategy new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGZippedBasicSerializationTest >> testByteArray [
 
 	self assertSerializationEqualityOf: #[1 2 3 4 5 6 7]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGZippedBasicSerializationTest >> testCompleteBinaryTree [
 
 	| aCollection numberOfLeafs |
@@ -42,7 +44,7 @@ FLGZippedBasicSerializationTest >> testCompleteBinaryTree [
 	self assertSerializationEqualityOf: aCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGZippedBasicSerializationTest >> testPairs [
 
 	| pairs |
@@ -56,7 +58,7 @@ FLGZippedBasicSerializationTest >> testPairs [
 	self assertSerializationEqualityOf: pairs
 ]
 
-{ #category : #'tests-strings' }
+{ #category : 'tests-strings' }
 FLGZippedBasicSerializationTest >> testWideString [
 	| wideString collection |
 	wideString := WideString streamContents: [ :stream |

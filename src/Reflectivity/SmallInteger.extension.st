@@ -1,6 +1,6 @@
-Extension { #name : #SmallInteger }
+Extension { #name : 'SmallInteger' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 SmallInteger >> rfMinus: aNumber [
 	"Primitive. Subtract the argument from the receiver and answer with the
 	result if it is a SmallInteger. Fail if the argument or the result is not a
@@ -11,7 +11,7 @@ SmallInteger >> rfMinus: aNumber [
 	^super - aNumber
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 SmallInteger >> rfPlus: aNumber [
 	"Primitive. Add the receiver to the argument and answer with the result
 	if it is a SmallInteger. Fail if the argument or the result is not a

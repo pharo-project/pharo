@@ -6,17 +6,19 @@ I rename the instance variable in the class definition, in all methods refering 
 My precondition verifies that the new variable is valid and not yet used in the whole class hierarchy.
 "
 Class {
-	#name : #RBRenameInstanceVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
+	#name : 'RBRenameInstanceVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
 	#instVars : [
 		'newName',
 		'browsedEnvironment',
 		'renameAccessors'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameInstanceVariableRefactoring class >> model: aRBNamespace rename: aVarName to: aName in: aClass [
 	^ self new
 		model: aRBNamespace;
@@ -26,7 +28,7 @@ RBRenameInstanceVariableRefactoring class >> model: aRBNamespace rename: aVarNam
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameInstanceVariableRefactoring class >> model: aRBNamespace rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
 	^ self new
 		model: aRBNamespace;
@@ -37,7 +39,7 @@ RBRenameInstanceVariableRefactoring class >> model: aRBNamespace rename: aVarNam
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aClass [
 	^ self new
 		rename: aVarName
@@ -45,7 +47,7 @@ RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aCla
 		in: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
 	^ self new
 		rename: aVarName
@@ -54,7 +56,7 @@ RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aCla
 		renameAccessors: aBoolean
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRenameInstanceVariableRefactoring >> addNewAccessors [
 	| refactoring |
 	refactoring := RBCreateAccessorsForVariableTransformation
@@ -67,28 +69,28 @@ RBRenameInstanceVariableRefactoring >> addNewAccessors [
 		createSetterAccessor
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 	^ browsedEnvironment ifNil: [ browsedEnvironment := RBBrowserEnvironment new ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRenameInstanceVariableRefactoring >> initialize [
 	super initialize.
 	renameAccessors := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameInstanceVariableRefactoring >> newName [
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameInstanceVariableRefactoring >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRenameInstanceVariableRefactoring >> preconditions [
 	^(RBCondition isValidInstanceVariableName: newName for: class)
 		& (RBCondition definesInstanceVariable: variableName in: class)
@@ -96,7 +98,7 @@ RBRenameInstanceVariableRefactoring >> preconditions [
 			& (RBCondition isGlobal: newName in: self model) not
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRenameInstanceVariableRefactoring >> privateTransform [
 	renameAccessors ifTrue: [
 		self removeOldAccessors
@@ -109,7 +111,7 @@ RBRenameInstanceVariableRefactoring >> privateTransform [
 	self renameAccessorsReferences
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRenameInstanceVariableRefactoring >> removeOldAccessors [
 	| oldAccessors |
 	oldAccessors := (class allSelectors
@@ -118,29 +120,29 @@ RBRenameInstanceVariableRefactoring >> removeOldAccessors [
 	oldAccessors do: [ :each | class removeMethod: each selector ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRenameInstanceVariableRefactoring >> rename: aVarName to: aName in: aClass [
 	self rename: aVarName to: aName in: aClass renameAccessors: false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRenameInstanceVariableRefactoring >> rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
 	self variable: aVarName class: aClass.
 	newName := aName.
 	renameAccessors := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameInstanceVariableRefactoring >> renameAccessors [
 	^ renameAccessors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameInstanceVariableRefactoring >> renameAccessors: anObject [
 	renameAccessors := anObject
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRenameInstanceVariableRefactoring >> renameAccessorsReferences [
 	| methods senders |
 	methods := (class allSelectors select: [ :each | (class methodFor: each) isNotNil ] thenCollect: [ :each | each ])
@@ -160,7 +162,7 @@ RBRenameInstanceVariableRefactoring >> renameAccessorsReferences [
 									withProtocol: each protocols) ] ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRenameInstanceVariableRefactoring >> renameReferences [
 	| replacer classes |
 	replacer := self parseTreeRewriterClass
@@ -177,7 +179,7 @@ RBRenameInstanceVariableRefactoring >> renameReferences [
 		using: replacer
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameInstanceVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

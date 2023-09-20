@@ -2,16 +2,18 @@
 SUnit tests for class  Mutex
 "
 Class {
-	#name : #MutexTest,
-	#superclass : #TestCase,
+	#name : 'MutexTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'mutex',
 		'forkedProcesses'
 	],
-	#category : #'Kernel-Tests-Extended-Processes'
+	#category : 'Kernel-Tests-Extended-Processes',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Processes'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 MutexTest >> fork: aBlock [
 
 	| newProcess |
@@ -20,7 +22,7 @@ MutexTest >> fork: aBlock [
 	^newProcess
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 MutexTest >> fork: aBlock at: priority [
 
 	| newProcess |
@@ -29,7 +31,7 @@ MutexTest >> fork: aBlock at: priority [
 	^newProcess
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MutexTest >> setUp [
 	super setUp.
 
@@ -37,14 +39,14 @@ MutexTest >> setUp [
 	mutex := Mutex new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MutexTest >> tearDown [
 	forkedProcesses do: #terminate.
 
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MutexTest >> testExecutionCriticalSection [
 
 	| actual |
@@ -53,7 +55,7 @@ MutexTest >> testExecutionCriticalSection [
 	self assert: actual equals: #result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MutexTest >> testFailedCriticalSectionShouldUnblockWaitingOne [
 	| lastCriticalExecuted semaphoreToHoldMutex |
 	lastCriticalExecuted := false.
@@ -73,7 +75,7 @@ MutexTest >> testFailedCriticalSectionShouldUnblockWaitingOne [
 	self assert: lastCriticalExecuted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MutexTest >> testTerminatedCriticalSectionShouldUnblockWaitingOne [
 	| lastCriticalExecuted semaphoreToHoldMutex processHoldingMutex |
 	lastCriticalExecuted := false.
@@ -92,7 +94,7 @@ MutexTest >> testTerminatedCriticalSectionShouldUnblockWaitingOne [
 	self assert: lastCriticalExecuted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MutexTest >> testTerminatingBlockedCriticalSectionShouldNotUnblockAnotherWaitingSection [
 	| semaphoreToHoldMutex holdingCriticalExecutedFirst firstWaitingProcess lastCriticalExecuted |
 	holdingCriticalExecutedFirst := false.
@@ -117,7 +119,7 @@ MutexTest >> testTerminatingBlockedCriticalSectionShouldNotUnblockAnotherWaiting
 	self assert: lastCriticalExecuted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MutexTest >> testTerminatingBlockedCriticalWhichWasSignalledButNotResumedYet [
 	| processWaitingForMutex firstCriticalExecuted lastCriticalExecuted semaphoreToHoldMutex |
 	firstCriticalExecuted := false.
@@ -141,7 +143,7 @@ MutexTest >> testTerminatingBlockedCriticalWhichWasSignalledButNotResumedYet [
 	self assert: lastCriticalExecuted description: 'consequent last critical should be executed'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MutexTest >> testTwoCriticalsShouldWaitEachOther [
 
 	| lastCriticalExecuted firstCriticalExecutedFirst semaphoreToHoldMutex |
@@ -163,7 +165,7 @@ MutexTest >> testTwoCriticalsShouldWaitEachOther [
 	self assert: firstCriticalExecutedFirst
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MutexTest >> testTwoRecursiveCriticalsShouldNotWaitEachOther [
 
 	| executed |
@@ -175,43 +177,43 @@ MutexTest >> testTwoRecursiveCriticalsShouldNotWaitEachOther [
 	self assert: executed
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 MutexTest >> waitFor: aBlock [
 
 	[ 10 milliSeconds wait. aBlock value ] whileFalse
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 MutexTest >> waitLastProcessLock [
 
 	self waitProcessLock: forkedProcesses last
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 MutexTest >> waitLastProcessSuspend [
 
 	self waitProcessSuspend: forkedProcesses last
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 MutexTest >> waitLastProcessTerminate [
 
 	self waitProcessTermination: forkedProcesses last
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 MutexTest >> waitProcessLock: aProcess [
 
 	self waitFor: [ aProcess suspendingList isEmptyOrNil not ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 MutexTest >> waitProcessSuspend: aProcess [
 
 	self waitFor: [ aProcess isSuspended ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 MutexTest >> waitProcessTermination: aProcess [
 
 	self waitFor: [ aProcess isTerminated ]

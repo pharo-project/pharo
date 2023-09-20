@@ -12,16 +12,18 @@ This refactoring will
 - replace every sender of the prior method with the new one, using the specified default argument.
 "
 Class {
-	#name : #RBAddParameterRefactoring,
-	#superclass : #RBChangeMethodNameRefactoring,
+	#name : 'RBAddParameterRefactoring',
+	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
 		'newArgs',
 		'senders'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl1 newArgs: aColl2 [
 	^ self new
 		addParameterToMethod: aSelector
@@ -31,7 +33,7 @@ RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass ne
 		newArgs: aColl2
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl1 newArgs: aColl2 [
 	^ self new
 		model: aRBSmalltalk;
@@ -43,7 +45,7 @@ RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSe
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelector: newSel permutation: aColl1 newArgs: aColl2 [
 	self
 		renameMethod: aSelector
@@ -53,7 +55,7 @@ RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelec
 	newArgs := aColl2
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddParameterRefactoring >> checkSendersAccessTo: name [
 
 	(#('self' 'super') includes: name) ifTrue: [ ^ self ].
@@ -67,7 +69,7 @@ RBAddParameterRefactoring >> checkSendersAccessTo: name [
 						with: violatorClass) ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
@@ -81,7 +83,7 @@ RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 	searcher executeTree: aParseTree
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	| argNames index |
 	argNames := newArgs collect: [ :arg | | newArg |
@@ -97,7 +99,7 @@ RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	self renameArgumentsIn: parseTree
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddParameterRefactoring >> myConditions [
 	^RBCondition withBlock:
 		[oldSelector numArgs < newSelector numArgs
@@ -108,12 +110,12 @@ RBAddParameterRefactoring >> myConditions [
 		true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddParameterRefactoring >> newArgs [
 	^ newArgs ifNil: [ newArgs := { } ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 RBAddParameterRefactoring >> renameArgumentsIn: parseTree [
 	| newArgNames |
 	newArgNames := newArgs collect: [ :arg | arg name ].
@@ -123,7 +125,7 @@ RBAddParameterRefactoring >> renameArgumentsIn: parseTree [
 	] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddParameterRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars [
 	| baseString index newString |
 	newString := baseString := 'anObject'.
@@ -137,7 +139,7 @@ RBAddParameterRefactoring >> safeVariableNameFor: aClass temporaries: allTempVar
 	^newString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddParameterRefactoring >> safeVariableNamed: argName for: aClass temporaries: allTempVars [
 	| baseString index newString |
 	((allTempVars includes: argName)
@@ -153,7 +155,7 @@ RBAddParameterRefactoring >> safeVariableNamed: argName for: aClass temporaries:
 	^newString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddParameterRefactoring >> senders [
 
 	senders
@@ -163,7 +165,7 @@ RBAddParameterRefactoring >> senders [
 	^ senders
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddParameterRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.
@@ -183,7 +185,7 @@ RBAddParameterRefactoring >> storeOn: aStream [
 		nextPutAll: ''')'
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddParameterRefactoring >> verifyInitializationExpressionOf: initializer [
 	| tree |
 	tree := self parserClass

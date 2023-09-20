@@ -2,20 +2,21 @@
 SUnit tests for RPackage
 "
 Class {
-	#name : #RPackageObsoleteTest,
-	#superclass : #RPackageIncrementalTest,
+	#name : 'RPackageObsoleteTest',
+	#superclass : 'RPackageIncrementalTest',
 	#instVars : [
 		'notRun'
 	],
-	#category : #'RPackage-Tests'
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageObsoleteTest >> setNotRun [
 	notRun := true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
 
 	| foo |
@@ -28,7 +29,7 @@ RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
 	self assert: notRun ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 
 	| pack method foo |
@@ -46,7 +47,7 @@ RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 		testingEnvironment removeKey: #FooForTest ifAbsent: [  ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageObsoleteTest >> testMethodPackageOfRemovedClass [
 
 	| pack method foo |

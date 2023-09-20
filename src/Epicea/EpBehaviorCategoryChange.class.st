@@ -2,17 +2,19 @@
 I represent a change in the category of a class or a trait.
 "
 Class {
-	#name : #EpBehaviorCategoryChange,
-	#superclass : #EpBehaviorChange,
+	#name : 'EpBehaviorCategoryChange',
+	#superclass : 'EpBehaviorChange',
 	#instVars : [
 		'oldCategory',
 		'newCategory',
 		'class'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpBehaviorCategoryChange class >> oldCategory: anOldCategory newCategory: aNewCategory class: aClass [
 
 	^ self basicNew
@@ -20,29 +22,29 @@ EpBehaviorCategoryChange class >> oldCategory: anOldCategory newCategory: aNewCa
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpBehaviorCategoryChange >> accept: aVisitor [
 
 	^ aVisitor visitBehaviorCategoryChange: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCategoryChange >> behaviorAffected [
 	^ self classAffected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCategoryChange >> behaviorAffectedName [
 	^ self classAffected name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCategoryChange >> classAffected [
 
 	^ class
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 EpBehaviorCategoryChange >> initializeOldCategory: anOldCategory newCategory: aNewCategory class: aClass [
 
 	self initialize.
@@ -51,13 +53,13 @@ EpBehaviorCategoryChange >> initializeOldCategory: anOldCategory newCategory: aN
 	class := aClass asEpiceaRingDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCategoryChange >> newCategory [
 
 	^ newCategory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCategoryChange >> oldCategory [
 
 	^ oldCategory

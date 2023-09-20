@@ -13,5 +13,5 @@ MCOrganizationTest >> testLoadAndUnload [
 	packageName := 'TestPackageToUnload'.
 	self packageOrganizer ensurePackage: packageName.
 	(MCOrganizationDefinition packageName: packageName) unload.
-	self deny: (self packageOrganizer includesCategory: packageName)
+	self deny: (self packageOrganizer hasPackage: packageName)
 ]

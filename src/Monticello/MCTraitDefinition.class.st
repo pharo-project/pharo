@@ -2,12 +2,14 @@
 A MCTraitDefinition represents a trait.
 "
 Class {
-	#name : #MCTraitDefinition,
-	#superclass : #MCClassDefinition,
-	#category : #'Monticello-Modeling'
+	#name : 'MCTraitDefinition',
+	#superclass : 'MCClassDefinition',
+	#category : 'Monticello-Modeling',
+	#package : 'Monticello',
+	#tag : 'Modeling'
 }
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
 	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
@@ -22,7 +24,7 @@ MCTraitDefinition class >> name: classNameString traitComposition: traitComposit
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCTraitDefinition >> = aDefinition [
 
 	self flag: #traits. "Ugly we harcoded the super superclass method.  We will have to refactor the definition hierarchy"
@@ -36,13 +38,13 @@ MCTraitDefinition >> = aDefinition [
 							  self classInstVarNames = aDefinition classInstVarNames and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCTraitDefinition >> accept: aVisitor [
 	^ aVisitor visitTraitDefinition: self
 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCTraitDefinition >> classSlotDefinitionString [
 
 	^ self needsSlotClassDefinition 
@@ -56,7 +58,7 @@ MCTraitDefinition >> classSlotDefinitionString [
 				stream nextPutAll: ' }']]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCTraitDefinition >> createClass [
 
 	| trait |
@@ -75,26 +77,26 @@ MCTraitDefinition >> createClass [
 	^ trait
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCTraitDefinition >> hasClassInstanceVariables [
 	^ false
 
 
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCTraitDefinition >> hash [
 
 	^ (name hash bitXor: traitComposition hash) bitXor: self category hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCTraitDefinition >> printClassDefinitionOn: stream [
 
 	^ self printMetaDefinitionOn: stream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCTraitDefinition >> printDefinitionOn: stream [
 	stream nextPutAll: 'Trait named: #', self className;
 		 cr;
@@ -119,7 +121,7 @@ MCTraitDefinition >> printDefinitionOn: stream [
 
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCTraitDefinition >> requirements [
 	"Assuming that traits in a composition can be identified by
 	testing for the first character beeing an uppercase character
@@ -134,7 +136,7 @@ MCTraitDefinition >> requirements [
 		as: Set) asArray
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCTraitDefinition >> slotDefinitionString [
 
 	variables ifNil: [ ^ '{ }' ].

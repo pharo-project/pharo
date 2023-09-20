@@ -1,10 +1,12 @@
 Class {
-	#name : #RBPushDownClassVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBPushDownClassVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBPushDownClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPushDownClassVariableRefactoring .
@@ -14,7 +16,7 @@ RBPushDownClassVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPushDownClassVariableParametrizedTest >> testFailureModelNonExistantName [
 
 	model defineClass:
@@ -24,14 +26,14 @@ RBPushDownClassVariableParametrizedTest >> testFailureModelNonExistantName [
 			 andArguments: { #Foo. #SomeClass })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPushDownClassVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { #Foo. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownClassVariableParametrizedTest >> testModelPushDownVariable [
 	| class |
 	model defineClass: 'Object << #SomeClass
@@ -47,7 +49,7 @@ RBPushDownClassVariableParametrizedTest >> testModelPushDownVariable [
 	self assert: (class directlyDefinesClassVariable: #Foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToClassDownTwoLevels [
 	| class |
 	model defineClass: 'Object << #SomeClass
@@ -69,7 +71,7 @@ RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToClassDownT
 	self assert: (class directlyDefinesClassVariable: #Foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToMultipleClassesInSameHierarchy [
 	| class |
 	model defineClass: 'Object << #SomeClass
@@ -87,7 +89,7 @@ RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToMultipleCl
 	self assert: (class directlyDefinesClassVariable: #Foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownClassVariableParametrizedTest >> testModelRemoveUnusedVariable [
 	model defineClass: 'Object << #SomeClass
 		sharedVariables: { #Foo };
@@ -101,7 +103,7 @@ RBPushDownClassVariableParametrizedTest >> testModelRemoveUnusedVariable [
 	self deny: ((model classNamed: #Subclass) directlyDefinesVariable: #Foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownClassVariableParametrizedTest >> testPushDownClassVariable [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:

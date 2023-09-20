@@ -5,12 +5,14 @@ This is used in incremental development, for example when doing Test First devel
 It is similar to ShouldBeImplemented, with a slightly different meaning.
 "
 Class {
-	#name : #NotYetImplemented,
-	#superclass : #SelectorException,
-	#category : #'Kernel-Exceptions'
+	#name : 'NotYetImplemented',
+	#superclass : 'SelectorException',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 NotYetImplemented >> standardMessageText [
 	"Generate a standard textual description"
 

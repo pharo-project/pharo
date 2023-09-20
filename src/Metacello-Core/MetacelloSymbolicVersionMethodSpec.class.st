@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloSymbolicVersionMethodSpec,
-	#superclass : #MetacelloMethodSpec,
-	#category : #'Metacello-Core-Constructors'
+	#name : 'MetacelloSymbolicVersionMethodSpec',
+	#superclass : 'MetacelloMethodSpec',
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 MetacelloSymbolicVersionMethodSpec >> addMethodSection: attribute versionString: aString [
     self methodSections
         add:
@@ -14,7 +16,7 @@ MetacelloSymbolicVersionMethodSpec >> addMethodSection: attribute versionString:
                 yourself)
 ]
 
-{ #category : #'method generation' }
+{ #category : 'method generation' }
 MetacelloSymbolicVersionMethodSpec >> methodSource [
     | strm |
     strm := WriteStream on: String new.
@@ -35,7 +37,7 @@ MetacelloSymbolicVersionMethodSpec >> methodSource [
     ^ strm contents
 ]
 
-{ #category : #'method generation' }
+{ #category : 'method generation' }
 MetacelloSymbolicVersionMethodSpec >> symbolicMethodSelectorAndPragma: aSelector symbolicVersionSymbol: symbolicVersionSymbol on: strm [
 	strm
 		nextPutAll: aSelector asString , ' spec';
@@ -46,7 +48,7 @@ MetacelloSymbolicVersionMethodSpec >> symbolicMethodSelectorAndPragma: aSelector
 		cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSymbolicVersionMethodSpec >> versionString: aStringOrSymbol [
 
 	aStringOrSymbol isSymbol ifFalse: [ self error: 'Version symbol ', aStringOrSymbol printString, ' for symbolic version method must be a Symbol' ].

@@ -1,22 +1,24 @@
 Class {
-	#name : #RBExtractMethodToComponentParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBExtractMethodToComponentParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractMethodToComponentParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBExtractMethodToComponentRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBExtractMethodToComponentParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThatNeedsReturn [
 	| refactoring class selectorsSize |
 	refactoring := self createRefactoringWithArguments: { (52 to: 133) . #openEditor . RBLintRuleTestData }.
@@ -49,7 +51,7 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 	self assert: class selectors size equals: selectorsSize
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractMethodToComponentParametrizedTest >> testFailureBadInterval [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ (24 to: 30) . #testMethod . RBClassDataForRefactoringTest }).
@@ -57,7 +59,7 @@ RBExtractMethodToComponentParametrizedTest >> testFailureBadInterval [
 		{ (80 to: 147) . #subclassOf:overrides: . RBBasicLintRuleTestData class })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractMethodToComponentParametrizedTest >> testFailureExtract [
 	self shouldFail: (self createRefactoringWithArguments:
 		{(80 to: 269) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
@@ -67,13 +69,13 @@ RBExtractMethodToComponentParametrizedTest >> testFailureExtract [
 		{ (77 to: 222) . #subclassResponsibilityNotDefined . RBBasicLintRuleTestData class })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractMethodToComponentParametrizedTest >> testFailureNonExistantSelector [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
 	| refactoring class selectorsSize |
 	refactoring := self createRefactoringWithArguments: { (118 to: 285) . #copyDictionary: . RBReadBeforeWrittenTester }.

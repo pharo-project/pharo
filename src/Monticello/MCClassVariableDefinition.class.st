@@ -2,22 +2,24 @@
 A MCClassVariableDefinition represent a class variable.
 "
 Class {
-	#name : #MCClassVariableDefinition,
-	#superclass : #MCVariableDefinition,
-	#category : #'Monticello-Modeling'
+	#name : 'MCClassVariableDefinition',
+	#superclass : 'MCVariableDefinition',
+	#category : 'Monticello-Modeling',
+	#package : 'Monticello',
+	#tag : 'Modeling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassVariableDefinition class >> type [
 	^ #class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCClassVariableDefinition >> isClassVariable [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCClassVariableDefinition >> isOrderDependend [
 	^false
 ]

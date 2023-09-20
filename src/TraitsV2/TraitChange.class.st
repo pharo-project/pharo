@@ -16,17 +16,19 @@ I propagate to the users of the trait.
 If the removal was shadowing a method from the trait composition, the method from the trait composition is installed and the change propagated accordly. 
 "
 Class {
-	#name : #TraitChange,
-	#superclass : #Object,
+	#name : 'TraitChange',
+	#superclass : 'Object',
 	#instVars : [
 		'addedSelectors',
 		'removedSelectors',
 		'updatedSelectors'
 	],
-	#category : #'TraitsV2-Changes'
+	#category : 'TraitsV2-Changes',
+	#package : 'TraitsV2',
+	#tag : 'Changes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TraitChange class >> addSelector: aSelector on: aClass [
 
 	"I propagate the addition or change of a selector in aClass that is a trait or a trait user.
@@ -37,7 +39,7 @@ TraitChange class >> addSelector: aSelector on: aClass [
 		applyOn: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TraitChange class >> removeSelector: aSelector on: aClass [
 
 	"I propagate the removal of a selector in aClass that is a trait or a trait user.
@@ -49,7 +51,7 @@ TraitChange class >> removeSelector: aSelector on: aClass [
 		applyOn: aClass
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TraitChange >> add: aSelector into: aClass changes: changes [
 
 	" After adding or updating a method, it should be added to the local MethodDictionary.
@@ -58,17 +60,17 @@ TraitChange >> add: aSelector into: aClass changes: changes [
 	changes updatedSelectors add: aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitChange >> addedSelectors [
 	^ addedSelectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitChange >> addedSelectors: anObject [
 	addedSelectors := anObject
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 TraitChange >> applyOn: aClass [
 	| result |
 
@@ -86,7 +88,7 @@ TraitChange >> applyOn: aClass [
 	aClass traitUsers do: [ :aUser | result applyOn: aUser ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitChange >> initialize [
 	super initialize.
 
@@ -95,7 +97,7 @@ TraitChange >> initialize [
 	removedSelectors := Set new
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TraitChange >> remove: aSelector into: aClass changes: results [
 	| isLocal inTrait priorMethod priorProtocol |
 
@@ -142,17 +144,17 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 			results removedSelectors add: aliased ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitChange >> removedSelectors [
 	^ removedSelectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitChange >> removedSelectors: anObject [
 	removedSelectors := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TraitChange >> update: aSelector into: aClass changes: changes [
 
 	"I am the responsible of propagating a change from an used trait"
@@ -172,12 +174,12 @@ TraitChange >> update: aSelector into: aClass changes: changes [
 			changes updatedSelectors add: aliased ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitChange >> updatedSelectors [
 	^ updatedSelectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitChange >> updatedSelectors: anObject [
 	updatedSelectors := anObject
 ]
