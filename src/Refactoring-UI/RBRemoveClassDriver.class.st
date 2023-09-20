@@ -29,19 +29,19 @@ RBRemoveClassDriver >> removeClassChanges [
 { #category : 'execution' }
 RBRemoveClassDriver >> runRefactoring [
 
-	| select hasNoReferences |
+	| select haveNoReferences |
 	
 	self configureRefactoring.
 	refactoring applicabilityPreconditions check ifFalse: [
 		RBRefactoringError signal: refactoring applicabilityPreconditions errorString ].
 	
-	hasNoReferences := refactoring preconditionHaveNoReferences.
-	hasNoReferences check
+	haveNoReferences := refactoring preconditionHaveNoReferences.
+	haveNoReferences check
 
 	ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
 	ifFalse: [ 
 		| perClassViolators |
-		perClassViolators := hasNoReferences violators.
+		perClassViolators := haveNoReferences violators.
 		users := perClassViolators flatCollect: [ :violators | violators ].
 		select := SpSelectDialog new 
 			title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
