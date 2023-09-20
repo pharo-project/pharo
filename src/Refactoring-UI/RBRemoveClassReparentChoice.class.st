@@ -1,22 +1,24 @@
 Class {
-	#name : #RBRemoveClassReparentChoice,
-	#superclass : #RBRemoveClassChoice,
-	#category : #'Refactoring-UI-Choices'
+	#name : 'RBRemoveClassReparentChoice',
+	#superclass : 'RBRemoveClassChoice',
+	#category : 'Refactoring-UI-Choices',
+	#package : 'Refactoring-UI',
+	#tag : 'Choices'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveClassReparentChoice >> action [
 
 	self halt.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveClassReparentChoice >> description [
 
 	^ 'Remove it (reparenting subclasses)'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveClassReparentChoice >> order [
 	^1
 ]

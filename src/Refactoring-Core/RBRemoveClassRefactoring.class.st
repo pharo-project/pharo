@@ -37,6 +37,11 @@ RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 		yourself
 ]
 
+{ #category : 'accessing' }
+RBRemoveClassRefactoring >> classNames [
+	^ classNames
+]
+
 { #category : 'initialization' }
 RBRemoveClassRefactoring >> classNames: aClassNameCollection [
 	classNames := aClassNameCollection
@@ -144,6 +149,15 @@ RBRemoveClassRefactoring >> reparentSubclasses [
 			| class |
 			class := self model classNamed: each.
 			self model reparentClasses: class subclasses copy to: class superclass]
+]
+
+{ #category : 'private' }
+RBRemoveClassRefactoring >> senders [
+
+	^ classNames flatCollect: [ :className |
+		  | aClass |
+		  aClass := self model classNamed: className asSymbol.
+		  self refactoringAwareReferencesTo: aClass ]
 ]
 
 { #category : 'printing' }
