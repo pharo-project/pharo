@@ -37,6 +37,28 @@ RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> applicabilityPreconditions [
+
+	^ classNames inject: self trueCondition into: [ :sum :each |
+		  | aClassOrTrait |
+		  aClassOrTrait := self model classNamed: each asSymbol.
+		  aClassOrTrait ifNil: [
+			  self refactoringError: 'No such class or trait' ].
+		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)) ] 
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> breakingChangePreconditions [
+
+	^ classNames inject: self trueCondition into: [ :sum :each |
+		  | aClassOrTrait |
+		  aClassOrTrait := self model classNamed: each asSymbol.
+		  sum & ((self preconditionHasNoReferences: aClassOrTrait)
+		   & (self preconditionEmptyOrHasNoSubclasses: aClassOrTrait)
+		   & (self preconditionHasNoUsers: aClassOrTrait)) ] 
+]
+
 { #category : 'accessing' }
 RBRemoveClassRefactoring >> classNames [
 	^ classNames
@@ -93,16 +115,9 @@ RBRemoveClassRefactoring >> preconditionIsNotMetaclass: aClass [
 
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> preconditions [
+	"We hope in the future to push up this method to RBRefactoring"
 
-	^ classNames inject: self trueCondition into: [ :sum :each |
-		  | aClassOrTrait |
-		  aClassOrTrait := self model classNamed: each asSymbol.
-		  aClassOrTrait ifNil: [
-			  self refactoringError: 'No such class or trait' ].
-		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
-		   & (self preconditionHasNoReferences: aClassOrTrait)
-		   & (self preconditionEmptyOrHasNoSubclasses: aClassOrTrait)
-		   & (self preconditionHasNoUsers: aClassOrTrait)) ] 
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'transforming' }
