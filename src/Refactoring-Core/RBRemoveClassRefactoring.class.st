@@ -128,6 +128,18 @@ RBRemoveClassRefactoring >> prepareForExecution [
 		           asDictionary
 ]
 
+{ #category : 'preparation' }
+RBRemoveClassRefactoring >> prepareForInteractiveMode [
+
+	| applicabilityPreconditions |
+	
+	self prepareForExecution.
+	applicabilityPreconditions := self applicabilityPreconditions.
+	applicabilityPreconditions check ifFalse: [
+		RBApplicabilityChecksFailedError signal:
+			applicabilityPreconditions errorString ]
+]
+
 { #category : 'transforming' }
 RBRemoveClassRefactoring >> privateTransform [
 	self

@@ -15,7 +15,8 @@ RBRemoveClassDriver >> configureRefactoring [
 
 	refactoring := RBRemoveClassRefactoring
 		               model: model
-		               classNames: (classes collect: [ :cl | cl name ])
+		               classNames: (classes collect: [ :cl | cl name ]).
+	refactoring prepareForInteractiveMode
 ]
 
 { #category : 'removing' }
@@ -29,37 +30,34 @@ RBRemoveClassDriver >> removeClassChanges [
 RBRemoveClassDriver >> runRefactoring [
 
 	| select hasNoReferences |
-	self configureRefactoring.
-	refactoring prepareForExecution. "Driver should ideally not know about this method..."
 	[
 	[
-	refactoring applicabilityPreconditions check ifFalse: [ ^ self ].
-	"refactoring breakingChangePreconditions check."
-
-	hasNoReferences := refactoring preconditionHaveNoReferences.
-	hasNoReferences check
+	
+		self configureRefactoring.
+		hasNoReferences := refactoring preconditionHaveNoReferences.
+		hasNoReferences check
 
 		ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
 		ifFalse: [ 
 			| perClassViolators |
 			perClassViolators := hasNoReferences violators.
 			users := perClassViolators flatCollect: [ :violators | violators ].
-		select := SpSelectDialog new 
-			title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
-			label: 'Select a strategy';
-			items: (RBRemoveClassChoice subclasses collect: [ :each | each  new driver: self]);
-			display: [ :each | each description ];
-			displayIcon: [ :each | self iconNamed: each systemIconName ];
-			openModal.
+			select := SpSelectDialog new 
+				title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
+				label: 'Select a strategy';
+				items: (RBRemoveClassChoice subclasses collect: [ :each | each  new driver: self]);
+				display: [ :each | each description ];
+				displayIcon: [ :each | self iconNamed: each systemIconName ];
+				openModal.
 			
-	select 
-		ifNotNil: [ 
-			select action ]]]
+			select 
+				ifNotNil: [ 
+					select action ]]]
 	
-		on: RBApplicabilityChecksFailedError
-		do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
-		on: RBBreakingChangeChecksFailedWarning
-		do: [ :err |	 err return ]
+			on: RBApplicabilityChecksFailedError
+			do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
+			on: RBBreakingChangeChecksFailedWarning
+			do: [ :err |	 err return ]
 	
 
 ]
