@@ -222,11 +222,16 @@ TraitBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: in
 { #category : 'accessing' }
 TraitBuilderEnhancer >> slotsForBuilder: aBuilder [
 
-	| resultingSlots |
+	| resultingSlots superSlots |
 	resultingSlots := aBuilder layoutDefinition slots asOrderedCollection.
+	superSlots := aBuilder superclass
+		              ifNil: [ #(  ) ]
+		              ifNotNil: [ :class | class allSlots ].
 
+	"We reject the slots that already have a slot in the class or a superclass"
 	aBuilder traitComposition asTraitComposition slotsCopy do: [ :slot |
-		(resultingSlots anySatisfy: [ :slot2 | slot name = slot2 name ]) ifFalse: [ resultingSlots add: slot ] ].
+		((resultingSlots anySatisfy: [ :slot2 | slot name = slot2 name ]) or: [ superSlots anySatisfy: [ :slot2 | slot name = slot2 name ] ]) ifFalse: [
+			resultingSlots add: slot ] ].
 
 	^ resultingSlots
 ]
