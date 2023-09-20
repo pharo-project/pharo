@@ -1,14 +1,16 @@
 Class {
-	#name : #RGEnvironmentBackend,
-	#superclass : #Object,
+	#name : 'RGEnvironmentBackend',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'providedDefinitions'
 	],
-	#category : #'Ring-Core-Environment'
+	#category : 'Ring-Core-Environment',
+	#package : 'Ring-Core',
+	#tag : 'Environment'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGEnvironmentBackend class >> for: anRGEnvironment [
 
 	^ self new
@@ -16,253 +18,253 @@ RGEnvironmentBackend class >> for: anRGEnvironment [
 		yourself
 ]
 
-{ #category : #'trait alias' }
+{ #category : 'trait alias' }
 RGEnvironmentBackend >> addAlias: aSymbol to: anRGTraitAlias [
 
 	^ anRGTraitAlias pvtAddAlias: aSymbol
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> addBehavior: anRGBehavior to: anRGEnvironment [
 
 	^ anRGEnvironment pvtAddBehavior: anRGBehavior
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> addClassTag: aSymbol to: anRGPackage [
 
 	^ anRGPackage pvtAddClassTag: aSymbol
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> addClassVariable: anRGInstanceVariableDefinition to: anRGBehavior [
 
 	^ anRGBehavior behaviorStrategy pvtAddClassVariable: anRGInstanceVariableDefinition
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> addDefinedBehavior: anRGBehavior to: anRGPackage [
 
 	^ anRGPackage pvtAddDefinedBehavior: anRGBehavior
 ]
 
-{ #category : #'trait exclusion' }
+{ #category : 'trait exclusion' }
 RGEnvironmentBackend >> addExclusion: aSymbol to: anRGTraitExclusion [
 
 	^ anRGTraitExclusion pvtAddExclusion: aSymbol
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> addExtensionMethod: anRGMethod to: anRGPackage [
 
 	^ anRGPackage pvtAddExtensionMethod: anRGMethod
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> addGlobalVariable: anRGGlobalVariable to: anRGEnvironment [
 
 	^ anRGEnvironment pvtAddGlobalVariable: anRGGlobalVariable
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> addLocalMethod: anRGMethod to: anRGBehavior [
 
 	^ anRGBehavior pvtAddLocalMethod: anRGMethod
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> addMethodTag: aSymbol to: anRGBehavior [
 
 	^ anRGBehavior pvtAddMethodTag: aSymbol
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> addPackage: anRGPackage to: anRGEnvironment [
 
 	^ anRGEnvironment pvtAddPackage: anRGPackage
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> addSharedPool: anRGPoolVariable to: anRGBehavior [
 
 	^ anRGBehavior behaviorStrategy pvtAddSharedPool: anRGPoolVariable
 ]
 
-{ #category : #'pointer layout' }
+{ #category : 'pointer layout' }
 RGEnvironmentBackend >> addSlot: anRGSlot to: anRGLayout [
 
 	^ anRGLayout pvtAddSlot: anRGSlot
 ]
 
-{ #category : #'trait composition' }
+{ #category : 'trait composition' }
 RGEnvironmentBackend >> addTransformation: anRGTraitTransformation to: anRGTraitComposition [
 
 	^ anRGTraitComposition pvtAddTransformation: anRGTraitTransformation
 ]
 
-{ #category : #'trait alias' }
+{ #category : 'trait alias' }
 RGEnvironmentBackend >> aliasesFor: anRGTraitAlias do: aBlock [
 
 	^ anRGTraitAlias pvtAliasesDo: aBlock
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> astFor: anRGMethod [
 
 	^  anRGMethod astFromSource
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> authorFor: anRGMethod [
 
 	^  anRGMethod pvtAuthor
 ]
 
-{ #category : #metaclass }
+{ #category : 'metaclass' }
 RGEnvironmentBackend >> baseClassFor: anRGBehavior [
 
 	^  anRGBehavior behaviorStrategy pvtBaseClass
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> behaviorsFor: anRGEnvironment do: aBlock [
 
 	^  anRGEnvironment pvtBehaviorsDo: aBlock
 ]
 
-{ #category : #'class comment' }
+{ #category : 'class comment' }
 RGEnvironmentBackend >> classCommentAuthorFor: anRGComment [
 
 	^  anRGComment pvtAuthor
 ]
 
-{ #category : #'class comment' }
+{ #category : 'class comment' }
 RGEnvironmentBackend >> classCommentContentFor: anRGComment [
 
 	^ anRGComment pvtContent
 ]
 
-{ #category : #'class comment' }
+{ #category : 'class comment' }
 RGEnvironmentBackend >> classCommentTimeFor: anRGComment [
 
 	^  anRGComment pvtTime
 ]
 
-{ #category : #trait }
+{ #category : 'trait' }
 RGEnvironmentBackend >> classTraitFor: anRGTrait [
 
 	^  anRGTrait behaviorStrategy pvtClassTrait
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> classVariablesFor: anRGBehavior do: aBlock [
 
 	^ anRGBehavior behaviorStrategy pvtClassVariablesDo: aBlock
 ]
 
-{ #category : #'trait alias' }
+{ #category : 'trait alias' }
 RGEnvironmentBackend >> cleanAliasesFor: anRGTraitAlias [
 
 	^ anRGTraitAlias pvtCleanAliases
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> cleanBehaviorsFor: anRGEnvironment [
 
 	anRGEnvironment pvtCleanBehaviors
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> cleanClassTagsFor: anRGBehavior [
 
 	anRGBehavior pvtCleanTags
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> cleanClassVariablesFor: anRGBehavior [
 
 	^ anRGBehavior behaviorStrategy pvtCleanClassVariables
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> cleanDefinedBehaviorsFor: anRGPackage [
 
 	anRGPackage pvtCleanDefinedBehaviors
 ]
 
-{ #category : #'trait exclusion' }
+{ #category : 'trait exclusion' }
 RGEnvironmentBackend >> cleanExclusionsFor: anRGTraitExclusion [
 
 	^ anRGTraitExclusion pvtCleanExclusions
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> cleanExtensionMethodsFor: anRGPackage [
 
 	anRGPackage pvtCleanExtensionMethods
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> cleanGlobalVariablesFor: anRGEnvironment [
 
 	^ anRGEnvironment pvtCleanGlobalVariables
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> cleanLocalMethodsFor: anRGBehavior [
 
 	^ anRGBehavior pvtCleanLocalMethods
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> cleanMethodTagsFor: anRGMethod [
 
 	anRGMethod pvtCleanTags
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> cleanPackagesFor: anRGEnvironment [
 
 	anRGEnvironment pvtCleanPackages
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> cleanSharedPoolsFor: anRGBehavior [
 
 	^ anRGBehavior behaviorStrategy pvtCleanSharedPools
 ]
 
-{ #category : #'pointer layout' }
+{ #category : 'pointer layout' }
 RGEnvironmentBackend >> cleanSlotsFor: anRGLayout [
 
 	^ anRGLayout pvtCleanSlots
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> cleanTagsForClassesFor: anRGPackage [
 
 	anRGPackage pvtCleanTagsForClasses
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> cleanTagsForMethodsFor: anRGBehavior [
 
 	anRGBehavior pvtCleanTagsForMethods
 ]
 
-{ #category : #'trait composition' }
+{ #category : 'trait composition' }
 RGEnvironmentBackend >> cleanTransformationsFor: anRGTraitComposition [
 
 	^ anRGTraitComposition pvtCleanTransformations
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> commentFor: anRGBehavior [
 
 	^  anRGBehavior behaviorStrategy pvtComment
 ]
 
-{ #category : #'unresolved objects' }
+{ #category : 'unresolved objects' }
 RGEnvironmentBackend >> createNewUnresolvedClass [
 
 	| classStub metaclassStub packageStub |
@@ -283,7 +285,7 @@ RGEnvironmentBackend >> createNewUnresolvedClass [
 	^ classStub
 ]
 
-{ #category : #'unresolved objects' }
+{ #category : 'unresolved objects' }
 RGEnvironmentBackend >> createNewUnresolvedMetaclassFor: anRGBehavior [
 
 	| metaclassStub superclassMetaclass |
@@ -303,7 +305,7 @@ RGEnvironmentBackend >> createNewUnresolvedMetaclassFor: anRGBehavior [
 	^ metaclassStub
 ]
 
-{ #category : #'unresolved objects' }
+{ #category : 'unresolved objects' }
 RGEnvironmentBackend >> createUnresolvedClassGroupFor: anRGBehavior [
 
 	| classStub metaclassStub superclassStub superclassMetaclassStub packageStub1 packageStub2 |
@@ -367,7 +369,7 @@ RGEnvironmentBackend >> createUnresolvedClassGroupFor: anRGBehavior [
 		ifTrue: [ classStub ]
 ]
 
-{ #category : #'unresolved objects' }
+{ #category : 'unresolved objects' }
 RGEnvironmentBackend >> createUnresolvedTraitGroupFor: anRGBehavior [
 
 	| traitStub classTraitStub traitMetaclassStub classTraitMetaclassStub packageStub1  |
@@ -421,19 +423,19 @@ RGEnvironmentBackend >> createUnresolvedTraitGroupFor: anRGBehavior [
 		ifTrue: [ classTraitStub ]
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> definedBehaviorsFor: anRGPackage do: aBlock [
 
 	^  anRGPackage pvtDefinedBehaviorsDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironmentBackend >> definitionFor: anObject [
 
 	^ self definitionFor: anObject ifAbsentRegister: [ anObject ensureRingDefinitionIn: self environment ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironmentBackend >> definitionFor: anObject ifAbsentRegister: aDefinitionOrBlock [
 
 	^ providedDefinitions at: anObject
@@ -441,85 +443,85 @@ RGEnvironmentBackend >> definitionFor: anObject ifAbsentRegister: aDefinitionOrB
 		ifAbsentPut: [ aDefinitionOrBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironmentBackend >> environment [
 
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironmentBackend >> environment: anRGEnironment [
 
 	environment := anRGEnironment
 ]
 
-{ #category : #'trait exclusion' }
+{ #category : 'trait exclusion' }
 RGEnvironmentBackend >> exclusionsFor: anRGTraitExclusion do: aBlock [
 
 	^ anRGTraitExclusion pvtExclusionsDo: aBlock
 ]
 
-{ #category : #slot }
+{ #category : 'slot' }
 RGEnvironmentBackend >> expressionFor: anRGUnknownSlot [
 
 	^  anRGUnknownSlot pvtExpression
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> extensionMethodsFor: anRGPackage do: aBlock [
 
 	^ anRGPackage pvtExtensionMethodsDo: aBlock
 ]
 
-{ #category : #subbackends }
+{ #category : 'subbackends' }
 RGEnvironmentBackend >> forBehavior [
 
 	^ self
 ]
 
-{ #category : #subbackends }
+{ #category : 'subbackends' }
 RGEnvironmentBackend >> forEnvironment [
 
 	^ self
 ]
 
-{ #category : #subbackends }
+{ #category : 'subbackends' }
 RGEnvironmentBackend >> forMethod [
 
 	^ self
 ]
 
-{ #category : #subbackends }
+{ #category : 'subbackends' }
 RGEnvironmentBackend >> forPackage [
 
 	^ self
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> globalVariablesFor: anRGEnvironment do: aBlock [
 
 	^ anRGEnvironment pvtGlobalVariablesDo: aBlock
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGEnvironmentBackend >> hasFullyResolved: anRGObject [
 
 	^ anRGObject pvtFullyResolved
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGEnvironmentBackend >> hasFullyUnresolved: anRGObject [
 
 	^ anRGObject pvtFullyUnresolved
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> hasSourceCodeFor: anRGMethod [
 
 	^ anRGMethod pvtSourceCode notNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGEnvironmentBackend >> initialize [
 
 	super initialize.
@@ -527,379 +529,379 @@ RGEnvironmentBackend >> initialize [
 	providedDefinitions := IdentityDictionary new
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> layoutFor: anRGBehavior [
 
 	^  anRGBehavior behaviorStrategy pvtLayout
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> localMethodsFor: anRGBehavior do: aBlock [
 
 	^ anRGBehavior pvtLocalMethodsDo: aBlock
 ]
 
-{ #category : #metaclass }
+{ #category : 'metaclass' }
 RGEnvironmentBackend >> metaclassFor: anRGBehavior [
 
 	^  anRGBehavior pvtMetaclass
 ]
 
-{ #category : #'metaclass trait' }
+{ #category : 'metaclass trait' }
 RGEnvironmentBackend >> metaclassTraitBaseTraitFor: anRGMetaclassTrait [
 
 	^  anRGMetaclassTrait behaviorStrategy pvtBaseTrait
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> methodPackageFor: anRGMethod [
 
 	^  anRGMethod pvtPackage
 ]
 
-{ #category : #general }
+{ #category : 'general' }
 RGEnvironmentBackend >> nameFor: anRGObject [
 
 	^ anRGObject pvtName
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> packageFor: anRGBehavior [
 
 	^  anRGBehavior behaviorStrategy pvtPackage
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> packagesFor: anRGEnvironment do: aBlock [
 
 	^  anRGEnvironment pvtPackagesDo: aBlock
 ]
 
-{ #category : #'trait alias' }
+{ #category : 'trait alias' }
 RGEnvironmentBackend >> removeAlias: aSymbol from: anRGTraitAlias [
 
 	^ anRGTraitAlias pvtRemoveAlias: aSymbol
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> removeBehavior: anRGBehavior from: anRGEnvironment [
 
 	anRGEnvironment pvtRemoveBehavior: anRGBehavior
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> removeClassTag: aSymbol from: anRGPackage [
 
 	^ anRGPackage pvtRemoveClassTag: aSymbol
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> removeClassVariable: anRGInstanceVariableDefinition from: anRGBehavior [
 
 	^ anRGBehavior behaviorStrategy pvtRemoveClassVariable: anRGInstanceVariableDefinition
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> removeDefinedBehavior: anRGBehavior from: anRGPackage [
 
 	^ anRGPackage pvtRemoveDefinedBehavior: anRGBehavior
 ]
 
-{ #category : #'trait exclusion' }
+{ #category : 'trait exclusion' }
 RGEnvironmentBackend >> removeExclusion: aSymbol from: anRGTraitExclusion [
 
 	^ anRGTraitExclusion pvtRemoveExclusion: aSymbol
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> removeExtensionMethod: anRGMethod from: anRGPackage [
 
 	^ anRGPackage pvtRemoveExtensionMethod: anRGMethod
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> removeGlobalVariable: anRGGlobalVariable from: anRGEnvironment [
 
 	^ anRGEnvironment pvtRemoveGlobalVariable: anRGGlobalVariable
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> removeLocalMethod: anRGMethod from: anRGBehavior [
 
 	^ anRGBehavior pvtRemoveLocalMethod: anRGMethod
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> removeMethodTag: aSymbol from: anRGBehavior [
 
 	^ anRGBehavior pvtRemoveMethodTag: aSymbol
 ]
 
-{ #category : #environment }
+{ #category : 'environment' }
 RGEnvironmentBackend >> removePackage: anRGPackage from: anRGEnvironment [
 
 	^ anRGEnvironment pvtRemovePackage: anRGPackage
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> removeSharedPool: anRGPoolVariable from: anRGBehavior [
 
 	^ anRGBehavior behaviorStrategy pvtRemoveSharedPool: anRGPoolVariable
 ]
 
-{ #category : #'pointer layout' }
+{ #category : 'pointer layout' }
 RGEnvironmentBackend >> removeSlot: anRGSlot from: anRGLayout [
 
 	^ anRGLayout pvtRemoveSlot: anRGSlot
 ]
 
-{ #category : #'trait composition' }
+{ #category : 'trait composition' }
 RGEnvironmentBackend >> removeTransformation: anRGTraitTransformation from: anRGTraitComposition [
 
 	^ anRGTraitComposition pvtRemoveTransformation: anRGTraitTransformation
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGEnvironmentBackend >> resolvedPropertiesFor: anRGObject [
 
 	^ anRGObject pvtResolvedProperties
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> setAuthorFor: anRGMethod to: aDateAndTime [
 
 	^  anRGMethod pvtAuthor: aDateAndTime
 ]
 
-{ #category : #metaclass }
+{ #category : 'metaclass' }
 RGEnvironmentBackend >> setBaseClassFor: anRGBehavior to: anRGClass [
 
 	^  anRGBehavior behaviorStrategy pvtBaseClass: anRGClass
 ]
 
-{ #category : #'class comment' }
+{ #category : 'class comment' }
 RGEnvironmentBackend >> setClassCommentAuthorFor: anRGComment to: aString [
 
 	^  anRGComment pvtAuthor: aString
 ]
 
-{ #category : #'class comment' }
+{ #category : 'class comment' }
 RGEnvironmentBackend >> setClassCommentContentFor: anRGComment to: anObject [
 
 	anRGComment pvtContent: anObject
 ]
 
-{ #category : #'class comment' }
+{ #category : 'class comment' }
 RGEnvironmentBackend >> setClassCommentTimeFor: anRGComment to: aDateAndTime [
 
 	^  anRGComment pvtTime: aDateAndTime
 ]
 
-{ #category : #trait }
+{ #category : 'trait' }
 RGEnvironmentBackend >> setClassTraitFor: anRGTrait to: anRGMetatraitDefinition [
 
 	^  anRGTrait behaviorStrategy pvtClassTrait: anRGMetatraitDefinition
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> setCommentFor: anRGBehavior to: anRGComment [
 
 	^  anRGBehavior behaviorStrategy pvtComment: anRGComment
 ]
 
-{ #category : #slot }
+{ #category : 'slot' }
 RGEnvironmentBackend >> setExpressionFor: anRGUnknownSlot to: aString [
 
 	^  anRGUnknownSlot pvtExpression: aString
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> setLayoutFor: anRGBehavior to: anRGLayout [
 
 	^  anRGBehavior behaviorStrategy pvtLayout: anRGLayout
 ]
 
-{ #category : #metaclass }
+{ #category : 'metaclass' }
 RGEnvironmentBackend >> setMetaclassFor: anRGBehavior to: anRGMetaclass [
 
 	^  anRGBehavior pvtMetaclass: anRGMetaclass
 ]
 
-{ #category : #'metaclass trait' }
+{ #category : 'metaclass trait' }
 RGEnvironmentBackend >> setMetaclassTraitBaseTraitFor: anRGMetaclassTrait to: anRGTrait [
 
 	^  anRGMetaclassTrait pvtBaseTrait: anRGTrait
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> setMethodPackageFor: anRGMethod to: anRGPackage [
 
 	^  anRGMethod pvtPackage: anRGPackage
 ]
 
-{ #category : #general }
+{ #category : 'general' }
 RGEnvironmentBackend >> setNameFor: anRGObject to: aString [
 
 	^ anRGObject pvtName: aString
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> setPackageFor: anRGBehavior to: anRGPackage [
 
 	^  anRGBehavior behaviorStrategy pvtPackage: anRGPackage
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> setSourceCodeFor: anRGMethod to: anObject [
 
 	anRGMethod pvtSourceCode: anObject
 ]
 
-{ #category : #'trait transormation' }
+{ #category : 'trait transormation' }
 RGEnvironmentBackend >> setSubjectFor: anRGTraitComposition to: anRGTrait [
 
 	^  anRGTraitComposition pvtSubject: anRGTrait
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> setSuperclassFor: anRGBehavior to: anObject [
 
 	^  anRGBehavior pvtSuperclass: anObject
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> setTimeFor: anRGMethod to: aDateAndTime [
 
 	^  anRGMethod pvtTime: aDateAndTime
 ]
 
-{ #category : #trait }
+{ #category : 'trait' }
 RGEnvironmentBackend >> setTraitCommentFor: anRGBehavior to: anRGComment [
 
 	^  anRGBehavior behaviorStrategy pvtComment: anRGComment
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> setTraitCompositionFor: anRGBehavior to: anRGTraitComposition [
 
 	^  anRGBehavior pvtTraitComposition: anRGTraitComposition
 ]
 
-{ #category : #trait }
+{ #category : 'trait' }
 RGEnvironmentBackend >> setTraitPackageFor: anRGBehavior to: anRGPackage [
 
 	^  anRGBehavior pvtPackage: anRGPackage
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> sharedPoolsFor: anRGBehavior do: aBlock [
 
 	^ anRGBehavior behaviorStrategy pvtSharedPoolsDo: aBlock
 ]
 
-{ #category : #'pointer layout' }
+{ #category : 'pointer layout' }
 RGEnvironmentBackend >> slotsFor: anRGLayout do: aBlock [
 
 	^ anRGLayout pvtSlotsDo: aBlock
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> sourceCodeFor: anRGMethod [
 
 	^ anRGMethod pvtSafeSourceCode
 ]
 
-{ #category : #'trait transormation' }
+{ #category : 'trait transormation' }
 RGEnvironmentBackend >> subjectFor: anRGTraitComposition [
 
 	^  anRGTraitComposition pvtSubject
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> superclassFor: anRGBehavior [
 
 	^  anRGBehavior pvtSuperclass
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> tagClass: anRGBehavior with: aSymbol [
 
 	^ anRGBehavior pvtTagWith: aSymbol
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> tagMethod: anRGMethod with: aSymbol [
 
 	^ anRGMethod pvtTagWith: aSymbol
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> tagsForClass: anRGBehavior do: aBlock [
 
 	^  anRGBehavior pvtTagsDo: aBlock
 ]
 
-{ #category : #package }
+{ #category : 'package' }
 RGEnvironmentBackend >> tagsForClassesFor: anRGPackage do: aBlock [
 
 	^  anRGPackage pvtTagsForClassesDo: aBlock
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> tagsForMethod: anRGMethod do: aBlock [
 
 	^  anRGMethod pvtTagsDo: aBlock
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> tagsForMethodsFor: anRGBehavior do: aBlock [
 
 	^  anRGBehavior pvtTagsForMethodsDo: aBlock
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> timeFor: anRGMethod [
 
 	^  anRGMethod pvtTime
 ]
 
-{ #category : #trait }
+{ #category : 'trait' }
 RGEnvironmentBackend >> traitCommentFor: anRGBehavior [
 
 	^  anRGBehavior behaviorStrategy pvtComment
 ]
 
-{ #category : #behavior }
+{ #category : 'behavior' }
 RGEnvironmentBackend >> traitCompositionFor: anRGBehavior [
 
 	^  anRGBehavior pvtTraitComposition
 ]
 
-{ #category : #trait }
+{ #category : 'trait' }
 RGEnvironmentBackend >> traitPackageFor: anRGBehavior [
 
 	^  anRGBehavior behaviorStrategy pvtPackage
 ]
 
-{ #category : #'trait composition' }
+{ #category : 'trait composition' }
 RGEnvironmentBackend >> transformationsFor: anRGTraitComposition do: aBlock [
 
 	^ anRGTraitComposition pvtTransformationsDo: aBlock
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGEnvironmentBackend >> unresolvedPropertiesFor: anRGObject [
 
 	^ anRGObject pvtUnresolvedProperties
 ]
 
-{ #category : #class }
+{ #category : 'class' }
 RGEnvironmentBackend >> untagClass: anRGBehavior from: aSymbol [
 
 	^ anRGBehavior pvtUntagFrom: aSymbol
 ]
 
-{ #category : #method }
+{ #category : 'method' }
 RGEnvironmentBackend >> untagMethod: anRGMethod from: aSymbol [
 
 	^ anRGMethod pvtUntagFrom: aSymbol

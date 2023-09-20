@@ -72,11 +72,6 @@ Behavior >> addSelector: selector withMethod: compiledMethod [
 ]
 
 { #category : 'adding-removing methods' }
-Behavior >> addSelector: selector withRecompiledMethod: compiledMethod [
-	^ self addSelectorSilently: selector withMethod: compiledMethod
-]
-
-{ #category : 'adding-removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	"Add the message selector with the corresponding compiled method to the
 	receiver's method dictionary.

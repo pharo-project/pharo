@@ -1,6 +1,6 @@
-Extension { #name : #RBMessageNode }
+Extension { #name : 'RBMessageNode' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> isInlineAndOr [
 
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineAndOr ifFalse: [ ^false ]].
@@ -10,7 +10,7 @@ RBMessageNode >> isInlineAndOr [
 	^self arguments allSatisfy: [ :each |  each isBlock and: [each arguments isEmpty ]]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> isInlineCase [
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineCase ifFalse: [ ^false ]].
 	self isCascaded ifTrue: [^ false].
@@ -28,7 +28,7 @@ RBMessageNode >> isInlineCase [
 	^ true
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> isInlineIf [
 
 	self methodCompilationContextOrNil ifNotNil: [ :c |
@@ -39,7 +39,7 @@ RBMessageNode >> isInlineIf [
 	^ self arguments allSatisfy: [ :node | node isBlock and: [ node arguments isEmpty ]]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> isInlineIfNil [
 
 	| assertNone assertOneOrNone |
@@ -66,7 +66,7 @@ RBMessageNode >> isInlineIfNil [
 	^ true
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> isInlineRepeat [
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineRepeat
 		ifFalse: [ ^ false ]].
@@ -80,7 +80,7 @@ RBMessageNode >> isInlineRepeat [
 	^ true
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> isInlineTimesRepeat [
 
 	| block |
@@ -95,7 +95,7 @@ RBMessageNode >> isInlineTimesRepeat [
 	^ true
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> isInlineToDo [
 
 	| block step |
@@ -120,7 +120,7 @@ RBMessageNode >> isInlineToDo [
 	^ true
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> isInlineWhile [
 
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineWhile ifFalse: [ ^false ]].
@@ -135,7 +135,7 @@ RBMessageNode >> isInlineWhile [
 	^ true
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> isInlined [
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineNone ifTrue: [ ^false ]].
 	self isInlineIf ifTrue: [^true].
@@ -149,7 +149,7 @@ RBMessageNode >> isInlined [
 	^false
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMessageNode >> methodCompilationContextOrNil [
 	^ self methodNode ifNotNil: [ :node | node compilationContext ]
 ]

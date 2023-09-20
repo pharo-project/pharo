@@ -1,6 +1,6 @@
-Extension { #name : #EmptyLayout }
+Extension { #name : 'EmptyLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 EmptyLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	| aHost |

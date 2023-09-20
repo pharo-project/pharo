@@ -8,7 +8,6 @@ Class {
 	#name : 'ClassRenamed',
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
-		'category',
 		'classRenamed',
 		'newName',
 		'oldName'
@@ -19,13 +18,13 @@ Class {
 }
 
 { #category : 'instance creation' }
-ClassRenamed class >> class: aClass category: aCategoryName oldName: anOldClassName newName: aNewClassName [
-	^self new
-			classRenamed: aClass;
-			category: aCategoryName;
-			oldName: anOldClassName;
-			newName: aNewClassName;
-			yourself
+ClassRenamed class >> class: aClass oldName: anOldClassName newName: aNewClassName [
+
+	^ self new
+		  classRenamed: aClass;
+		  oldName: anOldClassName;
+		  newName: aNewClassName;
+		  yourself
 ]
 
 { #category : 'testing' }
@@ -71,13 +70,7 @@ ClassRenamed >> affectsVariablesOf: aClass [
 { #category : 'accessing' }
 ClassRenamed >> category [
 
-	^ category
-]
-
-{ #category : 'accessing' }
-ClassRenamed >> category: anObject [
-
-	category := anObject
+	^ self classRenamed category
 ]
 
 { #category : 'accessing' }

@@ -2,25 +2,27 @@
 I am a bytecode accessing an instance variable. As such, I have an index.
 "
 Class {
-	#name : #IRInstVarAccess,
-	#superclass : #IRAccess,
+	#name : 'IRInstVarAccess',
+	#superclass : 'IRAccess',
 	#instVars : [
 		'index'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRInstVarAccess >> index [
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRInstVarAccess >> index: anInteger [
 	index := anInteger
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstVarAccess >> isInstVarAccess [
 	^ true
 ]
