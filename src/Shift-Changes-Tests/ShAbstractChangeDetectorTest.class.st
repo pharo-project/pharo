@@ -72,6 +72,8 @@ ShAbstractChangeDetectorTest >> setUp [
 			               traitComposition: usedTrait;
 			               slots: { #ivar1 };
 			               classSlots: { #classVar1 };
+			               sharedVariables: { #Var1 };
+			               sharedPools: 'TestSharedPool';
 			               layoutClass: FixedLayout;
 			               package: self packageName ].
 
