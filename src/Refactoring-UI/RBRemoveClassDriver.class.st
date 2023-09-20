@@ -2,7 +2,6 @@ Class {
 	#name : 'RBRemoveClassDriver',
 	#superclass : 'RBDriver',
 	#instVars : [
-		'refactoring',
 		'classes',
 		'users'
 	],
