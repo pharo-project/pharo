@@ -191,17 +191,6 @@ Breakpoint class >> registerInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
-{ #category : 'observers - experimental' }
-Breakpoint class >> registerObserver: anObject [
-	"Do not use this method, it is there for compatibility with old users.
-	Instead, register your object yourself to 'SystemAnnouncer uniqueInstance' like below, but only for the announcements you need"
-
-	SystemAnnouncer uniqueInstance
-		when: BreakpointAdded send: #update: to: anObject;
-		when: BreakpointHit send: #update: to: anObject;
-		when: BreakpointRemoved send: #update: to: anObject
-]
-
 { #category : 'cleanup' }
 Breakpoint class >> removeAll [
 	<script>
@@ -231,14 +220,6 @@ Breakpoint class >> removeFromMethod: aMethod [
 		breakpoint link methods
 			detect: [ :m | m == aMethod ]
 			ifFound: [ breakpoint removeFromMethod: aMethod ] ]
-]
-
-{ #category : 'observers - experimental' }
-Breakpoint class >> unregisterObserver: anObject [
-	"Do not use this method, it is there for compatibility with old users.
-	Instead, unsubscribe yourself from 'SystemAnnouncer uniqueInstance' directly (like shown below)"
-
-	SystemAnnouncer uniqueInstance unsubscribe: anObject
 ]
 
 { #category : 'api' }
