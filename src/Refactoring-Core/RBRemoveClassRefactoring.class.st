@@ -9,7 +9,8 @@ Class {
 	#name : 'RBRemoveClassRefactoring',
 	#superclass : 'RBRefactoring',
 	#instVars : [
-		'classNames'
+		'classNames',
+		'classesDictionary'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -145,14 +146,6 @@ RBRemoveClassRefactoring >> refactoringAwareUsesOf: aClass [
 
 { #category : 'removing' }
 RBRemoveClassRefactoring >> removeClassChanges [
-
-	self applicabilityPreconditions check ifFalse: [
-		RBApplicabilityChecksFailedError signal:
-			self applicabilityPreconditions errorString ].
-
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
 
