@@ -22,42 +22,44 @@ Note that the above states each have an associated revoke action:
 However all of these are accomplished trivially by restoring the original method dictionary.
 "
 Class {
-	#name : #MethodChangeRecord,
-	#superclass : #Object,
+	#name : 'MethodChangeRecord',
+	#superclass : 'Object',
 	#instVars : [
 		'changeType',
 		'lastSourcePointer'
 	],
-	#category : #'System-Changes-Records'
+	#category : 'System-Changes-Records',
+	#package : 'System-Changes',
+	#tag : 'Records'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodChangeRecord >> changeType [
 
 	^ changeType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodChangeRecord >> lastSourcePointer [
 
 	^ lastSourcePointer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodChangeRecord >> lastSourcePointer: sourcePointer [
 	"Store the source index of the last version of the method so it can be put back there if re-accepted from a version browser."
 
 	lastSourcePointer := sourcePointer
 ]
 
-{ #category : #'all changes' }
+{ #category : 'all changes' }
 MethodChangeRecord >> noteChangeType: newChangeType [
 	changeType := (changeType == #addedThenRemoved and: [ newChangeType == #change ])
 		ifTrue: [ #add ]
 		ifFalse: [ newChangeType ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MethodChangeRecord >> printOn: strm [
 
 	super printOn: strm.

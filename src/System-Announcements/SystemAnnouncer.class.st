@@ -109,12 +109,9 @@ SystemAnnouncer >> classParentOf: aClass renamedFrom: oldName to: newName [
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName inCategory: aCategoryName [
-	self announce: (ClassRenamed
-				class: aClass
-				category: aCategoryName
-				oldName: oldClassName
-				newName: newClassName)
+SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName [
+
+	self announce: (ClassRenamed class: aClass oldName: oldClassName newName: newClassName)
 ]
 
 { #category : 'triggering' }
