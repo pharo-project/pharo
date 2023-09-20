@@ -89,17 +89,6 @@ RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses: aClass [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionHasNoReferences: aClass [
-	
-	| referencingClassNames |
-	referencingClassNames := (self refactoringAwareReferencesTo: aClass).
-	^ (RBCondition withBlock: [ referencingClassNames isEmpty ])
-			errorMacro: aClass name , ' is referenced.<n>Browse references?';
-			errorBlock: [ self openBrowserOn: (RBClassEnvironment classes: referencingClassNames) ];
-			yourself
-]
-
-{ #category : 'preconditions' }
 RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
 
 	^ (RBCondition withBlock: [
@@ -109,6 +98,14 @@ RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
 		  errorBlock: [
 			  self openBrowserOn: (self environmentWithUsersOf: aClassOrTrait) ];
 		  yourself
+]
+
+{ #category : 'as yet unclassified' }
+RBRemoveClassRefactoring >> preconditionHaveNoReferences [
+
+	^ RBClassesHaveNoReferencesCondition new
+		  model: model;
+		  classes: classesDictionary values
 ]
 
 { #category : 'preconditions' }
@@ -136,14 +133,6 @@ RBRemoveClassRefactoring >> privateTransform [
 	self
 		reparentSubclasses;
 		removeClasses
-]
-
-{ #category : 'preconditions' }
-RBRemoveClassRefactoring >> refactoringAwareReferencesTo: aClass [
-	"Return the references to the class taking into account that some references may be created by other classes that should be removed by the refactoring."
-	
-^ ((self model classesReferencingClass: aClass) 
-		collect: [ :each | each name ]) copyWithoutAll: classNames
 ]
 
 { #category : 'preconditions' }

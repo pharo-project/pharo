@@ -28,16 +28,22 @@ RBRemoveClassDriver >> removeClassChanges [
 { #category : 'execution' }
 RBRemoveClassDriver >> runRefactoring [
 
-	| select |
+	| select hasNoReferences |
 	self configureRefactoring.
+	refactoring prepareForExecution. "Driver should ideally not know about this method..."
 	[
 	[
-	users := refactoring senders.
+	refactoring applicabilityPreconditions check ifFalse: [ ^ self ].
+	"refactoring breakingChangePreconditions check."
 
-	users
-		ifEmpty: [ self openPreviewWithChanges: refactoring generateChanges ]
-		ifNotEmpty: [ 
-		
+	hasNoReferences := refactoring preconditionHaveNoReferences.
+	hasNoReferences check
+
+		ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
+		ifFalse: [ 
+			| perClassViolators |
+			perClassViolators := hasNoReferences violators.
+			users := perClassViolators flatCollect: [ :violators | violators ].
 		select := SpSelectDialog new 
 			title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
 			label: 'Select a strategy';
