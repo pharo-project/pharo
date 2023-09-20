@@ -3,72 +3,74 @@ I represent the root element in a TraitComposition.
 I wrap a class or Trait to be used as a trait in a trait composition.
 "
 Class {
-	#name : #TaCompositionElement,
-	#superclass : #TaAbstractComposition,
+	#name : 'TaCompositionElement',
+	#superclass : 'TaAbstractComposition',
 	#instVars : [
 		'innerClass'
 	],
-	#category : #'TraitsV2-Compositions'
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaCompositionElement class >> for: aClass [
 	^ self new
 		innerClass: aClass;
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaCompositionElement >> = aTrait [
 	^ (aTrait species = self species)
 		ifTrue: [ aTrait innerClass = self innerClass ]
 		ifFalse: [ ^ false ]
 ]
 
-{ #category : #users }
+{ #category : 'users' }
 TaCompositionElement >> addUser: aClass [
 	"When a user is added to me I propagate to the real Trait, as I am the root of the TraitComposition"
 	innerClass addUser: aClass
 ]
 
-{ #category : #'transforming selectors' }
+{ #category : 'transforming selectors' }
 TaCompositionElement >> aliasSelector: selector [
 	^ selector = #initializeTalent
 		ifTrue: [ self initializeSelectorForMe ]
 		ifFalse: [ selector ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaCompositionElement >> allTraits [
 	^ { innerClass } , innerClass traitComposition allTraits
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaCompositionElement >> changesSourceCode: aSelector [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaCompositionElement >> classComposition [
 
 	^ TaClassCompositionElement for: innerClass class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaCompositionElement >> compiledMethodAt: selector [
 	| newSelector |
 	newSelector := self dealiasSelector: selector.
 	^ innerClass methods detect: [ :e | e selector = newSelector ] ifNone: [ innerClass traitComposition compiledMethodAt: newSelector ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaCompositionElement >> copyTraitExpression [
 	"I can be just shallowCopy, because I have only a reference to the real Trait"
 	^ self shallowCopy
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaCompositionElement >> copyWithoutTrait: aTrait [
 
 	"If you want to remove a trait that is equivalent to me, I return an empty composition.
@@ -76,7 +78,7 @@ TaCompositionElement >> copyWithoutTrait: aTrait [
 	^ self = aTrait ifTrue: [ TaEmptyComposition new ] ifFalse: [ self copy ]
 ]
 
-{ #category : #'transforming selectors' }
+{ #category : 'transforming selectors' }
 TaCompositionElement >> dealiasSelector: oldSelector [
 	"Usefule to dealias the initialize selector. Used mostly with stateful Talents"
 
@@ -87,43 +89,43 @@ TaCompositionElement >> dealiasSelector: oldSelector [
 		  ifFalse: [ oldSelector ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaCompositionElement >> hash [
 	^ self innerClass hash
 ]
 
-{ #category : #'transforming selectors' }
+{ #category : 'transforming selectors' }
 TaCompositionElement >> initializeSelectorForMe [
 	^ ('initializeTalent_' , self name) asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaCompositionElement >> innerClass [
 	^ innerClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaCompositionElement >> innerClass: anObject [
 	innerClass := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaCompositionElement >> isAliasSelector: aString [
 
 	^ innerClass traitComposition isAliasSelector: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaCompositionElement >> methods [
 	^innerClass methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaCompositionElement >> name [
 	^ innerClass name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaCompositionElement >> needsRecompilation: aSelector [
 	"We need to recompile if there is a supersend"
 
@@ -133,19 +135,19 @@ TaCompositionElement >> needsRecompilation: aSelector [
 		  ifAbsent: [ true ]
 ]
 
-{ #category : #users }
+{ #category : 'users' }
 TaCompositionElement >> removeUser: aClass [
 	"When a user is removed from me I propagate to the real Trait, as I am the root of the TraitComposition"
 	innerClass removeUser: aClass
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaCompositionElement >> reverseAlias: aSelector [
 
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaCompositionElement >> selectors [
 	" I get all the selectors of the methods in this talent, if there is a #initializeTalent selector I rename it to #initializeTalent_NameOfTalent"
 
@@ -156,24 +158,24 @@ TaCompositionElement >> selectors [
 		  ifFalse: [ originals ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaCompositionElement >> slots [
 	^ innerClass allSlots
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaCompositionElement >> traitCompositionExpression [
 
 	^ innerClass name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaCompositionElement >> traitCompositionExpressionWithParens [
 
 	^ self traitCompositionExpression
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaCompositionElement >> traitDefining: selector [
 	| newSelector |
 	newSelector := self dealiasSelector: selector.
@@ -184,12 +186,12 @@ TaCompositionElement >> traitDefining: selector [
 		ifNone: [ innerClass traitComposition traitDefining: newSelector ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaCompositionElement >> traits [
 	^ { innerClass }
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaCompositionElement >> without: anotherTrait [
 	^ self = anotherTrait ifTrue:[nil] ifFalse:[self]
 ]

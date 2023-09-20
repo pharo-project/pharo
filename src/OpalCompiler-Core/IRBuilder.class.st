@@ -20,8 +20,8 @@ Sending #compiledMethod to an ir method will generate its compiledMethod.  Sendi
 
 "
 Class {
-	#name : #IRBuilder,
-	#superclass : #Object,
+	#name : 'IRBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'ir',
 		'currentScope',
@@ -31,20 +31,22 @@ Class {
 		'sourceMapNodes',
 		'sourceMapByteIndex'
 	],
-	#category : #'OpalCompiler-Core-IR-Manipulation'
+	#category : 'OpalCompiler-Core-IR-Manipulation',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Manipulation'
 }
 
-{ #category : #'builder api' }
+{ #category : 'builder api' }
 IRBuilder class >> buildIR: aBlock [
 	^(aBlock value: self new) ir
 ]
 
-{ #category : #'builder api' }
+{ #category : 'builder api' }
 IRBuilder class >> buildMethod: aBlock [
 	^(self buildIR: aBlock) compiledMethod
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 IRBuilder >> add: instr [
 
 	"Associate instr with current parse node or byte range"
@@ -53,7 +55,7 @@ IRBuilder >> add: instr [
 	^ currentSequence add: instr
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> addBlockReturnTopIfRequired [
 	"If the current sequence is empty this means that there was a returntop before
 	then since there is no more stmts we do not need a blockreturntop"
@@ -71,26 +73,26 @@ IRBuilder >> addBlockReturnTopIfRequired [
 							ifFalse: [self blockReturnTop ]
 ]
 
-{ #category : #decompiling }
+{ #category : 'decompiling' }
 IRBuilder >> addJumpBackTarget: label to: sequence [
 
 	(jumpBackTargetStacks at: label ifAbsentPut: [OrderedCollection new])
 		addLast: sequence
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRBuilder >> addLiteral: aLiteral [
 	"Add this literal at the end of the literal array if there is space left"
 	aLiteral ifNil: [ ^ self ].
 	ir addAdditionalLiteral: aLiteral
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRBuilder >> addPragma: aPragma [
 	^ir addPragma: aPragma
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRBuilder >> addTemp: tempKey [
 
 	| tempMap |
@@ -103,18 +105,18 @@ IRBuilder >> addTemp: tempKey [
 	self cacheIndex: tempKey
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRBuilder >> addTemps: newKeys [
 	newKeys do: [ :key | self addTemp: key ]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRBuilder >> additionalLiterals:  literals [
 	"Add this literal at the end of the literal array if there is space left"
 	ir addAdditionalLiterals: literals
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> blockReturnTop [
 	| retInst |
 
@@ -125,7 +127,7 @@ IRBuilder >> blockReturnTop [
 	self popScope
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRBuilder >> cacheIndex: tempKey [
 	"if we have the ast, we can store the temp offset"
 	self sourceNode ifNotNil: [ :sourceNode |
@@ -135,17 +137,17 @@ IRBuilder >> cacheIndex: tempKey [
 		var ifNotNil: [ var index: (self currentScope tempMap at: tempKey) ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBuilder >> compilationContext [
 	^ir compilationContext
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRBuilder >> compilationContext: aCompilationContext [
 	ir compilationContext: aCompilationContext
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRBuilder >> createTempVectorNamed: name withVars: anArray [
 
 	self addTemp: name.
@@ -157,12 +159,12 @@ IRBuilder >> createTempVectorNamed: name withVars: anArray [
 			(sourceNode scope lookupVar: varName) index: i]]
 ]
 
-{ #category : #scopes }
+{ #category : 'scopes' }
 IRBuilder >> currentScope [
 	^currentScope top
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IRBuilder >> initialize [
 	ir := IRMethod new.
 	jumpAheadStacks := IdentityDictionary new.
@@ -181,20 +183,20 @@ IRBuilder >> initialize [
 			yourself)
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 IRBuilder >> ir [
 
 	self optimize.
 	^ ir
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBuilder >> irPrimitive: primNode [
 
 	ir irPrimitive: primNode
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> jumpAheadTarget: labelSymbol [
 	"Pop latest jumpAheadTo: with this labelSymbol and have it point to this new instruction sequence"
 
@@ -205,7 +207,7 @@ IRBuilder >> jumpAheadTarget: labelSymbol [
 	jumpInstr destination: currentSequence
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> jumpAheadTo: labelSymbol [
 	"Jump to the sequence that will be created when jumpAheadTarget: labelSymbol is sent to self.  This is and its corresponding target is only good for one use.  Other jumpAheadTo: with the same label will be put on a stack and superceed existing ones until its jumpAheadTarget: is called."
 
@@ -216,7 +218,7 @@ IRBuilder >> jumpAheadTo: labelSymbol [
 	self startNewSequence
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> jumpAheadTo: labelSymbol if: boolean [
 	"Conditional jump to the sequence that will be created when jumpAheadTarget: labelSymbol is sent to self.  This and its corresponding target is only good for one use.  Other jumpAheadTo:... with the same label will be put on a stack and superceed existing ones until its jumpAheadTarget: is called."
 
@@ -228,7 +230,7 @@ IRBuilder >> jumpAheadTo: labelSymbol if: boolean [
 	instr otherwise: currentSequence
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> jumpBackTarget: labelSymbol [
 	"Remember this basic block for a future jumpBackTo: labelSymbol.  Stack up remembered targets with same name and remove them from stack for each jumpBackTo: called with same name."
 
@@ -237,7 +239,7 @@ IRBuilder >> jumpBackTarget: labelSymbol [
 		addLast: currentSequence
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> jumpBackTo: labelSymbol [
 	"Pop last remembered position with this label and write an unconditional jump to it"
 
@@ -249,27 +251,27 @@ IRBuilder >> jumpBackTo: labelSymbol [
 	jump successor: currentSequence
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRBuilder >> mapToByteIndex: index [
 	"decompiling"
 
 	sourceMapByteIndex := index
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRBuilder >> mapToNode: object [
 	"new instructions will be associated with object"
 
 	sourceMapNodes addLast: object
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRBuilder >> numArgs: anInteger [
 	ir numArgs: anInteger.
 	ir sourceNode: self sourceNode
 ]
 
-{ #category : #optimizing }
+{ #category : 'optimizing' }
 IRBuilder >> optimize [
 	"Perform configured optimizations"
 
@@ -278,18 +280,18 @@ IRBuilder >> optimize [
 	ir absorbJumpsToSingleInstrs
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRBuilder >> popMap [
 
 	sourceMapNodes removeLast
 ]
 
-{ #category : #scopes }
+{ #category : 'scopes' }
 IRBuilder >> popScope [
 	currentScope pop
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> popTop [
 
 	currentSequence ifNotEmpty: [
@@ -298,128 +300,128 @@ IRBuilder >> popTop [
 	self add: IRInstruction popTop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBuilder >> properties: aDict [
 	ir properties: aDict
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushConsArray: size [
 
 	self add: (IRInstruction pushConsArray: size)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushDup [
 
 	self add: IRInstruction pushDup
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues [
 
 	^ self add: (IRInstruction pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues outerContextNeeded: aBoolean [
 
 	^ self add: (IRInstruction pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues outerContextNeeded: aBoolean)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushInstVar: index [
 
 	self add: (IRInstruction pushInstVar: index)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushLiteral: object [
 
 	self add: (IRInstruction pushLiteral: object)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushLiteralVariable: object [
 
 	self add: (IRInstruction pushLiteralVariable: object)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushNewArray: size [
 
 	self add: (IRInstruction pushNewArray: size)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushReceiver [
 
 	self add: (IRInstruction pushReceiver)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushRemoteTemp: name inVector: nameOfVector [
 
 	^self add: (IRInstruction pushRemoteTemp: name inVectorAt: nameOfVector)
 ]
 
-{ #category : #scopes }
+{ #category : 'scopes' }
 IRBuilder >> pushScope: anIRBlockOrMethod [
 
 	currentScope push: anIRBlockOrMethod
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushTemp: aSelector [
 
 	^ self add: (IRInstruction pushTemp: aSelector)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushThisContext [
 
 	self add: (IRInstruction pushThisContext)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> pushThisProcess [
 	"This is only supported with EncoderForSistaV1"
 	self add: (IRInstruction pushThisProcess)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> returnTop [
 
 	self add: IRInstruction returnTop.
 	self startNewSequence
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> send: selector [
 
 	^self add: (IRInstruction send: selector)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> send: selector toSuperOf: behavior [
 
 	^self add: (IRInstruction send: selector toSuperOf: behavior)
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRBuilder >> sourceByteIndex [
 
 	^ sourceMapByteIndex
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRBuilder >> sourceNode [
 	^ sourceMapNodes
 		ifEmpty: [nil]
 		ifNotEmpty: [sourceMapNodes last]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 IRBuilder >> startNewSequence [
 	"End current instruction sequence and start a new sequence to add instructions to.  If ending block just falls through to new block then add an explicit jump to it so they stay linked"
 
@@ -433,31 +435,31 @@ IRBuilder >> startNewSequence [
 	currentSequence := newSequence
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> storeInstVar: name [
 
 	^self add: (IRInstruction storeInstVar: name)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> storeIntoLiteralVariable: name [
 
 	^self add: (IRInstruction storeIntoLiteralVariable: name)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> storeRemoteTemp: name inVector: nameOfVector [
 
 	^self add: (IRInstruction storeRemoteTemp: name inVectorAt: nameOfVector)
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRBuilder >> storeTemp: aSymbol [
 
 	^self add: (IRInstruction storeTemp: aSymbol)
 ]
 
-{ #category : #decompiling }
+{ #category : 'decompiling' }
 IRBuilder >> testJumpAheadTarget: label [
 
 	jumpAheadStacks at: label ifPresent: [:stack |
