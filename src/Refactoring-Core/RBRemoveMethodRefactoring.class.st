@@ -166,6 +166,7 @@ RBRemoveMethodRefactoring >> privateTransform [
 
 { #category : 'actions' }
 RBRemoveMethodRefactoring >> removeMethodChanges [
+	"Pay attention, don't call directly since this method skips preconditions."
 
 	self privateTransform.
 	^ self changes

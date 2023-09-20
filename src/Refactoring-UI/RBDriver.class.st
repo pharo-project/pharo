@@ -46,7 +46,7 @@ RBDriver >> openPreviewWithChanges: changes [
 
 { #category : 'resources' }
 RBDriver >> refactoring [
-	self shouldBeImplemented.
+	^ refactoring
 ]
 
 { #category : 'utilities' }

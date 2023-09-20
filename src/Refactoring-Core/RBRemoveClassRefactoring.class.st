@@ -92,14 +92,6 @@ RBRemoveClassRefactoring >> preconditionIsNotMetaclass: aClass [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionNoTopClasses: aClass [
-
-	^ RBCondition 
-		withBlock: [ aClass superclass notNil ]
-		errorString: 'Cannot remove top level class<n>when it has subclasses'
-]
-
-{ #category : 'preconditions' }
 RBRemoveClassRefactoring >> preconditions [
 
 	^ classNames inject: self trueCondition into: [ :sum :each |
@@ -107,8 +99,7 @@ RBRemoveClassRefactoring >> preconditions [
 		  aClassOrTrait := self model classNamed: each asSymbol.
 		  aClassOrTrait ifNil: [
 			  self refactoringError: 'No such class or trait' ].
-		  sum & ((self preconditionNoTopClasses: aClassOrTrait) 
-			& (self preconditionIsNotMetaclass: aClassOrTrait)
+		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
 		   & (self preconditionHasNoReferences: aClassOrTrait)
 		   & (self preconditionEmptyOrHasNoSubclasses: aClassOrTrait)
 		   & (self preconditionHasNoUsers: aClassOrTrait)) ] 
@@ -135,6 +126,22 @@ RBRemoveClassRefactoring >> refactoringAwareUsesOf: aClass [
 	
 ^ ((self model allReferencesTo: aClass name)
 		collect: [ :each | each methodClass name ]) copyWithoutAll: classNames
+]
+
+{ #category : 'removing' }
+RBRemoveClassRefactoring >> removeClassChanges [
+
+	self applicabilityPreconditions check ifFalse: [
+		RBApplicabilityChecksFailedError signal:
+			self applicabilityPreconditions errorString ].
+
+	self breakingChangePreconditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangePreconditions errorString ].
+
+	self privateTransform.
+
+	^ self changes
 ]
 
 { #category : 'transforming' }

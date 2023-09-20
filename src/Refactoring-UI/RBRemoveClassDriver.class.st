@@ -18,6 +18,13 @@ RBRemoveClassDriver >> configureRefactoring [
 		               classNames: (classes collect: [ :cl | cl name ])
 ]
 
+{ #category : 'removing' }
+RBRemoveClassDriver >> removeClassChanges [
+
+	self openPreviewWithChanges: refactoring removeClassChanges
+
+]
+
 { #category : 'execution' }
 RBRemoveClassDriver >> runRefactoring [
 

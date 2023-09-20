@@ -9,7 +9,8 @@ Class {
 { #category : 'accessing' }
 RBRemoveClassReparentChoice >> action [
 
-	self halt.
+	driver removeClassChanges.
+
 ]
 
 { #category : 'accessing' }
