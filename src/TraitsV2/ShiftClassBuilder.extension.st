@@ -26,5 +26,7 @@ ShiftClassBuilder >> traitComposition: aValue [
 	aTraitComposition := aValue asTraitComposition.
 
 	self classTraitComposition: aTraitComposition classComposition.
+	"The enhander needs to be put to nil in case the trait composition is updated."
+	builderEnhancer := nil.
 	^ extensibleProperties at: #traitComposition put: aTraitComposition
 ]
