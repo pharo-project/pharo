@@ -8,6 +8,12 @@ Class {
 	#package : 'Shift-Changes'
 }
 
+{ #category : 'class initialization' }
+ShSuperclassChangeDetector class >> initialize [
+
+	self deprecatedAliases: { #ShSuperclassChangedDetector }
+]
+
 { #category : 'initialization' }
 ShSuperclassChangeDetector >> initialize [
 	super initialize.
