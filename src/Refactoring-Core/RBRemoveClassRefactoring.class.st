@@ -55,9 +55,10 @@ RBRemoveClassRefactoring >> applicabilityPreconditions [
 RBRemoveClassRefactoring >> breakingChangePreconditions [
 	"Remove users from here
 	Return reference checks, before was:
-	(self preconditionHasNoReferences)"
-	^ classesDictionary inject: self trueCondition into: [ :sum :class |
-		  sum & ((self preconditionEmptyOrHasNoSubclasses: class)) ] 
+	(self preconditionHasNoReferences)
+	self preconditionEmptyOrHasNoSubclasses"
+	self halt.
+	self flag: #todoConditions.
 	
 ]
 
@@ -82,15 +83,6 @@ RBRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses [
 
 	^ RBClassIsEmptyOrHasNoSubclassesCondition new classes: classesDictionary					
-]
-
-{ #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses: aClass [
-	^ (RBCondition hasSubclasses: aClass excluding: classNames) not
-		|
-		(RBCondition isEmptyClass: aClass)
-			
-					
 ]
 
 { #category : 'helper methods' }
