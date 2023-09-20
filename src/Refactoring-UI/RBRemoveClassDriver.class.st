@@ -64,7 +64,7 @@ RBRemoveClassDriver >> runRefactoring [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 RBRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 	
 	scopes := refactoringScopes.
