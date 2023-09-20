@@ -197,6 +197,7 @@ RBAbstractTransformation >> emptyCondition [
 { #category : 'transforming' }
 RBAbstractTransformation >> execute [
 	"Check precondition, execute the transformation that produces changes and finally execute the changes"
+	self prepareForExecution.
 	self generateChanges.
 	self performChanges
 ]
@@ -309,6 +310,12 @@ RBAbstractTransformation >> poolVariableNamesIn: poolName [
 RBAbstractTransformation >> preconditions [
 
 	self subclassResponsibility
+]
+
+{ #category : 'transforming' }
+RBAbstractTransformation >> prepareForExecution [
+	"I am empty by default. You can override me to initialize your instance variables just before execution.
+	I am typicaly a place where names (of classes, methods, etc.) are converted to RB model entities."
 ]
 
 { #category : 'transforming' }
