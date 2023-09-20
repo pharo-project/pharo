@@ -18,7 +18,9 @@ ShMetaclassChangeDetectorTest >> testChangeInMetaclassIsDetected [
 		              fillFor: originClass;
 		              yourself.
 
-	newBuilder traitComposition: usedTrait.
+	newBuilder
+		traitComposition: usedTrait;
+		createMetaclass.
 
 	self denyEmpty: self newComparer compareClass.
 	self assertChangeAreDetected
