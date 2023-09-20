@@ -99,7 +99,7 @@ RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'preconditions' }
 RBRemoveClassRefactoring >> preconditionHaveNoReferences [
 
 	^ RBClassesHaveNoReferencesCondition new
