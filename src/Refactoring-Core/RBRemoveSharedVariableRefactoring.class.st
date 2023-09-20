@@ -34,9 +34,11 @@ RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 		   referencesSharedVariable: variableName) not
 ]
 
-{ #category : 'actions' }
+{ #category : 'executing' }
 RBRemoveSharedVariableRefactoring >> generateChanges [
-	
+
+	self prepareForExecution.
+
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].

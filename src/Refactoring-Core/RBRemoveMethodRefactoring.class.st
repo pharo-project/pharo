@@ -114,7 +114,9 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 
 { #category : 'executing' }
 RBRemoveMethodRefactoring >> generateChanges [
-	
+
+	self prepareForExecution.
+
 	transformation applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  transformation applicabilityPreconditions errorString ].

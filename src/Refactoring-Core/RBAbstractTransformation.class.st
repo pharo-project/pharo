@@ -197,7 +197,6 @@ RBAbstractTransformation >> emptyCondition [
 { #category : 'transforming' }
 RBAbstractTransformation >> execute [
 	"Check precondition, execute the transformation that produces changes and finally execute the changes"
-	self prepareForExecution.
 	self generateChanges.
 	self performChanges
 ]
@@ -205,7 +204,8 @@ RBAbstractTransformation >> execute [
 { #category : 'executing' }
 RBAbstractTransformation >> generateChanges [
 	"compatibility method RBRefactoring"
-
+	
+	self prepareForExecution.
 	self checkPreconditions.
 	self privateTransform
 	
