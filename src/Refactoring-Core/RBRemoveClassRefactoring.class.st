@@ -57,8 +57,7 @@ RBRemoveClassRefactoring >> breakingChangePreconditions [
 	Return reference checks, before was:
 	(self preconditionHasNoReferences)"
 	^ classesDictionary inject: self trueCondition into: [ :sum :class |
-		  sum & ((self preconditionEmptyOrHasNoSubclasses: class)
-		   & (self preconditionHasNoUsers: class)) ] 
+		  sum & ((self preconditionEmptyOrHasNoSubclasses: class)) ] 
 	
 ]
 
@@ -88,7 +87,7 @@ RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses: aClass [
 					
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'helper methods' }
 RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
 
 	^ (RBCondition withBlock: [
