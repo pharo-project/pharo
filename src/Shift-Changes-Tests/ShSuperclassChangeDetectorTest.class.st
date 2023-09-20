@@ -1,12 +1,12 @@
 Class {
-	#name : 'ShSuperclassChangedDetectorTest',
+	#name : 'ShSuperclassChangeDetectorTest',
 	#superclass : 'ShAbstractChangeDetectorTest',
 	#category : 'Shift-Changes-Tests',
 	#package : 'Shift-Changes-Tests'
 }
 
 { #category : 'tests' }
-ShSuperclassChangedDetectorTest >> testChangeInSuperclassIsDetected [
+ShSuperclassChangeDetectorTest >> testChangeInSuperclassIsDetected [
 
 	newBuilder superclass: (self class classInstaller make: [ :builder |
 			 builder
@@ -18,7 +18,7 @@ ShSuperclassChangedDetectorTest >> testChangeInSuperclassIsDetected [
 ]
 
 { #category : 'tests' }
-ShSuperclassChangedDetectorTest >> testNoChangeInSuperclassDetected [
+ShSuperclassChangeDetectorTest >> testNoChangeInSuperclassDetected [
 
 	newBuilder superclass: superClass.
 
