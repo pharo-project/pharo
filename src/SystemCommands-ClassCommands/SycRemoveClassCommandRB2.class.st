@@ -1,24 +1,39 @@
 Class {
-	#name : #SycRemoveClassCommandRB2,
-	#superclass : #SycClassCommand,
+	#name : 'SycRemoveClassCommandRB2',
+	#superclass : 'SycClassCommand',
 	#instVars : [
 		'removeStrategy',
 		'toolContext'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'activation' }
+SycRemoveClassCommandRB2 class >> fullBrowserMenuActivation [
+	<classAnnotation>
+
+	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserClassContext
+]
+
+{ #category : 'activation' }
+SycRemoveClassCommandRB2 class >> fullBrowserShortcutActivation [
+	<classAnnotation>
+
+	^CmdShortcutActivation removalFor: ClyFullBrowserClassContext
+]
+
+{ #category : 'accessing' }
 SycRemoveClassCommandRB2 >> defaultMenuIconName [
 	^#removeIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveClassCommandRB2 >> defaultMenuItemName [
 	^'Remove Class 2 (refactoring)'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveClassCommandRB2 >> execute [
 	
 	(RBRemoveClassDriver new
@@ -26,12 +41,12 @@ SycRemoveClassCommandRB2 >> execute [
 				 classes:  classes) runRefactoring
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveClassCommandRB2 >> isComplexRefactoring [
 	^false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveClassCommandRB2 >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext.
