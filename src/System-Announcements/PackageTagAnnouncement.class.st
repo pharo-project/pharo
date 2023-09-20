@@ -2,28 +2,30 @@
 My classes represent package tags modifications in the system.
 "
 Class {
-	#name : #PackageTagAnnouncement,
-	#superclass : #SystemAnnouncement,
+	#name : 'PackageTagAnnouncement',
+	#superclass : 'SystemAnnouncement',
 	#instVars : [
 		'tag'
 	],
-	#category : #'System-Announcements-System-Packages'
+	#category : 'System-Announcements-System-Packages',
+	#package : 'System-Announcements',
+	#tag : 'System-Packages'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PackageTagAnnouncement class >> in: aPackage tag: aSymbol [
 	^self new
 		package: aPackage;
 		tag: aSymbol
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 PackageTagAnnouncement class >> initialize [
 
 	self deprecatedAliases: { 'ClassTagAnnouncement' }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PackageTagAnnouncement class >> to: aPackageTag [
 
 	^ self new
@@ -31,36 +33,36 @@ PackageTagAnnouncement class >> to: aPackageTag [
 		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PackageTagAnnouncement >> affectsPackage: aPackage [
 
 	^ self package == aPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PackageTagAnnouncement >> affectsPackages [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTagAnnouncement >> package [
 
 	^ self tag package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTagAnnouncement >> packagesAffected [
 
 	^ { self package }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTagAnnouncement >> tag [
 	^ tag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTagAnnouncement >> tag: aPackageTag [
 	tag := aPackageTag
 ]

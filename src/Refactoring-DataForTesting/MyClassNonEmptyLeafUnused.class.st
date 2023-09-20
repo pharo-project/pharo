@@ -1,6 +1,6 @@
 Class {
-	#name : #MyClassNonEmptyLeafUnused,
-	#superclass : #MyClassA,
+	#name : 'MyClassNonEmptyLeafUnused',
+	#superclass : 'MyClassA',
 	#instVars : [
 		'instVarName1222',
 		'instVarName23333'
@@ -8,17 +8,19 @@ Class {
 	#classVars : [
 		'ClassVarName2456'
 	],
-	#category : #'Refactoring-DataForTesting-StaticModel'
+	#category : 'Refactoring-DataForTesting-StaticModel',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'StaticModel'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MyClassNonEmptyLeafUnused >> initialize [
 
 	<ignoreUnusedVariables: #( instVarName1222 #instVarName23333 )>
 	super initialize
 ]
 
-{ #category : #'dummy methods' }
+{ #category : 'dummy methods' }
 MyClassNonEmptyLeafUnused >> methodForThePleasureOfIt [
 
 	^ 666

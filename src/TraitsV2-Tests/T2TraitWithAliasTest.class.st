@@ -1,10 +1,11 @@
 Class {
-	#name : #T2TraitWithAliasTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitWithAliasTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithAliasTest >> testChangingAnAliasedMethodIsIncludedInClass [
 
 	| t1 c1 |
@@ -18,7 +19,7 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsIncludedInClass [
 	self assert: (c1 includesSelector: #m2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 
 	| t1 c1 obj |
@@ -38,7 +39,7 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 	self assert: obj m2 equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithAliasTest >> testChangingDeleteSlot [
 
 	| t1 c1 |
@@ -56,7 +57,7 @@ T2TraitWithAliasTest >> testChangingDeleteSlot [
 	self assert: t1 slotNames equals: #(ivar)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
 	"we can add a slot in the class that we removed from the trait"
 	| t1 c1 |
@@ -77,7 +78,7 @@ T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
 	self assert: t1 slotNames equals: #(ivar1 ivar2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithAliasTest >> testChangingDeleteSlotAddVar [
 
 	| t1 c1 |
@@ -95,7 +96,7 @@ T2TraitWithAliasTest >> testChangingDeleteSlotAddVar [
 	self assert: t1 slotNames equals: #(ivar)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithAliasTest >> testChangingDeleteSlotAndAlias [
 	"we can remove a slot from one trait, then rename from the other trait and the class has one var"
 	| t1 t2 c1 |
@@ -112,7 +113,7 @@ T2TraitWithAliasTest >> testChangingDeleteSlotAndAlias [
 	self assert: t2 slotNames equals: #(personName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithAliasTest >> testChangingRenamedSlot [
 
 	| t1 c1 |
@@ -135,7 +136,7 @@ T2TraitWithAliasTest >> testChangingRenamedSlot [
 	self assert: t1 slotNames equals: #(ivar)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithAliasTest >> testChangingRenamedSlot2Slots [
 
 	| t1 c1 |

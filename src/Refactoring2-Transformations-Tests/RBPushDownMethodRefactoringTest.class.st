@@ -1,10 +1,12 @@
 Class {
-	#name : #RBPushDownMethodRefactoringTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBPushDownMethodRefactoringTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPushDownMethodRefactoringTest >> testFailurePushDownMethodOnNonAbstractClass [
 
 	| refactoring |
@@ -17,7 +19,7 @@ RBPushDownMethodRefactoringTest >> testFailurePushDownMethodOnNonAbstractClass [
 		raise: RBRefactoringWarning
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPushDownMethodRefactoringTest >> testFailurePushDownMethodSubclassesReferToSelector [
 
 	| refactoring |

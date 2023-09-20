@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveParameterParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRemoveParameterParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveParameterParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 			addCase: { #rbClass -> RBRemoveParameterTransformation};
@@ -13,12 +15,12 @@ RBRemoveParameterParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveParameterParametrizedTest >> constructor [
 	^ #removeParameter:in:selector:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveParameterParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -31,7 +33,7 @@ RBRemoveParameterParametrizedTest >> testFailureNonExistantName [
 				 #checkClass1: })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveParameterParametrizedTest >> testFailurePrimitiveMethods [
 
 	| refactoring |
@@ -47,7 +49,7 @@ RBRemoveParameterParametrizedTest >> testFailurePrimitiveMethods [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveParameterParametrizedTest >> testFailureReferenceArgument [
 
 	| refactoring |
@@ -63,7 +65,7 @@ RBRemoveParameterParametrizedTest >> testFailureReferenceArgument [
 	self shouldFail: refactoring
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveParameterParametrizedTest >> testRemoveParameter [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:

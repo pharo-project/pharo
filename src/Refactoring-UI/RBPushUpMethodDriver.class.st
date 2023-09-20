@@ -11,18 +11,20 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : #RBPushUpMethodDriver,
-	#superclass : #RBDriver,
+	#name : 'RBPushUpMethodDriver',
+	#superclass : 'RBDriver',
 	#instVars : [
 		'class',
 		'methods',
 		'superclass',
 		'refactoring'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushUp: methodsList [
 
 	^ self new
@@ -31,7 +33,7 @@ RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes push
 		  pushUp: methodsList
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBPushUpMethodDriver >> configureRefactoring [
 	"I'm gathering user input and creating refactoring instance"
 
@@ -43,7 +45,7 @@ RBPushUpMethodDriver >> configureRefactoring [
 		  to: superclass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUp: methodsList [
 
 	model := aRBNamespace.
@@ -52,7 +54,7 @@ RBPushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUp: me
 	class := methods first origin
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBPushUpMethodDriver >> refactoring [
 	"I'm gathering user input and creating refactoring instance"
 
@@ -64,7 +66,7 @@ RBPushUpMethodDriver >> refactoring [
 		  to: superclass
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBPushUpMethodDriver >> runRefactoring [
 
 	| changes |
@@ -82,7 +84,7 @@ RBPushUpMethodDriver >> runRefactoring [
 	self openPreviewWithChanges: changes
 ]
 
-{ #category : #'initialization - data' }
+{ #category : 'initialization - data' }
 RBPushUpMethodDriver >> selectMethodsAndSuperclass [
 
 	| classes |

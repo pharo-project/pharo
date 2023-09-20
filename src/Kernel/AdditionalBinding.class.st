@@ -10,24 +10,26 @@ all associations are changed to be AdditionaBinding.
 AddionalBinding is used, too, by both Slots and Reflectivity to reference directly objects from generated code.
 "
 Class {
-	#name : #AdditionalBinding,
-	#superclass : #LiteralVariable,
-	#category : #'Kernel-Variables'
+	#name : 'AdditionalBinding',
+	#superclass : 'LiteralVariable',
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 AdditionalBinding >> emitStore: methodBuilder [
 
 	methodBuilder storeIntoLiteralVariable: self
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 AdditionalBinding >> emitValue: methodBuilder [
 
 	methodBuilder pushLiteralVariable: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdditionalBinding >> isReferenced [
 	^ false
 ]

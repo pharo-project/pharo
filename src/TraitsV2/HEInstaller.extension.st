@@ -1,6 +1,6 @@
-Extension { #name : #HEInstaller }
+Extension { #name : 'HEInstaller' }
 
-{ #category : #'*TraitsV2' }
+{ #category : '*TraitsV2' }
 HEInstaller >> buildTrait: aTraitDefinition [
 	| newTrait traitComposition traitClass|
 
@@ -21,7 +21,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	^ newTrait
 ]
 
-{ #category : #'*TraitsV2' }
+{ #category : '*TraitsV2' }
 HEInstaller >> buildTraitCompositionFor: traitComposition [
 
 	| aLiteral |

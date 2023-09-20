@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 CompiledMethod >> asMCMethodDefinition [
    "Creates a MCMethodDefinition from the receiver"
 	| cached |
@@ -19,7 +19,7 @@ CompiledMethod >> asMCMethodDefinition [
 	^ cached
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 CompiledMethod >> basicAsMCMethodDefinition [
 
 	"Creates a MCMethodDefinition from the receiver"
@@ -33,7 +33,7 @@ CompiledMethod >> basicAsMCMethodDefinition [
 		  source: self sourceCode
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 CompiledMethod >> sameAsMCDefinition: anMCMethodDefinition [
 
 	^ anMCMethodDefinition selector = self selector and: [ 

@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloSymbolicVersionDoesNotExistError,
-	#superclass : #MetacelloVersionDoesNotExistError,
-	#category : #'Metacello-Core-Exceptions-Errors'
+	#name : 'MetacelloSymbolicVersionDoesNotExistError',
+	#superclass : 'MetacelloVersionDoesNotExistError',
+	#category : 'Metacello-Core-Exceptions-Errors',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Errors'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloSymbolicVersionDoesNotExistError >> description [
     "Return a textual description of the exception."
 
@@ -12,7 +14,7 @@ MetacelloSymbolicVersionDoesNotExistError >> description [
         , ' for the current platform. Possible symbolic version values include: ' , self possibleVersions printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSymbolicVersionDoesNotExistError >> possibleVersions [
     ^ self project symbolicVersionSymbols
 ]

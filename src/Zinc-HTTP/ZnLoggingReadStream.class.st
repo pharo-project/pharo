@@ -62,7 +62,7 @@ ZnLoggingReadStream >> identifier: string [
 { #category : #initialization }
 ZnLoggingReadStream >> initialize [
 	super initialize.
-	logger := [ :string | Transcript crShow: string ].
+	logger := [ :string | string traceCr ].
 	identifier := self class name asString.
 	logLevel := 1
 ]

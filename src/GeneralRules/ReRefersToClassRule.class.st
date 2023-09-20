@@ -3,24 +3,26 @@ This smell arises when a class has its class name directly in the source instead
 However we cannot systematically replace Class reference by self class or self because a Class reference is static and a self expression is dynamic. So the programmer may want to send messages to root of an hierarchy and not to the leaf classes. Therefore this rule generates false positives, please double check when fixing!
 "
 Class {
-	#name : #ReRefersToClassRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReRefersToClassRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReRefersToClassRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReRefersToClassRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'RefersToClassRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| class problemLiterals |
 
@@ -37,17 +39,17 @@ ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: literal hint:literal name )]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReRefersToClassRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReRefersToClassRule >> name [
 	^ 'Refers to class name instead of "self class"'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReRefersToClassRule >> rationale [
 	^ 'Checks for direct reference to classes themselves.'
 ]

@@ -2,22 +2,23 @@
 SUnit tests on renaming packages
 "
 Class {
-	#name : #RPackageRenameTest,
-	#superclass : #TestCase,
+	#name : 'RPackageRenameTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'oldSystemAnnouncer',
 		'packageNamesToClean'
 	],
-	#category : #'RPackage-Tests'
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageRenameTest >> cleanWorkingCopiesInTearDown: aCollection [
 
 	packageNamesToClean addAll: aCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageRenameTest >> setUp [
 	super setUp.
 	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
@@ -25,7 +26,7 @@ RPackageRenameTest >> setUp [
 	packageNamesToClean := OrderedCollection new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageRenameTest >> tearDown [
 
 	SystemAnnouncer announcer: oldSystemAnnouncer.
@@ -41,7 +42,7 @@ RPackageRenameTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageRenameTest >> testRenamePackage [
 	"Test that we do rename the package as expected."
 
@@ -63,14 +64,14 @@ RPackageRenameTest >> testRenamePackage [
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
 	self assert: ((package classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 	self assert: class category equals: #'TestRename-TAG'.
-	self deny: (self packageOrganizer includesCategory: #Test1).
+	self deny: (self packageOrganizer hasPackage: #Test1).
 	self deny: (MCWorkingCopy hasPackageNamed: #Test1).
 
 	workingCopy := MCWorkingCopy forPackageNamed: 'TestRename'.
 	self assert: workingCopy modified
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageRenameTest >> testRenamePackageToOwnTagName [
 	"If we rename a package to the (full)category name of one of its tags"
 
@@ -96,7 +97,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 	self assert: workingCopy modified
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	"If we rename a package to the (full)category name of one of its tags and the (non-tag)package is not empty"
 
@@ -123,36 +124,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	self assert: workingCopy modified
 ]
 
-{ #category : #tests }
-RPackageRenameTest >> testRenamePackageUppercase [
-	"Test that we do rename the package as expected."
-
-	| package pkg oldWorkingCopy |
-	"preparation: creation of a pkg and its associated mcworkingcopy"
-	[
-	package := self packageOrganizer ensurePackage: 'Test1'.
-	oldWorkingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	self assert: (self packageOrganizer hasPackage: #Test1).
-	self assert: (MCWorkingCopy hasPackageNamed: #Test1) isNotNil.
-
-	"renaming"
-	package renameTo: 'TEST1'.
-
-	pkg := self packageOrganizer packageNamed: 'Test1' ifAbsent: [ nil ].
-	self assert: pkg isNil.
-	self assert: 'TEST1' asPackage isNotNil.
-	self deny: 'TEST1' asPackage mcWorkingCopy equals: oldWorkingCopy.
-	self assert: 'TEST1' asPackage mcWorkingCopy isNotNil.
-	self assert: (self packageOrganizer hasPackage: #TEST1).
-	self assert: (MCWorkingCopy hasPackageNamed: #TEST1) isNotNil ] ensure: [ "cleaning"
-		'TEST1' asPackage removeFromSystem.
-		self deny: (self packageOrganizer hasPackage: #TEST1).
-		self deny: (MCWorkingCopy hasPackageNamed: #TEST1).
-		self deny: (self packageOrganizer hasPackage: #Test1).
-		self deny: (MCWorkingCopy hasPackageNamed: #Test1) ]
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageRenameTest >> testRenamePackageWithExtensions [
 
 	| package class extendedPackage extension |
@@ -184,7 +156,7 @@ RPackageRenameTest >> testRenamePackageWithExtensions [
 	self assert: class package equals: extendedPackage
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 
 	| package class extendedPackage extension |
@@ -218,7 +190,7 @@ RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 	self assert: class package equals: extendedPackage
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageRenameTest >> testUnregisterPackage [
 	"Test that we do unregister the package as expected."
 

@@ -1,10 +1,12 @@
 Class {
-	#name : #SelfVariableTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#name : 'SelfVariableTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelfVariableTest >> testReadInContext [
 
 	| var |
@@ -14,7 +16,7 @@ SelfVariableTest >> testReadInContext [
 	self assert: [(var readInContext: thisContext)] value identicalTo: self
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelfVariableTest >> testReadInContextClean [
 	<compilerOptions: #( +optionCleanBlockClosure)>
 	| var block |
@@ -27,7 +29,7 @@ SelfVariableTest >> testReadInContextClean [
 	self assert: (var readInContext: block value ) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelfVariableTest >> testUsingMethods [
 
 	|  var |
@@ -35,7 +37,7 @@ SelfVariableTest >> testUsingMethods [
 	self assert: (var usingMethods includes: thisContext method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelfVariableTest >> testUsingMethodsFFI [
 
 	|  var |
@@ -45,7 +47,7 @@ SelfVariableTest >> testUsingMethodsFFI [
 	self assert: (var usingMethods anySatisfy: [:method | method isFFIMethod and: [ method readsSelf not ]])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelfVariableTest >> testUsingMethodsSuper [
 
 	|  var |

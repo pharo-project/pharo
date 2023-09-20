@@ -54,10 +54,10 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 						superclass: className asSymbol
 						subclasses: #()
 						category: (self model classNamed: className) category)
-			with: (RBRenameClassTransformation new
-						className: className newClassName: newClassName)
-			with: (RBRenameClassTransformation new
-						className: self tmpName newClassName: className)
+			with: (RBRenameClassRefactoring
+						rename: className to: newClassName)
+			with: (RBRenameClassRefactoring
+						rename: self tmpName to: className)
 			with: (RBDeprecateClassTransformation
 						class: className) ]
 ]

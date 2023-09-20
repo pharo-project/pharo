@@ -2,21 +2,23 @@
 I'm an abstract class that represent an single delta element between two packages: removal, addition or modification.
 "
 Class {
-	#name : #MCPatchOperation,
-	#superclass : #Object,
+	#name : 'MCPatchOperation',
+	#superclass : 'Object',
 	#instVars : [
 		'isApplicable',
 		'isConflict'
 	],
-	#category : #'Monticello-Patching'
+	#category : 'Monticello-Patching',
+	#package : 'Monticello',
+	#tag : 'Patching'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCPatchOperation >> <= other [
 	^ self definition <= other definition
 ]
 
-{ #category : #'applying operation' }
+{ #category : 'applying operation' }
 MCPatchOperation >> applyTo: anObject [
 
 	(self isConflict and: [self isResolved not] ) ifTrue: [
@@ -25,145 +27,145 @@ MCPatchOperation >> applyTo: anObject [
 	self remoteChosen ifTrue: [ self basicApplyTo: anObject ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> beConflict [
 	isConflict := true.
 	isApplicable := nil. "not resolved"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> beNonConflict [
 	isConflict := false.
 	isApplicable := true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> chooseLocal [
 	isApplicable := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> chooseNewer [
 	self isLocalNewer 
 		ifTrue: [ self chooseLocal ]
 		ifFalse: [ self isRemoteNewer ifTrue: [ self chooseRemote ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> chooseOlder [
 	self isRemoteNewer 
 		ifTrue: [ self chooseLocal ]
 		ifFalse: [ self isLocalNewer ifTrue: [ self chooseRemote ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> chooseRemote [
 	isApplicable := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> clearChoice [
 	isApplicable := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> definition [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCPatchOperation >> initialize [
 	super initialize.
 	self beNonConflict
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> inverse [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> isAddition [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> isClassPatch [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> isConflict [
 	^ isConflict == true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> isLocalNewer [
 	^ self localDefinition fullTimeStamp > self remoteDefinition fullTimeStamp
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> isModification [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> isRemoteNewer [
 	^ self localDefinition fullTimeStamp < self remoteDefinition fullTimeStamp
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> isRemoval [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> isResolved [
 	^ isConflict and: [ isApplicable notNil ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> localChosen [
 	^ isApplicable == false
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> localDefinition [
 	^ self baseDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> operation [
 	"for compatibility with MCConflict interface"
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> prefixForOperation: aSymbol [
 	aSymbol == #insert ifTrue: [^ '+'].
 	aSymbol == #remove ifTrue: [^ '-'].
 	^ ' '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> printAnnotations: requests on: aStream [
 	"Add a string for an annotation pane, trying to fulfill the CodeHolder annotationRequests"
 
 	self definition printAnnotations: requests on: aStream.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPatchOperation >> remoteChosen [
 	^ isApplicable ~~ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> remoteDefinition [
 	^ self targetDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> status [
 	^ self isResolved
 		ifFalse: ['']
@@ -172,12 +174,12 @@ MCPatchOperation >> status [
 					ifTrue: ['R']]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> summarySuffix [
 	^ ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchOperation >> targetClass [
 	self subclassResponsibility.
 ]

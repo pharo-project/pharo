@@ -18,19 +18,21 @@ or more concisely...
 
 "
 Class {
-	#name : #ReStringConcatenationRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReStringConcatenationRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReStringConcatenationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'StringConcatenationRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReStringConcatenationRule >> afterCheck: aNode mappings: mappingDict [
 	(self performsConcatenation: (mappingDict at: '``@argument'))
 		ifTrue: [ ^ true ].
@@ -43,12 +45,12 @@ ReStringConcatenationRule >> afterCheck: aNode mappings: mappingDict [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReStringConcatenationRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReStringConcatenationRule >> initialize [
 	super initialize.
 	self  matchesAny: #(
@@ -65,12 +67,12 @@ ReStringConcatenationRule >> initialize [
 		'``@collection noneSatisfy: ``@argument' )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReStringConcatenationRule >> name [
 	^ 'String concatenation instead of streams'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReStringConcatenationRule >> performsConcatenation: aNode [
 
 	aNode isBlock ifFalse: [ ^ false ].

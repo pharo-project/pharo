@@ -29,6 +29,12 @@ AthensDisplayScanner >> initWithParagraph: aParagraph andCanvas: anAthensCanvas 
 	canvas := anAthensCanvas
 ]
 
+{ #category : #accessing }
+AthensDisplayScanner >> scale [
+
+	^ 1
+]
+
 { #category : #displaying }
 AthensDisplayScanner >> setFont [
 	super setFont.

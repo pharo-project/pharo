@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddClassVariableTransformationParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBAddClassVariableTransformationParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBAddClassVariableTransformationParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddVariableTransformation .
@@ -14,13 +16,13 @@ RBAddClassVariableTransformationParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddClassVariableTransformationParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddClassVariableTransformationParametrizedTest >> testAddClassVariable [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
@@ -33,14 +35,14 @@ RBAddClassVariableTransformationParametrizedTest >> testAddClassVariable [
 		directlyDefinesClassVariable: #Asdf)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddClassVariableTransformationParametrizedTest >> testFailureMetaClassFailure [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { #VariableName. #'RBTransformationRuleTestData class' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddClassVariableTransformationParametrizedTest >> testFailureMetaclass [
 
 	| refactoring |
@@ -51,7 +53,7 @@ RBAddClassVariableTransformationParametrizedTest >> testFailureMetaclass [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddClassVariableTransformationParametrizedTest >> testFailureModelMetaclass [
 
 	| refactoring |
@@ -62,7 +64,7 @@ RBAddClassVariableTransformationParametrizedTest >> testFailureModelMetaclass [
 	self shouldFail: refactoring
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddClassVariableTransformationParametrizedTest >> testModelAddClassVariable [
 	| refactoring |
 	refactoring := self createRefactoringWithModel: model

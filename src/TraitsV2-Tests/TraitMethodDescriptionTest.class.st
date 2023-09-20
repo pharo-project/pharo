@@ -1,10 +1,11 @@
 Class {
-	#name : #TraitMethodDescriptionTest,
-	#superclass : #TraitsTestCase,
-	#category : #'TraitsV2-Tests'
+	#name : 'TraitMethodDescriptionTest',
+	#superclass : 'TraitsTestCase',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TraitMethodDescriptionTest >> testArgumentNames [
 	self t1 compile: 'zork1: myArgument zork2: mySecondArgument ^true'.
 	self t2 compile: 'zork1: myArgument zork2: somethingElse ^false'.
@@ -16,7 +17,7 @@ TraitMethodDescriptionTest >> testArgumentNames [
 				beginsWith: 'zork1: arg1 zork2: arg2')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TraitMethodDescriptionTest >> testConflictMethodCreation [
 	"Generate conflicting methods between t1 and t2
 	and check the resulting method in Trait t5 (or c2).
@@ -54,7 +55,7 @@ TraitMethodDescriptionTest >> testConflictMethodCreation [
 	self should: [self c2 new zork1: 1 zork2: 2] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TraitMethodDescriptionTest >> testConflictingProtocols [
 
 	| t7 t8 |
@@ -77,7 +78,7 @@ TraitMethodDescriptionTest >> testConflictingProtocols [
 	self assert: (t8 protocolOfSelector: #m11) name equals: #catZ
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TraitMethodDescriptionTest >> testProtocols [
 
 	self assert: (self t4 protocolOfSelector: #m21) name equals: #cat1.

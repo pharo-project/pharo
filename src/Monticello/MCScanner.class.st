@@ -6,20 +6,22 @@ For example, try:
 MCScanner scan:  '(name ''MyPackage-ll.6'' message ''Fix bug xxx'' id ''b21dbd73-f1c3-2746-a3cc-92f1d4edea28'')' readStream
 "
 Class {
-	#name : #MCScanner,
-	#superclass : #Object,
+	#name : 'MCScanner',
+	#superclass : 'Object',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Monticello-Chunk Format'
+	#category : 'Monticello-Chunk Format',
+	#package : 'Monticello',
+	#tag : 'Chunk Format'
 }
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 MCScanner class >> scan: aStream [
 	^ (self new stream: aStream) next
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCScanner >> next [
 	"This would be slightly simpler using recursion but it risks a stack overflow 
 	 for some packages on some platforms, so we implement it using a local stack."
@@ -48,7 +50,7 @@ MCScanner >> next [
 	^stack top top
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCScanner >> nextArray [
 	stream next. "("
 	^ Array streamContents: [:s |
@@ -59,12 +61,12 @@ MCScanner >> nextArray [
 			ifFalse: [ self error: 'Unclosed array' ]]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCScanner >> nextString [
 	^ stream nextDelimited: $'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCScanner >> nextSymbol [
 	^ (String streamContents:
 		[:s |
@@ -72,7 +74,7 @@ MCScanner >> nextSymbol [
 			
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCScanner >> stream: aStream [
 	stream := aStream
 ]

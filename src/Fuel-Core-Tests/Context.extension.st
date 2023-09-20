@@ -1,6 +1,6 @@
-Extension { #name : #Context }
+Extension { #name : 'Context' }
 
-{ #category : #'*Fuel-Core-Tests' }
+{ #category : '*Fuel-Core-Tests' }
 Context >> assertWellMaterializedInto: aMethodContext in: aTestCase [
 
 	aTestCase assert: self ~~ aMethodContext.
@@ -18,7 +18,7 @@ Context >> assertWellMaterializedInto: aMethodContext in: aTestCase [
 		ifNotNil: [ sender assertWellMaterializedInto: aMethodContext sender in: aTestCase ]
 ]
 
-{ #category : #'*Fuel-Core-Tests' }
+{ #category : '*Fuel-Core-Tests' }
 Context >> initializeWith: aPc stackPtr: aStackPtr method: aMethod receiver: aReceiver sender: aSender [
 	pc := aPc.
 	stackp := aStackPtr.

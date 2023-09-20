@@ -12,22 +12,24 @@ Script
 ```
 "
 Class {
-	#name : #RBRemoveMethodsInHierarchyRefactoring,
-	#superclass : #RBCompositeRefactoring,
+	#name : 'RBRemoveMethodsInHierarchyRefactoring',
+	#superclass : 'RBCompositeRefactoring',
 	#instVars : [
 		'selectors',
 		'class'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBRemoveMethodsInHierarchyRefactoring class >> selectors: aSelectorsCollection from: aClass [ 
 	
 	^ self new selectors: aSelectorsCollection from: aClass
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveMethodsInHierarchyRefactoring >> applicabilityPreconditions [ 
 
 	^ selectors
@@ -35,7 +37,7 @@ RBRemoveMethodsInHierarchyRefactoring >> applicabilityPreconditions [
 			into: [ :cond :sel | cond & (RBCondition definesSelector: sel in: class) ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveMethodsInHierarchyRefactoring >> delete: aSelectorsCollection in: aClass [
 
 	| containingMethods |
@@ -48,14 +50,14 @@ RBRemoveMethodsInHierarchyRefactoring >> delete: aSelectorsCollection in: aClass
 				 from: aClass) ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
 
 	class withAllSubclasses do: [ :aClass |
 		self delete: selectors in: aClass ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBRemoveMethodsInHierarchyRefactoring >> selectors: aSelectorsCollection from: aClass [
 
 	class := self classObjectFor: aClass.
@@ -64,7 +66,7 @@ RBRemoveMethodsInHierarchyRefactoring >> selectors: aSelectorsCollection from: a
 	self initializeRefactorings 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveMethodsInHierarchyRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

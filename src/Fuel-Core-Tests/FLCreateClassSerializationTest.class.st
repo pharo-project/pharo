@@ -2,14 +2,16 @@
 I test the serialization of an entire class, in the cases in which the class *is not* present in the image at materialization time.
 "
 Class {
-	#name : #FLCreateClassSerializationTest,
-	#superclass : #FLClassSerializationTest,
+	#name : 'FLCreateClassSerializationTest',
+	#superclass : 'FLClassSerializationTest',
 	#traits : 'FLTCreateClassOrTraitSerializationTest',
 	#classTraits : 'FLTCreateClassOrTraitSerializationTest classTrait',
-	#category : #'Fuel-Core-Tests-FullSerialization'
+	#category : 'Fuel-Core-Tests-FullSerialization',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'FullSerialization'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> assertMaterializedHasCorrectFormat: aClass [
 	| materializedClass |
 	self serializer fullySerializeBehavior: aClass.
@@ -20,12 +22,12 @@ FLCreateClassSerializationTest >> assertMaterializedHasCorrectFormat: aClass [
 	self assert: aClass format equals: materializedClass format
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLCreateClassSerializationTest >> newAnonymousClassOrTrait [
 	^ self classFactory newAnonymousClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testAnonymousObjectIsSerializable [
 	| class |
 	class := self classFactory newAnonymousClass.
@@ -37,7 +39,7 @@ FLCreateClassSerializationTest >> testAnonymousObjectIsSerializable [
 		raise: FLClassNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateByteArrayWithInstance [
 	self flag: #fixIt. 
 	"Tests internal materialization of ByteArray together with an instance of it.
@@ -54,7 +56,7 @@ FLCreateClassSerializationTest >> testCreateByteArrayWithInstance [
 	self assert: result first = 42."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 	"Tests materialization a class or trait not defined in the image and that the metaclass is also created."
 
@@ -65,25 +67,23 @@ FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 	name := class name.
 	metaclassName := class class name.
 	metaclass := class class.
-	
+
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: class.
-	
+
 	"This is the test environment, so we have to cheat"
-	self
-		assertCollection: environment associations
-		hasSameElements: materializedClassOrTrait environment associations.
-		"Classes are not direclty inserted in the system organization so we can only test #basicCategory and not #category."
-	self assert: category equals: materializedClassOrTrait basicCategory.
+	self assertCollection: environment associations hasSameElements: materializedClassOrTrait environment associations.
+
+	self assert: category equals: materializedClassOrTrait category.
 	self assert: name equals: materializedClassOrTrait name.
 	"Notice that the metaclass is serialized by Fuel and a new one will be created."
 	self assert: metaclassName equals: materializedClassOrTrait class name.
 	self deny: metaclass identicalTo: materializedClassOrTrait class.
 
-    "It is important to notice that (at this moment) Fuel does not add the materialized class or trait into Smalltalk globals"
-    self deny: (self environmentOfTest includesKey: name)
+	"It is important to notice that (at this moment) Fuel does not add the materialized class or trait into Smalltalk globals"
+	self deny: (self environmentOfTest includesKey: name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassWithClassSideVariable [
 	"Tests materialization a class not defined in the image, with a class-side instance variable."
 	
@@ -99,7 +99,7 @@ FLCreateClassSerializationTest >> testCreateClassWithClassSideVariable [
 	self assert: #test = (materializedClass instVarNamed: 'a').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassWithClassVariable [
 	"Tests materialization a class not defined in the image, with a class variable."
 
@@ -115,7 +115,7 @@ FLCreateClassSerializationTest >> testCreateClassWithClassVariable [
 	self assert: materializedClass classPool associations first class identicalTo: ClassVariable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassWithCreatedTrait [
 	"Tests materialization of a class and a trait not defined in the image. The class uses the trait."
 
@@ -137,7 +137,7 @@ FLCreateClassSerializationTest >> testCreateClassWithCreatedTrait [
 	self assert: materializedClass traitComposition transformations isNotEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVariable [
 	"Tests materialization of a class and a trait not defined in the image.
 	The class uses the trait.
@@ -182,7 +182,7 @@ FLCreateClassSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVar
 	self assert: (materializedObject perform: #traitIvar) equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassWithInstance [
 	"Tests materialization of a class who references an instance of itself."
 
@@ -203,7 +203,7 @@ FLCreateClassSerializationTest >> testCreateClassWithInstance [
 	self assert: #testName = (materializedInstance instVarNamed: 'name')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassWithSharedPool [
 	"Tests materialization of a class not defined in the image, with a shared pool (NOTE: it will be an identity problem if it isn't a Smalltalk global')"
 	
@@ -217,7 +217,7 @@ FLCreateClassSerializationTest >> testCreateClassWithSharedPool [
 	self assert: TextConstants == materializedClass sharedPools first.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassWithSharedPoolAndMethodReferencingAClassVariableOfIt [
 	"Tests materialization of a class not defined in the image, with a shared pool and a compiled method that referers to a class side variable of the  sharedPool (NOTE: it will be an identity problem if it isn't a Smalltalk global')"
 
@@ -247,7 +247,7 @@ FLCreateClassSerializationTest >> testCreateClassWithSharedPoolAndMethodReferenc
 	self assert: (materializedClass perform: #yyy) identicalTo: anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassWithSharedPoolAndMethodReferencingIt [
 	"Tests materialization of a class not defined in the image, with a shared pool and a compiled method that referers to an Association with such sharedPool (NOTE: it will be an identity problem if it isn't a Smalltalk global')"
 
@@ -266,7 +266,7 @@ FLCreateClassSerializationTest >> testCreateClassWithSharedPoolAndMethodReferenc
 	self assert: (materializedMethod literalAt: literalIndex) value identicalTo: sharedPool
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassWithVariables [
 	"Tests materialization of a class not defined in the image, with instance variables."
 
@@ -278,13 +278,13 @@ FLCreateClassSerializationTest >> testCreateClassWithVariables [
 	self assert: aClass instVarNames equals: materializedClass instVarNames
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateCompiledMethodClass [
 	"Tests materialization of a CompiledMethod class that is not defined in the image"
 	self assertMaterializedHasCorrectFormat: FLCompiledMethodClassMock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateHierarchy [
 	"Tests materialization of a hierarchy of classes that is not defined in the image"
 
@@ -315,7 +315,7 @@ FLCreateClassSerializationTest >> testCreateHierarchy [
 	self deny: (Object subclasses identityIncludes: materializedClasses first)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateHierarchyWithExistingClasses [
 	"Tests materialization of a hierarchy of classes that are not defined in the image and classes that indeed are defined"
 
@@ -346,7 +346,7 @@ FLCreateClassSerializationTest >> testCreateHierarchyWithExistingClasses [
 	self deny: (Date subclasses identityIncludes: materializedClasses fourth)
 ]
 
-{ #category : #'tests-bugs' }
+{ #category : 'tests-bugs' }
 FLCreateClassSerializationTest >> testCreateHierarchyWithSubclassSerializedBeforeSuperclass [
 	"Tests issue #210"
 
@@ -365,13 +365,13 @@ FLCreateClassSerializationTest >> testCreateHierarchyWithSubclassSerializedBefor
 	self shouldnt: [ self resultOfSerializeRemoveAndMaterializeAll: serializedClasses ] raise: MessageNotUnderstood
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateNormalClass [
 	"Tests materialization of a class that is not defined in the image"
 	self assertMaterializedHasCorrectFormat: FLPair
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateSharedPoolClass [
 	"Tests materialization of a shared pool class not defined in the image (NOTE: it will be an identity problem if it isn't a Smalltalk global')"
 
@@ -389,31 +389,31 @@ FLCreateClassSerializationTest >> testCreateSharedPoolClass [
 	self assert: (materializedClass perform: #classVar1) equals: #foo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateVariableByteClass [
 	"Tests materialization of a variable byte class that is not defined in the image"
 	self assertMaterializedHasCorrectFormat: FLVariableByteClassMock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateVariableClass [
 	"Tests materialization of a variable class that is not defined in the image"
 	self assertMaterializedHasCorrectFormat: FLVariableClassMock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateVariableWordClass [
 	"Tests materialization of a variable word class that is not defined in the image"
 	self assertMaterializedHasCorrectFormat: FLVariableWordClassMock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateWeakClass [
 	"Tests materialization of a weak class that is not defined in the image"
 	self assertMaterializedHasCorrectFormat: FLWeakClassMock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateWithClassSideInitializeMethod [
 	"Tests materialization of a class-side #initialize method in a class or trait not defined in the image. It makes sure that Fuel doesn't call it automatically"
 
@@ -439,7 +439,7 @@ FLCreateClassSerializationTest >> testCreateWithClassSideInitializeMethod [
 	self assert: category equals: (materializedClassOrTrait classSide protocolNameOfSelector: #initialize)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateWithClassVariableAccessors [
 	"Tests materialization of a compiled method in a class not defined in the image. The class defines accessors for a class variable."
 
@@ -459,7 +459,7 @@ FLCreateClassSerializationTest >> testCreateWithClassVariableAccessors [
 	self assert: 0 equals: instance classVariable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateWithNilEnvironment [ 
 	"Tests materialization a class or trait not defined in the image, and with a nil in the instance variable 'environment ' "
 
@@ -472,8 +472,8 @@ FLCreateClassSerializationTest >> testCreateWithNilEnvironment [
 	self assert:  materializedClassOrTrait basicEnvironment isNil.
 ]
 
-{ #category : #tests }
-FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [ 
+{ #category : 'tests' }
+FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [
 	"Tests materialization a class or trait not defined in the image, and with Smalltalk globals  in the instance variable 'environment '. In that case, the whole Smalltalk globals should NOT be fully serialized but instead just store a reference to it. "
 
 	| aClassOrTrait materializedClassOrTrait category name |
@@ -481,17 +481,16 @@ FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [
 	aClassOrTrait environment: Smalltalk globals.
 	category := aClassOrTrait category.
 	name := aClassOrTrait name.
-	
+
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
-	self assert:  materializedClassOrTrait basicEnvironment == Smalltalk globals.
+	self assert: materializedClassOrTrait basicEnvironment identicalTo: Smalltalk globals.
 
-	"Classes are not direclty inserted in the system organization so we can only test #basicCategory and not #category."
-	self assert: category = materializedClassOrTrait basicCategory.
-	self assert: name = materializedClassOrTrait name.
+	self assert: category equals: materializedClassOrTrait category.
+	self assert: name equals: materializedClassOrTrait name
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateWithSubclass [
 	"Tests materialization of a class that has a external subclass. Currently, this is the expected behaviour."
 
@@ -504,7 +503,7 @@ FLCreateClassSerializationTest >> testCreateWithSubclass [
 	self assert: materializedClass subclasses first identicalTo: aSubclass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCreateClassSerializationTest >> testMaterializationDoesNotModifySerializedClass [
 	"Tests that materialization does not change the source class."
 
@@ -520,7 +519,7 @@ FLCreateClassSerializationTest >> testMaterializationDoesNotModifySerializedClas
 	self assert: aClass instVarNames isEmpty description: 'Materialization should not modify the serialized class'
 ]
 
-{ #category : #'tests-bugs' }
+{ #category : 'tests-bugs' }
 FLCreateClassSerializationTest >> testSerializeAnonymousSubclass [
 	| anonymous |
 	anonymous := self classFactory newAnonymousClass.

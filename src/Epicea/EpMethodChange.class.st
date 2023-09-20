@@ -2,24 +2,26 @@
 I represent a change in the method dictionary of a class or a trait.
 "
 Class {
-	#name : #EpMethodChange,
-	#superclass : #EpCodeChange,
-	#category : #'Epicea-Model'
+	#name : 'EpMethodChange',
+	#superclass : 'EpCodeChange',
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpMethodChange class >> isAbstract [
 
 	^ self == EpMethodChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodChange >> behaviorAffectedName [
 
 	^ self methodAffected className
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpMethodChange >> doesOverride: aCodeChange [
 
 	^ aCodeChange isEpMethodChange and: [
@@ -27,37 +29,37 @@ EpMethodChange >> doesOverride: aCodeChange [
 		aCodeChange methodAffectedSelector = self methodAffectedSelector ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpMethodChange >> isEpMethodChange [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodChange >> methodAffected [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodChange >> methodAffectedProtocol [
 
 	^ self methodAffected protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodChange >> methodAffectedSelector [
 
 	^ self methodAffected selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodChange >> methodAffectedSourceCode [
 
 	^ self methodAffected sourceCode
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EpMethodChange >> printOn: aStream [
 
 	super printOn: aStream.

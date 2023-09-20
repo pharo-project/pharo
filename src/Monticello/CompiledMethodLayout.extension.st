@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethodLayout }
+Extension { #name : 'CompiledMethodLayout' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 CompiledMethodLayout class >> mcTypeSymbol [ 
 	^ #compiledMethod 
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddInstanceVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBAddInstanceVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBAddInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddInstanceVariableRefactoring .
@@ -14,13 +16,13 @@ RBAddInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddInstanceVariableParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testAddInstanceVariable [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
@@ -33,7 +35,7 @@ RBAddInstanceVariableParametrizedTest >> testAddInstanceVariable [
 		directlyDefinesInstanceVariable: 'asdf')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testAddToModel [
 	| refactoring |
 	model := RBNamespace new.
@@ -51,7 +53,7 @@ RBAddInstanceVariableParametrizedTest >> testAddToModel [
 		directlyDefinesInstanceVariable: 'asdf')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testInvalidVariableName [
 
 	self shouldFail: (self createRefactoringWithArguments:

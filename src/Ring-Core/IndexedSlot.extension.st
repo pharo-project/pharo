@@ -1,6 +1,6 @@
-Extension { #name : #IndexedSlot }
+Extension { #name : 'IndexedSlot' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 IndexedSlot >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ self class == IndexedSlot

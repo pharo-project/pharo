@@ -252,6 +252,12 @@ RubCharacterBlockScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
+{ #category : #accessing }
+RubCharacterBlockScanner >> scale [
+
+	^ 1
+]
+
 { #category : #'stop conditions' }
 RubCharacterBlockScanner >> setFont [
 	specialWidth := nil.

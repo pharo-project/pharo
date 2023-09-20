@@ -2,17 +2,18 @@
 Mock for Monticello traits tests
 "
 Trait {
-	#name : #MCTraitMock1,
-	#category : #'Monticello-Tests'
+	#name : 'MCTraitMock1',
+	#category : 'Monticello-Tests',
+	#package : 'Monticello-Tests'
 }
 
-{ #category : #local }
+{ #category : 'local' }
 MCTraitMock1 >> c [
 
 	^ 'MCTraitMock1>>c'
 ]
 
-{ #category : #local }
+{ #category : 'local' }
 MCTraitMock1 >> c1 [
 
 	^ 'MCTraitMock1>>c1'

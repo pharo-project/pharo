@@ -1,10 +1,12 @@
 Class {
-	#name : #OnlyReferencing,
-	#superclass : #Object,
-	#category : #'Refactoring-DataForTesting-SymbolUses'
+	#name : 'OnlyReferencing',
+	#superclass : 'Object',
+	#category : 'Refactoring-DataForTesting-SymbolUses',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'SymbolUses'
 }
 
-{ #category : #dull }
+{ #category : 'dull' }
 OnlyReferencing >> referToClassBySymbol [
 
 	^ #OnlyReferencedByASymbol

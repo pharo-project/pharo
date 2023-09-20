@@ -2,15 +2,17 @@
 I can add or remove or modify definitions. My main purpose is to generate monticello snapshot out of multiple snapshots or definitions by using my most used method #apply:to:.
 "
 Class {
-	#name : #MCPatcher,
-	#superclass : #Object,
+	#name : 'MCPatcher',
+	#superclass : 'Object',
 	#instVars : [
 		'definitions'
 	],
-	#category : #'Monticello-Patching'
+	#category : 'Monticello-Patching',
+	#package : 'Monticello',
+	#tag : 'Patching'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 MCPatcher class >> apply: aPatch to: aSnapshot [
 	| loader |
 	loader := self snapshot: aSnapshot.
@@ -18,22 +20,22 @@ MCPatcher class >> apply: aPatch to: aSnapshot [
 	^ loader patchedSnapshot
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCPatcher class >> snapshot: aSnapshot [
 	^ self new initializeWithSnapshot: aSnapshot
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCPatcher >> addDefinition: aDefinition [
 	definitions add: aDefinition
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCPatcher >> initializeWithSnapshot: aSnapshot [
 	definitions := MCDefinitionIndex definitions: aSnapshot definitions
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCPatcher >> modifyDefinition: baseDefinition to: targetDefinition [
 	
 	"Only modify the definition if present"
@@ -45,12 +47,12 @@ MCPatcher >> modifyDefinition: baseDefinition to: targetDefinition [
 		ifAbsent: [ "nothing" ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatcher >> patchedSnapshot [
 	^ MCSnapshot fromDefinitions: definitions definitions
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCPatcher >> removeDefinition: aDefinition [
 	definitions remove: aDefinition
 ]

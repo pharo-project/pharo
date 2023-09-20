@@ -25,21 +25,23 @@ RBLintRuleTestData >> foo1: anObject
 ```
 "
 Class {
-	#name : #RBCreateLazyAccessorsForVariableTransformation,
-	#superclass : #RBCreateAccessorsForVariableTransformation,
+	#name : 'RBCreateLazyAccessorsForVariableTransformation',
+	#superclass : 'RBCreateAccessorsForVariableTransformation',
 	#instVars : [
 		'defaultValue'
 	],
-	#category : #'Refactoring-Core-Transformation'
+	#category : 'Refactoring-Core-Transformation',
+	#package : 'Refactoring-Core',
+	#tag : 'Transformation'
 }
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 RBCreateLazyAccessorsForVariableTransformation class >> basicMenuItemString [
 
 	^ 'Generate lazy accessors'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCreateLazyAccessorsForVariableTransformation class >> model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean defaultValue: aString [
 	^(self
 		model: aRBSmalltalk
@@ -50,7 +52,7 @@ RBCreateLazyAccessorsForVariableTransformation class >> model: aRBSmalltalk vari
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCreateLazyAccessorsForVariableTransformation class >> variable: aVarName class: aClass classVariable: aBoolean defaultValue: aString [
 
 	^(self variable: aVarName class: aClass)
@@ -59,7 +61,7 @@ RBCreateLazyAccessorsForVariableTransformation class >> variable: aVarName class
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCreateLazyAccessorsForVariableTransformation >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
@@ -76,7 +78,7 @@ RBCreateLazyAccessorsForVariableTransformation >> checkVariableReferencesIn: aPa
 	searcher executeTree: aParseTree
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBCreateLazyAccessorsForVariableTransformation >> createGetterAccessor [
 
 	getterMethodName := self findGetterMethod.
@@ -90,17 +92,17 @@ RBCreateLazyAccessorsForVariableTransformation >> createGetterAccessor [
 			getterMethodName := self defineGetterMethod ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCreateLazyAccessorsForVariableTransformation >> defaultValue [
 	^ defaultValue ifNil: [ defaultValue := 'nil' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCreateLazyAccessorsForVariableTransformation >> defaultValue: aString [
 	defaultValue := aString
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBCreateLazyAccessorsForVariableTransformation >> defineGetterMethod [
 
 	self generateChangesFor:
@@ -115,7 +117,7 @@ RBCreateLazyAccessorsForVariableTransformation >> defineGetterMethod [
 	^ selector
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCreateLazyAccessorsForVariableTransformation >> preconditions [
 	"In addition check that the initialization is valid"
 
@@ -123,7 +125,7 @@ RBCreateLazyAccessorsForVariableTransformation >> preconditions [
 		& (RBCondition withBlock: [  self verifyInitializationExpressionOf: self defaultValue. true ])
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCreateLazyAccessorsForVariableTransformation >> verifyInitializationExpressionOf: initializer [
 	| tree |
 	tree := self parserClass

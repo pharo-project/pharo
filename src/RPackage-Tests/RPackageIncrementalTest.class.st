@@ -17,41 +17,42 @@ P3
 	A2DefinedInP2>>methodDefinedInP3  (was *P2*)
 "
 Class {
-	#name : #RPackageIncrementalTest,
-	#superclass : #RPackageTestCase,
-	#category : #'RPackage-Tests'
+	#name : 'RPackageIncrementalTest',
+	#superclass : 'RPackageTestCase',
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageIncrementalTest >> p1Name [
 	^ 'RPackageTestP1'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageIncrementalTest >> p2Name [
 	^ 'RPackageTestP2'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageIncrementalTest >> p3Name [
 	^ 'RPackageTestP3'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageIncrementalTest >> removeClassNamedIfExists: aClassNameSymbol [
 	testingEnvironment at: aClassNameSymbol asSymbol ifPresent: [:c| c removeFromSystem]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageIncrementalTest >> setUp [
 	super setUp.
 	Author fullName ifNil: [Author fullName: 'RPackage']
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageIncrementalTest >> tearDown [
 
-	createdPackages do: [ :each | self removePackage: each name ].
+	createdPackages do: [ :package | self removePackage: package ].
 	"just remove package from package organizer dictionary"
 
 	createdPackages do: [ :each |
@@ -63,7 +64,7 @@ RPackageIncrementalTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'tests - method addition removal' }
+{ #category : 'tests - method addition removal' }
 RPackageIncrementalTest >> testAddRemoveMethod [
 
 	| p1 p2 p3 a2 |
@@ -96,7 +97,7 @@ RPackageIncrementalTest >> testAddRemoveMethod [
 	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofClass: a2)
 ]
 
-{ #category : #'tests - method addition removal' }
+{ #category : 'tests - method addition removal' }
 RPackageIncrementalTest >> testAddRemoveSelector [
 
 	| p1 p2 p3 a2 |
@@ -125,7 +126,7 @@ RPackageIncrementalTest >> testAddRemoveSelector [
 	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofClass: a2)
 ]
 
-{ #category : #'tests - class addition removal' }
+{ #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testClassAddition [
 
 	| p a1 |
@@ -138,7 +139,7 @@ RPackageIncrementalTest >> testClassAddition [
 	self assert: (p includesClass: a1 class)
 ]
 
-{ #category : #'tests - class addition removal' }
+{ #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testClassDefinitionRemoval [
 
 	| p a1 b1 |
@@ -163,7 +164,7 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 	self deny: (p includesClass: b1)
 ]
 
-{ #category : #'tests - class addition removal' }
+{ #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 
 	| p a1 b1 |
@@ -190,7 +191,7 @@ RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 	self assert: p classTags size equals: 0
 ]
 
-{ #category : #'tests - class addition removal' }
+{ #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testDefinedClassesAndDefinedClassNames [
 
 	| p a1 b1 |
@@ -206,7 +207,7 @@ RPackageIncrementalTest >> testDefinedClassesAndDefinedClassNames [
 	self assert: (p definedClassNames includes: b1 name)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testExtensionClassNames [
 
 	| p1 p2 a2 b2 |
@@ -241,7 +242,7 @@ RPackageIncrementalTest >> testExtensionClassNames [
 	self deny: (p1 includesClass: b2)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testExtensionClasses [
 
 	| p1 p2 a2 b2 |
@@ -270,7 +271,7 @@ RPackageIncrementalTest >> testExtensionClasses [
 	self assert: (p1 extendedClassNames includes: b2 name)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testExtensionClassesWithCompiledMethod [
 
 	| p1 p2 a2 b2 |
@@ -305,7 +306,7 @@ RPackageIncrementalTest >> testExtensionClassesWithCompiledMethod [
 	self deny: (p1 includesClass: b2)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testExtensionMethods [
 
 	| p1 p2 a2 b2 |
@@ -324,7 +325,7 @@ RPackageIncrementalTest >> testExtensionMethods [
 	self assert: p1 extensionSelectors size equals: 2
 ]
 
-{ #category : #'tests - class addition removal' }
+{ #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testImportClassNoDuplicate [
 
 	| p a1 b1 |
@@ -341,7 +342,7 @@ RPackageIncrementalTest >> testImportClassNoDuplicate [
 	self assert: p definedClasses size equals: 2
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testIncludeClass [
 
 	| p1 p2 a2 |
@@ -363,7 +364,7 @@ RPackageIncrementalTest >> testIncludeClass [
 	self assert: (p1 includesClassNamed: a2 name)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testIncludeClassMore [
 
 	| p1 p2 p3 a2 |
@@ -380,7 +381,7 @@ RPackageIncrementalTest >> testIncludeClassMore [
 	self deny: (p3 includesClass: a2)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testIncludeSelectorOfClass [
 
 	| p1 p2 p3 a2 |
@@ -406,7 +407,7 @@ RPackageIncrementalTest >> testIncludeSelectorOfClass [
 	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testIncludeSelectorOfMetaClass [
 
 	| p1 p2 p3 a2 |
@@ -433,7 +434,7 @@ RPackageIncrementalTest >> testIncludeSelectorOfMetaClass [
 	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExtensions [
 
 	| p1 p2 p3 a2 |
@@ -458,7 +459,7 @@ RPackageIncrementalTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExte
 	self deny: (p2 includesExtensionSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testIncludesOrTouches [
 
 	| p1 p2 a2 |
@@ -478,7 +479,7 @@ RPackageIncrementalTest >> testIncludesOrTouches [
 	self assert: (p2 includesClass: a2)
 ]
 
-{ #category : #'tests - method addition removal' }
+{ #category : 'tests - method addition removal' }
 RPackageIncrementalTest >> testMethodAddition [
 
 	| p1 a1 |
@@ -489,7 +490,7 @@ RPackageIncrementalTest >> testMethodAddition [
 	self assert: (p1 includesSelector: #foo ofClass: a1)
 ]
 
-{ #category : #'tests - method addition removal' }
+{ #category : 'tests - method addition removal' }
 RPackageIncrementalTest >> testMethodPackageResolution [
 
 	| p1 a1 |
@@ -502,7 +503,7 @@ RPackageIncrementalTest >> testMethodPackageResolution [
 	self assert: (a1 class >> #method) package identicalTo: p1
 ]
 
-{ #category : #'tests - package belonging' }
+{ #category : 'tests - package belonging' }
 RPackageIncrementalTest >> testPackageOfClassForClassesNotDefinedInPackageButJustExtendingIt [
 
 	| p1 p2 a2 |
@@ -518,7 +519,7 @@ RPackageIncrementalTest >> testPackageOfClassForClassesNotDefinedInPackageButJus
 		self deny: each methodClass package equals: p1 ]
 ]
 
-{ #category : #'tests - package belonging' }
+{ #category : 'tests - package belonging' }
 RPackageIncrementalTest >> testPackageOfClassForDefinedClasses [
 
 	| p a1 b1 |
@@ -530,7 +531,7 @@ RPackageIncrementalTest >> testPackageOfClassForDefinedClasses [
 	self assert: b1 package equals: p
 ]
 
-{ #category : #'tests - class addition removal' }
+{ #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testRemoveClassRemovesExtensions [
 
 	| p1 p2 a1 |
@@ -551,7 +552,7 @@ RPackageIncrementalTest >> testRemoveClassRemovesExtensions [
 	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a1)
 ]
 
-{ #category : #'tests - class addition removal' }
+{ #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testRemoveExtensionMethodRemovesExtensionsFromPackage [
 
 	| p1 p2 a1 |
@@ -572,7 +573,7 @@ RPackageIncrementalTest >> testRemoveExtensionMethodRemovesExtensionsFromPackage
 	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a1)
 ]
 
-{ #category : #'tests - extension' }
+{ #category : 'tests - extension' }
 RPackageIncrementalTest >> testTwoClassesWithExtensions [
 
 	| p1 p2 a2 b2 |
@@ -588,7 +589,7 @@ RPackageIncrementalTest >> testTwoClassesWithExtensions [
 	self assert: p2 classes size equals: 2
 ]
 
-{ #category : #'tests - class addition removal' }
+{ #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testUniqueClassInDefinedClassesUsingAddClassDefinition [
 
 	| p a1 |

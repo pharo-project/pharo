@@ -101,27 +101,27 @@ SystemMethodRemovedAnnouncement
        => I would simply remove the method from the RPackage in which it is register
 "
 Class {
-	#name : #RPackageOrganizer,
-	#superclass : #Object,
+	#name : 'RPackageOrganizer',
+	#superclass : 'Object',
 	#instVars : [
 		'classPackageMapping',
 		'packages',
 		'classExtendingPackagesMapping',
-		'debuggingName',
-		'environment',
-		'categoryMap'
+		'environment'
 	],
-	#category : #'RPackage-Core-Base'
+	#category : 'RPackage-Core-Base',
+	#package : 'RPackage-Core',
+	#tag : 'Base'
 }
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 RPackageOrganizer class >> default [
 	"Warning: Use 'self packageOrganizer' since I will be removed in the future."
 
 	^ self packageOrganizer
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RPackageOrganizer class >> initialize [
 	"You need manually filll the data:
 
@@ -130,24 +130,13 @@ RPackageOrganizer class >> initialize [
 	is the usual way (but is not in this package by default, it depends on MC)"
 ]
 
-{ #category : #quieries }
+{ #category : 'quieries' }
 RPackageOrganizer class >> isPackageDefinedForClass: aClass [
 
 	^ (self default packageOf: aClass) notNil
 ]
 
-{ #category : #private }
-RPackageOrganizer class >> methodAdded: anEvent [
-	"precondition: package exist, class exist"
-
-	| methodCategory |
-	methodCategory := anEvent protocol.
-	(methodCategory isEmptyOrNil or: [ methodCategory first ~= $* ]) ifFalse: [
-		(self isPackageDefinedForClass: anEvent methodClass) ifFalse: [
-			RPackage new named: (self packageOrganizer categoryOfBehavior: anEvent methodClass instanceSide) ] ]
-]
-
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 
 	<script>
@@ -156,22 +145,20 @@ RPackageOrganizer class >> registerInterestToSystemAnnouncement [
 	self packageOrganizer registerInterestToSystemAnnouncement
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 
 	self default unregisterInterestToSystemAnnouncement
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> addCategory: catString [
-	"Add a new category named catString"
+{ #category : 'adding' }
+RPackageOrganizer >> addCategory: aCategory [
 
-	categoryMap at: catString asSymbol ifPresent: [ ^ self ] ifAbsentPut: [ OrderedCollection new ].
-
-	SystemAnnouncer uniqueInstance classCategoryAdded: catString
+	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
+	self ensurePackageMatching: aCategory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageOrganizer >> addMethod: method [
 	"we have to register the method in the parent RPackage of the class.
 	to do that, we first have to look if the method is an extension from an external package:"
@@ -188,17 +175,15 @@ RPackageOrganizer >> addMethod: method [
 	package addMethod: method
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> announcer [
 	^SystemAnnouncer uniqueInstance private
 ]
 
-{ #category : #'initialization - data' }
+{ #category : 'initialization - data' }
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
-	aPackagesList
-		do: [ :packageName | packages at: packageName asSymbol put: (RPackage named: packageName organizer: self) ]
-		displayingProgress: 'Importing monticello packages'.
+	aPackagesList do: [ :packageName | self ensurePackage: packageName ] displayingProgress: 'Importing monticello packages'.
 
 	Smalltalk allClassesAndTraits
 		do: [ :behavior | (self ensurePackageMatching: behavior category) importClass: behavior ]
@@ -214,80 +199,21 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 		displayingProgress: 'Importing extensions'
 ]
 
-{ #category : #'private - registration' }
+{ #category : 'private - registration' }
 RPackageOrganizer >> basicRegisterPackage: aPackage [
 	"A new package is now available and declared in the receiver. Note that it is a low level implementation method since it does not deal with package contained information and does not update the related mapping tables."
 
 	^ packages at: aPackage name asSymbol put: aPackage
 ]
 
-{ #category : #'private - registration' }
-RPackageOrganizer >> basicUnregisterPackageNamed: aPackageName [
+{ #category : 'private - registration' }
+RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the PackageRemoved announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
-	^ packages removeKey: aPackageName ifAbsent: [  ]
+	^ packages removeKey: aPackage name ifAbsent: [  ]
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categories [
-
-	^ categoryMap keys
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categoriesMatching: matchString [
-	"Return all matching categories"
-
-	self categories ifNil: [ ^ #(  ) ].
-	^ self categories select: [ :c | matchString match: c ]
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> categoryOfBehavior: behavior [
-	"Answer the category associated with the argument. This method can take a Behavior or a Behavior name as parameter."
-
-	| behaviorName |
-	behaviorName := behavior isBehavior
-		                ifTrue: [ behavior name ]
-		                ifFalse: [ behavior ].
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ ^ category ] ].
-
-	^ nil
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> classesInCategory: category [
-
-	^ (self listAtCategoryNamed: category) collect: [ :className | self environment at: className ]
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> classify: behaviorName under: categoryName [
-	"Store the argument, element, in the category named heading."
-
-	categoryName ifNil: [ self error: 'Category cannot be nil.' ].
-
-	categoryMap
-		at: categoryName
-		ifPresent: [ :classes |
-		(classes includes: behaviorName) ifTrue: [ ^ self ] ]
-		ifAbsent: [ self addCategory: categoryName ].
-
-	(self categoryOfBehavior: behaviorName) ifNotNil: [ :oldCategory |
-		oldCategory = categoryName ifTrue: [ ^ self ].
-		self removeBehavior: behaviorName ].
-
-	(categoryMap at: categoryName) add: behaviorName
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> classifyAll: aCollection under: categoryName [
-
-	aCollection do: [ :element | self classify: element under: categoryName ]
-]
-
-{ #category : #registration }
+{ #category : 'registration' }
 RPackageOrganizer >> createPackageNamed: aString [
 
 	self validatePackageDoesNotExist: aString.
@@ -295,26 +221,21 @@ RPackageOrganizer >> createPackageNamed: aString [
 	^ self ensurePackage: aString
 ]
 
-{ #category : #'private - testing' }
-RPackageOrganizer >> debuggingName [
-
-	^ debuggingName
-]
-
-{ #category : #'private - testing' }
-RPackageOrganizer >> debuggingName: aString [
-
-	debuggingName := aString
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 RPackageOrganizer >> defineUnpackagedClassesPackage [
 
 	^ self ensurePackage: RPackage defaultPackageName
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 RPackageOrganizer >> ensurePackage: aPackage [
+
+	| packageName |
+	packageName := aPackage isString
+		               ifTrue: [ aPackage ]
+		               ifFalse: [ aPackage name ].
+
+	(self hasPackage: aPackage) ifTrue: [ ^ self packageNamed: packageName ].
 
 	^ aPackage isString
 		  ifTrue: [ self packageNamed: aPackage ifAbsent: [ self registerPackage: (RPackage named: aPackage organizer: self) ] ]
@@ -323,7 +244,15 @@ RPackageOrganizer >> ensurePackage: aPackage [
 			  aPackage ]
 ]
 
-{ #category : #'system integration' }
+{ #category : 'registration' }
+RPackageOrganizer >> ensurePackage: aPackage withTags: aCollection [
+
+	| package |
+	package := self ensurePackage: aPackage.
+	aCollection do: [ :tag | package ensureTag: tag ]
+]
+
+{ #category : 'system integration' }
 RPackageOrganizer >> ensurePackageMatching: aString [
 	"I try to find a package matching the string. The priority is given to a package having the same name case insensitive. If I don't find it, I'm stripping everything following the last dash and I retry to find the package. If non is found after all dashes are stripped, I create a package of the given name.
 	
@@ -332,45 +261,47 @@ RPackageOrganizer >> ensurePackageMatching: aString [
 	^ (self packageMatchingExtensionName: aString) ifNil: [ self ensurePackage: aString ]
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> ensurePackageOfExtensionProtocol: aProtocol [
 
 	^ (self packageForProtocol: aProtocol) ifNil: [ self ensurePackage: aProtocol name allButFirst capitalized ]
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 RPackageOrganizer >> ensureTagNamed: aTagName inPackageNamed: aPackageName [
 
 	^ (self ensurePackage: aPackageName) ensureTag: aTagName
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
+{ #category : 'accessing' }
 RPackageOrganizer >> environment [
 	 ^ environment ifNil: [ environment := Smalltalk globals]
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
+{ #category : 'accessing' }
 RPackageOrganizer >> environment: aSystemDictionary [
 	 environment := aSystemDictionary
 ]
 
-{ #category : #'package - access from class' }
+{ #category : 'package - access from class' }
 RPackageOrganizer >> extendingPackagesOf: aClass [
 	"Returns the packages extending the class aClass"
 
 	^ classExtendingPackagesMapping at: aClass instanceSide ifAbsent: [ #(  ) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageOrganizer >> hasPackage: aPackage [
 	"Takes a package or a package name as parameter and return true if I include this package."
 
 	^ aPackage isString
-		  ifTrue: [ packages includesKey: aPackage asSymbol ]
+		  ifTrue: [
+			  self packageNamed: aPackage asSymbol ifAbsent: [ ^ false ].
+			  ^ true ]
 		  ifFalse: [ self packages includes: aPackage ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageOrganizer >> hasTag: aTag inPackage: aPackage [
 
 	(self hasPackage: aPackage) ifFalse: [ ^ false ].
@@ -378,16 +309,7 @@ RPackageOrganizer >> hasTag: aTag inPackage: aPackage [
 	^ (self ensurePackage: aPackage) hasTag: aTag
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> includesCategory: aString [
-	"Tests if a category is already included."
-
-	^ self categories
-		  ifNil: [ false ]
-		  ifNotNil: [ :categories | categories includes: aString ]
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 RPackageOrganizer >> initialize [
 
 	super initialize.
@@ -395,42 +317,11 @@ RPackageOrganizer >> initialize [
 	packages := IdentityDictionary new.
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
-	debuggingName := ''.
-	categoryMap := Dictionary new.
 
 	self defineUnpackagedClassesPackage
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> isEmptyCategoryNamed: categoryName [
-
-	^ categoryMap
-		  at: categoryName
-		  ifPresent: [ :classes | classes isEmpty ]
-		  ifAbsent: [ false ]
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> listAtCategoryNamed: categoryName [
-	"Answer the array of elements associated with the name, categoryName."
-
-	^ (categoryMap at: categoryName ifAbsent: [ Array new ]) asArray
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> orderedTraitsIn: category [
-	"Answer an OrderedCollection containing references to the traits in the
-	category whose name is the argument, category (a string). The traits
-	are ordered so they can be filed in."
-
-	| behaviors traits |
-	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
-	traits := behaviors select: [ :each | each isTrait ].
-	traits := traits asSortedCollection: [ :t1 :t2 | (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
-	^ traits asArray
-]
-
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> packageForProtocol: aProtocol [
 	"Return nil if the protocol is not an extension of if there is no package matching the name.
 	
@@ -443,7 +334,7 @@ RPackageOrganizer >> packageForProtocol: aProtocol [
 	^ self packageMatchingExtensionName: (aProtocol name copyWithout: $*)
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 	"I try to find a package matching the string. The priority is given to a package having the same name case insensitive. If I don't find it, I'm stripping everything following the last dash and I retry to find the package. If non is found after all dashes are stripped, I return nil.
 	
@@ -451,11 +342,11 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 
 	| tmpPackageName |
 	"we first look if their is a package matching exactly the name specified"
-	(self packageNamedIgnoreCase: anExtensionName ifAbsent: [ nil ]) ifNotNil: [ :package | ^ package ].
+	self packageNamed: anExtensionName ifPresent: [ :package | ^ package ].
 
 	"if no package was found, we try to find one matching the begining of the name specified"
 	tmpPackageName := ''.
-	packages keysDo: [ :aSymbol |
+	self packageNames do: [ :aSymbol |
 		(anExtensionName beginsWith: aSymbol asString , '-' caseSensitive: false) ifTrue: [ "we keep the longest package name found"
 			aSymbol size > tmpPackageName size ifTrue: [ tmpPackageName := aSymbol ] ] ].
 
@@ -464,48 +355,53 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 		  ifFalse: [ self packageNamed: tmpPackageName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageOrganizer >> packageNamed: aSymbol [
 	^ self
 		packageNamed: aSymbol
 		ifAbsent: [ KeyNotFound signalFor: aSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageOrganizer >> packageNamed: aSymbol ifAbsent: errorBlock [
+	"We first look at the fast solution then we try the case insensitive way because we do not care about the case in this package manager."
 
-	^ packages at: aSymbol asSymbol ifAbsent: errorBlock
+	^ packages at: aSymbol asSymbol ifAbsent: [
+		  self packagesDo: [ :each | (each name sameAs: aSymbol) ifTrue: [ ^ each ] ].
+		  errorBlock value ]
 ]
 
-{ #category : #private }
-RPackageOrganizer >> packageNamedIgnoreCase: aSymbol ifAbsent: aBlock [
-	"In case of extensions, I can need to take a package ignoring name"
-	self packagesDo: [  :each |
-		(each name sameAs: aSymbol)
-			ifTrue: [  ^ each  ]  ].
+{ #category : 'accessing' }
+RPackageOrganizer >> packageNamed: aSymbol ifPresent: aBlock [
+	"We first look at the fast solution then we try the case insensitive way because we do not care about the case in this package manager."
 
-	^ aBlock value
+	^ packages
+		  at: aSymbol asSymbol
+		  ifPresent: aBlock
+		  ifAbsent: [
+			  self packagesDo: [ :each | (each name sameAs: aSymbol) ifTrue: [ ^ aBlock cull: each ] ].
+			  nil ]
 ]
 
-{ #category : #'package - names-cache' }
+{ #category : 'package - names-cache' }
 RPackageOrganizer >> packageNames [
 
 	^ packages keys
 ]
 
-{ #category : #'package - names-cache' }
+{ #category : 'package - names-cache' }
 RPackageOrganizer >> packageNamesDo: aBlock [
 
 	^ self packageNames do: aBlock
 ]
 
-{ #category : #'package - access from class' }
+{ #category : 'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
 	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self packageNamed: RPackage defaultPackageName ]
 ]
 
-{ #category : #'package - access from class' }
+{ #category : 'package - access from class' }
 RPackageOrganizer >> packageOfClassNamed: aName [
 
 	self flag: #pharoFixMe. "Should probably return _UnunpackagedPackage instead of nil"
@@ -514,53 +410,45 @@ RPackageOrganizer >> packageOfClassNamed: aName [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageOrganizer >> packages [
 
 	^ packages values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageOrganizer >> packagesDo: aBlock [
 
-	packages valuesDo: aBlock
+	self packages do: aBlock
 ]
 
-{ #category : #printing }
-RPackageOrganizer >> printOn: aStream [
-
-	super printOn: aStream.
-	debuggingName ifNotNil: [aStream nextPutAll: debuggingName ]
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 RPackageOrganizer >> register [
 
 	"self registerInterestToMC."
 	self registerInterestToSystemAnnouncement
 ]
 
-{ #category : #'private - registration' }
+{ #category : 'private - registration' }
 RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
 
 	(classExtendingPackagesMapping at: aClass instanceSide ifAbsentPut: [ IdentitySet new ]) add: aPackage
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	"There should be only one"
 
 	anAnnouncer unsubscribe: self.
 
 	anAnnouncer weak
-		when: CategoryAdded send: #systemCategoryAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> registerInterestToSystemAnnouncement [
 	"self registerInterestToSystemAnnouncement"
 	<systemEventRegistration>
@@ -568,11 +456,13 @@ RPackageOrganizer >> registerInterestToSystemAnnouncement [
 	self registerInterestToAnnouncer: self announcer
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 RPackageOrganizer >> registerPackage: aPackage [
 	"A new package is now available and declared in the receiver. "
 
-	self validateCanBeAddedPackageName: aPackage name tagName: nil.
+	self
+		packageNamed: aPackage name
+		ifPresent: [ RPackageConflictError signal: ('Package can not be added because it conflicts with package a package of the same name.' format: { aPackage name }) ].
 
 	self basicRegisterPackage: aPackage.
 	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
@@ -583,55 +473,14 @@ RPackageOrganizer >> registerPackage: aPackage [
 	^ aPackage
 ]
 
-{ #category : #'private - registration' }
+{ #category : 'private - registration' }
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 
 	(aPackage includesClass: aClass) ifFalse: [ self error: aPackage name , ' does not includes the class ' , aClass name ].
 	^ classPackageMapping at: aClass instanceSide put: aPackage
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeBehavior: behavior [
-	"Remove the behavior from all categories. I can take a Behavior or a Behavior name as argument."
-
-	| behaviorName |
-	behaviorName := behavior isBehavior
-		                ifTrue: [ behavior name ]
-		                ifFalse: [ behavior ].
-
-	categoryMap keysAndValuesDo: [ :category :classes | (classes includes: behaviorName) ifTrue: [ classes remove: behaviorName ] ]
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeCategoriesMatching: matchString [
-	"Remove all matching categories with their classes"
-
-	(self categoriesMatching: matchString) do: [ :c | self removeSystemCategory: c ]
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeCategory: aCategory [
-	"Remove the category named, cat. Create an error notificiation if the
-	category has any elements in it."
-
-	| category |
-	category := aCategory asSymbol.
-
-	categoryMap
-		at: category
-		ifPresent: [ :classes | classes ifNotEmpty: [ ^ self error: 'Cannot remove non-empty category ' , category , '. Present classes: ' , classes printString ] ]
-		ifAbsent: [ ^ self ].
-
-	categoryMap removeKey: category.
-
-	"Now that we managed the SystemOrganizer, let's update the package organizer."
-	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
-		package name = category
-			ifTrue: [ self removePackage: package ]
-			ifFalse: [ package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | package removeTag: tag ] ] ]
-]
-
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> removeClass: class [
 	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
 
@@ -640,7 +489,7 @@ RPackageOrganizer >> removeClass: class [
 	(self extendingPackagesOf: class) do: [ :extendedPackage | extendedPackage removeAllMethodsFromClass: class ]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 RPackageOrganizer >> removeEmptyPackagesAndTags [
 	"Remove empty packages and tags."
 
@@ -648,7 +497,7 @@ RPackageOrganizer >> removeEmptyPackagesAndTags [
 	(self packages select: [ :package | package isEmpty ]) do: [ :emptyPackage | self removePackage: emptyPackage ]
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 RPackageOrganizer >> removePackage: aPackage [
 
 	| package |
@@ -658,7 +507,7 @@ RPackageOrganizer >> removePackage: aPackage [
 		           ifTrue: [ self packageNamed: aPackage ]
 		           ifFalse: [ aPackage ].
 
-	self basicUnregisterPackageNamed: package name.
+	self basicUnregisterPackage: package.
 	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
 	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
 	SystemAnnouncer announce: (PackageRemoved to: package).
@@ -666,16 +515,7 @@ RPackageOrganizer >> removePackage: aPackage [
 	^ package
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> removeSystemCategory: category [
-	"remove all the classes and traits associated with the category"
-
-	(self orderedTraitsIn: category) , (self superclassOrder: category) reverseDo: [ :each | each removeFromSystem ].
-
-	self removeCategory: category
-]
-
-{ #category : #'deprecated - SystemOrganizer leftovers' }
+{ #category : 'system integration' }
 RPackageOrganizer >> removeTag: aTag fromPackage: aPackage [
 
 	(self hasPackage: aPackage) ifFalse: [ ^ self "no need to remove the tag if the package is not there." ].
@@ -683,29 +523,7 @@ RPackageOrganizer >> removeTag: aTag fromPackage: aPackage [
 	(self ensurePackage: aPackage) removeTag: aTag
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> renameCategory: oldCatString toBe: newCatString [
-	"Rename a category. No action if new name already exists, or if old name does not exist."
-
-	| oldName newName package |
-	oldName := oldCatString asSymbol.
-	newName := newCatString asSymbol.
-
-	categoryMap at: newName ifPresent: [ "new name exists, so no action" ^ self ].
-
-	categoryMap at: oldName ifPresent: [ :classes |
-		categoryMap
-			at: newName put: classes;
-			removeKey: oldName ].
-
-	"We do it in all cases because we have a few cases where a category was not created but a package was. It's bugs but since categories will vanish there is no reason to care too much."
-	package := self ensurePackageMatching: oldName.
-	package name = oldName ifTrue: [ self renamePackage: package to: newName ].
-
-	package classTagNamed: oldName ifPresent: [ :tag | tag basicRenameTo: newName ]
-]
-
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> renamePackage: aPackage to: newName [
 
 	(self hasPackage: aPackage) ifFalse: [ ^ self ].
@@ -713,7 +531,7 @@ RPackageOrganizer >> renamePackage: aPackage to: newName [
 	(self ensurePackage: aPackage) renameTo: newName
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 
 	(self hasPackage: aPackage) ifFalse: [ ^ self ].
@@ -721,13 +539,13 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 	(self ensurePackage: aPackage) renameTag: aTag to: newName
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 RPackageOrganizer >> signalPackageExists: aPackageName [
 
 	RPackageConflictError signal: ('A package named {1} already exists' format: {aPackageName})
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageOrganizer >> stopNotification [
 	"(self instVarNamed: #default) stopNotification"
 
@@ -739,29 +557,7 @@ RPackageOrganizer >> stopNotification [
 		wc removeDependent: self]
 ]
 
-{ #category : #'deprecated - SystemOrganizer leftovers' }
-RPackageOrganizer >> superclassOrder: category [
-	"Answer an OrderedCollection containing references to the classes in the
-	category whose name is the argument, category (a string). The classes
-	are ordered with superclasses first so they can be filed in."
-
-	| behaviors classes |
-	behaviors := (self listAtCategoryNamed: category) collect: [ :title | self environment at: title ].
-	classes := behaviors select: [ :each | each isBehavior ].
-	^ Class superclassOrder: classes
-]
-
-{ #category : #'system integration' }
-RPackageOrganizer >> systemCategoryAddedActionFrom: ann [
-
-	| package |
-	package := self ensurePackageMatching: ann categoryName.
-
-	"We extract the tag name from the category"
-	package ensureTag: (package toTagName: ann categoryName)
-]
-
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
 	| class newPackage newCategoryName |
@@ -775,14 +571,14 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 	newPackage moveClass: class toTag: (newPackage ensureTag: (newPackage toTagName: newCategoryName))
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
 	"when a class is reorganized, we have to check if an extension has not been added"
 
 	ann classReorganized extensionProtocols do: [ :protocol | self ensurePackageOfExtensionProtocol: protocol ]
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 
 	| method |
@@ -793,7 +589,7 @@ RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 	self addMethod: method
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 
 	| method |
@@ -820,37 +616,37 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageOrganizer >> testPackageNames [
 
-	^ packages keys select: [:nameSymbol | (self packageNamed: nameSymbol) isTestPackage]
+	^ self testPackages collect: [ :package | package name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageOrganizer >> testPackages [
 
-	^ packages values select: #isTestPackage
+	^ self packages select: [ :package | package isTestPackage ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RPackageOrganizer >> unregister [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #'private - registration' }
+{ #category : 'private - registration' }
 RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
 
 	classExtendingPackagesMapping at: aClass instanceSide ifPresent: [ :extendingPackages | extendingPackages remove: aPackage ifAbsent: [  ] ]
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 	"self unregisterInterestToSystemAnnouncement"
 
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #'private - registration' }
+{ #category : 'private - registration' }
 RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	"unregister the back pointer mapping from classes to packages."
 
@@ -858,24 +654,7 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	^ (classPackageMapping at: aClass instanceSide ifAbsent: [ ^ self ]) = aPackage ifTrue: [ classPackageMapping removeKey: aClass instanceSide ]
 ]
 
-{ #category : #private }
-RPackageOrganizer >> validateCanBeAddedPackageName: packageName tagName: tagName [
-
-	| package |
-	package := self packageNamed: packageName ifAbsent: [
-		           (packageName includes: $-) ifFalse: [ ^ self ].
-
-		           ^ self validateCanBeAddedPackageName: (packageName copyUpToLast: $-) tagName: (packageName copyAfterLast: $-) , (tagName
-				              ifNotNil: [ '-' , tagName ]
-				              ifNil: [ '' ]) ].
-
-	(tagName isEmptyOrNil or: [ package includesClassTagNamed: tagName ]) ifTrue: [
-		RPackageConflictError signal: ('Package/Tag can not be added because it conflicts with package {1} tag {2}' format: {
-					 packageName.
-					 tagName }) ]
-]
-
-{ #category : #registration }
+{ #category : 'registration' }
 RPackageOrganizer >> validatePackageDoesNotExist: aPackageName [
 
 	(self hasPackage: aPackageName) ifTrue: [ self signalPackageExists: aPackageName ]

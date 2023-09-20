@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameMethodRefactoringTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRenameMethodRefactoringTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameMethodRefactoringTest >> testFailureExistingSelector [
 		
 	| refactoring |

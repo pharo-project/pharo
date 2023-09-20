@@ -2,22 +2,24 @@
 Sort filtered versions 
 "
 Class {
-	#name : #MCFilteredVersionSorter,
-	#superclass : #MCVersionSorter,
+	#name : 'MCFilteredVersionSorter',
+	#superclass : 'MCVersionSorter',
 	#instVars : [
 		'target'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCFilteredVersionSorter >> addVersionInfo: aVersionInfo [
 	(aVersionInfo hasAncestor: target)
 		ifTrue: [super addVersionInfo: aVersionInfo]
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFilteredVersionSorter >> processVersionInfo: aVersionInfo [
 	| success |
 	aVersionInfo = target ifTrue: [^ true].
@@ -30,7 +32,7 @@ MCFilteredVersionSorter >> processVersionInfo: aVersionInfo [
 	^ success	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFilteredVersionSorter >> target: aVersionInfo [
 	target := aVersionInfo
 ]

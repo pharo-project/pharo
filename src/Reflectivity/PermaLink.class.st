@@ -11,8 +11,8 @@ I know the class of the slot/var the link will be put on. I also know my link, a
 The isInstanceSpecific inst var seems to be needed to keep track that the metalink is installed on an object, because this information is lost after the link is installed through the API. It could be done better perhaps. 
 "
 Class {
-	#name : #PermaLink,
-	#superclass : #Object,
+	#name : 'PermaLink',
+	#superclass : 'Object',
 	#instVars : [
 		'slotOrVariable',
 		'persistenceType',
@@ -20,65 +20,67 @@ Class {
 		'slotOrVarClass',
 		'link'
 	],
-	#category : #'Reflectivity-Installer'
+	#category : 'Reflectivity-Installer',
+	#package : 'Reflectivity',
+	#tag : 'Installer'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PermaLink >> initialize [
 	isInstanceSpecific := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> isInstanceSpecific [
 	^ isInstanceSpecific
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> isInstanceSpecific: anObject [
 	isInstanceSpecific := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> link [
 	^ link
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> link: anObject [
 	link := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> persistenceType [
 	^ persistenceType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> persistenceType: anObject [
 	persistenceType := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> slotOrVarClass [
 	^ slotOrVarClass nonAnonymousClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> slotOrVarClass: anObject [
 	slotOrVarClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> slotOrVariable [
 	^ slotOrVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> slotOrVariable: anObject [
 	slotOrVariable := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PermaLink >> targetObjectOrClass [
 	^ slotOrVarClass
 ]

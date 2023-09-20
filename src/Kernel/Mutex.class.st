@@ -13,16 +13,18 @@ Instance variables:
 	owner		<Process>		The process owning the mutex.
 "
 Class {
-	#name : #Mutex,
-	#superclass : #Object,
+	#name : 'Mutex',
+	#superclass : 'Object',
 	#instVars : [
 		'semaphore',
 		'owner'
 	],
-	#category : #'Kernel-Processes'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #'mutual exclusion' }
+{ #category : 'mutual exclusion' }
 Mutex >> critical: aBlock [
 	"Execute aBlock only if the receiver is not already used by another process.
 	If it is, wait until the resource is available.
@@ -37,7 +39,7 @@ Mutex >> critical: aBlock [
 			aBlock ensure: [ owner := nil ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Mutex >> initialize [
 	super initialize.
 	semaphore := Semaphore forMutualExclusion

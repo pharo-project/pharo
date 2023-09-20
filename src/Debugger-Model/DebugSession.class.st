@@ -80,7 +80,9 @@ DebugSession >> clear [
 	the same process, it should call this method."
 	exception := nil.
 	interruptedProcess := nil.
-	self updateContextTo: nil
+	self updateContextTo: nil.
+	
+	self triggerEvent: #clear
 ]
 
 { #category : #accessing }

@@ -249,6 +249,12 @@ CharacterBlockScanner >> retrieveLastCharacterWidth [
 	^lastCharacterWidth
 ]
 
+{ #category : #accessing }
+CharacterBlockScanner >> scale [
+
+	^ 1
+]
+
 { #category : #'stop conditions' }
 CharacterBlockScanner >> setFont [
 	specialWidth := nil.

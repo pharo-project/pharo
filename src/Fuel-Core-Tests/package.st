@@ -1,1 +1,1 @@
-Package { #name : #'Fuel-Core-Tests' }
+Package { #name : 'Fuel-Core-Tests' }

@@ -1,22 +1,24 @@
 Class {
-	#name : #RBDeprecateMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBDeprecateMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBDeprecateMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBDeprecateMethodTransformation };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDeprecateMethodParametrizedTest >> constructor [
 	^ #deprecateMethod:in:using:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithSameNumberOfArgs [
 
 	| refactoring class oldSelector newSelector |
@@ -37,7 +39,7 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithSameNumbe
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithoutArgs [
 
 	| refactoring class oldSelector newSelector |
@@ -56,7 +58,7 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithoutArgs [
 			[ :e | e isMessage and: [ e selector = #deprecated:on:in: ] ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBDeprecateMethodParametrizedTest >> testValidateBogusNewSelector [
 
 	| refactoring oldSelector newSelector |
@@ -69,7 +71,7 @@ RBDeprecateMethodParametrizedTest >> testValidateBogusNewSelector [
 	self deny: refactoring preconditions check
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBDeprecateMethodParametrizedTest >> testValidateEmptyNewSelector [
 
 	| refactoring oldSelector newSelector |
@@ -82,7 +84,7 @@ RBDeprecateMethodParametrizedTest >> testValidateEmptyNewSelector [
 	self deny: refactoring preconditions check
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBDeprecateMethodParametrizedTest >> testValidateNewSelector [
 
 	| refactoring oldSelector newSelector |
@@ -95,7 +97,7 @@ RBDeprecateMethodParametrizedTest >> testValidateNewSelector [
 	self assert: refactoring preconditions check
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBDeprecateMethodParametrizedTest >> testValidateSameNewSelector [
 
 	| refactoring oldSelector newSelector |
