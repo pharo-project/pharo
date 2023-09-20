@@ -143,14 +143,6 @@ RPackage >> <= aRPackage [
 	^ self name <= aRPackage name
 ]
 
-{ #category : 'class tags' }
-RPackage >> actualClassTags [
-
-	(classTags size = 1 and: [classTags anyOne isRoot]) ifTrue: [ ^#() ].
-
-	^classTags
-]
-
 { #category : 'add class' }
 RPackage >> addClass: aClass [
 	"TODO: deprecate system category / replace this with a direct call to moveClass:fromPackage:toTag:"
@@ -429,9 +421,6 @@ RPackage >> importClass: aClass inTag: aTag [
 	
 	(self ensureTag: aTag) addClass: aClass instanceSide.
 
-	"Maybe this should go in the PackageTag during the addition of the class"
-	self registerClass: aClass.
-
 	{ aClass . aClass classSide } do: [ :class |
 		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
 
@@ -685,13 +674,6 @@ RPackage >> register [
 ]
 
 { #category : 'private - register' }
-RPackage >> registerClass: aClass [
-	"Private method that declares the mapping between a class and its package."
-
-	self organizer registerPackage: self forClass: aClass
-]
-
-{ #category : 'private - register' }
 RPackage >> removeAllMethodsFromClass: aClass [
 	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
 
@@ -713,10 +695,7 @@ RPackage >> removeClass: aClass [
 	"Then I unregister it from the tags"
 	self classTags
 		detect: [ :tag | tag includesClass: aClass ]
-		ifFound: [ :tag | tag removeClass: aClass ].
-
-	"Lastly I remove the class from the organizer. Maybe this should go in the PackageTag during the removal."
-	self unregisterClass: aClass
+		ifFound: [ :tag | tag removeClass: aClass ]
 ]
 
 { #category : 'class tags' }
@@ -909,11 +888,4 @@ RPackage >> toTagName: aSymbol [
 RPackage >> unregister [
 
 	self organizer removePackage: self
-]
-
-{ #category : 'private - register' }
-RPackage >> unregisterClass: aClass [
-	"Private method that declares the mapping between a class and its package."
-
-	self organizer unregisterPackage: self forClass: aClass
 ]

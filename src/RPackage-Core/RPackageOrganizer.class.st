@@ -540,24 +540,6 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 	(self ensurePackage: aPackage) renameTag: aTag to: newName
 ]
 
-{ #category : 'registration' }
-RPackageOrganizer >> signalPackageExists: aPackageName [
-
-	RPackageConflictError signal: ('A package named {1} already exists' format: {aPackageName})
-]
-
-{ #category : 'private' }
-RPackageOrganizer >> stopNotification [
-	"(self instVarNamed: #default) stopNotification"
-
-	"pay attention that we can break the system using this method"
-
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-
-	self class environment at: #MCWorkingCopy ifPresent: [:wc |
-		wc removeDependent: self]
-]
-
 { #category : 'system integration' }
 RPackageOrganizer >> systemClassAddedActionFrom: ann [
 
@@ -664,5 +646,5 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 { #category : 'registration' }
 RPackageOrganizer >> validatePackageDoesNotExist: aPackageName [
 
-	(self hasPackage: aPackageName) ifTrue: [ self signalPackageExists: aPackageName ]
+	(self hasPackage: aPackageName) ifTrue: [ RPackageConflictError signal: ('A package named {1} already exists' format: { aPackageName }) ]
 ]
