@@ -5,7 +5,7 @@ You can call check to see if classes have references.
 Then you can use `violators` to get a dictionary mapping each class to its references.
 "
 Class {
-	#name : 'RBClassesHasNoReferencesCondition',
+	#name : 'RBClassesHaveNoReferencesCondition',
 	#superclass : 'RBCondition',
 	#instVars : [
 		'model',
@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : 'checking' }
-RBClassesHasNoReferencesCondition >> check [
+RBClassesHaveNoReferencesCondition >> check [
 
 	referencingClassesDictionary := Dictionary new.
 
@@ -32,19 +32,19 @@ RBClassesHasNoReferencesCondition >> check [
 ]
 
 { #category : 'accessing' }
-RBClassesHasNoReferencesCondition >> classes: aRBClassCollection [
+RBClassesHaveNoReferencesCondition >> classes: aRBClassCollection [
 
 	classes := aRBClassCollection 
 ]
 
 { #category : 'accessing' }
-RBClassesHasNoReferencesCondition >> model: aRBNamespace [
+RBClassesHaveNoReferencesCondition >> model: aRBNamespace [
 
 	model := aRBNamespace
 ]
 
 { #category : 'accessing' }
-RBClassesHasNoReferencesCondition >> violators [
+RBClassesHaveNoReferencesCondition >> violators [
 
 	^ referencingClassesDictionary 
 ]
