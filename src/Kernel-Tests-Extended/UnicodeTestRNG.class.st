@@ -2,50 +2,52 @@
 The random number generator used by the UnicodeTest
 "
 Class {
-	#name : #UnicodeTestRNG,
-	#superclass : #TestResource,
+	#name : 'UnicodeTestRNG',
+	#superclass : 'TestResource',
 	#instVars : [
 		'generator'
 	],
-	#category : #'Kernel-Tests-Extended-Charset'
+	#category : 'Kernel-Tests-Extended-Charset',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Charset'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 UnicodeTestRNG >> generator [
 	^ generator
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UnicodeTestRNG >> next [
 	^ generator next
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 UnicodeTestRNG >> randomCharacter [
 	^ self randomCharacterBetween: 0 and: Unicode maxValue
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 UnicodeTestRNG >> randomCharacterAtOrAbove: lower [
 	^ self randomCharacterBetween: lower and: Unicode maxValue
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 UnicodeTestRNG >> randomCharacterBetween: lower and: upper [
 	^ Character codePoint: (self randomCodePointBetween: lower and: upper)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 UnicodeTestRNG >> randomCodePoint [
 	^ self randomCodePointBetween: 0 and: Unicode maxValue
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 UnicodeTestRNG >> randomCodePointAtOrAbove: lower [
 	^ self randomCodePointBetween: lower and: Unicode maxValue
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 UnicodeTestRNG >> randomCodePointBetween: lower and: upper [
 	| max span codePoint |
 	max := upper min: 16rE01EF.
@@ -57,7 +59,7 @@ UnicodeTestRNG >> randomCodePointBetween: lower and: upper [
 	^ codePoint
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 UnicodeTestRNG >> setUp [
 	super setUp.
 	generator := Random seed: 14159265

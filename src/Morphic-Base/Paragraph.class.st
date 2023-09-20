@@ -386,12 +386,12 @@ Paragraph >> displayOn: aCanvas using: displayScanner at: somePosition [
 	"Send all visible lines to the displayScanner for display"
 	| visibleRectangle offset leftInRun line |
 	visibleRectangle := aCanvas clipRect.
-	offset := (somePosition - positionWhenComposed) truncated.
+	offset := (somePosition - (positionWhenComposed * displayScanner scale)) truncated.
 	leftInRun := 0.
-	(self lineIndexForPoint: visibleRectangle topLeft)
-		to: (self lineIndexForPoint: visibleRectangle bottomRight)
+	(self lineIndexForPoint: visibleRectangle topLeft scale: displayScanner scale)
+		to: (self lineIndexForPoint: visibleRectangle bottomRight scale: displayScanner scale)
 		do: [:i | line := lines at: i.
-			self displaySelectionInLine: line on: aCanvas.
+			self displaySelectionInLine: line on: aCanvas scale: displayScanner scale.
 			line first <= line last ifTrue:
 				[leftInRun := displayScanner displayLine: line offset: offset leftInRun: leftInRun]]
 ]
@@ -427,6 +427,12 @@ Paragraph >> displaySelectionBlock: aSelBlock inLine: line on: aCanvas [
 
 { #category : #display }
 Paragraph >> displaySelectionInLine: line on: aCanvas [
+
+	^ self displaySelectionInLine: line on: aCanvas scale: 1
+]
+
+{ #category : #display }
+Paragraph >> displaySelectionInLine: line on: aCanvas scale: scale [
 	| leftX rightX w caretColor |
 	selectionStart ifNil: [^self].	"No selection"
 	aCanvas isShadowDrawing ifTrue: [ ^self ].	"don't draw selection with shadow"
@@ -464,17 +470,17 @@ Paragraph >> displaySelectionInLine: line on: aCanvas [
 					[:i |
 					"Draw caret triangles at top and bottom"
 
-					aCanvas fillRectangle: ((leftX - w + i - 1) @ (line top + i - 1)
-								extent: ((w - i) * 2 + 3) @ 1)
+					aCanvas fillRectangle: (((leftX - w + i - 1) @ (line top + i - 1)
+								extent: ((w - i) * 2 + 3) @ 1) scaleBy: scale)
 						color: caretColor.
-					aCanvas fillRectangle: ((leftX - w + i - 1) @ (line bottom - i)
-								extent: ((w - i) * 2 + 3) @ 1)
+					aCanvas fillRectangle: (((leftX - w + i - 1) @ (line bottom - i)
+								extent: ((w - i) * 2 + 3) @ 1) scaleBy: scale)
 						color: caretColor].
-			aCanvas fillRectangle: (leftX @ line top corner: rightX @ line bottom)
+			aCanvas fillRectangle: ((leftX @ line top corner: rightX @ line bottom) scaleBy: scale)
 				color: caretColor]
 		ifFalse:
 			[caretRect := nil.
-			aCanvas fillRectangle: (leftX @ line top corner: rightX @ line bottom)
+			aCanvas fillRectangle: ((leftX @ line top corner: rightX @ line bottom) scaleBy: scale)
 				color: self selectionColor]
 ]
 
@@ -601,16 +607,22 @@ Paragraph >> lineIndexForCharacter: index [
 
 { #category : #private }
 Paragraph >> lineIndexForPoint: aPoint [
+
+	^ self lineIndexForPoint: aPoint scale: 1
+]
+
+{ #category : #private }
+Paragraph >> lineIndexForPoint: aPoint scale: scale [
 	"Answer the index of the line in which to select the character nearest to aPoint."
 	| i py |
 	py := aPoint y truncated.
 
 	"Find the first line at this y-value"
-	i := (self fastFindFirstLineSuchThat: [:line | line bottom > py]) min: lines size.
+	i := (self fastFindFirstLineSuchThat: [:line | (line bottom * scale) > py]) min: lines size.
 
 	"Now find the first line at this x-value"
-	[i < lines size and: [(lines at: i+1) top = (lines at: i) top
-				and: [aPoint x >= (lines at: i+1) left]]]
+	[i < lines size and: [((lines at: i+1) top * scale) = ((lines at: i) top * scale)
+				and: [aPoint x >= ((lines at: i+1) left * scale)]]]
 		whileTrue: [i := i + 1].
 	^ i
 ]

@@ -706,30 +706,6 @@ StrikeFont >> characterToGlyphMap: anArray [
 	characterToGlyphMap := anArray
 ]
 
-{ #category : #displaying }
-StrikeFont >> characters: anInterval in: sourceString displayAt: aPoint clippedBy: clippingRectangle rule: ruleInteger fillColor: aForm kernDelta: kernDelta on: aBitBlt [
-	"Simple, slow, primitive method for displaying a line of characters.
-	No wrap-around is provided."
-	| destPoint |
-	destPoint := aPoint.
-	anInterval do:
-		[ :i | | rightX sourceRect leftX ascii |
-		self flag: #yoDisplay.
-		"if the char is not supported, fall back to the specified fontset."
-		ascii := (sourceString at: i) charCode.
-		(ascii < minAscii or: [ ascii > maxAscii ]) ifTrue: [ ascii := maxAscii ].
-		leftX := xTable at: ascii + 1.
-		rightX := xTable at: ascii + 2.
-		sourceRect := leftX @ 0 extent: (rightX - leftX) @ self height.
-		aBitBlt
-			copyFrom: sourceRect
-			in: glyphs
-			to: destPoint.
-		destPoint := destPoint + ((rightX - leftX + kernDelta) @ 0)
-		"destPoint printString displayAt: 0@(i*20)" ].
-	^ destPoint
-]
-
 { #category : #testing }
 StrikeFont >> checkCharacter: character [
 	"Answer a Character that is within the ascii range of the receiver--either
@@ -818,20 +794,6 @@ StrikeFont >> displayChar: ascii form: charForm [
 	bigForm displayAt: 50 @ 2.
 	Display fillBlack:
 		(50 @ 2 + (m * charForm width @ 0) extent: 1 @ (m * self height))
-]
-
-{ #category : #displaying }
-StrikeFont >> displayLine: aString at: aPoint [
-	"Display the characters in aString, starting at position aPoint."
-
-	self characters: (1 to: aString size)
-		in: aString
-		displayAt: aPoint
-		clippedBy: Display boundingBox
-		rule: Form over
-		fillColor: nil
-		kernDelta: 0
-		on: (BitBlt toForm: Display)
 ]
 
 { #category : #displaying }
@@ -1167,12 +1129,6 @@ StrikeFont >> heightOf: aCharacter [
 		].
 	].
 	^ self height
-]
-
-{ #category : #displaying }
-StrikeFont >> installOn: aDisplayContext [
-
-	^aDisplayContext installStrikeFont: self
 ]
 
 { #category : #displaying }

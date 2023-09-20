@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 Object >> asOrderedCollection [
 
 	self

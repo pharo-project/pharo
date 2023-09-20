@@ -1,6 +1,6 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 Behavior >> methodNamed: aSelector [
 
 	^ self methodDict at: aSelector

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddVariableAccessorsWithLazyInitializationParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBAddVariableAccessorsWithLazyInitializationParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBCreateLazyAccessorsForVariableTransformation };
@@ -12,18 +14,18 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest class >> testParame
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> constructor [
 	^ #variable:class:classVariable:defaultValue:
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingClassVariableAccessors [
 	| refactoring class |
 
@@ -37,7 +39,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingClas
 		equals: (self parseMethod: 'name1 ^Name1 ifNil: [Name1 := nil]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingInstanceVariableAccessors [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -50,7 +52,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingInst
 		equals: (self parseMethod: 'name ^name ifNil: [name := nil]')
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadDefaultValueForNewArgument [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -60,7 +62,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadDe
 				 'foo:' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadInitializationCode1 [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -70,7 +72,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureBadIn
 				 '''string' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureNonExistantName [
 
 	self
@@ -86,7 +88,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testFailureNonEx
 						 nil })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewClassVariableAccessors [
 	| ref class |
 	ref := self createRefactoringWithArguments:
@@ -99,7 +101,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewClassVari
 		or: [ (class parseTreeForSelector: #foo1:) = (self parseMethod: 'foo1: anObject Foo1 := anObject') ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewInstanceVariableAccessors [
 	| ref class |
 	ref := self createRefactoringWithArguments:

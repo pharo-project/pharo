@@ -2,12 +2,14 @@
 SUnit test for TestCase class
 "
 Class {
-	#name : #TestCaseTest,
-	#superclass : #TestCase,
-	#category : #'SUnit-Tests-Core'
+	#name : 'TestCaseTest',
+	#superclass : 'TestCase',
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 TestCaseTest >> testAnnouncement [
 
 	| announcements oldCollection suite unitTest result |
@@ -46,7 +48,7 @@ TestCaseTest >> testAnnouncement [
 	self assert: announcements equals: oldCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestCaseTest >> testAssertEqualsActualAndExpectedOrder [
 	self
 		should: [
@@ -57,7 +59,7 @@ TestCaseTest >> testAssertEqualsActualAndExpectedOrder [
 		description: 'In #assert:equals: the first argument is the actual value and the second one is the expected.'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestCaseTest >> testIsUnitTest [
 
 	self assert: TestCase isUnitTest

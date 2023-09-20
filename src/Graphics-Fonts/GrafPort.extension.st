@@ -1,12 +1,6 @@
 Extension { #name : #GrafPort }
 
 { #category : #'*Graphics-Fonts' }
-GrafPort >> installStrikeFont: aStrikeFont [
-
-	^ self installStrikeFont: aStrikeFont foregroundColor: (lastFontForegroundColor ifNil: [Color black]) backgroundColor: (lastFontBackgroundColor ifNil: [Color transparent])
-]
-
-{ #category : #'*Graphics-Fonts' }
 GrafPort >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	super installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale.
 	aStrikeFont glyphs depth = 1 ifTrue: [

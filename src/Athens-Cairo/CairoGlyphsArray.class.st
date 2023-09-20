@@ -11,35 +11,37 @@ typedef struct {
 ```
 "
 Class {
-	#name : #CairoGlyphsArray,
-	#superclass : #FFIExternalArray,
+	#name : 'CairoGlyphsArray',
+	#superclass : 'FFIExternalArray',
 	#instVars : [
 		'allocatedByCairo'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CairoGlyphsArray class >> externalNew: size [
 	^ self externalNewType: CairoGlyph size: size
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CairoGlyphsArray class >> new [
 	^ self new: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CairoGlyphsArray class >> new: size [
 	^ self newType: CairoGlyph size: size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoGlyphsArray >> allocatedByCairo [
 	^ allocatedByCairo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoGlyphsArray >> allocatedByCairo: aBoolean [
 	allocatedByCairo := aBoolean
 ]

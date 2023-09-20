@@ -10,28 +10,30 @@ I am a driver object responsible for invoking refactorings. I am responsible for
 
 "
 Class {
-	#name : #RBDriver,
-	#superclass : #Object,
+	#name : 'RBDriver',
+	#superclass : 'Object',
 	#instVars : [
 		'model',
 		'scopes'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBDriver class >> isAbstract [
 
 	^ self == RBDriver
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBDriver >> furtherActionFor: aReport [
 	
 	aReport browse
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBDriver >> openPreviewWithChanges: changes [
 	
 	^ (StRefactoringPreviewPresenter
@@ -41,13 +43,13 @@ RBDriver >> openPreviewWithChanges: changes [
 		openModal
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBDriver >> refactoringScopeOn: aScope [
 
 	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBDriver >> runRefactoring [
 
 	self subclassResponsibility

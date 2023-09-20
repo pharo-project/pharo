@@ -181,7 +181,7 @@ CharacterScanner >> addKern: kernDelta [
 CharacterScanner >> advanceIfFirstCharOfLine [
 	lastIndex = line first
 		ifTrue:
-			[destX := destX + pendingKernX + (font widthOf: (text at: line first)).
+			[destX := destX + pendingKernX + ((font widthOf: (text at: line first)) * self scale).
 			lastIndex := lastIndex + 1.
 			pendingKernX := 0]
 ]
@@ -202,12 +202,12 @@ a font that does not do character-pair kerning"
 			(stopConditions at: ascii)
 				ifNotNil: [^ stopConditions at: ascii].
 			"bump nextDestX by the width of the current character"
-			nextDestX := destX + (font widthOf: char).
+			nextDestX := destX + ((font widthOf: char) * self scale).
 			"if the next x is past the right edge, return crossedX"
 			nextDestX > rightX
 				ifTrue: [^#crossedX].
 			"update destX and incorporate thr kernDelta"
-			destX := nextDestX + kern.
+			destX := nextDestX + (kern * self scale).
 			lastIndex := lastIndex + 1].
 	^self handleEndOfRunAt: stopIndex
 ]
@@ -283,11 +283,18 @@ CharacterScanner >> plainTab [
 	pendingKernX := 0.
 	^(alignment = Justified and: [self leadingTab not])
 		ifTrue:		"embedded tabs in justified text are weird"
-			[destX + (textStyle tabWidth - (line justifiedTabDeltaFor: spaceCount)) max: destX]
+			[destX + ((textStyle tabWidth * self scale) - ((line justifiedTabDeltaFor: spaceCount) * self scale)) max: destX]
 		ifFalse:
 			[textStyle nextTabXFrom: destX
 				leftMargin: leftMargin
-				rightMargin: rightMargin]
+				rightMargin: rightMargin
+				scale: self scale]
+]
+
+{ #category : #accessing }
+CharacterScanner >> scale [
+
+	self subclassResponsibility
 ]
 
 { #category : #scanning }
@@ -337,22 +344,22 @@ a font that does do character-pair kerning via widthAndKernedWidthOfLeft:right:i
 				into: widthAndKernedWidth.
 			"bump nextDestX by the width of the current character"
 			nextDestX := floatDestX
-						+ (widthAndKernedWidth at: 1).
+						+ ((widthAndKernedWidth at: 1) * self scale).
 			"if the next x is past the right edge, return crossedX"
 			nextDestX > rightX
 				ifTrue: [^ #crossedX].
 			"bump floatDestX by the *kerned* width of the current
 			character, which is where the *next* char will go"
-			floatDestX := floatDestX + kern
-						+ (widthAndKernedWidth at: 2).
+			floatDestX := floatDestX + (kern * self scale)
+						+ ((widthAndKernedWidth at: 2) * self scale).
 			"if we are at the end of this run we keep track of the
 			character-kern-delta for possible later use and then rather
 			insanely remove that character-kern-delta from floatDestX,
 			making it equivalent to (old floatDestX) + kernDelta +
 			width-of-character - no idea why"
 			atEndOfRun
-				ifTrue: [pendingKernX := (widthAndKernedWidth at: 2)
-								- (widthAndKernedWidth at: 1).
+				ifTrue: [pendingKernX := ((widthAndKernedWidth at: 2) * self scale)
+								- ((widthAndKernedWidth at: 1) * self scale).
 					floatDestX := floatDestX - pendingKernX].
 			"save the next x for next time around the loop"
 			destX := floatDestX.
@@ -390,12 +397,12 @@ a font that does do character-pair kerning via widthAndKernedWidthOfLeft:right:i
 			widthAndKernedWidthOfLeft: char
 			right: nextChar
 			into: widthAndKernedWidth.
-		nextDestX := floatDestX + (widthAndKernedWidth at: 1).
+		nextDestX := floatDestX + ((widthAndKernedWidth at: 1) * self scale).
 		nextDestX > rightX ifTrue: [^#crossedX].
-		floatDestX := floatDestX + kern + (widthAndKernedWidth at: 2).
+		floatDestX := floatDestX + (kern * self scale) + ((widthAndKernedWidth at: 2) * self scale).
 		atEndOfRun
 			ifTrue:[
-				pendingKernX := (widthAndKernedWidth at: 2) - (widthAndKernedWidth at: 1).
+				pendingKernX := ((widthAndKernedWidth at: 2) * self scale) - ((widthAndKernedWidth at: 1) * self scale).
 				floatDestX := floatDestX - pendingKernX].
 		destX := floatDestX .
 		lastIndex := lastIndex + 1.
@@ -416,9 +423,9 @@ a font that does not do character-pair kerning"
 		(ascii < 256 and: [(stopConditions at: ascii + 1) ~~ nil])
 			ifTrue: [^ stopConditions at: ascii + 1].
 		"bump nextDestX by the width of the current character"
-		nextDestX := destX + (font widthOf: char).
+		nextDestX := destX + ((font widthOf: char) * self scale).
 		nextDestX > rightX ifTrue: [^#crossedX].
-		destX := nextDestX + kern .
+		destX := nextDestX + (kern * self scale).
 		lastIndex := lastIndex + 1.
 	].
 	^self handleEndOfRunAt: stopIndex
@@ -459,9 +466,9 @@ CharacterScanner >> setFont [
 					We still want kerning between chars of the same
 					font, but of different color. So add any pending kern to destX"
 					destX := destX + (pendingKernX ifNil:[0])].
-			destX := destX + priorFont descentKern].
+			destX := destX + (priorFont descentKern * self scale)].
 	pendingKernX := 0. "clear any pending kern so there is no danger of it being added twice"
-	destX := destX - font descentKern.
+	destX := destX - (font descentKern * self scale).
 	"NOTE: next statement should be removed when clipping works"
 	leftMargin ifNotNil: [destX := destX max: leftMargin].
 	kern := kern - font baseKern.

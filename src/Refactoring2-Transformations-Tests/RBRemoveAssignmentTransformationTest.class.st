@@ -1,17 +1,19 @@
 Class {
-	#name : #RBRemoveAssignmentTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveAssignmentTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRemoveAssignmentTransformationTest >> methodAfter [
 
 	| variable |
 	variable := 'String'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRemoveAssignmentTransformationTest >> methodBefore [
 
 	| variable |
@@ -19,7 +21,7 @@ RBRemoveAssignmentTransformationTest >> methodBefore [
 	variable := 1 asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 
 	| refactoring |
@@ -37,7 +39,7 @@ RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 			 inClass: #RBRemoveAssignmentTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAssignmentTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveAssignmentTransformation
@@ -47,7 +49,7 @@ RBRemoveAssignmentTransformationTest >> testClassDoesNotExist [
 			 inClass: #RBAssignmentTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAssignmentTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveAssignmentTransformation
@@ -57,7 +59,7 @@ RBRemoveAssignmentTransformationTest >> testMethodDoesNotExist [
 			 inClass: #RBRemoveAssignmentTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAssignmentTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -77,7 +79,7 @@ RBRemoveAssignmentTransformationTest >> testRefactoring [
 		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAssignmentTransformationTest >> testTransform [
 
 	| transformation class |
@@ -95,7 +97,7 @@ RBRemoveAssignmentTransformationTest >> testTransform [
 		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAssignmentTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBRemoveAssignmentTransformation

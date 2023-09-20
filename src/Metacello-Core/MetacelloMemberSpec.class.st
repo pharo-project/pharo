@@ -1,26 +1,28 @@
 Class {
-	#name : #MetacelloMemberSpec,
-	#superclass : #MetacelloSpec,
+	#name : 'MetacelloMemberSpec',
+	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'name',
 		'spec'
 	],
-	#category : #'Metacello-Core-Members'
+	#category : 'Metacello-Core-Members',
+	#package : 'Metacello-Core',
+	#tag : 'Members'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMemberSpec >> applyAdd: addBlock copy: copyBlock merge: mergeBlock remove: removeBlock [
 
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMemberSpec >> applyToList: aListSpec [
 
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloMemberSpec >> configMethodCascadeOn: aStream last: lastCascade indent: indent [
 
 	self spec 
@@ -30,7 +32,7 @@ MetacelloMemberSpec >> configMethodCascadeOn: aStream last: lastCascade indent: 
 		indent: indent
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloMemberSpec >> configMethodOn: aStream indent: indent [
 
 	aStream nextPutAll: self class name asString, ' member: ('.
@@ -38,37 +40,37 @@ MetacelloMemberSpec >> configMethodOn: aStream indent: indent [
 	aStream nextPutAll: ')'.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMemberSpec >> methodUpdateSelector [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMemberSpec >> name [
 
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMemberSpec >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMemberSpec >> sourceName [
 
 	^self name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMemberSpec >> spec [
 
 	^spec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMemberSpec >> spec: aMetacelloSpec [
 
 	spec := aMetacelloSpec

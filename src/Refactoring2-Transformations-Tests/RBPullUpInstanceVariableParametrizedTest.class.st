@@ -1,10 +1,12 @@
 Class {
-	#name : #RBPullUpInstanceVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBPullUpInstanceVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPullUpInstanceVariableRefactoring .
@@ -12,14 +14,14 @@ RBPullUpInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPullUpInstanceVariableParametrizedTest >> testFailurePullUpVariableNotDefined [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { 'notDefinedVariable'. #RBLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpInstanceVariableParametrizedTest >> testPullUpInstVar [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:

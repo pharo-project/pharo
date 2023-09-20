@@ -1,19 +1,21 @@
 Class {
-	#name : #ProtocolTest,
-	#superclass : #TestCase,
+	#name : 'ProtocolTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'class'
 	],
-	#category : #'Kernel-Tests-Classes'
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ProtocolTest >> classNameForTests [
 
 	^ #ClassForTests
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ProtocolTest >> setUp [
 
 	super setUp.
@@ -23,7 +25,7 @@ ProtocolTest >> setUp [
 			         package: 'ClassOrganizer-Tests' ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ProtocolTest >> tearDown [
 
 	class package removeFromSystem.

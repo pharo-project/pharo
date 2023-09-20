@@ -2,12 +2,14 @@
 SUnit tests for fuel serialization of global sends
 "
 Class {
-	#name : #FLGlobalSendSerializationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLGlobalSendSerializationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalSendSerializationTest >> testBasic [
 	| result |
 	self deny: FLGlobalSendMock newInstanceToSerialize equals: FLGlobalSendMock newInstanceToMaterialize.
@@ -16,7 +18,7 @@ FLGlobalSendSerializationTest >> testBasic [
 	self assert: FLGlobalSendMock newInstanceToMaterialize equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalSendSerializationTest >> testGlobalNotFound [
 
 	self should: [ self resultOfSerializeAndMaterialize: FLGlobalSendNotPresentMock new ]

@@ -2,17 +2,19 @@
 I am a refactoring for moving a class variable up to the superclass.
 "
 Class {
-	#name : #RBPullUpClassVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBPullUpClassVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPullUpClassVariableRefactoring >> preconditions [
 	^(RBCondition isMetaclass: class) not
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBPullUpClassVariableRefactoring >> privateTransform [
 	| subclass |
 	subclass := self subclassDefiningVariable.
@@ -20,7 +22,7 @@ RBPullUpClassVariableRefactoring >> privateTransform [
 	class addClassVariable: variableName
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RBPullUpClassVariableRefactoring >> subclassDefiningVariable [
 	| subclasses |
 	subclasses := class allSubclasses

@@ -1,18 +1,20 @@
 Class {
-	#name : #BreakpointHit,
-	#superclass : #BreakpointAnnouncement,
+	#name : 'BreakpointHit',
+	#superclass : 'BreakpointAnnouncement',
 	#instVars : [
 		'valueOrNil'
 	],
-	#category : #'Reflectivity-Breakpoints'
+	#category : 'Reflectivity-Breakpoints',
+	#package : 'Reflectivity',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointHit >> valueOrNil [
 	^ valueOrNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BreakpointHit >> valueOrNil: anObject [
 	valueOrNil := anObject
 ]

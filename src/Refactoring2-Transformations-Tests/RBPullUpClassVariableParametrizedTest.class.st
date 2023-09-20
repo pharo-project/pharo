@@ -1,10 +1,12 @@
 Class {
-	#name : #RBPullUpClassVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBPullUpClassVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPullUpClassVariableRefactoring .
@@ -14,14 +16,14 @@ RBPullUpClassVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPullUpClassVariableParametrizedTest >> testFailureMetaClassFailure [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { #RecursiveSelfRule. #'RBLintRuleTestData class' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPullUpClassVariableParametrizedTest >> testFailureNonExistantName [
 
 	self skip.
@@ -29,7 +31,7 @@ RBPullUpClassVariableParametrizedTest >> testFailureNonExistantName [
 		{ #Foo . #RBLintRuleTestData })"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpClassVariableParametrizedTest >> testPullUpClassVariable [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:

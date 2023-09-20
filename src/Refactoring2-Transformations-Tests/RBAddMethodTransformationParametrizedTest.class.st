@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddMethodTransformationParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBAddMethodTransformationParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBAddMethodTransformationParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddMethodTransformation .
@@ -14,14 +16,14 @@ RBAddMethodTransformationParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddMethodTransformationParametrizedTest >> setUp [
 
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddMethodTransformationParametrizedTest >> testAddMethod [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
@@ -35,7 +37,7 @@ RBAddMethodTransformationParametrizedTest >> testAddMethod [
 		equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddMethodTransformationParametrizedTest >> testFailureBadMethod [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -44,7 +46,7 @@ RBAddMethodTransformationParametrizedTest >> testFailureBadMethod [
 				 #( #accessing ) })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddMethodTransformationParametrizedTest >> testModelAddMethod [
 	| refactoring class |
 	class := model metaclassNamed: #Bar.

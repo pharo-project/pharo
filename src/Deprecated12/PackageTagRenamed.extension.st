@@ -1,6 +1,6 @@
-Extension { #name : #PackageTagRenamed }
+Extension { #name : 'PackageTagRenamed' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 PackageTagRenamed >> newCategoryName [
 
 	self deprecated: 'The system of categories is been removed. Please use the packages and tags instead.'.
@@ -9,7 +9,7 @@ PackageTagRenamed >> newCategoryName [
 		  ifFalse: [ self package name , '-' , self tag newName ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 PackageTagRenamed >> oldCategoryName [
 
 	self deprecated: 'The system of categories is been removed. Please use the packages and tags instead.'.

@@ -2,16 +2,18 @@
 Abstract superclass of records of ancestry.
 "
 Class {
-	#name : #MCAncestry,
-	#superclass : #Object,
+	#name : 'MCAncestry',
+	#superclass : 'Object',
 	#instVars : [
 		'ancestors',
 		'stepChildren'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> allAncestorsDo: aBlock [
 	self ancestors do:
 		[:ea |
@@ -19,7 +21,7 @@ MCAncestry >> allAncestorsDo: aBlock [
 		ea allAncestorsDo: aBlock]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> allAncestorsOnPathTo: aVersionInfo [
 	^ MCFilteredVersionSorter new
 		target: aVersionInfo;
@@ -27,24 +29,24 @@ MCAncestry >> allAncestorsOnPathTo: aVersionInfo [
 		sortedVersionInfos
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> ancestorString [
 	^ String streamContents:
 		[:s | self ancestors do: [:ea | s nextPutAll: ea name] separatedBy: [s nextPutAll: ', ']]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> ancestorStringWithout: packageName [
 	^ String streamContents:
 		[:s | self ancestors do: [:ea | s nextPutAll: (ea nameWithout: packageName)] separatedBy: [s nextPutAll: ', ']]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> ancestors [
 	^ ancestors ifNil: [#()]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> ancestorsDoWhileTrue: aBlock [
 	self ancestors do:
 		[:ea |
@@ -52,12 +54,12 @@ MCAncestry >> ancestorsDoWhileTrue: aBlock [
 			[ea ancestorsDoWhileTrue: aBlock]]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> breadthFirstAncestors [
 	^ Array streamContents: [:s | self breadthFirstAncestorsDo: [:ea | s nextPut: ea]]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> breadthFirstAncestorsDo: aBlock [
 	| seen todo next |
 	seen := Set with: self.
@@ -72,14 +74,14 @@ MCAncestry >> breadthFirstAncestorsDo: aBlock [
 				todo add: ea]]]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> commonAncestorWith: aNode [
 	| commonAncestors |
 	commonAncestors := self commonAncestorsWith: aNode.
 	^ commonAncestors at: 1 ifAbsent: [nil]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> commonAncestorsWith: aVersionInfo [
 
 	| sharedAncestors mergedOrder sorter |
@@ -91,14 +93,14 @@ MCAncestry >> commonAncestorsWith: aVersionInfo [
 	^ mergedOrder select: [:ea | sharedAncestors includes: ea]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> hasAncestor: aVersionInfo [
 	^ self
 		hasAncestor: aVersionInfo
 		alreadySeen: OrderedCollection new
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> hasAncestor: aVersionInfo alreadySeen: aList [
 	(aList includes: self) ifTrue: [^ false].
 	aList add: self.
@@ -107,32 +109,32 @@ MCAncestry >> hasAncestor: aVersionInfo alreadySeen: aList [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCAncestry >> initialize [
 	super initialize.
 	ancestors := #().
 	stepChildren := #()
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> isRelatedTo: aVersionInfo [
 	^ aVersionInfo timeStamp < self timeStamp
 		ifTrue: [self hasAncestor: aVersionInfo]
 		ifFalse: [aVersionInfo hasAncestor: self]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> stepChildren [
 	^ stepChildren ifNil: [#()]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> stepChildrenString [
 	^ String streamContents:
 		[:s | self stepChildren do: [:ea | s nextPutAll: ea name] separatedBy: [s nextPutAll: ', ']]
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> topologicalAncestors [
 	
 	^ Array streamContents:
@@ -144,7 +146,7 @@ MCAncestry >> topologicalAncestors [
 		f isEmpty] whileFalse] 
 ]
 
-{ #category : #ancestry }
+{ #category : 'ancestry' }
 MCAncestry >> withBreadthFirstAncestors [
 	^ (Array with: self), self breadthFirstAncestors
 ]

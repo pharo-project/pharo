@@ -3,22 +3,24 @@ A ProcessSpecificTest is a test case for process local and dynamic variables.
 
 "
 Class {
-	#name : #ProcessSpecificTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Processes'
+	#name : 'ProcessSpecificTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Processes',
+	#package : 'Kernel-Tests',
+	#tag : 'Processes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> checkDynamic: value [
 	self assert: TestDynamicVariable value equals: value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> checkLocal: value [
 	self assert: TestLocalVariable value equals: value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> testDynamicVariable [
 
 	| s1 s2 p1stopped p2stopped |
@@ -60,7 +62,7 @@ ProcessSpecificTest >> testDynamicVariable [
 	self assert: p2stopped
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> testDynamicVariableAccessFromDifferentProcess [
 	| process sem result |
 	sem := Semaphore new.
@@ -71,14 +73,14 @@ ProcessSpecificTest >> testDynamicVariableAccessFromDifferentProcess [
 	self assert: result equals: 123
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> testDynamicVariableBlockReturnValue [
 	| returnValue |
 	returnValue := TestDynamicVariable value: 10 during: [ TestDynamicVariable value + 1 ].
 	self assert: returnValue equals: 11
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> testDynamicVariableRemovedAfterUse [
 	TestDynamicVariable
 		value: 3
@@ -87,7 +89,7 @@ ProcessSpecificTest >> testDynamicVariableRemovedAfterUse [
 	self assert: (Processor activeProcess psValueAt: TestDynamicVariable soleInstance index) equals: nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> testExecutionEnvironment [
 
 	| newEnv |
@@ -102,7 +104,7 @@ ProcessSpecificTest >> testExecutionEnvironment [
 	]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> testInheritableVariable [
 
 	| s1 s2 parentVar childVar |
@@ -124,7 +126,7 @@ ProcessSpecificTest >> testInheritableVariable [
 	self assert: childVar equals: #inheritedVar
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> testInheritingExecutionEnvironment [
 
 	| newEnv p |
@@ -136,7 +138,7 @@ ProcessSpecificTest >> testInheritingExecutionEnvironment [
 	self assert: newEnv forkedProcesses anyOne equals: p
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessSpecificTest >> testLocalVariable [
 
 	| s1 s2 p1stopped p2stopped |

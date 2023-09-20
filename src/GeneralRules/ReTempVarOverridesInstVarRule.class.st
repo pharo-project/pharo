@@ -2,24 +2,26 @@
 Finds methods whose arguments or temporary variables ooverride an instance variable. This causes problems if you want to use the instance variable inside the method.
 "
 Class {
-	#name : #ReTempVarOverridesInstVarRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReTempVarOverridesInstVarRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #'testing-interest' }
+{ #category : 'testing-interest' }
 ReTempVarOverridesInstVarRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempVarOverridesInstVarRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'TempVarOverridesInstVarRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReTempVarOverridesInstVarRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	| problemTemps |
@@ -31,7 +33,7 @@ ReTempVarOverridesInstVarRule >> check: aMethod forCritiquesDo: aCriticBlock [
 			(self critiqueFor: aMethod about: var definingNode) ]
 ]
 
-{ #category : #'running - helpers' }
+{ #category : 'running - helpers' }
 ReTempVarOverridesInstVarRule >> critiqueFor: aMethod about: aVarNode [
 	^ (ReTrivialCritique
 		withAnchor: (ReIntervalSourceAnchor
@@ -42,12 +44,12 @@ ReTempVarOverridesInstVarRule >> critiqueFor: aMethod about: aVarNode [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempVarOverridesInstVarRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempVarOverridesInstVarRule >> name [
 	^ 'Outer variable shadowed by temporary variable or argument'
 ]

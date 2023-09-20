@@ -2,38 +2,40 @@
 A mock for a singleton
 "
 Class {
-	#name : #FLSingletonMock,
-	#superclass : #Object,
+	#name : 'FLSingletonMock',
+	#superclass : 'Object',
 	#instVars : [
 		'reference'
 	],
 	#classVars : [
 		'Instance'
 	],
-	#category : #'Fuel-Core-Tests-Support-Mocks'
+	#category : 'Fuel-Core-Tests-Support-Mocks',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Support-Mocks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSingletonMock class >> instance [
 	^ Instance ifNil: [ Instance := self basicNew ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLSingletonMock class >> new [
 	self error: 'I''m a singleton!'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLSingletonMock class >> reset [
 	Instance := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSingletonMock >> reference [
 	^ reference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSingletonMock >> reference: anObject [
 	^ reference := anObject
 ]

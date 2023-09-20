@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMoveMethodToClassSideRefactoringTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBMoveMethodToClassSideRefactoringTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveMethodToClassSideRefactoringTest >> testFailureExistsMethodInClassSide [
 
 	| method someClass className refactoring |

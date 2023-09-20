@@ -5,24 +5,26 @@ In Pharo you do not increment or decrement counter but should use the message to
 1 to: 100 by: 3 do: [ :each | ... ]
 "
 Class {
-	#name : #ReToDoWithIncrementRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReToDoWithIncrementRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReToDoWithIncrementRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ToDoWithIncrementRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReToDoWithIncrementRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReToDoWithIncrementRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -32,12 +34,12 @@ ReToDoWithIncrementRule >> initialize [
 			'`@i to: `@j by: `@k do: [:`e | | `@temps | `@.Stmts. `x := `x - `@k. `@.Stmts2]')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReToDoWithIncrementRule >> name [
 	^ 'to:do: loop also increments a counter'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReToDoWithIncrementRule >> rationale [
 	^ 'Checks for users of to:do: that also increment or decrement a counter.'
 ]

@@ -2,18 +2,20 @@
 SUnit tests for fuel serialization of sorted collections
 "
 Class {
-	#name : #FLSortedCollectionSerializationTest,
-	#superclass : #FLSerializationTest,
+	#name : 'FLSortedCollectionSerializationTest',
+	#superclass : 'FLSerializationTest',
 	#instVars : [
 		'instanceVariableForTesting'
 	],
 	#classVars : [
 		'ClassVariableForTesting'
 	],
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'sorted collections for testing' }
+{ #category : 'sorted collections for testing' }
 FLSortedCollectionSerializationTest class >> sortedCollectionForTestingWithClassVariable [
 	^ SortedCollection sortBlock: [ :a :b | 
 		ClassVariableForTesting 
@@ -21,19 +23,19 @@ FLSortedCollectionSerializationTest class >> sortedCollectionForTestingWithClass
 			ifFalse: [ a >= b ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSortedCollectionSerializationTest >> classVariableForTesting [
 	
 	^ ClassVariableForTesting
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSortedCollectionSerializationTest >> classVariableForTesting: anObject [
 	
 	ClassVariableForTesting := anObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLSortedCollectionSerializationTest >> sortedBlockClosureWithInstanceVariable [
 	^ SortedCollection
 		sortBlock: [ :a :b | 
@@ -42,7 +44,7 @@ FLSortedCollectionSerializationTest >> sortedBlockClosureWithInstanceVariable [
 				ifFalse: [ a >= b ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSortedCollectionSerializationTest >> testSortedCollection [
 	"Tests that a SortedCollection works fine after materialization. 
 	Note: Equality can not be used to assert, since its behavior is this:
@@ -65,7 +67,7 @@ FLSortedCollectionSerializationTest >> testSortedCollection [
 	self assert: aSortedCollection asArray equals: materialized asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSortedCollectionSerializationTest >> testSortedCollectionWithClassVariableChanges [
 	"Tests serialization of a SortedCollection whose sortBlock has a reference to a class variable and its value is changed. See also FLBlockClosureSerializationTest >> testBlockClosureWithClassVariableChanges  and FLCompiledMethodSerializationTest >> testMethodChangingClassVariable"
 
@@ -91,7 +93,7 @@ FLSortedCollectionSerializationTest >> testSortedCollectionWithClassVariableChan
 	self assert: (literalHolder literalAt: index) value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSortedCollectionSerializationTest >> testSortedCollectionWithClassVariableReference [
 	"Tests serialization of a SortedCollection whose sortBlock has a reference to the outer context. 
 	Note: Equality can not be used to assert, since its behavior is this:
@@ -115,7 +117,7 @@ FLSortedCollectionSerializationTest >> testSortedCollectionWithClassVariableRefe
 	self assert: aSortedCollection asArray equals: materialized asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSortedCollectionSerializationTest >> testSortedCollectionWithInstanceVariableReference [
 	"Tests serialization of a SortedCollection whose sortBlock has a reference to the outer context. 
 	Note: Equality can not be used to assert, since its behavior is this:
@@ -136,7 +138,7 @@ FLSortedCollectionSerializationTest >> testSortedCollectionWithInstanceVariableR
 	self assert: aSortedCollection asArray equals: #(3 2 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLSortedCollectionSerializationTest >> testSortedCollectionWithInstanceVariableReferenceChange [
 	"IMPORTANT: this test is to demonstrate a limitation.  Unfortunatly there is nothing we can do to solve this problem. The sortBlock was serialized with a method context with different receiver, different temps, etc.
 	Tests serialization of a SortedCollection whose sortBlock has a reference to the outer context. 

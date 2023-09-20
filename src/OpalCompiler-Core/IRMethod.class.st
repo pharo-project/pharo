@@ -3,8 +3,8 @@ I am a method in the IR (intermediate representation) language consisting of IRI
 
 "
 Class {
-	#name : #IRMethod,
-	#superclass : #Object,
+	#name : 'IRMethod',
+	#superclass : 'Object',
 	#instVars : [
 		'sourceNode',
 		'startSequence',
@@ -17,31 +17,33 @@ Class {
 		'compilationContext',
 		'irPrimitive'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #optimizing }
+{ #category : 'optimizing' }
 IRMethod >> absorbJumpsToSingleInstrs [
 
 	startSequence absorbJumpToSingleInstr: IdentitySet new
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRMethod >> accept: aVisitor [
 	^ aVisitor visitMethod: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> addAdditionalLiteral: aLiteral [
 	additionalLiterals add: aLiteral
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> addAdditionalLiterals: literals [
 	additionalLiterals :=  literals
 ]
 
-{ #category : #inlining }
+{ #category : 'inlining' }
 IRMethod >> addInstructionsAfter: aCollection [
 	| returningSeqs  lastInstr |
 	aCollection ifEmpty: [^self].
@@ -50,24 +52,24 @@ IRMethod >> addInstructionsAfter: aCollection [
 	lastInstr addInstructionsBefore: aCollection
 ]
 
-{ #category : #inlining }
+{ #category : 'inlining' }
 IRMethod >> addInstructionsBefore: aCollection [
 
 	(self startSequence nextSequence first) addInstructionsBefore: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> addPragma: aPragma [
 
 	pragmas add: aPragma
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> additionalLiterals [
 	^additionalLiterals
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRMethod >> allInstructions [
 	" return irNodes as a flat collection "
 
@@ -77,7 +79,7 @@ IRMethod >> allInstructions [
 	^irInstructions
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRMethod >> allInstructionsMatching: aBlock [
 	" return irNodes as a flat collection "
 
@@ -87,34 +89,34 @@ IRMethod >> allInstructionsMatching: aBlock [
 	^irInstructions
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRMethod >> allSequences [
 	^ startSequence withAllSuccessors
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRMethod >> allTempAccessInstructions [
 	^self allInstructionsMatching: [:bc | bc isTemp]
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 IRMethod >> children [
 	^self startSequence withAllSuccessors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> compilationContext [
 	^ compilationContext ifNil: [
 		"only happens when decompiling or using stand-alone"
 		compilationContext := CompilationContext default]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext
 ]
 
-{ #category : #translating }
+{ #category : 'translating' }
 IRMethod >> compiledBlock: scope [
 
 	^compiledMethod
@@ -122,7 +124,7 @@ IRMethod >> compiledBlock: scope [
 		ifNotNil: [compiledMethod]
 ]
 
-{ #category : #translating }
+{ #category : 'translating' }
 IRMethod >> compiledMethod [
 
 	^ compiledMethod 
@@ -130,7 +132,7 @@ IRMethod >> compiledMethod [
 
 ]
 
-{ #category : #translating }
+{ #category : 'translating' }
 IRMethod >> compiledMethodWith: trailer [
 	self
 		deprecated: 'Use compiledMethod'
@@ -139,7 +141,7 @@ IRMethod >> compiledMethodWith: trailer [
 	^ self compiledMethod
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRMethod >> firstInstructionMatching: aBlock [
 	" return irNodes as a flat collection "
 
@@ -147,7 +149,7 @@ IRMethod >> firstInstructionMatching: aBlock [
 	^nil
 ]
 
-{ #category : #translating }
+{ #category : 'translating' }
 IRMethod >> generate [
 
 	| irTranslator |
@@ -166,7 +168,7 @@ IRMethod >> generate [
 	^ compiledMethod
 ]
 
-{ #category : #translating }
+{ #category : 'translating' }
 IRMethod >> generate: trailer [
 	self
 		deprecated: 'Use generate'
@@ -175,7 +177,7 @@ IRMethod >> generate: trailer [
 	^ self generate 
 ]
 
-{ #category : #translating }
+{ #category : 'translating' }
 IRMethod >> generateBlockWithScope: scope [
 	| irTranslator |
       irTranslator := IRTranslator context: self compilationContext.
@@ -187,13 +189,13 @@ IRMethod >> generateBlockWithScope: scope [
 	^ compiledMethod
 ]
 
-{ #category : #scoping }
+{ #category : 'scoping' }
 IRMethod >> indexForVarNamed: aName [
 
 	^tempMap at: aName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IRMethod >> initialize [
 
 	irPrimitive := IRPrimitive null.
@@ -203,7 +205,7 @@ IRMethod >> initialize [
 	numArgs := 0
 ]
 
-{ #category : #decompiling }
+{ #category : 'decompiling' }
 IRMethod >> instructionsForDecompiling [
 	"return all instructions, but skip the block bodies, as the decompiler
 	recurses over blocks"
@@ -211,29 +213,29 @@ IRMethod >> instructionsForDecompiling [
 	^startSequence instructionsForDecompiling allButFirst
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> ir [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> irPrimitive [
 
 	^ irPrimitive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> irPrimitive: aPrimitiveNode [
 
 	irPrimitive := aPrimitiveNode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRMethod >> isSend [
 	^false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 IRMethod >> longPrintOn: stream [
 
 	IRPrinter new
@@ -241,24 +243,24 @@ IRMethod >> longPrintOn: stream [
 		visitNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> method [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> numArgs [
 
 	^ numArgs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> numArgs: anInteger [
 
 	numArgs := anInteger
 ]
 
-{ #category : #optimizing }
+{ #category : 'optimizing' }
 IRMethod >> optimize [
 	"Perform all optimizations"
 
@@ -266,7 +268,7 @@ IRMethod >> optimize [
 	self absorbJumpsToSingleInstrs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> predecessorsOf: aSequence [
 	| predecessors |
 	predecessors := OrderedCollection new.
@@ -274,17 +276,17 @@ IRMethod >> predecessorsOf: aSequence [
 	^predecessors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> properties [
 	^properties
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> properties: propDict [
 	properties := propDict
 ]
 
-{ #category : #optimizing }
+{ #category : 'optimizing' }
 IRMethod >> removeEmptyStart [
 
 	 (startSequence size = 1) ifTrue: [
@@ -292,41 +294,41 @@ IRMethod >> removeEmptyStart [
         startSequence := startSequence last destination]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> sourceInterval [
 	^self sourceNode sourceInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> sourceNode [
 	^sourceNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> sourceNode: aNode [
 	sourceNode := aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> startSequence [
 
 	^ startSequence
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRMethod >> startSequence: irSequence [
 
 	startSequence := irSequence.
 	irSequence method: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> tempKeys [
 
 	^ tempMap keys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRMethod >> tempMap [
 	^ tempMap
 ]

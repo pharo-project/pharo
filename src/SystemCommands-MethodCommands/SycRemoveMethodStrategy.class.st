@@ -20,17 +20,18 @@ Strategy selection dialog orders collected strategy using this message.
 It is a string which should be displayed in strategy selection dialog.
 "
 Class {
-	#name : #SycRemoveMethodStrategy,
-	#superclass : #Object,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycRemoveMethodStrategy',
+	#superclass : 'Object',
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveMethodStrategy >> removeMethods: methods [
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveMethodStrategy >> userRequestString [
 	self subclassResponsibility
 ]

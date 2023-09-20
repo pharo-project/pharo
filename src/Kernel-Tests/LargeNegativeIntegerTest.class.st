@@ -2,18 +2,20 @@
 SUnit tests for large negative integers
 "
 Class {
-	#name : #LargeNegativeIntegerTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Numbers'
+	#name : 'LargeNegativeIntegerTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Numbers',
+	#package : 'Kernel-Tests',
+	#tag : 'Numbers'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 LargeNegativeIntegerTest >> classToBeTested [
 
 	^ LargeNegativeInteger
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 LargeNegativeIntegerTest >> testAbs [
 
 	self
@@ -21,7 +23,7 @@ LargeNegativeIntegerTest >> testAbs [
 		equals: (SmallInteger minVal - 2) negated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LargeNegativeIntegerTest >> testByteAt [
 
 	| lni |
@@ -31,7 +33,7 @@ LargeNegativeIntegerTest >> testByteAt [
 		self assert: i equals: digit]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LargeNegativeIntegerTest >> testDenormalizedPrintString [
 	"Check that an un-normalized instance behaves reasonably."
 
@@ -49,7 +51,7 @@ LargeNegativeIntegerTest >> testDenormalizedPrintString [
 	self assert: (i0 normalize isMemberOf: SmallInteger)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LargeNegativeIntegerTest >> testDigitAtPut [
 
 	| lni |
@@ -58,7 +60,7 @@ LargeNegativeIntegerTest >> testDigitAtPut [
 	self assert: -114605103402541699037609980192546360895434064385 equals: lni
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LargeNegativeIntegerTest >> testDigitLength [
 
 	| lni |
@@ -66,7 +68,7 @@ LargeNegativeIntegerTest >> testDigitLength [
 	self assert: 20 equals: lni bytesCount
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LargeNegativeIntegerTest >> testEmptyTemplate [
 	"Check that an uninitialized instance behaves reasonably."
 
@@ -77,7 +79,7 @@ LargeNegativeIntegerTest >> testEmptyTemplate [
 	self assert: i normalize equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LargeNegativeIntegerTest >> testMinimumNegativeIntegerArithmetic [
 	"We are speaking of minimum integer in underlying hardware here.
 	In 2-complement, abs(INT_MIN) = (INT-MAX+1) and thus overflows hardware register.
@@ -101,7 +103,7 @@ LargeNegativeIntegerTest >> testMinimumNegativeIntegerArithmetic [
 		self assert: (largeNegativeInt / -1) equals: largePositiveInt]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LargeNegativeIntegerTest >> testReplaceFromToWithStartingAt [
 
 	| lni20 lni7 |
@@ -121,12 +123,12 @@ LargeNegativeIntegerTest >> testReplaceFromToWithStartingAt [
 		self assert: replacementDigit equals: digit]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LargeNegativeIntegerTest >> testSqrt [
 	self should: [(SmallInteger minVal - 1) sqrt] raise: DomainError
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 LargeNegativeIntegerTest >> testStoreOn [
 	| integer |
 	integer := SmallInteger minVal - 1.

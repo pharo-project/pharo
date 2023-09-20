@@ -2,12 +2,13 @@ Extension { #name : #RGClassStrategy }
 
 { #category : #'*Ring-Monticello' }
 RGClassStrategy >> asMCDefinition [
+	"Here we should remove the use of the category and also add the package tag to the class definition"
 
 	^ (MCClassDefinition named: self owner name)
 		  superclassName: (self owner superclass ifNotNil: [ :aSuperclass | aSuperclass name ]);
 		  traitComposition: self owner traitCompositionString;
 		  classTraitComposition: self owner metaclass traitCompositionString;
-		  category: self owner category;
+		  packageName: self owner category;
 		  instVarNames: self instVarNames;
 		  classVarNames: self owner classVarNames;
 		  poolDictionaryNames: self owner sharedPoolNames;

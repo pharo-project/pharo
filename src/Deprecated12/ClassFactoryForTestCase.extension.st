@@ -1,41 +1,41 @@
-Extension { #name : #ClassFactoryForTestCase }
+Extension { #name : 'ClassFactoryForTestCase' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> deleteClass: aClass [
 
 	self deprecated: 'Use #delete: instead. The behavior is the same.' transformWith: '`@rcv deleteClass: `@arg' -> '`@rcv -> delete: `@arg'.
 	self delete: aClass
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newClassInCategory: category [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
 	^ self make: [ :aBuilder | aBuilder tag: category ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newClassUsing: aTraitComposition [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
 	^ self make: [ :aBuilder | aBuilder traitComposition: aTraitComposition ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
 	^ self make: [ :aBuilder | aBuilder slotsFromString: aString ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newSubclassOf: aClass [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
 	^ self make: [ :aBuilder | aBuilder superclass: aClass ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -46,7 +46,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesS
 			  sharedVariablesFromString: classVarsString ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -58,7 +58,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesS
 			  tag: category ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -72,7 +72,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 			  tag: category ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString category: category [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -87,7 +87,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 			  tag: category ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newSubclassOf: aClass using: aTraitComposition [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -97,7 +97,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass using: aTraitComposition [
 			  traitComposition: aTraitComposition ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newTraitInTag: aTag [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -107,7 +107,7 @@ ClassFactoryForTestCase >> newTraitInTag: aTag [
 			  tag: aTag ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag: aTag [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -119,7 +119,7 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag
 			  beTrait ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> newTraitUsing: aTraitComposition [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -129,7 +129,7 @@ ClassFactoryForTestCase >> newTraitUsing: aTraitComposition [
 			  traitComposition: aTraitComposition ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> redefineClass: aClass category: aString [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -139,7 +139,7 @@ ClassFactoryForTestCase >> redefineClass: aClass category: aString [
 			  package: aString ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> redefineClass: aClass instanceVariableNames: aString [
 
 	self deprecated:
@@ -150,7 +150,7 @@ ClassFactoryForTestCase >> redefineClass: aClass instanceVariableNames: aString 
 			  slotsFromString: aString ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString package: aPackageName [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
@@ -165,14 +165,14 @@ ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: a
 			  package: aPackageName asSymbol ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> silentlyNewClassInCategory: category [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #silentlyMake: to find the default value I am setting.'.
 	^ self silentlyMake: [ :aBuilder | aBuilder tag: category ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
 
 	self deprecated:
@@ -185,7 +185,7 @@ ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: 
 			  tag: self defaultTagPostfix ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
 	
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #silentlyMake: to find the default value I am setting.'.
@@ -197,7 +197,7 @@ ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: 
 			  tag: category ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString package: packageName [
 
 	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #silentlyMake: to find the default value I am setting.'.

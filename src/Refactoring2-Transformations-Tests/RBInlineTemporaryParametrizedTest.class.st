@@ -1,10 +1,12 @@
 Class {
-	#name : #RBInlineTemporaryParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBInlineTemporaryParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineTemporaryParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBInlineTemporaryRefactoring };
@@ -12,12 +14,12 @@ RBInlineTemporaryParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBInlineTemporaryParametrizedTest >> constructor [
 	^ #inline:from:in:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryBadInterval [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -26,7 +28,7 @@ RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryBadInterval [
 				 RBClassDataForRefactoringTest })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryMutlipleAssignment [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -35,7 +37,7 @@ RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryMutlipleAssignmen
 				 RBClassDataForRefactoringTest })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryReadBeforeWritten [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -44,7 +46,7 @@ RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryReadBeforeWritten
 				 RBClassDataForRefactoringTest })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineTemporaryParametrizedTest >> testInlineTemporary [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:

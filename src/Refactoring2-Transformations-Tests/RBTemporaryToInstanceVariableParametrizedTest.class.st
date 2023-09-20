@@ -1,10 +1,12 @@
 Class {
-	#name : #RBTemporaryToInstanceVariableParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBTemporaryToInstanceVariableParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTemporaryToInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBTemporaryToInstanceVariableRefactoring };
@@ -12,7 +14,7 @@ RBTemporaryToInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBTemporaryToInstanceVariableParametrizedTest >> addClassHierarchy [
 	model
 		defineClass: 'Foo << #Foo1
@@ -23,18 +25,18 @@ RBTemporaryToInstanceVariableParametrizedTest >> addClassHierarchy [
 		classified: #(#accessing)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTemporaryToInstanceVariableParametrizedTest >> constructor [
 	^ #class:selector:variable:
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBTemporaryToInstanceVariableParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBTemporaryToInstanceVariableParametrizedTest >> testFailureHierarchyDefinesVarableNamedAsTemporary [
 
 	| class |
@@ -46,7 +48,7 @@ RBTemporaryToInstanceVariableParametrizedTest >> testFailureHierarchyDefinesVara
 				 'foo' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBTemporaryToInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -59,7 +61,7 @@ RBTemporaryToInstanceVariableParametrizedTest >> testFailureNonExistantName [
 				 'aSmalllintContext' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBTemporaryToInstanceVariableParametrizedTest >> testFailureRedefinedTemporary [
 
 	| class |
@@ -74,7 +76,7 @@ RBTemporaryToInstanceVariableParametrizedTest >> testFailureRedefinedTemporary [
 				 'instVarName1' })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTemporaryToInstanceVariableParametrizedTest >> testTemporaryToInstanceVariable [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -92,7 +94,7 @@ RBTemporaryToInstanceVariableParametrizedTest >> testTemporaryToInstanceVariable
 	self assert: (class directlyDefinesInstanceVariable: 'nameStream')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBTemporaryToInstanceVariableParametrizedTest >> testWhenHierarchyDefinesVariableNamedAsTemporary [
 	| class refactoring |
 	self addClassHierarchy.

@@ -1,32 +1,34 @@
 Class {
-	#name : #RBChoice,
-	#superclass : #Object,
+	#name : 'RBChoice',
+	#superclass : 'Object',
 	#instVars : [
 		'refactoring',
 		'driver'
 	],
-	#category : #'Refactoring-UI-Choices'
+	#category : 'Refactoring-UI-Choices',
+	#package : 'Refactoring-UI',
+	#tag : 'Choices'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBChoice >> driver [
 
 	^ driver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBChoice >> driver: aDriver [
 
 	driver := aDriver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBChoice >> refactoring [
 
 	^ refactoring
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBChoice >> refactoring: anObject [
 
 	refactoring := anObject

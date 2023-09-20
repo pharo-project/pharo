@@ -17,7 +17,7 @@ BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint 
 
 	self primDisplayString: aString from: startIndex to: stopIndex
 			map: font characterToGlyphMap xTable: xTable
-			kern: kernDelta.
+			kern: kernDelta * scale.
 	^ destX@destY
 ]
 
@@ -36,12 +36,6 @@ BitBlt >> cachedFontColormapFrom: sourceDepth to: destDepth [
 		at: destDepth
 		put: map.
 	^ map
-]
-
-{ #category : #'*Graphics-Fonts' }
-BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY font: aFont [
-	"Double dispatch into the font. This method is present so that other-than-bitblt entities can be used by CharacterScanner and friends to display text."
-	^ aFont displayString: aString on: self from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY
 ]
 
 { #category : #'*Graphics-Fonts' }
@@ -83,12 +77,6 @@ BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint strik
 BitBlt >> installFont: aFont foregroundColor: foregroundColor backgroundColor: backgroundColor [
 	"Double dispatch into the font. This method is present so that other-than-bitblt entities can be used by CharacterScanner and friends to display text."
 	^aFont installOn: self foregroundColor: foregroundColor backgroundColor: backgroundColor
-]
-
-{ #category : #'*Graphics-Fonts' }
-BitBlt >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor [
-
-	^ self installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: 1
 ]
 
 { #category : #'*Graphics-Fonts' }

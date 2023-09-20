@@ -2,19 +2,21 @@
 Checks for mathematical expressions that might be evaluated different (from left-to-right) than the developer thinks.
 "
 Class {
-	#name : #RePrecedenceRule,
-	#superclass : #ReNodeBasedRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'RePrecedenceRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePrecedenceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'PrecedenceRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RePrecedenceRule >> basicCheck: aNode [
 	| leftOperand |
 	aNode isMessage ifFalse: [ ^ false ].
@@ -25,12 +27,12 @@ RePrecedenceRule >> basicCheck: aNode [
 	^ #(#+ #-) includes: leftOperand selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePrecedenceRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePrecedenceRule >> name [
 	^ 'Inspect instances of "A + B * C" might be "A + (B * C)"'
 ]

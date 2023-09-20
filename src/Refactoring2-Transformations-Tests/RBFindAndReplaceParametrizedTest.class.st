@@ -1,28 +1,30 @@
 Class {
-	#name : #RBFindAndReplaceParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBFindAndReplaceParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBFindAndReplaceParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBFindAndReplaceTransformation };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBFindAndReplaceParametrizedTest >> constructor [
 	^ #find:of:inWholeHierarchy:
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBFindAndReplaceParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForExtractMethodTest
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBFindAndReplaceParametrizedTest >> testFailureBadSelector [
 	|class|
 	class := model classNamed: #MyClassA.
@@ -30,7 +32,7 @@ RBFindAndReplaceParametrizedTest >> testFailureBadSelector [
 		andArguments: { #unexitingMethod . class . true })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBFindAndReplaceParametrizedTest >> testFailureFindOcurrencesInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
@@ -47,7 +49,7 @@ RBFindAndReplaceParametrizedTest >> testFailureFindOcurrencesInHierarchy [
 	self shouldFail: refactoring
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 
 	| class refactoring |
@@ -97,7 +99,7 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 	^ nil')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 	| class refactoring |
 	class := model classNamed: #MyClassA.
@@ -138,7 +140,7 @@ RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 	^ nil')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBFindAndReplaceParametrizedTest >> testFindOcurrencesWithArgInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.

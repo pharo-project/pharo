@@ -1,6 +1,6 @@
-Extension { #name : #RGEnvironment }
+Extension { #name : 'RGEnvironment' }
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> adoptForBrowser [
 	| unresolved extensionsPackage |
 	extensionsPackage := self ensurePackageNamed: '*Extensions*'.
@@ -13,28 +13,26 @@ RGEnvironment >> adoptForBrowser [
 	unresolved do: [ :each | self removePackage: each ]
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> associationsDo: aBlock [
 
 	self bindings do: aBlock
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> at: aSymbol [
 
 	^ self ask behaviorNamed: aSymbol
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> at: aString ifAbsent: aBlockClosure [
-	| association |
-	association := self bindingOf: aString.
-	^ association
-		ifNotNil: [ association value ]
-		ifNil: aBlockClosure
+	^ (self bindingOf: aString)
+		ifNotNil: [:association | association value ]
+		ifNil: [ aBlockClosure value ]
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> bindings [
 
 	"TODO:"
@@ -48,13 +46,13 @@ RGEnvironment >> bindings [
 	^ dict
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> browse [
 
 	^self browseAs: self printString
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> browseAs: browserTitleString [
 
 	 | clyEnv clyNavEnv browser |
@@ -74,7 +72,7 @@ RGEnvironment >> browseAs: browserTitleString [
 	^ browser open
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> classNamed: aString [
 	| association |
 	association := self bindingOf: aString.
@@ -82,25 +80,25 @@ RGEnvironment >> classNamed: aString [
 		ifNil: [ self error: 'Class "', aString, '" not found' ]
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> classNames [
 
 	^ self allClasses collect: [ :each | each name ]
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> defineClass: aString withController: anObject [
 	^ self compileANewClassFrom: aString notifying: nil startingFrom: nil
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> nonClassNames [
 
 	"TODO:"
 	^ #()
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGEnvironment >> systemDictionary [
 	^ self
 ]

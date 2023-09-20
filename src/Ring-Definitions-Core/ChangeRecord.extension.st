@@ -1,6 +1,6 @@
-Extension { #name : #ChangeRecord }
+Extension { #name : 'ChangeRecord' }
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 ChangeRecord >> asRingDefinition [
 	"Retrieves a RGMethodDefinition object based on the data of the receiver"
 
@@ -11,7 +11,7 @@ ChangeRecord >> asRingDefinition [
 	^nil
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 ChangeRecord >> createCommentDefinition [
 	"Retrieves a RGCommentDefinition object based on the data of the receiver"
 
@@ -21,7 +21,7 @@ ChangeRecord >> createCommentDefinition [
 		yourself
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 ChangeRecord >> createMethodDefinition [
 	"Retrieves a RGMethodDefinition object based on the data of the receiver"
 

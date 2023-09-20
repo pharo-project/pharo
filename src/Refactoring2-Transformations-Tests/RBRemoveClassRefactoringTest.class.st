@@ -1,15 +1,17 @@
 Class {
-	#name : #RBRemoveClassRefactoringTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveClassRefactoringTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveClassRefactoringTest class >> defaultTimeLimit [
 	^20 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassRefactoringTest >> testCanRemoveAReferencedClassNotHavingReferenceInTheModel [
 
 	| refactoring package |
@@ -33,7 +35,7 @@ RBRemoveClassRefactoringTest >> testCanRemoveAReferencedClassNotHavingReferenceI
 		(refactoring model classNamed: #RBTransformationDummyRuleTest1) isNil
 ]
 
-{ #category : #'tests environment' }
+{ #category : 'tests environment' }
 RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere [
 
 	| refactoring package |
@@ -53,7 +55,7 @@ RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClassUsingLimitedEnviro
 		(refactoring model classNamed: #RBTransformationDummyRuleTest1) isNil
 ]
 
-{ #category : #'tests environment' }
+{ #category : 'tests environment' }
 RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClassWithFullEnvironment [
 
 	| refactoring |
@@ -70,7 +72,7 @@ RBRemoveClassRefactoringTest >> testCanRemoveUnreferencedClassWithFullEnvironmen
 	self assert: (refactoring model classNamed: 'RBUnusedRootClass' asSymbol) isNil
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveClassRefactoringTest >> testFailureRaisesRBRefactoringErrorWhenRemovingNonEmptySuperclass [
 
 	| class |
@@ -79,14 +81,14 @@ RBRemoveClassRefactoringTest >> testFailureRaisesRBRefactoringErrorWhenRemovingN
 		(RBRemoveClassRefactoring model: model classNames: { class })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveClassRefactoringTest >> testFailureRemoveClassWithBadNameRaisesRBRefactoringError [
 
 	self shouldFail:
 		(RBRemoveClassRefactoring model: model classNames: { #NonExistantClassName })
 ]
 
-{ #category : #'tests preconditions' }
+{ #category : 'tests preconditions' }
 RBRemoveClassRefactoringTest >> testPreconditionHasNoReferencesWithClassesWithReferencesBetweenThem [
 
 	| refact classes |
@@ -101,7 +103,7 @@ RBRemoveClassRefactoringTest >> testPreconditionHasNoReferencesWithClassesWithRe
 	self assert: (refact preconditionHasNoReferences: (refact model classNamed: #RBSharedPoolForTestData2)) check.
 ]
 
-{ #category : #'tests preconditions' }
+{ #category : 'tests preconditions' }
 RBRemoveClassRefactoringTest >> testPreconditionHasNoSymbolUseHandlesCorrectlyRemovedClasses [
 
 	| refact classes |
@@ -118,7 +120,7 @@ RBRemoveClassRefactoringTest >> testPreconditionHasNoSymbolUseHandlesCorrectlyRe
 	
 ]
 
-{ #category : #'tests preconditions' }
+{ #category : 'tests preconditions' }
 RBRemoveClassRefactoringTest >> testPreconditionHasNoSymbolUseShouldFail [
 
 	| refact classes |
@@ -135,7 +137,7 @@ RBRemoveClassRefactoringTest >> testPreconditionHasNoSymbolUseShouldFail [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassRefactoringTest >> testPreconditionNotEmptyClass [
 
 	| refactoring  package |
@@ -150,7 +152,7 @@ RBRemoveClassRefactoringTest >> testPreconditionNotEmptyClass [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassRefactoringTest >> testRemoveAClassAndTheirSubclass [
 
 	| aRefactoring package |
@@ -166,7 +168,7 @@ RBRemoveClassRefactoringTest >> testRemoveAClassAndTheirSubclass [
 	self deny: (model includesClassNamed: #RBSharedPoolForTestData1)
 ]
 
-{ #category : #'tests environment' }
+{ #category : 'tests environment' }
 RBRemoveClassRefactoringTest >> testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment [
 	"This test verifies that the preconditions do not escape the metamodel."
 
@@ -185,7 +187,7 @@ RBRemoveClassRefactoringTest >> testRemoveAClassAndTheirSubclass2UsingAlimitedEn
 	self deny: (model includesClassNamed: RBFooDummyLintRuleTest1 subclasses first name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassRefactoringTest >> testRemoveClassesWithReferencesBetweenThem [
 
 	| aRefactoring package |
@@ -202,7 +204,7 @@ RBRemoveClassRefactoringTest >> testRemoveClassesWithReferencesBetweenThem [
 	self deny: (model includesClassNamed: #RBSharedPoolForTestData2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassIsAllowed [
 
 	| refactoring  package sup |
@@ -226,7 +228,7 @@ RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassIsAllowed [
 		(refactoring model includesClassNamed: #MyClassNonEmptyLeafUnused) 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassReparent [
 
 	| refactoring  package class subclasses superRoot |
@@ -258,7 +260,7 @@ RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassReparent [
 		]
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveClassRefactoringTest >> testShouldWarnWhenRemovingClassWithReferences [
 
 	self shouldWarn: 

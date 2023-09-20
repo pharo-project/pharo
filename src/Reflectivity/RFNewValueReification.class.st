@@ -2,33 +2,35 @@
 reify newValue
 "
 Class {
-	#name : #RFNewValueReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFNewValueReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFNewValueReification class >> entities [
 	^{RBVariableNode. RBAssignmentNode}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFNewValueReification class >> key [
 	^#newValue
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFNewValueReification >> genForRBAssignmentNode [
 	^RBVariableNode named: #RFNewValueReificationVar
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFNewValueReification >> genForRBVariableNode [
 	"same as #value for variableNodes"
 	^RBVariableNode named: #RFNewValueReificationVar
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFNewValueReification >> preambleForAssignment: aNode [
 	"balance stack for instead"
 
@@ -37,7 +39,7 @@ RFNewValueReification >> preambleForAssignment: aNode [
 		ifFalse: [ RFStoreIntoTempNode named: #RFNewValueReificationVar ]
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFNewValueReification >> preambleForVariable: aNode [
 	"balance stack for instead"
 

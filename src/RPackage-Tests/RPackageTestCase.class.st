@@ -2,34 +2,35 @@
 Common superclass for RPackage related tests
 "
 Class {
-	#name : #RPackageTestCase,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'RPackageTestCase',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'createdClasses',
 		'createdPackages',
 		'testEnvironment'
 	],
-	#category : #'RPackage-Tests'
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTestCase >> allWorkingCopies [
 
 	^ MCWorkingCopy allWorkingCopies
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageTestCase >> createMockTestPackages [
 
 	^ self namesOfMockTestPackages collect: [:pName | self createNewPackageNamed: pName]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageTestCase >> createNewClassNamed: aName [
 	^ self createNewClassNamed: aName inCategory: 'RPackageTest'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 
 	| cls |
@@ -44,7 +45,7 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 	^ cls
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 
 	| cls |
@@ -53,7 +54,7 @@ RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 	^ cls
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageTestCase >> createNewPackageNamed: aName [
 
 	| pack |
@@ -62,12 +63,12 @@ RPackageTestCase >> createNewPackageNamed: aName [
 	^ pack
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageTestCase >> createNewTraitNamed: aName [
 	^ self createNewTraitNamed: aName inCategory: 'RPackageTest'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 
 	| cls |
@@ -83,7 +84,7 @@ RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 	^ cls
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 
 	| cls |
@@ -92,25 +93,25 @@ RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 	^ cls
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RPackageTestCase >> namesOfMockTestPackages [
 
-	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package')
+	^ #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageTestCase >> organizer [
 
 	^ testEnvironment organization
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> removePackage: aName [
+{ #category : 'utilities' }
+RPackageTestCase >> removePackage: aPackage [
 
-	self organizer basicUnregisterPackageNamed: aName
+	self organizer basicUnregisterPackage: aPackage
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageTestCase >> runCase [
 
 	testEnvironment := self class environment class new.
@@ -123,7 +124,7 @@ RPackageTestCase >> runCase [
 		self cleanUpInstanceVariables ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageTestCase >> setUp [
 
 	super setUp.
@@ -131,7 +132,7 @@ RPackageTestCase >> setUp [
 	createdPackages := Set new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageTestCase >> tearDown [
 
 	createdClasses do: [ :cls | cls removeFromSystem ].

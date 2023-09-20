@@ -2,8 +2,8 @@
 SUnit tests for RPackage
 "
 Class {
-	#name : #RPackageCompleteSetupButForModificationTest,
-	#superclass : #RPackageIncrementalTest,
+	#name : 'RPackageCompleteSetupButForModificationTest',
+	#superclass : 'RPackageIncrementalTest',
 	#instVars : [
 		'p1',
 		'p2',
@@ -14,10 +14,11 @@ Class {
 		'a3',
 		'b2'
 	],
-	#category : #'RPackage-Tests'
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageCompleteSetupButForModificationTest >> setUp [
 
 	super setUp.
@@ -41,7 +42,7 @@ RPackageCompleteSetupButForModificationTest >> setUp [
 	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , p3 name
 ]
 
-{ #category : #'test - addition' }
+{ #category : 'test - addition' }
 RPackageCompleteSetupButForModificationTest >> testAddMethod [
 
 	self assert: (p1 includesSelector: #methodDefinedInP1 ofClass: a1).
@@ -53,7 +54,7 @@ RPackageCompleteSetupButForModificationTest >> testAddMethod [
 	self assert: (p3 includesSelector: #classSideMethodDefinedInP3 ofClass: a2 class)
 ]
 
-{ #category : #'test - addition' }
+{ #category : 'test - addition' }
 RPackageCompleteSetupButForModificationTest >> testBasicRemoveClass [
 	"we remove a class we check that it is not in the package anymore"
 
@@ -74,7 +75,7 @@ RPackageCompleteSetupButForModificationTest >> testBasicRemoveClass [
 	self deny: (p1 includesClass: b1 class)
 ]
 
-{ #category : #'test - starting situation' }
+{ #category : 'test - starting situation' }
 RPackageCompleteSetupButForModificationTest >> testExtensionMethodOfClass [
 	"P1
 		A1DefinedInP1>>methodDefinedInP1
@@ -103,14 +104,14 @@ RPackageCompleteSetupButForModificationTest >> testExtensionMethodOfClass [
 	self assert: (p3 extensionMethodsForClass: a2) size equals: 1
 ]
 
-{ #category : #'test - addition' }
+{ #category : 'test - addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveMethod [
 
 	p1 removeMethod: a1 >> #methodDefinedInP1.
 	self deny: (p1 includesSelector: #methodDefinedInP1 ofClass: a1)
 ]
 
-{ #category : #'test - addition' }
+{ #category : 'test - addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveMethodDoesNotRemoveFromClass [
 	"we remove a method so it is not in the package but also not from the class anymore"
 
@@ -119,13 +120,13 @@ RPackageCompleteSetupButForModificationTest >> testRemoveMethodDoesNotRemoveFrom
 	self assert: (a1 selectors includes: #methodDefinedInP1)
 ]
 
-{ #category : #'test - addition' }
+{ #category : 'test - addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveShouldRaiseErrorWhenMethodIsNotInPackage [
 
 	self should: [ p2 removeMethod: a2>>#methodDefinedZork ] raise: Error
 ]
 
-{ #category : #'test - starting situation' }
+{ #category : 'test - starting situation' }
 RPackageCompleteSetupButForModificationTest >> testStartingSituation [
 
 	self deny: (p2 includesClass: b1).

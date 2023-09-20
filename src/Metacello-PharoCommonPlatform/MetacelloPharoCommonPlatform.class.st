@@ -2,34 +2,35 @@
 MetacelloPharoPlatform contains all Pharo specific code to load Metacello.
 "
 Class {
-	#name : #MetacelloPharoCommonPlatform,
-	#superclass : #MetacelloPlatform,
-	#category : #'Metacello-PharoCommonPlatform'
+	#name : 'MetacelloPharoCommonPlatform',
+	#superclass : 'MetacelloPlatform',
+	#category : 'Metacello-PharoCommonPlatform',
+	#package : 'Metacello-PharoCommonPlatform'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MetacelloPharoCommonPlatform class >> initialize [
   self select
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPharoCommonPlatform >> authorName [
 	^ Author fullName
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPharoCommonPlatform >> authorName: aString [
 
 	Author fullName: aString
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> closeZipArchive: anArchive [
 	
 	anArchive close
 ]
 
-{ #category : #notification }
+{ #category : 'notification' }
 MetacelloPharoCommonPlatform >> collection: aCollection do: aBlock displaying: aString [
 
 	self bypassProgressBars ifTrue: [ ^super collection: aCollection do: aBlock displaying: aString ].
@@ -38,12 +39,12 @@ MetacelloPharoCommonPlatform >> collection: aCollection do: aBlock displaying: a
 		displayingProgress: aString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPharoCommonPlatform >> compiler [
 	^ self class compiler
 ]
 
-{ #category : #reflection }
+{ #category : 'reflection' }
 MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName [
 
 	| copysName class newDefinition |
@@ -52,7 +53,7 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 	(Smalltalk globals includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
 	newDefinition := oldClass definition copyReplaceAll: '#' , oldClass name asString with: '#' , copysName asString printString.
 	newDefinition := newDefinition
-		                 copyReplaceAll: 'category: ' , (self packageOrganizer categoryOfBehavior: oldClass) asString printString
+		                 copyReplaceAll: 'category: ' , oldClass category asString printString
 		                 with: 'category: ' , newCategoryName printString.
 	class := self compiler
 		         logged: true;
@@ -64,7 +65,7 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 	^ class
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPharoCommonPlatform >> createFiletreeRepository: aRepositorySpec [
 	MCRepository 
 		findFiletreeAlternateFormat: aRepositorySpec
@@ -74,7 +75,7 @@ MetacelloPharoCommonPlatform >> createFiletreeRepository: aRepositorySpec [
 	^ super createFiletreeRepository: aRepositorySpec
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPharoCommonPlatform >> createFtpRepository: aRepositorySpec [
  	| description headerSize index host directory |
 	
@@ -91,14 +92,14 @@ MetacelloPharoCommonPlatform >> createFtpRepository: aRepositorySpec [
 		password: aRepositorySpec password
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPharoCommonPlatform >> defaultDirectory [
 	"Get the image default directory"
 	
 	^FileLocator imageDirectory asFileReference
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 	| attributes versionString |
 	((Smalltalk respondsTo: #image) and: [ Smalltalk image respondsTo: #metacelloPlatformAttributes ])
@@ -126,23 +127,23 @@ MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 	^ attributes
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloPharoCommonPlatform >> defaultRepositoryDescription [
   ^ 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main'
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPharoCommonPlatform >> deleteFileNamed: filePath [
 	filePath asFileReference delete
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPharoCommonPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirectoryPath [
 	"Get a handle on the following path: anotherDirectoryPath/adirectoryPath"
 	^ anotherDirectoryPath resolveString: adirectoryPath
 ]
 
-{ #category : #notification }
+{ #category : 'notification' }
 MetacelloPharoCommonPlatform >> do: aBlock displaying: aString [
 
     self bypassProgressBars ifTrue: [ ^ super do: aBlock displaying: aString ].
@@ -155,7 +156,7 @@ MetacelloPharoCommonPlatform >> do: aBlock displaying: aString [
             bar value: 2 ]
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> downloadJSON: url username: username pass: pass [
   "return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
 
@@ -169,7 +170,7 @@ MetacelloPharoCommonPlatform >> downloadJSON: url username: username pass: pass 
   ^ STON fromString: json
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> downloadZipArchive: url to: outputFileName [
 	"download zip archive from <url> into <outputFileName>"
 
@@ -188,14 +189,14 @@ MetacelloPharoCommonPlatform >> downloadZipArchive: url to: outputFileName [
 	^ ZipArchive new readFrom: outputFileName asFileReference
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPharoCommonPlatform >> ensureDirectoryExists: aDirectoryHandle [
 	"Ensure the directory exists."
 
 	^ aDirectoryHandle ensureCreateDirectory ; yourself
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
     "unzip <zipFile> into <directory>"
 	ZipArchive new 
@@ -204,70 +205,70 @@ MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
 	zipFile asFileReference delete.
 ]
 
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> fileDirectoryClass [
 	^FileSystem
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPharoCommonPlatform >> fileHandleOn: aPath [
 	"Get an handle on a file."
 
 	^ aPath asFileReference
 ]
 
-{ #category : #monticello }
+{ #category : 'monticello' }
 MetacelloPharoCommonPlatform >> newVersionForWorkingCopy: aWorkingCopy [
 	^aWorkingCopy newVersionIn: aWorkingCopy repositoryGroup
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPharoCommonPlatform >> parentDirectoryOf: aFileHandler [
 	"Get the parent directory of this file."
 	
 	^ aFileHandler parent
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPharoCommonPlatform >> recursiveDelete: aDirectory [
 	"delete this directory and all children of it"
 
 	^  aDirectory deleteAll
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPharoCommonPlatform >> registerPackageNamed: packageName [
   "PackageInfo deprecated in Pharo3.0"
 
   ^RPackageSet named: packageName
 ]
 
-{ #category : #system }
+{ #category : 'system' }
 MetacelloPharoCommonPlatform >> selectorForPragma: aPragma [
 	^ aPragma methodSelector
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPharoCommonPlatform >> string: aString includesSubstring: aSubstring [
 	"abstract String>>includesSubstring: to have the same message on all supported platforms."
 
 	^aString includesSubstring: aSubstring
 ]
 
-{ #category : #system }
+{ #category : 'system' }
 MetacelloPharoCommonPlatform >> suspendSystemUpdateEventsDuring: aBlock [
 	"Wraps call to the system evetn manager to tell it that we want to suspend events during execution of aBlock"
 	SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
 ]
 
-{ #category : #'file system' }
+{ #category : 'file system' }
 MetacelloPharoCommonPlatform >> tempFileFor: aName suffix: aSuffixString [
 	^ (FileLocator temp asFileReference
 		/ (FileReference newTempFilePrefix: aName suffix: aSuffixString) basename)
 		fullName
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPharoCommonPlatform >> timestamp [
 
 	^Date today mmddyyyy, ' ',

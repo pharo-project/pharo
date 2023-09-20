@@ -18,10 +18,7 @@ RBNamespaceTest >> testAllClassesDo [
 	| model classes |
 	classes := 0.
 	model := modelFactory rbNamespace new.
-	model allClassesDo:
-			[:each |
-			each name = #Object ifTrue: [each allSubclasses].
-			classes := classes + 1].
+	model allClassesDo: [:each | classes := classes + 1].
 	RBBrowserEnvironment new classesDo: [:each | classes := classes - 1].
 	self assert: classes equals: 0
 ]

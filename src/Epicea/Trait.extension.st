@@ -1,6 +1,6 @@
-Extension { #name : #Trait }
+Extension { #name : 'Trait' }
 
-{ #category : #'*Epicea-Ring' }
+{ #category : '*Epicea-Ring' }
 Trait >> asEpiceaRingDefinition [
 
 	^ self asRingDefinition

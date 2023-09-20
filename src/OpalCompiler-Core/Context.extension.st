@@ -1,6 +1,6 @@
-Extension { #name : #Context }
+Extension { #name : 'Context' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> astScope [
 	"Return the scope of the method or the block of this context.
 	Note: if the compiler would not model scopes for optimized blocks, this would just just be the
@@ -18,7 +18,7 @@ Context >> astScope [
 		ifFalse: [node methodOrBlockNode scope ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> compiler [
 	"Return a compiler set up to parse/compile/evaluate scripts on the current context.
 	The compiler is also setup according to the class of the receiver"
@@ -26,7 +26,7 @@ Context >> compiler [
 	^ self receiver class compiler context: self
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> executedPC [
 	"Deeper in the stack the pc was already advanced one bytecode, so we need to go back
 	this one bytecode, which can consist of multiple bytes. But on IR, we record the *last*
@@ -39,32 +39,32 @@ Context >> executedPC [
 	^self isDead ifTrue: [ self endPC - 1] ifFalse: [ pc - 1]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> isBlockReturn: aPC [
 	^method encoderClass isBlockReturnAt: aPC in: method
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> isPushLiteralNil: aPC [
 	^ (self compiledCode at: aPC) = method encoderClass pushNilByte
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> isPushTemp: aPC [
 	^ self compiledCode encoderClass isPushTempAt: aPC in: method
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> isReturnAt: aPC [
 	^method encoderClass isReturnAt: aPC in: method
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> lookupVar: aSymbol [
 	^ self astScope lookupVar: aSymbol
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> sourceNode [
 	"Return the source node that created the method or the block of this context"
 
@@ -73,7 +73,7 @@ Context >> sourceNode [
 		ifNotNil: [ closureOrNil sourceNode ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Context >> sourceNodeExecuted [
 	"When down in the stack, I return the node that executed"
 	^ method sourceNodeForPC: self executedPC

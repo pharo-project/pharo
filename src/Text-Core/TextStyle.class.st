@@ -599,6 +599,12 @@ TextStyle allInstancesDo: [:ts | ts newFontArray: TextStyle default fontArray].
 
 { #category : #'tabs and margins' }
 TextStyle >> nextTabXFrom: anX leftMargin: leftMargin rightMargin: rightMargin [
+
+	^ self nextTabXFrom: anX leftMargin: leftMargin rightMargin: rightMargin scale: 1
+]
+
+{ #category : #'tabs and margins' }
+TextStyle >> nextTabXFrom: anX leftMargin: leftMargin rightMargin: rightMargin scale: scale [
 	"Tab stops are distances from the left margin. Set the distance into the
 	argument, anX, normalized for the paragraph's left margin."
 	| normalizedX tabX |
@@ -607,7 +613,7 @@ TextStyle >> nextTabXFrom: anX leftMargin: leftMargin rightMargin: rightMargin [
 		to: tabsArray size
 		do:
 			[ :i |
-			(tabX := tabsArray at: i) > normalizedX ifTrue: [ ^ leftMargin + tabX min: rightMargin ] ].
+			(tabX := (tabsArray at: i) * scale) > normalizedX ifTrue: [ ^ leftMargin + tabX min: rightMargin ] ].
 	^ rightMargin
 ]
 

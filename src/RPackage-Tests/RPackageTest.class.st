@@ -2,12 +2,13 @@
 SUnit tests for RPackage 
 "
 Class {
-	#name : #RPackageTest,
-	#superclass : #RPackageTestCase,
-	#category : #'RPackage-Tests'
+	#name : 'RPackageTest',
+	#superclass : 'RPackageTestCase',
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageTest >> tearDown [
 
 	#(TestClass TestClassOther)
@@ -16,7 +17,7 @@ RPackageTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTest >> testActualClassTags [
 
 	| packageWithoutClassTags packageWithClassTags |
@@ -28,7 +29,7 @@ RPackageTest >> testActualClassTags [
 	self assert: packageWithClassTags actualClassTags equals: packageWithClassTags classTags
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTest >> testAddClass [
 
 	| package1 package2 class done |
@@ -53,7 +54,7 @@ RPackageTest >> testAddClass [
 	self assert: ((package2 classTagNamed: #Test2) includesClass: class)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTest >> testAddClassFromTag [
 
 	| package1 package2 class |
@@ -72,7 +73,7 @@ RPackageTest >> testAddClassFromTag [
 	self assert: ((package2 classTagNamed: #Test2) includesClass: class)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTest >> testAllUnsentMessages [
 
 	| package class1 class2 |
@@ -97,7 +98,7 @@ RPackageTest >> testAllUnsentMessages [
 		equals: (#( 'nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4' ) collect: [ :each | each asSymbol ]) asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTest >> testAnonymousClassAndSelector [
 	"jgeidel test case from issue 12628."
 
@@ -113,7 +114,7 @@ RPackageTest >> testAnonymousClassAndSelector [
 	ghost classify: #rpackagetest under: '*rpackagetest'
 ]
 
-{ #category : #'tests - demotion' }
+{ #category : 'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamed [
 
 	| package1 package2 class |
@@ -130,7 +131,7 @@ RPackageTest >> testDemoteToRPackageNamed [
 	self assert: ((package2 classTagNamed: 'TAG1') classes includes: class)
 ]
 
-{ #category : #'tests - demotion' }
+{ #category : 'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 
 	| package1 package2 packageExisting class |
@@ -149,7 +150,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 	self assert: ((package2 classTagNamed: 'TAG1') classes includes: class)
 ]
 
-{ #category : #'tests - demotion' }
+{ #category : 'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 
 	| newOrganizer package renamedPackage |
@@ -162,7 +163,7 @@ RPackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 	self assert: renamedPackage organizer identicalTo: newOrganizer
 ]
 
-{ #category : #'tests - demotion' }
+{ #category : 'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 
 	| package1 package2 class |
@@ -179,7 +180,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 	self assert: ((package2 classTagNamed: 'X1') classes includes: class)
 ]
 
-{ #category : #'tests - demotion' }
+{ #category : 'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamedWithExtension [
 
 	| packageOriginal packageDemoted class classOther |
@@ -204,7 +205,7 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 				 classOther })
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 RPackageTest >> testHasProperty [
 	| package testValue |
 
@@ -218,7 +219,7 @@ RPackageTest >> testHasProperty [
 	self deny: (package hasProperty: #testKeySelector)
 ]
 
-{ #category : #'tests - queries' }
+{ #category : 'tests - queries' }
 RPackageTest >> testHierarchyRoots [
 
 	| roots |
@@ -227,7 +228,7 @@ RPackageTest >> testHierarchyRoots [
 	#( RPackageTestCase ) do: [ :each | roots includes: each ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTest >> testIsTestPackage [
 
 	|packages |
@@ -235,7 +236,7 @@ RPackageTest >> testIsTestPackage [
 	"Happy case: test package 'MockPackage-Tests' must contain -Tests suffix."
 	self assert: packages first isTestPackage equals: true.
 
-	"Package 'MockPackage-tests' is not test package, since it has lowercase suffix."
+	"Package 'MockPackage2-tests' is not test package, since it has lowercase suffix."
 	self assert: packages second isTestPackage  equals: false.
 
 	"Happy case: regular package 'MockPackage' without -Tests suffix is not a test package."
@@ -247,7 +248,7 @@ RPackageTest >> testIsTestPackage [
 	"cleanup of inst.vars should be done in tearDown"
 ]
 
-{ #category : #'tests - MC' }
+{ #category : 'tests - MC' }
 RPackageTest >> testMcPackage [
 
 	| rPackage |
@@ -255,7 +256,7 @@ RPackageTest >> testMcPackage [
 	self assert: rPackage mcPackage equals: (MCPackage new name: #Test1)
 ]
 
-{ #category : #'tests - MC' }
+{ #category : 'tests - MC' }
 RPackageTest >> testMcWorkingCopy [
 
 	| rPackage |
@@ -263,7 +264,7 @@ RPackageTest >> testMcWorkingCopy [
 	self assert: rPackage mcWorkingCopy identicalTo: (MCWorkingCopy forPackageNamed: #Test1)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 RPackageTest >> testPropertyAtPut [
 
 	| testValue package |
@@ -280,7 +281,7 @@ RPackageTest >> testPropertyAtPut [
 	self assert: package properties isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTest >> testRemoveEmptyTags [
 
 	| package class tag1 tag2 |
@@ -302,4 +303,41 @@ RPackageTest >> testRemoveEmptyTags [
 
 	self assert: (package includesClassTagNamed: #Tag1).
 	self deny: (package includesClassTagNamed: #Tag2)
+]
+
+{ #category : 'tests' }
+RPackageTest >> testRenamePackageAlsoRenameAllExtensionProtocols [
+	"test that when we rename a category, all corresponding extension protocols in the system are renamed"
+
+	| p1 p2 p3 classInY classInZ |
+	p1 := self createNewPackageNamed: #Test1.
+	p2 := self createNewPackageNamed: #Test2.
+	p3 := self createNewPackageNamed: #Test3.
+
+	classInY := self createNewClassNamed: 'ClassInYPackage' inPackage: p2.
+	classInZ := self createNewClassNamed: 'ClassInZPackage' inPackage: p3.
+
+	classInY compile: #extensionFromXInClassInY classified: '*' , p1 name.
+	classInY compile: #longNameExtensionFromXInClassInY classified: '*' , p1 name , '-subcategory'.
+	classInZ compile: #extensionFromXInClassInZ classified: '*' , p1 name.
+
+	p1 renameTo: #NewPackageName.
+
+	self assert: p1 name equals: #NewPackageName.
+	self assert: (classInY >> #extensionFromXInClassInY) protocolName equals: '*' , p1 name.
+	self assert: (classInY >> #longNameExtensionFromXInClassInY) protocolName equals: '*' , p1 name , '-subcategory'.
+	self assert: (classInZ >> #extensionFromXInClassInZ) protocolName equals: '*' , p1 name
+]
+
+{ #category : 'tests' }
+RPackageTest >> testRenameUpdateTheOrganizer [
+	"test that when we rename a category, the organizer dictionary is update with this new name, so that we can access the package with this new name as key"
+
+	| package |
+	package := self createNewPackageNamed: #Test1.
+
+	package renameTo: #Test2.
+	self assert: package name equals: #Test2.
+	self assert: (self organizer packageNamed: #Test2) identicalTo: package.
+	self deny: (self organizer hasPackage: #Test1)
 ]

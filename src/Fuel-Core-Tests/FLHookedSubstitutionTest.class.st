@@ -2,12 +2,14 @@
 SUnit tests for hooked serialization using fuel
 "
 Class {
-	#name : #FLHookedSubstitutionTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLHookedSubstitutionTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testAvoidRecursion [
 	| result original | 
 	original := FLClassWithRecursiveSubstitution new index: 1.
@@ -20,7 +22,7 @@ FLHookedSubstitutionTest >> testAvoidRecursion [
 	self assert: result index equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testClassWithCachedValueByNil [
 
 	| aClassWithCachedValue result original |
@@ -47,7 +49,7 @@ FLHookedSubstitutionTest >> testClassWithCachedValueByNil [
 	self assert: result cache isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testObjectByProxyThatBecomesItsContent [
 	"Tests a substitution of an object by a proxy that becomes another object on materialization."
 
@@ -66,7 +68,7 @@ FLHookedSubstitutionTest >> testObjectByProxyThatBecomesItsContent [
 	self assert: 5 @ 1 equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testProxyByTarget [
 
 	| aProxyClass result original |
@@ -88,7 +90,7 @@ FLHookedSubstitutionTest >> testProxyByTarget [
 	self assert: 5 equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
 
 	| aProxyClass result pair original |
@@ -116,7 +118,7 @@ FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
 	self assert: result right equals: 'foo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testProxyByTargetInsideObjectAndAnalisysIsPropagated [
 
 	| aProxyClass result original pair pairRoot |
@@ -148,7 +150,7 @@ FLHookedSubstitutionTest >> testProxyByTargetInsideObjectAndAnalisysIsPropagated
 	self assert: result right isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testProxyInsideObjectByTarget [
 
 	| aProxyClass result original pair |
@@ -175,7 +177,7 @@ FLHookedSubstitutionTest >> testProxyInsideObjectByTarget [
 	self assert: result right equals: 'foo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testSpecialObjectsArray [
 	| result |
 	result := self resultOfSerializeAndMaterialize: Smalltalk specialObjectsArray.
@@ -183,7 +185,7 @@ FLHookedSubstitutionTest >> testSpecialObjectsArray [
 	self assert: result isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testSubstituteByItself [
 	| aRecursiveClass result | 
 	aRecursiveClass := self classFactory silentlyNewClass .
@@ -203,7 +205,7 @@ FLHookedSubstitutionTest >> testSubstituteByItself [
 	self assert: result class identicalTo: aRecursiveClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testTransientByNil [
 	| result aClassOfTransientObjects | 
 	aClassOfTransientObjects := self classFactory silentlyNewClass.

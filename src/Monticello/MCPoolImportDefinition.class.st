@@ -2,22 +2,24 @@
 A MCPoolImportDefinition represents a pool definition.
 "
 Class {
-	#name : #MCPoolImportDefinition,
-	#superclass : #MCVariableDefinition,
-	#category : #'Monticello-Modeling'
+	#name : 'MCPoolImportDefinition',
+	#superclass : 'MCVariableDefinition',
+	#category : 'Monticello-Modeling',
+	#package : 'Monticello',
+	#tag : 'Modeling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPoolImportDefinition class >> type [
 	^ #pool
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPoolImportDefinition >> isOrderDependend [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPoolImportDefinition >> isPoolImport [
 	^ true
 ]

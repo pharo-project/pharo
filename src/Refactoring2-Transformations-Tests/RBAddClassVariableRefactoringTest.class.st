@@ -1,17 +1,19 @@
 Class {
-	#name : #RBAddClassVariableRefactoringTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddClassVariableRefactoringTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddClassVariableRefactoringTest >> setUp [
 
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddClassVariableRefactoringTest >> testFailureAlreadyExistingName [
 
 	self shouldFail: (RBAddClassVariableRefactoring
@@ -22,7 +24,7 @@ RBAddClassVariableRefactoringTest >> testFailureAlreadyExistingName [
 				 class: #RBTransformationRuleTestData )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddClassVariableRefactoringTest >> testFailureModelAlreadyExistingName [
 
 	self shouldFail: (RBAddClassVariableRefactoring

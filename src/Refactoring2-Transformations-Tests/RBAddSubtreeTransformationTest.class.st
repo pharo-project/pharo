@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddSubtreeTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddSubtreeTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddSubtreeTransformationTest >> testMethodDoesNotExist [
 	
 	self shouldFail: (RBAddSubtreeTransformation
@@ -14,7 +16,7 @@ RBAddSubtreeTransformationTest >> testMethodDoesNotExist [
 		in: self changeMockClass name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddSubtreeTransformationTest >> testParseFailure [
 
 	self shouldFail: (RBAddSubtreeTransformation
@@ -24,7 +26,7 @@ RBAddSubtreeTransformationTest >> testParseFailure [
 		in: self changeMockClass name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddSubtreeTransformationTest >> testRefactoring [
 
 	self
@@ -40,7 +42,7 @@ RBAddSubtreeTransformationTest >> testRefactoring [
 				 in: #RBRemoveMethodTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddSubtreeTransformationTest >> testTransform [
 
 	| transformation class |
