@@ -200,10 +200,11 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 		             ifTrue: [ 'package: ' , '_UnpackagedPackage' printString ]
 		             ifFalse: [ 'package: ' , 'Unclassified' printString ].
 
-	classRemoved definitionSource: (classRemoved definitionSource copyReplaceAll: toReplace with: 'package: ' , aClassRemovedAnnouncement categoryName printString).
+	classRemoved definitionSource:
+		(classRemoved definitionSource copyReplaceAll: toReplace with: 'package: ' , aClassRemovedAnnouncement packageTag categoryName printString).
 
 	classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
-	classRemoved category: aClassRemovedAnnouncement categoryName.
+	classRemoved category: aClassRemovedAnnouncement packageTag categoryName.
 	classRemoved package: aClassRemovedAnnouncement packageAffected name.
 
 	aClassRemovedAnnouncement classRemoved methods , aClassRemovedAnnouncement classRemoved classSide methods do: [ :each |

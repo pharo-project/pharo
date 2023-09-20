@@ -8,7 +8,8 @@ Class {
 		'metaClass',
 		'comment',
 		'category',
-		'package'
+		'package',
+		'packageTag'
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',
@@ -17,9 +18,15 @@ Class {
 
 { #category : 'accessing' }
 RGTraitDefinition >> category [
-	"Retrieves the tag-package associated to the receiver"
+	"retrieves a tag for its package"
 
-	^category
+	^ category ifNil: [
+		  (self packageTag isNotNil and: [ self package isNotNil ])
+			  ifFalse: [ nil ]
+			  ifTrue: [
+				  self packageTag = self package
+					  ifTrue: [ self package ]
+					  ifFalse: [ self package , '-' , self packageTag ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -119,6 +126,18 @@ RGTraitDefinition >> package: aRGPackage [
 	"Sets the package in which this trait is contained"
 
 	package:= aRGPackage
+]
+
+{ #category : 'accessing' }
+RGTraitDefinition >> packageTag [
+
+	^ packageTag
+]
+
+{ #category : 'accessing' }
+RGTraitDefinition >> packageTag: anObject [
+
+	packageTag := anObject
 ]
 
 { #category : 'accessing' }

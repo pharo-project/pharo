@@ -6,9 +6,8 @@ Class {
 	#name : 'ClassRemoved',
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
-		'categoryName',
 		'classRemoved',
-		'affectedPackage'
+		'packageTag'
 	],
 	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',
@@ -16,24 +15,19 @@ Class {
 }
 
 { #category : 'instance creation' }
-ClassRemoved class >> class: aClass category: aCategoryName [
-	^self new
-			classRemoved: aClass;
-			categoryName: aCategoryName;
-			yourself
-]
+ClassRemoved class >> class: aClass [
 
-{ #category : 'instance creation' }
-ClassRemoved class >> class: aClass package: aPackage category: aCategoryName [
-
-	^ (self class: aClass category: aCategoryName)
-		  affectedPackage: aPackage;
+	^ self new
+		  classRemoved: aClass;
 		  yourself
 ]
 
-{ #category : 'accessing' }
-ClassRemoved >> affectedPackage: aPackage [
-	affectedPackage := aPackage
+{ #category : 'instance creation' }
+ClassRemoved class >> class: aClass packageTag: aPackageTag [
+
+	^ (self class: aClass)
+		  packageTag: aPackageTag;
+		  yourself
 ]
 
 { #category : 'testing' }
@@ -56,25 +50,13 @@ ClassRemoved >> affectsMethodsDefinedInClass: aClass [
 { #category : 'testing' }
 ClassRemoved >> affectsMethodsDefinedInPackage: aPackage [
 
-	^affectedPackage == aPackage
+	^ self packageAffected == aPackage
 ]
 
 { #category : 'testing' }
 ClassRemoved >> affectsMethodsInProtocol: protocol [
 
 	^ classRemoved protocolNames includes: protocol
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> categoryName [
-
-	^ categoryName
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> categoryName: anObject [
-
-	categoryName := anObject
 ]
 
 { #category : 'accessing' }
@@ -92,21 +74,23 @@ ClassRemoved >> classRemoved [
 ClassRemoved >> classRemoved: aClass [
 
 	classRemoved := aClass.
-	affectedPackage := aClass package
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> classTagAffected [
-	^affectedPackage toTagName: categoryName
+	packageTag := aClass packageTag
 ]
 
 { #category : 'accessing' }
 ClassRemoved >> packageAffected [
-	^affectedPackage
+
+	^ self packageTag package
 ]
 
 { #category : 'accessing' }
-ClassRemoved >> packageAffected: aPackage [
+ClassRemoved >> packageTag [
 
-	affectedPackage := aPackage
+	^ packageTag
+]
+
+{ #category : 'accessing' }
+ClassRemoved >> packageTag: anObject [
+
+	packageTag := anObject
 ]

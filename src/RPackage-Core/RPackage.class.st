@@ -891,7 +891,10 @@ RPackage >> tagOf: aClass [
 
 	^ self classTags
 		  detect: [ :tag | tag hasClass: aClass ]
-		  ifNone: [ nil ]
+		  ifNone: [
+			  self isDefault
+				  ifTrue: [ self rootTag ]
+				  ifFalse: [ nil ] ]
 ]
 
 { #category : 'private' }

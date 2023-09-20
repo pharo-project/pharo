@@ -10,6 +10,7 @@ Class {
 		'classVariables',
 		'category',
 		'package',
+		'packageTag',
 		'sharedPools'
 	],
 	#category : 'Ring-Definitions-Core-Base',
@@ -115,7 +116,13 @@ RGClassDefinition >> allSharedPools [
 RGClassDefinition >> category [
 	"retrieves a tag for its package"
 
-	^category
+	^ category ifNil: [
+		  (self packageTag isNotNil and: [ self package isNotNil ])
+			  ifFalse: [ nil ]
+			  ifTrue: [
+				  self packageTag = self package
+					  ifTrue: [ self package ]
+					  ifFalse: [ self package , '-' , self packageTag ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -266,6 +273,18 @@ RGClassDefinition >> package: aRGPackage [
 	"Sets the package in which this class is contained"
 
 	package:= aRGPackage
+]
+
+{ #category : 'accessing' }
+RGClassDefinition >> packageTag [
+
+	^ packageTag
+]
+
+{ #category : 'accessing' }
+RGClassDefinition >> packageTag: anObject [
+
+	packageTag := anObject
 ]
 
 { #category : 'class variables' }

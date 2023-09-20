@@ -95,8 +95,7 @@ MCWorkingCopy class >> classMoved: anEvent [
 MCWorkingCopy class >> classRemoved: anEvent [
 	"Informs the registry who use to keep this class that its changed. Unlike #classModified:, class is not anymore in RPackages so it will not be found, that's why we look for system category instead if class is included or not"
 
-	(self packageOrganizer packageMatchingExtensionName: anEvent categoryName) ifNotNil: [ :package |
-		package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ].
+	anEvent packageAffected ifNotNil: [ :package | package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ].
 
 	anEvent classAffected protocolNames , anEvent classAffected classSide protocolNames do: [ :aProtocolName |
 		(aProtocolName beginsWith: '*') ifTrue: [
