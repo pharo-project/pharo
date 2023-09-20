@@ -1,7 +1,7 @@
 "
 I am a refactoring for removing classes. 
 
-My precondition verifies that the class name exists in this namespace and the class has no references (direct references or symbols representing the class).
+My precondition verifies that the class name exists in this namespace and the class has no references (direct references only! pay attention we don't check for symbols representing the class!!!).
 
 If this class is ""empty"" (has no methods and no variables), any subclass is reparented to the superclass of this class. It is not allowed to remove non-empty classes when it has subclasses.
 "
@@ -131,13 +131,7 @@ RBRemoveClassRefactoring >> prepareForExecution [
 { #category : 'preparation' }
 RBRemoveClassRefactoring >> prepareForInteractiveMode [
 
-	| applicabilityPreconditions |
-	
 	self prepareForExecution.
-	applicabilityPreconditions := self applicabilityPreconditions.
-	applicabilityPreconditions check ifFalse: [
-		RBApplicabilityChecksFailedError signal:
-			applicabilityPreconditions errorString ]
 ]
 
 { #category : 'transforming' }

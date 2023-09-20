@@ -30,34 +30,30 @@ RBRemoveClassDriver >> removeClassChanges [
 RBRemoveClassDriver >> runRefactoring [
 
 	| select hasNoReferences |
-	[
-	[
 	
-		self configureRefactoring.
-		hasNoReferences := refactoring preconditionHaveNoReferences.
-		hasNoReferences check
+	self configureRefactoring.
+	refactoring applicabilityPreconditions check ifFalse: [
+		RBRefactoringError signal: refactoring applicabilityPreconditions errorString ].
+	
+	hasNoReferences := refactoring preconditionHaveNoReferences.
+	hasNoReferences check
 
-		ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
-		ifFalse: [ 
-			| perClassViolators |
-			perClassViolators := hasNoReferences violators.
-			users := perClassViolators flatCollect: [ :violators | violators ].
-			select := SpSelectDialog new 
-				title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
-				label: 'Select a strategy';
-				items: (RBRemoveClassChoice subclasses collect: [ :each | each  new driver: self]);
-				display: [ :each | each description ];
-				displayIcon: [ :each | self iconNamed: each systemIconName ];
-				openModal.
-			
-			select 
-				ifNotNil: [ 
-					select action ]]]
-	
-			on: RBApplicabilityChecksFailedError
-			do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
-			on: RBBreakingChangeChecksFailedWarning
-			do: [ :err |	 err return ]
+	ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
+	ifFalse: [ 
+		| perClassViolators |
+		perClassViolators := hasNoReferences violators.
+		users := perClassViolators flatCollect: [ :violators | violators ].
+		select := SpSelectDialog new 
+			title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
+			label: 'Select a strategy';
+			items: (RBRemoveClassChoice subclasses collect: [ :each | each  new driver: self]);
+			display: [ :each | each description ];
+			displayIcon: [ :each | self iconNamed: each systemIconName ];
+			openModal.
+		
+		select 
+			ifNotNil: [ 
+				select action ]]
 	
 
 ]
