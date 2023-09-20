@@ -30,6 +30,12 @@ ShDefaultBuilderEnhancer >> allSlotsForBuilder: aBuilder [
 	^ aBuilder layoutDefinition allSlots
 ]
 
+{ #category : 'accessing' }
+ShDefaultBuilderEnhancer >> allSlotsToInstallForBuilder: aBuilder [
+
+	^ aBuilder layoutDefinition allSlots
+]
+
 { #category : 'migrating' }
 ShDefaultBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 ]
@@ -107,12 +113,6 @@ ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables 
 ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
 
 	newClass subclasses do: [ :e | installer remake: e ]
-]
-
-{ #category : 'accessing' }
-ShDefaultBuilderEnhancer >> slotsForBuilder: aBuilder [
-
-	^ aBuilder layoutDefinition slots
 ]
 
 { #category : 'class modifications' }
