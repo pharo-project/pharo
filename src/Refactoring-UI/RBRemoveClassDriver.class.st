@@ -29,32 +29,33 @@ RBRemoveClassDriver >> removeClassChanges [
 { #category : 'execution' }
 RBRemoveClassDriver >> runRefactoring [
 
-	| select haveNoReferences |
+	| select haveNoReferences emptyOrNoSubclasses |
 	
 	self configureRefactoring.
 	refactoring applicabilityPreconditions check ifFalse: [
 		RBRefactoringError signal: refactoring applicabilityPreconditions errorString ].
 	
 	haveNoReferences := refactoring preconditionHaveNoReferences.
-	haveNoReferences check
-
-	ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
-	ifFalse: [ 
-		| perClassViolators |
-		perClassViolators := haveNoReferences violators.
-		users := perClassViolators flatCollect: [ :violators | violators ].
-		select := SpSelectDialog new 
-			title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
-			label: 'Select a strategy';
-			items: (RBRemoveClassChoice subclasses collect: [ :each | each  new driver: self]);
-			display: [ :each | each description ];
-			displayIcon: [ :each | self iconNamed: each systemIconName ];
-			openModal.
-		
-		select 
-			ifNotNil: [ 
-				select action ]]
+	emptyOrNoSubclasses := refactoring preconditionEmptyOrHasNoSubclasses.
 	
+	haveNoReferences check & emptyOrNoSubclasses check
+			ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
+			ifFalse: [ 
+				| perClassViolators |
+										
+				haveNoReferences check ifTrue: [
+				perClassViolators := haveNoReferences violators.
+				users := perClassViolators flatCollect: [ :violators | violators ].
+				select := SpSelectDialog new 
+					title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
+					label: 'Select a strategy';
+					items: (RBRemoveClassChoice subclasses collect: [ :each | each  new driver: self]);
+					display: [ :each | each description ];
+					displayIcon: [ :each | self iconNamed: each systemIconName ];
+					openModal.
+
+	select ifNotNil: [ 	select action ]]
+	]	
 
 ]
 

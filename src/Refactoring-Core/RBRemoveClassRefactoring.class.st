@@ -79,6 +79,12 @@ RBRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 ]
 
 { #category : 'preconditions' }
+RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses [
+
+	^ RBClassIsEmptyOrHasNoSubclassesCondition new classes: classesDictionary					
+]
+
+{ #category : 'preconditions' }
 RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses: aClass [
 	^ (RBCondition hasSubclasses: aClass excluding: classNames) not
 		|
