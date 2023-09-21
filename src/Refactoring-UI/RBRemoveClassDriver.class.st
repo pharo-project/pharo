@@ -33,10 +33,10 @@ RBRemoveClassDriver >> handleBreakingChanges [
 
 	| select items |
 	items := OrderedCollection new.
-	items add: (RBRemoveClassReparentChoice new driver: self).
-	empty violators ifNotEmpty: [
+	items add: (RBRemoveClassReparentChoice new driver: self; classesHaveSubclasses: noSubclasses violators isNotEmpty).
+	(noSubclasses violators isNotEmpty and: [ empty violators isNotEmpty ]) ifTrue: [
 		items add:
-			(RBRemoveClassAndPushStateToSubclassChoice new driver: self) ].
+			(RBRemoveClassAndPushStateToSubclassChoice new driver: self; emptyClasses: empty violators isEmpty) ].
 	haveNoReferences violators ifNotEmpty: [
 		items add: (RBBrowseClassReferencesChoice new driver: self) ].
 	

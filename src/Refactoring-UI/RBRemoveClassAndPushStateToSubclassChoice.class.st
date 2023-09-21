@@ -1,6 +1,9 @@
 Class {
 	#name : 'RBRemoveClassAndPushStateToSubclassChoice',
 	#superclass : 'RBRemoveClassChoice',
+	#instVars : [
+		'removingClassesAreEmpty'
+	],
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
@@ -15,7 +18,20 @@ RBRemoveClassAndPushStateToSubclassChoice >> action [
 { #category : 'accessing' }
 RBRemoveClassAndPushStateToSubclassChoice >> description [
 
-	^ 'Remove it, pushing class state to subclasses'
+	| stream |
+	stream := String new writeStream.
+	stream nextPutAll: 'Remove it'.
+
+	removingClassesAreEmpty ifFalse: [
+		stream nextPutAll: ', pushing class state to subclasses' ].
+
+	^ stream contents
+]
+
+{ #category : 'as yet unclassified' }
+RBRemoveClassAndPushStateToSubclassChoice >> emptyClasses: aBoolean [
+
+	removingClassesAreEmpty := aBoolean
 ]
 
 { #category : 'accessing' }
