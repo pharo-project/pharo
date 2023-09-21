@@ -281,7 +281,10 @@ Class >> category: aString [
 	oldCategory := self category.
 	oldCategory = aString ifTrue: [ ^ self ].
 	self basicCategory: aString asSymbol.
-	SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category
+
+	oldCategory = Class unclassifiedCategory
+		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: self inCategory: self category ]
+		ifFalse: [ SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category ]
 ]
 
 { #category : 'subclass creation - variableByte' }

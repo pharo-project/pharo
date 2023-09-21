@@ -559,23 +559,17 @@ RPackageOrganizer >> stopNotification [
 ]
 
 { #category : 'system integration' }
-RPackageOrganizer >> systemClassAddedActionFrom: ann [
+RPackageOrganizer >> systemClassAddedActionFrom: announcement [
 
-	(self ensurePackageMatching: ann classAffected category) importClass: ann classAffected
+	self systemClassRecategorizedActionFrom: announcement
 ]
 
 { #category : 'system integration' }
 RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
-	| class newPackage newCategoryName |
-	class := announcement classAffected.
-
-	newCategoryName := announcement newCategory.
-
-	newCategoryName = announcement oldCategory ifTrue: [ ^ self ].
-	newPackage := self ensurePackageMatching: newCategoryName.
-
-	newPackage moveClass: class toTag: (newPackage ensureTag: (newPackage toTagName: newCategoryName))
+	| newPackage |
+	newPackage := self ensurePackageMatching: announcement classAffected category.
+	newPackage moveClass: announcement classAffected toTag: (newPackage toTagName: announcement classAffected category)
 ]
 
 { #category : 'system integration' }
