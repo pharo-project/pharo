@@ -25,6 +25,12 @@ Class {
 	#tag : 'Refactorings'
 }
 
+{ #category : 'preconditions' }
+RBRemoveClassPushingStateToSubclassesRefactoring >> breakingChangePreconditions [ 
+
+	^ RBCondition withBlock: [ self preconditionHaveNoReferences check ] errorString: 'Some classes still have references'
+]
+
 { #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownClassVarsOf: class [
 	class classVariableNames do: [ :e |
