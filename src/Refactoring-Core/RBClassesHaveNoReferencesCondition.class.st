@@ -20,15 +20,7 @@ Class {
 { #category : 'checking' }
 RBClassesHaveNoReferencesCondition >> check [
 
-	referencingClassesDictionary := Dictionary new.
-
-	classes do: [ :aClass |
-		referencingClassesDictionary
-			at: aClass
-			put:
-				(((model classesReferencingClass: aClass) collect: [ :each | each ])
-					 copyWithoutAll: classes) ].
-	^ referencingClassesDictionary allSatisfy: [ :val | val isEmpty ]
+	^ self violators allSatisfy: [ :val | val isEmpty ]
 ]
 
 { #category : 'accessing' }
@@ -46,7 +38,7 @@ RBClassesHaveNoReferencesCondition >> model: aRBNamespace [
 { #category : 'printing' }
 RBClassesHaveNoReferencesCondition >> printOn: aStream [
 
-	(referencingClassesDictionary reject: [ :refs | refs isEmpty ])
+	(self violators reject: [ :refs | refs isEmpty ])
 		keysAndValuesDo: [ :class :refs |
 			aStream
 				nextPutAll: class name;
@@ -59,5 +51,13 @@ RBClassesHaveNoReferencesCondition >> printOn: aStream [
 { #category : 'accessing' }
 RBClassesHaveNoReferencesCondition >> violators [
 
-	^ referencingClassesDictionary 
+	^ referencingClassesDictionary ifNil: [
+		  referencingClassesDictionary := Dictionary new.
+
+		  classes do: [ :aClass |
+			  referencingClassesDictionary
+				  at: aClass
+				  put:
+					  (((model classesReferencingClass: aClass) collect: [ :each |
+						    each ]) copyWithoutAll: classes) ] ]
 ]

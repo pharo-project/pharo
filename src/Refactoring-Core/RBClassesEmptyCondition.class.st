@@ -11,14 +11,9 @@ Class {
 }
 
 { #category : 'checking' }
-RBClassesEmptyCondition >> check [ 
+RBClassesEmptyCondition >> check [
 
-	violators := Dictionary new.
-	classes do: [ :aClass | 
-		(self isEmpty: aClass)  
-			ifFalse: [ violators at: aClass put: aClass name, ' is not empty.' ].
-	].
-	^ violators isEmpty
+	^ self violators isEmpty
 ]
 
 { #category : 'accessing' }
@@ -38,13 +33,18 @@ RBClassesEmptyCondition >> isEmpty: aClass [
 { #category : 'printing' }
 RBClassesEmptyCondition >> printOn: aStream [
 
-	violators do: [ :violator |
+	self violators do: [ :violator |
 		aStream
 			nextPutAll: violator;
 			nextPut: Character cr ]
 ]
 
 { #category : 'accessing' }
-RBClassesEmptyCondition >> violators [ 
-	^ violators
+RBClassesEmptyCondition >> violators [
+
+	^ violators ifNil: [
+		  violators := Dictionary new.
+		  classes do: [ :aClass |
+			  (self isEmpty: aClass) ifFalse: [
+				  violators at: aClass put: aClass name , ' is not empty.' ] ] ]
 ]
