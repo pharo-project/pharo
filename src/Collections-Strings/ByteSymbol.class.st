@@ -160,7 +160,7 @@ ByteSymbol >> privateAt: index put: aCharacter [
 		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private' }
 ByteSymbol >> species [
 	"Answer the preferred class for reconstructing the receiver."
 	^ByteString

@@ -109,7 +109,7 @@ MCLazyVersionInfo >> setStepChildren: someStepChildren [
 	stepChildren := WeakArray withAll: someStepChildren
 ]
 
-{ #category : 'comparing' }
+{ #category : 'private' }
 MCLazyVersionInfo >> species [
 	"Make this class equivalent to a MCVersionInfo in all regards."
 

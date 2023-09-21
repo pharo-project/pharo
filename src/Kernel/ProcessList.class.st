@@ -452,7 +452,7 @@ ProcessList >> size [
 	^ tally
 ]
 
-{ #category : 'enumerating' }
+{ #category : 'private' }
 ProcessList >> species [
 
 	^ Array
