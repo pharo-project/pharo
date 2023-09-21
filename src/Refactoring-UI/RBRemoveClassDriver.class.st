@@ -12,14 +12,14 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'initialization' }
+{ #category : 'actions' }
 RBRemoveClassDriver >> browseReferences [
 
 	SystemNavigation default 
 		browseAllCallsOnClass: haveNoReferences violators keys first realClass
 ]
 
-{ #category : 'resources' }
+{ #category : 'initialization' }
 RBRemoveClassDriver >> configureRefactoring [
 
 	refactoring := RBRemoveClassRefactoring
@@ -67,7 +67,7 @@ RBRemoveClassDriver >> labelBasedOnBreakingChanges [
 	^ stream contents
 ]
 
-{ #category : 'removing' }
+{ #category : 'actions' }
 RBRemoveClassDriver >> removeClassChanges [
 
 	self openPreviewWithChanges: refactoring removeClassChanges
@@ -86,7 +86,7 @@ RBRemoveClassDriver >> runRefactoring [
 	noSubclasses := refactoring preconditionHaveNoSubclasses.
 
 	haveNoReferences check & empty check & noSubclasses check
-			ifTrue: [ self openPreviewWithChanges: refactoring removeClassChanges ]
+			ifTrue: [ self removeClassChanges ]
 			ifFalse: [ self handleBreakingChanges ]
 
 ]
