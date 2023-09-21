@@ -775,9 +775,9 @@ String >> asTime [
 
 { #category : 'converting' }
 String >> asUncommentedCode [
-	"this string reprensent a commented code, let's uncomment it"
+	"this string represents a commented code, let's uncomment it"
 
-	^String streamContents:  [ :str |
+	^ String streamContents:  [ :str |
 
 		|doubleQuoteAlreadyFound|
 		doubleQuoteAlreadyFound := false.
