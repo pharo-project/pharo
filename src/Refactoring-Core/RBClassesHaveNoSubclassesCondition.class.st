@@ -45,5 +45,6 @@ RBClassesHaveNoSubclassesCondition >> violators [
 		  violators := Dictionary new.
 		  classes collect: [ :aClass |
 			  (self hasSubclasses: aClass excluding: classes) ifTrue: [
-				  violators at: aClass put: aClass name , ' has subclasses.' ] ] ]
+				  violators at: aClass put: aClass name , ' has subclasses.' ] ].
+		  violators ]
 ]

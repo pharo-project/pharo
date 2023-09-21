@@ -59,5 +59,7 @@ RBClassesHaveNoReferencesCondition >> violators [
 				  at: aClass
 				  put:
 					  (((model classesReferencingClass: aClass) collect: [ :each |
-						    each ]) copyWithoutAll: classes) ] ]
+						    each ]) copyWithoutAll: classes) ].
+			referencingClassesDictionary 
+		]
 ]

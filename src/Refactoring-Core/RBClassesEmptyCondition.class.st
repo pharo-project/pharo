@@ -46,5 +46,6 @@ RBClassesEmptyCondition >> violators [
 		  violators := Dictionary new.
 		  classes do: [ :aClass |
 			  (self isEmpty: aClass) ifFalse: [
-				  violators at: aClass put: aClass name , ' is not empty.' ] ] ]
+				  violators at: aClass put: aClass name , ' is not empty.' ] ].
+		  violators ]
 ]
