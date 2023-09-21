@@ -71,6 +71,7 @@ RBRemoveClassDriver >> labelBasedOnBreakingChanges [
 RBRemoveClassDriver >> removeClassAndPushStateToSubclasses [
 
 	refactoring := RBRemoveClassPushingStateToSubclassesRefactoring
+						   model: model
 		               classNames: (classes collect: [ :cl | cl name ]).
 	self openPreviewWithChanges: refactoring removeClassesChanges
 ]
