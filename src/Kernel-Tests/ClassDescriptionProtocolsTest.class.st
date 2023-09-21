@@ -3,7 +3,7 @@ I am a test case responsible of testing ClassDescription protocol management.
 "
 Class {
 	#name : 'ClassDescriptionProtocolsTest',
-	#superclass : 'ProtocolTest',
+	#superclass : 'AbstractClassDescriptionTest',
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',
 	#tag : 'Classes'

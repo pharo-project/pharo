@@ -349,12 +349,6 @@ Symbol >> = aSymbol [
 ]
 
 { #category : 'converting' }
-Symbol >> asAnnouncement [
-
-	^ self
-]
-
-{ #category : 'converting' }
 Symbol >> asMutator [
 	"Return a setter message from a getter message.
 	Return self if it is already a setter.

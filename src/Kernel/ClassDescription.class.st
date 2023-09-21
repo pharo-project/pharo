@@ -939,16 +939,18 @@ ClassDescription >> removeSelector: selector [
 	"Remove the message whose selector is given from the method
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
-	| priorMethod priorProtocol origin |
-	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
-	origin := priorMethod origin.
-	priorProtocol := self protocolOfSelector: selector.
+	| method protocol package origin |
+	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
+	origin := method origin.
+	protocol := self protocolOfSelector: selector.
+	package := method package.
 
-	priorMethod removeFromPackage.
-	self removeFromProtocols: selector.
+	method removeFromPackage.
+	"When we remove a method we do not want to announce a recategorization."
+	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self removeFromProtocols: selector ].
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin
+	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin package: package
 ]
 
 { #category : 'instance variables' }
