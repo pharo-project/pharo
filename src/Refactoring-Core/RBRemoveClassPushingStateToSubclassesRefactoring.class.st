@@ -69,20 +69,6 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> initialize [
 	refactorings := OrderedCollection new
 ]
 
-{ #category : 'preconditions' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> preconditions [
-
-	^ classNames inject: self trueCondition into: [ :sum :each |
-		  | aClassOrTrait |
-		  aClassOrTrait := self model classNamed: each asSymbol.
-		  aClassOrTrait ifNil: [
-			  self refactoringError: 'No such class or trait' ].
-		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
-		   & (self preconditionHasNoReferences: aClassOrTrait)
-		   & (self preconditionHasNoUsers: aClassOrTrait))
-		  "& ( self preconditionEmptyOrHasNoSubclasses: aClassOrTrait )" ]
-]
-
 { #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> privateTransform [
 	self createRefactorings.
