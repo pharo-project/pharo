@@ -11,3 +11,9 @@ RBBrowseClassReferencesChoice >> action [
 
 	driver browseReferences
 ]
+
+{ #category : 'accessing' }
+RBBrowseClassReferencesChoice >> description [
+
+	^ 'Browse class references'
+]
