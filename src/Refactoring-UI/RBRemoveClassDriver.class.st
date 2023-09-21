@@ -79,7 +79,7 @@ RBRemoveClassDriver >> runRefactoring [
 	noSubclasses := refactoring preconditionHaveNoSubclasses.
 
 	haveNoReferences check & empty check & noSubclasses check
-			ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
+			ifTrue: [ self openPreviewWithChanges: refactoring removeClassChanges ]
 			ifFalse: [ self handleBreakingChanges ]
 
 ]
