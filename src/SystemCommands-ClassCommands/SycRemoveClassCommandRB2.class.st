@@ -35,7 +35,7 @@ SycRemoveClassCommandRB2 >> defaultMenuItemName [
 
 { #category : 'execution' }
 SycRemoveClassCommandRB2 >> execute [
-	
+
 	(RBRemoveClassDriver new
 				 scopes: toolContext refactoringScopes
 				 classes:  classes) runRefactoring
