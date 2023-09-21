@@ -30,6 +30,18 @@ RBClassesEmptyCondition >> isEmpty: aClass [
 			  aClass selectors isEmpty ] ]
 ]
 
+{ #category : 'checking' }
+RBClassesEmptyCondition >> isFalse [
+
+	^ self isTrue not
+]
+
+{ #category : 'checking' }
+RBClassesEmptyCondition >> isTrue [
+
+	^ self check
+]
+
 { #category : 'printing' }
 RBClassesEmptyCondition >> printOn: aStream [
 

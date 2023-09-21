@@ -29,6 +29,18 @@ RBClassesHaveNoSubclassesCondition >> hasSubclasses: aClass excluding: classesLi
 		   copyWithoutAll: classesList) isNotEmpty
 ]
 
+{ #category : 'checking' }
+RBClassesHaveNoSubclassesCondition >> isFalse [
+
+	^ self isTrue not
+]
+
+{ #category : 'checking' }
+RBClassesHaveNoSubclassesCondition >> isTrue [ 
+
+	^ self check
+]
+
 { #category : 'printing' }
 RBClassesHaveNoSubclassesCondition >> printOn: aStream [
 

@@ -33,11 +33,11 @@ RBRemoveClassDriver >> handleBreakingChanges [
 
 	| select items |
 	items := OrderedCollection new.
-	items add: (RBRemoveClassReparentChoice new driver: self; classesHaveSubclasses: noSubclasses violators isNotEmpty).
-	(noSubclasses violators isNotEmpty and: [ emptyClasses violators isNotEmpty ]) ifTrue: [
+	items add: (RBRemoveClassReparentChoice new driver: self; classesHaveSubclasses: noSubclasses isFalse).
+	(noSubclasses isFalse and: [ emptyClasses isFalse ]) ifTrue: [
 		items add:
-			(RBRemoveClassAndPushStateToSubclassChoice new driver: self; emptyClasses: emptyClasses violators isEmpty) ].
-	haveNoReferences violators ifNotEmpty: [
+			(RBRemoveClassAndPushStateToSubclassChoice new driver: self; emptyClasses: emptyClasses isTrue) ].
+	haveNoReferences ifFalse: [
 		items add: (RBBrowseClassReferencesChoice new driver: self) ].
 	
 	select := SpSelectDialog new
