@@ -54,9 +54,9 @@ RBRemoveClassRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [ self preconditionEmptyClasses check ] errorString: 'Some classes are not empty'
-	  & (RBCondition withBlock: [ self preconditionHaveNoSubclasses check ] errorString: 'Some classes have subclasses'
-	  & (RBCondition withBlock: [ self preconditionHaveNoReferences check ] errorString: 'Some classes still have references'))
+	^ ((RBCondition withBlock: [ self preconditionEmptyClasses check ] errorString: 'Some classes are not empty')
+	  & (RBCondition withBlock: [ self preconditionHaveNoSubclasses check ] errorString: 'Some classes have subclasses'))
+	  & (RBCondition withBlock: [ self preconditionHaveNoReferences check ] errorString: 'Some classes still have references')
 ]
 
 { #category : 'accessing' }
