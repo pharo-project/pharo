@@ -13,12 +13,7 @@ Class {
 { #category : 'checking' }
 RBClassesHaveNoSubclassesCondition >> check [ 
 
-	violators := Dictionary new.
-	classes do: [ :aClass | 
-		(self hasSubclasses: aClass excluding: classes)
-			ifTrue: [ violators at: aClass  put: aClass name, 'has subclasses.'  ]
-	].
-	^ violators isEmpty
+	^ self violators isEmpty
 ]
 
 { #category : 'accessing' }
@@ -37,13 +32,18 @@ RBClassesHaveNoSubclassesCondition >> hasSubclasses: aClass excluding: classesLi
 { #category : 'printing' }
 RBClassesHaveNoSubclassesCondition >> printOn: aStream [
 
-	violators do: [ :violator |
+	self violators do: [ :violator |
 		aStream
 			nextPutAll: violator;
 			nextPut: Character cr ]
 ]
 
 { #category : 'accessing' }
-RBClassesHaveNoSubclassesCondition >> violators [ 
-	^ violators
+RBClassesHaveNoSubclassesCondition >> violators [
+
+	^ violators ifNil: [
+		  violators := Dictionary new.
+		  classes collect: [ :aClass |
+			  (self hasSubclasses: aClass excluding: classes) ifTrue: [
+				  violators at: aClass put: aClass name , ' has subclasses.' ] ] ]
 ]
