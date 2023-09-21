@@ -146,8 +146,10 @@ RBRemoveClassRefactoringTest >> testPreconditionNotEmptyClass [
 	refactoring := RBRemoveClassRefactoring 
 							model: model 
 							classNames: { ('RBTransformation' , 'RuleTestData1') asSymbol}. 
-
-	self deny: (refactoring preconditionEmptyOrHasNoSubclasses: (refactoring model classNamed: ('RBTransformation' , 'RuleTestData1') asSymbol)) check.
+	refactoring prepareForExecution.
+	
+	self deny: refactoring preconditionEmptyClasses check.
+	self deny: refactoring preconditionHaveNoSubclasses check
 	
 	
 ]
