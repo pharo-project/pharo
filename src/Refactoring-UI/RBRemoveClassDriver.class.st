@@ -12,6 +12,13 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'initialization' }
+RBRemoveClassDriver >> browseReferences [
+
+	SystemNavigation default 
+		browseAllCallsOnClass: haveNoReferences violators keys first realClass
+]
+
 { #category : 'resources' }
 RBRemoveClassDriver >> configureRefactoring [
 
