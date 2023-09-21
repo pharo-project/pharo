@@ -4,8 +4,8 @@ Class {
 	#instVars : [
 		'classes',
 		'haveNoReferences',
-		'empty',
-		'noSubclasses'
+		'noSubclasses',
+		'emptyClasses'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -34,9 +34,9 @@ RBRemoveClassDriver >> handleBreakingChanges [
 	| select items |
 	items := OrderedCollection new.
 	items add: (RBRemoveClassReparentChoice new driver: self; classesHaveSubclasses: noSubclasses violators isNotEmpty).
-	(noSubclasses violators isNotEmpty and: [ empty violators isNotEmpty ]) ifTrue: [
+	(noSubclasses violators isNotEmpty and: [ emptyClasses violators isNotEmpty ]) ifTrue: [
 		items add:
-			(RBRemoveClassAndPushStateToSubclassChoice new driver: self; emptyClasses: empty violators isEmpty) ].
+			(RBRemoveClassAndPushStateToSubclassChoice new driver: self; emptyClasses: emptyClasses violators isEmpty) ].
 	haveNoReferences violators ifNotEmpty: [
 		items add: (RBBrowseClassReferencesChoice new driver: self) ].
 	
@@ -58,7 +58,7 @@ RBRemoveClassDriver >> labelBasedOnBreakingChanges [
 	| stream |
 	stream := String new writeStream.
 	
-	empty printOn: stream.
+	emptyClasses printOn: stream.
 	noSubclasses printOn: stream.
 	haveNoReferences printOn: stream.
 	
@@ -91,10 +91,10 @@ RBRemoveClassDriver >> runRefactoring [
 		RBRefactoringError signal: refactoring applicabilityPreconditions errorString ].
 	
 	haveNoReferences := refactoring preconditionHaveNoReferences.
-	empty := refactoring preconditionEmptyClasses.
+	emptyClasses := refactoring preconditionEmptyClasses.
 	noSubclasses := refactoring preconditionHaveNoSubclasses.
 
-	haveNoReferences check & empty check & noSubclasses check
+	haveNoReferences check & emptyClasses check & noSubclasses check
 			ifTrue: [ self removeClassChanges ]
 			ifFalse: [ self handleBreakingChanges ]
 
