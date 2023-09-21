@@ -243,10 +243,7 @@ RPackageOrganizer >> defineUnpackagedClassesPackage [
 { #category : 'registration' }
 RPackageOrganizer >> ensurePackage: aPackage [
 
-	(self hasPackage: aPackage) ifTrue: [
-		^ self packageNamed: (aPackage isString
-				   ifTrue: [ aPackage ]
-				   ifFalse: [ aPackage name ]) ].
+	self packageNamed: (aPackage isString ifTrue: [ aPackage ] ifFalse: [ aPackage name ]) ifPresent: [ :package | ^ package ].
 
 	^ self addPackage: aPackage
 ]
