@@ -159,11 +159,6 @@ String class >> crlf [
 ]
 
 { #category : 'instance creation' }
-String class >> crlfcrlf [
-	^self crlf , self crlf
-]
-
-{ #category : 'instance creation' }
 String class >> empty [
 	"A canonicalized empty String instance."
 	^ ''
