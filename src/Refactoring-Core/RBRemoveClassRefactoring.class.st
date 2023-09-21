@@ -53,13 +53,10 @@ RBRemoveClassRefactoring >> applicabilityPreconditions [
 
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> breakingChangePreconditions [
-	"Remove users from here
-	Return reference checks, before was:
-	(self preconditionHasNoReferences)
-	self preconditionEmptyOrHasNoSubclasses"
-	self halt.
-	self flag: #todoConditions.
-	
+
+	^ RBCondition withBlock: [ self preconditionEmptyClasses check ] errorString: 'Some classes are not empty'
+	  & (RBCondition withBlock: [ self preconditionHaveNoSubclasses check ] errorString: 'Some classes have subclasses'
+	  & (RBCondition withBlock: [ self preconditionHaveNoReferences check ] errorString: 'Some classes still have references'))
 ]
 
 { #category : 'accessing' }
