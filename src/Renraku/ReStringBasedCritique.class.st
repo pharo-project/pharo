@@ -2,24 +2,26 @@
 I am a critic that provides a selection interval by searching a 'faulty substring' in the target's source code. I also use the 'faulty substring' to enhence the critic's title
 "
 Class {
-	#name : #ReStringBasedCritique,
-	#superclass : #ReAbstractCritique,
-	#category : #'Renraku-Critiques'
+	#name : 'ReStringBasedCritique',
+	#superclass : 'ReAbstractCritique',
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReStringBasedCritique class >> for: anEntity by: aRule badString: aString [
 	^ self basicNew
 		initializeRule: aRule target: anEntity badString: aString;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReStringBasedCritique >> change [
 	^ self shouldNotImplement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReStringBasedCritique >> initializeRule: aRule target: anEntity badString: aString [
 
 	self
@@ -30,12 +32,12 @@ ReStringBasedCritique >> initializeRule: aRule target: anEntity badString: aStri
 				string: aString)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReStringBasedCritique >> providesChange [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReStringBasedCritique >> title [
 	^ '[', sourceAnchor searchString, '] ', super title
 ]

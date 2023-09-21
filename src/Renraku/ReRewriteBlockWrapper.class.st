@@ -2,15 +2,17 @@
 A concrete wrapper implementation that uses a block to create new nodes
 "
 Class {
-	#name : #ReRewriteBlockWrapper,
-	#superclass : #ReRewriteWrapper,
+	#name : 'ReRewriteBlockWrapper',
+	#superclass : 'ReRewriteWrapper',
 	#instVars : [
 		'block'
 	],
-	#category : #'Renraku-Rules-Rewrite'
+	#category : 'Renraku-Rules-Rewrite',
+	#package : 'Renraku',
+	#tag : 'Rules-Rewrite'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReRewriteBlockWrapper class >> on: aBlock [
 
 	^ self basicNew
@@ -18,12 +20,12 @@ ReRewriteBlockWrapper class >> on: aBlock [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReRewriteBlockWrapper >> initializeBlock: aBlock [
 	block := aBlock
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReRewriteBlockWrapper >> rewriten: aNode with: aMap [
 
 	^ block cull: aNode cull: aMap
