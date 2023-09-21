@@ -131,9 +131,11 @@ TFFunctionDefinition >> returnType: anObject [
 
 { #category : #accessing }
 TFFunctionDefinition >> validate [
-	| parameterHandlers |
+	"Ensure I am ready to be called. Normally, there are actions to take after a new session started (or it is the first time after instance creation)."
 
-	handle isNull ifFalse: [ ^self ].
+	| parameterHandlers |
+	"A non-NULL handle is enough to determine I am ready."
+	handle isNull ifFalse: [ ^ self ].
 
 	"First, we get valid parameter handles."
 	parameterTypes do: [ :e | e validate ].

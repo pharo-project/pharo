@@ -28,7 +28,8 @@ RPackageTag class >> package: aPackage name: aString [
 RPackageTag >> addClass: aClass [
 
 	aClass category = self categoryName ifFalse: [ aClass category: self categoryName ].
-	classes add: aClass
+	classes add: aClass.
+	self organizer registerPackage: self package forClass: aClass
 ]
 
 { #category : 'private' }
@@ -154,6 +155,7 @@ RPackageTag >> removeClass: aClass [
 
 	| oldObject |
 	oldObject := classes remove: aClass ifAbsent: [  ].
+	self organizer unregisterPackage: self package forClass: aClass.
 	self isEmpty ifTrue: [ self removeFromPackage ].
 	^ oldObject
 ]
