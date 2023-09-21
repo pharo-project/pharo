@@ -44,19 +44,25 @@ RBRemoveClassRefactoring >> applicabilityPreconditions [
 	| conditions |
 	conditions := self trueCondition.
 	classesDictionary keysAndValuesDo: [ :className :class |
-		conditions & (RBCondition
-			 withBlock: [ class isNotNil ]
-			 errorString: 'No such class or trait ' , className)
-		& (self preconditionIsNotMetaclass: class) ].
+		class ifNil: [ 
+			 self refactoringError: 'No such class or trait ' , className].
+		conditions & (self preconditionIsNotMetaclass: class) ].
 	^ conditions
 ]
 
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> breakingChangePreconditions [
+	"Empty error blocks are here so that warnings are raised. This is a ugly hack..."
 
-	^ ((RBCondition withBlock: [ self preconditionEmptyClasses check ] errorString: 'Some classes are not empty')
-	  & (RBCondition withBlock: [ self preconditionHaveNoSubclasses check ] errorString: 'Some classes have subclasses'))
-	  & (RBCondition withBlock: [ self preconditionHaveNoReferences check ] errorString: 'Some classes still have references')
+	^ ((RBCondition
+		   withBlock: [ self preconditionHaveNoReferences check ]
+		   errorString: 'Some classes still have references') errorBlock: [ ] )
+	  & (((RBCondition
+			    withBlock: [ self preconditionHaveNoSubclasses check ]
+			    errorString: 'Some classes have subclasses') errorBlock: [ ] )
+			| ((RBCondition
+			    withBlock: [ self preconditionEmptyClasses check ]
+			    errorString: 'Some classes are not empty') errorBlock: [ ] ))
 ]
 
 { #category : 'accessing' }
