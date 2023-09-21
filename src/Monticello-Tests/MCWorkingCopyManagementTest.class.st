@@ -73,30 +73,3 @@ MCWorkingCopyManagementTest >> testClassRemoved [
 	
 	
 ]
-
-{ #category : 'tests' }
-MCWorkingCopyManagementTest >> testWorkingCopiesForExtensionProtocolDo [
-	"Consider the following package structure:
-		Renraku
-		Renraku-Help
-
-		and a method extension with the protocol '*renraku'.
-		MCWorkingCopy>>methodModified: should only mark 'Renraku' as modified,
-		not 'Renraku-Help'"
-
-	| workingCopies |
-	self assert: (MCWorkingCopy registry includesKey: mcPackage1).
-	self assert: (MCWorkingCopy registry includesKey: mcPackage2).
-
-	workingCopies := OrderedCollection new.
-	MCWorkingCopy workingCopiesForExtensionProtocol: mcPackage1 name do: [ :workingCopy | workingCopies add: workingCopy ].
-
-	self assert: workingCopies size equals: 1.
-	self assert: workingCopies first package identicalTo: mcPackage1.
-
-	workingCopies := OrderedCollection new.
-	MCWorkingCopy workingCopiesForExtensionProtocol: mcPackage2 name do: [ :workingCopy | workingCopies add: workingCopy ].
-
-	self assert: workingCopies size equals: 1.
-	self assert: workingCopies first package identicalTo: mcPackage2
-]

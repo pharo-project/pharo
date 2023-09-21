@@ -176,14 +176,14 @@ MCWorkingCopy class >> initialize [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> methodModified: anEvent [
-
 	"If the method has just been loaded by monticello itself, do not mark it as dirty"
+
 	anEvent propertyAt: #eventSource ifPresent: [ :source | source == self class package name ifTrue: [ ^ self ] ].
 
 	"trait methods aren't handled here"
 	anEvent isProvidedByATrait ifTrue: [ ^ self ].
 
-	^ self workingCopiesForClass: anEvent methodClass protocol: anEvent protocol do: [ :wc | wc modified: true ]
+	^ self workingCopiesForPackage: anEvent methodPackage do: [ :wc | wc modified: true ]
 ]
 
 { #category : 'system changes' }
@@ -196,7 +196,7 @@ MCWorkingCopy class >> methodMoved: anEvent [
 { #category : 'system changes' }
 MCWorkingCopy class >> methodRemoved: anEvent [
 
-	self workingCopiesForClass: anEvent methodClass protocol: anEvent protocol do: [ :wc | wc modified: true ]
+	self workingCopiesForPackage: anEvent methodPackage do: [ :wc | wc modified: true ]
 ]
 
 { #category : 'system changes' }
@@ -280,32 +280,6 @@ MCWorkingCopy class >> unregisterForNotifications [
 MCWorkingCopy class >> workingCopiesForClass: aClass do: aBlock [
 
 	^ self workingCopiesForPackage: aClass package do: aBlock
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> workingCopiesForClass: aClass protocol: protocol do: aBlock [
-
-	protocol ifNil: [ ^ self ]. "This can happen, for example when a method recategorised is raised at a method removal."
-
-	protocol isExtensionProtocol ifFalse: [ ^ self workingCopiesForClass: aClass do: aBlock ].
-
-	self workingCopiesForExtensionProtocol: protocol name allButFirst do: aBlock
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> workingCopiesForExtensionProtocol: extensionName do: aBlock [
-
-	| packageName |
-	packageName := extensionName.
-	[ "Loop over package tags until we found a matching one"
-	self registry
-		detect: [ :workingCopy | "We might get a protocol name case insensitive." workingCopy packageName sameAs: packageName ]
-		ifFound: [ :workingCopy | ^ aBlock value: workingCopy ].
-
-	packageName includes: $- ] whileTrue: [ "Step up to next level package" packageName := packageName copyUpToLast: $- ].
-
-	"If no match was found, create a new (but only top-level)"
-	aBlock value: (self ensureForPackageNamed: extensionName capitalized)
 ]
 
 { #category : 'system changes' }

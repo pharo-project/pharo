@@ -1,5 +1,5 @@
 Class {
-	#name : 'ProtocolTest',
+	#name : 'AbstractClassDescriptionTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'class'
@@ -10,23 +10,29 @@ Class {
 }
 
 { #category : 'helpers' }
-ProtocolTest >> classNameForTests [
+AbstractClassDescriptionTest >> classNameForTests [
 
-	^ #ClassForTests
+	^ #ClassDescriptionGeneratedTestClass
+]
+
+{ #category : 'helpers' }
+AbstractClassDescriptionTest >> packageNameForTests [
+
+	^ #'Generated-Kernel-Test-Package'
 ]
 
 { #category : 'running' }
-ProtocolTest >> setUp [
+AbstractClassDescriptionTest >> setUp [
 
 	super setUp.
 	class := self class classInstaller make: [ :aBuilder |
 		         aBuilder
 			         name: self classNameForTests;
-			         package: 'ClassOrganizer-Tests' ]
+			         package: self packageNameForTests ]
 ]
 
 { #category : 'running' }
-ProtocolTest >> tearDown [
+AbstractClassDescriptionTest >> tearDown [
 
 	class package removeFromSystem.
 	super tearDown
