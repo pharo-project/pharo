@@ -636,8 +636,9 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 { #category : 'registration' }
 RPackageOrganizer >> validatePackageDoesNotExist: aPackage [
 
-	(self hasPackage: aPackage) ifTrue: [
-		RPackageConflictError signal: ('A package named {1} already exists' format: { (aPackage isString
-					  ifTrue: [ aPackage ]
-					  ifFalse: [ aPackage name ]) }) ]
+	| packageName |
+	packageName := aPackage isString
+		               ifTrue: [ aPackage ]
+		               ifFalse: [ aPackage name ].
+	self packageNamed: packageName ifPresent: [ RPackageConflictError signal: ('A package named {1} already exists' format: { packageName }) ]
 ]

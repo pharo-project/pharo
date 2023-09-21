@@ -2,26 +2,28 @@
 Synchronize repos 
 "
 Class {
-	#name : #GoferSynchronize,
-	#superclass : #GoferOperation,
+	#name : 'GoferSynchronize',
+	#superclass : 'GoferOperation',
 	#instVars : [
 		'cacheReferences'
 	],
-	#category : #'Gofer-Core-Operations'
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GoferSynchronize class >> isAbstract [
 
 	^ self == GoferSynchronize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferSynchronize >> cacheRepository [
 	^ MCCacheRepository uniqueInstance
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferSynchronize >> initializeOn: aGofer [
 	super initializeOn: aGofer disablePackageCache.
 	MCFileBasedRepository flushAllCaches.

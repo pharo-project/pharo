@@ -2,22 +2,24 @@
 Commit work
 "
 Class {
-	#name : #GoferCommit,
-	#superclass : #GoferWorking,
+	#name : 'GoferCommit',
+	#superclass : 'GoferWorking',
 	#instVars : [
 		'message'
 	],
-	#category : #'Gofer-Core-Operations'
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 GoferCommit >> execute [
 
 	self workingCopies
 		do: [ :each | self execute: each ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferCommit >> execute: aWorkingCopy [
 
 	| repositories version |
@@ -34,18 +36,18 @@ GoferCommit >> execute: aWorkingCopy [
 		do: [ :repository | repository storeVersion: version ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferCommit >> initializeOn: aGofer [
 
 	super initializeOn: aGofer disablePackageCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferCommit >> message [
 	^ message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferCommit >> message: aString [
 	message := aString
 ]

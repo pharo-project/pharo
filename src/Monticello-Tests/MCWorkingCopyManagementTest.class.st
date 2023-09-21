@@ -28,8 +28,8 @@ MCWorkingCopyManagementTest >> tearDown [
 
 	classToRemove ifNotNil: [ classToRemove removeFromSystem ].
 
-	package1 unregister.
-	package2 unregister.
+	package1 removeFromSystem.
+	package2 removeFromSystem.
 	MCWorkingCopy registry
 		removeKey: mcPackage1 ifAbsent: [  ];
 		removeKey: mcPackage2 ifAbsent: [  ].

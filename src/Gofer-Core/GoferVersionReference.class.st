@@ -2,52 +2,54 @@
 A GoferVersionReference refers to a specific version of a Monticello package.
 "
 Class {
-	#name : #GoferVersionReference,
-	#superclass : #GoferReference,
+	#name : 'GoferVersionReference',
+	#superclass : 'GoferReference',
 	#instVars : [
 		'package',
 		'author',
 		'branch',
 		'versionNumber'
 	],
-	#category : #'Gofer-Core-References'
+	#category : 'Gofer-Core-References',
+	#package : 'Gofer-Core',
+	#tag : 'References'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferVersionReference >> author [
 	"Answer the author of the receiver."
 
 	^ author
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferVersionReference >> branch [
 	"Answer the branch of the receiver."
 
 	^ branch
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferVersionReference >> initializeName: aString [
 
 	super initializeName: aString.
 	self parseName: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferVersionReference >> matches: aResolvedReference [
 
 	^ self name = aResolvedReference name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferVersionReference >> packageName [
 	"Answer the package of the receiver."
 
 	^ package
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferVersionReference >> parseName: aString [
 
 	| basicName |
@@ -67,7 +69,7 @@ GoferVersionReference >> parseName: aString [
 		ifFalse: [ versionNumber := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferVersionReference >> versionNumber [
 	"Answer the version of the receiver."
 

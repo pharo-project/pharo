@@ -195,6 +195,7 @@ RPackageRenameTest >> testUnregisterPackage [
 	"Test that we do unregister the package as expected."
 
 	| package workingCopy class |
+	self flag: #package. "Why is this here? It should be in Monticello tests!"
 	package := self packageOrganizer ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class := (Object << #TestClass package: 'Test1-TAG') install.
@@ -203,7 +204,7 @@ RPackageRenameTest >> testUnregisterPackage [
 	self assert: ((package classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 	self assert: workingCopy modified.
 
-	package unregister.
+	package removeFromSystem.
 
 	self deny: (self packageOrganizer hasPackage: #Test1).
 	self deny: (MCWorkingCopy hasPackageNamed: #Test1)

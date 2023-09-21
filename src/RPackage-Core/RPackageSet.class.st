@@ -162,6 +162,7 @@ RPackageSet >> packages [
 ]
 
 { #category : 'accessing' }
-RPackageSet >> unregister [
-	self packages do: #unregister
+RPackageSet >> removeFromSystem [
+
+	self packages do: [ :package | package removeFromSystem ]
 ]

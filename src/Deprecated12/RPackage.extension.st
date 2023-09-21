@@ -180,6 +180,15 @@ RPackage >> metaclassExtensionSlicesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
+RPackage >> register [
+
+	self
+		deprecated: 'Tihs method will be removed because usually if the package know the organizer it should be because the organizer created it.'
+		transformWith: '`@rcv register' -> '`@rcv organizer addPackage: `@rcv'.
+	self organizer addPackage: self
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> removeClassNamed: aClassName [
 
 	self deprecated: 'Use #removeClass: with a real class instead.'.
@@ -191,4 +200,14 @@ RPackage >> removeClassTag: aSymbol [
 
 	self deprecated: 'Use #removeTag: instead.' transformWith: '`@rcv removeClassTag: `@arg' -> '`@rcv removeTag: `@arg'.
 	self removeTag: aSymbol
+]
+
+{ #category : '*Deprecated12' }
+RPackage >> unregister [
+
+	self
+		deprecated: 'Tihs method will be removed because the name does not conform with the naming convensions of this class.'
+		transformWith: '`@rcv unregister' -> '`@rcv organizer removePackage: `@rcv'.
+
+	self organizer removePackage: self
 ]

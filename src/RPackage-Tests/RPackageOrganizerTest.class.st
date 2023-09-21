@@ -228,7 +228,7 @@ RPackageOrganizerTest >> testPackageNamedWithoutMatchingPackage [
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 	self createNewPackageNamed: 'P1'.
-	self should: [ (RPackage named: 'P1') register ] raise: Error
+	self should: [ self organizer addPackage: (RPackage named: 'P1') ] raise: RPackageConflictError
 ]
 
 { #category : 'tests' }

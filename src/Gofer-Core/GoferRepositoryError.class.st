@@ -2,15 +2,17 @@
 A GoferRepositoryError is the error thrown when a repository cannot be accessed.
 "
 Class {
-	#name : #GoferRepositoryError,
-	#superclass : #Error,
+	#name : 'GoferRepositoryError',
+	#superclass : 'Error',
 	#instVars : [
 		'repository'
 	],
-	#category : #'Gofer-Core-Exceptions'
+	#category : 'Gofer-Core-Exceptions',
+	#package : 'Gofer-Core',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GoferRepositoryError class >> signal: aString repository: aRepository [
 
 	^ self new
@@ -18,18 +20,18 @@ GoferRepositoryError class >> signal: aString repository: aRepository [
 		  signal: aString
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 GoferRepositoryError >> isResumable [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferRepositoryError >> repository [
 	^ repository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferRepositoryError >> repository: aRepository [
 	repository := aRepository
 ]
