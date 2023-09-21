@@ -17,8 +17,8 @@ Class {
 MCWorkingCopyManagementTest >> setUp [
 
 	super setUp.
-	package1 := self packageOrganizer createPackageNamed: #A , UUID new asString36.
-	package2 := self packageOrganizer createPackageNamed: package1 name , #'-SubPart'.
+	package1 := self packageOrganizer addPackage: #A , UUID new asString36.
+	package2 := self packageOrganizer addPackage: package1 name , #'-SubPart'.
 	mcPackage1 := package1 mcPackage.
 	mcPackage2 := package2 mcPackage
 ]

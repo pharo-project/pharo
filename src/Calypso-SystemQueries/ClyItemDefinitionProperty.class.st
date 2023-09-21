@@ -36,17 +36,19 @@ Internal Representation and Key Implementation Points.
 	isInstanceSide:		<Boolean>
 "
 Class {
-	#name : #ClyItemDefinitionProperty,
-	#superclass : #ClyProperty,
+	#name : 'ClyItemDefinitionProperty',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'definingClassItem',
 		'definingPackageItem',
 		'isInstanceSide'
 	],
-	#category : #'Calypso-SystemQueries-Properties'
+	#category : 'Calypso-SystemQueries-Properties',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Properties'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyItemDefinitionProperty class >> package: aPackage class: aClass [
 
 	^self new
@@ -55,56 +57,56 @@ ClyItemDefinitionProperty class >> package: aPackage class: aClass [
 		definingPackage: aPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemDefinitionProperty >> definingClass [
 	^self definingClassItem actualObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemDefinitionProperty >> definingClass: aClass [
 
 	definingClassItem := ClyBrowserItem named: aClass name with: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemDefinitionProperty >> definingClassItem [
 	^ definingClassItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemDefinitionProperty >> definingMetaLevelScope [
 	^isInstanceSide
 		ifTrue: [ ClyInstanceSideScope ]
 		ifFalse: [ ClyClassSideScope  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemDefinitionProperty >> definingPackage [
 	^self definingPackageItem actualObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemDefinitionProperty >> definingPackage: aPackage [
 
 	definingPackageItem := ClyBrowserItem named: aPackage name with: aPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemDefinitionProperty >> definingPackageItem [
 	^ definingPackageItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemDefinitionProperty >> isInstanceSide [
 	^ isInstanceSide
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemDefinitionProperty >> isInstanceSide: anObject [
 	isInstanceSide := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyItemDefinitionProperty >> printDefiningClass [
 
 	^isInstanceSide
@@ -112,18 +114,18 @@ ClyItemDefinitionProperty >> printDefiningClass [
 		ifFalse: [ definingClassItem name, ' class']
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyItemDefinitionProperty >> printDefiningProtocol [
 	^ 'no protocol'
 ]
 
-{ #category : #'printing items' }
+{ #category : 'printing items' }
 ClyItemDefinitionProperty >> printDefinition [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'printing items' }
+{ #category : 'printing items' }
 ClyItemDefinitionProperty >> printFullNameOf: anEnvironmentItem [
 
 	^anEnvironmentItem name, ' (', self printDefinition, ')'

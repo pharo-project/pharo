@@ -670,7 +670,8 @@ RPackage >> propertyAt: propName put: propValue [
 
 { #category : 'register' }
 RPackage >> register [
-	self organizer registerPackage: self
+
+	self organizer addPackage: self
 ]
 
 { #category : 'private - register' }

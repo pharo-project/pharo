@@ -1,35 +1,34 @@
 Class {
-	#name : #ClyBrowserToolValidityTest,
-	#superclass : #ClyBrowserContextAbstractTest,
+	#name : 'ClyBrowserToolValidityTest',
+	#superclass : 'ClyBrowserContextAbstractTest',
 	#instVars : [
 		'tool',
 		'context'
 	],
-	#category : #'Calypso-Browser-Tests'
+	#category : 'Calypso-Browser-Tests',
+	#package : 'Calypso-Browser-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolValidityTest >> isValidInContextOtherThan: someContexts [
 
 	^ (self allClyContextBut: someContexts) 
 		anySatisfy: [ :ctx | tool isValidInContext: ctx ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolValidityTest >> mockPackage [
 
-	^ [ RPackageOrganizer default createPackageNamed: self mockPackageName ]
-		on: RPackageConflictError 
-		do: [ : ex |  RPackageOrganizer default packageNamed: self mockPackageName ]
+	^ self packageOrganizer ensurePackage: self mockPackageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolValidityTest >> mockPackageName [
 
 	^ 'MockPackageForTestingCalypso'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCommentToolIsNotValidWhenNotAClassContext [
 
 	tool := self findBrowserTool: ClyRichTextClassCommentEditorToolMorph.
@@ -37,7 +36,7 @@ ClyBrowserToolValidityTest >> testClassCommentToolIsNotValidWhenNotAClassContext
 	self deny: (self isValidInContextOtherThan: { ClyFullBrowserClassContext }).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCommentToolIsNotValidWhenReferencingDifferentClass [
 
 	tool := self findBrowserTool: ClyRichTextClassCommentEditorToolMorph.
@@ -48,7 +47,7 @@ ClyBrowserToolValidityTest >> testClassCommentToolIsNotValidWhenReferencingDiffe
 	self deny: (tool isValidInContext: context).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCommentToolIsValidWhenReferencingSameClass [
 
 	tool := self findBrowserTool: ClyRichTextClassCommentEditorToolMorph.
@@ -56,7 +55,7 @@ ClyBrowserToolValidityTest >> testClassCommentToolIsValidWhenReferencingSameClas
 	self assert: (tool isValidInContext: self classContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCreationToolIsNotValidWhenNotAPackageOrClassGroupContext [
 	
 	self openBrowserWithPackageOnlySelected.
@@ -65,7 +64,7 @@ ClyBrowserToolValidityTest >> testClassCreationToolIsNotValidWhenNotAPackageOrCl
 	self deny: (self isValidInContextOtherThan: { ClyFullBrowserPackageContext . ClyFullBrowserClassGroupContext }).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCreationToolIsNotValidWhenReferencingDifferentClassGroup [
 
 	self openBrowserWithPackageAndClassGroupOnlySelected.
@@ -74,7 +73,7 @@ ClyBrowserToolValidityTest >> testClassCreationToolIsNotValidWhenReferencingDiff
 	self deny: (tool isValidInContext: self differentClassGroupContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCreationToolIsNotValidWhenReferencingDifferentPackage [
 
 	self openBrowserWithPackageOnlySelected.
@@ -83,7 +82,7 @@ ClyBrowserToolValidityTest >> testClassCreationToolIsNotValidWhenReferencingDiff
 	self deny: (tool isValidInContext: self differentPackageContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCreationToolIsValidWhenClassGroupContext [
 
 	self openBrowserWithPackageAndClassGroupOnlySelected.
@@ -92,7 +91,7 @@ ClyBrowserToolValidityTest >> testClassCreationToolIsValidWhenClassGroupContext 
 	self assert: (tool isValidInContext: self classGroupContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCreationToolIsValidWhenPackageContext [
 
 	self openBrowserWithPackageOnlySelected.
@@ -101,7 +100,7 @@ ClyBrowserToolValidityTest >> testClassCreationToolIsValidWhenPackageContext [
 	self assert: (tool isValidInContext: self packageContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassDefinitionToolIsNotValidWhenNotAClassContext [
 
 	tool := self findBrowserTool: ClyClassDefinitionEditorToolMorph.
@@ -109,7 +108,7 @@ ClyBrowserToolValidityTest >> testClassDefinitionToolIsNotValidWhenNotAClassCont
 	self deny: (self isValidInContextOtherThan: { ClyFullBrowserClassContext }).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassDefinitionToolIsNotValidWhenReferencingDifferentClass [
 
 	tool := self findBrowserTool: ClyClassDefinitionEditorToolMorph.
@@ -120,7 +119,7 @@ ClyBrowserToolValidityTest >> testClassDefinitionToolIsNotValidWhenReferencingDi
 	self deny: (tool isValidInContext: context).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassDefinitionToolIsValidWhenClassContext [
 
 	tool := self findBrowserTool: ClyClassDefinitionEditorToolMorph.
@@ -128,7 +127,7 @@ ClyBrowserToolValidityTest >> testClassDefinitionToolIsValidWhenClassContext [
 	self assert: (tool isValidInContext: self classContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testMethodEditorToolIsNotValidWhenNotAMethodContext [
 
 	tool := self findBrowserTool: ClyMethodCodeEditorToolMorph.
@@ -136,7 +135,7 @@ ClyBrowserToolValidityTest >> testMethodEditorToolIsNotValidWhenNotAMethodContex
 	self deny: (self isValidInContextOtherThan: { ClyFullBrowserMethodContext }).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testMethodEditorToolIsNotValidWhenReferencingDifferentMethod [
 
 	tool := self findBrowserTool: ClyMethodCodeEditorToolMorph.
@@ -144,7 +143,7 @@ ClyBrowserToolValidityTest >> testMethodEditorToolIsNotValidWhenReferencingDiffe
 	self deny: (tool isValidInContext: self differentMethodContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testMethodEditorToolIsValidWhenReferencingSameMethod [
 
 	tool := self findBrowserTool: ClyMethodCodeEditorToolMorph.
@@ -152,7 +151,7 @@ ClyBrowserToolValidityTest >> testMethodEditorToolIsValidWhenReferencingSameMeth
 	self assert: (tool isValidInContext: self methodContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testPackageCommentToolIsNotValidWhenNotAPackageOrClassGroupContext [
 
 	self openBrowserWithPackageOnlySelected.
@@ -161,7 +160,7 @@ ClyBrowserToolValidityTest >> testPackageCommentToolIsNotValidWhenNotAPackageOrC
 	self deny: (self isValidInContextOtherThan: { ClyFullBrowserPackageContext . ClyFullBrowserClassGroupContext }).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testPackageCommentToolIsNotValidWhenReferencingDifferentPackage [
 
 	self openBrowserWithPackageOnlySelected.
@@ -170,7 +169,7 @@ ClyBrowserToolValidityTest >> testPackageCommentToolIsNotValidWhenReferencingDif
 	self deny: (tool isValidInContext: self differentPackageContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testPackageCommentToolIsValidWhenClassGroupContext [
 
 	self openBrowserWithPackageAndClassGroupOnlySelected.
@@ -179,7 +178,7 @@ ClyBrowserToolValidityTest >> testPackageCommentToolIsValidWhenClassGroupContext
 	self assert: (tool isValidInContext: self classGroupContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testPackageCommentToolIsValidWhenReferencingDifferentClassGroup [
 
 	self openBrowserWithPackageAndClassGroupOnlySelected.
@@ -188,7 +187,7 @@ ClyBrowserToolValidityTest >> testPackageCommentToolIsValidWhenReferencingDiffer
 	self assert: (tool isValidInContext: self differentClassGroupContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testPackageCommmentToolIsValidWhenPackageContext [
 
 	self openBrowserWithPackageOnlySelected.
@@ -197,7 +196,7 @@ ClyBrowserToolValidityTest >> testPackageCommmentToolIsValidWhenPackageContext [
 	self assert: (tool isValidInContext: self packageContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testPackageSelectionAfterPackageCreation [
 
 	self deleteBrowser.
@@ -210,7 +209,7 @@ ClyBrowserToolValidityTest >> testPackageSelectionAfterPackageCreation [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testSetUpToolIsNotValidWhenNotAClassContext [
 
 	tool := self findBrowserTool: ClyTestSetUpEditorToolMorph.
@@ -218,7 +217,7 @@ ClyBrowserToolValidityTest >> testSetUpToolIsNotValidWhenNotAClassContext [
 	self deny: (self isValidInContextOtherThan: { ClyFullBrowserClassContext }).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testSetUpToolIsNotValidWhenReferencingDifferentClass [
 
 	tool := self findBrowserTool: ClyTestSetUpEditorToolMorph.
@@ -229,7 +228,7 @@ ClyBrowserToolValidityTest >> testSetUpToolIsNotValidWhenReferencingDifferentCla
 	self deny: (tool isValidInContext: context).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testSetUpToolIsValidWhenReferencingSameClass [
 
 	tool := self findBrowserTool: ClyTestSetUpEditorToolMorph.
@@ -237,7 +236,7 @@ ClyBrowserToolValidityTest >> testSetUpToolIsValidWhenReferencingSameClass [
 	self assert: (tool isValidInContext: self classContext).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testWindowLabelIsUpdatedAfterPackageRemoval [
 
 	| realPackage command activator cmdContext |
@@ -265,7 +264,7 @@ ClyBrowserToolValidityTest >> testWindowLabelIsUpdatedAfterPackageRemoval [
 		equals: 'Current image'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserToolValidityTest >> testWindowLabelSetAfterPackageCreation [
 
 	self deleteBrowser.
