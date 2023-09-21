@@ -77,7 +77,7 @@ RBRemoveClassRefactoringTest >> testFailureRaisesRBRefactoringErrorWhenRemovingN
 
 	| class |
 	class := ('RBTransformation' , 'RuleTestData1') asSymbol.
-	self shouldFail:
+	self shouldWarn:
 		(RBRemoveClassRefactoring model: model classNames: { class })
 ]
 
@@ -99,8 +99,9 @@ RBRemoveClassRefactoringTest >> testPreconditionHasNoReferencesWithClassesWithRe
 					model: model 
 					classNames: { #RBSharedPoolForTestData2 . #RBRemoveClassRefactoringTest }.
 	"RBSharedPoolForTestData2 refers to RBRemoveClassRefactoringTest and nobody else refers to them!"
+	refact prepareForExecution.
 	
-	self assert: (refact preconditionHasNoReferences: (refact model classNamed: #RBSharedPoolForTestData2)) check.
+	self assert: refact preconditionHaveNoReferences check
 ]
 
 { #category : 'tests preconditions' }
@@ -164,7 +165,7 @@ RBRemoveClassRefactoringTest >> testRemoveAClassAndTheirSubclass [
 			 model: model
 			 classNames: { #RBSharedPoolForTestData2 . #RBSharedPoolForTestData1 }.
 
-	aRefactoring generateChanges.
+	self proceedThroughWarning: [ aRefactoring generateChanges ].
 
 	self deny: (model includesClassNamed: #RBSharedPoolForTestData2).
 	self deny: (model includesClassNamed: #RBSharedPoolForTestData1)
@@ -183,7 +184,7 @@ RBRemoveClassRefactoringTest >> testRemoveAClassAndTheirSubclass2UsingAlimitedEn
 			 model: model
 			 classNames: {RBFooDummyLintRuleTest1 name . RBFooDummyLintRuleTest1 subclasses first name }.
 
-	aRefactoring generateChanges.
+	self proceedThroughWarning: [ aRefactoring generateChanges ].
 
 	self deny: (model includesClassNamed: RBFooDummyLintRuleTest1 name).
 	self deny: (model includesClassNamed: RBFooDummyLintRuleTest1 subclasses first name)
@@ -215,11 +216,13 @@ RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassIsAllowed [
 	refactoring := RBRemoveClassRefactoring 
 							model: model 
 							classNames: { #MyClassNonEmptyLeafUnused}.
+	refactoring prepareForExecution.
+	
 	sup := (refactoring model classNamed: #MyClassNonEmptyLeafUnused).
 	self assert: sup isNotNil.
 	self deny: sup isEmptyClass.
 	
-	self assert: (refactoring preconditionEmptyOrHasNoSubclasses: sup) check.
+	self assert: refactoring preconditionHaveNoSubclasses check | refactoring preconditionEmptyClasses check.
 	"It is not empty but it is a leaf so this is ok
 	"
 	self
@@ -239,13 +242,16 @@ RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassReparent [
 	refactoring := RBRemoveClassRefactoring 
 							model: model 
 							classNames: { #MyClassB}.
+	refactoring prepareForExecution.
+	
 	class := (refactoring model classNamed: #MyClassB).
 	superRoot := class superclass.
 	self assert: class isNotNil.
 	self assert: class isEmptyClass.
 	subclasses := class subclasses.
 
-	self assert: (refactoring preconditionEmptyOrHasNoSubclasses: class) check.
+	self assert: refactoring preconditionHaveNoSubclasses check.
+	self assert: refactoring preconditionEmptyClasses check.
 	"It is empty but it has subclasses so this is ok they will be reparented
 	"
 
