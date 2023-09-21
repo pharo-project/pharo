@@ -18,18 +18,6 @@ RPackageTest >> tearDown [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testActualClassTags [
-
-	| packageWithoutClassTags packageWithClassTags |
-	packageWithoutClassTags := self packageOrganizer packageOf: StartupAction.
-	self denyEmpty: packageWithoutClassTags classTags.
-	self assertEmpty: packageWithoutClassTags actualClassTags.
-
-	packageWithClassTags := self packageOrganizer packageOf: Object.
-	self assert: packageWithClassTags actualClassTags equals: packageWithClassTags classTags
-]
-
-{ #category : 'tests' }
 RPackageTest >> testAddClass [
 
 	| package1 package2 class done |
@@ -303,6 +291,54 @@ RPackageTest >> testRemoveEmptyTags [
 
 	self assert: (package includesClassTagNamed: #Tag1).
 	self deny: (package includesClassTagNamed: #Tag2)
+]
+
+{ #category : 'tests' }
+RPackageTest >> testRemoveTag [
+
+	| p1 a1 b1 |
+	p1 := self createNewPackageNamed: #P1.
+
+	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
+	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
+	self assert: p1 classTags size equals: 1. "We start with the root tag"
+
+	p1 importClass: a1 inTag: #foo.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
+
+	p1 importClass: b1 inTag: #foo.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
+
+	p1 removeTag: #bar.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
+
+	p1 removeTag: #foo.
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assertEmpty: (p1 classesTaggedWith: #foo)
+]
+
+{ #category : 'tests' }
+RPackageTest >> testRemoveTagRemoveClasses [
+
+	| p1 a1 |
+	p1 := self createNewPackageNamed: #P1.
+
+	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
+	self assert: p1 classTags size equals: 1. "We start with the root tag"
+
+	p1 importClass: a1 inTag: #foo.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
+
+	p1 removeTag: #foo.
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assertEmpty: (p1 classesTaggedWith: #foo).
+	self deny: (p1 includesClass: a1).
+	self assert: (self organizer packageOf: a1) name equals: RPackage defaultPackageName.
+	self assert: a1 isObsolete
 ]
 
 { #category : 'tests' }

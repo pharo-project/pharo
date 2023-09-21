@@ -18,7 +18,7 @@ RPackageTagTest >> tearDown [
 { #category : 'tests' }
 RPackageTagTest >> testAddClass [
 
-	| package1 package2 class |
+	| package1 package2 tag class |
 	package1 := self createNewPackageNamed: #Test1.
 	class := self createNewClassNamed: 'TestClass' inPackage: package1.
 
@@ -26,8 +26,11 @@ RPackageTagTest >> testAddClass [
 
 	package2 := self createNewPackageNamed: #Test2.
 
-	(package2 ensureTag: #TAG) addClass: class.
+	tag := package2 ensureTag: #TAG.
 
+	tag addClass: class.
+
+	self assert: class packageTag equals: tag.
 	self deny: (package1 includesClass: class).
 	self assert: (package2 includesClass: class).
 	self assert: (package2 hasTag: #TAG).
@@ -88,6 +91,23 @@ RPackageTagTest >> testPromoteAsPackage [
 	self assert: package2 isNotNil.
 	self assert: (package2 classes includes: class).
 	self deny: (package1 classes includes: class)
+]
+
+{ #category : 'tests' }
+RPackageTagTest >> testRemoveClass [
+
+	| package tag class |
+	package := self createNewPackageNamed: #Test1.
+	tag := package ensureTag: #TAG.
+	class := self createNewClassNamed: 'TestClass' inCategory: package name , '-TAG'.
+
+	self assert: (tag includesClass: class).
+
+	tag removeClass: class.
+
+	self deny: (tag includesClass: class).
+	self deny: (package includesClass: class).
+	self deny: class packageTag equals: tag
 ]
 
 { #category : 'tests' }

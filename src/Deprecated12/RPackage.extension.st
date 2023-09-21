@@ -1,6 +1,15 @@
 Extension { #name : 'RPackage' }
 
 { #category : '*Deprecated12' }
+RPackage >> actualClassTags [
+
+	self deprecated: 'This method is too specific and will be removed in future versions of Pharo.'.
+	(classTags size = 1 and: [ classTags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
+
+	^ classTags
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> addClassTag: tagName [
 
 	self deprecated: 'Use #ensureTag: instead' transformWith: '`@rcv addClassTag: `@arg' -> '`@rcv ensureTag: `@arg'.
