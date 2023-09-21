@@ -64,6 +64,7 @@ ReProperMethodProtocolRule >> critiqueFor: aMethod [
 
 { #category : 'accessing' }
 ReProperMethodProtocolRule >> group [
+
 	^ 'Clean Code'
 ]
 
