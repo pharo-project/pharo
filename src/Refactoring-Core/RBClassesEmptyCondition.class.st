@@ -35,6 +35,15 @@ RBClassesEmptyCondition >> isEmpty: aClass [
 			  aClass selectors isEmpty ] ]
 ]
 
+{ #category : 'printing' }
+RBClassesEmptyCondition >> printOn: aStream [
+
+	violators do: [ :violator |
+		aStream
+			nextPutAll: violator;
+			nextPut: Character cr ]
+]
+
 { #category : 'accessing' }
 RBClassesEmptyCondition >> violators [ 
 	^ violators

@@ -3,7 +3,9 @@ Class {
 	#superclass : 'RBDriver',
 	#instVars : [
 		'classes',
-		'users'
+		'haveNoReferences',
+		'empty',
+		'noSubclasses'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -19,6 +21,45 @@ RBRemoveClassDriver >> configureRefactoring [
 	refactoring prepareForInteractiveMode
 ]
 
+{ #category : 'execution' }
+RBRemoveClassDriver >> handleBreakingChanges [
+
+	| select items |
+	items := OrderedCollection new.
+	items add: (RBRemoveClassReparentChoice new driver: self).
+	empty violators ifNotEmpty: [
+		items add:
+			(RBRemoveClassAndPushStateToSubclassChoice new driver: self) ].
+	haveNoReferences violators ifNotEmpty: [
+		items add: (RBBrowseClassReferencesChoice new driver: self) ].
+	
+	select := SpSelectDialog new
+		          title: 'There are potentital breaking changes!';
+		          label: self labelBasedOnBreakingChanges;
+		          items: items;
+		          display: [ :each | each description ];
+		          displayIcon: [ :each |
+			          self iconNamed: each systemIconName ];
+		          openModal.
+
+	select ifNotNil: [ select action ]
+]
+
+{ #category : 'ui - dialogs' }
+RBRemoveClassDriver >> labelBasedOnBreakingChanges [
+
+	| stream |
+	stream := String new writeStream.
+	
+	empty printOn: stream.
+	noSubclasses printOn: stream.
+	haveNoReferences printOn: stream.
+	
+	stream nextPutAll: 'Select a strategy'.
+	
+	^ stream contents
+]
+
 { #category : 'removing' }
 RBRemoveClassDriver >> removeClassChanges [
 
@@ -28,34 +69,18 @@ RBRemoveClassDriver >> removeClassChanges [
 
 { #category : 'execution' }
 RBRemoveClassDriver >> runRefactoring [
-
-	| select haveNoReferences emptyOrNoSubclasses |
 	
 	self configureRefactoring.
 	refactoring applicabilityPreconditions check ifFalse: [
 		RBRefactoringError signal: refactoring applicabilityPreconditions errorString ].
 	
 	haveNoReferences := refactoring preconditionHaveNoReferences.
-	emptyOrNoSubclasses := refactoring preconditionEmptyOrHasNoSubclasses.
-	
-	haveNoReferences check & emptyOrNoSubclasses check
-			ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
-			ifFalse: [ 
-				| perClassViolators |
-										
-				haveNoReferences check ifTrue: [
-				perClassViolators := haveNoReferences violators.
-				users := perClassViolators flatCollect: [ :violators | violators ].
-				select := SpSelectDialog new 
-					title: 'There are ', users size asString,  ' classes using calling ', refactoring classNames asString;
-					label: 'Select a strategy';
-					items: (RBRemoveClassChoice subclasses collect: [ :each | each  new driver: self]);
-					display: [ :each | each description ];
-					displayIcon: [ :each | self iconNamed: each systemIconName ];
-					openModal.
+	empty := refactoring preconditionEmptyClasses.
+	noSubclasses := refactoring preconditionHaveNoSubclasses.
 
-	select ifNotNil: [ 	select action ]]
-	]	
+	haveNoReferences check & empty check & noSubclasses check
+			ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
+			ifFalse: [ self handleBreakingChanges ]
 
 ]
 

@@ -34,6 +34,15 @@ RBClassesHaveNoSubclassesCondition >> hasSubclasses: aClass excluding: classesLi
 		   copyWithoutAll: classesList) isNotEmpty
 ]
 
+{ #category : 'printing' }
+RBClassesHaveNoSubclassesCondition >> printOn: aStream [
+
+	violators do: [ :violator |
+		aStream
+			nextPutAll: violator;
+			nextPut: Character cr ]
+]
+
 { #category : 'accessing' }
 RBClassesHaveNoSubclassesCondition >> violators [ 
 	^ violators
