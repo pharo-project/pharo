@@ -80,9 +80,9 @@ RBRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses [
+RBRemoveClassRefactoring >> preconditionEmptyClasses [
 
-	^ RBClassIsEmptyOrHasNoSubclassesCondition new classes: classesDictionary					
+	^ RBClassesEmptyCondition new classes: classesDictionary
 ]
 
 { #category : 'helper methods' }
@@ -103,6 +103,12 @@ RBRemoveClassRefactoring >> preconditionHaveNoReferences [
 	^ RBClassesHaveNoReferencesCondition new
 		  model: model;
 		  classes: classesDictionary values
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> preconditionHaveNoSubclasses [
+
+	^ RBClassesHaveNoSubclassesCondition new classes: classesDictionary					
 ]
 
 { #category : 'preconditions' }
