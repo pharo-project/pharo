@@ -5,7 +5,6 @@ Class {
 	#name : 'RPackageTestCase',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'createdClasses',
 		'createdPackages',
 		'testEnvironment'
 	],
@@ -40,7 +39,6 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 			       installingEnvironment: testEnvironment;
 			       package: cat ].
 
-	createdClasses add: cls.
 	createdPackages add: cls package.
 	^ cls
 ]
@@ -79,7 +77,6 @@ RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 			       installingEnvironment: testEnvironment;
 			       beTrait ].
 
-	createdClasses add: cls.
 	createdPackages add: cls package.
 	^ cls
 ]
@@ -128,14 +125,13 @@ RPackageTestCase >> runCase [
 RPackageTestCase >> setUp [
 
 	super setUp.
-	createdClasses := Set new.
 	createdPackages := Set new
 ]
 
 { #category : 'running' }
 RPackageTestCase >> tearDown [
 
-	createdClasses do: [ :cls | cls removeFromSystem ].
+	self organizer environment allClasses do: [ :cls | cls removeFromSystem ].
 
 	super tearDown
 ]
