@@ -9,7 +9,7 @@ Class {
 { #category : 'accessing' }
 RBRemoveClassAndPushStateToSubclassChoice >> action [ 
 
-	self halt.
+	driver removeClassAndPushStateToSubclasses
 ]
 
 { #category : 'accessing' }

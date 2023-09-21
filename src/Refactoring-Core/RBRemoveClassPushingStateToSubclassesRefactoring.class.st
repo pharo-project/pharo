@@ -95,3 +95,11 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> privateTransform [
 RBRemoveClassPushingStateToSubclassesRefactoring >> removeClasses [
 	classNames do: [:each | self model removeClassKeepingSubclassesNamed: each]
 ]
+
+{ #category : 'removing' }
+RBRemoveClassPushingStateToSubclassesRefactoring >> removeClassesChanges [
+
+	self privateTransform.
+	
+	^ self changes
+]
