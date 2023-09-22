@@ -1,7 +1,7 @@
 "
 I am a refactoring for removing classes. 
 
-My precondition verifies that the class name exists in this namespace and the class has no references (direct references or symbols representing the class).
+My precondition verifies that the class name exists in this namespace and the class has no references (direct references only! pay attention we don't check for symbols representing the class!!!).
 
 If this class is ""empty"" (has no methods and no variables), any subclass is reparented to the superclass of this class. It is not allowed to remove non-empty classes when it has subclasses.
 "
@@ -9,7 +9,8 @@ Class {
 	#name : 'RBRemoveClassRefactoring',
 	#superclass : 'RBRefactoring',
 	#instVars : [
-		'classNames'
+		'classNames',
+		'classesDictionary'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -37,6 +38,38 @@ RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> applicabilityPreconditions [
+
+	| conditions |
+	conditions := self trueCondition.
+	classesDictionary keysAndValuesDo: [ :className :class |
+		class ifNil: [ 
+			 self refactoringError: 'No such class or trait ' , className].
+		conditions & (self preconditionIsNotMetaclass: class) ].
+	^ conditions
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> breakingChangePreconditions [
+	"Empty error blocks are here so that warnings are raised. This is a ugly hack..."
+
+	^ ((RBCondition
+		   withBlock: [ self preconditionHaveNoReferences check ]
+		   errorString: 'Some classes still have references') errorBlock: [ ] )
+	  & (((RBCondition
+			    withBlock: [ self preconditionHaveNoSubclasses check ]
+			    errorString: 'Some classes have subclasses') errorBlock: [ ] )
+			| ((RBCondition
+			    withBlock: [ self preconditionEmptyClasses check ]
+			    errorString: 'Some classes are not empty') errorBlock: [ ] ))
+]
+
+{ #category : 'accessing' }
+RBRemoveClassRefactoring >> classNames [
+	^ classNames
+]
+
 { #category : 'initialization' }
 RBRemoveClassRefactoring >> classNames: aClassNameCollection [
 	classNames := aClassNameCollection
@@ -50,26 +83,12 @@ RBRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses: aClass [
-	^ (RBCondition hasSubclasses: aClass excluding: classNames) not
-		|
-		(RBCondition isEmptyClass: aClass)
-			
-					
+RBRemoveClassRefactoring >> preconditionEmptyClasses [
+
+	^ RBClassesEmptyCondition new classes: classesDictionary
 ]
 
-{ #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionHasNoReferences: aClass [
-	
-	| referencingClassNames |
-	referencingClassNames := (self refactoringAwareReferencesTo: aClass).
-	^ (RBCondition withBlock: [ referencingClassNames isEmpty ])
-			errorMacro: aClass name , ' is referenced.<n>Browse references?';
-			errorBlock: [ self openBrowserOn: (RBClassEnvironment classes: referencingClassNames) ];
-			yourself
-]
-
-{ #category : 'preconditions' }
+{ #category : 'helper methods' }
 RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
 
 	^ (RBCondition withBlock: [
@@ -82,31 +101,43 @@ RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
 ]
 
 { #category : 'preconditions' }
+RBRemoveClassRefactoring >> preconditionHaveNoReferences [
+
+	^ RBClassesHaveNoReferencesCondition new
+		  model: model;
+		  classes: classesDictionary values
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> preconditionHaveNoSubclasses [
+
+	^ RBClassesHaveNoSubclassesCondition new classes: classesDictionary					
+]
+
+{ #category : 'preconditions' }
 RBRemoveClassRefactoring >> preconditionIsNotMetaclass: aClass [
 	^ ((RBCondition isMetaclass: aClass) errorMacro: 'Cannot remove just the metaclass') not
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionNoTopClasses: aClass [
+RBRemoveClassRefactoring >> preconditions [
+	"We hope in the future to push up this method to RBRefactoring"
 
-	^ RBCondition 
-		withBlock: [ aClass superclass notNil ]
-		errorString: 'Cannot remove top level class<n>when it has subclasses'
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
-{ #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditions [
+{ #category : 'transforming' }
+RBRemoveClassRefactoring >> prepareForExecution [
 
-	^ classNames inject: self trueCondition into: [ :sum :each |
-		  | aClassOrTrait |
-		  aClassOrTrait := self model classNamed: each asSymbol.
-		  aClassOrTrait ifNil: [
-			  self refactoringError: 'No such class or trait' ].
-		  sum & ((self preconditionNoTopClasses: aClassOrTrait) 
-			& (self preconditionIsNotMetaclass: aClassOrTrait)
-		   & (self preconditionHasNoReferences: aClassOrTrait)
-		   & (self preconditionEmptyOrHasNoSubclasses: aClassOrTrait)
-		   & (self preconditionHasNoUsers: aClassOrTrait)) ] 
+	classesDictionary := (classNames collect: [ :className |
+		            className -> (self model classNamed: className asSymbol) ])
+		           asDictionary
+]
+
+{ #category : 'preparation' }
+RBRemoveClassRefactoring >> prepareForInteractiveMode [
+
+	self prepareForExecution.
 ]
 
 { #category : 'transforming' }
@@ -117,19 +148,19 @@ RBRemoveClassRefactoring >> privateTransform [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassRefactoring >> refactoringAwareReferencesTo: aClass [
-	"Return the references to the class taking into account that some references may be created by other classes that should be removed by the refactoring."
-	
-^ ((self model classesReferencingClass: aClass) 
-		collect: [ :each | each name ]) copyWithoutAll: classNames
-]
-
-{ #category : 'preconditions' }
 RBRemoveClassRefactoring >> refactoringAwareUsesOf: aClass [
 	"Return the 'symbol use' to the class taking into account that some uses may be created by other classes that should be removed by the refactoring."
 	
 ^ ((self model allReferencesTo: aClass name)
 		collect: [ :each | each methodClass name ]) copyWithoutAll: classNames
+]
+
+{ #category : 'removing' }
+RBRemoveClassRefactoring >> removeClassChanges [
+
+	self privateTransform.
+
+	^ self changes
 ]
 
 { #category : 'transforming' }
@@ -144,6 +175,15 @@ RBRemoveClassRefactoring >> reparentSubclasses [
 			| class |
 			class := self model classNamed: each.
 			self model reparentClasses: class subclasses copy to: class superclass]
+]
+
+{ #category : 'private' }
+RBRemoveClassRefactoring >> senders [
+
+	^ classNames flatCollect: [ :className |
+		  | aClass |
+		  aClass := self model classNamed: className asSymbol.
+		  self refactoringAwareReferencesTo: aClass ]
 ]
 
 { #category : 'printing' }

@@ -97,9 +97,8 @@ ImageCleaner >> cleanUpForRelease [
 			((each respondsTo: #releaseCachedState) and: [ (each isKindOf: RubAbstractTextArea) not ])
 				ifTrue: [ each releaseCachedState ] ].
 
-	self
-		removeEmptyCategories;
-		removeEmptyPackages.
+	self removeEmptyCategories.
+	self packageOrganizer removeEmptyPackagesAndTags.
 
 	Smalltalk
 		garbageCollect;
@@ -215,13 +214,6 @@ ImageCleaner >> removeEmptyCategories [
 	Smalltalk allClassesAndTraitsDo: [ :class |
 		class removeEmptyProtocols.
 		class class removeEmptyProtocols ]
-]
-
-{ #category : 'cleaning' }
-ImageCleaner >> removeEmptyPackages [
-	| empty |
-	empty := RPackageOrganizer default packages select: #isEmpty.
-	empty do: #unregister
 ]
 
 { #category : 'literal sharing' }

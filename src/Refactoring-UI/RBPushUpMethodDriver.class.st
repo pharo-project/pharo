@@ -16,8 +16,7 @@ Class {
 	#instVars : [
 		'class',
 		'methods',
-		'superclass',
-		'refactoring'
+		'superclass'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

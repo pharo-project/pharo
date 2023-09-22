@@ -34,8 +34,9 @@ RBNegationCondition >> condition: aCondition [
 ]
 
 { #category : 'private' }
-RBNegationCondition >> errorBlockFor: aBoolean [
-	^condition errorBlockFor: aBoolean not
+RBNegationCondition >> errorBlock [
+
+	^ condition errorBlock
 ]
 
 { #category : 'private' }

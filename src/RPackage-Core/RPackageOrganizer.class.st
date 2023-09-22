@@ -175,6 +175,27 @@ RPackageOrganizer >> addMethod: method [
 	package addMethod: method
 ]
 
+{ #category : 'registration' }
+RPackageOrganizer >> addPackage: aPackage [
+
+	| package |
+	self validatePackageDoesNotExist: aPackage.
+
+	aPackage isString
+		ifTrue: [ package := RPackage named: aPackage organizer: self ]
+		ifFalse: [
+			aPackage organizer: self.
+			aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
+			aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
+			package := aPackage ].
+
+	self basicRegisterPackage: package.
+
+	SystemAnnouncer announce: (PackageAdded to: package).
+
+	^ package
+]
+
 { #category : 'system integration' }
 RPackageOrganizer >> announcer [
 	^SystemAnnouncer uniqueInstance private
@@ -213,14 +234,6 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	^ packages removeKey: aPackage name ifAbsent: [  ]
 ]
 
-{ #category : 'registration' }
-RPackageOrganizer >> createPackageNamed: aString [
-
-	self validatePackageDoesNotExist: aString.
-
-	^ self ensurePackage: aString
-]
-
 { #category : 'initialization' }
 RPackageOrganizer >> defineUnpackagedClassesPackage [
 
@@ -230,18 +243,7 @@ RPackageOrganizer >> defineUnpackagedClassesPackage [
 { #category : 'registration' }
 RPackageOrganizer >> ensurePackage: aPackage [
 
-	| packageName |
-	packageName := aPackage isString
-		               ifTrue: [ aPackage ]
-		               ifFalse: [ aPackage name ].
-
-	(self hasPackage: aPackage) ifTrue: [ ^ self packageNamed: packageName ].
-
-	^ aPackage isString
-		  ifTrue: [ self packageNamed: aPackage ifAbsent: [ self registerPackage: (RPackage named: aPackage organizer: self) ] ]
-		  ifFalse: [
-			  (self hasPackage: aPackage) ifFalse: [ self registerPackage: aPackage ].
-			  aPackage ]
+	^ self packageNamed: (aPackage isString ifTrue: [ aPackage ] ifFalse: [ aPackage name ]) ifAbsent: [ self addPackage: aPackage ]
 ]
 
 { #category : 'registration' }
@@ -457,23 +459,6 @@ RPackageOrganizer >> registerInterestToSystemAnnouncement [
 	self registerInterestToAnnouncer: self announcer
 ]
 
-{ #category : 'registration' }
-RPackageOrganizer >> registerPackage: aPackage [
-	"A new package is now available and declared in the receiver. "
-
-	self
-		packageNamed: aPackage name
-		ifPresent: [ RPackageConflictError signal: ('Package can not be added because it conflicts with package a package of the same name.' format: { aPackage name }) ].
-
-	self basicRegisterPackage: aPackage.
-	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
-	aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
-
-	SystemAnnouncer announce: (PackageAdded to: aPackage).
-
-	^ aPackage
-]
-
 { #category : 'private - registration' }
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 
@@ -638,7 +623,11 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 ]
 
 { #category : 'registration' }
-RPackageOrganizer >> validatePackageDoesNotExist: aPackageName [
+RPackageOrganizer >> validatePackageDoesNotExist: aPackage [
 
-	(self hasPackage: aPackageName) ifTrue: [ RPackageConflictError signal: ('A package named {1} already exists' format: { aPackageName }) ]
+	| packageName |
+	packageName := aPackage isString
+		               ifTrue: [ aPackage ]
+		               ifFalse: [ aPackage name ].
+	self packageNamed: packageName ifPresent: [ RPackageConflictError signal: ('A package named {1} already exists' format: { packageName }) ]
 ]

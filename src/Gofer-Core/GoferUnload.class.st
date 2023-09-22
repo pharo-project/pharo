@@ -66,7 +66,7 @@ GoferUnload >> unregisterPackageInfo: aWorkingCopy [
 { #category : 'unregistering' }
 GoferUnload >> unregisterPackageSet: aWorkingCopy [
 
-	aWorkingCopy packageSet unregister
+	aWorkingCopy packageSet removeFromSystem
 ]
 
 { #category : 'unregistering' }

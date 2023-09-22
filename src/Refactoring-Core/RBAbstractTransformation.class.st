@@ -204,7 +204,8 @@ RBAbstractTransformation >> execute [
 { #category : 'executing' }
 RBAbstractTransformation >> generateChanges [
 	"compatibility method RBRefactoring"
-
+	
+	self prepareForExecution.
 	self checkPreconditions.
 	self privateTransform
 	
@@ -309,6 +310,12 @@ RBAbstractTransformation >> poolVariableNamesIn: poolName [
 RBAbstractTransformation >> preconditions [
 
 	self subclassResponsibility
+]
+
+{ #category : 'transforming' }
+RBAbstractTransformation >> prepareForExecution [
+	"I am empty by default. You can override me to initialize your instance variables just before execution.
+	I am typicaly a place where names (of classes, methods, etc.) are converted to RB model entities."
 ]
 
 { #category : 'transforming' }

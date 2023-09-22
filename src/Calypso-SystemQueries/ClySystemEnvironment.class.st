@@ -171,7 +171,8 @@ Is this really what you want to do?') asText
 
 { #category : 'package management' }
 ClySystemEnvironment >> createPackageNamed: packageName [
-	^packageOrganizer createPackageNamed: packageName
+
+	^ packageOrganizer addPackage: packageName
 ]
 
 { #category : 'class compilation' }

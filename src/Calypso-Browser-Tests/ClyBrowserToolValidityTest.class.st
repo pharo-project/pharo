@@ -19,9 +19,7 @@ ClyBrowserToolValidityTest >> isValidInContextOtherThan: someContexts [
 { #category : 'accessing' }
 ClyBrowserToolValidityTest >> mockPackage [
 
-	^ [ RPackageOrganizer default createPackageNamed: self mockPackageName ]
-		on: RPackageConflictError 
-		do: [ : ex |  RPackageOrganizer default packageNamed: self mockPackageName ]
+	^ self packageOrganizer ensurePackage: self mockPackageName
 ]
 
 { #category : 'accessing' }

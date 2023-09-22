@@ -75,10 +75,11 @@ RBRenameMethodRefactoring >> breakingChangePreconditions [
 	^ self doesNotOverrideExistingMethodPrecondition 
 ]
 
-{ #category : 'actions' }
+{ #category : 'executing' }
 RBRenameMethodRefactoring >> generateChanges [
 
-	
+	self prepareForExecution.
+
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
