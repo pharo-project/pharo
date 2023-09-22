@@ -19,6 +19,12 @@ Class {
 	#tag : 'RPackage'
 }
 
+{ #category : 'accessing' }
+RPackageMCSynchronisationTest >> allWorkingCopies [
+
+	^ MCWorkingCopy allWorkingCopies
+]
+
 { #category : 'setup' }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
@@ -109,6 +115,10 @@ RPackageMCSynchronisationTest >> tearDown [
 	MCWorkingCopy removeDependent: self emptyOrganizer.
 	self cleanClassesPackagesAndCategories.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
+	createdPackages do: [ :each |
+		self allWorkingCopies
+			detect: [ :mcPackage | mcPackage packageName = each packageName asString ]
+			ifFound: [ :mcPackage | mcPackage unregister ] ].
 	super tearDown
 ]
 
