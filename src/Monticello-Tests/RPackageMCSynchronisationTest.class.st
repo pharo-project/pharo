@@ -115,9 +115,9 @@ RPackageMCSynchronisationTest >> tearDown [
 	MCWorkingCopy removeDependent: self emptyOrganizer.
 	self cleanClassesPackagesAndCategories.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	createdPackages do: [ :each |
+	self organizer package do: [ :package |
 		self allWorkingCopies
-			detect: [ :mcPackage | mcPackage packageName = each packageName asString ]
+			detect: [ :mcPackage | mcPackage packageName = package name ]
 			ifFound: [ :mcPackage | mcPackage unregister ] ].
 	super tearDown
 ]

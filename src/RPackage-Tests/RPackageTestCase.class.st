@@ -5,7 +5,6 @@ Class {
 	#name : 'RPackageTestCase',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'createdPackages',
 		'testEnvironment'
 	],
 	#category : 'RPackage-Tests',
@@ -15,7 +14,7 @@ Class {
 { #category : 'utilities' }
 RPackageTestCase >> createMockTestPackages [
 
-	^ self namesOfMockTestPackages collect: [:pName | self createNewPackageNamed: pName]
+	^ self namesOfMockTestPackages collect: [:pName | self ensurePackage: pName]
 ]
 
 { #category : 'utilities' }
@@ -26,15 +25,11 @@ RPackageTestCase >> createNewClassNamed: aName [
 { #category : 'utilities' }
 RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 
-	| cls |
-	cls := self class classInstaller make: [ :aClassBuilder |
-		       aClassBuilder
-			       name: aName;
-			       installingEnvironment: testEnvironment;
-			       package: cat ].
-
-	createdPackages add: cls package.
-	^ cls
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: cat ]
 ]
 
 { #category : 'utilities' }
@@ -47,15 +42,6 @@ RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 ]
 
 { #category : 'utilities' }
-RPackageTestCase >> createNewPackageNamed: aName [
-
-	| pack |
-	pack := self organizer ensurePackage: aName.
-	createdPackages add: pack.
-	^ pack
-]
-
-{ #category : 'utilities' }
 RPackageTestCase >> createNewTraitNamed: aName [
 	^ self createNewTraitNamed: aName inCategory: 'RPackageTest'
 ]
@@ -63,16 +49,12 @@ RPackageTestCase >> createNewTraitNamed: aName [
 { #category : 'utilities' }
 RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 
-	| cls |
-	cls := self class classInstaller make: [ :aBuilder |
-		       aBuilder
-			       name: aName;
-			       package: cat;
-			       installingEnvironment: testEnvironment;
-			       beTrait ].
-
-	createdPackages add: cls package.
-	^ cls
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: aName;
+			  package: cat;
+			  installingEnvironment: testEnvironment;
+			  beTrait ]
 ]
 
 { #category : 'utilities' }
@@ -82,6 +64,12 @@ RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 	cls := self createNewTraitNamed: aName.
 	p importClass: cls.
 	^ cls
+]
+
+{ #category : 'utilities' }
+RPackageTestCase >> ensurePackage: aName [
+
+	^ self organizer ensurePackage: aName
 ]
 
 { #category : 'utilities' }
@@ -107,13 +95,6 @@ RPackageTestCase >> runCase [
 		  self performTest ] ] ensure: [
 		self tearDown.
 		self cleanUpInstanceVariables ]
-]
-
-{ #category : 'running' }
-RPackageTestCase >> setUp [
-
-	super setUp.
-	createdPackages := Set new
 ]
 
 { #category : 'running' }
