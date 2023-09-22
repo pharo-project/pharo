@@ -114,7 +114,9 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 
 { #category : 'executing' }
 RBRemoveMethodRefactoring >> generateChanges [
-	
+
+	self prepareForExecution.
+
 	transformation applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  transformation applicabilityPreconditions errorString ].
@@ -166,6 +168,7 @@ RBRemoveMethodRefactoring >> privateTransform [
 
 { #category : 'actions' }
 RBRemoveMethodRefactoring >> removeMethodChanges [
+	"Pay attention, don't call directly since this method skips preconditions."
 
 	self privateTransform.
 	^ self changes

@@ -15,9 +15,6 @@ You can create my instance and execute the refactoring by running:
 Class {
 	#name : 'RBMoveMethodsToClassSideDriver',
 	#superclass : 'RBDriver',
-	#instVars : [
-		'refactoring'
-	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'

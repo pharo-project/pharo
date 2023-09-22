@@ -6,8 +6,7 @@ Class {
 	#superclass : 'RBDriver',
 	#instVars : [
 		'class',
-		'variables',
-		'refactoring'
+		'variables'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

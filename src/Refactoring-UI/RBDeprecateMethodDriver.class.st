@@ -14,7 +14,6 @@ Class {
 	#name : 'RBDeprecateMethodDriver',
 	#superclass : 'RBDriver',
 	#instVars : [
-		'refactoring',
 		'useInsteadSelector',
 		'selectorToDeprecate'
 	],

@@ -29,9 +29,11 @@ RBRemoveInstanceVariableRefactoring >> breakingChangePreconditions [
 	
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'executing' }
 RBRemoveInstanceVariableRefactoring >> generateChanges [
 	
+	self prepareForExecution.
+
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
