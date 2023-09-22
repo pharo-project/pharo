@@ -46,7 +46,8 @@ RBClassesHaveNoSubclassesCondition >> printOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
-			nextPutAll: violator;
+			nextPutAll: violator name;
+			nextPutAll: ' has subclasses.';
 			nextPut: Character cr ]
 ]
 
@@ -54,9 +55,9 @@ RBClassesHaveNoSubclassesCondition >> printOn: aStream [
 RBClassesHaveNoSubclassesCondition >> violators [
 
 	^ violators ifNil: [
-		  violators := Dictionary new.
+		  violators := OrderedCollection new.
 		  classes collect: [ :aClass |
 			  (self hasSubclasses: aClass excluding: classes) ifTrue: [
-				  violators at: aClass put: aClass name , ' has subclasses.' ] ].
+				  violators add: aClass ] ].
 		  violators ]
 ]

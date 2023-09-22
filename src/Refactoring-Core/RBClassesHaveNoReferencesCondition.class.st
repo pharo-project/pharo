@@ -67,11 +67,12 @@ RBClassesHaveNoReferencesCondition >> violators [
 		  referencingClassesDictionary := Dictionary new.
 
 		  classes do: [ :aClass |
+			  | methodsReferencingClass |
+			  methodsReferencingClass := (model methodsReferencingClass: aClass) reject: [ :each |
+						    classes includes: each methodClass ].
 			  referencingClassesDictionary
 				  at: aClass
-				  put:
-					  (((model classesReferencingClass: aClass) collect: [ :each |
-						    each ]) copyWithoutAll: classes) ].
+				  put: methodsReferencingClass ].
 			referencingClassesDictionary 
 		]
 ]
