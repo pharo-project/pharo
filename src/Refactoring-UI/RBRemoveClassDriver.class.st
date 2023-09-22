@@ -43,6 +43,9 @@ RBRemoveClassDriver >> handleBreakingChanges [
 	haveNoReferences isFalse ifTrue: [
 		items add: (RBBrowseClassReferencesChoice new driver: self) ].
 	
+	items size = 1
+		ifTrue: [ ^ items first action ].
+		
 	select := SpSelectDialog new
 		          title: 'There are potentital breaking changes!';
 		          label: self labelBasedOnBreakingChanges;
