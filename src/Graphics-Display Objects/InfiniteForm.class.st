@@ -2,15 +2,17 @@
 I represent a Form obtained by replicating a pattern form indefinitely in all directions.
 "
 Class {
-	#name : #InfiniteForm,
-	#superclass : #DisplayObject,
+	#name : 'InfiniteForm',
+	#superclass : 'DisplayObject',
 	#instVars : [
 		'patternForm'
 	],
-	#category : #'Graphics-Display Objects-Forms'
+	#category : 'Graphics-Display Objects-Forms',
+	#package : 'Graphics-Display Objects',
+	#tag : 'Forms'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 InfiniteForm class >> with: aForm [
 	"Answer an instance of me whose pattern form is the argument, aForm."
 
@@ -19,46 +21,46 @@ InfiniteForm class >> with: aForm [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 InfiniteForm >> addFillStyleMenuItems: aMenu hand: aHand from: aMorph [
 	"Add the items for changing the current fill style of the receiver"
 
 	"prevents a walkback when control menu is built for morph with me as color"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfiniteForm >> asColor [
 	^ patternForm dominantColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfiniteForm >> asForm [
 	^ patternForm
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : 'fillstyle protocol' }
 InfiniteForm >> bitPatternForDepth: suspectedDepth [
 	^ patternForm
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 InfiniteForm >> colorForInsets [
 	^ Color transparent
 ]
 
-{ #category : #'display box access' }
+{ #category : 'display box access' }
 InfiniteForm >> computeBoundingBox [
 	"Refer to the comment in DisplayObject|computeBoundingBox."
 
 	^0 @ 0 corner: SmallInteger maxVal @ SmallInteger maxVal
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : 'fillstyle protocol' }
 InfiniteForm >> direction [
 	^patternForm width @ 0
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 InfiniteForm >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle rule: ruleInteger fillColor: aForm [
 	"This is the real display message, but it doesn't get used until the new
 	display protocol is installed."
@@ -83,7 +85,7 @@ InfiniteForm >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRec
 			bb destOrigin: x@y; copyBits]]
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 InfiniteForm >> displayOnPort: aPort at: offset [
 
 	| targetBox patternBox savedMap top left |
@@ -111,7 +113,7 @@ InfiniteForm >> displayOnPort: aPort at: offset [
 	aPort colorMap: savedMap
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 InfiniteForm >> displayOnPort: aPort offsetBy: offset [
 
 	| targetBox patternBox savedMap top left |
@@ -140,90 +142,90 @@ InfiniteForm >> displayOnPort: aPort offsetBy: offset [
 	aPort colorMap: savedMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfiniteForm >> dominantColor [
 	^ patternForm dominantColor
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : 'fillstyle protocol' }
 InfiniteForm >> form [
 	"Bitmap fills respond to #form"
 	^patternForm
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InfiniteForm >> form: aForm [
 
 	patternForm := aForm
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InfiniteForm >> isBitmapFill [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InfiniteForm >> isGradientFill [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InfiniteForm >> isOrientedFill [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InfiniteForm >> isSolidFill [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InfiniteForm >> isTiled [
 	"Return true if the receiver should be drawn as a tiled pattern"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InfiniteForm >> isTranslucent [
 	"Return true since the bitmap may be translucent and we don't really want to check"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InfiniteForm >> mightBeTranslucent [
 	"Return true since the bitmap may be translucent and we don't really want to check"
 	^true
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : 'fillstyle protocol' }
 InfiniteForm >> normal [
 	^0 @ patternForm height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfiniteForm >> offset [
 	"Refer to the comment in DisplayObject|offset."
 
 	^0 @ 0
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : 'fillstyle protocol' }
 InfiniteForm >> origin [
 	^0@0
 ]
 
-{ #category : #'fillstyle protocol' }
+{ #category : 'fillstyle protocol' }
 InfiniteForm >> origin: aPoint [
 	"Ignored"
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 InfiniteForm >> raisedColor [
 	^ Color transparent
 ]

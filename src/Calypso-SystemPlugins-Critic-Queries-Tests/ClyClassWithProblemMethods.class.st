@@ -2,25 +2,26 @@
 I am an example class which methods have example critiques
 "
 Class {
-	#name : #ClyClassWithProblemMethods,
-	#superclass : #Object,
-	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
+	#name : 'ClyClassWithProblemMethods',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemPlugins-Critic-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 
-{ #category : #'method examples' }
+{ #category : 'method examples' }
 ClyClassWithProblemMethods >> methodWithHalt [
 	<haltOrBreakpointForTesting>
 	self halt.
 	self methodWithHalt2
 ]
 
-{ #category : #'method examples' }
+{ #category : 'method examples' }
 ClyClassWithProblemMethods >> methodWithHalt2 [
 	<haltOrBreakpointForTesting>
 	self halt
 ]
 
-{ #category : #'method examples' }
+{ #category : 'method examples' }
 ClyClassWithProblemMethods >> methodWithoutCritiques [
 	"this is example method which should not have critiques"
 	^self printString

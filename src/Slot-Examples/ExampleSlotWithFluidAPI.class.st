@@ -2,16 +2,18 @@
 This is an example of a slot that has meta data which is set using a fluid api (cascade)
 "
 Class {
-	#name : #ExampleSlotWithFluidAPI,
-	#superclass : #InstanceVariableSlot,
+	#name : 'ExampleSlotWithFluidAPI',
+	#superclass : 'InstanceVariableSlot',
 	#instVars : [
 		'value1',
 		'value2'
 	],
-	#category : #'Slot-Examples-Base'
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExampleSlotWithFluidAPI >> printOn: aStream [
 	aStream
 		store: self name;
@@ -24,25 +26,25 @@ ExampleSlotWithFluidAPI >> printOn: aStream [
 		store: value2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExampleSlotWithFluidAPI >> value1 [
 
 	^ value1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExampleSlotWithFluidAPI >> value1: anObject [
 
 	value1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExampleSlotWithFluidAPI >> value2 [
 
 	^ value2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExampleSlotWithFluidAPI >> value2: anObject [
 
 	value2 := anObject

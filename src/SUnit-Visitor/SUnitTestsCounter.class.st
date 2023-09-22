@@ -2,31 +2,32 @@
 A visitor which count tests in the visitable object provided.
 "
 Class {
-	#name : #SUnitTestsCounter,
-	#superclass : #SUnitVisitor,
+	#name : 'SUnitTestsCounter',
+	#superclass : 'SUnitVisitor',
 	#instVars : [
 		'count'
 	],
-	#category : #'SUnit-Visitor'
+	#category : 'SUnit-Visitor',
+	#package : 'SUnit-Visitor'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SUnitTestsCounter >> count [
 	^ count
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SUnitTestsCounter >> count: anObject [
 	count := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SUnitTestsCounter >> initialize [
 	super initialize.
 	self count: 0
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitTestsCounter >> visitTestCase: aTestCase [
 	"Defines the behaviour while visiting a TestCase.
 	 This method must be overrided by users of this trait.

@@ -1,6 +1,6 @@
-Extension { #name : #Float }
+Extension { #name : 'Float' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Float >> packAsDoubleToArity: arity [
 	| rolledPointer |
 
@@ -9,7 +9,7 @@ Float >> packAsDoubleToArity: arity [
 	^ rolledPointer
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Float >> packAsFloatToArity: arity [
 	| rolledPointer |
 
@@ -18,12 +18,12 @@ Float >> packAsFloatToArity: arity [
 	^ rolledPointer
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Float >> packToArity: arity [
 	self error: 'Use #rollAsFloatArity: or #rollAsDoubleArity:'
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Float >> pointer [
 	"Floats in Pharo are 64bits (8 bytes) and that correspond directly with a double on C.
 	 So 'default' behaviour will be to address it as a double (float is also available in case is
@@ -31,7 +31,7 @@ Float >> pointer [
 	^ self pointerDouble
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Float >> pointerDouble [
 	"sizeof(double)== 8"
 	^ (ByteArray new: FFIFloat64 externalTypeSize)
@@ -39,7 +39,7 @@ Float >> pointerDouble [
 		yourself
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Float >> pointerFloat [
 	"sizeof(float)== 4"
 	^ (ByteArray new: FFIFloat32 externalTypeSize)

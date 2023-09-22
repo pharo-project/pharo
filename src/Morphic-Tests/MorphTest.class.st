@@ -5,27 +5,29 @@ This is the unit test for the class Morph. Unit tests are a good way to exercise
 	- the sunit class category
 "
 Class {
-	#name : #MorphTest,
-	#superclass : #TestCase,
+	#name : 'MorphTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'morph'
 	],
-	#category : #'Morphic-Tests-Kernel'
+	#category : 'Morphic-Tests-Kernel',
+	#package : 'Morphic-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MorphTest >> setUp [
 	super setUp.
 	morph := Morph new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MorphTest >> tearDown [
 	morph delete.
 	super tearDown
 ]
 
-{ #category : #'testing - geometry' }
+{ #category : 'testing - geometry' }
 MorphTest >> testBoundingBoxOfSubmorphs [
 
 	| subMorph |
@@ -38,7 +40,7 @@ MorphTest >> testBoundingBoxOfSubmorphs [
 	self assert: morph boundingBoxOfSubmorphs equals: subMorph bounds
 ]
 
-{ #category : #'testing - geometry' }
+{ #category : 'testing - geometry' }
 MorphTest >> testExtent [
 	| m1 m2 v1 v2 v3 b1 b2 |
 	m1 := Morph new.
@@ -57,7 +59,7 @@ MorphTest >> testExtent [
 	self assert: b2 equals: b1
 ]
 
-{ #category : #'testing - testing' }
+{ #category : 'testing - testing' }
 MorphTest >> testForTiltedStickyness [
 
 	| m |
@@ -73,7 +75,7 @@ MorphTest >> testForTiltedStickyness [
 	m topRendererOrSelf delete
 ]
 
-{ #category : #'testing - halo' }
+{ #category : 'testing - halo' }
 MorphTest >> testHaloIsDisable [
 	| isHaloEnable |
 	isHaloEnable := Morph halosEnabled.
@@ -82,7 +84,7 @@ MorphTest >> testHaloIsDisable [
 	Morph halosEnabled: isHaloEnable
 ]
 
-{ #category : #'testing - into/outof world' }
+{ #category : 'testing - into/outof world' }
 MorphTest >> testIntoWorldCollapseOutOfWorld [
 	| m1 m2 collapsed |
 	"Create the guys"
@@ -130,7 +132,7 @@ MorphTest >> testIntoWorldCollapseOutOfWorld [
 	self assert: m2 outOfWorldCount equals: 2
 ]
 
-{ #category : #'testing - into/outof world' }
+{ #category : 'testing - into/outof world' }
 MorphTest >> testIntoWorldDeleteOutOfWorld [
 	| m1 m2 |
 	"Create the guys"
@@ -161,7 +163,7 @@ MorphTest >> testIntoWorldDeleteOutOfWorld [
 	self assert: m2 outOfWorldCount equals: 1
 ]
 
-{ #category : #'testing - into/outof world' }
+{ #category : 'testing - into/outof world' }
 MorphTest >> testIntoWorldTransferToNewGuy [
 	| m1 m2 |
 	"Create the guys"
@@ -210,12 +212,12 @@ MorphTest >> testIntoWorldTransferToNewGuy [
 	self assert: m2 outOfWorldCount equals: 1
 ]
 
-{ #category : #'testing - classification' }
+{ #category : 'testing - classification' }
 MorphTest >> testIsMorph [
 	self assert: (morph isMorph)
 ]
 
-{ #category : #'testing - initialization' }
+{ #category : 'testing - initialization' }
 MorphTest >> testOpenInWorld [
 	morph openInWorld
 ]

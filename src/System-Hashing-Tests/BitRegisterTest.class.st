@@ -1,15 +1,17 @@
 Class {
-	#name : #BitRegisterTest,
-	#superclass : #TestCase,
+	#name : 'BitRegisterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'reg1',
 		'reg2',
 		'result'
 	],
-	#category : #'System-Hashing-Tests-Registers'
+	#category : 'System-Hashing-Tests-Registers',
+	#package : 'System-Hashing-Tests',
+	#tag : 'Registers'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterAddition [
 
 	reg1 := SixtyFourBitRegister new load: 0.
@@ -22,7 +24,7 @@ BitRegisterTest >> testSixtyFourBitRegisterAddition [
 		equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterAdditionOverflow [
 
 	| byteArray |
@@ -32,7 +34,7 @@ BitRegisterTest >> testSixtyFourBitRegisterAdditionOverflow [
 	self assert: reg1 asInteger equals: 305419896
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterAnd [
 
 	reg1 := SixtyFourBitRegister new load: 16rFFFF0000.
@@ -43,7 +45,7 @@ BitRegisterTest >> testSixtyFourBitRegisterAnd [
 	self assert: result equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterAsByteArray [
 
 	| reg byteArray |
@@ -55,7 +57,7 @@ BitRegisterTest >> testSixtyFourBitRegisterAsByteArray [
 		equals: #[ 18 52 86 120 18 52 86 120 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterByteAt [
 
     | byteArray register |
@@ -80,7 +82,7 @@ BitRegisterTest >> testSixtyFourBitRegisterByteAt [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterInversion [
 
 	reg1 := SixtyFourBitRegister new load: 16rFFFFFFFF00000000.
@@ -90,7 +92,7 @@ BitRegisterTest >> testSixtyFourBitRegisterInversion [
 	self assert: result equals: 16r00000000FFFFFFFF
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterLeftRotateBy2 [
 
 	| initial rotated |
@@ -107,7 +109,7 @@ BitRegisterTest >> testSixtyFourBitRegisterLeftRotateBy2 [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterLeftRotateBy3 [
 
 	| initial rotated |
@@ -124,7 +126,7 @@ BitRegisterTest >> testSixtyFourBitRegisterLeftRotateBy3 [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterLeftRotateBySimple [
 
 	| byteArray initial rotated |
@@ -141,7 +143,7 @@ BitRegisterTest >> testSixtyFourBitRegisterLeftRotateBySimple [
 		equals: rotated.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterLoadFromCorrectByteOrder [
 
 	| byteArray |
@@ -151,7 +153,7 @@ BitRegisterTest >> testSixtyFourBitRegisterLoadFromCorrectByteOrder [
 	self assert: reg1 asInteger equals: 1311768467463790320
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterLoadFromReverseByteOrder [
 
 	| byteArray |
@@ -161,7 +163,7 @@ BitRegisterTest >> testSixtyFourBitRegisterLoadFromReverseByteOrder [
 	self assert: reg1 asInteger equals: 1311768467463790320
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterOr [
 
 	reg1 := SixtyFourBitRegister new load: 16rFFFFFFFF00000000.
@@ -172,7 +174,7 @@ BitRegisterTest >> testSixtyFourBitRegisterOr [
 	self assert: result equals: 16rFFFFFFFFFFFFFFFF
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testSixtyFourBitRegisterXor [
 
 	reg1 := SixtyFourBitRegister new load: 16rFFFFFFFF00000000.
@@ -183,7 +185,7 @@ BitRegisterTest >> testSixtyFourBitRegisterXor [
 	self assert: result equals: 16rFFFFFFFFFFFFFFFF
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testThirtyTwoBitRegisterAddition [
 
 	reg1 := ThirtyTwoBitRegister new load: 0.
@@ -196,7 +198,7 @@ BitRegisterTest >> testThirtyTwoBitRegisterAddition [
 		equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testThirtyTwoBitRegisterAdditionOverflow [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFFFFFF.
@@ -209,7 +211,7 @@ BitRegisterTest >> testThirtyTwoBitRegisterAdditionOverflow [
 		equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testThirtyTwoBitRegisterAnd [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFF0000.
@@ -220,7 +222,7 @@ BitRegisterTest >> testThirtyTwoBitRegisterAnd [
 	self assert: result equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testThirtyTwoBitRegisterInversion [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFF0000.
@@ -230,7 +232,7 @@ BitRegisterTest >> testThirtyTwoBitRegisterInversion [
 	self assert: result equals: 16r0000FFFF
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testThirtyTwoBitRegisterLoadFromCorrectByteOrder [
 
 	| byteArray |
@@ -240,7 +242,7 @@ BitRegisterTest >> testThirtyTwoBitRegisterLoadFromCorrectByteOrder [
 	self assert: reg1 asInteger equals: 305419896
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testThirtyTwoBitRegisterLoadFromReverseByteOrder [
 
 	| byteArray |
@@ -250,7 +252,7 @@ BitRegisterTest >> testThirtyTwoBitRegisterLoadFromReverseByteOrder [
 	self assert: reg1 asInteger equals: 305419896
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testThirtyTwoBitRegisterOr [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFF0000.
@@ -261,7 +263,7 @@ BitRegisterTest >> testThirtyTwoBitRegisterOr [
 	self assert: result equals: 16rFFFFFFFF
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BitRegisterTest >> testThirtyTwoBitRegisterXor [
 
 	reg1 := ThirtyTwoBitRegister new load: 16rFFFF0000.

@@ -1,14 +1,15 @@
 Class {
-	#name : #OmBlockFileStoreTest,
-	#superclass : #OmFileStoreTest,
+	#name : 'OmBlockFileStoreTest',
+	#superclass : 'OmFileStoreTest',
 	#instVars : [
 		'targetReference',
 		'bigStore'
 	],
-	#category : #'Ombu-Tests'
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStoreTest class >> multiBlockOmbu [
 	"The second comment in this method is used to generate test data for #testEntryForIfPresentIfAbsent"
 "OmEntry {
@@ -6603,7 +6604,7 @@ OmEntry {
 "
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmBlockFileStoreTest >> setUpOtherStore [
 
 	^ OmBlockFileStore
@@ -6611,7 +6612,7 @@ OmBlockFileStoreTest >> setUpOtherStore [
 		inDirectory: self directoryForTests ensureCreateDirectory
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmBlockFileStoreTest >> setUpStore [
 
 	^ OmBlockFileStore
@@ -6619,7 +6620,7 @@ OmBlockFileStoreTest >> setUpStore [
 		inDirectory: self directoryForTests ensureCreateDirectory
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmBlockFileStoreTest >> tearDown [
 
 	bigStore ifNotNil:
@@ -6627,7 +6628,7 @@ OmBlockFileStoreTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStoreTest >> testEntryForIfPresentIfAbsent [
 	"Check that #entryFor:ifPresent:ifAbsent: loads the file past the first block"
 	| ombuContent ombuFile mr1 entry mr2 |
@@ -6657,7 +6658,7 @@ OmBlockFileStoreTest >> testEntryForIfPresentIfAbsent [
 		description: 'mustRefresh should be false after to search'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmBlockFileStoreTest >> testMultibyteUnicodeCharacterCrossingTwoBlocks [
 	"Test fogbugz case 20112"
 

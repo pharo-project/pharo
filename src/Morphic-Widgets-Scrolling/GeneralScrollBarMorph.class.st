@@ -2,21 +2,22 @@
 Support for GeneralScrollPane.
 "
 Class {
-	#name : #GeneralScrollBarMorph,
-	#superclass : #ScrollBarMorph,
+	#name : 'GeneralScrollBarMorph',
+	#superclass : 'ScrollBarMorph',
 	#instVars : [
 		'showState'
 	],
-	#category : #'Morphic-Widgets-Scrolling'
+	#category : 'Morphic-Widgets-Scrolling',
+	#package : 'Morphic-Widgets-Scrolling'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 GeneralScrollBarMorph class >> initialize [
 
 	self deprecatedAliases: { #GeneralScrollBarMorph }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GeneralScrollBarMorph >> initialize [
 	"Initialize the receiver."
 
@@ -24,61 +25,61 @@ GeneralScrollBarMorph >> initialize [
 	self showWhenNeeded
 ]
 
-{ #category : #'model access' }
+{ #category : 'model access' }
 GeneralScrollBarMorph >> setValue: newValue [
 	"Bypass screwed up scrollbar!"
 
 	^self perform: #setValue: withArguments: {newValue} inSuperclass: SliderMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GeneralScrollBarMorph >> showAlways [
 	"Set the scrollbar to be always shown."
 
 	self showState: #always
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GeneralScrollBarMorph >> showNever [
 	"Set the scrollbar to be never shown."
 
 	self showState: #never
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GeneralScrollBarMorph >> showState [
 
 	^ showState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GeneralScrollBarMorph >> showState: anObject [
 
 	showState := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GeneralScrollBarMorph >> showWhenNeeded [
 	"Set the scrollbar to be shown if needed."
 
 	self showState: #whenNeeded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GeneralScrollBarMorph >> showsAlways [
 	"Answer whether the scrollbar should always be shown."
 
 	^self showState == #always
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GeneralScrollBarMorph >> showsNever [
 	"Answer whether the scrollbar should never be shown."
 
 	^self showState == #never
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GeneralScrollBarMorph >> showsWhenNeeded [
 	"Answer whether the scrollbar should be shown if needed."
 

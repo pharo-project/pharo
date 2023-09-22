@@ -60,65 +60,67 @@ Note that in #finalizeResourceData: you cannot access any other properties of yo
 
 "
 Class {
-	#name : #FFIExternalResourceManager,
-	#superclass : #Object,
+	#name : 'FFIExternalResourceManager',
+	#superclass : 'Object',
 	#instVars : [
 		'registry'
 	],
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'UnifiedFFI-External-Resources'
+	#category : 'UnifiedFFI-External-Resources',
+	#package : 'UnifiedFFI',
+	#tag : 'External-Resources'
 }
 
-{ #category : #'resource management' }
+{ #category : 'resource management' }
 FFIExternalResourceManager class >> addResource: anObject [
 	self uniqueInstance addResource: anObject
 ]
 
-{ #category : #'resource management' }
+{ #category : 'resource management' }
 FFIExternalResourceManager class >> addResource: anObject data: aData [
 	self uniqueInstance addResource: anObject data: aData
 ]
 
-{ #category : #'resource management' }
+{ #category : 'resource management' }
 FFIExternalResourceManager class >> addResource: anObject executor: anExecutor [
 	self uniqueInstance addResource: anObject executor: anExecutor
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFIExternalResourceManager class >> reset [
 	uniqueInstance := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalResourceManager class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance  := super new ]
 ]
 
-{ #category : #'external resource management' }
+{ #category : 'external resource management' }
 FFIExternalResourceManager >> addResource: anObject [
 	^ self addResource: anObject data: anObject resourceData
 ]
 
-{ #category : #'external resource management' }
+{ #category : 'external resource management' }
 FFIExternalResourceManager >> addResource: anObject data: resourceData [
   registry add: anObject finalizer: (FFIExternalResourceExecutor new resourceClass: anObject class data: resourceData)
 ]
 
-{ #category : #'external resource management' }
+{ #category : 'external resource management' }
 FFIExternalResourceManager >> addResource: anObject executor: anExecutor [
 
 	registry add: anObject finalizer: anExecutor
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalResourceManager >> includes: anObject [
 
 	^ registry includes: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalResourceManager >> initialize [ 
 	registry := FinalizationRegistry new
 ]

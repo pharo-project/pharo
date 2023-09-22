@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 SequenceableCollection >> running: aBlock of: aSubsetSize [
 	"This is a generalization of a running average (a.k.a. moving average, rolling average) which allows you to apply any given block to the shifting subsets of a given size.
 
@@ -17,7 +17,7 @@ SequenceableCollection >> running: aBlock of: aSubsetSize [
 			out nextPut: (aBlock value: subset) ] ]
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 SequenceableCollection >> runningAverage: aSubsetSize [
 	"Running average (a.k.a. moving average, rolling average). See the comment of self >> #running:of: for more information."
 	"(#(1 1 2 2 3 3) runningAverage: 2) >>> {1 . (3/2) . 2 . (5/2) . 3}"
@@ -25,7 +25,7 @@ SequenceableCollection >> runningAverage: aSubsetSize [
 	^ self running: [ :subset | subset average ] of: aSubsetSize
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 SequenceableCollection >> runningMax: aSubsetSize [
 	"Running max. See the comment of self >> #running:of: for more information."
 	"(#(1 1 2 2 3 3) runningMax: 3) >>> {2 . 2 . 3 . 3}"
@@ -33,7 +33,7 @@ SequenceableCollection >> runningMax: aSubsetSize [
 	^ self running: [ :subset | subset max ] of: aSubsetSize
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 SequenceableCollection >> runningMin: aSubsetSize [
 	"Running min. See the comment of self >> #running:of: for more information."
 	"(#(1 1 2 2 3 3) runningMin: 3) >>> {1 . 1 . 2 . 2}"

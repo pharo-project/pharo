@@ -1,11 +1,11 @@
-Extension { #name : #ExternalType }
+Extension { #name : 'ExternalType' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ExternalType >> atomicSelector [
 	^ AtomicSelectors at: self atomicType
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ExternalType >> offsetReadFieldAt: offsetVariableName [
 	"Answer a string defining the accessor to an entity of the receiver type starting at the
 	 given byte offset.
@@ -45,7 +45,7 @@ ExternalType >> offsetReadFieldAt: offsetVariableName [
 			space; nextPutAll: offsetVariableName]
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ExternalType >> offsetReadStructFieldAt: offsetVariableName [
 	^ '^ {1} fromHandle: (handle structAt: {2} length: {1} byteSize)'
 		format: {
@@ -53,7 +53,7 @@ ExternalType >> offsetReadStructFieldAt: offsetVariableName [
 			offsetVariableName }
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ExternalType >> offsetWriteFieldAt: offsetVariableName with: valueName [
 	"Answer a string defining the accessor to an entity of the receiver type starting at the given byte offset.
 	 Private. Used for field definition only."
@@ -82,7 +82,7 @@ ExternalType >> offsetWriteFieldAt: offsetVariableName with: valueName [
 			nextPutAll: valueName]
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ExternalType >> offsetWriteStructFieldAt: offsetVariableName with: valueName [
 	^ 'handle structAt: {1} put: {2} getHandle length: {3} byteSize'
 		format: {
@@ -91,7 +91,7 @@ ExternalType >> offsetWriteStructFieldAt: offsetVariableName with: valueName [
 			referentClass name }
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ExternalType >> withPointerArity: aNumber [
 	self flag: #pharoTodo. "FFI does not understand arity>1 (for now), so I will ignore it and return
 	 the #referencedType in case I want a pointer... this needs to be fixed."

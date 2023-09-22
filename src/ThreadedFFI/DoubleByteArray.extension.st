@@ -1,6 +1,6 @@
-Extension { #name : #DoubleByteArray }
+Extension { #name : 'DoubleByteArray' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 DoubleByteArray >> tfPointerAddress [
 
 	self pinInMemory.

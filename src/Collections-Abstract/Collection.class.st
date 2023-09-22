@@ -6,23 +6,25 @@ To get more information you read the explanation on Pharo by Example book in the
 Or if you want to read in PDF format, download it from [Pharo by Example](https://github.com/SquareBracketAssociates/PharoByExample80/releases/tag/continuous) and look for Chapter 13: Collections. 
 "
 Class {
-	#name : #Collection,
-	#superclass : #Object,
-	#category : #'Collections-Abstract-Base'
+	#name : 'Collection',
+	#superclass : 'Object',
+	#category : 'Collections-Abstract-Base',
+	#package : 'Collections-Abstract',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Collection class >> empty [
 	^ self new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection class >> isAbstract [
 
 	^self name = #Collection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Collection class >> newFromArray: anArray [
 
 	"Fast initialization with the items of a given array.
@@ -54,7 +56,7 @@ Collection class >> newFromArray: anArray [
 	^ newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Collection class >> with: anObject [
 	"Answer an instance of me containing anObject."
 
@@ -63,7 +65,7 @@ Collection class >> with: anObject [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Collection class >> with: firstObject with: secondObject [
 	"Answer an instance of me containing the two arguments as elements."
 
@@ -73,7 +75,7 @@ Collection class >> with: firstObject with: secondObject [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Collection class >> with: firstObject with: secondObject with: thirdObject [
 	"Answer an instance of me containing the three arguments as elements."
 
@@ -84,7 +86,7 @@ Collection class >> with: firstObject with: secondObject with: thirdObject [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Collection class >> with: firstObject with: secondObject with: thirdObject with: fourthObject [
 	"Answer an instance of me, containing the four arguments as the elements."
 
@@ -96,7 +98,7 @@ Collection class >> with: firstObject with: secondObject with: thirdObject with:
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Collection class >> with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject [
 	"Answer an instance of me, containing the five arguments as the elements."
 
@@ -109,7 +111,7 @@ Collection class >> with: firstObject with: secondObject with: thirdObject with:
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Collection class >> with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject with: sixthObject [
 	"Answer an instance of me, containing the six arguments as the elements."
 
@@ -123,7 +125,7 @@ Collection class >> with: firstObject with: secondObject with: thirdObject with:
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Collection class >> withAll: aCollection [
 	"Create a new collection containing all the elements from aCollection."
 
@@ -132,7 +134,7 @@ Collection class >> withAll: aCollection [
 		yourself
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> & aCollection [
 
 	"Alias for intersection:"
@@ -142,7 +144,7 @@ Collection >> & aCollection [
 	^ self intersection: aCollection
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> , aCollection [
 	"Concatenate the receiver with the argument."
 	"#(1 2 3) , #(4 5 6) >>> #(1 2 3 4 5 6)"
@@ -150,7 +152,7 @@ Collection >> , aCollection [
 	^self copy addAll: aCollection; yourself
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> \ aCollection [
 
 	"Return all the elements in self that are not in aCollection.
@@ -162,7 +164,7 @@ Collection >> \ aCollection [
 	^ self difference: aCollection
 ]
 
-{ #category : #adapting }
+{ #category : 'adapting' }
 Collection >> adaptToCollection: rcvr andSend: selector [
 	"If I am involved in arithmetic with another Collection, return a Collection of
 	the results of each element combined with the scalar in that expression.
@@ -177,7 +179,7 @@ Collection >> adaptToCollection: rcvr andSend: selector [
 		[:rcvrElement :myElement | rcvrElement perform: selector with: myElement]
 ]
 
-{ #category : #adapting }
+{ #category : 'adapting' }
 Collection >> adaptToNumber: rcvr andSend: selector [
 	"If I am involved in arithmetic with a scalar, return a Collection of
 	the results of each element combined with the scalar in that expression."
@@ -185,7 +187,7 @@ Collection >> adaptToNumber: rcvr andSend: selector [
 	^ self collect: [:element | rcvr perform: selector with: element]
 ]
 
-{ #category : #adapting }
+{ #category : 'adapting' }
 Collection >> adaptToPoint: rcvr andSend: selector [
 	"If I am involved in arithmetic with a scalar, return a Collection of
 	the results of each element combined with the scalar in that expression."
@@ -193,7 +195,7 @@ Collection >> adaptToPoint: rcvr andSend: selector [
 	^ self collect: [:element | rcvr perform: selector with: element]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Collection >> add: newObject [
 
 	"Include newObject as one of the receiver's elements. Answer newObject.
@@ -209,7 +211,7 @@ Collection >> add: newObject [
 	self subclassResponsibility
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Collection >> add: newObject withOccurrences: anInteger [
 
 	"Add newObject anInteger times to the receiver. Answer newObject."
@@ -222,7 +224,7 @@ Collection >> add: newObject withOccurrences: anInteger [
 	^ newObject
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Collection >> addAll: aCollection [
 
 	"Include all the elements of aCollection as the receiver's elements. Answer
@@ -238,13 +240,13 @@ Collection >> addAll: aCollection [
 	^ aCollection
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Collection >> addAssignToFloatArray: aFloatArray [
 	1 to: aFloatArray size do: [ :i | aFloatArray at: i put: (aFloatArray at: i) + (self at: i) ].
 	^ aFloatArray
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Collection >> addIfNotPresent: anObject [
 
 	"Include anObject as one of the receiver's elements, but only if there
@@ -260,7 +262,7 @@ Collection >> addIfNotPresent: anObject [
 	^ anObject
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> allSatisfy: aBlock [
 
 	"Evaluate aBlock with the elements of the receiver.
@@ -282,7 +284,7 @@ Collection >> allSatisfy: aBlock [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Collection >> anyOne [
 
 	"Answer a representative sample of the receiver. It raises an error when the collection is empty. This method can be helpful when needing to preinfer the nature of the contents of semi-homogeneous collections."
@@ -299,7 +301,7 @@ Collection >> anyOne [
 	self do: [ :each | ^ each ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> anySatisfy: aBlock [
 
 	"Evaluate aBlock with the elements of the receiver.
@@ -321,7 +323,7 @@ Collection >> anySatisfy: aBlock [
 	^ false
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asArray [
 
 	"Answer an Array whose elements are the elements of the receiver.
@@ -344,7 +346,7 @@ Collection >> asArray [
 	^ newArray
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asBag [
 
 	"Answer a Bag whose elements are the elements of the receiver."
@@ -357,7 +359,7 @@ Collection >> asBag [
 	^ Bag withAll: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asByteArray [
 	"Answer a ByteArray whose elements are the elements of the receiver.
 	Implementation note: Cannot use ''ByteArray withAll: self'' as that only
@@ -376,7 +378,7 @@ Collection >> asByteArray [
 	^ array
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asCharacterSet [
 	"Answer a CharacterSet whose elements are the unique elements of the receiver.
 	The reciever should only contain characters."
@@ -384,7 +386,7 @@ Collection >> asCharacterSet [
 	^ CharacterSet newFrom: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> asCommaString [
 
 	"Return collection printed as 'a, b, c' "
@@ -398,7 +400,7 @@ Collection >> asCommaString [
 	^ String streamContents: [ :s | self asStringOn: s delimiter: ', ' ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> asCommaStringAnd [
 
 	"Return collection printed as 'a, b and c' "
@@ -412,7 +414,7 @@ Collection >> asCommaStringAnd [
 	^String streamContents: [:s | self asStringOn: s delimiter: ', ' last: ' and ']
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asDictionary [
 
 	"Answers a Dictionary based on collection of Associations."
@@ -424,7 +426,7 @@ Collection >> asDictionary [
 	^ self as: Dictionary
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asIdentitySet [
 
 	"Return a new IdentitySet based on self."
@@ -435,7 +437,7 @@ Collection >> asIdentitySet [
 	^(IdentitySet new: self size) addAll: self; yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asMultilineString [
 
 	^ String streamContents: [ :stream |
@@ -444,7 +446,7 @@ Collection >> asMultilineString [
 			  separatedBy: [ stream nextPut: Character cr ] ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asNewArray [
 
 	"Like asArray: but return a copy if self is already an Array.
@@ -456,7 +458,7 @@ Collection >> asNewArray [
 	^ self asArray
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asOrderedCollection [
 
 	"Answer an OrderedCollection whose elements are the elements of the
@@ -473,7 +475,7 @@ Collection >> asOrderedCollection [
 	^ self as: OrderedCollection
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asOrderedDictionary [
 
 	"Answers a Dictionary based on collection of Associations."
@@ -483,7 +485,7 @@ Collection >> asOrderedDictionary [
 	^ self as: OrderedDictionary
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asSet [
 	"Answer a Set whose elements are the unique elements of the receiver."
 
@@ -495,7 +497,7 @@ Collection >> asSet [
 	^ Set withAll: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asSortedCollection [
 
 	"Answer a SortedCollection whose elements are the elements of the receiver. The sort order is the default less than or equal. Note that you should use #sorted if you don't really need a SortedCollection, but a sorted collection."
@@ -507,7 +509,7 @@ Collection >> asSortedCollection [
 	^ self as: SortedCollection
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Collection >> asSortedCollection: aSortBlock [
 
 	"Answer a SortedCollection whose elements are the elements of the receiver. The sort order is defined by the argument, aSortBlock. Note that it is better to use #sorted if you don't really need a SortedCollection, but a sorted collection!!"
@@ -521,7 +523,7 @@ Collection >> asSortedCollection: aSortBlock [
 	^ aSortedCollection
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> asStringOn: aStream delimiter: delimString [
 
 	"Print elements on a stream separated
@@ -537,7 +539,7 @@ Collection >> asStringOn: aStream delimiter: delimString [
 		separatedBy: [ aStream nextPutAll: delimString ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> asStringOn: aStream delimiter: delimString last: lastDelimString [
 
 	"Print elements on a stream separated
@@ -561,7 +563,7 @@ Collection >> asStringOn: aStream delimiter: delimString last: lastDelimString [
 		aStream nextPutAll: (n = sz ifTrue: [lastDelimString] ifFalse: [delimString])]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> associationsDo: aBlock [
 
 	"Evaluate aBlock for each of the receiver's elements (key/value
@@ -584,14 +586,14 @@ Collection >> associationsDo: aBlock [
 	self do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Collection >> capacity [
 	"Answer the current capacity of the receiver."
 
 	^ self size
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> collect: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Collect the resulting values into a collection like the receiver. Answer
@@ -612,7 +614,7 @@ Collection >> collect: aBlock [
 	^ newCollection
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> collect: aBlock as: aClass [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Collect the resulting values into an instance of aClass. Answer the resulting collection."
@@ -623,7 +625,7 @@ Collection >> collect: aBlock as: aClass [
 	^(aClass new: self size) fillFrom: self with: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> collect: aBlock into: aCollection [
 
 	"Evaluate aBlock with each of the receiver's elements as the argument.
@@ -635,7 +637,7 @@ Collection >> collect: aBlock into: aCollection [
 	^aCollection fillFrom: self with: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> collect: collectBlock thenDo: doBlock [
 	"Utility method to improve readability."
 
@@ -643,26 +645,26 @@ Collection >> collect: collectBlock thenDo: doBlock [
 		doBlock value: (collectBlock value: each)]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> collect: collectBlock thenReject: selectBlock [
 	"Utility method to improve readability."
 
 	^ (self collect: collectBlock) reject: selectBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> collect: collectBlock thenSelect: selectBlock [
 	"Utility method to improve readability."
 
 	^ (self collect: collectBlock) select: selectBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> collectionSizeThreshold [
 	^ 3000
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> contains: aBlock [
 
 	"For compatibility, please use #anySatisfy: instead!
@@ -671,12 +673,12 @@ Collection >> contains: aBlock [
 	^ self anySatisfy: aBlock
 ]
 
-{ #category : #'filter streaming' }
+{ #category : 'filter streaming' }
 Collection >> contents [
 	^ self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> copyEmpty [
 
 	"Return a new empty collection based on the species"
@@ -688,7 +690,7 @@ Collection >> copyEmpty [
 	^ self species new
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> copyWith: newElement [
 	"Answer a new collection with newElement added (as last
 	element if sequenceable)."
@@ -701,20 +703,20 @@ Collection >> copyWith: newElement [
 		yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> copyWithAll: aCollection [
 
 	^ self , aCollection
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> copyWithDependent: newElement [
 	"Answer a new collection with newElement added (as last
 	element if sequenceable)."
 	^self copyWith: newElement
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> copyWithout: oldElement [
 	"Answer a copy of the receiver that does not contain any
 	elements equal to oldElement."
@@ -726,7 +728,7 @@ Collection >> copyWithout: oldElement [
 	^ self reject: [:each | each = oldElement]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> copyWithoutAll: aCollection [
 	"Answer a copy of the receiver that does not contain any elements
 	equal to those in aCollection."
@@ -737,7 +739,7 @@ Collection >> copyWithoutAll: aCollection [
 	^ self reject: [:each | aCollection includes: each]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> copyWithoutDuplicates [
 	"Answer a copy of the receiver without any duplicated elements"
 	"(#(2 3 4 4 5 6) copyWithoutDuplicates asSet)  >>> #(2 3 4 5 6) asSet"
@@ -746,7 +748,7 @@ Collection >> copyWithoutDuplicates [
 	^ self asSet asArray
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> copyWithoutFirst: anObject [
 	| done |
 	done := false.
@@ -756,7 +758,7 @@ Collection >> copyWithoutFirst: anObject [
 				and: [ done := true ]]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Collection >> copyWithoutFirstOccurrenceOf: anObject [
 
 	| done |
@@ -767,7 +769,7 @@ Collection >> copyWithoutFirstOccurrenceOf: anObject [
 			and: [ done := true ] ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> count: aBlock [
 
 	"Evaluate aBlock with each of the receiver's elements as the argument.
@@ -782,7 +784,7 @@ Collection >> count: aBlock [
 	^ sum
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> detect: aBlock [
 
 	"Evaluate aBlock with each of the receiver's elements as the argument.
@@ -795,7 +797,7 @@ Collection >> detect: aBlock [
 	^ self detect: aBlock ifNone: [ self errorNotFound: aBlock ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> detect: aBlock ifFound: foundBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	If some element evaluates aBlock to true, then cull this element into
@@ -814,7 +816,7 @@ Collection >> detect: aBlock ifFound: foundBlock [
 			 ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> detect: aBlock ifFound: foundBlock ifNone: exceptionBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	If some element evaluates aBlock to true, then cull this element into
@@ -833,7 +835,7 @@ Collection >> detect: aBlock ifFound: foundBlock ifNone: exceptionBlock [
 	^ exceptionBlock value
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> detect: aBlock ifNone: exceptionBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the first element for which aBlock evaluates to true. If none
@@ -847,7 +849,7 @@ Collection >> detect: aBlock ifNone: exceptionBlock [
 	^ self detect: aBlock ifFound: [ :element | element ] ifNone: exceptionBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> detectMax: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the element for which aBlock evaluates to the highest magnitude.
@@ -873,7 +875,7 @@ Collection >> detectMax: aBlock [
 	^ maxElement
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> detectMin: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the element for which aBlock evaluates to the lowest number.
@@ -898,7 +900,7 @@ Collection >> detectMin: aBlock [
 	^ minElement
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> difference: aCollection [
 	"Answer the set theoretic difference of two collections. Pay attention that the difference is not commutative, hence the order is important."
 
@@ -915,7 +917,7 @@ Collection >> difference: aCollection [
 	^ self species withAll: set asArray
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> displayStringOn: stream [
 	self printNameOn: stream.
 	stream
@@ -929,7 +931,7 @@ Collection >> displayStringOn: stream [
 		ifTrue: [ self printElementsOn: stream ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> do: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 
@@ -953,7 +955,7 @@ Collection >> do: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> do: elementBlock separatedBy: separatorBlock [
 
 	"Evaluate the elementBlock for all elements in the receiver,
@@ -971,7 +973,7 @@ Collection >> do: elementBlock separatedBy: separatorBlock [
 		elementBlock value: each]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> do: aBlock without: anItem [
 
 	"Enumerate all elements in the receiver.
@@ -982,7 +984,7 @@ Collection >> do: aBlock without: anItem [
 	^ self do: [ :each | anItem = each ifFalse: [ aBlock value: each ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> doWithIndex: elementAndIndexBlock [
 
 	"Use the new version with consistent naming"
@@ -990,7 +992,7 @@ Collection >> doWithIndex: elementAndIndexBlock [
 	^ self withIndexDo: elementAndIndexBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Collection >> emptyCheck [
 
 	"Signal CollectionIsEmpty if the collection is empty"
@@ -1001,28 +1003,28 @@ Collection >> emptyCheck [
 	self isEmpty ifTrue: [self errorEmptyCollection]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Collection >> errorEmptyCollection [
 	"Signal a CollectionIsEmpty exception"
 
 	CollectionIsEmpty signalWith: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Collection >> errorNotFound: anObject [
 	"Raise a NotFound exception."
 
 	NotFound signalFor: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Collection >> errorSizeMismatch [
 	"Signal a SizeMismatch exception"
 
 	SizeMismatch signal
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Collection >> fillFrom: aCollection with: aBlock [
 	"Evaluate aBlock with each of aCollections's elements as the argument.
 	Collect the resulting values into self. Answer self."
@@ -1035,7 +1037,7 @@ Collection >> fillFrom: aCollection with: aBlock [
 		self add: (aBlock value: each) ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> findFirstInByteString: aByteString startingAt: start [
 	"Find the index of first character starting at start in aByteString that is included in the receiver.
 	Default is to use a naive algorithm.
@@ -1053,7 +1055,7 @@ Collection >> findFirstInByteString: aByteString startingAt: start [
 	^ 0
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> flatCollect: aBlock [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
@@ -1065,7 +1067,7 @@ Collection >> flatCollect: aBlock [
 	^ self flatCollect: aBlock as: self species
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> flatCollect: aBlock as: aCollectionClass [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
@@ -1080,7 +1082,7 @@ Collection >> flatCollect: aBlock as: aCollectionClass [
 	^ aCollectionClass withAll: col
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> flatCollectAsSet: aBlock [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
@@ -1091,7 +1093,7 @@ Collection >> flatCollectAsSet: aBlock [
 	^ self flatCollect: aBlock as: Set
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> flattenOn: aStream [
 
 	"See Collection>>flattened that uses this method"
@@ -1099,7 +1101,7 @@ Collection >> flattenOn: aStream [
 	self do: [ :each | each flattenOn: aStream ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> flattened [
 
 	"Flattens a collection of collections (no matter how many levels of collections exist). Strings are considered atoms and, as such, won't be flattened"
@@ -1111,7 +1113,7 @@ Collection >> flattened [
 	^ Array streamContents: [ :stream | self flattenOn: stream ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> fold: binaryBlock [
 	"Alias of Collection>>reduce"
 	"Evaluate the block with the first two (or more) elements of the receiver, then with the result of the first evaluation and the next element, and so on.  Answer the result of the final evaluation. If the receiver is empty, raise an error. If the receiver has a single element, answer that element."
@@ -1120,14 +1122,14 @@ Collection >> fold: binaryBlock [
 	^self reduce: binaryBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> gather: aBlock [
 	"This method is kept for compatibility reasons, use flatCollect: instead."
 
 	^ self flatCollect: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> groupedBy: aBlock [
 	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species."
 
@@ -1144,7 +1146,7 @@ Collection >> groupedBy: aBlock [
 	^ groups
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> groupedBy: aBlock having: aSelectionBlock [
 	"Like in SQL operation - Split the recievers contents into collections of
 	elements for which keyBlock returns the same results, and return those
@@ -1160,7 +1162,7 @@ Collection >> groupedBy: aBlock having: aSelectionBlock [
 	^ (self groupedBy: aBlock) select: aSelectionBlock
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Collection >> hash [
 	"Answer an integer hash value for the receiver such that,
 	  -- the hash value of an unchanged object is constant over time, and
@@ -1174,7 +1176,7 @@ Collection >> hash [
 	^hash bitXor: self size hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> identityIncludes: anObject [
 	"Answer whether anObject is one of the receiver's elements."
 
@@ -1186,7 +1188,7 @@ Collection >> identityIncludes: anObject [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> ifEmpty: aBlock [
 	"Evaluate the given block, answering its value if the receiver is empty, otherwise answer the receiver."
 
@@ -1201,7 +1203,7 @@ Collection >> ifEmpty: aBlock [
 		ifFalse: [ self ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> ifEmpty: emptyBlock ifNotEmpty: notEmptyBlock [
 	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise"
 	"If the notEmptyBlock has an argument, eval with the receiver as its argument"
@@ -1211,7 +1213,7 @@ Collection >> ifEmpty: emptyBlock ifNotEmpty: notEmptyBlock [
 		ifFalse: [ notEmptyBlock cull: self ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> ifNotEmpty: aBlock [
 	"Evaluate the given block with the receiver as argument, answering its value
 	unless the receiver is empty, in which case answer the receiver."
@@ -1224,7 +1226,7 @@ Collection >> ifNotEmpty: aBlock [
 		ifFalse: [ aBlock cull: self ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> ifNotEmpty: notEmptyBlock ifEmpty: emptyBlock [
 	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise
 	 If the notEmptyBlock has an argument, eval with the receiver as its argument"
@@ -1234,7 +1236,7 @@ Collection >> ifNotEmpty: notEmptyBlock ifEmpty: emptyBlock [
 		ifFalse: [ notEmptyBlock cull: self ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> includes: anObject [
 	"Answer whether anObject is one of the receiver's elements."
 
@@ -1252,7 +1254,7 @@ Collection >> includes: anObject [
 	^ self anySatisfy: [:each | each = anObject]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> includesAll: aCollection [
 	"Answer whether all the elements of aCollection are in the receiver."
 
@@ -1266,7 +1268,7 @@ Collection >> includesAll: aCollection [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> includesAny: aCollection [
 	"Answer whether any element of aCollection is one of the receiver's elements."
 
@@ -1280,7 +1282,7 @@ Collection >> includesAny: aCollection [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> includesAnyOf: aCollection [
 
 	self flag: 'use includesAny: instead'.
@@ -1288,7 +1290,7 @@ Collection >> includesAnyOf: aCollection [
 	^ self includesAny: aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> includesSubstringAnywhere: testString [
 	"Answer whether the receiver includes, anywhere in its nested structure, a string that has testString as a substring"
 
@@ -1306,7 +1308,7 @@ Collection >> includesSubstringAnywhere: testString [
 	^ false
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> inject: thisValue into: binaryBlock [
 	"Accumulate a running value associated with evaluating the argument, binaryBlock, with the current value of the argument, thisValue, and the receiver as block arguments."
 	"Look at Collection>>reduce: for a related method."
@@ -1328,7 +1330,7 @@ Collection >> inject: thisValue into: binaryBlock [
 	^nextValue
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> intersection: aCollection [
 	"Answer the set theoretic intersection of two collections."
 
@@ -1343,13 +1345,13 @@ Collection >> intersection: aCollection [
 	^ self species withAll: (self asSet intersection: aCollection) asArray
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> isCollection [
 	"Return true if the receiver is some sort of Collection and responds to basic collection messages such as #size and #do:"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> isEmpty [
 	"Answer whether the receiver contains any elements."
 
@@ -1363,7 +1365,7 @@ Collection >> isEmpty [
 	^self size = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> isEmptyOrNil [
 	"Answer whether the receiver contains any elements, or is nil.  Useful in numerous situations where one wishes the same reaction to an empty collection or to nil"
 
@@ -1374,7 +1376,7 @@ Collection >> isEmptyOrNil [
 	^ self isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> isNotEmpty [
 	"Answer whether the receiver contains any elements."
 
@@ -1386,7 +1388,7 @@ Collection >> isNotEmpty [
 	^ self isEmpty not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> isSequenceable [
 
 	"See SequenceableCollection"
@@ -1394,7 +1396,7 @@ Collection >> isSequenceable [
 	^ false
 ]
 
-{ #category : #'math functions' }
+{ #category : 'math functions' }
 Collection >> median [
 	"Return the middle element, or as close as we can get.
 	The collection must not be empty."
@@ -1409,7 +1411,7 @@ Collection >> median [
 	^ self asSortedCollection median
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> noneSatisfy: aBlock [
 	"Evaluate aBlock with the elements of the receiver. If aBlock returns false for all elements return true. Otherwise return false"
 
@@ -1423,7 +1425,7 @@ Collection >> noneSatisfy: aBlock [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Collection >> notEmpty [
 	"Answer whether the receiver contains any elements."
 	"use isNotEmpty for consistency with isEmpty"
@@ -1431,7 +1433,7 @@ Collection >> notEmpty [
 	^ self isEmpty not
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> occurrencesOf: anObject [
 	"Answer how many of the receiver's elements are equal to anObject."
 
@@ -1445,7 +1447,7 @@ Collection >> occurrencesOf: anObject [
 	^tally
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> printElementsOn: aStream [
 	"List elements betwen () and separated by spaces.
 	Is used by printOn: and other related printing methods."
@@ -1465,12 +1467,12 @@ Collection >> printElementsOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> printNameOn: aStream [
 	super printOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> printOn: aStream [
 	"Append a sequence of characters that identify the receiver to aStream."
 
@@ -1478,7 +1480,7 @@ Collection >> printOn: aStream [
 	self printElementsOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> printOn: aStream delimiter: delimString [
 	"Print elements on a stream separated
 	with a delimiter String like: 'a, b, c'"
@@ -1490,7 +1492,7 @@ Collection >> printOn: aStream delimiter: delimString [
 	self do: [:elem | aStream print: elem] separatedBy: [aStream nextPutAll: delimString]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 	"Print elements on a stream separated
 	with a delimiter between all the elements and with
@@ -1514,7 +1516,7 @@ Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 			ifFalse: [aStream nextPutAll: delimString]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> reduce: aBlock [
 	"Fold the result of the receiver into aBlock. The argument aBlock must take two or more arguments. It applies the argument, binaryBlock cumulatively to the elements of the receiver. For sequenceable collections the elements will be used in order, for unordered collections the order is unspecified."
 
@@ -1526,7 +1528,7 @@ Collection >> reduce: aBlock [
 	^self asOrderedCollection reduce: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> reject: aBlock [
 
 	"Evaluate aBlock with each of the receiver's elements as the argument. Collect into a new collection like the receiver only those elements for which aBlock evaluates to false. Answer the new collection."
@@ -1538,7 +1540,7 @@ Collection >> reject: aBlock [
 	^ self select: [ :element | (aBlock value: element) == false ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> reject: rejectBlock thenCollect: collectBlock [
 	"Utility method to improve readability."
 
@@ -1547,7 +1549,7 @@ Collection >> reject: rejectBlock thenCollect: collectBlock [
 	^ (self reject: rejectBlock) collect: collectBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> reject: rejectBlock thenDo: doBlock [
 	"Utility method to improve readability.
 	Do not create the intermediate collection."
@@ -1557,7 +1559,7 @@ Collection >> reject: rejectBlock thenDo: doBlock [
 			ifFalse: [ doBlock value: each ] ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Collection >> remove: oldObject [
 	"Remove oldObject from the receiver's elements. Answer oldObject
 	unless no element is equal to oldObject, in which case, raise an error.
@@ -1568,7 +1570,7 @@ Collection >> remove: oldObject [
 	^ self remove: oldObject ifAbsent: [self errorNotFound: oldObject]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Collection >> remove: oldObject ifAbsent: anExceptionBlock [
 	"Remove oldObject from the receiver's elements. If several of the
 	elements are equal to oldObject, only one is removed. If no element is
@@ -1579,7 +1581,7 @@ Collection >> remove: oldObject ifAbsent: anExceptionBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Collection >> removeAll [
 	"Remove each element from the receiver and leave it empty.
 	ArrayedCollections cannot respond to this message.
@@ -1592,7 +1594,7 @@ Collection >> removeAll [
 	self do: [:each | self remove: each]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Collection >> removeAll: aCollection [
 	"Remove each element of aCollection from the receiver. If successful for
 	each, answer aCollection. Otherwise create an error notification.
@@ -1605,7 +1607,7 @@ Collection >> removeAll: aCollection [
 	^ aCollection
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Collection >> removeAllFoundIn: aCollection [
 	"Remove each element of aCollection which is present in the receiver
 	from the receiver. Answer aCollection. No error is raised if an element
@@ -1617,7 +1619,7 @@ Collection >> removeAllFoundIn: aCollection [
 	^ aCollection
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Collection >> removeAllSuchThat: aBlock [
 	"Evaluate aBlock for each element and remove all that elements from
 	the receiver for that aBlock evaluates to true.  Use a copy to enumerate
@@ -1628,7 +1630,7 @@ Collection >> removeAllSuchThat: aBlock [
 	self copy do: [:each | (aBlock value: each) ifTrue: [self remove: each]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> select: aBlock [
 
 	"Evaluate aBlock with each of the receiver's elements as the argument. Collect into a new collection like the receiver, only those elements for which aBlock evaluates to true. Answer the new collection."
@@ -1650,7 +1652,7 @@ Collection >> select: aBlock [
 	^ newCollection
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> select: selectBlock thenCollect: collectBlock [
 	"Utility method to improve readability."
 
@@ -1660,7 +1662,7 @@ Collection >> select: selectBlock thenCollect: collectBlock [
 	^ (self select: selectBlock) collect: collectBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> select: selectBlock thenDo: doBlock [
 	"Utility method to improve readability.
 	Do not create the intermediate collection."
@@ -1673,7 +1675,7 @@ Collection >> select: selectBlock thenDo: doBlock [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Collection >> size [
 	"Answer how many elements the receiver contains."
 
@@ -1694,7 +1696,7 @@ Collection >> size [
 	^ tally
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Collection >> sorted [
 	"Return a new sequenceable collection which contains the same elements as self but its
 elements are sorted"
@@ -1706,7 +1708,7 @@ elements are sorted"
 	^self asArray sorted
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Collection >> sorted: aSortBlockOrNil [
 	"Return a new sequenceable collection which contains the same elements as self but its
 elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if
@@ -1720,7 +1722,7 @@ comparison."
 	^self asArray sort: aSortBlockOrNil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Collection >> storeOn: aStream [
 	"Refer to the comment in Object|storeOn:."
 
@@ -1740,7 +1742,7 @@ Collection >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'math functions' }
+{ #category : 'math functions' }
 Collection >> sum: aBlock [
 	"This is implemented using a variant of the normal inject:into: pattern.
 	The reason for this is that it is not known whether we're in the normal
@@ -1757,7 +1759,7 @@ Collection >> sum: aBlock [
 	^ self sum: aBlock ifEmpty: [ 0 ]
 ]
 
-{ #category : #'math functions' }
+{ #category : 'math functions' }
 Collection >> sum: aBlock ifEmpty: anEmptySumBlock [
 	"This is implemented using a variant of the normal inject:into: pattern.
 	The reason for this is that it is not known whether we're in the normal
@@ -1775,7 +1777,7 @@ Collection >> sum: aBlock ifEmpty: anEmptySumBlock [
 		ifEmpty: anEmptySumBlock
 ]
 
-{ #category : #'math functions' }
+{ #category : 'math functions' }
 Collection >> sumNumbers [
 	"This is implemented using a variant of the normal inject:into: pattern
 	that is specific to handling numbers. The receiver should include only numbers.
@@ -1793,7 +1795,7 @@ Collection >> sumNumbers [
 		into: [ :sum :each |  sum + each ]
 ]
 
-{ #category : #'math functions' }
+{ #category : 'math functions' }
 Collection >> sumNumbers: aBlock [
 	"This is implemented using a variant of the normal inject:into: pattern
 	that is specific to handling numbers. aBlock is expected to return a number
@@ -1812,7 +1814,7 @@ Collection >> sumNumbers: aBlock [
 		into: [ :sum :each |  sum + (aBlock value: each) ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> union: aCollection [
 
 	"Answer the set theoretic union of two collections."
@@ -1825,7 +1827,7 @@ Collection >> union: aCollection [
 	^ self species withAll: set asArray
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> withIndexDo: elementAndIndexBlock [
 	"Just like do: except that the iteration index supplies the second argument to the block"
 	"Support collection enumeration with a counter, even though not ordered"
@@ -1839,7 +1841,7 @@ Collection >> withIndexDo: elementAndIndexBlock [
 	self do: [:item | elementAndIndexBlock value: item value: (index := index+1)]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Collection >> | aCollection [
 
 	"Return all the elements that appear in self or in aCollection.

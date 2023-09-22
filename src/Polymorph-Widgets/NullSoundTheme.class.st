@@ -2,19 +2,21 @@
 A silent sound theme
 "
 Class {
-	#name : #NullSoundTheme,
-	#superclass : #SoundTheme,
-	#category : #'Polymorph-Widgets-Themes'
+	#name : 'NullSoundTheme',
+	#superclass : 'SoundTheme',
+	#category : 'Polymorph-Widgets-Themes',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Themes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NullSoundTheme class >> themeName [
 	"Answer the friendly name of the theme."
 
 	^'No Sounds'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NullSoundTheme >> defaultDefaultSound [
 	"Answer the default default sound!"
 

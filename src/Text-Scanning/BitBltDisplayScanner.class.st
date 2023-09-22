@@ -14,16 +14,18 @@ fillBlt
 
 "
 Class {
-	#name : #BitBltDisplayScanner,
-	#superclass : #DisplayScanner,
+	#name : 'BitBltDisplayScanner',
+	#superclass : 'DisplayScanner',
 	#instVars : [
 		'bitBlt',
 		'scale'
 	],
-	#category : #'Text-Scanning-Base'
+	#category : 'Text-Scanning-Base',
+	#package : 'Text-Scanning',
+	#tag : 'Base'
 }
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 BitBltDisplayScanner >> displayEmbeddedForm: aForm [
 
 	| scaledForm |
@@ -37,7 +39,7 @@ BitBltDisplayScanner >> displayEmbeddedForm: aForm [
 		fillColor: Color white
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 BitBltDisplayScanner >> displayString: string from: startIndex to: stopIndex at: aPoint [
     | endPoint top |
    top := aPoint translateBy: 0@ (font ascent * self scale).
@@ -54,32 +56,32 @@ BitBltDisplayScanner >> displayString: string from: startIndex to: stopIndex at:
         ifTrue: [ font displayStrikeoutOn: bitBlt from: top to: endPoint scale: self scale ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BitBltDisplayScanner >> initialize [
 
 	super initialize.
 	scale := 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBltDisplayScanner >> scale [
 
 	^ scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBltDisplayScanner >> scale: newScale [
 
 	scale := newScale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBltDisplayScanner >> setFont [
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
 	font installOn: bitBlt foregroundColor: foregroundColor backgroundColor: Color transparent scale: self scale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBltDisplayScanner >> setPort: aBitBlt [
 	"Install the BitBlt to use"
 	bitBlt := aBitBlt.

@@ -6,23 +6,25 @@ When serialized I get the name of the class variable
 When deserialized I look up the class variable binding in the class that is being deserialized.
 "
 Class {
-	#name : #HEClassVariable,
-	#superclass : #HESymbol,
-	#category : #'Hermes-Model'
+	#name : 'HEClassVariable',
+	#superclass : 'HESymbol',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClassVariable class >> tag [
 	^ 6
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEClassVariable >> asLiteralIn: env [
 	"I ask the binding to the class that is currently being deserialized"
 	^ env newClass bindingOf: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClassVariable >> value: aClassVariable [
 	value := aClassVariable name
 ]

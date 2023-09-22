@@ -3,19 +3,20 @@ A FinderExampleMethodNode is a node used by the FinderUI's tree representing a M
 from an examples (by MethodFinder)
 "
 Class {
-	#name : #FinderExampleMethodNode,
-	#superclass : #FinderMethodNode,
-	#category : #'Tool-Finder-UI'
+	#name : 'FinderExampleMethodNode',
+	#superclass : 'FinderMethodNode',
+	#category : 'Tool-Finder-UI',
+	#package : 'Tool-Finder-UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderExampleMethodNode >> childNodeClassFromItem: anItem [
 	"I answer the class of my children nodes (if I have some)"
 
 	^ FinderExampleClassNode
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 FinderExampleMethodNode >> displayString [
 
 	^ String streamContents: [ :str |
@@ -25,13 +26,13 @@ FinderExampleMethodNode >> displayString [
 			  print: self item evaluate ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderExampleMethodNode >> receiver [
 	"return the receiver of my item."
 	^self item receiver
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderExampleMethodNode >> selector [
 	^ self item selector
 ]

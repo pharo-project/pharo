@@ -2,29 +2,31 @@
 QuestionDialog supporting custom text/buttons for yes/no choices.
 "
 Class {
-	#name : #CustomQuestionDialogWindow,
-	#superclass : #QuestionDialogWindow,
+	#name : 'CustomQuestionDialogWindow',
+	#superclass : 'QuestionDialogWindow',
 	#instVars : [
 		'yesButton',
 		'noButton',
 		'cancelButton'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CustomQuestionDialogWindow >> cancelButton [
 
 	^ cancelButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CustomQuestionDialogWindow >> cancelButton: anObject [
 
 	cancelButton := anObject
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 CustomQuestionDialogWindow >> cancelText: aStringOrText help: helpString [
 	"Set the cancel button label.
 	if the text is nil, remove the button."
@@ -37,7 +39,7 @@ CustomQuestionDialogWindow >> cancelText: aStringOrText help: helpString [
 					setBalloonText: helpString]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 CustomQuestionDialogWindow >> default: defaultOption [
 	"Set the default button."
 
@@ -48,28 +50,28 @@ CustomQuestionDialogWindow >> default: defaultOption [
 					ifFalse: [self noButton isDefault: true]]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 CustomQuestionDialogWindow >> defaultCancelButton [
 	"Answer a default cancel button."
 
 	^self newCancelButton
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 CustomQuestionDialogWindow >> defaultNoButton [
 	"Answer a default no button."
 
 	^self newNoButton
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 CustomQuestionDialogWindow >> defaultYesButton [
 	"Answer a default yes button."
 
 	^self newYesButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CustomQuestionDialogWindow >> initialize [
 	"Initialize the receiver."
 
@@ -80,28 +82,28 @@ CustomQuestionDialogWindow >> initialize [
 	super initialize
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 CustomQuestionDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
 	^{self yesButton. self noButton. self cancelButton}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CustomQuestionDialogWindow >> noButton [
 	"Answer the value of noButton"
 
 	^ noButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CustomQuestionDialogWindow >> noButton: anObject [
 	"Set the value of noButton"
 
 	noButton := anObject
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 CustomQuestionDialogWindow >> noText: aStringOrText help: helpString [
 	"Set the no button label.
 	if the text is nil, remove the button."
@@ -114,21 +116,21 @@ CustomQuestionDialogWindow >> noText: aStringOrText help: helpString [
 					setBalloonText: helpString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CustomQuestionDialogWindow >> yesButton [
 	"Answer the value of yesButton"
 
 	^ yesButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CustomQuestionDialogWindow >> yesButton: anObject [
 	"Set the value of yesButton"
 
 	yesButton := anObject
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 CustomQuestionDialogWindow >> yesText: aStringOrText help: helpString [
 	"Set the yes button label.
 	if the text is nil, remove the button."

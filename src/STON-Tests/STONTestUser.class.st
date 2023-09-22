@@ -8,17 +8,19 @@ Instance Variables
 
 "
 Class {
-	#name : #STONTestUser,
-	#superclass : #Object,
+	#name : 'STONTestUser',
+	#superclass : 'Object',
 	#instVars : [
 		'username',
 		'password',
 		'enabled'
 	],
-	#category : #'STON-Tests-Support'
+	#category : 'STON-Tests-Support',
+	#package : 'STON-Tests',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 STONTestUser class >> dummy [
 	"self dummy"
 
@@ -33,12 +35,12 @@ STONTestUser class >> dummy [
 		yourself
 ]
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 STONTestUser class >> stonName [
 	^ #TestUser
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 STONTestUser >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -49,45 +51,45 @@ STONTestUser >> = anObject [
 	^ username = anObject username and: [ password = anObject password and: [ enabled = anObject enabled ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestUser >> enabled [
 	^ enabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestUser >> enabled: anObject [
 	enabled := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 STONTestUser >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ username hash bitXor: (password hash bitXor: enabled hash)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 STONTestUser >> initialize [
 	super initialize.
 	enabled := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestUser >> password [
 	^ password
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestUser >> password: anObject [
 	password := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestUser >> username [
 	^ username
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestUser >> username: anObject [
 	username := anObject
 ]

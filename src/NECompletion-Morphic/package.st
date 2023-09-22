@@ -1,1 +1,1 @@
-Package { #name : #'NECompletion-Morphic' }
+Package { #name : 'NECompletion-Morphic' }

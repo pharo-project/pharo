@@ -1,6 +1,6 @@
-Extension { #name : #RGCompiledMethodLayout }
+Extension { #name : 'RGCompiledMethodLayout' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGCompiledMethodLayout >> mcType [
 
 	^ #compiledMethod

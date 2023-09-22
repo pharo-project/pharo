@@ -2,8 +2,8 @@
 String morph with enablement support. When disabled the text will appear inset.
 "
 Class {
-	#name : #LabelMorph,
-	#superclass : #StringMorph,
+	#name : 'LabelMorph',
+	#superclass : 'StringMorph',
 	#instVars : [
 		'getEnabledSelector',
 		'getTextSelector',
@@ -11,17 +11,18 @@ Class {
 		'model',
 		'disabledStyle'
 	],
-	#category : #'Morphic-Widgets-Basic'
+	#category : 'Morphic-Widgets-Basic',
+	#package : 'Morphic-Widgets-Basic'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 LabelMorph class >> example [
 	"self example"
 	<sampleInstance>
 	^ (self newLabel: 'A Label') openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 LabelMorph class >> exampleDisable [
 	"self exampleDisable"
 	<sampleInstance>
@@ -30,7 +31,7 @@ LabelMorph class >> exampleDisable [
 		openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 LabelMorph class >> exampleDisableInset [
 	"self exampleDisable"
 	<sampleInstance>
@@ -41,14 +42,14 @@ LabelMorph class >> exampleDisableInset [
 		openInWindow
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LabelMorph class >> labelFont [
 	"in the future should access an instance variable"
 
 	^StandardFonts defaultFont
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LabelMorph class >> newLabel: aString [
 	"Answer a new text label morph."
 
@@ -58,7 +59,7 @@ LabelMorph class >> newLabel: aString [
 		getEnabled: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LabelMorph class >> newLabelFor: aModel label: aString getEnabled: enabledSel [
 	"Answer a new text label whose model is aModel"
 
@@ -67,25 +68,25 @@ LabelMorph class >> newLabelFor: aModel label: aString getEnabled: enabledSel [
 		getEnabledSelector: enabledSel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> adoptPaneColor: aColor [
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 LabelMorph >> disable [
 	"Disable the receiver."
 
 	self enabled: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> disabledStyle [
 	"Answer the value of disabledStyle"
 
 	^ disabledStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> disabledStyle: anObject [
 	"Set the value of disabledStyle"
 
@@ -93,7 +94,7 @@ LabelMorph >> disabledStyle: anObject [
 	self changed
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LabelMorph >> drawOn: aCanvas [
 	"Draw based on enablement."
 
@@ -108,21 +109,21 @@ LabelMorph >> drawOn: aCanvas [
 	]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 LabelMorph >> enable [
 	"Enable the receiver."
 
 	self enabled: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> enabled [
 	"Answer the value of enabled"
 
 	^enabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> enabled: aBoolean [
 	"Set the value of enabled"
 
@@ -133,14 +134,14 @@ LabelMorph >> enabled: aBoolean [
 			changed]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> getEnabledSelector [
 	"Answer the value of getEnabledSelector"
 
 	^ getEnabledSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> getEnabledSelector: anObject [
 	"Set the value of getEnabledSelector"
 
@@ -148,20 +149,20 @@ LabelMorph >> getEnabledSelector: anObject [
 	self updateEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> getTextSelector [
 
 	^ getTextSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> getTextSelector: aSymbol [
 
 	getTextSelector := aSymbol.
 	self updateText
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LabelMorph >> initWithContents: aString font: aFont emphasis: emphasisCode [
 	"Grrr, why do they do basicNew?"
 
@@ -171,7 +172,7 @@ LabelMorph >> initWithContents: aString font: aFont emphasis: emphasisCode [
 		enabled: true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LabelMorph >> initialize [
 	"Initialize the receiver."
 
@@ -181,13 +182,13 @@ LabelMorph >> initialize [
 		enabled: true
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 LabelMorph >> interactionState: aSymbol [
 	"Backstop here to prevent 'legacy' color handling being applied from
 	pluggable buttons."
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 LabelMorph >> minHeight [
 	"Answer the receiver's minimum height.
 	based on font height."
@@ -195,7 +196,7 @@ LabelMorph >> minHeight [
 	^self fontToUse height rounded max: super minHeight
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 LabelMorph >> minWidth [
 	"Answer the minmum width of the receiver.
 	Based on font and contents."
@@ -203,14 +204,14 @@ LabelMorph >> minWidth [
 	^self valueOfProperty: #minWidth ifAbsent: [self measureContents x] "allow override"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> model [
 	"Answer the value of model"
 
 	^model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> model: anObject [
 	"Set my model and make me me a dependent of the given object."
 
@@ -219,7 +220,7 @@ LabelMorph >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LabelMorph >> stringColor [
 
 	^ self enabled
@@ -227,7 +228,7 @@ LabelMorph >> stringColor [
 		ifFalse: [ self theme labelDisabledColorFor: self ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 LabelMorph >> update: aSymbol [
 	"Refer to the comment in View|update:."
 
@@ -239,7 +240,7 @@ LabelMorph >> update: aSymbol [
 		^ self]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 LabelMorph >> updateEnabled [
 	"Update the enablement state."
 
@@ -248,7 +249,7 @@ LabelMorph >> updateEnabled [
 			self enabled: (self model perform: self getEnabledSelector)]]
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 LabelMorph >> updateText [
 	"Update the text contents."
 

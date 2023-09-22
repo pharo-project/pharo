@@ -2,12 +2,14 @@
 SUnit tests for SystemVersion.
 "
 Class {
-	#name : #SystemVersionTest,
-	#superclass : #TestCase,
-	#category : #'System-Support-Tests-Image'
+	#name : 'SystemVersionTest',
+	#superclass : 'TestCase',
+	#category : 'System-Support-Tests-Image',
+	#package : 'System-Support-Tests',
+	#tag : 'Image'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SystemVersionTest >> checkIsCompatibleWithResultOfVersionMessage: aString [
 	"Checks whether a string is compatible with the result of the existing #version message who returned
 	   Pharomajor.minor.patch[suffix]
@@ -23,13 +25,13 @@ SystemVersionTest >> checkIsCompatibleWithResultOfVersionMessage: aString [
 		assert: (rx subexpression: 5) asNumber >= 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemVersionTest >> testCalculationOfHighestUpdate [
 
 	self assert: (SystemVersion fromVersionString: 'Pharo-6.0+alpha.build.510') highestUpdate equals: 60510
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemVersionTest >> testCommitHashShort [
 
 	| version |
@@ -37,14 +39,14 @@ SystemVersionTest >> testCommitHashShort [
 	self assert: version commitHashShort equals: '368dcda'
 ]
 
-{ #category : #'tests - compatibility' }
+{ #category : 'tests - compatibility' }
 SystemVersionTest >> testDoNotBreakSmalltalkVersion [
 	"TODO: This one might be yellow when we still set the suffix with build nr and hash from the outside."
 
 	self checkIsCompatibleWithResultOfVersionMessage: Smalltalk version
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemVersionTest >> testDottedMajorMinorPatch [
 
 	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') dottedMajorMinorPatch equals: '3.7.0'.
@@ -52,7 +54,7 @@ SystemVersionTest >> testDottedMajorMinorPatch [
 	self assert: (SystemVersion fromVersionString: 'Pharo1.1') dottedMajorMinorPatch equals: '1.1.0'
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 SystemVersionTest >> testInstanceCreation [
 
 	| version |
@@ -70,7 +72,7 @@ SystemVersionTest >> testInstanceCreation [
 		assert: (version printString beginsWith: 'Pharo-0.0')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinor [
 
 	| version |
@@ -88,7 +90,7 @@ SystemVersionTest >> testInstanceCreationMajorMinor [
 		assert: (version printString beginsWith: 'Pharo-6.1.199')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffix [
 
 	| version |
@@ -110,7 +112,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffix [
 		assert: (version printString beginsWith: 'Pharo-7.0.199+alpha')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuild [
 
 	| version |
@@ -133,7 +135,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuild [
 		assert: (version printString beginsWith: 'Pharo-7.0.199+alpha.build.142')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildCommitHash [
 
 	| version |
@@ -151,7 +153,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildCommitHash [
 		assert: (version printString beginsWith: 'Pharo-7.0.199+alpha.build.148.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
 
 	| version |
@@ -174,7 +176,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
 		assert: (version printString beginsWith: 'Pharo-7.0.199+build.142')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemVersionTest >> testMajorMinorVersion [
 
 	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorVersion equals: 'RPharo3.7.0'.
@@ -183,7 +185,7 @@ SystemVersionTest >> testMajorMinorVersion [
 	self assert: (SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorVersion equals: 'Pharo1.1.7'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemVersionTest >> testMajorMinorWithSeparatingString [
 
 	self assert: ((SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorPatch: '-') equals: '3-7-0'.
@@ -192,7 +194,7 @@ SystemVersionTest >> testMajorMinorWithSeparatingString [
 	self assert: ((SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorPatch: '.') equals: '1.1.7'
 ]
 
-{ #category : #'tests - parsing' }
+{ #category : 'tests - parsing' }
 SystemVersionTest >> testParsingFromVersionString [
 	"Test that each of the keys are parsable and return a printString giving as value of the associations"
 
@@ -217,20 +219,20 @@ SystemVersionTest >> testParsingFromVersionString [
 	do: [:each | self assert: ((SystemVersion fromVersionString: each key) printString beginsWith: each value) ]
 ]
 
-{ #category : #'tests - compatibility' }
+{ #category : 'tests - compatibility' }
 SystemVersionTest >> testSmalltalkVersionEqualsCurrentVersion [
 	"TODO: This one might be yellow when we still set the suffix with build nr and hash from the outside."
 
 	self assert: Smalltalk version equals: SystemVersion current version
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemVersionTest >> testSystemVersion [
 
 	self assert: SystemVersion current notNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemVersionTest >> testVersion [
 	"Check that the #version method returns without a $- between Pharo and the major number."
 
@@ -239,7 +241,7 @@ SystemVersionTest >> testVersion [
 	self assert: version version equals: 'Pharo7.0.0alpha'
 ]
 
-{ #category : #'tests - compatibility' }
+{ #category : 'tests - compatibility' }
 SystemVersionTest >> testVersionIsCompatible [
 	"Test that the result of the #version method follows the historic pattern (e.g. Pharo7.0alpha)
 	 and is not broken"

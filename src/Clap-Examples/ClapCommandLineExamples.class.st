@@ -15,15 +15,16 @@ Commands registered in the system (returned from a class-side method with the <c
 ```
 "
 Class {
-	#name : #ClapCommandLineExamples,
-	#superclass : #ClapApplication,
+	#name : 'ClapCommandLineExamples',
+	#superclass : 'ClapApplication',
 	#instVars : [
 		'outStream'
 	],
-	#category : #'Clap-Examples'
+	#category : 'Clap-Examples',
+	#package : 'Clap-Examples'
 }
 
-{ #category : #'command line' }
+{ #category : 'command line' }
 ClapCommandLineExamples class >> git [
 	"A dummy command (no behavior besides help) to demonstrate nested subcommand and as a test subject for the documenter.
 	<commandline> pragma omitted, because doesn't really make sense to make it available outside the image."
@@ -51,7 +52,7 @@ ClapCommandLineExamples class >> git [
 		yourself
 ]
 
-{ #category : #'command line' }
+{ #category : 'command line' }
 ClapCommandLineExamples class >> hello [
 	"The usual Hello-World example, demonstrating a Clap command with a couple features."
 
@@ -79,57 +80,57 @@ ClapCommandLineExamples class >> hello [
 			(self with: args) execute ]
 ]
 
-{ #category : #'accessing - private' }
+{ #category : 'accessing - private' }
 ClapCommandLineExamples >> argumentAt: identifier [
 	^ (arguments at: identifier) value: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommandLineExamples >> defaultLanguage [
 	^ #en
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommandLineExamples >> defaultRecipient [
 	^ self
 		translationFor: self language
 		from: self translatedRecipients
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapCommandLineExamples >> execute [
 	self sayHello
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommandLineExamples >> greeting [
 	^ self
 		translationFor: self language
 		from: self translatedGreetings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommandLineExamples >> language [
 	^ self argumentAt: #language
 ]
 
-{ #category : #'accessing - private' }
+{ #category : 'accessing - private' }
 ClapCommandLineExamples >> outStream [
 	^ outStream ifNil: [ outStream := VTermOutputDriver on: arguments context stdout ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommandLineExamples >> recipients [
 	^ (arguments at: #who) allOccurrencesCollect: [ :arg | arg value: self ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapCommandLineExamples >> sayHello [
 	"arguments validateAll."
 	self sayHelloOn: self outStream
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapCommandLineExamples >> sayHelloOn: aStream [
 	self recipients do: [ :each |
 		aStream
@@ -137,12 +138,12 @@ ClapCommandLineExamples >> sayHelloOn: aStream [
 			lf ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommandLineExamples >> shouting [
 	^ self argumentAt: #shout
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapCommandLineExamples >> translatedGreetings [
 	^ {
 		#de -> 'hallo'.
@@ -155,7 +156,7 @@ ClapCommandLineExamples >> translatedGreetings [
 	} asDictionary
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapCommandLineExamples >> translatedRecipients [
 	^ {
 		#de -> 'welt'.
@@ -168,20 +169,20 @@ ClapCommandLineExamples >> translatedRecipients [
 	} asDictionary
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapCommandLineExamples >> translationFor: lang from: translations [
 	^ translations at: self language
 		ifAbsent: [ translations at: self defaultLanguage ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapCommandLineExamples >> voice: aString [
 	self shouting ifTrue: [ ^ aString asUppercase , '!' ].
 	self whispering ifTrue: [ ^ '(' , aString asLowercase , ')' ].
 	^ aString , '.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommandLineExamples >> whispering [
 	^ self argumentAt: #whisper
 ]

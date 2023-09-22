@@ -1,10 +1,12 @@
 Class {
-	#name : #WinPlatformTest,
-	#superclass : #TestCase,
-	#category : #'System-Platforms-Tests-Windows'
+	#name : 'WinPlatformTest',
+	#superclass : 'TestCase',
+	#category : 'System-Platforms-Tests-Windows',
+	#package : 'System-Platforms-Tests',
+	#tag : 'Windows'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WinPlatformTest >> testGetTempPathFromTMP [
 
 	| value |

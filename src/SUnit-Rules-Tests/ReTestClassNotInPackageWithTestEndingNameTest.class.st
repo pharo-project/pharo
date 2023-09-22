@@ -1,10 +1,12 @@
 Class {
-	#name : #ReTestClassNotInPackageWithTestEndingNameTest,
-	#superclass : #ReTestBasedTestCase,
-	#category : #'SUnit-Rules-Tests-Base'
+	#name : 'ReTestClassNotInPackageWithTestEndingNameTest',
+	#superclass : 'ReTestBasedTestCase',
+	#category : 'SUnit-Rules-Tests-Base',
+	#package : 'SUnit-Rules-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReTestClassNotInPackageWithTestEndingNameTest >> testBasicCheck [
 	
 	"test in wrong package raises critic"

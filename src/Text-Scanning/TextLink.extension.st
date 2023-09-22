@@ -1,5 +1,5 @@
-Extension { #name : #TextLink }
+Extension { #name : 'TextLink' }
 
-{ #category : #'*Text-Scanning' }
+{ #category : '*Text-Scanning' }
 TextLink >> emphasizeScanner: scanner [
 ]

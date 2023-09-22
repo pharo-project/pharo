@@ -1,10 +1,12 @@
 Class {
-	#name : #TableLayoutTest,
-	#superclass : #TestCase,
-	#category : #'Morphic-Tests-Layouts'
+	#name : 'TableLayoutTest',
+	#superclass : 'TestCase',
+	#category : 'Morphic-Tests-Layouts',
+	#package : 'Morphic-Tests',
+	#tag : 'Layouts'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TableLayoutTest >> testNotVisibleMorphIsNotGettingAnExtent [
 
 	self 
@@ -16,7 +18,7 @@ TableLayoutTest >> testNotVisibleMorphIsNotGettingAnExtent [
 		compareSelector: #width
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TableLayoutTest >> testNotVisibleMorphIsNotGettingAnExtent: direction compareSelector: aSelector [
 	| morph m1 m2 |
 	

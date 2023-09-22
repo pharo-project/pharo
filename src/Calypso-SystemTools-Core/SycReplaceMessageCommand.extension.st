@@ -1,6 +1,6 @@
-Extension { #name : #SycReplaceMessageCommand }
+Extension { #name : 'SycReplaceMessageCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycReplaceMessageCommand class >> canBeExecutedInContext: aToolContext [
 
 	self flag: #Enh.
@@ -11,7 +11,7 @@ SycReplaceMessageCommand class >> canBeExecutedInContext: aToolContext [
 	 aToolContext isMethodSelected
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycReplaceMessageCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

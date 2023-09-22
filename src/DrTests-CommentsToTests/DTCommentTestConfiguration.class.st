@@ -2,12 +2,14 @@
 I know the items to create a testSuite that will be analysed by a DrTestsPlugin.
 "
 Class {
-	#name : #DTCommentTestConfiguration,
-	#superclass : #DTPluginConfiguration,
-	#category : #'DrTests-CommentsToTests-Base'
+	#name : 'DTCommentTestConfiguration',
+	#superclass : 'DTPluginConfiguration',
+	#category : 'DrTests-CommentsToTests-Base',
+	#package : 'DrTests-CommentsToTests',
+	#tag : 'Base'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 DTCommentTestConfiguration >> asTestSuite [
 
 	| suite classes methods |

@@ -1,6 +1,6 @@
-Extension { #name : #Workspace }
+Extension { #name : 'Workspace' }
 
-{ #category : #'*HeuristicCompletion-Morphic' }
+{ #category : '*HeuristicCompletion-Morphic' }
 Workspace >> bindings [
 	^ bindings
 ]

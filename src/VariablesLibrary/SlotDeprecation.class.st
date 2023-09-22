@@ -2,17 +2,19 @@
 This exception is raised when accessing deprecated slots
 "
 Class {
-	#name : #SlotDeprecation,
-	#superclass : #Deprecation,
-	#category : #'VariablesLibrary-DeprecatedSlot'
+	#name : 'SlotDeprecation',
+	#superclass : 'Deprecation',
+	#category : 'VariablesLibrary-DeprecatedSlot',
+	#package : 'VariablesLibrary',
+	#tag : 'DeprecatedSlot'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotDeprecation >> explanationString [
 	^explanationString ifNil: [ '' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotDeprecation >> messageText [
 	^ String
 		streamContents: [ :str |

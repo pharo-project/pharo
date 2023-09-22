@@ -12,12 +12,14 @@ Then, it will lookup in the receiver's hierarchy the approuved and forbidden met
 NewMethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3
 "
 Class {
-	#name : #MethodFinder,
-	#superclass : #Object,
-	#category : #'Tool-Finder-MethodFinder'
+	#name : 'MethodFinder',
+	#superclass : 'Object',
+	#category : 'Tool-Finder-MethodFinder',
+	#package : 'Tool-Finder',
+	#tag : 'MethodFinder'
 }
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 MethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult: expectedResult [
 	"Search for methods which giving each elements of input returns the corresponding elements of outputs."
 	
@@ -26,7 +28,7 @@ MethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult: ex
 		  send resultIn: expectedResult evaluate ]
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 MethodFinder >> possibleSolutionsForInput: inputCollection [
 
 	| sends |

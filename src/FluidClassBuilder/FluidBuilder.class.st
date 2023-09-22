@@ -31,8 +31,8 @@ There are too many conversion and we should realigned the APIs with the class de
 
 "
 Class {
-	#name : #FluidBuilder,
-	#superclass : #Object,
+	#name : 'FluidBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'shiftClassBuilder',
 		'packageName',
@@ -43,43 +43,45 @@ Class {
 		'classSlotsToBuild',
 		'classTraitsToBuild'
 	],
-	#category : #'FluidClassBuilder-Base'
+	#category : 'FluidClassBuilder-Base',
+	#package : 'FluidClassBuilder',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FluidBuilder class >> isAbstract [
 
 	^ self == FluidBuilder
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FluidBuilder >> build [
 	"Return a class that is not installed in the system."
 
 	^ self shiftClassBuilder build
 ]
 
-{ #category : #'class side' }
+{ #category : 'class side' }
 FluidBuilder >> classSlots: aCollection [
 	classSlotsToBuild := aCollection collect: [ :e | e asSlot ]
 ]
 
-{ #category : #'class side' }
+{ #category : 'class side' }
 FluidBuilder >> classSlotsToBuild [
 	^ classSlotsToBuild
 ]
 
-{ #category : #'class side' }
+{ #category : 'class side' }
 FluidBuilder >> classTraits: aCollection [
 	classTraitsToBuild := aCollection asTraitComposition
 ]
 
-{ #category : #'class side' }
+{ #category : 'class side' }
 FluidBuilder >> classTraitsToBuild [
 	^ classTraitsToBuild
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [
 
 	| oldClass |
@@ -89,7 +91,7 @@ FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [
 	classTraitsToBuild := oldClass class traitComposition
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FluidBuilder >> fillInstanceSideFromClass: aClass [
 
 	slotsToBuild := aClass slots.
@@ -99,7 +101,7 @@ FluidBuilder >> fillInstanceSideFromClass: aClass [
 	aClass packageTag ifNotNil: [ :tag | tag isRoot ifFalse: [ self tag: tag name ] ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FluidBuilder >> fillShiftClassBuilder [
 
 	shiftClassBuilder := ShiftClassBuilder new
@@ -113,14 +115,14 @@ FluidBuilder >> fillShiftClassBuilder [
 		                     yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FluidBuilder >> fluidInstall [
 	"Install the class in the system environment, method #fluidInstall is implemented in behavior, too"
 
 	^ self install
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FluidBuilder >> initialize [
 
 	super initialize.
@@ -133,74 +135,74 @@ FluidBuilder >> initialize [
 "	#packageName . #tagToBuild"
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FluidBuilder >> install [
 	"Install the class in the system environment"
 
 	^ ShiftClassInstaller new makeWithBuilder: self shiftClassBuilder
 ]
 
-{ #category : #'accessing - mandatory' }
+{ #category : 'accessing - mandatory' }
 FluidBuilder >> nameToBuild [
 	"mandatory"
 
 	^ nameToBuild
 ]
 
-{ #category : #'accessing - mandatory' }
+{ #category : 'accessing - mandatory' }
 FluidBuilder >> nameToBuild: aSymbol [
 	nameToBuild := aSymbol
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 FluidBuilder >> package: aString [
 
 	packageName := aString
 ]
 
-{ #category : #'accessing - mandatory' }
+{ #category : 'accessing - mandatory' }
 FluidBuilder >> packageToBuild [
 
 	^ packageName
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FluidBuilder >> shiftClassBuilder [
 
 	^ shiftClassBuilder ifNil: [ shiftClassBuilder := self fillShiftClassBuilder ]
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 FluidBuilder >> slots: anArray [
 
 	slotsToBuild := anArray collect: [ :each | each asSlot ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FluidBuilder >> slotsToBuild [
 
 	^ slotsToBuild
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FluidBuilder >> tag [
 
 	^ tagToBuild
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 FluidBuilder >> tag: aString [
 
 	tagToBuild := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FluidBuilder >> tagToBuild [
 
 	^ tagToBuild
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 FluidBuilder >> trait: aTraitComposition [
 
 	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg'
@@ -209,20 +211,20 @@ FluidBuilder >> trait: aTraitComposition [
 	^ self traits: aTraitComposition
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 FluidBuilder >> traits: anArray [
 
 	uses := anArray asTraitComposition.
 	classTraitsToBuild := uses classComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FluidBuilder >> traitsToBuild [
 
 	^ uses
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 FluidBuilder >> uses: aTraitComposition [
 
 	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg'

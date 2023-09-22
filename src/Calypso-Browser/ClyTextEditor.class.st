@@ -4,12 +4,14 @@ I override all kind of navigation requests like sendersOfIt, implementorsOfIt an
 I always call my actual browser owner to perform requested navigation query
 "
 Class {
-	#name : #ClyTextEditor,
-	#superclass : #RubSmalltalkEditor,
-	#category : #'Calypso-Browser-TextEditors'
+	#name : 'ClyTextEditor',
+	#superclass : 'RubSmalltalkEditor',
+	#category : 'Calypso-Browser-TextEditors',
+	#package : 'Calypso-Browser',
+	#tag : 'TextEditors'
 }
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 ClyTextEditor class >> contextMenuOn: aBuilder [
 	<RubSmalltalkCodeMenu>
 
@@ -21,23 +23,23 @@ ClyTextEditor class >> contextMenuOn: aBuilder [
 	CmdContextMenuActivation registerContextMenuOn: aBuilder inContext: context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditor >> browser [
 	^textArea editingMode browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditor >> browserTool [
 	^textArea editingMode browserTool
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTextEditor >> cancel [
 
 	self browserTool cancelChanges
 ]
 
-{ #category : #'new selection' }
+{ #category : 'new selection' }
 ClyTextEditor >> notify: aString at: anInteger in: aStream [
 	"Because in calypso there is error icons and UI feedback absent in others RubEditor,
 	there no need to insert -> message in the text area"
@@ -56,7 +58,7 @@ ClyTextEditor >> notify: aString at: anInteger in: aStream [
 	textArea flashColor: self theme dangerBackgroundColor
 ]
 
-{ #category : #'do-its' }
+{ #category : 'do-its' }
 ClyTextEditor >> printIt [
 	"Treat the current text selection as an expression; evaluate it. Insert the
 	description of the result of evaluation after the selection and then make
@@ -80,7 +82,7 @@ ClyTextEditor >> printIt [
 		popoverPresenter takeKeyboardFocus ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTextEditor >> undo [
 
 	super undo.

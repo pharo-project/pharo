@@ -2,15 +2,17 @@
 I am a completion engine that logs when the menu is closed without activating an entry.
 "
 Class {
-	#name : #CoStatisticsCompletionEngine,
-	#superclass : #CoCompletionEngine,
+	#name : 'CoStatisticsCompletionEngine',
+	#superclass : 'CoCompletionEngine',
 	#instVars : [
 		'statistics'
 	],
-	#category : #'HeuristicCompletion-Morphic-Statistics'
+	#category : 'HeuristicCompletion-Morphic-Statistics',
+	#package : 'HeuristicCompletion-Morphic',
+	#tag : 'Statistics'
 }
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 CoStatisticsCompletionEngine >> closeMenu [
 
 	context ifNotNil: [
@@ -23,7 +25,7 @@ CoStatisticsCompletionEngine >> closeMenu [
 	super closeMenu
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoStatisticsCompletionEngine >> initialize [
 
 	super initialize.

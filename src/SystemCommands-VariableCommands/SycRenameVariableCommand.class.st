@@ -11,43 +11,44 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #SycRenameVariableCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycRenameVariableCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'newName',
 		'variable'
 	],
-	#category : #'SystemCommands-VariableCommands'
+	#category : 'SystemCommands-VariableCommands',
+	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRenameVariableCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isVariableSelected and: [ aToolContext isGlobalVariableSelected not ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameVariableCommand class >> defaultMenuIconName [
 	^ #edit
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameVariableCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	aToolContext showVariableNamed: newName
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameVariableCommand >> classRefactoring [
 
 	^ RBRenameInstanceVariableRefactoring
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameVariableCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameVariableCommand >> execute [
 
 	| refactoring |
@@ -56,23 +57,23 @@ SycRenameVariableCommand >> execute [
 	refactoring execute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameVariableCommand >> newName [
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameVariableCommand >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameVariableCommand >> newVariableName [
 
 	^ newName asSymbol
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameVariableCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
@@ -80,7 +81,7 @@ SycRenameVariableCommand >> prepareFullExecutionInContext: aToolContext [
 	self requestNewNameIn: aToolContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameVariableCommand >> requestNewNameIn: aToolContext [
 
 	newName := UIManager default
@@ -91,12 +92,12 @@ SycRenameVariableCommand >> requestNewNameIn: aToolContext [
 		CmdCommandAborted signal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameVariableCommand >> variable [
 	^ variable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameVariableCommand >> variable: anObject [
 	variable := anObject
 ]

@@ -1,1 +1,1 @@
-Package { #name : #'VariablesLibrary-Tests' }
+Package { #name : 'VariablesLibrary-Tests' }

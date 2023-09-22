@@ -2,18 +2,20 @@
 I know how to handle the marshalling and unmarshalling of structs.
 "
 Class {
-	#name : #TFStructType,
-	#superclass : #TFAbstractType,
+	#name : 'TFStructType',
+	#superclass : 'TFAbstractType',
 	#instVars : [
 		'members',
 		'offsets',
 		'targetClass',
 		'byteSize'
 	],
-	#category : #'ThreadedFFI-Types'
+	#category : 'ThreadedFFI-Types',
+	#package : 'ThreadedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFStructType class >> finalizeResourceData: handle [
 
 	handle isNull ifTrue: [ ^ self ].
@@ -24,7 +26,7 @@ TFStructType class >> finalizeResourceData: handle [
 	handle beNull
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFStructType class >> forClass: aClass withMembers: aCollectionOfMembers [
 
 	^ self new
@@ -34,32 +36,32 @@ TFStructType class >> forClass: aClass withMembers: aCollectionOfMembers [
 		yourself
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 TFStructType >> basicType [
 
 	^ self
 ]
 
-{ #category : #size }
+{ #category : 'size' }
 TFStructType >> byteSize [
 
 	self validate.
 	^ byteSize ifNil: [ self primitiveByteSize ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 TFStructType >> callbackReadValue: anExternalAddress [
 
 	^ targetClass fromHandle: anExternalAddress
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 TFStructType >> callbackWrite: aNumber into: anExternalAddress [
 
 	self write: aNumber getHandle into: anExternalAddress
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TFStructType >> copyFrom: from to: to size: size [
 	"Copy from the from an externalAdress or a ByteArray or to a ByteArray or an External Address"
 
@@ -67,11 +69,11 @@ TFStructType >> copyFrom: from to: to size: size [
 	self primitiveFail
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFStructType >> emitFreeIfNeededOfIndex: anInteger argumentsArrayTempName: aString withBuilder: anIRBuilder [
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFStructType >> emitMarshallFromPrimitive: anIRBuilder [
 
 	anIRBuilder addTemp: #__structHandler.
@@ -82,31 +84,31 @@ TFStructType >> emitMarshallFromPrimitive: anIRBuilder [
 	anIRBuilder send: #fromHandle:
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFStructType >> emitMarshallToPrimitive: anIRBuilder [
 
 	anIRBuilder send: #getHandle
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 TFStructType >> free [
 	<primitive: 'primitiveFreeStruct'>
 
 	^ self primitiveFailed
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TFStructType >> freeValueIfNeeded: anExternalAddress [
 
 	"Nothing to free"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TFStructType >> isVoid [
 	^ false
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFStructType >> marshallFromPrimitive: aValue [
 
 	(aValue isKindOf: targetClass)
@@ -115,44 +117,44 @@ TFStructType >> marshallFromPrimitive: aValue [
 	^ targetClass fromHandle: aValue
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFStructType >> marshallToPrimitive: aValue [
 
 	^ aValue getHandle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFStructType >> members [
 	^ members
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFStructType >> members: anObject [
 	members := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFStructType >> offsets [
 	self validate.
 
 	^ offsets
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 TFStructType >> primitiveByteSize [
 	<primitive: 'primitiveStructByteSize'>
 
 	^ self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 TFStructType >> primitiveInitializeStructType [
 	<primitive: 'primitiveInitializeStructType'>
 
 	^ self primitiveFailed
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 TFStructType >> readReturnValue: anExternalAddress [
 
 	| newHandle |
@@ -161,7 +163,7 @@ TFStructType >> readReturnValue: anExternalAddress [
 	^ newHandle
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 TFStructType >> readValue: anExternalAddress offset: offset [
 
 	| address |
@@ -170,17 +172,17 @@ TFStructType >> readValue: anExternalAddress offset: offset [
 	^ targetClass fromHandle: address
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFStructType >> targetClass [
 	^ targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFStructType >> targetClass: anObject [
 	targetClass := anObject
 ]
 
-{ #category : #validating }
+{ #category : 'validating' }
 TFStructType >> validate [
 	self isValid
 		ifTrue: [ ^ self ].
@@ -193,7 +195,7 @@ TFStructType >> validate [
 	byteSize := self primitiveByteSize
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 TFStructType >> write: anExternalStructure into: anExternalAddress [
 
 	self copyFrom: anExternalStructure to: anExternalAddress size: self byteSize

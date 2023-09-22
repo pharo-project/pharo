@@ -1,6 +1,6 @@
-Extension { #name : #TraitedMetaclass }
+Extension { #name : 'TraitedMetaclass' }
 
-{ #category : #'*CodeExport-Traits' }
+{ #category : '*CodeExport-Traits' }
 TraitedMetaclass >> fileOutLocalMethodsInProtocol: protocol on: aFileStream [
 
 	aFileStream cr.

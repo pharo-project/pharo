@@ -32,18 +32,20 @@ The shadow paint has following properties:
 
 "
 Class {
-	#name : #AthensShadowPaint,
-	#superclass : #AthensPaint,
+	#name : 'AthensShadowPaint',
+	#superclass : 'AthensPaint',
 	#instVars : [
 		'color',
 		'width',
 		'blur',
 		'offset'
 	],
-	#category : #'Athens-Core-Paints'
+	#category : 'Athens-Core-Paints',
+	#package : 'Athens-Core',
+	#tag : 'Paints'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensShadowPaint >> asStrokePaintOn: aCanvas [
 	"receiver can be converted to stroke paint
 	presering color and width"
@@ -51,45 +53,45 @@ AthensShadowPaint >> asStrokePaintOn: aCanvas [
 		width: self width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensShadowPaint >> blur [
 	^ blur
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensShadowPaint >> blur: aPoint [
 	"Set shadpw blur"
 	blur := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensShadowPaint >> color [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensShadowPaint >> color: aColor [
 	color := aColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensShadowPaint >> initialize [
 	super initialize.
 	self setDefaults
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensShadowPaint >> offset [
 	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensShadowPaint >> offset: aPoint [
 	"Set shadow offset"
 	offset := aPoint
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensShadowPaint >> setDefaults [
 
 	"Set the default values for shadows"
@@ -100,12 +102,12 @@ AthensShadowPaint >> setDefaults [
 		blur: 4@4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensShadowPaint >> width [
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensShadowPaint >> width: aNumber [
 	"Set shadow width"
 	width := aNumber

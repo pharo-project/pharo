@@ -11,18 +11,19 @@ Installs:
 - Graphics-* packages (Form, Bitmap, GrafPort...)
 "
 Class {
-	#name : #BaselineOfDisplay,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfDisplay',
+	#superclass : 'BaselineOf',
 	#instVars : [
 		'initializersEnabled'
 	],
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfDisplay
+	#category : 'BaselineOfDisplay',
+	#package : 'BaselineOfDisplay'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfDisplay >> baseline: spec [
 	<baseline>
 
@@ -38,7 +39,7 @@ BaselineOfDisplay >> baseline: spec [
 		 ].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfDisplay >> installBitmap [
 
 	"install new Bitmap class to special objects array"
@@ -51,7 +52,7 @@ BaselineOfDisplay >> installBitmap [
 	Smalltalk specialObjectsArray becomeForward: array.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfDisplay >> postload: loader package: packageSpec [
 
 	| display |
@@ -77,7 +78,7 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	Initialized := true.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfDisplay >> preload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"

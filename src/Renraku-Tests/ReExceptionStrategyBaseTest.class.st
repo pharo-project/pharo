@@ -2,33 +2,34 @@
 A super test case that (re)stores  the setting value
 "
 Class {
-	#name : #ReExceptionStrategyBaseTest,
-	#superclass : #TestCase,
+	#name : 'ReExceptionStrategyBaseTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'currentStrategy'
 	],
-	#category : #'Renraku-Tests'
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReExceptionStrategyBaseTest class >> isAbstract [
 
 	^ self = ReExceptionStrategyBaseTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReExceptionStrategyBaseTest >> errorMessage [
 
 	^ 'test message'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReExceptionStrategyBaseTest >> setUp [
 	super setUp.
 	currentStrategy := ReExceptionStrategy current
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReExceptionStrategyBaseTest >> tearDown [
 
 	ReExceptionStrategy current: currentStrategy.

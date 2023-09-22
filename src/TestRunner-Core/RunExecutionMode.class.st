@@ -2,12 +2,14 @@
 I ececute a test suite then return its TestResult.
 "
 Class {
-	#name : #RunExecutionMode,
-	#superclass : #AbstractExecutionMode,
-	#category : #'TestRunner-Core-ExecutionModes'
+	#name : 'RunExecutionMode',
+	#superclass : 'AbstractExecutionMode',
+	#category : 'TestRunner-Core-ExecutionModes',
+	#package : 'TestRunner-Core',
+	#tag : 'ExecutionModes'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 RunExecutionMode class >> executeCase: aTestCase [
 
 

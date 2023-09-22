@@ -1,6 +1,6 @@
-Extension { #name : #ShiftClassBuilder }
+Extension { #name : 'ShiftClassBuilder' }
 
-{ #category : #'*ClassParser' }
+{ #category : '*ClassParser' }
 ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 
 	self name: aCDClassDefinitionNode className.

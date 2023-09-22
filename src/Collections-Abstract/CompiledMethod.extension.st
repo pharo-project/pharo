@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Collections-Abstract' }
+{ #category : '*Collections-Abstract' }
 CompiledMethod class >> sortBlock [
 	"Return a sort block that orders methods by class name and then by selector"
 	^  [ :a :b|

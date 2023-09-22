@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnDigestAuthenticatorTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnDigestAuthenticatorTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnDigestAuthenticatorTest >> testParseEmpty [
 	| keys headerValue |
 	headerValue := ' Digest username="Mufasa",
@@ -25,7 +26,7 @@ ZnDigestAuthenticatorTest >> testParseEmpty [
 	self assert: (keys at: 'response') equals: '6629fae49393a05397450978507c4ef1'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnDigestAuthenticatorTest >> testParseOK [
 	| keys headerValue |
 	headerValue := ' Digest username="Mufasa",

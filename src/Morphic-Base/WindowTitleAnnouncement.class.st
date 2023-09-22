@@ -1,25 +1,26 @@
 Class {
-	#name : #WindowTitleAnnouncement,
-	#superclass : #Announcement,
+	#name : 'WindowTitleAnnouncement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'title'
 	],
-	#category : #'Morphic-Base'
+	#category : 'Morphic-Base',
+	#package : 'Morphic-Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowTitleAnnouncement class >> title: aString [
 
 	^ self new title: aString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowTitleAnnouncement >> title [
 
 	^ title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowTitleAnnouncement >> title: aString [
 
 	title := aString .

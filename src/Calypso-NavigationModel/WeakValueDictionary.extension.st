@@ -1,6 +1,6 @@
-Extension { #name : #WeakValueDictionary }
+Extension { #name : 'WeakValueDictionary' }
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 WeakValueDictionary >> clyCleanGarbage [
 
 	| firstFound |
@@ -14,7 +14,7 @@ WeakValueDictionary >> clyCleanGarbage [
 		self fixCollisionsFrom: firstFound]
 ]
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 WeakValueDictionary >> clyIncludesCleanedKey: key [
 	"Answer whether the receiver has a key which value was collected as garbage"
 

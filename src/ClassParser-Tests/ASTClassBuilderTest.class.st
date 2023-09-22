@@ -2,24 +2,25 @@
 I am testing the creation of Classes from an AST
 "
 Class {
-	#name : #ASTClassBuilderTest,
-	#superclass : #TestCase,
-	#category : #'ClassParser-Tests'
+	#name : 'ASTClassBuilderTest',
+	#superclass : 'TestCase',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #environmentSetUp }
+{ #category : 'environmentSetUp' }
 ASTClassBuilderTest >> environment [
 
 	^ self class environment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> parserClass [
 
 	^ CDClassDefinitionParser
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateEphemeronClassNamed [
 
 	| ast class |
@@ -35,7 +36,7 @@ ASTClassBuilderTest >> testCreateEphemeronClassNamed [
 	self assert: class name equals: #TestSubClass
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateEphemeronClassWithAll [
 
 	| ast class |
@@ -58,7 +59,7 @@ ASTClassBuilderTest >> testCreateEphemeronClassWithAll [
 	self assert: class classVarNames equals: #( #classVar #pouet #var )
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateImmediateClassNamed [
 
 	| ast class |
@@ -73,7 +74,7 @@ ASTClassBuilderTest >> testCreateImmediateClassNamed [
 	self assert: class name equals: #TestSubClass
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateImmediateClassWithAll [
 
 	| ast class |
@@ -95,7 +96,7 @@ ASTClassBuilderTest >> testCreateImmediateClassWithAll [
 	self assert: class classVarNames equals: #( #classVar #pouet #var )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateNormalClassNamed [
 
 	| ast class |
@@ -107,7 +108,7 @@ ASTClassBuilderTest >> testCreateNormalClassNamed [
 	self assert: class name equals: #TestClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateNormalClassSuperClass [
 
 	| ast class |
@@ -122,7 +123,7 @@ ASTClassBuilderTest >> testCreateNormalClassSuperClass [
 	self assert: class superclass equals: (self environment classNamed: 'Xcrd') ] ensure: [ (self environment classNamed: 'Xcrd') ifNotNil: #removeFromSystem ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateNormalClassWithClassVariable [
 
 	| ast class |
@@ -136,7 +137,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithClassVariable [
 	self assert: class classVarNames equals: #( #classVar #pouet #var )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateNormalClassWithIV [
 
 	| ast class |
@@ -149,7 +150,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithIV [
 	self assert: class instanceVariablesString equals: ''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateNormalClassWithPackage [
 
 	| ast class |
@@ -162,7 +163,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithPackage [
 	self assert: class category equals: Class unclassifiedCategory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateNormalClassWithSharedPools [
 
 	| ast class resTest |
@@ -178,7 +179,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithSharedPools [
 	self assert: class sharedPoolNames equals: resTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateNormalClassWithTrait [
 
 	| ast class |
@@ -191,7 +192,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithTrait [
 	self assert: (class isComposedBy: TOccurrencesTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateNormalClassWithTraitComposition [
 
 	| ast class |
@@ -205,7 +206,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithTraitComposition [
 	self assert: (class isComposedBy: TIncludesWithIdentityCheckTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateTraitUsingAnotherSingleTrait [
 
 	| ast class |
@@ -218,7 +219,7 @@ ASTClassBuilderTest >> testCreateTraitUsingAnotherSingleTrait [
 	self assert: (class isComposedBy: TOccurrencesTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateTraitUsingAnotherTraitComposition [
 
 	| ast class |
@@ -232,7 +233,7 @@ ASTClassBuilderTest >> testCreateTraitUsingAnotherTraitComposition [
 	self assert: (class isComposedBy: TAddForUniquenessTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTClassBuilderTest >> testCreateTraitWithoutOtherTraits [
 
 	| ast class |
@@ -245,7 +246,7 @@ ASTClassBuilderTest >> testCreateTraitWithoutOtherTraits [
 	self assert: class traits isEmpty
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateVariableByteClassNamed [
 
 	| ast class |
@@ -259,7 +260,7 @@ ASTClassBuilderTest >> testCreateVariableByteClassNamed [
 	self assert: class name equals: #TestSubClass
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateVariableByteClassWithAll [
 
 	| ast class |
@@ -279,7 +280,7 @@ ASTClassBuilderTest >> testCreateVariableByteClassWithAll [
 	self assert: class classVarNames equals: #( #classVar #pouet #var )
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateVariableClassNamed [
 
 	| ast class |
@@ -293,7 +294,7 @@ ASTClassBuilderTest >> testCreateVariableClassNamed [
 	self assert: class name equals: #TestSubClass
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateVariableClassWithAll [
 
 	| ast class |
@@ -314,7 +315,7 @@ ASTClassBuilderTest >> testCreateVariableClassWithAll [
 	self assert: class classVarNames equals: #( #classVar #pouet #var )
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateVariableWordClassNamed [
 
 	| ast class |
@@ -328,7 +329,7 @@ ASTClassBuilderTest >> testCreateVariableWordClassNamed [
 	self assert: class name equals: #TestSubClass
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateVariableWordClassWithAll [
 
 	| ast class |
@@ -349,7 +350,7 @@ ASTClassBuilderTest >> testCreateVariableWordClassWithAll [
 	self assert: class classLayout class equals: WordLayout
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateWeakClassNamed [
 
 	| ast class |
@@ -363,7 +364,7 @@ ASTClassBuilderTest >> testCreateWeakClassNamed [
 	self assert: class name equals: #TestSubClass
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTClassBuilderTest >> testCreateWeakClassWithAll [
 
 	| ast class |
@@ -383,7 +384,7 @@ ASTClassBuilderTest >> testCreateWeakClassWithAll [
 	self assert: class instanceVariablesString equals: 'cat env'
 ]
 
-{ #category : #resolveSuperclass }
+{ #category : 'resolveSuperclass' }
 ASTClassBuilderTest >> testDefaultResolve [
 
 	| ast |
@@ -398,7 +399,7 @@ ASTClassBuilderTest >> testDefaultResolve [
 		raise: Error
 ]
 
-{ #category : #resolveSuperclass }
+{ #category : 'resolveSuperclass' }
 ASTClassBuilderTest >> testUseUndefinedClass [
 
 	| ast |

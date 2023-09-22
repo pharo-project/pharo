@@ -1,6 +1,6 @@
-Extension { #name : #MCDictionaryRepository }
+Extension { #name : 'MCDictionaryRepository' }
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MCDictionaryRepository >> asRepositorySpecFor: aMetacelloMCProject [
 
 	| desc |
@@ -12,17 +12,17 @@ MCDictionaryRepository >> asRepositorySpecFor: aMetacelloMCProject [
 		yourself
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MCDictionaryRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
 	^ aPlatform createDictionaryRepository: aRepositorySpec
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MCDictionaryRepository class >> isAvailableFor: type [
 	^ type = 'dictionary'
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MCDictionaryRepository >> versionInfoFromVersionNamed: aString [
 
 	| versions |

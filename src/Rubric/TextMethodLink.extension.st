@@ -1,6 +1,6 @@
-Extension { #name : #TextMethodLink }
+Extension { #name : 'TextMethodLink' }
 
-{ #category : #'*Rubric-Editing-Core' }
+{ #category : '*Rubric-Editing-Core' }
 TextMethodLink >> rubActOnClick: anEvent for: target in: aParagraph editor: anEditor [
 	self flag: #pharoTodo. "Complete implementation with class".
 
@@ -11,7 +11,7 @@ TextMethodLink >> rubActOnClick: anEvent for: target in: aParagraph editor: anEd
 	^ true
 ]
 
-{ #category : #'*Rubric-Editing-Core' }
+{ #category : '*Rubric-Editing-Core' }
 TextMethodLink >> rubMayActOnEvent: anEvent [
 	^ anEvent isMouseMove or: [ super rubMayActOnEvent: anEvent ]
 ]

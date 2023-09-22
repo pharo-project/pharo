@@ -1,6 +1,6 @@
-Extension { #name : #BorderedMorph }
+Extension { #name : 'BorderedMorph' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 BorderedMorph >> changeBorderColor: evt [
 	self theme
 		chooseColorIn: self
@@ -9,7 +9,7 @@ BorderedMorph >> changeBorderColor: evt [
 		for: [ :newColor | self borderColor: newColor ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 BorderedMorph >> changeBorderWidth: evt [
 	| aHand origin handle newWidth |
 	aHand := evt ifNil: [self primaryHand] ifNotNil: [evt hand].
@@ -32,7 +32,7 @@ Click when done.' translated hand: evt hand.
 	handle startStepping
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 BorderedMorph class >> exampleGradient [
 
 	| morph fs |

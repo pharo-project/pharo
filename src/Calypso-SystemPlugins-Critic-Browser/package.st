@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Critic-Browser' }
+Package { #name : 'Calypso-SystemPlugins-Critic-Browser' }

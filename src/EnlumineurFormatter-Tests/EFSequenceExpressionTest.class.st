@@ -1,10 +1,11 @@
 Class {
-	#name : #EFSequenceExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFSequenceExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> basicConfiguration [ 
 
 	^ self contextClass basicNew
@@ -21,7 +22,7 @@ EFSequenceExpressionTest >> basicConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> dontFormatCommentWithStatementConfiguration [
 
 	^ self contextClass basicNew
@@ -44,7 +45,7 @@ EFSequenceExpressionTest >> dontFormatCommentWithStatementConfiguration [
 		indentExtraSpaces: 0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> dontRetainBlankLinesBeforeCommentsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -67,7 +68,7 @@ EFSequenceExpressionTest >> dontRetainBlankLinesBeforeCommentsConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> dontRetainBlankLinesBetweenStatementsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -88,7 +89,7 @@ EFSequenceExpressionTest >> dontRetainBlankLinesBetweenStatementsConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> formatBlockConfiguration [
 
 	^ self contextClass basicNew
@@ -113,7 +114,7 @@ EFSequenceExpressionTest >> formatBlockConfiguration [
 		lineUpBlockBrackets: false
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> formatCommentWithStatementConfiguration [
 
 	^ self contextClass basicNew
@@ -135,7 +136,7 @@ EFSequenceExpressionTest >> formatCommentWithStatementConfiguration [
 		newLineBeforeFirstKeyword: false
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> newLineAfterStatementConfiguration [
 
 	^ self contextClass basicNew
@@ -152,7 +153,7 @@ EFSequenceExpressionTest >> newLineAfterStatementConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> newLineAfterTemporariesConfiguration [
 
 	^ self contextClass basicNew
@@ -162,7 +163,7 @@ EFSequenceExpressionTest >> newLineAfterTemporariesConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> noPeriodAtEndOfMethodConfiguration [ 
 
 	^ self contextClass basicNew
@@ -185,7 +186,7 @@ EFSequenceExpressionTest >> noPeriodAtEndOfMethodConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> periodAtEndOfMethodConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -212,7 +213,7 @@ EFSequenceExpressionTest >> periodAtEndOfMethodConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> retainBlankLinesBeforeCommentsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -233,7 +234,7 @@ EFSequenceExpressionTest >> retainBlankLinesBeforeCommentsConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFSequenceExpressionTest >> retainBlankLinesBetweenStatementsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -254,7 +255,7 @@ EFSequenceExpressionTest >> retainBlankLinesBetweenStatementsConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testCommentBetweenStatements [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -262,7 +263,7 @@ EFSequenceExpressionTest >> testCommentBetweenStatements [
 	self assert: source equals: '| a b |a := 1. "comment" b := 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testCommentBetweenTemporariesAndStatement [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -274,7 +275,7 @@ EFSequenceExpressionTest >> testCommentBetweenTemporariesAndStatement [
 a := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testDontFormatCommentWithStatement [
 	| source |
 	configurationSelector := #dontFormatCommentWithStatementConfiguration.
@@ -283,7 +284,7 @@ EFSequenceExpressionTest >> testDontFormatCommentWithStatement [
  '1 + 3 "We do an addition". 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testDontRetainBlankLinesBeforeComments [
 	| source |
 	configurationSelector := #dontRetainBlankLinesBeforeCommentsConfiguration.
@@ -295,7 +296,7 @@ EFSequenceExpressionTest >> testDontRetainBlankLinesBeforeComments [
 	self assert: source equals: '| a b |a := 1. "Comment" b := 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testDontRetainBlankLinesBetweenStatements [
 	| source |
 	configurationSelector := #dontRetainBlankLinesBetweenStatementsConfiguration.
@@ -309,7 +310,7 @@ EFSequenceExpressionTest >> testDontRetainBlankLinesBetweenStatements [
 	self assert: source equals: '| a b |a := 1. b := a'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testFormatCommentWithStatement [
 	| source |
 	configurationSelector := #formatCommentWithStatementConfiguration.
@@ -318,7 +319,7 @@ EFSequenceExpressionTest >> testFormatCommentWithStatement [
 '1 + 1. "We do an addition" 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testFormatEachStatement [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -326,7 +327,7 @@ EFSequenceExpressionTest >> testFormatEachStatement [
 	self assert: source equals: '| a b |a := 1. b := a'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testLineBetweenTemporariesAndComment [
 	| source |
 	configurationSelector := #newLineAfterTemporariesConfiguration.
@@ -339,7 +340,7 @@ EFSequenceExpressionTest >> testLineBetweenTemporariesAndComment [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testNewLineBetweenStatement [
 	| source |
 	configurationSelector := #newLineAfterStatementConfiguration.
@@ -351,7 +352,7 @@ EFSequenceExpressionTest >> testNewLineBetweenStatement [
 b := a'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testNoNewLineBetweenVariableAndIfTrue [
 	| source |
 	configurationSelector := #formatBlockConfiguration.
@@ -387,7 +388,7 @@ x ifTrue: [
 		ungammaTable: gammaInverseTable ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testNoPeriodAtEndOfMethode [
 	| source |
 	configurationSelector := #noPeriodAtEndOfMethodConfiguration.
@@ -395,7 +396,7 @@ EFSequenceExpressionTest >> testNoPeriodAtEndOfMethode [
 	self assert: source equals: '| a b |6 factorial'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testPeriodAtEndOfMethode [
 	| source |
 	configurationSelector := #periodAtEndOfMethodConfiguration.
@@ -403,7 +404,7 @@ EFSequenceExpressionTest >> testPeriodAtEndOfMethode [
 	self assert: source equals: '| a b |6 factorial.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testRetainBlankLinesBeforeComments [
 	| source |
 	configurationSelector := #retainBlankLinesBeforeCommentsConfiguration.
@@ -420,7 +421,7 @@ EFSequenceExpressionTest >> testRetainBlankLinesBeforeComments [
 "Comment" b := 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testRetainBlankLinesBetweenStatements [
 	| source |
 	configurationSelector := #retainBlankLinesBetweenStatementsConfiguration.
@@ -439,7 +440,7 @@ EFSequenceExpressionTest >> testRetainBlankLinesBetweenStatements [
 b := a'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testRetainBlankLinesBetweenStatements2 [
 	| source |
 	configurationSelector := #retainBlankLinesBetweenStatementsConfiguration.
@@ -460,7 +461,7 @@ EFSequenceExpressionTest >> testRetainBlankLinesBetweenStatements2 [
 b := a'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFSequenceExpressionTest >> testRetainBlankLinesBetweenStatements3 [
 	| source |
 	configurationSelector := #retainBlankLinesBetweenStatementsConfiguration.

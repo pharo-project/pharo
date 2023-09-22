@@ -1,6 +1,6 @@
-Extension { #name : #RemoteString }
+Extension { #name : 'RemoteString' }
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 RemoteString >> text [
 	^ self string asText
 ]

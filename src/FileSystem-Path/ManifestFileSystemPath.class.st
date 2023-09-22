@@ -6,12 +6,14 @@ It is responsible for the modelisation of absolute and relative paths in the fil
 A documentation of this library is available in the Deep Into Pharo book, «Chapter 3: Files with FileSystem».
 "
 Class {
-	#name : #ManifestFileSystemPath,
-	#superclass : #PackageManifest,
-	#category : #'FileSystem-Path-Manifest'
+	#name : 'ManifestFileSystemPath',
+	#superclass : 'PackageManifest',
+	#category : 'FileSystem-Path-Manifest',
+	#package : 'FileSystem-Path',
+	#tag : 'Manifest'
 }
 
-{ #category : #'meta-data - dependency analyser' }
+{ #category : 'meta-data - dependency analyser' }
 ManifestFileSystemPath class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams' #'Collections-Abstract')
 ]

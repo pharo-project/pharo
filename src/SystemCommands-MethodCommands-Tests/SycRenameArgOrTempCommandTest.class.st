@@ -1,10 +1,11 @@
 Class {
-	#name : #SycRenameArgOrTempCommandTest,
-	#superclass : #TestCase,
-	#category : #'SystemCommands-MethodCommands-Tests'
+	#name : 'SycRenameArgOrTempCommandTest',
+	#superclass : 'TestCase',
+	#category : 'SystemCommands-MethodCommands-Tests',
+	#package : 'SystemCommands-MethodCommands-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRenameArgOrTempCommandTest >> testCanExecuteOnArgumentNode [
 
 	| argNode sourceCodeContext |
@@ -14,7 +15,7 @@ SycRenameArgOrTempCommandTest >> testCanExecuteOnArgumentNode [
 	self assert: (SycRenameArgOrTempCommand canBeExecutedInContext: sourceCodeContext)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRenameArgOrTempCommandTest >> testCanExecuteOnTemporaryNode [
 
 	| sourceCodeContext tempNode |

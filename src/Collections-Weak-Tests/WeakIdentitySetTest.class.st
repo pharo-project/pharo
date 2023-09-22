@@ -1,16 +1,18 @@
 Class {
-	#name : #WeakIdentitySetTest,
-	#superclass : #WeakSetTest,
-	#category : #'Collections-Weak-Tests-Base'
+	#name : 'WeakIdentitySetTest',
+	#superclass : 'WeakSetTest',
+	#category : 'Collections-Weak-Tests-Base',
+	#package : 'Collections-Weak-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 WeakIdentitySetTest >> classToBeTested [
 
 	^ WeakIdentitySet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakIdentitySetTest >> testAddEqualElements [
 	| ws o2 o3 |
 	o2 := 1 / 2.
@@ -29,7 +31,7 @@ WeakIdentitySetTest >> testAddEqualElements [
 	self assert: ws size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakIdentitySetTest >> testAddIdenticalElements [
 	| identitySet aString anOtherString |
 	aString := 'hello'.
@@ -48,7 +50,7 @@ WeakIdentitySetTest >> testAddIdenticalElements [
 	self deny: (identitySet includes: anOtherString) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakIdentitySetTest >> testAddIncludesSizeReclaim [
 	"It is complex test in superclass to check how elements are garbage collected.
 	And how #includes: behavios after that.
@@ -56,7 +58,7 @@ WeakIdentitySetTest >> testAddIncludesSizeReclaim [
 	Adopting this test for WeakIdentitySest is not simple task"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakIdentitySetTest >> testCollisions [
 	"It is complex test in superclass to check how collisions are resolved.
 	The logic is based on WeakSet and it is not compatible to WeakIdentitySet.

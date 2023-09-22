@@ -1,1 +1,1 @@
-Package { #name : #'Tool-DependencyAnalyser-UI-Tab' }
+Package { #name : 'Tool-DependencyAnalyser-UI-Tab' }

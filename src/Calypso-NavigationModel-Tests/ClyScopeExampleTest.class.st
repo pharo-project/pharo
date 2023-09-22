@@ -1,25 +1,26 @@
 Class {
-	#name : #ClyScopeExampleTest,
-	#superclass : #ClyTypedScopeTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyScopeExampleTest',
+	#superclass : 'ClyTypedScopeTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyScopeExampleTest >> extraBasisSample [
 	^#extraBasis
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyScopeExampleTest >> scopeClass [
 	^ClyExampleScope
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyScopeExampleTest >> singleBasisSample [
 	^#singleBasis
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeExampleTest >> testConvertingWithExtraBasisObjectWhenThereIsExtraScopeParameter [
 	| convertedScope |
 	scope := self singleScopeSample.
@@ -30,7 +31,7 @@ ClyScopeExampleTest >> testConvertingWithExtraBasisObjectWhenThereIsExtraScopePa
 	self assert: convertedScope extraParameter equals: #testParameter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeExampleTest >> testConvertingWithNewBasisObjectsWhenThereIsExtraScopeParameter [
 	| convertedScope |
 	scope := self singleScopeSample.
@@ -41,7 +42,7 @@ ClyScopeExampleTest >> testConvertingWithNewBasisObjectsWhenThereIsExtraScopePar
 	self assert: convertedScope extraParameter equals: #testParameter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeExampleTest >> testCreationUnifiedInstanceWhenThereIsExtraScopeParameter [
 
 	| unifiedInstance |

@@ -2,12 +2,13 @@
 I am ZnBufferedReadStreamTests.
 "
 Class {
-	#name : #ZnBufferedReadStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnBufferedReadStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests',
+	#package : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testBuffering [
 	| stream |
 	stream := ZnBufferedReadStream on: '01234567890123456789' readStream.
@@ -19,7 +20,7 @@ ZnBufferedReadStreamTest >> testBuffering [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testPeek [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -33,7 +34,7 @@ ZnBufferedReadStreamTest >> testPeek [
 	self assert: stream next isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testReadInto [
 	| stream buffer count |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -49,7 +50,7 @@ ZnBufferedReadStreamTest >> testReadInto [
 	self assert: buffer equals: '789123'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testReadIntoLarger [
 	| stream buffer count |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -60,7 +61,7 @@ ZnBufferedReadStreamTest >> testReadIntoLarger [
 	self assert: buffer equals: '0123456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testReadUpTo [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -70,7 +71,7 @@ ZnBufferedReadStreamTest >> testReadUpTo [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testReadUpToEnd [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -83,7 +84,7 @@ ZnBufferedReadStreamTest >> testReadUpToEnd [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testSetToEnd [
 	| stream source |
 	source := '0123456789'.

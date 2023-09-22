@@ -1,6 +1,6 @@
-Extension { #name : #TaSequence }
+Extension { #name : 'TaSequence' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 TaSequence class >> fuelNew [
 	^ self new
 ]

@@ -14,15 +14,17 @@ Preconditions:
 - The protocol name is a valid name.
 "
 Class {
-	#name : #RBAddProtocolTransformation,
-	#superclass : #RBClassTransformation,
+	#name : 'RBAddProtocolTransformation',
+	#superclass : 'RBClassTransformation',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddProtocolTransformation class >> model: aRBModel protocol: aString inClass: aClassName [
 
 	^ self new
@@ -32,7 +34,7 @@ RBAddProtocolTransformation class >> model: aRBModel protocol: aString inClass: 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddProtocolTransformation class >> protocol: aString inClass: aClassName [
 
 	^ self new
@@ -41,13 +43,13 @@ RBAddProtocolTransformation class >> protocol: aString inClass: aClassName [
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddProtocolTransformation >> applicabilityPreconditions [
 
 	^ self classExist & self protocolExist
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddProtocolTransformation >> classExist [
 
 	^ RBCondition
@@ -55,20 +57,20 @@ RBAddProtocolTransformation >> classExist [
 		  errorString: 'Class named ' , className , ' does not exist'
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddProtocolTransformation >> privateTransform [
 
 	self definingClass addProtocolNamed: protocol
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddProtocolTransformation >> protocol: aString inClass: aClassName [
 
 	self className: aClassName.
 	protocol := aString
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddProtocolTransformation >> protocolExist [
 
 	^ RBCondition
@@ -78,7 +80,7 @@ RBAddProtocolTransformation >> protocolExist [
 		  errorString: 'Protocol named ' , protocol , ' already exists'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

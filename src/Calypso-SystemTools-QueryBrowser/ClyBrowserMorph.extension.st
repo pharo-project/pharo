@@ -1,6 +1,6 @@
-Extension { #name : #ClyBrowserMorph }
+Extension { #name : 'ClyBrowserMorph' }
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> browseImplementorsOf: aSymbol inNameResolver: aNameResolver [
 	| classBinding classToBrowse |
 	aSymbol first isUppercase ifTrue: [
@@ -22,13 +22,13 @@ ClyBrowserMorph >> browseImplementorsOf: aSymbol inNameResolver: aNameResolver [
 	^ #NormalImplementorBrowse
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> browseReferencesTo: aSymbol [
 
 	self browseReferencesTo: aSymbol inNameResolver: self system
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 
 	| classBinding |
@@ -42,19 +42,19 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 	{ self browseSendersOf: aSymbol . #SendersNoIdeaWhenSent }
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> browseSendersOf: aSymbol [
 
 	self spawnQueryBrowserOn: (ClyMessageSendersQuery of: aSymbol)
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> spawnQueryBrowserOn: aQuery [
 
 	self spawnQueryBrowserOn: aQuery withState: []
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> spawnQueryBrowserOn: aQuery withState: navigationBlock [
 	| targetQuery |
 	targetQuery := aQuery.

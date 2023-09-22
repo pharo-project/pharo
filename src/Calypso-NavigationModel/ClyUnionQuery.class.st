@@ -25,12 +25,14 @@ General query concatination using comma message produced my instances. Previous 
 
 "
 Class {
-	#name : #ClyUnionQuery,
-	#superclass : #ClyCompositeQuery,
-	#category : #'Calypso-NavigationModel-Query'
+	#name : 'ClyUnionQuery',
+	#superclass : 'ClyCompositeQuery',
+	#category : 'Calypso-NavigationModel-Query',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Query'
 }
 
-{ #category : #'merging queries' }
+{ #category : 'merging queries' }
 ClyUnionQuery class >> merge: queries [
 	| result queryGroups |
 	queries size = 1 ifTrue: [ ^{queries anyOne} ].
@@ -43,7 +45,7 @@ ClyUnionQuery class >> merge: queries [
 	^result
 ]
 
-{ #category : #'merging queries' }
+{ #category : 'merging queries' }
 ClyUnionQuery class >> mergeOwnInstances: queries [
 
 	| allSubqueries |
@@ -51,7 +53,7 @@ ClyUnionQuery class >> mergeOwnInstances: queries [
 	^self merge: allSubqueries
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyUnionQuery class >> with: subqueries [
 	| mergedQueries |
 	subqueries ifEmpty: [ ^ClyUnknownQuery instance ].
@@ -63,12 +65,12 @@ ClyUnionQuery class >> with: subqueries [
 		requiredResult: subqueries anyOne requiredResult
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyUnionQuery >> , anotherQuery [
 	^ anotherQuery unionWith: subqueries as: requiredResult
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyUnionQuery >> buildResult: aQueryResult [
 
 	| subResult allItems |
@@ -79,7 +81,7 @@ ClyUnionQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: allItems asIdentitySet
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyUnionQuery >> unionWith: typedQueries as: aQueryResult [
 
 	^ClyQuery unionFrom: (typedQueries , subqueries) as: aQueryResult

@@ -4,33 +4,35 @@ I am an sunit test for SystemNavigation with the default value for its environme
 
 "
 Class {
-	#name : #SystemNavigationTest,
-	#superclass : #TestCase,
+	#name : 'SystemNavigationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'classFactory',
 		'oldSystemAnnouncer'
 	],
-	#category : #'System-Support-Tests-Image'
+	#category : 'System-Support-Tests-Image',
+	#package : 'System-Support-Tests',
+	#tag : 'Image'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemNavigationTest class >> isUnitTest [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemNavigationTest >> classFactory [
 
 	^classFactory
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SystemNavigationTest >> createClassFactory [
 
 	^ ClassFactoryForTestCase environment: self systemNavigationToTest environment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SystemNavigationTest >> setUp [
 
 	super setUp.
@@ -39,13 +41,13 @@ SystemNavigationTest >> setUp [
 	classFactory := self createClassFactory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemNavigationTest >> systemNavigationToTest [
 
 	^SystemNavigation new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SystemNavigationTest >> tearDown [
 
 	self classFactory cleanUp.
@@ -53,7 +55,7 @@ SystemNavigationTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemNavigationTest >> testAllClassesImplementing [
 
 	| implementingClasses |
@@ -64,7 +66,7 @@ SystemNavigationTest >> testAllClassesImplementing [
 		hasSameElements: {Object. Symbol}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemNavigationTest >> testAllExistingProtocolsFor [
 
 	| instSideProtocols classSideProtocols |
@@ -77,7 +79,7 @@ SystemNavigationTest >> testAllExistingProtocolsFor [
 	self assert: (classSideProtocols includesAll: Object class protocolNames)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemNavigationTest >> testAllSendersOfASelector [
 
 	| senders selector class otherClass callers |
@@ -95,7 +97,7 @@ SystemNavigationTest >> testAllSendersOfASelector [
 		assert: (callers includesAll: #(#anotherMethod #yetAnotherMethod))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemNavigationTest >> testIsMessageSentInSystemWithClassesActuallySendngTheMessage [
 
 	| classesSendingMessage sentMessageSelector |
@@ -109,7 +111,7 @@ SystemNavigationTest >> testIsMessageSentInSystemWithClassesActuallySendngTheMes
 		hasSameElements: (classesSendingMessage collect: [ :class | class >> #meth ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemNavigationTest >> testIsMessageSentInSystemWithTheSelectorInsideAnArray [
 
 	| classesSendingMessage sentMessageSelector |
@@ -123,7 +125,7 @@ SystemNavigationTest >> testIsMessageSentInSystemWithTheSelectorInsideAnArray [
 		hasSameElements: (classesSendingMessage collect: [ :class | class >> #meth ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemNavigationTest >> testIsUnsentMessage [
 
 	| class |
@@ -132,7 +134,7 @@ SystemNavigationTest >> testIsUnsentMessage [
 	self assert: (self systemNavigationToTest isUnsentMessage: class selectors anyOne)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemNavigationTest >> testReferencesToAClassInBlock [
 
 	| referencingMethods class otherClass callers |
@@ -151,7 +153,7 @@ SystemNavigationTest >> testReferencesToAClassInBlock [
 		assert: (callers includesAll: #(#anotherMethod))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemNavigationTest >> testSenderOfASelectorInBlock [
 
 	| senders selector class otherClass |

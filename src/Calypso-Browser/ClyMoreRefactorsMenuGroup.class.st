@@ -2,12 +2,14 @@
 I am a submenu for rarely used refactorings
 "
 Class {
-	#name : #ClyMoreRefactorsMenuGroup,
-	#superclass : #CmdMenuGroup,
-	#category : #'Calypso-Browser-MenuGroups'
+	#name : 'ClyMoreRefactorsMenuGroup',
+	#superclass : 'CmdMenuGroup',
+	#category : 'Calypso-Browser-MenuGroups',
+	#package : 'Calypso-Browser',
+	#tag : 'MenuGroups'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoreRefactorsMenuGroup >> buildContextMenu: aMenu [
 	aMenu addLine.
 
@@ -15,12 +17,12 @@ ClyMoreRefactorsMenuGroup >> buildContextMenu: aMenu [
 	aMenu addLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoreRefactorsMenuGroup >> name [
 	^ 'Refactorings'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoreRefactorsMenuGroup >> order [
 	^10100
 ]

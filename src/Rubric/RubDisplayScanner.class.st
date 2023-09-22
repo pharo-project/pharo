@@ -1,6 +1,6 @@
 Class {
-	#name : #RubDisplayScanner,
-	#superclass : #RubCharacterScanner,
+	#name : 'RubDisplayScanner',
+	#superclass : 'RubCharacterScanner',
 	#instVars : [
 		'bitBlt',
 		'lineY',
@@ -11,15 +11,17 @@ Class {
 		'defaultTextColor',
 		'scale'
 	],
-	#category : #'Rubric-TextScanning'
+	#category : 'Rubric-TextScanning',
+	#package : 'Rubric',
+	#tag : 'TextScanning'
 }
 
-{ #category : #queries }
+{ #category : 'queries' }
 RubDisplayScanner class >> defaultFont [
 	^ TextStyle defaultFont
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubDisplayScanner >> cr [
 	"When a carriage return is encountered, simply increment the pointer
 	into the paragraph."
@@ -31,7 +33,7 @@ RubDisplayScanner >> cr [
 	^false
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubDisplayScanner >> crossedX [
 	"This condition will sometimes be reached 'legally' during display, when,
 	for instance the space that caused the line to wrap actually extends over
@@ -43,13 +45,13 @@ RubDisplayScanner >> crossedX [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubDisplayScanner >> defaultTextColor [
 	defaultTextColor ifNil: [ defaultTextColor := Smalltalk ui theme textColor ].
 	^ defaultTextColor
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubDisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 	"The call on the primitive (scanCharactersFrom:to:in:rightX:) will be interrupted according to an array of stop conditions passed to the scanner at which time the code to handle the stop condition is run and the call on the primitive continued until a stop condition returns true (which means the line has terminated).  leftInRun is the # of characters left to scan in the current run; when 0, it is time to call setStopConditions."
 	| stopCondition nowLeftInRun startIndex string lastPos |
@@ -101,7 +103,7 @@ RubDisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 	^ runStopIndex - lastIndex   "Number of characters remaining in the current run"
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubDisplayScanner >> endOfRun [
 	"The end of a run in the display case either means that there is actually
 	a change in the style (run code) to be associated with the string or the
@@ -115,20 +117,20 @@ RubDisplayScanner >> endOfRun [
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubDisplayScanner >> initialize [
 
 	super initialize.
 	scale := 1
 ]
 
-{ #category : #'multilingual scanning' }
+{ #category : 'multilingual scanning' }
 RubDisplayScanner >> isBreakableAt: index in: sourceString [
 
 	^ false
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubDisplayScanner >> paddedSpace [
 	"Each space is a stop condition when the alignment is right justified.
 	Padding must be added to the base width of the space according to
@@ -142,7 +144,7 @@ RubDisplayScanner >> paddedSpace [
 	^ false
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubDisplayScanner >> placeEmbeddedObject: anchoredMorph [
 	anchoredMorph relativeTextAnchorPosition ifNotNil:[
 		anchoredMorph position:
@@ -169,19 +171,19 @@ RubDisplayScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubDisplayScanner >> scale [
 
 	^ scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubDisplayScanner >> scale: newScale [
 
 	scale := newScale
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubDisplayScanner >> setFont [
 	foregroundColor := self defaultTextColor.
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
@@ -191,7 +193,7 @@ RubDisplayScanner >> setFont [
 		destY := baselineY - (font ascent * self scale)]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubDisplayScanner >> setPort: aBitBlt [
 	"Install the BitBlt to use"
 	bitBlt := aBitBlt.
@@ -199,7 +201,7 @@ RubDisplayScanner >> setPort: aBitBlt [
 	bitBlt sourceForm: nil. "Make sure font installation won't be confused"
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubDisplayScanner >> setStopConditions [
 	"Set the font and the stop conditions for the current run."
 
@@ -214,21 +216,21 @@ RubDisplayScanner >> setStopConditions [
 "
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubDisplayScanner >> tab [
 	self plainTab.
 	lastIndex := lastIndex + 1.
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubDisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
 	foregroundColor := foreColor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubDisplayScanner >> textColor: textColor [
 	foregroundColor := textColor
 ]

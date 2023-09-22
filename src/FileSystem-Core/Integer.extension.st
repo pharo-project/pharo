@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*FileSystem-Core' }
+{ #category : '*FileSystem-Core' }
 Integer >> humanReadableByteSizeString [
 	"Return the receiver as a string with the adequate file size identified, e.g. '50 KB'. The difference with humanReadableByteSISizeString is that the current one counts by 1024 and not 1000."
 
@@ -16,7 +16,7 @@ Integer >> humanReadableByteSizeString [
 				ifTrue: [ ^ value asString , ' ' , each ] ]
 ]
 
-{ #category : #'*FileSystem-Core' }
+{ #category : '*FileSystem-Core' }
 Integer >> humanReadableSIByteSize [
 	"Return the receiver as a string with SI binary (International System of Units) file size, e.g. '50 KB'"
 

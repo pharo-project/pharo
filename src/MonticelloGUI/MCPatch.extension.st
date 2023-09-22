@@ -1,6 +1,6 @@
-Extension { #name : #MCPatch }
+Extension { #name : 'MCPatch' }
 
-{ #category : #'*MonticelloGUI' }
+{ #category : '*MonticelloGUI' }
 MCPatch >> browse [
 
 	^ (MCPatchBrowser forPatch: self) show

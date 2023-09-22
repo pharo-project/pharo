@@ -1,6 +1,6 @@
-Extension { #name : #SycPushDownMethodInSomeClassesCommand }
+Extension { #name : 'SycPushDownMethodInSomeClassesCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycPushDownMethodInSomeClassesCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

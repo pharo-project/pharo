@@ -5,18 +5,20 @@ If there is a literal as receiver, create a fetcher for messages of its class.
 See my superclass for details.
 "
 Class {
-	#name : #CoLiteralMessageHeuristic,
-	#superclass : #CoASTNodeFetcherHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoLiteralMessageHeuristic',
+	#superclass : 'CoASTNodeFetcherHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoLiteralMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
 	^ aNode receiver isLiteralNode
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoLiteralMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
 
 	^ self newMessageInHierarchyFetcherForClass: aRBMessageNode receiver value class inASTNode: aRBMessageNode

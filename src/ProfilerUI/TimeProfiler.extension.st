@@ -1,37 +1,37 @@
-Extension { #name : #TimeProfiler }
+Extension { #name : 'TimeProfiler' }
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 TimeProfiler >> blockCodeFrom: aString [
 	^ 'self runBlock: [', aString, ']'
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 TimeProfiler >> doItSelectorsPath [
 	^ #('UndefinedObject>>DoIt')
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 TimeProfiler >> report [
 
 	^ self fullReport
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 TimeProfiler >> startProfiling [
 	"Created for compatibility with Andreas Profiler"
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 TimeProfiler >> stopProfiling [
 	"Created for compatibility with AndreasProfiler"
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 TimeProfiler >> tallyRoot [
 	^ rootMessageTally
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 TimeProfiler >> totalTime [
 	^ rootMessageTally
 		ifNotNil: [rootMessageTally time]

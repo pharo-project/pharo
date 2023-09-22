@@ -1,17 +1,19 @@
 Class {
-	#name : #ClyMethodsInProtocolQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyMethodsInProtocolQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodsInProtocolQueryTest >> createQuery [
 	^ ClyMethodsInProtocolQuery
 		by: #tag1
 		from: (ClyClassScope of: ClyClass1FromP1Mock in: environment)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodsInProtocolQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: ClyClass1FromP1Mock >> #tag1Method1 in: environment).
@@ -21,7 +23,7 @@ ClyMethodsInProtocolQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodsInProtocolQueryTest >> testComparisonToSimilarQueryButWithDifferentTag [
 	| query2 |
 	query tag: #tag1.
@@ -31,7 +33,7 @@ ClyMethodsInProtocolQueryTest >> testComparisonToSimilarQueryButWithDifferentTag
 	self deny: query equals: query2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodsInProtocolQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {

@@ -2,12 +2,14 @@
 SUnit tests for weak announcements
 "
 Class {
-	#name : #WeakAnnouncerTest,
-	#superclass : #AnnouncerTest,
-	#category : #'Announcements-Core-Tests-Tests'
+	#name : 'WeakAnnouncerTest',
+	#superclass : 'AnnouncerTest',
+	#category : 'Announcements-Core-Tests-Tests',
+	#package : 'Announcements-Core-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 WeakAnnouncerTest >> benchManyWeakGuys [
 
 	| object ann time |
@@ -29,13 +31,13 @@ WeakAnnouncerTest >> benchManyWeakGuys [
 	^ time
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 WeakAnnouncerTest >> longTestCase [
 
 	self timeLimit: 60 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
 	self longTestCase.
 	"we skip this on the ci as it impact all other ci checks, open issue https://github.com/pharo-project/pharo/issues/2471"
@@ -48,7 +50,7 @@ WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
 	self assertEmpty: (WeakAnnouncementSubscription allInstances select: [ :sub | sub subscriber isNil ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testNoWeakBlock [
 	"There is no such thing as a weak block, these things never go away."
 
@@ -71,7 +73,7 @@ WeakAnnouncerTest >> testNoWeakBlock [
 	self assert: counter equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 
 	| a1 a2 o |
@@ -109,7 +111,7 @@ WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 	assert: a2 subscriptions numberOfSubscriptions isZero
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testWeakObject [
 	| counter collector forwarder |
 
@@ -132,7 +134,7 @@ WeakAnnouncerTest >> testWeakObject [
 	self assert: counter equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testWeakSubscription [
 	| obj subscription |
 	self longTestCase.

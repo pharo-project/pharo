@@ -1,10 +1,11 @@
 Class {
-	#name : #RGTraitStrategyTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGTraitStrategyTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testClassVariablesString [
 
 	| anRGBehavior |
@@ -14,7 +15,7 @@ RGTraitStrategyTest >> testClassVariablesString [
 	self assert: anRGBehavior classVariablesString equals: ''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testCreationByMethod [
 
 	| anRGBehavior |
@@ -24,7 +25,7 @@ RGTraitStrategyTest >> testCreationByMethod [
 	self assert: (anRGBehavior behaviorStrategy isTraitStrategy)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testIncompatibleBehavior [
 
 	| anRGBehavior |
@@ -45,7 +46,7 @@ RGTraitStrategyTest >> testIncompatibleBehavior [
 		anRGBehavior defaultMetaClass ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testInstSize [
 
 	| anRGBehavior |
@@ -54,7 +55,7 @@ RGTraitStrategyTest >> testInstSize [
 	self assert: anRGBehavior instSize equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testInstanceVariablesString [
 
 	| anRGBehavior |
@@ -63,7 +64,7 @@ RGTraitStrategyTest >> testInstanceVariablesString [
 	self assert: anRGBehavior instanceVariablesString equals: ''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testKind [
 
 	| strategy |
@@ -75,7 +76,7 @@ RGTraitStrategyTest >> testKind [
 	self deny: strategy isMetaclassTraitStrategy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testResolvingConsistency [
 
 	| anObject |
@@ -83,7 +84,7 @@ RGTraitStrategyTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testSharedPoolNames [
 
 	| anRGBehavior |
@@ -92,7 +93,7 @@ RGTraitStrategyTest >> testSharedPoolNames [
 	self assert: (anRGBehavior sharedPoolNames isEmpty)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testSharedPools [
 
 	| anRGBehavior |
@@ -101,7 +102,7 @@ RGTraitStrategyTest >> testSharedPools [
 	self assert: (anRGBehavior sharedPools isEmpty)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitStrategyTest >> testTrait [
 
 	| anRGBehavior |

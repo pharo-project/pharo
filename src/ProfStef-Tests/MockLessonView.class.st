@@ -2,38 +2,40 @@
 A LessonView mock for testing purposes
 "
 Class {
-	#name : #MockLessonView,
-	#superclass : #Object,
+	#name : 'MockLessonView',
+	#superclass : 'Object',
 	#instVars : [
 		'lesson',
 		'title'
 	],
-	#category : #'ProfStef-Tests-Mocks'
+	#category : 'ProfStef-Tests-Mocks',
+	#package : 'ProfStef-Tests',
+	#tag : 'Mocks'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MockLessonView >> isOpenInWindow [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockLessonView >> lesson [
 	^ lesson
 ]
 
-{ #category : #gui }
+{ #category : 'gui' }
 MockLessonView >> showLesson: aLesson withTitle: aString [
 	lesson := aLesson.
 	title := aString
 ]
 
-{ #category : #gui }
+{ #category : 'gui' }
 MockLessonView >> showTutorialNode: aTutorialNode [
 	lesson:= aTutorialNode lessonInstance.
 	title := aTutorialNode title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockLessonView >> title [
 	^ title
 ]

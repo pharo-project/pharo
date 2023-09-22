@@ -2,33 +2,35 @@
 A slot on which one can write only once.
 "
 Class {
-	#name : #WriteOnceSlot,
-	#superclass : #IndexedSlot,
-	#category : #'Slot-Examples-Base'
+	#name : 'WriteOnceSlot',
+	#superclass : 'IndexedSlot',
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WriteOnceSlot >> initialize: anObject [
 	super write: nil -> true to: anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WriteOnceSlot >> isWritten: anObject [
 	^ (super read: anObject) value
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 WriteOnceSlot >> read: anObject [
 	^ (super read: anObject) key
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WriteOnceSlot >> wantsInitialization [
 
 	^ true
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 WriteOnceSlot >> write: aValue to: anObject [
 
 	^(self isWritten: anObject)

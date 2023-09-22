@@ -1,6 +1,6 @@
-Extension { #name : #Rectangle }
+Extension { #name : 'Rectangle' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Rectangle >> asLayoutFrame [
 	"Answer an instance of LayoutFrame which uses fractions from receiver "
 
@@ -12,7 +12,7 @@ Rectangle >> asLayoutFrame [
 		yourself
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Rectangle >> newRectButtonPressedDo: newRectBlock inWorld: aWorld [
 	"Track the outline of a new rectangle until mouse button changes. newFrameBlock produces each new rectangle from the previous. Only tracks while mouse is down."
 	| rect newRect buttonNow hand |

@@ -1,10 +1,11 @@
 Class {
-	#name : #CmdCommandActivatorTest,
-	#superclass : #TestCase,
-	#category : #'Commander-Core-Tests'
+	#name : 'CmdCommandActivatorTest',
+	#superclass : 'TestCase',
+	#category : 'Commander-Core-Tests',
+	#package : 'Commander-Core-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmdCommandActivatorTest >> testConvertingCommandToActivator [
 
 	| activator command |
@@ -19,7 +20,7 @@ CmdCommandActivatorTest >> testConvertingCommandToActivator [
 	self assert: activator activationStrategy commandClass equals: command class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmdCommandActivatorTest >> testConvertingToActivator [
 	| activator |
 	activator := CmdCommandActivator new.
@@ -27,7 +28,7 @@ CmdCommandActivatorTest >> testConvertingToActivator [
 	self assert: activator asCommandActivator identicalTo: activator
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmdCommandActivatorTest >> testCreationNewForNewCommand [
 	| activator newActivator |
 	activator := CmdCommandActivator new.

@@ -2,8 +2,8 @@
 this class is subject of changes/removal. do not use it.
 "
 Class {
-	#name : #AthensParagraph,
-	#superclass : #Object,
+	#name : 'AthensParagraph',
+	#superclass : 'Object',
 	#instVars : [
 		'text',
 		'textStyle',
@@ -13,22 +13,23 @@ Class {
 		'selectionStart',
 		'selectionStop'
 	],
-	#category : #'Athens-Morphic'
+	#category : 'Athens-Morphic',
+	#package : 'Athens-Morphic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensParagraph >> caretRect [
 
 	^ (0@0 corner: 0@0)
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AthensParagraph >> characterBlockForIndex: index [
 
 	^ self defaultCharacterBlock
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 AthensParagraph >> compose: aText style: aTextStyle from: startingIndex in: aRectangle [
 	text := aText.
 	textStyle := aTextStyle
@@ -36,7 +37,7 @@ AthensParagraph >> compose: aText style: aTextStyle from: startingIndex in: aRec
 	self shouldBeImplemented
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensParagraph >> compose: aText style: aTextStyle in: rect [
 
 	text := aText.
@@ -45,14 +46,14 @@ AthensParagraph >> compose: aText style: aTextStyle in: rect [
 	lines := (AthensTextComposer scan: aText for: AthensTextScanner new) lines
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AthensParagraph >> defaultCharacterBlock [
 	^ (CharacterBlock new stringIndex: 1 text: text
 			topLeft: 0@0 extent: 0 @ 0)
 		textLine: lines first
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensParagraph >> drawOnAthensCanvas: canvas bounds: aRectangle [
 
 	| renderer |
@@ -66,12 +67,12 @@ AthensParagraph >> drawOnAthensCanvas: canvas bounds: aRectangle [
 "
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensParagraph >> extent [
 	^ containerRect width @ lines last bottom
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AthensParagraph >> extraSelectionChanged [
 	"
 	refreshExtraSelection := true
@@ -80,19 +81,19 @@ AthensParagraph >> extraSelectionChanged [
 	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AthensParagraph >> findReplaceSelectionRegex: aRegex [
 	"	findReplaceSelectionRegex := aRegex. "
 
 	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensParagraph >> focused [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensParagraph >> focused: bool [
 
 	"why we should care?"
@@ -100,48 +101,48 @@ AthensParagraph >> focused: bool [
 	"self flag: #ooo"
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AthensParagraph >> positionWhenComposed: pos [
 	positionWhenComposed := pos
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AthensParagraph >> secondarySelection: aSubstring [
 	"	secondarySelection := aSubstring."
 
 	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AthensParagraph >> selectionColor: anUndefinedObject [
 	self shouldBeImplemented
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AthensParagraph >> selectionRects [
 	^ #()
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AthensParagraph >> selectionStart: startBlock selectionStop: stopBlock [
 	selectionStart := startBlock.
 	selectionStop := stopBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensParagraph >> showCaret [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensParagraph >> showCaret: abool [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensParagraph >> text [
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensParagraph >> textOwner: anUndefinedObject [
 	self shouldBeImplemented
 ]

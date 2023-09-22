@@ -2,21 +2,23 @@
 i have settings for QA recording functions
 "
 Class {
-	#name : #ReSettings,
-	#superclass : #Object,
+	#name : 'ReSettings',
+	#superclass : 'Object',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Renraku-Utility'
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ReSettings class >> cleanUp [
 
 	uniqueInstance := nil
 ]
 
-{ #category : #'settings-definition' }
+{ #category : 'settings-definition' }
 ReSettings class >> resetButtonSettingsOn: aBuilder [
 	<systemsettings>
 
@@ -35,7 +37,7 @@ ReSettings class >> resetButtonSettingsOn: aBuilder [
 				yourself ]
 ]
 
-{ #category : #'settings-accessing' }
+{ #category : 'settings-accessing' }
 ReSettings class >> showErrors [
 	self flag: 'switch to exception strategy completely'.
 	"Utilize the ReExceptionStrategy to either skip the exception,
@@ -45,7 +47,7 @@ ReSettings class >> showErrors [
 	^ ReExceptionStrategy current = RePassExceptionStrategy
 ]
 
-{ #category : #'settings-accessing' }
+{ #category : 'settings-accessing' }
 ReSettings class >> showErrors: aBoolean [
 
 	ReExceptionStrategy current: (aBoolean
@@ -53,7 +55,7 @@ ReSettings class >> showErrors: aBoolean [
 		ifFalse: [ ReIgnoreExceptionStrategy ])
 ]
 
-{ #category : #'settings-definition' }
+{ #category : 'settings-definition' }
 ReSettings class >> showErrorsSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #showErrors)
@@ -65,7 +67,7 @@ ReSettings class >> showErrorsSettingsOn: aBuilder [
 		parent: #qualityAssistant
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSettings class >> uniqueInstance [
 
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]

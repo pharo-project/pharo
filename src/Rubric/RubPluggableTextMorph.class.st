@@ -7,15 +7,17 @@ Use RubScrolledTextMorph instead
 
 "
 Class {
-	#name : #RubPluggableTextMorph,
-	#superclass : #RubScrolledTextMorph,
+	#name : 'RubPluggableTextMorph',
+	#superclass : 'RubScrolledTextMorph',
 	#instVars : [
 		'getEnabledSelector'
 	],
-	#category : #'Rubric-Compatibility-toBeDeprecated'
+	#category : 'Rubric-Compatibility-toBeDeprecated',
+	#package : 'Rubric',
+	#tag : 'Compatibility-toBeDeprecated'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubPluggableTextMorph class >> on: anObject text: getTextSel accept: setTextSel readSelection: getSelectionSel menu: getMenuSel [
 
 	^ self new on: anObject
@@ -26,7 +28,7 @@ RubPluggableTextMorph class >> on: anObject text: getTextSel accept: setTextSel 
 		setSelection: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubPluggableTextMorph class >> on: anObject text: getTextSel accept: setTextSel readSelection: getSelectionSel menu: getMenuSel setSelection: setSelectionSel [
 
 	^ self new on: anObject
@@ -37,47 +39,47 @@ RubPluggableTextMorph class >> on: anObject text: getTextSel accept: setTextSel 
 		setSelection: setSelectionSel
 ]
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 RubPluggableTextMorph >> clearUndoManager [
 	self textArea editingState clearUndoManager: nil
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 RubPluggableTextMorph >> disable [
 	self beReadOnly
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 RubPluggableTextMorph >> enable [
 	self beEditable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorph >> getColorSelector [
 	^ self getBackgroundColorSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorph >> getColorSelector: aSymbol [
 	self getBackgroundColorSelector: aSymbol.
 	self update: self getColorSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorph >> getEnabledSelector [
 	"Answer the value of getEnabledSelector"
 
 	^ getEnabledSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorph >> getEnabledSelector: aSymbol [
 	"Answer the value of getEnabledSelector"
 
 	getEnabledSelector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorph >> getMenuSelector: aGetMenuSelector [
 	aGetMenuSelector
 		ifNil: [ self textArea forbidMenu ]
@@ -85,7 +87,7 @@ RubPluggableTextMorph >> getMenuSelector: aGetMenuSelector [
 			self menuProvider: self model selector: aGetMenuSelector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorph >> hasUnacceptedEdits: aBoolean [
 	"Set the hasUnacceptedEdits flag to the given value. "
 
@@ -98,7 +100,7 @@ RubPluggableTextMorph >> hasUnacceptedEdits: aBoolean [
 		ifFalse: [ hasEditingConflicts := false ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubPluggableTextMorph >> initialize [
 	super initialize.
 	hasUnacceptedEdits := false.
@@ -106,13 +108,13 @@ RubPluggableTextMorph >> initialize [
 	askBeforeDiscardingEdits := true
 ]
 
-{ #category : #'model protocol' }
+{ #category : 'model protocol' }
 RubPluggableTextMorph >> model: anObject [
 	super model: anObject.
 	anObject addDependent: self
 ]
 
-{ #category : #'model protocol' }
+{ #category : 'model protocol' }
 RubPluggableTextMorph >> on: aModel text: aGetTextSelector accept: aSetTextSelector readSelection: aReadSelectionSelector menu: aGetMenuSelector [
 	self getTextSelector: aGetTextSelector.
 	self setTextSelector: aSetTextSelector.
@@ -123,7 +125,7 @@ RubPluggableTextMorph >> on: aModel text: aGetTextSelector accept: aSetTextSelec
 	self on: aModel
 ]
 
-{ #category : #'model protocol' }
+{ #category : 'model protocol' }
 RubPluggableTextMorph >> on: anObject text: getTextSel accept: setTextSel readSelection: getSelectionSel menu: getMenuSel setSelection: setSelectionSel [
 	self
 		on: anObject
@@ -137,7 +139,7 @@ RubPluggableTextMorph >> on: anObject text: getTextSel accept: setTextSel readSe
 	self setSelection: self getSelectionFromModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorph >> promptForCancel [
 	"Ask for the appropriate action to take when unaccepted contents
 	would be overwritten."
@@ -160,7 +162,7 @@ RubPluggableTextMorph >> promptForCancel [
 						ifNil: [ self basicHasUnacceptedEdits: false ] ] ]
 ]
 
-{ #category : #'accessing - scrollbars' }
+{ #category : 'accessing - scrollbars' }
 RubPluggableTextMorph >> registerScrollChanges: aSelector [
 
 	self announcer
@@ -169,7 +171,7 @@ RubPluggableTextMorph >> registerScrollChanges: aSelector [
 		to: self model
 ]
 
-{ #category : #'accessing - scrollbars' }
+{ #category : 'accessing - scrollbars' }
 RubPluggableTextMorph >> scrollerOffsetChanged [
 	super scrollerOffsetChanged.
 	self announcer
@@ -180,13 +182,13 @@ RubPluggableTextMorph >> scrollerOffsetChanged [
 				yourself)
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 RubPluggableTextMorph >> styled: aBoolean [
 	aBoolean ifTrue: [ ^ self beForSmalltalkCode  ].
 	self beForPlainText
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RubPluggableTextMorph >> update: aSymbol [
 	aSymbol ifNil: [ ^ self ].
 	aSymbol == #flash
@@ -229,7 +231,7 @@ RubPluggableTextMorph >> update: aSymbol [
 	^ self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RubPluggableTextMorph >> updateEnabled [
 	"Update the enablement state."
 

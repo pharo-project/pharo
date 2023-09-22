@@ -3,22 +3,24 @@ Dialog window displaying a message with a single OK button. Escape/return will c
 Handles long messages through use of a text editor with potential for scrolling.
 "
 Class {
-	#name : #LongMessageDialogWindow,
-	#superclass : #MessageDialogWindow,
+	#name : 'LongMessageDialogWindow',
+	#superclass : 'MessageDialogWindow',
 	#instVars : [
 		'entryText'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LongMessageDialogWindow >> entryText [
 	"Answer the value of entryText"
 
 	^ entryText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LongMessageDialogWindow >> entryText: anObject [
 	"Set the value of entryText"
 
@@ -26,14 +28,14 @@ LongMessageDialogWindow >> entryText: anObject [
 	self changed: #entryText
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LongMessageDialogWindow >> isResizeable [
 	"Answer whether we are not we can be resized."
 
 	^true
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 LongMessageDialogWindow >> newContentMorph [
 	"Answer a new content morph."
 
@@ -45,7 +47,7 @@ LongMessageDialogWindow >> newContentMorph [
 			vResizing: #spaceFill)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 LongMessageDialogWindow >> newTextMorph [
 	"Answer a new text editor morph."
 
@@ -63,7 +65,7 @@ LongMessageDialogWindow >> newTextMorph [
 	^tm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LongMessageDialogWindow >> text: aStringOrText [
 	"Set the text."
 

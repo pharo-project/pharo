@@ -2,12 +2,14 @@
 SUnit tests for class TextAlignment
 "
 Class {
-	#name : #TextAlignmentTest,
-	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests-Base'
+	#name : 'TextAlignmentTest',
+	#superclass : 'HashAndEqualsTestCase',
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TextAlignmentTest >> setUp [
 	super setUp.
 	prototypes add: TextAlignment centered;
@@ -16,7 +18,7 @@ TextAlignmentTest >> setUp [
 		 add: TextAlignment rightFlush
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextAlignmentTest >> testAlignment [
 	| attribute |
 	self assert: TextAlignment leftFlush alignment equals: TextConstants LeftFlush.
@@ -29,7 +31,7 @@ TextAlignmentTest >> testAlignment [
 	self assert: attribute alignment equals: TextConstants RightFlush
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextAlignmentTest >> testDominates [
 	| text |
 	self assert: (TextAlignment centered dominates: TextAlignment rightFlush).

@@ -2,8 +2,8 @@
 The join side
 "
 Class {
-	#name : #JoinSide,
-	#superclass : #Object,
+	#name : 'JoinSide',
+	#superclass : 'Object',
 	#instVars : [
 		'range',
 		'offset',
@@ -12,45 +12,47 @@ Class {
 		'color',
 		'text'
 	],
-	#category : #'Tool-Diff-Joins'
+	#category : 'Tool-Diff-Joins',
+	#package : 'Tool-Diff',
+	#tag : 'Joins'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> color [
 	"Answer the value of color"
 
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> color: anObject [
 	"Set the value of color"
 
 	color := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> highlight [
 	"Answer the primary highlight."
 
 	^(self highlights ifEmpty: [^nil]) first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> highlights [
 	"Answer the value of highlights"
 
 	^ highlights
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> highlights: anObject [
 	"Set the value of highlights"
 
 	highlights := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 JoinSide >> initialize [
 	"Initialize the receiver."
 
@@ -64,56 +66,56 @@ JoinSide >> initialize [
 		text: ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> lineRange [
 	"Answer the value of lineRange"
 
 	^ lineRange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> lineRange: anObject [
 	"Set the value of lineRange"
 
 	lineRange := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> offset [
 	"Answer the value of offset"
 
 	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> offset: anObject [
 	"Set the value of offset"
 
 	offset := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> range [
 	"Answer the value of range"
 
 	^ range
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> range: anObject [
 	"Set the value of range"
 
 	range := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> text [
 	"Answer the value of text"
 
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSide >> text: anObject [
 	"Set the value of text"
 
