@@ -37,6 +37,13 @@ RPackageOrganizer >> classesInCategory: category [
 ]
 
 { #category : '*Deprecated12' }
+RPackageOrganizer >> createPackageNamed: aString [
+
+	self deprecated: 'Use #addPackage: instead.' transformWith: '`@rcv createPackageNamed: `@arg' -> '`@rcv addPackage: `@arg'.
+	^ self addPackage: aString
+]
+
+{ #category : '*Deprecated12' }
 RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 
 	self deprecated: 'Use #ensurePackage: instead.' transformWith: '`@rcv ensureExistAndRegisterPackageNamed: `@arg' -> '`@rcv ensurePackage: `@arg'.
@@ -98,6 +105,13 @@ RPackageOrganizer >> packageExactlyMatchingExtensionName: anExtensionName [
 		deprecated: 'Use #packageNamed:ifAbsent: instead.'
 		transformWith: '`@rcv packageExactlyMatchingExtensionName: `@arg' -> '`@rcv packageNamed:ifAbsent: `@arg ifAbsent: [ nil ]'.
 	^ self packageNamed: anExtensionName ifAbsent: [ nil ]
+]
+
+{ #category : '*Deprecated12' }
+RPackageOrganizer >> registerPackage: aPackage [
+
+	self deprecated: 'Use #addPackage: instead.' transformWith: '`@rcv registerPackage: `@arg' -> '`@rcv addPackage: `@arg'.
+	^ self addPackage: aPackage
 ]
 
 { #category : '*Deprecated12' }
