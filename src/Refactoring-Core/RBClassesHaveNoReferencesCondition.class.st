@@ -29,10 +29,16 @@ RBClassesHaveNoReferencesCondition >> classes: aRBClassCollection [
 	classes := aRBClassCollection 
 ]
 
-{ #category : 'controlling' }
-RBClassesHaveNoReferencesCondition >> ifFalse: aBlock [
+{ #category : 'testing' }
+RBClassesHaveNoReferencesCondition >> isFalse [
 
-	self violators ifNotEmpty: aBlock
+	^ self isTrue not
+]
+
+{ #category : 'testing' }
+RBClassesHaveNoReferencesCondition >> isTrue [
+
+	^ self check
 ]
 
 { #category : 'accessing' }
