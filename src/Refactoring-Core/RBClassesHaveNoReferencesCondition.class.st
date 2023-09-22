@@ -29,12 +29,6 @@ RBClassesHaveNoReferencesCondition >> classes: aRBClassCollection [
 	classes := aRBClassCollection 
 ]
 
-{ #category : 'controlling' }
-RBClassesHaveNoReferencesCondition >> ifFalse: aBlock [
-
-	self violators ifNotEmpty: aBlock
-]
-
 { #category : 'accessing' }
 RBClassesHaveNoReferencesCondition >> model: aRBNamespace [
 
