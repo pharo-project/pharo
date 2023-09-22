@@ -751,6 +751,12 @@ RGBehavior >> oldDefinition [
 		definitionString
 ]
 
+{ #category : 'accessing - model' }
+RGBehavior >> packageTag [
+
+	^ self tags ifEmpty: [ nil ] ifNotEmpty: [ :tgs | tgs anyOne ]
+]
+
 { #category : 'printing' }
 RGBehavior >> printOn: aStream [
 	aStream nextPutAll: self name

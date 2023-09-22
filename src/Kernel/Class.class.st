@@ -991,7 +991,8 @@ Class >> removeFromSystem: logged [
 	if this class is loaded again. We do not check if references exist as it is too slow"
 	Undeclared declare: self name asSymbol from: Smalltalk globals.
 	myCategory := self category.
-	packageTag := self packageTag.
+	self flag: #package. "The nil check happens for unpackaged classes. This should be improved so that #packageTag directly returns this."
+	packageTag := self packageTag ifNil: [ self package rootTag ].
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.

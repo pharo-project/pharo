@@ -15,14 +15,6 @@ Class {
 }
 
 { #category : 'instance creation' }
-ClassRemoved class >> class: aClass [
-
-	^ self new
-		  classRemoved: aClass;
-		  yourself
-]
-
-{ #category : 'instance creation' }
 ClassRemoved class >> class: aClass packageTag: aPackageTag [
 
 	^ (self class: aClass)
