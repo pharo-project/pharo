@@ -277,14 +277,18 @@ Class >> category: aString [
 	"Categorize the receiver under the system category, aString, removing it from
 	any previous categorization."
 
-	| oldCategory |
+	| oldCategory newPackage |
 	oldCategory := self category.
 	oldCategory = aString ifTrue: [ ^ self ].
 	self basicCategory: aString asSymbol.
 
+	self flag: #package. "In the future we should not depend on the category but on the package + tag"
+	newPackage := self packageOrganizer ensurePackageMatching: self category.
+	newPackage moveClass: self toTag: (newPackage toTagName: self category).
+
 	oldCategory = Class unclassifiedCategory
-		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: self inCategory: self category ]
-		ifFalse: [ SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category ]
+		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: self category: self category) ]
+		ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRecategorized class: self recategorizedFrom: oldCategory to: self category) ]
 ]
 
 { #category : 'subclass creation - variableByte' }

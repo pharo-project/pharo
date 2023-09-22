@@ -76,17 +76,6 @@ SystemAnnouncer >> class: aClass oldComment: oldComment newComment: newComment o
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> class: aClass recategorizedFrom: oldPackageName to: newPackageName [
-
-	self announce: (ClassRecategorized class: aClass recategorizedFrom: oldPackageName to: newPackageName)
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> classAdded: aClass inCategory: aCategoryName [
-	self announce: (ClassAdded class: aClass category: aCategoryName)
-]
-
-{ #category : 'triggering' }
 SystemAnnouncer >> classCommented: aClass [
 	"A class with the given name was commented in the system."
 

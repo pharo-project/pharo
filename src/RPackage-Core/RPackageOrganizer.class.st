@@ -444,8 +444,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	anAnnouncer unsubscribe: self.
 
 	anAnnouncer weak
-		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
-		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
 		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
@@ -523,20 +521,6 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 	(self hasPackage: aPackage) ifFalse: [ ^ self ].
 
 	(self ensurePackage: aPackage) renameTag: aTag to: newName
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> systemClassAddedActionFrom: announcement [
-
-	self systemClassRecategorizedActionFrom: announcement
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
-
-	| newPackage |
-	newPackage := self ensurePackageMatching: announcement classAffected category.
-	newPackage moveClass: announcement classAffected toTag: (newPackage toTagName: announcement classAffected category)
 ]
 
 { #category : 'system integration' }
