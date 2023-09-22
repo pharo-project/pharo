@@ -20,15 +20,7 @@ Class {
 { #category : 'checking' }
 RBClassesHaveNoReferencesCondition >> check [
 
-	referencingClassesDictionary := Dictionary new.
-
-	classes do: [ :aClass |
-		referencingClassesDictionary
-			at: aClass
-			put:
-				(((model classesReferencingClass: aClass) collect: [ :each | each ])
-					 copyWithoutAll: classes) ].
-	^ referencingClassesDictionary allSatisfy: [ :val | val isEmpty ]
+	^ self violators allSatisfy: [ :val | val isEmpty ]
 ]
 
 { #category : 'accessing' }
@@ -37,14 +29,43 @@ RBClassesHaveNoReferencesCondition >> classes: aRBClassCollection [
 	classes := aRBClassCollection 
 ]
 
+{ #category : 'controlling' }
+RBClassesHaveNoReferencesCondition >> ifFalse: aBlock [
+
+	self violators ifNotEmpty: aBlock
+]
+
 { #category : 'accessing' }
 RBClassesHaveNoReferencesCondition >> model: aRBNamespace [
 
 	model := aRBNamespace
 ]
 
+{ #category : 'printing' }
+RBClassesHaveNoReferencesCondition >> printOn: aStream [
+
+	(self violators reject: [ :refs | refs isEmpty ])
+		keysAndValuesDo: [ :class :refs |
+			aStream
+				nextPutAll: class name;
+				nextPutAll: ' has ';
+				nextPutAll: refs size asString;
+				nextPutAll: ' references';
+				nextPut: Character cr ]
+]
+
 { #category : 'accessing' }
 RBClassesHaveNoReferencesCondition >> violators [
 
-	^ referencingClassesDictionary 
+	^ referencingClassesDictionary ifNil: [
+		  referencingClassesDictionary := Dictionary new.
+
+		  classes do: [ :aClass |
+			  referencingClassesDictionary
+				  at: aClass
+				  put:
+					  (((model classesReferencingClass: aClass) collect: [ :each |
+						    each ]) copyWithoutAll: classes) ].
+			referencingClassesDictionary 
+		]
 ]

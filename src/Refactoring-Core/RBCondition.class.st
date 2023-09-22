@@ -472,14 +472,15 @@ RBCondition >> check [
 	^block value
 ]
 
+{ #category : 'accessing' }
+RBCondition >> errorBlock [
+
+	^ errorBlock
+]
+
 { #category : 'initialization' }
 RBCondition >> errorBlock: anObject [
 	errorBlock := anObject
-]
-
-{ #category : 'accessing' }
-RBCondition >> errorBlockFor: aBoolean [
-	^errorBlock
 ]
 
 { #category : 'initialization' }

@@ -44,22 +44,25 @@ RBRemoveClassRefactoring >> applicabilityPreconditions [
 	| conditions |
 	conditions := self trueCondition.
 	classesDictionary keysAndValuesDo: [ :className :class |
-		conditions & (RBCondition
-			 withBlock: [ class isNotNil ]
-			 errorString: 'No such class or trait ' , className)
-		& (self preconditionIsNotMetaclass: class) ].
+		class ifNil: [ 
+			 self refactoringError: 'No such class or trait ' , className].
+		conditions & (self preconditionIsNotMetaclass: class) ].
 	^ conditions
 ]
 
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> breakingChangePreconditions [
-	"Remove users from here
-	Return reference checks, before was:
-	(self preconditionHasNoReferences)
-	self preconditionEmptyOrHasNoSubclasses"
-	self halt.
-	self flag: #todoConditions.
-	
+	"Empty error blocks are here so that warnings are raised. This is a ugly hack..."
+
+	^ ((RBCondition
+		   withBlock: [ self preconditionHaveNoReferences check ]
+		   errorString: 'Some classes still have references') errorBlock: [ ] )
+	  & (((RBCondition
+			    withBlock: [ self preconditionHaveNoSubclasses check ]
+			    errorString: 'Some classes have subclasses') errorBlock: [ ] )
+			| ((RBCondition
+			    withBlock: [ self preconditionEmptyClasses check ]
+			    errorString: 'Some classes are not empty') errorBlock: [ ] ))
 ]
 
 { #category : 'accessing' }
@@ -80,9 +83,9 @@ RBRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses [
+RBRemoveClassRefactoring >> preconditionEmptyClasses [
 
-	^ RBClassIsEmptyOrHasNoSubclassesCondition new classes: classesDictionary					
+	^ RBClassesEmptyCondition new classes: classesDictionary
 ]
 
 { #category : 'helper methods' }
@@ -103,6 +106,12 @@ RBRemoveClassRefactoring >> preconditionHaveNoReferences [
 	^ RBClassesHaveNoReferencesCondition new
 		  model: model;
 		  classes: classesDictionary values
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> preconditionHaveNoSubclasses [
+
+	^ RBClassesHaveNoSubclassesCondition new classes: classesDictionary					
 ]
 
 { #category : 'preconditions' }

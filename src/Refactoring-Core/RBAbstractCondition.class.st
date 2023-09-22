@@ -32,16 +32,6 @@ RBAbstractCondition >> check [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
-RBAbstractCondition >> errorBlock [
-	^self errorBlockFor: false
-]
-
-{ #category : 'private' }
-RBAbstractCondition >> errorBlockFor: aBoolean [
-	^nil
-]
-
 { #category : 'private' }
 RBAbstractCondition >> errorMacro [
 
