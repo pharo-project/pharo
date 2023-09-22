@@ -17,16 +17,18 @@ Observations about the transformation:
 - In this implementation, the temporary variable will be added to the body of the method
 "
 Class {
-	#name : #RBAddTemporaryVariableTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddTemporaryVariableTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'variableName',
 		'interval'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddTemporaryVariableTransformation class >> model: aRBModel variable: aString inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -37,7 +39,7 @@ RBAddTemporaryVariableTransformation class >> model: aRBModel variable: aString 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddTemporaryVariableTransformation class >> variable: aString inInterval: anInterval inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -48,7 +50,7 @@ RBAddTemporaryVariableTransformation class >> variable: aString inInterval: anIn
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddTemporaryVariableTransformation class >> variable: aString inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -58,7 +60,7 @@ RBAddTemporaryVariableTransformation class >> variable: aString inMethod: aSelec
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddTemporaryVariableTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition
@@ -74,7 +76,7 @@ RBAddTemporaryVariableTransformation >> applicabilityPreconditions [
 				   , ' already defines an argument named ' , variableName)
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddTemporaryVariableTransformation >> privateTransform [
 
 	| methodTree parseTree |
@@ -93,7 +95,7 @@ RBAddTemporaryVariableTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddTemporaryVariableTransformation >> skippingPreconditions [
 
 	^ RBCondition
@@ -104,7 +106,7 @@ RBAddTemporaryVariableTransformation >> skippingPreconditions [
 			  , ' already defines a temporary variable named ' , variableName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -121,7 +123,7 @@ RBAddTemporaryVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddTemporaryVariableTransformation >> variable: aVariableName inInterval: anInterval inMethod: aSelector inClass: aClass [
 
 	self className: aClass.
@@ -130,7 +132,7 @@ RBAddTemporaryVariableTransformation >> variable: aVariableName inInterval: anIn
 	variableName := aVariableName
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddTemporaryVariableTransformation >> variable: aVariableName inMethod: aSelector inClass: aClass [
 
 	self

@@ -2,12 +2,14 @@
 I am a tab which can be locked/unlocked with according action and icon
 "
 Class {
-	#name : #LockableTabMorph,
-	#superclass : #TabMorph,
-	#category : #'Morphic-Widgets-Tabs-Morphs'
+	#name : 'LockableTabMorph',
+	#superclass : 'TabMorph',
+	#category : 'Morphic-Widgets-Tabs-Morphs',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'Morphs'
 }
 
-{ #category : #icons }
+{ #category : 'icons' }
 LockableTabMorph class >> lockedIcon [
 
 	^ Icons
@@ -15,7 +17,7 @@ LockableTabMorph class >> lockedIcon [
 		ifAbsentPut: [ self lockedIconContents ]
 ]
 
-{ #category : #'icons - contents' }
+{ #category : 'icons - contents' }
 LockableTabMorph class >> lockedIconContents [
 
 	^ Form
@@ -25,7 +27,7 @@ LockableTabMorph class >> lockedIconContents [
 		offset: 0@0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LockableTabMorph >> closeable: anObject [
 
 	closeable := anObject.
@@ -34,19 +36,19 @@ LockableTabMorph >> closeable: anObject [
 		ifFalse: [ self setLockedIcon ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LockableTabMorph >> setLockedIcon [
 
 	closeIcon image: self class lockedIcon
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LockableTabMorph >> setUnlockedIcon [
 
 	closeIcon image: self class closeIcon
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 LockableTabMorph >> showCloseIcon [
 
 	closeIcon show

@@ -10,25 +10,27 @@ interruptKey
 
 "
 Class {
-	#name : #UserInterruptHandler,
-	#superclass : #Object,
+	#name : 'UserInterruptHandler',
+	#superclass : 'Object',
 	#classVars : [
 		'CmdDotEnabled'
 	],
-	#category : #'OSWindow-SDL2-Base'
+	#category : 'OSWindow-SDL2-Base',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Base'
 }
 
-{ #category : #setting }
+{ #category : 'setting' }
 UserInterruptHandler class >> cmdDotEnabled [
 	^ CmdDotEnabled ifNil: [CmdDotEnabled := true]
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 UserInterruptHandler class >> cmdDotEnabled: aBoolean [
 	CmdDotEnabled := aBoolean
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 UserInterruptHandler class >> settingsOn: aBuilder [
 
 	<systemsettings>
@@ -42,7 +44,7 @@ UserInterruptHandler class >> settingsOn: aBuilder [
 			'If true, it allows the user to stop currently running process by opening-up a debugger'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UserInterruptHandler >> handleUserInterrupt [
 	"This will be called from the event-fetcher process.
 	Assume no system-vital processes have a lower priority than this, and are thus ok to interrupt"
@@ -57,7 +59,7 @@ UserInterruptHandler >> handleUserInterrupt [
 	] on: Error fork: [:ex | ex pass]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UserInterruptHandler >> processToInterrupt [
 	"Look for best candidate to interrupt:
 		- any scheduled non-finalization process of lower priority

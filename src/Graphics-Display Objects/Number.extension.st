@@ -1,6 +1,6 @@
-Extension { #name : #Number }
+Extension { #name : 'Number' }
 
-{ #category : #'*Graphics-Display Objects' }
+{ #category : '*Graphics-Display Objects' }
 Number >> asMargin [
 	^ Margin fromNumber: self
 ]

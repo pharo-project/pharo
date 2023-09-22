@@ -2,21 +2,23 @@
 Border supporting multiple ""sub-borders"".
 "
 Class {
-	#name : #CompositeBorderStyle,
-	#superclass : #SimpleBorderStyle,
+	#name : 'CompositeBorderStyle',
+	#superclass : 'SimpleBorderStyle',
 	#instVars : [
 		'borders'
 	],
-	#category : #'Morphic-Base-Borders'
+	#category : 'Morphic-Base-Borders',
+	#package : 'Morphic-Base',
+	#tag : 'Borders'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 CompositeBorderStyle class >> initialize [
 	"Deprecated in Pharo 11"
 	self deprecatedAliases: { #CompositeBorder }
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompositeBorderStyle >> = aBorderStyle [
 	"Check the sub-borders too"
 
@@ -24,28 +26,28 @@ CompositeBorderStyle >> = aBorderStyle [
 		self borders = aBorderStyle borders]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeBorderStyle >> borders [
 	"Answer the value of borders"
 
 	^ borders
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeBorderStyle >> borders: anObject [
 	"Set the value of borders"
 
 	borders := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeBorderStyle >> colorsAtCorners [
 	"Return the colors of the first border."
 
 	^self borders first colorsAtCorners
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 CompositeBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Draw each border in turn."
 
@@ -56,14 +58,14 @@ CompositeBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 		r := r insetBy: b width]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompositeBorderStyle >> hash [
 	"Since #= is overridden."
 
 	^super hash bitXor: self borders hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompositeBorderStyle >> isComposite [
 	"Answer true."
 

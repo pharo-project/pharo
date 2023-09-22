@@ -2,25 +2,27 @@
 I am raised when a horizontal scroll is done
 "
 Class {
-	#name : #RubHorizontalScrolled,
-	#superclass : #RubMorphAnnouncement,
+	#name : 'RubHorizontalScrolled',
+	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
 		'scrollValue'
 	],
-	#category : #'Rubric-Editing-Announcements'
+	#category : 'Rubric-Editing-Announcements',
+	#package : 'Rubric',
+	#tag : 'Editing-Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubHorizontalScrolled class >> scrollValue: aScrollValue [
 	^ self new scrollValue: aScrollValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubHorizontalScrolled >> scrollValue [
 	^ scrollValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubHorizontalScrolled >> scrollValue: anObject [
 	scrollValue := anObject
 ]

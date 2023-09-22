@@ -3,17 +3,18 @@ I am a command to open special context menu.
 I show in menu all commands annotated by activationStrategy class
 "
 Class {
-	#name : #SycOpenContextMenuCommand,
-	#superclass : #CmdOpenContextMenuCommand,
-	#category : #'SystemCommands-RefactoringSupport'
+	#name : 'SycOpenContextMenuCommand',
+	#superclass : 'CmdOpenContextMenuCommand',
+	#category : 'SystemCommands-RefactoringSupport',
+	#package : 'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 SycOpenContextMenuCommand >> cmCommandClass [
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycOpenContextMenuCommand >> createContextMenu [
 
 	| menuMorph |
@@ -22,7 +23,7 @@ SycOpenContextMenuCommand >> createContextMenu [
 	^ menuMorph
 ]
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 SycOpenContextMenuCommand >> registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
 
 	"Here we need to take care because this command itself is added to menu of same context.

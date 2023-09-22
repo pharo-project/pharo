@@ -1,10 +1,11 @@
 Class {
-	#name : #CDNormalClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDNormalClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDNormalClassParserTest >> classDefinitionString [
 
 	^ '{superclassName} subclass: #{classname}
@@ -20,7 +21,7 @@ CDNormalClassParserTest >> classDefinitionString [
 				'classvar2' -> self secondClassVariableName. } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDNormalClassParserTest >> testNormalClassHasFixedLayout [
 
 	self assert: classDefinition layoutClass equals: FixedLayout

@@ -2,15 +2,17 @@
 I build a resultset with all possible candidates for an AST node, pre-sorted with a sorter.
 "
 Class {
-	#name : #CoGlobalSorterResultSetBuilder,
-	#superclass : #CoASTResultSetBuilder,
+	#name : 'CoGlobalSorterResultSetBuilder',
+	#superclass : 'CoASTResultSetBuilder',
 	#instVars : [
 		'sorterClass'
 	],
-	#category : #'HeuristicCompletion-Model-SystemIntegration'
+	#category : 'HeuristicCompletion-Model-SystemIntegration',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'SystemIntegration'
 }
 
-{ #category : #'API - building' }
+{ #category : 'API - building' }
 CoGlobalSorterResultSetBuilder >> parseNode [
 
 	| aNewNode |
@@ -19,18 +21,18 @@ CoGlobalSorterResultSetBuilder >> parseNode [
 	^ aNewNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoGlobalSorterResultSetBuilder >> sorterClass [
 
 	^ sorterClass ifNil: [ completionContext class sorterClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoGlobalSorterResultSetBuilder >> sorterClass: anObject [
 	sorterClass := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoGlobalSorterResultSetBuilder >> visitNode: aNode [
 
 	| fetcher entries sorter |

@@ -56,8 +56,8 @@ SS can not be run unbuffered, since that seems unneeded. The option to autoFlush
 The first performance tests shows that, as noted above, receiving large amounts of data using #upToAll: is greatly improved - factor of 10. Serving HTTP with small payloads seemed at first not be faster at all - but this is due to the high overhead of Socket connect/close and other things. Increasing payloads show a difference and especially with keep alive on - where the new SS roughly doubles the throughput!
 "
 Class {
-	#name : #SocketStream,
-	#superclass : #Object,
+	#name : 'SocketStream',
+	#superclass : 'Object',
 	#instVars : [
 		'recentlyRead',
 		'socket',
@@ -72,10 +72,12 @@ Class {
 		'binary',
 		'shouldSignal'
 	],
-	#category : #'Network-Kernel-Base'
+	#category : 'Network-Kernel-Base',
+	#package : 'Network-Kernel',
+	#tag : 'Base'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SocketStream class >> finger: userName [
 	"SocketStream finger: 'stp'"
 
@@ -89,19 +91,19 @@ SocketStream class >> finger: userName [
 	self traceCr: '---------- Connection Closed ----------'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SocketStream class >> on: socket [
 	"Create a socket stream on a connected server socket."
 
 	^self basicNew initialize socket: socket
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SocketStream class >> openConnectionToHost: hostIP port: portNumber [
 	^ self openConnectionToHost: hostIP port: portNumber timeout: Socket standardTimeout
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SocketStream class >> openConnectionToHost: hostIP port: portNumber timeout: timeout [
 	| socket |
 	socket := Socket new.
@@ -109,14 +111,14 @@ SocketStream class >> openConnectionToHost: hostIP port: portNumber timeout: tim
 	^self on: socket
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SocketStream class >> openConnectionToHostNamed: hostName port: portNumber [
 	| hostIP |
 	hostIP := NetNameResolver addressForName: hostName timeout: 20.
 	^self openConnectionToHost: hostIP port: portNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> << anObject [
 	"Write anObject to the receiver, dispatching using #putOn:
 	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
@@ -127,7 +129,7 @@ SocketStream >> << anObject [
  	anObject putOn: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> adjustInBuffer: bytesRead [
 	"Adjust markers and possibly grow inBuffer or move data down.
 	Currently grows through doubling when less than 1024 bytes are left.
@@ -147,7 +149,7 @@ SocketStream >> adjustInBuffer: bytesRead [
 	^old
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> adjustOutBuffer: bytesToWrite [
 	"Possibly grow outBuffer to accommodate the new data.
 	Currently grows through doubling when less
@@ -159,7 +161,7 @@ SocketStream >> adjustOutBuffer: bytesToWrite [
 						replaceFrom: 1 to: outBuffer size with: outBuffer startingAt: 1]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> ascii [
 	"Tell the SocketStream to send data
 	as Strings instead of ByteArrays.
@@ -173,7 +175,7 @@ SocketStream >> ascii [
 			outBuffer := outBuffer asString]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> atEnd [
 	"There is nothing more to read when
 	there is no more data in our inBuffer, the socket
@@ -187,7 +189,7 @@ SocketStream >> atEnd [
 		and: [self isDataAvailable not]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> autoFlush [
 	"If autoFlush is enabled data will be sent through
 	the socket (flushed) when the bufferSize is reached
@@ -198,7 +200,7 @@ SocketStream >> autoFlush [
 	^autoFlush
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> autoFlush: aBoolean [
 	"If autoFlush is enabled data will be sent through
 	the socket (flushed) when the bufferSize is reached
@@ -209,7 +211,7 @@ SocketStream >> autoFlush: aBoolean [
 	autoFlush := aBoolean
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> binary [
 	"Tell the SocketStream to send data
 	as ByteArrays instead of Strings.
@@ -223,7 +225,7 @@ SocketStream >> binary [
 			outBuffer := outBuffer asByteArray]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> bufferSize [
 	"Default buffer size is 4kb.
 	increased from earlier 2000 bytes."
@@ -231,7 +233,7 @@ SocketStream >> bufferSize [
 	^bufferSize
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> bufferSize: anInt [
 	"Default buffer size is 4kb.
 	increased from earlier 2000 bytes."
@@ -239,7 +241,7 @@ SocketStream >> bufferSize: anInt [
 	bufferSize := anInt
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> checkFlush [
 	"If autoFlush is true we flush if
 	we have reached the bufferSize
@@ -249,7 +251,7 @@ SocketStream >> checkFlush [
 		ifTrue: [self flush]
 ]
 
-{ #category : #control }
+{ #category : 'control' }
 SocketStream >> close [
 	"Flush any data still not sent
 	and take care of the socket."
@@ -258,17 +260,17 @@ SocketStream >> close [
 	socket closeAndDestroy: 30
 ]
 
-{ #category : #'stream out' }
+{ #category : 'stream out' }
 SocketStream >> cr [
 	self nextPutAll: String cr
 ]
 
-{ #category : #'stream out' }
+{ #category : 'stream out' }
 SocketStream >> crlf [
 	self nextPutAll: String crlf
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SocketStream >> debug [
 	"Display debug info."
 
@@ -283,13 +285,13 @@ SocketStream >> debug [
 			nextPutAll: 'Out data (20):', (outBuffer copyFrom: 1 to: ((outNextToWrite - 1) min: 20)); cr]
 ]
 
-{ #category : #control }
+{ #category : 'control' }
 SocketStream >> destroy [
 	"Destroy the receiver and its underlying socket. Does not attempt to flush the output buffers. For a graceful close use SocketStream>>close instead."
 	socket ifNotNil: [socket destroy]
 ]
 
-{ #category : #control }
+{ #category : 'control' }
 SocketStream >> flush [
 	"If the other end is connected and we have something
 	to send, then we send it and reset the outBuffer."
@@ -302,27 +304,27 @@ SocketStream >> flush [
 			outNextToWrite := 1]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> growInBuffer [
 	"Grows through doubling."
 
 	self resizeInBuffer: inBuffer size * 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> ifStale: aBlock [
 	self isConnected
 		ifFalse: [ aBlock value ]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> inBufferSize [
 	"Answers the current size of data in the inBuffer."
 
 	^inNextToWrite - lastRead - 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SocketStream >> initialize [
 	super initialize.
 	autoFlush := true.
@@ -332,19 +334,19 @@ SocketStream >> initialize [
 	self ascii
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> isBinary [
 	^binary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> isConnected [
 	"The stream is connected if the socket is."
 
 	^socket isConnected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> isDataAvailable [
 	"It the inbuffer is empty, we check the socket for data.
 	If it claims to have data available to read, we try to read
@@ -359,31 +361,31 @@ SocketStream >> isDataAvailable [
 		ifTrue: [self receiveDataIfAvailable; isDataAvailable]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> isEmpty [
 	"Test if there are more data to read."
 
 	^self isInBufferEmpty and: [self isDataAvailable not]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> isInBufferEmpty [
 	"Any data in the buffer?"
 
 	^lastRead + 1 = inNextToWrite
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> isOtherEndConnected [
 	^socket isOtherEndClosed not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> isStream [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> moveInBufferDown [
 	"Move down contents of inBuffer to the start.
 	Return distance moved."
@@ -397,7 +399,7 @@ SocketStream >> moveInBufferDown [
 	^distanceMoved
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> next [
 	"Return next byte, if inBuffer is empty
 	we recieve some more data and try again."
@@ -410,7 +412,7 @@ SocketStream >> next [
 	^inBuffer at: lastRead
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> next: anInteger [
 	"Read count elements and return them in a collection.
 	If the receiver is #atEnd before count elements were read,
@@ -419,7 +421,7 @@ SocketStream >> next: anInteger [
 	^ self nextInto: (self streamBuffer: anInteger)
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> next: n into: aCollection [
 	"Read n objects into the given collection.
 	Return aCollection or a partial copy if less than
@@ -427,7 +429,7 @@ SocketStream >> next: n into: aCollection [
 	^self next: n into: aCollection startingAt: 1
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> next: requestedCount into: collection startingAt: startIndex [
 	"Read requestedCount objects into the given collection.
 	Return collection or a partial copy if less elements have been read."
@@ -439,7 +441,7 @@ SocketStream >> next: requestedCount into: collection startingAt: startIndex [
 		ifFalse: [ collection copyFrom: 1 to: startIndex + readCount - 1 ]
 ]
 
-{ #category : #'stream out' }
+{ #category : 'stream out' }
 SocketStream >> next: n putAll: aCollection startingAt: startIndex [
 	"Put a String or a ByteArray onto the stream.
 	Currently a large collection will allocate a large buffer.
@@ -452,14 +454,14 @@ SocketStream >> next: n putAll: aCollection startingAt: startIndex [
 	^aCollection
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> nextAllInBuffer [
 	"Return all data currently in the inBuffer,"
 
 	^self nextInBuffer: inNextToWrite - lastRead - 1
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> nextAvailable [
 	"Answer all the data currently available,
 	in buffer or in socket."
@@ -469,7 +471,7 @@ SocketStream >> nextAvailable [
 	^self nextAllInBuffer
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> nextAvailable: howMany [
 	"Answer all the data currently available,
 	in buffer or in socket - but limited to <howMany>."
@@ -479,7 +481,7 @@ SocketStream >> nextAvailable: howMany [
 	^self nextInBuffer: howMany
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> nextInBuffer: anInteger [
 	"Answer anInteger bytes of data at most,
 	but only from the inBuffer."
@@ -491,7 +493,7 @@ SocketStream >> nextInBuffer: anInteger [
 	^inBuffer copyFrom: start to: lastRead
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> nextInto: aCollection [
 	"Read the next elements of the receiver into aCollection.
 	Return aCollection or a partial copy if less than aCollection
@@ -499,7 +501,7 @@ SocketStream >> nextInto: aCollection [
 	^self next: aCollection size into: aCollection startingAt: 1
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> nextInto: aCollection startingAt: startIndex [
 	"Read the next elements of the receiver into aCollection.
 	Return aCollection or a partial copy if less than aCollection
@@ -507,24 +509,24 @@ SocketStream >> nextInto: aCollection startingAt: startIndex [
 	^self next: (aCollection size - startIndex+1) into: aCollection startingAt: startIndex
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> nextLine [
 	^self nextLineCrLf
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> nextLineCrLf [
 	^self upToAll: String crlf
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> nextLineLf [
 	| nextLine |
 	nextLine := self upToAll: String lf.
 	^nextLine
 ]
 
-{ #category : #'stream out' }
+{ #category : 'stream out' }
 SocketStream >> nextPut: char [
 	"Put a single Character or byte onto the stream."
 
@@ -538,7 +540,7 @@ SocketStream >> nextPut: char [
 	^ char
 ]
 
-{ #category : #'stream out' }
+{ #category : 'stream out' }
 SocketStream >> nextPutAll: aCollection [
 	"Put a String or a ByteArray onto the stream.
 	Currently a large collection will allocate a large buffer."
@@ -552,7 +554,7 @@ SocketStream >> nextPutAll: aCollection [
 	^aCollection
 ]
 
-{ #category : #'stream out' }
+{ #category : 'stream out' }
 SocketStream >> nextPutAllFlush: aCollection [
 	"Put a String or a ByteArray onto the stream.
 	You can use this if you have very large data - it avoids
@@ -568,21 +570,21 @@ SocketStream >> nextPutAllFlush: aCollection [
 			do: [:ex | shouldSignal ifFalse: ["swallow"]]]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> noTimeout [
 	"Do not use timeout."
 
 	timeout := 0
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> outBufferSize [
 	"Answers the current size of data in the outBuffer."
 
 	^outNextToWrite - 1
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> peek [
 	"Return next byte, if inBuffer is empty
 	we recieve some more data and try again.
@@ -595,7 +597,7 @@ SocketStream >> peek [
 	^inBuffer at: lastRead+1
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> peek: anInteger [
 	"Answer anInteger bytes of data.
 	Do not consume data.
@@ -608,7 +610,7 @@ SocketStream >> peek: anInteger [
 	^inBuffer copyFrom: start to: ((lastRead + anInteger) min: inNextToWrite - 1)
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> peekFor: aCharacterOrByte [
 	"Read and return next character or byte
 	if it is equal to the argument.
@@ -626,7 +628,7 @@ SocketStream >> peekFor: aCharacterOrByte [
 	^false
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> peekForAll: aString [
 	"Answer whether or not the next string of characters in the receiver
 	matches aString. If a match is made, advance over that string in the receiver and
@@ -646,17 +648,17 @@ SocketStream >> peekForAll: aString [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> position [
 	^lastRead
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SocketStream >> print: anObject [
 	anObject printOn: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SocketStream >> printOn: aStream [
 	"Display buffer sizes."
 
@@ -670,7 +672,7 @@ SocketStream >> printOn: aStream [
 			nextPutAll: 'kb]']
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> readInto: aCollection startingAt: startIndex count: anInteger [
 	"Read n objects into the given collection starting at startIndex.
 	Return number of elements that have been read."
@@ -696,7 +698,7 @@ SocketStream >> readInto: aCollection startingAt: startIndex count: anInteger [
 	^amount
 ]
 
-{ #category : #'private - socket' }
+{ #category : 'private - socket' }
 SocketStream >> receiveAvailableData [
 	"Receive available data (as much as fits in the inBuffer)
 	but not waiting for more to arrive.
@@ -708,7 +710,7 @@ SocketStream >> receiveAvailableData [
 	^self adjustInBuffer: recentlyRead
 ]
 
-{ #category : #'private - socket' }
+{ #category : 'private - socket' }
 SocketStream >> receiveData [
 	"Receive data with timeout if it has been set.
 	If shouldSignal is false we use the Socket methods
@@ -738,7 +740,7 @@ SocketStream >> receiveData [
 	^self adjustInBuffer: recentlyRead
 ]
 
-{ #category : #control }
+{ #category : 'control' }
 SocketStream >> receiveData: nBytes [
 	"Keep reading the socket until we have nBytes
 	in the inBuffer or we reach the end. This method
@@ -757,7 +759,7 @@ SocketStream >> receiveData: nBytes [
 		whileTrue: [self receiveData]
 ]
 
-{ #category : #'private - socket' }
+{ #category : 'private - socket' }
 SocketStream >> receiveDataIfAvailable [
 	"Only used to check that there really is data to read
 	from the socket after it signals dataAvailable.
@@ -771,7 +773,7 @@ SocketStream >> receiveDataIfAvailable [
 	^self adjustInBuffer: recentlyRead
 ]
 
-{ #category : #control }
+{ #category : 'control' }
 SocketStream >> recentlyRead [
 	"Return the number of bytes read
 	during the last socket operation."
@@ -779,7 +781,7 @@ SocketStream >> recentlyRead [
 	^recentlyRead
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> resetBuffers [
 	"Recreate the buffers with default start sizes."
 
@@ -790,7 +792,7 @@ SocketStream >> resetBuffers [
 	outNextToWrite := 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> resizeInBuffer: newSize [
 	"Resize the inBuffer by recreating it.
 	This also has the effect of getting rid of
@@ -801,7 +803,7 @@ SocketStream >> resizeInBuffer: newSize [
 					replaceFrom: 1 to: inNextToWrite - 1 with: inBuffer startingAt: 1
 ]
 
-{ #category : #'stream out' }
+{ #category : 'stream out' }
 SocketStream >> sendCommand: aString [
 	"Sends a String ending it with CR LF and then flush
 	causing it to block until sent."
@@ -809,7 +811,7 @@ SocketStream >> sendCommand: aString [
 	self nextPutAll: aString, String crlf; flush
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> shouldSignal [
 	"If shouldSignal is enabled the Socket Exceptions
 	ConnectionClosed and ConnectionTimedOut
@@ -819,7 +821,7 @@ SocketStream >> shouldSignal [
 	^shouldSignal
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> shouldSignal: aBoolean [
 	"If shouldSignal is enabled the Socket Exceptions
 	ConnectionClosed and ConnectionTimedOut will not be swallowed.
@@ -840,12 +842,12 @@ SocketStream >> shouldSignal: aBoolean [
 	shouldSignal := aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketStream >> shouldTimeout [
 	^self timeout > 0
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> skip: anInteger [
 	"Skip a number of bytes.
 	This is faster than #next: since it does not
@@ -857,22 +859,22 @@ SocketStream >> skip: anInteger [
 	lastRead := (lastRead + anInteger) min: inNextToWrite - 1
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> socket [
 	^socket
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> socket: aSocket [
 	socket := aSocket
 ]
 
-{ #category : #'stream out' }
+{ #category : 'stream out' }
 SocketStream >> space [
 	self nextPut: Character space
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SocketStream >> streamBuffer: size [
 	"Create a buffer of the correct class and given size."
 
@@ -881,7 +883,7 @@ SocketStream >> streamBuffer: size [
 		ifFalse: [String]) new: size
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> timeout [
 	"Lazily initialized unless it has been set explicitly."
 
@@ -889,12 +891,12 @@ SocketStream >> timeout [
 	^timeout
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 SocketStream >> timeout: seconds [
 	timeout := seconds
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> upTo: aCharacterOrByte [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of anObject in the receiver. If  anObject is not in the collection, answer the entire rest of the receiver."
 
@@ -905,7 +907,7 @@ SocketStream >> upTo: aCharacterOrByte [
 		ifFalse: [ self upTo: aCharacterOrByte asCharacter limit: 100000]
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> upTo: aCharacterOrByte limit: nBytes [
 	"Return data up to, but not including given character or byte. If the character is not in the stream, or not found within nBytes answer the available contents of the stream"
 
@@ -948,7 +950,7 @@ SocketStream >> upTo: aCharacterOrByte limit: nBytes [
 	^self nextAllInBuffer
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> upToAll: aStringOrByteArray [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
 
@@ -957,7 +959,7 @@ SocketStream >> upToAll: aStringOrByteArray [
 	^self upToAll: aStringOrByteArray limit: 100000
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> upToAll: aStringOrByteArray limit: nBytes [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aStringOrByteArray. If aCollection is not in the stream, or not found within nBytes answer the available contents of the stream"
 
@@ -1001,7 +1003,7 @@ SocketStream >> upToAll: aStringOrByteArray limit: nBytes [
 	^self nextAllInBuffer
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 SocketStream >> upToEnd [
 	"Answer all data coming in on the socket until the socket
 	is closed by the other end, or we get a timeout.

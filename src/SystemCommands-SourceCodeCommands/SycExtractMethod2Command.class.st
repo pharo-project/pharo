@@ -1,29 +1,30 @@
 Class {
-	#name : #SycExtractMethod2Command,
-	#superclass : #SycSourceCodeRefactoringCommand,
+	#name : 'SycExtractMethod2Command',
+	#superclass : 'SycSourceCodeRefactoringCommand',
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'selectedTextInterval'
 	],
-	#category : #'SystemCommands-SourceCodeCommands'
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycExtractMethod2Command class >> canBeExecutedInContext: aSourceCodeContext [
 
 	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
 		  aSourceCodeContext isMethodSelected not ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycExtractMethod2Command class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SycExtractMethod2Command >> asRefactorings [
 
 	| selectedInterval refactoring |
@@ -41,24 +42,24 @@ SycExtractMethod2Command >> asRefactorings [
 	^ { refactoring }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycExtractMethod2Command >> defaultMenuIconName [
 	^ #glamorousRestart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycExtractMethod2Command >> defaultMenuItemName [
 
 	^ 'Extract method 2'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycExtractMethod2Command >> execute [
 
 	self executeRefactoring: self asRefactorings
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SycExtractMethod2Command >> executeRefactoring: refactoring [
 
 	self initializeDefaultOptionsOf: refactoring.
@@ -67,7 +68,7 @@ SycExtractMethod2Command >> executeRefactoring: refactoring [
 		do: [ :e | UIManager default alert: e messageText ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SycExtractMethod2Command >> getNewSelector [
 
 	| invalidArgs methodName dialog |
@@ -85,14 +86,14 @@ SycExtractMethod2Command >> getNewSelector [
 	^ methodName
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycExtractMethod2Command >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
 	self setUpModelFromContext: aSourceCodeContext.
 	selectedTextInterval := aSourceCodeContext selectedTextInterval
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycExtractMethod2Command >> setUpOptionToChangeExtractionClass: refactoring [
 
 	refactoring setOption: #extractionClass toUse: [ :ref | | cls superclasses |
@@ -110,7 +111,7 @@ SycExtractMethod2Command >> setUpOptionToChangeExtractionClass: refactoring [
 		cls ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycExtractMethod2Command >> setUpOptionToChangeMethodNameDuring: refactoring [
 
 	| dialog |
@@ -126,14 +127,14 @@ SycExtractMethod2Command >> setUpOptionToChangeMethodNameDuring: refactoring [
 		methodName ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycExtractMethod2Command >> setUpOptionToOverrideExistingMethodDuring: aRefactoring [
 
 	aRefactoring setOption: #alreadyDefined toUse:  [ :ref :class :selector |
 		ref refactoringWarning: 'Method ', selector printString, ' will override method in ', class name]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycExtractMethod2Command >> setUpOptionsOf: refactoring [
 
 	self initializeDefaultOptionsOf: refactoring.

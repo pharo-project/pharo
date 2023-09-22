@@ -3,7 +3,9 @@ Signals if an operation on a Socket found it in a state invalid for that operati
 
 "
 Class {
-	#name : #InvalidSocketStatusException,
-	#superclass : #Error,
-	#category : #'Network-Kernel-Exceptions'
+	#name : 'InvalidSocketStatusException',
+	#superclass : 'Error',
+	#category : 'Network-Kernel-Exceptions',
+	#package : 'Network-Kernel',
+	#tag : 'Exceptions'
 }

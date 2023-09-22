@@ -1,13 +1,14 @@
 Class {
-	#name : #MyClassUsingMock3Test,
-	#superclass : #TestCase,
+	#name : 'MyClassUsingMock3Test',
+	#superclass : 'TestCase',
 	#instVars : [
 		'mock'
 	],
-	#category : #'SUnit-MockObjects-Tests'
+	#category : 'SUnit-MockObjects-Tests',
+	#package : 'SUnit-MockObjects-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMock3Test >> setUp [
 
 	super setUp.
@@ -18,14 +19,14 @@ MyClassUsingMock3Test >> setUp [
 		verify: [ :arg | arg even ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMock3Test >> testVerify [
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife: )>
 	mock meaningOfLife: 3
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMock3Test >> testVerify2 [
 	"When the arguments are correct, the verify block is executed and it should return true."
 

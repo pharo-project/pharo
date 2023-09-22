@@ -2,12 +2,14 @@
 Similar to class `FluidClassBuilder` but for traits
 "
 Class {
-	#name : #FluidTraitBuilder,
-	#superclass : #FluidBuilder,
-	#category : #'FluidClassBuilder-Base'
+	#name : 'FluidTraitBuilder',
+	#superclass : 'FluidBuilder',
+	#category : 'FluidClassBuilder-Base',
+	#package : 'FluidClassBuilder',
+	#tag : 'Base'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 FluidTraitBuilder >> fillShiftClassBuilder [
 
 	super fillShiftClassBuilder.

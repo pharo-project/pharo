@@ -1,6 +1,6 @@
-Extension { #name : #TraitedClass }
+Extension { #name : 'TraitedClass' }
 
-{ #category : #'*CodeExport-Traits' }
+{ #category : '*CodeExport-Traits' }
 TraitedClass >> fileOutLocalMethodsInProtocol: protocol on: aFileStream [
 
 	aFileStream cr.

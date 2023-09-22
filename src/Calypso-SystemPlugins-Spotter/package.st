@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Spotter' }
+Package { #name : 'Calypso-SystemPlugins-Spotter' }

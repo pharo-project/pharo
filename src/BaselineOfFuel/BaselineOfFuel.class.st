@@ -5,12 +5,13 @@ See more information in our website:
 http://rmod.lille.inria.fr/web/pier/software/Fuel/
 "
 Class {
-	#name : #BaselineOfFuel,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfFuel
+	#name : 'BaselineOfFuel',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfFuel',
+	#package : 'BaselineOfFuel'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfFuel >> baseline: spec [
 
 	<baseline>

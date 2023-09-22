@@ -2,16 +2,18 @@
 Report tests execution result under XML format
 "
 Class {
-	#name : #XmlReporter,
-	#superclass : #AbstractReporter,
+	#name : 'XmlReporter',
+	#superclass : 'AbstractReporter',
 	#instVars : [
 		'stream',
 		'suitePosition'
 	],
-	#category : #'TestRunner-Core-Reporters'
+	#category : 'TestRunner-Core-Reporters',
+	#package : 'TestRunner-Core',
+	#tag : 'Reporters'
 }
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter class >> buildAttributesForFailure: aTestFailure duringTest: aTestCase [
 
 	| aDictionnary |
@@ -23,7 +25,7 @@ XmlReporter class >> buildAttributesForFailure: aTestFailure duringTest: aTestCa
 	^ aDictionnary
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter class >> convert: aString [
 
 	^ (aString asString
@@ -33,7 +35,7 @@ XmlReporter class >> convert: aString [
 		  with: (String with: Character lf)
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter class >> encode: aString [
 
 	^ ((aString asString copyReplaceAll: '&' with: '&amp;')
@@ -41,14 +43,14 @@ XmlReporter class >> encode: aString [
 		   with: '&quot;') copyReplaceAll: '<' with: '&lt;'
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter class >> generateTesCaseClassName: aTestCase [
 
 	^ (aTestCase class category copyReplaceAll: '-' with: '.') , '.'
 	  , aTestCase class name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 XmlReporter >> buildAttributesForFailure: aTestFailure duringTest: aTestCase [
 
 	^ self class
@@ -56,7 +58,7 @@ XmlReporter >> buildAttributesForFailure: aTestFailure duringTest: aTestCase [
 		  duringTest: aTestCase
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> buildAttributesForTestCase: aTestCase [
 
 	| aDictionnary |
@@ -69,37 +71,37 @@ XmlReporter >> buildAttributesForTestCase: aTestCase [
 	^ aDictionnary
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> convert: aString [
 
 	^ self class convert: aString
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> currentCaseDuration [
 
 	^ currentCaseDuration
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> datasAreReseted [
 
 	^ super datasAreReseted and: (stream isNil and: suitePosition isNil)
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> encode: aString [
 
 	^ self class encode: aString
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> finishReporting [
 
 	stream close
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> generateStandardPart [
 
 	stream
@@ -111,19 +113,19 @@ XmlReporter >> generateStandardPart [
 		lf
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> generateTesCaseClassName: aTestCase [
 
 	^ self class generateTesCaseClassName: aTestCase
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> reportError: aTestError of: aTestCase [
 
 	self reportFailure: aTestError of: aTestCase
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> reportFailure: aTestFailure of: aTestCase [
 
 	| attributesForFailureTag attributesForTestCaseTag |
@@ -147,7 +149,7 @@ XmlReporter >> reportFailure: aTestFailure of: aTestCase [
 		self writeClosingTag: aTestCase ]
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> reportPass: aTestCase [
 
 	"report the execution's result of a passed test"
@@ -158,7 +160,7 @@ XmlReporter >> reportPass: aTestCase [
 	self writeClosingTag: aTestCase
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> reportResult: aTestResult [
 
 	"Report the execution's result of a testSuite"
@@ -179,7 +181,7 @@ XmlReporter >> reportResult: aTestResult [
 	self finishReporting
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> reportSuite: aTestSuite runBlock: aBlock [
 
 	"run an report the execution's result of a testSuite"
@@ -207,7 +209,7 @@ XmlReporter >> reportSuite: aTestSuite runBlock: aBlock [
 		nextPutAll: '</testsuite>'
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> startReporting: aTestSuite [
 
 	| aFile |
@@ -223,25 +225,25 @@ XmlReporter >> startReporting: aTestSuite [
 		lf
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> tabCaracter [
 
 	^ '    '
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> tabCaracter2Times [
 
 	^ self tabCaracter , self tabCaracter
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> tabCaracter3Times [
 
 	^ self tabCaracter , self tabCaracter , self tabCaracter
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> writeClosingTag: aTestCase [
 
 	stream
@@ -250,7 +252,7 @@ XmlReporter >> writeClosingTag: aTestCase [
 		lf
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> writeException: aTestFailure [
 
 	stream
@@ -261,14 +263,14 @@ XmlReporter >> writeException: aTestFailure [
 		lf.
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> writeException: aTestFailure of: aTestCase [
 
 	self writeException: aTestFailure.
 	self writeExceptionStack: aTestFailure of: aTestCase.
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> writeExceptionStack: anException of: aTestCase [
 
 	| context |
@@ -288,7 +290,7 @@ XmlReporter >> writeExceptionStack: anException of: aTestCase [
 		context := context sender ]
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> writeOpeningFailureTag: aTestCase withProperties: aDictionnary [
 
 	stream nextPutAll: self tabCaracter.
@@ -298,13 +300,13 @@ XmlReporter >> writeOpeningFailureTag: aTestCase withProperties: aDictionnary [
 		withProperties: aDictionnary
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> writeOpeningTag: aTestCase [
 
 	self writeOpeningTestCaseTag: aTestCase withProperties: Dictionary new
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> writeOpeningTagOf: aTagName duringTest: aTestCase withProperties: aDictionnary [
 
 	stream
@@ -324,7 +326,7 @@ XmlReporter >> writeOpeningTagOf: aTagName duringTest: aTestCase withProperties:
 		lf
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 XmlReporter >> writeOpeningTestCaseTag: aTestCase withProperties: aDictionnary [
 
 	self

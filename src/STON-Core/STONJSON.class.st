@@ -33,37 +33,39 @@ E x a m p l e s
 For a much more sophisticated JSON parser/writer implementation, have a look at NeoJSON.
 "
 Class {
-	#name : #STONJSON,
-	#superclass : #Object,
-	#category : #'STON-Core-Facade'
+	#name : 'STONJSON',
+	#superclass : 'Object',
+	#category : 'STON-Core-Facade',
+	#package : 'STON-Core',
+	#tag : 'Facade'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 STONJSON class >> fromStream: stream [
 	^ STON fromStream: stream
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 STONJSON class >> fromString: string [
 	^ STON fromString: string
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 STONJSON class >> put: object onStream: stream [
 	STON put: object asJsonOnStream: stream
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 STONJSON class >> put: object onStreamPretty: stream [
 	STON put: object asJsonOnStreamPretty: stream
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 STONJSON class >> toString: object [
 	^ STON toJsonString: object
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 STONJSON class >> toStringPretty: object [
 	^ STON toJsonStringPretty: object
 ]

@@ -1,10 +1,11 @@
 Trait {
-	#name : #ClyTraitChild1,
+	#name : 'ClyTraitChild1',
 	#traits : 'ClyTraitRoot1 + ClyTraitRoot2',
 	#classTraits : 'ClyTraitRoot1 classTrait + ClyTraitRoot2 classTrait',
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
 }
 
-{ #category : #tag }
+{ #category : 'tag' }
 ClyTraitChild1 >> methodFromTraitChild1 [
 ]

@@ -1,44 +1,46 @@
 Class {
-	#name : #AthensCairoExportSurfaceTest,
-	#superclass : #TestCase,
+	#name : 'AthensCairoExportSurfaceTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'surface'
 	],
-	#category : #'Athens-Cairo-Tests-Core'
+	#category : 'Athens-Cairo-Tests-Core',
+	#package : 'Athens-Cairo-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensCairoExportSurfaceTest class >> isAbstract [
 
 	^ self = AthensCairoExportSurfaceTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoExportSurfaceTest >> athensSurfaceClass [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoExportSurfaceTest >> fileName [
 
 	^ self className asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoExportSurfaceTest >> fileReference [
 
 	^ self fileName asFileReference
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AthensCairoExportSurfaceTest >> setUp [
 
 	super setUp.
 	self fileReference ensureDelete
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AthensCairoExportSurfaceTest >> tearDown [
 
 	surface close.
@@ -46,7 +48,7 @@ AthensCairoExportSurfaceTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensCairoExportSurfaceTest >> testExportBoxes [
 
 	| path |
@@ -74,7 +76,7 @@ AthensCairoExportSurfaceTest >> testExportBoxes [
 	self assert: self fileReference size > 400
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensCairoExportSurfaceTest >> testExtent [
 
 	surface := self athensSurfaceClass
@@ -83,7 +85,7 @@ AthensCairoExportSurfaceTest >> testExtent [
 	self assert: surface extent equals: 100@50
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensCairoExportSurfaceTest >> testHeight [
 
 	surface := self athensSurfaceClass
@@ -92,7 +94,7 @@ AthensCairoExportSurfaceTest >> testHeight [
 	self assert: surface height equals: 50
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensCairoExportSurfaceTest >> testWidth [
 
 	surface := self athensSurfaceClass

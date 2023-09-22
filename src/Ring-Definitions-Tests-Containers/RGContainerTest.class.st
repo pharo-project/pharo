@@ -2,12 +2,14 @@
 SUnit tests for container
 "
 Class {
-	#name : #RGContainerTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Containers-Base'
+	#name : 'RGContainerTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Containers-Base',
+	#package : 'Ring-Definitions-Tests-Containers',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGContainerTest >> testCategoryMatching [
 
 	self assert: ('Compression-Archives' isCategoryOf: 'Compression').

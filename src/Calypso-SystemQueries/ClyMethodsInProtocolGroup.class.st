@@ -2,28 +2,30 @@
 I am group of methods in a specific protocol
 "
 Class {
-	#name : #ClyMethodsInProtocolGroup,
-	#superclass : #ClyMethodGroup,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyMethodsInProtocolGroup',
+	#superclass : 'ClyMethodGroup',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodsInProtocolGroup class >> isBasedOnProtocol [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodsInProtocolGroup class >> isEditableGroup [
 	^true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodsInProtocolGroup class >> withMethodsFrom: aClassScope inProtocol: protocolName [
 
 	^ self named: protocolName on: (ClyMethodsInProtocolQuery by: protocolName from: aClassScope)
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodsInProtocolGroup >> categorizeMethodsIn: newProtocolName [
 
 	newProtocolName = self protocol ifTrue: [ ^ self ].
@@ -31,7 +33,7 @@ ClyMethodsInProtocolGroup >> categorizeMethodsIn: newProtocolName [
 	super categorizeMethodsIn: newProtocolName
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodsInProtocolGroup >> importMethod: aMethod [
 
 	super importMethod: aMethod.
@@ -39,7 +41,7 @@ ClyMethodsInProtocolGroup >> importMethod: aMethod [
 	aMethod protocol: self protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodsInProtocolGroup >> protocol [
 
 	^ methodQuery protocol

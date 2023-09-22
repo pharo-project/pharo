@@ -30,12 +30,13 @@ The size of the union can be verified with:
 	UnionExample byteSize = (Smalltalk wordSize max: 4).
 "
 Class {
-	#name : #ExternalUnion,
-	#superclass : #ExternalStructure,
-	#category : #'FFI-Kernel'
+	#name : 'ExternalUnion',
+	#superclass : 'ExternalStructure',
+	#category : 'FFI-Kernel',
+	#package : 'FFI-Kernel'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalUnion class >> compileFields: specArray withAccessors: aSymbol [
 	"Compile a type specification for the FFI machinery.
 	Return the newly compiled spec.
@@ -87,7 +88,7 @@ ExternalUnion class >> compileFields: specArray withAccessors: aSymbol [
 	^ newCompiledSpec
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalUnion class >> compositeName [
 	^'union'
 ]

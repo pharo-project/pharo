@@ -6,22 +6,24 @@ I am a ZnEntity.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnByteArrayEntity,
-	#superclass : #ZnEntity,
+	#name : 'ZnByteArrayEntity',
+	#superclass : 'ZnEntity',
 	#instVars : [
 		'bytes'
 	],
-	#category : #'Zinc-HTTP-Core'
+	#category : 'Zinc-HTTP-Core',
+	#package : 'Zinc-HTTP',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnByteArrayEntity class >> bytes: byteArray [
 	^ (self type: ZnMimeType applicationOctetStream length: byteArray size)
 		bytes: byteArray;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnByteArrayEntity class >> designatedMimeType [
 	"I have no designated mime type, I can handle all binary content.
 	See #concreteSubclassForType: "
@@ -29,7 +31,7 @@ ZnByteArrayEntity class >> designatedMimeType [
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnByteArrayEntity class >> matches: mimeType [
 	"I have no designated mime type, I can handle all binary content.
 	See #concreteSubclassForType: "
@@ -37,44 +39,44 @@ ZnByteArrayEntity class >> matches: mimeType [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnByteArrayEntity >> = other [
 	^ super = other and: [ self bytes = other bytes ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnByteArrayEntity >> bytes [
 	^ bytes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnByteArrayEntity >> bytes: anObject [
 	bytes := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnByteArrayEntity >> contents [
 	^ self bytes
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnByteArrayEntity >> hash [
 	^ super hash bitXor: self bytes hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnByteArrayEntity >> isEmpty [
 	^ self bytes isNil or: [ self bytes isEmpty ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnByteArrayEntity >> printContentsOn: stream [
 	super printContentsOn: stream.
 	self bytes notNil ifTrue: [
 		stream space; print: self bytes ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnByteArrayEntity >> readFrom: stream [
 
 	self contentLength
@@ -94,12 +96,12 @@ ZnByteArrayEntity >> readFrom: stream [
 			]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnByteArrayEntity >> readStream [
 	^ self bytes readStream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnByteArrayEntity >> writeOn: stream [
 	ZnUtils nextPutAll: self bytes on: stream
 ]

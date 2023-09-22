@@ -13,23 +13,25 @@ self openWithScrollbarAndBorderOfWidth: 5.
 self openAutoAccept.
 "
 Class {
-	#name : #RubTextFieldExample,
-	#superclass : #Object,
+	#name : 'RubTextFieldExample',
+	#superclass : 'Object',
 	#instVars : [
 		'string',
 		'announcer'
 	],
-	#category : #'Rubric-Editing-Widgets-Examples'
+	#category : 'Rubric-Editing-Widgets-Examples',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextFieldExample class >> exampleOpen [
 	| st |
 	st := self new newScrolledText.
  	st openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextFieldExample class >> openAutoAccept [
 	| st model |
 	model := self new.
@@ -38,43 +40,43 @@ RubTextFieldExample class >> openAutoAccept [
  	st openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextFieldExample class >> openWithBorderOfWidth: anInteger [
 	| st |
 	st := self new newScrolledTextWithBorderOfWidth: anInteger.
  	st openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextFieldExample class >> openWithScrollbar [
 	| st |
 	st := self new newScrolledTextWithScrollbar.
  	st openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextFieldExample class >> openWithScrollbarAndBorderOfWidth: anInteger [
 	| st |
 	st := self new newScrolledTextWithScrollbarAndBorderOfWidth: anInteger.
  	st openInWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextFieldExample >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubTextFieldExample >> getText [
 	^ self string asText
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubTextFieldExample >> menu [
 	^ nil
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubTextFieldExample >> newScrolledText [
 	| st |
 	st := (RubTextFieldMorph on: self)
@@ -86,7 +88,7 @@ RubTextFieldExample >> newScrolledText [
 	^ st
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubTextFieldExample >> newScrolledTextAutoAccept [
 	| st |
 	st := (RubTextFieldMorph
@@ -99,34 +101,34 @@ RubTextFieldExample >> newScrolledTextAutoAccept [
 	^st
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubTextFieldExample >> newScrolledTextWithBorderOfWidth: anInteger [
 	^ self newScrolledText borderWidth: anInteger
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubTextFieldExample >> newScrolledTextWithScrollbar [
 	^ self newScrolledText hScrollbarShowAlways
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubTextFieldExample >> newScrolledTextWithScrollbarAndBorderOfWidth: anInteger [
 	^ self newScrolledText hScrollbarShowAlways; borderWidth: anInteger
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubTextFieldExample >> setText: aText from: aView [
 	self string: aText string.
 	"return true to remove unaccepted edit adornment in tge view"
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextFieldExample >> string [
 	^ string ifNil: [ string := '' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextFieldExample >> string: aString [
 	string := aString
 ]

@@ -1,23 +1,25 @@
 Class {
-	#name : #XmlReporterTest,
-	#superclass : #AbstractReporterTest,
-	#category : #'TestRunner-Tests-Reporters'
+	#name : 'XmlReporterTest',
+	#superclass : 'AbstractReporterTest',
+	#category : 'TestRunner-Tests-Reporters',
+	#package : 'TestRunner-Tests',
+	#tag : 'Reporters'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 XmlReporterTest class >> exampleOfTestFailureException [
 
 	^ TestFailure new messageText: 'Assertion failed'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 XmlReporterTest >> setUp [
 
 	super setUp.
 	reporter := XmlReporter new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 XmlReporterTest >> testBuildingAttributesForFailureTag [
 
 	| aDictionnary aFailure aTestCase |
@@ -32,7 +34,7 @@ XmlReporterTest >> testBuildingAttributesForFailureTag [
 		assert: (aDictionnary at: 'message') equals: 'Assertion failed'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 XmlReporterTest >> testBuildingAttributesForTestCaseTag [
 
 	| aDictionnary aTestCase |

@@ -2,12 +2,13 @@
 I am a special kind of MethodAnnouncement which represent that overridden method changes own ""overridden status""
 "
 Class {
-	#name : #ClyOverriddenMethodChanged,
-	#superclass : #MethodAnnouncement,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
+	#name : 'ClyOverriddenMethodChanged',
+	#superclass : 'MethodAnnouncement',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyOverriddenMethodChanged class >> method: aMethod [
 	^self new
 		method: aMethod

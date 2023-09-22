@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnMessageBenchmarkTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnMessageBenchmarkTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMessageBenchmarkTest >> testRequests [
 	ZnMessageBenchmark requests do: [ :each |
 		| bench |
@@ -16,7 +17,7 @@ ZnMessageBenchmarkTest >> testRequests [
 		self assert: bench read equals: bench message ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMessageBenchmarkTest >> testResponses [
 	ZnMessageBenchmark responses do: [ :each |
 		| bench |

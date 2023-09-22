@@ -1,10 +1,12 @@
 Class {
-	#name : #WeakClassVariableTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'WeakClassVariableTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakClassVariableTest >> testCreateClassWithWeakClassVariable [
 	| classVar |
 
@@ -15,7 +17,7 @@ WeakClassVariableTest >> testCreateClassWithWeakClassVariable [
 	self assert: (aClass hasClassVarNamed: 'ClassVar')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakClassVariableTest >> testReadWriteWeakClassVarCompiled [
 	| classVar object valuetoTest |
 	<ignoreNotImplementedSelectors: #(ClassVar ClassVar:)>
@@ -34,7 +36,7 @@ WeakClassVariableTest >> testReadWriteWeakClassVarCompiled [
 	self assert: object ClassVar equals: valuetoTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakClassVariableTest >> testWeakClassVariableIsWeak [
 	| classVar |
 	classVar := #ClassVar => WeakClassVariable.
@@ -46,7 +48,7 @@ WeakClassVariableTest >> testWeakClassVariableIsWeak [
 	self assert: classVar read equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakClassVariableTest >> testWeakClassVariableReflective [
 	| classVar |
 	classVar := #ClassVar => WeakClassVariable.

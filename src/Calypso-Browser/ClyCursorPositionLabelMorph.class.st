@@ -8,15 +8,17 @@ Internal Representation and Key Implementation Points.
 	labelMorph:		<StringMorph>
 "
 Class {
-	#name : #ClyCursorPositionLabelMorph,
-	#superclass : #ClyTextMorphToolMorph,
+	#name : 'ClyCursorPositionLabelMorph',
+	#superclass : 'ClyTextMorphToolMorph',
 	#instVars : [
 		'labelMorph'
 	],
-	#category : #'Calypso-Browser-TextEditors'
+	#category : 'Calypso-Browser-TextEditors',
+	#package : 'Calypso-Browser',
+	#tag : 'TextEditors'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCursorPositionLabelMorph >> attachToTextMorph [
 	super attachToTextMorph.
 
@@ -24,14 +26,14 @@ ClyCursorPositionLabelMorph >> attachToTextMorph [
 	self updateContents
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCursorPositionLabelMorph >> detachFromTextMorph [
 	super detachFromTextMorph.
 
 	self textArea announcer unsubscribe: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyCursorPositionLabelMorph >> initialize [
 	super initialize.
 	self setBalloonText: 'Current line number/Total line number [Current character number]'.
@@ -39,7 +41,7 @@ ClyCursorPositionLabelMorph >> initialize [
 	self addMorph: labelMorph
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyCursorPositionLabelMorph >> printCursorPosition [
 	| result textArea |
 	textArea := self textArea.
@@ -51,7 +53,7 @@ ClyCursorPositionLabelMorph >> printCursorPosition [
 	^result
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyCursorPositionLabelMorph >> printTextLinePositionOf: aCharacterBlock [
 	| result textLine linePosition |
 	textLine := aCharacterBlock textLine.
@@ -61,7 +63,7 @@ ClyCursorPositionLabelMorph >> printTextLinePositionOf: aCharacterBlock [
 	^ result
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyCursorPositionLabelMorph >> updateContents [
 
 	labelMorph contents: self printCursorPosition

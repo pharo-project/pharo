@@ -2,12 +2,14 @@
 I attach a timestamp as a suffix to the name (after last _).
 "
 Class {
-	#name : #OmTimeStampSuffixStrategy,
-	#superclass : #OmSuffixAfterDotStrategy,
-	#category : #'Ombu-Strategies'
+	#name : 'OmTimeStampSuffixStrategy',
+	#superclass : 'OmSuffixAfterDotStrategy',
+	#category : 'Ombu-Strategies',
+	#package : 'Ombu',
+	#tag : 'Strategies'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmTimeStampSuffixStrategy >> nextSuffix [
 	"There is a hack here because of a difference of behavior between Windows and Unix systems.
 	Unix systems gives a time at the nanosecond while windows only does at the millisecond.

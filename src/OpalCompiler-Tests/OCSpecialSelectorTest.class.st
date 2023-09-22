@@ -1,14 +1,16 @@
 Class {
-	#name : #OCSpecialSelectorTest,
-	#superclass : #OCASTTranslatorTest,
+	#name : 'OCSpecialSelectorTest',
+	#superclass : 'OCASTTranslatorTest',
 	#instVars : [
 		'optimisationsActive',
 		'replacedMethods'
 	],
-	#category : #'OpalCompiler-Tests-AST'
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCSpecialSelectorTest >> compilationContext [
 
 	| context |
@@ -22,7 +24,7 @@ OCSpecialSelectorTest >> compilationContext [
 	^ context
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCSpecialSelectorTest >> proxy: aMethod [
 	"Replace the method by the proxy and keep the original one to restore it on tearDown"
 
@@ -32,7 +34,7 @@ OCSpecialSelectorTest >> proxy: aMethod [
 	^ proxy
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCSpecialSelectorTest >> replace: aMethod with: aReplacement [
 
 	"Replace the method in its class and remember it to restore it at the end."
@@ -44,7 +46,7 @@ OCSpecialSelectorTest >> replace: aMethod with: aReplacement [
 		withMethod: aReplacement.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCSpecialSelectorTest >> setUp [
 
 	super setUp.
@@ -52,7 +54,7 @@ OCSpecialSelectorTest >> setUp [
 	replacedMethods := Set new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCSpecialSelectorTest >> tearDown [
 	"Restore methods replaced during the test"
 
@@ -61,7 +63,7 @@ OCSpecialSelectorTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCSpecialSelectorTest >> testOptimisedPlusSpecialSendsMessageDoesNotCaptureSend [
 	"Turn on optimisation, then compile & run"
 
@@ -78,7 +80,7 @@ OCSpecialSelectorTest >> testOptimisedPlusSpecialSendsMessageDoesNotCaptureSend 
 	] valueUnpreemptively
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCSpecialSelectorTest >> testOptimisedValueSpecialSendsMessageDoesNotCaptureSend [
 	"Turn on optimisation, then compile & run"
 
@@ -99,7 +101,7 @@ OCSpecialSelectorTest >> testOptimisedValueSpecialSendsMessageDoesNotCaptureSend
 	] valueUnpreemptively
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCSpecialSelectorTest >> testUnoptimisedPlusSpecialSendsMessageCapturesSend [
 	"Turn off optimisation, then compile & run"
 
@@ -116,7 +118,7 @@ OCSpecialSelectorTest >> testUnoptimisedPlusSpecialSendsMessageCapturesSend [
 	self assert: proxy wasCalled ] valueUnpreemptively
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCSpecialSelectorTest >> testUnoptimisedValueSpecialSendsMessageCapturesSend [
 	"Turn off optimisation, then compile & run"
 

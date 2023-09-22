@@ -1,21 +1,22 @@
 Class {
-	#name : #RGEnsureTraitTest,
-	#superclass : #RGTest,
+	#name : 'RGEnsureTraitTest',
+	#superclass : 'RGTest',
 	#instVars : [
 		'environment',
 		'definition'
 	],
-	#category : #'Ring-Tests-Core'
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RGEnsureTraitTest >> setUp [
 
 	super setUp.
 	environment := RGEnvironment new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RGEnsureTraitTest >> testClassTrait [
 
 	"test creation of named class trait on empty environment"
@@ -27,7 +28,7 @@ RGEnsureTraitTest >> testClassTrait [
 	self assert: definition isMetaclassTrait
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RGEnsureTraitTest >> testClassTraitIfMetaclassAlreadyExists [
 	"test creation of named class trait if a related metaclass already exists"
 
@@ -45,7 +46,7 @@ RGEnsureTraitTest >> testClassTraitIfMetaclassAlreadyExists [
 	self assert: definition baseTrait name equals: #SomeTrait
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RGEnsureTraitTest >> testClassTraitIfTraitAlreadyExists [
 	"test creation of named class trait if a related trait already exists"
 
@@ -63,7 +64,7 @@ RGEnsureTraitTest >> testClassTraitIfTraitAlreadyExists [
 	self assert: definition baseTrait name equals: #SomeTrait
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RGEnsureTraitTest >> testTrait [
 
 	"test creation of named trait on empty environment"
@@ -75,7 +76,7 @@ RGEnsureTraitTest >> testTrait [
 	self assert: definition isMetaclassTrait not
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RGEnsureTraitTest >> testTraitIfClassAlreadyExists [
 	"test creation of named trait if a class of the realted name already exists"
 
@@ -92,7 +93,7 @@ RGEnsureTraitTest >> testTraitIfClassAlreadyExists [
 	self assert: definition isMetaclassTrait not
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RGEnsureTraitTest >> testTraitIfClassTraitAlreadyExists [
 	"test creation of named trait if a related class trait already exists"
 

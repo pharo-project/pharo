@@ -2,12 +2,14 @@
 It only defines a teardown for ensure that the current pool is properly clean after executing tests.
 "
 Class {
-	#name : #TKTTestCase,
-	#superclass : #ParametrizedTestCase,
-	#category : #'TaskIt-Tests-Kernel'
+	#name : 'TKTTestCase',
+	#superclass : 'ParametrizedTestCase',
+	#category : 'TaskIt-Tests-Kernel',
+	#package : 'TaskIt-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTestCase >> assertWithGarbageCollect: aBlock [
 
 	| waitingPeriod timesToRun |
@@ -24,12 +26,12 @@ TKTTestCase >> assertWithGarbageCollect: aBlock [
 	self fail: 'Timeout waiting for ' , aBlock printString
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTestCase >> runCaseManaged [
 	^ self runCase
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTestCase >> setUp [
 	super setUp.
 	TKTConfiguration
@@ -37,14 +39,14 @@ TKTTestCase >> setUp [
 		profileNamed: #test
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTestCase >> tearDown [
 
 	TKTConfiguration resetSoleInstance.
 	super tearDown
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTestCase >> waitGarbageCollect [
 
 	5 timesRepeat: [ Smalltalk garbageCollect. 100 milliSecond wait ]

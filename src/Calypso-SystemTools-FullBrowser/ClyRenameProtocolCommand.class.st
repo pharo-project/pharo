@@ -10,72 +10,74 @@ Internal Representation and Key Implementation Points.
 	newName:		<String>
 "
 Class {
-	#name : #ClyRenameProtocolCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClyRenameProtocolCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'methodGroup',
 		'newName'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-MethodGroups'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRenameProtocolCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isProtocolSelected
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRenameProtocolCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserMethodGroupContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRenameProtocolCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation renamingFor: ClyFullBrowserMethodGroupContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRenameProtocolCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	aToolContext showProtocol: newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameProtocolCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRenameProtocolCommand >> execute [
 
 	methodGroup categorizeMethodsIn: newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameProtocolCommand >> methodGroup [
 	^ methodGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameProtocolCommand >> methodGroup: anObject [
 	methodGroup := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameProtocolCommand >> newName [
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameProtocolCommand >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRenameProtocolCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.

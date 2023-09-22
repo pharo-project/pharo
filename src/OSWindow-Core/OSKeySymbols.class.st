@@ -4,8 +4,8 @@ This pool contains all the platform independent key symbols. They are the same u
 The symbolic constants and their mapping to named KeyboardKey	for Morphic consumption are defined in the data method. Some SDL2 constants are omitted because they are rare and they do not have a corresponding mapping in KeyboardKey. One requirement in the initialize method is that all of the named constan have a corresponding mapping in KeyboardKey.
 "
 Class {
-	#name : #OSKeySymbols,
-	#superclass : #SharedPool,
+	#name : 'OSKeySymbols',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'OSK_0',
 		'OSK_1',
@@ -160,10 +160,12 @@ Class {
 		'OSKeySymbolNameToValueMap',
 		'OSKeySymbolValueToKeyboardKeyMap'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OSKeySymbols class >> data [
 	^ #(
 		(16r0000 OSK_UNKNOWN null)
@@ -405,7 +407,7 @@ OSKeySymbols class >> data [
 	)
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSKeySymbols class >> initialize [
 
 	OSKeySymbolValueToKeyboardKeyMap := Dictionary new.
@@ -425,12 +427,12 @@ OSKeySymbols class >> initialize [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeySymbols class >> mapKeySymbolNameToValue: keySymbolName [
 	^ OSKeySymbolNameToValueMap at: keySymbolName ifAbsent: [ OSK_UNKNOWN ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeySymbols class >> mapKeySymbolValueToKeyboardKey: keySymbolValue [
 	^ OSKeySymbolValueToKeyboardKeyMap at: keySymbolValue ifAbsent: [ nil ]
 ]

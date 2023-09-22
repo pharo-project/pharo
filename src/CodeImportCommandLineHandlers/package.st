@@ -1,1 +1,1 @@
-Package { #name : #CodeImportCommandLineHandlers }
+Package { #name : 'CodeImportCommandLineHandlers' }

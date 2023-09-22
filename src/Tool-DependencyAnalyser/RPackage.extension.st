@@ -1,6 +1,6 @@
-Extension { #name : #RPackage }
+Extension { #name : 'RPackage' }
 
-{ #category : #'*Tool-DependencyAnalyser' }
+{ #category : '*Tool-DependencyAnalyser' }
 RPackage >> ignoredDependencies [
 
 	^ self packageManifestOrNil
@@ -8,7 +8,7 @@ RPackage >> ignoredDependencies [
 		ifNotNil: #ignoredDependencies
 ]
 
-{ #category : #'*Tool-DependencyAnalyser' }
+{ #category : '*Tool-DependencyAnalyser' }
 RPackage >> manuallyResolvedDependencies [
 
 	^ self packageManifestOrNil

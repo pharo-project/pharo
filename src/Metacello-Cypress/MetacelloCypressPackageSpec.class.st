@@ -2,22 +2,24 @@
 I am a package spec specific to metadataless projects (filetree/tonel).
 "
 Class {
-	#name : #MetacelloCypressPackageSpec,
-	#superclass : #MetacelloPackageSpec,
-	#category : #'Metacello-Cypress-Specs'
+	#name : 'MetacelloCypressPackageSpec',
+	#superclass : 'MetacelloPackageSpec',
+	#category : 'Metacello-Cypress-Specs',
+	#package : 'Metacello-Cypress',
+	#tag : 'Specs'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloCypressPackageSpec >> ancestors [
   ^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloCypressPackageSpec >> compareCurrentVersion: anOperator targetVersionStatus: statusIgnored using: anMCLoader [
   ^ false
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloCypressPackageSpec >> isPackageLoaded: aLoader [
 
 	MCWorkingCopy allWorkingCopies
@@ -26,7 +28,7 @@ MetacelloCypressPackageSpec >> isPackageLoaded: aLoader [
 	^ true
 ]
 
-{ #category : #fetching }
+{ #category : 'fetching' }
 MetacelloCypressPackageSpec >> searchCacheRepositoryForPackage: searchBlock [
   "evaluate the <searchBlock> if you want to search for the package in a local package cache"
 

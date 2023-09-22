@@ -4,12 +4,14 @@ I am a joystick device remapped event.
 This event is generated when a joystick layout is remapped.
 "
 Class {
-	#name : #OSJoyDeviceRemappedEvent,
-	#superclass : #OSJoyDeviceEvent,
-	#category : #'OSWindow-Core-Events'
+	#name : 'OSJoyDeviceRemappedEvent',
+	#superclass : 'OSJoyDeviceEvent',
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSJoyDeviceRemappedEvent >> accept: aVisitor [
 	^ aVisitor visitJoyDeviceRemappedEvent: self
 ]

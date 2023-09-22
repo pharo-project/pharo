@@ -29,31 +29,33 @@ Internal Representation and Key Implementation Points.
 	baseQueryResult:		<ClyQueryResult>
 "
 Class {
-	#name : #ClyExtensionLastSortedClassResult,
-	#superclass : #ClyBrowserQueryResult,
+	#name : 'ClyExtensionLastSortedClassResult',
+	#superclass : 'ClyBrowserQueryResult',
 	#instVars : [
 		'baseQueryResult'
 	],
-	#category : #'Calypso-SystemQueries-Results'
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyExtensionLastSortedClassResult class >> hierarchical [
 	^self using: ClyHierarchicallySortedClassesResult new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyExtensionLastSortedClassResult class >> simple [
 	^self using: (ClySortedQueryResult using: ClySortByNameFunction ascending)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyExtensionLastSortedClassResult class >> using: aQueryResult [
 	^self new
 		baseQueryResult: aQueryResult
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyExtensionLastSortedClassResult >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -62,17 +64,17 @@ ClyExtensionLastSortedClassResult >> = anObject [
 	^ baseQueryResult = anObject baseQueryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExtensionLastSortedClassResult >> baseQueryResult [
 	^ baseQueryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExtensionLastSortedClassResult >> baseQueryResult: anObject [
 	baseQueryResult := anObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyExtensionLastSortedClassResult >> buildExtensionItemsFrom: classes [
 
 	| extensions |
@@ -81,7 +83,7 @@ ClyExtensionLastSortedClassResult >> buildExtensionItemsFrom: classes [
 	^extensions
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyExtensionLastSortedClassResult >> buildItemsFrom: classes [
 
 	| subResult |
@@ -90,7 +92,7 @@ ClyExtensionLastSortedClassResult >> buildItemsFrom: classes [
 	^subResult items collect: [:each | each asCalypsoBrowserItem ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyExtensionLastSortedClassResult >> fillWith: classes [
 
 	| definedClasses extensions |
@@ -104,12 +106,12 @@ ClyExtensionLastSortedClassResult >> fillWith: classes [
 	items addAll: (self buildExtensionItemsFrom: extensions)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyExtensionLastSortedClassResult >> hash [
 	^super hash bitXor: baseQueryResult hash
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyExtensionLastSortedClassResult >> isQueryScopeDefinesClass: aClass [
 
 	| classPackage |

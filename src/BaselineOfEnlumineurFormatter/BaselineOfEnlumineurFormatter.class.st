@@ -5,12 +5,13 @@ Metacello new
   load: 'Tests'.
 "
 Class {
-	#name : #BaselineOfEnlumineurFormatter,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfEnlumineurFormatter
+	#name : 'BaselineOfEnlumineurFormatter',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfEnlumineurFormatter',
+	#package : 'BaselineOfEnlumineurFormatter'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfEnlumineurFormatter >> baseline: spec [
 	<baseline>
 

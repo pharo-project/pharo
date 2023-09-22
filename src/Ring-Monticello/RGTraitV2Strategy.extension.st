@@ -1,6 +1,6 @@
-Extension { #name : #RGTraitV2Strategy }
+Extension { #name : 'RGTraitV2Strategy' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGTraitV2Strategy >> asMCDefinition [
 
 	^ (MCClassDefinition named: self name)
@@ -18,7 +18,7 @@ RGTraitV2Strategy >> asMCDefinition [
 		  yourself
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGTraitV2Strategy >> classLayout [
 	"TODO"
 	^ layout"
@@ -29,20 +29,20 @@ RGTraitV2Strategy >> classLayout [
 			layout := superLayout class extending: superLayout scope: scope host: self ]"
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGTraitV2Strategy >> classPool [
 
 	"TODO"
 	^ Dictionary newFrom: (self classVarNames collect: [ :each | each -> nil ])
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGTraitV2Strategy >> mcType [
 
 	^ self layout mcType
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGTraitV2Strategy >> referencedPackages [
 
 	^ Array with: self package

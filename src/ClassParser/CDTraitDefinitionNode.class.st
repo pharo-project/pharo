@@ -8,7 +8,9 @@ Trait named: TBehavior
 ```
 "
 Class {
-	#name : #CDTraitDefinitionNode,
-	#superclass : #CDClassDefinitionNode,
-	#category : #'ClassParser-Model'
+	#name : 'CDTraitDefinitionNode',
+	#superclass : 'CDClassDefinitionNode',
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }

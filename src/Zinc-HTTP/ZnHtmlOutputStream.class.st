@@ -28,22 +28,24 @@ ZnHtmlOutputStream streamContents: [ :html |
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnHtmlOutputStream,
-	#superclass : #Object,
+	#name : 'ZnHtmlOutputStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Zinc-HTTP-Streaming'
+	#category : 'Zinc-HTTP-Streaming',
+	#package : 'Zinc-HTTP',
+	#tag : 'Streaming'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnHtmlOutputStream class >> on: writeStream [
 	^ self new
 		on: writeStream;
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnHtmlOutputStream class >> streamContents: block [
 	"Execute block with a ZnHtmlOutputStream as argument to generate HTML, returning the resulting string"
 
@@ -55,7 +57,7 @@ ZnHtmlOutputStream class >> streamContents: block [
 			block value: (self on: out) ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnHtmlOutputStream >> << anObject [
 	"Write anObject to the receiver, dispatching using #putOn:
 	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
@@ -66,12 +68,12 @@ ZnHtmlOutputStream >> << anObject [
  	anObject putOn: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnHtmlOutputStream >> close [
 	stream close
 ]
 
-{ #category : #'private - html' }
+{ #category : 'private - html' }
 ZnHtmlOutputStream >> closeTag: tag [
 	stream
 		nextPut: $<;
@@ -80,7 +82,7 @@ ZnHtmlOutputStream >> closeTag: tag [
 		nextPut: $>
 ]
 
-{ #category : #html }
+{ #category : 'html' }
 ZnHtmlOutputStream >> comment: string [
 	"Write an HTML/XML comment consisting of string, as in <!-- string -->"
 
@@ -90,14 +92,14 @@ ZnHtmlOutputStream >> comment: string [
 		nextPutAll: ' -->'
 ]
 
-{ #category : #html }
+{ #category : 'html' }
 ZnHtmlOutputStream >> escape: string [
 	"Write string, escaping characters as needed for regular text"
 
 	string do: [ :each | self escapeCharacter: each ]
 ]
 
-{ #category : #html }
+{ #category : 'html' }
 ZnHtmlOutputStream >> escapeAttributeValue: string [
 	"Write string, escaping characters as needed for the value of an attribute"
 
@@ -107,7 +109,7 @@ ZnHtmlOutputStream >> escapeAttributeValue: string [
 			ifFalse: [ stream nextPut: each ] ]
 ]
 
-{ #category : #html }
+{ #category : 'html' }
 ZnHtmlOutputStream >> escapeCharacter: char [
 	"Write char, escaping it as needed for regular text"
 
@@ -119,12 +121,12 @@ ZnHtmlOutputStream >> escapeCharacter: char [
 				ifFalse: [ stream nextPut: char ] ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnHtmlOutputStream >> flush [
 	stream flush
 ]
 
-{ #category : #html }
+{ #category : 'html' }
 ZnHtmlOutputStream >> format: string with: args [
 	"Like String>>#format: format the string template using the args given, esacaping characters when needed for regular text"
 
@@ -142,14 +144,14 @@ ZnHtmlOutputStream >> format: string with: args [
 					ifFalse: [ self escapeCharacter: currentChar ] ] ]
 ]
 
-{ #category : #html }
+{ #category : 'html' }
 ZnHtmlOutputStream >> html5 [
 	"Write the standard HTML5 DOCTYPE tag"
 
 	stream nextPutAll: '<!DOCTYPE html>'
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnHtmlOutputStream >> next: count putAll: collection [
 	self
 		next: count
@@ -157,7 +159,7 @@ ZnHtmlOutputStream >> next: count putAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnHtmlOutputStream >> next: count putAll: collection startingAt: offset [
 	"Write count characters from collection starting at offset."
 
@@ -167,12 +169,12 @@ ZnHtmlOutputStream >> next: count putAll: collection startingAt: offset [
 		startingAt: offset
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnHtmlOutputStream >> nextPut: object [
 	^ stream nextPut: object
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnHtmlOutputStream >> nextPutAll: collection [
 	self
 		next: collection size
@@ -180,12 +182,12 @@ ZnHtmlOutputStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnHtmlOutputStream >> on: writeStream [
 	stream := writeStream
 ]
 
-{ #category : #'private - html' }
+{ #category : 'private - html' }
 ZnHtmlOutputStream >> openTag: tag [
 	stream
 		nextPut: $<;
@@ -193,7 +195,7 @@ ZnHtmlOutputStream >> openTag: tag [
 		nextPut: $>
 ]
 
-{ #category : #'private - html' }
+{ #category : 'private - html' }
 ZnHtmlOutputStream >> openTag: tag attribute: name value: value [
 	stream
 		nextPut: $<;
@@ -207,7 +209,7 @@ ZnHtmlOutputStream >> openTag: tag attribute: name value: value [
 	stream nextPut: $>
 ]
 
-{ #category : #'private - html' }
+{ #category : 'private - html' }
 ZnHtmlOutputStream >> openTag: tag attributes: attributes [
 	stream
 		nextPut: $<;
@@ -216,7 +218,7 @@ ZnHtmlOutputStream >> openTag: tag attributes: attributes [
 	stream nextPut: $>
 ]
 
-{ #category : #html }
+{ #category : 'html' }
 ZnHtmlOutputStream >> page: title do: block [
 	"Write out a standard page using title, then execute block"
 
@@ -230,12 +232,12 @@ ZnHtmlOutputStream >> page: title do: block [
 				block value ] ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnHtmlOutputStream >> print: object [
 	object printOn: self
 ]
 
-{ #category : #'private - html' }
+{ #category : 'private - html' }
 ZnHtmlOutputStream >> renderAttributes: attributes [
 	attributes pairsDo: [ :name :value |
 		stream space; nextPutAll: name.
@@ -245,19 +247,19 @@ ZnHtmlOutputStream >> renderAttributes: attributes [
 			stream nextPut: $" ] ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnHtmlOutputStream >> space [
 	self nextPut: Character space
 ]
 
-{ #category : #html }
+{ #category : 'html' }
 ZnHtmlOutputStream >> str: string [
 	"Write string, escaping characters as needed for regular text"
 
 	self escape: string
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag [
 	"Write a standalone, self closing HTML tag"
 
@@ -270,7 +272,7 @@ ZnHtmlOutputStream >> tag: tag [
 		nextPut: $>
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag attributes: attributes [
 	"Write a standalone, self closing HTML tag with attributes, a collection of alternating keys and values"
 
@@ -285,7 +287,7 @@ ZnHtmlOutputStream >> tag: tag attributes: attributes [
 		nextPut: $>
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag attributes: attributePairs do: block [
 	"Write an HTML tag with attributes, a collection of alternating keys and values, executing block to generate enclosed content"
 
@@ -296,7 +298,7 @@ ZnHtmlOutputStream >> tag: tag attributes: attributePairs do: block [
 	self closeTag: tag
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag attributes: attributePairs with: string [
 	"Write an HTML tag with attributes, a collection of alternating keys and values, using the escaped string as content"
 
@@ -307,7 +309,7 @@ ZnHtmlOutputStream >> tag: tag attributes: attributePairs with: string [
 	self closeTag: tag
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag class: cssClass do: block [
 	"Write an HTML tag with class cssClass, executing block to generate enclosed content"
 
@@ -318,7 +320,7 @@ ZnHtmlOutputStream >> tag: tag class: cssClass do: block [
 	self closeTag: tag
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag class: cssClass with: string [
 	"Write an HTML tag with class cssClass, using the escaped string as content"
 
@@ -329,7 +331,7 @@ ZnHtmlOutputStream >> tag: tag class: cssClass with: string [
 	self closeTag: tag
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag do: block [
 	"Write an HTML tag, executing block to generate enclosed content"
 
@@ -340,7 +342,7 @@ ZnHtmlOutputStream >> tag: tag do: block [
 	self closeTag: tag
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag id: cssId do: block [
 	"Write an HTML tag with id cssId, executing block to generate enclosed content"
 
@@ -351,7 +353,7 @@ ZnHtmlOutputStream >> tag: tag id: cssId do: block [
 	self closeTag: tag
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag id: cssId with: string [
 	"Write an HTML tag with id cssId, using the escaped string as content"
 
@@ -362,7 +364,7 @@ ZnHtmlOutputStream >> tag: tag id: cssId with: string [
 	self closeTag: tag
 ]
 
-{ #category : #'html tags' }
+{ #category : 'html tags' }
 ZnHtmlOutputStream >> tag: tag with: string [
 	"Write an HTML tag using the escaped string as content"
 
@@ -373,7 +375,7 @@ ZnHtmlOutputStream >> tag: tag with: string [
 	self closeTag: tag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnHtmlOutputStream >> wrappedStream [
 	^ stream
 ]

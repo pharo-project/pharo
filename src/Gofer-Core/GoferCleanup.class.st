@@ -2,12 +2,14 @@
 Cleanup working copies
 "
 Class {
-	#name : #GoferCleanup,
-	#superclass : #GoferWorking,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferCleanup',
+	#superclass : 'GoferWorking',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 GoferCleanup >> cleanup: aWorkingCopy [
 
 	aWorkingCopy systemPackage ifNotNil: [ :package |
@@ -15,7 +17,7 @@ GoferCleanup >> cleanup: aWorkingCopy [
 		package isEmpty ifTrue: [ package removeFromSystem ] ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferCleanup >> execute [
 
 	self workingCopies do: [ :workingCopy | self cleanup: workingCopy ]

@@ -2,12 +2,13 @@
 Unit test for three way comparison
 "
 Class {
-	#name : #ThreeWayComparisonTest,
-	#superclass : #TestCase,
-	#category : #'SortFunctions-Tests'
+	#name : 'ThreeWayComparisonTest',
+	#superclass : 'TestCase',
+	#category : 'SortFunctions-Tests',
+	#package : 'SortFunctions-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ThreeWayComparisonTest >> testBooleans [
 	self assert: (true threeWayCompareTo: false) equals: 1.
 	self assert: (false threeWayCompareTo: true) equals: -1.
@@ -15,7 +16,7 @@ ThreeWayComparisonTest >> testBooleans [
 	self assert: (false threeWayCompareTo: false) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ThreeWayComparisonTest >> testFloats [
 
 	| a b c d |
@@ -30,14 +31,14 @@ ThreeWayComparisonTest >> testFloats [
 	self assert: (d threeWayCompareTo: a) equals: -1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ThreeWayComparisonTest >> testIntegers [
 	self assert: (42 threeWayCompareTo: 42) equals: 0.
 	self assert: (1 threeWayCompareTo: 42) equals: -1.
 	self assert: (100 threeWayCompareTo: 42) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ThreeWayComparisonTest >> testStrings [
 
 	| a b c d |

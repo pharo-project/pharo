@@ -18,49 +18,51 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #AbstractStoredSetting,
-	#superclass : #Object,
+	#name : 'AbstractStoredSetting',
+	#superclass : 'Object',
 	#instVars : [
 		'settingNodeIdentifier',
 		'hasDefaultValue'
 	],
-	#category : #'System-Settings-Core-Persistence-Ston-StoredSettings'
+	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
+	#package : 'System-Settings-Core',
+	#tag : 'Persistence-Ston-StoredSettings'
 }
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 AbstractStoredSetting class >> stonAllInstVarNames [
 
 	^ self allInstVarNames copyWithout: #hasDefaultValue
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractStoredSetting >> = aStoredSetting [
 	^ self class = aStoredSetting class and: [
 		self settingNodeIdentifier = aStoredSetting settingNodeIdentifier ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractStoredSetting >> hasDefaultValue [
 	^ hasDefaultValue ifNil: [ ^ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractStoredSetting >> hasDefaultValue: aBoolean [
 
 	hasDefaultValue := aBoolean
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractStoredSetting >> hash [
 	^ self class hash bitXor: self settingNodeIdentifier hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractStoredSetting >> isForSettingNode: aSettingNode [
 	^ self settingNodeIdentifier = aSettingNode settingNodeIdentifier
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractStoredSetting >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -69,22 +71,22 @@ AbstractStoredSetting >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractStoredSetting >> realValue [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractStoredSetting >> settingNodeIdentifier [
 	^ settingNodeIdentifier
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractStoredSetting >> settingNodeIdentifier: aString [
 	settingNodeIdentifier := aString
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 AbstractStoredSetting >> updateSettingNode: aSettingNode [
 	| value |
 	[ value := self realValue ] on: Error do: [ :exception | "ignore and leave"

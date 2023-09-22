@@ -2,61 +2,63 @@
 File info for embbeded FreeType fonts
 "
 Class {
-	#name : #FreeTypeEmbeddedFileInfo,
-	#superclass : #AbstractFreeTypeFileInfo,
+	#name : 'FreeTypeEmbeddedFileInfo',
+	#superclass : 'AbstractFreeTypeFileInfo',
 	#instVars : [
 		'fileContents',
 		'baseName'
 	],
-	#category : #'EmbeddedFreeType-Installation'
+	#category : 'EmbeddedFreeType-Installation',
+	#package : 'EmbeddedFreeType',
+	#tag : 'Installation'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeEmbeddedFileInfo >> baseName [
 	"Answer the value of baseName"
 
 	^ baseName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeEmbeddedFileInfo >> baseName: anObject [
 	"Set the value of baseName"
 
 	baseName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeEmbeddedFileInfo >> fileContents [
 	"Answer the value of fileContents"
 
 	^ fileContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeEmbeddedFileInfo >> fileContents: anObject [
 	"Set the value of fileContents"
 
 	fileContents := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeEmbeddedFileInfo >> fileSize [
 	^fileContents size
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeEmbeddedFileInfo >> isEmbedded [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeEmbeddedFileInfo >> locationType [
 	"Answer the value of locationType"
 
 	^ #embedded
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FreeTypeEmbeddedFileInfo >> printOn: aStream [
 
 	aStream

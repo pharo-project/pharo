@@ -4,33 +4,35 @@ If the variable is a temporary, installs the variable breakpoint on all variable
 If the variable is an intance variable, installs the breakpoint on all methods using the variable.
 "
 Class {
-	#name : #ClyVariableBreakpointCommand,
-	#superclass : #ClyDebuggingCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints'
+	#name : 'ClyVariableBreakpointCommand',
+	#superclass : 'ClyDebuggingCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'VariableBreakpoints'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariableBreakpointCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^ (super canBeExecutedInContext: aSourceCodeContext)
 		and: [ aSourceCodeContext lastSelectedSourceNode isVariable ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyVariableBreakpointCommand class >> contextMenuOrder [
 	^3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariableBreakpointCommand class >> isAbstract [
 	^ self == ClyVariableBreakpointCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyVariableBreakpointCommand >> defaultMenuIconName [
 	^#halt
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyVariableBreakpointCommand >> execute [
 	| methodOrClass |
 	sourceNode isVariable
@@ -41,7 +43,7 @@ ClyVariableBreakpointCommand >> execute [
 	self installVariableBreakpointOn: sourceNode name in: methodOrClass
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyVariableBreakpointCommand >> installVariableBreakpointOn: aVariableName in: methodOrClass [
 	self subclassResponsibility
 ]

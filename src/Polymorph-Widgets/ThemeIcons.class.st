@@ -20,8 +20,8 @@ NOTE: ""name"" is the branch name in the repository.
 
 "
 Class {
-	#name : #ThemeIcons,
-	#superclass : #Object,
+	#name : 'ThemeIcons',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'url',
@@ -32,10 +32,12 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'Polymorph-Widgets-Themes'
+	#category : 'Polymorph-Widgets-Themes',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Themes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons class >> availablePacks [
 	"Retrieve all packs available in local disk"
 	^ { self current }, (self destinationPath exists
@@ -46,12 +48,12 @@ ThemeIcons class >> availablePacks [
 		ifFalse: [ #() ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons class >> baseUrl [
 	^ 'https://github.com/pharo-project/pharo-icon-packs/archive' asUrl
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> createFetchButtonUpdating: listMorph [
 	^ (Smalltalk ui theme
 		newButtonIn: self
@@ -69,7 +71,7 @@ ThemeIcons class >> createFetchButtonUpdating: listMorph [
 		yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> createIconPackList [
 	^ (Smalltalk ui theme
 		newDropListIn: Morph new
@@ -86,7 +88,7 @@ ThemeIcons class >> createIconPackList [
 		yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> createSettingRow [
 	| list |
 	^ Smalltalk ui theme
@@ -96,25 +98,25 @@ ThemeIcons class >> createSettingRow [
 			self createFetchButtonUpdating: list }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ThemeIcons class >> current [
 	"WARNING: Direct access to this method is ill-adviced, use Smalltalk ui icons instead."
 	^ Current ifNil: [ Current := self loadDefault ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ThemeIcons class >> current: aPack [
 	aPack hasIcons ifFalse: [ aPack loadIconsFromUrl ].
 	Current := aPack.
 	SystemAnnouncer announce: IconSetChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons class >> destinationPath [
 	^ FileLocator localDirectory / 'icon-packs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons class >> fetchPacks [
 	"Retrieve all packs available from repository"
 	| jsonList |
@@ -136,7 +138,7 @@ ThemeIcons class >> fetchPacks [
 		as: Array
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ThemeIcons class >> loadDefault [
 	^ self new
 	name: 'svgPack';
@@ -144,19 +146,19 @@ ThemeIcons class >> loadDefault [
 	yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ThemeIcons class >> named: aString [
 	^ self new name: aString
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ThemeIcons class >> reset [
 	<script>
 
 	Current := nil
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> settingsOn: aBuilder [
 	<systemsettings>
 
@@ -169,7 +171,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 		dialog: [ self createSettingRow ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> uiFetchPacks [
 	| choosenPacks remotePacks |
 
@@ -190,45 +192,45 @@ ThemeIcons class >> uiFetchPacks [
 			each downloadFromUrl ]]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> wrapIconPack: aPack [
 	^ aPack name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ThemeIcons >> = anotherObject [
 
 	^ self species = anotherObject species
 		and: [ self name = anotherObject name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> allIconNames [
 	"Returns the names of all the available icons"
 	^ self icons keys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> beCurrent [
 	self class current: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> beNotReportNotFound [
 	reportNotFound := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> beReportNotFound [
 	reportNotFound := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> blankIcon [
 	^ self blankIconOfWidth: 16
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ThemeIcons >> blankIconOfWidth: aNumber [
 
 	"We hard-code the most used cases to avoid symbol creation"
@@ -246,12 +248,12 @@ ThemeIcons >> blankIconOfWidth: aNumber [
 		ifAbsentPut: [Form extent: aNumber @ 1 depth: 8]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ThemeIcons >> defaultUrl [
 	^ self class baseUrl / (self name, '.zip')
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 ThemeIcons >> doesNotUnderstand: aMessage [
 	"WARNING: This is "
 	aMessage selector isUnary
@@ -259,7 +261,7 @@ ThemeIcons >> doesNotUnderstand: aMessage [
 	^ super doesNotUnderstand: aMessage
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 ThemeIcons >> downloadFromUrl [
 	| zipArchive |
 	self class destinationPath ensureCreateDirectory.
@@ -273,7 +275,7 @@ ThemeIcons >> downloadFromUrl [
 	^ zipArchive
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ThemeIcons >> form16x16FromContents: aByteArray [
 	^ Form
 	extent: 16@16
@@ -282,18 +284,18 @@ ThemeIcons >> form16x16FromContents: aByteArray [
 	offset: 0@0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ThemeIcons >> hasIcons [
 	^ self icons notEmpty
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ThemeIcons >> hash [
 
 	^ self name hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> iconNamed: aSymbol [
 	^ (self
 		iconNamed: aSymbol
@@ -305,7 +307,7 @@ ThemeIcons >> iconNamed: aSymbol [
 				ifFalse: [ self blankIcon scaledByDisplayScaleFactor ]])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 
 	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ].
@@ -320,23 +322,23 @@ ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> icons [
 	^ icons ifNil: [ icons := Dictionary new: 0 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ThemeIcons >> isReportingNotFound [
 	^ reportNotFound ifNil: [ reportNotFound := false ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 ThemeIcons >> loadIconsFromUrl [
 
 	^ self loadIconsFromUrlUsingScale: 1
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
 	| newIcons zipArchive |
 
@@ -355,46 +357,46 @@ ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
 	scale := newScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> name: aName [
 	name := aName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> notFoundIcon [
 	^ self icons
 		at: #notFoundIcon
 		ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ThemeIcons >> printOn: stream [
 	super printOn: stream.
 	stream << $( << self name << $)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ThemeIcons >> readPNGFrom: aReference [
 	^ aReference binaryReadStreamDo: [ :stream |
 		PNGReadWriter formFromStream: stream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> scale [
 	^ scale ifNil: [ scale := 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> url [
 	^ url ifNil: [ url := self defaultUrl ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> url: aStringOrUrl [
 	url := aStringOrUrl ifNotNil: [ aStringOrUrl asUrl ]
 ]

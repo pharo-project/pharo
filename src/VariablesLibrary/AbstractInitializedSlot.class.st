@@ -6,31 +6,33 @@ the default parameter can be literal or a block (which is evaluated on init). If
 There are two subclasses: setting the default value on instantion and lazy initialization on read.
 "
 Class {
-	#name : #AbstractInitializedSlot,
-	#superclass : #InstanceVariableSlot,
+	#name : 'AbstractInitializedSlot',
+	#superclass : 'InstanceVariableSlot',
 	#instVars : [
 		'default'
 	],
-	#category : #'VariablesLibrary-Slots'
+	#category : 'VariablesLibrary-Slots',
+	#package : 'VariablesLibrary',
+	#tag : 'Slots'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractInitializedSlot class >> isAbstract [
 
 	^ self == AbstractInitializedSlot
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractInitializedSlot >> = other [
 	^ super = other and: [default = other default]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractInitializedSlot >> default [
 	^default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractInitializedSlot >> default: anObject [
 	"this needs to be a literal or clean block"
 	(anObject isLiteral or: [ anObject isBlock and: [anObject isClean]])
@@ -38,12 +40,12 @@ AbstractInitializedSlot >> default: anObject [
 	default := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractInitializedSlot >> hash [
 	^super hash bitXor: default hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractInitializedSlot >> printOn: aStream [
 	aStream
 		store: self name;

@@ -1,6 +1,6 @@
-Extension { #name : #BitmapFillStyle }
+Extension { #name : 'BitmapFillStyle' }
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 BitmapFillStyle >> grabNewGraphicIn: aMorph event: evt [
 	"Used by any morph that can be represented by a graphic"
 	| fill |
@@ -13,7 +13,7 @@ BitmapFillStyle >> grabNewGraphicIn: aMorph event: evt [
 	aMorph changed
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 BitmapFillStyle >> newForm: aForm forMorph: aMorph [
 	self form: aForm.
 	self direction: (aForm width @ 0).

@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyHierarchicallySortedClassesTest,
-	#superclass : #ClyBrowserQueryResultTest,
-	#category : #'Calypso-SystemQueries-Tests-Results'
+	#name : 'ClyHierarchicallySortedClassesTest',
+	#superclass : 'ClyBrowserQueryResultTest',
+	#category : 'Calypso-SystemQueries-Tests-Results',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Results'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyHierarchicallySortedClassesTest >> createQueryResult [
 	^ClyHierarchicallySortedClassesResult new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithAnotherHierarchyType [
 	| queryResult2 |
 	queryResult2 := self createQueryResult.
@@ -18,7 +20,7 @@ ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithAnotherHierarc
 	self deny: queryResult equals: queryResult2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithAnotherSortFunction [
 	| queryResult2 |
 	queryResult2 := queryResult sortedBy: #anotherSortFunction.
@@ -27,7 +29,7 @@ ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithAnotherSortFun
 	self deny: queryResult identicalTo: queryResult2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithSameHierarchyAbdSortFunction [
 	| queryResult2 |
 	queryResult2 := queryResult sortedBy: queryResult hierarchy sortFunction.
@@ -36,7 +38,7 @@ ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithSameHierarchyA
 	self assert: queryResult hash equals: queryResult2 hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithSimilarInverseHierarchy [
 	| queryResult2 |
 	queryResult2 := self createQueryResult.
@@ -45,7 +47,7 @@ ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithSimilarInverse
 	self deny: queryResult equals: queryResult2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicallySortedClassesTest >> testFillingWithClassAndItGrandSuperclass [
 
 	queryResult fillWith: { ClyClass1FromP1Mock. ClySubclassLOfSubclassMFromP3Mock }.
@@ -53,7 +55,7 @@ ClyHierarchicallySortedClassesTest >> testFillingWithClassAndItGrandSuperclass [
 	self assertItems: {ClyClass1FromP1Mock. 0. ClySubclassLOfSubclassMFromP3Mock. 1}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicallySortedClassesTest >> testFillingWithClassesFromOneHierarchy [
 
 	queryResult fillWith: { ClySubclassN1OfClass1FromP1Mock. ClySubclassLOfSubclassMFromP3Mock. ClyClass1FromP1Mock. ClySubclassN2OfClass1FromP1Mock }.
@@ -63,7 +65,7 @@ ClyHierarchicallySortedClassesTest >> testFillingWithClassesFromOneHierarchy [
 		ClySubclassN1OfClass1FromP1Mock. 1. ClySubclassN2OfClass1FromP1Mock. 1 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicallySortedClassesTest >> testFillingWithObjectAndTwoProtoObjects [
 
 	queryResult fillWith: { Object. ProtoObject. ProtoObject }.
@@ -71,7 +73,7 @@ ClyHierarchicallySortedClassesTest >> testFillingWithObjectAndTwoProtoObjects [
 	self assertItems: {ProtoObject. 0. Object. 1}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicallySortedClassesTest >> testFillingWithTwoSameClasses [
 
 	queryResult fillWith: { ClyClass1FromP1Mock. ClyClass1FromP1Mock }.

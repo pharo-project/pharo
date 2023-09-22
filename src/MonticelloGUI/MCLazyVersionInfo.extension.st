@@ -1,6 +1,6 @@
-Extension { #name : #MCLazyVersionInfo }
+Extension { #name : 'MCLazyVersionInfo' }
 
-{ #category : #'*MonticelloGUI' }
+{ #category : '*MonticelloGUI' }
 MCLazyVersionInfo >> loadAncestorsAndStepChildren [
 	"This code scans all the repositories to find the exact package version and reload the relevant info."
 

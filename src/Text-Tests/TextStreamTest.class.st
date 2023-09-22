@@ -2,21 +2,23 @@
 A TextStreamTest is a test class for testing the behavior of TextStream
 "
 Class {
-	#name : #TextStreamTest,
-	#superclass : #TestCase,
+	#name : 'TextStreamTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Text-Tests-Base'
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TextStreamTest >> setUp [
 	super setUp.
 	stream := TextStream on: (Text new:100)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextStreamTest >> testAddStringToTextStream [
 	"It is possible to add a string into a TextStream.
 	 This test verifies that the created text has text attributes for all its characters."
@@ -30,7 +32,7 @@ TextStreamTest >> testAddStringToTextStream [
 	self assert: text string size equals: text runs size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextStreamTest >> testApplyAttributeBeginningAt [
 	| attributes |
 	stream nextPutAll: 'Pharo is cool'.
@@ -44,7 +46,7 @@ TextStreamTest >> testApplyAttributeBeginningAt [
 		self assert: attributes first emphasisCode equals: 4]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextStreamTest >> testNextPutAll [
 	stream
 		nextPutAll: 'Pharo';
@@ -55,7 +57,7 @@ TextStreamTest >> testNextPutAll [
 	1 to: 6 do: [:index | self assertEmpty: (stream contents runs at: index) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextStreamTest >> testWithAttributeDo [
 	| attributes |
 	stream
@@ -80,7 +82,7 @@ TextStreamTest >> testWithAttributeDo [
 		self assert: attributes first emphasisCode equals: 4]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextStreamTest >> testWithAttributesDo [
 	| attributes |
 	stream

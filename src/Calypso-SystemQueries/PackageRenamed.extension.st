@@ -1,6 +1,6 @@
-Extension { #name : #PackageRenamed }
+Extension { #name : 'PackageRenamed' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 PackageRenamed >> canAffectResultOfMethodQuery: aMethodQuery [
 	^true
 ]

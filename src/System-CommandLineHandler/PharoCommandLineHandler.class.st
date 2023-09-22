@@ -20,50 +20,52 @@ The PharoCommandLineHandler is activated before all other handlers.
 It first checks if another handler is available. If so it will activate the found handler.
 "
 Class {
-	#name : #PharoCommandLineHandler,
-	#superclass : #BasicCommandLineHandler,
+	#name : 'PharoCommandLineHandler',
+	#superclass : 'BasicCommandLineHandler',
 	#classVars : [
 		'ForcePreferencesOmission'
 	],
-	#category : #'System-CommandLineHandler-Base'
+	#category : 'System-CommandLineHandler-Base',
+	#package : 'System-CommandLineHandler',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoCommandLineHandler class >> description [
 	^ 'responsible for the default options and activating other commands'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoCommandLineHandler class >> forcePreferencesOmission [
 	"If this variable is at true, command lines will not load preferences, even if the command line specify directly a preferences file. This is useful to deploy applications with proprietary code."
 
 	^ ForcePreferencesOmission ifNil: [ ForcePreferencesOmission := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoCommandLineHandler class >> forcePreferencesOmission: anObject [
 	ForcePreferencesOmission := anObject
 ]
 
-{ #category : #'handler selection' }
+{ #category : 'handler selection' }
 PharoCommandLineHandler class >> isResponsibleFor: aCommandLine [
 	"I do not match ever, because my activation is manual"
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoCommandLineHandler class >> priority [
 	"Highest priority"
 	^ Float infinity
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PharoCommandLineHandler class >> requireDeploymentPassword [
 	^ false
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 PharoCommandLineHandler >> activate [
 	"If the command line is configured to force the omission of preferences, we should skip them in any case. To ensure the command line works perfectly, we should still ensure that there is no unneeded parameters as 'preferences-file' of 'no-default-preferences'."
 
@@ -78,7 +80,7 @@ PharoCommandLineHandler >> activate [
 	^ super activate
 ]
 
-{ #category : #'private - preferences' }
+{ #category : 'private - preferences' }
 PharoCommandLineHandler >> changePreferences [
 	| preferenceFile |
 	self isOmittingPreferences
@@ -91,7 +93,7 @@ PharoCommandLineHandler >> changePreferences [
 	StartupPreferencesLoader default load: {preferenceFile}
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 PharoCommandLineHandler >> default [
 	Smalltalk isHeadless
 		ifFalse: [ ^ self noQuit ].
@@ -99,30 +101,30 @@ PharoCommandLineHandler >> default [
 	^ super default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoCommandLineHandler >> forcePreferencesOmission [
 	^ self class forcePreferencesOmission
 ]
 
-{ #category : #'private - preferences' }
+{ #category : 'private - preferences' }
 PharoCommandLineHandler >> isChangingPreferences [
 
 	^ self isOverridingPreferences or: [ self isOmittingPreferences ]
 ]
 
-{ #category : #'private - preferences' }
+{ #category : 'private - preferences' }
 PharoCommandLineHandler >> isOmittingPreferences [
 
 	^ self hasOption: 'no-default-preferences'
 ]
 
-{ #category : #'private - preferences' }
+{ #category : 'private - preferences' }
 PharoCommandLineHandler >> isOverridingPreferences [
 
 	^ self hasOption: 'preferences-file'
 ]
 
-{ #category : #'private - preferences' }
+{ #category : 'private - preferences' }
 PharoCommandLineHandler >> runPreferences [
 
 	Smalltalk at: #SystemSettingsPersistence ifPresent: [:persistence |

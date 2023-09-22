@@ -9,21 +9,23 @@ TranscriptLogger new
 ```	
 "
 Class {
-	#name : #WrapperSignal,
-	#superclass : #BeaconSignal,
+	#name : 'WrapperSignal',
+	#superclass : 'BeaconSignal',
 	#instVars : [
 		'target'
 	],
-	#category : #'Beacon-Core-Signals'
+	#category : 'Beacon-Core-Signals',
+	#package : 'Beacon-Core',
+	#tag : 'Signals'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WrapperSignal class >> emit: aTargetObject [
 
 	^ (self on: aTargetObject) emit
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WrapperSignal class >> on: aTargetObject [
 
 	^ self new
@@ -31,25 +33,25 @@ WrapperSignal class >> on: aTargetObject [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WrapperSignal >> name [
 
 	^ 'Wrapper on ', self target class name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 WrapperSignal >> printOneLineContentsOn: stream [
 
 	self target printOn: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WrapperSignal >> target [
 
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WrapperSignal >> target: anObject [
 
 	target := anObject

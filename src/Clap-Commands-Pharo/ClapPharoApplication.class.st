@@ -1,10 +1,11 @@
 Class {
-	#name : #ClapPharoApplication,
-	#superclass : #ClapApplication,
-	#category : #'Clap-Commands-Pharo'
+	#name : 'ClapPharoApplication',
+	#superclass : 'ClapApplication',
+	#category : 'Clap-Commands-Pharo',
+	#package : 'Clap-Commands-Pharo'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClapPharoApplication >> execute [
 	arguments validateAll.
 	arguments at: #helpFlag ifPresent: [ :help | help value; exitSuccess ].
@@ -12,7 +13,7 @@ ClapPharoApplication >> execute [
 	self prepareImage
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClapPharoApplication >> prepareImage [
 	arguments at: #rename ifPresent: [ :rename |
 		| imageFile |
@@ -24,7 +25,7 @@ ClapPharoApplication >> prepareImage [
 				openSourceFiles ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClapPharoApplication >> shouldSave [
 	^ (arguments at: #save) isExplicit
 		or: [ (arguments at: #noSave) isExplicit not ]

@@ -24,15 +24,17 @@ RBLintRuleTestData >> foo1: anObject
 ```
 "
 Class {
-	#name : #RBAddVariableAccessorWithLazyInitializationTransformation,
-	#superclass : #RBAddVariableAccessorTransformation,
+	#name : 'RBAddVariableAccessorWithLazyInitializationTransformation',
+	#superclass : 'RBAddVariableAccessorTransformation',
 	#instVars : [
 		'defaultValue'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddVariableAccessorWithLazyInitializationTransformation class >> model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean defaultValue: aString [
 
 	^(self model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean)
@@ -40,7 +42,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation class >> model: aRBSma
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddVariableAccessorWithLazyInitializationTransformation class >> variable: aVarName class: aClass classVariable: aBoolean defaultValue: aString [
 
 	^(self variable: aVarName class: aClass classVariable: aBoolean)
@@ -48,7 +50,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation class >> variable: aVa
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityPreconditions [ 
 
 	^ super applicabilityPreconditions &
@@ -57,7 +59,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityPrecon
 		true ])
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
@@ -74,7 +76,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableRefere
 	searcher executeTree: aParseTree
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> createGetterAccessor [
 
 	(self definingClass getterMethodFor: variableName)
@@ -82,17 +84,17 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> createGetterAccesso
 		ifNotNil: [ :symbol | self defineGetterCalled: symbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> defaultValue [
 	^ defaultValue ifNil: [ defaultValue := 'nil' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> defaultValue: aString [
 	defaultValue := aString
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterCalled: aSymbol [
 
 	| selector |
@@ -106,18 +108,18 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterCalled:
 	^ selector
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterMethod [
 
 	^ self defineGetterCalled: self getterMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [
 	^ self safeMethodNameFor: self definingClass basedOn: variableName asString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -133,7 +135,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> verifyInitializationExpressionOf: initializer [
 	| tree |
 	tree := self parserClass

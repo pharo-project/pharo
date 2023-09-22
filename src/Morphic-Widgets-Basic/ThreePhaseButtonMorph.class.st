@@ -14,8 +14,8 @@ Display a rectangle where the button is.
 	self invalidRect: bounds.
 "
 Class {
-	#name : #ThreePhaseButtonMorph,
-	#superclass : #ImageMorph,
+	#name : 'ThreePhaseButtonMorph',
+	#superclass : 'ImageMorph',
 	#instVars : [
 		'offImage',
 		'pressedImage',
@@ -25,10 +25,12 @@ Class {
 		'arguments',
 		'actWhen'
 	],
-	#category : #'Morphic-Widgets-Basic-Buttons'
+	#category : 'Morphic-Widgets-Basic-Buttons',
+	#package : 'Morphic-Widgets-Basic',
+	#tag : 'Buttons'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ThreePhaseButtonMorph class >> checkBox [
 	"Answer a button pre-initialized with checkbox images."
 
@@ -41,7 +43,7 @@ ThreePhaseButtonMorph class >> checkBox [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ThreePhaseButtonMorph class >> radioButton [
 	"Answer a button pre-initialized with radiobutton images."
 
@@ -54,19 +56,19 @@ ThreePhaseButtonMorph class >> radioButton [
 		yourself
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 ThreePhaseButtonMorph >> actWhen: condition [
 	"Accepts symbols:  #buttonDown, #buttonUp, and #whilePressed"
 	actWhen := condition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> actionSelector [
 
 	^ actionSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> actionSelector: aSymbolOrString [
 
 	(nil = aSymbolOrString or:
@@ -77,18 +79,18 @@ ThreePhaseButtonMorph >> actionSelector: aSymbolOrString [
 	actionSelector := aSymbolOrString asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> arguments [
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> arguments: aCollection [
 
 	arguments := aCollection asArray copy
 ]
 
-{ #category : #button }
+{ #category : 'button' }
 ThreePhaseButtonMorph >> doButtonAction [
 	"Perform the action of this button. Subclasses may override this method. The default behavior is to send the button's actionSelector to its target object with its arguments."
 
@@ -99,7 +101,7 @@ ThreePhaseButtonMorph >> doButtonAction [
 			target isMorph ifTrue: [target changed]]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ThreePhaseButtonMorph >> doButtonAction: evt [
 
 	"Perform the action of this button. Subclasses may override this method. The default behavior is to send the button's actionSelector to its target object with its arguments."
@@ -116,7 +118,7 @@ ThreePhaseButtonMorph >> doButtonAction: evt [
 	]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ThreePhaseButtonMorph >> drawOn: aCanvas [
 
 	state == #off ifTrue: [
@@ -127,7 +129,7 @@ ThreePhaseButtonMorph >> drawOn: aCanvas [
 		image ifNotNil: [aCanvas translucentImage: image at: bounds origin]]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ThreePhaseButtonMorph >> extent: aPoint [
 	"Do it normally"
 
@@ -137,30 +139,30 @@ ThreePhaseButtonMorph >> extent: aPoint [
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ThreePhaseButtonMorph >> handlesMouseDown: evt [
 
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ThreePhaseButtonMorph >> handlesMouseStillDown: evt [
 	^actWhen == #whilePressed
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 ThreePhaseButtonMorph >> helpText [
 
 	^self balloonText
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 ThreePhaseButtonMorph >> helpText: aString [
 
 	self setBalloonText: aString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ThreePhaseButtonMorph >> initialize [
 	super initialize.
 	state := #off.
@@ -172,12 +174,12 @@ ThreePhaseButtonMorph >> initialize [
 	"real move should include a call on dragIfAuthoring: "
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ThreePhaseButtonMorph >> isOn [
 	^ state == #on
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ThreePhaseButtonMorph >> mouseDown: evt [
 	| now dt |
 	self state: #pressed.
@@ -193,7 +195,7 @@ ThreePhaseButtonMorph >> mouseDown: evt [
 	self mouseStillDown: evt
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ThreePhaseButtonMorph >> mouseMove: evt [
 	(self containsPoint: evt cursorPoint)
 		ifTrue: [self state: #pressed.
@@ -202,13 +204,13 @@ ThreePhaseButtonMorph >> mouseMove: evt [
 		ifFalse: [self state: #off]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ThreePhaseButtonMorph >> mouseStillDown: evt [
 	actWhen == #whilePressed ifFalse:[^self].
 	(self containsPoint: evt cursorPoint) ifTrue:[self doButtonAction]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ThreePhaseButtonMorph >> mouseUp: evt [
 	"Allow on:send:to: to set the response to events other than actWhen"
 	actWhen == #buttonUp ifFalse: [^super mouseUp: evt].
@@ -222,23 +224,23 @@ ThreePhaseButtonMorph >> mouseUp: evt [
 	"Allow owner to keep it selected for radio buttons"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> offImage [
 	^ offImage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> offImage: aForm [
 	offImage := aForm.
 	self invalidRect: self bounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> onImage [
 	^ image
 ]
 
-{ #category : #button }
+{ #category : 'button' }
 ThreePhaseButtonMorph >> onImage: aForm [
 	"The main image is used when on.
 	Go through ImageMorph method to set extent."
@@ -246,18 +248,18 @@ ThreePhaseButtonMorph >> onImage: aForm [
 	self image: aForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> pressedImage [
 	^ pressedImage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> pressedImage: aForm [
 	pressedImage := aForm.
 	self invalidRect: self bounds
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ThreePhaseButtonMorph >> printOn: aStream [
 	| string |
 	aStream nextPutAll: '3PButton'.
@@ -278,7 +280,7 @@ ThreePhaseButtonMorph >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> state: newState [
 	"Change the image and invalidate the rect."
 
@@ -287,7 +289,7 @@ ThreePhaseButtonMorph >> state: newState [
 	self invalidRect: bounds.	"All three images must be the same size"
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 ThreePhaseButtonMorph >> step [
 	(self hasProperty: #doesButtonAction) ifTrue:[
 		self doButtonAction.
@@ -295,25 +297,25 @@ ThreePhaseButtonMorph >> step [
 	]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 ThreePhaseButtonMorph >> stepTime [
 	(self hasProperty: #doesButtonAction) ifTrue:[^1].
 	^super stepTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> target [
 
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> target: anObject [
 
 	target := anObject
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ThreePhaseButtonMorph >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
@@ -323,7 +325,7 @@ ThreePhaseButtonMorph >> veryDeepFixupWith: deepCopier [
 		deepCopier references at: each ifAbsent: [each]]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ThreePhaseButtonMorph >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables.  Some need to be not copied at all, but shared.  	Warning!!  Every instance variable defined in this class must be handled.  We must also implement veryDeepFixupWith:.  See DeepCopier class comment."
 
@@ -337,7 +339,7 @@ state := state veryDeepCopyWith: deepCopier.
 actWhen := actWhen.		"Symbol"
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 ThreePhaseButtonMorph >> wantsSteps [
 	^self hasProperty: #doesButtonAction
 ]

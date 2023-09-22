@@ -3,8 +3,8 @@ A ListDialogWindow is a dialog window used to search an element into a list.
 A text field is provided to on the fly reduce the field or search
 "
 Class {
-	#name : #ListDialogWindow,
-	#superclass : #MessageDialogWindow,
+	#name : 'ListDialogWindow',
+	#superclass : 'MessageDialogWindow',
 	#instVars : [
 		'pattern',
 		'list',
@@ -21,49 +21,51 @@ Class {
 	#classInstVars : [
 		'searchList'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ListDialogWindow class >> chooseFromOwner: aMorph [
 
 	^ self new chooseFromOwner: aMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListDialogWindow class >> searchList [
 	^ searchList ifNil: [ searchList := OrderedCollection new ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ListDialogWindow >> accept: anItem [
 	self answer: anItem.
 	self ok
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListDialogWindow >> acceptNewEntry [
 
 	^ acceptNewEntry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListDialogWindow >> acceptNewEntry: aBoolean [
 
 	acceptNewEntry := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListDialogWindow >> answer [
 	^ answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListDialogWindow >> answer: anObject [
 	answer := anObject
 ]
 
-{ #category : #'button behavior' }
+{ #category : 'button behavior' }
 ListDialogWindow >> browseAction [
 	| aString tmp block |
 	aString := searchMorph content.
@@ -74,19 +76,19 @@ ListDialogWindow >> browseAction [
 	self cancel
 ]
 
-{ #category : #'button behavior' }
+{ #category : 'button behavior' }
 ListDialogWindow >> browseBlock [
 
 	^ browseBlock
 ]
 
-{ #category : #'button behavior' }
+{ #category : 'button behavior' }
 ListDialogWindow >> browseBlock: aBlock [
 
 	browseBlock := aBlock
 ]
 
-{ #category : #'item creation' }
+{ #category : 'item creation' }
 ListDialogWindow >> buildBrowseButton [
 
 	^ (PluggableButtonMorph
@@ -97,7 +99,7 @@ ListDialogWindow >> buildBrowseButton [
 		yourself
 ]
 
-{ #category : #'items creation' }
+{ #category : 'items creation' }
 ListDialogWindow >> buildListMorph [
 	^ listMorph := PluggableListMorph new
 		hResizing: #spaceFill;
@@ -114,7 +116,7 @@ ListDialogWindow >> buildListMorph [
 		yourself
 ]
 
-{ #category : #'items creation' }
+{ #category : 'items creation' }
 ListDialogWindow >> buildSearchMorph [
 	^ searchMorph := SearchMorph new
 			model: self;
@@ -124,51 +126,51 @@ ListDialogWindow >> buildSearchMorph [
 			yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ListDialogWindow >> cancel [
 
 	self answer: nil.
 	super cancel
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ListDialogWindow >> chooseFromOwner: aMorph [
 
 	self openModal.
 	^ self answer
 ]
 
-{ #category : #'focus handling' }
+{ #category : 'focus handling' }
 ListDialogWindow >> defaultFocusMorph [
 
 	^ searchMorph
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 ListDialogWindow >> displayBlock [
 
 	^ displayBlock
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 ListDialogWindow >> displayBlock: aBlock [
 
 	displayBlock := aBlock
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 ListDialogWindow >> displayItem: anItem [
 
 	^ self displayBlock cull: anItem cull: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ListDialogWindow >> doubleClickOk [
 	self listIndex ~= 0
 		ifTrue: [ self ok ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ListDialogWindow >> getList: aSymbolOrBlockWithOneArgument [
 	aSymbolOrBlockWithOneArgument isBlock
 		ifTrue: [ listBlock := aSymbolOrBlockWithOneArgument. ^ self updateList ].
@@ -179,7 +181,7 @@ ListDialogWindow >> getList: aSymbolOrBlockWithOneArgument [
 	Error signal: 'invalid argument'
 ]
 
-{ #category : #'focus handling' }
+{ #category : 'focus handling' }
 ListDialogWindow >> giveFocusToList [
 	list ifEmpty: [ ^ self giveFocusToSearch].
 
@@ -187,28 +189,28 @@ ListDialogWindow >> giveFocusToList [
 	listMorph takeKeyboardFocus
 ]
 
-{ #category : #'focus handling' }
+{ #category : 'focus handling' }
 ListDialogWindow >> giveFocusToSearch [
 	searchMorph takeKeyboardFocus
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 ListDialogWindow >> initialAnswer: aString [
 
 	searchMorph content: aString
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 ListDialogWindow >> initialExtent [
 	^ 300 @ 400
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ListDialogWindow >> initialFilter: aString [
 	searchMorph content: aString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ListDialogWindow >> initialize [
 
 	list := #().
@@ -223,29 +225,29 @@ ListDialogWindow >> initialize [
 	super initialize
 ]
 
-{ #category : #'morphic protocol' }
+{ #category : 'morphic protocol' }
 ListDialogWindow >> list [
 	^ list
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 ListDialogWindow >> listChanged [
 	self changed: #list
 ]
 
-{ #category : #'morphic protocol' }
+{ #category : 'morphic protocol' }
 ListDialogWindow >> listIndex [
 	^ listIndex
 ]
 
-{ #category : #'morphic protocol' }
+{ #category : 'morphic protocol' }
 ListDialogWindow >> listIndex: aNumber [
 	listIndex := aNumber.
 	self answer: (list at: listIndex ifAbsent: [ nil ]).
 	self changed: #listIndex
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 ListDialogWindow >> listKeystroke: event [
 	event keyCharacter = Character arrowUp
 		ifTrue: [ ^ self listKeystrokeUp ].
@@ -254,7 +256,7 @@ ListDialogWindow >> listKeystroke: event [
 		ifTrue: [ ^ self listKeystrokeDown ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 ListDialogWindow >> listKeystrokeDown [
 	listIndex = list size
 		ifTrue: [
@@ -264,7 +266,7 @@ ListDialogWindow >> listKeystrokeDown [
 	^ false
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 ListDialogWindow >> listKeystrokeUp [
 	listIndex = 1
 		ifTrue: [
@@ -274,14 +276,14 @@ ListDialogWindow >> listKeystrokeUp [
 	^ false
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ListDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
 	^{self newOKButton isDefault: true. self buildBrowseButton. self newCancelButton}
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ListDialogWindow >> newContentMorph [
 	| panel  |
 	panel := PanelMorph new.
@@ -296,12 +298,12 @@ ListDialogWindow >> newContentMorph [
 	^ panel
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ListDialogWindow >> no [
 	"overwrite de default"
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ListDialogWindow >> ok [
 
 	(acceptNewEntry and: [ list isEmpty ]) ifTrue: [
@@ -314,7 +316,7 @@ ListDialogWindow >> ok [
 		delete
 ]
 
-{ #category : #'morphic protocol' }
+{ #category : 'morphic protocol' }
 ListDialogWindow >> searchAccept: aString [
 	self searchUpdate: aString.
 	list detect: [ :item | (self displayItem: item) = aString ] ifFound: [ :item | ^ self accept: item ].
@@ -326,7 +328,7 @@ ListDialogWindow >> searchAccept: aString [
 	list ifNotEmpty: [ ^ self giveFocusToList ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 ListDialogWindow >> searchKeystroke: event [
 
 	searchMorph content ifNil: [ ^ false ].
@@ -338,7 +340,7 @@ ListDialogWindow >> searchKeystroke: event [
 		ifTrue: [ ^ self searchKeystrokeUp ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 ListDialogWindow >> searchKeystrokeDown [
 	|interval|
 	interval := searchMorph selectionInterval .
@@ -350,7 +352,7 @@ ListDialogWindow >> searchKeystrokeDown [
 	^ true
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 ListDialogWindow >> searchKeystrokeUp [
 	(searchMorph selectionInterval last == 0)
 		ifFalse: [ ^ false ].
@@ -360,12 +362,12 @@ ListDialogWindow >> searchKeystrokeUp [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListDialogWindow >> searchString [
 	^ searchMorph searchString
 ]
 
-{ #category : #'morphic protocol' }
+{ #category : 'morphic protocol' }
 ListDialogWindow >> searchUpdate: aString [
 
 	pattern := '.' asRegexIgnoringCase.
@@ -376,13 +378,13 @@ ListDialogWindow >> searchUpdate: aString [
 	self updateList
 ]
 
-{ #category : #'button behavior' }
+{ #category : 'button behavior' }
 ListDialogWindow >> state [
 
 	^ false
 ]
 
-{ #category : #'morphic protocol' }
+{ #category : 'morphic protocol' }
 ListDialogWindow >> updateList [
 	"update the displayed list in a separate thread to avoid UI blocking"
 
@@ -400,7 +402,7 @@ ListDialogWindow >> updateList [
 		self defer: [self listChanged]] fork
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ListDialogWindow >> yes [
 	"overwrite de default"
 ]

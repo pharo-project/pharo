@@ -1,28 +1,30 @@
 Class {
-	#name : #EpTriggeringIntegrationTest,
-	#superclass : #EpEnabledIntegrationTest,
-	#category : #'Epicea-Tests-Integration'
+	#name : 'EpTriggeringIntegrationTest',
+	#superclass : 'EpEnabledIntegrationTest',
+	#category : 'Epicea-Tests-Integration',
+	#package : 'Epicea-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTriggeringIntegrationTest >> changesBrowserOpenedWindows [
 
 	^ StChangesBrowserPresenter allSubInstances reject: [ :each | each window isClosed ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTriggeringIntegrationTest >> monticelloRepository [
 
 	^ GoferResource current monticelloRepository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTriggeringIntegrationTest >> resources [
 
 	^ super resources copyWith: GoferResource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpTriggeringIntegrationTest >> testMCVersionLoad [
 
 	| gofer anEntry |
@@ -44,7 +46,7 @@ EpTriggeringIntegrationTest >> testMCVersionLoad [
 		description: 'It did not recognize that the code change was triggered by other event.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpTriggeringIntegrationTest >> testNoTrigger [
 
 	classFactory newClass.

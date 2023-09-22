@@ -2,12 +2,14 @@
 A non-primary pointer has gone down.
 "
 Class {
-	#name : #OSTouchActionPointerDownEvent,
-	#superclass : #OSTouchActionPointerEvent,
-	#category : #'OSWindow-Core-Events-Touch'
+	#name : 'OSTouchActionPointerDownEvent',
+	#superclass : 'OSTouchActionPointerEvent',
+	#category : 'OSWindow-Core-Events-Touch',
+	#package : 'OSWindow-Core',
+	#tag : 'Events-Touch'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSTouchActionPointerDownEvent >> accept: aVisitor [
 	^aVisitor visitTouchPointerDownEvent: self
 ]

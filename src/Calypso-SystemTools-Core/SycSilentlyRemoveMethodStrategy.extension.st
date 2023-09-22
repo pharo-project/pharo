@@ -1,6 +1,6 @@
-Extension { #name : #SycSilentlyRemoveMethodStrategy }
+Extension { #name : 'SycSilentlyRemoveMethodStrategy' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycSilentlyRemoveMethodStrategy >> orderForBrowser [
 	^1
 ]

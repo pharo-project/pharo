@@ -1,10 +1,12 @@
 Class {
-	#name : #RBSequenceNodeTest,
-	#superclass : #RBParseTreeTest,
-	#category : #'AST-Core-Tests-Nodes'
+	#name : 'RBSequenceNodeTest',
+	#superclass : 'RBParseTreeTest',
+	#category : 'AST-Core-Tests-Nodes',
+	#package : 'AST-Core-Tests',
+	#tag : 'Nodes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSequenceNodeTest >> testModifyParametersShouldNotModifyPeriods [
 
 	| sequenceNode |
@@ -17,7 +19,7 @@ RBSequenceNodeTest >> testModifyParametersShouldNotModifyPeriods [
 	self assert: sequenceNode temporaries isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSequenceNodeTest >> testStop [
 	| ast |
 	ast := self parserClass parseMethod: 'method | temp |'.

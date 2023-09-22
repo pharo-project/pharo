@@ -1,6 +1,6 @@
-Extension { #name : #TestCase }
+Extension { #name : 'TestCase' }
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 TestCase >> runBy: aTestRunner [
 
 	aTestRunner runCase: self

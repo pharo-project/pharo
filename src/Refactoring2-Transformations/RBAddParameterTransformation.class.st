@@ -1,14 +1,16 @@
 Class {
-	#name : #RBAddParameterTransformation,
-	#superclass : #RBChangeMethodNameTransformation,
+	#name : 'RBAddParameterTransformation',
+	#superclass : 'RBChangeMethodNameTransformation',
 	#instVars : [
 		'newArgs',
 		'senders'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl1 newArgs: aColl2 [
 	^ self new
 		addParameterToMethod: aSelector
@@ -18,7 +20,7 @@ RBAddParameterTransformation class >> addParameterToMethod: aSelector in: aClass
 		newArgs: aColl2
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl1 newArgs: aColl2 [
 	^ self new
 		model: aRBSmalltalk;
@@ -30,7 +32,7 @@ RBAddParameterTransformation class >> model: aRBSmalltalk addParameterToMethod: 
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> addParameterToMethod: aSelector in: aClass newSelector: newSel permutation: aColl1 newArgs: aColl2 [
 	self
 		renameMethod: aSelector
@@ -40,7 +42,7 @@ RBAddParameterTransformation >> addParameterToMethod: aSelector in: aClass newSe
 	newArgs := aColl2
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> applicabilityPreconditions [ 
 	
 	^ super applicabilityPreconditions & 
@@ -53,7 +55,7 @@ RBAddParameterTransformation >> applicabilityPreconditions [
 			true])
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> canReferenceVariable: aString in: aClass [
 
 	(aClass definesVariable: aString) ifTrue: [ ^ true ].
@@ -61,7 +63,7 @@ RBAddParameterTransformation >> canReferenceVariable: aString in: aClass [
 	^ (self poolVariableNamesFor: aClass) includes: aString
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> checkSendersAccessTo: name [
 
 	(#('self' 'super') includes: name) ifTrue: [ ^ self ].
@@ -75,7 +77,7 @@ RBAddParameterTransformation >> checkSendersAccessTo: name [
 						with: violatorClass) ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
@@ -89,7 +91,7 @@ RBAddParameterTransformation >> checkVariableReferencesIn: aParseTree [
 	searcher executeTree: aParseTree
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> modifyImplementorParseTree: parseTree in: aClass [
 	| argNames index |
 	argNames := newArgs collect: [ :arg | | newArg |
@@ -105,12 +107,12 @@ RBAddParameterTransformation >> modifyImplementorParseTree: parseTree in: aClass
 	self renameArgumentsIn: parseTree
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> newArgs [
 	^ newArgs ifNil: [ newArgs := { } ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> parseTreeRewriter [
 	| rewriteRule oldString newString |
 	rewriteRule := self parseTreeRewriterClass new.
@@ -121,7 +123,7 @@ RBAddParameterTransformation >> parseTreeRewriter [
 	^rewriteRule
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> renameArgumentsIn: parseTree [
 	| newArgNames |
 	newArgNames := newArgs collect: [ :arg | arg name ].
@@ -131,7 +133,7 @@ RBAddParameterTransformation >> renameArgumentsIn: parseTree [
 	] ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> safeVariableNameFor: aClass temporaries: allTempVars [
 	| baseString index newString |
 	newString := baseString := 'anObject'.
@@ -145,7 +147,7 @@ RBAddParameterTransformation >> safeVariableNameFor: aClass temporaries: allTemp
 	^newString
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> safeVariableNamed: argName for: aClass temporaries: allTempVars [
 	| baseString index newString |
 	((allTempVars includes: argName)
@@ -161,7 +163,7 @@ RBAddParameterTransformation >> safeVariableNamed: argName for: aClass temporari
 	^newString
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> senders [
 
 	senders
@@ -171,7 +173,7 @@ RBAddParameterTransformation >> senders [
 	^ senders
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -191,7 +193,7 @@ RBAddParameterTransformation >> storeOn: aStream [
 		nextPutAll: ''')'
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBAddParameterTransformation >> verifyInitializationExpressionOf: initializer [
 	| tree |
 	tree := self parserClass

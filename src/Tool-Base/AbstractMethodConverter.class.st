@@ -4,15 +4,17 @@ An AbstractMessageConverter is a wrapper used to switch which information to ret
 This way, you can avoid switch case, you just have to use set the correct filter
 "
 Class {
-	#name : #AbstractMethodConverter,
-	#superclass : #Object,
+	#name : 'AbstractMethodConverter',
+	#superclass : 'Object',
 	#instVars : [
 		'method'
 	],
-	#category : #'Tool-Base-Converter'
+	#category : 'Tool-Base-Converter',
+	#package : 'Tool-Base',
+	#tag : 'Converter'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AbstractMethodConverter class >> method: aMessage [
 
 	^ self new
@@ -20,14 +22,14 @@ AbstractMethodConverter class >> method: aMessage [
 		yourself
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 AbstractMethodConverter >> getText [
 
 	method ifNil: [ ^ '' ].
 	^ self internalGetText
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 AbstractMethodConverter >> getTextFor: aMethod [
 
 	method := aMethod.
@@ -36,25 +38,25 @@ AbstractMethodConverter >> getTextFor: aMethod [
 	^ self internalGetText
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AbstractMethodConverter >> internalGetText [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractMethodConverter >> method [
 
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractMethodConverter >> method: aMessage [
 
 	method := aMessage
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractMethodConverter >> shouldShout [
 
 	^ false

@@ -1,6 +1,6 @@
-Extension { #name : #LRUCache }
+Extension { #name : 'LRUCache' }
 
-{ #category : #'*System-Caching-Tests' }
+{ #category : '*System-Caching-Tests' }
 LRUCache >> testSupportGetCachedAssociations [
 	| result |
 	result := OrderedCollection new.

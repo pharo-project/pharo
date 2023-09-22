@@ -1,6 +1,6 @@
-Extension { #name : #SycDeprecateMessageCommand }
+Extension { #name : 'SycDeprecateMessageCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycDeprecateMessageCommand class >> methodMenuActivation [
 	<classAnnotation>
 

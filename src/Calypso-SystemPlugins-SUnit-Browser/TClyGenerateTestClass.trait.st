@@ -7,11 +7,13 @@ I am a trait containing the behavior or retrieving the test class of a class.
 If the test class does not exists I am able to generate it.
 "
 Trait {
-	#name : #TClyGenerateTestClass,
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Traits'
+	#name : 'TClyGenerateTestClass',
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Traits',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Traits'
 }
 
-{ #category : #action }
+{ #category : 'action' }
 TClyGenerateTestClass >> addNewCommentForTestClass: aClass basedOn: baseClass [
 	aClass
 		comment:
@@ -28,12 +30,12 @@ TClyGenerateTestClass >> addNewCommentForTestClass: aClass basedOn: baseClass [
 						nextPutAll: baseClass name ])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TClyGenerateTestClass >> isValidClass: inputClass [
 	^ (inputClass isTestCase or: [ inputClass isMeta ]) not
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 TClyGenerateTestClass >> newTestClassCategoryFor: aClass [
 
 	| tag |
@@ -48,12 +50,12 @@ TClyGenerateTestClass >> newTestClassCategoryFor: aClass [
 				  nextPutAll: tag name ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TClyGenerateTestClass >> systemEnvironment [
 	^ self explicitRequirement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TClyGenerateTestClass >> testClassFor: inputClass [
 
 	| className resultClass |
@@ -76,7 +78,7 @@ TClyGenerateTestClass >> testClassFor: inputClass [
 	^ resultClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TClyGenerateTestClass >> testClassNameFor: inputClass [
 	^ (inputClass name , 'Test') asSymbol
 ]

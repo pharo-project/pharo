@@ -1,20 +1,21 @@
 Class {
-	#name : #DTCoveragePluginPresenterTest,
-	#superclass : #TestCase,
+	#name : 'DTCoveragePluginPresenterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'presenter'
 	],
-	#category : #'DrTests-Tests'
+	#category : 'DrTests-Tests',
+	#package : 'DrTests-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DTCoveragePluginPresenterTest >> setUp [
 
 	super setUp.
 	presenter := MockDTCoveragePluginPresenter new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DTCoveragePluginPresenterTest >> testEmptyInitializeOfAttributes [
 
 	| emptyPresenter |
@@ -24,7 +25,7 @@ DTCoveragePluginPresenterTest >> testEmptyInitializeOfAttributes [
 	self assert: emptyPresenter yellowNodes isNil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DTCoveragePluginPresenterTest >> testUpdateSourceCodePanelUncovered [
 
 	| oneMethod  |

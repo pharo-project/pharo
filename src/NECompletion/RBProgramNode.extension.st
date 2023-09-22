@@ -1,6 +1,6 @@
-Extension { #name : #RBProgramNode }
+Extension { #name : 'RBProgramNode' }
 
-{ #category : #'*NECompletion' }
+{ #category : '*NECompletion' }
 RBProgramNode >> completionEntries: offset [
 	"for now we give all selectors and gloabls as a fallback"
 	| selectors globals |
@@ -16,7 +16,7 @@ RBProgramNode >> completionEntries: offset [
 	^ selectors , globals
 ]
 
-{ #category : #'*NECompletion' }
+{ #category : '*NECompletion' }
 RBProgramNode >> completionToken: offset [
 	"fall back: if we are not able to parse to something better, we use the word before the cursor"
 

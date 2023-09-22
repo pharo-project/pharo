@@ -1,6 +1,6 @@
-Extension { #name : #MCVersionNameAndMessageRequest }
+Extension { #name : 'MCVersionNameAndMessageRequest' }
 
-{ #category : #'*MonticelloGUI' }
+{ #category : '*MonticelloGUI' }
 MCVersionNameAndMessageRequest >> defaultAction [
 	^ MCSaveVersionDialog new
 		versionName: suggestion;

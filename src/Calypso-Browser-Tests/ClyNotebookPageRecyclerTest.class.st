@@ -1,10 +1,11 @@
 Class {
-	#name : #ClyNotebookPageRecyclerTest,
-	#superclass : #ClyBrowserContextAbstractTest,
-	#category : #'Calypso-Browser-Tests'
+	#name : 'ClyNotebookPageRecyclerTest',
+	#superclass : 'ClyBrowserContextAbstractTest',
+	#category : 'Calypso-Browser-Tests',
+	#package : 'Calypso-Browser-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotebookPageRecyclerTest >> testDoesNotRecycleToolWhenNotValidInContext [
 
 	| recycler tools |
@@ -14,7 +15,7 @@ ClyNotebookPageRecyclerTest >> testDoesNotRecycleToolWhenNotValidInContext [
 	self assert: recycler toolsToKeep isEmpty.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotebookPageRecyclerTest >> testRecycleToolWhenValidInContext [
 	
 	| recycler tools |
@@ -26,7 +27,7 @@ ClyNotebookPageRecyclerTest >> testRecycleToolWhenValidInContext [
 	self assert: recycler toolsToKeep anyOne class equals: ClyRichTextClassCommentEditorToolMorph.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotebookPageRecyclerTest >> testTargetedToolsWhenManyContext [
 
 	| recycler tools |
@@ -40,7 +41,7 @@ ClyNotebookPageRecyclerTest >> testTargetedToolsWhenManyContext [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotebookPageRecyclerTest >> testTargetedToolsWhenOneContext [
 
 	| recycler |
@@ -53,7 +54,7 @@ ClyNotebookPageRecyclerTest >> testTargetedToolsWhenOneContext [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotebookPageRecyclerTest >> testToolsToInstall [
 
 	| recycler |
@@ -65,7 +66,7 @@ ClyNotebookPageRecyclerTest >> testToolsToInstall [
 	self assert: recycler toolsToInstall anyOne activation toolClass equals: ClyMethodCodeEditorToolMorph.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotebookPageRecyclerTest >> testToolsToKeepWhenManyContext [
 
 	| recycler tools |
@@ -79,7 +80,7 @@ ClyNotebookPageRecyclerTest >> testToolsToKeepWhenManyContext [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotebookPageRecyclerTest >> testToolsToKeepWhenOneContext [
 
 	| recycler |
@@ -92,7 +93,7 @@ ClyNotebookPageRecyclerTest >> testToolsToKeepWhenOneContext [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotebookPageRecyclerTest >> testToolsToRemoveWhenManyToolsToRemove [
 
 	| recycler |

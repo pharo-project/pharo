@@ -10,19 +10,20 @@ I can be used to ignore wrongly encoded input by resuming me. By default a quest
 Part of Zinc HTTP Components
 "
 Class {
-	#name : #ZnIncomplete,
-	#superclass : #ZnCharacterEncodingError,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnIncomplete',
+	#superclass : 'ZnCharacterEncodingError',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnIncomplete >> defaultResumeValue [
 	"$? codePoint"
 
 	^ 63
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnIncomplete >> isResumable [
 	^ true
 ]

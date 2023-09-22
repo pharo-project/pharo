@@ -1,6 +1,6 @@
-Extension { #name : #WeakValueDictionary }
+Extension { #name : 'WeakValueDictionary' }
 
-{ #category : #'*Ombu' }
+{ #category : '*Ombu' }
 WeakValueDictionary >> at: key ifPresent: presentBlock ifAbsentOrNil: absentBlock [
 
 	^ self

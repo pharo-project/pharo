@@ -2,16 +2,18 @@
 I implement how to read entries from a stream.
 "
 Class {
-	#name : #OmEntryReader,
-	#superclass : #Object,
+	#name : 'OmEntryReader',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'store'
 	],
-	#category : #'Ombu-Persistence'
+	#category : 'Ombu-Persistence',
+	#package : 'Ombu',
+	#tag : 'Persistence'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmEntryReader class >> newForStore: aFileStore [
 
 	^ self basicNew
@@ -19,38 +21,38 @@ OmEntryReader class >> newForStore: aFileStore [
 		yourself
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OmEntryReader >> entryPositionsDo: aBlock [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmEntryReader >> initializeWithStore: aFileStore [
 
 	self initialize.
 	store := aFileStore
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OmEntryReader >> nextEntry [
 	"Read next entry from the stream."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmEntryReader >> store [
 	^ store
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmEntryReader >> stream [
 
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmEntryReader >> stream: aReadStream [
 
 	stream := aReadStream

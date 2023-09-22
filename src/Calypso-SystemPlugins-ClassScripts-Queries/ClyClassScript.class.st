@@ -35,28 +35,29 @@ Internal Representation and Key Implementation Points.
 	implementorMethod:		<CompiledMethod>
 "
 Class {
-	#name : #ClyClassScript,
-	#superclass : #Object,
+	#name : 'ClyClassScript',
+	#superclass : 'Object',
 	#instVars : [
 		'implementorMethod'
 	],
-	#category : #'Calypso-SystemPlugins-ClassScripts-Queries'
+	#category : 'Calypso-SystemPlugins-ClassScripts-Queries',
+	#package : 'Calypso-SystemPlugins-ClassScripts-Queries'
 }
 
-{ #category : #'script detection' }
+{ #category : 'script detection' }
 ClyClassScript class >> canBeProvidedByMethod: aMethod [
 	"This method just checks that method in general can be used for this kind of script"
 
 	^ aMethod origin isClassSide and: [ aMethod numArgs = 0 ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassScript class >> createFrom: aMethod [
 	^self new
 		implementorMethod: aMethod
 ]
 
-{ #category : #'script detection' }
+{ #category : 'script detection' }
 ClyClassScript class >> detectInMethod: aMethod ifAbsent: absentBlock [
 
 
@@ -67,7 +68,7 @@ ClyClassScript class >> detectInMethod: aMethod ifAbsent: absentBlock [
 	^ absentBlock value
 ]
 
-{ #category : #'script detection' }
+{ #category : 'script detection' }
 ClyClassScript class >> isImplementedByMethod: aMethod [
 	"Subclasses should override it.
 	The method is not abstract to not corrupt browser if new script is not completelly implemented"
@@ -75,44 +76,44 @@ ClyClassScript class >> isImplementedByMethod: aMethod [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassScript >> description [
 	^ 'Run the script'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyClassScript >> executeOn: aClass [
 	"Execute the corresponding method of the argument."
 
 	^ aClass instanceSide perform: implementorMethod selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassScript >> iconName [
 	^ #scriptManager
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassScript >> implementorClass [
 	^ implementorMethod methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassScript >> implementorMethod [
 	^ implementorMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassScript >> implementorMethod: aCompiledMethod [
 	implementorMethod := aCompiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassScript >> implementorSelector [
 	^ implementorMethod selector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassScript >> isImplementedByClass: aClass [
 
 	^ aClass instanceSide respondsTo: self implementorSelector

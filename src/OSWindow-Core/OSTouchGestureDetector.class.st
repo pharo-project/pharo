@@ -2,28 +2,30 @@
 I am an abstract class for the gestures detector, to work I have to register with an OSWindowGestureHandler
 "
 Class {
-	#name : #OSTouchGestureDetector,
-	#superclass : #OSWindowEventGestureVisitor,
+	#name : 'OSTouchGestureDetector',
+	#superclass : 'OSWindowEventGestureVisitor',
 	#instVars : [
 		'deviceId',
 		'activeFingers',
 		'eventHandler'
 	],
-	#category : #'OSWindow-Core-Gestures'
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSTouchGestureDetector class >> onDeviceId: anInteger [
 	^ self new deviceId: anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSTouchGestureDetector class >> reinitializeAllSubclasses [
 	"self reinitializeAllSubclasses"
 	self allSubclassesDo: [ :each | each initialize ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchGestureDetector class >> touchGestureSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #touchGestures)
@@ -31,17 +33,17 @@ OSTouchGestureDetector class >> touchGestureSettingsOn: aBuilder [
 		label: 'Touch Gestures'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchGestureDetector >> activeFingers [
 	^ activeFingers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchGestureDetector >> activeFingers: anObject [
 	activeFingers := anObject
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchGestureDetector >> centerOfAllFingers [
 	| fingersPosition sum cpt |
 	cpt := 0.
@@ -53,27 +55,27 @@ OSTouchGestureDetector >> centerOfAllFingers [
 	^ sum / cpt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchGestureDetector >> deviceId [
 	^ deviceId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchGestureDetector >> deviceId: anInteger [
 	deviceId := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchGestureDetector >> eventHandler [
 	^ eventHandler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchGestureDetector >> eventHandler: anObject [
 	eventHandler := anObject
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchGestureDetector >> sendToEventHandler: anEvent [
 	eventHandler handleGestureEvent: anEvent
 ]

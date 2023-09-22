@@ -2,32 +2,34 @@
 I am the notification signaled once a test has been checked by the RottenTestsFinder.
 "
 Class {
-	#name : #RTFTestAnalysed,
-	#superclass : #Notification,
+	#name : 'RTFTestAnalysed',
+	#superclass : 'Notification',
 	#instVars : [
 		'compiledMethod'
 	],
-	#category : #'RottenTestsFinder-Notifications'
+	#category : 'RottenTestsFinder-Notifications',
+	#package : 'RottenTestsFinder',
+	#tag : 'Notifications'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RTFTestAnalysed class >> compiledMethod: aCompiledMethod [
 	^ self new
 		compiledMethod: aCompiledMethod;
 		yourself
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 RTFTestAnalysed class >> signalTest: aCompiledMethod [
 	(self compiledMethod: aCompiledMethod) signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFTestAnalysed >> compiledMethod [
 	^ compiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFTestAnalysed >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]

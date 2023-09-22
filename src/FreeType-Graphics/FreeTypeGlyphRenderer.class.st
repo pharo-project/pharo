@@ -3,30 +3,32 @@ This class produces glyphs for a FreeTypeFont.
 It can be subclassed to provide, for example, sub-pixel anti-aliased glyphs.
 "
 Class {
-	#name : #FreeTypeGlyphRenderer,
-	#superclass : #Object,
+	#name : 'FreeTypeGlyphRenderer',
+	#superclass : 'Object',
 	#pools : [
 		'FT2Constants'
 	],
 	#classInstVars : [
 		'current'
 	],
-	#category : #'FreeType-Graphics-GlyphRendering'
+	#category : 'FreeType-Graphics-GlyphRendering',
+	#package : 'FreeType-Graphics',
+	#tag : 'GlyphRendering'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeGlyphRenderer class >> current [
 	<script: 'self current inspect'>
 
 	^current ifNil:[current := self new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeGlyphRenderer class >> current: aKindOfFreeTypeGlyphRender [
 	current := aKindOfFreeTypeGlyphRender
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FreeTypeGlyphRenderer >> convert8To32: aGlyphForm [
 	"Convert aGlyphForm from the 8 bit deep form produced by FreeType, where each byte represents the intensity of a single pixel, to a 32 bit deep form"
 	| w h s answer rowstart bytes word littleEndian shift v a colorVal |
@@ -55,7 +57,7 @@ FreeTypeGlyphRenderer >> convert8To32: aGlyphForm [
 	^ answer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FreeTypeGlyphRenderer >> convert8to32: aGlyphForm colorValue: foreColorValue [
 	"Convert from the 8 bit deep form produced by FreeType, where each byte represents the intensity of a single pixel, to a 32 bit deep form with pixels of color foreColorValue"
 
@@ -93,7 +95,7 @@ FreeTypeGlyphRenderer >> convert8to32: aGlyphForm colorValue: foreColorValue [
 	^ answer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FreeTypeGlyphRenderer >> fixBytesForMono: aGlyphForm [
 	"On Windows, the bits in each byte are in reverse order, and inverted.
 	i.e. 2r10100000 should be 2r11111010  to display correctly.
@@ -115,7 +117,7 @@ FreeTypeGlyphRenderer >> fixBytesForMono: aGlyphForm [
 	^ aGlyphForm
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FreeTypeGlyphRenderer >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale [
 
 	| form |
@@ -133,7 +135,7 @@ FreeTypeGlyphRenderer >> glyphOf: aCharacter colorValue: aColorValue mono: monoB
 	^ form
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FreeTypeGlyphRenderer >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale [
 
 	| form |
@@ -152,7 +154,7 @@ FreeTypeGlyphRenderer >> mode41GlyphOf: aCharacter colorValue: aColorValue mono:
 	^ form
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: sub font: aFreeTypeFont scale: scale [
 	"Glyphs are either 1 or 8 bit deep. For 32 bpp we use 8 bits, otherwise 1"
 	| em form glyph charCode slant extraWidth extraHeight boldExtra offsetX offsetY s synthBoldStrength face |
@@ -214,7 +216,7 @@ FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: 
 	^ form
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FreeTypeGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale [
 	"The default renderer does not support sub-pixel anti-aliasing,
 	so answer an ordinary glyph"
@@ -222,7 +224,7 @@ FreeTypeGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: mo
 	^self mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FreeTypeGlyphRenderer >> unicodeToMacRoman: aCharacter [
 
 	^ (#macroman asZnCharacterEncoder decodeAsCodePoints: { aCharacter codePoint }) first

@@ -14,20 +14,22 @@ TextMorph new
 
 "
 Class {
-	#name : #TextDoIt,
-	#superclass : #TextAction,
+	#name : 'TextDoIt',
+	#superclass : 'TextAction',
 	#instVars : [
 		'evalString'
 	],
-	#category : #'Text-Core-Attributes'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TextDoIt class >> evalString: str [
 	^ self new evalString: str
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextDoIt >> analyze: aString [
 
 	| list |
@@ -36,12 +38,12 @@ TextDoIt >> analyze: aString [
 	^ list at: 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextDoIt >> evalString: str [
 	evalString := str
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextDoIt >> info [
 	^ evalString
 ]

@@ -1,1 +1,1 @@
-Package { #name : #'Commander-Activators-Shortcut' }
+Package { #name : 'Commander-Activators-Shortcut' }

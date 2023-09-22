@@ -1,12 +1,13 @@
 Trait {
-	#name : #TRefactoringCommandSupport,
+	#name : 'TRefactoringCommandSupport',
 	#instVars : [
 		'model'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : 'SystemCommands-RefactoringSupport',
+	#package : 'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 TRefactoringCommandSupport >> computeInvalidArgNamesForSelector: aSymbol [
 
 	| invalidArgNames |
@@ -20,13 +21,13 @@ TRefactoringCommandSupport >> computeInvalidArgNamesForSelector: aSymbol [
 	^ invalidArgNames
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TRefactoringCommandSupport >> initializeDefaultOptionsOf: refactoring [
 
 	NautilusRefactoring new refactoringOptions: refactoring
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TRefactoringCommandSupport >> setUpModelFromContext: aContext [
 	| browser scope |
 	browser := aContext browser.

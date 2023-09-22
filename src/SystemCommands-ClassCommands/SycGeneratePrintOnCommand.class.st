@@ -1,13 +1,14 @@
 Class {
-	#name : #SycGeneratePrintOnCommand,
-	#superclass : #SycSingleClassCommand,
+	#name : 'SycGeneratePrintOnCommand',
+	#superclass : 'SycSingleClassCommand',
 	#instVars : [
 		'variables'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGeneratePrintOnCommand >> asRefactorings [
 
 	^{
@@ -17,18 +18,18 @@ SycGeneratePrintOnCommand >> asRefactorings [
 	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycGeneratePrintOnCommand >> defaultMenuItemName [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 	^ self refactoringClass menuItemString
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGeneratePrintOnCommand >> execute [
 	self executeRefactorings
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGeneratePrintOnCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
@@ -37,7 +38,7 @@ SycGeneratePrintOnCommand >> prepareFullExecutionInContext: aToolContext [
 		from: {targetClass}
 ]
 
-{ #category : #'factory method' }
+{ #category : 'factory method' }
 SycGeneratePrintOnCommand >> refactoringClass [
 
 	^ RBGeneratePrintOnTransformation

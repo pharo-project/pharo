@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnEntityReaderTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnEntityReaderTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReaderTest >> testChunked [
 	| input headers reader entity |
 	input := '3' , String crlf , 'con' , String crlf , '8' , String crlf , 'sequence' , String crlf , '0' , String crlf , String crlf.
@@ -18,7 +19,7 @@ ZnEntityReaderTest >> testChunked [
 	self assert: entity contents equals: 'consequence'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReaderTest >> testChunkedWithExtraHeaders [
 	| input headers reader entity |
 	input := '3' , String crlf , 'con' , String crlf , '8' , String crlf , 'sequence' , String crlf , '0' , String crlf , 'X-Foo:bar' , String crlf , String crlf.
@@ -33,7 +34,7 @@ ZnEntityReaderTest >> testChunkedWithExtraHeaders [
 	self assert: (headers at: 'X-Foo') equals: 'bar'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReaderTest >> testReadStreaming [
 	| data headers reader entity |
 	data := ((1 to: 32) collect: [ :each | (0 to: 9) atRandom ]) asByteArray.
@@ -50,7 +51,7 @@ ZnEntityReaderTest >> testReadStreaming [
 	self assert: entity contents equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReaderTest >> testReadStreamingWriting [
 	| data headers reader entity output |
 	data := ((1 to: 32) collect: [ :each | (0 to: 9) atRandom ]) asByteArray.

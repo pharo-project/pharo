@@ -2,12 +2,13 @@
 Baseline for Beacon - a slim logging engine based entirely on Announcements
 "
 Class {
-	#name : #BaselineOfBeacon,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfBeacon
+	#name : 'BaselineOfBeacon',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfBeacon',
+	#package : 'BaselineOfBeacon'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfBeacon >> baseline: spec [
 	<baseline>
 

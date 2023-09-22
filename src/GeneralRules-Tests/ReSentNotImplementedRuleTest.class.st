@@ -2,12 +2,14 @@
 A RBSentNotImplementedRuleTest is a test class for testing the behavior of RBSentNotImplementedRule
 "
 Class {
-	#name : #ReSentNotImplementedRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReSentNotImplementedRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #sample }
+{ #category : 'sample' }
 ReSentNotImplementedRuleTest >> sampleMethod [
 	"this is a comment, so whatShallIDoNow should not highlight"
 	99 whatShallIDoNow.
@@ -16,7 +18,7 @@ ReSentNotImplementedRuleTest >> sampleMethod [
 	88 whatShallIDoNow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSentNotImplementedRuleTest >> testRule [
 	| critiques |
 	critiques := self myCritiques.

@@ -8,29 +8,30 @@ Internal Representation and Key Implementation Points.
 	analyzedObject:		<Object>
 "
 Class {
-	#name : #ClyCriticContext,
-	#superclass : #ClyBrowserContext,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyCriticContext',
+	#superclass : 'ClyBrowserContext',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #'selection strategy' }
+{ #category : 'selection strategy' }
 ClyCriticContext class >> selectionStrategy [
 	<classAnnotation>
 
 	^ClyContextSelectionStrategyAnnotation for: ClyCriticDecorator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticContext >> analyzedObject [
 	^ tool analyzedObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticContext >> browser [
 	^tool browser
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 ClyCriticContext >> executeCommand: aCommand by: aCommandActivator [
 
 	aCommand isComplexRefactoring ifTrue: [
@@ -39,12 +40,12 @@ ClyCriticContext >> executeCommand: aCommand by: aCommandActivator [
 	aCommand execute
 ]
 
-{ #category : #'refactoring support' }
+{ #category : 'refactoring support' }
 ClyCriticContext >> refactoringScopes [
 	^self browser allNavigationScopes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticContext >> selectedCritique [
 	^self lastSelectedItem actualObject
 ]

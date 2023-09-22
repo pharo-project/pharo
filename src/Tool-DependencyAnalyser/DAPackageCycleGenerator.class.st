@@ -2,15 +2,17 @@
 A class able to generate a dot file from a package cycle (DAPackageCycle)
 "
 Class {
-	#name : #DAPackageCycleGenerator,
-	#superclass : #DAGraphVizGenerator,
+	#name : 'DAPackageCycleGenerator',
+	#superclass : 'DAGraphVizGenerator',
 	#instVars : [
 		'packageCycle'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAPackageCycleGenerator class >> newWith: aPackageCycle named: aString [
 
 	| generator |
@@ -21,7 +23,7 @@ DAPackageCycleGenerator class >> newWith: aPackageCycle named: aString [
 	^ generator
 ]
 
-{ #category : #'build items' }
+{ #category : 'build items' }
 DAPackageCycleGenerator >> buildEdges [
 	packageCycle packages
 		do: [ :package |
@@ -30,7 +32,7 @@ DAPackageCycleGenerator >> buildEdges [
 		displayingProgress: 'Building edges'
 ]
 
-{ #category : #'build items' }
+{ #category : 'build items' }
 DAPackageCycleGenerator >> buildNodes [
 
 	packageCycle packages
@@ -39,12 +41,12 @@ DAPackageCycleGenerator >> buildNodes [
 			 ] displayingProgress: 'Building nodes'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageCycleGenerator >> packageCycle [
 	^ packageCycle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageCycleGenerator >> packageCycle: anObject [
 	packageCycle := anObject
 ]

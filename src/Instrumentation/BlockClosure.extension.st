@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosure }
+Extension { #name : 'BlockClosure' }
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 BlockClosure >> insEnsure: aBlock [
 	"I am a re-implementation of the method BlockClosure>>#ensure: and I have the same code
 	except for the <noInstrumentation> pragma. I re-implement this method because when

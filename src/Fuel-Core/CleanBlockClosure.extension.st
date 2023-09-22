@@ -1,6 +1,6 @@
-Extension { #name : #CleanBlockClosure }
+Extension { #name : 'CleanBlockClosure' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 CleanBlockClosure >> cleanCopy [
 	"nothing to do"
 ]

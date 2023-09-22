@@ -6,8 +6,8 @@ When a part is named in a world, it is given a new slot in the model.  When a pa
 In addition for public variables (and this is the default for now), methods are generated and called in any outer model in which this model gets embedded, thus propagating variable changes outward.
 "
 Class {
-	#name : #ModelMorph,
-	#superclass : #BorderedMorph,
+	#name : 'ModelMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'model'
 	],
@@ -15,54 +15,56 @@ Class {
 		'KeyboardFocusOnMouseDown',
 		'MouseOverForKeyboardFocus'
 	],
-	#category : #'Morphic-Base-Kernel'
+	#category : 'Morphic-Base-Kernel',
+	#package : 'Morphic-Base',
+	#tag : 'Kernel'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ModelMorph class >> initialize [
 
 	self deprecatedAliases: { #MorphicModel }
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ModelMorph class >> keyboardFocusOnMouseDown [
 	^ KeyboardFocusOnMouseDown ifNil: [KeyboardFocusOnMouseDown := true]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ModelMorph class >> keyboardFocusOnMouseDown: aBoolean [
 	KeyboardFocusOnMouseDown := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ModelMorph class >> mouseOverForKeyboardFocus [
 	^ MouseOverForKeyboardFocus ifNil: [MouseOverForKeyboardFocus := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ModelMorph class >> mouseOverForKeyboardFocus: aBoolean [
 	MouseOverForKeyboardFocus := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ModelMorph >> defaultBorderColor [
 	"answer the default border color/fill style for the receiver"
 	^ Color yellow
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ModelMorph >> defaultBounds [
 "answer the default bounds for the receiver"
 	^ 0 @ 0 corner: 200 @ 100
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ModelMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color transparent
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ModelMorph >> hasYellowButtonMenu [
 	"Answer true if I have any items at all for a context (yellow button) menu."
 	^ self wantsYellowButtonMenu
@@ -71,17 +73,17 @@ ModelMorph >> hasYellowButtonMenu [
 					ifNotNil: [:aModel | aModel hasModelYellowButtonMenuItems]]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ModelMorph >> keyboardFocusOnMouseDown [
 	^ self class keyboardFocusOnMouseDown
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ModelMorph >> model [
 	^ model
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ModelMorph >> model: anObject [
 	"Set my model and make me me a dependent of the given object."
 
@@ -90,12 +92,12 @@ ModelMorph >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ModelMorph >> mouseOverForKeyboardFocus [
 	^ self class mouseOverForKeyboardFocus
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 ModelMorph >> releaseCachedState [
 	"Release cached state of the receiver"
 

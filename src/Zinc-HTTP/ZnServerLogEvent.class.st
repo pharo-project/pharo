@@ -5,22 +5,24 @@ I hold a processId attribute.
 I hold an optional serverId attribute.
 "
 Class {
-	#name : #ZnServerLogEvent,
-	#superclass : #ZnLogEvent,
+	#name : 'ZnServerLogEvent',
+	#superclass : 'ZnLogEvent',
 	#instVars : [
 		'serverId',
 		'processId'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnServerLogEvent >> initialize [
 	super initialize.
 	processId := ZnUtils currentProcessID
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnServerLogEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
 	serverId ifNotNil: [ stream space; << serverId ].
@@ -28,22 +30,22 @@ ZnServerLogEvent >> printContentsOn: stream [
 	processId printOn: stream base: 10 length: 6 padded: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerLogEvent >> processId [
 	^ processId
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnServerLogEvent >> processId: anObject [
 	processId := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerLogEvent >> serverId [
 	^ serverId
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnServerLogEvent >> serverId: anObject [
 	serverId := anObject
 ]

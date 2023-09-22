@@ -5,8 +5,8 @@ These projects are selected by the Pharo contributors and the selected versions 
 This projects holds the metadata to show to the users, to recover the readme from the GitHub project and to load it using metacello.
 "
 Class {
-	#name : #LoadableProject,
-	#superclass : #Object,
+	#name : 'LoadableProject',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'repository',
@@ -16,10 +16,11 @@ Class {
 		'description',
 		'summary'
 	],
-	#category : #ExternalProjectLoader
+	#category : 'ExternalProjectLoader',
+	#package : 'ExternalProjectLoader'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LoadableProject class >> allProjects [
 
 	^ { 	self new
@@ -55,31 +56,31 @@ LoadableProject class >> allProjects [
 				yourself}
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LoadableProject class >> named: aString [
 
 	^ self new name: aString; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> baselineName [
 
 	^ baselineName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> baselineName: aString [
 
 	baselineName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> description [
 
 	^ description ifNil: [ description := self fetchDescription ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LoadableProject >> fetchDescription [
 
 	| request |
@@ -90,17 +91,17 @@ LoadableProject >> fetchDescription [
 		ifFalse: [ request contents ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> group [
 	^ group
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> group: anObject [
 	group := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 LoadableProject >> load [
 
 	Metacello new
@@ -109,55 +110,55 @@ LoadableProject >> load [
 		load: self group
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LoadableProject >> readMeUrl [
 
 	^ ('https://raw.githubusercontent.com/{1}/{2}/README.md' format: { repository. version }) asUrl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> repository [
 	^ repository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> repository: aRepository [
 
 	repository := aRepository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> repositoryWithVersion [
 
 	^ 'github://' , self repository , ':' , self version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> summary [
 	^ summary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> summary: anObject [
 	summary := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> version [
 	^ version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoadableProject >> version: anObject [
 	version := anObject
 ]

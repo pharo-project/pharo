@@ -19,15 +19,17 @@ Observations about the transformation:
 - Although the pragma must be described, the transformation will remove the pragma that has the same selector as the specified one.
 "
 Class {
-	#name : #RBRemovePragmaTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBRemovePragmaTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'pragma'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemovePragmaTransformation class >> model: aRBModel pragma: aPragmaDefinition inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -38,7 +40,7 @@ RBRemovePragmaTransformation class >> model: aRBModel pragma: aPragmaDefinition 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemovePragmaTransformation class >> pragma: aPragmaDefinition inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -48,7 +50,7 @@ RBRemovePragmaTransformation class >> pragma: aPragmaDefinition inMethod: aSelec
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemovePragmaTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
@@ -67,7 +69,7 @@ RBRemovePragmaTransformation >> applicabilityPreconditions [
 					    with: (self parserClass parsePragma: pragma) selector))
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemovePragmaTransformation >> classExist [
 
 	^ RBCondition
@@ -76,7 +78,7 @@ RBRemovePragmaTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemovePragmaTransformation >> pragma: aPragmaDefinition inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -84,7 +86,7 @@ RBRemovePragmaTransformation >> pragma: aPragmaDefinition inMethod: aSelector in
 	pragma := aPragmaDefinition
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemovePragmaTransformation >> privateTransform [
 	| methodTree pragmaNode nodesToRemove |
 	methodTree := self definingMethod.
@@ -96,7 +98,7 @@ RBRemovePragmaTransformation >> privateTransform [
 	self definingClass compileTree: methodTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemovePragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

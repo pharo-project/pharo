@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 Class >> runBy: aRunner [
 
 	aRunner runClass: self

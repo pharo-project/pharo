@@ -1,6 +1,6 @@
-Extension { #name : #Boolean }
+Extension { #name : 'Boolean' }
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 Boolean class >> settingInputWidgetForNode: aSettingNode [
 	^ aSettingNode inputWidgetForBoolean
 ]

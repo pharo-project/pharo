@@ -2,8 +2,8 @@
 Sets spec's for how handles are layed out in a halo.
 "
 Class {
-	#name : #HaloSpec,
-	#superclass : #Object,
+	#name : 'HaloSpec',
+	#superclass : 'Object',
 	#instVars : [
 		'addHandleSelector',
 		'horizontalPlacement',
@@ -11,28 +11,30 @@ Class {
 		'color',
 		'iconSymbol'
 	],
-	#category : #'Morphic-Base-Widgets'
+	#category : 'Morphic-Base-Widgets',
+	#package : 'Morphic-Base',
+	#tag : 'Widgets'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 HaloSpec >> addHandleSelector [
 
 	^ addHandleSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HaloSpec >> color [
 
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HaloSpec >> horizontalPlacement [
 
 	^ horizontalPlacement
 ]
 
-{ #category : #setter }
+{ #category : 'setter' }
 HaloSpec >> horizontalPlacement: hp verticalPlacement: vp color: col iconSymbol: is addHandleSelector: sel [
 
 	horizontalPlacement := hp.
@@ -42,13 +44,13 @@ HaloSpec >> horizontalPlacement: hp verticalPlacement: vp color: col iconSymbol:
 	addHandleSelector := sel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HaloSpec >> iconSymbol [
 
 	^ iconSymbol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HaloSpec >> printOn: aStream [
 
 	super printOn: aStream.
@@ -60,7 +62,7 @@ HaloSpec >> printOn: aStream [
  		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HaloSpec >> verticalPlacement [
 
 	^ verticalPlacement

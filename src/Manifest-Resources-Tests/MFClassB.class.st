@@ -2,12 +2,13 @@
 I'm a dummy class for test purposes  
 "
 Class {
-	#name : #MFClassB,
-	#superclass : #Object,
-	#category : #'Manifest-Resources-Tests'
+	#name : 'MFClassB',
+	#superclass : 'Object',
+	#category : 'Manifest-Resources-Tests',
+	#package : 'Manifest-Resources-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MFClassB >> method2 [
 	"This variable is there to trigger the 'Temporary variable not read or written' critics rule for the test SmallintManifestCheckerTest>>testCriticsOf rule"
 	|foo|
@@ -15,7 +16,7 @@ MFClassB >> method2 [
 	1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MFClassB >> method3 [
 	"This variable is there to trigger the 'Temporary variable not read or written' critics rule for the test SmallintManifestCheckerTest>>testCriticsOf rule"
 	|foo|

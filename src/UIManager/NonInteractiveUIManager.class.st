@@ -12,12 +12,14 @@ You can replace the default UI Manager with my instance in cases, when you need 
 
 "
 Class {
-	#name : #NonInteractiveUIManager,
-	#superclass : #CommandLineUIManager,
-	#category : #'UIManager-Base'
+	#name : 'NonInteractiveUIManager',
+	#superclass : 'CommandLineUIManager',
+	#category : 'UIManager-Base',
+	#package : 'UIManager',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 NonInteractiveUIManager class >> isValidForCurrentSystemConfiguration [
 
 	^ Smalltalk isHeadless
@@ -25,7 +27,7 @@ NonInteractiveUIManager class >> isValidForCurrentSystemConfiguration [
 		and: [ Smalltalk isInteractiveGraphic not ] ]
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> chooseDirectory: label from: dir [
 	"Let the user choose a directory"
 	^ self nonInteractiveWarning: (String streamContents: [ :s|
@@ -35,19 +37,19 @@ NonInteractiveUIManager >> chooseDirectory: label from: dir [
 		])
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> chooseFrom: aList lines: linesArray title: aString [
 	"Choose an item from the given list. Answer the index of the selected item."
 	^ self chooseOrRequestFrom: aList values: aList lines: linesArray title: aString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> chooseFrom: labelList values: valueList lines: linesArray title: aString [
 	"Choose an item from the given list. Answer the selected item."
 	^ self chooseOrRequestFrom: labelList values: valueList lines: linesArray title: aString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> chooseFullFileNameMatching: patterns label: labelString [
 	"Let the user choose a file matching the given patterns"
 	^ self nonInteractiveWarning: (String streamContents: [ :s|
@@ -58,7 +60,7 @@ NonInteractiveUIManager >> chooseFullFileNameMatching: patterns label: labelStri
 		])
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> chooseOrRequestFrom: labelList values: valueList lines: linesArray title: aString [
 	 ^ self nonInteractiveWarning: (String streamContents: [ :s|
 			s nextPutAll: 'Choice Request: '; nextPutAll: aString; cr.
@@ -66,7 +68,7 @@ NonInteractiveUIManager >> chooseOrRequestFrom: labelList values: valueList line
 				s tab; nextPutAll: label asString; nextPutAll: ':'; tab; print: value; cr ]])
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: queryString [
 	(ProvideAnswerNotification signal: queryString) ifNotNil: [:answer |
 		^ answer].
@@ -74,37 +76,37 @@ NonInteractiveUIManager >> confirm: queryString [
 	^  self nonInteractiveWarning: 'Confirming: ', queryString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: queryString label: titleString [
 	^  self nonInteractiveRequest: queryString title: titleString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: queryString label: title trueChoice: trueChoice falseChoice: falseChoice cancelChoice: cancelChoice default: aSymbol [
 	^  self nonInteractiveRequest: queryString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: aString orCancel: cancelBlock [
 	^  self nonInteractiveRequest: aString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: falseChoice [
 	^  self nonInteractiveRequest: queryString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: falseChoice cancelChoice: cancelChoice default: aSymbol [
 	^  self nonInteractiveRequest: queryString
 ]
 
-{ #category : #debug }
+{ #category : 'debug' }
 NonInteractiveUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
 	^ self nonInteractiveWarning: 'Opening Debugger'
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	"Open an editor on the given string/text"
 	^self nonInteractiveWarning: (String streamContents: [ :s |
@@ -113,27 +115,27 @@ NonInteractiveUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 		s cr; nextPutAll: aText])
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> fontFromUser: priorFont [
 	^self nonInteractiveWarning: 'Font Choose Request'
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> multiLineRequest: queryString initialAnswer: defaultAnswer answerHeight: answerHeight [
 	^  self nonInteractiveRequest: queryString
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 NonInteractiveUIManager >> nonInteractive [
 	^ ErrorNonInteractive signal
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 NonInteractiveUIManager >> nonInteractive: anException [
 	^ ErrorNonInteractive signalForException: anException
 ]
 
-{ #category : #'non-interactive' }
+{ #category : 'non-interactive' }
 NonInteractiveUIManager >> nonInteractiveManager [
 	" Answer an instance of non-interactive manager, which will be used when image runs headless.
 	  We put it here, so subclasses can override it.
@@ -143,12 +145,12 @@ NonInteractiveUIManager >> nonInteractiveManager [
 	^ self
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 NonInteractiveUIManager >> nonInteractiveRequest: aStringOrText [
 	^ self nonInteractiveRequest: aStringOrText title: nil
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 NonInteractiveUIManager >> nonInteractiveRequest: aStringOrText title: aTitle [
 	 ^ self nonInteractiveWarning: (String streamContents: [ :s|
 			s nextPutAll: 'Interactive Request: '.
@@ -157,27 +159,27 @@ NonInteractiveUIManager >> nonInteractiveRequest: aStringOrText title: aTitle [
 		])
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 NonInteractiveUIManager >> nonInteractiveWarning: aWarnMessage [
 	^ ProvideAnswerNotification signal: aWarnMessage
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> request: queryString initialAnswer: defaultAnswer [
 	^ self request: queryString initialAnswer: defaultAnswer title: nil entryCompletion: nil.
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> request: queryString initialAnswer: defaultAnswer entryCompletion: anEntryCompletion [
 	^ self request: queryString initialAnswer: defaultAnswer title: nil entryCompletion: anEntryCompletion.
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle [
 	^ self request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: nil.
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: anEntryCompletion [
 	(ProvideAnswerNotification signal: aStringOrText)
 		ifNotNil: [:answer |
@@ -186,7 +188,7 @@ NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer t
 	^ self nonInteractiveRequest: aStringOrText title: aTitle
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 NonInteractiveUIManager >> requestPassword: queryString [
 	^self nonInteractiveWarning: 'Requesting Password'
 ]

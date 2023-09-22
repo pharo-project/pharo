@@ -6,14 +6,16 @@ Supports a few methods not found elsewhere that can be convenient, eg. newRow
 
 "
 Class {
-	#name : #AlignmentMorph,
-	#superclass : #BorderedMorph,
+	#name : 'AlignmentMorph',
+	#superclass : 'BorderedMorph',
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
-	#category : #'Morphic-Base-Basic'
+	#category : 'Morphic-Base-Basic',
+	#package : 'Morphic-Base',
+	#tag : 'Basic'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlignmentMorph class >> columnPrototype [
 	"Answer a prototypical column"
 	"self columnPrototype openInHand"
@@ -30,47 +32,47 @@ AlignmentMorph class >> columnPrototype [
 	^ aColumn
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlignmentMorph class >> inAColumn: aCollectionOfMorphs [
 	"Answer a columnar AlignmentMorph holding the given collection"
 
 	^ self new inAColumn: aCollectionOfMorphs
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlignmentMorph class >> inARow: aCollectionOfMorphs [
 	"Answer a row-oriented AlignmentMorph holding the given collection"
 
 	^ self new inARow: aCollectionOfMorphs
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlignmentMorph class >> newColumn [
 
 	^ self new setAsColumn
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlignmentMorph class >> newRow [
 
 	^ self new setAsRow
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlignmentMorph class >> newSpacer: aColor [
 	"Answer a space-filling instance of me of the given color."
 
 	^ self new setAsSpacer: aColor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlignmentMorph class >> newVariableTransparentSpacer [
 	"Answer a space-filling instance of me of the given color."
 
 	^ self new setAsSpacer: Color transparent
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlignmentMorph class >> rowPrototype [
 	"Answer a prototypical row"
 	"self rowPrototype openInHand"
@@ -88,7 +90,7 @@ AlignmentMorph class >> rowPrototype [
 	^ aRow
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 AlignmentMorph >> addAColumn: aCollectionOfMorphs [
 
 	| col |
@@ -97,7 +99,7 @@ AlignmentMorph >> addAColumn: aCollectionOfMorphs [
 	^col
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 AlignmentMorph >> addARow: aCollectionOfMorphs [
 
 	| row |
@@ -106,7 +108,7 @@ AlignmentMorph >> addARow: aCollectionOfMorphs [
 	^row
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 AlignmentMorph >> addARowCentered: aCollectionOfMorphs [
 
 	^(self addARow: aCollectionOfMorphs)
@@ -115,7 +117,7 @@ AlignmentMorph >> addARowCentered: aCollectionOfMorphs [
 		cellPositioning: #leftCenter
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 AlignmentMorph >> addARowCentered: aCollectionOfMorphs cellInset: cellInsetInteger [
 
 	^(self addARow: aCollectionOfMorphs)
@@ -125,14 +127,14 @@ AlignmentMorph >> addARowCentered: aCollectionOfMorphs cellInset: cellInsetInteg
 		cellInset: cellInsetInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlignmentMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 
 	^ 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlignmentMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 
@@ -142,7 +144,7 @@ AlignmentMorph >> defaultColor [
 		b: 0.8
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 AlignmentMorph >> inAColumn: aCollectionOfMorphs [
 
 	self setAsColumn
@@ -156,7 +158,7 @@ AlignmentMorph >> inAColumn: aCollectionOfMorphs [
 	^ self
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 AlignmentMorph >> inARightColumn: aCollectionOfMorphs [
 
 	self setAsColumn
@@ -168,7 +170,7 @@ AlignmentMorph >> inARightColumn: aCollectionOfMorphs [
 		do: [ :each | self addMorphBack: each ]
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 AlignmentMorph >> inARow: aCollectionOfMorphs [
 
 	 self setAsRow
@@ -182,7 +184,7 @@ AlignmentMorph >> inARow: aCollectionOfMorphs [
 		do: [ :each | self addMorphBack: each]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlignmentMorph >> initialize [
 
 	super initialize.
@@ -196,20 +198,20 @@ AlignmentMorph >> initialize [
 	 	rubberBandCells: true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlignmentMorph >> isAlignmentMorph [
 
 	^ true
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 AlignmentMorph >> openInWindowLabeled: aString inWorld: aWorld [
 
 	self layoutInset: 0.
 	^super openInWindowLabeled: aString inWorld: aWorld
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 AlignmentMorph >> setAsColumn [
 
 	self
@@ -219,7 +221,7 @@ AlignmentMorph >> setAsColumn [
 		vResizing: #spaceFill
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 AlignmentMorph >> setAsRow [
 
 	self
@@ -229,7 +231,7 @@ AlignmentMorph >> setAsRow [
 		borderWidth: 0
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 AlignmentMorph >> setAsSpacer: aColor [
 
 	self hResizing: #spaceFill;
@@ -240,7 +242,7 @@ AlignmentMorph >> setAsSpacer: aColor [
 		color: aColor
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlignmentMorph >> wantsKeyboardFocusFor: aSubmorph [
 	aSubmorph wouldAcceptKeyboardFocus ifTrue: [^ true].
 	^ super wantsKeyboardFocusFor: aSubmorph

@@ -1,18 +1,19 @@
 Class {
-	#name : #RBParseTreeEnvironment,
-	#superclass : #RBSelectorEnvironment,
+	#name : 'RBParseTreeEnvironment',
+	#superclass : 'RBSelectorEnvironment',
 	#instVars : [
 		'matcher'
 	],
-	#category : #'Refactoring-Critics'
+	#category : 'Refactoring-Critics',
+	#package : 'Refactoring-Critics'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBParseTreeEnvironment >> matcher: aParseTreeSearcher [
 	matcher := aParseTreeSearcher
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseTreeEnvironment >> selectionIntervalFor: aString [
 
 	| parseTree node |

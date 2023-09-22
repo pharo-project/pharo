@@ -1,6 +1,6 @@
-Extension { #name : #ByteArray }
+Extension { #name : 'ByteArray' }
 
-{ #category : #'*Network-MIME' }
+{ #category : '*Network-MIME' }
 ByteArray >> base64Encoded [
 	"Encode the receiver using Base64, returning a String.
 	Base64 encoding is a technique to represent binary data as ASCII text.

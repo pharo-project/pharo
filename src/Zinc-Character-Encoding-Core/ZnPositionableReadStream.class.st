@@ -27,8 +27,8 @@ The real core methods are #next, #atEnd, #position and #position: and are used t
 Part of Zinc HTTP Components
 "
 Class {
-	#name : #ZnPositionableReadStream,
-	#superclass : #Object,
+	#name : 'ZnPositionableReadStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'buffer',
@@ -36,10 +36,11 @@ Class {
 		'index',
 		'delta'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnPositionableReadStream class >> on: readStream [
 	"Create an instance of ZnPositionableReadStream that wraps readStream to add limited positioning capabilities to it."
 
@@ -48,7 +49,7 @@ ZnPositionableReadStream class >> on: readStream [
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnPositionableReadStream class >> on: readStream do: block [
 	"Execute block with as argument a ZnPositionableReadStream on readStream.
 	Return the value of block."
@@ -56,14 +57,14 @@ ZnPositionableReadStream class >> on: readStream do: block [
 	^ block value: (self on: readStream)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnPositionableReadStream >> atEnd [
 	"Answer whether I can access any more objects."
 
 	^ delta = 0 and: [ stream atEnd ]
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 ZnPositionableReadStream >> back [
 	"Go back one element and return it."
 
@@ -71,21 +72,21 @@ ZnPositionableReadStream >> back [
 	^ self peek
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> bufferSize [
 	"Return the size of my buffer, which limits how far I can be positioned backwards. See #sizeBuffer: to set another buffer size."
 
 	^ buffer size
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnPositionableReadStream >> close [
 	"Close me after which I can no longer be accessed. I delegate this to the stream that I wrap."
 
 	stream close
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> collectionSpecies [
 	"Return the collection class able to hold my elements"
 
@@ -96,27 +97,27 @@ ZnPositionableReadStream >> collectionSpecies [
 				ifFalse: [ String ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> defaultBufferSize [
 	"Return the default size of my buffer, which limits how far I can be positioned backwards. See #sizeBuffer: to set another buffer size."
 
 	^ 2 raisedToInteger: 8
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnPositionableReadStream >> initialize [
 	super initialize.
 	count := index := delta := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnPositionableReadStream >> isBinary [
 	"Return whether I am binary, whether my elements are byte values (8 bit integers between 0 and 255)"
 
 	^ stream isBinary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> next [
 	"Return the next element and move over it"
 
@@ -133,7 +134,7 @@ ZnPositionableReadStream >> next [
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> next: requestedCount [
 	"Read requestedCount elements and return them as a collection.
 	If less are available, a smaller collection will be returned."
@@ -143,7 +144,7 @@ ZnPositionableReadStream >> next: requestedCount [
 		into: (self collectionSpecies new: requestedCount)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
@@ -154,7 +155,7 @@ ZnPositionableReadStream >> next: requestedCount into: collection [
 		startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
@@ -169,7 +170,7 @@ ZnPositionableReadStream >> next: requestedCount into: collection startingAt: of
 		ifFalse: [ collection copyFrom: 1 to: offset + read - 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> nextInto: collection [
 	"Read the next elements of the receiver into collection,
 	returning a copy if less elements are available"
@@ -179,7 +180,7 @@ ZnPositionableReadStream >> nextInto: collection [
 		into: collection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnPositionableReadStream >> on: readStream [
 	"Initialize me on readStream"
 
@@ -187,14 +188,14 @@ ZnPositionableReadStream >> on: readStream [
 	self sizeBuffer: self defaultBufferSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> peek [
 	"Return the next element but do not move over it"
 
 	^ self savingPositionDo: [ self next ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> peekFor: object [
 	"Answer false and do not move over the next element if it is not equal to object, or if the receiver is at the end.
 	Answer true and move over the next element when it is equal to object."
@@ -206,14 +207,14 @@ ZnPositionableReadStream >> peekFor: object [
 		ifFalse: [ false ]
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 ZnPositionableReadStream >> position [
 	"Return my current position. This is an object that can be used as argument to #position: to move back to that position. Although opaque, it is currently an integer count of the number of #next operations done on the stream that I wrap."
 
 	^ count - delta
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 ZnPositionableReadStream >> position: newPosition [
 	"Move my current position to newPosition, an object obtained by previously calling #position. My buffer size limits how far I can be positioned backwards. A SubscriptOutOfBounds exception will be signalled in case this operation cannot be completed. It is also no possible to go backwards unless data has been read previously."
 
@@ -228,7 +229,7 @@ ZnPositionableReadStream >> position: newPosition [
 	^ delta := newDelta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
 	returning the number of elements read, there could be less elements available."
@@ -239,12 +240,12 @@ ZnPositionableReadStream >> readInto: collection startingAt: offset count: reque
 	^ requestedCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> readStream [
 	^ self
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 ZnPositionableReadStream >> savingPositionDo: block [
 	"Execute block so that any reading from me in it has no effect afterwards. I remember the current #position and move back to it using #position: after evaluating block. My buffer size limits how long the excursion can be. A SubscriptOutOfBounds exception will be signalled in case this operation cannot be completed."
 
@@ -253,14 +254,14 @@ ZnPositionableReadStream >> savingPositionDo: block [
 	^ block ensure: [ self position: savedPosition ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnPositionableReadStream >> sizeBuffer: size [
 	"Change the buffer size. This should be done when I am still in my initial state."
 
 	buffer := self collectionSpecies new: size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> skip: integer [
 	"Skip over integer count elements."
 
@@ -269,7 +270,7 @@ ZnPositionableReadStream >> skip: integer [
 		ifFalse: [ self position: (self position + integer) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> upTo: value [
 	"Read upto but not including value and return them as a collection.
 	If value is not found, return the entire contents of the stream."
@@ -280,7 +281,7 @@ ZnPositionableReadStream >> upTo: value [
 				writeStream nextPut: element ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> upToEnd [
 	"Read elements until the stream is atEnd and return them as a collection."
 
@@ -289,7 +290,7 @@ ZnPositionableReadStream >> upToEnd [
 			[ self atEnd ] whileFalse: [ collectionStream nextPut: self next ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPositionableReadStream >> wrappedStream [
 	"Return the read stream that I wrap."
 

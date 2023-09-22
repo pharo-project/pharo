@@ -3,53 +3,55 @@ I am a null renderer.
 I am used when we are in command line or during the initialization
 "
 Class {
-	#name : #NullWorldRenderer,
-	#superclass : #AbstractWorldRenderer,
-	#category : #'Morphic-Core-Worlds'
+	#name : 'NullWorldRenderer',
+	#superclass : 'AbstractWorldRenderer',
+	#category : 'Morphic-Core-Worlds',
+	#package : 'Morphic-Core',
+	#tag : 'Worlds'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NullWorldRenderer class >> isApplicableFor: aWorld [
 	"This worldRenderer is always applicable"
 
 	^ true
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 NullWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 	"Nothing to activate here"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NullWorldRenderer >> actualScreenSize [
 
 	^ 240@120
 ]
 
-{ #category : #'display box access' }
+{ #category : 'display box access' }
 NullWorldRenderer >> checkForNewScreenSize [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NullWorldRenderer >> clipboardText: aString [
 	"nothing because they don't have window"
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NullWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 
 	^ aPosition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NullWorldRenderer >> deactivate [
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NullWorldRenderer >> doActivate [
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 NullWorldRenderer >> drawDuring: aBlock [
 
 	| canvas |
@@ -57,37 +59,37 @@ NullWorldRenderer >> drawDuring: aBlock [
 	aBlock value: canvas
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 NullWorldRenderer >> forceDamageToScreen: allDamage [
 
 	"Do Nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NullWorldRenderer >> icon: aForm [
 
 	"Do nothing, a null world rendered has no window, so no icon either"
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 NullWorldRenderer >> requestStopTextEditing [
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 NullWorldRenderer >> requestTextEditingAt: aRectangle [
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 NullWorldRenderer >> updateDamage: rectangles [
 
 	"Do nothing"
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 NullWorldRenderer >> updateToNewResolution [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NullWorldRenderer >> windowTitle: aString [
 
 	"I am a dummy implementation"

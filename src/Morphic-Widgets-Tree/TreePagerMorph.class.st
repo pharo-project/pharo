@@ -2,21 +2,23 @@
 A tree pager
 "
 Class {
-	#name : #TreePagerMorph,
-	#superclass : #TreeNavigationBarMorph,
+	#name : 'TreePagerMorph',
+	#superclass : 'TreeNavigationBarMorph',
 	#instVars : [
 		'currentPageFirstIndex'
 	],
-	#category : #'Morphic-Widgets-Tree-Pagination'
+	#category : 'Morphic-Widgets-Tree-Pagination',
+	#package : 'Morphic-Widgets-Tree',
+	#tag : 'Pagination'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TreePagerMorph class >> initialize [
 
 	self deprecatedAliases: { #MorphTreePager }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> allIntervals [
 	| intervals |
 	intervals := OrderedCollection new.
@@ -25,7 +27,7 @@ TreePagerMorph >> allIntervals [
 	^ intervals
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreePagerMorph >> buildPanel [
 	| widgets firstPageButton previousButton wid nextButton lastPageButton pageSizeEditor searchEditor |
 	self removeAllMorphs.
@@ -92,7 +94,7 @@ TreePagerMorph >> buildPanel [
 	self updateContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> choosePage [
 	| choiceList chosen |
 	choiceList := OrderedCollection new.
@@ -110,19 +112,19 @@ TreePagerMorph >> choosePage [
 	self currentPage: chosen
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TreePagerMorph >> currentNodelist [
 	^ self nodeList copyFrom: self currentPageFirstIndex to: self currentPageLastIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> currentPage [
 	^ self currentPageLastIndex \\ pageSize > 0
 		ifTrue: [(self currentPageLastIndex / pageSize) asInteger + 1]
 		ifFalse: [(self currentPageLastIndex / pageSize) asInteger]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> currentPage: anIndex [
 	anIndex = self currentPage ifTrue: [^ self].
 	anIndex = 1
@@ -134,12 +136,12 @@ TreePagerMorph >> currentPage: anIndex [
 				ifFalse: [self setPageInterval: ((((self lastPage - 1) * pageSize) + 1) to: self nodeList size)]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> currentPageFirstIndex [
 	^ currentPageFirstIndex ifNil: [currentPageFirstIndex := 1]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> currentPageInput: aString [
 	| input currPage |
 	input := aString asString trimBoth.
@@ -149,22 +151,22 @@ TreePagerMorph >> currentPageInput: aString [
 	^ self currentPage: currPage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> currentPageLastIndex [
 	^ pageSize ifNil: [self nodeList size] ifNotNil: [(self currentPageFirstIndex + pageSize - 1) min: self nodeList size]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> currentPageToString [
 	^ self currentPage asString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TreePagerMorph >> hasSeveralPages [
 	^ self lastPage > 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> lastPage [
 	| p |
 	p := (self nodeList size / pageSize) asInteger.
@@ -172,55 +174,55 @@ TreePagerMorph >> lastPage [
 	^ p
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> nextPage [
 	self currentPageLastIndex < self nodeList size
 		ifTrue: [currentPageFirstIndex := (currentPageFirstIndex + pageSize) min: self nodeList size.
 			self showCurrentPage]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> nextPage: theIndexOfAnElement [
 	"To make sure we can go to the page of an element."
 
 	self currentPage: (self pageOfNodeIndex: theIndexOfAnElement)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TreePagerMorph >> notOnFirstPage [
 	^ self onFirstPage not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TreePagerMorph >> notOnLastPage [
 	^ self onLastPage not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TreePagerMorph >> onFirstPage [
 	^ self currentPageFirstIndex = 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TreePagerMorph >> onLastPage [
 	^ self currentPageLastIndex = self nodeList size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> previousPage [
 	self currentPageFirstIndex > 1
 		ifTrue: [currentPageFirstIndex := (currentPageFirstIndex - pageSize) max: 1.
 			self showCurrentPage]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> setPageInterval: anInterval [
 	currentPageFirstIndex := anInterval first.
 	self showCurrentPage.
 	self changed: #currentPage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreePagerMorph >> showCurrentPage [
 	self buildPanel.
 	treeMorph scroller removeAllMorphs.
@@ -231,7 +233,7 @@ TreePagerMorph >> showCurrentPage [
 	treeMorph scrollSelectionIntoView
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 TreePagerMorph >> updateForNewPageSize: newPageSize [
 	pageSize ~= newPageSize
 		ifTrue: [ |  oldLast |

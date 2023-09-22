@@ -1,6 +1,6 @@
-Extension { #name : #TestResult }
+Extension { #name : 'TestResult' }
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 TestResult >> + aTestResult [
 
 	aTestResult passed do: [ :each | self addPassIfAbsent: each ].
@@ -9,31 +9,31 @@ TestResult >> + aTestResult [
 	aTestResult skipped do: [ :each | self addSkipIfAbsent: each ]
 ]
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 TestResult >> addErrorIfAbsent: anError [
 
 	(errors includes: anError) ifFalse: [ self addError: anError ]
 ]
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 TestResult >> addFailureIfAbsent: aFailure [
 
 	(failures includes: aFailure) ifFalse: [ self addFailure: aFailure ]
 ]
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 TestResult >> addPassIfAbsent: aPassed [
 
 	(passed includes: aPassed) ifFalse: [ self addPass: aPassed ]
 ]
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 TestResult >> addSkipIfAbsent: aSkip [
 
 	(skipped includes: aSkip) ifFalse: [ self addSkip: aSkip ]
 ]
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 TestResult >> removeError: aTestCase [
 
 	"remove the giving error from the errors set"
@@ -41,7 +41,7 @@ TestResult >> removeError: aTestCase [
 	^ errors remove: aTestCase
 ]
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 TestResult >> removeFailure: aTestCase [
 
 	"remove the giving failure from the failures set"
