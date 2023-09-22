@@ -1,10 +1,11 @@
 Class {
-	#name : #ReVarSearchSourceAnchorTest,
-	#superclass : #TestCase,
-	#category : #'Renraku-Tests'
+	#name : 'ReVarSearchSourceAnchorTest',
+	#superclass : 'TestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReVarSearchSourceAnchorTest >> testModifyFor [
 	| anchor |
 	anchor := ReVarSearchSourceAnchor new.
@@ -26,7 +27,7 @@ ReVarSearchSourceAnchorTest >> testModifyFor [
 		equals: ' two '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReVarSearchSourceAnchorTest >> testSearchString [
 
 	| anchor |
@@ -40,7 +41,7 @@ ReVarSearchSourceAnchorTest >> testSearchString [
 		equals: 'var'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReVarSearchSourceAnchorTest >> testSearchString2 [
 
 	| anchor |

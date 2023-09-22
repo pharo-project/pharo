@@ -1,10 +1,11 @@
 Class {
-	#name : #ReRuleManagerTest,
-	#superclass : #RenrakuBaseTestCase,
-	#category : #'Renraku-Tests'
+	#name : 'ReRuleManagerTest',
+	#superclass : 'RenrakuBaseTestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReRuleManagerTest >> testClassAdded [
 
 	| rule rulesCount |
@@ -32,7 +33,7 @@ ReRuleManagerTest >> testClassAdded [
 	rule removeFromSystem
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReRuleManagerTest >> testClassRemoved [
 
 	| rule |

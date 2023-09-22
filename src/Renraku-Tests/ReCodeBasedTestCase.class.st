@@ -2,23 +2,24 @@
 I provide a testing class and method which are destroyed later
 "
 Class {
-	#name : #ReCodeBasedTestCase,
-	#superclass : #RenrakuBaseTestCase,
+	#name : 'ReCodeBasedTestCase',
+	#superclass : 'RenrakuBaseTestCase',
 	#instVars : [
 		'testClass',
 		'testMethod',
 		'testClass2'
 	],
-	#category : #'Renraku-Tests'
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReCodeBasedTestCase class >> isAbstract [
 
 	^ self = ReCodeBasedTestCase
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReCodeBasedTestCase >> setUp [
 	super setUp.
 
@@ -37,7 +38,7 @@ ReCodeBasedTestCase >> setUp [
 			package: testPackage name ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReCodeBasedTestCase >> tearDown [
 
 	testPackage methods do: #removeFromSystem.
