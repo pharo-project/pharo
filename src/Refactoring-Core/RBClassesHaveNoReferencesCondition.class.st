@@ -20,7 +20,7 @@ Class {
 { #category : 'checking' }
 RBClassesHaveNoReferencesCondition >> check [
 
-	^ self violators allSatisfy: [ :val | val isEmpty ]
+	^ self violators isEmpty
 ]
 
 { #category : 'accessing' }
@@ -56,7 +56,7 @@ RBClassesHaveNoReferencesCondition >> printOn: aStream [
 				nextPutAll: class name;
 				nextPutAll: ' has ';
 				nextPutAll: refs size asString;
-				nextPutAll: ' references';
+				nextPutAll: ' references.';
 				nextPut: Character cr ]
 ]
 
@@ -67,11 +67,13 @@ RBClassesHaveNoReferencesCondition >> violators [
 		  referencingClassesDictionary := Dictionary new.
 
 		  classes do: [ :aClass |
-			  referencingClassesDictionary
-				  at: aClass
-				  put:
-					  (((model classesReferencingClass: aClass) collect: [ :each |
-						    each ]) copyWithoutAll: classes) ].
+			  | methodsReferencingClass |
+			  methodsReferencingClass := (model methodsReferencingClass: aClass) reject: [ :each |
+						    classes includes: each methodClass ].
+			  methodsReferencingClass ifNotEmpty: [ 
+				  referencingClassesDictionary
+					  at: aClass
+					  put: methodsReferencingClass ] ].
 			referencingClassesDictionary 
 		]
 ]

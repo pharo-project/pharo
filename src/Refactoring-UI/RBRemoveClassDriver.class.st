@@ -15,8 +15,10 @@ Class {
 { #category : 'actions' }
 RBRemoveClassDriver >> browseReferences [
 
-	SystemNavigation default 
-		browseAllCallsOnClass: haveNoReferences violators keys first realClass
+	haveNoReferences violators keysAndValuesDo: [ :violator :references |
+		StMessageBrowserPresenter
+			browse: (references collect: [ :ref | ref method ])
+			asSendersOf: violator realClass ]
 ]
 
 { #category : 'initialization' }
@@ -33,13 +35,19 @@ RBRemoveClassDriver >> handleBreakingChanges [
 
 	| select items |
 	items := OrderedCollection new.
-	items add: (RBRemoveClassReparentChoice new driver: self; classesHaveSubclasses: noSubclasses isFalse).
+	items add: (RBRemoveClassReparentChoice new
+						driver: self;
+						classesHaveSubclasses: noSubclasses isFalse;
+						emptyClasses: emptyClasses isTrue).
 	(noSubclasses isFalse and: [ emptyClasses isFalse ]) ifTrue: [
 		items add:
-			(RBRemoveClassAndPushStateToSubclassChoice new driver: self; emptyClasses: emptyClasses isTrue) ].
+			(RBRemoveClassAndPushStateToSubclassChoice new driver: self) ].
 	haveNoReferences isFalse ifTrue: [
 		items add: (RBBrowseClassReferencesChoice new driver: self) ].
 	
+	items size = 1
+		ifTrue: [ ^ items first action ].
+		
 	select := SpSelectDialog new
 		          title: 'There are potentital breaking changes!';
 		          label: self labelBasedOnBreakingChanges;
@@ -55,16 +63,11 @@ RBRemoveClassDriver >> handleBreakingChanges [
 { #category : 'ui - dialogs' }
 RBRemoveClassDriver >> labelBasedOnBreakingChanges [
 
-	| stream |
-	stream := String new writeStream.
-	
-	emptyClasses printOn: stream.
-	noSubclasses printOn: stream.
-	haveNoReferences printOn: stream.
-	
-	stream nextPutAll: 'Select a strategy'.
-	
-	^ stream contents
+	^ String streamContents: [ :stream | 
+		emptyClasses printOn: stream.
+		noSubclasses printOn: stream.
+		haveNoReferences printOn: stream.	
+		stream nextPutAll: 'Select a strategy' ]
 ]
 
 { #category : 'actions' }

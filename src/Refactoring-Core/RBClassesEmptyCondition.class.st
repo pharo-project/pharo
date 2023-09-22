@@ -47,7 +47,8 @@ RBClassesEmptyCondition >> printOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
-			nextPutAll: violator;
+			nextPutAll: violator name;
+			nextPutAll: ' is not empty.';
 			nextPut: Character cr ]
 ]
 
@@ -55,9 +56,9 @@ RBClassesEmptyCondition >> printOn: aStream [
 RBClassesEmptyCondition >> violators [
 
 	^ violators ifNil: [
-		  violators := Dictionary new.
+		  violators := OrderedCollection new.
 		  classes do: [ :aClass |
 			  (self isEmpty: aClass) ifFalse: [
-				  violators at: aClass put: aClass name , ' is not empty.' ] ].
+				  violators add: aClass ] ].
 		  violators ]
 ]

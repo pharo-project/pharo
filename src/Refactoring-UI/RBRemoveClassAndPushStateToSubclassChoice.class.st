@@ -18,20 +18,7 @@ RBRemoveClassAndPushStateToSubclassChoice >> action [
 { #category : 'accessing' }
 RBRemoveClassAndPushStateToSubclassChoice >> description [
 
-	| stream |
-	stream := String new writeStream.
-	stream nextPutAll: 'Remove it'.
-
-	removingClassesAreEmpty ifFalse: [
-		stream nextPutAll: ', pushing class state to subclasses' ].
-
-	^ stream contents
-]
-
-{ #category : 'as yet unclassified' }
-RBRemoveClassAndPushStateToSubclassChoice >> emptyClasses: aBoolean [
-
-	removingClassesAreEmpty := aBoolean
+	^ 'Remove it and push class state to subclasses'
 ]
 
 { #category : 'accessing' }

@@ -2,7 +2,8 @@ Class {
 	#name : 'RBRemoveClassReparentChoice',
 	#superclass : 'RBRemoveClassChoice',
 	#instVars : [
-		'classesHaveSubclasses'
+		'classesHaveSubclasses',
+		'emptyClasses'
 	],
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
@@ -25,14 +26,19 @@ RBRemoveClassReparentChoice >> classesHaveSubclasses: aBoolean [
 { #category : 'accessing' }
 RBRemoveClassReparentChoice >> description [
 
-	| stream |
-	stream := String new writeStream.
-	stream nextPutAll: 'Remove it'.
+	^ String streamContents: [ :aStream |
+		aStream nextPutAll: 'Remove it'.
 
-	classesHaveSubclasses ifTrue: [
-		stream nextPutAll: ' (reparenting subclasses)' ].
+		classesHaveSubclasses ifTrue: [
+			aStream nextPutAll: ' and reparent subclasses' ].
+		emptyClasses ifFalse: [ 
+			aStream nextPutAll: '. Pay attention you lose all the class state' ] ]
+]
 
-	^ stream contents
+{ #category : 'accessing' }
+RBRemoveClassReparentChoice >> emptyClasses: aBoolean [
+
+	emptyClasses := aBoolean 
 ]
 
 { #category : 'accessing' }
