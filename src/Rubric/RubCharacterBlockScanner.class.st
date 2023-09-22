@@ -1,6 +1,6 @@
 Class {
-	#name : #RubCharacterBlockScanner,
-	#superclass : #RubCharacterScanner,
+	#name : 'RubCharacterBlockScanner',
+	#superclass : 'RubCharacterScanner',
 	#instVars : [
 		'characterPoint',
 		'characterIndex',
@@ -10,10 +10,12 @@ Class {
 		'nextLeftMargin',
 		'specialWidth'
 	],
-	#category : #'Rubric-TextScanning'
+	#category : 'Rubric-TextScanning',
+	#package : 'Rubric',
+	#tag : 'TextScanning'
 }
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCharacterBlockScanner >> characterBlockAtPoint: aPoint index: index in: textLine [
 	"This method is the Morphic characterBlock finder.  It combines
 	MVC's characterBlockAtPoint:, -ForIndex:, and buildCharcterBlock:in:"
@@ -65,12 +67,12 @@ RubCharacterBlockScanner >> characterBlockAtPoint: aPoint index: index in: textL
 							[ "Result for characterBlockForIndex: " (RubCharacterBlock new stringIndex: characterIndex topLeft: characterPoint + ((font descentKern - kern) @ 0) extent: lastCharacterExtent) textLine: line ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlockScanner >> characterPointSetX: xVal [
 	characterPoint := xVal @ characterPoint y
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> cr [
 	"Answer a CharacterBlock that specifies the current location of the mouse
 	relative to a carriage return stop condition that has just been
@@ -98,7 +100,7 @@ RubCharacterBlockScanner >> cr [
 		^true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> crossedX [
 	"Text display has wrapping. The scanner just found a character past the x
 	location of the cursor. We know that the cursor is pointing at a character
@@ -152,7 +154,7 @@ RubCharacterBlockScanner >> crossedX [
 	^ true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> endOfRun [
 	"Before arriving at the cursor location, the selection has encountered an
 	end of run. Answer false if the selection continues, true otherwise. Set
@@ -204,7 +206,7 @@ RubCharacterBlockScanner >> endOfRun [
 	^true
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCharacterBlockScanner >> indentationLevel: anInteger [
 	super indentationLevel: anInteger.
 	nextLeftMargin := leftMargin.
@@ -212,17 +214,17 @@ RubCharacterBlockScanner >> indentationLevel: anInteger [
 		nextLeftMargin := self nextTabXFrom: nextLeftMargin]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlockScanner >> lastCharacterExtentSetX: xVal [
 	lastCharacterExtent := xVal @ lastCharacterExtent y
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlockScanner >> lastSpaceOrTabExtentSetX: xVal [
 	lastSpaceOrTabExtent := xVal @ lastSpaceOrTabExtent y
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> paddedSpace [
 	"When the line is justified, the spaces will not be the same as the font's
 	space character. A padding of extra space must be considered in trying
@@ -243,7 +245,7 @@ RubCharacterBlockScanner >> paddedSpace [
 	^ false
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCharacterBlockScanner >> placeEmbeddedObject: anchoredMorph [
 	"Workaround: The following should really use #textAnchorType"
 	anchoredMorph relativeTextAnchorPosition ifNotNil:[^true].
@@ -252,19 +254,19 @@ RubCharacterBlockScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlockScanner >> scale [
 
 	^ 1
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> setFont [
 	specialWidth := nil.
 	super setFont
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> setStopConditions [
 	"Set the font and the stop conditions for the current run."
 
@@ -272,7 +274,7 @@ RubCharacterBlockScanner >> setStopConditions [
 	self setConditionArray: (alignment = Justified ifTrue: [#paddedSpace])
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> tab [
 	| currentX |
 	currentX := (alignment = Justified and: [self leadingTab not])

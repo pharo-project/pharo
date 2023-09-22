@@ -12,12 +12,14 @@ Preconditions:
 overriden from RBAddVariableTransformation and RBRemoveVariableAccessorTransformation
 "
 Class {
-	#name : #RBPushDownVariableTransformation,
-	#superclass : #RBCompositeVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#name : 'RBPushDownVariableTransformation',
+	#superclass : 'RBCompositeVariableTransformation',
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownVariableTransformation >> applicabilityPreconditionsForClassVariable [
 	"it does not perform when two subclasses (and/or their subclasses) accesses this variable"
 
@@ -26,7 +28,7 @@ RBPushDownVariableTransformation >> applicabilityPreconditionsForClassVariable [
 		  in: self definingClass
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
 
 	^ RBCondition
@@ -34,7 +36,7 @@ RBPushDownVariableTransformation >> applicabilityPreconditionsForInstanceVariabl
 		  in: self definingClass
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownVariableTransformation >> breakingChangePreconditionsForClassVariable [
 
 	^ RBCondition withBlock: [
@@ -52,7 +54,7 @@ RBPushDownVariableTransformation >> breakingChangePreconditionsForClassVariable 
 		  numSubclassesAccessing < 2 ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
 
 	^ RBCondition
@@ -61,7 +63,7 @@ RBPushDownVariableTransformation >> breakingChangePreconditionsForInstanceVariab
 		  showIn: self
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBPushDownVariableTransformation >> buildTransformations [
 
 	^ OrderedCollection new
@@ -80,7 +82,7 @@ RBPushDownVariableTransformation >> buildTransformations [
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownVariableTransformation >> preconditions [
 	"it does not perform when two subclasses
 	(and/or their subclasses) access this variable"
@@ -90,7 +92,7 @@ RBPushDownVariableTransformation >> preconditions [
 		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBPushDownVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -104,7 +106,7 @@ RBPushDownVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPushDownVariableTransformation >> variable: aVariableName class: aClassName classVariable: aBoolean [
 
 	variableName := aVariableName.
@@ -112,7 +114,7 @@ RBPushDownVariableTransformation >> variable: aVariableName class: aClassName cl
 	className := aClassName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBPushDownVariableTransformation >> variableDefinitionsInHierarchy [
 
 	self flag: #pharoTodo. "why the behavior is different for class and instance variable?"

@@ -6,24 +6,26 @@ Sending me the message #import makes me evaluate the code and return the result 
 Be careful, my #import method also handles ChangeSet interaction so far, handling Changeset preambles and Postscripts.
 "
 Class {
-	#name : #DoItChunk,
-	#superclass : #CodeChunk,
-	#category : #'CodeImport-Chunks'
+	#name : 'DoItChunk',
+	#superclass : 'CodeChunk',
+	#category : 'CodeImport-Chunks',
+	#package : 'CodeImport',
+	#tag : 'Chunks'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DoItChunk >> accept: aVisitor [
 
 	^ aVisitor visitDoItChunk: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoItChunk >> description [
 
 	^ 'DoIt (', (contents first: (40 min: contents size)), ')'
 ]
 
-{ #category : #importing }
+{ #category : 'importing' }
 DoItChunk >> importFor: requestor logSource: logSource [
 
 	(contents beginsWith: '----') ifTrue: [ ^self ].
@@ -40,7 +42,7 @@ DoItChunk >> importFor: requestor logSource: logSource [
 		evaluate
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItChunk >> isDoItDeclaration [
 
 	^ true

@@ -1,6 +1,6 @@
-Extension { #name : #RBCascadeNode }
+Extension { #name : 'RBCascadeNode' }
 
-{ #category : #'*ClassParser' }
+{ #category : '*ClassParser' }
 RBCascadeNode >> extractClassDefinitionFor: aFluidParser [
 
 	aFluidParser setAdequateClassDefinitionFrom: self receiver

@@ -3,12 +3,14 @@ This class should trigger the RBClassNotReferencedRule critic. All other classes
 	RBSmalllintTestSuperclassObject updateDefaultExplicitClassReferences.
 "
 Class {
-	#name : #RBSmalllintTestClassNotReferencedObject,
-	#superclass : #RBSmalllintTestSuperclassObject,
-	#category : #'Refactoring-Tests-Critics-Base'
+	#name : 'RBSmalllintTestClassNotReferencedObject',
+	#superclass : 'RBSmalllintTestSuperclassObject',
+	#category : 'Refactoring-Tests-Critics-Base',
+	#package : 'Refactoring-Tests-Critics',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSmalllintTestClassNotReferencedObject class >> mustNotBeReferenced [
 	^ true
 ]

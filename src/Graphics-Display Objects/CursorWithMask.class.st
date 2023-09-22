@@ -2,15 +2,17 @@
 A Cursor which additionally has a 16x16 transparency bitmap called a ""mask"".  See the comment of beCursorWithMask: for details on how the mask is treated.
 "
 Class {
-	#name : #CursorWithMask,
-	#superclass : #Cursor,
+	#name : 'CursorWithMask',
+	#superclass : 'Cursor',
 	#instVars : [
 		'maskForm'
 	],
-	#category : #'Graphics-Display Objects-Cursors'
+	#category : 'Graphics-Display Objects-Cursors',
+	#package : 'Graphics-Display Objects',
+	#tag : 'Cursors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CursorWithMask class >> derivedFrom: aForm [      "Cursor initNormalWithMask.  Cursor normal show"
 	"aForm is presumably a cursor"
 	| cursor mask ext |
@@ -25,13 +27,13 @@ CursorWithMask class >> derivedFrom: aForm [      "Cursor initNormalWithMask.  C
 	^ cursor
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 CursorWithMask >> activateInCursorOwner: aCursorOwner [
 	maskForm unhibernate.
 	^ aCursorOwner activateCursor: self withMask: maskForm
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CursorWithMask >> asCursorForm [
 	| form |
 	form := Form extent: self extent depth: 8.
@@ -40,22 +42,22 @@ CursorWithMask >> asCursorForm [
 	^ form offset: offset
 ]
 
-{ #category : #mask }
+{ #category : 'mask' }
 CursorWithMask >> hasMask [
 	^true
 ]
 
-{ #category : #mask }
+{ #category : 'mask' }
 CursorWithMask >> maskForm [
 	^ maskForm
 ]
 
-{ #category : #mask }
+{ #category : 'mask' }
 CursorWithMask >> setMaskForm: aForm [
 	maskForm := aForm
 ]
 
-{ #category : #mask }
+{ #category : 'mask' }
 CursorWithMask >> storeOn: aStream base: anInteger [
 
 	aStream nextPut: $(.
@@ -65,7 +67,7 @@ CursorWithMask >> storeOn: aStream base: anInteger [
 	aStream nextPut: $)
 ]
 
-{ #category : #mask }
+{ #category : 'mask' }
 CursorWithMask >> withMask [
 	^self
 ]

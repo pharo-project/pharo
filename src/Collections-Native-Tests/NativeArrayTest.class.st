@@ -2,12 +2,14 @@
 SUnit tests for ByteArray, DoubleByteArray, WordArray and DoubleWordArray.
 "
 Class {
-	#name : #NativeArrayTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Native-Tests-Base'
+	#name : 'NativeArrayTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Native-Tests-Base',
+	#package : 'Collections-Native-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NativeArrayTest >> alignmentIndexesDo: aBlock [
 	| max |
 	max := self wordSize.
@@ -17,7 +19,7 @@ NativeArrayTest >> alignmentIndexesDo: aBlock [
 				aBlock value: i value: j value: k ] ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NativeArrayTest >> alignments [
 	"Arrays aligned differently on 8 bytes boundary (when turned into byteArrays)"
 	^ #(
@@ -32,12 +34,12 @@ NativeArrayTest >> alignments [
 	)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NativeArrayTest >> guineaPigClasses [
 	^ { ByteArray . DoubleByteArray . WordArray . DoubleWordArray}
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NativeArrayTest >> guineaPigHerd [
 	"Different alignment, different classes"
 	^ self guineaPigClasses flatCollect: [ :cls |
@@ -45,7 +47,7 @@ NativeArrayTest >> guineaPigHerd [
 			cls newFrom: align ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NativeArrayTest >> testAtAllPut [
 	"Makes sure the primitive works correctly with different data structures"
 	self guineaPigHerd do: [ :guineaPig |
@@ -56,14 +58,14 @@ NativeArrayTest >> testAtAllPut [
 			self assert: (guineaPig at: i) equals: 42 ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NativeArrayTest >> testAtAllPutFail [
 	"Makes sure the primitive works correctly with different data structures"
 	self guineaPigHerd do: [ :guineaPig |
 		self should: [guineaPig atAllPut: -1] raise: Error ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NativeArrayTest >> testAtPutBiggerNumberThrowsException [
 	"Make sure native arrays can contain elements of their slot size"
 
@@ -77,7 +79,7 @@ NativeArrayTest >> testAtPutBiggerNumberThrowsException [
 			raise: Error ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NativeArrayTest >> testAtPutExactSizeNumber [
 	"Make sure native arrays can contain elements of their slot size"
 
@@ -91,13 +93,13 @@ NativeArrayTest >> testAtPutExactSizeNumber [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NativeArrayTest >> testDoubleArraysHaveCorrectLayout [
 	self assert: DoubleWordArray classLayout class equals: DoubleWordLayout.
 	self assert: DoubleByteArray classLayout class equals: DoubleByteLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NativeArrayTest >> testReplaceFromToWithStartingAt [
 	"Makes sure the primitive works correctly with different data structures"
 	self guineaPigHerd do: [ :guineaPig |
@@ -110,7 +112,7 @@ NativeArrayTest >> testReplaceFromToWithStartingAt [
 					self assert: (guineaPig at: j + 8) equals: (copy at: j + 8 - i + k) ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NativeArrayTest >> wordSize [
 	^ Smalltalk wordSize
 ]

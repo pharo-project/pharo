@@ -74,15 +74,17 @@ MyClassA subclass: #MyClassB
 ```
 "
 Class {
-	#name : #RBTemporaryToInstanceVariableTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBTemporaryToInstanceVariableTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'temporaryVariableName'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBTemporaryToInstanceVariableTransformation class >> class: aClass selector: aSelector variable: aVariableName [
 	^ self new
 		class: aClass
@@ -90,7 +92,7 @@ RBTemporaryToInstanceVariableTransformation class >> class: aClass selector: aSe
 		variable: aVariableName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBTemporaryToInstanceVariableTransformation class >> model: aRBSmalltalk class: aClass selector: aSelector variable: aVariableName [
 	^ self new
 		model: aRBSmalltalk;
@@ -100,7 +102,7 @@ RBTemporaryToInstanceVariableTransformation class >> model: aRBSmalltalk class: 
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition definesSelector: selector in: class) & (RBCondition
@@ -111,7 +113,7 @@ RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 			   true ])
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBTemporaryToInstanceVariableTransformation >> breakingChangePreconditions [
 
 	^ RBCondition withBlock: [
@@ -124,7 +126,7 @@ RBTemporaryToInstanceVariableTransformation >> breakingChangePreconditions [
 		  true ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 	| parseTree |
 	parseTree := class parseTreeForSelector: selector.
@@ -143,20 +145,20 @@ RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 							expandMacrosWith: temporaryVariableName)]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector variable: aVariableName [
 	class := self model classObjectFor: aClass.
 	selector := aSelector.
 	temporaryVariableName := aVariableName
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBTemporaryToInstanceVariableTransformation >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBTemporaryToInstanceVariableTransformation >> privateTransform [
 	self removeTemporaryOfClass: class.
 	class allSubclasses do: [ :cls |
@@ -166,12 +168,12 @@ RBTemporaryToInstanceVariableTransformation >> privateTransform [
 	class addInstanceVariable: temporaryVariableName
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfClass: aClass [
 	aClass selectors do: [ :aSymbol | self removeTemporaryOfMethod: aSymbol in: aClass ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfMethod: aSelector in: aClass [
 	| parseTree matcher aMethod |
 	aMethod := aClass methodFor: aSelector.
@@ -182,7 +184,7 @@ RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfMethod: aSelecto
 	aMethod compileTree: matcher tree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBTemporaryToInstanceVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -3,62 +3,64 @@ I'm a common superclass for class definition parsers.
 
 "
 Class {
-	#name : #CDAbstractClassDefinitionParser,
-	#superclass : #Object,
+	#name : 'CDAbstractClassDefinitionParser',
+	#superclass : 'Object',
 	#instVars : [
 		'classDefinition'
 	],
-	#category : #'ClassParser-Parser'
+	#category : 'ClassParser-Parser',
+	#package : 'ClassParser',
+	#tag : 'Parser'
 }
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser class >> fromASTNode: aNode [
 
 	^ self new parseRootNode: aNode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDAbstractClassDefinitionParser class >> isAbstract [
 
 	^ self == CDAbstractClassDefinitionParser
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CDAbstractClassDefinitionParser class >> parse: aString [
 
 	^ self new parse: aString
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 CDAbstractClassDefinitionParser >> beClassDefinition [
 
 	classDefinition := CDClassDefinitionNode new
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 CDAbstractClassDefinitionParser >> beClassSideTraitDefinition [
 
 	classDefinition := CDClassSideTraitDefinitionNode new
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 CDAbstractClassDefinitionParser >> beMetaclassDefinition [
 
 	classDefinition := CDMetaclassDefinitionNode new
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 CDAbstractClassDefinitionParser >> beTraitDefinition [
 
 	classDefinition := CDTraitDefinitionNode new
 ]
 
-{ #category : #'private - class factory' }
+{ #category : 'private - class factory' }
 CDAbstractClassDefinitionParser >> classNameNodeClass [
 	^ CDClassNameNode
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> handleClassName: aNode [
 	| className classNode |
 	className := (aNode isVariable
@@ -70,7 +72,7 @@ CDAbstractClassDefinitionParser >> handleClassName: aNode [
 	classDefinition className: className astNode: classNode
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 	| slots slotNodes instanceVariablesString |
 	instanceVariablesString := aNode value.
@@ -89,7 +91,7 @@ CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 	classDefinition slots: slotNodes
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> handleMetaclassName: aNode [
 	"we are in situation ClassX class << ClassZ class
 				slots: {xxxx} so grab the class"
@@ -106,18 +108,18 @@ CDAbstractClassDefinitionParser >> handleMetaclassName: aNode [
 	"
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> handlePackage: aNode [
 
 	classDefinition packageNameNode: aNode astNode: aNode
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> handleSharedVariableNames: aNode [
 
 	| slots slotNodes classVariablesString |
@@ -135,12 +137,12 @@ CDAbstractClassDefinitionParser >> handleSharedVariableNames: aNode [
 	classDefinition sharedVariables: slotNodes
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> handleSuperclassNode: aNode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> handleTraitUsesFromNode: aNode [
 
 	| traitComposition |
@@ -149,7 +151,7 @@ CDAbstractClassDefinitionParser >> handleTraitUsesFromNode: aNode [
 	classDefinition traitDefinition: traitComposition
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> parse: aString [
 	| expressionTree |
 	expressionTree := self parserClass parseExpression: aString.
@@ -157,32 +159,32 @@ CDAbstractClassDefinitionParser >> parse: aString [
 	^ self parseRootNode: expressionTree
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> parseRootNode: aNode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'private - class factory' }
+{ #category : 'private - class factory' }
 CDAbstractClassDefinitionParser >> parserClass [
 	^ RBParser
 ]
 
-{ #category : #'private - class factory' }
+{ #category : 'private - class factory' }
 CDAbstractClassDefinitionParser >> sharedPoolNodeClass [
 	^ CDSharedPoolNode
 ]
 
-{ #category : #'private - class factory' }
+{ #category : 'private - class factory' }
 CDAbstractClassDefinitionParser >> slotNodeClass [
 	^ CDSlotNode
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDAbstractClassDefinitionParser >> visitMessageNode: aNode [
 	^ self subclassResponsibility
 ]

@@ -2,22 +2,24 @@
 FileAttributePluginPrimsTests mostly tests failure cases.  Functionality tests are contained in DiskFileAttributeTests and FileReferenceAttributeTests.
 "
 Class {
-	#name : #FileAttributesPluginPrimsTest,
-	#superclass : #TestCase,
+	#name : 'FileAttributesPluginPrimsTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'primitives'
 	],
-	#category : #'FileSystem-Tests-Attributes-Tests'
+	#category : 'FileSystem-Tests-Attributes-Tests',
+	#package : 'FileSystem-Tests-Attributes',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FileAttributesPluginPrimsTest >> setUp [
 
 	super setUp.
 	primitives := File
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileAttributesPluginPrimsTest >> testExistsPathTooLong [
 
 	| pathMax filename |
@@ -28,7 +30,7 @@ FileAttributesPluginPrimsTest >> testExistsPathTooLong [
 		raise: IllegalFileName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileAttributesPluginPrimsTest >> testFileAttributeNumberOutOfRange [
 	"Check that the appropriate Bad Argument error is raised if an invalid attribute number is supplied"
 
@@ -40,7 +42,7 @@ FileAttributesPluginPrimsTest >> testFileAttributeNumberOutOfRange [
 		raise: PrimitiveFailed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileAttributesPluginPrimsTest >> testPrimCloseDirNil [
 	"FileAttributesPluginPrims>>primClosedir: nil should raise a bad argument error"
 
@@ -51,7 +53,7 @@ FileAttributesPluginPrimsTest >> testPrimCloseDirNil [
 			self assert: exception selector equals: #'bad argument' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileAttributesPluginPrimsTest >> testPrimCloseDirString [
 	"FileAttributesPluginPrims>>primClosedir: only accepts a ByteArray, anything else should raise an error"
 
@@ -62,7 +64,7 @@ FileAttributesPluginPrimsTest >> testPrimCloseDirString [
 			self assert: exception selector equals: #'bad argument' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileAttributesPluginPrimsTest >> testPrimCloseDirWrongLength [
 	"FileAttributesPluginPrims>>primClosedir: only accepts a ByteArray of size 'void *'"
 
@@ -73,7 +75,7 @@ FileAttributesPluginPrimsTest >> testPrimCloseDirWrongLength [
 			self assert: exception selector equals: #'bad argument' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileAttributesPluginPrimsTest >> testPrimExistsNil [
 	"FileAttributesPluginPrims>>primClosedir: nil should raise a bad argument error"
 

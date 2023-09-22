@@ -1,6 +1,6 @@
-Extension { #name : #TonelRepository }
+Extension { #name : 'TonelRepository' }
 
-{ #category : #'*Pharo30Bootstrap' }
+{ #category : '*Pharo30Bootstrap' }
 TonelRepository >> asRing2EnvironmentWith: packageNames [
 
 	| aRG2Environment |

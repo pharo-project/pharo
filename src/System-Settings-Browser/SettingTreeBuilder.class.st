@@ -2,44 +2,45 @@
 A builder for the settings tree
 "
 Class {
-	#name : #SettingTreeBuilder,
-	#superclass : #Object,
+	#name : 'SettingTreeBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'nodeList',
 		'currentParent',
 		'currentPragma'
 	],
-	#category : #'System-Settings-Browser'
+	#category : 'System-Settings-Browser',
+	#package : 'System-Settings-Browser'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SettingTreeBuilder class >> acceptableKeywords: aCollectionOfRegExps [
 	^ self new acceptableKeywords: aCollectionOfRegExps
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTreeBuilder >> buildPragma: aPragma [
 	currentPragma := aPragma.
 	self perform: aPragma selector withArguments: aPragma arguments.
 	^ nodeList
 ]
 
-{ #category : #'tree building' }
+{ #category : 'tree building' }
 SettingTreeBuilder >> group: aSymbol [
 	^ self nodeClass: PragmaSetting name: aSymbol
 ]
 
-{ #category : #'tree building' }
+{ #category : 'tree building' }
 SettingTreeBuilder >> launcher: aSymbol [
 	^ self nodeClass: SystemSettingLauncher name: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTreeBuilder >> nodeClass [
 	^ SettingNode
 ]
 
-{ #category : #'private - tree building' }
+{ #category : 'private - tree building' }
 SettingTreeBuilder >> nodeClass: aClass name: aSymbol [
 	| node |
 	node := self nodeClass with: aClass new.
@@ -50,12 +51,12 @@ SettingTreeBuilder >> nodeClass: aClass name: aSymbol [
 	^ (SettingNodeBuilder new) node: node; builder: self; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTreeBuilder >> nodeList [
 	^ nodeList ifNil: [nodeList := OrderedCollection new]
 ]
 
-{ #category : #'private - tree building' }
+{ #category : 'private - tree building' }
 SettingTreeBuilder >> parent: aNode while: aBlock [
 	| oldParent |
 	oldParent := currentParent.
@@ -64,22 +65,22 @@ SettingTreeBuilder >> parent: aNode while: aBlock [
 	currentParent := oldParent
 ]
 
-{ #category : #'tree building' }
+{ #category : 'tree building' }
 SettingTreeBuilder >> pickOne: aSymbol [
 	^ self nodeClass: PickOneSettingDeclaration name: aSymbol
 ]
 
-{ #category : #'tree building' }
+{ #category : 'tree building' }
 SettingTreeBuilder >> range: aSymbol [
 	^ self nodeClass: RangeSettingDeclaration name: aSymbol
 ]
 
-{ #category : #'tree building' }
+{ #category : 'tree building' }
 SettingTreeBuilder >> setting: aSymbol [
 	^ self nodeClass: SettingDeclaration name: aSymbol
 ]
 
-{ #category : #pragmas }
+{ #category : 'pragmas' }
 SettingTreeBuilder >> systemsettings [
 	"Process a <systemsettings> pragma"
 

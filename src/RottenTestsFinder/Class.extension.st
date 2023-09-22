@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*RottenTestsFinder' }
+{ #category : '*RottenTestsFinder' }
 Class >> lowestCompiledMethodInInheritanceChainNamed: aSelector [
 	"Starting from self, look if myself define a CompiledMethod named aSelector.
 	 If not, look in my superclasses following the inheritance chain.

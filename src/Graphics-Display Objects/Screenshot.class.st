@@ -6,12 +6,14 @@ I handle the user interaction to get the area to make the screenshot.
 The method #makeAScreenshot handles the menu option to make screen shots.
 "
 Class {
-	#name : #Screenshot,
-	#superclass : #Object,
-	#category : #'Graphics-Display Objects-Utilities'
+	#name : 'Screenshot',
+	#superclass : 'Object',
+	#category : 'Graphics-Display Objects-Utilities',
+	#package : 'Graphics-Display Objects',
+	#tag : 'Utilities'
 }
 
-{ #category : #'world menu items' }
+{ #category : 'world menu items' }
 Screenshot class >> screenShotCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Screenshot)
@@ -24,13 +26,13 @@ Screenshot class >> screenShotCommandOn: aBuilder [
 		iconName: #smallScreenshotIcon
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 Screenshot >> formScreenshotFromUserSelection [
 	
 	^ self formScreenshotFromUserSelection: 1 @ 1
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 Screenshot >> formScreenshotFromUserSelection: initialPoint [
 	
 	| rect |

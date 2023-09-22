@@ -3,12 +3,14 @@ I am a complishon fetcher decorator for ClassBasedComplishonFetcher that will it
 I'll yield all results found in one, then move to the superclass, and so on.
 "
 Class {
-	#name : #CoHierarchyFetcher,
-	#superclass : #CoFetcherDecorator,
-	#category : #'HeuristicCompletion-Model-Fetchers'
+	#name : 'CoHierarchyFetcher',
+	#superclass : 'CoFetcherDecorator',
+	#category : 'HeuristicCompletion-Model-Fetchers',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Fetchers'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoHierarchyFetcher >> entriesDo: aBlock [
 	| currentCompletionFetcher |
 	currentCompletionFetcher := decoree.

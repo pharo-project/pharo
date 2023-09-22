@@ -24,16 +24,18 @@ Example for the eval command:
 		addPositional: ClapPositionnal withName: 'smalltalk 		expression'.
 "
 Class {
-	#name : #ClapCommand,
-	#superclass : #ClapParameterized,
+	#name : 'ClapCommand',
+	#superclass : 'ClapParameterized',
 	#instVars : [
 		'flags',
 		'subcommands'
 	],
-	#category : #'Clap-Core-Specification'
+	#category : 'Clap-Core-Specification',
+	#package : 'Clap-Core',
+	#tag : 'Specification'
 }
 
-{ #category : #'predefined commands' }
+{ #category : 'predefined commands' }
 ClapCommand class >> forHelp [
 	^ (self id: #helpCommand)
 		description: 'Prints command documentation';
@@ -54,63 +56,63 @@ ClapCommand class >> forHelp [
 				ifNotNil: [ doc explain: topic ] ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClapCommand >> addFlag: aFlag [
 	flags add: aFlag
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClapCommand >> addSubcommand: aCommand [
 	subcommands add: aCommand
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClapCommand >> addTo: parentParameter [
 	^ parentParameter addSubcommand: self
 ]
 
-{ #category : #'matching - testing' }
+{ #category : 'matching - testing' }
 ClapCommand >> canMatchWith: word [
 	^ self hasAlias: word
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommand >> flags [
 	^ flags
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClapCommand >> initialize [
 	super initialize.
 	subcommands := OrderedCollection new.
 	flags := OrderedCollection new
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ClapCommand >> parametersDo: aBlock [
 	super parametersDo: aBlock.
 	self flags do: aBlock.
 	self subcommands do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommand >> subcommandNamed: specName ifNone: aBlock [
 	^ subcommands
 		detect: [ :cmd | cmd hasAlias: specName ]
 		ifNone: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommand >> subcommands [
 	^ subcommands
 ]
 
-{ #category : #documenting }
+{ #category : 'documenting' }
 ClapCommand >> synopsisOn: aStream [
 	aStream nextPutAll: self canonicalName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommand >> valueFor: aMatch with: arg [
 	^ aMatch
 		matchedSubcommand: [ :sub | sub value: arg ]

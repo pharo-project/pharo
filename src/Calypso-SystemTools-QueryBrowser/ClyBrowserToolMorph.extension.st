@@ -1,6 +1,6 @@
-Extension { #name : #ClyBrowserToolMorph }
+Extension { #name : 'ClyBrowserToolMorph' }
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserToolMorph >> spawnQueryBrowserOn: aQuery [
 	browser spawnQueryBrowserOn: aQuery
 ]

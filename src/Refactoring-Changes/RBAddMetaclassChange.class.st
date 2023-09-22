@@ -2,15 +2,17 @@
 I am a refactoring change for the class side of a class addition.
 "
 Class {
-	#name : #RBAddMetaclassChange,
-	#superclass : #RBRefactoryDefinitionChange,
+	#name : 'RBAddMetaclassChange',
+	#superclass : 'RBRefactoryDefinitionChange',
 	#instVars : [
 		'classInstanceVariableNames'
 	],
-	#category : #'Refactoring-Changes-Changes-Classes'
+	#category : 'Refactoring-Changes-Changes-Classes',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Classes'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddMetaclassChange class >> definitionPatterns [
 
 	^ #(
@@ -22,25 +24,25 @@ RBAddMetaclassChange class >> definitionPatterns [
 		)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBAddMetaclassChange >> asUndoOperation [
 
 	^ self class definition: self changeClass class oldDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddMetaclassChange >> classInstanceVariableNames [
 
 	^ classInstanceVariableNames
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddMetaclassChange >> definitionClass [
 
 	^ self changeClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBAddMetaclassChange >> fillOutDefinition: aDictionary [
 	"What a bad method name!!! This has nothing to do with it. It fills up a domain object out of the dictionary."
 	"Pay attention that the variables used as key in the dictionary correspond to the pattern variables defined

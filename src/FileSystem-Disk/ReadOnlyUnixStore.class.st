@@ -2,24 +2,26 @@
 I'm a specific store for Unix file systems that allows only read-only access. All read-only DiskStore subclasses share the same behavior. Usage of traits would be appropriate here, but it is not used because the kernel should not contain traits.
 "
 Class {
-	#name : #ReadOnlyUnixStore,
-	#superclass : #UnixStore,
-	#category : #'FileSystem-Disk-Store'
+	#name : 'ReadOnlyUnixStore',
+	#superclass : 'UnixStore',
+	#category : 'FileSystem-Disk-Store',
+	#package : 'FileSystem-Disk',
+	#tag : 'Store'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore class >> isActiveClass [
 
 	^ false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore class >> writableVariant [
 
 	^ UnixStore
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> basicOpen: aPath writable: aBoolean [
 
 	aBoolean ifTrue: [
@@ -29,7 +31,7 @@ ReadOnlyUnixStore >> basicOpen: aPath writable: aBoolean [
 	^ super basicOpen: aPath writable: aBoolean
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> createDirectory: path [
 
 	ReadOnlyFileException signal: 'Attempt crate directory ', path pathString, ' on a read-only file system'.
@@ -37,7 +39,7 @@ ReadOnlyUnixStore >> createDirectory: path [
 	^ self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> delete: path [
 
 	ReadOnlyFileException signal: 'Attempt delete ', path pathString, ' on a read-only file system'.
@@ -45,7 +47,7 @@ ReadOnlyUnixStore >> delete: path [
 	^ self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> file: path posixPermissions: anInteger [
 
 	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
@@ -53,7 +55,7 @@ ReadOnlyUnixStore >> file: path posixPermissions: anInteger [
 	^ self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> file: path symlinkUid: uidInteger gid: gidInteger [
 
 	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
@@ -61,7 +63,7 @@ ReadOnlyUnixStore >> file: path symlinkUid: uidInteger gid: gidInteger [
 	^ self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> file: path uid: uidInteger gid: gidInteger [
 
 	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
@@ -69,24 +71,24 @@ ReadOnlyUnixStore >> file: path uid: uidInteger gid: gidInteger [
 	^ self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> handleClass [
 	^ ReadOnlyFileHandle
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> isWritable [
 
 	^ false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> isWritable: aPath [
 
 	^ false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ReadOnlyUnixStore >> rename: sourcePath to: destinationPath [
 
 	ReadOnlyFileException signal: 'Attempt to rename file ' , sourcePath pathString, ' on a read-only file system'.

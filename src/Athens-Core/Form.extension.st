@@ -1,6 +1,6 @@
-Extension { #name : #Form }
+Extension { #name : 'Form' }
 
-{ #category : #'*Athens-Core' }
+{ #category : '*Athens-Core' }
 Form >> asAthensPaintOn: canvas [
 
 	^ canvas surface createFormPaint: self

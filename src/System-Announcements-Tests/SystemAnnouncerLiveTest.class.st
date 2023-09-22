@@ -2,12 +2,13 @@
 Tests verifiying the behaviour of the default SystemAnnouncer instance.
 "
 Class {
-	#name : #SystemAnnouncerLiveTest,
-	#superclass : #TestCase,
-	#category : #'System-Announcements-Tests'
+	#name : 'SystemAnnouncerLiveTest',
+	#superclass : 'TestCase',
+	#category : 'System-Announcements-Tests',
+	#package : 'System-Announcements-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemAnnouncerLiveTest >> testNoDeadSubscriptions [
 	| dead |
 
@@ -25,7 +26,7 @@ SystemAnnouncerLiveTest >> testNoDeadSubscriptions [
 	self assert: dead asArray equals: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemAnnouncerLiveTest >> testOnlyWeakSubscriptions [
 
 	| strong |
@@ -40,7 +41,7 @@ SystemAnnouncerLiveTest >> testOnlyWeakSubscriptions [
 	self assert: strong asArray equals: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemAnnouncerLiveTest >> testSaneSubscriptionSize [
 
 	"self flag: 'this should be a release test, not a regular one'"

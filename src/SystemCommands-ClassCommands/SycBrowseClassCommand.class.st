@@ -2,22 +2,23 @@
 I am a command to open browser on given class
 "
 Class {
-	#name : #SycBrowseClassCommand,
-	#superclass : #SycSingleClassCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycBrowseClassCommand',
+	#superclass : 'SycSingleClassCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycBrowseClassCommand >> defaultMenuIconName [
 	^#glamorousBrowse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycBrowseClassCommand >> defaultMenuItemName [
 	^'Browse'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycBrowseClassCommand >> execute [
 	targetClass browse
 ]

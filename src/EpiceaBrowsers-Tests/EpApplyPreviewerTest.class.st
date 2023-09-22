@@ -1,10 +1,12 @@
 Class {
-	#name : #EpApplyPreviewerTest,
-	#superclass : #EpLogBrowserOperationFactoryTest,
-	#category : #'EpiceaBrowsers-Tests-Integration'
+	#name : 'EpApplyPreviewerTest',
+	#superclass : 'EpLogBrowserOperationFactoryTest',
+	#category : 'EpiceaBrowsers-Tests-Integration',
+	#package : 'EpiceaBrowsers-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 EpApplyPreviewerTest >> assertEmptyPreviewLog [
 
 	self
@@ -12,7 +14,7 @@ EpApplyPreviewerTest >> assertEmptyPreviewLog [
 		description: 'Shouldn''t find anything to apply'
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 EpApplyPreviewerTest >> assertOutputsAnEventWith: aBlock [
 
 	| outputEvents |
@@ -23,7 +25,7 @@ EpApplyPreviewerTest >> assertOutputsAnEventWith: aBlock [
 	aBlock value: outputEvents anyOne
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 EpApplyPreviewerTest >> assertOutputsEventsWith: aBlock [
 
 	| logBrowserModel outputLog |
@@ -39,7 +41,7 @@ EpApplyPreviewerTest >> assertOutputsEventsWith: aBlock [
 	aBlock value: (outputLog entries collect: [:each | each content])
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 EpApplyPreviewerTest >> outputEvents [
 
 	| outputLog logBrowserModel |
@@ -55,7 +57,7 @@ EpApplyPreviewerTest >> outputEvents [
 	^ outputLog entries collect: [:each | each content]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testBehaviorCategoryChange [
 
 	| aClass aCategory anotherCategory |
@@ -74,7 +76,7 @@ EpApplyPreviewerTest >> testBehaviorCategoryChange [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testBehaviorCommentChange [
 
 	| aClass |
@@ -90,7 +92,7 @@ EpApplyPreviewerTest >> testBehaviorCommentChange [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testBehaviorNameChange [
 
 	| aClass oldName newName |
@@ -109,7 +111,7 @@ EpApplyPreviewerTest >> testBehaviorNameChange [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testClassAdditionWithClassRemoved [
 
 	| aClass classDefinition |
@@ -126,7 +128,7 @@ EpApplyPreviewerTest >> testClassAdditionWithClassRemoved [
 			equals: classDefinition ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testClassAdditionWithInstanceVariablesChanged [
 
 	| aClass classDefinition |
@@ -145,7 +147,7 @@ EpApplyPreviewerTest >> testClassAdditionWithInstanceVariablesChanged [
 			equals: classDefinition ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testClassAdditionWithSuperclassChanged [
 
 	| aClass classDefinition |
@@ -166,7 +168,7 @@ EpApplyPreviewerTest >> testClassAdditionWithSuperclassChanged [
 	aClass superclass: Object "Restore original superclass else something in hierarchy stays wrong (and ClassHierarchyTest>>testSubclassInstVar fails)"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testClassRemovalWithClassAdded [
 
 	| aClass className |
@@ -186,7 +188,7 @@ EpApplyPreviewerTest >> testClassRemovalWithClassAdded [
 			equals: aClass definitionString ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testKeepChangeWhenMethodAdditionWithAbsentBehavior [
 
 	| aClass |
@@ -199,7 +201,7 @@ EpApplyPreviewerTest >> testKeepChangeWhenMethodAdditionWithAbsentBehavior [
 		self assert: output class equals: EpMethodAddition ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testKeepChangeWhenMethodModificationWithAbsentBehavior [
 
 	| aClass |
@@ -213,7 +215,7 @@ EpApplyPreviewerTest >> testKeepChangeWhenMethodModificationWithAbsentBehavior [
 		self assert: output class equals: EpMethodModification ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testMethodAdditionWithMethodRemoved [
 
 	| aClass |
@@ -229,7 +231,7 @@ EpApplyPreviewerTest >> testMethodAdditionWithMethodRemoved [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testMethodAdditionWithProtocolChanged [
 
 	| aClass |
@@ -247,7 +249,7 @@ EpApplyPreviewerTest >> testMethodAdditionWithProtocolChanged [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testMethodAdditionWithSourceCodeChanged [
 
 	| aClass |
@@ -265,7 +267,7 @@ EpApplyPreviewerTest >> testMethodAdditionWithSourceCodeChanged [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testMethodModificationWithMethodRemoved [
 
 	| aClass |
@@ -282,7 +284,7 @@ EpApplyPreviewerTest >> testMethodModificationWithMethodRemoved [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testMethodRemovalWithMethodAdded [
 
 	| aClass |
@@ -299,7 +301,7 @@ EpApplyPreviewerTest >> testMethodRemovalWithMethodAdded [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testNonCodeChangeEvent [
 
 	monitor logEntryCommented:
@@ -313,7 +315,7 @@ EpApplyPreviewerTest >> testNonCodeChangeEvent [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testPackageTagAdditionWithPackageTagRemoval [
 
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
@@ -326,7 +328,7 @@ EpApplyPreviewerTest >> testPackageTagAdditionWithPackageTagRemoval [
 		self assert: output tagName equals: classFactory defaultTagPostfix ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testPackageTagRemovalWithPackageTagAddition [
 
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
@@ -341,7 +343,7 @@ EpApplyPreviewerTest >> testPackageTagRemovalWithPackageTagAddition [
 		self assert: output tagName equals: classFactory defaultTagPostfix ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testPackageTagRenameWithPreviousRollback [
 
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
@@ -357,7 +359,7 @@ EpApplyPreviewerTest >> testPackageTagRenameWithPreviousRollback [
 		self assert: output newTagName equals: classFactory defaultTagPostfix , '2' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testProtocolAdditionWithProtocolRemoved [
 
 	| aClass |
@@ -371,7 +373,7 @@ EpApplyPreviewerTest >> testProtocolAdditionWithProtocolRemoved [
 		self assert: output protocol equals: 'protocol' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testProtocolRemovalWithProtocolAdded [
 
 	| aClass |
@@ -386,7 +388,7 @@ EpApplyPreviewerTest >> testProtocolRemovalWithProtocolAdded [
 		self assert: output protocol equals: 'protocol' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantBehaviorCategoryChange [
 
 	| aClass aCategory anotherCategory |
@@ -400,7 +402,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCategoryChange [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantBehaviorCategoryChangeWithAbsentBehavior [
 
 	| aClass aCategory anotherCategory |
@@ -415,7 +417,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCategoryChangeWithAbsentBehavior [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantBehaviorCommentChange [
 
 	| aClass |
@@ -428,7 +430,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChange [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 
 	| aClass |
@@ -440,7 +442,7 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantClassAddition [
 	classFactory newClass.
 	self setHeadAsInputEntry.
@@ -448,7 +450,7 @@ EpApplyPreviewerTest >> testRedundantClassAddition [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantClassRemoval [
 
 	| aClass |
@@ -459,7 +461,7 @@ EpApplyPreviewerTest >> testRedundantClassRemoval [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantMethodAddition [
 
 	| aClass |
@@ -470,7 +472,7 @@ EpApplyPreviewerTest >> testRedundantMethodAddition [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantMethodModification [
 
 	| aClass |
@@ -482,7 +484,7 @@ EpApplyPreviewerTest >> testRedundantMethodModification [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantMethodRemoval [
 
 	| aClass |
@@ -494,7 +496,7 @@ EpApplyPreviewerTest >> testRedundantMethodRemoval [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantMethodRemovalWithAbsentBehavior [
 
 	| aClass |
@@ -507,7 +509,7 @@ EpApplyPreviewerTest >> testRedundantMethodRemovalWithAbsentBehavior [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantPAckageTagRenameWithAbsentTag [
 
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
@@ -517,7 +519,7 @@ EpApplyPreviewerTest >> testRedundantPAckageTagRenameWithAbsentTag [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantPackageTagAddition [
 
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
@@ -526,7 +528,7 @@ EpApplyPreviewerTest >> testRedundantPackageTagAddition [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantPackageTagRemoval [
 
 	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
@@ -536,7 +538,7 @@ EpApplyPreviewerTest >> testRedundantPackageTagRemoval [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantProtocolAddition [
 
 	| aClass |
@@ -547,7 +549,7 @@ EpApplyPreviewerTest >> testRedundantProtocolAddition [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantProtocolRemoval [
 
 	| aClass |
@@ -559,7 +561,7 @@ EpApplyPreviewerTest >> testRedundantProtocolRemoval [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #'tests - multiple changes' }
+{ #category : 'tests - multiple changes' }
 EpApplyPreviewerTest >> testRedundantSequenceOfMethodModifications [
 
 	| aClass |
@@ -572,7 +574,7 @@ EpApplyPreviewerTest >> testRedundantSequenceOfMethodModifications [
 	self assertEmptyPreviewLog
 ]
 
-{ #category : #'tests - multiple changes' }
+{ #category : 'tests - multiple changes' }
 EpApplyPreviewerTest >> testSequenceOfClassAndMethodAddition [
 
 	| aClass |
@@ -590,7 +592,7 @@ EpApplyPreviewerTest >> testSequenceOfClassAndMethodAddition [
 		]
 ]
 
-{ #category : #'tests - multiple changes' }
+{ #category : 'tests - multiple changes' }
 EpApplyPreviewerTest >> testSequenceOfMethodModifications [
 
 	| aClass |
@@ -611,7 +613,7 @@ EpApplyPreviewerTest >> testSequenceOfMethodModifications [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testTraitAdditionWithTraitRemoved [
 
 	| aTrait traitDefinition |
@@ -628,7 +630,7 @@ EpApplyPreviewerTest >> testTraitAdditionWithTraitRemoved [
 			equals: traitDefinition ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpApplyPreviewerTest >> testTraitRemovalWithTraitAdded [
 
 	| aTrait traitName traitDefinition |

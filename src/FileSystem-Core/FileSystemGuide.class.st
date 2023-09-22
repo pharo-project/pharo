@@ -8,67 +8,69 @@ work
 	An OrderedCollection, used to keep track of filesystem nodes that have not yet been visited
 "
 Class {
-	#name : #FileSystemGuide,
-	#superclass : #Object,
+	#name : 'FileSystemGuide',
+	#superclass : 'Object',
 	#instVars : [
 		'visitor',
 		'work',
 		'selectChildren'
 	],
-	#category : #'FileSystem-Core-Base-Guide'
+	#category : 'FileSystem-Core-Base-Guide',
+	#package : 'FileSystem-Core',
+	#tag : 'Base-Guide'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileSystemGuide class >> for: aVisitor [
 	^ self basicNew initializeWithVisitor: aVisitor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileSystemGuide class >> show: aReference to: aVisitor [
 	^ (self for: aVisitor) show: aReference
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileSystemGuide class >> show: aReference to: aVisitor selecting: aBlock [
 	^ (self for: aVisitor)
 		selectChildren:  aBlock;
 		show: aReference
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileSystemGuide >> initialize [
 
 	super initialize.
 	work := OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileSystemGuide >> initializeWithVisitor: aVisitor [
 	self initialize.
 	visitor := aVisitor
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 FileSystemGuide >> pop [
 	^ work removeLast
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FileSystemGuide >> push: anObject [
 	work add: anObject
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 FileSystemGuide >> pushAll: aCollection [
 	aCollection do: [ :ea | self push: ea ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemGuide >> selectChildren [
 	^ selectChildren
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemGuide >> selectChildren: aBlock [
 	"With this block you can control how the guide spreads over directories.
 	Example:
@@ -81,24 +83,24 @@ FileSystemGuide >> selectChildren: aBlock [
 	selectChildren := aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemGuide >> shouldVisitChildrenOf: anEntry [
 	^ selectChildren
 		ifNil: [ true ]
 		ifNotNil: [ selectChildren cull: anEntry ]
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 FileSystemGuide >> show: aReference [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemGuide >> top [
 	^ work removeFirst
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 FileSystemGuide >> whileNotDoneDo: aBlock [
 	[ work isEmpty ] whileFalse: [ aBlock value ]
 ]

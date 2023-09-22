@@ -2,30 +2,32 @@
 SUnit tests for a single file system tree (depth one)
 "
 Class {
-	#name : #SingleTreeTest,
-	#superclass : #FileSystemTreeTest,
+	#name : 'SingleTreeTest',
+	#superclass : 'FileSystemTreeTest',
 	#instVars : [
 		'filesystem'
 	],
-	#category : #'FileSystem-Tests-Core-Base'
+	#category : 'FileSystem-Tests-Core-Base',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SingleTreeTest class >> isAbstract [
 	^ self name = #SingleTreeTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SingleTreeTest >> createDirectory: aString [
 	filesystem createDirectory: (filesystem pathFromString: aString)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SingleTreeTest >> createFile: aString [
 	filesystem store createFile: (filesystem pathFromString: aString)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SingleTreeTest >> setUp [
 	super setUp.
 	filesystem := FileSystem memory

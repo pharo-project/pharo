@@ -1,39 +1,40 @@
 Class {
-	#name : #CNSelectorExtractionOnPositionTest,
-	#superclass : #TestCase,
+	#name : 'CNSelectorExtractionOnPositionTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'sourceCode',
 		'ast',
 		'position'
 	],
-	#category : #'Tools-CodeNavigation-Tests'
+	#category : 'Tools-CodeNavigation-Tests',
+	#package : 'Tools-CodeNavigation-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> caretAfter: aNode [
 
 	self caretAt: aNode stop + 1
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> caretAt: aPosition [
 
 	position := aPosition
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> caretBefore: aNode [
 
 	self caretAt: aNode start
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> caretInMiddleOf: aNode [
 
 	self caretAt: aNode start + 1
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> caretInMiddleOfCascadeMessage: aRBMessageNode [
 
 	self flag: #bug.
@@ -41,19 +42,19 @@ CNSelectorExtractionOnPositionTest >> caretInMiddleOfCascadeMessage: aRBMessageN
 	^ self caretAt: aRBMessageNode selectorNode start
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> messageNodeToTest [
 
 	^ self returnNodeToTest value
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> method: a zkx: bsq pn: c [
 	<ignoreNotImplementedSelectors: #(aMethod:with:x: something:)>
 	^ self aMethod: a with: (self something: bsq) x:(self perform: #selector)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> methodWithCascade [
 
 	^ self
@@ -61,7 +62,7 @@ CNSelectorExtractionOnPositionTest >> methodWithCascade [
 		asString
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> methodWithIfTrueIfFalse [
 
 	self isInteger
@@ -71,37 +72,37 @@ CNSelectorExtractionOnPositionTest >> methodWithIfTrueIfFalse [
 		ifFalse: [ self yourself ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> methodWithSpacesAtTheEnd [
 	"Please do not remove the leading spaces"
 	<ignoreNotImplementedSelectors: #(someMessageFollowedBySpaces)>
 	^ 1 someMessageFollowedBySpaces  
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> methodX:a [
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> returnNodeToTest [
 
 	^ ast statements first
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> selectedSelector [
 
 	^ CNSelectorExtractor new extractSelectorFromAST: ast atPosition: position
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CNSelectorExtractionOnPositionTest >> sourceCodeOf: aMethod [
 
 	sourceCode := aMethod sourceCode.
 	ast := aMethod ast
 ]
 
-{ #category : #'tests - no selection - withOutMessage' }
+{ #category : 'tests - no selection - withOutMessage' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterABlock [
 	| selector |
 	selector := '[]'.
@@ -111,7 +112,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterABlock [
 	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
-{ #category : #'tests - no selection - withOutMessage' }
+{ #category : 'tests - no selection - withOutMessage' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterABlockWithArgument [
 	| selector |
 	selector := '[:even| ]'.
@@ -121,7 +122,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterABlockWithArgument [
 	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
-{ #category : #'tests - no selection - withOutMessage' }
+{ #category : 'tests - no selection - withOutMessage' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArray [
 	| selector |
 	selector := '{}'.
@@ -131,7 +132,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArray [
 	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
-{ #category : #'tests - no selection - withOutMessage' }
+{ #category : 'tests - no selection - withOutMessage' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArrayWithAnElement [
 	| selector |
 	selector := '{even}'.
@@ -141,7 +142,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArrayWithAnElement [
 	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
-{ #category : #'tests - no selection - withOutMessage' }
+{ #category : 'tests - no selection - withOutMessage' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArray [
 	| selector |
 	selector := '#()'.
@@ -151,7 +152,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArray [
 	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
-{ #category : #'tests - no selection - withOutMessage' }
+{ #category : 'tests - no selection - withOutMessage' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArrayWithAnElement [
 	| selector |
 	selector := '#(even)'.
@@ -161,7 +162,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArrayWithAnElement [
 	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
-{ #category : #'tests - no selection - blocks' }
+{ #category : 'tests - no selection - blocks' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterFirstMessageInBlock [
 
 	| firstBlock messageInsideBlock |
@@ -173,7 +174,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterFirstMessageInBlock [
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
-{ #category : #'tests - no selection - blocks' }
+{ #category : 'tests - no selection - blocks' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterLastMessageInBlock [
 
 	| firstBlock messageInsideBlock |
@@ -185,7 +186,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterLastMessageInBlock [
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
-{ #category : #'tests - no selection - blocks' }
+{ #category : 'tests - no selection - blocks' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterMessageInBlock [
 
 	| firstBlock messageInsideBlock |
@@ -197,7 +198,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterMessageInBlock [
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
-{ #category : #'tests - no selection - message' }
+{ #category : 'tests - no selection - message' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterNestedMessageReceiverInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
@@ -208,7 +209,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterNestedMessageReceiverInMiddl
 	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
 
-{ #category : #'tests - no selection - return' }
+{ #category : 'tests - no selection - return' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterReturnShouldMatchChild [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -219,7 +220,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterReturnShouldMatchChild [
 	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
-{ #category : #'tests - no selection - return' }
+{ #category : 'tests - no selection - return' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterReturnShouldMatchChildCascade [
 
 	| cascade |
@@ -232,7 +233,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterReturnShouldMatchChildCascad
 	self assert: self selectedSelector equals: cascade messages first selector
 ]
 
-{ #category : #'tests - no selection - variable' }
+{ #category : 'tests - no selection - variable' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterVariableNode [
 
 	| selector |
@@ -243,7 +244,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterVariableNode [
 	self assert: self selectedSelector equals: selector
 ]
 
-{ #category : #'tests - no selection - return' }
+{ #category : 'tests - no selection - return' }
 CNSelectorExtractionOnPositionTest >> testCaretAtEndOfMethodShouldMatchMethodNode [
 
 	self sourceCodeOf: self class >> #methodWithSpacesAtTheEnd.
@@ -253,7 +254,7 @@ CNSelectorExtractionOnPositionTest >> testCaretAtEndOfMethodShouldMatchMethodNod
 	self assert: self selectedSelector equals: #methodWithSpacesAtTheEnd
 ]
 
-{ #category : #'tests - no selection - blocks' }
+{ #category : 'tests - no selection - blocks' }
 CNSelectorExtractionOnPositionTest >> testCaretBeforeMessageInBlock [
 
 	| firstBlock messageInsideBlock |
@@ -265,7 +266,7 @@ CNSelectorExtractionOnPositionTest >> testCaretBeforeMessageInBlock [
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
-{ #category : #'tests - no selection - message' }
+{ #category : 'tests - no selection - message' }
 CNSelectorExtractionOnPositionTest >> testCaretBeforeNestedMessageReceiverInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
@@ -276,7 +277,7 @@ CNSelectorExtractionOnPositionTest >> testCaretBeforeNestedMessageReceiverInMidd
 	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
 
-{ #category : #'tests - no selection - return' }
+{ #category : 'tests - no selection - return' }
 CNSelectorExtractionOnPositionTest >> testCaretBeforeReturnShouldMatchChild [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -285,7 +286,7 @@ CNSelectorExtractionOnPositionTest >> testCaretBeforeReturnShouldMatchChild [
 	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
-{ #category : #'tests - no selection - cascade' }
+{ #category : 'tests - no selection - cascade' }
 CNSelectorExtractionOnPositionTest >> testCaretInCascadeFirstMessageShouldMatchFirstMessage [
 
 	| cascade |
@@ -297,7 +298,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInCascadeFirstMessageShouldMatchF
 	self assert: self selectedSelector equals: cascade messages first selector
 ]
 
-{ #category : #'tests - no selection - cascade' }
+{ #category : 'tests - no selection - cascade' }
 CNSelectorExtractionOnPositionTest >> testCaretInCascadeReceiverShouldMatchFirstMessage [
 
 	| cascade |
@@ -309,7 +310,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInCascadeReceiverShouldMatchFirst
 	self assert: self selectedSelector equals: cascade messages first selector
 ]
 
-{ #category : #'tests - no selection - cascade' }
+{ #category : 'tests - no selection - cascade' }
 CNSelectorExtractionOnPositionTest >> testCaretInCascadeSecondMessageShouldMatchSecondMessage [
 
 	| cascade |
@@ -321,7 +322,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInCascadeSecondMessageShouldMatch
 	self assert: self selectedSelector equals: cascade messages second selector
 ]
 
-{ #category : #'tests - no selection - method signature' }
+{ #category : 'tests - no selection - method signature' }
 CNSelectorExtractionOnPositionTest >> testCaretInHeaderAfterArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -330,7 +331,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderAfterArgumentName [
 	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
-{ #category : #'tests - no selection - method signature' }
+{ #category : 'tests - no selection - method signature' }
 CNSelectorExtractionOnPositionTest >> testCaretInHeaderInBeforeArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -339,7 +340,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderInBeforeArgumentName [
 	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
-{ #category : #'tests - no selection - method signature' }
+{ #category : 'tests - no selection - method signature' }
 CNSelectorExtractionOnPositionTest >> testCaretInHeaderInBeforeArgumentWithoutSpaceName [
 
 	self sourceCodeOf: self class >> #methodX:.
@@ -348,7 +349,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderInBeforeArgumentWithoutSp
 	self assert: self selectedSelector equals: #methodX:
 ]
 
-{ #category : #'tests - no selection - method signature' }
+{ #category : 'tests - no selection - method signature' }
 CNSelectorExtractionOnPositionTest >> testCaretInHeaderInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -357,7 +358,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderInMiddleOfArgumentName [
 	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
-{ #category : #'tests - no selection - method signature' }
+{ #category : 'tests - no selection - method signature' }
 CNSelectorExtractionOnPositionTest >> testCaretInHeaderInMiddleOfMessageSelector [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -366,7 +367,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderInMiddleOfMessageSelector
 	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
-{ #category : #'tests - no selection - method signature' }
+{ #category : 'tests - no selection - method signature' }
 CNSelectorExtractionOnPositionTest >> testCaretInHeaderInMiddleOfSelectorHeader [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -375,7 +376,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInHeaderInMiddleOfSelectorHeader 
 	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
-{ #category : #'tests - no selection - message' }
+{ #category : 'tests - no selection - message' }
 CNSelectorExtractionOnPositionTest >> testCaretInMessageAfterArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -384,7 +385,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInMessageAfterArgumentName [
 	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
-{ #category : #'tests - no selection - message' }
+{ #category : 'tests - no selection - message' }
 CNSelectorExtractionOnPositionTest >> testCaretInMessageInBeforeArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -393,7 +394,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInMessageInBeforeArgumentName [
 	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
-{ #category : #'tests - no selection - blocks' }
+{ #category : 'tests - no selection - blocks' }
 CNSelectorExtractionOnPositionTest >> testCaretInMessageInBlock [
 
 	| firstBlock messageInsideBlock |
@@ -405,7 +406,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInMessageInBlock [
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
-{ #category : #'tests - no selection - message' }
+{ #category : 'tests - no selection - message' }
 CNSelectorExtractionOnPositionTest >> testCaretInNestedMessageInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -416,7 +417,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInNestedMessageInMiddleOfArgument
 	self assert: self selectedSelector equals: self messageNodeToTest arguments second selector
 ]
 
-{ #category : #'tests - no selection - message' }
+{ #category : 'tests - no selection - message' }
 CNSelectorExtractionOnPositionTest >> testCaretInNestedPerformMessageInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -427,7 +428,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInNestedPerformMessageInMiddleOfA
 	self assert: self selectedSelector equals: self messageNodeToTest arguments third selector
 ]
 
-{ #category : #'tests - no selection - message' }
+{ #category : 'tests - no selection - message' }
 CNSelectorExtractionOnPositionTest >> testCaretInSymbol [
 
 	| performSymbolArgumentNode |
@@ -440,7 +441,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInSymbol [
 	self assert: self selectedSelector equals: performSymbolArgumentNode value
 ]
 
-{ #category : #'tests - no selection - message' }
+{ #category : 'tests - no selection - message' }
 CNSelectorExtractionOnPositionTest >> testCaretInTheMiddleOfNestedMessageReceiverInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
@@ -451,7 +452,7 @@ CNSelectorExtractionOnPositionTest >> testCaretInTheMiddleOfNestedMessageReceive
 	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
 
-{ #category : #'tests - no selection - withOutMessage' }
+{ #category : 'tests - no selection - withOutMessage' }
 CNSelectorExtractionOnPositionTest >> testCaretOnNonValidCode [
 	"Code has invalid code (no selectors at all)"
 
@@ -462,7 +463,7 @@ CNSelectorExtractionOnPositionTest >> testCaretOnNonValidCode [
 	self assert: self selectedSelector equals: ast methodNode selector
 ]
 
-{ #category : #'tests - no selection - withOutMessage' }
+{ #category : 'tests - no selection - withOutMessage' }
 CNSelectorExtractionOnPositionTest >> testCaretWithEmptyString [
 	| selector |
 	selector := ''.
@@ -472,7 +473,7 @@ CNSelectorExtractionOnPositionTest >> testCaretWithEmptyString [
 	self assert: self selectedSelector equals: nil
 ]
 
-{ #category : #'tests - no selection - blocks' }
+{ #category : 'tests - no selection - blocks' }
 CNSelectorExtractionOnPositionTest >> testExtractSelectorWithPositionAtFirstCharacterOfMethod [
 
 	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.

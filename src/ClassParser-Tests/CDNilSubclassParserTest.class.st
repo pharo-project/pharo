@@ -1,10 +1,11 @@
 Class {
-	#name : #CDNilSubclassParserTest,
-	#superclass : #CDNormalClassParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDNilSubclassParserTest',
+	#superclass : 'CDNormalClassParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDNilSubclassParserTest >> classDefinitionString [
 	^ 'ProtoObject subclass: #ProtoObject
 	instanceVariableNames: ''first second''
@@ -13,18 +14,18 @@ CDNilSubclassParserTest >> classDefinitionString [
 ProtoObject superclass: nil'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDNilSubclassParserTest >> className [
 	^ 'ProtoObject'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDNilSubclassParserTest >> superclassName [
 
 	^ 'nil'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDNilSubclassParserTest >> testBestNodeForClassNameSelectionShouldBeClassNameNode [
 
 	| selectedNode selection |

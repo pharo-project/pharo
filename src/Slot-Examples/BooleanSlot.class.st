@@ -4,20 +4,22 @@ I am a Slot that does not allocate one field for each slot. Instead, all Boolean
 
 "
 Class {
-	#name : #BooleanSlot,
-	#superclass : #DerivedSlot,
+	#name : 'BooleanSlot',
+	#superclass : 'DerivedSlot',
 	#instVars : [
 		'offset'
 	],
-	#category : #'Slot-Examples-Base'
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BooleanSlot >> baseSlotRead: anObject [
 	^ (baseSlot read: anObject) ifNil: [ 0 ]
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 BooleanSlot >> emitStore: methodBuilder [
 	"generate bytecode for 'baseSlot bitAt: index put: <stackTop>'"
 	| tempName |
@@ -34,7 +36,7 @@ BooleanSlot >> emitStore: methodBuilder [
 		storeInstVar: baseSlot index
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 BooleanSlot >> emitValue: methodBuilder [
 	"generate bytecode for '(<baseSlot> bitAt: offset) == 1'"
 	methodBuilder
@@ -45,7 +47,7 @@ BooleanSlot >> emitValue: methodBuilder [
 		send: #==
 ]
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 BooleanSlot >> installingIn: aClass [
 	| booleanSlots |
 	super installingIn: aClass.
@@ -62,17 +64,17 @@ BooleanSlot >> installingIn: aClass [
 	offset := booleanSlots indexOf: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BooleanSlot >> offset [
 	^offset
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 BooleanSlot >> read: anObject [
 	^((self baseSlotRead: anObject) bitAt: offset) == 1
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 BooleanSlot >> write: aValue to: anObject [
 		| newInteger |
 		newInteger := (self baseSlotRead: anObject) bitAt: offset put: aValue asBit.

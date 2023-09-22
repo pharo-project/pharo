@@ -1,6 +1,6 @@
-Extension { #name : #CmdCommand }
+Extension { #name : 'CmdCommand' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> addToolbarItemInto: toolbarMorph using: aCommandActivator [
 
 	| item |
@@ -9,13 +9,13 @@ CmdCommand >> addToolbarItemInto: toolbarMorph using: aCommandActivator [
 	toolbarMorph addNewItem: item
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> browserTabActionIcon [
 
 	^self secureMenuIcon
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> buildBrowserNotebookActionsUsing: aCommandActivator [
 
 	^ { ClyNotebookPageActionButtonMorph forAction: (ClyNotebookPageAction
@@ -24,7 +24,7 @@ CmdCommand >> buildBrowserNotebookActionsUsing: aCommandActivator [
 		label: aCommandActivator commandDescription) }
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> buildBrowserTabActionsUsing: aCommandActivator [
 
 	^{
@@ -35,7 +35,7 @@ CmdCommand >> buildBrowserTabActionsUsing: aCommandActivator [
 	}
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> createTableCellButtonUsing: aCommandActivator [
 
 	| icon |
@@ -44,7 +44,7 @@ CmdCommand >> createTableCellButtonUsing: aCommandActivator [
 	^self createTableCellButtonWith: icon using: aCommandActivator
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> createTableCellButtonWith: anIcon using: aCommandActivator [
 
 	^IconicButtonMorph new
@@ -57,13 +57,13 @@ CmdCommand >> createTableCellButtonWith: anIcon using: aCommandActivator [
 		extent: anIcon extent
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> createToolbarItemFor: aCommandActivator [
 
 	^ClyBrowserButtonMorph activatingBy: aCommandActivator
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> decorateTableCell: anItemCellMorph using: aCommandActivator [
 
 	| button |
@@ -72,13 +72,13 @@ CmdCommand >> decorateTableCell: anItemCellMorph using: aCommandActivator [
 	self decorateTableCell: anItemCellMorph with: button
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 
 	anItemCellMorph definitionMorph: aMorph
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> decorateToolbarItem: aBrowserToolbarItem [
 
 	self description ifNotNil: [ :d |
@@ -88,12 +88,12 @@ CmdCommand >> decorateToolbarItem: aBrowserToolbarItem [
 		aBrowserToolbarItem addIcon: icon asMorph]
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> defaultToolbarItemName [
 	^self defaultMenuItemName
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdCommand >> tableCellIcon [
 
 	^self secureMenuIcon

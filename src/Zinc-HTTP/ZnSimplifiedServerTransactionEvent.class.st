@@ -12,8 +12,8 @@ ZnSimplifiedServerTransactionEvent is ideal for classic HTTP logging with little
 
 "
 Class {
-	#name : #ZnSimplifiedServerTransactionEvent,
-	#superclass : #ZnServerLogEvent,
+	#name : 'ZnSimplifiedServerTransactionEvent',
+	#superclass : 'ZnServerLogEvent',
 	#instVars : [
 		'method',
 		'url',
@@ -21,20 +21,22 @@ Class {
 		'size',
 		'duration'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedServerTransactionEvent >> duration [
 	^ duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedServerTransactionEvent >> method [
 	^ method
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnSimplifiedServerTransactionEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
 	stream space; nextPutAll: method.
@@ -46,35 +48,35 @@ ZnSimplifiedServerTransactionEvent >> printContentsOn: stream [
 	stream space; print: duration; nextPutAll: 'ms'
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnSimplifiedServerTransactionEvent >> request: aZnRequest [
 	method := aZnRequest method.
 	url := aZnRequest url
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnSimplifiedServerTransactionEvent >> response: aZnResponse [
 	response := aZnResponse code.
 	aZnResponse hasEntity
 		ifTrue: [ size := aZnResponse entity contentLength ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedServerTransactionEvent >> responseCode [
 	^ response
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedServerTransactionEvent >> size [
 	^ size
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnSimplifiedServerTransactionEvent >> timing: timing [
 	duration := timing totalDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedServerTransactionEvent >> url [
 	^ url
 ]

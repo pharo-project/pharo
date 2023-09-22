@@ -2,11 +2,13 @@
 I am a Trait that can be used by subclasses of RubScrolledTextExtra wanting to display or not line numbers.
 "
 Trait {
-	#name : #TRubWithLineNumber,
-	#category : #'Rubric-Traits'
+	#name : 'TRubWithLineNumber',
+	#category : 'Rubric-Traits',
+	#package : 'Rubric',
+	#tag : 'Traits'
 }
 
-{ #category : #'managing line numbers' }
+{ #category : 'managing line numbers' }
 TRubWithLineNumber >> changeLineNumbersDisplay [
 	self paragraphProvider lineNumbersRuler
 		ifNil: [ self paragraphProvider withLineNumbers ]
@@ -15,24 +17,24 @@ TRubWithLineNumber >> changeLineNumbersDisplay [
 	self updateContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TRubWithLineNumber >> fontToUse [
 	^ RubAbstractTextArea lineNumbersFont
 ]
 
-{ #category : #'managing line numbers' }
+{ #category : 'managing line numbers' }
 TRubWithLineNumber >> lineNumbersDisplayLabel [
 	^ self paragraphProvider lineNumbersRuler
 		ifNil: [ '+L' ]
 		ifNotNil: [ 'L' ]
 ]
 
-{ #category : #'managing line numbers' }
+{ #category : 'managing line numbers' }
 TRubWithLineNumber >> lineNumbersDisplayLabelMorph [
 	^ StringMorph contents: self lineNumbersDisplayLabel font: self fontToUse
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TRubWithLineNumber >> updateContents [
 	self explicitRequirement
 ]

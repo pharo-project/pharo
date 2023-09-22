@@ -2,22 +2,24 @@
 SUnit test resource for Gofer testing
 "
 Class {
-	#name : #GoferResource,
-	#superclass : #TestResource,
+	#name : 'GoferResource',
+	#superclass : 'TestResource',
 	#instVars : [
 		'versionReferences',
 		'monticelloRepository'
 	],
-	#category : #'Gofer-Tests-Resources'
+	#category : 'Gofer-Tests-Resources',
+	#package : 'Gofer-Tests',
+	#tag : 'Resources'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferResource >> monticelloRepository [
 
 	^ monticelloRepository
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferResource >> setUp [
 
 	super setUp.
@@ -26,7 +28,7 @@ GoferResource >> setUp [
 		setUpMonticelloRepository
 ]
 
-{ #category : #'private - running' }
+{ #category : 'private - running' }
 GoferResource >> setUpMonticelloRepository [
 	"This method builds a fake repository with the version references from #buildReferences."
 
@@ -51,7 +53,7 @@ GoferResource >> setUpMonticelloRepository [
 				 dependencies: #(  )) ]
 ]
 
-{ #category : #'private - running' }
+{ #category : 'private - running' }
 GoferResource >> setUpVersionReferences [
 	"This method answers a set of Gofer references in the order they should be sorted. It includes two different packages (Gofer-Foo, Gofer-Bar), linear series of packages (Gofer-Foo-lr.1, Gofer-Foo-lr.2, Gofer-Foo-lr.4), packages with a branch (Gofer-Bar.branch-lr.1,Gofer.branch-Bar-lr.2), and packages with the same version but different authors (Gofer-Bar-jf.1, Gofer-Bar-lr.1)."
 
@@ -66,7 +68,7 @@ GoferResource >> setUpVersionReferences [
 		add: (GoferVersionReference name: 'GoferFoo-lr.4')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferResource >> versionReferences [
 
 	^ versionReferences

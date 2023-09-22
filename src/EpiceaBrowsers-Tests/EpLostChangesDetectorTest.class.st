@@ -2,15 +2,17 @@
 An EpLostChangesDetectorTest is a test class for testing the behavior of EpLostChangesDetector
 "
 Class {
-	#name : #EpLostChangesDetectorTest,
-	#superclass : #EpEnabledIntegrationTest,
+	#name : 'EpLostChangesDetectorTest',
+	#superclass : 'EpEnabledIntegrationTest',
 	#instVars : [
 		'detector'
 	],
-	#category : #'EpiceaBrowsers-Tests-Integration'
+	#category : 'EpiceaBrowsers-Tests-Integration',
+	#package : 'EpiceaBrowsers-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectInEmptyLog [
 	detector := EpLostChangesDetector newWithLog: monitor log.
 	self deny: detector hasLostChanges.
@@ -19,7 +21,7 @@ EpLostChangesDetectorTest >> testDetectInEmptyLog [
 	self assertEmpty: monitor log entries	"Just to be sure of the assumed precondition"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectNoChange [
 	classFactory newClass.
 	monitor log store flush.
@@ -32,7 +34,7 @@ EpLostChangesDetectorTest >> testDetectNoChange [
 	self assert: monitor log entriesCount equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectNoChangeBecauseLogFileWasDeleted [
 
 	| logWithALostChange |
@@ -50,7 +52,7 @@ EpLostChangesDetectorTest >> testDetectNoChangeBecauseLogFileWasDeleted [
 	self assertEmpty: detector lostChanges
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 
 	| logWithALostChange |
@@ -70,7 +72,7 @@ EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 	self assert: monitor log entriesCount > 1. "Just to ensure assumptions of this test"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectThreeChanges [
 
 	| logWithLostChanges numberOfLostChanges expectedLostClassNames detectedLostChanges detectedLostClassChanges |

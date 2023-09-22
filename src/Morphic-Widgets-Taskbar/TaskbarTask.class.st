@@ -2,18 +2,19 @@
 Holds the state of a taskbar/tasklist entry.
 "
 Class {
-	#name : #TaskbarTask,
-	#superclass : #Object,
+	#name : 'TaskbarTask',
+	#superclass : 'Object',
 	#instVars : [
 		'morph',
 		'state',
 		'label',
 		'icon'
 	],
-	#category : #'Morphic-Widgets-Taskbar'
+	#category : 'Morphic-Widgets-Taskbar',
+	#package : 'Morphic-Widgets-Taskbar'
 }
 
-{ #category : #'intance creation' }
+{ #category : 'intance creation' }
 TaskbarTask class >> morph: aMorph state: aSymbol icon: aForm label: aString [
 	"Answer a new instance of the receiver with the given parameters."
 
@@ -24,7 +25,7 @@ TaskbarTask class >> morph: aMorph state: aSymbol icon: aForm label: aString [
 		label: aString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaskbarTask >> = aTaskbarTask [
 	"Answer whether equal."
 
@@ -35,7 +36,7 @@ TaskbarTask >> = aTaskbarTask [
 		and: [self label = aTaskbarTask label]]]]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 TaskbarTask >> activate [
 	"Activate the task."
 
@@ -43,14 +44,14 @@ TaskbarTask >> activate [
 		ifTrue: [self morph restoreAndActivate]
 ]
 
-{ #category : #'user-interface' }
+{ #category : 'user-interface' }
 TaskbarTask >> buttonClickedForTaskList: aTasklist [
 	"Notify the tasklist."
 
 	aTasklist taskClicked: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaskbarTask >> hash [
 	"Hash is implemented because #= is implemented."
 
@@ -60,77 +61,77 @@ TaskbarTask >> hash [
 		bitXor: self label hash))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarTask >> icon [
 	"Answer the value of icon"
 
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarTask >> icon: anObject [
 	"Set the value of icon"
 
 	icon := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaskbarTask >> isActive [
 	"Answer whether the task is active."
 
 	^self state == #active
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaskbarTask >> isMinimized [
 	"Answer whether the task is minimized."
 
 	^self state == #minimized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarTask >> label [
 	"Answer the value of label"
 
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarTask >> label: anObject [
 	"Set the value of label"
 
 	label := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarTask >> morph [
 	"Answer the value of morph"
 
 	^ morph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarTask >> morph: anObject [
 	"Set the value of morph"
 
 	morph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarTask >> state [
 	"Answer the value of state"
 
 	^ state
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarTask >> state: anObject [
 	"Set the value of state"
 
 	state := anObject
 ]
 
-{ #category : #'user-interface' }
+{ #category : 'user-interface' }
 TaskbarTask >> taskListButtonFor: aTasklist [
 	"Answer a button for the task."
 
@@ -139,14 +140,14 @@ TaskbarTask >> taskListButtonFor: aTasklist [
 		for: self
 ]
 
-{ #category : #'user-interface' }
+{ #category : 'user-interface' }
 TaskbarTask >> taskbarButtonFor: aTaskBar [
 	"Answer a button for the task."
 
 	^self morph taskbarButtonFor: aTaskBar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarTask >> theme [
 	^ Smalltalk ui theme
 ]

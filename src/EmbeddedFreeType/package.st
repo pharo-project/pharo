@@ -1,1 +1,1 @@
-Package { #name : #EmbeddedFreeType }
+Package { #name : 'EmbeddedFreeType' }

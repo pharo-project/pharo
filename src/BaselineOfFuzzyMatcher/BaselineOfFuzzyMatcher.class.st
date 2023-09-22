@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfFuzzyMatcher,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfFuzzyMatcher
+	#name : 'BaselineOfFuzzyMatcher',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfFuzzyMatcher',
+	#package : 'BaselineOfFuzzyMatcher'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfFuzzyMatcher >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [

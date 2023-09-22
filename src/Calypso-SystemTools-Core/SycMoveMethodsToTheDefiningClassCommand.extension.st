@@ -1,6 +1,6 @@
-Extension { #name : #SycMoveMethodsToTheDefiningClassCommand }
+Extension { #name : 'SycMoveMethodsToTheDefiningClassCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycMoveMethodsToTheDefiningClassCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

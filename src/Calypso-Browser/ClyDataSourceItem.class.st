@@ -42,70 +42,72 @@ Internal Representation and Key Implementation Points.
 	childrenDataSource:		<ClyDataSource>
 "
 Class {
-	#name : #ClyDataSourceItem,
-	#superclass : #Object,
+	#name : 'ClyDataSourceItem',
+	#superclass : 'Object',
 	#instVars : [
 		'ownerDataSource',
 		'childrenDataSource',
 		'browserItem'
 	],
-	#category : #'Calypso-Browser-DataSource'
+	#category : 'Calypso-Browser-DataSource',
+	#package : 'Calypso-Browser',
+	#tag : 'DataSource'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyDataSourceItem class >> of: aDataSource value: anEnvironmentItem [
 	^self new
 		ownerDataSource: aDataSource;
 		browserItem: anEnvironmentItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> actualObject [
 	"environmentItem can be nil when actual object was removed. In that case actualObject should be nil too. It is convention of updating items/selection logic"
 	^browserItem ifNotNil: [browserItem actualObject]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> actualObject: anObject [
 	^browserItem actualObject: anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyDataSourceItem >> asSelection [
 	^self rootDataSource newSelectionWith: {self}
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> belongsToDataSource: aDataSource [
 	^ownerDataSource == aDataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> browser [
 	^self queryView browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> browserItem [
 	^ browserItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> browserItem: aBrowserItem [
 	browserItem := aBrowserItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> childrenCount [
 	^ownerDataSource countChildrenOf: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> childrenDataSource [
 	^ childrenDataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> childrenDataSource: aDataSource [
 	childrenDataSource := aDataSource.
 	childrenDataSource ifNotNil: [
@@ -113,24 +115,24 @@ ClyDataSourceItem >> childrenDataSource: aDataSource [
 		childrenDataSource depth: self depth + 1]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> childrenItemAt: ownerIndex [
 
 	^childrenDataSource elementAt: ownerIndex - self position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> childrenItems [
 
 	^childrenDataSource allElements
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceItem >> collapse [
 	ownerDataSource collapse: self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyDataSourceItem >> copy [
 
 	| copy |
@@ -139,12 +141,12 @@ ClyDataSourceItem >> copy [
 	^copy
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyDataSourceItem >> copyForBrowserStateSnapshot [
 	^self copyForBrowserStateSnapshotOf: ownerDataSource copyForBrowserStateSnapshot
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyDataSourceItem >> copyForBrowserStateSnapshotOf: rootDataSourceSnapshot [
 	| copy ownerDataSourceSnapshot |
 	ownerDataSourceSnapshot := rootDataSourceSnapshot
@@ -157,25 +159,25 @@ ClyDataSourceItem >> copyForBrowserStateSnapshotOf: rootDataSourceSnapshot [
 	^copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> depth [
 	^ownerDataSource depth + browserItem depth
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceItem >> expand [
 	self isExpanded ifTrue: [ ^self ].
 
 	ownerDataSource expand: self
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceItem >> expandChildren [
 
 	self childrenDataSource: (ownerDataSource retrieveChildrenOf: self)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> findParentItemOf: itemTypeClass [
 	| parent |
 	parent := self parentItem ifNil: [ ^nil ].
@@ -184,120 +186,120 @@ ClyDataSourceItem >> findParentItemOf: itemTypeClass [
 	^parent findParentItemOf: itemTypeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> getProperty: anEnvironmentPropertyClass [
 	^browserItem getProperty: anEnvironmentPropertyClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> getProperty: anEnvironmentPropertyClass ifAbsent: absentBlock [
 	^browserItem getProperty: anEnvironmentPropertyClass ifAbsent: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> globalPosition [
 	^ownerDataSource globalPositionOf: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> hasChildAt: ownerDataSourceIndex [
 
 	^ownerDataSourceIndex > self position and: [
 		ownerDataSourceIndex <= (self position + self childrenCount)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> hasChildren [
 	^ownerDataSource doesItemHaveChildren: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> hasProperty: propertyClass [
 	^browserItem hasProperty: propertyClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> includesActualObject: anObject [
 
 	^ self browserItem includesActualObject: anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> isAfter: ownerIndex [
 
 	^ownerIndex <= self position
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> isBasedOnItemType: aClass [
 	^browserItem representsItemOfType: aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> isEqualTo: anotherItem [
 	^browserItem isEqualTo: anotherItem browserItem
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> isExpanded [
 	^ownerDataSource isExpanded: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> isMarkedWith: propertyClass [
 	^browserItem isMarkedWith: propertyClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> isRemoved [
 	^browserItem isNil
 		or: [ ownerDataSource isParentRemoved
 				or: [ ownerDataSource isParentCollapsed] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> isRoot [
 	^ownerDataSource isRoot & browserItem isRoot
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> isSameAs: anotherItem [
 	^browserItem isSameAs: anotherItem browserItem
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> isSameKindAs: anotherItem [
 	^self type = anotherItem type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> name [
 	^browserItem name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> ownerDataSource [
 	^ ownerDataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> ownerDataSource: anObject [
 	ownerDataSource := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> parentItem [
 	^ ownerDataSource isRoot
 		ifTrue: [ nil ]
 		ifFalse: [ ownerDataSource parentItem]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> position [
 	^browserItem position
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyDataSourceItem >> printOn: aStream [
 	super printOn: aStream.
 
@@ -308,41 +310,41 @@ ClyDataSourceItem >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> queryView [
 	^ownerDataSource queryView
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> rootDataSource [
 	^ ownerDataSource isRoot
 		ifTrue: [ ownerDataSource ]
 		ifFalse: [ ownerDataSource parentItem rootDataSource ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> rootParentItem [
 	^ ownerDataSource isRoot
 		ifTrue: [ self ]
 		ifFalse: [ self parentItem rootParentItem ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceItem >> supportsExpansion [
 	^ownerDataSource definesChildren
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> systemDefinition [
 	^browserItem systemDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> type [
 	^browserItem type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceItem >> updateItemWith: updatedEnvironmentItem [
 	browserItem := updatedEnvironmentItem
 ]

@@ -17,17 +17,19 @@ Preconditions:
 
 "
 Class {
-	#name : #RBRemoveDirectAccessToVariableTransformation,
-	#superclass : #RBVariableTransformation,
+	#name : 'RBRemoveDirectAccessToVariableTransformation',
+	#superclass : 'RBVariableTransformation',
 	#instVars : [
 		'getterMethod',
 		'setterMethod',
 		'receiver'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveDirectAccessToVariableTransformation >> applicabilityPreconditions [ 
 
 	class := self model classObjectFor: className.
@@ -43,7 +45,7 @@ RBRemoveDirectAccessToVariableTransformation >> applicabilityPreconditions [
 		& (RBCondition canUnderstand: self setterMethodSelector in: self definingClass)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveDirectAccessToVariableTransformation >> definingClass [
 	"For this refactoring the defining class is the class in which the refactoring should be applied.
 	This is basically the basic defining class"
@@ -53,7 +55,7 @@ RBRemoveDirectAccessToVariableTransformation >> definingClass [
 		ifFalse: [ super definingClass ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveDirectAccessToVariableTransformation >> getterMethod [
 
 	^ getterMethod ifNil: [
@@ -61,7 +63,7 @@ RBRemoveDirectAccessToVariableTransformation >> getterMethod [
 			ifNil: [ variableName uncapitalized asSymbol ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveDirectAccessToVariableTransformation >> getterMethodSelector [
 
 	^ getterMethod ifNil: [
@@ -69,26 +71,26 @@ RBRemoveDirectAccessToVariableTransformation >> getterMethodSelector [
 			ifNil: [ variableName uncapitalized asSymbol ] ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveDirectAccessToVariableTransformation >> privateTransform [
 
 	self replaceInstanceAccesses.
 	isClassVariable ifTrue: [ self replaceClassAccesses ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveDirectAccessToVariableTransformation >> receiver [
 
 	^ receiver ifNil: [ self receiver: 'self'. receiver ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveDirectAccessToVariableTransformation >> receiver: aString [
 
 	receiver := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveDirectAccessToVariableTransformation >> replaceClassAccesses [
 	"replace accesses in the metaclass"
 	
@@ -118,7 +120,7 @@ RBRemoveDirectAccessToVariableTransformation >> replaceClassAccesses [
 		using: replacer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveDirectAccessToVariableTransformation >> replaceInstanceAccesses [
 
 	| replacer includeGettersAndSetters |
@@ -144,7 +146,7 @@ RBRemoveDirectAccessToVariableTransformation >> replaceInstanceAccesses [
 		using: replacer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveDirectAccessToVariableTransformation >> setterMethod [
 
 	^ setterMethod ifNil: [
@@ -152,7 +154,7 @@ RBRemoveDirectAccessToVariableTransformation >> setterMethod [
 			ifNil: [ 	(variableName uncapitalized, ':') asSymbol ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveDirectAccessToVariableTransformation >> setterMethodSelector [
 
 	^ setterMethod ifNil: [

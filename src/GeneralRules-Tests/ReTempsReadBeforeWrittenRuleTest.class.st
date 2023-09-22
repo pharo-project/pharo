@@ -1,10 +1,12 @@
 Class {
-	#name : #ReTempsReadBeforeWrittenRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReTempsReadBeforeWrittenRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReTempsReadBeforeWrittenRuleTest >> mockMethod [
 	| temp1 temp2 temp3 |
 	temp3 := 1.
@@ -12,7 +14,7 @@ ReTempsReadBeforeWrittenRuleTest >> mockMethod [
 	^ { temp1 . temp2 . temp3 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReTempsReadBeforeWrittenRuleTest >> testFoundTemporaries [
 
 	| temporaries |

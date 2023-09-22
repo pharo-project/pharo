@@ -64,8 +64,8 @@ Internal Representation and Key Implementation Points.
 	itemObserver: <Object>
 "
 Class {
-	#name : #ClyBrowserQueryCursor,
-	#superclass : #Object,
+	#name : 'ClyBrowserQueryCursor',
+	#superclass : 'Object',
 	#instVars : [
 		'queryResult',
 		'cache',
@@ -74,27 +74,29 @@ Class {
 		'itemObserver',
 		'itemCount'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserQueryCursor class >> for: aBrowserQueryResult [
 	^self new
 		queryResult: aBrowserQueryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> cache [
 	^cache
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyBrowserQueryCursor >> cleanCache [
 
 	cache items: #()
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserQueryCursor >> close [
 
 	queryResult unsubscribe: itemObserver.
@@ -102,12 +104,12 @@ ClyBrowserQueryCursor >> close [
 	^ClyClosedBrowserCursor instance
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryCursor >> currentItem [
 	^cache itemAt: position
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryCursor >> findItemsSimilarTo: sampleBrowserItems [
 
 	^cache
@@ -116,13 +118,13 @@ ClyBrowserQueryCursor >> findItemsSimilarTo: sampleBrowserItems [
 			^queryResult findItemsSimilarTo: sampleBrowserItems]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryCursor >> findItemsWhere: conditionBlock [
 
 	^queryResult itemsWhere: conditionBlock
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryCursor >> findItemsWith: actualObjects [
 	"it returnes environment items which represent actualObjects.
 	Result will be in same order as given actualObjects array.
@@ -133,50 +135,50 @@ ClyBrowserQueryCursor >> findItemsWith: actualObjects [
 		^queryResult findItemsWith: actualObjects]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserQueryCursor >> forceFullUpdate [
 	queryResult forceRebuild
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> getMetaProperty: aPropertyClass [
 	^metadata getProperty: aPropertyClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserQueryCursor >> hasMetaProperty: aPropertyClass [
 
 	^metadata hasProperty: aPropertyClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> itemCount [
 	^itemCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> itemObserver [
 	^itemObserver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> itemObserver: anObject [
 	itemObserver := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> metadata [
 	^metadata
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserQueryCursor >> moveTo: newPosition [
 
 	position := newPosition.
 	cache loadItemOf: queryResult at: position
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserQueryCursor >> moveToItemWhich: conditionBlock [
 	| itemsFound |
 	cache
@@ -190,25 +192,25 @@ ClyBrowserQueryCursor >> moveToItemWhich: conditionBlock [
 	^true
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserQueryCursor >> moveToNext [
 
 	self moveTo: position + 1
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserQueryCursor >> moveToStart [
 
 	self moveTo: 1
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryCursor >> nextItem [
 	self moveToNext.
 	^self currentItem
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserQueryCursor >> openFor: anItemObserver [
 
 	self moveToStart.
@@ -216,17 +218,17 @@ ClyBrowserQueryCursor >> openFor: anItemObserver [
 	queryResult subscribe: itemObserver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> position: anObject [
 	position := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyBrowserQueryCursor >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -234,12 +236,12 @@ ClyBrowserQueryCursor >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> queryResult [
 	^ queryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCursor >> queryResult: aQueryResult [
 	queryResult := aQueryResult.
 	position := 0.
@@ -250,13 +252,13 @@ ClyBrowserQueryCursor >> queryResult: aQueryResult [
 	It is important for remote scenario"
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryCursor >> retrieveAll [
 
 	^queryResult allItems
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyBrowserQueryCursor >> updateItemCache [
 	| update |
 	update := cache createFullUpdateOf: queryResult.

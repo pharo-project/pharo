@@ -2,34 +2,36 @@
 An example external type used in tests
 "
 Class {
-	#name : #FFITestType,
-	#superclass : #FFIExternalType,
+	#name : 'FFITestType',
+	#superclass : 'FFIExternalType',
 	#instVars : [
 		'type'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFITestType class >> of: aType [
 
 	^ self new type: aType; yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFITestType >> asExternalTypeOn: aTypeResolver [
 
 	"FFI sends this to us expecting us to be a class most of the times, but for testing purposes, we use an instance."
 	^ self copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFITestType >> externalType [
 
 	^ type externalType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFITestType >> type: anObject [
 	type := anObject
 ]

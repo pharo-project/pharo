@@ -14,17 +14,19 @@ Preconditions:
 The source code of the method must be syntactically valid.
 "
 Class {
-	#name : #RBAddMethodTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddMethodTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'sourceCode',
 		'rbMethod',
 		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocol: aProtocol [
 
 	^ self new
@@ -35,7 +37,7 @@ RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClas
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocol: aProtocol [
 
 	^ self new
@@ -45,7 +47,7 @@ RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocol: 
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddMethodTransformation >> applicabilityPreconditions [
 
 	rbMethod := self parserClass
@@ -59,13 +61,13 @@ RBAddMethodTransformation >> applicabilityPreconditions [
 	^ self trueCondition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddMethodTransformation >> method [
 
 	^ rbMethod 
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddMethodTransformation >> privateTransform [
 
 	self definingClass
@@ -73,13 +75,13 @@ RBAddMethodTransformation >> privateTransform [
 		classified: protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddMethodTransformation >> selector [
 
 	^ rbMethod selector
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocol: aSymbol [
 
 	self className: aClassName.
@@ -87,7 +89,7 @@ RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocol: aS
 	protocol := aSymbol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

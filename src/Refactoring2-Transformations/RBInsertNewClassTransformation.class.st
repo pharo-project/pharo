@@ -20,17 +20,19 @@ Preconditions:
 - name of the category must be a valid one
 "
 Class {
-	#name : #RBInsertNewClassTransformation,
-	#superclass : #RBClassTransformation,
+	#name : 'RBInsertNewClassTransformation',
+	#superclass : 'RBClassTransformation',
 	#instVars : [
 		'superclass',
 		'subclasses',
 		'category'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInsertNewClassTransformation class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 
 	^ self new
@@ -41,7 +43,7 @@ RBInsertNewClassTransformation class >> addClass: aName superclass: aClass subcl
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInsertNewClassTransformation class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 
 	^ self new
@@ -53,7 +55,7 @@ RBInsertNewClassTransformation class >> model: aRBSmalltalk addClass: aName supe
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBInsertNewClassTransformation >> addClass: aName superclass: aClass category: aSymbol [
 
 	self
@@ -63,7 +65,7 @@ RBInsertNewClassTransformation >> addClass: aName superclass: aClass category: a
 		category: aSymbol
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBInsertNewClassTransformation >> addClass: aName superclass: superclassName subclasses: aCollection category: aSymbol [
 
 	self className: aName.
@@ -72,7 +74,7 @@ RBInsertNewClassTransformation >> addClass: aName superclass: superclassName sub
 	category := aSymbol asSymbol
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBInsertNewClassTransformation >> applicabilityPreconditions [
 	"Superclass and subclasses shouldn't be metaclasses.
 	Each subclass should be immediate subclass of superclass."
@@ -96,19 +98,19 @@ RBInsertNewClassTransformation >> applicabilityPreconditions [
 			   'Invalid category name')
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBInsertNewClassTransformation >> isNotGlobal [
 
 	^ (RBCondition isGlobal: className in: self model) not
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBInsertNewClassTransformation >> isValidClassName [
 
 	^ RBCondition isValidClassName: className
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBInsertNewClassTransformation >> privateTransform [
 
 	self model
@@ -120,7 +122,7 @@ RBInsertNewClassTransformation >> privateTransform [
 		to: (self model classNamed: className asSymbol)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBInsertNewClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

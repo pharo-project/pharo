@@ -9,28 +9,30 @@ Example:
                 text: 'Enter your password')) entryText explore
 "
 Class {
-	#name : #PasswordDialogWindow,
-	#superclass : #TextEntryDialogWindow,
+	#name : 'PasswordDialogWindow',
+	#superclass : 'TextEntryDialogWindow',
 	#instVars : [
 		'textEditor',
 		'showPassword'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PasswordDialogWindow >> beDecrypted [
 
 	textEditor font: self theme textFont
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PasswordDialogWindow >> beEncrypted [
 
 	textEditor font: (StrikeFont passwordFontSize: self theme textFont pointSize)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PasswordDialogWindow >> newContentMorph [
 	"Answer a new content morph."
 
@@ -44,7 +46,7 @@ PasswordDialogWindow >> newContentMorph [
 		self showPasswordButton}
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 PasswordDialogWindow >> newTextEditorMorph [
 	"Answer a new morph for the text entry using a password font."
 
@@ -53,13 +55,13 @@ PasswordDialogWindow >> newTextEditorMorph [
 	^ textEditor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PasswordDialogWindow >> showPassword [
 
 	^ showPassword ifNil: [ showPassword := false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PasswordDialogWindow >> showPassword: aBoolean [
 
 	(showPassword := aBoolean)
@@ -68,7 +70,7 @@ PasswordDialogWindow >> showPassword: aBoolean [
 	self changed: #showPassword
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PasswordDialogWindow >> showPasswordButton [
 
 	^ (CheckboxMorph

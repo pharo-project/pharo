@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyMergedSubclassesAndInheritedTraitsHierarchyTest,
-	#superclass : #ClyBrowserQueryResultTest,
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests'
+	#name : 'ClyMergedSubclassesAndInheritedTraitsHierarchyTest',
+	#superclass : 'ClyBrowserQueryResultTest',
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> createQueryResult [
 	^(ClySubclassHierarchy new, ClyTraitUserHierarchy inverse)
 		asQueryResult sortedBy: ClyTraitFirstSortFunction ascending
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndItGrandSuperclass [
 
 	queryResult fillWith: { ClyClass1FromP1Mock. ClySubclassLOfSubclassMFromP3Mock }.
@@ -18,7 +19,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndItG
 	self assertItems: {ClyClass1FromP1Mock. 0. ClySubclassLOfSubclassMFromP3Mock. 1}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndItsDeepTwoTraits [
 
 	queryResult fillWith: {ClyClassWithTraits. ClyTraitChild2. ClyTraitRoot2 }.
@@ -29,7 +30,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndIts
 			ClyTraitRoot2. 1}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndItsTraits [
 
 	queryResult fillWith: {
@@ -41,7 +42,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndIts
 			ClyTraitChild2Child. 1. ClyTraitChild2. 2. ClyTraitRoot1. 3}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndItsTraitsWhenSomeMiddleTraitIsMissing [
 
 	queryResult fillWith: {
@@ -53,7 +54,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndIts
 			ClyTraitChild2Child. 1. ClyTraitRoot1. 2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassWithoutTraits [
 
 	queryResult fillWith: {ClyClassWithoutTraits}.
@@ -61,7 +62,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassWithou
 	self assertItems: {ClyClassWithoutTraits. 0}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassesFromOneHierarchy [
 
 	queryResult fillWith: { ClySubclassN1OfClass1FromP1Mock. ClySubclassLOfSubclassMFromP3Mock. ClyClass1FromP1Mock. ClySubclassN2OfClass1FromP1Mock }.
@@ -71,7 +72,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassesFrom
 		ClySubclassN1OfClass1FromP1Mock. 1. ClySubclassN2OfClass1FromP1Mock. 1 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithObjectAndTwoProtoObjects [
 
 	queryResult fillWith: { Object. ProtoObject. ProtoObject }.
@@ -79,7 +80,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithObjectAndTw
 	self assertItems: {ProtoObject. 0. Object. 1}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithOnlyClassWhichHasTraits [
 
 	queryResult fillWith: {ClyClassWithTraits}.
@@ -87,7 +88,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithOnlyClassWh
 	self assertItems: {ClyClassWithTraits. 0}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithTraitsOfClassWhichIsMissingInGivenList [
 
 	queryResult fillWith: {
@@ -98,7 +99,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithTraitsOfCla
 		ClyTraitChild2Child. 0. ClyTraitChild2. 1. ClyTraitRoot1. 2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithTwoClassWhichInheriteSameTraits [
 
 	queryResult fillWith: {ClyClassWithTraits. ClyTraitChild2. ClyTraitRoot2.
@@ -112,7 +113,7 @@ ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithTwoClassWhi
 				ClyTraitRoot2. 2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSubclassesAndInheritedTraitsHierarchyTest >> testFillingWithTwoSameClasses [
 
 	queryResult fillWith: { ClyClass1FromP1Mock. ClyClass1FromP1Mock }.

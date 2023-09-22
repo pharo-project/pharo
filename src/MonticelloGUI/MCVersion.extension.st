@@ -1,13 +1,13 @@
-Extension { #name : #MCVersion }
+Extension { #name : 'MCVersion' }
 
-{ #category : #'*MonticelloGUI' }
+{ #category : '*MonticelloGUI' }
 MCVersion >> browse [
 
 	^ (MCSnapshotBrowser forSnapshot: self completeSnapshot)
 		showLabelled: 'Snapshot of ', self fileName
 ]
 
-{ #category : #'*MonticelloGUI' }
+{ #category : '*MonticelloGUI' }
 MCVersion >> open [
 	(MCVersionInspector new version: self) show
 ]

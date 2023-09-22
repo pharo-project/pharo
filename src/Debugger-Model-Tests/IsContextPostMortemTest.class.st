@@ -1,20 +1,22 @@
 Class {
-	#name : #IsContextPostMortemTest,
-	#superclass : #DebuggerTest,
-	#category : #'Debugger-Model-Tests-Core'
+	#name : 'IsContextPostMortemTest',
+	#superclass : 'DebuggerTest',
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
 IsContextPostMortemTest >> stepA1 [
 	^ self stepA2
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 IsContextPostMortemTest >> stepA2 [
 	^ 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IsContextPostMortemTest >> testIsContextPostMortem [
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
 	session stepInto.

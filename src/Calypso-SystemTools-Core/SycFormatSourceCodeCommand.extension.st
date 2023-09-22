@@ -1,6 +1,6 @@
-Extension { #name : #SycFormatSourceCodeCommand }
+Extension { #name : 'SycFormatSourceCodeCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycFormatSourceCodeCommand class >> methodEditorShorcutActivation [
 
 	<classAnnotation>
@@ -9,7 +9,7 @@ SycFormatSourceCodeCommand class >> methodEditorShorcutActivation [
 		for: ClyTextEditorContext
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycFormatSourceCodeCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

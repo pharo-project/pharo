@@ -2,11 +2,13 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryImplementationTest,
-	#category : #'Collections-Unordered-Tests-Traits'
+	#name : 'TDictionaryImplementationTest',
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #'tests - implementation' }
+{ #category : 'tests - implementation' }
 TDictionaryImplementationTest >> testAtNil [
 	"(self run: #testAtNil)"
 
@@ -31,7 +33,7 @@ TDictionaryImplementationTest >> testAtNil [
 	self assert: (dict1 at: nil) = #none
 ]
 
-{ #category : #'tests - implementation' }
+{ #category : 'tests - implementation' }
 TDictionaryImplementationTest >> testFindElementOrNil [
 	"Set>>findElementOrNil: takes an associaiton (when called on a dictionary) an integer, the index of the first
 	position at is either equal to the assocation or which is nil"
@@ -43,7 +45,7 @@ TDictionaryImplementationTest >> testFindElementOrNil [
 	self assert: (self emptyDict findElementOrNil: assoc key) = ((self emptyDict array indexOf: nil) max: indexForG)
 ]
 
-{ #category : #'tests - implementation' }
+{ #category : 'tests - implementation' }
 TDictionaryImplementationTest >> testNew [
 	| d |
 	d := self classToBeTested new: 10.
@@ -53,7 +55,7 @@ TDictionaryImplementationTest >> testNew [
 	self assert: d capacity = 14
 ]
 
-{ #category : #'tests - implementation' }
+{ #category : 'tests - implementation' }
 TDictionaryImplementationTest >> testPseudo [
 	"(self run: #testPseudo)"
 
@@ -67,7 +69,7 @@ TDictionaryImplementationTest >> testPseudo [
 	self assert: (dict1 at: false) = #false
 ]
 
-{ #category : #'tests - implementation' }
+{ #category : 'tests - implementation' }
 TDictionaryImplementationTest >> testPseudoVariablesAreValidKeys [
 	"(self run: #testPseudoVariablesAreValidKeys)"
 
@@ -81,7 +83,7 @@ TDictionaryImplementationTest >> testPseudoVariablesAreValidKeys [
 	self assert: (dict1 at: false) = #false
 ]
 
-{ #category : #'tests - implementation' }
+{ #category : 'tests - implementation' }
 TDictionaryImplementationTest >> testScanFor [
 	"Set>>scanFor: return an integer "
 	| assoc indexForG |
@@ -92,7 +94,7 @@ TDictionaryImplementationTest >> testScanFor [
 	self assert: (self emptyDict scanFor: assoc) = ((self emptyDict array indexOf: nil) max: indexForG)
 ]
 
-{ #category : #'tests - implementation' }
+{ #category : 'tests - implementation' }
 TDictionaryImplementationTest >> testSpecies [
 	self assert: self nonEmptyDict species == self nonEmptyDict class.
 	self assert: self emptyDict species == self emptyDict class

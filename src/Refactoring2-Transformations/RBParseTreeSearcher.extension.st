@@ -1,6 +1,6 @@
-Extension { #name : #RBParseTreeSearcher }
+Extension { #name : 'RBParseTreeSearcher' }
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeSearcher class >> matchingTreeForMethod: aCompiledMethod [
 
 	| searchCode tree variables |
@@ -20,7 +20,7 @@ RBParseTreeSearcher class >> matchingTreeForMethod: aCompiledMethod [
 	^ searchCode
 ]
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeSearcher class >> matchingTreeForSubtree: subtree [
 
 	| searchCode argumentNodes |
@@ -42,7 +42,7 @@ RBParseTreeSearcher class >> matchingTreeForSubtree: subtree [
 	^ searchCode
 ]
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeSearcher class >> treeMatchings: aString in: aParseTree [
 
 	| allMatches |
@@ -53,7 +53,7 @@ RBParseTreeSearcher class >> treeMatchings: aString in: aParseTree [
 	^ allMatches
 ]
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeSearcher class >> whichMethodIn: aCollection matches: subtree [
 
 	| isGetterBlock searchTree |

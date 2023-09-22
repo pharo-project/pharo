@@ -15,15 +15,17 @@ Preconditions:
 - the code from which the subtree will be extracted should be parseable
 "
 Class {
-	#name : #RBRemoveSubtreeTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBRemoveSubtreeTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'sourceCode'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveSubtreeTransformation class >> code: aString from: aSelector in: aClass [
 
 	^ self new
@@ -33,7 +35,7 @@ RBRemoveSubtreeTransformation class >> code: aString from: aSelector in: aClass 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveSubtreeTransformation class >> model: aRBModel code: aString from: aSelector in: aClass [
 
 	^ self new
@@ -44,7 +46,7 @@ RBRemoveSubtreeTransformation class >> model: aRBModel code: aString from: aSele
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveSubtreeTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: self definingClass)
@@ -66,7 +68,7 @@ RBRemoveSubtreeTransformation >> applicabilityPreconditions [
 					true ])
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
 
 	self className: aClassName.
@@ -74,7 +76,7 @@ RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
 	sourceCode := aString
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveSubtreeTransformation >> privateTransform [
 
 	| parseTree |
@@ -96,7 +98,7 @@ RBRemoveSubtreeTransformation >> privateTransform [
 	self definingClass compileTree: parseTree"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 	^ [ self parseTreeRewriterClass
 		replaceStatements: aTree formattedCode
@@ -111,7 +113,7 @@ RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 				onInterval: aTree sourceInterval ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

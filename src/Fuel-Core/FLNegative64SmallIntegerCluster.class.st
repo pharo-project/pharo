@@ -2,18 +2,20 @@
 A cluster of unsigned int 64bit
 "
 Class {
-	#name : #FLNegative64SmallIntegerCluster,
-	#superclass : #FLSmallIntegerCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLNegative64SmallIntegerCluster',
+	#superclass : 'FLSmallIntegerCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLNegative64SmallIntegerCluster >> materializeInstanceWith: aDecoder [
 	
 	^ aDecoder nextEncodedUint64 negated
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLNegative64SmallIntegerCluster >> serializeInstance: anInteger with: anEncoder [
 	
 	anEncoder encodeUint64: anInteger abs

@@ -10,50 +10,52 @@ I add:
 	-	Having a configuration to fail on new undeclared variables.
 "
 Class {
-	#name : #HEExtendedInstaller,
-	#superclass : #HEInstaller,
+	#name : 'HEExtendedInstaller',
+	#superclass : 'HEInstaller',
 	#instVars : [
 		'failOnUndeclared',
 		'duplicationMode'
 	],
-	#category : #'Hermes-Extensions-ClassInstaller'
+	#category : 'Hermes-Extensions-ClassInstaller',
+	#package : 'Hermes-Extensions',
+	#tag : 'ClassInstaller'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedInstaller >> duplicationMode: anObject [
 	duplicationMode := anObject
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEExtendedInstaller >> existingClass: aHEClass [
 	^ duplicationMode existingClass: aHEClass on: self
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEExtendedInstaller >> existingTrait: aHETrait [
 	^ duplicationMode existingTrait: aHETrait on: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedInstaller >> failOnUndeclared: anObject [
 	failOnUndeclared := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEExtendedInstaller >> forOptions: aCommandLine [
 	failOnUndeclared := (aCommandLine hasOption: 'no-fail-on-undeclared') not.
 
 	duplicationMode := HEDuplicationModeStrategy forOption: (aCommandLine optionAt: 'on-duplication' ifAbsent: [ 'fail' ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEExtendedInstaller >> initialize [
 	super initialize.
 	failOnUndeclared := true.
 	duplicationMode := HEFailOnDuplication new
 ]
 
-{ #category : #'reporting undeclared' }
+{ #category : 'reporting undeclared' }
 HEExtendedInstaller >> reportNewUndeclareds: newUndeclareds [
 	| message |
 	newUndeclareds
@@ -63,7 +65,7 @@ HEExtendedInstaller >> reportNewUndeclareds: newUndeclareds [
 				ifFalse: [ SystemNotification signal: message ] ]
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEExtendedInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 	^ duplicationMode shouldBuildMethod: aHEMethod in: aClass installer: self
 ]

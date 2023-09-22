@@ -16,23 +16,25 @@ and its variants receive normal strings and decide whether they have to encode t
 My subclasses may or may not provide additional APIs to have more control on the particular encoding used.
 "
 Class {
-	#name : #OSEnvironment,
-	#superclass : #Object,
+	#name : 'OSEnvironment',
+	#superclass : 'Object',
 	#instVars : [
 		'platform'
 	],
 	#classVars : [
 		'Current'
 	],
-	#category : #'System-OSEnvironments-Base'
+	#category : 'System-OSEnvironments-Base',
+	#package : 'System-OSEnvironments',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSEnvironment class >> current [
 	^ Current ifNil: [ Current := self environmentFor: OSPlatform current ]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 OSEnvironment class >> environmentFor: aPlatform [
 	| environmentClass |
 
@@ -45,42 +47,42 @@ OSEnvironment class >> environmentFor: aPlatform [
 		ifFalse: [ NullOSEnvironment platform: aPlatform ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 OSEnvironment class >> example [
 
 	Smalltalk os environment asDictionary inspect
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSEnvironment class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSEnvironment class >> isAvailable [
 	self flag: #pharoTodo. "Replace this for a check of FFI available"
 	self environment at: #FFICalloutAPI ifAbsent: [ ^ false ].
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSEnvironment class >> isDefaultFor: aPlatform [
 	^ false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSEnvironment class >> platform: anOSPlatform [
 	^ self basicNew initializeWith: anOSPlatform
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSEnvironment class >> startUp: isImageStarting [
 
 	isImageStarting ifTrue: [ Current := nil ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 OSEnvironment >> asDictionary [
 	| dictionary |
 	dictionary := Dictionary new.
@@ -89,7 +91,7 @@ OSEnvironment >> asDictionary [
 	^ dictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> associations [
 	"Answer a Collection containing the receiver's associations."
 
@@ -97,13 +99,13 @@ OSEnvironment >> associations [
 		self associationsDo: [ :each | stream nextPut: each ]]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 OSEnvironment >> associationsDo: aBlock [
 	^ self keysAndValuesDo: [ :key :value |
 		aBlock value: key -> value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> at: aKey [
 	"Gets the value of an environment variable called `aKey`.
 	Throws a KeyNotFound exception if not found.
@@ -115,7 +117,7 @@ OSEnvironment >> at: aKey [
 	^ self at: aKey ifAbsent: [ KeyNotFound signalFor: aKey ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> at: aKey ifAbsent: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Execute aBlock if absent.
@@ -127,7 +129,7 @@ OSEnvironment >> at: aKey ifAbsent: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> at: aKey ifAbsentPut: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	If absent, insert the value given by aBlock.
@@ -139,7 +141,7 @@ OSEnvironment >> at: aKey ifAbsentPut: aBlock [
 	^ self at: aKey ifAbsent: [ self at: aKey put: aBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> at: aKey ifPresent: aBlock [
 	"Gets the value of an environment variable called `aKey` and invoke aBlock with it.
 	Return nil if absent.
@@ -151,7 +153,7 @@ OSEnvironment >> at: aKey ifPresent: aBlock [
 	^ aBlock value: (self at: aKey ifAbsent: [ ^ nil ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> at: aKey ifPresent: presentBlock ifAbsent: absentBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Call presentBlock with it if present.
@@ -165,7 +167,7 @@ OSEnvironment >> at: aKey ifPresent: presentBlock ifAbsent: absentBlock [
 	^absentBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> at: aKey put: aValue [
 	"Sets the value of an environment variable called `aKey` to `aValue`.
 	It is the system responsibility to manage the encodings of both arguments.
@@ -176,43 +178,43 @@ OSEnvironment >> at: aKey put: aValue [
 	^ self subclassResponsibility
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 OSEnvironment >> do: aBlock [
 
 	^self valuesDo: aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSEnvironment >> includes: anObject [
 
 	self do: [:each | anObject = each ifTrue: [^true]].
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSEnvironment >> includesKey: aKey [
 	^ self at: aKey ifPresent: [ :value | true ] ifAbsent: [ false ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSEnvironment >> initializeWith: anOSPlatform [
 	super initialize.
 	platform := anOSPlatform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> keys [
 	"Answer an Array containing the receiver's keys."
 
 	^Array streamContents: [ :s | self keysDo: [ :key | s nextPut: key]]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 OSEnvironment >> keysAndValuesDo: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 OSEnvironment >> keysAndValuesDo: aBlock withAssociationString: associationString [
 	| equalsIndex |
 	equalsIndex := associationString indexOf: $=.
@@ -221,18 +223,18 @@ OSEnvironment >> keysAndValuesDo: aBlock withAssociationString: associationStrin
 		value: (associationString allButFirst: equalsIndex)
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 OSEnvironment >> keysDo: aBlock [
 	^ self keysAndValuesDo: [ :key :value |
 		aBlock value: key ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> platform [
 	^ platform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> removeKey: aKey [
 	"Removes the entry `aKey` from the environment variables.
 	It is the system responsibility to manage the encoding of the argument.
@@ -243,14 +245,14 @@ OSEnvironment >> removeKey: aKey [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> setEnv: nameString value: valueString [
 	"This method calls the the platform specific set environment routine"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> setEnv: nameString value: valueString during: aBlock [
 
 	| oldValue |
@@ -263,21 +265,21 @@ OSEnvironment >> setEnv: nameString value: valueString during: aBlock [
 			ifNotNil: [ self setEnv: nameString value: valueString ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> unsetEnv: string [
 	"This method calls the the platform specific unset environment routine"
 
 	^ self ffiCall: #(int unsetenv #(String string)) module: LibC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEnvironment >> values [
 	"Answer a Collection containing the receiver's values."
 	^ Array streamContents: [ :stream|
 		self valuesDo: [ :value | stream nextPut: value ]]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 OSEnvironment >> valuesDo: aBlock [
 	^ self keysAndValuesDo: [ :key :value |
 		aBlock value: value ]

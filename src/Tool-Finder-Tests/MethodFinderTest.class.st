@@ -2,12 +2,14 @@
 Unit tests for MethodFinder
 "
 Class {
-	#name : #MethodFinderTest,
-	#superclass : #TestCase,
-	#category : #'Tool-Finder-Tests-MethodFinder'
+	#name : 'MethodFinderTest',
+	#superclass : 'TestCase',
+	#category : 'Tool-Finder-Tests-MethodFinder',
+	#package : 'Tool-Finder-Tests',
+	#tag : 'MethodFinder'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testArgumentsNumber [
 	"The Method Finder should returns sends with the good number of arguments."
 
@@ -19,7 +21,7 @@ MethodFinderTest >> testArgumentsNumber [
 	self assert: ((resultOne  collect: [:each | each selector]) allSatisfy: [ :s | s keywords size = 1 and: s last = $:])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testExceptionDoesNotStopTheFlow [
 
 	| result args |
@@ -31,14 +33,14 @@ MethodFinderTest >> testExceptionDoesNotStopTheFlow [
 			 #oneArgumentMethod:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testExceptionInWrongEqualityReturns [
 
 	self should: [ { 1.2.3 } = (3 to: {5}) ] raise: Error.
 	self deny: ((MethodFinderSend receiver: 3 selector: #to: withArguments: { 5 }) resultIn: { 1.2.3 }).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testForbiddenSetIsOverApprovedSet [
 
 	| result args |
@@ -51,7 +53,7 @@ MethodFinderTest >> testForbiddenSetIsOverApprovedSet [
 			 #InApprovedAndInForbiddenSetMethod) not
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testMethodApprovedInClassButDisapprovedInSuperClass [
 	"If a method f is approved by a class A but disapproved by one of
 	 its superclass, its should be approved for A instance."
@@ -62,7 +64,7 @@ MethodFinderTest >> testMethodApprovedInClassButDisapprovedInSuperClass [
 	self assert: ((result collect: [:each | each selector]) includes: #topDisapprovedButBottomApprovedMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testMethodDisapprovedInClassButApprovedInSuperClass [
 	"If a method f is disapproved by a class A, it should be disapproved
 	by any instance of A, no matter if A superclass approved it."
@@ -78,7 +80,7 @@ MethodFinderTest >> testMethodDisapprovedInClassButApprovedInSuperClass [
 		equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testMethodNotDefinedAndDisapprovedInClassButApprovedInSuperClass [
 	"If the superclass B of a class defines a methods f which is not
 	 redefined in A, then any instance of A should accept f unless
@@ -107,7 +109,7 @@ MethodFinderTest >> testMethodNotDefinedAndDisapprovedInClassButApprovedInSuperC
 		equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testMethodNotDefinedInClassAndDisapprovedInSuperClass [
 	"If the superclass B of a class A defines a not approved method f
 	 which is not approved in A, then any instance of A should not accept f."
@@ -123,7 +125,7 @@ MethodFinderTest >> testMethodNotDefinedInClassAndDisapprovedInSuperClass [
 		equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testMethodNotDefinedInClassButApprovedInSuperClass [
 	"If the superclass B of a class defines a methods f which is not
 	 redefined in A and which is not forbidden in A, then any instance
@@ -139,7 +141,7 @@ MethodFinderTest >> testMethodNotDefinedInClassButApprovedInSuperClass [
 			 #onlyTopDefinedApprovedMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testMethodOnlyBottomDefinedAndApprovedInBottom [
 	"If a method f is approved by a class A, then it
 	 should be approved by any instance of A"
@@ -154,7 +156,7 @@ MethodFinderTest >> testMethodOnlyBottomDefinedAndApprovedInBottom [
 			 #onlyBottomDefinedApprovedMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testMethodOnlyTopDefinedAndApprovedInTop [
 	"If a method f is approved by a class A and is not redefined
 	 in a subclass B, then if there is no information on it in B,
@@ -170,7 +172,7 @@ MethodFinderTest >> testMethodOnlyTopDefinedAndApprovedInTop [
 			 #onlyTopDefinedApprovedMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testPermutation [
 	"Any order of the args should result in the same responding methods. Thus,
 	 `-` should correspond to `5 . 4 -> 1` but also to `4 . 5 -> 1`.
@@ -192,7 +194,7 @@ MethodFinderTest >> testPermutation [
 				 andExpectedResult: result) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTest >> testSearchOnClassDoesNotFail [
 
 	| args result |

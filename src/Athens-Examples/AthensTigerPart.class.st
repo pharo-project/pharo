@@ -2,8 +2,8 @@
 I'm a visual part of the AthensTiger.
 "
 Class {
-	#name : #AthensTigerPart,
-	#superclass : #Object,
+	#name : 'AthensTigerPart',
+	#superclass : 'Object',
 	#instVars : [
 		'path',
 		'fillRule',
@@ -16,70 +16,72 @@ Class {
 		'fillPaint',
 		'stroke'
 	],
-	#category : #'Athens-Examples-Utilities'
+	#category : 'Athens-Examples-Utilities',
+	#package : 'Athens-Examples',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> addFill [
 	fill := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> addStroke [
 	stroke := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> capStyle [
 	^capStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> capStyle: cap [
 	capStyle := cap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> fillPaint: aColor [
 	fillPaint := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> fillRule [
 	^ fillRule
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> fillRule: rule [
 	fillRule := rule
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensTigerPart >> initialize [
 	fill := stroke := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> joinStyle [
 	^joinStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> joinStyle: join [
 	joinStyle := join
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> miterLimit [
 	^miterLimit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> miterLimit: lim [
 	miterLimit := lim
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTigerPart >> prepareFor: surface [
 	fill ifTrue: [
 		fillPaint := surface createSolidColorPaint: fillPaint.
@@ -91,7 +93,7 @@ AthensTigerPart >> prepareFor: surface [
 	]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTigerPart >> renderOn: can [
 
 	fill ifTrue: [
@@ -105,22 +107,22 @@ AthensTigerPart >> renderOn: can [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> setPath: anAthensCairoPath [
 		path := anAthensCairoPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> strokePaint: aColor [
 	strokePaint := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> strokeWidth [
 	^strokeWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerPart >> strokeWidth: w [
 	strokeWidth := w
 ]

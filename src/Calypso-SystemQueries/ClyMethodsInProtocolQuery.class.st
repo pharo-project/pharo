@@ -14,15 +14,17 @@ Internal Representation and Key Implementation Points.
 	protocol:		<Symbol>
 "
 Class {
-	#name : #ClyMethodsInProtocolQuery,
-	#superclass : #ClyMethodQuery,
+	#name : 'ClyMethodsInProtocolQuery',
+	#superclass : 'ClyMethodQuery',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodsInProtocolQuery class >> by: protocol [
 
 	^ self new
@@ -30,7 +32,7 @@ ClyMethodsInProtocolQuery class >> by: protocol [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodsInProtocolQuery class >> by: protocol from: aScope [
 
 	^ (self from: aScope)
@@ -38,7 +40,7 @@ ClyMethodsInProtocolQuery class >> by: protocol from: aScope [
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMethodsInProtocolQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -47,26 +49,26 @@ ClyMethodsInProtocolQuery >> = anObject [
 	^ protocol = anObject protocol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethodsInProtocolQuery >> description [
 
 	^ 'methods in protocol ' , protocol
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMethodsInProtocolQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash bitXor: protocol hash
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyMethodsInProtocolQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	^ (aSystemAnnouncement affectsMethodsInProtocol: protocol) and: [ scope includesMethodsAffectedBy: aSystemAnnouncement ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethodsInProtocolQuery >> printExtraInfoOn: aStream [
 
 	super printExtraInfoOn: aStream.
@@ -74,19 +76,19 @@ ClyMethodsInProtocolQuery >> printExtraInfoOn: aStream [
 	^ aStream nextPutAll: protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodsInProtocolQuery >> protocol [
 
 	^ protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodsInProtocolQuery >> protocol: protocolName [
 
 	protocol := protocolName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodsInProtocolQuery >> selectsMethod: aMethod [
 
 	^ aMethod protocolName == protocol

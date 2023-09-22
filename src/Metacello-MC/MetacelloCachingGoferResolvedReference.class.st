@@ -1,13 +1,15 @@
 Class {
-	#name : #MetacelloCachingGoferResolvedReference,
-	#superclass : #GoferResolvedReference,
+	#name : 'MetacelloCachingGoferResolvedReference',
+	#superclass : 'GoferResolvedReference',
 	#instVars : [
 		'cachedVersion'
 	],
-	#category : #'Metacello-MC-Gofer'
+	#category : 'Metacello-MC-Gofer',
+	#package : 'Metacello-MC',
+	#tag : 'Gofer'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCachingGoferResolvedReference >> version [
 	"Answer a Monticello version of the receiver."
 
@@ -15,7 +17,7 @@ MetacelloCachingGoferResolvedReference >> version [
 	^cachedVersion
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloCachingGoferResolvedReference >> workingCopy [
 	"Answer a working copy or throw an error if not present."
 

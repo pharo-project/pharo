@@ -1,19 +1,21 @@
 Class {
-	#name : #ObservableSlotTest,
-	#superclass : #TestCase,
+	#name : 'ObservableSlotTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'point'
 	],
-	#category : #'VariablesLibrary-Tests-Observable'
+	#category : 'VariablesLibrary-Tests-Observable',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Observable'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ObservableSlotTest >> setUp [
 	super setUp.
 	point := ObservablePoint new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testChangeInInstanceVariableRaisesEventOnlyOnce [
 	| count |
 	count := 0.
@@ -24,7 +26,7 @@ ObservableSlotTest >> testChangeInInstanceVariableRaisesEventOnlyOnce [
 	self assert: count equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testExplicitNotificationRaisesEventOnlyOnce [
 	| count |
 	count := 0.
@@ -35,7 +37,7 @@ ObservableSlotTest >> testExplicitNotificationRaisesEventOnlyOnce [
 	self assert: count equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testExplicitNotificationRaisesEventWithNewValue [
 	| newValue |
 	point x: 17.
@@ -46,24 +48,24 @@ ObservableSlotTest >> testExplicitNotificationRaisesEventWithNewValue [
 	self assert: newValue equals: 17
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testExplicitNotifyUnexistentPropertyChangedRaisesError [
 	self should: [ point notifyPropertyChanged: #z ] raise: SlotNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testIsObservableSlot [
 
 	self assert: (point class slotNamed: 'x') isObservableSlot
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testObservableSlotAssignReturnsValue [
 	"When assigning to a Observable Slot, the return value should be the value"
 	self assert: (point xReturn: 299) equals: 299
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testObservableSlotWorksAsNormalSlot [
 	point x: 17.
 	point y: 299.
@@ -72,7 +74,7 @@ ObservableSlotTest >> testObservableSlotWorksAsNormalSlot [
 	self assert: point y equals: 299
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testSubscribeBlockWithoutParametersIsCalled [
 	| called |
 	called := false.
@@ -83,7 +85,7 @@ ObservableSlotTest >> testSubscribeBlockWithoutParametersIsCalled [
 	self assert: called
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testSubscribeToChangeRaisesEventWithNewValue [
 	| newValue |
 	point property: #x whenChangedDo: [ :new | newValue := new ].
@@ -93,7 +95,7 @@ ObservableSlotTest >> testSubscribeToChangeRaisesEventWithNewValue [
 	self assert: newValue equals: 17
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testSubscribeToExistentNonObservablePropertyRaisesError [
 
 	self
@@ -104,7 +106,7 @@ ObservableSlotTest >> testSubscribeToExistentNonObservablePropertyRaisesError [
 		raise: NonObservableSlotError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObservableSlotTest >> testSubscribeToUnexistentPropertyRaisesError [
 
 	self

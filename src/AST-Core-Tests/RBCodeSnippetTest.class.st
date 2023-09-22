@@ -5,15 +5,17 @@ Parametrized matrix test class to run various test on code snippets.
 The only parameter is the instance variable `snippet` that is the current code snippet <RBCodeSnippet>.
 "
 Class {
-	#name : #RBCodeSnippetTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'RBCodeSnippetTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'snippet'
 	],
-	#category : #'AST-Core-Tests-Snippets'
+	#category : 'AST-Core-Tests-Snippets',
+	#package : 'AST-Core-Tests',
+	#tag : 'Snippets'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBCodeSnippetTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -21,32 +23,32 @@ RBCodeSnippetTest class >> testParameters [
 		  yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBCodeSnippetTest >> performTest [
 
 	self skipIf: testSelector asSymbol.
 	^ super performTest
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 RBCodeSnippetTest >> skipIf: aSymbol [
 
 	snippet ifSkip: aSymbol then: [ self skip ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippetTest >> snippet [
 
 	^ snippet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippetTest >> snippet: anObject [
 
 	snippet := anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testCodeImporter [
 
 	| string importer class runBlock |
@@ -91,7 +93,7 @@ RBCodeSnippetTest >> testCodeImporter [
 	self testExecuteBlock: runBlock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testDump [
 
 	| ast dump ast2 dump2 |
@@ -103,7 +105,7 @@ RBCodeSnippetTest >> testDump [
 	self assert: dump2 equals: dump
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testFormattedCode [
 
 	| ast |
@@ -111,7 +113,7 @@ RBCodeSnippetTest >> testFormattedCode [
 	self assert: ast formattedCode withSeparatorsCompacted equals: snippet formattedCode withSeparatorsCompacted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testMonticello [
 
 	| definition |
@@ -150,7 +152,7 @@ RBCodeSnippetTest >> testMonticello [
 	self assert: MCMockClassE methods size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testParse [
 
 	| ast |
@@ -184,7 +186,7 @@ RBCodeSnippetTest >> testParse [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testParseOnError [
 
 	| ast error |
@@ -199,7 +201,7 @@ RBCodeSnippetTest >> testParseOnError [
 			self deny: ast isFaulty ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testSimpleFormattedCode [
 
 	| ast fast east |

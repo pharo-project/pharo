@@ -2,42 +2,44 @@
 Monticello selector for changes.
 "
 Class {
-	#name : #MCChangeSelector,
-	#superclass : #MCPatchBrowser,
+	#name : 'MCChangeSelector',
+	#superclass : 'MCPatchBrowser',
 	#instVars : [
 		'kept'
 	],
-	#category : #'MonticelloGUI-Tools'
+	#category : 'MonticelloGUI-Tools',
+	#package : 'MonticelloGUI',
+	#tag : 'Tools'
 }
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCChangeSelector >> buttonSpecs [
 	^ #((Select select 'Select these changes')
 		 (Cancel cancel 'Cancel the operation')
 		)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCChangeSelector >> cancel [
 	self answer: nil
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCChangeSelector >> defaultLabel [
 	^ 'Change Selector'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCChangeSelector >> kept [
 	^ kept ifNil: [kept := Set new]
 ]
 
-{ #category : #'multi-selection' }
+{ #category : 'multi-selection' }
 MCChangeSelector >> listSelectionAt: aNumber [
 	^ self kept includes: (self items at: aNumber)
 ]
 
-{ #category : #'multi-selection' }
+{ #category : 'multi-selection' }
 MCChangeSelector >> listSelectionAt: aNumber put: aBoolean [
 	| item |
 	item := self items at: aNumber.
@@ -46,24 +48,24 @@ MCChangeSelector >> listSelectionAt: aNumber put: aBoolean [
 		ifFalse: [self kept remove: item ifAbsent: []]
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 MCChangeSelector >> select [
 	self answer: (MCPatch operations: kept)
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCChangeSelector >> selectAll [
 	kept addAll: self items.
 	self changed: #list
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCChangeSelector >> selectNone [
 	kept := Set new.
 	self changed: #list
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCChangeSelector >> widgetSpecs [
 	 ^#(
 		((buttonRow) (0 0 1 0) (0 0 0 30))

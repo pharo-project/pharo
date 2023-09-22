@@ -1,6 +1,6 @@
-Extension { #name : #OldPharoClassDefinitionPrinter }
+Extension { #name : 'OldPharoClassDefinitionPrinter' }
 
-{ #category : #'*ClassParser' }
+{ #category : '*ClassParser' }
 OldPharoClassDefinitionPrinter >> classDefinitionParserClass [
 
 	^ CDClassDefinitionParser

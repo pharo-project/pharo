@@ -1,6 +1,6 @@
-Extension { #name : #Form }
+Extension { #name : 'Form' }
 
-{ #category : #'*Morphic-Core' }
+{ #category : '*Morphic-Core' }
 Form >> anyShapeFill [
 	"Fill the interior of the outermost outlined region in the receiver, a 1-bit deep form.  Typically the resulting form is used with fillShape:fillColor: to paint a solid color.  See also convexShapeFill:"
 
@@ -14,7 +14,7 @@ Form >> anyShapeFill [
 	^ shape
 ]
 
-{ #category : #'*Morphic-Core' }
+{ #category : '*Morphic-Core' }
 Form >> borderWidth: anInteger [
 	"Set the width of the border for the receiver to be anInteger and paint it
 	using black as the border color."
@@ -25,14 +25,14 @@ Form >> borderWidth: anInteger [
 		fillColor: Smalltalk ui theme borderColor
 ]
 
-{ #category : #'*Morphic-Core' }
+{ #category : '*Morphic-Core' }
 Form >> defaultCanvasClass [
 
 	"Return the default canvas used for drawing onto the receiver"
 	^ FormCanvas
 ]
 
-{ #category : #'*Morphic-Core' }
+{ #category : '*Morphic-Core' }
 Form >> getCanvas [
 	"Return a Canvas that can be used to draw onto the receiver"
 	^self defaultCanvasClass on: self

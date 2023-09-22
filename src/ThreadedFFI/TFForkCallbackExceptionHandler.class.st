@@ -5,12 +5,14 @@ I execute the given block and handle it with #on:fork:.
 I collaborate with TFRunner instances that centralize the callback execution and return per runner.
 "
 Class {
-	#name : #TFForkCallbackExceptionHandler,
-	#superclass : #Object,
-	#category : #'ThreadedFFI-Callbacks'
+	#name : 'TFForkCallbackExceptionHandler',
+	#superclass : 'Object',
+	#category : 'ThreadedFFI-Callbacks',
+	#package : 'ThreadedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #errors }
+{ #category : 'errors' }
 TFForkCallbackExceptionHandler >> handleExceptionDuring: aBlock [
 
 	aBlock on: Exception fork: [ :e | e pass ]

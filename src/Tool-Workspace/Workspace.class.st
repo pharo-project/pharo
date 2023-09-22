@@ -17,8 +17,8 @@ To open a new workspace, execute one of the following expression:
 
 "
 Class {
-	#name : #Workspace,
-	#superclass : #Model,
+	#name : 'Workspace',
+	#superclass : 'Model',
 	#instVars : [
 		'textModel',
 		'bindings',
@@ -30,30 +30,32 @@ Class {
 	#classVars : [
 		'LastContents'
 	],
-	#category : #'Tool-Workspace-Base'
+	#category : 'Tool-Workspace-Base',
+	#package : 'Tool-Workspace',
+	#tag : 'Base'
 }
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 Workspace class >> cleanUp [
 	LastContents := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace class >> lastContents [
 	^ LastContents ifNil: [LastContents := OrderedCollection new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace class >> maxKeptContents [
 	^ 30
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Workspace class >> open [
 	^ self new openLabel: self title ; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Workspace class >> openContents: aString [
 	"Open a new workspace with the given contents. It looks better when aString is code since the style is applied"
 
@@ -63,30 +65,30 @@ Workspace class >> openContents: aString [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Workspace class >> openLabel: aLabel [
 	^ self new openLabel: aLabel ; yourself
 ]
 
-{ #category : #'tool registry' }
+{ #category : 'tool registry' }
 Workspace class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]"
 	registry register: self as: #workspace
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 Workspace class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#workspace
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Workspace class >> title [
 	^ 'Workspace'
 ]
 
-{ #category : #'window menu' }
+{ #category : 'window menu' }
 Workspace >> addModelItemsToWindowMenu: aMenu [
 	aMenu addLine.
 	aMenu add: 'Open...' target: self selector: #openMenuAction.
@@ -102,7 +104,7 @@ Workspace >> addModelItemsToWindowMenu: aMenu [
 	aMenu addLine
 ]
 
-{ #category : #'file support' }
+{ #category : 'file support' }
 Workspace >> askForFileNameToOpen [
 	"Ask user for file name to load content from"
 	^ UIManager default
@@ -110,7 +112,7 @@ Workspace >> askForFileNameToOpen [
 			label: 'Choose file to open in the workspace' translated
 ]
 
-{ #category : #'file support' }
+{ #category : 'file support' }
 Workspace >> askForFileNameToSave: suggestedFileName [
 	"Ask user for the name of the file to save workspace content to. Use the given file name as the initial answer"
 
@@ -119,31 +121,31 @@ Workspace >> askForFileNameToSave: suggestedFileName [
 			initialAnswer: suggestedFileName
 ]
 
-{ #category : #'variable definitions' }
+{ #category : 'variable definitions' }
 Workspace >> bindingOf: aString [
 	(bindings includesKey: aString)
 		ifFalse: [ bindings add: (WorkspaceVariable key: aString asSymbol) ].
 	^ bindings associationAt: aString
 ]
 
-{ #category : #'variable definitions' }
+{ #category : 'variable definitions' }
 Workspace >> browseBindings [
 	bindings inspect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> contents [
 
 	^ textModel getText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> contents: aString [
 
 	^ textModel setText: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Workspace >> createTextView [
 	| v |
 	v := textModel newScrolledText
@@ -154,37 +156,37 @@ Workspace >> createTextView [
 	^ v
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Workspace >> defaultTextModel [
 	^ RubScrolledTextModel new interactionModel: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> doItContext [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> doItReceiver [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> fileName [
 	^ fileName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> fileName: anObject [
 	fileName := anObject
 ]
 
-{ #category : #'shout bindings' }
+{ #category : 'shout bindings' }
 Workspace >> hasBindingOf: aString [
 	^bindings includesKey: aString asSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Workspace >> initialize [
 	super initialize.
 	textModel := self defaultTextModel.
@@ -192,40 +194,40 @@ Workspace >> initialize [
 	self initializeBindings
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Workspace >> initializeBindings [
 
 	bindings := Dictionary new
 ]
 
-{ #category : #'window menu' }
+{ #category : 'window menu' }
 Workspace >> itemForEncoding: aString [
 	^ encoding = aString -> aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> label: aString [
 
 	window title: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> lastContents [
 	^ self class lastContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> maxKeptContents [
 	^ self class maxKeptContents
 ]
 
-{ #category : #view }
+{ #category : 'view' }
 Workspace >> open [
 
 	self openLabel: self class title
 ]
 
-{ #category : #'file support' }
+{ #category : 'file support' }
 Workspace >> openFile: aFileName [
 	"Load file content into this workspace. If successful, associate the workspace with this file and change its label"
 
@@ -234,7 +236,7 @@ Workspace >> openFile: aFileName [
 	self label: aFileName
 ]
 
-{ #category : #view }
+{ #category : 'view' }
 Workspace >> openLabel: aString [
 
 	window := StandardWindow new model: self.
@@ -245,7 +247,7 @@ Workspace >> openLabel: aString [
 	window openInWorld
 ]
 
-{ #category : #'window menu' }
+{ #category : 'window menu' }
 Workspace >> openMenuAction [
 	"Open content of the file choosed by user in this workspace and associate it's name with this workspace"
 	| userWarned |
@@ -257,7 +259,7 @@ Workspace >> openMenuAction [
 	userWarned ifTrue: [self openFile: self askForFileNameToOpen]
 ]
 
-{ #category : #'file support' }
+{ #category : 'file support' }
 Workspace >> readStringFromFile: aFileName [
 	"Read the content of the given file."
 
@@ -267,7 +269,7 @@ Workspace >> readStringFromFile: aFileName [
 	self contents: fileContent upToEnd asString
 ]
 
-{ #category : #'window menu' }
+{ #category : 'window menu' }
 Workspace >> saveAsMenuAction [
 	"Save the receiver's contents string to a file, prompting the user for a file-name.  Suggest a reasonable file-name."
 
@@ -279,7 +281,7 @@ Workspace >> saveAsMenuAction [
 	textModel ifNotNil: [ :model | self saveString: model getString toFile: suggestedFileName ]
 ]
 
-{ #category : #'file support' }
+{ #category : 'file support' }
 Workspace >> saveString: aString toFile: aFileName [
 	"Save the given string to the given file"
 
@@ -290,29 +292,29 @@ Workspace >> saveString: aString toFile: aFileName [
 	fileContent nextPutAll: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> selectedClassOrMetaClass [
 	^ nil
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 Workspace >> selectedMethod [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> setBindings: aDictionary [
 	"Sets the Workspace to use the specified dictionary as its namespace"
 
 	bindings := aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Workspace >> sourceTextArea [
 	^ self textView
 ]
 
-{ #category : #'file support' }
+{ #category : 'file support' }
 Workspace >> suggestedFileName [
 	"If the workspace has an associated fileName use that, otherwise derive a reasonable file-name from the window label"
 
@@ -320,25 +322,25 @@ Workspace >> suggestedFileName [
 	^ window title, '.ws'
 ]
 
-{ #category : #view }
+{ #category : 'view' }
 Workspace >> textView [
 	^ textView ifNil:[ textView := self createTextView]
 ]
 
-{ #category : #'window menu' }
+{ #category : 'window menu' }
 Workspace >> useEncoding: aString [
 	encoding := aString.
 	textModel hasUnacceptedEdits: true
 ]
 
-{ #category : #'window menu' }
+{ #category : 'window menu' }
 Workspace >> warnUser [
 	"Warn the user about the possible content loss"
 
 	^ self confirm: 'This will replace the current workspace content.', String cr, 'Do you want to continue?' translated
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 Workspace >> whenTextAccepted: anAnnouncement [
 	self lastContents size > self maxKeptContents
 		ifTrue: [ self lastContents removeFirst ].

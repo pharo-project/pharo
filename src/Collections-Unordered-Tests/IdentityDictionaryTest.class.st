@@ -2,29 +2,31 @@
 SUnit tests for identity dictionaries
 "
 Class {
-	#name : #IdentityDictionaryTest,
-	#superclass : #DictionaryTest,
-	#category : #'Collections-Unordered-Tests-Dictionaries'
+	#name : 'IdentityDictionaryTest',
+	#superclass : 'DictionaryTest',
+	#category : 'Collections-Unordered-Tests-Dictionaries',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 IdentityDictionaryTest class >> shouldInheritSelectors [
 
 ^true
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IdentityDictionaryTest >> canBeUnhealthy [
 	^ false
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 IdentityDictionaryTest >> classToBeTested [
 
 	^ IdentityDictionary
 ]
 
-{ #category : #'tests - identity' }
+{ #category : 'tests - identity' }
 IdentityDictionaryTest >> testIdentity [
 	| dict key |
 	dict := self classToBeTested new.

@@ -2,45 +2,47 @@
 SUnit tests for SystemDictionary
 "
 Class {
-	#name : #SystemDictionaryTest,
-	#superclass : #DictionaryTest,
-	#category : #'System-Support-Tests-Utilities'
+	#name : 'SystemDictionaryTest',
+	#superclass : 'DictionaryTest',
+	#category : 'System-Support-Tests-Utilities',
+	#package : 'System-Support-Tests',
+	#tag : 'Utilities'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 SystemDictionaryTest class >> shouldInheritSelectors [
 
 	^ true
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SystemDictionaryTest >> canBeUnhealthy [
 	"uses GlobalVariables instead of associations"
 
 	^ false
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 SystemDictionaryTest >> classToBeTested [
 
 	^ SystemDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testClassOrTraitNamedReturnsClassForClasses [
 
 	self assert: Object identicalTo: (testingEnvironment classOrTraitNamed: 'Object').
 	self assert: Object identicalTo: (testingEnvironment classOrTraitNamed: #Object)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testClassOrTraitNamedReturnsNilForGlobals [
 
 	self assert: nil equals: (testingEnvironment classOrTraitNamed: 'Undeclared').
 	self assert: nil equals: (testingEnvironment classOrTraitNamed: #Undeclared)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testEnvironmentOfOrganization [
 
 	| aDictionary |
@@ -48,7 +50,7 @@ SystemDictionaryTest >> testEnvironmentOfOrganization [
 	self assert: aDictionary organization environment equals: aDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testHasBindingThatBeginsWith [
 
 	super testHasBindingThatBeginsWith.
@@ -56,31 +58,31 @@ SystemDictionaryTest >> testHasBindingThatBeginsWith [
 	self deny: (Smalltalk globals hasBindingThatBeginsWith: 'NOTHEREIope')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testOrganizationPerInstance [
 
 	self deny: SystemDictionary new organization equals: SystemDictionary new organization
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testOtherInstancesOfSystemDictionaryAsString [
 
 	self deny: SystemDictionary new asString equals: 'Smalltalk'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testOtherInstancesOfSystemDictionaryPrintString [
 
 	self deny: SystemDictionary new printString equals: 'Smalltalk'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testOtherInstancesOfSystemDictionarySelfEvaluating [
 
 	self deny: SystemDictionary new isSelfEvaluating
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testPrintOn [
 
 	| printed splittedString |
@@ -97,7 +99,7 @@ SystemDictionaryTest >> testPrintOn [
 			'globals' }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testSetOrganizationSetBackPointer [
 
 	| systemDictionary packageOrganizer |
@@ -108,19 +110,19 @@ SystemDictionaryTest >> testSetOrganizationSetBackPointer [
 	self assert: systemDictionary organization identicalTo: packageOrganizer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testSmalltalkAsString [
 
 	self assert: Smalltalk asString equals: 'Smalltalk'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testSmalltalkPrintString [
 
 	self assert: Smalltalk printString equals: 'Smalltalk'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDictionaryTest >> testSmalltalkSelfEvaluating [
 
 	self assert: Smalltalk isSelfEvaluating

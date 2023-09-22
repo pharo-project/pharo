@@ -1,22 +1,24 @@
 Class {
-	#name : #ReClassSideResetMethodProtocolRule,
-	#superclass : #ReAbstractRule,
-	#category : #'Renraku-Rules'
+	#name : 'ReClassSideResetMethodProtocolRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'Renraku-Rules',
+	#package : 'Renraku',
+	#tag : 'Rules'
 }
 
-{ #category : #'testing - interest' }
+{ #category : 'testing - interest' }
 ReClassSideResetMethodProtocolRule class >> checksMethod [
 
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassSideResetMethodProtocolRule >> basicCheck: aMethod [
 
 	^ aMethod isClassSide and: [ aMethod selector = #reset and: [ aMethod protocolName ~= #'class initialization' ] ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReClassSideResetMethodProtocolRule >> critiqueFor: aMethod [
 
 	| methodSymbol classSymbol |
@@ -31,12 +33,12 @@ ReClassSideResetMethodProtocolRule >> critiqueFor: aMethod [
 			   inClass: classSymbol)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassSideResetMethodProtocolRule >> group [
 	^ 'Clean Code'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassSideResetMethodProtocolRule >> name [
 
 	^ 'Class side methods called #reset should be in the ''class initialization'' protocol'

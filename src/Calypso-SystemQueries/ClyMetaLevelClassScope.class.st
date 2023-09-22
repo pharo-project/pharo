@@ -3,12 +3,14 @@ I am abstract scope which represents concrete meta level of class. There are ins
 Look at subclasses. They should implement class side method #resolveClass:  which returns instanceSide of classSide of given class
 "
 Class {
-	#name : #ClyMetaLevelClassScope,
-	#superclass : #ClyLocalClassScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyMetaLevelClassScope',
+	#superclass : 'ClyLocalClassScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyMetaLevelClassScope class >> metaLevelForHierarchyOf: aClass [
 	"My subclasses should restrict any hierarchy by instance side relationship.
 	For example using class side scope you can analyze hierarchy of ProtoObject.
@@ -17,19 +19,19 @@ ClyMetaLevelClassScope class >> metaLevelForHierarchyOf: aClass [
 	^aClass instanceSide
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyMetaLevelClassScope class >> metaLevelOf: aClass [
 	"Subclasses should decide what meta level of given class they see.
 	Look at subclasses"
 	self subclassResponsibility
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyMetaLevelClassScope class >> metaLevelsOf: aClass do: aBlock [
 	aBlock value: (self metaLevelOf: aClass)
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyMetaLevelClassScope >> metaLevelOf: aClass [
 	^self class metaLevelOf: aClass
 ]

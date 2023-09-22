@@ -2,12 +2,14 @@
 A RubEditingStateTest is a test class for testing the behavior of RubEditingState
 "
 Class {
-	#name : #RubEditingStateTest,
-	#superclass : #TestCase,
-	#category : #'Rubric-Tests-Editing-Core'
+	#name : 'RubEditingStateTest',
+	#superclass : 'TestCase',
+	#category : 'Rubric-Tests-Editing-Core',
+	#package : 'Rubric-Tests',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubEditingStateTest >> testSelectionStart [
 
 	| m |
@@ -36,7 +38,7 @@ RubEditingStateTest >> testSelectionStart [
 	self assert: m selectionStart stringIndex equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubEditingStateTest >> testSelectionStop [
 
 	| m |

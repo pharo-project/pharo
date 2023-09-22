@@ -1,6 +1,6 @@
 Class {
-	#name : #RBChangeMethodNameTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBChangeMethodNameTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'newSelector',
 		'oldSelector',
@@ -8,10 +8,12 @@ Class {
 		'implementors',
 		'renameMap'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBChangeMethodNameTransformation >> applicabilityPreconditions [
 		
 	^ (RBCondition definesSelector: oldSelector in: class)
@@ -19,7 +21,7 @@ RBChangeMethodNameTransformation >> applicabilityPreconditions [
 
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
 	(self model allReferencesTo: aSymbol in: classes)
 		do:
@@ -30,7 +32,7 @@ RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol of: classes 
 				using: searchReplacer]
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol using: searchReplacer [
 	|aBlock|
 	aBlock := [:eachMethod |
@@ -41,7 +43,7 @@ RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol using: searc
 	self model allReferencesTo: aSymbol do: aBlock
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> hasPermutedArguments [
 	oldSelector numArgs = newSelector numArgs ifFalse: [^true].
 	1 to: oldSelector numArgs
@@ -49,19 +51,19 @@ RBChangeMethodNameTransformation >> hasPermutedArguments [
 	^false
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> implementors [
 
 	implementors ifNil: [ implementors := self model allImplementorsOf: oldSelector ].
 	^ implementors
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> implementorsCanBePrimitives [
 	^false
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBChangeMethodNameTransformation >> interactionConditions [
 	
 	self flag: #popUp.
@@ -74,19 +76,19 @@ RBChangeMethodNameTransformation >> interactionConditions [
 		true])
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> modifyImplementorParseTree: parseTree in: aClass [
 	| oldArgs |
 	oldArgs := parseTree arguments.
 	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> newSelector [
 	^newSelector
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> parseTreeRewriter [
 	| rewriteRule oldString newString |
 	rewriteRule := self parseTreeRewriterClass new.
@@ -98,7 +100,7 @@ RBChangeMethodNameTransformation >> parseTreeRewriter [
 	^rewriteRule
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBChangeMethodNameTransformation >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
@@ -112,14 +114,14 @@ RBChangeMethodNameTransformation >> preconditions [
 	^ conditions & self interactionConditions 
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> privateTransform [
 	self renameImplementors.
 	self replaceMessageSends.
 	self removeRenamedImplementors
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> removeRenamedImplementors [
 	oldSelector = newSelector
 		ifTrue: [ ^ self ].
@@ -127,14 +129,14 @@ RBChangeMethodNameTransformation >> removeRenamedImplementors [
 		do: [ :each | each removeMethod: oldSelector ]
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> renameArgumentsIn: parseTree [
 	self renameMap do: [ :arg |
 		(self parseTreeRewriterClass rename: arg name to: arg newName) executeTree: parseTree
 	]
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> renameImplementors [
 
 	self implementors
@@ -155,17 +157,17 @@ RBChangeMethodNameTransformation >> renameImplementors [
 			]
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> renameMap [
 	^renameMap ifNil: [ renameMap := { } ]
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> renameMap: aColl [
 	renameMap := aColl
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
@@ -173,12 +175,12 @@ RBChangeMethodNameTransformation >> renameMethod: aSelector in: aClass to: newSe
 	permutation := aMap
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> replaceMessageSends [
 	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBChangeMethodNameTransformation >> replaceMessageSendsIn: classes [
 	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
 ]

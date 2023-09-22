@@ -2,28 +2,30 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TAddForUniquenessTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TAddForUniquenessTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAddForUniquenessTest >> collectionWithElement [
 " return a collection already including 'element'    "
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAddForUniquenessTest >> collectionWithoutElement [
 	" return a collection that does not include 'element' "
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAddForUniquenessTest >> element [
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TAddForUniquenessTest >> test0FixtureAddForUniquenessTest [
 	self element.
 	self collectionWithElement.
@@ -32,7 +34,7 @@ TAddForUniquenessTest >> test0FixtureAddForUniquenessTest [
 	self deny: (self collectionWithoutElement includes: self element)
 ]
 
-{ #category : #'tests - adding uniquely' }
+{ #category : 'tests - adding uniquely' }
 TAddForUniquenessTest >> testAddAlreadyThereDoesNotCount [
 
 	| added oldSize |
@@ -46,7 +48,7 @@ TAddForUniquenessTest >> testAddAlreadyThereDoesNotCount [
 	self assert: self collectionWithElement size = oldSize
 ]
 
-{ #category : #'tests - adding uniquely' }
+{ #category : 'tests - adding uniquely' }
 TAddForUniquenessTest >> testAddNewElementIncrementsSize [
 	| added oldSize |
 	oldSize := self collectionWithoutElement size.
@@ -57,7 +59,7 @@ TAddForUniquenessTest >> testAddNewElementIncrementsSize [
 	self assert: self collectionWithoutElement size = (oldSize + 1)
 ]
 
-{ #category : #'tests - adding uniquely' }
+{ #category : 'tests - adding uniquely' }
 TAddForUniquenessTest >> testTAddIfNotPresentWithElementAlreadyIn [
 
 	| added oldSize |
@@ -71,7 +73,7 @@ TAddForUniquenessTest >> testTAddIfNotPresentWithElementAlreadyIn [
 	self assert: self collectionWithElement size = oldSize
 ]
 
-{ #category : #'tests - adding uniquely' }
+{ #category : 'tests - adding uniquely' }
 TAddForUniquenessTest >> testTAddIfNotPresentWithNewElement [
 	| added oldSize |
 	oldSize := self collectionWithoutElement size.

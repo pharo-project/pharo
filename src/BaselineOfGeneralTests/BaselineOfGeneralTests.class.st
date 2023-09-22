@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfGeneralTests,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfGeneralTests
+	#name : 'BaselineOfGeneralTests',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfGeneralTests',
+	#package : 'BaselineOfGeneralTests'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfGeneralTests >> baseline: spec [
 	<baseline>
 	"Needs to be re-sorted"

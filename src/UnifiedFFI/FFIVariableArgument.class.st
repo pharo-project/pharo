@@ -7,15 +7,17 @@ The type knows how to resolve itself in a context.
 To resolve my name, the resolver performs a semantic analysis in the calling context to define if the variable is an instance variable, a method argument or a class variable. The name resolution is represented by my loader.
 "
 Class {
-	#name : #FFIVariableArgument,
-	#superclass : #FFIFunctionArgument,
+	#name : 'FFIVariableArgument',
+	#superclass : 'FFIFunctionArgument',
 	#instVars : [
 		'name'
 	],
-	#category : #'UnifiedFFI-Arguments'
+	#category : 'UnifiedFFI-Arguments',
+	#package : 'UnifiedFFI',
+	#tag : 'Arguments'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIVariableArgument class >> name: aString typeName: aTypeName arity: anInteger [
 
 	^ self new
@@ -24,23 +26,23 @@ FFIVariableArgument class >> name: aString typeName: aTypeName arity: anInteger 
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIVariableArgument >> asOldArraySpec [
 
 	^ { name . nil . type name . type arity }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIVariableArgument >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIVariableArgument >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFIVariableArgument >> resolveUsing: aResolver [
 
 	loader := aResolver loaderForArgNamed: name indirectIndex: nil.

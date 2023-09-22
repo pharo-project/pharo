@@ -1,10 +1,12 @@
 Class {
-	#name : #TKTTaskTimeoutTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Kernel'
+	#name : 'TKTTaskTimeoutTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Kernel',
+	#package : 'TaskIt-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTTaskTimeoutTest >> testTaskDoesNotTimeoutIfTaskExecutionIsShorter [
 
 	| runner finished |
@@ -19,7 +21,7 @@ TKTTaskTimeoutTest >> testTaskDoesNotTimeoutIfTaskExecutionIsShorter [
 	self assert: finished
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTTaskTimeoutTest >> testTaskTimeoutIfTaskExecutionIsLonger [
 	| runner |
 	runner := TKTLocalProcessTaskRunner new.

@@ -2,23 +2,25 @@
 A ChangesBrowser is a browser used to browse a composite change wich gather all the wanted changes
 "
 Class {
-	#name : #StChangesBrowserPresenter,
-	#superclass : #SpPresenterWithModel,
+	#name : 'StChangesBrowserPresenter',
+	#superclass : 'SpPresenterWithModel',
 	#instVars : [
 		'changesTree',
 		'selectedItems',
 		'diffView'
 	],
-	#category : #'NautilusRefactoring-Utilities'
+	#category : 'NautilusRefactoring-Utilities',
+	#package : 'NautilusRefactoring',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StChangesBrowserPresenter class >> changes: aCollection [
 
 	^ self on: aCollection
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 StChangesBrowserPresenter >> accept [
 
 	self okToChange ifFalse: [ ^ self ].
@@ -29,7 +31,7 @@ StChangesBrowserPresenter >> accept [
 		run
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StChangesBrowserPresenter >> buildDiffFor: aChange [
 
 	^ aChange ifNil: [ '' ] ifNotNil: [
@@ -39,30 +41,30 @@ StChangesBrowserPresenter >> buildDiffFor: aChange [
 			  rightText: aChange textToDisplay ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StChangesBrowserPresenter >> changes [
 
 	^ self model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StChangesBrowserPresenter >> changes: aCollection [
 
 	self model: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StChangesBrowserPresenter >> changesTree [
 	^ changesTree
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StChangesBrowserPresenter >> connectPresenters [
 
 	changesTree whenActivatedDo: [ :selection | self buildDiffFor: selection selectedItem ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 StChangesBrowserPresenter >> defaultLayout [
 
 	^ SpPanedLayout newTopToBottom
@@ -71,7 +73,7 @@ StChangesBrowserPresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StChangesBrowserPresenter >> initializeDialogWindow: aWindow [
 
 	super initializeDialogWindow: aWindow.
@@ -82,7 +84,7 @@ StChangesBrowserPresenter >> initializeDialogWindow: aWindow [
 		okAction: [ self accept ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StChangesBrowserPresenter >> initializePresenters [
 
 	changesTree := self newTreeTable.
@@ -105,24 +107,24 @@ StChangesBrowserPresenter >> initializePresenters [
 		add: diffView
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 StChangesBrowserPresenter >> open [
 
 	self openDialog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StChangesBrowserPresenter >> pickedChanges [
 
 	^ changesTree roots select: [ :i | selectedItems includes: i ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StChangesBrowserPresenter >> textArea [
 	^ diffView
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StChangesBrowserPresenter >> updateChanges [
 	| aCompositeChange |
 	aCompositeChange := RBRefactoryChangeManager changeFactory
@@ -135,7 +137,7 @@ StChangesBrowserPresenter >> updateChanges [
 	selectedItems := Set withAll: changesTree roots
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 StChangesBrowserPresenter >> updatePresenter [
 
 	self model ifNil: [ ^ self ].

@@ -7,32 +7,34 @@ I send these event back to my handler:
 	- OSTouchThreeFingersSwipeAbortEvent 
 "
 Class {
-	#name : #OSTouchThreeFingersSwipeDetector,
-	#superclass : #OSTouchSwipeDetector,
-	#category : #'OSWindow-Core-Gestures'
+	#name : 'OSTouchThreeFingersSwipeDetector',
+	#superclass : 'OSTouchSwipeDetector',
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchThreeFingersSwipeDetector >> eventClassAbortGesture [
 	^ OSTouchThreeFingersSwipeAbortEvent
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchThreeFingersSwipeDetector >> eventClassBeginGesture [
 	^ OSTouchThreeFingersSwipeBeginEvent
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchThreeFingersSwipeDetector >> eventClassEndGesture [
 	^ OSTouchThreeFingersSwipeEndEvent
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchThreeFingersSwipeDetector >> eventClassMoveGesture [
 	^ OSTouchThreeFingersSwipeMoveEvent
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchThreeFingersSwipeDetector >> necessaryFingers [
 	^ 3
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : #SHRBStyleAttributionTest,
-	#superclass : #TestCase,
+	#name : 'SHRBStyleAttributionTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'styler',
 		'oldSetting'
@@ -11,10 +11,12 @@ Class {
 	#pools : [
 		'SHRBMockSharedPoolStyler'
 	],
-	#category : #'Shout-Tests-Styling'
+	#category : 'Shout-Tests-Styling',
+	#package : 'Shout-Tests',
+	#tag : 'Styling'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 SHRBStyleAttributionTest >> assertStyleOf: aText at: index shouldBe: aStyleSymbol [
 
 	self
@@ -24,13 +26,13 @@ SHRBStyleAttributionTest >> assertStyleOf: aText at: index shouldBe: aStyleSymbo
 		shouldBe: aStyleSymbol
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 SHRBStyleAttributionTest >> assertStyleOf: aText between: min and: max shouldBe: aStyleSymbol [
 
 	min to: max do: [ :index | self assert: (aText attributesAt: index) anyOne name equals: aStyleSymbol ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SHRBStyleAttributionTest >> setUp [
 
 	super setUp.
@@ -39,7 +41,7 @@ SHRBStyleAttributionTest >> setUp [
 	oldSetting := SHRBMockTextStyler instVarNamed: #formatIncompleteIdentifiers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHRBStyleAttributionTest >> style: aText [
 
 	| ast |
@@ -49,14 +51,14 @@ SHRBStyleAttributionTest >> style: aText [
 	^ ast
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SHRBStyleAttributionTest >> tearDown [
 
 	SHRBMockTextStyler formatIncompleteIdentifiers: oldSetting.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testArgumentStyle [
 
 	| aText |
@@ -70,7 +72,7 @@ SHRBStyleAttributionTest >> testArgumentStyle [
 		shouldBe: #argument
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testAssignmentStyle [
 
 	| aText |
@@ -85,7 +87,7 @@ SHRBStyleAttributionTest >> testAssignmentStyle [
 	self assertStyleOf: aText at: 15 shouldBe: #number
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testAttributeInBlockHasRightStyle [
 
 	| aText |
@@ -99,7 +101,7 @@ SHRBStyleAttributionTest >> testAttributeInBlockHasRightStyle [
 		shouldBe: #argument
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBinaryStyle [
 
 	| aText |
@@ -109,7 +111,7 @@ SHRBStyleAttributionTest >> testBinaryStyle [
 	self assertStyleOf: aText at: 8 shouldBe: #selector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBlockArgColonStyle [
 
 	| aText |
@@ -119,7 +121,7 @@ SHRBStyleAttributionTest >> testBlockArgColonStyle [
 	self assertStyleOf: aText at: 7 shouldBe: #blockArgColon
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBlockArgStyle [
 
 	| aText |
@@ -133,7 +135,7 @@ SHRBStyleAttributionTest >> testBlockArgStyle [
 		shouldBe: #blockArg
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBlockArgsBarStyle [
 
 	| aText |
@@ -143,7 +145,7 @@ SHRBStyleAttributionTest >> testBlockArgsBarStyle [
 	self assertStyleOf: aText at: 8 shouldBe: #blockArgsBar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBlockPatternArgStyle [
 
 	| aText |
@@ -157,7 +159,7 @@ SHRBStyleAttributionTest >> testBlockPatternArgStyle [
 		shouldBe: #blockPatternArg
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBlockPatternTempVarStyle [
 
 	| aText |
@@ -171,7 +173,7 @@ SHRBStyleAttributionTest >> testBlockPatternTempVarStyle [
 		shouldBe: #blockPatternTempVar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBlockStyle [
 
 	| aText |
@@ -196,7 +198,7 @@ SHRBStyleAttributionTest >> testBlockStyle [
 	self assertStyleOf: aText at: 119 shouldBe: #block
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBlockTempBarStyle [
 
 	| aText |
@@ -207,7 +209,7 @@ SHRBStyleAttributionTest >> testBlockTempBarStyle [
 	self assertStyleOf: aText at: 9 shouldBe: #blockTempBar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBlockTempVarStyle [
 
 	| aText |
@@ -221,7 +223,7 @@ SHRBStyleAttributionTest >> testBlockTempVarStyle [
 		shouldBe: #blockTempVar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testBracesStyle [
 
 	| aText |
@@ -246,7 +248,7 @@ SHRBStyleAttributionTest >> testBracesStyle [
 	self assertStyleOf: aText at: 57 shouldBe: #brace
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testCascadeSeparatorStyle [
 
 	| aText |
@@ -256,7 +258,7 @@ SHRBStyleAttributionTest >> testCascadeSeparatorStyle [
 	self assertStyleOf: aText at: 9 shouldBe: #cascadeSeparator
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testCharacterStyle [
 
 	| aText |
@@ -270,7 +272,7 @@ SHRBStyleAttributionTest >> testCharacterStyle [
 		shouldBe: #character
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testClassVarStyle [
 
 	| aText |
@@ -284,7 +286,7 @@ SHRBStyleAttributionTest >> testClassVarStyle [
 		shouldBe: #classVar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testCommentOfVariableInParenthesis [
 	"Regression test for https://github.com/pharo-project/pharo/issues/13316"
 
@@ -302,7 +304,7 @@ SHRBStyleAttributionTest >> testCommentOfVariableInParenthesis [
 		shouldBe: #comment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testCommentStyle [
 
 	| aText |
@@ -316,7 +318,7 @@ SHRBStyleAttributionTest >> testCommentStyle [
 		shouldBe: #comment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testCommentsInLiteralArrayNode [
 
 	| aText |
@@ -331,7 +333,7 @@ SHRBStyleAttributionTest >> testCommentsInLiteralArrayNode [
 		shouldBe: #comment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testCommentsInLiteralValueNode [
 
 	| aText |
@@ -346,7 +348,7 @@ SHRBStyleAttributionTest >> testCommentsInLiteralValueNode [
 		shouldBe: #comment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testCommentsInVariaousPlaces [
 	"For now, the AST does not visit really well the comments. Some work is needed to do that and until it is done, this test will help to avoid regression."
 
@@ -377,7 +379,7 @@ SHRBStyleAttributionTest >> testCommentsInVariaousPlaces [
 		shouldBe: #comment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testCommentsPragmaNode [
 
 	| aText |
@@ -392,7 +394,7 @@ SHRBStyleAttributionTest >> testCommentsPragmaNode [
 		shouldBe: #comment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testDefaultStyle [
 
 	| aText |
@@ -402,7 +404,7 @@ SHRBStyleAttributionTest >> testDefaultStyle [
 	self assertStyleOf: aText at: 2 shouldBe: #default
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testDeprecatedClass [
 
 	| aText |
@@ -412,7 +414,7 @@ SHRBStyleAttributionTest >> testDeprecatedClass [
 	5 to: 27 do: [ :index | self assert: ((aText attributesAt: index) includes: TextEmphasis struckOut) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testDeprecatedGlobalVariable [
 
 	[
@@ -426,7 +428,7 @@ SHRBStyleAttributionTest >> testDeprecatedGlobalVariable [
 		Smalltalk globals removeKey: #SHRBDeprecatedGlobalVariable ifAbsent: [ "Do nothing. The test just crashed really really early." ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testErrorStyle [
 
 	| aText |
@@ -452,7 +454,7 @@ SHRBStyleAttributionTest >> testErrorStyle [
 		shouldBe: #invalid. "opening ["
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testFalseStyle [
 
 	| aText |
@@ -466,7 +468,7 @@ SHRBStyleAttributionTest >> testFalseStyle [
 		shouldBe: #false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testGlobalVarStyle [
 
 	| aText |
@@ -480,7 +482,7 @@ SHRBStyleAttributionTest >> testGlobalVarStyle [
 		shouldBe: #globalVar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testIncompleteIdentifierStyle [
 
 	| aText |
@@ -495,7 +497,7 @@ SHRBStyleAttributionTest >> testIncompleteIdentifierStyle [
 		shouldBe: #incompleteIdentifier
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testIncompleteKeywordStyle [
 
 	| aText |
@@ -510,7 +512,7 @@ SHRBStyleAttributionTest >> testIncompleteKeywordStyle [
 		shouldBe: #incompleteSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testInstanceVarStyle [
 
 	| aText |
@@ -524,7 +526,7 @@ SHRBStyleAttributionTest >> testInstanceVarStyle [
 		shouldBe: #instVar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testInvalidStyle [
 
 	| aText |
@@ -534,7 +536,7 @@ SHRBStyleAttributionTest >> testInvalidStyle [
 	self assertStyleOf: aText at: 6 shouldBe: #invalid
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testKeywordStyle [
 
 	| aText |
@@ -548,7 +550,7 @@ SHRBStyleAttributionTest >> testKeywordStyle [
 		shouldBe: #selector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testMethodTempBarStyle [
 
 	| aText |
@@ -559,7 +561,7 @@ SHRBStyleAttributionTest >> testMethodTempBarStyle [
 	self assertStyleOf: aText at: 7 shouldBe: #methodTempBar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testNilStyle [
 
 	| aText |
@@ -573,7 +575,7 @@ SHRBStyleAttributionTest >> testNilStyle [
 		shouldBe: #nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testNumberStyle [
 
 	| aText |
@@ -587,7 +589,7 @@ SHRBStyleAttributionTest >> testNumberStyle [
 		shouldBe: #number
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testNumberStyle2 [
 
 	| aText |
@@ -601,7 +603,7 @@ SHRBStyleAttributionTest >> testNumberStyle2 [
 		shouldBe: #number
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testParenthesisStyle [
 
 	| aText |
@@ -626,7 +628,7 @@ SHRBStyleAttributionTest >> testParenthesisStyle [
 	self assertStyleOf: aText at: 57 shouldBe: #parenthesis
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testParenthesisSurroundingVar [
 
 	| aText |
@@ -642,7 +644,7 @@ SHRBStyleAttributionTest >> testParenthesisSurroundingVar [
 	self assertStyleOf: aText at: 15 shouldBe: #parenthesis
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testPatternArgStyle [
 
 	| aText |
@@ -656,7 +658,7 @@ SHRBStyleAttributionTest >> testPatternArgStyle [
 		shouldBe: #patternArg
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testPatternKeywordStyle [
 
 	| aText |
@@ -676,7 +678,7 @@ SHRBStyleAttributionTest >> testPatternKeywordStyle [
 		shouldBe: #patternSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testPatternTempVarStyle [
 
 	| aText |
@@ -686,7 +688,7 @@ SHRBStyleAttributionTest >> testPatternTempVarStyle [
 	self assertStyleOf: aText at: 5 shouldBe: #patternTempVar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testPragmaStyle [
 
 	| aText |
@@ -700,7 +702,7 @@ SHRBStyleAttributionTest >> testPragmaStyle [
 		shouldBe: #pragma
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testPragmaStyleWithCrazyPragma [
 
 	| aText |
@@ -721,7 +723,7 @@ SHRBStyleAttributionTest >> testPragmaStyleWithCrazyPragma [
 	self assertStyleOf: aText at: 28 shouldBe: #pragma
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testReturnStyle [
 
 	| aText |
@@ -734,7 +736,7 @@ SHRBStyleAttributionTest >> testReturnStyle [
 		shouldBe: #return
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testSelfStyle [
 
 	| aText |
@@ -748,7 +750,7 @@ SHRBStyleAttributionTest >> testSelfStyle [
 		shouldBe: #self
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testSharedPoolVarStyle [
 
 	| aText |
@@ -762,7 +764,7 @@ SHRBStyleAttributionTest >> testSharedPoolVarStyle [
 		shouldBe: #poolConstant
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testStatementSeparatorStyle [
 
 	| aText |
@@ -772,7 +774,7 @@ SHRBStyleAttributionTest >> testStatementSeparatorStyle [
 	self assertStyleOf: aText at: 9 shouldBe: #statementSeparator
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testStringStyle [
 
 	| aText |
@@ -786,7 +788,7 @@ SHRBStyleAttributionTest >> testStringStyle [
 		shouldBe: #string
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testStringSymbolStyle [
 
 	| aText |
@@ -800,7 +802,7 @@ SHRBStyleAttributionTest >> testStringSymbolStyle [
 		shouldBe: #symbol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testSuperStyle [
 
 	| aText |
@@ -814,7 +816,7 @@ SHRBStyleAttributionTest >> testSuperStyle [
 		shouldBe: #super
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testSymbolStyle [
 
 	| aText |
@@ -828,7 +830,7 @@ SHRBStyleAttributionTest >> testSymbolStyle [
 		shouldBe: #symbol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testTempVarStyle [
 
 	| aText |
@@ -838,7 +840,7 @@ SHRBStyleAttributionTest >> testTempVarStyle [
 	self assertStyleOf: aText at: 11 shouldBe: #tempVar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testThisContextStyle [
 
 	| aText |
@@ -852,7 +854,7 @@ SHRBStyleAttributionTest >> testThisContextStyle [
 		shouldBe: #thisContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testThisProcessStyle [
 
 	| aText |
@@ -866,7 +868,7 @@ SHRBStyleAttributionTest >> testThisProcessStyle [
 		shouldBe: #thisProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testTrueStyle [
 
 	| aText |
@@ -880,7 +882,7 @@ SHRBStyleAttributionTest >> testTrueStyle [
 		shouldBe: #true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testUnaryStyle [
 
 	| aText |
@@ -894,7 +896,7 @@ SHRBStyleAttributionTest >> testUnaryStyle [
 		shouldBe: #selector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testUndefinedIdentifierStyle [
 
 	| aText |
@@ -909,7 +911,7 @@ SHRBStyleAttributionTest >> testUndefinedIdentifierStyle [
 		shouldBe: #undefinedIdentifier
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testUndefinedKeywordStyle [
 
 	| aText |
@@ -924,7 +926,7 @@ SHRBStyleAttributionTest >> testUndefinedKeywordStyle [
 		shouldBe: #undefinedSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testUnfinishedCommentStyle [
 
 	| aText |

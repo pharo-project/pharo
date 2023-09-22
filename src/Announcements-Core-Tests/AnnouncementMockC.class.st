@@ -2,26 +2,28 @@
 This is a simple test mock
 "
 Class {
-	#name : #AnnouncementMockC,
-	#superclass : #AnnouncementMockB,
+	#name : 'AnnouncementMockC',
+	#superclass : 'AnnouncementMockB',
 	#instVars : [
 		'announcingCounter'
 	],
-	#category : #'Announcements-Core-Tests-Mocks'
+	#category : 'Announcements-Core-Tests-Mocks',
+	#package : 'Announcements-Core-Tests',
+	#tag : 'Mocks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementMockC >> announcingCounter [
 	^ announcingCounter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AnnouncementMockC >> initialize [
 	super initialize.
 	announcingCounter := 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AnnouncementMockC >> prepareForDelivery [
 
 	announcingCounter := announcingCounter + 1

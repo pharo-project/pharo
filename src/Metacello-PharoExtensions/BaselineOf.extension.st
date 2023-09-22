@@ -1,12 +1,12 @@
-Extension { #name : #BaselineOf }
+Extension { #name : 'BaselineOf' }
 
-{ #category : #'*Metacello-PharoExtensions' }
+{ #category : '*Metacello-PharoExtensions' }
 BaselineOf class >> allPackageNames [
 	
 	^ self version packages collect: [:each | each name]
 ]
 
-{ #category : #'*Metacello-PharoExtensions' }
+{ #category : '*Metacello-PharoExtensions' }
 BaselineOf class >> deepPackagesOfGroupNamed: aName [
 	"Traverses the group tree to collect packages"
 	| allGroups projects group |
@@ -29,7 +29,7 @@ BaselineOf class >> deepPackagesOfGroupNamed: aName [
 		flattened
 ]
 
-{ #category : #'*Metacello-PharoExtensions' }
+{ #category : '*Metacello-PharoExtensions' }
 BaselineOf >> packageRepository [
 
 	" Tries to determine a repository from which the baseline is being loaded. Useful for 
@@ -40,7 +40,7 @@ BaselineOf >> packageRepository [
 		ifEmpty: [ nil ]
 ]
 
-{ #category : #'*Metacello-PharoExtensions' }
+{ #category : '*Metacello-PharoExtensions' }
 BaselineOf >> packageRepositoryURL [
 
 	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
@@ -51,13 +51,13 @@ BaselineOf >> packageRepositoryURL [
 		ifNil: [ '' ]
 ]
 
-{ #category : #'*Metacello-PharoExtensions' }
+{ #category : '*Metacello-PharoExtensions' }
 BaselineOf class >> packagesOfGroupNamed: aName [
 
 	^ (self version groups detect: [ :g | g name = aName ]) includes
 ]
 
-{ #category : #'*Metacello-PharoExtensions' }
+{ #category : '*Metacello-PharoExtensions' }
 BaselineOf class >> version [
 	
 	^ self project version

@@ -10,22 +10,24 @@ It is polymorphic to ClyTaggedClassGroup which performs actual tag renaming.
 My class query is ClyRestUntaggedClasses 
 "
 Class {
-	#name : #ClyNoTagClassGroup,
-	#superclass : #ClyClassGroup,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyNoTagClassGroup',
+	#superclass : 'ClyClassGroup',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyNoTagClassGroup class >> isBasedOnClassTag [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNoTagClassGroup class >> priority [
 	^10
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyNoTagClassGroup >> importClass: aClass [
 
 	| newPackages |
@@ -39,7 +41,7 @@ ClyNoTagClassGroup >> importClass: aClass [
 	aClass removePackageTag
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyNoTagClassGroup >> renameClassTagTo: newTag [
 
 	self classes do: [ :class | class packageTag: newTag ]

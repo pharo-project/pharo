@@ -3,12 +3,14 @@ I'm an util to convert a shortcut into the representation used in OSX
 
 "
 Class {
-	#name : #KMOSXShortcutPrinter,
-	#superclass : #KMShortcutPrinter,
-	#category : #'Keymapping-Core-Base'
+	#name : 'KMOSXShortcutPrinter',
+	#superclass : 'KMShortcutPrinter',
+	#category : 'Keymapping-Core-Base',
+	#package : 'Keymapping-Core',
+	#tag : 'Base'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 KMOSXShortcutPrinter >> basicModifierStringsOf: aShortcut [
 
 	| list |
@@ -17,7 +19,7 @@ KMOSXShortcutPrinter >> basicModifierStringsOf: aShortcut [
 	^ list
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 KMOSXShortcutPrinter >> mapSpecialCharacter: char [
 
 	char = KeyboardKey enter ifTrue: [ ^ self class symbolTableAt: #Enter ifAbsent: [ 'Enter' ] ].
@@ -26,7 +28,7 @@ KMOSXShortcutPrinter >> mapSpecialCharacter: char [
 	^ char name asUppercase
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 KMOSXShortcutPrinter >> visitSingleShortcut: aShortcut [
 
 	| keyParts symbols char |

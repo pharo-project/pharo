@@ -2,26 +2,28 @@
 Tests for FFIExternalStructureFieldParser
 "
 Class {
-	#name : #FFIExternalStructureFieldParserTest,
-	#superclass : #TestCase,
+	#name : 'FFIExternalStructureFieldParserTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'architecture'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 FFIExternalStructureFieldParserTest >> newParser [
 	^ FFIExternalStructureFieldParser new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFIExternalStructureFieldParserTest >> setUp [
 	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalStructureFieldParserTest >> testParseFieldsStructure [
 	| fieldSpec |
 

@@ -3,12 +3,14 @@ A list of examples.
 See class side.
 "
 Class {
-	#name : #FTExamples,
-	#superclass : #Object,
-	#category : #'Morphic-Widgets-FastTable-Examples'
+	#name : 'FTExamples',
+	#superclass : 'Object',
+	#category : 'Morphic-Widgets-FastTable-Examples',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> example1 [
 	<example>
 	| list |
@@ -21,7 +23,7 @@ FTExamples class >> example1 [
 	list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> example2 [
 	<example>
 	| list |
@@ -35,7 +37,7 @@ FTExamples class >> example2 [
 	list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleDragAndDrop1 [
 	"Show drag&drop between two lists"
 	<sampleInstance>
@@ -74,7 +76,7 @@ FTExamples class >> exampleDragAndDrop1 [
 		openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleDragAndDrop2 [
 	"Show drag&drop between two lists, multiple selection"
 	<sampleInstance>
@@ -114,7 +116,7 @@ FTExamples class >> exampleDragAndDrop2 [
 		openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleDragAndDrop3 [
 	"Show drag&drop between two lists, multiple selection.
 	 Showing 50 elements, so we can test Cmd+A (select all)"
@@ -155,7 +157,7 @@ FTExamples class >> exampleDragAndDrop3 [
 		openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleDragAndDrop4 [
 	"Show drag&drop in one list, with autoscroll"
 	<sampleInstance>
@@ -173,7 +175,7 @@ FTExamples class >> exampleDragAndDrop4 [
 	^ list openInWindowLabeled: 'Autoscrolling'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleEasyList1 [
 	"Show an easy list with all Morph methods"
 	<sampleInstance>
@@ -190,7 +192,7 @@ FTExamples class >> exampleEasyList1 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleEasyList2 [
 	"Show an easy list with all Morph methods and a simple menu"
 	<example>
@@ -216,7 +218,7 @@ FTExamples class >> exampleEasyList2 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleEasyList3 [
 	"Show an easy list with all Morph methods and a simple menu, with a list header"
 	<example>
@@ -243,7 +245,7 @@ FTExamples class >> exampleEasyList3 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleEditableList1 [
 	<sampleInstance>
 	<example>
@@ -280,7 +282,7 @@ FTExamples class >> exampleEditableList1 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleFilterableList [
 	<example>
 	| list |
@@ -293,7 +295,7 @@ FTExamples class >> exampleFilterableList [
 	list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleList1 [
 	"Show a list with all Object methods"
 	<example>
@@ -308,7 +310,7 @@ FTExamples class >> exampleList1 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleList2 [
 	"Show a list with all Object methods and preselects one item"
 
@@ -326,7 +328,7 @@ FTExamples class >> exampleList2 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleList3 [
 	"Show a list with all Object methods,
 		- preselects one element
@@ -346,7 +348,7 @@ FTExamples class >> exampleList3 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleList4 [
 	"Show a list with all Object methods,
 		- preselects one element
@@ -370,7 +372,7 @@ FTExamples class >> exampleList4 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleList5 [
 	"Show a list with all Object methods,
 		- preselects one element
@@ -394,7 +396,7 @@ FTExamples class >> exampleList5 [
 	^ list openInWindow
 ]
 
-{ #category : #'function examples' }
+{ #category : 'function examples' }
 FTExamples class >> exampleListWithExplicitFilter [
 	<example>
 	| list |
@@ -407,7 +409,7 @@ FTExamples class >> exampleListWithExplicitFilter [
 	list openInWindow
 ]
 
-{ #category : #'function examples' }
+{ #category : 'function examples' }
 FTExamples class >> exampleListWithExplicitFilterAndActionButton [
 	<example>
 	| list |
@@ -422,7 +424,7 @@ FTExamples class >> exampleListWithExplicitFilterAndActionButton [
 	list openInWindow
 ]
 
-{ #category : #'function examples' }
+{ #category : 'function examples' }
 FTExamples class >> exampleListWithExplicitFilterAndActionButton2 [
 	<example>
 	| list |
@@ -434,7 +436,7 @@ FTExamples class >> exampleListWithExplicitFilterAndActionButton2 [
 	list openInWindow
 ]
 
-{ #category : #'function examples' }
+{ #category : 'function examples' }
 FTExamples class >> exampleListWithExplicitSearch [
 	<example>
 	| list |
@@ -447,7 +449,7 @@ FTExamples class >> exampleListWithExplicitSearch [
 	list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleListWithGenerator [
 	"Show a list with all Object methods"
 	<example>
@@ -462,7 +464,7 @@ FTExamples class >> exampleListWithGenerator [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleListWithHeader [
 	"Show a list with all Object methods with a header"
 
@@ -478,7 +480,7 @@ FTExamples class >> exampleListWithHeader [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleOutline1 [
 	<example>
 	| list |
@@ -495,7 +497,7 @@ FTExamples class >> exampleOutline1 [
 	list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleOutline2 [
 	<example>
 	| data list |
@@ -509,7 +511,7 @@ FTExamples class >> exampleOutline2 [
 	list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleRowNotHomogeneousList1 [
 	"Show a list with all Object methods"
 	<example>
@@ -524,7 +526,7 @@ FTExamples class >> exampleRowNotHomogeneousList1 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleSortableList [
 	"Show a list with all Object methods with a header"
 
@@ -543,7 +545,7 @@ FTExamples class >> exampleSortableList [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleSortableList2 [
 	"Show a list with all Object methods with a header"
 
@@ -562,7 +564,7 @@ FTExamples class >> exampleSortableList2 [
 	^ list openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleSortableTable1 [
 	"Show a table with all Object methods"
 
@@ -595,7 +597,7 @@ FTExamples class >> exampleSortableTable1 [
 	^ table openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleSortableTable2 [
 	"Show a table with all Object methods"
 
@@ -629,7 +631,7 @@ FTExamples class >> exampleSortableTable2 [
 	^ table openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleSortableTable3 [
 	"Show a table with all Object methods"
 
@@ -663,7 +665,7 @@ FTExamples class >> exampleSortableTable3 [
 	^ table openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleSortableTree [
 	"Show a list with all Object methods with a header"
 
@@ -681,7 +683,7 @@ FTExamples class >> exampleSortableTree [
 		openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleTable1 [
 	"Show a table with all Object methods"
 
@@ -705,7 +707,7 @@ FTExamples class >> exampleTable1 [
 	^ table openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleTable2 [
 	"Show a table with all Object methods, with a fixed width"
 
@@ -729,7 +731,7 @@ FTExamples class >> exampleTable2 [
 	^ table openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleTable3 [
 	"Show a table with all Object methods, with a header"
 
@@ -755,7 +757,7 @@ FTExamples class >> exampleTable3 [
 	^ table openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleTable4 [
 	"Show a table with all Object methods, with a resizable header"
 
@@ -783,7 +785,7 @@ FTExamples class >> exampleTable4 [
 	^ table openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleTable5 [
 	"Show a table with cell selection mode"
 
@@ -805,7 +807,7 @@ FTExamples class >> exampleTable5 [
 	^ table openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTExamples class >> exampleTableHorizontalScroll [
 	"Show a table with all Object methods, with a header,
 	 all fixed width columns as horizontal scroll."
@@ -832,7 +834,7 @@ FTExamples class >> exampleTableHorizontalScroll [
 	^ table openInWindow
 ]
 
-{ #category : #'tree examples' }
+{ #category : 'tree examples' }
 FTExamples class >> exampleTree1 [
 	<example>
 	| ds |
@@ -847,7 +849,7 @@ FTExamples class >> exampleTree1 [
 		openInWindow
 ]
 
-{ #category : #'tree examples' }
+{ #category : 'tree examples' }
 FTExamples class >> exampleTree2 [
 	<example>
 	| ds |
@@ -863,7 +865,7 @@ FTExamples class >> exampleTree2 [
 		openInWindow
 ]
 
-{ #category : #'tree examples' }
+{ #category : 'tree examples' }
 FTExamples class >> exampleTreeWithAllItemsFilter [
 	<example>
 	| ds |
@@ -882,7 +884,7 @@ FTExamples class >> exampleTreeWithAllItemsFilter [
 		openInWindow
 ]
 
-{ #category : #'tree examples' }
+{ #category : 'tree examples' }
 FTExamples class >> exampleTreeWithAllItemsSearch [
 	<example>
 	| ds |
@@ -900,7 +902,7 @@ FTExamples class >> exampleTreeWithAllItemsSearch [
 		openInWindow
 ]
 
-{ #category : #'tree examples' }
+{ #category : 'tree examples' }
 FTExamples class >> exampleTreeWithRootFilter [
 	<example>
 	| ds |
@@ -919,7 +921,7 @@ FTExamples class >> exampleTreeWithRootFilter [
 		openInWindow
 ]
 
-{ #category : #'tree examples' }
+{ #category : 'tree examples' }
 FTExamples class >> exampleTreeWithRootSearch [
 	<example>
 	| ds |
@@ -937,7 +939,7 @@ FTExamples class >> exampleTreeWithRootSearch [
 		openInWindow
 ]
 
-{ #category : #'tree examples' }
+{ #category : 'tree examples' }
 FTExamples class >> exampleTreeWithVisibleItemsFilter [
 	<example>
 	| ds |
@@ -956,7 +958,7 @@ FTExamples class >> exampleTreeWithVisibleItemsFilter [
 		openInWindow
 ]
 
-{ #category : #'tree examples' }
+{ #category : 'tree examples' }
 FTExamples class >> exampleTreeWithVisibleItemsSearch [
 	<example>
 	| ds |
@@ -974,7 +976,7 @@ FTExamples class >> exampleTreeWithVisibleItemsSearch [
 		openInWindow
 ]
 
-{ #category : #'tree examples' }
+{ #category : 'tree examples' }
 FTExamples class >> exampleexampleOneSubLevelTree [
 	<example>
 	| ds |
@@ -990,6 +992,6 @@ FTExamples class >> exampleexampleOneSubLevelTree [
 		openInWindow
 ]
 
-{ #category : #'see class side' }
+{ #category : 'see class side' }
 FTExamples >> seeClassSide [
 ]

@@ -1,14 +1,15 @@
 Class {
-	#name : #ReClassSideResetMethodProtocolRuleTest,
-	#superclass : #TestCase,
+	#name : 'ReClassSideResetMethodProtocolRuleTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'testClassName',
 		'testClass'
 	],
-	#category : #'Renraku-Tests'
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassSideResetMethodProtocolRuleTest >> setUp [
 
 	super setUp.
@@ -17,7 +18,7 @@ ReClassSideResetMethodProtocolRuleTest >> setUp [
 	testClass := Object subclass: testClassName
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassSideResetMethodProtocolRuleTest >> tearDown [
 
 	testClass removeFromSystem.
@@ -25,7 +26,7 @@ ReClassSideResetMethodProtocolRuleTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassSideResetMethodProtocolRuleTest >> testAutomatedFix [
 
 	| method critiques refactoring |
@@ -43,7 +44,7 @@ ReClassSideResetMethodProtocolRuleTest >> testAutomatedFix [
 	self assert: method protocolName equals: #'class initialization'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassSideResetMethodProtocolRuleTest >> testIgnoredMethodWrongProtocol [
 
 	| method critiques |
@@ -56,7 +57,7 @@ ReClassSideResetMethodProtocolRuleTest >> testIgnoredMethodWrongProtocol [
 	self assert: critiques isEmpty
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassSideResetMethodProtocolRuleTest >> testRightMethodRightProtocol [
 
 	| method critiques |
@@ -69,7 +70,7 @@ ReClassSideResetMethodProtocolRuleTest >> testRightMethodRightProtocol [
 	self assert: critiques isEmpty
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassSideResetMethodProtocolRuleTest >> testRightMethodWrongProtocol [
 
 	| method critiques |

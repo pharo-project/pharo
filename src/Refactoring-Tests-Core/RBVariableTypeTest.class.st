@@ -1,10 +1,11 @@
 Class {
-	#name : #RBVariableTypeTest,
-	#superclass : #RBRefactoringBrowserTest,
-	#category : #'Refactoring-Tests-Core'
+	#name : 'RBVariableTypeTest',
+	#superclass : 'RBRefactoringBrowserTest',
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBVariableTypeTest >> testBasicLintRuleTypes [
 	| typer types |
 	typer := RBRefactoryTyper new.
@@ -26,7 +27,7 @@ RBVariableTypeTest >> testBasicLintRuleTypes [
 	typer printString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBVariableTypeTest >> testCompositeLintRuleTypes [
 	| typer types |
 	typer := RBRefactoryTyper new runOn: RBCompositeLintRuleTestData.
@@ -38,7 +39,7 @@ RBVariableTypeTest >> testCompositeLintRuleTypes [
 	typer printString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBVariableTypeTest >> testLintRuleTypes [
 	| typer types |
 	typer := RBRefactoryTyper new.
@@ -49,7 +50,7 @@ RBVariableTypeTest >> testLintRuleTypes [
 	self assert: (types includes: (typer model classFor: String))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBVariableTypeTest >> testParseTreeTypes [
 	| types model |
 	model := RBClassModelFactory rbNamespace new.

@@ -25,8 +25,8 @@ Inbound: Characters are translated in to 0-63 values and shifted into 8 bit byte
 By Ted Kaehler, based on Tim Olson's Base64Filter.
 "
 Class {
-	#name : #Base64MimeConverter,
-	#superclass : #MimeConverter,
+	#name : 'Base64MimeConverter',
+	#superclass : 'MimeConverter',
 	#instVars : [
 		'multiLine'
 	],
@@ -34,10 +34,12 @@ Class {
 		'FromCharTable',
 		'ToCharTable'
 	],
-	#category : #'Network-MIME-Converter'
+	#category : 'Network-MIME-Converter',
+	#package : 'Network-MIME',
+	#tag : 'Converter'
 }
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 Base64MimeConverter class >> decodeInteger: mimeString [
 
 	"Decode the MIME string into an integer of any length"
@@ -50,7 +52,7 @@ Base64MimeConverter class >> decodeInteger: mimeString [
 	^ sum
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 Base64MimeConverter class >> encodeInteger: int [
 	| strm |
 	"Encode an integer of any length and return the MIME string"
@@ -61,7 +63,7 @@ Base64MimeConverter class >> encodeInteger: int [
 	^ ((self mimeEncode: strm) contents) copyUpTo: $=	"remove padding"
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Base64MimeConverter class >> initialize [
 
 	FromCharTable := Array new: 256.	"nils"
@@ -81,7 +83,7 @@ Base64MimeConverter class >> initialize [
 	ToCharTable at: 64 put: $/
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 Base64MimeConverter class >> mimeDecodeToChars: aStream [
 	"Return a ReadWriteStream of the original String.  aStream has only 65 innocuous character values.  It is not binary.  (See class comment). 4 bytes in aStream goes to 3 bytes in output."
 
@@ -93,14 +95,14 @@ Base64MimeConverter class >> mimeDecodeToChars: aStream [
 	^ me dataStream
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 Base64MimeConverter class >> mimeEncode: aStream [
 	"Return a ReadWriteStream of characters.  The data of aStream is encoded as 65 innocuous characters.  (See class comment). 3 bytes in aStream goes to 4 bytes in output."
 
 	^self mimeEncode: aStream multiLine: true
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 Base64MimeConverter class >> mimeEncode: aStream multiLine: aBool [
 	"Return a ReadWriteStream of characters.  The data of aStream is encoded as 65 innocuous characters.  (See class comment). 3 bytes in aStream goes to 4 bytes in output."
 
@@ -112,14 +114,14 @@ Base64MimeConverter class >> mimeEncode: aStream multiLine: aBool [
 	^ me mimeStream
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Base64MimeConverter >> initialize [
 	super initialize.
 
 	multiLine := true
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Base64MimeConverter >> mimeDecode [
 	"Convert a stream in base 64 with only a-z,A-Z,0-9,+,/ to a full byte stream of characters.  Reutrn a whole stream for the user to read."
 
@@ -138,7 +140,7 @@ Base64MimeConverter >> mimeDecode [
 	^ dataStream
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Base64MimeConverter >> mimeDecodeToByteArray [
 	"Convert a stream in base 64 with only a-z,A-Z,0-9,+,/ to a full ByteArray of 0-255 values.  Reutrn a whole stream for the user to read."
 
@@ -157,7 +159,7 @@ Base64MimeConverter >> mimeDecodeToByteArray [
 	^ dataStream
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Base64MimeConverter >> mimeEncode [
 
 	| phase1 phase2 raw nib lineLength data |
@@ -198,17 +200,17 @@ Base64MimeConverter >> mimeEncode [
 	^ mimeStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Base64MimeConverter >> multiLine [
 	^ multiLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Base64MimeConverter >> multiLine: anObject [
 	multiLine := anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Base64MimeConverter >> nextValue [
 	"The next six bits of data char from the mimeStream, or nil.  Skip all other chars"
 	| raw num |

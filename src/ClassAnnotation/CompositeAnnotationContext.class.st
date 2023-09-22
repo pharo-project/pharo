@@ -15,26 +15,27 @@ Internal Representation and Key Implementation Points.
 	parts:		<Collection of<AnnotationContext>>
 "
 Class {
-	#name : #CompositeAnnotationContext,
-	#superclass : #AnnotationContext,
+	#name : 'CompositeAnnotationContext',
+	#superclass : 'AnnotationContext',
 	#instVars : [
 		'parts'
 	],
-	#category : #ClassAnnotation
+	#category : 'ClassAnnotation',
+	#package : 'ClassAnnotation'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CompositeAnnotationContext class >> with: contextCollection [
 	^self new
 		parts: contextCollection
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CompositeAnnotationContext >> , anAnnotationContext [
 	^ self class with: (parts copyWith: anAnnotationContext asAnnotationContext)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompositeAnnotationContext >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -44,29 +45,29 @@ CompositeAnnotationContext >> = anObject [
 	^ parts = anObject parts
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompositeAnnotationContext >> describes: anAnnotationUser [
 	^parts allSatisfy: [ :each | each describes: anAnnotationUser ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompositeAnnotationContext >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ parts hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeAnnotationContext >> parts [
 	^ parts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeAnnotationContext >> parts: anObject [
 	parts := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompositeAnnotationContext >> printOn: aStream [
 	super printOn: aStream.
 

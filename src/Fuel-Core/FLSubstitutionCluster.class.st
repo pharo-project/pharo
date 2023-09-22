@@ -16,22 +16,24 @@ anAnalyzer when: [:x | x isInteger] substituteBy: [:x | x printString].
 In this way, when you serialize #(1 2), you will then materialize #('1' '2')
 "
 Class {
-	#name : #FLSubstitutionCluster,
-	#superclass : #FLCluster,
+	#name : 'FLSubstitutionCluster',
+	#superclass : 'FLCluster',
 	#instVars : [
 		'substitutions',
 		'substitutes'
 	],
-	#category : #'Fuel-Core-Clusters'
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLSubstitutionCluster class >> clusterBucketIn: aClusterization [
 
 	^aClusterization substitutionsBucket
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLSubstitutionCluster >> add: anObject substitutedBy: anotherObject traceWith: aAnalysis [
 
 	substitutions 
@@ -42,7 +44,7 @@ FLSubstitutionCluster >> add: anObject substitutedBy: anotherObject traceWith: a
 			aAnalysis trace: anotherObject ].
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLSubstitutionCluster >> initializeAnalyzing [
 
 	super initializeAnalyzing.
@@ -50,19 +52,19 @@ FLSubstitutionCluster >> initializeAnalyzing [
 	substitutes := IdentitySet new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSubstitutionCluster >> isSubstitute: anObject [
 	^ substitutes includes: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSubstitutionCluster >> objects [
 	"This cluster does not have objects"
 	
 	^#()
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLSubstitutionCluster >> printOn: aStream [
 
 	super printOn: aStream.
@@ -70,7 +72,7 @@ FLSubstitutionCluster >> printOn: aStream [
 	substitutions printElementsOn: aStream
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLSubstitutionCluster >> registerIndexesOn: anEncoder [
 	substitutions keysAndValuesDo: [ :anObject :theSubstitution | 
 		| substitutionIndex |
@@ -80,7 +82,7 @@ FLSubstitutionCluster >> registerIndexesOn: anEncoder [
 			put: substitutionIndex ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSubstitutionCluster >> substitutions [
 	^ substitutions
 ]

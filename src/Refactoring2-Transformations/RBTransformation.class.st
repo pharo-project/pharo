@@ -11,12 +11,14 @@ My main API is
 
 "
 Class {
-	#name : #RBTransformation,
-	#superclass : #RBAbstractTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#name : 'RBTransformation',
+	#superclass : 'RBAbstractTransformation',
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 RBTransformation class >> initializeRefactoringOptions [
 
 	RefactoringOptions := IdentityDictionary new.
@@ -52,20 +54,20 @@ RBTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBTransformation >> applicabilityPreconditions [ 
 	
 	^ self trueCondition 
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBTransformation >> asRefactoring [
 
 	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTransformation >> copyOptionsFrom: aDictionary [
 	| dict |
 	dict := self options.
@@ -78,19 +80,19 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBTransformation >> preconditions [
 
 	^ self applicabilityPreconditions 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTransformation >> setOption: aSymbol toUse: aBlock [
 
 	self options at: aSymbol put: aBlock
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBTransformation >> transform [
 
 	self deprecated: 'Use generateChanges instead' transformWith: '`@rec transform' -> '`@rec generateChanges'.
@@ -105,7 +107,7 @@ RBTransformation >> transform [
 	"RBRefactoringManager instance addRefactoring: self"
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 RBTransformation >> whatToDisplayIn: aBrowser [
 
 	^ self changes changes

@@ -1,27 +1,28 @@
 Class {
-	#name : #SourceFileBufferedReadWriteStreamTest,
-	#superclass : #TestCase,
+	#name : 'SourceFileBufferedReadWriteStreamTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'classFactory'
 	],
-	#category : #'System-Sources-Tests'
+	#category : 'System-Sources-Tests',
+	#package : 'System-Sources-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SourceFileBufferedReadWriteStreamTest >> setUp [
 	super setUp.
 
 	classFactory := ClassFactoryForTestCase new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SourceFileBufferedReadWriteStreamTest >> tearDown [
 	classFactory cleanUp.
 
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testBuffering [
 	| stream |
 	stream := SourceFileBufferedReadWriteStream on: '01234567890123456789' readStream.
@@ -33,7 +34,7 @@ SourceFileBufferedReadWriteStreamTest >> testBuffering [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesCompleteChunk [
 	"This test covers https://github.com/pharo-project/pharo/issues/6063.
 	When flushing is deferred but the internal write buffer overlows during
@@ -59,7 +60,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 	self assert: stringStream contents equals: 'before flush - after flush'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesCompleteChunkDuringCompilation [
 	"This test covers https://github.com/pharo-project/pharo/issues/6063.
 	When flushing is deferred but the internal write buffer overlows during
@@ -114,7 +115,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 									stream sizeBuffer: stream defaultBufferSize ] ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 	| stringStream |
 
@@ -130,7 +131,7 @@ SourceFileBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 	self assert: stringStream contents equals: '01234567890123456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testPeek [
 	| stream |
 	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
@@ -144,7 +145,7 @@ SourceFileBufferedReadWriteStreamTest >> testPeek [
 	self assert: stream next isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testReadInto [
 	| stream buffer count |
 	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
@@ -160,7 +161,7 @@ SourceFileBufferedReadWriteStreamTest >> testReadInto [
 	self assert: buffer equals: '789123'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testReadIntoLarger [
 	| stream buffer count |
 	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
@@ -171,7 +172,7 @@ SourceFileBufferedReadWriteStreamTest >> testReadIntoLarger [
 	self assert: buffer equals: '0123456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testReadThenWrite [
 	| stream stringStream |
 
@@ -196,7 +197,7 @@ SourceFileBufferedReadWriteStreamTest >> testReadThenWrite [
 	self assert: stringStream contents equals: '0123ABCD89'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testReadUpTo [
 	| stream |
 	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
@@ -206,7 +207,7 @@ SourceFileBufferedReadWriteStreamTest >> testReadUpTo [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testReadUpToEnd [
 	| stream |
 	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
@@ -216,7 +217,7 @@ SourceFileBufferedReadWriteStreamTest >> testReadUpToEnd [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testSetAtEnd [
 
 	| stream originalStream|
@@ -232,7 +233,7 @@ SourceFileBufferedReadWriteStreamTest >> testSetAtEnd [
 	self assert: originalStream contents equals: '0123456789A'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testWriteThenRead [
 	| stream stringStream |
 
@@ -255,7 +256,7 @@ SourceFileBufferedReadWriteStreamTest >> testWriteThenRead [
 	self assert: stringStream contents equals: 'ABCD456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testWriting [
 	| stringStream bufferedStream |
 	stringStream := ReadWriteStream with: String new.
@@ -267,7 +268,7 @@ SourceFileBufferedReadWriteStreamTest >> testWriting [
 	self assert: stringStream contents equals: '0123456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testWritingOverflow [
 	| stringStream bufferedStream |
 

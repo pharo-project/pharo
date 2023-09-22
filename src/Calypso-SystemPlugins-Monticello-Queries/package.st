@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Monticello-Queries' }
+Package { #name : 'Calypso-SystemPlugins-Monticello-Queries' }

@@ -2,12 +2,14 @@
 SUnit tests for Workspace
 "
 Class {
-	#name : #WorkspaceTest,
-	#superclass : #TestCase,
-	#category : #'Tool-Workspace-Tests-Base'
+	#name : 'WorkspaceTest',
+	#superclass : 'TestCase',
+	#category : 'Tool-Workspace-Tests-Base',
+	#package : 'Tool-Workspace-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WorkspaceTest >> testEmptyContent [
 	self assertEmpty: Workspace new contents
 ]

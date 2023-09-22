@@ -2,12 +2,14 @@
 Gradient fill style that uses proper alpha-aware interpolation.
 "
 Class {
-	#name : #InterpolatedGradientFillStyle,
-	#superclass : #GradientFillStyle,
-	#category : #'Graphics-Canvas-Fills'
+	#name : 'InterpolatedGradientFillStyle',
+	#superclass : 'GradientFillStyle',
+	#category : 'Graphics-Canvas-Fills',
+	#package : 'Graphics-Canvas',
+	#tag : 'Fills'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 InterpolatedGradientFillStyle >> computePixelRampOfSize: length [
 	"Compute the pixel ramp in the receiver."
 
@@ -35,7 +37,7 @@ InterpolatedGradientFillStyle >> computePixelRampOfSize: length [
 	^bits
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InterpolatedGradientFillStyle >> interpolatedAlphaMix: ratio of: rgba1 and: rgba2 [
 	"Answer a proper interpolated value between two RGBA color words.
 	Theta is 0..1.."
@@ -55,7 +57,7 @@ InterpolatedGradientFillStyle >> interpolatedAlphaMix: ratio of: rgba1 and: rgba
 	^result bitOr: (alpha rounded bitShift: 24)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InterpolatedGradientFillStyle >> pixelWord32Of: aColor [
 	"Returns an integer representing the bits that appear in a single pixel of this color in a Form of depth 32.
 	Transparency: The pixel value zero is reserved for transparent. For depths greater than 8, black maps to the darkest possible blue.

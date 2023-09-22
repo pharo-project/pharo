@@ -1,31 +1,32 @@
 Class {
-	#name : #SycRemoveNewPackageCommandTest,
-	#superclass : #TestCase,
+	#name : 'SycRemoveNewPackageCommandTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'mockPackage'
 	],
-	#category : #'SystemCommands-PackageCommands-Tests'
+	#category : 'SystemCommands-PackageCommands-Tests',
+	#package : 'SystemCommands-PackageCommands-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveNewPackageCommandTest >> mockPackage [
 
 	^ mockPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveNewPackageCommandTest >> mockPackage: anObject [
 
 	mockPackage := anObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SycRemoveNewPackageCommandTest >> packageNameForTesting [
 
 	^ 'Test-Package'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SycRemoveNewPackageCommandTest >> setUp [
 
 	super setUp.
@@ -33,7 +34,7 @@ SycRemoveNewPackageCommandTest >> setUp [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRemoveNewPackageCommandTest >> testExecute [
 
 	| command |

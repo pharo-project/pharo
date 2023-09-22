@@ -2,25 +2,27 @@
 Superclass of all pinches events
 "
 Class {
-	#name : #OSTouchPinchEvent,
-	#superclass : #OSTouchComplexEvent,
+	#name : 'OSTouchPinchEvent',
+	#superclass : 'OSTouchComplexEvent',
 	#instVars : [
 		'dDist'
 	],
-	#category : #'OSWindow-Core-Events-Touch'
+	#category : 'OSWindow-Core-Events-Touch',
+	#package : 'OSWindow-Core',
+	#tag : 'Events-Touch'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchPinchEvent class >> id [
 	^ #pinch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchPinchEvent >> dDist [
 	^ dDist
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchPinchEvent >> dDist: anObject [
 	dDist := anObject
 ]

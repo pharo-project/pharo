@@ -10,33 +10,35 @@ Internal Representation and Key Implementation Points.
 	visibilityLevel:		<ClyMethodVisibilityLevel>
 "
 Class {
-	#name : #ClyMethodVisibilityMorph,
-	#superclass : #Morph,
+	#name : 'ClyMethodVisibilityMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'browser',
 		'visibilityLevel'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-UI'
+	#category : 'Calypso-SystemTools-FullBrowser-UI',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'UI'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodVisibilityMorph class >> for: aBrowser level: aMethodVisibilityLevel [
 	^self new
 		browser: aBrowser;
 		visibilityLevel: aMethodVisibilityLevel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityMorph >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityMorph >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMethodVisibilityMorph >> build [
 
 	| checkBox |
@@ -51,7 +53,7 @@ ClyMethodVisibilityMorph >> build [
 	self addMorph: checkBox
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodVisibilityMorph >> initialize [
 	super initialize.
 	color := Color transparent.
@@ -62,13 +64,13 @@ ClyMethodVisibilityMorph >> initialize [
 	self minHeight: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodVisibilityMorph >> isMethodsVisible [
 
 	^visibilityLevel isActive
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyMethodVisibilityMorph >> showInheritedMethods: aBoolean [
 
 	| newScope |
@@ -79,12 +81,12 @@ ClyMethodVisibilityMorph >> showInheritedMethods: aBoolean [
 		browser restrictMethodVisibilityBy: newScope]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityMorph >> visibilityLevel [
 	^ visibilityLevel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityMorph >> visibilityLevel: anObject [
 	visibilityLevel := anObject
 ]

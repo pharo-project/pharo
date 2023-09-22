@@ -7,28 +7,30 @@ Instance variables:
 	string 	<String>
 "
 Class {
-	#name : #RxmSubstring,
-	#superclass : #RxmLink,
+	#name : 'RxmSubstring',
+	#superclass : 'RxmLink',
 	#instVars : [
 		'sample',
 		'compare'
 	],
-	#category : #'Regex-Core-Links'
+	#category : 'Regex-Core-Links',
+	#package : 'Regex-Core',
+	#tag : 'Links'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmSubstring >> beCaseInsensitive [
 
 	compare := [:char1 :char2 | char1 sameAs: char2]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmSubstring >> beCaseSensitive [
 
 	compare := [:char1 :char2 | char1 = char2]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RxmSubstring >> character: aCharacter ignoreCase: aBoolean [
 	"Match exactly this character."
 
@@ -36,13 +38,13 @@ RxmSubstring >> character: aCharacter ignoreCase: aBoolean [
 	aBoolean ifTrue: [self beCaseInsensitive]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmSubstring >> initialize [
 	super initialize.
 	self beCaseSensitive
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RxmSubstring >> matchAgainst: aMatcher [
 	"Match if my sample stream is exactly the current prefix
 	of the matcher stream's contents."
@@ -58,13 +60,13 @@ RxmSubstring >> matchAgainst: aMatcher [
 			false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxmSubstring >> sampleStream [
 
 	^sample readStream
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmSubstring >> substring: aString ignoreCase: aBoolean [
 	"Match exactly this string."
 

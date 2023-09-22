@@ -10,28 +10,29 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyOverridingSubclassesChanged,
-	#superclass : #ClyClassHierarchyChanged,
+	#name : 'ClyOverridingSubclassesChanged',
+	#superclass : 'ClyClassHierarchyChanged',
 	#instVars : [
 		'overriddenSuperclass'
 	],
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyOverridingSubclassesChanged class >> overriddenSuperclass: aClass [
 
 	^self new
 		overriddenSuperclass: aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyOverridingSubclassesChanged >> affectsMethodsDefinedInClass: aClass [
 
 	^aClass instanceSide includesBehavior: overriddenSuperclass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyOverridingSubclassesChanged >> affectsMethodsDefinedInPackage: aPackage [
 
 	overriddenSuperclass withAllSubclassesDo: [:each |
@@ -40,7 +41,7 @@ ClyOverridingSubclassesChanged >> affectsMethodsDefinedInPackage: aPackage [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyOverridingSubclassesChanged >> affectsMethodsInProtocol: protocol [
 
 	overriddenSuperclass withAllSubclassesDo: [ :superclass | (superclass protocolNames includes: protocol) ifTrue: [ ^ true ] ].
@@ -48,17 +49,17 @@ ClyOverridingSubclassesChanged >> affectsMethodsInProtocol: protocol [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOverridingSubclassesChanged >> classAffected [
 	^ overriddenSuperclass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOverridingSubclassesChanged >> overriddenSuperclass [
 	^ overriddenSuperclass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOverridingSubclassesChanged >> overriddenSuperclass: anObject [
 	overriddenSuperclass := anObject
 ]

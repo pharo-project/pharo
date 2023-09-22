@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfSortFunctions }
+Package { #name : 'BaselineOfSortFunctions' }

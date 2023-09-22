@@ -2,19 +2,21 @@
 Weak action sequences for events
 "
 Class {
-	#name : #WeakActionSequence,
-	#superclass : #Array,
-	#type : #variable,
-	#category : #'System-Object Events-Base'
+	#name : 'WeakActionSequence',
+	#superclass : 'Array',
+	#type : 'variable',
+	#category : 'System-Object Events-Base',
+	#package : 'System-Object Events',
+	#tag : 'Base'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 WeakActionSequence >> asActionSequence [
 
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WeakActionSequence >> asMinimalRepresentation [
 
 	| valid |
@@ -26,7 +28,7 @@ WeakActionSequence >> asMinimalRepresentation [
 	^valid
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 WeakActionSequence >> printOn: aStream [
 
 	self size < 2 ifTrue: [^super printOn: aStream].
@@ -37,7 +39,7 @@ WeakActionSequence >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakActionSequence >> value [
     "Answer the result of evaluating the elements of the receiver.
 	Actually, return just the last result."
@@ -48,7 +50,7 @@ WeakActionSequence >> value [
     ^answer
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakActionSequence >> valueWithArguments: anArray [
 
 	"Return the last result"

@@ -5,17 +5,19 @@ I help is abstracting over API differences pre and post the introduction of File
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnFileSystemUtils,
-	#superclass : #Object,
-	#category : #'Zinc-HTTP-Support'
+	#name : 'ZnFileSystemUtils',
+	#superclass : 'Object',
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #paths }
+{ #category : 'paths' }
 ZnFileSystemUtils class >> baseNameFor: fileName [
 	^ fileName asFileReference basename
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
 	| fileReference |
 	fileReference := fileName asFileReference.
@@ -24,7 +26,7 @@ ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
 		ifFalse: [ fileReference writeStream binary ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> binaryReadStreamFor: fileName [
 	| fileReference |
 	fileReference := fileName asFileReference.
@@ -33,7 +35,7 @@ ZnFileSystemUtils class >> binaryReadStreamFor: fileName [
 		ifFalse: [ fileReference readStream binary ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> binaryWriteStreamFor: fileName [
 	| fileReference |
 	fileReference := fileName asFileReference.
@@ -42,7 +44,7 @@ ZnFileSystemUtils class >> binaryWriteStreamFor: fileName [
 		ifFalse: [ fileReference writeStream binary ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> binaryWriteStreamFor: fileName do: block [
 	| fileReference |
 	fileReference := fileName asFileReference.
@@ -59,34 +61,34 @@ ZnFileSystemUtils class >> binaryWriteStreamFor: fileName do: block [
 					[ block value: binaryStream ] ensure: [ binaryStream close ] ] ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ZnFileSystemUtils class >> defaultDirectory [
 	^ FileSystem disk workingDirectory
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ZnFileSystemUtils class >> defaultDirectoryPath [
 	^ self defaultDirectory fullName
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 ZnFileSystemUtils class >> delete: path [
 	^ path asFileReference delete
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 ZnFileSystemUtils class >> deleteIfExists: path [
 	^ (self exists: path)
 		ifTrue: [ self delete: path. true ]
 		ifFalse: [ false ]
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 ZnFileSystemUtils class >> directory: path [
 	^ path asFileReference
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 ZnFileSystemUtils class >> downloadPathTo: directoryOrFileName for: baseName [
 	| downloadPath |
 	downloadPath := directoryOrFileName asFileReference.
@@ -99,44 +101,44 @@ ZnFileSystemUtils class >> downloadPathTo: directoryOrFileName for: baseName [
 			directoryOrFileName ]
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 ZnFileSystemUtils class >> exists: path [
 	^ path asFileReference exists
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 ZnFileSystemUtils class >> extensionFor: fileName [
 	^ fileName asFileReference extension
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> fileNamed: fileName do: block [
 	^ fileName asFileReference
 		writeStreamDo: block
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ZnFileSystemUtils class >> fileSizeFor: fileName [
 	^ fileName asFileReference entry size
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> fileStreamFor: fileName [
 	^ fileName asFileReference
 		writeStream
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 ZnFileSystemUtils class >> fullNameFor: fileName [
 	^ fileName asFileReference fullName
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ZnFileSystemUtils class >> modificationTimeFor: path [
 	^ path asFileReference entry modificationTime
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> newBinaryFileNamed: fileName do: block [
 	| fileReference |
 	fileReference := fileName asFileReference.
@@ -151,39 +153,39 @@ ZnFileSystemUtils class >> newBinaryFileNamed: fileName do: block [
 				ifFalse: [ block value: (self binaryFileStreamFor: fileName) ] ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> newFileNamed: fileName do: block [
 	^ fileName asFileReference
 		writeStreamDo: block
 		ifPresent: [ FileExists signalWith: fileName asFileReference ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> oldFileNamed: fileName do: block [
 	^ fileName asFileReference
 		readStreamDo: block
 		ifAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> oldFileStreamFor: fileName [
 	^ fileName asFileReference
 		readStreamIfAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> readStreamFor: fileName [
 	^ fileName asFileReference readStream
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> readStreamFor: fileName do: block [
 	^ fileName asFileReference
 		readStreamDo: block
 		ifAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ZnFileSystemUtils class >> writeStreamFor: fileName do: block [
 	^ fileName asFileReference
 		writeStreamDo: block

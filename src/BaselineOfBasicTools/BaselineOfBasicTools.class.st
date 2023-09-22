@@ -20,15 +20,16 @@ Installs:
 ..and some other packages
 "
 Class {
-	#name : #BaselineOfBasicTools,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfBasicTools',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfBasicTools
+	#category : 'BaselineOfBasicTools',
+	#package : 'BaselineOfBasicTools'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfBasicTools >> baseline: spec [
 	<baseline>
 	| repository |
@@ -98,7 +99,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Tools' ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfBasicTools >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
@@ -116,7 +117,7 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Initialized := true.
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfBasicTools >> project [
 	
 	| aProject |
@@ -126,7 +127,7 @@ BaselineOfBasicTools >> project [
 	^ aProject.
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfBasicTools >> specRefactoring: spec [
 	
 	"Package used to rename #defaultSpec methods to #defaultLayout.

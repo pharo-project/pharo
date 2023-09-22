@@ -2,76 +2,78 @@
 Test sample for MethodFinderTest
 "
 Class {
-	#name : #MethodFinderBottomClass,
-	#superclass : #MethodFinderTopClass,
+	#name : 'MethodFinderBottomClass',
+	#superclass : 'MethodFinderTopClass',
 	#instVars : [
 		'instanceVariable'
 	],
-	#category : #'Tool-Finder-Tests-Support'
+	#category : 'Tool-Finder-Tests-Support',
+	#package : 'Tool-Finder-Tests',
+	#tag : 'Support'
 }
 
-{ #category : #'method finder' }
+{ #category : 'method finder' }
 MethodFinderBottomClass class >> approvedSelectorsForMethodFinder [
 
 	^#(topDisapprovedButBottomApprovedMethod onlyBottomDefinedApprovedMethod modifyMethod: oneArgumentMethod: otherOneArgumentMethod: InApprovedAndInForbiddenSetMethod)
 ]
 
-{ #category : #'method finder' }
+{ #category : 'method finder' }
 MethodFinderBottomClass class >> forbiddenSelectorsForMethodFinder [
 
 	^#(topApprovedButBottomDisapprovedMethod InApprovedAndInForbiddenSetMethod)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MethodFinderBottomClass >> = other [
 
 	^ instanceVariable = other instanceVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderBottomClass >> InApprovedAndInForbiddenSetMethod [
 
 	 ^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderBottomClass >> instanceVariable [
 
 	^ instanceVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderBottomClass >> modifyMethod: x [
 
 	instanceVariable := x.
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderBottomClass >> multipleArgumentsMethod: x and: y [
 
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderBottomClass >> oneArgumentMethod: x [
 
 	^ x + 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderBottomClass >> onlyBottomDefinedApprovedMethod [
 
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderBottomClass >> onlyBottomDefinedDisapprovedMethod [
 
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderBottomClass >> otherOneArgumentMethod: s [
 
 	^ s, ''

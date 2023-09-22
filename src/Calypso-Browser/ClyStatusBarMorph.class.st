@@ -15,28 +15,30 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyStatusBarMorph,
-	#superclass : #PanelMorph,
+	#name : 'ClyStatusBarMorph',
+	#superclass : 'PanelMorph',
 	#instVars : [
 		'contextBar',
 		'commandBar'
 	],
-	#category : #'Calypso-Browser-UI'
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyStatusBarMorph >> addCommandItem: aMorph [
 	commandBar addMorphBack: aMorph.
 	^aMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyStatusBarMorph >> addContextItem: aMorph [
 	contextBar addMorphBack: aMorph.
 	^aMorph
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyStatusBarMorph >> buildCommandBar [
 	commandBar := Morph new
 		setNameTo: 'command bar';
@@ -51,7 +53,7 @@ ClyStatusBarMorph >> buildCommandBar [
 	self addMorphBack: commandBar
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyStatusBarMorph >> buildContextBar [
 	contextBar := Morph new
 		setNameTo: 'context bar';
@@ -66,13 +68,13 @@ ClyStatusBarMorph >> buildContextBar [
 	self addMorphBack: contextBar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyStatusBarMorph >> clear [
 	commandBar removeAllMorphs.
 	contextBar removeAllMorphs
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyStatusBarMorph >> initialize [
 	super initialize.
 	self
@@ -88,7 +90,7 @@ ClyStatusBarMorph >> initialize [
 	self buildCommandBar
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyStatusBarMorph >> update [
 	"Here I just trying to reset extent.
 	When there are no items it should hide it.

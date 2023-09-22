@@ -8,28 +8,30 @@ Internal Representation and Key Implementation Points.
 	changes:		<IdentityDictionary of<ClyQueryResult, Announcement>>
 "
 Class {
-	#name : #ClyFullEnvironmentUpdateStrategy,
-	#superclass : #ClyEnvironmentUpdateStrategy,
+	#name : 'ClyFullEnvironmentUpdateStrategy',
+	#superclass : 'ClyEnvironmentUpdateStrategy',
 	#instVars : [
 		'changes'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyFullEnvironmentUpdateStrategy >> announceChangesOf: aQueryResult [
 
 	changes add: aQueryResult
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFullEnvironmentUpdateStrategy >> initialize [
 	super initialize.
 
 	changes := IdentitySet new
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyFullEnvironmentUpdateStrategy >> publishCollectedChanges [
 	changes do: [ :queryResult | queryResult notifyChanges ].
 	changes removeAll

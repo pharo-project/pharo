@@ -1,12 +1,12 @@
-Extension { #name : #MCClassTraitDefinition }
+Extension { #name : 'MCClassTraitDefinition' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassTraitDefinition >> asRGDefinition [
 
 	^ self ensureRingDefinitionIn: RGEnvironment new
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassTraitDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [

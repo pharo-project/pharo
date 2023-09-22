@@ -2,17 +2,19 @@
 SUnit tests for AbstractEnumerationVisitor
 "
 Class {
-	#name : #AbstractEnumerationVisitorTest,
-	#superclass : #SingleTreeTest,
-	#category : #'FileSystem-Tests-Core-Visitors'
+	#name : 'AbstractEnumerationVisitorTest',
+	#superclass : 'SingleTreeTest',
+	#category : 'FileSystem-Tests-Core-Visitors',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Visitors'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractEnumerationVisitorTest class >> isAbstract [
 	^ self name = #AbstractEnumerationVisitorTest
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractEnumerationVisitorTest >> assertEntries: references are: expected [
 	| strings |
 	self assert: references isArray.
@@ -21,12 +23,12 @@ AbstractEnumerationVisitorTest >> assertEntries: references are: expected [
 	self assert: strings equals: expected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractEnumerationVisitorTest >> root [
 	^ filesystem / 'alpha'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AbstractEnumerationVisitorTest >> setUp [
 	super setUp.
 	self setUpGreek

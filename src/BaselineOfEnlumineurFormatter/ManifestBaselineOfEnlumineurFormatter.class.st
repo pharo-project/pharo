@@ -10,7 +10,9 @@ For the record:
 ""enluminures: Ornements en couleur, tels que fleurons, vignettes, lettres ornées, sujets à personnages, qui décorent les manuscrits du Moyen Âge.""
 "
 Class {
-	#name : #ManifestBaselineOfEnlumineurFormatter,
-	#superclass : #PackageManifest,
-	#category : #'BaselineOfEnlumineurFormatter-Manifest'
+	#name : 'ManifestBaselineOfEnlumineurFormatter',
+	#superclass : 'PackageManifest',
+	#category : 'BaselineOfEnlumineurFormatter-Manifest',
+	#package : 'BaselineOfEnlumineurFormatter',
+	#tag : 'Manifest'
 }

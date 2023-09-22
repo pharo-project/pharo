@@ -7,85 +7,87 @@ To get a reference to the current session, send #session to a ZnMessage (request
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnServerSession,
-	#superclass : #Object,
+	#name : 'ZnServerSession',
+	#superclass : 'Object',
 	#instVars : [
 		'id',
 		'attributes',
 		'created',
 		'modified'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> age [
 	^ DateAndTime now - created
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> attributeAt: key [
 	^ attributes at: key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> attributeAt: key ifAbsent: block [
 	^ attributes at: key ifAbsent: block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> attributeAt: key ifAbsentPut: block [
 	^ attributes at: key ifAbsentPut: block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> attributeAt: key put: value [
 	^ attributes at: key put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> attributeKeys [
 	^ attributes keys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> created [
 	^ created
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> id [
 	^ id
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnServerSession >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> inactivity [
 	^ DateAndTime now - modified
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnServerSession >> initialize [
 	super initialize.
 	attributes := SmallDictionary new.
 	created := modified := DateAndTime now
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnServerSession >> isValid [
 	^ self inactivity < 1 hour
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> modified [
 	^ modified
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnServerSession >> printOn: stream [
 	super printOn: stream.
 	id
@@ -96,12 +98,12 @@ ZnServerSession >> printOn: stream [
 				nextPut: $) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> removeAttribute: key [
 	attributes removeKey: key ifAbsent: [ ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSession >> touch [
 	modified := DateAndTime now
 ]

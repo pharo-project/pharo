@@ -1,6 +1,6 @@
-Extension { #name : #RBCodeSnippetTest }
+Extension { #name : 'RBCodeSnippetTest' }
 
-{ #category : #'*Renraku-Tests' }
+{ #category : '*Renraku-Tests' }
 RBCodeSnippetTest >> testCritiques [
 
 	| ast critiques |

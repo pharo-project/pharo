@@ -5,12 +5,14 @@ This class is similar to the ThirtyTwoBitRegister class but extended to 64 bits.
 
 "
 Class {
-	#name : #SixtyFourBitRegister,
-	#superclass : #FixedBitWidthRegister,
-	#category : #'System-Hashing-Core'
+	#name : 'SixtyFourBitRegister',
+	#superclass : 'FixedBitWidthRegister',
+	#category : 'System-Hashing-Core',
+	#package : 'System-Hashing',
+	#tag : 'Core'
 }
 
-{ #category : #'accumulator ops' }
+{ #category : 'accumulator ops' }
 SixtyFourBitRegister >> += aSixtyFourBitRegister [
     "Replace my contents with the sum of the given register and my current contents."
 
@@ -20,7 +22,7 @@ SixtyFourBitRegister >> += aSixtyFourBitRegister [
     low := lowSum bitAnd: 16rFFFFFFFF
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SixtyFourBitRegister >> asByteArray [
 	"Convert the 64-bit register contents to a byte array.
 	The resulting byte_array will be a bytes object, which is an immutable sequence of integers in the range 0-255."
@@ -37,14 +39,14 @@ SixtyFourBitRegister >> asByteArray [
 		  yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SixtyFourBitRegister >> asInteger [
     "Answer the integer value of my current contents."
 
     ^ (hi bitShift: 32) + low
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SixtyFourBitRegister >> asReverseInteger [
     "Answer the byte-swapped integer value of my current contents."
 
@@ -58,7 +60,7 @@ SixtyFourBitRegister >> asReverseInteger [
        ((hi bitAnd: 16rFF000000) bitShift: -56)
 ]
 
-{ #category : #'accumulator ops' }
+{ #category : 'accumulator ops' }
 SixtyFourBitRegister >> bitInvert [
     "Replace my contents with the bitwise inverse of my current contents."
 
@@ -66,7 +68,7 @@ SixtyFourBitRegister >> bitInvert [
     low := low bitXor: 16rFFFFFFFF
 ]
 
-{ #category : #'accumulator ops' }
+{ #category : 'accumulator ops' }
 SixtyFourBitRegister >> bitShift: anInteger [
     "Replace my contents with the bitShift of anInteger."
 
@@ -75,7 +77,7 @@ SixtyFourBitRegister >> bitShift: anInteger [
     self load: result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SixtyFourBitRegister >> byteAt: anInteger [
 
 	anInteger = 1 ifTrue: [ ^ hi bitShift: -24  ].
@@ -89,7 +91,7 @@ SixtyFourBitRegister >> byteAt: anInteger [
 	self errorSubscriptBounds: anInteger 
 ]
 
-{ #category : #'accumulator ops' }
+{ #category : 'accumulator ops' }
 SixtyFourBitRegister >> leftRotateBy: bits [
 	"Rotate my contents left by the given number of bits, retaining exactly 64 bits."
 
@@ -117,7 +119,7 @@ SixtyFourBitRegister >> leftRotateBy: bits [
 	low := newLow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SixtyFourBitRegister >> load: anInteger [
     "Set my contents to the value of the given 64-bit integer."
 
@@ -127,7 +129,7 @@ SixtyFourBitRegister >> load: anInteger [
         ifFalse: [ self error: 'out of range: ', anInteger printString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SixtyFourBitRegister >> loadFrom: aByteArray at: index [
 	"Load my 64-bit value from the eight bytes of the given ByteArray starting at the given index. 
 	Consider the first byte to contain the most significant bits of the word (i.e., use big-endian byte ordering)."
@@ -142,7 +144,7 @@ SixtyFourBitRegister >> loadFrom: aByteArray at: index [
 	       + ((aByteArray at: index + 7) bitShift: 0).
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SixtyFourBitRegister >> reverseLoadFrom: aByteArray at: index [
     "Load my 64-bit value from the eight bytes of the given ByteArray starting at the given index. 
 	Consider the first byte to contain the least significant bits of the word (i.e., use little-endian byte ordering)."

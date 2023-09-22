@@ -1,6 +1,6 @@
-Extension { #name : #SimpleServiceEntry }
+Extension { #name : 'SimpleServiceEntry' }
 
-{ #category : #'*Tool-FileList' }
+{ #category : '*Tool-FileList' }
 SimpleServiceEntry >> addServiceFor: served toMenu: aMenu [
 	aMenu
 		add: self label

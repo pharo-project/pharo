@@ -4,29 +4,30 @@ I am a command that is used for removing variables.
 My responsibility is to delegate removal execution to the remove variable driver.
 "
 Class {
-	#name : #SycRemoveVariablesCommand,
-	#superclass : #SycRefactorVariableCommand,
-	#category : #'SystemCommands-VariableCommands'
+	#name : 'SycRemoveVariablesCommand',
+	#superclass : 'SycRefactorVariableCommand',
+	#category : 'SystemCommands-VariableCommands',
+	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycRemoveVariablesCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.5 for: ClySourceCodeContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveVariablesCommand >> defaultMenuIconName [
 	^#removeIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveVariablesCommand >> defaultMenuItemName [
 	^'Remove'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveVariablesCommand >> execute [
 
 	variables first isClassVariable
@@ -43,7 +44,7 @@ SycRemoveVariablesCommand >> execute [
 				 for: variables first definingClass) runRefactoring ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveVariablesCommand >> isComplexRefactoring [
 
 	^false

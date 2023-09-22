@@ -15,15 +15,17 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyAsyncMethodGroup,
-	#superclass : #ClyMethodGroup,
+	#name : 'ClyAsyncMethodGroup',
+	#superclass : 'ClyMethodGroup',
 	#instVars : [
 		'asyncQueryResult'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'item preparation' }
+{ #category : 'item preparation' }
 ClyAsyncMethodGroup class >> prepareCalypsoItemCopy: aBrowserItem [
 
 	| groupCopy |
@@ -32,29 +34,29 @@ ClyAsyncMethodGroup class >> prepareCalypsoItemCopy: aBrowserItem [
 	aBrowserItem actualObject: groupCopy
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAsyncMethodGroup >> asAsyncQueryGroup [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAsyncMethodGroup >> asyncQueryResult [
 	^ asyncQueryResult ifNil: [ asyncQueryResult := self loadAsyncQueryResult ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAsyncMethodGroup >> asyncQueryResult: anObject [
 	asyncQueryResult := anObject
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyAsyncMethodGroup >> decorateOwnBrowserItem: myItem [
 	super decorateOwnBrowserItem: myItem.
 
 	self asyncQueryResult isBuilt ifFalse: [  myItem markWith: ClyBackgroundProcessingTag]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAsyncMethodGroup >> dependsOnMethod: aMethod [
 
 	"If query result are not built yet we are depending on any possible method.
@@ -64,13 +66,13 @@ ClyAsyncMethodGroup >> dependsOnMethod: aMethod [
 	^super dependsOnMethod: aMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAsyncMethodGroup >> includesMethod: aMethod [
 	self asyncQueryResult isBuilt ifFalse: [ ^false ].
 	^super includesMethod: aMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAsyncMethodGroup >> loadAsyncQueryResult [
 
 	^methodQuery execute

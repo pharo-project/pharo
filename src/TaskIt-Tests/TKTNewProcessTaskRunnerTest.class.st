@@ -1,10 +1,12 @@
 Class {
-	#name : #TKTNewProcessTaskRunnerTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Kernel'
+	#name : 'TKTNewProcessTaskRunnerTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Kernel',
+	#package : 'TaskIt-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerExceptionIsHandledByExceptionHandler [
 	| runner error |
 
@@ -19,7 +21,7 @@ TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerExceptionIsHandledByExcep
 	self assert: runner exceptionHandler error equals: error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerRunsInNewProcessEveryTime [
 
 	| runner hashes futures hashesSet |
@@ -38,7 +40,7 @@ TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerRunsInNewProcessEveryTime
 	self assert: hashesSet size equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerRunsNeverInLocalProcess [
 
 	| runner hashes futures |

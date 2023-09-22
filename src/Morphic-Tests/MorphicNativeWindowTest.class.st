@@ -1,20 +1,21 @@
 Class {
-	#name : #MorphicNativeWindowTest,
-	#superclass : #AbstractWindowManagerTest,
+	#name : 'MorphicNativeWindowTest',
+	#superclass : 'AbstractWindowManagerTest',
 	#instVars : [
 		'window'
 	],
-	#category : #'Morphic-Tests'
+	#category : 'Morphic-Tests',
+	#package : 'Morphic-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MorphicNativeWindowTest >> setUp [
 
 	super setUp.
 	window := manager newWindowWithRoot: Morph new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicNativeWindowTest >> testMaximizeWindow [
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
@@ -28,7 +29,7 @@ MorphicNativeWindowTest >> testMaximizeWindow [
 	window restore
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicNativeWindowTest >> testMinimizeWindow [
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
@@ -44,7 +45,7 @@ MorphicNativeWindowTest >> testMinimizeWindow [
 	window restore
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicNativeWindowTest >> testNewWindowDefaultsIsNotMaximize [
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
@@ -56,7 +57,7 @@ MorphicNativeWindowTest >> testNewWindowDefaultsIsNotMaximize [
 	self assert: window isMaximized equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicNativeWindowTest >> testNewWindowDefaultsIsNotMinimized [
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
@@ -68,7 +69,7 @@ MorphicNativeWindowTest >> testNewWindowDefaultsIsNotMinimized [
 	self assert: window isNotMinimized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicNativeWindowTest >> testRestoreWindow [
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 

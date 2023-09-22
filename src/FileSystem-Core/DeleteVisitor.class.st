@@ -4,17 +4,19 @@ I delete the directory tree that I visit. I use the PostorderGuide so that I can
 I don't follow symbolic links (so files outside the receiver's tree will not be deleted).
 "
 Class {
-	#name : #DeleteVisitor,
-	#superclass : #FileSystemVisitor,
-	#category : #'FileSystem-Core-Base-Visitors'
+	#name : 'DeleteVisitor',
+	#superclass : 'FileSystemVisitor',
+	#category : 'FileSystem-Core-Base-Visitors',
+	#package : 'FileSystem-Core',
+	#tag : 'Base-Visitors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DeleteVisitor class >> delete: aReference [
 	^ self new visit: aReference
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DeleteVisitor >> visit: aReference [
 	"Don't follow symbolic links:
 	- We shouldn't delete files outside the root's tree.
@@ -25,7 +27,7 @@ DeleteVisitor >> visit: aReference [
 		selecting: [ :entry | entry isSymlink not ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DeleteVisitor >> visitReference: anEntry [
 	anEntry reference delete
 ]
