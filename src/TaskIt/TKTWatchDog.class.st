@@ -2,8 +2,8 @@
 Watchdog watches the common queue worker pool to ensure the good working of this pool
 "
 Class {
-	#name : #TKTWatchDog,
-	#superclass : #TKTService,
+	#name : 'TKTWatchDog',
+	#superclass : 'TKTService',
 	#instVars : [
 		'values',
 		'id',
@@ -12,10 +12,12 @@ Class {
 	#classInstVars : [
 		'onDuty'
 	],
-	#category : #'TaskIt-Worker'
+	#category : 'TaskIt-Worker',
+	#package : 'TaskIt',
+	#tag : 'Worker'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWatchDog class >> onDuty [
 	^ onDuty
 		ifNil: [ onDuty := self new.
@@ -23,30 +25,30 @@ TKTWatchDog class >> onDuty [
 			onDuty ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TKTWatchDog class >> reset [
 
 	onDuty ifNotNil: [ onDuty stop ].
 	onDuty := nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> cleanUpImageToStart [
 	values removeAll
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> delay [
 	^ 10 seconds
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> ensureIsAwake [
 	self isRunning
 		ifFalse: [ self restart ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> ensureIsWatching: aValue [
 	worker = aValue ifTrue: [ ^ self ].
 	(values includes: aValue)
@@ -54,7 +56,7 @@ TKTWatchDog >> ensureIsWatching: aValue [
 	self ensureIsAwake
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> initialize [
 	super initialize.
 	values := WeakSet new.
@@ -62,17 +64,17 @@ TKTWatchDog >> initialize [
 	started := false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> name [
 	^ 'WatchDog (' , id asString , ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWatchDog >> pharoProcess [
 	^ worker process process
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> privateStart [
 	stopRequested := false.
 	stopCallbacks := Set new.
@@ -87,14 +89,14 @@ TKTWatchDog >> privateStart [
 	TKTConfiguration serviceManager startService: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> start [
 	started
 		ifFalse: [ started := true.
 			self privateStart ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> stepService [
 	self watchedValues
 		ifEmpty: [ self stop ]
@@ -102,23 +104,23 @@ TKTWatchDog >> stepService [
 			self delay wait ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> stop [
 	started := false.
 	super stop
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> stopWatching: aValue [
 	values remove: aValue ifAbsent: [  ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> watch: aValue [
 	values add: aValue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> watchDog: aParameterPool [
 	[ aParameterPool ensureIsWorking ]
 		on: UnhandledError
@@ -132,7 +134,7 @@ TKTWatchDog >> watchDog: aParameterPool [
 								printString ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWatchDog >> watchedValues [
 
 	^  values
