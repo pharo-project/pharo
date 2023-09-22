@@ -8,15 +8,6 @@ Class {
 	#package : 'RPackage-Tests'
 }
 
-{ #category : 'running' }
-RPackageTest >> tearDown [
-
-	#(TestClass TestClassOther)
-		do: [ :each |
-			self class environment at: each ifPresent: #removeFromSystem ].
-	super tearDown
-]
-
 { #category : 'tests' }
 RPackageTest >> testAddClass [
 
