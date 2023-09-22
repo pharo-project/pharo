@@ -61,16 +61,11 @@ RBRemoveClassDriver >> handleBreakingChanges [
 { #category : 'ui - dialogs' }
 RBRemoveClassDriver >> labelBasedOnBreakingChanges [
 
-	| stream |
-	stream := String new writeStream.
-	
-	emptyClasses printOn: stream.
-	noSubclasses printOn: stream.
-	haveNoReferences printOn: stream.
-	
-	stream nextPutAll: 'Select a strategy'.
-	
-	^ stream contents
+	^ String streamContents: [ :stream | 
+		emptyClasses printOn: stream.
+		noSubclasses printOn: stream.
+		haveNoReferences printOn: stream.	
+		stream nextPutAll: 'Select a strategy' ]
 ]
 
 { #category : 'actions' }
