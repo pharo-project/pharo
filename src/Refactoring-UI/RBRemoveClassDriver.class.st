@@ -16,10 +16,9 @@ Class {
 RBRemoveClassDriver >> browseReferences [
 
 	haveNoReferences violators keysAndValuesDo: [ :violator :references |
-		references ifNotEmpty: [
-			StMessageBrowserPresenter
-				browse: (references collect: [ :ref | ref method ])
-				asSendersOf: violator realClass ] ]
+		StMessageBrowserPresenter
+			browse: (references collect: [ :ref | ref method ])
+			asSendersOf: violator realClass ]
 ]
 
 { #category : 'initialization' }

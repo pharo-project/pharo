@@ -20,7 +20,7 @@ Class {
 { #category : 'checking' }
 RBClassesHaveNoReferencesCondition >> check [
 
-	^ self violators allSatisfy: [ :val | val isEmpty ]
+	^ self violators isEmpty
 ]
 
 { #category : 'accessing' }
@@ -70,9 +70,10 @@ RBClassesHaveNoReferencesCondition >> violators [
 			  | methodsReferencingClass |
 			  methodsReferencingClass := (model methodsReferencingClass: aClass) reject: [ :each |
 						    classes includes: each methodClass ].
-			  referencingClassesDictionary
-				  at: aClass
-				  put: methodsReferencingClass ].
+			  methodsReferencingClass ifNotEmpty: [ 
+				  referencingClassesDictionary
+					  at: aClass
+					  put: methodsReferencingClass ] ].
 			referencingClassesDictionary 
 		]
 ]
