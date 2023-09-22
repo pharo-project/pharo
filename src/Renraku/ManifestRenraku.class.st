@@ -17,3 +17,10 @@ Class {
 	#package : 'Renraku',
 	#tag : 'Manifest'
 }
+
+{ #category : 'code-critics' }
+ManifestRenraku class >> ruleBadMessageRule2V1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#'ReAbstractRule class' #isVisible #true)) #'2023-09-22T10:50:00.890614+02:00') )
+]

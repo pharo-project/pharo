@@ -167,7 +167,7 @@ TKTConfiguration class >> settingsOn: aBuilder [
 		label: 'Task it execution profile';
 		with: [
 			(aBuilder pickOne: #profileNamed)
-				label: 'Exeucting Profile';
+				label: 'Executing Profile';
 				target: self;
 				parent: #taskitExecution;
 				default: TKTProfile defaultProfileName;
