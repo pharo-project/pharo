@@ -37,7 +37,7 @@ RBRemoveClassDriver >> handleBreakingChanges [
 	(noSubclasses isFalse and: [ emptyClasses isFalse ]) ifTrue: [
 		items add:
 			(RBRemoveClassAndPushStateToSubclassChoice new driver: self; emptyClasses: emptyClasses isTrue) ].
-	haveNoReferences violators ifNotEmpty: [
+	haveNoReferences isFalse ifTrue: [
 		items add: (RBBrowseClassReferencesChoice new driver: self) ].
 	
 	select := SpSelectDialog new

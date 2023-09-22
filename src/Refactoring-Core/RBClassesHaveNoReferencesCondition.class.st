@@ -29,6 +29,18 @@ RBClassesHaveNoReferencesCondition >> classes: aRBClassCollection [
 	classes := aRBClassCollection 
 ]
 
+{ #category : 'testing' }
+RBClassesHaveNoReferencesCondition >> isFalse [
+
+	^ self isTrue not
+]
+
+{ #category : 'testing' }
+RBClassesHaveNoReferencesCondition >> isTrue [
+
+	^ self check
+]
+
 { #category : 'accessing' }
 RBClassesHaveNoReferencesCondition >> model: aRBNamespace [
 
