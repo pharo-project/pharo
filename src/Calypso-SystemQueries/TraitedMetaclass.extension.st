@@ -1,6 +1,6 @@
-Extension { #name : #TraitedMetaclass }
+Extension { #name : 'TraitedMetaclass' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 TraitedMetaclass >> protocolsForAllMethods [
 
 	| allProtocols selectors |
@@ -13,7 +13,7 @@ TraitedMetaclass >> protocolsForAllMethods [
 		  thenCollect: #name
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 TraitedMetaclass >> visibleMethods [
 
 	^ self methods reject: [ :e | e origin = TraitedClass ]

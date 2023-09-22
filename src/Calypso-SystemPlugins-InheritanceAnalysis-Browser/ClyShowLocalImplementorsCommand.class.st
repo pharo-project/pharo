@@ -17,26 +17,27 @@ Internal Representation and Key Implementation Points.
 	browser:		<ClyBrowser>
 "
 Class {
-	#name : #ClyShowLocalImplementorsCommand,
-	#superclass : #SycMethodCommand,
+	#name : 'ClyShowLocalImplementorsCommand',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyShowLocalImplementorsCommand class >> isAbstract [
 	^self = ClyShowLocalImplementorsCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowLocalImplementorsCommand >> createInheritanceScopeFrom: classes [
 
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowLocalImplementorsCommand >> createQueryScope [
 
 	| classes scope |
@@ -47,7 +48,7 @@ ClyShowLocalImplementorsCommand >> createQueryScope [
 	^scope
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowLocalImplementorsCommand >> execute [
 
 	| selectors query |
@@ -58,13 +59,13 @@ ClyShowLocalImplementorsCommand >> execute [
 		self selectMethodsIn: queryBrowser ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowLocalImplementorsCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	browser := aToolContext browser
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowLocalImplementorsCommand >> selectMethodsIn: aQueryBrowser [
 ]

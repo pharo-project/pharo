@@ -3,17 +3,18 @@ I am special plugin which analyzes ffi methods and mark them with ClyFFIMethodTa
 Also I provide ffi method group to see all ffi calls together
 "
 Class {
-	#name : #ClyFFIEnvironmentPlugin,
-	#superclass : #ClySystemEnvironmentPlugin,
-	#category : #'Calypso-SystemPlugins-FFI-Queries'
+	#name : 'ClyFFIEnvironmentPlugin',
+	#superclass : 'ClySystemEnvironmentPlugin',
+	#category : 'Calypso-SystemPlugins-FFI-Queries',
+	#package : 'Calypso-SystemPlugins-FFI-Queries'
 }
 
-{ #category : #'method groups' }
+{ #category : 'method groups' }
 ClyFFIEnvironmentPlugin >> collectMethodGroupProviders [
 	^{ClyFFIMethodGroupProvider new}
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyFFIEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
 	aMethod isFFIMethod ifTrue: [

@@ -1,32 +1,33 @@
 Class {
-	#name : #HaltTest,
-	#superclass : #TestCase,
-	#category : #'Debugging-Utils-Tests'
+	#name : 'HaltTest',
+	#superclass : 'TestCase',
+	#category : 'Debugging-Utils-Tests',
+	#package : 'Debugging-Utils-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> a [
 	self b
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> a1 [
 	self b1
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> b [
 	<haltOrBreakpointForTesting>
 	self haltIf: #testHaltIf
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> b1 [
 	<haltOrBreakpointForTesting>
 	self haltIf: #testasdasdfHaltIf
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> haltFromCount [
 	<haltOrBreakpointForTesting>
 
@@ -53,7 +54,7 @@ HaltTest >> haltFromCount [
 	self assert: haltCount equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> haltOnCount [
 	<haltOrBreakpointForTesting>
 
@@ -72,31 +73,31 @@ HaltTest >> haltOnCount [
 	self assert: haltCount equals: 1
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> shouldHaltAfter: aNumber times: aBlock [
 	
 	self shouldHaltWhen: [ aNumber timesRepeat: aBlock ].
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> shouldHaltWhen: aBlock [
 
 	self should: aBlock raise: Halt.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> shouldntHaltAfter: aNumber times: aBlock [
 	
 	self shouldntHaltWhen: [ aNumber timesRepeat: aBlock ].
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> shouldntHaltWhen: aBlock [
 
 	self shouldnt: aBlock raise: Halt.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testContainsHalt [
 	
 	| annonClass |
@@ -123,7 +124,7 @@ HaltTest >> testContainsHalt [
 	assert: (annonClass >> #m5) containsHalt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltFromCount [
 
 	<haltOrBreakpointForTesting>
@@ -135,7 +136,7 @@ HaltTest >> testHaltFromCount [
 	(self class >> #haltFromCount) recompile "Recompile for next execution"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltIf [
 	<haltOrBreakpointForTesting>
 
@@ -155,14 +156,14 @@ HaltTest >> testHaltIf [
 	self shouldntHaltWhen: [self haltIf: [:receiver | receiver class ~= self class]].
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltIfNil [
 	<haltOrBreakpointForTesting>
 
 	self should: [ nil haltIfNil] raise: Halt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltOnCount [
 
 	<haltOrBreakpointForTesting>
@@ -174,7 +175,7 @@ HaltTest >> testHaltOnCount [
 	(self class >> #haltOnCount) recompile "Recompile for next execution"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltOnce [
 	<haltOrBreakpointForTesting>
 	| anObject block |

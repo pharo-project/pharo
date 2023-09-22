@@ -1,10 +1,11 @@
 Class {
-	#name : #WatchTest,
-	#superclass : #TestCase,
-	#category : #'Reflectivity-Tools-Tests'
+	#name : 'WatchTest',
+	#superclass : 'TestCase',
+	#category : 'Reflectivity-Tools-Tests',
+	#package : 'Reflectivity-Tools-Tests'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 WatchTest >> testAddSameWatchSameNode [
 	| node watchpoint watchpoint2 |
 	node := (ReflectivityExamples >> #exampleAssignment) ast body children first.
@@ -18,7 +19,7 @@ WatchTest >> testAddSameWatchSameNode [
 	self deny: node hasWatch
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 WatchTest >> testAddWatch [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignment) ast body children first.
@@ -32,7 +33,7 @@ WatchTest >> testAddWatch [
 	self deny: (Watch allWatches includesKey: node)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 WatchTest >> testAddWatchSameNode [
 	| node watchpoint watchpoint2 |
 	node := (ReflectivityExamples >> #exampleAssignment) ast body children first.
@@ -46,7 +47,7 @@ WatchTest >> testAddWatchSameNode [
 	self deny: node hasWatch
 ]
 
-{ #category : #'deleting history' }
+{ #category : 'deleting history' }
 WatchTest >> testDeleteAllHistory [
 	| node1 node2 watchpoint1 watchpoint2 |
 	node1 := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body statements first.
@@ -69,7 +70,7 @@ WatchTest >> testDeleteAllHistory [
 	watchpoint2 uninstall
 ]
 
-{ #category : #'deleting history' }
+{ #category : 'deleting history' }
 WatchTest >> testDeleteHistory [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
@@ -86,7 +87,7 @@ WatchTest >> testDeleteHistory [
 	watchpoint uninstall
 ]
 
-{ #category : #'deleting history' }
+{ #category : 'deleting history' }
 WatchTest >> testDeleteHistoryFromNode [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
@@ -103,7 +104,7 @@ WatchTest >> testDeleteHistoryFromNode [
 	watchpoint uninstall
 ]
 
-{ #category : #values }
+{ #category : 'values' }
 WatchTest >> testSaveOneValue [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar) ast body children first.
@@ -115,7 +116,7 @@ WatchTest >> testSaveOneValue [
 	watchpoint uninstall
 ]
 
-{ #category : #values }
+{ #category : 'values' }
 WatchTest >> testSaveValues [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
@@ -129,7 +130,7 @@ WatchTest >> testSaveValues [
 	watchpoint uninstall
 ]
 
-{ #category : #values }
+{ #category : 'values' }
 WatchTest >> testSendMessage [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleMessageSend) ast body children first.
@@ -141,7 +142,7 @@ WatchTest >> testSendMessage [
 	watchpoint uninstall
 ]
 
-{ #category : #recording }
+{ #category : 'recording' }
 WatchTest >> testStopRecording [
 	| node watchpoint dummy |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
@@ -167,7 +168,7 @@ WatchTest >> testStopRecording [
 	self deny: node hasWatch
 ]
 
-{ #category : #values }
+{ #category : 'values' }
 WatchTest >> testTimestamp [
 	|node watchpoint|
 
@@ -185,7 +186,7 @@ WatchTest >> testTimestamp [
 	watchpoint uninstall
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 WatchTest >> testWatchTwice [
 	|node watchpoint|
 

@@ -1,1 +1,1 @@
-Package { #name : #'System-Object Events-Tests' }
+Package { #name : 'System-Object Events-Tests' }

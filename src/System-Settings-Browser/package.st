@@ -1,1 +1,1 @@
-Package { #name : #'System-Settings-Browser' }
+Package { #name : 'System-Settings-Browser' }

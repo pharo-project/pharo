@@ -2,27 +2,29 @@
 I am an abstract Athens renderer. 
 "
 Class {
-	#name : #OSWindowAthensRenderer,
-	#superclass : #OSWindowRenderer,
+	#name : 'OSWindowAthensRenderer',
+	#superclass : 'OSWindowRenderer',
 	#instVars : [
 		'athensSurface',
 		'session'
 	],
-	#category : #'OSWindow-Core-Renderer'
+	#category : 'OSWindow-Core-Renderer',
+	#package : 'OSWindow-Core',
+	#tag : 'Renderer'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAthensRenderer >> athensSurface [
 	^ athensSurface
 ]
 
-{ #category : #'session management' }
+{ #category : 'session management' }
 OSWindowAthensRenderer >> checkSession [
 	session == Smalltalk session
 		ifFalse: [ self error: 'Cannot use this renderer (created in a previous session or in a closed window)' ]
 ]
 
-{ #category : #deleting }
+{ #category : 'deleting' }
 OSWindowAthensRenderer >> destroy [
 
 	super destroy.
@@ -30,19 +32,19 @@ OSWindowAthensRenderer >> destroy [
 	session := nil
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 OSWindowAthensRenderer >> drawDuring: aBlock [
 	self prepareForDrawing.
 	self athensSurface drawDuring: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindowAthensRenderer >> initialize [
 	super initialize.
 	session := Smalltalk session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAthensRenderer >> pixelExtent [
 	"The extent of the window may not be in pixels, so we have to ask to the actual
 	drawing surface for its size in pixel. This is specially true under OS X with HiDPI suppport."
@@ -50,11 +52,11 @@ OSWindowAthensRenderer >> pixelExtent [
 	^ self athensSurface extent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 OSWindowAthensRenderer >> prepareForDrawing [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAthensRenderer >> surface [
 	^ self athensSurface
 ]

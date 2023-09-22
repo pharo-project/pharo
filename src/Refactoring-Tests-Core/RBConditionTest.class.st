@@ -1,16 +1,17 @@
 Class {
-	#name : #RBConditionTest,
-	#superclass : #TestCase,
+	#name : 'RBConditionTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'rbNamespace',
 		'objectClass',
 		'messageNodeClass',
 		'newClass'
 	],
-	#category : #'Refactoring-Tests-Core'
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBConditionTest >> setUp [
 
 	super setUp.
@@ -25,7 +26,7 @@ RBConditionTest >> setUp [
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckFailEarlyAndDoesNotCoverEveryConditions [
 
 	| falseCase trueCase composition |
@@ -42,7 +43,7 @@ RBConditionTest >> testCheckFailEarlyAndDoesNotCoverEveryConditions [
 		equals: 'The false case'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckInvalidMethodName [
 	"Usually used to validate input."
 
@@ -61,7 +62,7 @@ RBConditionTest >> testCheckInvalidMethodName [
 	self deny: (RBCondition checkMethodName: 'foo:agr')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckThatAndIsWorking [
 
 	| falseCase trueCase composition |
@@ -75,7 +76,7 @@ RBConditionTest >> testCheckThatAndIsWorking [
 	self deny: composition check
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReported [
 
 	| falseCase trueCase composition |
@@ -90,7 +91,7 @@ RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReported [
 	self assert: composition errorString equals: 'The false case'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReportedTrueCaseFirst [
 
 	| falseCase trueCase composition |
@@ -107,7 +108,7 @@ RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReportedTrueCaseFirst
 		equals: 'The false case'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckValidMethodName [
 	"Usually used to validate input."
 	self assert: (RBCondition checkMethodName: 'foo').
@@ -116,7 +117,7 @@ RBConditionTest >> testCheckValidMethodName [
 	self assert: (RBCondition checkMethodName: #+)
 ]
 
-{ #category : #'tests - references' }
+{ #category : 'tests - references' }
 RBConditionTest >> testHierarchyOfReferencesInstanceVariable [
 
 	| testClass |
@@ -128,7 +129,7 @@ RBConditionTest >> testHierarchyOfReferencesInstanceVariable [
 			 referencesInstanceVariable: #objectClass) check
 ]
 
-{ #category : #'tests - references' }
+{ #category : 'tests - references' }
 RBConditionTest >> testHierarchyOfReferencesSharedVariableAccessing [
 
 	| textConstantClass |
@@ -145,7 +146,7 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableAccessing [
 			 referencesSharedVariable: #Basal) check
 ]
 
-{ #category : #'tests - references' }
+{ #category : 'tests - references' }
 RBConditionTest >> testHierarchyOfReferencesSharedVariableNotAccessing [
 
 	| testClass |
@@ -156,7 +157,7 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableNotAccessing [
 			 referencesSharedVariable: #ClassVariable1) check
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testInvalidArgumentsForSelector [
 
 	| aModel aClass |
@@ -173,7 +174,7 @@ RBConditionTest >> testInvalidArgumentsForSelector [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testIsClassDefinedInModel [
 
 	| aModel aClass |
@@ -186,7 +187,7 @@ RBConditionTest >> testIsClassDefinedInModel [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testIsClassNamedDefinedIn [
 
 	| aModel |
@@ -198,7 +199,7 @@ RBConditionTest >> testIsClassNamedDefinedIn [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testIsClassNamedDefinedInNot [
 
 	| aModel |
@@ -210,7 +211,7 @@ RBConditionTest >> testIsClassNamedDefinedInNot [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testTrue [
 	
 	self assert: RBCondition true check.

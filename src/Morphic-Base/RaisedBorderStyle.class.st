@@ -2,18 +2,20 @@
 see BorderedMorph
 "
 Class {
-	#name : #RaisedBorderStyle,
-	#superclass : #SimpleBorderStyle,
-	#category : #'Morphic-Base-Borders'
+	#name : 'RaisedBorderStyle',
+	#superclass : 'SimpleBorderStyle',
+	#category : 'Morphic-Base-Borders',
+	#package : 'Morphic-Base',
+	#tag : 'Borders'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RaisedBorderStyle class >> initialize [
 	"Deprecated in Pharo 11"
 	self deprecatedAliases: { #RaisedBorder }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RaisedBorderStyle >> bottomRightColor [
 	"Changed from direct access to color since, if nil,
 	self color is transparent."
@@ -23,7 +25,7 @@ RaisedBorderStyle >> bottomRightColor [
 		ifFalse: [self color darker]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RaisedBorderStyle >> colorsAtCorners [
 	| c c14 c23 |
 	c := self color.
@@ -31,12 +33,12 @@ RaisedBorderStyle >> colorsAtCorners [
 	^Array with: c14 with: c23 with: c23 with: c14
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RaisedBorderStyle >> style [
 	^#raised
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RaisedBorderStyle >> topLeftColor [
 	"Changed from direct access to color since, if nil,
 	self color is transparent."
@@ -46,7 +48,7 @@ RaisedBorderStyle >> topLeftColor [
 		ifFalse: [self color lighter]
 ]
 
-{ #category : #'color tracking' }
+{ #category : 'color tracking' }
 RaisedBorderStyle >> trackColorFrom: aMorph [
 	baseColor ifNil:[self color: aMorph raisedColor]
 ]

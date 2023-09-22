@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'class',
 		'originalMessage',
-		'refactoring',
 		'newMessage',
 		'command',
 		'postAction'

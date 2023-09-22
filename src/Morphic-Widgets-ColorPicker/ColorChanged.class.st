@@ -10,26 +10,27 @@ Example:
                                                                         UIManager inform: 'Selected color: ', ann newColor asString].
 "
 Class {
-	#name : #ColorChanged,
-	#superclass : #Announcement,
+	#name : 'ColorChanged',
+	#superclass : 'Announcement',
 	#instVars : [
 		'newColor'
 	],
-	#category : #'Morphic-Widgets-ColorPicker'
+	#category : 'Morphic-Widgets-ColorPicker',
+	#package : 'Morphic-Widgets-ColorPicker'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorChanged class >> to: aColor [
 	^self new
 		newColor: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorChanged >> newColor [
 	^ newColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorChanged >> newColor: anObject [
 	newColor := anObject
 ]

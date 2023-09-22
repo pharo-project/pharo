@@ -4,19 +4,21 @@
 Instances of this class are used to terminate matcher's chains. When a match reaches this (an instance receives #matchAgainst: message), the match is considered to succeed. Instances also support building protocol of RxmLinks, with some restrictions.
 "
 Class {
-	#name : #RxmTerminator,
-	#superclass : #Object,
-	#category : #'Regex-Core-Utilities'
+	#name : 'RxmTerminator',
+	#superclass : 'Object',
+	#category : 'Regex-Core-Utilities',
+	#package : 'Regex-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #matching }
+{ #category : 'matching' }
 RxmTerminator >> matchAgainst: aStream [
 	"If got here, the match is successful."
 
 	^true
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RxmTerminator >> pointTailTo: anRxmLink [
 	"Branch tails are never redirected by the build algorithm.
 	Healthy terminators should never receive this."
@@ -25,7 +27,7 @@ RxmTerminator >> pointTailTo: anRxmLink [
 		'internal matcher build error - redirecting terminator tail'
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RxmTerminator >> terminateWith: aTerminator [
 	"Branch terminators are never supposed to change.
 	Make sure this is the case."

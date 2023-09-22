@@ -5,7 +5,6 @@ Class {
 	#name : 'RBRemoveMethodDriver',
 	#superclass : 'RBDriver',
 	#instVars : [
-		'refactoring',
 		'methods',
 		'senders'
 	],

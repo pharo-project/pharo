@@ -27,87 +27,89 @@ and pressing the reset button. Or simply executing  ReRuleManager reset
 When you load complete rules into the system, the cache will be reset automatically. But as you are creating a new rule and it is in the incomplete state you have to reset the cache once you are ready.
 "
 Class {
-	#name : #ReAbstractRule,
-	#superclass : #Object,
+	#name : 'ReAbstractRule',
+	#superclass : 'Object',
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #'Renraku-Rules'
+	#category : 'Renraku-Rules',
+	#package : 'Renraku',
+	#tag : 'Rules'
 }
 
-{ #category : #'testing - interest' }
+{ #category : 'testing - interest' }
 ReAbstractRule class >> checksClass [
 	"Not checking a class by default - but subclasses should return true when the receiver rule checks on class level."
 
 	^ false
 ]
 
-{ #category : #'testing - interest' }
+{ #category : 'testing - interest' }
 ReAbstractRule class >> checksMethod [
 	"Not checking a method by default - but subclasses should return true when the receiver rule checks on method level."
 
 	^ false
 ]
 
-{ #category : #'testing - interest' }
+{ #category : 'testing - interest' }
 ReAbstractRule class >> checksNode [
 	"Not checking a node by default - but subclasses should return true when the receiver rule checks on AST node level."
 
 	^ false
 ]
 
-{ #category : #'testing - interest' }
+{ #category : 'testing - interest' }
 ReAbstractRule class >> checksPackage [
 	"Not checking a package by default - but subclasses should return true when the receiver rule checks on package level."
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractRule class >> enabled [
 
 	^ enabled ifNil: [ enabled := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractRule class >> enabled: aBoolean [
 
 	enabled := aBoolean.
 	ReRuleManager reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractRule class >> enabledSettingID [
 
 	^ (self name, '_enabled') asSymbol
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 ReAbstractRule class >> identifierMinorVersionNumber [
 	"This number identifies the version of the rule definition. Each time the rule is updated and its changes invalidates previous false positives identification (and as such should be reassessed by developers) the number should be increased."
 
 	^ 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReAbstractRule class >> isAbstract [
 
 	^ self = ReAbstractRule
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 ReAbstractRule class >> isBeginnerRule [
 
 	^ false
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 ReAbstractRule class >> isDefaultRule [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReAbstractRule class >> isUsed [
 	"all my sublasses are used"
 
@@ -116,46 +118,48 @@ ReAbstractRule class >> isUsed [
 		ifFalse: [ true ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReAbstractRule class >> isVisible [
 
+	self isAbstract ifTrue: [ ^ false ].
+	
 	^ self methodOfInteresetSelectors anySatisfy: [ :selector |
 		self perform: selector ]
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 ReAbstractRule class >> methodOfInteresetSelectors [
 
 	^ #(checksMethod checksClass checksPackage checksNode)
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 ReAbstractRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^ self name
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 ReAbstractRule class >> uniqueIdentifierNumber [
 	"This number should be unique and should change only when the rule completely change semantics"
 	^ 0
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReAbstractRule >> anchorFor: anEntity [
 
 	^ ReSourceAnchor entity: anEntity
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReAbstractRule >> basicCheck: anEntity [
 	"If you end here, you should most likely implement this in a subclass"
 
 	^ self shouldBeImplemented
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReAbstractRule >> check: anEntity [
 
 	| critiques |
@@ -166,7 +170,7 @@ ReAbstractRule >> check: anEntity [
 	^ critiques
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock [
 	"Accepts an entity and a block which could be evaluated for each detected critique
 	aCriticBlock may accept one argument: the critique object"
@@ -175,7 +179,7 @@ ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock [
 		ifTrue: [ aCriticBlock cull: (self critiqueFor: anEntity) ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock ifNone: alternativeBlock [
 
 	| encounteredCritique |
@@ -188,7 +192,7 @@ ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock ifNone: alternati
 	encounteredCritique ifFalse: alternativeBlock
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReAbstractRule >> check: anEntity ifNoCritiques: alternativeBlock [
 
 	| critiques |
@@ -200,7 +204,7 @@ ReAbstractRule >> check: anEntity ifNoCritiques: alternativeBlock [
 	^ critiques
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ReAbstractRule >> createTrivialCritiqueOn: method intervalOf: node hint: hint [
 
 	^ ReTrivialCritique
@@ -212,7 +216,7 @@ ReAbstractRule >> createTrivialCritiqueOn: method intervalOf: node hint: hint [
 		  hint: hint
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReAbstractRule >> critiqueFor: anEntity [
 
 	^ ReTrivialCritique
@@ -220,7 +224,7 @@ ReAbstractRule >> critiqueFor: anEntity [
 		by: self
 ]
 
-{ #category : #'running - helpers' }
+{ #category : 'running - helpers' }
 ReAbstractRule >> critiqueFor: aClass about: aVarName [
 
 	| crit |
@@ -233,43 +237,43 @@ ReAbstractRule >> critiqueFor: aClass about: aVarName [
 	^ crit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractRule >> group [
 
 	^ 'Unclassified rules'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReAbstractRule >> isComposite [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReAbstractRule >> isRewriteRule [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractRule >> name [
 	"Answer a human readable name of the rule."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractRule >> rationale [
 	"Answer an explanation of the rule, usually in one line. Long description can be obtained using longDescription."
 
 	^ self class comment
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 ReAbstractRule >> resetResult [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractRule >> severity [
 	"Answer the severity of issues reported by this rule. This method should return one of #error, #warning, or #information."
 

@@ -1,6 +1,6 @@
-Extension { #name : #CmdMenu }
+Extension { #name : 'CmdMenu' }
 
-{ #category : #'*Commander-Spec2-Compatibility' }
+{ #category : '*Commander-Spec2-Compatibility' }
 CmdMenu >> asSpMenuPresenter [
 	| menu |
 	menu := SpMenuPresenter new.

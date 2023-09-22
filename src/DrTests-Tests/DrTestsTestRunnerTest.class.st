@@ -2,8 +2,8 @@
 A DrTestsUITest is a test class for testing the behavior of DrTests-TestRunner
 "
 Class {
-	#name : #DrTestsTestRunnerTest,
-	#superclass : #TestCase,
+	#name : 'DrTestsTestRunnerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'plugin',
 		'package',
@@ -12,10 +12,11 @@ Class {
 		'reRunconf',
 		'testCase'
 	],
-	#category : #'DrTests-Tests'
+	#category : 'DrTests-Tests',
+	#package : 'DrTests-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DrTestsTestRunnerTest >> setUp [
 
 	super setUp.
@@ -29,7 +30,7 @@ DrTestsTestRunnerTest >> setUp [
 	plugin := DTTestsRunnerPlugin new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsTestRunnerTest >> testAllSelectedClassesAreTestCases [
 
 	| thePackage |
@@ -37,7 +38,7 @@ DrTestsTestRunnerTest >> testAllSelectedClassesAreTestCases [
 	self assert: ((plugin itemsToBeAnalysedFor: {thePackage}) flattened allSatisfy: [ :each | each isTestCase ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsTestRunnerTest >> testReRunResultIsDTTestRunnerResult [
 	| pluginResult |
 	pluginResult := plugin runForConfiguration: conf.
@@ -50,21 +51,21 @@ DrTestsTestRunnerTest >> testReRunResultIsDTTestRunnerResult [
 		equals: DTTestsRunnerResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsTestRunnerTest >> testRunResultBuildTreeForUI [
 	self
 		assert: (plugin runForConfiguration: conf) buildTreeForUI class
 		equals: DTTreeNode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsTestRunnerTest >> testRunResultIsDTTestRunnerResult [
 	self
 		assert: (plugin runForConfiguration: conf) class
 		equals: DTTestsRunnerResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsTestRunnerTest >> testSelectedPackagesContainTestCases [
 
 	self assert: (plugin packagesAvailableForAnalysis allSatisfy: [ :pkg |
@@ -72,7 +73,7 @@ DrTestsTestRunnerTest >> testSelectedPackagesContainTestCases [
 			class isTestCase ] ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsTestRunnerTest >> testTestResultIsNotEmpty [
 	self
 		deny: (plugin runForConfiguration: conf) testResults passed isEmpty

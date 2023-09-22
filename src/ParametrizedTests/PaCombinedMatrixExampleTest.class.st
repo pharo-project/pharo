@@ -2,15 +2,17 @@
 Testing class
 "
 Class {
-	#name : #PaCombinedMatrixExampleTest,
-	#superclass : #PaAbstractExampleTest,
+	#name : 'PaCombinedMatrixExampleTest',
+	#superclass : 'PaAbstractExampleTest',
 	#instVars : [
 		'option3'
 	],
-	#category : #'ParametrizedTests-Tests'
+	#category : 'ParametrizedTests-Tests',
+	#package : 'ParametrizedTests',
+	#tag : 'Tests'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 PaCombinedMatrixExampleTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -21,12 +23,12 @@ PaCombinedMatrixExampleTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaCombinedMatrixExampleTest >> option3 [
 	^ option3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaCombinedMatrixExampleTest >> option3: aString [
 	option3 := aString
 ]

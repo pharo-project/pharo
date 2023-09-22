@@ -11,19 +11,21 @@ We want to make sure that we are not forced to use classSlots: and classTraits:
 because users will be confused. 
 "
 Class {
-	#name : #FluidClassSideTraitBuilder,
-	#superclass : #FluidTraitBuilder,
-	#category : #'FluidClassBuilder-Base'
+	#name : 'FluidClassSideTraitBuilder',
+	#superclass : 'FluidTraitBuilder',
+	#category : 'FluidClassBuilder-Base',
+	#package : 'FluidClassBuilder',
+	#tag : 'Base'
 }
 
-{ #category : #API }
+{ #category : 'API' }
 FluidClassSideTraitBuilder >> slots: anArray [
 	"Pay attention on the class side we do not have to have classSlots: but slots:"
 
 	classSlotsToBuild := anArray collect: [ :each | each asSlot ]
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 FluidClassSideTraitBuilder >> traits: aCollection [
 	"Pay attention that on class side we want to write traits: and not classTraits:"
 

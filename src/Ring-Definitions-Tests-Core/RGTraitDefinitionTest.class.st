@@ -2,12 +2,14 @@
 SUnit tests for trait definitions
 "
 Class {
-	#name : #RGTraitDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Core-Base'
+	#name : 'RGTraitDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Core-Base',
+	#package : 'Ring-Definitions-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitDefinitionTest >> testAddingMethods [
 	| newMethod newClass |
 	newClass := RGTraitDefinition named: #TSortable.
@@ -44,7 +46,7 @@ RGTraitDefinitionTest >> testAddingMethods [
 	self assert: (newClass compiledMethodNamed: #foo) isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitDefinitionTest >> testAsTraitDefinition [
 	| newTrait |
 	newTrait := TSortable asRingDefinition.
@@ -60,7 +62,7 @@ RGTraitDefinitionTest >> testAsTraitDefinition [
 	self assert: newTrait classSide traitCompositionSource equals: '{}'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitDefinitionTest >> testAsTraitDefinition2 [
 
 	| newTrait newClass newSlice |
@@ -86,7 +88,7 @@ RGTraitDefinitionTest >> testAsTraitDefinition2 [
 	self assertEmpty: newTrait subclasses
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitDefinitionTest >> testExistingTrait [
 	| newClass metaClass |
 	newClass := RGTraitDefinition named: #TSortable.
@@ -104,7 +106,7 @@ RGTraitDefinitionTest >> testExistingTrait [
 	self assert: metaClass realClass equals: TSortable classSide
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitDefinitionTest >> testNonExistingClass [
 	| newClass |
 	newClass := RGTraitDefinition named: #TConnection.
@@ -122,7 +124,7 @@ RGTraitDefinitionTest >> testNonExistingClass [
 	self assert: newClass hasProtocols not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitDefinitionTest >> testTraitEquality [
 	| newClass |
 	self assert: TSortable asRingDefinition equals: TSortable asRingDefinition.

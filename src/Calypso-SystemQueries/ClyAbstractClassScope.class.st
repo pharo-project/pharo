@@ -78,72 +78,74 @@ And to support scoped refactoring my instances can be converted to the refactori
 - asRBEnvironment 
 "
 Class {
-	#name : #ClyAbstractClassScope,
-	#superclass : #ClyTypedScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyAbstractClassScope',
+	#superclass : 'ClyTypedScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope class >> asInterestingClassScope [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAbstractClassScope class >> defaultName [
 	^'classes'
 ]
 
-{ #category : #'scope names' }
+{ #category : 'scope names' }
 ClyAbstractClassScope class >> hierarchyScopeName [
 	^ 'hierarchy'
 ]
 
-{ #category : #'scope names' }
+{ #category : 'scope names' }
 ClyAbstractClassScope class >> inheritedScopeName [
 	^'parents'
 ]
 
-{ #category : #'scope names' }
+{ #category : 'scope names' }
 ClyAbstractClassScope class >> inheritingScopeName [
 	^'children'
 ]
 
-{ #category : #'scope names' }
+{ #category : 'scope names' }
 ClyAbstractClassScope class >> userHierarchyScopeName [
 	^'user hier'
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope >> adoptLocalScopeClassTo: aLocalScopeClass [
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope >> asInheritedScope [
 	^ClyInheritedScopeProviderAnnotation createInheritedScopeFrom: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope >> asInheritingScope [
 	^ClyInheritedScopeProviderAnnotation createInheritingScopeFrom: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope >> asInterestingClassScope [
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope >> asLocalClassScope [
 	self subclassResponsibility
 ]
 
-{ #category : #'refactoring support' }
+{ #category : 'refactoring support' }
 ClyAbstractClassScope >> asRBEnvironment [
 	^RBClassEnvironment classes: self collectAllClasses
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope >> asScope: aClassScopeClass [
 
 	| newScope |
@@ -152,14 +154,14 @@ ClyAbstractClassScope >> asScope: aClassScopeClass [
 	^newScope
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAbstractClassScope >> classVariablesDo: aBlock [
 
 	self classesDo: [ :eachClass |
 		self classVariablesOf: eachClass do: aBlock]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyAbstractClassScope >> classVariablesOf: definingClass do: aBlock [
 	"Class variables are visible from any meta level of declaring class.
 	But we can retrieve them only from instance side of given class"
@@ -167,12 +169,12 @@ ClyAbstractClassScope >> classVariablesOf: definingClass do: aBlock [
 		aBlock value: (ClyClassVariable on: var definedIn: definingClass instanceSide)]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAbstractClassScope >> classesDo: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyAbstractClassScope >> collectAllClasses [
 	| classes |
 	classes := OrderedCollection new: basisObjects size.
@@ -182,14 +184,14 @@ ClyAbstractClassScope >> collectAllClasses [
 	^classes
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAbstractClassScope >> includesClass: aClass [
 
 	self classesDo: [ :each | each = aClass ifTrue: [^true]].
 	^false
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyAbstractClassScope >> includesClassesAffectedBy: aSystemAnnouncement [
 
 	self classesDo: [ :each |
@@ -197,7 +199,7 @@ ClyAbstractClassScope >> includesClassesAffectedBy: aSystemAnnouncement [
 	^false
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyAbstractClassScope >> includesMethodGroupsAffectedBy: aSystemAnnouncement [
 	self
 		methodGroupProvidersDo: [ :each |
@@ -206,7 +208,7 @@ ClyAbstractClassScope >> includesMethodGroupsAffectedBy: aSystemAnnouncement [
 	^ false
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyAbstractClassScope >> includesMethodsAffectedBy: aSystemAnnouncement [
 
 	self classesDo: [ :each |
@@ -214,7 +216,7 @@ ClyAbstractClassScope >> includesMethodsAffectedBy: aSystemAnnouncement [
 	^false
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyAbstractClassScope >> includesVariablesAffectedBy: aSystemAnnouncement [
 
 	self classesDo: [ :class |
@@ -223,20 +225,20 @@ ClyAbstractClassScope >> includesVariablesAffectedBy: aSystemAnnouncement [
 	^false
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope >> increasedByClassesFrom: aClassScope [
 
 	^self withExtraBasisObjects: aClassScope collectAllClasses
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAbstractClassScope >> instanceVariablesDo: aBlock [
 
 	self classesDo: [ :eachClass |
 		self instanceVariablesOf: eachClass do: aBlock]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyAbstractClassScope >> instanceVariablesOf: definingClass do: aBlock [
 
 	| slots |
@@ -249,12 +251,12 @@ ClyAbstractClassScope >> instanceVariablesOf: definingClass do: aBlock [
 			aBlock value: (ClyInstanceVariable on: var definedIn: definingClass) ]]
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyAbstractClassScope >> localScopeClass [
 	self subclassResponsibility
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyAbstractClassScope >> metaLevelsOf: aClass do: aBlock [
 	"Subclasses should decide what class meta level is visible.
 	For example it can be instance side, class side or both"
@@ -262,7 +264,7 @@ ClyAbstractClassScope >> metaLevelsOf: aClass do: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyAbstractClassScope >> methodGroupProvidersDo: aBlock [
 	| providers |
 
@@ -271,7 +273,7 @@ ClyAbstractClassScope >> methodGroupProvidersDo: aBlock [
 		providers do: aBlock ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAbstractClassScope >> methodGroupsDo: aBlock [
 	| dynamicGroups groups |
 	dynamicGroups := OrderedCollection new.
@@ -285,19 +287,19 @@ ClyAbstractClassScope >> methodGroupsDo: aBlock [
 	self processDynamicMethodGroups: dynamicGroups by: aBlock
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAbstractClassScope >> methodsDo: aBlock [
 
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAbstractClassScope >> printBasisObject: aClass on: aStream [
 
 	^aStream nextPutAll: aClass name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyAbstractClassScope >> processDynamicMethodGroups: dynamicGroups by: aBlock [
 
 	| activeGroups |
@@ -312,7 +314,7 @@ ClyAbstractClassScope >> processDynamicMethodGroups: dynamicGroups by: aBlock [
 		activeGroups reset]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope >> reducedByClassesFrom: aClassScope [
 
 	| myClasses classesToExclude |
@@ -322,7 +324,7 @@ ClyAbstractClassScope >> reducedByClassesFrom: aClassScope [
 	^self withNewBasisObjects: (myClasses copyWithoutAll: classesToExclude)
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAbstractClassScope >> variablesDo: aBlock [
 
 	self classesDo: [ :eachClass |
@@ -330,7 +332,7 @@ ClyAbstractClassScope >> variablesDo: aBlock [
 		self instanceVariablesOf: eachClass do: aBlock]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAbstractClassScope >> withMetaLevel: aMetaLevelScopeClass [
 	self subclassResponsibility
 ]

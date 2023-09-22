@@ -1,13 +1,15 @@
 Class {
-	#name : #DebuggerTestCaseForRestartTest,
-	#superclass : #TestCase,
+	#name : 'DebuggerTestCaseForRestartTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'testedValue'
 	],
-	#category : #'Debugger-Model-Tests-Core'
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DebuggerTestCaseForRestartTest >> setUp [
 	super setUp.
 
@@ -17,7 +19,7 @@ DebuggerTestCaseForRestartTest >> setUp [
 	testedValue := Object new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DebuggerTestCaseForRestartTest >> testPushingValuesOnActivation [
 
 	| oldValue |
@@ -31,7 +33,7 @@ DebuggerTestCaseForRestartTest >> testPushingValuesOnActivation [
 	self assert: oldValue == testedValue
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DebuggerTestCaseForRestartTest >> testedValue [
 
 	^ testedValue

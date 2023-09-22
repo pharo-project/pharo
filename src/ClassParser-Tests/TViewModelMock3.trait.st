@@ -2,33 +2,34 @@
 A trait used in test classes like `CDFluidClassParserTest`
 "
 Trait {
-	#name : #TViewModelMock3,
+	#name : 'TViewModelMock3',
 	#instVars : [
 		'a',
 		'b'
 	],
-	#category : #'ClassParser-Tests'
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TViewModelMock3 >> a [
 
 	^ a
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TViewModelMock3 >> a: anObject [
 
 	a := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TViewModelMock3 >> b [
 
 	^ b
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TViewModelMock3 >> b: anObject [
 
 	b := anObject

@@ -2,12 +2,13 @@
 The Unix vm does not do line-ending conversion, thus this subclass which specifies we convert CR's to LF's when pasting to it
 "
 Class {
-	#name : #UnixClipboard,
-	#superclass : #Clipboard,
-	#category : #'System-Clipboard'
+	#name : 'UnixClipboard',
+	#superclass : 'Clipboard',
+	#category : 'System-Clipboard',
+	#package : 'System-Clipboard'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixClipboard >> clipboardText: text [
 
 	| string bytes |

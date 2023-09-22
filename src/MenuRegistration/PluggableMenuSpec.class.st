@@ -3,28 +3,30 @@ I'm a spec for a menu. The World menu pragma based registration uses it for now.
 We could probably avoid MenuSpec and just use MenuMorph instead. 
 "
 Class {
-	#name : #PluggableMenuSpec,
-	#superclass : #Object,
+	#name : 'PluggableMenuSpec',
+	#superclass : 'Object',
 	#instVars : [
 		'label',
 		'model',
 		'items',
 		'parentMenu'
 	],
-	#category : #'MenuRegistration-Core'
+	#category : 'MenuRegistration-Core',
+	#package : 'MenuRegistration',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableMenuSpec class >> withModel: aModel [
 	^ self new model: aModel
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 PluggableMenuSpec >> add: aString [
 	^ self add: aString action: nil
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 PluggableMenuSpec >> add: aString action: aMessageSend [
 	| item |
 	item := self addMenuItem.
@@ -33,7 +35,7 @@ PluggableMenuSpec >> add: aString action: aMessageSend [
 	^item
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 PluggableMenuSpec >> add: aString selector: aMessageSend [
 	| item |
 	item := self addMenuItem.
@@ -42,17 +44,17 @@ PluggableMenuSpec >> add: aString selector: aMessageSend [
 	^item
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 PluggableMenuSpec >> add: aString selector: aSelector argumentList: anArray [
 	^ self add: aString action: (MessageSend receiver: model selector: aSelector arguments: anArray)
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 PluggableMenuSpec >> add: aString target: anObject selector: aSelector argumentList: anArray [
 	^ self add: aString translated action: (MessageSend receiver: anObject selector: aSelector arguments: anArray)
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 PluggableMenuSpec >> addList: aList [
 	"Add the given items to this menu, where each item is a pair (<string> <actionSelector>).  If an element of the list is simply the symobl $-, add a line to the receiver. The optional third element of each entry, if present, provides balloon help."
 
@@ -73,7 +75,7 @@ PluggableMenuSpec >> addList: aList [
 						ifTrue: [ item icon: (self theme iconNamed: tuple fourth) ] ] ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 PluggableMenuSpec >> addMenuItem [
 	| item |
 	item := self newMenuItem.
@@ -81,39 +83,39 @@ PluggableMenuSpec >> addMenuItem [
 	^item
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 PluggableMenuSpec >> addSeparator [
 	self items isEmpty
 		ifTrue: [ ^ nil ].
 	self items last separator: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMenuSpec >> items [
 	^ items ifNil: [ items := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMenuSpec >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMenuSpec >> label: aString [
 	label := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMenuSpec >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMenuSpec >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 PluggableMenuSpec >> newMenuItem [
 	^ PluggableMenuItemSpec new
 ]

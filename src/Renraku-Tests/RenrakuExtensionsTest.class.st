@@ -1,10 +1,11 @@
 Class {
-	#name : #RenrakuExtensionsTest,
-	#superclass : #TestCase,
-	#category : #'Renraku-Tests'
+	#name : 'RenrakuExtensionsTest',
+	#superclass : 'TestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuExtensionsTest >> testBanLevelCandidatesForClass [
 	| class candidates |
 	class := self class.
@@ -15,7 +16,7 @@ RenrakuExtensionsTest >> testBanLevelCandidatesForClass [
 	self assert: (candidates includes: RePersistentImageRuleBaner)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuExtensionsTest >> testBanLevelCandidatesForMethod [
 	| method candidates |
 	method := thisContext  method.
@@ -27,7 +28,7 @@ RenrakuExtensionsTest >> testBanLevelCandidatesForMethod [
 	self assert: (candidates includes: RePersistentImageRuleBaner)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuExtensionsTest >> testBanLevelCandidatesForPackage [
 	| package candidates |
 	package := self class package.

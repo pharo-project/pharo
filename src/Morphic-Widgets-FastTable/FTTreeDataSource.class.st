@@ -60,8 +60,8 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTTreeDataSource,
-	#superclass : #FTDataSource,
+	#name : 'FTTreeDataSource',
+	#superclass : 'FTDataSource',
 	#instVars : [
 		'childrenBlock',
 		'rootItem',
@@ -72,10 +72,12 @@ Class {
 	#classVars : [
 		'SearchStrategies'
 	],
-	#category : #'Morphic-Widgets-FastTable-Tree'
+	#category : 'Morphic-Widgets-FastTable-Tree',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Tree'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource class >> defaultSearchStrategies [
 	^ Dictionary new
 		at: #rootsOnly put: FTRootItemsStrategy;
@@ -84,7 +86,7 @@ FTTreeDataSource class >> defaultSearchStrategies [
 		yourself
 ]
 
-{ #category : #'utilities - morph creation' }
+{ #category : 'utilities - morph creation' }
 FTTreeDataSource class >> emptyMorph [
 	| icon |
 	icon := (Smalltalk ui icons iconNamed: #empty) asMorph.
@@ -92,13 +94,13 @@ FTTreeDataSource class >> emptyMorph [
 	^ icon
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FTTreeDataSource class >> initialize [
 
 	SearchStrategies := nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTTreeDataSource class >> root: aRootItem children: aBlock [
 	^ self new
 		rootItem: aRootItem;
@@ -107,52 +109,52 @@ FTTreeDataSource class >> root: aRootItem children: aBlock [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource class >> rootItemFor: aCollection [
 	^ FTRootItem new
 		data: aCollection;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTTreeDataSource class >> roots: aCollection children: aBlock [
 	^ self root: (self rootItemFor: aCollection) children: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource class >> searchStrategies [
 	^ SearchStrategies ifNil: [ SearchStrategies := self defaultSearchStrategies ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource class >> searchStrategies: anObject [
 	SearchStrategies := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTTreeDataSource >> addSourceToRootItem [
 	rootItem dataSource: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> allShownItems [
 
 	^ rootItem children flatCollect: [ :e | e withExpandedChildren ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> buttonFor: item [
 	^ ( (self canDisplayChildrenOf: item) and: [item children isNotEmpty])
 		ifTrue: [ item generateButton ]
 		ifFalse: [ self class emptyMorph ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTTreeDataSource >> canDisplayChildrenOf: item [
 	^ self maxDepth ifNil: [ true ] ifNotNil: [ self maxDepth > item depth ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> cellColumn: column row: rowIndex [
 	| item cell |
 	item := self elementAt: rowIndex.
@@ -164,50 +166,50 @@ FTTreeDataSource >> cellColumn: column row: rowIndex [
 	^ cell
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> childrenBlock [
 	^ childrenBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> childrenBlock: aBlockClosure [
 	childrenBlock := aBlockClosure
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTTreeDataSource >> collapseAll [
 	rootItem collapseAll.
 	self tableRefresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> elementAt: index [
 	^ rootItem childAt: index
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTTreeDataSource >> expandAll [
 	rootItem expandAll.
 	self tableRefresh
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTTreeDataSource >> expandAllTo: aDepth [
 	self rootItem expandAllTo: aDepth
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTTreeDataSource >> expandRoots [
 	self rootsItems do: #expand.
 	self tableRefresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> headerColumn: column [
 	^ self basicHeaderCellFor: column
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTTreeDataSource >> indexOfChangedItem [
 	"I should be call when the user of the Fast Tree collapse or extand an Item. I return the index of the changed item. I should not be used by an other method than #updateSelectionWithCollectBlock:."
 
@@ -218,17 +220,17 @@ FTTreeDataSource >> indexOfChangedItem [
 	^ self errorSubscriptBounds: self numberOfRows + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> maxDepth [
 	^ maxDepth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> maxDepth: anObject [
 	maxDepth := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> menuColumn: column row: rowIndex [
 	rowIndex = 0
 		ifTrue: [ ^ nil ].	"I could answer a menu without selection, but in this case I will just answer nil, which means 'no menu'"
@@ -239,19 +241,19 @@ FTTreeDataSource >> menuColumn: column row: rowIndex [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> newDataSourceMatching: aFTFilter [
 	"I delegate the filter to a FTTreeFunctionStrategy."
 
 	^ (self class searchStrategies at: self searchStrategy ifAbsent: [ self class searchStrategies at: #default ]) filterWith: aFTFilter pattern dataSource: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> numberOfRows [
 	^ self rootItem numberOfVisibleChildren
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTTreeDataSource >> preservingScrollbarPositionDo: aBlock [
 
 	| oldScroll oldItems newScroll newItems |
@@ -274,58 +276,58 @@ FTTreeDataSource >> preservingScrollbarPositionDo: aBlock [
 	self table verticalScrollBar setValue: newScroll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> realElementAt: anIndex [
 	^ (super realElementAt: anIndex) data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> rootItem [
 	^ rootItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> rootItem: anObject [
 	rootItem := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> rootsItems [
 	^ rootItem children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> searchStrategy [
 	^ searchStrategy ifNil: [ #default ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> searchStrategy: anObject [
 	"Can be #default, #rootsOnly or #allItems. Use #allItems ONLY if the tree have not an infinit number of children, else you will get an infinit loop."
 
 	searchStrategy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeDataSource >> searchText: aString [
 	"I delegate the search to a FTTreeFunctionStrategy."
 
 	^ (self class searchStrategies at: self searchStrategy ifAbsent: [ self class searchStrategies at: #default ]) searchWith: aString dataSource: self
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTTreeDataSource >> sortElements: aSortFunction [
 	unsortedElements ifNil: [ unsortedElements := self rootsItems ].
 	self rootItem children: (self rootItem children sorted: aSortFunction)
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTTreeDataSource >> unsortElements [
 	self rootItem children: unsortedElements.
 	unsortedElements := nil
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTTreeDataSource >> updateData [
 	"I am here to reset the items in case someone updated them."
 
@@ -333,7 +335,7 @@ FTTreeDataSource >> updateData [
 	self tableRefresh
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTTreeDataSource >> updateSelectionWithCollectBlock: aBlock [
 	"I take a block with two parameters, the index of a selected element and
 	the index of the item that collapsed/expanded. This block needs to return

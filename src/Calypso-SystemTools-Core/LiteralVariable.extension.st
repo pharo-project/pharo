@@ -1,6 +1,6 @@
-Extension { #name : #LiteralVariable }
+Extension { #name : 'LiteralVariable' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 LiteralVariable >> asCalypsoVariableOf: declarationClass [
 	"it is variable compatible object. Generally variable objects should have declaring class.
 	Then it will be not needed and simplified"

@@ -2,8 +2,8 @@
 Model for a find and replace service in editors
 "
 Class {
-	#name : #FindReplaceService,
-	#superclass : #Model,
+	#name : 'FindReplaceService',
+	#superclass : 'Model',
 	#instVars : [
 		'findText',
 		'replaceText',
@@ -14,28 +14,30 @@ Class {
 		'findStartIndex',
 		'isRegex'
 	],
-	#category : #'Text-Edition-Services'
+	#category : 'Text-Edition-Services',
+	#package : 'Text-Edition',
+	#tag : 'Services'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FindReplaceService class >> newFor: textArea [
 
 	"sublasses may use the text area object"
 	^ self new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> caseSensitive [
 	^ caseSensitive ifNil: [caseSensitive := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> caseSensitive: aBoolean [
 	caseSensitive := aBoolean.
 	self findPolicyChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> convertedFindString [
 	| specials |
 	specials := '|^$:\+*[](){}?.'.
@@ -45,18 +47,18 @@ FindReplaceService >> convertedFindString [
 				s nextPut: c]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> entireWordsOnly [
 	^ entireWordsOnly ifNil: [entireWordsOnly := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> entireWordsOnly: aBoolean [
 	entireWordsOnly := aBoolean.
 	self findPolicyChanged
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 FindReplaceService >> findInTextMorph: aTextMorph [
 	| where  |
 	findStartIndex
@@ -79,7 +81,7 @@ FindReplaceService >> findInTextMorph: aTextMorph [
 	^ where
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 FindReplaceService >> findNextSubstring: aSubstring inTextMorph: aTextMorph [
 	| where  |
 	findStartIndex
@@ -91,13 +93,13 @@ FindReplaceService >> findNextSubstring: aSubstring inTextMorph: aTextMorph [
 	^ where
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> findPolicyChanged [
 
 	self changed: #findPolicy
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 FindReplaceService >> findRegex [
 	| s |
 	self regexString ifEmpty: [ ^nil ].
@@ -112,40 +114,40 @@ FindReplaceService >> findRegex [
 			^ '' asRegex]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> findStartIndex [
 	^ findStartIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> findStartIndex: anInteger [
 	findStartIndex := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> findString [
 	^ self findText asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> findText [
 	^ (findText ifNil: [findText := '' asText. findText]) asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> findText: aStringOrText [
 	findText := aStringOrText asText.
 	self findPolicyChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> findText: aStringOrText isRegex: aBoolean [
 		self isRegex: aBoolean.
 		self findText: aStringOrText.
 		self replaceText: ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> findText: aStringOrText isRegex: isReg caseSensitive: isCaseSensitive entireWordsOnly: forEntireWordsOnly [
 		self isRegex: isReg.
 		self findText: aStringOrText.
@@ -153,39 +155,39 @@ FindReplaceService >> findText: aStringOrText isRegex: isReg caseSensitive: isCa
 		self caseSensitive: isCaseSensitive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> findText: aStringOrText isRegex: aBoolean entireWordsOnly: forEntireWordsOnly [
 		self isRegex: aBoolean.
 		self findText: aStringOrText.
 		self entireWordsOnly: forEntireWordsOnly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> isRegex [
 	^ isRegex ifNil: [isRegex := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> isRegex: aBoolean [
 	isRegex := aBoolean.
 	self findPolicyChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> regexString [
 	^ self isRegex
 		ifTrue: [self findString]
 		ifFalse: [self convertedFindString]
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 FindReplaceService >> replaceAllInTextMorph: aTextMorph [
 	| startIdx |
 	startIdx := self wrapAround ifTrue: [1] ifFalse: [aTextMorph editor selectionInterval first].
 	aTextMorph replaceAll: self findRegex with: self replaceText startingAt: startIdx
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 FindReplaceService >> replaceInTextMorph: aTextMorph [
 
 	findStartIndex := self searchBackwards
@@ -195,46 +197,46 @@ FindReplaceService >> replaceInTextMorph: aTextMorph [
 		ifNotNil: [aTextMorph replaceSelectionWith: self replaceText]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> replaceText [
 	^ replaceText ifNil: [replaceText := '']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> replaceText: aStringOrText [
 	replaceText := aStringOrText asString.
 	self findPolicyChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> searchBackwards [
 	^ searchBackwards ifNil: [searchBackwards := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> searchBackwards: aBoolean [
 	searchBackwards := aBoolean.
 	self findPolicyChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> selectionRegexString [
 	^ self convertedFindString
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FindReplaceService >> updateFindStartIndexForTextMorph: aTextMorph [
 	| si |
 	si := aTextMorph editor selectionInterval.
 	self findStartIndex: (self searchBackwards ifTrue: [si first - 1] ifFalse: [si last + 1])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> wrapAround [
 	^ wrapAround ifNil: [wrapAround := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FindReplaceService >> wrapAround: aBoolean [
 	wrapAround := aBoolean.
 	self findPolicyChanged

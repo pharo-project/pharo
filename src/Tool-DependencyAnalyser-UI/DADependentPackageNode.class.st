@@ -2,53 +2,55 @@
 A DADependentPackageNode is used to display a dependent package in a tree.
 "
 Class {
-	#name : #DADependentPackageNode,
-	#superclass : #DAAbstractPackageNode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DADependentPackageNode',
+	#superclass : 'DAAbstractPackageNode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 DADependentPackageNode >> childNodeClassFor: anItem [
 	^ anItem nodeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageNode >> children [
 	^ self compositeDependencyTo dependencies
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageNode >> compositeDependencyTo [
 	"should return one composite dependency anytime"
 	^ self content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageNode >> daPackage [
 	^ self parentNode daPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DADependentPackageNode >> hasChildren [
 	^ [ self content dependencies notEmpty ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageNode >> icon [
 	^ self iconNamed: #forwardIcon
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DADependentPackageNode >> isPackageNode [
 	^ true
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DADependentPackageNode >> label [
 	^ self rPackage packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageNode >> rPackage [
 	^ self content target rPackageSet
 ]

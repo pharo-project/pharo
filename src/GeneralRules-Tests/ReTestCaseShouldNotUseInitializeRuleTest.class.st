@@ -1,27 +1,29 @@
 Class {
-	#name : #ReTestCaseShouldNotUseInitializeRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#name : 'ReTestCaseShouldNotUseInitializeRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
 	#instVars : [
 		'aDummyVar'
 	],
-	#category : #'GeneralRules-Tests-Migrated'
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTestCaseShouldNotUseInitializeRuleTest >> aDummyVar [
 	"Only necessary that ivar does not appear unused"
 
 	^ aDummyVar
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReTestCaseShouldNotUseInitializeRuleTest >> tearDown [
 
 	self class removeSelector: #initialize.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReTestCaseShouldNotUseInitializeRuleTest >> testRule [
 	| critiques |
 	self class compile: 'initialize
@@ -33,7 +35,7 @@ ReTestCaseShouldNotUseInitializeRuleTest >> testRule [
 	self assert: critiques size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReTestCaseShouldNotUseInitializeRuleTest >> testRuleDoesNotAppear [
 	| critiques |
 	self class compile: 'initialize

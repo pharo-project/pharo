@@ -4,17 +4,19 @@ previous segment endpoint and my endpoing
 of given angle, passing in counter-clockwise direction.
 "
 Class {
-	#name : #AthensCCWArcSegment,
-	#superclass : #AthensArcSegment,
-	#category : #'Athens-Core-Paths'
+	#name : 'AthensCCWArcSegment',
+	#superclass : 'AthensArcSegment',
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensCCWArcSegment >> accept: aVisitor [
 	^ aVisitor ccwArcSegment: self
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensCCWArcSegment >> sendCommandTo: aBuilder [
 	^ aBuilder ccwArcTo: endPoint angle: angle
 ]

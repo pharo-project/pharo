@@ -1,6 +1,6 @@
-Extension { #name : #TextStyle }
+Extension { #name : 'TextStyle' }
 
-{ #category : #'*Rubric' }
+{ #category : '*Rubric' }
 TextStyle >> privateTabsArray: anArray [
 	"DefaultTab := anArray first.
 	DefaultTabsArray := anArray."
@@ -8,7 +8,7 @@ TextStyle >> privateTabsArray: anArray [
 	marginTabsArray := tabsArray collect: [ :t | {t . t } ]
 ]
 
-{ #category : #'*Rubric' }
+{ #category : '*Rubric' }
 TextStyle >> rubTabWidth [
 	 ^ tabsArray first
 ]

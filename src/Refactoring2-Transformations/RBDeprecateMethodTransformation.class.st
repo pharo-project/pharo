@@ -39,21 +39,23 @@ RBRefactoryTestDataApp >> called: anObject on: aBlock
 ```
 "
 Class {
-	#name : #RBDeprecateMethodTransformation,
-	#superclass : #RBCompositeMethodTransformation,
+	#name : 'RBDeprecateMethodTransformation',
+	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
 		'newSelector'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 RBDeprecateMethodTransformation class >> basicMenuItemString [
 
 	^ 'Deprecate method'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBDeprecateMethodTransformation class >> deprecateMethod: aSelector in: aClass using: newSelector [
 	^ self new
 		deprecateMethod: aSelector
@@ -62,13 +64,13 @@ RBDeprecateMethodTransformation class >> deprecateMethod: aSelector in: aClass u
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBDeprecateMethodTransformation class >> isTransformation [
 
 	^ true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aSelector in: aClass [
 	"partial initialized refactoring"
 	
@@ -78,7 +80,7 @@ RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aS
 		  yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aSelector in: aClass using: newSelector [
 	^ self new
 		model: aRBSmalltalk;
@@ -88,7 +90,7 @@ RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aS
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBDeprecateMethodTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition withBlock: [ selector ~= newSelector ]) 
@@ -97,7 +99,7 @@ RBDeprecateMethodTransformation >> applicabilityPreconditions [
 	  
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBDeprecateMethodTransformation >> buildTransformations [
 
 	| node parseTree method |
@@ -112,7 +114,7 @@ RBDeprecateMethodTransformation >> buildTransformations [
 			 withProtocol: method protocols) } 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDeprecateMethodTransformation >> callDeprecationMethod [
 
 	^ 'self
@@ -121,7 +123,7 @@ RBDeprecateMethodTransformation >> callDeprecationMethod [
 		in: ''' , SystemVersion current imageVersionString , ''''
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass [
 	"partial initialization"
 	
@@ -129,19 +131,19 @@ RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass [
 	class := self model classObjectFor: aClass
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass using: newSel [
 	self deprecateMethod: aSelector in: aClass.
 	newSelector := newSel asSymbol.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBDeprecateMethodTransformation >> newSelector: aSymbol [
 
 	newSelector := aSymbol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBDeprecateMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

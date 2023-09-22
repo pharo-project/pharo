@@ -2,33 +2,35 @@
 Browser for version history
 "
 Class {
-	#name : #MCVersionHistoryBrowser,
-	#superclass : #MCTool,
+	#name : 'MCVersionHistoryBrowser',
+	#superclass : 'MCTool',
 	#instVars : [
 		'ancestry',
 		'index',
 		'package',
 		'infos'
 	],
-	#category : #'MonticelloGUI-Tools'
+	#category : 'MonticelloGUI-Tools',
+	#package : 'MonticelloGUI',
+	#tag : 'Tools'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> ancestry: anAncestry [
 	ancestry := anAncestry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> baseSnapshot [
 	^ self snapshotForInfo: ancestry
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionHistoryBrowser >> defaultLabel [
 	^ ancestry name, ' History'
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionHistoryBrowser >> getMenu: aMenu [
 	index < 1 ifTrue: [^ aMenu].
 	self fillMenu: aMenu fromSpecs: 
@@ -40,73 +42,73 @@ MCVersionHistoryBrowser >> getMenu: aMenu [
 	^ aMenu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> index [
 	"Answer the value of index"
 
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> index: anObject [
 	"Set the value of index"
 
 	index := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> infos [
 	^ infos ifNil: [infos := ancestry withBreadthFirstAncestors]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionHistoryBrowser >> initialExtent [
 	^ 440@169.
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> list [
 	^ self infos collect: [:ea | ea name]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> package: aMCPackage [
 	package := aMCPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> repositoryGroup [
 	^ MCRepositoryGroup default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> selectedInfo [
 	^ self infos at: self selection ifAbsent: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> selectedSnapshot [
 	^ self snapshotForInfo: self selectedInfo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> selection [
 	^ index ifNil: [0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> selection: aNumber [
 	index := aNumber.
 	self changed: #selection; changed: #summary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> snapshotForInfo: aVersionInfo [
 	^ (self repositoryGroup versionWithInfo: aVersionInfo) snapshot
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionHistoryBrowser >> spawnHistory [
 	MCVersionHistoryBrowser new
 		ancestry: self selectedInfo;
@@ -114,7 +116,7 @@ MCVersionHistoryBrowser >> spawnHistory [
 		show
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionHistoryBrowser >> summary [
 	| selInfo |
 	selInfo := self selectedInfo.
@@ -123,7 +125,7 @@ MCVersionHistoryBrowser >> summary [
 		ifNotNil: [selInfo summary]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionHistoryBrowser >> widgetSpecs [
 	^ #(
 		((listMorph:selection:menu: list selection getMenu:) (0 0 0.3 1))

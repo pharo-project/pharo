@@ -1,10 +1,11 @@
 Class {
-	#name : #CDImmediateClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDImmediateClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDImmediateClassParserTest >> classDefinitionString [
 
 	^ '{superclassName} immediateSubclass: #{classname}
@@ -20,7 +21,7 @@ CDImmediateClassParserTest >> classDefinitionString [
 				'classvar2' -> self secondClassVariableName. } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDImmediateClassParserTest >> testImmediateClassIsImmediate [
 
 	self assert: classDefinition layoutClass equals: ImmediateLayout

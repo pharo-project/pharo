@@ -1,6 +1,6 @@
-Extension { #name : #SycClassifyMethodCommand }
+Extension { #name : 'SycClassifyMethodCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycClassifyMethodCommand class >> methodMenuActivation [
 	<classAnnotation>
 

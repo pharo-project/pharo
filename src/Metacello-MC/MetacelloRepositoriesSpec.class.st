@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloRepositoriesSpec,
-	#superclass : #MetacelloMemberListSpec,
-	#category : #'Metacello-MC-Specs'
+	#name : 'MetacelloRepositoriesSpec',
+	#superclass : 'MetacelloMemberListSpec',
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
+	#tag : 'Specs'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloRepositoriesSpec >> add: aStringOrSpec [
 
 	aStringOrSpec addToMetacelloRepositories: self
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloRepositoriesSpec >> canUpgradeTo: aMetacelloRepositoriesSpec [
   | repositorySpecs anotherRepositorySpecs |
   repositorySpecs := self map values
@@ -28,7 +30,7 @@ MetacelloRepositoriesSpec >> canUpgradeTo: aMetacelloRepositoriesSpec [
   ^ false
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloRepositoriesSpec >> compareEqual: aMetacelloProjectSpec [
     | repositorySpecs anotherRepositorySpecs |
     repositorySpecs := (self map values sort: [ :a :b | a description <= b description ])
@@ -38,7 +40,7 @@ MetacelloRepositoriesSpec >> compareEqual: aMetacelloProjectSpec [
     ^ repositorySpecs = anotherRepositorySpecs
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloRepositoriesSpec >> configMethodCascadeOn: aStream indent: indent [
 
 	| repositorySpecs |
@@ -53,7 +55,7 @@ MetacelloRepositoriesSpec >> configMethodCascadeOn: aStream indent: indent [
 					lastCascade: index >= repositorySpecs size ]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloRepositoriesSpec >> configMethodOn: aStream indent: indent [
 
 	aStream 
@@ -63,7 +65,7 @@ MetacelloRepositoriesSpec >> configMethodOn: aStream indent: indent [
 	self configMethodCascadeOn: aStream indent: indent
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloRepositoriesSpec >> hasNoLoadConflicts: aMetacelloRepositoriesSpec [
   | repositorySpecs anotherRepositorySpecs |
   repositorySpecs := self map values
@@ -81,35 +83,35 @@ MetacelloRepositoriesSpec >> hasNoLoadConflicts: aMetacelloRepositoriesSpec [
   ^ true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloRepositoriesSpec >> merge: aRepositorySpec [
 
 	aRepositorySpec mergeIntoMetacelloRepositories: self
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloRepositoriesSpec >> metacelloRegistrationHash [
     ^ ((self map values sort: [ :a :b | a description <= b description ]) collect: [ :each | each description ]) hash
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloRepositoriesSpec >> remove: aRepositorySpec [
 
 	aRepositorySpec removeFromMetacelloRepositories: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloRepositoriesSpec >> repository: aStringOrSpec [
 
 	aStringOrSpec addToMetacelloRepositories: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloRepositoriesSpec >> repository: anObject constructor: aVersionConstructor [
     aVersionConstructor repositoryForRepositories: anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloRepositoriesSpec >> repository: description username: username password: password [
 
 	| spec |
@@ -126,7 +128,7 @@ MetacelloRepositoriesSpec >> repository: description username: username password
 			yourself)
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloRepositoriesSpec >> repository: aString username: username password: password constructor: aVersionConstructor [
     aVersionConstructor repositoryForRepositories: aString username: username password: password
 ]

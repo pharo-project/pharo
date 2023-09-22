@@ -15,30 +15,31 @@ Internal Representation and Key Implementation Points.
 	successesCount:		<Integer>
 "
 Class {
-	#name : #ClyTestResultProperty,
-	#superclass : #ClyProperty,
+	#name : 'ClyTestResultProperty',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'allCount',
 		'errorCount',
 		'failureCount',
 		'successCount'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Queries'
+	#category : 'Calypso-SystemPlugins-SUnit-Queries',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTestResultProperty class >> ofMethod: aMethod [
 	^ClyCompositeTestResultProperty new
 		accumulateTestMethod: aMethod
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTestResultProperty class >> ofTestCase: aTestCaseClass [
 	^self new
 		accumulateTestCase: aTestCaseClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> accumulateFailures: failures andErrors: errors [
 
 	allCount := allCount + failures + errors.
@@ -46,7 +47,7 @@ ClyTestResultProperty >> accumulateFailures: failures andErrors: errors [
 	errorCount := errorCount + errors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> accumulateTest: testSelector of: aTestClass [
 
 	allCount := allCount + 1.
@@ -55,7 +56,7 @@ ClyTestResultProperty >> accumulateTest: testSelector of: aTestClass [
 	errorCount := errorCount + (aTestClass methodRaisedError: testSelector) asBit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> accumulateTestCase: aClass [
 
 	allCount := allCount + aClass allTestSelectors size.
@@ -64,28 +65,28 @@ ClyTestResultProperty >> accumulateTestCase: aClass [
 	errorCount := errorCount + (aClass history at: #errors) size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> accumulateTestMethod: testMethod [
 
 	self accumulateTest: testMethod selector of: testMethod methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> allCount [
 	^ allCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> allCount: anObject [
 	allCount := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> brokenCount [
 	^failureCount + errorCount
 ]
 
-{ #category : #presentation }
+{ #category : 'presentation' }
 ClyTestResultProperty >> createIcon [
 
 	allCount = 0 ifTrue: [ ^ self iconNamed: #testNotRun ].
@@ -99,32 +100,32 @@ ClyTestResultProperty >> createIcon [
 	^ self iconNamed: #testNotRun
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> errorCount [
 	^ errorCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> errorCount: anObject [
 	errorCount := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> failureCount [
 	^ failureCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> failureCount: anObject [
 	failureCount := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTestResultProperty >> hasBrokenTests [
 	^failureCount > 0 | (errorCount > 0)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTestResultProperty >> initialize [
 	super initialize.
 	allCount := 0.
@@ -133,12 +134,12 @@ ClyTestResultProperty >> initialize [
 	errorCount := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> successCount [
 	^ successCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestResultProperty >> successCount: anObject [
 	successCount := anObject
 ]

@@ -5,21 +5,22 @@ Instance variables:
 	handle	<ByteArray | ExternalAddress>
 "
 Class {
-	#name : #ExternalObject,
-	#superclass : #Object,
+	#name : 'ExternalObject',
+	#superclass : 'Object',
 	#instVars : [
 		'handle'
 	],
-	#category : #'FFI-Kernel'
+	#category : 'FFI-Kernel',
+	#package : 'FFI-Kernel'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExternalObject class >> initialize [
 
 	Smalltalk recreateSpecialObjectsArray
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ExternalObject class >> install [
 	"Notify all instances of the receiver that we're coming up on a new platform.
 	Note: The default implementation does nothing since the general external
@@ -28,44 +29,44 @@ ExternalObject class >> install [
 	be taken."
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ExternalObject class >> installSubclasses [
 	"Notify all the subclasses of ExternalObject that we are starting up on a new platform."
 	self withAllSubclassesDo:[:cls| cls install]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalObject class >> null [
 
 	^ self fromHandle: (ExternalAddress null)
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ExternalObject class >> startUp: resuming [
 	"The system is coming up. If it is on a new platform, clear out the existing handles."
 	ExternalAddress startUp: resuming. "Make sure handles are invalid"
 	resuming ifTrue:[self installSubclasses]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalObject >> getHandle [
 	"Private. Return the handle used to represent the external entitiy."
 	^handle
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalObject >> isExternalAddress [
 	"Return true if the receiver describes the address of an object in the outside world"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalObject >> isNull [
 	"Answer true if the receiver currently is a NULL pointer"
 	^handle == nil or:[handle isNull]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalObject >> setHandle: anObject [
 	"Private. Set the handle used to represent the external entity."
 	handle := anObject

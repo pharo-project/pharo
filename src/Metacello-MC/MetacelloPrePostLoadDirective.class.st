@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloPrePostLoadDirective,
-	#superclass : #MetacelloDirective,
-	#category : #'Metacello-MC-Directives'
+	#name : 'MetacelloPrePostLoadDirective',
+	#superclass : 'MetacelloDirective',
+	#category : 'Metacello-MC-Directives',
+	#package : 'Metacello-MC',
+	#tag : 'Directives'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPrePostLoadDirective >> evaluateSupplyingAnswers: loadBlock [
 
 	| answers |
@@ -13,13 +15,13 @@ MetacelloPrePostLoadDirective >> evaluateSupplyingAnswers: loadBlock [
 		ifFalse: [ loadBlock value]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloPrePostLoadDirective >> prepostLoadDirectivesDo: aBlock [
 
 	aBlock value: self
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloPrePostLoadDirective >> prepostLoadDo: aBlock [
 
 	aBlock value: self

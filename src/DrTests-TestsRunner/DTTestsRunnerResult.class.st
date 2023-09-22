@@ -7,15 +7,17 @@ I build a tree with the testsResult listed in groups:
 I am used in DrTestsUI to show the results in a orderly manner.
 "
 Class {
-	#name : #DTTestsRunnerResult,
-	#superclass : #DTPluginResult,
+	#name : 'DTTestsRunnerResult',
+	#superclass : 'DTPluginResult',
 	#instVars : [
 		'testsResult'
 	],
-	#category : #'DrTests-TestsRunner-Base'
+	#category : 'DrTests-TestsRunner-Base',
+	#package : 'DrTests-TestsRunner',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> backgroundColorStyle [
 
 	testsResult errors ifNotEmpty: [ ^ 'testError' ].
@@ -23,12 +25,12 @@ DTTestsRunnerResult >> backgroundColorStyle [
 	^ 'testPass'
 ]
 
-{ #category : #'tree building' }
+{ #category : 'tree building' }
 DTTestsRunnerResult >> buildLeavesFrom: aCollection type: testResultType [
 	^ aCollection collect: [ :t | DTTestLeafNode content: t type: testResultType ]
 ]
 
-{ #category : #'tree building' }
+{ #category : 'tree building' }
 DTTestsRunnerResult >> buildNodeGroupedByTypeAndClass: anOrderedColletion type: testResultType [
 	^ DTTreeNode new
 			name: testResultType pluralName;
@@ -41,7 +43,7 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeAndClass: anOrderedColletion type: 
 			yourself
 ]
 
-{ #category : #'tree building' }
+{ #category : 'tree building' }
 DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletion type: testResultType [
 	^ DTTreeNode new
 			name: testResultType pluralName;
@@ -56,7 +58,7 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> buildTreeForUI [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
@@ -88,7 +90,7 @@ DTTestsRunnerResult >> buildTreeForUI [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> buildTreeForUIByClasses [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result and classes' order: 2>
 
@@ -106,7 +108,7 @@ DTTestsRunnerResult >> buildTreeForUIByClasses [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> buildTreeForUIByClassesAndProtocol [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result, classes, and protocol' order: 3>
 
@@ -124,35 +126,35 @@ DTTestsRunnerResult >> buildTreeForUIByClassesAndProtocol [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> errors [
 
 	^ self testResults errors asOrderedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> expectedFailures [
 	^ self testResults expectedDefects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> failures [
 	^ self testResults failures asOrderedCollection
 	   select: [ :t | t shouldPass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> passed [
 	^ self testResults passed asOrderedCollection
 		select: [ :t | t shouldPass]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> skipped [
 	^ self testResults skipped
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
@@ -172,24 +174,24 @@ DTTestsRunnerResult >> summarizeInfo [
 				<< ' skipped' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> testResults [
 	^ testsResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> testResults: anObject [
 	testsResult := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> textColor [
 	testsResult errors ifNotEmpty: [ ^ DTErrorResultType textColor ].
 	testsResult failures ifNotEmpty: [ ^ DTFailResultType textColor  ].
 	^ DTPassResultType textColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsRunnerResult >> unexpectedPassed [
 	^ self testResults unexpectedPasses asOrderedCollection
 ]

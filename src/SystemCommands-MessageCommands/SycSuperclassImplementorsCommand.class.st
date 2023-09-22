@@ -1,24 +1,25 @@
 Class {
-	#name : #SycSuperclassImplementorsCommand,
-	#superclass : #SycChangeMessageSignatureCommand,
-	#category : #'SystemCommands-MessageCommands'
+	#name : 'SycSuperclassImplementorsCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycSuperclassImplementorsCommand >> applyResultInContext: a [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycSuperclassImplementorsCommand >> defaultMenuIconName [
 	^#edit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycSuperclassImplementorsCommand >> defaultMenuItemName [
 	^'Hierarchical implementors'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycSuperclassImplementorsCommand >> execute [
 
 	| sup |
@@ -28,7 +29,7 @@ SycSuperclassImplementorsCommand >> execute [
 	Smalltalk tools messageList browse: { sup >> originalMessage selector }
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycSuperclassImplementorsCommand >> isComplexRefactoring [
 
 	^ false

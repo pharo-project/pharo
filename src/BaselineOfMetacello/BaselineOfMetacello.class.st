@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfMetacello,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfMetacello
+	#name : 'BaselineOfMetacello',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfMetacello',
+	#package : 'BaselineOfMetacello'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfMetacello >> baseline: spec [
 	<baseline>
 

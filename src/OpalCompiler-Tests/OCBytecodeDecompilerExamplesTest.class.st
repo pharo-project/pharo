@@ -1,10 +1,12 @@
 Class {
-	#name : #OCBytecodeDecompilerExamplesTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Bytecode'
+	#name : 'OCBytecodeDecompilerExamplesTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Bytecode',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Bytecode'
 }
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 
 	| ir method newMethod instance |
@@ -20,7 +22,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 		equals: instance exampleBlockArgument
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 
 	| ir method newMethod instance |
@@ -36,7 +38,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 		equals: instance exampleBlockExternal
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 
 	| ir method newMethod instance |
@@ -52,7 +54,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 		equals: instance exampleBlockExternal2
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 
 	| ir method newMethod instance |
@@ -68,7 +70,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 		equals: instance exampleBlockExternalArg
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 
 	| ir method newMethod instance |
@@ -84,7 +86,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 		equals: instance exampleBlockExternalNested
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 
 	| ir method newMethod instance |
@@ -100,7 +102,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 		equals: instance exampleBlockInternal
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockNested [
 
 	| ir method newMethod instance |
@@ -116,7 +118,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockNested [
 		equals: instance exampleBlockNested
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
 
 	| ir method newMethod instance |
@@ -132,7 +134,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
 		equals: instance exampleEmptyMethod
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfFalse [
 
 	| ir method newMethod instance |
@@ -148,7 +150,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalse [
 		equals: instance exampleIfFalse
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
 
 	| ir method newMethod instance |
@@ -164,7 +166,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
 		equals: instance exampleIfFalseIfTrue
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
 
 	| ir method newMethod instance |
@@ -180,7 +182,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
 		equals: instance exampleIfNotNilReturnNil
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
 
 	| ir method newMethod instance |
@@ -196,7 +198,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
 		equals: instance exampleIfNotNilArg
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfTrue [
 
 	| ir method newMethod instance |
@@ -211,7 +213,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrue [
 		equals: instance exampleIfTrue
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
 
 	| ir method newMethod instance |
@@ -227,7 +229,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
 		equals: instance exampleIfTrueIfFalse
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
 
 	| ir method newMethod instance |
@@ -243,7 +245,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
 		equals: instance exampleMethodTempInNestedBlock
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
 
 	| ir method newMethod instance |
@@ -259,7 +261,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
 		equals: instance exampleMethodWithOptimizedBlocksA
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
 
 	| ir method newMethod instance |
@@ -275,7 +277,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
 		equals: instance exampleNestedBlockScoping
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleNewArray [
 
 	| ir method newMethod instance |
@@ -291,7 +293,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNewArray [
 		equals: instance exampleNewArray
 ]
 
-{ #category : #'tests - misc' }
+{ #category : 'tests - misc' }
 OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
 
 	| ir method newMethod instance |
@@ -307,7 +309,7 @@ OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
 		equals: instance examplePushArray
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 
 	| ir method newMethod instance |
@@ -323,7 +325,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 		equals: instance exampleReturn42
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
 
 	| ir method newMethod instance |
@@ -339,7 +341,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
 		equals: instance exampleReturn1plus2
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleSelf [
 
 	| ir method newMethod instance |
@@ -354,7 +356,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSelf [
 		equals: instance exampleSelf
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
 
 	| ir method newMethod instance |
@@ -371,7 +373,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
 		equals: instance exampleSimpleBlock value
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
 
 	| ir method newMethod instance |
@@ -387,7 +389,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
 		equals: instance exampleSimpleBlockArgument1
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
 
 	| ir method newMethod instance |
@@ -403,7 +405,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
 		equals: instance exampleSimpleBlockArgument2
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
 
 	| ir method newMethod instance |
@@ -419,7 +421,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
 		equals: instance exampleSimpleBlockArgument3
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
 
 	| ir method newMethod instance |
@@ -435,7 +437,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
 		equals: instance exampleSimpleBlockArgument4
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
 
 	| ir method newMethod instance |
@@ -451,7 +453,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
 		equals: instance exampleSimpleBlockArgument5
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
 
 	| ir method newMethod instance |
@@ -467,7 +469,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
 		equals: instance exampleSimpleBlockEmpty
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
 
 	| ir method newMethod instance |
@@ -483,7 +485,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
 		equals: instance exampleSimpleBlockLocal
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
 
 	| ir method newMethod instance |
@@ -499,7 +501,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
 		equals: instance exampleSimpleBlockLocalIf
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
 
 	| ir method newMethod instance |
@@ -515,7 +517,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
 		equals: instance exampleSimpleBlockNested
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
 
 	| ir method newMethod instance |
@@ -531,7 +533,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
 		equals: instance exampleSimpleBlockLocalWhile
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
 
 	| ir method newMethod instance |
@@ -547,7 +549,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
 		equals: instance exampleSimpleBlockNested
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
 
 	| ir method newMethod instance |
@@ -563,7 +565,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
 		equals: instance exampleSimpleBlockReturn
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
 
 	| ir method newMethod instance |
@@ -579,7 +581,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
 		equals: instance exampleSimpleBlockiVar
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleSuper [
 
 	| ir method newMethod instance |
@@ -594,7 +596,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSuper [
 		equals: instance exampleSuper
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 
 	| ir method newMethod instance |
@@ -610,7 +612,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 	self assert: instance result isContext
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
 
 	| ir method newMethod instance |
@@ -626,7 +628,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
 		equals: instance exampleToDoArgument
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
 
 	| ir method newMethod instance |
@@ -642,7 +644,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
 		equals: instance exampleToDoArgumentNotInlined
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
 
 	| ir method newMethod instance |
@@ -658,7 +660,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
 		equals: instance exampleToDoInsideTemp
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
 
 	| ir method newMethod instance |
@@ -674,7 +676,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
 		equals: instance exampleToDoInsideTempNotInlined
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
 
 	| ir method newMethod instance |
@@ -690,7 +692,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
 		equals: instance exampleToDoOutsideTemp
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
 
 	| ir method newMethod instance |
@@ -706,7 +708,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
 		equals: instance exampleToDoOutsideTempNotInlined
 ]
 
-{ #category : #'tests - misc' }
+{ #category : 'tests - misc' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 
 	| ir method newMethod instance |
@@ -722,7 +724,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 		equals: instance exampleToDoValue
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined [
 
 	| ir method newMethod |
@@ -738,7 +740,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined 
 		equals: OCOpalExamples new exampleWhileModificationAfterNotInlined
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 
 	| ir method newMethod instance |
@@ -754,7 +756,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 		equals: instance exampleWhileModificationBefore
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined [
 
 	| ir method newMethod |
@@ -771,7 +773,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined
 		equals: OCOpalExamples new exampleWhileModificationBeforeNotInlined
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
 
 	| ir method newMethod |
@@ -787,7 +789,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
 		equals: OCOpalExamples new exampleWhileWithTemp
 ]
 
-{ #category : #'tests - blocks-optimized' }
+{ #category : 'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
 
 	| ir method newMethod |
@@ -803,7 +805,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
 		equals: OCOpalExamples new exampleWhileWithTempNotInlined
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleiVar [
 
 	| ir method newMethod instance |

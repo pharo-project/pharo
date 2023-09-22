@@ -10,15 +10,17 @@ transformation := (RBAddClassCommentTransformation
 (ChangesBrowser changes: transformation model changes changes) open
 "
 Class {
-	#name : #RBAddClassCommentTransformation,
-	#superclass : #RBClassTransformation,
+	#name : 'RBAddClassCommentTransformation',
+	#superclass : 'RBClassTransformation',
 	#instVars : [
 		'comment'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddClassCommentTransformation class >> comment: aString in: aClass [
 
 	^ self new
@@ -27,7 +29,7 @@ RBAddClassCommentTransformation class >> comment: aString in: aClass [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddClassCommentTransformation class >> model: aRBModel comment: aString in: aClass [
 
 	^ self new
@@ -37,20 +39,20 @@ RBAddClassCommentTransformation class >> model: aRBModel comment: aString in: aC
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddClassCommentTransformation >> comment: aString in: aClassName [
 
 	self className: aClassName.
 	comment := aString
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddClassCommentTransformation >> privateTransform [
 
 	self definingClass comment: comment
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddClassCommentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

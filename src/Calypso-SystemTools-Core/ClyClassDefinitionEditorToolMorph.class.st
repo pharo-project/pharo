@@ -5,12 +5,14 @@ I allow to modify class properties (package, tags and variables) using text edit
 And in addition I allow to create new classes by typing new class name
 "
 Class {
-	#name : #ClyClassDefinitionEditorToolMorph,
-	#superclass : #ClyClassEditorToolMorph,
-	#category : #'Calypso-SystemTools-Core-Editors-Classes'
+	#name : 'ClyClassDefinitionEditorToolMorph',
+	#superclass : 'ClyClassEditorToolMorph',
+	#category : 'Calypso-SystemTools-Core-Editors-Classes',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Classes'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
 
 	| newClass |
@@ -26,14 +28,14 @@ ClyClassDefinitionEditorToolMorph >> applyChanges [
 	^ true
 ]
 
-{ #category : #'to sort' }
+{ #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> createTextContext [
 	^self selectedSourceNode
 		ifNil: [ super createTextContext ]
 		ifNotNil: [ :astNode | ClyClassDefinitionContext for: self selectedNode: astNode]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 	| title |
 	super decorateContainerTab.
@@ -45,31 +47,31 @@ ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 	containerTab label: title
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassDefinitionEditorToolMorph >> defaultIconName [
 	^#class
 ]
 
-{ #category : #'to sort' }
+{ #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> editingText [
 	"Answer a <String> with the receivers class definition"
 
 	^ editingClass definitionString
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassDefinitionEditorToolMorph >> fillStatusBar [
 	super fillStatusBar.
 	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 
 	^ aCommand canBeExecutedInClassEditor: self
 ]
 
-{ #category : #'to sort' }
+{ #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
 
 	self editingClass needsSlotClassDefinition
@@ -77,12 +79,12 @@ ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
 	^ ClassDefinitionPrinter new classDefinitionParserClass parse: self editingText
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyClassDefinitionEditorToolMorph >> selectSourceNode: aCDNode [
 	textMorph setSelection: aCDNode sourceInterval
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyClassDefinitionEditorToolMorph >> selectVariableNamed: aString [
 	| classDefinition varNode |
 	classDefinition := self parseClassDefinition.
@@ -92,7 +94,7 @@ ClyClassDefinitionEditorToolMorph >> selectVariableNamed: aString [
 	self selectSourceNode: varNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassDefinitionEditorToolMorph >> selectedSourceNode [
 	| selectedInterval definitionNode |
 	selectedInterval := self selectedTextInterval.
@@ -102,7 +104,7 @@ ClyClassDefinitionEditorToolMorph >> selectedSourceNode [
 		ifNil: [ definitionNode ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassDefinitionEditorToolMorph >> setUpModelFromContext [
 
 	super setUpModelFromContext.

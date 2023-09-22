@@ -13,12 +13,14 @@ Preconditions:
 Checks whether there are any references to this method
 "
 Class {
-	#name : #RBRemoveMethodTransformation,
-	#superclass : #RBMethodTransformation,
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#name : 'RBRemoveMethodTransformation',
+	#superclass : 'RBMethodTransformation',
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveMethodTransformation class >> model: aRBModel selector: aSelector from: aClassName [
 
 	^ self new
@@ -28,7 +30,7 @@ RBRemoveMethodTransformation class >> model: aRBModel selector: aSelector from: 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveMethodTransformation class >> model: aRBModel selectors: aCollection from: aClassName [
 
 	^ RBCompositeTransformation new
@@ -38,7 +40,7 @@ RBRemoveMethodTransformation class >> model: aRBModel selectors: aCollection fro
 				  from: aClassName] )
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveMethodTransformation class >> selector: aSelector from: aClassName [
 
 	^ self new
@@ -47,31 +49,31 @@ RBRemoveMethodTransformation class >> selector: aSelector from: aClassName [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveMethodTransformation class >> selectors: aCollection from: aClassName [
 
 	^ self model: RBTransformation new model selectors: aCollection from: aClassName
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveMethodTransformation >> applicabilityPreconditions [
 
 	^ RBCondition definesSelector: selector in: self definingClass
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveMethodTransformation >> privateTransform [
 
 	self definingClass removeMethod: selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveMethodTransformation >> selector [
 
 	^ selector 
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveMethodTransformation >> selector: aSelector from: aClassName [
 
 	self className: aClassName.

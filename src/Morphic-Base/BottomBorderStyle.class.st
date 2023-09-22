@@ -26,31 +26,33 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #BottomBorderStyle,
-	#superclass : #SimpleBorderStyle,
+	#name : 'BottomBorderStyle',
+	#superclass : 'SimpleBorderStyle',
 	#instVars : [
 		'trimSize'
 	],
-	#category : #'Morphic-Base-Borders'
+	#category : 'Morphic-Base-Borders',
+	#package : 'Morphic-Base',
+	#tag : 'Borders'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 BottomBorderStyle class >> initialize [
 	"Deprecated in Pharo 11"
 	self deprecatedAliases: { #BottomBorder }
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BottomBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	self drawLineFrom: aRectangle bottomLeft + (self trimSize @ 0) to: aRectangle bottomRight - (self trimSize @ 0) on: aCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BottomBorderStyle >> trimSize [
 	^ trimSize ifNil: [ trimSize := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BottomBorderStyle >> trimSize: anObject [
 	trimSize := anObject
 ]

@@ -4,8 +4,8 @@ I am a specialized analysis that limits the size of the serialized graph to a co
 See the comments of FLDepthLimitingAnalysis and FLObjectLimitingAnalysis for more information.
 "
 Class {
-	#name : #FLDepthAndObjectLimitingAnalysis,
-	#superclass : #FLAnalysis,
+	#name : 'FLDepthAndObjectLimitingAnalysis',
+	#superclass : 'FLAnalysis',
 	#instVars : [
 		'depthLimit',
 		'depth',
@@ -13,21 +13,23 @@ Class {
 		'objectLimit',
 		'previousStackSize'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLDepthAndObjectLimitingAnalysis class >> isResponsible [
 	^ self configuration hasDepthLimit and: [
 		self configuration hasObjectsLimit ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLDepthAndObjectLimitingAnalysis class >> priority [
 	^ 5
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLDepthAndObjectLimitingAnalysis >> initialize [
 	super initialize.
 	
@@ -38,7 +40,7 @@ FLDepthAndObjectLimitingAnalysis >> initialize [
 	depthLimit := self configuration depthLimit
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLDepthAndObjectLimitingAnalysis >> mapAndTrace: anObject [
 	anObject ifNil: [
 		super mapAndTrace: anObject.

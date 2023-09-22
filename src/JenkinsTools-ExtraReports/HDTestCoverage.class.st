@@ -18,67 +18,68 @@ wrappers := wrappers reject: [:each | each hasRun].
 
 "
 Class {
-	#name : #HDTestCoverage,
-	#superclass : #ProtoObject,
+	#name : 'HDTestCoverage',
+	#superclass : 'ProtoObject',
 	#instVars : [
 		'hasRun',
 		'reference',
 		'method'
 	],
-	#category : #'JenkinsTools-ExtraReports'
+	#category : 'JenkinsTools-ExtraReports',
+	#package : 'JenkinsTools-ExtraReports'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HDTestCoverage class >> on: aMethodReference [
 	^ self new initializeOn: aMethodReference
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestCoverage >> doesNotUnderstand: aMessage [
 	^ method perform: aMessage selector withArguments: aMessage arguments
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HDTestCoverage >> hasRun [
 	^ hasRun
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HDTestCoverage >> initializeOn: aMethodReference [
 	hasRun := false.
 	reference := aMethodReference.
 	method := reference compiledMethod
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 HDTestCoverage >> install [
 	reference methodClass methodDict
 		at: reference selector
 		put: self.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestCoverage >> mark [
 	hasRun := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestCoverage >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestCoverage >> reference [
 	^ reference
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 HDTestCoverage >> run: aSelector with: anArray in: aReceiver [
 	self mark; uninstall.
 	^ aReceiver withArgs: anArray executeMethod: method
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 HDTestCoverage >> uninstall [
 	reference methodClass methodDict
 		at: reference selector

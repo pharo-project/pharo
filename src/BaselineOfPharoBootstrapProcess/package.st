@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfPharoBootstrapProcess }
+Package { #name : 'BaselineOfPharoBootstrapProcess' }

@@ -4,38 +4,40 @@ I am a mock used to simlify testing.
 A mock is an object that simulates the behavior of a real object or component in a controlled manner. It is used in unit testing to isolate the code being tested from its dependencies, allowing the code to be tested in isolation.
 "
 Class {
-	#name : #ForEventTestMock,
-	#superclass : #Object,
+	#name : 'ForEventTestMock',
+	#superclass : 'Object',
 	#instVars : [
 		'stringMorph',
 		'counter'
 	],
-	#category : #'Morphic-Tests-Event'
+	#category : 'Morphic-Tests-Event',
+	#package : 'Morphic-Tests',
+	#tag : 'Event'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ForEventTestMock class >> initialize [
 
 	self deprecatedAliases: { #MockObjectForEventTests }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForEventTestMock >> counter [
 	^ counter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForEventTestMock >> counter: anObject [
 	counter := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ForEventTestMock >> initialize [
 	super initialize.
 	counter := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForEventTestMock >> mockStringMorph [
 	^ StringMorph new
 		contents: 'Test';
@@ -43,12 +45,12 @@ ForEventTestMock >> mockStringMorph [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForEventTestMock >> mouseEnter: a from: b [
 	counter := counter + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForEventTestMock >> stringMorph [
 	^ stringMorph ifNil: [ stringMorph := self mockStringMorph ]
 ]

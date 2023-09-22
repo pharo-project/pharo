@@ -1,10 +1,12 @@
 Class {
-	#name : #AthensCairoCanvasTest,
-	#superclass : #TestCase,
-	#category : #'Athens-Cairo-Tests-Library'
+	#name : 'AthensCairoCanvasTest',
+	#superclass : 'TestCase',
+	#category : 'Athens-Cairo-Tests-Library',
+	#package : 'Athens-Cairo-Tests',
+	#tag : 'Library'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensCairoCanvasTest >> testTextExtentsAnswerValidData [
 	"This works almost as a smoke test since the objective is validate image does not
 	 crash, but it will try to valid it also answers something reasonable"

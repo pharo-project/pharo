@@ -1,10 +1,11 @@
 Class {
-	#name : #EFBlockExpressionOnlyTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFBlockExpressionOnlyTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 EFBlockExpressionOnlyTest >> basicConfiguration [
 
 	^ self contextClass basicNew
@@ -28,7 +29,7 @@ EFBlockExpressionOnlyTest >> basicConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 EFBlockExpressionOnlyTest >> dontFormatCommentWithStatementConfiguration [
 
 	^ self contextClass basicNew
@@ -52,7 +53,7 @@ EFBlockExpressionOnlyTest >> dontFormatCommentWithStatementConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFBlockExpressionOnlyTest >> testDontFormatCommentWithStatement2 [
 	| source |
 	configurationSelector := #dontFormatCommentWithStatementConfiguration.
@@ -62,7 +63,7 @@ EFBlockExpressionOnlyTest >> testDontFormatCommentWithStatement2 [
 2 factorial ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFBlockExpressionOnlyTest >> testNewLineAfterComment [
 
 	| source |
@@ -73,7 +74,7 @@ EFBlockExpressionOnlyTest >> testNewLineAfterComment [
 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFBlockExpressionOnlyTest >> testSpaceAfterComment [
 
 	| source |
@@ -82,7 +83,7 @@ EFBlockExpressionOnlyTest >> testSpaceAfterComment [
 	self assert: source equals: '[ "aComment" 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFBlockExpressionOnlyTest >> testformatComment [
 
 	| source |

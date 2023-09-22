@@ -13,33 +13,35 @@ self ffiCall: #( void fn () ) module: LibC.
 (but of course recomended way is to use a module, in case you need a strategy to find libraries in different platforms. 
 "
 Class {
-	#name : #FFIUnknownLibrary,
-	#superclass : #FFILibrary,
+	#name : 'FFIUnknownLibrary',
+	#superclass : 'FFILibrary',
 	#instVars : [
 		'libraryName'
 	],
-	#category : #'UnifiedFFI-Libraries'
+	#category : 'UnifiedFFI-Libraries',
+	#package : 'UnifiedFFI',
+	#tag : 'Libraries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIUnknownLibrary class >> name: aString [
 	^ self basicNew
 		initializeName: aString;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIUnknownLibrary class >> new [
 	self error: 'Use #name:'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIUnknownLibrary >> initializeName: aString [
 	libraryName := aString.
 	self initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIUnknownLibrary >> libraryName [
 	^ libraryName
 ]

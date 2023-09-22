@@ -4,16 +4,17 @@ The error shows the symbol name and the module.
 If the module is nil, we assume is the main module of the application
 "
 Class {
-	#name : #SymbolNotFoundError,
-	#superclass : #Error,
+	#name : 'SymbolNotFoundError',
+	#superclass : 'Error',
 	#instVars : [
 		'symbolName',
 		'moduleName'
 	],
-	#category : #'FFI-Kernel'
+	#category : 'FFI-Kernel',
+	#package : 'FFI-Kernel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SymbolNotFoundError class >> symbolName: aSymbolName module: aModuleName [ 
 	
 	^ self new
@@ -22,18 +23,18 @@ SymbolNotFoundError class >> symbolName: aSymbolName module: aModuleName [
 		signal.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolNotFoundError >> messageText [
 
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolNotFoundError >> moduleName: anUndefinedObject [ 
 	moduleName := anUndefinedObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolNotFoundError >> standardMessageText [
 
 	^ String streamContents: [ :s |
@@ -48,7 +49,7 @@ SymbolNotFoundError >> standardMessageText [
 		]].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolNotFoundError >> symbolName: aString [ 
 	symbolName := aString
 ]

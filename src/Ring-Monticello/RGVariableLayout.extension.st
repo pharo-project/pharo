@@ -1,6 +1,6 @@
-Extension { #name : #RGVariableLayout }
+Extension { #name : 'RGVariableLayout' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGVariableLayout >> mcType [
 
 	^ #variable

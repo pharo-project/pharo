@@ -9,15 +9,16 @@ Internal Representation and Key Implementation Points.
 	repository:		<IceRepository>
 "
 Class {
-	#name : #ClyIcebergShowMethodVersionCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClyIcebergShowMethodVersionCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'method'
 	],
-	#category : #'Calypso-SystemPlugins-Monticello-Browser'
+	#category : 'Calypso-SystemPlugins-Monticello-Browser',
+	#package : 'Calypso-SystemPlugins-Monticello-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyIcebergShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ aToolContext isMethodSelected and: [
@@ -25,31 +26,31 @@ ClyIcebergShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext
 			   aToolContext lastSelectedMethod package) notNil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyIcebergShowMethodVersionCommand class >> methodBrowserTabActivation [
 	<classAnnotation>
 
 	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyIcebergShowMethodVersionCommand class >> methodMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 1001 for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyIcebergShowMethodVersionCommand >> defaultMenuIconName [
 	^#komitterSmalltalkhubRemote
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyIcebergShowMethodVersionCommand >> defaultMenuItemName [
 	^'History'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyIcebergShowMethodVersionCommand >> execute [
 	| browserClass packageName repositoriesWithPackage repository |
 
@@ -76,7 +77,7 @@ ClyIcebergShowMethodVersionCommand >> execute [
 	(browserClass onRepository: repository method: method) open
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyIcebergShowMethodVersionCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.

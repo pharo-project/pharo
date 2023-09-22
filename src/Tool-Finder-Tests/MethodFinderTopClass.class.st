@@ -2,46 +2,48 @@
 Test sample for MethodFinderTest
 "
 Class {
-	#name : #MethodFinderTopClass,
-	#superclass : #Object,
-	#category : #'Tool-Finder-Tests-Support'
+	#name : 'MethodFinderTopClass',
+	#superclass : 'Object',
+	#category : 'Tool-Finder-Tests-Support',
+	#package : 'Tool-Finder-Tests',
+	#tag : 'Support'
 }
 
-{ #category : #'method finder' }
+{ #category : 'method finder' }
 MethodFinderTopClass class >> approvedSelectorsForMethodFinder [
 
 	^#(topApprovedButBottomDisapprovedMethod onlyTopDefinedApprovedMethod)
 ]
 
-{ #category : #'method finder' }
+{ #category : 'method finder' }
 MethodFinderTopClass class >> forbiddenSelectorsForMethodFinder [
 	^ #(topDisapprovedButBottomApprovedMethod)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderTopClass >> onlyTopDefinedApprovedMethod [
 	"comment stating purpose of message"
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderTopClass >> onlyTopDefinedDisaprovedMethod [
 
 	^self
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodFinderTopClass >> test [
 	^ self onlyTopDefinedDisaprovedMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderTopClass >> topApprovedButBottomDisapprovedMethod [
 
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodFinderTopClass >> topDisapprovedButBottomApprovedMethod [
 
 	^self

@@ -8,42 +8,44 @@ This allows other combinators to act upon me.
 - I define #forHierarchy that decorates myself with a HierarchyComplishonFetcher that makes a search for the entire hierarchy.
 "
 Class {
-	#name : #CoClassBasedFetcher,
-	#superclass : #CoFetcher,
+	#name : 'CoClassBasedFetcher',
+	#superclass : 'CoFetcher',
 	#instVars : [
 		'completionClass',
 		'astNode'
 	],
-	#category : #'HeuristicCompletion-Model-Fetchers'
+	#category : 'HeuristicCompletion-Model-Fetchers',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Fetchers'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoClassBasedFetcher class >> isAbstract [
 
 	^ self == CoClassBasedFetcher
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoClassBasedFetcher >> astNode [
 	^ astNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoClassBasedFetcher >> astNode: anObject [
 	astNode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoClassBasedFetcher >> completionClass [
 	^ completionClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoClassBasedFetcher >> completionClass: anObject [
 	completionClass := anObject
 ]
 
-{ #category : #'hierarchy-fetching' }
+{ #category : 'hierarchy-fetching' }
 CoClassBasedFetcher >> forHierarchy [
 
 	^ CoHierarchyFetcher new
@@ -51,7 +53,7 @@ CoClassBasedFetcher >> forHierarchy [
 		yourself
 ]
 
-{ #category : #'hierarchy-fetching' }
+{ #category : 'hierarchy-fetching' }
 CoClassBasedFetcher >> onSuperclass [
 
 	completionClass superclass

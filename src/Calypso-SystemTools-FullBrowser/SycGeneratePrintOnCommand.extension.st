@@ -1,6 +1,6 @@
-Extension { #name : #SycGeneratePrintOnCommand }
+Extension { #name : 'SycGeneratePrintOnCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycGeneratePrintOnCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

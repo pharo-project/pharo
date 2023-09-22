@@ -2,12 +2,13 @@
 I am an abstract callback using TFFI. Used by tests
 "
 Class {
-	#name : #TFUFFIAbstractCallback,
-	#superclass : #FFICallback,
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#name : 'TFUFFIAbstractCallback',
+	#superclass : 'FFICallback',
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFUFFIAbstractCallback >> calloutAPIClass [
 
 	^ TFCalloutAPI

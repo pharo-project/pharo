@@ -2,12 +2,14 @@
 A ClyNotRemoveAndShowSubclassesClassStrategyTest is a test class for testing the behavior of ClyNotRemoveAndShowSubclassesClassStrategy
 "
 Class {
-	#name : #ClyNotRemoveAndShowSubclassesClassStrategyTest,
-	#superclass : #TestCase,
-	#category : #'Calypso-SystemTools-QueryBrowser-Tests-Commands-Classes'
+	#name : 'ClyNotRemoveAndShowSubclassesClassStrategyTest',
+	#superclass : 'TestCase',
+	#category : 'Calypso-SystemTools-QueryBrowser-Tests-Commands-Classes',
+	#package : 'Calypso-SystemTools-QueryBrowser-Tests',
+	#tag : 'Commands-Classes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotRemoveAndShowSubclassesClassStrategyTest >> testExecutingCommand [
 	| browser command strategy |
 	browser := ClyBrowserMock new.

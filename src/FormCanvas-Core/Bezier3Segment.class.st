@@ -5,16 +5,18 @@ Instance variables:
 	via1, via2	<Point>	The additional control points (OFF the curve)
 "
 Class {
-	#name : #Bezier3Segment,
-	#superclass : #LineSegment,
+	#name : 'Bezier3Segment',
+	#superclass : 'LineSegment',
 	#instVars : [
 		'via1',
 		'via2'
 	],
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Bezier3Segment class >> convertBezier3ToBezier2: vertices [
 	| pa pts index c |
 	pts := OrderedCollection new.
@@ -32,18 +34,18 @@ Bezier3Segment class >> convertBezier3ToBezier2: vertices [
 	^ pa
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Bezier3Segment class >> from: p1 to: p2 [
 	^ self new from: p1 via: (p1 interpolateTo: p2 at: 0.3333) and: (p1
 interpolateTo: p2 at: 0.66667) to: p2
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Bezier3Segment class >> from: p1 via: p2 and: p3 to: p4 [
 	^ self new from: p1 via: p2 and: p3 to: p4
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Bezier3Segment class >> makeEllipseSegments: aRectangle [
 	"Answer a set of bezier segments approximating an ellipsoid fitting the given rectangle.
 	This method creates four bezier segments (one for each quadrant) approximating the oval."
@@ -71,7 +73,7 @@ Bezier3Segment class >> makeEllipseSegments: aRectangle [
 	^self makeEllipseSegments: aRectangle count: 4
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Bezier3Segment class >> makeEllipseSegments: aRectangle count: segmentCount [
 	"Answer a set of bezier segments approximating an ellipsoid fitting the given rectangle.
 	This method creates segmentCount bezier segments (one for each quadrant) approximating the oval."
@@ -86,7 +88,7 @@ Bezier3Segment class >> makeEllipseSegments: aRectangle count: segmentCount [
 	]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Bezier3Segment class >> makePieSegment: aRectangle from: angle1 to: angle2 [
 	"Create a single pie segment for the oval inscribed in aRectangle between angle1 and angle2. If angle1 is less than angle2 this method creates a CW pie segment, otherwise it creates a CCW pie segment."
 	| seg center scale |
@@ -101,7 +103,7 @@ Bezier3Segment class >> makePieSegment: aRectangle from: angle1 to: angle2 [
 	^self controlPoints: (seg controlPoints collect:[:pt| pt * scale + center])
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Bezier3Segment class >> makePieSegments: aRectangle from: angle1 to: angle2 [
 	"Create a series of cubic bezier segments for the oval inscribed in aRectangle between angle1 and angle2. The segments are oriented clockwise, to get counter-clockwise segments simply switch angle1 and angle2."
 	angle2 < angle1 ifTrue:[
@@ -120,7 +122,7 @@ Bezier3Segment class >> makePieSegments: aRectangle from: angle1 to: angle2 [
 	^self makePieSegment: aRectangle from: angle1 to: angle2
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Bezier3Segment class >> makeUnitPieSegmentFrom: angle1 to: angle2 [
 	"Create a clockwise unit pie segment from angle1 to angle2, that is a pie segment for a circle centered at zero with radius one. Note: This method can be used to create at most a quarter circle."
 	| pt1 pt2 rad1 rad2 |
@@ -131,7 +133,7 @@ Bezier3Segment class >> makeUnitPieSegmentFrom: angle1 to: angle2 [
 	^self makeUnitPieSegmentWith: pt1 and: pt2
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Bezier3Segment class >> makeUnitPieSegmentWith: point1 and: point2 [
 	"Create a clockwise unit pie segment from point1 to point2, that is a pie segment for a circle centered at zero with radius one."
 	| pt1 pt2 dir1 dir2 mid length scale cp1 cp2 pt3 magic |
@@ -168,7 +170,7 @@ Bezier3Segment class >> makeUnitPieSegmentWith: point1 and: point2 [
 		to: pt2
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bezier3Segment >> asBezier2Points: error [
 	"Demote a cubic bezier to a set of approximating quadratic beziers.
 	Should convert to forward differencing someday"
@@ -189,26 +191,26 @@ Bezier3Segment >> asBezier2Points: error [
 	^ pts
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bezier3Segment >> asBezier2Segments [
 	"Demote a cubic bezier to a set of approximating quadratic beziers."
 	^self asBezier2Segments: 0.5
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bezier3Segment >> asBezierShape [
 	"Demote a cubic bezier to a set of approximating quadratic beziers."
 	^self asBezierShape: 0.5
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bezier3Segment >> asBezierShape: error [
 	"Demote a cubic bezier to a set of approximating quadratic beziers.
 	Should convert to forward differencing someday"
 	^(self asBezier2Points: error) asPointArray
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bezier3Segment >> asPointArray [
 	| p |
 	p := PointArray new: 4.
@@ -219,7 +221,7 @@ Bezier3Segment >> asPointArray [
 	^ p
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bezier3Segment >> asTangentSegment [
 	^Bezier2Segment
 		from: via1-start
@@ -227,14 +229,14 @@ Bezier3Segment >> asTangentSegment [
 		to: end-via2
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Bezier3Segment >> bezier2SegmentCount [
 	"Compute the number of quadratic bezier segments needed to approximate
 	this cubic with less than a 1-pixel error"
 	^ self bezier2SegmentCount: 1.0
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bezier3Segment >> bezier2SegmentCount: pixelError [
 	"Compute the number of quadratic bezier segments needed to approximate
 	this cubic with no more than a specified error"
@@ -244,7 +246,7 @@ Bezier3Segment >> bezier2SegmentCount: pixelError [
 	^ (((a r / (20.0 * pixelError)) raisedTo: 0.333333) ceiling) max: 1
 ]
 
-{ #category : #'bezier clipping' }
+{ #category : 'bezier clipping' }
 Bezier3Segment >> bezierClipHeight: dir [
 	"Check if the argument overlaps the receiver somewhere
 	along the line from start to end. Optimized for speed."
@@ -269,27 +271,27 @@ Bezier3Segment >> bezierClipHeight: dir [
 	^uMin@uMax
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bezier3Segment >> bounds [
 	^ ((super bounds encompassing: via1) encompassing: via2)
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 Bezier3Segment >> controlPoints [
 	^{start. via1. via2. end}
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 Bezier3Segment >> controlPointsDo: aBlock [
 	aBlock value: start; value: via1; value: via2; value: end
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bezier3Segment >> degree [
 	^3
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Bezier3Segment >> from: aPoint1 via: aPoint2 and: aPoint3 to: aPoint4 [
 	start := aPoint1.
 	via1 := aPoint2.
@@ -297,7 +299,7 @@ Bezier3Segment >> from: aPoint1 via: aPoint2 and: aPoint3 to: aPoint4 [
 	end := aPoint4
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Bezier3Segment >> initializeFrom: controlPoints [
 	controlPoints size = 4 ifFalse:[self error:'Wrong number of control points'].
 	start := controlPoints at: 1.
@@ -306,13 +308,13 @@ Bezier3Segment >> initializeFrom: controlPoints [
 	end := controlPoints at: 4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bezier3Segment >> length [
 	"Answer a gross approximation of the length of the receiver"
 	^(start distanceTo: via1) + (via1 distanceTo: via2) + (via2 distanceTo: end)
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 Bezier3Segment >> lineSegments: steps do: aBlock [
 	"Evaluate aBlock with the receiver's line segments"
 	"Note: We could use forward differencing here."
@@ -327,7 +329,7 @@ Bezier3Segment >> lineSegments: steps do: aBlock [
 		t := t + deltaStep]
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 Bezier3Segment >> lineSegmentsDo: aBlock [
 	"Evaluate aBlock with the receiver's line segments"
 	"Note: We could use forward differencing here."
@@ -343,7 +345,7 @@ Bezier3Segment >> lineSegmentsDo: aBlock [
 		t := t + deltaStep]
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 Bezier3Segment >> outlineSegment: width [
 	| tan1 nrm1 tan2 nrm2 newStart newVia1 newEnd newVia2 dist |
 	tan1 := (via1 - start) normalized.
@@ -360,7 +362,7 @@ Bezier3Segment >> outlineSegment: width [
 	^self class from: newStart via: newVia1 and: newVia2 to: newEnd
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 Bezier3Segment >> tangentAt: parameter [
 	| tan1 tan2 tan3 t1 t2 t3 |
 	tan1 := via1 - start.
@@ -372,12 +374,12 @@ Bezier3Segment >> tangentAt: parameter [
 	^(tan1 * t1) + (tan2 * t2) + (tan3 * t3)
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 Bezier3Segment >> tangentAtEnd [
 	^end - via2
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 Bezier3Segment >> tangentAtMid [
 	| tan1 tan2 tan3 |
 	tan1 := via1 - start.
@@ -386,12 +388,12 @@ Bezier3Segment >> tangentAtMid [
 	^(tan1 + (2*tan2) + tan3) * 0.25
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 Bezier3Segment >> tangentAtStart [
 	^via1 - start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bezier3Segment >> valueAt: t [
 	| a b c d |
 
@@ -410,22 +412,22 @@ Bezier3Segment >> valueAt: t [
 	^ ((a * t + b) * t + c) * t + d
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bezier3Segment >> via1 [
 	^via1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bezier3Segment >> via1: aPoint [
 	via1 := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bezier3Segment >> via2 [
 	^via2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bezier3Segment >> via2: aPoint [
 	via2 := aPoint
 ]

@@ -2,18 +2,20 @@
 I find libraries in a MacOS (64bit) system.
 "
 Class {
-	#name : #FFIMacLibraryFinder,
-	#superclass : #FFILibraryFinder,
-	#category : #'UnifiedFFI-Libraries'
+	#name : 'FFIMacLibraryFinder',
+	#superclass : 'FFILibraryFinder',
+	#category : 'UnifiedFFI-Libraries',
+	#package : 'UnifiedFFI',
+	#tag : 'Libraries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIMacLibraryFinder class >> findFramework: aName [
 
 	^ self new findFramework: aName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIMacLibraryFinder >> basePaths [
 
 	^ {
@@ -22,7 +24,7 @@ FFIMacLibraryFinder >> basePaths [
 	(Smalltalk vm binary parent parent / 'Resources' / 'lib') fullName }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIMacLibraryFinder >> findFramework: aName [
 	| path |
 
@@ -32,7 +34,7 @@ FFIMacLibraryFinder >> findFramework: aName [
 	self error: ('Framework {1} not found.' format: { aName })
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIMacLibraryFinder >> knownPaths [
 
 	^ #(

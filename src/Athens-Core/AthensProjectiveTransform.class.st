@@ -4,28 +4,30 @@ I am an extended version of my supeclass, that represents 2D projective transfor
 <Currently I have no use>
 "
 Class {
-	#name : #AthensProjectiveTransform,
-	#superclass : #AthensAffineTransform,
+	#name : 'AthensProjectiveTransform',
+	#superclass : 'AthensAffineTransform',
 	#instVars : [
 		'w0',
 		'w1',
 		'w2'
 	],
-	#category : #'Athens-Core-Matrices'
+	#category : 'Athens-Core-Matrices',
+	#package : 'Athens-Core',
+	#tag : 'Matrices'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensProjectiveTransform >> invert [
 	self isAffineTransform ifTrue: [ ^ super invert ].
 	self shouldBeImplemented
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensProjectiveTransform >> isAffineTransform [
 	^ w0 = 0 and: [ w1 = 0 and: [ w2 = 1 ] ]
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensProjectiveTransform >> loadIdentity [
 	"initialize with identity transform"
 	super loadIdentity.
@@ -33,7 +35,7 @@ AthensProjectiveTransform >> loadIdentity [
 	w2 := 1.0
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensProjectiveTransform >> transform: aPoint [
 	| px py tx ty tw |
 
@@ -46,7 +48,7 @@ AthensProjectiveTransform >> transform: aPoint [
 	^ Point x: tx / tw y: ty / tw
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensProjectiveTransform >> transformX: px Y: py [
 	"Transform x and y coordinates by receiver, and perform perspective division to answer a 2D point."
 	| tx ty tw |
@@ -56,32 +58,32 @@ AthensProjectiveTransform >> transformX: px Y: py [
 	^ Point x: tx / tw y: ty / tw
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensProjectiveTransform >> w0 [
 	^ w0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensProjectiveTransform >> w0: anObject [
 	w0 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensProjectiveTransform >> w1 [
 	^ w1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensProjectiveTransform >> w1: anObject [
 	^ w1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensProjectiveTransform >> w2 [
 	^ w2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensProjectiveTransform >> w2: anObject [
 	w2 := anObject
 ]

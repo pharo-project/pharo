@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyExtensionLastSortedClassesTest,
-	#superclass : #ClyBrowserQueryResultTest,
-	#category : #'Calypso-SystemQueries-Tests-Results'
+	#name : 'ClyExtensionLastSortedClassesTest',
+	#superclass : 'ClyBrowserQueryResultTest',
+	#category : 'Calypso-SystemQueries-Tests-Results',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Results'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyExtensionLastSortedClassesTest >> createQueryResult [
 	^ClyExtensionLastSortedClassResult simple
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtensionLastSortedClassesTest >> testComparisonToSimilarResultButWithWithDifferentBaseResult [
 	| result2 |
 	queryResult := ClyExtensionLastSortedClassResult simple.
@@ -18,7 +20,7 @@ ClyExtensionLastSortedClassesTest >> testComparisonToSimilarResultButWithWithDif
 	self deny: queryResult equals: result2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtensionLastSortedClassesTest >> testCreationHierarchicalInstance [
 
 	queryResult := ClyExtensionLastSortedClassResult hierarchical.
@@ -26,7 +28,7 @@ ClyExtensionLastSortedClassesTest >> testCreationHierarchicalInstance [
 	self assert: queryResult baseQueryResult class equals: ClyHierarchicallySortedClassesResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtensionLastSortedClassesTest >> testCreationSimpleInstance [
 
 	queryResult := ClyExtensionLastSortedClassResult simple.
@@ -34,7 +36,7 @@ ClyExtensionLastSortedClassesTest >> testCreationSimpleInstance [
 	self assert: queryResult baseQueryResult class equals: ClySortedQueryResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtensionLastSortedClassesTest >> testFillingHierarchicalInstance [
 	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
 	queryResult := ClyExtensionLastSortedClassResult hierarchical prepareNewFor: query in: environment..
@@ -49,7 +51,7 @@ ClyExtensionLastSortedClassesTest >> testFillingHierarchicalInstance [
 	self deny: (items second isMarkedWith: ClyExtendedClassTag)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtensionLastSortedClassesTest >> testFillingSimpleInstance [
 	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
 	queryResult := ClyExtensionLastSortedClassResult simple prepareNewFor: query in: environment.
@@ -64,7 +66,7 @@ ClyExtensionLastSortedClassesTest >> testFillingSimpleInstance [
 	self deny: (items second isMarkedWith: ClyExtendedClassTag)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtensionLastSortedClassesTest >> testFillingWithExtendedClassSide [
 	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
 	queryResult := ClyExtensionLastSortedClassResult simple prepareNewFor: query in: environment.
@@ -77,7 +79,7 @@ ClyExtensionLastSortedClassesTest >> testFillingWithExtendedClassSide [
 	self assert: (items last isMarkedWith: ClyExtendedClassTag)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtensionLastSortedClassesTest >> testHasDefaultBaseQueryResultByDefault [
 
 	self assert: queryResult baseQueryResult class equals: ClySortedQueryResult

@@ -4,17 +4,19 @@ I am STONZnUrl, I am an implementation artifact to help reading objects with cla
 I am a ZnUrl.
 "
 Class {
-	#name : #STONZnUrl,
-	#superclass : #ZnUrl,
-	#category : #'STON-Core-Reader'
+	#name : 'STONZnUrl',
+	#superclass : 'ZnUrl',
+	#category : 'STON-Core-Reader',
+	#package : 'STON-Core',
+	#tag : 'Reader'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 STONZnUrl class >> fromSton: stonReader [
 	^ ZnUrl fromString: stonReader parseListSingleton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONZnUrl class >> stonName [
 	^ #URL
 ]

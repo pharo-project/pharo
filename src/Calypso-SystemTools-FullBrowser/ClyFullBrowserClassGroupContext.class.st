@@ -2,24 +2,26 @@
 I am a context of selected class groups in full browser
 "
 Class {
-	#name : #ClyFullBrowserClassGroupContext,
-	#superclass : #ClyFullBrowserContext,
-	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
+	#name : 'ClyFullBrowserClassGroupContext',
+	#superclass : 'ClyFullBrowserContext',
+	#category : 'Calypso-SystemTools-FullBrowser-Contexts',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Contexts'
 }
 
-{ #category : #'selection strategy' }
+{ #category : 'selection strategy' }
 ClyFullBrowserClassGroupContext class >> selectionStrategy [
 	<classAnnotation>
 
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClassGroup
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserClassGroupContext >> isClassGroupSelected [
 	^self hasSelectedItems
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserClassGroupContext >> isClassTagSelected [
 	| classGroupClass |
 	self isClassGroupSelected ifFalse: [ ^false ].
@@ -29,28 +31,28 @@ ClyFullBrowserClassGroupContext >> isClassTagSelected [
 	^classGroupClass isBasedOnClassTag
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserClassGroupContext >> isPackageSelected [
 	^tool packageSelection isEmpty not
 ]
 
-{ #category : #'selection-class groups' }
+{ #category : 'selection-class groups' }
 ClyFullBrowserClassGroupContext >> lastSelectedClassGroup [
 	^self lastSelectedObject
 ]
 
-{ #category : #'selection-class groups' }
+{ #category : 'selection-class groups' }
 ClyFullBrowserClassGroupContext >> lastSelectedClassTag [
 
 	^self lastSelectedObjectIn: self selectedClassTags
 ]
 
-{ #category : #'selection-class groups' }
+{ #category : 'selection-class groups' }
 ClyFullBrowserClassGroupContext >> selectedClassGroups [
 	^self selectedObjects
 ]
 
-{ #category : #'selection-class groups' }
+{ #category : 'selection-class groups' }
 ClyFullBrowserClassGroupContext >> selectedClassTags [
 
 	^selectedItems

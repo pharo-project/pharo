@@ -147,7 +147,7 @@ RPackageTag >> promoteAsPackage [
 
 	self classes do: [ :class | newPackage moveClass: class toTag: newPackage rootTag ].
 
-	self organizer registerPackage: newPackage
+	self organizer addPackage: newPackage
 ]
 
 { #category : 'accessing' }

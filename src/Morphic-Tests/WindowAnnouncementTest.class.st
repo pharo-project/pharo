@@ -1,19 +1,21 @@
 Class {
-	#name : #WindowAnnouncementTest,
-	#superclass : #TestCase,
+	#name : 'WindowAnnouncementTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'window'
 	],
-	#category : #'Morphic-Tests-WindowNotification'
+	#category : 'Morphic-Tests-WindowNotification',
+	#package : 'Morphic-Tests',
+	#tag : 'WindowNotification'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 WindowAnnouncementTest >> tearDown [
 	window ifNotNil: [ window delete ].
 	super tearDown
 ]
 
-{ #category : #'tests - window change' }
+{ #category : 'tests - window change' }
 WindowAnnouncementTest >> testCollapsing [
 	| t |
 	window := SystemWindow labelled: 'foo'.
@@ -25,7 +27,7 @@ WindowAnnouncementTest >> testCollapsing [
 	self assert: t equals: 1
 ]
 
-{ #category : #'tests - window change' }
+{ #category : 'tests - window change' }
 WindowAnnouncementTest >> testMoving [
 	| t oldBounds event |
 	window := SystemWindow labelled: 'foo'.
@@ -59,7 +61,7 @@ WindowAnnouncementTest >> testMoving [
 	self assert: t equals: 1
 ]
 
-{ #category : #'tests - window change' }
+{ #category : 'tests - window change' }
 WindowAnnouncementTest >> testResizing [
 	| t oldBounds newBounds |
 	window := SystemWindow labelled: 'foo'.
@@ -74,7 +76,7 @@ WindowAnnouncementTest >> testResizing [
 	self assert: t equals: 1
 ]
 
-{ #category : #'tests - window creation and deletion' }
+{ #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testResizingClosing [
 	| coll |
 	window := SystemWindow labelled: 'foo'.
@@ -98,7 +100,7 @@ WindowAnnouncementTest >> testResizingClosing [
 	window := nil
 ]
 
-{ #category : #'tests - window change' }
+{ #category : 'tests - window change' }
 WindowAnnouncementTest >> testScrolling [
 	"This test tests the scrolling values of a scrollpane. We create a reeeeeally big (enormous) morph, to be sure its size is bigger than the screen and therefore its enclosing window has scrollbars.
 	When screen sizes become bigger, you should increase the value, or fix morphic, what happens first :).
@@ -124,7 +126,7 @@ WindowAnnouncementTest >> testScrolling [
 	window := nil
 ]
 
-{ #category : #'tests - window creation and deletion' }
+{ #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowCreation [
 	| t oldBounds newBounds |
 	t := 0.
@@ -140,7 +142,7 @@ WindowAnnouncementTest >> testWindowCreation [
 	self assert: t equals: 1
 ]
 
-{ #category : #'tests - window creation and deletion' }
+{ #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowCreationAndDeletion [
 	| t newWindowCreated |
 	t := 0.
@@ -167,7 +169,7 @@ WindowAnnouncementTest >> testWindowCreationAndDeletion [
 	self assert: window identicalTo: newWindowCreated
 ]
 
-{ #category : #'tests - window creation and deletion' }
+{ #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowLabelling [
 	"Test change of label for a window."
 

@@ -5,30 +5,32 @@ We also trust in the presence of FreeType fonts (a default nowadays) and ""Lucid
 If any of this conditions are not fullfilled, ToggleMenuIttemMorph with not use me but my sibling.
 "
 Class {
-	#name : #ToggleWithSymbolMenuItemShortcut,
-	#superclass : #ToggleMenuItemShortcut,
+	#name : 'ToggleWithSymbolMenuItemShortcut',
+	#superclass : 'ToggleMenuItemShortcut',
 	#classVars : [
 		'SymbolFont',
 		'SymbolTable'
 	],
-	#category : #'Morphic-Base-Menus'
+	#category : 'Morphic-Base-Menus',
+	#package : 'Morphic-Base',
+	#tag : 'Menus'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ToggleWithSymbolMenuItemShortcut class >> canBeUsed [
 	^ OSPlatform current isMacOS
 		and: [ self symbolFont isTTCFont
 		and: [ self symbolFont familyName = self symbolFont realFont face familyName ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ToggleWithSymbolMenuItemShortcut class >> createSymbolFont [
 	^ LogicalFont
 		familyName: 'Lucida Grande'
 		pointSize: 10
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ToggleWithSymbolMenuItemShortcut class >> createSymbolTable [
 	| attributes |
 	attributes := {TextFontReference toFont: self symbolFont}.
@@ -41,33 +43,33 @@ ToggleWithSymbolMenuItemShortcut class >> createSymbolTable [
 		"#Enter. 	Text string: (Character value: 16r23ce) asString attributes: attributes" }
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ToggleWithSymbolMenuItemShortcut class >> initialize [
 
 	self deprecatedAliases: { #ToggleMenuItemShortcutWithSymbol }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToggleWithSymbolMenuItemShortcut class >> priority [
 	^ 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToggleWithSymbolMenuItemShortcut class >> symbolFont [
 	^ SymbolFont ifNil: [ SymbolFont := self createSymbolFont ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToggleWithSymbolMenuItemShortcut class >> symbolTable [
 	^ SymbolTable ifNil: [ SymbolTable := self createSymbolTable ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToggleWithSymbolMenuItemShortcut class >> symbolTableAt: anObject ifAbsent: aBlock [
 	^ self symbolTable at: anObject ifAbsent: aBlock
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ToggleWithSymbolMenuItemShortcut >> drawOn: aCanvas [
 	| text keyBounds keyFont |
 
@@ -81,7 +83,7 @@ ToggleWithSymbolMenuItemShortcut >> drawOn: aCanvas [
 		color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ToggleWithSymbolMenuItemShortcut >> text [
 	| keyParts |
 	keyParts := (self keyText substrings: '+') collect: [:each | each trimBoth].

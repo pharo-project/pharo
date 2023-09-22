@@ -1,13 +1,14 @@
 Class {
-	#name : #SycGenerateEqualAndHashCommand,
-	#superclass : #SycSingleClassCommand,
+	#name : 'SycGenerateEqualAndHashCommand',
+	#superclass : 'SycSingleClassCommand',
 	#instVars : [
 		'variables'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGenerateEqualAndHashCommand >> asRefactorings [
 
 	^{
@@ -17,19 +18,19 @@ SycGenerateEqualAndHashCommand >> asRefactorings [
 	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycGenerateEqualAndHashCommand >> defaultMenuItemName [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
 	^ self refactoringClass menuItemString
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGenerateEqualAndHashCommand >> execute [
 	self executeRefactorings
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGenerateEqualAndHashCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
@@ -38,7 +39,7 @@ SycGenerateEqualAndHashCommand >> prepareFullExecutionInContext: aToolContext [
 		from: {targetClass}
 ]
 
-{ #category : #'factory method' }
+{ #category : 'factory method' }
 SycGenerateEqualAndHashCommand >> refactoringClass [
 
 	^ RBGenerateEqualHashTransformation

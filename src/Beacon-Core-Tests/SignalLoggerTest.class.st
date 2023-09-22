@@ -1,10 +1,12 @@
 Class {
-	#name : #SignalLoggerTest,
-	#superclass : #TestCase,
-	#category : #'Beacon-Core-Tests-Tests'
+	#name : 'SignalLoggerTest',
+	#superclass : 'TestCase',
+	#category : 'Beacon-Core-Tests-Tests',
+	#package : 'Beacon-Core-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SignalLoggerTest >> testStartingTwiceDoesNotRegisterTwice [
 	| initialNumberOfSubscriptions |
 	initialNumberOfSubscriptions := Beacon instance announcer numberOfSubscriptions.

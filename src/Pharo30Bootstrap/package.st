@@ -1,1 +1,1 @@
-Package { #name : #Pharo30Bootstrap }
+Package { #name : 'Pharo30Bootstrap' }

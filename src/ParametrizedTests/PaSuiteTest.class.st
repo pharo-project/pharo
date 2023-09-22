@@ -2,12 +2,14 @@
 Test case to check that the cases are correctly generated
 "
 Class {
-	#name : #PaSuiteTest,
-	#superclass : #ParametrizedTestCase,
-	#category : #'ParametrizedTests-Tests'
+	#name : 'PaSuiteTest',
+	#superclass : 'ParametrizedTestCase',
+	#category : 'ParametrizedTests-Tests',
+	#package : 'ParametrizedTests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testCasesHasTheCorrectNumberOfTests [
 
 	| suite |
@@ -15,7 +17,7 @@ PaSuiteTest >> testCasesHasTheCorrectNumberOfTests [
 	self assert: suite tests size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testCasesHasTheCorrectTests [
 
 	| suite |
@@ -27,7 +29,7 @@ PaSuiteTest >> testCasesHasTheCorrectTests [
 		hasSameElements: { { 'a'. 1 }. { 'b'. 2 }. { 'c'. 3 } }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testCombinedHasTheCorrectNumberOfTests [
 
 	| suite |
@@ -35,7 +37,7 @@ PaSuiteTest >> testCombinedHasTheCorrectNumberOfTests [
 	self assert: suite tests size equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testCombinedHasTheCorrectTests [
 
 	| suite |
@@ -48,7 +50,7 @@ PaSuiteTest >> testCombinedHasTheCorrectTests [
 	 							 { 'c'. 3. 'a'}. { 'c'. 3. 'b'}. }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testMatrix3ExampleHasTheCorrectNumberOfTests [
 
 	| suite |
@@ -56,7 +58,7 @@ PaSuiteTest >> testMatrix3ExampleHasTheCorrectNumberOfTests [
 	self assert: suite tests size equals: 27
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testMatrix3ExampleHasTheCorrectTests [
 
 	| suite |
@@ -79,7 +81,7 @@ PaSuiteTest >> testMatrix3ExampleHasTheCorrectTests [
 		}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testMatrixExampleHasTheCorrectNumberOfTests [
 
 	| suite |
@@ -87,7 +89,7 @@ PaSuiteTest >> testMatrixExampleHasTheCorrectNumberOfTests [
 	self assert: suite tests size equals: 9
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testMatrixExampleHasTheCorrectTests [
 
 	| suite |
@@ -101,7 +103,7 @@ PaSuiteTest >> testMatrixExampleHasTheCorrectTests [
 			{ 'c'. 1}. { 'c'. 2}. { 'c'. 3}.}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testMultiplyMatrixWithCasesMultiplyCases [
 
 	| m1 m2 m3 |
@@ -123,7 +125,7 @@ PaSuiteTest >> testMultiplyMatrixWithCasesMultiplyCases [
 	} asTestMatrix
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testMultiplyMatrixWithOptionsAndCasesMultiplyCases [
 
 	| m1 m2 m3 |
@@ -144,7 +146,7 @@ PaSuiteTest >> testMultiplyMatrixWithOptionsAndCasesMultiplyCases [
 	} asTestMatrix
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSuiteTest >> testMultiplyMatrixWithOptionsMultiplyCases [
 
 	| m1 m2 m3 |

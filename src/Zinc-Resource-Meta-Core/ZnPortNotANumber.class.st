@@ -4,27 +4,28 @@ ZnPortNotANumber is signalled when an URL is parsed containing an illegal port s
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnPortNotANumber,
-	#superclass : #Error,
+	#name : 'ZnPortNotANumber',
+	#superclass : 'Error',
 	#instVars : [
 		'port'
 	],
-	#category : #'Zinc-Resource-Meta-Core'
+	#category : 'Zinc-Resource-Meta-Core',
+	#package : 'Zinc-Resource-Meta-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnPortNotANumber class >> port: port [
 	^ self new
 		port: port;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPortNotANumber >> port [
 	^ port
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnPortNotANumber >> port: anObject [
 	port := anObject
 ]

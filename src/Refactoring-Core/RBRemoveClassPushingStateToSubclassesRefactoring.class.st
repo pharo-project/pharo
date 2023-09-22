@@ -25,6 +25,15 @@ Class {
 	#tag : 'Refactorings'
 }
 
+{ #category : 'preconditions' }
+RBRemoveClassPushingStateToSubclassesRefactoring >> breakingChangePreconditions [
+
+	^ (RBCondition
+		   withBlock: [ self preconditionHaveNoReferences check ]
+		   errorString: 'Some classes still have references')
+		errorBlock: [ "This is here to mark this as a breaking change and raise warning" ]
+]
+
 { #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownClassVarsOf: class [
 	class classVariableNames do: [ :e |
@@ -69,20 +78,6 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> initialize [
 	refactorings := OrderedCollection new
 ]
 
-{ #category : 'preconditions' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> preconditions [
-
-	^ classNames inject: self trueCondition into: [ :sum :each |
-		  | aClassOrTrait |
-		  aClassOrTrait := self model classNamed: each asSymbol.
-		  aClassOrTrait ifNil: [
-			  self refactoringError: 'No such class or trait' ].
-		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
-		   & (self preconditionHasNoReferences: aClassOrTrait)
-		   & (self preconditionHasNoUsers: aClassOrTrait))
-		  "& ( self preconditionEmptyOrHasNoSubclasses: aClassOrTrait )" ]
-]
-
 { #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> privateTransform [
 	self createRefactorings.
@@ -94,4 +89,12 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> privateTransform [
 { #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> removeClasses [
 	classNames do: [:each | self model removeClassKeepingSubclassesNamed: each]
+]
+
+{ #category : 'removing' }
+RBRemoveClassPushingStateToSubclassesRefactoring >> removeClassesChanges [
+
+	self privateTransform.
+	
+	^ self changes
 ]

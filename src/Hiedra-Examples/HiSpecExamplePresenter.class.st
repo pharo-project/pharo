@@ -2,22 +2,24 @@
 I am an example of use of Hiedra in the Spec library (with Morph as backend).
 "
 Class {
-	#name : #HiSpecExamplePresenter,
-	#superclass : #SpPresenter,
+	#name : 'HiSpecExamplePresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'hiedraColumnController',
 		'table',
 		'actionBar'
 	],
-	#category : #'Hiedra-Examples-Spec2'
+	#category : 'Hiedra-Examples-Spec2',
+	#package : 'Hiedra-Examples',
+	#tag : 'Spec2'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 HiSpecExamplePresenter class >> example60RandomCommits [
 	^ self openExample: #randomlyGenerated
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 HiSpecExamplePresenter class >> openExample: selector [
 
 	| commits |
@@ -33,13 +35,13 @@ HiSpecExamplePresenter class >> openExample: selector [
 		yourself
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 HiSpecExamplePresenter >> close [
 
 	self window close
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSpecExamplePresenter >> commits: commits [
 
 	table items: commits.
@@ -56,7 +58,7 @@ HiSpecExamplePresenter >> commits: commits [
 	table columns first width: hiedraColumnController rulerWidth
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 HiSpecExamplePresenter >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #table;
@@ -64,13 +66,13 @@ HiSpecExamplePresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiSpecExamplePresenter >> forceRefreshHiedra [
 	hiedraColumnController reset.
 	table withAdapterDo: #refreshList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiSpecExamplePresenter >> initializeActionBar [
 
 	| refreshButton inspectButton |
@@ -91,13 +93,13 @@ HiSpecExamplePresenter >> initializeActionBar [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiSpecExamplePresenter >> initializePresenters [
 	self initializeTable.
 	self initializeActionBar
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiSpecExamplePresenter >> initializeTable [
 	table := self newTable.
 

@@ -48,8 +48,8 @@ This explains why the stopCondition must not reset the font immediately, but dif
 
 "
 Class {
-	#name : #DisplayScanner,
-	#superclass : #CharacterScanner,
+	#name : 'DisplayScanner',
+	#superclass : 'CharacterScanner',
 	#instVars : [
 		'lineY',
 		'foregroundColor',
@@ -58,15 +58,17 @@ Class {
 		'lastDisplayableIndex',
 		'stopConditionsMustBeReset'
 	],
-	#category : #'Text-Scanning-Base'
+	#category : 'Text-Scanning-Base',
+	#package : 'Text-Scanning',
+	#tag : 'Base'
 }
 
-{ #category : #queries }
+{ #category : 'queries' }
 DisplayScanner class >> defaultFont [
 	^ TextStyle defaultFont
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DisplayScanner class >> new [
 	"Use default concrete class"
 	^(self == DisplayScanner
@@ -74,7 +76,7 @@ DisplayScanner class >> new [
 		ifFalse: [self]) basicNew initialize
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 DisplayScanner >> cr [
 	"When a carriage return is encountered, simply increment the pointer
 	into the paragraph."
@@ -87,7 +89,7 @@ DisplayScanner >> cr [
 	^false
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 DisplayScanner >> crossedX [
 	"This condition will sometimes be reached 'legally' during display, when,
 	for instance the space that caused the line to wrap actually extends over
@@ -101,22 +103,22 @@ DisplayScanner >> crossedX [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScanner >> defaultTextColor [
 	^ defaultTextColor ifNil:[ defaultTextColor := Smalltalk ui theme textColor ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScanner >> defaultTextColor: color [
 	defaultTextColor := color
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DisplayScanner >> displayEmbeddedForm: aForm [
 	self subclassResponsibility
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 DisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 	"The call on the primitive (scanCharactersFrom:to:in:rightX:) will be interrupted according to an array of stop conditions passed to the scanner at which time the code to handle the stop condition is run and the call on the primitive continued until a stop condition returns true (which means the line has terminated).  leftInRun is the # of characters left to scan in the current run; when 0, it is time to call setStopConditions."
 
@@ -167,12 +169,12 @@ DisplayScanner >> displayLine: textLine offset: offset leftInRun: leftInRun [
 	^ runStopIndex - lastIndex	"Number of characters remaining in the current run"
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DisplayScanner >> displayString: string from: startIndex  to: stopIndex at: aPoint [
 	self subclassResponsibility
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 DisplayScanner >> endOfRun [
 	"The end of a run in the display case either means that there is actually
 	a change in the style (run code) to be associated with the string or the
@@ -187,7 +189,7 @@ DisplayScanner >> endOfRun [
 	^ false
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 DisplayScanner >> paddedSpace [
 	"Each space is a stop condition when the alignment is right justified.
 	Padding must be added to the base width of the space according to
@@ -202,7 +204,7 @@ DisplayScanner >> paddedSpace [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScanner >> placeEmbeddedObject: anchoredMorphOrForm [
 
 	anchoredMorphOrForm relativeTextAnchorPosition ifNotNil:[:relativeTextAnchorPosition |
@@ -220,20 +222,20 @@ DisplayScanner >> placeEmbeddedObject: anchoredMorphOrForm [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScanner >> setFont [
 	foregroundColor := self defaultTextColor.
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
 	text ifNotNil:[destY := lineY + (line baseline * self scale) - (font ascent * self scale)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScanner >> setStopConditions [
 	super setStopConditions.
 	stopConditionsMustBeReset := false
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 DisplayScanner >> tab [
 	lastDisplayableIndex := lastIndex - 1.
 	destX := self plainTab.
@@ -241,14 +243,14 @@ DisplayScanner >> tab [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScanner >> text: t textStyle: ts foreground: foreColor [
 	text := t.
 	textStyle := ts.
 	foregroundColor := defaultTextColor := foreColor
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 DisplayScanner >> textColor: textColor [
 	foregroundColor := textColor
 ]

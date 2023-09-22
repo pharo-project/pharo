@@ -2,7 +2,9 @@
 I implement the fact that the button corresponding to a command is hidden when it can not be run.
 "
 Class {
-	#name : #CmUIHideWhenCantBeRun,
-	#superclass : #CmUICommandDisplayStrategy,
-	#category : #'Commander2-UI-Strategies'
+	#name : 'CmUIHideWhenCantBeRun',
+	#superclass : 'CmUICommandDisplayStrategy',
+	#category : 'Commander2-UI-Strategies',
+	#package : 'Commander2-UI',
+	#tag : 'Strategies'
 }

@@ -2,8 +2,8 @@
 A TextContainer models the shape of an ownerMorph, possibly occluded by one or more occludingMorphs, and scans this shape to provide a list of rectangles suitable for layout of text.  It does this by displaying the shadow of the ownerMorph in black, and any occludingMorphs in white, on its shadowForm.  It then scans horizontal strips of appropriate height to find unbroken intervals of black, greater than minWidth in extent.  Conputation of the rectangles is done on demand, and results are cached so that text can be redisplayed without having to recompute the rectangles.
 "
 Class {
-	#name : #TextContainer,
-	#superclass : #Object,
+	#name : 'TextContainer',
+	#superclass : 'Object',
 	#instVars : [
 		'textMorph',
 		'shadowForm',
@@ -16,29 +16,31 @@ Class {
 	#classVars : [
 		'OuterMargin'
 	],
-	#category : #'Morphic-Base-Text Support'
+	#category : 'Morphic-Base-Text Support',
+	#package : 'Morphic-Base',
+	#tag : 'Text Support'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TextContainer class >> initialize [
 
 	OuterMargin := 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextContainer >> avoidsOcclusions [
 
 	^ avoidsOcclusions ifNil: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextContainer >> avoidsOcclusions: aBoolean [
 
 	avoidsOcclusions := aBoolean.
 	self releaseCachedState
 ]
 
-{ #category : #'container protocol' }
+{ #category : 'container protocol' }
 TextContainer >> bottom [
 
 	"Note we should really check for contiguous pixels here"
@@ -47,7 +49,7 @@ TextContainer >> bottom [
 	  + shadowForm offset y
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextContainer >> bounds [
 
 	| bounds theText |
@@ -60,7 +62,7 @@ TextContainer >> bounds [
 	^ bounds
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextContainer >> computeShadow [
 
 	| canvas bounds theText |
@@ -87,20 +89,20 @@ TextContainer >> computeShadow [
 	^ shadowForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextContainer >> fillsOwner [
 
 	^ fillsOwner ifNil: [ true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextContainer >> fillsOwner: aBoolean [
 
 	fillsOwner := aBoolean.
 	self releaseCachedState
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextContainer >> for: aTextMorph minWidth: wid [
 
 	textMorph := aTextMorph.
@@ -109,13 +111,13 @@ TextContainer >> for: aTextMorph minWidth: wid [
 	avoidsOcclusions := false
 ]
 
-{ #category : #'container protocol' }
+{ #category : 'container protocol' }
 TextContainer >> left [
 
 	^ textMorph owner left
 ]
 
-{ #category : #'container protocol' }
+{ #category : 'container protocol' }
 TextContainer >> rectanglesAt: lineY height: lineHeight [
 	"Return a list of rectangles that are at least minWidth wide
 	in the specified horizontal strip of the shadowForm.
@@ -164,7 +166,7 @@ TextContainer >> rectanglesAt: lineY height: lineHeight [
 	^rects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextContainer >> releaseCachedState [
 
 	shadowForm := nil.
@@ -172,20 +174,20 @@ TextContainer >> releaseCachedState [
 	rectangleCache := Dictionary new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextContainer >> shadowForm [
 
 	shadowForm ifNil: [ self computeShadow ].
 	^ shadowForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextContainer >> textMorph [
 
 	^ textMorph
 ]
 
-{ #category : #'container protocol' }
+{ #category : 'container protocol' }
 TextContainer >> top [
 	"Note we should really check for contiguous pixels here"
 
@@ -195,27 +197,27 @@ TextContainer >> top [
 	  + shadowForm offset y
 ]
 
-{ #category : #'container protocol' }
+{ #category : 'container protocol' }
 TextContainer >> topLeft [
 	"for compatibility"
 
 	^ textMorph owner topLeft
 ]
 
-{ #category : #'container protocol' }
+{ #category : 'container protocol' }
 TextContainer >> translateBy: delta [
 
 	self releaseCachedState
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextContainer >> vertProfile [
 
 	vertProfile ifNil: [ self computeShadow ].
 	^ vertProfile
 ]
 
-{ #category : #'container protocol' }
+{ #category : 'container protocol' }
 TextContainer >> width [
 	"for compatibility"
 

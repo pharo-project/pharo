@@ -1,14 +1,16 @@
 Class {
-	#name : #RBVariableTransformation,
-	#superclass : #RBClassTransformation,
+	#name : 'RBVariableTransformation',
+	#superclass : 'RBClassTransformation',
 	#instVars : [
 		'variableName',
 		'isClassVariable'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBVariableTransformation class >> classVariable: aVariableName class: aClassName [
 
 	^ self new
@@ -18,7 +20,7 @@ RBVariableTransformation class >> classVariable: aVariableName class: aClassName
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBVariableTransformation class >> instanceVariable: aVariableName class: aClassName [
 
 	^ self new
@@ -28,7 +30,7 @@ RBVariableTransformation class >> instanceVariable: aVariableName class: aClassN
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBVariableTransformation class >> model: aRBModel classVariable: aVariableName class: aClassName [
 
 	^ self new
@@ -39,7 +41,7 @@ RBVariableTransformation class >> model: aRBModel classVariable: aVariableName c
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBVariableTransformation class >> model: aRBModel instanceVariable: aVariableName class: aClassName [
 
 	^ self new
@@ -50,7 +52,7 @@ RBVariableTransformation class >> model: aRBModel instanceVariable: aVariableNam
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBVariableTransformation class >> model: aRBModel variable: aVariableName class: aClassName classVariable: aBoolean [
 
 	^ self new
@@ -61,7 +63,7 @@ RBVariableTransformation class >> model: aRBModel variable: aVariableName class:
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBVariableTransformation class >> variable: aVariableName class: aClassName classVariable: aBoolean [
 
 	^ self new
@@ -71,7 +73,7 @@ RBVariableTransformation class >> variable: aVariableName class: aClassName clas
 		yourself
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -85,7 +87,7 @@ RBVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBVariableTransformation >> variable: aVariableName class: aClassName classVariable: aBoolean [
 
 	self className: aClassName.

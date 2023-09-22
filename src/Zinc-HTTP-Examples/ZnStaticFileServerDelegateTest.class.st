@@ -2,12 +2,13 @@
 Unit tests for ZnStaticFileServerDelegate
 "
 Class {
-	#name : #ZnStaticFileServerDelegateTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-HTTP-Examples'
+	#name : 'ZnStaticFileServerDelegateTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegateTest >> indexHtml [
 	^ '<html>
 <head><title>Index</title></head>
@@ -16,7 +17,7 @@ ZnStaticFileServerDelegateTest >> indexHtml [
 '
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegateTest >> largeHtml [
 	^ String streamContents: [ :out |
 		out << '<html><body>'.
@@ -25,7 +26,7 @@ ZnStaticFileServerDelegateTest >> largeHtml [
 		out << '</html></body>' ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnStaticFileServerDelegateTest >> setUp [
 	super setUp.
 	ZnFileSystemUtils
@@ -46,7 +47,7 @@ ZnStaticFileServerDelegateTest >> setUp [
 			stream nextPutAll: self indexHtml ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegateTest >> smallHtml [
 	^ '<html>
 <head><title>Small</title></head>
@@ -55,7 +56,7 @@ ZnStaticFileServerDelegateTest >> smallHtml [
 '
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnStaticFileServerDelegateTest >> tearDown [
 	ZnFileSystemUtils
 		deleteIfExists: 'small.html';
@@ -65,7 +66,7 @@ ZnStaticFileServerDelegateTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnStaticFileServerDelegateTest >> testBasicGet [
 	self withServerDo: [ :server | | client |
 		(client := ZnClient new)
@@ -86,7 +87,7 @@ ZnStaticFileServerDelegateTest >> testBasicGet [
 			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnStaticFileServerDelegateTest >> testBasicGetLarge [
 	self withServerDo: [ :server | | client |
 		(client := ZnClient new)
@@ -107,7 +108,7 @@ ZnStaticFileServerDelegateTest >> testBasicGetLarge [
 			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnStaticFileServerDelegateTest >> testBasicGetWide [
 	self withServerDo: [ :server | | client |
 		(client := ZnClient new)
@@ -128,7 +129,7 @@ ZnStaticFileServerDelegateTest >> testBasicGetWide [
 			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnStaticFileServerDelegateTest >> testBasicHead [
 	self withServerDo: [ :server | | client |
 		(client := ZnClient new)
@@ -149,7 +150,7 @@ ZnStaticFileServerDelegateTest >> testBasicHead [
 			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnStaticFileServerDelegateTest >> testIfModifiedSinceNotModified [
 	self withServerDo: [ :server | | client |
 		(client := ZnClient new)
@@ -164,7 +165,7 @@ ZnStaticFileServerDelegateTest >> testIfModifiedSinceNotModified [
 		self deny: client response hasEntity ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnStaticFileServerDelegateTest >> testRedirect [
 	self
 		withServerDo: [ :server |
@@ -182,12 +183,12 @@ ZnStaticFileServerDelegateTest >> testRedirect [
 			self assert: (client response headers at: 'Cache-Control') equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegateTest >> wideHtml [
 	^ '<html><h1>Czech is in Czech {1}e{2}tina.</h1></html>' format: { 269 asCharacter. 353 asCharacter}
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegateTest >> withServerDo: block [
 	ZnServer withOSAssignedPortDo: [ :server | | staticFileServerDelegate |
 		(staticFileServerDelegate := ZnStaticFileServerDelegate new)

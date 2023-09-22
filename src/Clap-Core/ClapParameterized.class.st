@@ -2,22 +2,24 @@
 I am an abstract class specifying a parameter with nested positional parameters.
 "
 Class {
-	#name : #ClapParameterized,
-	#superclass : #ClapParameter,
+	#name : 'ClapParameterized',
+	#superclass : 'ClapParameter',
 	#instVars : [
 		'parameters',
 		'positionals',
 		'aliases'
 	],
-	#category : #'Clap-Core-Specification'
+	#category : 'Clap-Core-Specification',
+	#package : 'Clap-Core',
+	#tag : 'Specification'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapParameterized class >> isAbstract [
 	^ self == ClapParameterized
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClapParameterized >> add: aParameter [
 	parameters
 		at: aParameter identifier
@@ -26,45 +28,45 @@ ClapParameterized >> add: aParameter [
 	^ aParameter addTo: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClapParameterized >> addAll: parametersToAdd [
 	parametersToAdd do: [ :each | each addTo: self ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClapParameterized >> addPositional: aPositional [
 	positionals add: aPositional
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapParameterized >> aliases [
 	^ aliases
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClapParameterized >> aliases: aCollection [
 	aliases := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapParameterized >> at: identifierOrSpec [
 	^ parameters at: identifierOrSpec asClapIdentifier
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapParameterized >> at: identifierOrSpec ifAbsent: absentBlock [
 	^ parameters at: identifierOrSpec asClapIdentifier
 		ifAbsent: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapParameterized >> at: identifierOrSpec ifPresent: presentBlock [
 	^ parameters
 		at: identifierOrSpec asClapIdentifier
 		ifPresent: presentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapParameterized >> at: identifierOrSpec ifPresent: presentBlock ifAbsent: absentBlock [
 	^ parameters
 		at: identifierOrSpec asClapIdentifier
@@ -72,12 +74,12 @@ ClapParameterized >> at: identifierOrSpec ifPresent: presentBlock ifAbsent: abse
 		ifAbsent: absentBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapParameterized >> hasAlias: aString [
 	^ aString = self canonicalName or: [ self aliases includes: aString ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClapParameterized >> initialize [
 	super initialize.
 	parameters := OrderedDictionary new.
@@ -85,22 +87,22 @@ ClapParameterized >> initialize [
 	aliases := #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapParameterized >> matchClass [
 	^ ClapNamedMatch
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ClapParameterized >> parametersDo: aBlock [
 	positionals do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapParameterized >> positionals [
 	^ positionals
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClapParameterized >> signalIdentifierConflictOf: newParameter with: currentParameter [
 	Error signal: 'Identifier conflict (' , newParameter identifier , ')'
 ]

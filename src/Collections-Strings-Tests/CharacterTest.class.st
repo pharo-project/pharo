@@ -5,18 +5,20 @@ This is the unit test for the class Character. Unit tests are a good way to exer
 	- the sunit class category
 "
 Class {
-	#name : #CharacterTest,
-	#superclass : #ClassTestCase,
-	#category : #'Collections-Strings-Tests-Base'
+	#name : 'CharacterTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Collections-Strings-Tests-Base',
+	#package : 'Collections-Strings-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 CharacterTest >> classToBeTested [
 
 	^ Character
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 CharacterTest >> testAsLowercaseBasicAsciiRange [
 	| lowercase uppercase |
 	lowercase  := 'abcdefghijklmnopqrstuvwxyz123456789'.
@@ -25,7 +27,7 @@ CharacterTest >> testAsLowercaseBasicAsciiRange [
 		self assert: char asLowercase equals: (lowercase at: index)]
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 CharacterTest >> testAsUppercaseBasicAsciiRange [
 	| lowercase uppercase |
 	lowercase  := 'abcdefghijklmnopqrstuvwxyz123456789'.
@@ -34,7 +36,7 @@ CharacterTest >> testAsUppercaseBasicAsciiRange [
 		self assert: char asUppercase equals: (uppercase at: index)]
 ]
 
-{ #category : #'tests - various' }
+{ #category : 'tests - various' }
 CharacterTest >> testCharacterSeparators [
 	"Regression test"
 
@@ -43,7 +45,7 @@ CharacterTest >> testCharacterSeparators [
 	self assert: result size equals: Character separators size + 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testCodePoint [
 
 	self assert: $A codePoint equals: 65.
@@ -51,7 +53,7 @@ CharacterTest >> testCodePoint [
 	self assert: (Character codePoint: 97) codePoint equals: 97
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testDigitValue [
 
 	'0123456789ABCDEF' with: #(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
@@ -61,20 +63,20 @@ CharacterTest >> testDigitValue [
 		do: [:char :value | self assert: char digitValue equals: value]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testHex [
 	self assert: $a hex equals: '16r61'.
 	self assert: Character space hex equals: '16r20'
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 CharacterTest >> testInstanceCreation [
 	self should: [ Character value: -1 ] raise: Error.
 	Character value: 0.
 	Character value: 256
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testIsSeparator [
     {Character space.
     Character cr.
@@ -84,7 +86,7 @@ CharacterTest >> testIsSeparator [
     Character alphabet do: [ :each | self deny: each isSeparator ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testMaxVal [
 	"Check that Character class>>maxVal is returning the correct value:
 	- A character created with the value has the same code point
@@ -96,13 +98,13 @@ CharacterTest >> testMaxVal [
 			raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 CharacterTest >> testNew [
 
 	self should: [Character new] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testPrintString [
 	self assert: $a printString equals: '$a'.
 	self assert: $5 printString equals: '$5'.
@@ -116,20 +118,20 @@ CharacterTest >> testPrintString [
 	self assert: (Character value: 17) printString equals: 'Character value: 17'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testPrintStringAll [
 
 	Character allByteCharacters do: [ :each |
 		self assert: (self class compiler evaluate: each printString) equals: each ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testPrintStringHex [
 	self assert: $a printStringHex equals: '61'.
 	self assert: Character space printStringHex equals: '20'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testStoreString [
 	self assert: $a storeString equals: '$a'.
 	self assert: $5 storeString equals: '$5'.
@@ -143,7 +145,7 @@ CharacterTest >> testStoreString [
 	self assert: (Character value: 17) storeString equals: '(Character value: 17)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterTest >> testStoreStringAll [
 
 	Character allByteCharacters do: [ :each |

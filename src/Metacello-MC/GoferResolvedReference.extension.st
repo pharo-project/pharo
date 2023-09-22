@@ -1,6 +1,6 @@
-Extension { #name : #GoferResolvedReference }
+Extension { #name : 'GoferResolvedReference' }
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 GoferResolvedReference >> asMetacelloCachingResolvedReference [
 
 	^MetacelloCachingGoferResolvedReference name: self name repository: self repository

@@ -1,1 +1,1 @@
-Package { #name : #'PharoDocComment-Tests' }
+Package { #name : 'PharoDocComment-Tests' }

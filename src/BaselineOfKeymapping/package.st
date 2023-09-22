@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfKeymapping }
+Package { #name : 'BaselineOfKeymapping' }

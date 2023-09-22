@@ -14,7 +14,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'model',
-		'scopes'
+		'scopes',
+		'refactoring'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -41,6 +42,11 @@ RBDriver >> openPreviewWithChanges: changes [
 		 scopes: scopes)
 		refactoring: self refactoring;
 		openModal
+]
+
+{ #category : 'resources' }
+RBDriver >> refactoring [
+	^ refactoring
 ]
 
 { #category : 'utilities' }

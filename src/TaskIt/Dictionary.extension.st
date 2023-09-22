@@ -1,6 +1,6 @@
-Extension { #name : #Dictionary }
+Extension { #name : 'Dictionary' }
 
-{ #category : #'*TaskIt' }
+{ #category : '*TaskIt' }
 Dictionary >> removeKeyAtValue: aValue [
 	| key |
 	key := self keyAtValue: aValue ifAbsent: [ nil ].

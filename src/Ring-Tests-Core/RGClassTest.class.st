@@ -1,18 +1,19 @@
 Class {
-	#name : #RGClassTest,
-	#superclass : #RGTest,
+	#name : 'RGClassTest',
+	#superclass : 'RGTest',
 	#traits : 'TRGBehaviorTest + TRGClassDescriptionTest',
 	#classTraits : 'TRGBehaviorTest classTrait + TRGClassDescriptionTest classTrait',
-	#category : #'Ring-Tests-Core'
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> behaviorClass [
 
 	^ RGClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testClassSide [
 	| behavior |
 	behavior := RGClass unnamed.
@@ -20,7 +21,7 @@ RGClassTest >> testClassSide [
 	self assert: behavior metaclass classSide identicalTo: behavior metaclass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testClassVariablesCollection [
 
 	| class env classVariable1 classVariable2 classVariable3 |
@@ -61,7 +62,7 @@ RGClassTest >> testClassVariablesCollection [
 	self assert: (class hasResolved: #classVariables)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testConversionToTrait [
 
 	| env behavior trait |
@@ -78,7 +79,7 @@ RGClassTest >> testConversionToTrait [
 	self assert: behavior isTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testCopyForBehaviorDefinitionForClass [
 	"test copying for instance variables from RGClass"
 
@@ -108,7 +109,7 @@ RGClassTest >> testCopyForBehaviorDefinitionForClass [
 	self assert: copy sharedPools anyOne name equals: #SomePool
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testDefinition [
 	| env aClass |
 	env := RGEnvironment new.
@@ -127,7 +128,7 @@ RGClassTest >> testDefinition [
 	package: ''Kernel-Objects'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testEnsureProtocol [
 
 	| behavior |
@@ -138,7 +139,7 @@ RGClassTest >> testEnsureProtocol [
 	self assert: behavior protocols first equals: #SomeProtocol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testEnvironmentStubs [
 
 	| package env |
@@ -151,7 +152,7 @@ RGClassTest >> testEnvironmentStubs [
 "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testPrinting [
 	| aClass |
 
@@ -160,7 +161,7 @@ RGClassTest >> testPrinting [
 	self assert: aClass printString equals: #Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testProtocolsForAllMethods [
 
 	| env class1 trait1 trait2 composition method1 method2 method3 method4 |
@@ -191,7 +192,7 @@ RGClassTest >> testProtocolsForAllMethods [
 	self assertCollection: class1 protocolsForAllMethods hasSameElements: #(#tag1 tag2 tag3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testProtocolsForAllMethodsForClassWithoutTraits [
 
 	| class method1 method2 |
@@ -216,7 +217,7 @@ RGClassTest >> testProtocolsForAllMethodsForClassWithoutTraits [
 	self assertCollection: class tagsForMethods sorted hasSameElements: #(#tag1 #tag2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testSharedPoolsCollection [
 
 	| class env sharedPool1 sharedPool2 sharedPool3 |
@@ -251,7 +252,7 @@ RGClassTest >> testSharedPoolsCollection [
 	self assert: (class hasResolved: #sharedPools)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTagsCollection [
 
 	| class env tag1 tag2 tag3 |
@@ -284,7 +285,7 @@ RGClassTest >> testTagsCollection [
 	self assert: (class hasResolved: #tags)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTagsForMethods [
 
 	| class method1 method2 |
@@ -335,7 +336,7 @@ RGClassTest >> testTagsForMethods [
 	self assertEmpty: (class methodsTaggedWith: #tag3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTagsForMethodsCollection [
 
 	| class env tag1 tag2 tag3 |
@@ -367,7 +368,7 @@ RGClassTest >> testTagsForMethodsCollection [
 	self assert: (class hasResolved: #tagsForMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTagsForMethodsRemoval [
 
 	| class method1 method2 |
@@ -392,7 +393,7 @@ RGClassTest >> testTagsForMethodsRemoval [
 	self assert: class tagsForMethods isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTesting [
 
 	| env behavior |

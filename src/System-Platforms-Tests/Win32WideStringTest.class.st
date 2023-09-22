@@ -1,22 +1,24 @@
 Class {
-	#name : #Win32WideStringTest,
-	#superclass : #TestCase,
-	#category : #'System-Platforms-Tests-Windows'
+	#name : 'Win32WideStringTest',
+	#superclass : 'TestCase',
+	#category : 'System-Platforms-Tests-Windows',
+	#package : 'System-Platforms-Tests',
+	#tag : 'Windows'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 Win32WideStringTest >> exampleString [
 
 	^ 'áéíóúñÑâîôûêèàìòù©¢ßðöäå®þü¼¡²³¤€¼½¾‘’¥'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Win32WideStringTest >> isWindows [
 
 	^ OSPlatform current isWindows
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Win32WideStringTest >> testCharactersAreEncodedInUnicode16Bits [
 
 	| bytes index |
@@ -34,7 +36,7 @@ Win32WideStringTest >> testCharactersAreEncodedInUnicode16Bits [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Win32WideStringTest >> testConvertingInBothDirectionsGaveSameString [
 
 	self isWindows
@@ -43,7 +45,7 @@ Win32WideStringTest >> testConvertingInBothDirectionsGaveSameString [
 	self assert: self exampleString asWin32WideString asString equals: self exampleString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Win32WideStringTest >> testHandleIsAByteArray [
 
 	self isWindows
@@ -52,7 +54,7 @@ Win32WideStringTest >> testHandleIsAByteArray [
 	self assert: (self exampleString asWin32WideString getHandle isKindOf: ByteArray)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Win32WideStringTest >> testUnderlayingByteArrayEndsInTwoZeros [
 
 	self isWindows
@@ -61,7 +63,7 @@ Win32WideStringTest >> testUnderlayingByteArrayEndsInTwoZeros [
 	self assert: (self exampleString asWin32WideString getHandle last:2) equals: #[00 00]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Win32WideStringTest >> testUnderlayingByteArrayIsMultipleOf2 [
 
 	self isWindows

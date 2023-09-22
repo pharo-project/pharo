@@ -1,6 +1,6 @@
-Extension { #name : #TaAliasMethod }
+Extension { #name : 'TaAliasMethod' }
 
-{ #category : #'*Ring-TraitsV2Support' }
+{ #category : '*Ring-TraitsV2Support' }
 TaAliasMethod >> asRingMinimalDefinitionIn: anRGEnvironment [
 	^ anRGEnvironment backend
 		definitionFor: self

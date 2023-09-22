@@ -2,51 +2,52 @@
 A FinderClassNode is a node used by the FinderUI's tree representing a Class
 "
 Class {
-	#name : #FinderClassNode,
-	#superclass : #FinderNode,
-	#category : #'Tool-Finder-UI'
+	#name : 'FinderClassNode',
+	#superclass : 'FinderNode',
+	#category : 'Tool-Finder-UI',
+	#package : 'Tool-Finder-UI'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FinderClassNode >> browse [
 
 	self hasParentNode ifFalse: [ ^ super browseClass ].
 	^ self browseClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderClassNode >> browseClass [
 
 	^ Smalltalk tools browser openOnClass: self item selector: self parentNode item
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderClassNode >> browseHierarchy [
 
 	self systemNavigation browseHierarchy: self item
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderClassNode >> browseReferences [
 
 	self systemNavigation browseAllCallsOnClass: self item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderClassNode >> childNodeClassFromItem: anItem [
 	"The children (if there are some) are instances of
 	FinderMethodNode (in the case of a Classes research)"
 	^ FinderMethodNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderClassNode >> childrenItems [
 	"I search the children, if I have not got any, I call my super method"
 
 	^ self model resultDictionary at: self item ifAbsent: [ ^ super childrenItems ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FinderClassNode >> keyDown: anEvent [
 	(anEvent controlKeyPressed or: [ anEvent commandKeyPressed ]) ifFalse: [ ^ false ].
 	anEvent keyCharacter == $h ifTrue: [ ^ self browseHierarchy ].
@@ -54,7 +55,7 @@ FinderClassNode >> keyDown: anEvent [
 	^ super keyDown: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FinderClassNode >> menu: menu shifted: aBoolean [
 	menu
 		add: 'Hierarchy (h)'

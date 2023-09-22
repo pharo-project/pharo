@@ -1,19 +1,21 @@
 Class {
-	#name : #ReTestBasedTestCase,
-	#superclass : #ReCodeBasedTestCase,
+	#name : 'ReTestBasedTestCase',
+	#superclass : 'ReCodeBasedTestCase',
 	#instVars : [
 		'validTestPackage'
 	],
-	#category : #'SUnit-Rules-Tests-Base'
+	#category : 'SUnit-Rules-Tests-Base',
+	#package : 'SUnit-Rules-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReTestBasedTestCase class >> isAbstract [
 
 	^self == ReTestBasedTestCase 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReTestBasedTestCase >> setUp [
 
 	super setUp.
@@ -27,7 +29,7 @@ ReTestBasedTestCase >> setUp [
 			             package: testPackage name ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReTestBasedTestCase >> tearDown [
 
 	validTestPackage removeFromSystem.

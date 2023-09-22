@@ -87,8 +87,10 @@ RBPushDownMethodRefactoring >> classes: aCollection [
 	]
 ]
 
-{ #category : 'actions' }
+{ #category : 'executing' }
 RBPushDownMethodRefactoring >> generateChanges [
+
+	self prepareForExecution.
 
 	self applicabilityPreconditions check ifFalse: [
 		RBApplicabilityChecksFailedError signal:

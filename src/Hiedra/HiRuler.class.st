@@ -32,8 +32,8 @@ Note 1: A ruler always has a 1-to-1 relation between values, rows and nodes.
 Note 2: See HiAbstractRenderer to render my instances into Forms.
 "
 Class {
-	#name : #HiRuler,
-	#superclass : #Object,
+	#name : 'HiRuler',
+	#superclass : 'Object',
 	#instVars : [
 		'links',
 		'elementsByRow',
@@ -43,16 +43,18 @@ Class {
 		'rowByValue',
 		'linksByRow'
 	],
-	#category : #'Hiedra-Model'
+	#category : 'Hiedra-Model',
+	#package : 'Hiedra',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HiRuler class >> new [
 	"use #withNumberOfRows: instead"
 	self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HiRuler class >> withValues: aSequenceableCollection [
 
 	^ self basicNew
@@ -60,7 +62,7 @@ HiRuler class >> withValues: aSequenceableCollection [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> addLinkFrom: aNode to: anotherNode [
 	"Add a HiLink to the ruler from aNode to anotherNode. The link will occupy a free point in the ruler for each intermediate row from the origin to the target node."
 
@@ -86,7 +88,7 @@ HiRuler >> addLinkFrom: aNode to: anotherNode [
 	^ newLink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> addNodeFor: aValue [
 	"Add the node for aValue. The node will occupy a free point in the ruler in the corresponding row.
 
@@ -109,12 +111,12 @@ HiRuler >> addNodeFor: aValue [
 	^ newNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> elementsByRow [
 	^ elementsByRow
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiRuler >> initializeWithValues: aSequenceableCollection [
 
 	self initialize.
@@ -133,41 +135,41 @@ HiRuler >> initializeWithValues: aSequenceableCollection [
 		linksByRow at: index put: LinkedList new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> links [
 	^ links
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> linksAtRow: rowIndex [
 
 	^ linksByRow at: rowIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> nodeAtRow: rowIndex [
 
 	^ nodeByRow at: rowIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> nodeAtValue: aValue [
 
 	^ nodeByValue at: aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> nodeAtValue: aValue ifAbsent: aBlock [
 
 	^ nodeByValue at: aValue ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> nodes [
 	^ nodeByRow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> numberOfColumns [
 
 	^ elementsByRow
@@ -175,24 +177,24 @@ HiRuler >> numberOfColumns [
 		ifNotEmpty: [ elementsByRow max: #size ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> numberOfColumnsAt: rowIndex [
 
 	^ (elementsByRow at: rowIndex) size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> numberOfRows [
 
 	^ elementsByRow size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> valueIndices [
 	^ rowByValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRuler >> values [
 	^ valueByRow
 ]

@@ -3,55 +3,19 @@ SUnit tests on renaming packages
 "
 Class {
 	#name : 'RPackageRenameTest',
-	#superclass : 'TestCase',
-	#instVars : [
-		'oldSystemAnnouncer',
-		'packageNamesToClean'
-	],
+	#superclass : 'RPackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
-
-{ #category : 'utilities' }
-RPackageRenameTest >> cleanWorkingCopiesInTearDown: aCollection [
-
-	packageNamesToClean addAll: aCollection
-]
-
-{ #category : 'running' }
-RPackageRenameTest >> setUp [
-	super setUp.
-	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer restoreAllNotifications.
-	packageNamesToClean := OrderedCollection new
-]
-
-{ #category : 'running' }
-RPackageRenameTest >> tearDown [
-
-	SystemAnnouncer announcer: oldSystemAnnouncer.
-	self class environment at: #TestClass ifPresent: [ :class | class removeFromSystem ].
-	self class environment at: #TestClass1 ifPresent: [ :class | class removeFromSystem ].
-	self class environment at: #TestClass2 ifPresent: [ :class | class removeFromSystem ].
-	self class environment at: #TestClass3 ifPresent: [ :class | class removeFromSystem ].
-
-	packageNamesToClean do: [ :aPackageName |
-		(MCWorkingCopy hasPackageNamed: aPackageName) ifTrue: [ (MCWorkingCopy forPackageNamed: aPackageName) unload ].
-		(aPackageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ].
-
-	super tearDown
-]
 
 { #category : 'tests' }
 RPackageRenameTest >> testRenamePackage [
 	"Test that we do rename the package as expected."
 
 	| package workingCopy class |
-	self cleanWorkingCopiesInTearDown: #( 'TestRename' ).
-
-	package := self packageOrganizer ensurePackage: 'Test1'.
+	package := self createNewPackageNamed: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	class := (Object << #TestClass package: 'Test1-TAG') install.
+	class := self createNewClassNamed: #TestClass inCategory: 'Test1-TAG'.
 
 	self assert: (package includesClass: class).
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
@@ -76,12 +40,10 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 	"If we rename a package to the (full)category name of one of its tags"
 
 	| package workingCopy class1 class2 |
-	self cleanWorkingCopiesInTearDown: #( 'Test1-Core' ).
-
-	package := self packageOrganizer ensurePackage: 'Test1'.
+	package := self createNewPackageNamed: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	class1 := (Object << #TestClass1 package: 'Test1-Core') install.
-	class2 := (Object << #TestClass2 package: 'Test1-Util') install.
+	class1 := self createNewClassNamed: #TestClass1 inCategory: 'Test1-Core'.
+	class2 := self createNewClassNamed: #TestClass2 inCategory: 'Test1-Util'.
 
 	self assert: (package classTagNamed: #Core ifAbsent: [ nil ]) notNil.
 	self assert: (package classTagNamed: #Util ifAbsent: [ nil ]) notNil.
@@ -102,13 +64,11 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	"If we rename a package to the (full)category name of one of its tags and the (non-tag)package is not empty"
 
 	| package workingCopy class1 class2 class3 |
-	self cleanWorkingCopiesInTearDown: #( 'Test1-Core' ).
-
-	package := self packageOrganizer ensurePackage: 'Test1'.
+	package := self createNewPackageNamed: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	class1 := (Object << #TestClass1 package: 'Test1-Core') install.
-	class2 := (Object << #TestClass2 package: 'Test1-Util') install.
-	class3 := (Object << #TestClass3 package: 'Test1') install.
+	class1 := self createNewClassNamed: #TestClass1 inCategory: 'Test1-Core'.
+	class2 := self createNewClassNamed: #TestClass2 inCategory: 'Test1-Util'.
+	class3 := self createNewClassNamed: #TestClass3 inCategory: 'Test1'.
 
 	self assert: (package classTagNamed: #Core ifAbsent: [ nil ]) notNil.
 	self assert: (package classTagNamed: #Util ifAbsent: [ nil ]) notNil.
@@ -128,15 +88,14 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 RPackageRenameTest >> testRenamePackageWithExtensions [
 
 	| package class extendedPackage extension |
-	package := self packageOrganizer ensurePackage: 'OriginalPackage'.
+	package := self createNewPackageNamed: 'OriginalPackage'.
 
-	class := (Object << #TestClass package: 'OriginalPackage-TAG') install.
+	class := self createNewClassNamed: #TestClass inCategory: 'OriginalPackage-TAG'.
 
-	extendedPackage := self packageOrganizer ensurePackage: 'ExtendedPackage'.
+	extendedPackage := self createNewPackageNamed: 'ExtendedPackage'.
 
-	self cleanWorkingCopiesInTearDown: #( ExtendedPackage RenamedPackage OriginalPackage ).
 
-	class := (Object << #TestExtendedClass package: 'ExtendedPackage') install.
+	class := self createNewClassNamed: #TestExtendedClass inCategory: 'ExtendedPackage'.
 
 	class compile: 'm ^ 42' classified: '*OriginalPackage'.
 	extension := class >> #m.
@@ -160,15 +119,14 @@ RPackageRenameTest >> testRenamePackageWithExtensions [
 RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 
 	| package class extendedPackage extension |
-	package := self packageOrganizer ensurePackage: 'OriginalPackage'.
+	package := self createNewPackageNamed: 'OriginalPackage'.
 
-	class := (Object << #TestClass package: 'OriginalPackage-TAG') install.
+	class := self createNewClassNamed: #TestClass inCategory: 'OriginalPackage-TAG'.
 
-	extendedPackage := self packageOrganizer ensurePackage: 'ExtendedPackage'.
+	extendedPackage := self createNewPackageNamed: 'ExtendedPackage'.
 
-	self cleanWorkingCopiesInTearDown: #( ExtendedPackage RenamedPackage OriginalPackage ).
 
-	class := (Object << #TestExtendedClass package: 'ExtendedPackage') install.
+	class := self createNewClassNamed: #TestExtendedClass inCategory: 'ExtendedPackage'.
 
 	class := class class.
 
@@ -195,16 +153,17 @@ RPackageRenameTest >> testUnregisterPackage [
 	"Test that we do unregister the package as expected."
 
 	| package workingCopy class |
-	package := self packageOrganizer ensurePackage: 'Test1'.
+	self flag: #package. "Why is this here? It should be in Monticello tests!"
+	package := self createNewPackageNamed: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	class := (Object << #TestClass package: 'Test1-TAG') install.
+	class := self createNewClassNamed: #TestClass inCategory: 'Test1-TAG'.
 	self assert: (package includesClass: class).
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
 	self assert: ((package classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 	self assert: workingCopy modified.
 
-	package unregister.
+	package removeFromSystem.
 
-	self deny: (self packageOrganizer hasPackage: #Test1).
+	self deny: (self organizer hasPackage: #Test1).
 	self deny: (MCWorkingCopy hasPackageNamed: #Test1)
 ]

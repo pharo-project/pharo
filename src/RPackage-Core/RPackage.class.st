@@ -270,16 +270,17 @@ RPackage >> demoteToTagInPackage [
 	| newPackage tag |
 	(self name includes: $-) ifFalse: [ self error: 'To demote a package, it name needs to contain at least one dash `-`.' ].
 
-	self flag: #package. "We need to unregister because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a #removeFromSystem at the end to avoid to have a removal system AND an unregistering system."
-	self unregister.
-
 	newPackage := self organizer ensurePackage: (self name copyUpToLast: $-).
 
 	"We keep the suffix that was removed as the tag name to create."
 	tag := newPackage ensureTag: (self name withoutPrefix: newPackage name , '-').
 
 	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
-	self extensionMethods do: [ :method | newPackage addMethod: method ].
+	self extensionMethods do: [ :method |
+		newPackage addMethod: method.
+		self removeMethod: method ].
+
+	self removeFromSystem.
 
 	^ newPackage
 ]
@@ -671,11 +672,6 @@ RPackage >> propertyAt: propName put: propValue [
 		put: propValue
 ]
 
-{ #category : 'register' }
-RPackage >> register [
-	self organizer registerPackage: self
-]
-
 { #category : 'private - register' }
 RPackage >> removeAllMethodsFromClass: aClass [
 	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
@@ -713,7 +709,7 @@ RPackage >> removeFromSystem [
 	self classTags do: [ :tag | tag removeFromSystem ].
 	self extensionMethods do: [ :method | method removeFromSystem ].
 
-	self unregister
+	self organizer removePackage: self
 ]
 
 { #category : 'add method - compiled method' }
@@ -890,10 +886,4 @@ RPackage >> toTagName: aSymbol [
 			  (aSymbol sameAs: self name)
 				  ifTrue: [ self rootTagName ]
 				  ifFalse: [ aSymbol ] ]
-]
-
-{ #category : 'register' }
-RPackage >> unregister [
-
-	self organizer removePackage: self
 ]

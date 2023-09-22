@@ -2,8 +2,8 @@
 Utility class to compose text
 "
 Class {
-	#name : #TextComposer,
-	#superclass : #Object,
+	#name : 'TextComposer',
+	#superclass : 'Object',
 	#instVars : [
 		'lines',
 		'maxRightX',
@@ -25,16 +25,18 @@ Class {
 		'actualHeight',
 		'wantsColumnBreaks'
 	],
-	#category : #'Morphic-Base-Text Support'
+	#category : 'Morphic-Base-Text Support',
+	#package : 'Morphic-Base',
+	#tag : 'Text Support'
 }
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 TextComposer class >> characterForColumnBreak [
 
 	^Character value: 12
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TextComposer >> addNullLineForIndex: index [
 	"This awful bit is to ensure that if we have scanned all the text and the last character is a CR that there is a null line at the end of lines. Sometimes this was not happening which caused anomalous selections when selecting all the text. This is implemented as a post-composition fixup because I couldn't figure out where to put it in the main logic."
 
@@ -51,7 +53,7 @@ TextComposer >> addNullLineForIndex: index [
 	self addNullLineWithIndex: index andRectangle: r
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TextComposer >> addNullLineWithIndex: index andRectangle: r [
 
 	lines addLast: (
@@ -67,7 +69,7 @@ TextComposer >> addNullLineWithIndex: index andRectangle: r [
 	)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextComposer >> checkIfReadyToSlide [
 	"Check whether we are now in sync with previously composed lines"
 
@@ -90,7 +92,7 @@ TextComposer >> checkIfReadyToSlide [
 	]
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 TextComposer >> composeAllLines [
 
 	[ currCharIndex <= theText size and: [
@@ -100,7 +102,7 @@ TextComposer >> composeAllLines [
 			 ifFalse: [ self composeOneLine ]) ifNil: [ ^ nil ] ]
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 TextComposer >> composeAllRectangles: rectangles [
 
 	| charIndexBeforeLine numberOfLinesBefore reasonForStopping |
@@ -133,7 +135,7 @@ TextComposer >> composeAllRectangles: rectangles [
 	]
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 TextComposer >> composeEachRectangleIn: rectangles [
 
 	| myLine lastChar |
@@ -162,7 +164,7 @@ TextComposer >> composeEachRectangleIn: rectangles [
 	^false
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 TextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: argLinesCollection priorLines: argPriorLines atY: argStartY textStyle: argTextStyle text: argText container: argContainer wantsColumnBreaks: argWantsColumnBreaks [
 
 	wantsColumnBreaks := argWantsColumnBreaks.
@@ -194,7 +196,7 @@ TextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: arg
 	^ {lines asArray. maxRightX}
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 TextComposer >> composeOneLine [
 
 	| rectangles |
@@ -209,7 +211,7 @@ TextComposer >> composeOneLine [
 	self checkIfReadyToSlide
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextComposer >> fixupLastLineIfCR [
 "This awful bit is to ensure that if we have scanned all the text and the last character is a CR that there is a null line at the end of lines. Sometimes this was not happening which caused anomalous selections when selecting all the text. This is implemented as a post-composition fixup because I couldn't figure out where to put it in the main logic."
 
@@ -218,7 +220,7 @@ TextComposer >> fixupLastLineIfCR [
 	self addNullLineForIndex: theText size + 1
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TextComposer >> multiComposeLinesFrom: argStart to: argStop delta: argDelta into: argLinesCollection priorLines: argPriorLines atY: argStartY textStyle: argTextStyle text: argText container: argContainer wantsColumnBreaks: argWantsColumnBreaks [
 	wantsColumnBreaks := argWantsColumnBreaks.
 	lines := argLinesCollection.
@@ -249,7 +251,7 @@ TextComposer >> multiComposeLinesFrom: argStart to: argStop delta: argDelta into
 	^ {lines asArray. maxRightX}
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextComposer >> slideOneLineDown [
 
 	| priorLine |

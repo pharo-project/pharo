@@ -2,42 +2,44 @@
 I am a patch in a mesh gradient.
 "
 Class {
-	#name : #AthensAbstractMeshPaintPatch,
-	#superclass : #Object,
+	#name : 'AthensAbstractMeshPaintPatch',
+	#superclass : 'Object',
 	#instVars : [
 		'controlPoints',
 		'colors'
 	],
-	#category : #'Athens-Core-Paints'
+	#category : 'Athens-Core-Paints',
+	#package : 'Athens-Core',
+	#tag : 'Paints'
 }
 
-{ #category : #constructor }
+{ #category : 'constructor' }
 AthensAbstractMeshPaintPatch class >> controlPoints: controlPoints colors: colors [
 	^ self new controlPoints: controlPoints; colors: colors; yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensAbstractMeshPaintPatch class >> isAbstract [
 
 	^ self == AthensAbstractMeshPaintPatch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAbstractMeshPaintPatch >> colors [
 	^ colors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAbstractMeshPaintPatch >> colors: anObject [
 	colors := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAbstractMeshPaintPatch >> controlPoints [
 	^ controlPoints
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAbstractMeshPaintPatch >> controlPoints: anObject [
 	controlPoints := anObject
 ]

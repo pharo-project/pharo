@@ -14,17 +14,19 @@ Internal Representation and Key Implementation Points.
 	totalItemCount: <Integer>
 "
 Class {
-	#name : #ClyBrowserQueryUpdate,
-	#superclass : #Object,
+	#name : 'ClyBrowserQueryUpdate',
+	#superclass : 'Object',
 	#instVars : [
 		'metadata',
 		'itemCache',
 		'totalItemCount'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserQueryUpdate class >> of: aBrowserQueryResult withItems: aBrowserQueryCache [
 	^self new
 		metadata: aBrowserQueryResult metadata;
@@ -32,32 +34,32 @@ ClyBrowserQueryUpdate class >> of: aBrowserQueryResult withItems: aBrowserQueryC
 		totalItemCount: aBrowserQueryResult size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryUpdate >> itemCache [
 	^ itemCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryUpdate >> itemCache: anObject [
 	itemCache := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryUpdate >> metadata [
 	^ metadata
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryUpdate >> metadata: anObject [
 	metadata := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryUpdate >> totalItemCount [
 	^ totalItemCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryUpdate >> totalItemCount: anObject [
 	totalItemCount := anObject
 ]

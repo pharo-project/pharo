@@ -2,35 +2,37 @@
 A chunk pager
 "
 Class {
-	#name : #TreeChunkPagerMorph,
-	#superclass : #TreeNavigationBarMorph,
+	#name : 'TreeChunkPagerMorph',
+	#superclass : 'TreeNavigationBarMorph',
 	#instVars : [
 		'atBottom',
 		'lastIndex',
 		'pageSizeEditor',
 		'nextPageAllowed'
 	],
-	#category : #'Morphic-Widgets-Tree-Pagination'
+	#category : 'Morphic-Widgets-Tree-Pagination',
+	#package : 'Morphic-Widgets-Tree',
+	#tag : 'Pagination'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TreeChunkPagerMorph class >> initialize [
 
 	self deprecatedAliases: { #MorphTreeChunkPager }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeChunkPagerMorph >> atBottom [
 	^ atBottom ifNil: [atBottom := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeChunkPagerMorph >> atBottom: aBoolean [
 	atBottom ~= aBoolean
 		ifTrue: [atBottom := aBoolean]
 ]
 
-{ #category : #'initialize - release' }
+{ #category : 'initialize - release' }
 TreeChunkPagerMorph >> buildPanel [
 	| widgets nextButton lastPageButton searchEditor |
 	self removeAllMorphs.
@@ -81,7 +83,7 @@ TreeChunkPagerMorph >> buildPanel [
 	self updateContents
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeChunkPagerMorph >> chunkSizeFromString: aString [
 	| input newPageSize |
 	input := aString asString trimBoth.
@@ -98,14 +100,14 @@ TreeChunkPagerMorph >> chunkSizeFromString: aString [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeChunkPagerMorph >> computedHeight [
 	^ self nodeList size > self lastIndex
 		ifTrue: [super computedHeight ]
 		ifFalse:[0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeChunkPagerMorph >> computedHeightFromContents [
 	| h |
 	h := 0.
@@ -113,34 +115,34 @@ TreeChunkPagerMorph >> computedHeightFromContents [
 	^ h max: (self preferedFont height + 8)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeChunkPagerMorph >> currentNodelist [
 	^ self nodeList copyFrom: 1 to: (self lastIndex min: self nodeList size)
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeChunkPagerMorph >> fullList [
 	self lastIndex < self nodeList size
 		ifTrue: [self nextPage: self nodeList size]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TreeChunkPagerMorph >> initialize [
 	super initialize.
 	nextPageAllowed := true
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeChunkPagerMorph >> lastIndex [
 	^ lastIndex ifNil: [lastIndex := self pageSize]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeChunkPagerMorph >> lastIndex: anIndex [
 	lastIndex := anIndex
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeChunkPagerMorph >> nextPage [
 	| last |
 	nextPageAllowed
@@ -161,7 +163,7 @@ TreeChunkPagerMorph >> nextPage [
 				ensure: [nextPageAllowed := true]]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeChunkPagerMorph >> nextPage: newLast [
 	| addedNodeList |
 	newLast > self lastIndex
@@ -174,24 +176,24 @@ TreeChunkPagerMorph >> nextPage: newLast [
 			treeMorph addSubmorphsFromNodeList: addedNodeList previouslyExpanded: treeMorph currentlyExpanded ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TreeChunkPagerMorph >> notOnLastPage [
 	^ self onLastPage not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TreeChunkPagerMorph >> onLastPage [
 	^ self lastIndex = self nodeList size
 ]
 
-{ #category : #'initialize - release' }
+{ #category : 'initialize - release' }
 TreeChunkPagerMorph >> updateContents [
 	treeMorph vIsScrollable
 		ifFalse: [self atBottom: true].
 	super updateContents
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 TreeChunkPagerMorph >> vScrollBarValue: scrollValue [
 	| old |
 	old := atBottom.
@@ -200,7 +202,7 @@ TreeChunkPagerMorph >> vScrollBarValue: scrollValue [
 		ifTrue: [ self buildPanel ]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 TreeChunkPagerMorph >> verticalScrollbarFrontier [
 	^ 0.98
 ]

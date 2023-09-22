@@ -1,17 +1,19 @@
 Class {
-	#name : #RegisteredClassAnnotationsTest,
-	#superclass : #ClassAnnotationTestCase,
-	#category : #'ClassAnnotation-Tests-Base'
+	#name : 'RegisteredClassAnnotationsTest',
+	#superclass : 'ClassAnnotationTestCase',
+	#category : 'ClassAnnotation-Tests-Base',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RegisteredClassAnnotationsTest >> setUp [
 	super setUp.
 
 	ClassAnnotation resetCache
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RegisteredClassAnnotationsTest >> tearDown [
 
 	ClassAnnotation resetCache.
@@ -19,7 +21,7 @@ RegisteredClassAnnotationsTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testAreCached [
 	| annotations |
 	annotations := ClassAnnotationExample1 registeredInstances.
@@ -27,7 +29,7 @@ RegisteredClassAnnotationsTest >> testAreCached [
 	self assert: ClassAnnotationExample1 registeredInstances identicalTo: annotations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testAreDifferentForDifferentAnnotationClasses [
 	| annotations1 annotations2 |
 	annotations1 := ClassAnnotationExample1 registeredInstances.
@@ -36,7 +38,7 @@ RegisteredClassAnnotationsTest >> testAreDifferentForDifferentAnnotationClasses 
 	self deny: annotations1 equals: annotations2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testAreEmptyForUnusedAnnotation [
 
 	| actual |
@@ -45,7 +47,7 @@ RegisteredClassAnnotationsTest >> testAreEmptyForUnusedAnnotation [
 	self assert: actual isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testAreSortedByPriority [
 
 	| annotations expected |
@@ -57,7 +59,7 @@ RegisteredClassAnnotationsTest >> testAreSortedByPriority [
 	self assert: annotations asArray equals: expected asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testCanBeEnumerated [
 
 	| enumerated |
@@ -67,7 +69,7 @@ RegisteredClassAnnotationsTest >> testCanBeEnumerated [
 	self assert: enumerated asArray equals: ClassAnnotationExample1 registeredInstances asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testCanBeQueriedForConcreteClass [
 
 	| annotations |
@@ -77,7 +79,7 @@ RegisteredClassAnnotationsTest >> testCanBeQueriedForConcreteClass [
 	self assert: (annotations collect: #annotatedClass as: Set) equals: {ClassWithThreeAnnotations} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testIncludeCopiesForEachSubclassOfOriginDeclaration [
 
 	| annotations |
@@ -86,7 +88,7 @@ RegisteredClassAnnotationsTest >> testIncludeCopiesForEachSubclassOfOriginDeclar
 	self assert: (annotations anySatisfy: [ :each | each annotatedClass = SubclassWithOnlyInheritedAnnotation ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testIncludeForbiddenClassesAsSpecialForbiddenAnnotations [
 	| allForbidden forbidden actualAnnotation |
 
@@ -96,7 +98,7 @@ RegisteredClassAnnotationsTest >> testIncludeForbiddenClassesAsSpecialForbiddenA
 	self assert: actualAnnotation class equals: ForbiddenClassAnnotationExample
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testIncludeInstancesFromAllAnnotatingMethodsOfAnyClassInSystem [
 
 	| annotations |
@@ -106,7 +108,7 @@ RegisteredClassAnnotationsTest >> testIncludeInstancesFromAllAnnotatingMethodsOf
 	self assert: (annotations collect: #class as: Set) equals: {ClassAnnotationExample1} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testNotIncludeForbiddenClassesAsBrokenAnnotations [
 	| broken |
 
@@ -116,7 +118,7 @@ RegisteredClassAnnotationsTest >> testNotIncludeForbiddenClassesAsBrokenAnnotati
 		ifFound: [ :ann | self assert: false description: 'forbidden annotation should not be broken' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RegisteredClassAnnotationsTest >> testNotIncludeInstancesAnnotatingForbiddenClasses [
 	"In that test the annotation define canAnnotateClass: with constant false answer.
 	So any annotating methods which define it should never register their instances"

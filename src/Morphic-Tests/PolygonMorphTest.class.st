@@ -2,12 +2,14 @@
 This class holds tests for PolygonMorph
 "
 Class {
-	#name : #PolygonMorphTest,
-	#superclass : #MorphTest,
-	#category : #'Morphic-Tests-Basic'
+	#name : 'PolygonMorphTest',
+	#superclass : 'MorphTest',
+	#category : 'Morphic-Tests-Basic',
+	#package : 'Morphic-Tests',
+	#tag : 'Basic'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PolygonMorphTest >> testBoundsBug1035 [
 	"PolygonMorph used to position badly when container bounds were growing"
 

@@ -47,13 +47,15 @@ is equivalent to
 
 "
 Class {
-	#name : #Array,
-	#superclass : #ArrayedCollection,
-	#type : #variable,
-	#category : #'Collections-Sequenceable-Base'
+	#name : 'Array',
+	#superclass : 'ArrayedCollection',
+	#type : 'variable',
+	#category : 'Collections-Sequenceable-Base',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Base'
 }
 
-{ #category : #'brace support' }
+{ #category : 'brace support' }
 Array class >> braceStream: nElements [
 	"This method is used in compilation of brace constructs.
 	It MUST NOT be deleted or altered."
@@ -61,13 +63,13 @@ Array class >> braceStream: nElements [
 	^ WriteStream basicNew braceArray: (self new: nElements)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Array class >> empty [
 	"A canonicalized empty Array instance."
 	^ #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Array class >> new: sizeRequested [
 	"Answer an instance of this class with the number of indexable
 	variables specified by the argument, sizeRequested.
@@ -78,7 +80,7 @@ Array class >> new: sizeRequested [
 	^ self basicNew: sizeRequested  "Exceptional conditions will be handled in basicNew:"
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Array >> as: aSimilarClass [
 
 	"Specific classes can redefine newFromArray: by a faster implementation if they want.
@@ -89,32 +91,32 @@ Array >> as: aSimilarClass [
 	^ aSimilarClass newFromArray: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Array >> asArray [
 	"Answer with the receiver itself."
 
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Array >> asNewArray [
 
 	^ self clone
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Array >> asOrderedCollection [
 
 	^ OrderedCollection newFromArray: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Array >> asSet [
 
 	^ Set newFromArray: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Array >> atWrap: index [
 
     "Answer the index'th element of the receiver.  If index is out of bounds,
@@ -130,28 +132,28 @@ Array >> atWrap: index [
     ^ self at: index - 1 \\ self size + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Array >> atWrap: index put: anObject [
 	"Optimized to go through the primitive if possible"
 	<primitive: 61>
 	^ self at: index - 1 \\ self size + 1 put: anObject
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Array >> beReadOnlyLiteral [
 	self isLiteral ifFalse: [ ^ self ].
 	self beReadOnlyObject.
 	self do: [ :each | each beReadOnlyLiteral ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Array >> copyWithDependent: newElement [
 
 	self isEmpty ifTrue: [ ^ DependentsArray with: newElement ].
 	^ self copyWith: newElement
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Array >> elementsExchangeIdentityWith: otherArray [
 	"This primitive performs a bulk mutation, causing all pointers to the elements of the
 	 receiver to be replaced by pointers to the corresponding elements of otherArray.
@@ -188,7 +190,7 @@ Array >> elementsExchangeIdentityWith: otherArray [
 	self primitiveFailed
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Array >> elementsForwardIdentityTo: otherArray [
 	"This primitive performs a bulk mutation, causing all pointers to the elements of the
 	 receiver to be replaced by pointers to the corresponding elements of otherArray.
@@ -199,7 +201,7 @@ Array >> elementsForwardIdentityTo: otherArray [
 	self primitiveFailed
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Array >> elementsForwardIdentityTo: otherArray copyHash: copyHash [
 	"This primitive performs a bulk mutation, causing all pointers to the elements of the
 	 receiver to be replaced by pointers to the corresponding elements of otherArray.
@@ -212,7 +214,7 @@ Array >> elementsForwardIdentityTo: otherArray copyHash: copyHash [
 	self primitiveFailed
 ]
 
-{ #category : #'literal testing' }
+{ #category : 'literal testing' }
 Array >> hasLiteral: literal [
 	"Answer true if literal is identical to any literal in this array, even
 	if imbedded in further array structure. This method is only intended
@@ -226,7 +228,7 @@ Array >> hasLiteral: literal [
 	^false
 ]
 
-{ #category : #'literal testing' }
+{ #category : 'literal testing' }
 Array >> hasLiteralSuchThat: testBlock [
 	"Answer true if testBlock returns true for any literal in this array, even if imbedded in 	further Arrays or CompiledMethods.  This method is only intended for private use by 	CompiledMethod 	hasLiteralSuchThat:"
 	| lit |
@@ -236,18 +238,18 @@ Array >> hasLiteralSuchThat: testBlock [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Array >> isArray [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Array >> isLiteral [
 
 	^ self class == Array and: [ self isLiteral: {  } ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Array >> isLiteral: alreadyVisited [
 
 	"Do not call super! This logic ends with an infinite recursion"
@@ -258,13 +260,13 @@ Array >> isLiteral: alreadyVisited [
 	^ self allSatisfy: [ :each | each isLiteral: alreadyVisited , { self } ]
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 Array >> isSelfEvaluating [
 
 	^ self class == Array and: [ self isSelfEvaluating: { } ]
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 Array >> isSelfEvaluating: alreadyVisited [
 
 	"Do not call super! This logic ends with an infinite recursion"
@@ -275,7 +277,7 @@ Array >> isSelfEvaluating: alreadyVisited [
 	^ self allSatisfy: [ :each | each isSelfEvaluating: alreadyVisited , { self } ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Array >> literalEqual: other [
 
 	self class == other class ifFalse: [^ false].
@@ -285,13 +287,13 @@ Array >> literalEqual: other [
 	^ true
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 Array >> printAsLiteralFormOn: aStream [
 	aStream nextPut: $#.
 	self printElementsOn: aStream
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 Array >> printAsSelfEvaluatingFormOn: aStream [
 
 	aStream nextPut: ${.
@@ -299,7 +301,7 @@ Array >> printAsSelfEvaluatingFormOn: aStream [
 	aStream nextPut: $}
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Array >> printOn: aStream [
 	self shouldBePrintedAsLiteral ifTrue: [self printAsLiteralFormOn: aStream. ^ self].
 	self isSelfEvaluating ifTrue: [self printAsSelfEvaluatingFormOn: aStream. ^ self].
@@ -307,7 +309,7 @@ Array >> printOn: aStream [
 	super printOn: aStream
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Array >> recursiveDo: aBlock [
 
 	"execute the block for my content like do, but then recurse into nested arrays"
@@ -317,26 +319,26 @@ Array >> recursiveDo: aBlock [
 		each isArray ifTrue: [ each recursiveDo: aBlock ] ]
 ]
 
-{ #category : #'literal testing' }
+{ #category : 'literal testing' }
 Array >> refersToLiteral: literal [
 	^ (self literalEqual: literal)
 		or: [ self hasLiteral: literal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Array >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : #'literal testing' }
+{ #category : 'literal testing' }
 Array >> shouldBePrintedAsLiteral [
 
 	^ self class == Array and: [ self shouldBePrintedAsLiteral: {  } ]
 ]
 
-{ #category : #'literal testing' }
+{ #category : 'literal testing' }
 Array >> shouldBePrintedAsLiteral: alreadyVisited [
 
 	"Do not call super! This logic ends with an infinite recursion"
@@ -347,7 +349,7 @@ Array >> shouldBePrintedAsLiteral: alreadyVisited [
 	^ self allSatisfy: [ :each | each shouldBePrintedAsLiteral: alreadyVisited , { self } ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Array >> storeOn: aStream [
 
 	"Use the literal form if possible."

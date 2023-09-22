@@ -1,6 +1,6 @@
-Extension { #name : #TextLine }
+Extension { #name : 'TextLine' }
 
-{ #category : #'*FreeType-Morphic' }
+{ #category : '*FreeType-Morphic' }
 TextLine >> justifiedPadFor: spaceIndex font: aFont [
 	"Compute the width of pad for a given space in a line of justified text."
 	| pad |

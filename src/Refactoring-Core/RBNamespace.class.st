@@ -286,10 +286,10 @@ RBNamespace >> classObjectFor: anObject [
 { #category : 'accessing - classes' }
 RBNamespace >> classesReferencingClass: aRBClass [ 
 
-	| classes |
-	classes := Set new. 
-	self allReferencesToClass: aRBClass do: [ :meth | classes add: meth methodClass ].
-	^ classes
+	| methods |
+	methods := Set new. 
+	self allReferencesToClass: aRBClass do: [ :meth | methods add: meth methodClass ].
+	^ methods
 ]
 
 { #category : 'changes' }
@@ -490,6 +490,15 @@ RBNamespace >> metaclassNamed: aSymbol [
 	( class isBehavior or: [ class isTrait ] )
 		ifTrue: [ ^ ( self createNewClassFor: class ) last ].
 	^ nil
+]
+
+{ #category : 'accessing - classes' }
+RBNamespace >> methodsReferencingClass: aRBClass [ 
+
+	| methods |
+	methods := Set new. 
+	self allReferencesToClass: aRBClass do: [ :meth | methods add: meth ].
+	^ methods
 ]
 
 { #category : 'accessing' }

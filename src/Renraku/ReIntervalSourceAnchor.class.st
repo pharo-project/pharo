@@ -2,15 +2,17 @@
 This anchor stores the actual interval object which is set during initialization.
 "
 Class {
-	#name : #ReIntervalSourceAnchor,
-	#superclass : #ReSourceAnchor,
+	#name : 'ReIntervalSourceAnchor',
+	#superclass : 'ReSourceAnchor',
 	#instVars : [
 		'interval'
 	],
-	#category : #'Renraku-SourceAnchors'
+	#category : 'Renraku-SourceAnchors',
+	#package : 'Renraku',
+	#tag : 'SourceAnchors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReIntervalSourceAnchor class >> entity: anEntity interval: anInterval [
 
 	^ self basicNew
@@ -19,20 +21,20 @@ ReIntervalSourceAnchor class >> entity: anEntity interval: anInterval [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReIntervalSourceAnchor >> initializeEnitity: anEntiy interval: anInterval [
 
 	self initializeEnitity: anEntiy.
 	interval := anInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReIntervalSourceAnchor >> interval [
 
 	^ interval
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReIntervalSourceAnchor >> providesInterval [
 
 	^ true
