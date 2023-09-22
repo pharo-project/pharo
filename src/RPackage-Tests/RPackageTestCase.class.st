@@ -12,12 +12,6 @@ Class {
 	#package : 'RPackage-Tests'
 }
 
-{ #category : 'accessing' }
-RPackageTestCase >> allWorkingCopies [
-
-	^ MCWorkingCopy allWorkingCopies
-]
-
 { #category : 'utilities' }
 RPackageTestCase >> createMockTestPackages [
 
@@ -100,12 +94,6 @@ RPackageTestCase >> namesOfMockTestPackages [
 RPackageTestCase >> organizer [
 
 	^ testEnvironment organization
-]
-
-{ #category : 'utilities' }
-RPackageTestCase >> removePackage: aPackage [
-
-	self organizer basicUnregisterPackage: aPackage
 ]
 
 { #category : 'running' }

@@ -52,15 +52,8 @@ RPackageIncrementalTest >> setUp [
 { #category : 'running' }
 RPackageIncrementalTest >> tearDown [
 
-	createdPackages do: [ :package | self removePackage: package ].
-	"just remove package from package organizer dictionary"
+	createdPackages do: [ :package | package removeFromSystem ].
 
-	createdPackages do: [ :each |
-		self allWorkingCopies
-			detect: [ :mcPackage | mcPackage packageName = each packageName asString ]
-			ifFound: [ :mcPackage | mcPackage unregister ].
-		each extendedClasses do: [ :extendedClass | self organizer unregisterExtendingPackage: each forClass: extendedClass ] ].
-	"all ***extending*** classes the packages are also unregistered from PackageOrganizer"
 	super tearDown
 ]
 
