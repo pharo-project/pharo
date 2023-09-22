@@ -18,7 +18,7 @@ RBRemoveClassAndPushStateToSubclassChoice >> action [
 { #category : 'accessing' }
 RBRemoveClassAndPushStateToSubclassChoice >> description [
 
-	^ 'Remove it and push class state to subclasses.'
+	^ 'Remove it and push class state to subclasses'
 ]
 
 { #category : 'accessing' }

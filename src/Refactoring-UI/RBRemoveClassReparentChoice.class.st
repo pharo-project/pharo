@@ -33,7 +33,7 @@ RBRemoveClassReparentChoice >> description [
 	classesHaveSubclasses ifTrue: [
 		stream nextPutAll: ' and reparent subclasses' ].
 	emptyClasses ifFalse: [ 
-		stream nextPutAll: '. Pay attention you lose all the class state.' ].
+		stream nextPutAll: '. Pay attention you lose all the class state' ].
 
 	^ stream contents
 ]

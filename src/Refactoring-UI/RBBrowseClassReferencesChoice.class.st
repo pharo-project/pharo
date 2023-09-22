@@ -15,5 +15,5 @@ RBBrowseClassReferencesChoice >> action [
 { #category : 'accessing' }
 RBBrowseClassReferencesChoice >> description [
 
-	^ 'Browse class references.'
+	^ 'Browse class references'
 ]

@@ -56,7 +56,7 @@ RBClassesHaveNoReferencesCondition >> printOn: aStream [
 				nextPutAll: class name;
 				nextPutAll: ' has ';
 				nextPutAll: refs size asString;
-				nextPutAll: ' references';
+				nextPutAll: ' references.';
 				nextPut: Character cr ]
 ]
 
