@@ -431,7 +431,7 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 
 	self addEvent: (EpMethodRemoval method: (aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
 				  protocol: aMethodRemovedAnnouncement protocol name;
-				  package: ((self packageOrganizer packageForProtocol: aMethodRemovedAnnouncement protocol) ifNil: [ aMethodRemovedAnnouncement methodClass package ]) name;
+				  package: aMethodRemovedAnnouncement methodPackage name;
 				  yourself))
 ]
 

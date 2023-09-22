@@ -3,7 +3,7 @@ I am a test case specialized in checking that the announcements linked to protoc
 "
 Class {
 	#name : 'ProtocolAnnouncementsTest',
-	#superclass : 'ProtocolTest',
+	#superclass : 'AbstractClassDescriptionTest',
 	#instVars : [
 		'numberOfAnnouncements'
 	],

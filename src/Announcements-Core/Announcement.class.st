@@ -7,17 +7,19 @@ HelpBrowser openOn: AnnouncementsHelp
 
 "
 Class {
-	#name : #Announcement,
-	#superclass : #Object,
-	#category : #'Announcements-Core-Base'
+	#name : 'Announcement',
+	#superclass : 'Object',
+	#category : 'Announcements-Core-Base',
+	#package : 'Announcements-Core',
+	#tag : 'Base'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 Announcement class >> , anAnnouncementClass [
 	^ AnnouncementSet with: self with: anAnnouncementClass
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 Announcement class >> - anotherAnnouncement [
 	"Create an announcement set containing the receiver
 	and anotherAnnouncement as exclusion."
@@ -28,30 +30,30 @@ Announcement class >> - anotherAnnouncement [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Announcement class >> asAnnouncement [
 	^ self new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Announcement class >> handlesAnnouncement: anAnnouncement [
 	"The receiver acts as a filter to determine whether subscribers who used the receiver as signaling tag (event identifier class or symbol) should receive incoming announcement. In particular, registering to a superclass will receive the announcements from all subclasses."
 
 	^ anAnnouncement class includesBehavior: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Announcement class >> where: instancesFilterBlock [
 
 	^AnnouncementDeliveryCondition for: self where: instancesFilterBlock
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Announcement >> asAnnouncement [
 	^ self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Announcement >> prepareForDelivery [
 	"This method will be executed once before subscriptions delivery.
 	If nobody subscribed on me this method will not be called.

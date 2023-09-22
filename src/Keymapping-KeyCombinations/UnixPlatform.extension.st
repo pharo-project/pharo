@@ -1,6 +1,6 @@
-Extension { #name : #UnixPlatform }
+Extension { #name : 'UnixPlatform' }
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 UnixPlatform >> defaultModifier [
 
 	^ KMModifier control
