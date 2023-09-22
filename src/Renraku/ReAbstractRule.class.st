@@ -121,6 +121,8 @@ ReAbstractRule class >> isUsed [
 { #category : 'testing' }
 ReAbstractRule class >> isVisible [
 
+	self isAbstract ifTrue: [ ^ false ].
+	
 	^ self methodOfInteresetSelectors anySatisfy: [ :selector |
 		self perform: selector ]
 ]
