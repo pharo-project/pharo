@@ -296,15 +296,7 @@ ShiftClassInstaller >> oldClass: anObject [
 { #category : 'notifications' }
 ShiftClassInstaller >> recategorize: aClass to: newCategory [
 
-	| oldCategory |
-	oldCategory := oldClass ifNotNil: [ oldClass category ].
-	oldCategory == newCategory ifTrue: [ ^ self ].
-
-	self installingEnvironment organization ifNotNil: [ :systemOrganizer | aClass basicCategory: newCategory ].
-
-	(oldCategory isNil or: [ oldCategory = Class unclassifiedCategory ])
-		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
-		ifFalse: [ SystemAnnouncer uniqueInstance class: aClass recategorizedFrom: oldCategory to: newCategory ]
+	aClass category: newCategory
 ]
 
 { #category : 'building' }

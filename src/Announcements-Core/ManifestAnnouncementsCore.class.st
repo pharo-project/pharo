@@ -2,17 +2,19 @@
 A package with classes for the announcement framwork - an event notification framework.
 "
 Class {
-	#name : #ManifestAnnouncementsCore,
-	#superclass : #PackageManifest,
-	#category : #'Announcements-Core-Manifest'
+	#name : 'ManifestAnnouncementsCore',
+	#superclass : 'PackageManifest',
+	#category : 'Announcements-Core-Manifest',
+	#package : 'Announcements-Core',
+	#tag : 'Manifest'
 }
 
-{ #category : #'meta-data - dependency analyser' }
+{ #category : 'meta-data - dependency analyser' }
 ManifestAnnouncementsCore class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Abstract')
 ]
 
-{ #category : #'code-critics' }
+{ #category : 'code-critics' }
 ManifestAnnouncementsCore class >> ruleBadMessageRule2V1FalsePositive [
 
 	<ignoreForCoverage>

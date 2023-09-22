@@ -2,18 +2,20 @@
 Test to check if there are methods who have unused temporary variables in the image
 "
 Class {
-	#name : #NoUnusedVariablesLeftTest,
-	#superclass : #TestCase,
-	#category : #'ReleaseTests-CleanCode'
+	#name : 'NoUnusedVariablesLeftTest',
+	#superclass : 'TestCase',
+	#category : 'ReleaseTests-CleanCode',
+	#package : 'ReleaseTests',
+	#tag : 'CleanCode'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NoUnusedVariablesLeftTest class >> defaultTimeLimit [
 
 	^ 2 minute
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 
 	| variables classes validExceptions remaining |
@@ -30,7 +32,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	self assert: remaining isEmpty description: 'the following classes have unused class variables and should be cleaned: ' , remaining asString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 
 	| variables classes |
@@ -46,7 +48,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 	self assert: classes isEmpty description: 'the following classes have unused instance variables and should be cleaned: ' , classes asOrderedCollection asString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NoUnusedVariablesLeftTest >> testNoUnusedTemporaryVariablesLeft [
 	"Fail if there are methods who have unused temporary variables"
 	| found validExceptions |

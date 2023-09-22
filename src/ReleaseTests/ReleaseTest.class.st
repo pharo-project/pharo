@@ -2,33 +2,35 @@
 I contain tests that validate the integrity of the system.
 "
 Class {
-	#name : #ReleaseTest,
-	#superclass : #AbstractEnvironmentTestCase,
-	#category : #'ReleaseTests-Release'
+	#name : 'ReleaseTest',
+	#superclass : 'AbstractEnvironmentTestCase',
+	#category : 'ReleaseTests-Release',
+	#package : 'ReleaseTests',
+	#tag : 'Release'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReleaseTest class >> actualProcesses [
 	^ Process allSubInstances reject: [ :each | each isTerminated ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReleaseTest class >> defaultTimeLimit [
 
 	^ 2 minutes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReleaseTest >> actualProcesses [
 	^ self class actualProcesses
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReleaseTest >> assertValidLintRule: aLintRule [
 	self assertValidLintRule: aLintRule withExceptions: {}
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
 	| runner results |
 	runner := ReSmalllintChecker new.
@@ -56,7 +58,7 @@ ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
 						separatedBy: [ s lf ] ] ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReleaseTest >> hasStartUpOrShutDownMethod: aClass [
 	| keySelectors |
 	keySelectors := #(#startUp #startUp: #shutDown #shutDown:).
@@ -64,7 +66,7 @@ ReleaseTest >> hasStartUpOrShutDownMethod: aClass [
 		or: [ aClass class selectors includesAny: keySelectors ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReleaseTest >> knownProcesses [
 	"Return a dynamic list of know processes"
 
@@ -83,7 +85,7 @@ ReleaseTest >> knownProcesses [
 		TFCallbackQueue uniqueInstance callbackProcess } asSet
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	| wrong |
 	wrong := OrderedCollection new.
@@ -91,7 +93,7 @@ ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	self assertEmpty: wrong
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllClassPoolBindingHaveDefiningClass [
 	| wrong |
 	wrong := OrderedCollection new.
@@ -99,14 +101,14 @@ ReleaseTest >> testAllClassPoolBindingHaveDefiningClass [
 	self assertEmpty: wrong
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
 	wrong := testingEnvironment associations reject: [ :each | each isKindOf: GlobalVariable ].
 	self assertEmpty: wrong
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllInstanceVariablesStartLowercase [
 	"Make sure that all class instance variable names start with a lowercase letter"
 	| violating |
@@ -119,7 +121,7 @@ ReleaseTest >> testAllInstanceVariablesStartLowercase [
 		description: 'Instance variable names must start with a lowercase letter: ', violating asArray asString
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testClassesShadow [
 
 	| classes |
@@ -130,14 +132,14 @@ ReleaseTest >> testClassesShadow [
 	self assert: classes isEmpty description: classes asArray asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 
 	self assertValidLintRule: ReExplicitRequirementMethodsRule new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 	| instanceSideMethodsWithNilKeyInLastLiteral |
 
@@ -151,7 +153,7 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 				print: instanceSideMethodsWithNilKeyInLastLiteral ]]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
 	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #WeakArray #BasicCommandLineHandler).
@@ -165,7 +167,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 	self assert: (registeredHandlers includes: #UIManagerSessionHandler)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testLayoutIntegrity [
 
 	SystemNavigation default allClassesDo: [ :class |
@@ -173,14 +175,14 @@ ReleaseTest >> testLayoutIntegrity [
 		class classSide classLayout checkIntegrity ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 
 	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testManifestNamesAccordingToPackageNames [
 	"Make sure package name and manifest name are in synch"
 
@@ -197,7 +199,7 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 		 self assert: (expectedManifestNames includes: each)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testMethodsContainNoHalt [
 
 	| methods |
@@ -217,7 +219,7 @@ ReleaseTest >> testMethodsContainNoHalt [
 				print: methods ] ]
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testMethodsWithUnboundGlobals [
 	| methodsWithUnboundGlobals |
 	"Ensure the environment is clean"
@@ -234,7 +236,7 @@ ReleaseTest >> testMethodsWithUnboundGlobals [
 				print: methodsWithUnboundGlobals ]]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testNoEmptyPackages [
 	"Test that we have no empty packages left"
 
@@ -243,7 +245,7 @@ ReleaseTest >> testNoEmptyPackages [
 	self assertEmpty: violating
 ]
 
-{ #category : #'tests - methods' }
+{ #category : 'tests - methods' }
 ReleaseTest >> testNoEquivalentSuperclassMethods [
 
 	| methods |
@@ -268,7 +270,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 				print: methods ] ]"
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testNoLiteralIsPinnedInMemory [
 	| methodsWithPinnedLiterals |
 
@@ -280,13 +282,13 @@ ReleaseTest >> testNoLiteralIsPinnedInMemory [
 	self assertEmpty: methodsWithPinnedLiterals
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testNoNilAssignmentInInitializeMethod [
 
 	self assertValidLintRule: ReNoNilAssignationInInitializeRule new
 ]
 
-{ #category : #'tests - source' }
+{ #category : 'tests - source' }
 ReleaseTest >> testNoNullCharacter [
 	"Check that we do not have NULL in sources - see https://github.com/pharo-project/pharo/issues/9631"
 
@@ -295,7 +297,7 @@ ReleaseTest >> testNoNullCharacter [
 	self assert: violations isEmpty description: 'Source corrupted: Methods with Null character found'
 ]
 
-{ #category : #'tests - source' }
+{ #category : 'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
 	methods := SystemNavigation new allMethods select: [ :method |
@@ -308,7 +310,7 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 				print: methods ] ]
 ]
 
-{ #category : #'tests - methods' }
+{ #category : 'tests - methods' }
 ReleaseTest >> testNoSentNotImplementedSelectors [
 	"There is a long term cleanup to fix 'selectors send but not implemented'.
 	 This test makes sure that we do not introduce new cases until we are down to zero"
@@ -316,7 +318,7 @@ ReleaseTest >> testNoSentNotImplementedSelectors [
 	self assert: SystemNavigation default allSentNotImplementedSelectors size < 315
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
 	| found validExceptions remaining |
@@ -338,7 +340,7 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
 
@@ -356,7 +358,7 @@ ReleaseTest >> testObsoleteClasses [
 					print: obsoleteClasses ]]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testPharoVersionFileExists [
 
 	"Test there is a pharo.version file next to this image containing the short version of this pharo image.
@@ -370,7 +372,7 @@ ReleaseTest >> testPharoVersionFileExists [
 		equals: SystemVersion current major asString,  SystemVersion current minor asString
 ]
 
-{ #category : #'tests - packages - manifests' }
+{ #category : 'tests - packages - manifests' }
 ReleaseTest >> testProperManifestClasses [
 
 	|manifests|
@@ -379,7 +381,7 @@ ReleaseTest >> testProperManifestClasses [
 	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ])
 ]
 
-{ #category : #'tests - rpackage' }
+{ #category : 'tests - rpackage' }
 ReleaseTest >> testRPackageOrganizer [
 	"Ensure other tests temporary created organizers are collected"
 
@@ -395,7 +397,7 @@ ReleaseTest >> testRPackageOrganizer [
 		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testRatioOfCommentedClasses [
 
 	| stereotypes violating |
@@ -411,7 +413,7 @@ ReleaseTest >> testRatioOfCommentedClasses [
 	self assert: violating size <= 876
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17721"
 
@@ -422,7 +424,7 @@ ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupLi
 		ifTrue: [ self should: [ (startupList indexOf: #FileLocator) < (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17834"
 	"The Startup of he WorldMorph is now done in the UIManagerHandler"
@@ -433,12 +435,12 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
 	self assertValidLintRule: ReTestClassNameShouldEndWithTestRule new
 ]
 
-{ #category : #'tests - rpackage' }
+{ #category : 'tests - rpackage' }
 ReleaseTest >> testThatAllMethodsArePackaged [
 	| classes instanceMethods classMethods allMethods methodsWithoutPackageInfo |
 	classes := Smalltalk allClassesAndTraits.
@@ -449,7 +451,7 @@ ReleaseTest >> testThatAllMethodsArePackaged [
 	self assertEmpty: methodsWithoutPackageInfo
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testUndeclared [
 	| undeclaredVariables validExceptions remaining description |
 
@@ -480,7 +482,7 @@ ReleaseTest >> testUndeclared [
 	self assert: remaining isEmpty description: description
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testUnknownProcesses [
 	"Make sure that there are no other processes running except the known processes"
 
@@ -499,7 +501,7 @@ ReleaseTest >> testUnknownProcesses [
 				separatedBy: [ out << String crlf ] ])
 ]
 
-{ #category : #'tests - rpackage' }
+{ #category : 'tests - rpackage' }
 ReleaseTest >> testUnpackagedClasses [
 
 	| unpackagedClasses |
@@ -509,7 +511,7 @@ ReleaseTest >> testUnpackagedClasses [
 			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])
 ]
 
-{ #category : #'tests - rpackage' }
+{ #category : 'tests - rpackage' }
 ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 
 	| unpackagePackage |
@@ -518,7 +520,7 @@ ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 	self assertEmpty: unpackagePackage classes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testVersionInImageHeaderIsCorrect [
 
 	| currentVersion |
@@ -529,7 +531,7 @@ ReleaseTest >> testVersionInImageHeaderIsCorrect [
 		equals: currentVersion major * 10 + currentVersion minor
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testWorldMenuHasHelpForAllEntries [
 	"In this test we check that at least every terminal menu entry of the world menu has an help."
 

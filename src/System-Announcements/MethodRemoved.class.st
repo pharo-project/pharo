@@ -16,12 +16,14 @@ Class {
 }
 
 { #category : 'instance creation' }
-MethodRemoved class >> methodRemoved: aCompiledMethod protocol: aProtocol origin: aBehavior [
-	^self new
-		method: aCompiledMethod;
-		protocol: aProtocol;
-		methodOrigin: aBehavior;
-		yourself
+MethodRemoved class >> methodRemoved: aCompiledMethod protocol: aProtocol origin: aBehavior package: aPackage [
+
+	^ self new
+		  method: aCompiledMethod;
+		  protocol: aProtocol;
+		  methodOrigin: aBehavior;
+		  methodPackage: aPackage;
+		  yourself
 ]
 
 { #category : 'testing' }
@@ -38,6 +40,12 @@ MethodRemoved >> methodOrigin [
 { #category : 'accessing' }
 MethodRemoved >> methodOrigin: anObject [
 	methodOrigin := anObject
+]
+
+{ #category : 'accessing' }
+MethodRemoved >> methodPackage: aPackage [
+
+	methodPackage := aPackage
 ]
 
 { #category : 'accessing' }

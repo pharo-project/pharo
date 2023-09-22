@@ -281,7 +281,10 @@ Class >> category: aString [
 	oldCategory := self category.
 	oldCategory = aString ifTrue: [ ^ self ].
 	self basicCategory: aString asSymbol.
-	SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category
+
+	oldCategory = Class unclassifiedCategory
+		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: self inCategory: self category ]
+		ifFalse: [ SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category ]
 ]
 
 { #category : 'subclass creation - variableByte' }
@@ -580,17 +583,15 @@ Class >> deprecationRefactorings [
 
 { #category : 'copying' }
 Class >> duplicateClassWithNewName: aSymbol [
+
 	| copysName class |
 	copysName := aSymbol asSymbol.
-	copysName = self name
-		ifTrue: [ ^ self ].
-	(self environment includesKey: copysName)
-		ifTrue: [ ^ self error: copysName , ' already exists' ].
-	class := self classInstaller
-		make: [ :builder |
-			builder
-				fillFor: self;
-				name: copysName ].
+	copysName = self name ifTrue: [ ^ self ].
+	(self environment includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
+	class := self classInstaller make: [ :builder |
+		         builder
+			         fillFor: self;
+			         name: copysName ].
 	class copyAllMethodsFrom: self.
 	class class copyAllMethodsFrom: self class.
 	^ class

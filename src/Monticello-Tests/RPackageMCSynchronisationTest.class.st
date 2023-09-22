@@ -22,16 +22,6 @@ Class {
 { #category : 'setup' }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
-	self organizer environment
-		removeClassNamed: 'NewClass';
-		removeClassNamed: 'RPackageNewStubClass';
-		removeClassNamed: 'RPackageOldStubClass';
-		removeClassNamed: 'Foo';
-		removeClassNamed: 'FooOther';
-		removeClassNamed: 'NewTrait';
-		removeClassNamed: 'ClassInYPackage';
-		removeClassNamed: 'ClassInZPackage'.
-
 	#( 'OriginalCategory' 'XXXXX' 'XXXX' 'YYYYY' 'YYYY' 'Yyyyy' 'YyYyY' 'Y' 'ZZZZZ' 'Zzzzz' 'FooPackage-Core' 'FooPackage-Other' 'FooPackage' 'Zork' ) do: [
 		:packageName |
 		self allWorkingCopies
