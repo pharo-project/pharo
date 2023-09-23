@@ -22,6 +22,16 @@ RBClassesHaveNoSubclassesCondition >> classes: aRBClassCollection [
 	classes := aRBClassCollection 
 ]
 
+{ #category : 'displaying' }
+RBClassesHaveNoSubclassesCondition >> displayStringOn: aStream [
+
+	self violators do: [ :violator |
+		aStream
+			nextPutAll: violator name;
+			nextPutAll: ' has subclasses.';
+			nextPut: Character cr ]
+]
+
 { #category : 'testing' }
 RBClassesHaveNoSubclassesCondition >> hasSubclasses: aClass excluding: classesList [
 
@@ -39,16 +49,6 @@ RBClassesHaveNoSubclassesCondition >> isFalse [
 RBClassesHaveNoSubclassesCondition >> isTrue [ 
 
 	^ self check
-]
-
-{ #category : 'printing' }
-RBClassesHaveNoSubclassesCondition >> printOn: aStream [
-
-	self violators do: [ :violator |
-		aStream
-			nextPutAll: violator name;
-			nextPutAll: ' has subclasses.';
-			nextPut: Character cr ]
 ]
 
 { #category : 'accessing' }

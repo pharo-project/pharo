@@ -22,6 +22,16 @@ RBClassesEmptyCondition >> classes: aRBClassCollection [
 	classes := aRBClassCollection 
 ]
 
+{ #category : 'displaying' }
+RBClassesEmptyCondition >> displayStringOn: aStream [
+
+	self violators do: [ :violator |
+		aStream
+			nextPutAll: violator name;
+			nextPutAll: ' is not empty.';
+			nextPut: Character cr ]
+]
+
 { #category : 'testing' }
 RBClassesEmptyCondition >> isEmpty: aClass [
 
@@ -40,16 +50,6 @@ RBClassesEmptyCondition >> isFalse [
 RBClassesEmptyCondition >> isTrue [
 
 	^ self check
-]
-
-{ #category : 'printing' }
-RBClassesEmptyCondition >> printOn: aStream [
-
-	self violators do: [ :violator |
-		aStream
-			nextPutAll: violator name;
-			nextPutAll: ' is not empty.';
-			nextPut: Character cr ]
 ]
 
 { #category : 'accessing' }

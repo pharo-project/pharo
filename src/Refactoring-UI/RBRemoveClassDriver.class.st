@@ -64,9 +64,9 @@ RBRemoveClassDriver >> handleBreakingChanges [
 RBRemoveClassDriver >> labelBasedOnBreakingChanges [
 
 	^ String streamContents: [ :stream | 
-		emptyClasses printOn: stream.
-		noSubclasses printOn: stream.
-		haveNoReferences printOn: stream.	
+		emptyClasses displayStringOn: stream.
+		noSubclasses displayStringOn: stream.
+		haveNoReferences displayStringOn: stream.	
 		stream nextPutAll: 'Select a strategy' ]
 ]
 

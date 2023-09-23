@@ -29,6 +29,19 @@ RBClassesHaveNoReferencesCondition >> classes: aRBClassCollection [
 	classes := aRBClassCollection 
 ]
 
+{ #category : 'displaying' }
+RBClassesHaveNoReferencesCondition >> displayStringOn: aStream [
+
+	(self violators reject: [ :refs | refs isEmpty ])
+		keysAndValuesDo: [ :class :refs |
+			aStream
+				nextPutAll: class name;
+				nextPutAll: ' has ';
+				nextPutAll: refs size asString;
+				nextPutAll: ' references.';
+				nextPut: Character cr ]
+]
+
 { #category : 'testing' }
 RBClassesHaveNoReferencesCondition >> isFalse [
 
@@ -45,19 +58,6 @@ RBClassesHaveNoReferencesCondition >> isTrue [
 RBClassesHaveNoReferencesCondition >> model: aRBNamespace [
 
 	model := aRBNamespace
-]
-
-{ #category : 'printing' }
-RBClassesHaveNoReferencesCondition >> printOn: aStream [
-
-	(self violators reject: [ :refs | refs isEmpty ])
-		keysAndValuesDo: [ :class :refs |
-			aStream
-				nextPutAll: class name;
-				nextPutAll: ' has ';
-				nextPutAll: refs size asString;
-				nextPutAll: ' references.';
-				nextPut: Character cr ]
 ]
 
 { #category : 'accessing' }
