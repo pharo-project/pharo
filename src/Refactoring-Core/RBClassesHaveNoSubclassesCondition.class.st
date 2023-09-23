@@ -55,9 +55,6 @@ RBClassesHaveNoSubclassesCondition >> printOn: aStream [
 RBClassesHaveNoSubclassesCondition >> violators [
 
 	^ violators ifNil: [
-		  violators := OrderedCollection new.
-		  classes collect: [ :aClass |
-			  (self hasSubclasses: aClass excluding: classes) ifTrue: [
-				  violators add: aClass ] ].
-		  violators ]
+		  violators := classes select: [ :aClass |
+			               self hasSubclasses: aClass excluding: classes ] ]
 ]

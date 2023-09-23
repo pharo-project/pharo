@@ -56,9 +56,5 @@ RBClassesEmptyCondition >> printOn: aStream [
 RBClassesEmptyCondition >> violators [
 
 	^ violators ifNil: [
-		  violators := OrderedCollection new.
-		  classes do: [ :aClass |
-			  (self isEmpty: aClass) ifFalse: [
-				  violators add: aClass ] ].
-		  violators ]
+		  violators := classes reject: [ :aClass | self isEmpty: aClass ] ]
 ]
