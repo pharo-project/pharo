@@ -107,5 +107,6 @@ RBRemoveClassDriver >> runRefactoring [
 RBRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 	
 	scopes := refactoringScopes.
+	model := self refactoringScopeOn: scopes first.
 	classes := aColclasses
 ]
