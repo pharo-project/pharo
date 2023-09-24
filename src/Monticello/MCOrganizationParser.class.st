@@ -24,8 +24,8 @@ MCOrganizationParser >> addDefinitionsTo: aCollection [
 
 	tokens := source parseLiterals.
 
-	packageName := '' join: (tokens copyFrom: 4 to: tokens size - 2).
-	tags := tokens last.
+	packageName := tokens at: 4.
+	tags := tokens at: 6.
 
 	definition
 		packageName: packageName;
