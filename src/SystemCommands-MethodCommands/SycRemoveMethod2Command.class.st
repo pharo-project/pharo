@@ -2,7 +2,6 @@ Class {
 	#name : 'SycRemoveMethod2Command',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
-		'removeStrategy',
 		'toolContext'
 	],
 	#category : 'SystemCommands-MethodCommands',

@@ -1,9 +1,6 @@
 Class {
 	#name : 'RBRemoveClassAndPushStateToSubclassChoice',
 	#superclass : 'RBRemoveClassChoice',
-	#instVars : [
-		'removingClassesAreEmpty'
-	],
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'

@@ -29,7 +29,7 @@ RBInstanceVariableHasReferences >> hierarchyOf: aRBClass referencesInstanceVaria
 	instanceVariable := variableName 
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'initialization' }
 RBInstanceVariableHasReferences >> initialize [ 
 	super initialize.
 	violators := OrderedCollection new
