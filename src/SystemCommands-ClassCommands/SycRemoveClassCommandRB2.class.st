@@ -2,7 +2,6 @@ Class {
 	#name : 'SycRemoveClassCommandRB2',
 	#superclass : 'SycClassCommand',
 	#instVars : [
-		'removeStrategy',
 		'toolContext'
 	],
 	#category : 'SystemCommands-ClassCommands',

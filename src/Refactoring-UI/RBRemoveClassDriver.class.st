@@ -1,6 +1,6 @@
 Class {
 	#name : 'RBRemoveClassDriver',
-	#superclass : 'RBDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'classes',
 		'haveNoReferences',

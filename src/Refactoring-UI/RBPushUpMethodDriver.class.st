@@ -12,7 +12,7 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : 'RBPushUpMethodDriver',
-	#superclass : 'RBDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
 		'methods',

@@ -3,7 +3,7 @@ I'm a model for user interaction for the remove method refactoring.
 "
 Class {
 	#name : 'RBRemoveMethodDriver',
-	#superclass : 'RBDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'methods',
 		'senders'
