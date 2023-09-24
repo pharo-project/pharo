@@ -122,11 +122,24 @@ RBConditionTest >> testHierarchyOfReferencesInstanceVariable [
 
 	| testClass |
 	testClass := rbNamespace classNamed: self class name.
-
+	self halt.
 	self assert: (testClass withAllSuperclasses includes: objectClass).
 	self assert: (RBCondition
 			 hierarchyOf: testClass
 			 referencesInstanceVariable: #objectClass) check
+]
+
+{ #category : 'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesInstanceVariable2 [
+
+	| testClass |
+	testClass := rbNamespace classNamed: self class name.
+	
+	self assert: (testClass withAllSuperclasses includes: objectClass).
+	"the class itself refers to its own objectClass instance variable"
+	self assert: (RBInstanceVariableHasReferences new
+			 				hierarchyOf: testClass
+			 				referencesInstanceVariable: #objectClass) check
 ]
 
 { #category : 'tests - references' }

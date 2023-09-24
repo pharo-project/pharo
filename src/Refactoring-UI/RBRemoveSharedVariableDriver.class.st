@@ -3,7 +3,7 @@ I'm a model for user interaction for the remove shared variable refactoring.
 "
 Class {
 	#name : 'RBRemoveSharedVariableDriver',
-	#superclass : 'RBDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
 		'variables'
