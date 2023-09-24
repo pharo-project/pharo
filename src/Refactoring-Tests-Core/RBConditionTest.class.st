@@ -122,7 +122,6 @@ RBConditionTest >> testHierarchyOfReferencesInstanceVariable [
 
 	| testClass |
 	testClass := rbNamespace classNamed: self class name.
-	self halt.
 	self assert: (testClass withAllSuperclasses includes: objectClass).
 	self assert: (RBCondition
 			 hierarchyOf: testClass
