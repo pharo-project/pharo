@@ -54,7 +54,7 @@ MCClassTraitDefinition >> baseTrait [
 
 { #category : 'initialization' }
 MCClassTraitDefinition >> baseTraitName: aTraitName [
-1haltOnce.
+
 	baseTrait := aTraitName
 ]
 
