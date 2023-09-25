@@ -12,9 +12,14 @@ RBCompositeRefactoring2 >> applicabilityPreconditions [
 	when executing the refactoring.
 	"
 	
-	"^ refactorings allSatisfy: [ :each | each applicabilityPreconditions check ] this is bad since it does not return a condition"
 	
-	^ refactorings inject: RBTrueCondition new into: [ :sum :each | sum & each applicabilityPreconditions ]
+	
+	"^ refactorings inject: RBTrueCondition new into: [ :sum :each | sum & each applicabilityPreconditions ]"
+	
+	refactorings ifEmpty: [ ^ self ].
+	refactorings size = 1
+		ifTrue: [ ^ refactorings first applicabilityPreconditions ].
+	^ refactorings fold: [ :sum :each | sum & each applicabilityPreconditions ]
 	
 ]
 
@@ -25,8 +30,10 @@ RBCompositeRefactoring2 >> breakingChangePreconditions [
 	"
 	
 	"^ refactorings allSatisfy: [ :each | each applicabilityPreconditions check ] this is bad since it does not return a condition"
-	
-	^ refactorings inject: RBTrueCondition new into: [ :sum :each | sum & each breakingChangePreconditions ]
+	refactorings ifEmpty: [ ^ self ].
+	refactorings size = 1
+		ifTrue: [ ^ refactorings first breakingChangePreconditions ].
+	^ refactorings fold: [ :sum :each | sum & each breakingChangePreconditions ]
 	
 ]
 

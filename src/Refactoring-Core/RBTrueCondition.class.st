@@ -1,6 +1,6 @@
 Class {
 	#name : 'RBTrueCondition',
-	#superclass : 'RBCondition',
+	#superclass : 'RBNewAbstractCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -13,7 +13,13 @@ RBTrueCondition >> check [
 ]
 
 { #category : 'checking' }
+RBTrueCondition >> errorString [ 
+
+	^ ' true '
+]
+
+{ #category : 'checking' }
 RBTrueCondition >> violators [ 
 
-	^ #()
+	^ OrderedCollection new
 ]
