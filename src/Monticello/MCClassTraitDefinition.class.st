@@ -65,6 +65,12 @@ MCClassTraitDefinition >> classTraitComposition [
 ]
 
 { #category : #accessing }
+MCClassTraitDefinition >> classTraitCompositionCompiled [
+
+	^ (Smalltalk compiler evaluate: self classTraitCompositionString) asTraitComposition
+]
+
+{ #category : #accessing }
 MCClassTraitDefinition >> classTraitCompositionString [
 	^ self classTraitComposition ifNil: [ '{}' ]
 ]
@@ -111,8 +117,12 @@ MCClassTraitDefinition >> isClassDefinition [
 ]
 
 { #category : #installing }
-MCClassTraitDefinition >> load [	
-	self class compiler evaluate: self definitionString
+MCClassTraitDefinition >> load [
+
+	self class environment
+		at: self baseTrait
+		ifPresent: [ :trait | trait class setTraitComposition: self classTraitCompositionCompiled ]
+		ifAbsent: [ self class compiler evaluate: self definitionString ]
 ]
 
 { #category : #printing }
