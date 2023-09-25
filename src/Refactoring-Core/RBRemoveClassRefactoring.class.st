@@ -41,14 +41,7 @@ RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> applicabilityPreconditions [
 
-	| conditions |
-	conditions := self trueCondition.
-	classesDictionary keysAndValuesDo: [ :className :class |
-		conditions := (conditions & (RBCondition
-			 withBlock: [ class isNotNil ]
-			 errorString: 'No such class or trait ' , className))
-		& (self preconditionIsNotMetaclass: class) ].
-	^ conditions
+	^ { RBClassesExistCondition new classes: classesDictionary . self preconditionAreNotMeta }
 ]
 
 { #category : 'preconditions' }
@@ -63,10 +56,14 @@ RBRemoveClassRefactoring >> breakingChangePreconditions [
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> checkApplicabilityPreconditions [
 
-	| conditions |
+	| conditions errorStrings |
 	conditions := self applicabilityPreconditions.
-	conditions check ifTrue: [ ^ self ].
-	self refactoringError: conditions errorString
+	conditions := conditions reject: [ :cond | cond check ].
+	conditions ifEmpty: [ ^ self ].
+	errorStrings := String streamContents: [ :aStream |
+		                conditions do: [ :cond |
+			                cond violationMessageOn: aStream ] ].
+	self refactoringError: errorStrings
 ]
 
 { #category : 'preconditions' }
@@ -107,6 +104,12 @@ RBRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 ]
 
 { #category : 'preconditions' }
+RBRemoveClassRefactoring >> preconditionAreNotMeta [
+
+	^ RBClassesAreNotMetaClassCondition new classes: classesDictionary
+]
+
+{ #category : 'preconditions' }
 RBRemoveClassRefactoring >> preconditionEmptyClasses [
 
 	^ RBClassesEmptyCondition new classes: classesDictionary
@@ -136,11 +139,6 @@ RBRemoveClassRefactoring >> preconditionHaveNoReferences [
 RBRemoveClassRefactoring >> preconditionHaveNoSubclasses [
 
 	^ RBClassesHaveNoSubclassesCondition new classes: classesDictionary					
-]
-
-{ #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionIsNotMetaclass: aClass [
-	^ ((RBCondition isMetaclass: aClass) errorMacro: 'Cannot remove just the metaclass') not
 ]
 
 { #category : 'preconditions' }

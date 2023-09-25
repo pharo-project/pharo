@@ -93,8 +93,7 @@ RBRemoveClassDriver >> removeClassChanges [
 RBRemoveClassDriver >> runRefactoring [
 	
 	self configureRefactoring.
-	refactoring applicabilityPreconditions check ifFalse: [
-		RBRefactoringError signal: refactoring applicabilityPreconditions errorString ].
+	refactoring checkApplicabilityPreconditions.
 	
 	haveNoReferences := refactoring preconditionHaveNoReferences.
 	emptyClasses := refactoring preconditionEmptyClasses.
