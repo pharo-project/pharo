@@ -98,6 +98,13 @@ RPackage >> extensionCategoriesForClass: aClass [
 ]
 
 { #category : '*Deprecated12' }
+RPackage >> importClass: aClass [
+
+	self deprecated: 'Use #addClass: instead or #moveClass:toTag:' transformWith: '`@rcv importClass: `@arg' -> '`@rcv addClass: `@arg'.
+	^ self addClass: aClass
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> includesDefinedSelector: aSelector ofClassName: aClassName [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
 

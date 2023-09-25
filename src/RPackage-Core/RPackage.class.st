@@ -152,7 +152,7 @@ RPackage >> addClass: aClass [
 		- change the class category as appropriate.
 			(and by cascade, ensure systemClassRecategorizedAction: is called)."
 
-	aClass category: self rootTag categoryName
+	aClass instanceSide category: self rootTag categoryName
 ]
 
 { #category : 'add method - compiled method' }
@@ -396,16 +396,6 @@ RPackage >> hierarchyRoots [
 
 	^ self definedClasses
 		select: [ :each | (each superclass isNil or: [ each superclass package ~~ self ]) and: [ each hasSubclasses ] ]
-]
-
-{ #category : 'private' }
-RPackage >> importClass: aClass [
-	"import a class already created but not attached to a package to the receiver.
-	Handle also *- convention. Methods defined in *category are not added to the package.
-	Pay attention that it will not import anything from the metaClass side"
-
-	self flag: #package. "Do not rely on the category here in the future"
-	self importClass: aClass inTag: (self toTagName: aClass category)
 ]
 
 { #category : 'private' }
