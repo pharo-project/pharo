@@ -12,7 +12,7 @@ Class {
 RPackageTest >> testAddClass [
 
 	| package1 package2 class done |
-	package1 := self createNewPackageNamed: #Test1.
+	package1 := self ensurePackage: #Test1.
 	done := 0.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
 
@@ -21,7 +21,7 @@ RPackageTest >> testAddClass [
 	self assert: (package1 hasTag: #TAG).
 	self assert: ((package1 classTagNamed: #TAG) includesClass: class).
 
-	package2 := self createNewPackageNamed: #Test2.
+	package2 := self ensurePackage: #Test2.
 	[
 	SystemAnnouncer uniqueInstance when: ClassRecategorized do: [ done := done + 1 ] for: self.
 	package2 addClass: class ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ].
@@ -37,12 +37,12 @@ RPackageTest >> testAddClass [
 RPackageTest >> testAddClassFromTag [
 
 	| package1 package2 class |
-	package1 := self createNewPackageNamed: #Test1.
+	package1 := self ensurePackage: #Test1.
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
 
 	self assert: (package1 includesClass: class).
 
-	package2 := self createNewPackageNamed: #Test2.
+	package2 := self ensurePackage: #Test2.
 
 	package2 addClass: class.
 
@@ -56,7 +56,7 @@ RPackageTest >> testAddClassFromTag [
 RPackageTest >> testAllUnsentMessages [
 
 	| package class1 class2 |
-	package := self createNewPackageNamed: #Test1.
+	package := self ensurePackage: #Test1.
 
 	class1 := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
 	class2 := self createNewClassNamed: 'TestClassOther' inCategory: 'Test1-TAG'.
@@ -97,7 +97,7 @@ RPackageTest >> testAnonymousClassAndSelector [
 RPackageTest >> testDemoteToRPackageNamed [
 
 	| package1 package2 class |
-	package1 := self createNewPackageNamed: #'Test1-TAG1'.
+	package1 := self ensurePackage: #'Test1-TAG1'.
 	class := self createNewClassNamed: 'TestClass' inPackage: package1.
 	class compile: 'foo ^42' classified: 'accessing'.
 
@@ -114,8 +114,8 @@ RPackageTest >> testDemoteToRPackageNamed [
 RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 
 	| package1 package2 packageExisting class |
-	package1 := self createNewPackageNamed: #'Test1-TAG1'.
-	packageExisting := self createNewPackageNamed: #Test1.
+	package1 := self ensurePackage: #'Test1-TAG1'.
+	packageExisting := self ensurePackage: #Test1.
 	class := self createNewClassNamed: 'TestClass' inPackage: package1.
 	class compile: 'foo ^42' classified: 'accessing'.
 
@@ -146,7 +146,7 @@ RPackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 RPackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 
 	| package1 package2 class |
-	package1 := self createNewPackageNamed: #'Test1-TAG1-X1'.
+	package1 := self ensurePackage: #'Test1-TAG1-X1'.
 	class := self createNewClassNamed: 'TestClass' inPackage: package1.
 	class compile: 'foo ^42' classified: 'accessing'.
 
@@ -163,7 +163,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 RPackageTest >> testDemoteToRPackageNamedWithExtension [
 
 	| packageOriginal packageDemoted class classOther |
-	packageOriginal := self createNewPackageNamed: #'Test1-TAG1'.
+	packageOriginal := self ensurePackage: #'Test1-TAG1'.
 	class := self createNewClassNamed: 'TestClass' inPackage: packageOriginal.
 	class compile: 'foo ^42' classified: 'accessing'.
 
@@ -264,7 +264,7 @@ RPackageTest >> testPropertyAtPut [
 RPackageTest >> testRemoveEmptyTags [
 
 	| package class tag1 tag2 |
-	package := self createNewPackageNamed: #Test1.
+	package := self ensurePackage: #Test1.
 
 	tag1 := package ensureTag: #Tag1.
 	tag2 := package ensureTag: #Tag2.
@@ -288,7 +288,7 @@ RPackageTest >> testRemoveEmptyTags [
 RPackageTest >> testRemoveTag [
 
 	| p1 a1 b1 |
-	p1 := self createNewPackageNamed: #P1.
+	p1 := self ensurePackage: #P1.
 
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
@@ -315,7 +315,7 @@ RPackageTest >> testRemoveTag [
 RPackageTest >> testRemoveTagRemoveClasses [
 
 	| p1 a1 |
-	p1 := self createNewPackageNamed: #P1.
+	p1 := self ensurePackage: #P1.
 
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	self assert: p1 classTags size equals: 1. "We start with the root tag"
@@ -337,9 +337,9 @@ RPackageTest >> testRenamePackageAlsoRenameAllExtensionProtocols [
 	"test that when we rename a category, all corresponding extension protocols in the system are renamed"
 
 	| p1 p2 p3 classInY classInZ |
-	p1 := self createNewPackageNamed: #Test1.
-	p2 := self createNewPackageNamed: #Test2.
-	p3 := self createNewPackageNamed: #Test3.
+	p1 := self ensurePackage: #Test1.
+	p2 := self ensurePackage: #Test2.
+	p3 := self ensurePackage: #Test3.
 
 	classInY := self createNewClassNamed: 'ClassInYPackage' inPackage: p2.
 	classInZ := self createNewClassNamed: 'ClassInZPackage' inPackage: p3.
@@ -361,7 +361,7 @@ RPackageTest >> testRenameUpdateTheOrganizer [
 	"test that when we rename a category, the organizer dictionary is update with this new name, so that we can access the package with this new name as key"
 
 	| package |
-	package := self createNewPackageNamed: #Test1.
+	package := self ensurePackage: #Test1.
 
 	package renameTo: #Test2.
 	self assert: package name equals: #Test2.
