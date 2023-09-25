@@ -6,10 +6,9 @@ Then you can use `violators` to get a dictionary mapping each class to its refer
 "
 Class {
 	#name : 'RBClassesHaveNoReferencesCondition',
-	#superclass : 'RBCondition',
+	#superclass : 'RBClassesCondition',
 	#instVars : [
 		'model',
-		'classes',
 		'referencingClassesDictionary'
 	],
 	#category : 'Refactoring-Core-Conditions',
@@ -17,38 +16,14 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'checking' }
-RBClassesHaveNoReferencesCondition >> check [
-
-	^ self violators isEmpty
-]
-
-{ #category : 'accessing' }
-RBClassesHaveNoReferencesCondition >> classes: aRBClassCollection [
-
-	classes := aRBClassCollection 
-]
-
-{ #category : 'testing' }
-RBClassesHaveNoReferencesCondition >> isFalse [
-
-	^ self isTrue not
-]
-
-{ #category : 'testing' }
-RBClassesHaveNoReferencesCondition >> isTrue [
-
-	^ self check
-]
-
 { #category : 'accessing' }
 RBClassesHaveNoReferencesCondition >> model: aRBNamespace [
 
 	model := aRBNamespace
 ]
 
-{ #category : 'printing' }
-RBClassesHaveNoReferencesCondition >> printOn: aStream [
+{ #category : 'displaying' }
+RBClassesHaveNoReferencesCondition >> violationMessageOn: aStream [
 
 	(self violators reject: [ :refs | refs isEmpty ])
 		keysAndValuesDo: [ :class :refs |
@@ -57,7 +32,7 @@ RBClassesHaveNoReferencesCondition >> printOn: aStream [
 				nextPutAll: ' has ';
 				nextPutAll: refs size asString;
 				nextPutAll: ' references.';
-				nextPut: Character cr ]
+				space ]
 ]
 
 { #category : 'accessing' }

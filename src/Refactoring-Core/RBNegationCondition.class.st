@@ -49,3 +49,9 @@ RBNegationCondition >> printOn: aStream [
 	aStream nextPutAll: 'NOT ';
 		print: condition
 ]
+
+{ #category : 'displaying' }
+RBNegationCondition >> violationMessageOn: aStream [ 
+
+	condition violationMessageOn: aStream
+]
