@@ -66,6 +66,7 @@ MCTraitDefinition >> createClass [
 		  aBuilder
 			  name: name;
 			  traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
+			  classTraitComposition: (Smalltalk compiler evaluate: self classTraitCompositionString);
 			  slots: self instanceVariables;
 			  classSlots: self classInstanceVariables;
 			  package: self category;
