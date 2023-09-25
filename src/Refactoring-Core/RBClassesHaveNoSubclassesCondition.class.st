@@ -1,26 +1,10 @@
 Class {
 	#name : 'RBClassesHaveNoSubclassesCondition',
-	#superclass : 'RBCondition',
-	#instVars : [
-		'classes',
-		'violators'
-	],
+	#superclass : 'RBClassesCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
-
-{ #category : 'checking' }
-RBClassesHaveNoSubclassesCondition >> check [ 
-
-	^ self violators isEmpty
-]
-
-{ #category : 'accessing' }
-RBClassesHaveNoSubclassesCondition >> classes: aRBClassCollection [
-
-	classes := aRBClassCollection 
-]
 
 { #category : 'displaying' }
 RBClassesHaveNoSubclassesCondition >> displayStringOn: aStream [
@@ -37,18 +21,6 @@ RBClassesHaveNoSubclassesCondition >> hasSubclasses: aClass excluding: classesLi
 
 	^ ((aClass subclasses collect: [ :each | each name ])
 		   copyWithoutAll: classesList) isNotEmpty
-]
-
-{ #category : 'checking' }
-RBClassesHaveNoSubclassesCondition >> isFalse [
-
-	^ self isTrue not
-]
-
-{ #category : 'checking' }
-RBClassesHaveNoSubclassesCondition >> isTrue [ 
-
-	^ self check
 ]
 
 { #category : 'accessing' }

@@ -6,28 +6,15 @@ Then you can use `violators` to get a dictionary mapping each class to its refer
 "
 Class {
 	#name : 'RBClassesHaveNoReferencesCondition',
-	#superclass : 'RBCondition',
+	#superclass : 'RBClassesCondition',
 	#instVars : [
 		'model',
-		'classes',
 		'referencingClassesDictionary'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
-
-{ #category : 'checking' }
-RBClassesHaveNoReferencesCondition >> check [
-
-	^ self violators isEmpty
-]
-
-{ #category : 'accessing' }
-RBClassesHaveNoReferencesCondition >> classes: aRBClassCollection [
-
-	classes := aRBClassCollection 
-]
 
 { #category : 'displaying' }
 RBClassesHaveNoReferencesCondition >> displayStringOn: aStream [
@@ -40,18 +27,6 @@ RBClassesHaveNoReferencesCondition >> displayStringOn: aStream [
 				nextPutAll: refs size asString;
 				nextPutAll: ' references.';
 				nextPut: Character cr ]
-]
-
-{ #category : 'testing' }
-RBClassesHaveNoReferencesCondition >> isFalse [
-
-	^ self isTrue not
-]
-
-{ #category : 'testing' }
-RBClassesHaveNoReferencesCondition >> isTrue [
-
-	^ self check
 ]
 
 { #category : 'accessing' }
