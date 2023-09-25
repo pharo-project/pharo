@@ -24,10 +24,11 @@ RPackageOrganizerSystemTest >> testDefaultEnvironment [
 
 { #category : 'tests' }
 RPackageOrganizerSystemTest >> testThatExistingPackageNamesDoesNotContainIllegalCharacters [
-	| illegalCharacters |
 
+	| illegalCharacters |
 	illegalCharacters := #( $\ $/ $: $* $? $" $< $> $| ).
 
-	self packageOrganizer categories do: [ :aPackageName |
-		self deny: (aPackageName includesAnyOf: illegalCharacters) ]
+	self packageOrganizer packages do: [ :package |
+		self deny: (package name includesAnyOf: illegalCharacters).
+		package classTags do: [ :tag | self deny: (tag name includesAnyOf: illegalCharacters) ] ]
 ]
