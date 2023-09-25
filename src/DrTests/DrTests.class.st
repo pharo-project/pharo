@@ -39,13 +39,13 @@ DrTests class >> beDefaultTestRunner [
 
 { #category : 'world menu' }
 DrTests class >> menuCommandOn: aBuilder [
-	<worldMenu>
 
+	<worldMenu>
 	(aBuilder item: #'Dr Test')
 		parent: #Testing;
 		action: [ self open ];
 		order: 2;
-		"keyText: 'o, u';" "Note: Removed the shortcut to not clash with SUnitRunner keybinding."
+		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
 		icon: (aBuilder iconNamed: self taskbarIconName);
 		withSeparatorAfter
