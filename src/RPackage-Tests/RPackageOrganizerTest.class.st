@@ -397,8 +397,8 @@ RPackageOrganizerTest >> testTestPackageNames [
 	| packages |
 	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
 
-	"Only 2 mock package names are test packages:  'MockPackage-Tests' 'MockPackage-Tests-Package'"
-	self assert: self organizer testPackageNames size equals: 2.
+	"Only 3 mock package names are test packages:  'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage-Tests-Package'"
+	self assert: self organizer testPackageNames size equals: 3.
 
 	"Names of test packages are symbols."
 	self assert: (self organizer testPackageNames allSatisfy: #isSymbol)
@@ -410,8 +410,8 @@ RPackageOrganizerTest >> testTestPackages [
 	| packages |
 	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
 
-	"Only 2 mock packages are test packages:  'MockPackage-Tests' 'MockPackage-Tests-Package'."
-	self assert: self organizer testPackages size equals: 2.
+	"Only 2 mock packages are test packages:  'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage-Tests-Package'."
+	self assert: self organizer testPackages size equals: 3.
 
 	"all items from resulting collection are test packages."
 	self assert: (self organizer testPackages allSatisfy: #isTestPackage)
