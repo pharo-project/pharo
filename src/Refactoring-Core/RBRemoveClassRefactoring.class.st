@@ -78,7 +78,7 @@ RBRemoveClassRefactoring >> checkBreakingChangePreconditions [
 	conditions ifEmpty: [ ^ self ].
 	errorStrings := String streamContents: [ :aStream |
 		                conditions do: [ :cond |
-			                cond displayStringOn: aStream ] ].
+			                cond violationMessageOn: aStream ] ].
 	self refactoringWarning: errorStrings
 ]
 
