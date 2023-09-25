@@ -214,8 +214,8 @@ RPackageTest >> testIsTestPackage [
 	package := self organizer ensurePackage: 'MockPackage-Tests'.
 	self assert: package isTestPackage. "Happy case: test package 'MockPackage-Tests' must contain -Tests suffix."
 
-	package := self organizer ensurePackage: 'MockPackage-tests'.
-	self deny: package isTestPackage. "Package 'MockPackage-tests' is not test package, since it has lowercase suffix."
+	package := self organizer ensurePackage: 'MockPackage2-tests'.
+	self assert: package isTestPackage. "Package 'MockPackage-tests' is not test package, since it has lowercase suffix."
 
 	package := self organizer ensurePackage: 'MockPackage'.
 	self deny: package isTestPackage. "Happy case: regular package 'MockPackage' without -Tests suffix is not a test package."

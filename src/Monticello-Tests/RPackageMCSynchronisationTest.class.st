@@ -56,7 +56,7 @@ RPackageMCSynchronisationTest >> emptyOrganizer [
 { #category : 'utilities' }
 RPackageMCSynchronisationTest >> ensureTagYinX [
 
-	self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
+	^ self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
 ]
 
 { #category : 'utilities' }
