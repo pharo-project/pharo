@@ -107,3 +107,9 @@ RBConjunctiveCondition >> rightFailed [
 RBConjunctiveCondition >> unknownFailed [
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)
 ]
+
+{ #category : 'accessing' }
+RBConjunctiveCondition >> violators [ 
+
+	^ left violators , right violators
+]

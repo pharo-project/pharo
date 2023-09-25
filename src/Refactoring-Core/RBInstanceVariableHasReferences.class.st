@@ -34,3 +34,8 @@ RBInstanceVariableHasReferences >> initialize [
 	super initialize.
 	violators := OrderedCollection new
 ]
+
+{ #category : 'accessing' }
+RBInstanceVariableHasReferences >> violators [ 
+	^ violators
+]
