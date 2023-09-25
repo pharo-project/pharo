@@ -136,7 +136,7 @@ PathTest >> testCanonicalization [
 	self assert: ref segments equals: #('a' 'c').
 
 	ref := (Path / '..') canonicalize.
-	self assert: ref segments isEmpty.
+	self assertEmpty: ref segments.
 
 	ref := (Path / '../a/b/../c') canonicalize.
 	self assert: ref segments equals: #('a' 'c')
