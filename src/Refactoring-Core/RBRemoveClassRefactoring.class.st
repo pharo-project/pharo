@@ -55,15 +55,38 @@ RBRemoveClassRefactoring >> applicabilityPreconditions [
 RBRemoveClassRefactoring >> breakingChangePreconditions [
 	"Empty error blocks are here so that warnings are raised. This is a ugly hack..."
 
-	^ ((RBCondition
-		   withBlock: [ self preconditionHaveNoReferences check ]
-		   errorString: 'Some classes still have references') errorBlock: [ ] )
-	  & (((RBCondition
-			    withBlock: [ self preconditionHaveNoSubclasses check ]
-			    errorString: 'Some classes have subclasses') errorBlock: [ ] )
-			| ((RBCondition
-			    withBlock: [ self preconditionEmptyClasses check ]
-			    errorString: 'Some classes are not empty') errorBlock: [ ] ))
+	^ { self preconditionHaveNoReferences .
+		 self preconditionHaveNoSubclasses |
+		 self preconditionEmptyClasses }
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> checkApplicabilityPreconditions [
+
+	| conditions |
+	conditions := self applicabilityPreconditions.
+	conditions check ifTrue: [ ^ self ].
+	self refactoringError: conditions errorString
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> checkBreakingChangePreconditions [
+
+	| conditions errorStrings |
+	conditions := self breakingChangePreconditions.
+	conditions := conditions reject: [ :cond | cond check ].
+	conditions ifEmpty: [ ^ self ].
+	errorStrings := String streamContents: [ :aStream |
+		                conditions do: [ :cond |
+			                cond displayStringOn: aStream ] ].
+	self refactoringWarning: errorStrings
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> checkPreconditions [
+
+	self checkApplicabilityPreconditions.
+	self checkBreakingChangePreconditions
 ]
 
 { #category : 'accessing' }
