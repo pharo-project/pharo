@@ -13,7 +13,7 @@ RPackageRenameTest >> testRenamePackage [
 	"Test that we do rename the package as expected."
 
 	| package workingCopy class |
-	package := self createNewPackageNamed: 'Test1'.
+	package := self ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class := self createNewClassNamed: #TestClass inCategory: 'Test1-TAG'.
 
@@ -40,7 +40,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 	"If we rename a package to the (full)category name of one of its tags"
 
 	| package workingCopy class1 class2 |
-	package := self createNewPackageNamed: 'Test1'.
+	package := self ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class1 := self createNewClassNamed: #TestClass1 inCategory: 'Test1-Core'.
 	class2 := self createNewClassNamed: #TestClass2 inCategory: 'Test1-Util'.
@@ -64,7 +64,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	"If we rename a package to the (full)category name of one of its tags and the (non-tag)package is not empty"
 
 	| package workingCopy class1 class2 class3 |
-	package := self createNewPackageNamed: 'Test1'.
+	package := self ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class1 := self createNewClassNamed: #TestClass1 inCategory: 'Test1-Core'.
 	class2 := self createNewClassNamed: #TestClass2 inCategory: 'Test1-Util'.
@@ -88,11 +88,11 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 RPackageRenameTest >> testRenamePackageWithExtensions [
 
 	| package class extendedPackage extension |
-	package := self createNewPackageNamed: 'OriginalPackage'.
+	package := self ensurePackage: 'OriginalPackage'.
 
 	class := self createNewClassNamed: #TestClass inCategory: 'OriginalPackage-TAG'.
 
-	extendedPackage := self createNewPackageNamed: 'ExtendedPackage'.
+	extendedPackage := self ensurePackage: 'ExtendedPackage'.
 
 
 	class := self createNewClassNamed: #TestExtendedClass inCategory: 'ExtendedPackage'.
@@ -119,11 +119,11 @@ RPackageRenameTest >> testRenamePackageWithExtensions [
 RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 
 	| package class extendedPackage extension |
-	package := self createNewPackageNamed: 'OriginalPackage'.
+	package := self ensurePackage: 'OriginalPackage'.
 
 	class := self createNewClassNamed: #TestClass inCategory: 'OriginalPackage-TAG'.
 
-	extendedPackage := self createNewPackageNamed: 'ExtendedPackage'.
+	extendedPackage := self ensurePackage: 'ExtendedPackage'.
 
 
 	class := self createNewClassNamed: #TestExtendedClass inCategory: 'ExtendedPackage'.
@@ -154,7 +154,8 @@ RPackageRenameTest >> testUnregisterPackage [
 
 	| package workingCopy class |
 	self flag: #package. "Why is this here? It should be in Monticello tests!"
-	package := self createNewPackageNamed: 'Test1'.
+	package := self ensurePackage: 'Test1'.
+
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class := self createNewClassNamed: #TestClass inCategory: 'Test1-TAG'.
 	self assert: (package includesClass: class).

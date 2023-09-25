@@ -17,7 +17,7 @@ RBRemoveClassReparentChoice >> action [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RBRemoveClassReparentChoice >> classesHaveSubclasses: aBoolean [
 
 	classesHaveSubclasses := aBoolean

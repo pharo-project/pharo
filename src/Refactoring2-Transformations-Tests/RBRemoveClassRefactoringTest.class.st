@@ -208,32 +208,6 @@ RBRemoveClassRefactoringTest >> testRemoveClassesWithReferencesBetweenThem [
 ]
 
 { #category : 'tests' }
-RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassIsAllowed [
-
-	| refactoring  package sup |
-   package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
-	model := RBNamespace onEnvironment: package.
-	refactoring := RBRemoveClassRefactoring 
-							model: model 
-							classNames: { #MyClassNonEmptyLeafUnused}.
-	refactoring prepareForExecution.
-	
-	sup := (refactoring model classNamed: #MyClassNonEmptyLeafUnused).
-	self assert: sup isNotNil.
-	self deny: sup isEmptyClass.
-	
-	self assert: refactoring preconditionHaveNoSubclasses check | refactoring preconditionEmptyClasses check.
-	"It is not empty but it is a leaf so this is ok
-	"
-	self
-		shouldnt: [ refactoring generateChanges ]
-		raise: RBRefactoringError.
-
-	self deny:
-		(refactoring model includesClassNamed: #MyClassNonEmptyLeafUnused) 
-]
-
-{ #category : 'tests' }
 RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassReparent [
 
 	| refactoring  package class subclasses superRoot |
@@ -266,6 +240,32 @@ RBRemoveClassRefactoringTest >> testRemovingAnEmptyNonLeafClassReparent [
 			self assert: (refactoring model includesClassNamed: each name).
 			self assert: superRoot equals: each superclass.
 		]
+]
+
+{ #category : 'tests' }
+RBRemoveClassRefactoringTest >> testRemovingAnNonEmptyLeafClassIsAllowed [
+
+	| refactoring  package sup |
+   package := RBPackageEnvironment packageName: RBFooDummyLintRuleTest1 packageName.
+	model := RBNamespace onEnvironment: package.
+	refactoring := RBRemoveClassRefactoring 
+							model: model 
+							classNames: { #MyClassNonEmptyLeafUnused}.
+	refactoring prepareForExecution.
+	
+	sup := (refactoring model classNamed: #MyClassNonEmptyLeafUnused).
+	self assert: sup isNotNil.
+	self deny: sup isEmptyClass.
+	
+	self assert: refactoring preconditionHaveNoSubclasses check | refactoring preconditionEmptyClasses check.
+	"It is not empty but it is a leaf so this is ok
+	"
+	self
+		shouldnt: [ self proceedThroughWarning: [ refactoring generateChanges ] ]
+		raise: RBRefactoringError.
+
+	self deny:
+		(refactoring model includesClassNamed: #MyClassNonEmptyLeafUnused) 
 ]
 
 { #category : 'failure tests' }

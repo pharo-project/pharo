@@ -41,28 +41,49 @@ RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> applicabilityPreconditions [
 
-	| conditions |
-	conditions := self trueCondition.
-	classesDictionary keysAndValuesDo: [ :className :class |
-		class ifNil: [ 
-			 self refactoringError: 'No such class or trait ' , className].
-		conditions & (self preconditionIsNotMetaclass: class) ].
-	^ conditions
+	^ { RBClassesExistCondition new classes: classesDictionary . self preconditionAreNotMeta }
 ]
 
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> breakingChangePreconditions [
 	"Empty error blocks are here so that warnings are raised. This is a ugly hack..."
 
-	^ ((RBCondition
-		   withBlock: [ self preconditionHaveNoReferences check ]
-		   errorString: 'Some classes still have references') errorBlock: [ ] )
-	  & (((RBCondition
-			    withBlock: [ self preconditionHaveNoSubclasses check ]
-			    errorString: 'Some classes have subclasses') errorBlock: [ ] )
-			| ((RBCondition
-			    withBlock: [ self preconditionEmptyClasses check ]
-			    errorString: 'Some classes are not empty') errorBlock: [ ] ))
+	^ { self preconditionHaveNoReferences .
+		 self preconditionHaveNoSubclasses |
+		 self preconditionEmptyClasses }
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> checkApplicabilityPreconditions [
+
+	| conditions errorStrings |
+	conditions := self applicabilityPreconditions.
+	conditions := conditions reject: [ :cond | cond check ].
+	conditions ifEmpty: [ ^ self ].
+	errorStrings := String streamContents: [ :aStream |
+		                conditions do: [ :cond |
+			                cond violationMessageOn: aStream ] ].
+	self refactoringError: errorStrings
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> checkBreakingChangePreconditions [
+
+	| conditions errorStrings |
+	conditions := self breakingChangePreconditions.
+	conditions := conditions reject: [ :cond | cond check ].
+	conditions ifEmpty: [ ^ self ].
+	errorStrings := String streamContents: [ :aStream |
+		                conditions do: [ :cond |
+			                cond violationMessageOn: aStream ] ].
+	self refactoringWarning: errorStrings
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> checkPreconditions [
+
+	self eagerlyCheckApplicabilityPreconditions.
+	self checkBreakingChangePreconditions
 ]
 
 { #category : 'accessing' }
@@ -76,10 +97,25 @@ RBRemoveClassRefactoring >> classNames: aClassNameCollection [
 ]
 
 { #category : 'preconditions' }
+RBRemoveClassRefactoring >> eagerlyCheckApplicabilityPreconditions [
+
+	self applicabilityPreconditions
+		do: [ :cond | cond check ifFalse:
+				[ self refactoringError:
+					(String streamContents: [ :aStream | cond violationMessageOn: aStream ] ) ] ]
+]
+
+{ #category : 'preconditions' }
 RBRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 	^ RBClassEnvironment
 		onEnvironment: RBBrowserEnvironment new
 		classes: (self model classesReferencingClass: aClassable)
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> preconditionAreNotMeta [
+
+	^ RBClassesAreNotMetaClassCondition new classes: classesDictionary
 ]
 
 { #category : 'preconditions' }
@@ -112,11 +148,6 @@ RBRemoveClassRefactoring >> preconditionHaveNoReferences [
 RBRemoveClassRefactoring >> preconditionHaveNoSubclasses [
 
 	^ RBClassesHaveNoSubclassesCondition new classes: classesDictionary					
-]
-
-{ #category : 'preconditions' }
-RBRemoveClassRefactoring >> preconditionIsNotMetaclass: aClass [
-	^ ((RBCondition isMetaclass: aClass) errorMacro: 'Cannot remove just the metaclass') not
 ]
 
 { #category : 'preconditions' }

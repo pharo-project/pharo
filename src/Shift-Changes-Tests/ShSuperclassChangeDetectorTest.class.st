@@ -8,13 +8,16 @@ Class {
 { #category : 'tests' }
 ShSuperclassChangeDetectorTest >> testChangeInSuperclassIsDetected [
 
-	newBuilder superclass: (self class classInstaller make: [ :builder |
-			 builder
-				 name: #ShSuperTestForClass2;
-				 package: self packageName ]).
+	| newSuperclass |
+	[
+	newSuperclass := self class classInstaller make: [ :builder |
+		                 builder
+			                 name: #ShSuperTestForClass2;
+			                 package: self packageName ].
+	newBuilder superclass: newSuperclass.
 
 	self denyEmpty: self newComparer compareClass.
-	self assertChangeAreDetected
+	self assertChangeAreDetected ] ensure: [ newSuperclass ifNotNil: [ newSuperclass removeFromSystem ] ]
 ]
 
 { #category : 'tests' }

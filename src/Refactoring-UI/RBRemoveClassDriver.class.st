@@ -1,6 +1,6 @@
 Class {
 	#name : 'RBRemoveClassDriver',
-	#superclass : 'RBDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'classes',
 		'haveNoReferences',
@@ -64,9 +64,12 @@ RBRemoveClassDriver >> handleBreakingChanges [
 RBRemoveClassDriver >> labelBasedOnBreakingChanges [
 
 	^ String streamContents: [ :stream | 
-		emptyClasses printOn: stream.
-		noSubclasses printOn: stream.
-		haveNoReferences printOn: stream.	
+		emptyClasses violationMessageOn: stream.
+		stream cr.
+		noSubclasses violationMessageOn: stream.
+		stream cr.
+		haveNoReferences violationMessageOn: stream.
+		stream cr.
 		stream nextPutAll: 'Select a strategy' ]
 ]
 
@@ -90,8 +93,7 @@ RBRemoveClassDriver >> removeClassChanges [
 RBRemoveClassDriver >> runRefactoring [
 	
 	self configureRefactoring.
-	refactoring applicabilityPreconditions check ifFalse: [
-		RBRefactoringError signal: refactoring applicabilityPreconditions errorString ].
+	refactoring checkApplicabilityPreconditions.
 	
 	haveNoReferences := refactoring preconditionHaveNoReferences.
 	emptyClasses := refactoring preconditionEmptyClasses.
@@ -107,5 +109,6 @@ RBRemoveClassDriver >> runRefactoring [
 RBRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 	
 	scopes := refactoringScopes.
+	model := self refactoringScopeOn: scopes first.
 	classes := aColclasses
 ]
