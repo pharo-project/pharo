@@ -44,9 +44,10 @@ RBRemoveClassRefactoring >> applicabilityPreconditions [
 	| conditions |
 	conditions := self trueCondition.
 	classesDictionary keysAndValuesDo: [ :className :class |
-		class ifNil: [ 
-			 self refactoringError: 'No such class or trait ' , className].
-		conditions & (self preconditionIsNotMetaclass: class) ].
+		conditions := (conditions & (RBCondition
+			 withBlock: [ class isNotNil ]
+			 errorString: 'No such class or trait ' , className))
+		& (self preconditionIsNotMetaclass: class) ].
 	^ conditions
 ]
 
