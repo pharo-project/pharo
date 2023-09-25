@@ -216,7 +216,7 @@ FileReferenceTest >> testCanonicalization [
 	self assert: ref path segments equals: #('a' 'c').
 
 	ref := '/..' asFileReference canonicalize.
-	self assert: ref path segments isEmpty.
+	self assertEmtpy: ref path segments.
 
 	ref := '/../a/b/../c' asFileReference canonicalize.
 	self assert: ref path segments equals: #('a' 'c')
