@@ -82,7 +82,7 @@ RBRemoveClassRefactoring >> checkBreakingChangePreconditions [
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> checkPreconditions [
 
-	self checkApplicabilityPreconditions.
+	self eagerlyCheckApplicabilityPreconditions.
 	self checkBreakingChangePreconditions
 ]
 
@@ -94,6 +94,15 @@ RBRemoveClassRefactoring >> classNames [
 { #category : 'initialization' }
 RBRemoveClassRefactoring >> classNames: aClassNameCollection [
 	classNames := aClassNameCollection
+]
+
+{ #category : 'preconditions' }
+RBRemoveClassRefactoring >> eagerlyCheckApplicabilityPreconditions [
+
+	self applicabilityPreconditions
+		do: [ :cond | cond check ifFalse:
+				[ self refactoringError:
+					(String streamContents: [ :aStream | cond violationMessageOn: aStream ] ) ] ]
 ]
 
 { #category : 'preconditions' }
