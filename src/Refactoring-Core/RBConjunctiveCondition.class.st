@@ -107,3 +107,11 @@ RBConjunctiveCondition >> rightFailed [
 RBConjunctiveCondition >> unknownFailed [
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)
 ]
+
+{ #category : 'displaying' }
+RBConjunctiveCondition >> violationMessageOn: aStream [
+
+	failed = #left
+		ifTrue: [ left violationMessageOn: aStream ]
+		ifFalse: [ right violationMessageOn: aStream ]
+]

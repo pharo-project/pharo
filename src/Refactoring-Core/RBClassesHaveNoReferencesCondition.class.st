@@ -16,8 +16,14 @@ Class {
 	#tag : 'Conditions'
 }
 
+{ #category : 'accessing' }
+RBClassesHaveNoReferencesCondition >> model: aRBNamespace [
+
+	model := aRBNamespace
+]
+
 { #category : 'displaying' }
-RBClassesHaveNoReferencesCondition >> displayStringOn: aStream [
+RBClassesHaveNoReferencesCondition >> violationMessageOn: aStream [
 
 	(self violators reject: [ :refs | refs isEmpty ])
 		keysAndValuesDo: [ :class :refs |
@@ -26,13 +32,7 @@ RBClassesHaveNoReferencesCondition >> displayStringOn: aStream [
 				nextPutAll: ' has ';
 				nextPutAll: refs size asString;
 				nextPutAll: ' references.';
-				nextPut: Character cr ]
-]
-
-{ #category : 'accessing' }
-RBClassesHaveNoReferencesCondition >> model: aRBNamespace [
-
-	model := aRBNamespace
+				space ]
 ]
 
 { #category : 'accessing' }

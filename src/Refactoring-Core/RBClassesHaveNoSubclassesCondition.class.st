@@ -6,21 +6,21 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'displaying' }
-RBClassesHaveNoSubclassesCondition >> displayStringOn: aStream [
-
-	self violators do: [ :violator |
-		aStream
-			nextPutAll: violator name;
-			nextPutAll: ' has subclasses.';
-			nextPut: Character cr ]
-]
-
 { #category : 'testing' }
 RBClassesHaveNoSubclassesCondition >> hasSubclasses: aClass excluding: classesList [
 
 	^ ((aClass subclasses collect: [ :each | each name ])
 		   copyWithoutAll: classesList) isNotEmpty
+]
+
+{ #category : 'displaying' }
+RBClassesHaveNoSubclassesCondition >> violationMessageOn: aStream [
+
+	self violators do: [ :violator |
+		aStream
+			nextPutAll: violator name;
+			nextPutAll: ' has subclasses.';
+			space ]
 ]
 
 { #category : 'accessing' }
