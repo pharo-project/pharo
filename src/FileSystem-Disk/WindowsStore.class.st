@@ -260,7 +260,7 @@ WindowsStore >> permissions: aPath [
 
 { #category : 'converting' }
 WindowsStore >> printPath: aPath on: aStream [
-	| hasDrive |
+	| hasDrive firstSegment |
 
 	aPath isNetworkPath
 		ifTrue: [ ^ aPath printOn: aStream delimiter: self delimiter ].
@@ -274,9 +274,9 @@ WindowsStore >> printPath: aPath on: aStream [
 		ifTrue: [ ^ aPath printOn: aStream delimiter: self delimiter ].
 	aPath segments first first = $:
 		ifTrue: [ ^ aStream nextPut: self delimiter ].	"as tagged in #pathFromString:  "
-	hasDrive := aPath segments first second = $:.
-	(hasDrive not )
-		ifTrue: [ aStream nextPut: self delimiter ].
+	firstSegment := aPath segments first.
+	hasDrive := firstSegment size >= 2 and: [ firstSegment second = $: ].
+	hasDrive ifFalse: [ aStream nextPut: self delimiter ].
 	aPath printOn: aStream delimiter: self delimiter.
 	(hasDrive and: [ aPath segments size = 1 ])
 		ifTrue: [ aStream nextPut: self delimiter ]
