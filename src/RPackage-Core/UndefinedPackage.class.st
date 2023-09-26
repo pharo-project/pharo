@@ -31,6 +31,13 @@ UndefinedPackage >> classes [
 	^ #(  )
 ]
 
+{ #category : 'private' }
+UndefinedPackage >> importClass: aClass inTag: aTag [
+	"Do nothing here"
+
+	
+]
+
 { #category : 'initialization' }
 UndefinedPackage >> initialize [
 
