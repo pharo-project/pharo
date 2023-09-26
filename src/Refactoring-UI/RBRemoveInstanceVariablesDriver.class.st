@@ -24,7 +24,7 @@ RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 { #category : 'resources' }
 RBRemoveInstanceVariablesDriver >> configureRefactoring [
 
-	refactoring := RBCompositeRefactoring2 new
+	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
 							model: model; 
 							refactorings: (variables collect: [:each | 
 									RBRemoveInstanceVariableRefactoring model: model remove: each from: class]);

@@ -1,5 +1,10 @@
+"
+I'm a composite that evaluates all the applicability preconditions and breaking changes of all the composed refactorings upfront e.g. before performing the actual sequence of refactorings. 
+
+So do not use me if your sequence has side effects you rely on later on the following refactorings.
+"
 Class {
-	#name : 'RBCompositeRefactoring2',
+	#name : 'RBUpFrontPreconditionCheckingCompositeRefactoring',
 	#superclass : 'RBCompositeRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -7,7 +12,7 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBCompositeRefactoring2 >> applicabilityPreconditions [
+RBUpFrontPreconditionCheckingCompositeRefactoring >> applicabilityPreconditions [
 	"basically this is checking up front all preconditions and I need a way to not rexecute them 
 	when executing the refactoring.
 	"
@@ -24,7 +29,7 @@ RBCompositeRefactoring2 >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBCompositeRefactoring2 >> breakingChangePreconditions [ 
+RBUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions [ 
 	"basically this is checking up front all preconditions and I need a way to not rexecute them 
 	when executing the refactoring.
 	"
@@ -38,14 +43,13 @@ RBCompositeRefactoring2 >> breakingChangePreconditions [
 ]
 
 { #category : 'accessing' }
-RBCompositeRefactoring2 >> privateTransform [
+RBUpFrontPreconditionCheckingCompositeRefactoring >> privateTransform [
 	"pay attention we are not checking preconditions of children at this level"
 	
 	refactorings do: [ :each | each privateTransform ]
 ]
 
 { #category : 'accessing' }
-RBCompositeRefactoring2 >> violators [ 
-
-	^ self breakingChangePreconditions violators "flatCollect: [ :each | each violators ]"
+RBUpFrontPreconditionCheckingCompositeRefactoring >> violators [ 
+	^ self breakingChangePreconditions violators
 ]

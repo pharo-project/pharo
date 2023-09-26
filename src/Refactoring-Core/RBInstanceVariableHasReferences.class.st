@@ -16,7 +16,7 @@ RBInstanceVariableHasReferences >> check [
 	
 	aClass withAllSubclasses do: [ :each |
 			| res |
-			res := (each whichSelectorsReferToInstanceVariable: instanceVariable).
+			res := (each whichMethodsReferToInstanceVariable: instanceVariable).
 			res isNotEmpty
 				ifTrue: [ violators addAll: res ].
 			].
