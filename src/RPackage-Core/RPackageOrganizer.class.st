@@ -486,7 +486,7 @@ RPackageOrganizer >> removePackage: aPackage [
 		           ifTrue: [ self packageNamed: aPackage ]
 		           ifFalse: [ aPackage ].
 
-	aPackage isUndefined ifTrue: [ ^ self ].
+	package isUndefined ifTrue: [ ^ self ].
 
 	self basicUnregisterPackage: package.
 	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
