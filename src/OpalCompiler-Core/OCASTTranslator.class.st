@@ -643,17 +643,17 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
-	"Long form: generates (Array braceStream: N) nextPut: a; nextPut: b; ...; braceArray"
+	"Long form: useing at:put:"
 	methodBuilder pushLiteralVariable: Array binding.
 	methodBuilder pushLiteral: aRBArrayNode statements size.
-	methodBuilder send: #braceStream:.
-	aRBArrayNode statements do: [ :each |
+	methodBuilder send: #new:.
+	aRBArrayNode statements withIndexDo: [  :each :index |
 		methodBuilder pushDup.
+		methodBuilder pushLiteral: index.
 		self visitNode: each.
-		methodBuilder send: #nextPut:.
+		methodBuilder send: #at:put:.
 		methodBuilder popTop.
-		].
-	methodBuilder send: #braceArray
+	].
 ]
 
 { #category : 'visitor - double dispatching' }

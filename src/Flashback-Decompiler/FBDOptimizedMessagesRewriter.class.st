@@ -122,15 +122,6 @@ FBDOptimizedMessagesRewriter >> extractStartValue: msgNode startTemp: startTemp 
 ]
 
 { #category : 'handling' }
-FBDOptimizedMessagesRewriter >> handleBigArray: msgNode [
-	| seq cascade |
-	seq := msgNode parent parent.
-	cascade := seq statements at: (seq statements indexOf: msgNode parent) +1 .
-	seq removeNode: msgNode parent.
-	seq replaceNode: cascade withNode: (RBArrayNode statements: (cascade  messages removeLast; collect: [ :msg | msg arguments first ]))
-]
-
-{ #category : 'handling' }
 FBDOptimizedMessagesRewriter >> handleIfFalse: msgNode [
 	(self isIfNilIfNotNil: msgNode)
 		ifTrue: [
@@ -212,11 +203,6 @@ FBDOptimizedMessagesRewriter >> isAnd: msgNode [
 	| stmts |
 	stmts := msgNode arguments second body statements.
 	^ stmts size = 1 and: [ stmts first value = false ]
-]
-
-{ #category : 'testing' }
-FBDOptimizedMessagesRewriter >> isBigArray: msgNode [
-	^ (msgNode selector = #braceStream:) and: [ msgNode receiver isVariable and: [ msgNode receiver name = #Array ] ]
 ]
 
 { #category : 'testing' }
@@ -354,9 +340,7 @@ FBDOptimizedMessagesRewriter >> visitMessageNode: msgNode [
 	msgNode selector = #ifFalse:
 		ifTrue: [ self handleIfFalse: msgNode ].
 	msgNode selector = #whileTrue:
-		ifTrue: [ self handleWhileTrue: msgNode ].
-	(self isBigArray: msgNode)
-		ifTrue: [ self handleBigArray: msgNode ]
+		ifTrue: [ self handleWhileTrue: msgNode ]
 ]
 
 { #category : 'visiting' }
