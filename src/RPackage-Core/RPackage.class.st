@@ -716,7 +716,6 @@ RPackage >> removeEmptyTags [
 { #category : 'removing' }
 RPackage >> removeFromSystem [
 
-	self isUndefined ifTrue: [ ^ self ].
 	self classTags do: [ :tag | tag removeFromSystem ].
 	self extensionMethods do: [ :method | method removeFromSystem ].
 

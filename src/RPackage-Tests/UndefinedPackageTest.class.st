@@ -6,9 +6,21 @@ Class {
 }
 
 { #category : 'tests' }
+UndefinedPackageTest >> testCannotRemoveUndefinedPackage [
+
+	| undefinedPackage |
+	undefinedPackage := self undefinedPackage.
+
+	undefinedPackage removeFromSystem.
+
+	self assert: self undefinedPackage isNotNil.
+	self assert: self undefinedPackage identicalTo: undefinedPackage
+]
+
+{ #category : 'tests' }
 UndefinedPackageTest >> testIsUndefined [
 
-	self assert: self organizer undefinedPackage isUndefined.
+	self assert: self undefinedPackage isUndefined.
 
 	self deny: (self ensurePackage: #Package1) isUndefined
 ]
@@ -16,5 +28,17 @@ UndefinedPackageTest >> testIsUndefined [
 { #category : 'tests' }
 UndefinedPackageTest >> testName [
 
-	self assert: self organizer undefinedPackage name equals: UndefinedPackage undefinedPackageName
+	self assert: self undefinedPackage name equals: UndefinedPackage undefinedPackageName
+]
+
+{ #category : 'tests' }
+UndefinedPackageTest >> testUndefinedTag [
+	self assert: self undefinedPackage classTags size equals: 1.
+	self assert: self undefinedPackage classTags anyOne isUndefined
+]
+
+{ #category : 'tests' }
+UndefinedPackageTest >> undefinedPackage [
+
+	^ self organizer undefinedPackage
 ]

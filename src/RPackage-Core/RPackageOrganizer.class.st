@@ -592,7 +592,7 @@ RPackageOrganizer >> testPackages [
 { #category : 'accessing' }
 RPackageOrganizer >> undefinedPackage [
 
-	^ self packageNamed: UndefinedPackage undefinedPackageName
+	^ self packages detect: [ :package | package isUndefined ]
 ]
 
 { #category : 'initialization' }
