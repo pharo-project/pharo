@@ -54,8 +54,9 @@ RBCompositeRefactoring >> prepareForInteractiveMode [
 
 { #category : 'transforming' }
 RBCompositeRefactoring >> privateTransform [
-
-	refactorings do: [ :each | each generateChanges ]
+	"pay attention we are not checking preconditions of children at this level"
+	
+	refactorings do: [ :each | each privateTransform ]
 ]
 
 { #category : 'accessing' }

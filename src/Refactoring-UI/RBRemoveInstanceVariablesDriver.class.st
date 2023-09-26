@@ -57,7 +57,7 @@ RBRemoveInstanceVariablesDriver >> handleBreakingChanges [
 RBRemoveInstanceVariablesDriver >> removeInstanceVariables [
 
 	| changes |
-	changes := refactoring generateChanges.
+	changes := refactoring privateTransform.
 	self openPreviewWithChanges: changes
 ]
 
