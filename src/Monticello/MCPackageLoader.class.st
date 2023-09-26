@@ -39,9 +39,8 @@ MCPackageLoader class >> installSnapshot: aSnapshot [
 
 { #category : 'public' }
 MCPackageLoader class >> unloadPackage: aPackage [
-	self new
-		unloadPackage: aPackage;
-		loadWithNameLike: aPackage name, '-unload'
+
+	self new unloadPackage: aPackage
 ]
 
 { #category : 'public' }
