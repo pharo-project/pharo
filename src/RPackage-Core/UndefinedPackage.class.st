@@ -21,7 +21,7 @@ UndefinedPackage class >> undefinedPackageName [
 { #category : 'class tags' }
 UndefinedPackage >> classTags [
 
-	^ { undefinedTag }
+	^ { undefinedTag } asOrderedCollection
 ]
 
 { #category : 'accessing' }
@@ -33,8 +33,11 @@ UndefinedPackage >> classes [
 
 { #category : 'initialization' }
 UndefinedPackage >> initialize [
+
 	super initialize.
 	undefinedTag := UndefinedPackageTag new
+		                package: self;
+		                yourself
 ]
 
 { #category : 'testing' }
