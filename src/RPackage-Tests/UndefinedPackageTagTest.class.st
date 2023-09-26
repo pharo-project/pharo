@@ -6,6 +6,18 @@ Class {
 }
 
 { #category : 'tests' }
+UndefinedPackageTagTest >> testCannotRemoveUndefinedPackageTag [
+
+	| undefinedTag |
+	undefinedTag := self undefinedTag.
+
+	undefinedTag removeFromSystem.
+
+	self assert: self undefinedTag isNotNil.
+	self assert: self undefinedTag identicalTo: undefinedTag
+]
+
+{ #category : 'tests' }
 UndefinedPackageTagTest >> testIsUndefined [
 
 	self assert: self undefinedTag isUndefined.

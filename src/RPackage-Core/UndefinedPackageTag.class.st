@@ -15,6 +15,19 @@ UndefinedPackageTag class >> undefinedPackageTagName [
 	^ #Unclassified
 ]
 
+{ #category : 'accessing' }
+UndefinedPackageTag >> categoryName [
+
+	^ Class unclassifiedCategory
+]
+
+{ #category : 'accessing' }
+UndefinedPackageTag >> classes [
+	"The undefined tag does not keep track of the classes it contains."
+
+	^ #(  )
+]
+
 { #category : 'testing' }
 UndefinedPackageTag >> isUndefined [
 
@@ -24,4 +37,17 @@ UndefinedPackageTag >> isUndefined [
 { #category : 'accessing' }
 UndefinedPackageTag >> name [
 	^ self class undefinedPackageTagName
+]
+
+{ #category : 'converting' }
+UndefinedPackageTag >> promoteAsPackage [
+
+	self error: 'Cannot promote the undefined package tag'
+]
+
+{ #category : 'accessing' }
+UndefinedPackageTag >> removeFromSystem [
+	"Cannot remove the undefined package tag"
+
+	
 ]

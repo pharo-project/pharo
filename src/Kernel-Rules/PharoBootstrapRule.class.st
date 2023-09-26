@@ -19,8 +19,8 @@ PharoBootstrapRule class >> checksPackage [
 
 { #category : 'running' }
 PharoBootstrapRule >> basicCheck: aPackage [
-	(self bootstrapPackages includes: aPackage packageName)
-		ifFalse: [ ^ false "Do not check" ].
+
+	(self bootstrapPackages includes: aPackage name) ifFalse: [ ^ false "Do not check" ].
 	^ self newExternalDependencyExistFor: aPackage
 ]
 

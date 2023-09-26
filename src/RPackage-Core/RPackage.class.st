@@ -74,7 +74,11 @@ Class {
 
 { #category : 'constants' }
 RPackage class >> defaultPackageName [
-	^ #'_UnpackagedPackage'
+
+	self
+		deprecated: 'Use `UndefinedPackageTag undefinedPackageName` instead'
+		transformWith: '`@rcv defaultPackageName' -> 'UndefinedPackage undefinedPackageName'.
+	^ UndefinedPackage undefinedPackageName
 ]
 
 { #category : 'class initialization' }
@@ -235,11 +239,6 @@ RPackage >> definedClasses [
 RPackage >> definedMethodsForClass: aClass [
 
 	^ (self definedSelectorsForClass: aClass) asOrderedCollection collect: [ :each | aClass >> each ]
-]
-
-{ #category : 'accessing' }
-RPackage >> definedOrExtendedClasses [
-	^ self definedClasses | self extendedClasses
 ]
 
 { #category : 'accessing' }
@@ -526,7 +525,6 @@ RPackage >> isDeprecated [
 { #category : 'testing' }
 RPackage >> isEmpty [
 
-	self name = self class defaultPackageName ifTrue: [ ^ false ].
 	^ self classes isEmpty and: [ self extensionSelectors isEmpty ]
 ]
 

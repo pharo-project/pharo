@@ -49,10 +49,16 @@ UndefinedPackage >> isUndefined [
 { #category : 'accessing' }
 UndefinedPackage >> name [
 
-	^ RPackage defaultPackageName
+	^ #_UnpackagedPackage
 ]
 
 { #category : 'removing' }
 UndefinedPackage >> removeFromSystem [
 	"Cannot remove the undefined package."
+]
+
+{ #category : 'class tags' }
+UndefinedPackage >> tagOf: aClass [
+
+	^ undefinedTag
 ]

@@ -165,7 +165,7 @@ RPackageOrganizer >> addMethod: method [
 
 	| package protocol |
 	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
-	method methodClass package name = RPackage defaultPackageName ifTrue: [ ^ self ].
+	method methodClass package name = UndefinedPackage undefinedPackageName ifTrue: [ ^ self ].
 
 	protocol := method protocol.
 	package := protocol isExtensionProtocol
@@ -393,7 +393,7 @@ RPackageOrganizer >> packageNamesDo: aBlock [
 { #category : 'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
-	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self packageNamed: RPackage defaultPackageName ]
+	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self undefinedPackage ]
 ]
 
 { #category : 'package - access from class' }
@@ -485,6 +485,8 @@ RPackageOrganizer >> removePackage: aPackage [
 	package := aPackage isString
 		           ifTrue: [ self packageNamed: aPackage ]
 		           ifFalse: [ aPackage ].
+
+	aPackage isUndefined ifTrue: [ ^ self ].
 
 	self basicUnregisterPackage: package.
 	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].

@@ -89,6 +89,13 @@ RPackage >> definedClassesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
+RPackage >> definedOrExtendedClasses [
+
+	self deprecated: 'Use #classes instead' transformWith: '`@rcv definedOrExtendedClasses' -> '`@rcv classes'.
+	^ self classes
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> extensionCategoriesForClass: aClass [
 
 	self

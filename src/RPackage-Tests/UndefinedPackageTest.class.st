@@ -32,6 +32,13 @@ UndefinedPackageTest >> testName [
 ]
 
 { #category : 'tests' }
+UndefinedPackageTest >> testTagOf [
+
+	self assert: (self undefinedPackage tagOf: self class) equals: self undefinedPackage classTags anyOne.
+	self assert: (self undefinedPackage tagOf: self class) name equals: UndefinedPackageTag undefinedPackageTagName
+]
+
+{ #category : 'tests' }
 UndefinedPackageTest >> testUndefinedTag [
 	self assert: self undefinedPackage classTags size equals: 1.
 	self assert: self undefinedPackage classTags anyOne isUndefined

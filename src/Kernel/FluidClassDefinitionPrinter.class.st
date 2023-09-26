@@ -317,7 +317,7 @@ FluidClassDefinitionPrinter >> packageOn: s [
 		nextPut: $';
 		nextPutAll: ((forClass packageOrganizer packageOfClassNamed: forClass name)
 				 ifNotNil: [ :package | package name ]
-				 ifNil: [ RPackage defaultPackageName ]);
+				 ifNil: [ UndefinedPackage undefinedPackageName ]);
 		nextPut: $'
 ]
 
