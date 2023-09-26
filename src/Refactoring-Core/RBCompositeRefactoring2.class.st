@@ -38,6 +38,13 @@ RBCompositeRefactoring2 >> breakingChangePreconditions [
 ]
 
 { #category : 'accessing' }
+RBCompositeRefactoring2 >> privateTransform [
+	"pay attention we are not checking preconditions of children at this level"
+	
+	refactorings do: [ :each | each privateTransform ]
+]
+
+{ #category : 'accessing' }
 RBCompositeRefactoring2 >> violators [ 
 
 	^ self breakingChangePreconditions violators "flatCollect: [ :each | each violators ]"
