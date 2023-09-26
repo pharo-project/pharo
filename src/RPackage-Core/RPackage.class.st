@@ -179,22 +179,23 @@ RPackage >> classTagCategoryNames [
 { #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol [
 
-	^ classTags detect: [ :each | each name = aSymbol ]
+	^ self classTags detect: [ :each | each name = aSymbol ]
 ]
 
 { #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol ifAbsent: aBlock [
-	^ classTags
+	^ self classTags
 		detect: [ :each | each name = aSymbol ]
 		ifNone: aBlock
 ]
 
 { #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol ifPresent: aBlock [
-	^ classTags
-		detect: [ :each | each name = aSymbol ]
-		ifFound: [ :tag | aBlock cull: tag ]
-		ifNone: [ nil ]
+
+	^ self classTags
+		  detect: [ :each | each name = aSymbol ]
+		  ifFound: [ :tag | aBlock cull: tag ]
+		  ifNone: [ nil ]
 ]
 
 { #category : 'class tags' }
@@ -301,7 +302,7 @@ RPackage >> ensureTag: aTag [
 	(self hasTag: aTag) ifTrue: [ ^ self classTagNamed: tagName ].
 
 	newTag := RPackageTag package: self name: tagName.
-	classTags add: newTag.
+	self classTags add: newTag.
 
 	SystemAnnouncer announce: (PackageTagAdded to: newTag).
 	^ newTag
@@ -510,8 +511,9 @@ RPackage >> initialize [
 
 { #category : 'testing' }
 RPackage >> isDefault [
-	"Return whether the receiver is the default package, i.e. the one used when nothing else is specified."
-	^ self name = self class defaultPackageName
+
+	self deprecated: 'Use #isUndefined instead' transformWith: '`@rcv isDefault' -> '`@rcv isUndefined'.
+	^ self isUndefined
 ]
 
 { #category : 'testing' }
@@ -540,6 +542,12 @@ RPackage >> isTestPackage [
 	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
 
 	^ (self name endsWith: '-Tests' caseSensitive: false) or: [ self name includesSubstring: '-Tests-' caseSensitive: false ]
+]
+
+{ #category : 'testing' }
+RPackage >> isUndefined [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -622,7 +630,8 @@ RPackage >> packageManifestOrNil [
 { #category : 'accessing' }
 RPackage >> packageName [
 
-	^ name
+	self deprecated: 'Use #name instead.' transformWith: '`@rcv packageName' -> '`@rcv name'.
+	^ self name
 ]
 
 { #category : 'system compatibility' }
@@ -707,7 +716,7 @@ RPackage >> removeEmptyTags [
 { #category : 'removing' }
 RPackage >> removeFromSystem [
 
-	self isDefault ifTrue: [ ^ self ].
+	self isUndefined ifTrue: [ ^ self ].
 	self classTags do: [ :tag | tag removeFromSystem ].
 	self extensionMethods do: [ :method | method removeFromSystem ].
 
@@ -776,7 +785,7 @@ RPackage >> removeTag: aTag [
 
 	tag classes do: [ :class | class removeFromSystem ].
 
-	classTags remove: tag ifAbsent: [ ^ self ].
+	self classTags remove: tag ifAbsent: [ ^ self ].
 
 	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]

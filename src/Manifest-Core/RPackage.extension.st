@@ -28,7 +28,8 @@ RPackage >> packageComment: aDescription [
 
 { #category : '*Manifest-Core' }
 RPackage >> packageManifest [
+
 	^ self definedClasses
-		detect: [ :each | each isManifest ]
-		ifNone: [ TheManifestBuilder new createManifestNamed: name]
+		  detect: [ :each | each isManifest ]
+		  ifNone: [ TheManifestBuilder new createManifestNamed: self name ]
 ]

@@ -505,7 +505,7 @@ ReleaseTest >> testUnknownProcesses [
 ReleaseTest >> testUnpackagedClasses [
 
 	| unpackagedClasses |
-	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (self packageOrganizer packageOf: each) packageName = RPackage defaultPackageName ].
+	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (self packageOrganizer packageOf: each) name = RPackage defaultPackageName ].
 	self assert: unpackagedClasses isEmpty description: (String streamContents: [ :s |
 			 s nextPutAll: 'Found the following unpackaged classes: '.
 			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])

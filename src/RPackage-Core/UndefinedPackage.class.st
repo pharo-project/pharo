@@ -10,6 +10,18 @@ Class {
 }
 
 { #category : 'accessing' }
+UndefinedPackage class >> undefinedPackageName [
+
+	^ #_UnpackagedPackage
+]
+
+{ #category : 'testing' }
+UndefinedPackage >> isUndefined [
+
+	^ true
+]
+
+{ #category : 'accessing' }
 UndefinedPackage >> name [
 
 	^ RPackage defaultPackageName

@@ -589,6 +589,12 @@ RPackageOrganizer >> testPackages [
 	^ self packages select: [ :package | package isTestPackage ]
 ]
 
+{ #category : 'accessing' }
+RPackageOrganizer >> undefinedPackage [
+
+	^ self packageNamed: UndefinedPackage undefinedPackageName
+]
+
 { #category : 'initialization' }
 RPackageOrganizer >> unregister [
 	SystemAnnouncer uniqueInstance unsubscribe: self

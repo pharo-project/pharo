@@ -4,9 +4,9 @@ Extension { #name : 'RPackage' }
 RPackage >> actualClassTags [
 
 	self deprecated: 'This method is too specific and will be removed in future versions of Pharo.'.
-	(classTags size = 1 and: [ classTags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
+	(self classTags size = 1 and: [ self classTags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
 
-	^ classTags
+	^ self classTags
 ]
 
 { #category : '*Deprecated12' }
