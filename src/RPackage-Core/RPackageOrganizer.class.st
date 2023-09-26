@@ -234,12 +234,6 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	^ packages removeKey: aPackage name ifAbsent: [  ]
 ]
 
-{ #category : 'initialization' }
-RPackageOrganizer >> defineUnpackagedClassesPackage [
-
-	^ self ensurePackage: RPackage defaultPackageName
-]
-
 { #category : 'registration' }
 RPackageOrganizer >> ensurePackage: aPackage [
 
@@ -319,8 +313,7 @@ RPackageOrganizer >> initialize [
 	packages := IdentityDictionary new.
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
-
-	self defineUnpackagedClassesPackage
+	self ensurePackage: UndefinedPackage new
 ]
 
 { #category : 'system integration' }
