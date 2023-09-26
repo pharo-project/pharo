@@ -1,5 +1,7 @@
 "
-MCClassTraitParser identifies classTrait. 
+MCClassTraitParser identifies classTrait.
+
+MCClassTraitDefinition are not generated anymore by Pharo. This is just here for backward compatibility.
 "
 Class {
 	#name : 'MCClassTraitParser',
