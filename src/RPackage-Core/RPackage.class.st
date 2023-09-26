@@ -172,11 +172,6 @@ RPackage >> addMethod: aCompiledMethod [
 ]
 
 { #category : 'class tags' }
-RPackage >> classTagCategoryNames [
-	^ (Set with: self packageName), (self classTags collect: [:each | each categoryName])
-]
-
-{ #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol [
 
 	^ classTags detect: [ :each | each name = aSymbol ]
@@ -781,15 +776,6 @@ RPackage >> removeTag: aTag [
 	SystemAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
-{ #category : 'private' }
-RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
-
-	| protocols |
-	protocols := self extensionMethods collect: [ :method | method protocol ] as: Set.
-
-	protocols do: [ :protocol | protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ]
-]
-
 { #category : 'class tags' }
 RPackage >> renameTag: aTag to: newName [
 
@@ -804,19 +790,24 @@ RPackage >> renameTag: aTag to: newName [
 RPackage >> renameTo: aSymbol [
 	"Rename a package with a different name, provided as a symbol"
 
-	| oldName newName oldCategoryNames |
+	| oldName newName |
 	oldName := self name.
 	newName := aSymbol asSymbol.
 	self organizer validatePackageDoesNotExist: aSymbol.
-	oldCategoryNames := (self classTags collect: [ :each | each categoryName ] as: Set)
-		                    add: self name;
-		                    difference: { newName }.
+
 	self organizer basicUnregisterPackage: self.
 	self name: aSymbol.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ self definedClasses do: [ :each | each category: newName , (each category allButFirst: oldName size) ] ].
+
 	self flag: #package. "For now, the root tag has the name of the package, thus, renaming the package means that we need to rename the root tag. In the future I want to update the root tag name to be fix and not depend on the name of the package. When that happens, we'll be able to remove the next line."
 	self classTagNamed: oldName ifPresent: [ :tag | tag renameTo: newName ].
-	self renameExtensionsPrefixedWith: oldName to: newName.
+
+	self flag: #package. "The next line is necessary until classes know their tag. Then it will not be needed anymore"
+	self classTags do: [ :tag | tag classes do: [ :class | class basicCategory: tag categoryName ] ].
+
+	"We rename the extension protocols refering to this package"
+	(self extensionMethods collect: [ :method | method protocol ] as: Set) do: [ :protocol |
+		protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ].
+
 	self organizer basicRegisterPackage: self.
 	SystemAnnouncer uniqueInstance announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
