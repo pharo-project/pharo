@@ -76,7 +76,7 @@ RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 RPackageOrganizerTest >> testEmpty [
 
 	self assert: self organizer packageNames size equals: 1.
-	self assert: (self organizer packageNames includes: RPackage defaultPackageName)
+	self assert: (self organizer packageNames includes: UndefinedPackage undefinedPackageName)
 ]
 
 { #category : 'tests' }

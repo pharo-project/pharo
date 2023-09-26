@@ -165,7 +165,7 @@ RPackageOrganizer >> addMethod: method [
 
 	| package protocol |
 	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
-	method methodClass package name = RPackage defaultPackageName ifTrue: [ ^ self ].
+	method methodClass package name = UndefinedPackage undefinedPackageName ifTrue: [ ^ self ].
 
 	protocol := method protocol.
 	package := protocol isExtensionProtocol
@@ -235,12 +235,6 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the PackageRemoved announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
 	^ packages removeKey: aPackage name ifAbsent: [  ]
-]
-
-{ #category : 'initialization' }
-RPackageOrganizer >> defineUnpackagedClassesPackage [
-
-	^ self ensurePackage: RPackage defaultPackageName
 ]
 
 { #category : 'registration' }
@@ -322,8 +316,7 @@ RPackageOrganizer >> initialize [
 	packages := IdentityDictionary new.
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
-
-	self defineUnpackagedClassesPackage
+	self ensurePackage: UndefinedPackage new
 ]
 
 { #category : 'system integration' }
@@ -403,7 +396,7 @@ RPackageOrganizer >> packageNamesDo: aBlock [
 { #category : 'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
-	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self packageNamed: RPackage defaultPackageName ]
+	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self undefinedPackage ]
 ]
 
 { #category : 'package - access from class' }
@@ -597,6 +590,12 @@ RPackageOrganizer >> testPackageNames [
 RPackageOrganizer >> testPackages [
 
 	^ self packages select: [ :package | package isTestPackage ]
+]
+
+{ #category : 'tests' }
+RPackageOrganizer >> undefinedPackage [
+
+	^ self packages detect: [ :package | package isUndefined ]
 ]
 
 { #category : 'initialization' }

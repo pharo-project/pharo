@@ -325,7 +325,7 @@ RPackageTest >> testRemoveTagRemoveClasses [
 	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assertEmpty: (p1 classesTaggedWith: #foo).
 	self deny: (p1 includesClass: a1).
-	self assert: (self organizer packageOf: a1) name equals: RPackage defaultPackageName.
+	self assert: (self organizer packageOf: a1) name equals: UndefinedPackage undefinedPackageName.
 	self assert: a1 isObsolete
 ]
 
