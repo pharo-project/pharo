@@ -66,7 +66,7 @@ RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
 	| p1 |
 	p1 := self ensurePackage: self p1Name.
-	self createNewClassNamed: #MyPoint inPackage: p1.
+	self newClassNamed: #MyPoint in: p1.
 	self assert: self organizer packageNames size equals: 2.
 	self assert: self organizer packages size equals: 2.
 	self assert: (self organizer packageNamed: self p1Name) definedClasses size equals: 1
@@ -101,7 +101,7 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 	p1 := self ensurePackage: 'P1'.
 	p2 := self ensurePackage: 'P2'.
 
-	c1 := self createNewClassNamed: #C1 inPackage: p2.
+	c1 := self newClassNamed: #C1 in: p2.
 
 	c1 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*p1-something'.
 	self organizer addMethod: c1 >> #methodPackagedInP1.
@@ -119,11 +119,11 @@ RPackageOrganizerTest >> testFullRegistration [
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 
-	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
-	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
-	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
-	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
-	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
+	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
+	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
+	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
+	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
@@ -292,7 +292,7 @@ RPackageOrganizerTest >> testRegisteredPackages [
 RPackageOrganizerTest >> testRegistrationExtendingPackages [
 
 	| p |
-	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
+	self newClassNamed: 'QuadrangleForTesting' in: self class package.
 	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
 	p := self ensurePackage: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
@@ -316,10 +316,10 @@ RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 	tag1 := package3 ensureTag: #Tag1.
 	tag2 := package3 ensureTag: #Tag2.
 
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
+	class := self newClassNamed: 'TestClass' in: package1.
 	class compile: 'extension ^ 1' classified: '*Test2'.
 
-	class := self createNewClassNamed: 'TestClass2' inCategory: 'Test3-Tag1'.
+	class := self newClassNamed: 'TestClass2' inTag: tag1.
 
 	self assert: (self organizer hasPackage: package1).
 	self deny: package1 isEmpty.
@@ -353,11 +353,11 @@ RPackageOrganizerTest >> testRemovePackage [
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 
-	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
-	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
-	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
-	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
-	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
+	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
+	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
+	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
+	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
@@ -395,10 +395,10 @@ RPackageOrganizerTest >> testRenameUpdateTheOrganizer [
 RPackageOrganizerTest >> testTestPackageNames [
 
 	| packages |
-	packages := self createMockTestPackages.
+	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
 
-	"Only 2 mock package names are test packages:  'MockPackage-Tests' 'MockPackage-Tests-Package'"
-	self assert: self organizer testPackageNames size equals: 2.
+	"Only 3 mock package names are test packages:  'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage-Tests-Package'"
+	self assert: self organizer testPackageNames size equals: 3.
 
 	"Names of test packages are symbols."
 	self assert: (self organizer testPackageNames allSatisfy: #isSymbol)
@@ -408,10 +408,10 @@ RPackageOrganizerTest >> testTestPackageNames [
 RPackageOrganizerTest >> testTestPackages [
 
 	| packages |
-	packages := self createMockTestPackages.
+	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
 
-	"Only 2 mock packages are test packages:  'MockPackage-Tests' 'MockPackage-Tests-Package'."
-	self assert: self organizer testPackages size equals: 2.
+	"Only 2 mock packages are test packages:  'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage-Tests-Package'."
+	self assert: self organizer testPackages size equals: 3.
 
 	"all items from resulting collection are test packages."
 	self assert: (self organizer testPackages allSatisfy: #isTestPackage)
@@ -438,7 +438,7 @@ RPackageOrganizerTest >> testUnregister [
 RPackageOrganizerTest >> testUnregistrationExtendingPackages [
 
 	| p |
-	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
+	self newClassNamed: 'QuadrangleForTesting' in: self class package.
 	p := self ensurePackage: 'P1'.
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
