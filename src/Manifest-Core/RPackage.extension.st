@@ -30,5 +30,5 @@ RPackage >> packageComment: aDescription [
 RPackage >> packageManifest [
 	^ self definedClasses
 		detect: [ :each | each isManifest ]
-		ifNone: [ TheManifestBuilder new createManifestNamed: name]
+		ifNone: [ TheManifestBuilder new createManifestNamed: self name]
 ]
