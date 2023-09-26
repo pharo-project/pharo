@@ -47,10 +47,16 @@ RBCompositeRefactoring >> preconditions [
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
+{ #category : 'preparation' }
+RBCompositeRefactoring >> prepareForInteractiveMode [
+	self 
+]
+
 { #category : 'transforming' }
 RBCompositeRefactoring >> privateTransform [
-
-	refactorings do: [ :each | each generateChanges ]
+	"pay attention we are not checking preconditions of children at this level"
+	
+	refactorings do: [ :each | each privateTransform ]
 ]
 
 { #category : 'accessing' }
