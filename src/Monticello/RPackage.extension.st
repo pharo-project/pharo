@@ -30,7 +30,7 @@ RPackage >> mcPackage [
 { #category : '*Monticello-RPackage' }
 RPackage >> mcWorkingCopy [
 
-	^ (MCWorkingCopy hasPackageNamed: name)
-		  ifTrue: [ MCWorkingCopy forPackageNamed: name ]
+	^ (MCWorkingCopy hasPackageNamed: self name)
+		  ifTrue: [ MCWorkingCopy forPackageNamed: self name ]
 		  ifFalse: [ nil ]
 ]

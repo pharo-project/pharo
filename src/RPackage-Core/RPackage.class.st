@@ -607,7 +607,8 @@ RPackage >> packageManifestOrNil [
 { #category : 'accessing' }
 RPackage >> packageName [
 
-	^ name
+	self deprecated: 'Use #name instead.' transformWith: '`@rcv packageName' -> '`@rcv name'.
+	^ self name
 ]
 
 { #category : 'system compatibility' }
