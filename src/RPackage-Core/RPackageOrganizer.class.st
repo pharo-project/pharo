@@ -396,13 +396,21 @@ RPackageOrganizer >> packageNamesDo: aBlock [
 { #category : 'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
-	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self undefinedPackage ]
+	| package |
+	package := classPackageMapping at: aClass instanceSide ifAbsent: [ self undefinedPackage ].
+
+	package isUndefined ifFalse: [ (package includesClass: aClass) ifFalse: [ self error: 'Cache is not in sync with the package state.' ] ].
+
+	^ package
 ]
 
 { #category : 'package - access from class' }
 RPackageOrganizer >> packageOfClassNamed: aName [
 
-	classPackageMapping keysAndValuesDo: [ :class :package | class originalName = aName ifTrue: [ ^ package ] ].
+	classPackageMapping keysAndValuesDo: [ :class :package |
+		class originalName = aName ifTrue: [
+			(package includesClassNamed: aName) ifFalse: [ self error: 'Cache is not in sync with the package state.' ].
+			^ package ] ].
 
 	^ self undefinedPackage
 ]
