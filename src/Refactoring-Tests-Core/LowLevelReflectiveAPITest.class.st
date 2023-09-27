@@ -31,25 +31,43 @@ LowLevelReflectiveAPITest >> testIsAccessedIn [
 { #category : 'tests' }
 LowLevelReflectiveAPITest >> testWhichMethodsAccessSubclassState [
 
-	self assert: (MyClassARoot whichMethodsAccess: #instVarName1) first selector equals: #accessing. 
-	self assert: (MyClassARoot whichMethodsAccess: #instVarName1) first methodClass equals: MyClassARoot. 
+	| accessingMethods accessingSelectors |
+	accessingMethods := (MyClassARoot whichMethodsAccess: #instVarName1).
+	self assert: accessingMethods size equals: 1.
+	self assert: accessingMethods first selector equals: #accessing. 
+	self assert: (MyClassARoot whichMethodsAccess: #instVarName1) first methodClass equals: MyClassARoot.
+	 
 	self assert: (MySubAccessingSuperclassState whichMethodsAccess: #instVarName1) size equals: 3.
-	self assert: (MySubAccessingSuperclassState whichMethodsAccess: #instVarName1) first selector equals: #accessing.
-	self assert: (MySubAccessingSuperclassState whichMethodsAccess: #instVarName1) first methodClass equals: MySubAccessingSuperclassState.
-	self assert: (MySubAccessingSuperclassState whichMethodsAccess: #instVarName1) second selector equals: #accessing2InSub.
-	self assert: (MySubAccessingSuperclassState whichMethodsAccess: #instVarName1) third selector equals: #writing.
 	
+	accessingMethods := (MySubAccessingSuperclassState whichMethodsAccess: #instVarName1).
+	accessingSelectors := accessingMethods collect: [ :each | each selector ].
+	
+	self assert: (accessingSelectors includes: #accessing).
+	self assert: (accessingSelectors includes: #accessing2InSub).
+	self assert: (accessingSelectors includes: #writing).
+		
+	self assert: (accessingMethods select: [ :each | each selector = #accessing2InSub ]) first methodClass equals: MySubAccessingSuperclassState.
+	self assert: (accessingMethods select: [ :each | each selector = #accessing ]) first methodClass equals: MySubAccessingSuperclassState.
+	self assert: (accessingMethods select: [ :each | each selector = #writing ]) first methodClass equals: MySubAccessingSuperclassState.
 ]
 
 { #category : 'tests' }
 LowLevelReflectiveAPITest >> testWhichMethodsReadSubclassState [
 
+	| accessingMethods accessingSelectors |
 	self assert: (MyClassARoot whichMethodsRead: #instVarName1) first selector equals: #accessing. 
 	self assert: (MyClassARoot whichMethodsRead: #instVarName1) first methodClass equals: MyClassARoot. 
 	self assert: (MySubAccessingSuperclassState whichMethodsRead: #instVarName1) size equals: 2.
-	self assert: (MySubAccessingSuperclassState whichMethodsRead: #instVarName1) first selector equals: #accessing.
-	self assert: (MySubAccessingSuperclassState whichMethodsRead: #instVarName1) first methodClass equals: MySubAccessingSuperclassState.
-	self assert: (MySubAccessingSuperclassState whichMethodsRead: #instVarName1) second selector equals: #accessing2InSub.
+	
+	accessingMethods := (MySubAccessingSuperclassState whichMethodsRead: #instVarName1).
+	accessingSelectors := accessingMethods collect: [ :each | each selector ].
+	
+	self assert: (accessingSelectors includes: #accessing).
+	self assert: (accessingSelectors includes: #accessing2InSub).
+	
+	self assert: (accessingMethods select: [ :each | each selector =  #accessing2InSub ]) first methodClass equals: MySubAccessingSuperclassState.
+	self assert: (accessingMethods select: [ :each | each selector =  #accessing ]) first methodClass equals: MySubAccessingSuperclassState.
+	
 	
 ]
 
