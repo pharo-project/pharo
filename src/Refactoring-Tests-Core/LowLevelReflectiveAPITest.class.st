@@ -86,5 +86,5 @@ LowLevelReflectiveAPITest >> testWhichMethodsWriteSubclassState [
 LowLevelReflectiveAPITest >> testWhichSelectorsAccessSubclassState [
 
 	self assert: (MyClassARoot whichSelectorsAccess: #instVarName1) equals: #(accessing). 
-	self assert: (MySubAccessingSuperclassState whichSelectorsAccess: #instVarName1) equals: #(#accessing #accessing2InSub #writing)
+	self assert: (MySubAccessingSuperclassState whichSelectorsAccess: #instVarName1) asSet equals: #(#accessing #accessing2InSub #writing) asSet
 ]
