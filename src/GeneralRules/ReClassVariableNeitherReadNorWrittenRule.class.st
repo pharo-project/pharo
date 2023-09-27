@@ -16,8 +16,11 @@ ReClassVariableNeitherReadNorWrittenRule class >> checksClass [
 
 { #category : 'running' }
 ReClassVariableNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
-	aClass classVariables
-		select: [ :variable | variable isReferenced not ]
+
+	(self unreferencedVariablesOf: aClass)
+		reject: [ :variable |
+			variable definingClass pragmas anySatisfy: [ :pragma |
+				pragma selector = #ignoreUnusedClassVariables: and: [ (pragma argumentAt: 1) includes: variable name ] ] ]
 		thenDo: [ :variable | aCriticBlock cull: (self critiqueFor: aClass about: variable name) ]
 ]
 
@@ -35,4 +38,10 @@ ReClassVariableNeitherReadNorWrittenRule >> name [
 { #category : 'accessing' }
 ReClassVariableNeitherReadNorWrittenRule >> severity [
 	^ #information
+]
+
+{ #category : 'running' }
+ReClassVariableNeitherReadNorWrittenRule >> unreferencedVariablesOf: aClass [
+
+	^ aClass classVariables reject: [ :variable | variable isReferenced ]
 ]

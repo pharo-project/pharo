@@ -80,6 +80,12 @@ STONAlternativeRepresentationTestObject >> id: anObject [
 	id := anObject
 ]
 
+{ #category : 'initialization' }
+STONAlternativeRepresentationTestObject >> initialize [
+		<ignoreUnusedClassVariables: #( KnownObjects )>
+		super initialize.
+]
+
 { #category : 'ston persistence' }
 STONAlternativeRepresentationTestObject >> stonOn: stonWriter [
 	stonWriter writeObject: self streamMap: [ :dictionary |

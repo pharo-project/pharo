@@ -21,8 +21,11 @@ ReNoUnusedInstanceVariableRule class >> uniqueIdentifierName [
 
 { #category : 'running' }
 ReNoUnusedInstanceVariableRule >> check: aClass forCritiquesDo: aCriticBlock [
+
 	aClass slots
-		select: [ :slot | slot isReferenced not ]
+		reject: [ :slot |
+			slot isReferenced or: [
+				slot definingClass pragmas anySatisfy: [ :pragma | pragma selector = #ignoreUnusedVariables: and: [ (pragma argumentAt: 1) includes: slot name ] ] ] ]
 		thenDo: [ :slot | aCriticBlock cull: (self critiqueFor: aClass about: slot name) ]
 ]
 
