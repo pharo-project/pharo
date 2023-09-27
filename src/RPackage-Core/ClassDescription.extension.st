@@ -62,10 +62,9 @@ ClassDescription >> packageTag [
 ]
 
 { #category : '*RPackage-Core' }
-ClassDescription >> packageTag: aSymbol [
+ClassDescription >> packageTag: aTag [
 
-	self flag: #package. "In the future this method should work with a real package tag also."
-	(self package ensureTag: aSymbol) addClass: self
+	(self package ensureTag: aTag) addClass: self
 ]
 
 { #category : '*RPackage-Core' }

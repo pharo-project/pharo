@@ -290,11 +290,11 @@ RPackageTest >> testRemoveTag [
 	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
 	self assert: p1 classTags size equals: 1. "We start with the root tag"
 
-	p1 importClass: a1 inTag: #foo.
+	p1 moveClass: a1 toTag: #foo.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
 
-	p1 importClass: b1 inTag: #foo.
+	p1 moveClass: b1 toTag: #foo.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
 
@@ -316,7 +316,7 @@ RPackageTest >> testRemoveTagRemoveClasses [
 	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
 	self assert: p1 classTags size equals: 1. "We start with the root tag"
 
-	p1 importClass: a1 inTag: #foo.
+	p1 moveClass: a1 toTag: #foo.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
 
