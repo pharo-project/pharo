@@ -355,9 +355,7 @@ RBAbstractClass >> existingMethodsThatReferToClassVariable: aString [
 RBAbstractClass >> existingMethodsThatReferToInstanceVariable: aString [
 	| existingMethods rClass |
 	rClass := self realClass. "no idea what we cannot use the variable realClass"
-	self halt.
-	existingMethods :=  (realClass
-		whichSelectorsAccess: aString) collect: [ :each | realClass >> each ].
+	existingMethods :=  (realClass whichSelectorsAccess: aString) collect: [ :each | realClass >> each ].
 	(newMethods isNil and: [ removedMethods isNil ])
 		ifTrue: [ ^ existingMethods ].
 	^ existingMethods
