@@ -81,6 +81,13 @@ RPackage >> classesForClassTag: aTagName [
 ]
 
 { #category : '*Deprecated12' }
+RPackage class >> defaultPackageName [
+
+	self deprecated: 'Use `UndefinedPackage undefinedPackageName`' transformWith: '`@rcv defaultPackageName' -> 'UndefinedPackage undefinedPackageName'.
+	^ UndefinedPackage undefinedPackageName
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> definedClassesDo: aBlock [
 
 	self deprecated:
@@ -150,6 +157,13 @@ RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
 
 	self deprecated: 'Use #includesSelector:ofClass: directly with the class.'.
 	^ self includesSelector: aSelector ofClass: (self environment at: aClassName)
+]
+
+{ #category : '*Deprecated12' }
+RPackage >> isDefault [
+
+	self deprecated: 'Use #isUndefined instead' transformWith: '`@rcv isDefault' -> '`@rcv isUndefined'.
+	^ self isUndefined
 ]
 
 { #category : '*Deprecated12' }

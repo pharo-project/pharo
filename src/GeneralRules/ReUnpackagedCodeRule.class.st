@@ -28,7 +28,8 @@ ReUnpackagedCodeRule class >> uniqueIdentifierName [
 
 { #category : 'running' }
 ReUnpackagedCodeRule >> basicCheck: anEntity [
-	^ anEntity package isNotNil and: [ anEntity package isDefault ]
+
+	^ anEntity package isNotNil and: [ anEntity package isUndefined ]
 ]
 
 { #category : 'accessing' }

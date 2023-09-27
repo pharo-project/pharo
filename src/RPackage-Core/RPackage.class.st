@@ -72,11 +72,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'constants' }
-RPackage class >> defaultPackageName [
-	^ #'_UnpackagedPackage'
-]
-
 { #category : 'class initialization' }
 RPackage class >> initialize [
 	"Ensure the organizer will be the RPackageOrganizer default"
@@ -494,12 +489,6 @@ RPackage >> initialize [
 ]
 
 { #category : 'testing' }
-RPackage >> isDefault [
-	"Return whether the receiver is the default package, i.e. the one used when nothing else is specified."
-	^ self name = self class defaultPackageName
-]
-
-{ #category : 'testing' }
 RPackage >> isDeprecated [
 	^ self packageManifestOrNil
 		ifNil: [ ^ false ]
@@ -509,7 +498,6 @@ RPackage >> isDeprecated [
 { #category : 'testing' }
 RPackage >> isEmpty [
 
-	self name = self class defaultPackageName ifTrue: [ ^ false ].
 	^ self classes isEmpty and: [ self extensionSelectors isEmpty ]
 ]
 
@@ -525,6 +513,12 @@ RPackage >> isTestPackage [
 	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
 
 	^ (self name endsWith: '-Tests' caseSensitive: false) or: [ self name includesSubstring: '-Tests-' caseSensitive: false ]
+]
+
+{ #category : 'testing' }
+RPackage >> isUndefined [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -693,7 +687,6 @@ RPackage >> removeEmptyTags [
 { #category : 'removing' }
 RPackage >> removeFromSystem [
 
-	self isDefault ifTrue: [ ^ self ].
 	self classTags do: [ :tag | tag removeFromSystem ].
 	self extensionMethods do: [ :method | method removeFromSystem ].
 
