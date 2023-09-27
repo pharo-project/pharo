@@ -326,9 +326,12 @@ ShiftClassBuilder >> fillFor: aClass [
 		classSlots: aClass class localSlots;
 		sharedVariablesFromString: aClass classVariablesString;
 		sharedPools: aClass sharedPoolsString;
-		category: aClass category;
+		package: aClass package name;
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
+
+	self flag: #package. "Can be improved later."
+	aClass packageTag ifNotNil: [ :packageTag | packageTag isRoot ifFalse: [ self tag: packageTag name ] ].
 
 	self builderEnhancer fillBuilder: self from: aClass
 ]
