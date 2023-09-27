@@ -250,7 +250,6 @@ RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 	^ self new
 		  block: [
 			  aClass withAllSubclasses anySatisfy: [ :each |
-					self halt.
 				  (each whichSelectorsReferToInstanceVariable: aString) isNotEmpty ] ]
 		  errorString: aClass printString
 			  , ' or subclass <1?:does not >reference<1?s:> instance variable '

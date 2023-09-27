@@ -35,7 +35,7 @@ RBAbstractCondition >> check [
 { #category : 'private' }
 RBAbstractCondition >> errorMacro [
 
-	^ errorMacro ifNil: [ self halt. 'unknown' ] ifNotNil: [ errorMacro ]
+	^ errorMacro ifNil: [ 'unknown' ] ifNotNil: [ errorMacro ]
 ]
 
 { #category : 'private' }
