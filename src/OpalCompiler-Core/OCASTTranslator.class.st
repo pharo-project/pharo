@@ -643,7 +643,7 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
-	"Long form: useing at:put:"
+	"Long form: using at:put:"
 	methodBuilder pushLiteralVariable: Array binding.
 	methodBuilder pushLiteral: aRBArrayNode statements size.
 	methodBuilder send: #new:.
