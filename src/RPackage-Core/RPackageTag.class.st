@@ -98,6 +98,12 @@ RPackageTag >> isRoot [
 	^ self name = self package rootTagName
 ]
 
+{ #category : 'testing' }
+RPackageTag >> isUndefined [
+
+	^ false
+]
+
 { #category : 'accessing' }
 RPackageTag >> name [
 	^ name

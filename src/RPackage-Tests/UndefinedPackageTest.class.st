@@ -32,6 +32,23 @@ UndefinedPackageTest >> testName [
 ]
 
 { #category : 'tests' }
+UndefinedPackageTest >> testPackageOfUnpackagedClass [
+
+	| class |
+	class := self newClassNamed: #MyTestClass in: #Package1.
+	self organizer removeClass: class.
+
+	self assert: class package identicalTo: self undefinedPackage
+]
+
+{ #category : 'tests' }
+UndefinedPackageTest >> testTagOf [
+
+	self assert: (self undefinedPackage tagOf: self class) equals: self undefinedPackage undefinedTag.
+	self assert: (self undefinedPackage tagOf: self class) name equals: UndefinedPackageTag undefinedPackageTagName
+]
+
+{ #category : 'helpers' }
 UndefinedPackageTest >> undefinedPackage [
 
 	^ self organizer undefinedPackage
