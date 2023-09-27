@@ -24,6 +24,12 @@ FLFullBasicSerializationTest >> defaultTimeLimit [
 	^ 2 minutes
 ]
 
+{ #category : 'initialization' }
+FLFullBasicSerializationTest >> initialize [
+		<ignoreUnusedClassVariables: #( ClassVariableForTesting )>
+		super initialize.
+]
+
 { #category : 'tests' }
 FLFullBasicSerializationTest >> testClassGlobalAssociation [
 	"An association included in Smalltalk globals is treated as global by default."

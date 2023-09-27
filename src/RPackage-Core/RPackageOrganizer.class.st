@@ -402,10 +402,9 @@ RPackageOrganizer >> packageOf: aClass [
 { #category : 'package - access from class' }
 RPackageOrganizer >> packageOfClassNamed: aName [
 
-	self flag: #pharoFixMe. "Should probably return _UnunpackagedPackage instead of nil"
 	classPackageMapping keysAndValuesDo: [ :class :package | class originalName = aName ifTrue: [ ^ package ] ].
 
-	^ nil
+	^ self undefinedPackage
 ]
 
 { #category : 'accessing' }

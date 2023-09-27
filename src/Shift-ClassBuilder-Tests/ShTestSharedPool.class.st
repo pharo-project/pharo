@@ -11,3 +11,9 @@ Class {
 	#package : 'Shift-ClassBuilder-Tests',
 	#tag : 'TestClasses'
 }
+
+{ #category : 'initialization' }
+ShTestSharedPool >> initialize [
+		<ignoreUnusedClassVariables: #( FooValue1 )>
+		super initialize.
+]

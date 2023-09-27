@@ -86,7 +86,10 @@ RBLintRuleTestData >> hasConflicts [
 
 { #category : 'initialization' }
 RBLintRuleTestData >> initialize [
-	<ignoreUnusedVariables: #(#foo1)>
+
+	<ignoreUnusedVariables: #( #foo1 )>
+	<ignoreUnusedClassVariables: #( Foo1 )>
+	super initialize.
 	name := ''
 ]
 

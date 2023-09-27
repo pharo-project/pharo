@@ -17,6 +17,7 @@ Class {
 MyClassNonEmptyLeafUnused >> initialize [
 
 	<ignoreUnusedVariables: #( instVarName1222 #instVarName23333 )>
+	<ignoreUnusedClassVariables: #( ClassVarName2456 )>
 	super initialize
 ]
 

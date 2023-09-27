@@ -476,6 +476,12 @@ Character >> hexDigitValue [
 		ifFalse: [ nil ]
 ]
 
+{ #category : 'initialization' }
+Character >> initialize [
+		<ignoreUnusedClassVariables: #( CharacterTable )>
+		super initialize.
+]
+
 { #category : 'testing' }
 Character >> isAlphaNumeric [
 	"Answer whether the receiver is a letter or a digit."

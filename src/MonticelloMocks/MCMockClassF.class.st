@@ -12,3 +12,9 @@ Class {
 	#category : 'MonticelloMocks',
 	#package : 'MonticelloMocks'
 }
+
+{ #category : 'initialization' }
+MCMockClassF >> initialize [
+		<ignoreUnusedClassVariables: #( Foo )>
+		super initialize.
+]
