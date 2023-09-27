@@ -848,7 +848,7 @@ RPackage >> tagOf: aClass [
 
 	^ self classTags
 		  detect: [ :tag | tag hasClass: aClass ]
-		  ifNone: [ nil ]
+		  ifNone: [ self error: ('No tag containing {1} found in package {2}' format: { aClass name . self name }) ]
 ]
 
 { #category : 'private' }
