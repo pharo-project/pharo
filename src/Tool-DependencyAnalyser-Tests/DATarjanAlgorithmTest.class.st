@@ -52,8 +52,8 @@ DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 
 	| aRelation aCollection sccs |
 	aCollection := OrderedCollection withAll: (self packageOrganizer packages
-			                select: [ :package | '*Collections*' match: package packageName asString ]
-			                thenCollect: [ :package | package packageName ]).
+			                select: [ :package | '*Collections*' match: package name asString ]
+			                thenCollect: [ :package | package name ]).
 	aRelation := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: (RPackageSet named: each) ]).
 	aRelation
 		computeStaticDependencies;
