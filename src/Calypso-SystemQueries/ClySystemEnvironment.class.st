@@ -7,7 +7,6 @@ Public API and Key Messages
 
 - packages
 - createPackageNamed: aString
-- removePackage: aPackage
 - includesClassNamed: aString 
 - defaultClassCompiler
 - subscribe: aNavigationEnvironment
@@ -358,12 +357,6 @@ ClySystemEnvironment >> projects [
 ClySystemEnvironment >> registerProjectManager: aPackageManager [
 	aPackageManager systemEnvironment: self.
 	projectManager registerProjectManager: aPackageManager
-]
-
-{ #category : 'package management' }
-ClySystemEnvironment >> removePackage: aPackage [
-
-	packageOrganizer removePackage: aPackage
 ]
 
 { #category : 'subscription' }
