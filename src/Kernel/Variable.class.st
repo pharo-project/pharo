@@ -132,7 +132,8 @@ Variable >> hash [
 
 { #category : 'testing' }
 Variable >> isAccessedIn: aMethod [
-	^self usingMethods includes: aMethod
+	"Return whether the receiver is accessed in the arg. Pay attention that the compiler is free to remove unused variable so the access is only garanteed for used instance variables e.g. part of return, expression, assignment..."
+	^ self usingMethods includes: aMethod
 ]
 
 { #category : 'testing' }
@@ -370,6 +371,13 @@ Variable >> removeProperty: propName ifAbsent: aBlock [
 { #category : 'accessing' }
 Variable >> scope [
 	^self subclassResponsibility
+]
+
+{ #category : 'testing' }
+Variable >> sisAccessedIn: aMethod [
+	"Return whether the receiver is accessed in the arg. Pay attention that the compiler is free to remove unused variable so the access is only garanteed for used instance variables e.g. part of return, expression, assignment..."
+	
+	^ self usingMethods includes: aMethod
 ]
 
 { #category : 'queries' }

@@ -10,6 +10,18 @@ Class {
 }
 
 { #category : 'tests' }
+LowLevelReflectiveAPITest >> testIsAccessedIn [
+
+	self assert: ((MyClassARoot slotNamed: #instVarName1) isAccessedIn:  MyClassARoot >> #accessing).
+	self assert: ((MyClassARoot slotNamed: #instVarName1) isAccessedIn:  MySubAccessingSuperclassState >> #accessing).
+	self assert: ((MyClassARoot slotNamed: #instVarName1) isAccessedIn:  MySubAccessingSuperclassState >> #accessing2InSub).
+	self assert: ((MyClassARoot slotNamed: #instVarName1) isAccessedIn:  MySubAccessingSuperclassState >> #writing).
+		
+
+	
+]
+
+{ #category : 'tests' }
 LowLevelReflectiveAPITest >> testWhichMethodsAccessSubclassState [
 
 	self assert: (MyClassARoot whichMethodsAccess: #instVarName1) first selector equals: #accessing. 
