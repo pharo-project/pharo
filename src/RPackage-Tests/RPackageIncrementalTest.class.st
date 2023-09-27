@@ -57,6 +57,23 @@ RPackageIncrementalTest >> tearDown [
 	super tearDown
 ]
 
+{ #category : 'tests - class addition removal' }
+RPackageIncrementalTest >> testAddClassNoDuplicate [
+
+	| p a1 b1 |
+	p := self ensurePackage: self p1Name.
+	a1 := self newClassNamed: #A1InPackageP1 in: self p2Name.
+	self assertEmpty: p definedClasses.
+	p addClass: a1.
+	self assert: p definedClasses size equals: 1.
+	b1 := self newClassNamed: #B1InPackageP1 in: self p2Name.
+	p addClass: a1.
+	"adding the same class does not do anything - luckily"
+	self assert: p definedClasses size equals: 1.
+	p addClass: b1.
+	self assert: p definedClasses size equals: 2
+]
+
 { #category : 'tests - method addition removal' }
 RPackageIncrementalTest >> testAddRemoveMethod [
 
@@ -126,7 +143,7 @@ RPackageIncrementalTest >> testClassAddition [
 	p := self ensurePackage: self p1Name.
 	a1 := self newClassNamed: #A1InPAckageP1 in: self p2Name.
 	self assertEmpty: p definedClasses.
-	p importClass: a1.
+	p addClass: a1.
 	self assert: p definedClasses size equals: 1.
 	self assert: (p includesClass: a1).
 	self assert: (p includesClass: a1 class)
@@ -141,8 +158,8 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 	b1 := self newClassNamed: #B1InPAckageP1 in: self p2Name.
 	self assertEmpty: p definedClasses.
 
-	p importClass: a1.
-	p importClass: b1.
+	p addClass: a1.
+	p addClass: b1.
 	self assert: p definedClasses size equals: 2.
 
 	self assert: (p includesClass: a1).
@@ -318,23 +335,6 @@ RPackageIncrementalTest >> testExtensionMethods [
 	self assert: p1 extensionSelectors size equals: 2
 ]
 
-{ #category : 'tests - class addition removal' }
-RPackageIncrementalTest >> testImportClassNoDuplicate [
-
-	| p a1 b1 |
-	p := self ensurePackage: self p1Name.
-	a1 := self newClassNamed: #A1InPackageP1 in: self p2Name.
-	self assertEmpty: p definedClasses.
-	p importClass: a1.
-	self assert: p definedClasses size equals: 1.
-	b1 := self newClassNamed: #B1InPackageP1 in: self p2Name.
-	p importClass: a1.
-	"adding the same class does not do anything - luckily"
-	self assert: p definedClasses size equals: 1.
-	p importClass: b1.
-	self assert: p definedClasses size equals: 2
-]
-
 { #category : 'tests - extension' }
 RPackageIncrementalTest >> testIncludeClass [
 
@@ -352,7 +352,7 @@ RPackageIncrementalTest >> testIncludeClass [
 	the class as defined. The reason is that like that the client controls the granularity
 	and moment of class registration."
 
-	p1 importClass: a2.
+	p1 addClass: a2.
 	self assert: (p1 includesClass: a2).
 	self assert: (p1 includesClassNamed: a2 name)
 ]
@@ -589,10 +589,10 @@ RPackageIncrementalTest >> testUniqueClassInDefinedClassesUsingAddClassDefinitio
 	p := self ensurePackage: self p1Name.
 	a1 := self newClassNamed: #A1InPackageP1 in: self p2Name.
 	self assertEmpty: p definedClasses.
-	p importClass: a1.
+	p addClass: a1.
 	self assert: p definedClasses size equals: 1.
-	p importClass: a1.
+	p addClass: a1.
 	self assert: p definedClasses size equals: 1.
-	p importClass: a1 class.
+	p addClass: a1 class.
 	self assert: p definedClasses size equals: 1
 ]
