@@ -44,7 +44,6 @@ RBRemoveInstanceVariablesDriver >> handleBreakingChanges [
 	
 	select := SpSelectDialog new
 		          title: 'There are references to variables!';
-		          label: 'self labelBasedOnBreakingChanges';
 		          items: items;
 		          display: [ :each | each description ];
 		          displayIcon: [ :each |  self iconNamed: each systemIconName ];
