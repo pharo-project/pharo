@@ -31,13 +31,6 @@ CompiledMethodTest >> abstractMethod [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'private - accessing' }
-CompiledMethodTest >> categoryNameForTemporaryClasses [
-	"Answer the category where to classify temporarily created classes"
-
-	^'Dummy-Tests-Class'
-]
-
 { #category : 'coverage' }
 CompiledMethodTest >> classToBeTested [
 
@@ -217,6 +210,13 @@ CompiledMethodTest >> nonAbstractMethod [
 	^ 4 + 5
 ]
 
+{ #category : 'private - accessing' }
+CompiledMethodTest >> packageNameForTests [
+	"Answer the category where to classify temporarily created classes"
+
+	^'Dummy-Tests-Class'
+]
+
 { #category : 'examples' }
 CompiledMethodTest >> readX [
 	| tmp |
@@ -250,7 +250,7 @@ CompiledMethodTest >> shouldNotImplementMethod [
 { #category : 'running' }
 CompiledMethodTest >> tearDown [
 
-	self packageOrganizer removePackage: self categoryNameForTemporaryClasses.
+	self packageOrganizer removePackage: self packageNameForTests.
 	class ifNotNil: [ class removeFromSystem ].
 	super tearDown
 ]
@@ -473,7 +473,7 @@ CompiledMethodTest >> testIsExtension [
 
 	self class removeSelector: #isExtensionTestMethod.
 	self deny: method isExtension ] ensure: [
-		self packageOrganizer packageNamed: 'Kernel-Tests-Generated-Package' ifPresent: [ :package | package removeFromSystem ].
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
@@ -502,7 +502,7 @@ CompiledMethodTest >> testIsInstalled [
 	cls := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: #TUTU;
-			package: self categoryNameForTemporaryClasses].
+			package: self packageNameForTests].
 
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
@@ -667,7 +667,7 @@ CompiledMethodTest >> testMethodClass [
 	cls := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: #TUTU;
-			package: self categoryNameForTemporaryClasses].
+			package: self packageNameForTests].
 
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
@@ -830,7 +830,7 @@ CompiledMethodTest >> testSelector [
 			cls := self class classInstaller make: [ :aBuilder |
 				aBuilder
 					name: #TUTU;
-					package: self categoryNameForTemporaryClasses].
+					package: self packageNameForTests].
 
 			cls compile: 'foo ^ 10'.
 

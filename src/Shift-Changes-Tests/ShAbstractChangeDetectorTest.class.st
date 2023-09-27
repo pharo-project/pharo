@@ -85,10 +85,12 @@ ShAbstractChangeDetectorTest >> setUp [
 { #category : 'running' }
 ShAbstractChangeDetectorTest >> tearDown [
 
-	self packageOrganizer packageNamed: self packageName ifPresent: [ :package | package removeFromSystem ].
 	{
 		usedTrait.
 		superClass.
 		originClass } do: [ :class | class removeFromSystem ].
+
+	self packageOrganizer removePackage: self packageName.
+
 	super tearDown
 ]

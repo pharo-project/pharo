@@ -489,19 +489,11 @@ RPackageOrganizer >> removeEmptyPackagesAndTags [
 { #category : 'registration' }
 RPackageOrganizer >> removePackage: aPackage [
 
-	| package |
-	(self hasPackage: aPackage) ifFalse: [ ^ self ].
-
-	package := aPackage isString
-		           ifTrue: [ self packageNamed: aPackage ]
-		           ifFalse: [ aPackage ].
-
-	self basicUnregisterPackage: package.
-	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
-	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
-	SystemAnnouncer announce: (PackageRemoved to: package).
-
-	^ package
+	self
+		packageNamed: (aPackage isString
+				 ifTrue: [ aPackage ]
+				 ifFalse: [ aPackage name ])
+		ifPresent: [ :package | package removeFromSystem ]
 ]
 
 { #category : 'system integration' }
@@ -621,6 +613,25 @@ RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 	"self unregisterInterestToSystemAnnouncement"
 
 	SystemAnnouncer uniqueInstance unsubscribe: self
+]
+
+{ #category : 'private' }
+RPackageOrganizer >> unregisterPackage: aPackage [
+	"I am a private method to unregister a package from myself without removing its contents fro the image."
+
+	| package |
+	(self hasPackage: aPackage) ifFalse: [ ^ self ].
+
+	package := aPackage isString
+		           ifTrue: [ self packageNamed: aPackage ]
+		           ifFalse: [ aPackage ].
+
+	self basicUnregisterPackage: package.
+	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
+	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
+	SystemAnnouncer announce: (PackageRemoved to: package).
+
+	^ package
 ]
 
 { #category : 'private - registration' }

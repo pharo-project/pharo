@@ -228,7 +228,7 @@ RPackage >> unregister [
 
 	self
 		deprecated: 'Tihs method will be removed because the name does not conform with the naming convensions of this class.'
-		transformWith: '`@rcv unregister' -> '`@rcv organizer removePackage: `@rcv'.
+		transformWith: '`@rcv unregister' -> '`@rcv organizer unregisterPackage: `@rcv'.
 
-	self organizer removePackage: self
+	self organizer unregisterPackage: self
 ]
