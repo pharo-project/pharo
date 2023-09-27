@@ -859,7 +859,7 @@ RBAbstractClass >> whichSelectorsReferToInstanceVariable: aString [
 					]
 			].
 	self isDefined
-		ifTrue: [ selectors addAll: ( self existingMethodsThatReferToInstanceVariable: aString ) ].
+		ifTrue: [ selectors addAll: ( self existingSelectorsThatReferToInstanceVariable: aString ) ].
 	^ selectors
 ]
 
