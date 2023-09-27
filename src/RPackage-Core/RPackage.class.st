@@ -140,14 +140,9 @@ RPackage >> <= aRPackage [
 
 { #category : 'add class' }
 RPackage >> addClass: aClass [
-	"TODO: deprecate system category / replace this with a direct call to moveClass:fromPackage:toTag:"
+	"If no tag is given we put the class in the root tag"
 
-	"This does two things:
-		- make sure the class tag for ourselves exists
-		- change the class category as appropriate.
-			(and by cascade, ensure systemClassRecategorizedAction: is called)."
-
-	aClass instanceSide category: self rootTag categoryName
+	self moveClass: aClass toTag: self rootTag
 ]
 
 { #category : 'add method - compiled method' }

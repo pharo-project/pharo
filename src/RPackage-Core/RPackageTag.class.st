@@ -142,9 +142,11 @@ RPackageTag >> printOn: aStream [
 RPackageTag >> privateAddClass: aClass [
 	"This method adds the class to the tag but does not check is the class was already in the right package."
 
-	aClass basicCategory: self categoryName.
 	classes add: aClass.
-	self organizer registerPackage: self package forClass: aClass
+	self organizer registerPackage: self package forClass: aClass.
+
+	self flag: #package. "Next line should first use #basicCategory: to not start a ping pong then be totally removed once we will not need the category"
+	aClass category: self categoryName
 ]
 
 { #category : 'converting' }
