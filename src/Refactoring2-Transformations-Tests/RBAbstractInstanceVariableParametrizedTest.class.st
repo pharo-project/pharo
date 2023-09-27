@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAbstractInstanceVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBAbstractInstanceVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAbstractInstanceVariableRefactoring .
@@ -14,13 +16,13 @@ RBAbstractInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAbstractInstanceVariableParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractInstanceVariableParametrizedTest >> testAbstractInstanceVariable [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -31,13 +33,16 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractInstanceVariable [
 	self assert: (class parseTreeForSelector: #name:) equals: (self parseMethod: 'name: aString
 	name := aString').
 	self assert: (class parseTreeForSelector: #initialize) equals: (self parseMethod: 'initialize
-	<ignoreUnusedVariables: #(#foo1)>
+
+	<ignoreUnusedVariables: #( #foo1 )>
+	<ignoreUnusedClassVariables: #( Foo1 )>
+	super initialize.
 	self name: ''''').
 	self assert: (class parseTreeForSelector: #printOn:) equals: (self parseMethod: 'printOn: aStream
 	self name ifNil: [ super printOn: aStream ] ifNotNil: [ aStream nextPutAll: self name ]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractInstanceVariableParametrizedTest >> testAbstractWithAssignmentUsed [
 	| refactoring class |
 	class := model classNamed: #Foo.
@@ -65,7 +70,7 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractWithAssignmentUsed [
 						instVarName1 := instVarName1 + self instVarName2 + ClassVarName1')"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractInstanceVariableParametrizedTest >> testAbstractWithDefaultNamesUsed [
 	| refactoring class |
 	class := model classNamed: #Foo.
@@ -92,21 +97,21 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractWithDefaultNamesUsed [
 						self instVarName11: self instVarName11 + instVarName2 + ClassVarName1')"
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAbstractInstanceVariableParametrizedTest >> testFailureInheritedName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { 'name'. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAbstractInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { 'foo'. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractInstanceVariableParametrizedTest >> testMetaclassInstanceVariables [
 	| refactoring class |
 	class := model metaclassNamed: #Foo.

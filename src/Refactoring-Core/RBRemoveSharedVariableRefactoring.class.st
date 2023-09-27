@@ -1,64 +1,68 @@
 Class {
-	#name : #RBRemoveSharedVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBRemoveSharedVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveSharedVariableRefactoring class >> model: aNamespace remove: variable from: class [
 
 	^ self model: aNamespace variable: variable class: class
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBRemoveSharedVariableRefactoring class >> remove: variable from: class [
 
 	^ self variable: variable class: class
 ]
 
-{ #category : #preconditions }
-RBRemoveSharedVariableRefactoring >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
 	^ ( RBCondition isMetaclass: class ) not
 		& ( RBCondition definesClassVariable: variableName in: class )
 
 ]
 
-{ #category : #preconditions }
-RBRemoveSharedVariableRefactoring >> breakingChangeConditions [
+{ #category : 'preconditions' }
+RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 	
 	^ (RBCondition
 		   hierarchyOf: class
 		   referencesSharedVariable: variableName) not
 ]
 
-{ #category : #actions }
+{ #category : 'executing' }
 RBRemoveSharedVariableRefactoring >> generateChanges [
-	
-	self applicabilityConditions check ifFalse: [
-		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
 
-	self transform.
+	self prepareForExecution.
+
+	self applicabilityPreconditions check ifFalse: [
+		^ RBApplicabilityChecksFailedError signal:
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangePreconditions errorString ].
+
+	self privateTransform.
 	^ self changes
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveSharedVariableRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
-{ #category : #accessing }
+{ #category : 'transforming' }
+RBRemoveSharedVariableRefactoring >> privateTransform [
+	class removeClassVariable: variableName
+]
+
+{ #category : 'accessing' }
 RBRemoveSharedVariableRefactoring >> refactoredClass [
 
 	^ class
-]
-
-{ #category : #transforming }
-RBRemoveSharedVariableRefactoring >> transform [
-	class removeClassVariable: variableName
 ]

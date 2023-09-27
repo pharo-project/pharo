@@ -1,20 +1,22 @@
 Class {
-	#name : #FLCompiledMethodSerializationTest,
-	#superclass : #FLSerializationTest,
+	#name : 'FLCompiledMethodSerializationTest',
+	#superclass : 'FLSerializationTest',
 	#instVars : [
 		'theCompiledMethod',
 		'theClass'
 	],
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FLCompiledMethodSerializationTest >> setUp [
 	super setUp.
 	theClass := self classFactory silentlyNewClass class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCompiledMethodSerializationTest >> testDoIt [
 	| materialized |
 	self useDoIt.
@@ -36,7 +38,7 @@ FLCompiledMethodSerializationTest >> testDoIt [
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCompiledMethodSerializationTest >> testInstalled [
 	| materialized |
 	self useInstalled.
@@ -51,7 +53,7 @@ FLCompiledMethodSerializationTest >> testInstalled [
 	self assert: materialized identicalTo: theCompiledMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCompiledMethodSerializationTest >> testInstalledModified [
 	| copy materialized |
 	"Since Pharo 3.0 decompilation of compiled methods is no longer possible.
@@ -79,41 +81,39 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 	self assert: materialized sourceCode notNil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
-	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self classFactory silentlyNewClassWithClassVariableNames: 'A'.
 
-	self classFactory
-		silentlyCompile: 'm1 A:= 3'
-		in: aClassWithVariable.
+	| aClassWithVariable aMethod materializedMethod |
+	aClassWithVariable := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'A' ].
+
+	self classFactory silentlyCompile: 'm1 A:= 3' in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #m1.
-	aClassWithVariable classVarNamed: #A put: 7. 
-	
+	aClassWithVariable classVarNamed: #A put: 7.
+
 	materializedMethod := self resultOfSerializeAndMaterialize: aMethod.
-	
+
 	self assertCollection: materializedMethod literals hasSameElements: aMethod literals.
-	self assert: (materializedMethod literalAt: 2) identicalTo: (aMethod literalAt: 2).
+	self assert: (materializedMethod literalAt: 2) identicalTo: (aMethod literalAt: 2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariableInADoit [
-	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self classFactory silentlyNewClassWithClassVariableNames: 'A'.
 
-	self classFactory
-		silentlyCompile: 'DoIt A:= 3'
-		in: aClassWithVariable.
+	| aClassWithVariable aMethod materializedMethod |
+	aClassWithVariable := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'A' ].
+
+	self classFactory silentlyCompile: 'DoIt A:= 3' in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #DoIt.
-	aClassWithVariable classVarNamed: #A put: 7. 
-	
+	aClassWithVariable classVarNamed: #A put: 7.
+
 	materializedMethod := self resultOfSerializeAndMaterialize: aMethod.
-	
+
 	self assertCollection: materializedMethod literals hasSameElements: aMethod literals.
 	self assert: (materializedMethod literalAt: 2) equals: (aMethod literalAt: 2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLCompiledMethodSerializationTest >> testNotInstalled [
 	| materialized |
 	"Since Pharo 3.0 decompilation of compiled methods is no longer possible.
@@ -134,7 +134,7 @@ FLCompiledMethodSerializationTest >> testNotInstalled [
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLCompiledMethodSerializationTest >> useDoIt [
 	self classFactory 
 		silentlyCompile: 'm  ^ 42'
@@ -146,7 +146,7 @@ FLCompiledMethodSerializationTest >> useDoIt [
 		put: theCompiledMethod
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLCompiledMethodSerializationTest >> useInstalled [
 	self classFactory
 		silentlyCompile: 'm  ^ 42'
@@ -155,7 +155,7 @@ FLCompiledMethodSerializationTest >> useInstalled [
 	theCompiledMethod := theClass methodNamed: #m
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLCompiledMethodSerializationTest >> useNotInstalled [
 	self classFactory
 		silentlyCompile: 'm  ^ 42'

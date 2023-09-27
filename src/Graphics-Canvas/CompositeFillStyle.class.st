@@ -2,22 +2,24 @@
 Fillstyle supporting compositing of multiple sub-fillstyles.
 "
 Class {
-	#name : #CompositeFillStyle,
-	#superclass : #FillStyle,
+	#name : 'CompositeFillStyle',
+	#superclass : 'FillStyle',
 	#instVars : [
 		'fillStyles'
 	],
-	#category : #'Graphics-Canvas-Fills'
+	#category : 'Graphics-Canvas-Fills',
+	#package : 'Graphics-Canvas',
+	#tag : 'Fills'
 }
 
-{ #category : #build }
+{ #category : 'build' }
 CompositeFillStyle class >> fillStyles: aCollection [
 	"Answer a new instance of the receiver with the specfied fill styles."
 
 	^self new fillStyles: aCollection
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CompositeFillStyle >> asColor [
 	"Answer a colour that is a best match to the receiver.
 	Simple approach for the moment."
@@ -27,7 +29,7 @@ CompositeFillStyle >> asColor [
 		ifNotEmpty: [self fillStyles last asColor]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeFillStyle >> direction [
 	"Answer an effective direction of any oriented fill styles.
 	Answer the bottom-right maxima."
@@ -42,7 +44,7 @@ CompositeFillStyle >> direction [
 	^dir ifNil: [0@0] "just in case"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeFillStyle >> direction: aPoint [
 	"Change the effective direction of any oriented fill styles."
 
@@ -53,7 +55,7 @@ CompositeFillStyle >> direction: aPoint [
 			fs direction: fs direction + delta]]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 CompositeFillStyle >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver.
 	Render from bottom to top."
@@ -62,7 +64,7 @@ CompositeFillStyle >> fillRectangle: aRectangle on: aCanvas [
 		fs fillRectangle: aRectangle on: aCanvas]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeFillStyle >> fillStyles [
 	"Answer the value of fillStyles. The first item in the collection is considered
 	to be topmost when rendered."
@@ -70,7 +72,7 @@ CompositeFillStyle >> fillStyles [
 	^ fillStyles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeFillStyle >> fillStyles: aCollection [
 	"Set the value of fillStyles. The first item in the collection is considered
 	to be topmost when rendering."
@@ -78,7 +80,7 @@ CompositeFillStyle >> fillStyles: aCollection [
 	fillStyles := aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CompositeFillStyle >> initialize [
 	"Initialize the receiver."
 
@@ -87,7 +89,7 @@ CompositeFillStyle >> initialize [
 		fillStyles: OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompositeFillStyle >> isCompositeFill [
 	"Answer whether the receiver is a composite fill.
 	True for kinds of the receiver's class."
@@ -95,7 +97,7 @@ CompositeFillStyle >> isCompositeFill [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompositeFillStyle >> isGradientFill [
 	"Answer whether any of the composited fill styles are gradients."
 
@@ -104,7 +106,7 @@ CompositeFillStyle >> isGradientFill [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompositeFillStyle >> isOrientedFill [
 	"Answer whether any of the composited fill styles are oriented."
 
@@ -113,21 +115,21 @@ CompositeFillStyle >> isOrientedFill [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompositeFillStyle >> isTranslucent [
 	"Answer whether all of the composited fill styles are transparent."
 
 	^ self fillStyles allSatisfy: [ :fs | fs isTranslucent ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompositeFillStyle >> isTransparent [
 	"Answer whether all of the composited fill styles are transparent."
 
 	^ self fillStyles allSatisfy: [ :fs | fs isTransparent ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeFillStyle >> normal [
 	"Answer an effective normal of any oriented fill styles.
 	Answer the top-left minima (probably not an accurate assumption)."
@@ -142,7 +144,7 @@ CompositeFillStyle >> normal [
 	^normal ifNil: [0@0] "just in case"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeFillStyle >> normal: aPoint [
 	"Change the effective normal of any oriented fill styles."
 
@@ -158,7 +160,7 @@ CompositeFillStyle >> normal: aPoint [
 			fs normal: fs normal + delta]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeFillStyle >> origin [
 	"Answer an effective origin of any oriented fill styles.
 	Answer the top-left minima."
@@ -173,7 +175,7 @@ CompositeFillStyle >> origin [
 	^origin ifNil: [0@0] "just in case"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositeFillStyle >> origin: aPoint [
 	"Change the effective origin of any oriented fill styles."
 

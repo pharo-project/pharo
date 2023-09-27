@@ -1,11 +1,11 @@
-Extension { #name : #Morph }
+Extension { #name : 'Morph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Morph >> athensSurface [
 	^ owner ifNotNil: [ owner athensSurface ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Morph >> drawClippedOnAthensCanvas: anAthensCanvas during: aBlock [
 
 	^ self clipSubmorphs
@@ -16,7 +16,7 @@ Morph >> drawClippedOnAthensCanvas: anAthensCanvas during: aBlock [
 		ifFalse: [ aBlock value ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Morph >> drawKeyboardFocusOnAthensCanvas: anAthensCanvas [
 	"Draw the keyboard focus indication."
 
@@ -24,7 +24,7 @@ Morph >> drawKeyboardFocusOnAthensCanvas: anAthensCanvas [
 		drawOnAthensCanvas: anAthensCanvas
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Morph >> drawOnAthensCanvas: anAthensCanvas [
 	| border |
 	border := self borderStyle.
@@ -41,19 +41,19 @@ Morph >> drawOnAthensCanvas: anAthensCanvas [
 	"aBorderStyle frameRectangle: aRectangle on: self "
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Morph >> drawOnCanvasWrapperFor: anAthensCanvas [
 	self drawOn: anAthensCanvas asCanvasWrapper
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Morph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 	self
 		drawClippedOnAthensCanvas: anAthensCanvas
 		during: [ submorphs reverseDo: [ :m | anAthensCanvas fullDrawMorph: m ] ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Morph >> fullDrawOnAthensCanvas: anAthensCanvas [
 	"Draw the full Morphic structure on the given Canvas"
 
@@ -68,7 +68,7 @@ Morph >> fullDrawOnAthensCanvas: anAthensCanvas [
 	self drawSubmorphsOnAthensCanvas: anAthensCanvas
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Morph >> testAthensRender [
 
 | surf |

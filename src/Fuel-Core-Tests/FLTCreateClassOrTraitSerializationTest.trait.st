@@ -2,41 +2,52 @@
 I test the serialization of an entire class or trait, in the cases in which they *are not* present in the image at materialization time.
 "
 Trait {
-	#name : #FLTCreateClassOrTraitSerializationTest,
-	#category : #'Fuel-Core-Tests-FullSerialization'
+	#name : 'FLTCreateClassOrTraitSerializationTest',
+	#category : 'Fuel-Core-Tests-FullSerialization',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'FullSerialization'
 }
 
-{ #category : #'class-factory' }
+{ #category : 'class-factory' }
 FLTCreateClassOrTraitSerializationTest >> newAnonymousClassOrTrait [
 	^ self explicitRequirement
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterialize: aClass [
-	| materialized |
+
+	| materialized wasSilent |
 	self serializer fullySerializeBehavior: aClass.
 	self serialize: aClass.
-	self classFactory deleteBehavior: aClass.
+	wasSilent := self classFactory createdSilently includes: aClass.
+	self classFactory delete: aClass.
 	materialized := self materialized.
 	self classFactory registerBehavior: materialized.
+	wasSilent ifTrue: [ self classFactory createdSilently add: materialized ].
 	^ materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterializeAll: objects [
-	| classesOrTraits materialized |
-	classesOrTraits := objects select: [ :anObject | anObject isBehavior or: [anObject isTrait]].
+
+	| classesOrTraits materialized silent |
+	silent := OrderedCollection new.
+	classesOrTraits := objects select: [ :anObject | anObject isBehavior or: [ anObject isTrait ] ].
 	self serializer fullySerializeAllBehaviors: classesOrTraits.
 	self serialize: objects.
-	classesOrTraits do: [ :aClassOrTrait | self classFactory deleteBehavior: aClassOrTrait . ].
+	classesOrTraits do: [ :aClassOrTrait |
+		(self classFactory createdSilently includes: aClassOrTrait) ifTrue: [ silent add: aClassOrTrait name ].
+		self classFactory delete: aClassOrTrait ].
 	materialized := self materialized.
-	materialized 
+	materialized
 		select: [ :object | object isBehavior ]
-		thenDo: [ :behavior | self classFactory registerBehavior: behavior ].
+		thenDo: [ :behavior |
+			self classFactory registerBehavior: behavior.
+			(silent includes: behavior name) ifTrue: [ self classFactory createdSilently add: behavior ] ].
 	^ materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testAnonymousBehaviorIsSerializable [
 	| classOrTrait |
 	classOrTrait := self newAnonymousClassOrTrait.
@@ -48,7 +59,7 @@ FLTCreateClassOrTraitSerializationTest >> testAnonymousBehaviorIsSerializable [
 		raise: FLClassNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCompiledMethodClassBinding [
 	"The class binding of each CM has to point to a correct Association, which should not be added to Smalltalk globals."
 	
@@ -69,7 +80,7 @@ FLTCreateClassOrTraitSerializationTest >> testCompiledMethodClassBinding [
 	self deny: (self environmentOfTest includesKey: className asSymbol)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateBasic [
 	"Tests materialization a class or trait not defined in the image."
 
@@ -78,23 +89,20 @@ FLTCreateClassOrTraitSerializationTest >> testCreateBasic [
 	environment := aClassOrTrait environment.
 	category := aClassOrTrait category.
 	name := aClassOrTrait name.
-	
+
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
 	self deny: aClassOrTrait identicalTo: materializedClassOrTrait.
 	"This is the test environment wrapper, so we need to cheat"
-	self
-		assertCollection: environment associations
-		hasSameElements: materializedClassOrTrait environment associations.
-	"Classes are not direclty inserted in the system organization so we can only test #basicCategory and not #category."
-	self assert: category equals: materializedClassOrTrait basicCategory.
+	self assertCollection: environment associations hasSameElements: materializedClassOrTrait environment associations.
+	self assert: category equals: materializedClassOrTrait category.
 	self assert: name equals: materializedClassOrTrait name.
 
-     "It is important to notice that Fuel does not add the materialized class or trait into Smalltalk globals."
-    self deny: (self environmentOfTest includesKey: name)
+	"It is important to notice that Fuel does not add the materialized class or trait into Smalltalk globals."
+	self deny: (self environmentOfTest includesKey: name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithClassSideMethod [
 	"Tests materialization of a class-side method in a class or trait not defined in the image."
 
@@ -104,7 +112,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithClassSideMethod [
 	self classFactory
 		silentlyCompile:  'fortyTwo ^42'
 		in: aClassOrTrait classSide
-		category: category.
+		protocol: category.
 
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
@@ -114,7 +122,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithClassSideMethod [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) class perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithClassTrait [
 	"Tests materialization of a class not defined in the image, with a class trait"
 	
@@ -135,7 +143,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithClassTrait [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) class perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithComment [
 	"Tests materialization of the comment of a class or trait not defined in the image."
 	
@@ -149,7 +157,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithComment [
 	self assert: 'test stamp' = materializedClassOrTrait commentStamp
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithExternalTrait [
 	"Tests materialization of a class not defined in the image, with a trait"
 	
@@ -170,7 +178,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithExternalTrait [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithInstance [
 	"Tests materialization of an internal class or trait together with an object using it."
 	
@@ -191,7 +199,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithInstance [
 	self assert: 42 equals: (materializedObjects second perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithInternalTrait [
 	"Tests materialization of a class not defined in the image, with a trait, both internally serialized"
 	
@@ -216,7 +224,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithInternalTrait [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) perform: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithMethod [
 	"Tests materialization of a compiled method in a class not defined in the image."
 	
@@ -226,7 +234,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithMethod [
 	self classFactory
 		silentlyCompile: 'fortyTwo ^42'
 		in: aClassOrTrait
-		category: category.
+		protocol: category.
 
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
@@ -236,7 +244,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithMethod [
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) perform: #fortyTwo).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateWithTraitOnClassSide [
 	"Tests materialization of a class not defined in the image, with a trait added to its class side"
 	

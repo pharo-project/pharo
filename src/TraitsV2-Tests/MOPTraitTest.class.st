@@ -1,10 +1,12 @@
 Class {
-	#name : #MOPTraitTest,
-	#superclass : #TestCase,
-	#category : #'TraitsV2-Tests-MOP'
+	#name : 'MOPTraitTest',
+	#superclass : 'TestCase',
+	#category : 'TraitsV2-Tests-MOP',
+	#package : 'TraitsV2-Tests',
+	#tag : 'MOP'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MOPTraitTest >> testClass [
 	"The class of a compiled method is the class that contains it.
 	A compiled method is shared."
@@ -21,7 +23,7 @@ MOPTraitTest >> testClass [
 	self assert: (MOPTestClassA>>#c2) methodClass equals: MOPTestClassA
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MOPTraitTest >> testOrigin [
 	"The origin of a compiledMethod is its defining class or trait."
 
@@ -38,7 +40,7 @@ MOPTraitTest >> testOrigin [
 	self assert: aliasedMethod origin identicalTo: aliasedMethod originMethod methodClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MOPTraitTest >> testSelector [
 	"The selector of a compiled method should be its name.
 	An aliased method should have the name of its alias name."

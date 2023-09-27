@@ -1,6 +1,6 @@
-Extension { #name : #ClyItemGroup }
+Extension { #name : 'ClyItemGroup' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 ClyItemGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 
 	self isEditableGroup ifFalse: [

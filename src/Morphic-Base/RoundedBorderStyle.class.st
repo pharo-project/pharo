@@ -2,35 +2,37 @@
 Rounded corner border supporting radii of 1-4 pixels. Slower but more flexible than CornerRounder.
 "
 Class {
-	#name : #RoundedBorderStyle,
-	#superclass : #SimpleBorderStyle,
+	#name : 'RoundedBorderStyle',
+	#superclass : 'SimpleBorderStyle',
 	#instVars : [
 		'cornerRadius'
 	],
-	#category : #'Morphic-Base-Borders'
+	#category : 'Morphic-Base-Borders',
+	#package : 'Morphic-Base',
+	#tag : 'Borders'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RoundedBorderStyle class >> initialize [
 	"Deprecated in Pharo 11"
 	self deprecatedAliases: { #RoundedBorder }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RoundedBorderStyle >> cornerRadius [
 	"Answer the value of cornerRadius"
 
 	^ cornerRadius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RoundedBorderStyle >> cornerRadius: anObject [
 	"Set the value of cornerRadius"
 
 	cornerRadius := anObject
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle0: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 0."
 
@@ -41,7 +43,7 @@ RoundedBorderStyle >> frameRectangle0: aRectangle on: aCanvas [
 		borderColor: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle1: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 1."
 
@@ -55,7 +57,7 @@ RoundedBorderStyle >> frameRectangle1: aRectangle on: aCanvas [
 		line: r bottomLeft - (0@1) to: r topLeft + (0@1) width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle2: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 2."
 
@@ -73,7 +75,7 @@ RoundedBorderStyle >> frameRectangle2: aRectangle on: aCanvas [
 		line: r topLeft + (1@1) to: r topLeft + (1@1) width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle3: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 3."
 
@@ -95,7 +97,7 @@ RoundedBorderStyle >> frameRectangle3: aRectangle on: aCanvas [
 		line: r topLeft + (1@1) to: r topLeft + (2@1) width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle4: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 4."
 
@@ -117,7 +119,7 @@ RoundedBorderStyle >> frameRectangle4: aRectangle on: aCanvas [
 		line: r topLeft + (2@1) to: r topLeft + (3@1) width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle5: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 5."
 
@@ -139,7 +141,7 @@ RoundedBorderStyle >> frameRectangle5: aRectangle on: aCanvas [
 		line: r topLeft + (2@2) to: r topLeft + (4@1) width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle6: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 6."
 
@@ -165,7 +167,7 @@ RoundedBorderStyle >> frameRectangle6: aRectangle on: aCanvas [
 		line: r topLeft + (3@2) to: r topLeft + (5@1) width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle7: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 7."
 
@@ -191,7 +193,7 @@ RoundedBorderStyle >> frameRectangle7: aRectangle on: aCanvas [
 		line: r topLeft + (5@1) to: r topLeft + (6@1) width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle8: aRectangle on: aCanvas [
 	"Draw the border for a corner radius of 8."
 
@@ -217,7 +219,7 @@ RoundedBorderStyle >> frameRectangle8: aRectangle on: aCanvas [
 		line: r topLeft + (6@1) to: r topLeft + (7@1) width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RoundedBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Draw the border. Radius is the x/y offset not width 'around the corner'."
 
@@ -233,7 +235,7 @@ RoundedBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	^super frameRectangle: aRectangle on: aCanvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RoundedBorderStyle >> initialize [
 	"Initialize the receiver."
 

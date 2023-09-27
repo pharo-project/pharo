@@ -2,18 +2,20 @@
 MetacelloValidationError indicates that errors are to be expected if an attempt to use the configuration/version is made
 "
 Class {
-	#name : #MetacelloValidationError,
-	#superclass : #MetacelloValidationIssue,
-	#category : #'Metacello-Core-Validation'
+	#name : 'MetacelloValidationError',
+	#superclass : 'MetacelloValidationIssue',
+	#category : 'Metacello-Core-Validation',
+	#package : 'Metacello-Core',
+	#tag : 'Validation'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloValidationError >> isError [
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationError >> label [
 
 	^'Error'

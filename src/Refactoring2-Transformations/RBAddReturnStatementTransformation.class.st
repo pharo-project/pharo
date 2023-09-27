@@ -17,15 +17,17 @@ Observations about the transformation:
 - The transformation is straightforward: parse the return value and add the resulting node to the end of the method
 "
 Class {
-	#name : #RBAddReturnStatementTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddReturnStatementTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'returnValue'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddReturnStatementTransformation class >> model: aRBModel return: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -36,7 +38,7 @@ RBAddReturnStatementTransformation class >> model: aRBModel return: aString inMe
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddReturnStatementTransformation class >> return: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -46,8 +48,8 @@ RBAddReturnStatementTransformation class >> return: aString inMethod: aSelector 
 		yourself
 ]
 
-{ #category : #preconditions }
-RBAddReturnStatementTransformation >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBAddReturnStatementTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]
@@ -69,7 +71,7 @@ RBAddReturnStatementTransformation >> applicabilityConditions [
 				    expandMacrosWith: selector))
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddReturnStatementTransformation >> classExist [
 
 	^ RBCondition
@@ -78,13 +80,7 @@ RBAddReturnStatementTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #preconditions }
-RBAddReturnStatementTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddReturnStatementTransformation >> privateTransform [
 	"the transformation is straighforward: just add the node at the last position of the method.
 	 #todo the case in which the context is a block"
@@ -96,7 +92,7 @@ RBAddReturnStatementTransformation >> privateTransform [
 	self definingClass compileTree: methodTree
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddReturnStatementTransformation >> return: anExpression inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -104,7 +100,7 @@ RBAddReturnStatementTransformation >> return: anExpression inMethod: aSelector i
 	returnValue := anExpression
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddReturnStatementTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

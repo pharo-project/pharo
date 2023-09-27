@@ -1,6 +1,6 @@
-Extension { #name : #RGTraitDefinitionTest }
+Extension { #name : 'RGTraitDefinitionTest' }
 
-{ #category : #'*Ring-Definitions-Tests-Monticello' }
+{ #category : '*Ring-Definitions-Tests-Monticello' }
 RGTraitDefinitionTest >> testAsFullTraitDefinition [
 	| rgClass |
 	rgClass := TSortable asRingDefinition.

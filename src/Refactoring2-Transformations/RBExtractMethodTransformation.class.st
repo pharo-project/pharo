@@ -18,8 +18,8 @@ transformation := (RBExtractMethodTransformation
 (ChangesBrowser changes: transformation model changes changes) open
 "
 Class {
-	#name : #RBExtractMethodTransformation,
-	#superclass : #RBCompositeMethodTransformation,
+	#name : 'RBExtractMethodTransformation',
+	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
 		'sourceCode',
 		'newSelector',
@@ -31,10 +31,12 @@ Class {
 		'assignments',
 		'selectorOfExistingMethod'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBExtractMethodTransformation class >> allMethodsInHierarchyOf: aRBClass [
 
 	^ ((aRBClass
@@ -43,7 +45,7 @@ RBExtractMethodTransformation class >> allMethodsInHierarchyOf: aRBClass [
 		reject: #isNil
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBExtractMethodTransformation class >> extract: aString from: aSelector to: aNewSelector in: aClass [
 
 	^ self new
@@ -54,7 +56,7 @@ RBExtractMethodTransformation class >> extract: aString from: aSelector to: aNew
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aSelector to: aNewSelector in: aClass [
 
 	^ self new
@@ -66,266 +68,8 @@ RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aS
 		yourself
 ]
 
-{ #category : #executing }
-RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemovedTemps: tempsToRemove [
-
-	| needsReturn messageSend newArguments |
-	needsReturn := self calculateIfReturnIsNeeded.
-	newMethod := self generateNewMethodWith: newMethodName.
-	newArguments := self calculateNewArgumentsIn: newMethodName.
-	messageSend := self
-		               messageSendWith: newMethodName
-		               and: newArguments
-		               needsReturn: needsReturn.
-
-	^ OrderedCollection new
-		  add: (RBAddMethodTransformation
-				   model: self model
-				   sourceCode: newMethod newSource
-				   in: class
-				   withProtocols: { Protocol unclassified });
-		  add: (RBReplaceSubtreeTransformation
-				   model: self model
-				   replace: sourceCode
-				   to: messageSend
-				   inMethod: selector
-				   inClass: class);
-		  addAll: (tempsToRemove collect: [ :temporary |
-					   RBRemoveTemporaryVariableTransformation
-						   model: self model
-						   variable: temporary
-						   inMethod: selector
-						   inClass: class ]);
-		  yourself
-]
-
-{ #category : #executing }
-RBExtractMethodTransformation >> buildTransformations [
-
-	subtree := self calculateSubtree.
-
-	selectorOfExistingMethod
-		ifNotNil: [
-			^ OrderedCollection with: (self parseTreeRewriterClass
-					   replaceCode: subtree
-					   byMessageSendTo: selectorOfExistingMethod
-					   in:
-					   (self definingClass methodFor: self calculateTree selector)) ]
-		ifNil: [
-			^ (parseTree isNil or: [ subtree isNil ])
-				  ifTrue: [ OrderedCollection new ]
-				  ifFalse: [
-					  | tempsToRemove |
-					  arguments := self calculateArguments.
-					  temporaries := self calculateTemporaries.
-					  assignments := self calculateAssignments.
-					  tempsToRemove := self calculateTemporariesToRemove.
-
-					  assignments size > 1
-						  ifTrue: [ OrderedCollection new ]
-						  ifFalse: [
-							  | newMethodName |
-							  newMethodName := self newMethodName.
-							  newMethodName ifNil: [ ^ OrderedCollection new ].
-							  self
-								  buildTransformationFor: newMethodName
-								  withRemovedTemps: tempsToRemove ] ] ]
-]
-
-{ #category : #querying }
-RBExtractMethodTransformation >> calculateArguments [
-	"returns a collection of variables that should be passed as arguments"
-
-	| allVariables accesses assigned |
-	allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
-
-	accesses := allVariables select: [ :each | subtree references: each ].
-	assigned := allVariables select: [ :each | subtree assigns: each ].
-
-	^ accesses asOrderedCollection difference: assigned
-]
-
-{ #category : #querying }
-RBExtractMethodTransformation >> calculateAssignments [
-	"checks how many variables in the subtree are assigned to values."
-
-	^ assignments ifNil: [
-		| sequenceNode whoDefinesTemp |
-		sequenceNode := (parseTree allChildren select: [ :each | each isSequence ]) last.
-
-		assignments := temporaries select: [ :temp |
-			whoDefinesTemp := (sequenceNode whoDefines: temp).
-			whoDefinesTemp statements anySatisfy: [ :statement |
-				(statement references: temp)
-				and: [ (subtree allChildren includes: statement) not ] ] ] ]
-]
-
-{ #category : #querying }
-RBExtractMethodTransformation >> calculateIfReturnIsNeeded [
-
-	| searcher |
-	searcher := self parseTreeSearcher.
-	searcher
-		matches: '^self' do: [:aNode :answer | answer];
-		matches: '^`@anything' do: [:aNode :answer | true].
-	^ (searcher executeTree: subtree initialAnswer: false)
-]
-
-{ #category : #querying }
-RBExtractMethodTransformation >> calculateNewArgumentsIn: aMethodName [
-
-	aMethodName arguments size > arguments size ifTrue: [
-		| selection |
-		selection := RBMethodArgumentsSelector
-			openOn: aMethodName arguments copy
-			and: (newMethod body allChildren
-					select: #isLiteralNode
-					thenCollect: [ :e | e value storeString ])
-			in: newMethod.
-
-		newMethod := selection newTree.
-		^ selection argumentsAndValues ].
-	^ Dictionary new
-]
-
-{ #category : #querying }
-RBExtractMethodTransformation >> calculateSubtree [
-
-	^ subtree ifNil: [
-		subtree := self calculateTree ifNotNil: [ parseTree extractSubtreeWith: sourceCode ] ]
-]
-
-{ #category : #querying }
-RBExtractMethodTransformation >> calculateTemporaries [
-	"returns a collection of variables that should be defined inside the method"
-
-	^ temporaries ifNil: [
-		| allVariables accesses |
-		allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
-		accesses := allVariables select: [ :each | subtree references: each ].
-
-		temporaries := accesses select: [ :each | subtree assigns: each ] ]
-]
-
-{ #category : #querying }
-RBExtractMethodTransformation >> calculateTemporariesToRemove [
-	"returns a collection of variables that should be removed from the original method"
-
-	| newParseTree |
-	newParseTree := parseTree copy removeSubtree: subtree.
-	^ newParseTree allDefinedVariables
-		reject: [ :var | newParseTree references: var ]
-]
-
-{ #category : #querying }
-RBExtractMethodTransformation >> calculateTree [
-
-	^ parseTree ifNil: [ parseTree := self definingMethod ]
-]
-
-{ #category : #api }
-RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelector in: aClassName [
-
-	class := aClassName.
-	selector := aSelector.
-	newSelector := aNewSelector.
-	sourceCode := aString
-]
-
-{ #category : #executing }
-RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
-
-	| args newMethodNode |
-	args := aMethodName arguments
-		collect: [ :p | RBVariableNode named: p ].
-
-	newMethodNode := RBMethodNode
-							selector: aMethodName selector
-							arguments: args asArray
-							body: (subtree isSequence
-								ifTrue: [ subtree ]
-								ifFalse: [ RBSequenceNode
-									temporaries: #()
-									statements: (OrderedCollection with: subtree)]).
-	temporaries do: [:each | newMethodNode body addTemporaryNamed: each].
-
-	((parseTree parentOfSubtree: subtree) uses: subtree)
-		ifTrue: [ newMethodNode addReturn ].
-
-	assignments size = 1 ifTrue: [
-		newMethodNode addNode:
-			(RBReturnNode value:
-			(RBVariableNode named: assignments first asString)) ].
-
-	^ newMethodNode
-]
-
-{ #category : #initialization }
-RBExtractMethodTransformation >> initialize [ 
-	super initialize.
-	self flag: #todo. "to be removed when all the applicability preconditions are enforced."
-	self preconditionChecking: true.
-]
-
-{ #category : #executing }
-RBExtractMethodTransformation >> messageSendWith: aMethodName and: newArguments needsReturn: aBoolean [
-
-	^ String streamContents: [ :string |
-		aBoolean ifTrue: [ string nextPutAll: '^ ' ].
-
-		assignments size = 1
-			ifTrue: [ string
-				nextPutAll: assignments first asString;
-				nextPutAll: ' := ' ].
-
-		string nextPutAll: 'self '.
-		aMethodName arguments
-			ifEmpty: [ string nextPutAll: aMethodName selector asString ]
-			ifNotEmpty: [
-				(aMethodName selector keywords size = aMethodName arguments size)
-					ifTrue: [ aMethodName selector keywords
-								with: aMethodName arguments
-								do: [ :key :arg |
-									string nextPutAll: key asString; nextPut: $ .
-									(newArguments includesKey: arg asString)
-										ifTrue: [ string nextPutAll: (newArguments at: arg asString) ]
-										ifFalse: [ string nextPutAll: arg asString ].
-								string nextPut: $ ] ] ] ]
-]
-
-{ #category : #executing }
-RBExtractMethodTransformation >> newMethodName [
-
-	| methodName newAttempt |
-	newAttempt := newSelector isNil.
-
-	methodName := RBMethodName new.
-	methodName arguments: arguments.
-	newSelector ifNotNil: [ methodName selector: newSelector ].
-
-	[ newAttempt ] whileTrue: [
-		methodName := (RBMethodNameEditor openOn: methodName) methodName.
-		methodName
-			ifNil: [ newAttempt := false ]
-			ifNotNil: [ :newMethodName |
-				newSelector := newMethodName selector.
-				newAttempt := newSelector isNil.
-
-				"it's a valid selector"
-				(newSelector isString and: [newSelector isValidSelector])
-					ifFalse: [ self inform: newSelector asString, ' is not a valid selector.'.
-								  newSelector := nil ].
-
-				"already exists in class"
-				(self definingClass directlyDefinesLocalMethod: newSelector)
-					ifTrue: [ self inform: newSelector, ' is already defined in ', class asString.
-								 newSelector := nil ] ] ].
-
-	^ methodName
-]
-
-{ #category : #preconditions }
-RBExtractMethodTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> applicabilityPreconditions [ 
 
 	| aSubtree |
 	aSubtree := self calculateSubtree.
@@ -375,7 +119,258 @@ RBExtractMethodTransformation >> preconditions [
 	
 ]
 
-{ #category : #printing }
+{ #category : 'executing' }
+RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemovedTemps: tempsToRemove [
+
+	| needsReturn messageSend newArguments |
+	needsReturn := self calculateIfReturnIsNeeded.
+	newMethod := self generateNewMethodWith: newMethodName.
+	newArguments := self calculateNewArgumentsIn: newMethodName.
+	messageSend := self
+		               messageSendWith: newMethodName
+		               and: newArguments
+		               needsReturn: needsReturn.
+
+	^ OrderedCollection new
+		  add: (RBAddMethodTransformation
+				   model: self model
+				   sourceCode: newMethod newSource
+				   in: class
+				   withProtocol: Protocol unclassified);
+		  add: (RBReplaceSubtreeTransformation
+				   model: self model
+				   replace: sourceCode
+				   to: messageSend
+				   inMethod: selector
+				   inClass: class);
+		  addAll: (tempsToRemove collect: [ :temporary |
+					   RBRemoveTemporaryVariableTransformation
+						   model: self model
+						   variable: temporary
+						   inMethod: selector
+						   inClass: class ]);
+		  yourself
+]
+
+{ #category : 'executing' }
+RBExtractMethodTransformation >> buildTransformations [
+
+	subtree := self calculateSubtree.
+
+	selectorOfExistingMethod
+		ifNotNil: [
+			^ OrderedCollection with: (self parseTreeRewriterClass
+					   replaceCode: subtree
+					   byMessageSendTo: selectorOfExistingMethod
+					   in:
+					   (self definingClass methodFor: self calculateTree selector)) ]
+		ifNil: [
+			^ (parseTree isNil or: [ subtree isNil ])
+				  ifTrue: [ OrderedCollection new ]
+				  ifFalse: [
+					  | tempsToRemove |
+					  arguments := self calculateArguments.
+					  temporaries := self calculateTemporaries.
+					  assignments := self calculateAssignments.
+					  tempsToRemove := self calculateTemporariesToRemove.
+
+					  assignments size > 1
+						  ifTrue: [ OrderedCollection new ]
+						  ifFalse: [
+							  | newMethodName |
+							  newMethodName := self newMethodName.
+							  newMethodName ifNil: [ ^ OrderedCollection new ].
+							  self
+								  buildTransformationFor: newMethodName
+								  withRemovedTemps: tempsToRemove ] ] ]
+]
+
+{ #category : 'querying' }
+RBExtractMethodTransformation >> calculateArguments [
+	"returns a collection of variables that should be passed as arguments"
+
+	| allVariables accesses assigned |
+	allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
+
+	accesses := allVariables select: [ :each | subtree references: each ].
+	assigned := allVariables select: [ :each | subtree assigns: each ].
+
+	^ accesses asOrderedCollection difference: assigned
+]
+
+{ #category : 'querying' }
+RBExtractMethodTransformation >> calculateAssignments [
+	"checks how many variables in the subtree are assigned to values."
+
+	^ assignments ifNil: [
+		| sequenceNode whoDefinesTemp |
+		sequenceNode := (parseTree allChildren select: [ :each | each isSequence ]) last.
+
+		assignments := temporaries select: [ :temp |
+			whoDefinesTemp := (sequenceNode whoDefines: temp).
+			whoDefinesTemp statements anySatisfy: [ :statement |
+				(statement references: temp)
+				and: [ (subtree allChildren includes: statement) not ] ] ] ]
+]
+
+{ #category : 'querying' }
+RBExtractMethodTransformation >> calculateIfReturnIsNeeded [
+
+	| searcher |
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '^self' do: [:aNode :answer | answer];
+		matches: '^`@anything' do: [:aNode :answer | true].
+	^ (searcher executeTree: subtree initialAnswer: false)
+]
+
+{ #category : 'querying' }
+RBExtractMethodTransformation >> calculateNewArgumentsIn: aMethodName [
+
+	aMethodName arguments size > arguments size ifTrue: [
+		| selection |
+		selection := RBMethodArgumentsSelector
+			openOn: aMethodName arguments copy
+			and: (newMethod body allChildren
+					select: #isLiteralNode
+					thenCollect: [ :e | e value storeString ])
+			in: newMethod.
+
+		newMethod := selection newTree.
+		^ selection argumentsAndValues ].
+	^ Dictionary new
+]
+
+{ #category : 'querying' }
+RBExtractMethodTransformation >> calculateSubtree [
+
+	^ subtree ifNil: [
+		subtree := self calculateTree ifNotNil: [ parseTree extractSubtreeWith: sourceCode ] ]
+]
+
+{ #category : 'querying' }
+RBExtractMethodTransformation >> calculateTemporaries [
+	"returns a collection of variables that should be defined inside the method"
+
+	^ temporaries ifNil: [
+		| allVariables accesses |
+		allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
+		accesses := allVariables select: [ :each | subtree references: each ].
+
+		temporaries := accesses select: [ :each | subtree assigns: each ] ]
+]
+
+{ #category : 'querying' }
+RBExtractMethodTransformation >> calculateTemporariesToRemove [
+	"returns a collection of variables that should be removed from the original method"
+
+	| newParseTree |
+	newParseTree := parseTree copy removeSubtree: subtree.
+	^ newParseTree allDefinedVariables
+		reject: [ :var | newParseTree references: var ]
+]
+
+{ #category : 'querying' }
+RBExtractMethodTransformation >> calculateTree [
+
+	^ parseTree ifNil: [ parseTree := self definingMethod ]
+]
+
+{ #category : 'api' }
+RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelector in: aClassName [
+
+	class := aClassName.
+	selector := aSelector.
+	newSelector := aNewSelector.
+	sourceCode := aString
+]
+
+{ #category : 'executing' }
+RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
+
+	| args newMethodNode |
+	args := aMethodName arguments
+		collect: [ :p | RBVariableNode named: p ].
+
+	newMethodNode := RBMethodNode
+							selector: aMethodName selector
+							arguments: args asArray
+							body: (subtree isSequence
+								ifTrue: [ subtree ]
+								ifFalse: [ RBSequenceNode
+									temporaries: #()
+									statements: (OrderedCollection with: subtree)]).
+	temporaries do: [:each | newMethodNode body addTemporaryNamed: each].
+
+	((parseTree parentOfSubtree: subtree) uses: subtree)
+		ifTrue: [ newMethodNode addReturn ].
+
+	assignments size = 1 ifTrue: [
+		newMethodNode addNode:
+			(RBReturnNode value:
+			(RBVariableNode named: assignments first asString)) ].
+
+	^ newMethodNode
+]
+
+{ #category : 'executing' }
+RBExtractMethodTransformation >> messageSendWith: aMethodName and: newArguments needsReturn: aBoolean [
+
+	^ String streamContents: [ :string |
+		aBoolean ifTrue: [ string nextPutAll: '^ ' ].
+
+		assignments size = 1
+			ifTrue: [ string
+				nextPutAll: assignments first asString;
+				nextPutAll: ' := ' ].
+
+		string nextPutAll: 'self '.
+		aMethodName arguments
+			ifEmpty: [ string nextPutAll: aMethodName selector asString ]
+			ifNotEmpty: [
+				(aMethodName selector keywords size = aMethodName arguments size)
+					ifTrue: [ aMethodName selector keywords
+								with: aMethodName arguments
+								do: [ :key :arg |
+									string nextPutAll: key asString; nextPut: $ .
+									(newArguments includesKey: arg asString)
+										ifTrue: [ string nextPutAll: (newArguments at: arg asString) ]
+										ifFalse: [ string nextPutAll: arg asString ].
+								string nextPut: $ ] ] ] ]
+]
+
+{ #category : 'executing' }
+RBExtractMethodTransformation >> newMethodName [
+
+	| methodName newAttempt |
+	newAttempt := newSelector isNil.
+
+	methodName := RBMethodName new.
+	methodName arguments: arguments.
+	newSelector ifNotNil: [ methodName selector: newSelector ].
+
+	[ newAttempt ] whileTrue: [
+		methodName := (RBMethodNameEditor openOn: methodName) methodName.
+		methodName
+			ifNil: [ newAttempt := false ]
+			ifNotNil: [ :newMethodName |
+				newSelector := newMethodName selector.
+				newAttempt := newSelector isNil.
+
+				"it's a valid selector"
+				(newSelector isString and: [newSelector isValidSelector])
+					ifFalse: [ self inform: newSelector asString, ' is not a valid selector.'.
+								  newSelector := nil ].
+
+				"already exists in class"
+				(self definingClass directlyDefinesLocalMethod: newSelector)
+					ifTrue: [ self inform: newSelector, ' is already defined in ', class asString.
+								 newSelector := nil ] ] ].
+
+	^ methodName
+]
+
+{ #category : 'printing' }
 RBExtractMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

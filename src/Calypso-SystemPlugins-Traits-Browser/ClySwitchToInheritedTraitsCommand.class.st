@@ -2,29 +2,30 @@
 I a command to show in browser a hierarchy of traits which are inherited by selected classes
 "
 Class {
-	#name : #ClySwitchToInheritedTraitsCommand,
-	#superclass : #ClySwitchTraitHierarchyModeCommand,
-	#category : #'Calypso-SystemPlugins-Traits-Browser'
+	#name : 'ClySwitchToInheritedTraitsCommand',
+	#superclass : 'ClySwitchTraitHierarchyModeCommand',
+	#category : 'Calypso-SystemPlugins-Traits-Browser',
+	#package : 'Calypso-SystemPlugins-Traits-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchToInheritedTraitsCommand class >> canBeExecutedInContext: aToolContext [
 	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
 
 	^aToolContext isSelectedClassUsesTraits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToInheritedTraitsCommand >> defaultMenuItemName [
 	^'Traits'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchToInheritedTraitsCommand >> requiredQueryResult [
 	^ClyTraitUserHierarchy inverse asQueryResult
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchToInheritedTraitsCommand >> traitScopeClass [
 	^ClyInheritedTraitScope
 ]

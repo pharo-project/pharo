@@ -3,28 +3,30 @@ Superclass for classes containing debugger tests.
 Provides the ability to send #debuggerOnSetUpSession to a debugger test class to obtain a debugger opened on the debug session set up by that class for its tests.
 "
 Class {
-	#name : #DebuggerTest,
-	#superclass : #TestCase,
+	#name : 'DebuggerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'context',
 		'session',
 		'process'
 	],
-	#category : #'Debugger-Model-Tests-Core'
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 DebuggerTest >> inspectCurrentNode: aDebugSession [
 	context := aDebugSession interruptedContext.
 	(context method sourceNodeForPC: context pc) inspect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebuggerTest >> session [
 	^ session
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DebuggerTest >> setUp [
 	super setUp.
 	context := nil.
@@ -32,7 +34,7 @@ DebuggerTest >> setUp [
 	session := nil
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 DebuggerTest >> settingUpSessionAndProcessAndContextForBlock: aBlock [
 	process := aBlock newProcess.
 	[process step closure == aBlock] whileFalse.
@@ -44,7 +46,7 @@ DebuggerTest >> settingUpSessionAndProcessAndContextForBlock: aBlock [
 	session := process newDebugSessionNamed: 'test session' startedAt: context
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 DebuggerTest >> settingUpSessionAndProcessAndContextForCleanBlock: aBlock [
 	process := aBlock newProcess.
 

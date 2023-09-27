@@ -8,32 +8,34 @@ Instance Variables
 
 "
 Class {
-	#name : #DAReferenceDependency,
-	#superclass : #DADependencyFromClass,
+	#name : 'DAReferenceDependency',
+	#superclass : 'DADependencyFromClass',
 	#instVars : [
 		'selector',
 		'reference',
 		'method'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAReferenceDependency >> isReferenceDependency [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReferenceDependency >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReferenceDependency >> method: anObject [
 	method := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAReferenceDependency >> printReasonOn: aStream [
 	aStream
 		nextPutAll: self theClass name;
@@ -43,22 +45,22 @@ DAReferenceDependency >> printReasonOn: aStream [
 		print: self reference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReferenceDependency >> reference [
 	^ reference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReferenceDependency >> reference: aClass [
 	reference := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReferenceDependency >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReferenceDependency >> selector: aSymbol [
 	selector := aSymbol
 ]

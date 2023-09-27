@@ -5,47 +5,49 @@ I'm abstract, my children keep the real references.
 A referenced type is  some variable that lives in the C heap and is seen in Pharo as an external  reference (an ==ExternalAddress==) .
 "
 Class {
-	#name : #FFIExternalReference,
-	#superclass : #ExternalObject,
-	#category : #'UnifiedFFI-Objects'
+	#name : 'FFIExternalReference',
+	#superclass : 'ExternalObject',
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FFIExternalReference class >> finalizeResourceData: handle [
 	handle isNull ifTrue: [ ^ self ].
 	handle free.
 	handle beNull
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalReference class >> fromHandle: aHandle [
 	^ self new setHandle: aHandle
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalReference class >> newPointer [
 	^ self fromHandle: ExternalAddress newPointer
 ]
 
-{ #category : #'external resource management' }
+{ #category : 'external resource management' }
 FFIExternalReference >> autoRelease [
 	"Note, subclasses should implement #resourceData
 	and #finalizeResourceData: on class side"
 	FFIExternalResourceManager addResource: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalReference >> createDefaultHandle [
 	^ ExternalAddress new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalReference >> initialize [
 	super initialize.
 	self setHandle: self createDefaultHandle
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FFIExternalReference >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -54,7 +56,7 @@ FFIExternalReference >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #'external resource management' }
+{ #category : 'external resource management' }
 FFIExternalReference >> resourceData [
 	^ self getHandle
 ]

@@ -6,21 +6,23 @@ Instance variables:
 	tileFlag	<Boolean>	If true, then the form is repeatedly drawn to fill the area.
 "
 Class {
-	#name : #BitmapFillStyle,
-	#superclass : #OrientedFillStyle,
+	#name : 'BitmapFillStyle',
+	#superclass : 'OrientedFillStyle',
 	#instVars : [
 		'form',
 		'tileFlag'
 	],
-	#category : #'Graphics-Canvas-Fills'
+	#category : 'Graphics-Canvas-Fills',
+	#package : 'Graphics-Canvas',
+	#tag : 'Fills'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BitmapFillStyle class >> form: aForm [
 	^self new form: aForm
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BitmapFillStyle class >> fromForm: aForm [
 	| fs |
 	fs := self form: aForm.
@@ -31,7 +33,7 @@ BitmapFillStyle class >> fromForm: aForm [
 	^fs
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BitmapFillStyle class >> fromUser [
 	| fill |
 	fill := self form: Screenshot new formScreenshotFromUserSelection.
@@ -42,50 +44,50 @@ BitmapFillStyle class >> fromUser [
 	^fill
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 BitmapFillStyle >> asColor [
 	^form colorAt: 0@0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitmapFillStyle >> direction [
 
 	^direction ifNil: [direction :=( (normal y @ normal x negated) * form width / form height ) rounded]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitmapFillStyle >> form [
 	^form
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitmapFillStyle >> form: aForm [
 	form := aForm
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BitmapFillStyle >> isBitmapFill [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BitmapFillStyle >> isTiled [
 	"Return true if the receiver should be repeated if the fill shape is larger than the form"
 	^tileFlag == true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitmapFillStyle >> normal [
 	^normal ifNil: [normal := ((direction y negated @ direction x) *  form height / form width ) rounded]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitmapFillStyle >> tileFlag [
 	^tileFlag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitmapFillStyle >> tileFlag: aBoolean [
 	tileFlag := aBoolean
 ]

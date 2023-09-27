@@ -2,30 +2,32 @@
 I resolve origins by consulting the user. I maintain a cache of the user's responses.
 "
 Class {
-	#name : #InteractiveResolver,
-	#superclass : #FileSystemResolver,
+	#name : 'InteractiveResolver',
+	#superclass : 'FileSystemResolver',
 	#instVars : [
 		'cache'
 	],
-	#category : #'FileSystem-Core-Base-Resolver'
+	#category : 'FileSystem-Core-Base-Resolver',
+	#package : 'FileSystem-Core',
+	#tag : 'Base-Resolver'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InteractiveResolver >> flushLocalCache [
 	cache := IdentityDictionary new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InteractiveResolver >> initialize [
 	self flushLocalCache
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 InteractiveResolver >> resolve: origin [
 	^ cache at: origin ifAbsent: [self unknownOrigin: origin]
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 InteractiveResolver >> unknownOrigin: origin [
 	| reference |
 	^ (next ifNotNil: [next resolve: origin]) ifNil:

@@ -1,6 +1,6 @@
-Extension { #name : #RGMethodDefinition }
+Extension { #name : 'RGMethodDefinition' }
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 RGMethodDefinition >> asStringOrText [
 
 	| text |

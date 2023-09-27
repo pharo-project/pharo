@@ -1,13 +1,14 @@
 Class {
-	#name : #TFCallbacksTest,
-	#superclass : #TFTestCase,
+	#name : 'TFCallbacksTest',
+	#superclass : 'TFTestCase',
 	#instVars : [
 		'oldExceptionHandler'
 	],
-	#category : #'ThreadedFFI-Tests'
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TFCallbacksTest >> callCallback: aCallback [
 
 	| functionDefinition function |
@@ -20,7 +21,7 @@ TFCallbacksTest >> callCallback: aCallback [
 	runner invokeFunction: function withArguments: {}
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFCallbacksTest >> newTestCallbackDoing: aBlock [
 
 	^ TFCallback
@@ -30,7 +31,7 @@ TFCallbacksTest >> newTestCallbackDoing: aBlock [
 		runner: runner
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TFCallbacksTest >> setUp [
 
 	super setUp.
@@ -39,14 +40,14 @@ TFCallbacksTest >> setUp [
 	runner exceptionHandler: TFTestCallbackExceptionHandler new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TFCallbacksTest >> tearDown [
 
 	runner exceptionHandler: oldExceptionHandler.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFCallbacksTest >> testCallbackFromOldSessionFailsReturn [
 	"If a callback survives a session (e.g., an image is saved and reopened), returning it will fail.
 	This test validates a surviving callback throws a meaningful exception when trying to return in this case."
@@ -73,7 +74,7 @@ TFCallbacksTest >> testCallbackFromOldSessionFailsReturn [
 	self assert: runner exceptionHandler lastException callback equals: c1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFCallbacksTest >> testCallbackNotRespectingLIFOOrderFailsReturn [
 
 	| smain s1 c1 s2 c2 returned |
@@ -109,7 +110,7 @@ TFCallbacksTest >> testCallbackNotRespectingLIFOOrderFailsReturn [
 	self assert: returned
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFCallbacksTest >> testReentrantCalloutsDuringCallback [
 
 	| callback fun returnValue |
@@ -137,7 +138,7 @@ TFCallbacksTest >> testReentrantCalloutsDuringCallback [
 	self assert: returnValue equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFCallbacksTest >> testReentrantCalloutsDuringCallbackUsingSameProcessForCallbacks [
 
 	| callback fun returnValue |
@@ -170,7 +171,7 @@ TFCallbacksTest >> testReentrantCalloutsDuringCallbackUsingSameProcessForCallbac
 	self assert: returnValue equals: 7 ] ensure: [ callback runStrategy callbackProcess terminate ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFCallbacksTest >> testSingleCalloutDuringCallback [
 
 	| callback fun returnValue |

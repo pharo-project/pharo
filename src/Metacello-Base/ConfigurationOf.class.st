@@ -58,15 +58,16 @@ To create a new Metacello configuration:
 
 "
 Class {
-	#name : #ConfigurationOf,
-	#superclass : #Object,
+	#name : 'ConfigurationOf',
+	#superclass : 'Object',
 	#instVars : [
 		'project'
 	],
-	#category : #'Metacello-Base'
+	#category : 'Metacello-Base',
+	#package : 'Metacello-Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOf class >> bootstrapMetacelloFrom: repositoryUrl [
   "Corresponds to version 1.0.0-beta.32.6"
 
@@ -96,7 +97,7 @@ ConfigurationOf class >> bootstrapMetacelloFrom: repositoryUrl [
   self bootstrapPackage: platformPkg from: repositoryUrl
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOf class >> bootstrapPackage: aString from: aPath [
     | repository version |
     repository := (MCCacheRepository default includesVersionNamed: aString)
@@ -112,7 +113,7 @@ ConfigurationOf class >> bootstrapPackage: aString from: aPath [
                     version workingCopy repositoryGroup addRepository: repository ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOf class >> ensureGoferVersion: goferVersion repositoryUrl: repositoryUrl [
 	"load the p=file goferVersion if Gofer isn't loaded or an earlier version of Gofer is currently loaded"
 
@@ -131,14 +132,14 @@ ConfigurationOf class >> ensureGoferVersion: goferVersion repositoryUrl: reposit
 		ifTrue: [ self bootstrapPackage: goferVersion from: repositoryUrl ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOf class >> ensureMetacello [
     "Bootstrap Metacello and load the 'bootstrap' group"
 
     self ensureMetacello: #('batch')
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOf class >> ensureMetacello: loadList [
 	"Bootstrap Metacello, retry using alternate repository, if primary repository is not accessible"
 
@@ -194,18 +195,18 @@ ConfigurationOf class >> ensureMetacello: loadList [
 						, error description printString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOf class >> project [
 
 	^self new project
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOf class >> retry: aBlock [
     self retry: aBlock retryCount: 3
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOf class >> retry: aBlock retryCount: retryCount [
 	| count |
 	count := 1.
@@ -222,7 +223,7 @@ ConfigurationOf class >> retry: aBlock retryCount: retryCount [
 			count := count + 1 ]
 ]
 
-{ #category : #'unloading Metacello' }
+{ #category : 'unloading Metacello' }
 ConfigurationOf class >> unloadMetacello [
 	"Unload the classes that implement Metacello. Metacello is not needed once a project has been loaded, so it can safely be unloaded."
 
@@ -236,7 +237,7 @@ ConfigurationOf class >> unloadMetacello [
 	gofer unload
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOf class >> validate [
 	"Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). 
 	Errors identify specification issues that will result in unexpected behaviour when you load the configuration. 
@@ -250,7 +251,7 @@ ConfigurationOf class >> validate [
 	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ConfigurationOf >> bleedingEdge [ 
 	"override if different behavior desired.
 	 Use:
@@ -262,7 +263,7 @@ ConfigurationOf >> bleedingEdge [
 	^self defaultBleedingEdgeVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOf >> customProjectAttributes [
     "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
 	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes "
@@ -270,7 +271,7 @@ ConfigurationOf >> customProjectAttributes [
     ^ #()
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ConfigurationOf >> defaultBleedingEdgeVersion [
 	| bleedingEdgeVersion |
 	bleedingEdgeVersion := (self project map values select: [ :version | version blessing == #baseline ])
@@ -279,7 +280,7 @@ ConfigurationOf >> defaultBleedingEdgeVersion [
 	^ bleedingEdgeVersion versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOf >> project [
     ^ project
         ifNil: [ 
@@ -292,25 +293,25 @@ ConfigurationOf >> project [
             project ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOf >> project: aProject [
 
 	project ifNil: [ self class ensureMetacello ].
 	project := aProject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOf >> projectClass [
     ^ MetacelloMCProject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConfigurationOf >> versionDoesNotExistError: versionStringOrSymbol [
 
 	((Smalltalk at: #MetacelloSymbolicVersionDoesNotExistError) project: self project versionString: versionStringOrSymbol) signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationOf >> versionNumberClass [
     ^ MetacelloSemanticVersionNumber
 ]

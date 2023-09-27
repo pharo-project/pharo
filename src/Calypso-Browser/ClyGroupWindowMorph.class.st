@@ -3,12 +3,14 @@ I fix bad behaviour of my superclass in context of Calypso requirement.
 For example I update group window title to be same as selected tab title.
 "
 Class {
-	#name : #ClyGroupWindowMorph,
-	#superclass : #GroupWindowMorph,
-	#category : #'Calypso-Browser-UI'
+	#name : 'ClyGroupWindowMorph',
+	#superclass : 'GroupWindowMorph',
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyGroupWindowMorph >> activateWindow: aWindow [
 
 	| index |
@@ -20,7 +22,7 @@ ClyGroupWindowMorph >> activateWindow: aWindow [
 	aWindow activate; announceOpened
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyGroupWindowMorph >> activeWindow [
 	self tabGroup pages size = 0 ifTrue: [ ^nil].
 	self tabGroup selectedPageIndex <= 0 ifTrue: [ ^nil ].
@@ -28,7 +30,7 @@ ClyGroupWindowMorph >> activeWindow [
 	^self tabGroup pages at: self tabGroup selectedPageIndex
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 ClyGroupWindowMorph >> dragTab: aSystemWindow event: anEvent in: aTabLabel [
 	"Drag a tab. Remove the window from the organiser and place in hand."
 	aSystemWindow announcer unsubscribe: self.
@@ -39,7 +41,7 @@ ClyGroupWindowMorph >> dragTab: aSystemWindow event: anEvent in: aTabLabel [
 	anEvent hand grabMorph: aSystemWindow
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyGroupWindowMorph >> update: aSymbol [
 	"Handle tab changes."
 
@@ -47,7 +49,7 @@ ClyGroupWindowMorph >> update: aSymbol [
 	self updateMainWindowTitle
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyGroupWindowMorph >> update: aSymbol  with: anObject [
 	"Handle tab changes."
 
@@ -55,7 +57,7 @@ ClyGroupWindowMorph >> update: aSymbol  with: anObject [
 	self updateMainWindowTitle
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyGroupWindowMorph >> updateMainWindowTitle [
 
 	| activeWindow |

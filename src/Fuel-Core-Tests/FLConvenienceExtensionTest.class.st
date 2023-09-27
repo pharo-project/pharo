@@ -1,10 +1,12 @@
 Class {
-	#name : #FLConvenienceExtensionTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-ConvenienceExtensions'
+	#name : 'FLConvenienceExtensionTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-ConvenienceExtensions',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'ConvenienceExtensions'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLConvenienceExtensionTest >> testObjectSerializeOn [
 	| filePath object byteArray materializedObject |
 	filePath := FLFilePoolTestResource current filePathString: 'test.fuel'.
@@ -23,7 +25,7 @@ FLConvenienceExtensionTest >> testObjectSerializeOn [
 	self deny: materializedObject identicalTo: object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLConvenienceExtensionTest >> testObjectSerializeToByteArray [
 	| filePath object byteArray materializedObject |
 	filePath := FLFilePoolTestResource current filePathString: 'test.fuel'.
@@ -41,7 +43,7 @@ FLConvenienceExtensionTest >> testObjectSerializeToByteArray [
 	self deny: materializedObject identicalTo: object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLConvenienceExtensionTest >> testObjectSerializeToFileNamed [
 	| filePath object materializedObject |
 	filePath := FLFilePoolTestResource current filePathString: 'test.fuel'.

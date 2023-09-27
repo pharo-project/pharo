@@ -1,6 +1,6 @@
-Extension { #name : #FileSystemStore }
+Extension { #name : 'FileSystemStore' }
 
-{ #category : #'*Zinc-Resource-Meta-Core' }
+{ #category : '*Zinc-Resource-Meta-Core' }
 FileSystemStore >> mimeTypesAt: aPath [
 	| mimeType |
 	mimeType := ZnMimeType

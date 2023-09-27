@@ -1,13 +1,13 @@
-Extension { #name : #ClyBrowserItem }
+Extension { #name : 'ClyBrowserItem' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClyBrowserItem >> ensureSystemDefinition: aBlock [
 
 	self getProperty: ClyItemDefinitionProperty ifAbsent: [
 		self addProperty: aBlock value]
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClyBrowserItem >> systemDefinition [
 
 	^self
@@ -15,7 +15,7 @@ ClyBrowserItem >> systemDefinition [
 		ifAbsent: [ self error: 'No system definition is specified for item' ]
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClyBrowserItem >> systemDefinitionClass [
 
 	^self systemDefinition definingClass

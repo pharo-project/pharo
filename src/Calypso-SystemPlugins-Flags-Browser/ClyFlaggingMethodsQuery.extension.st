@@ -1,6 +1,6 @@
-Extension { #name : #ClyFlaggingMethodsQuery }
+Extension { #name : 'ClyFlaggingMethodsQuery' }
 
-{ #category : #'*Calypso-SystemPlugins-Flags-Browser' }
+{ #category : '*Calypso-SystemPlugins-Flags-Browser' }
 ClyFlaggingMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	| icon |
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
@@ -9,7 +9,7 @@ ClyFlaggingMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: gro
 	icon setBalloonText: 'There are methods with flag'
 ]
 
-{ #category : #'*Calypso-SystemPlugins-Flags-Browser' }
+{ #category : '*Calypso-SystemPlugins-Flags-Browser' }
 ClyFlaggingMethodsQuery >> decorateResultMethodEditor: aMethodEditor [
 
 	aMethodEditor selectAnySelector: #(flag:)

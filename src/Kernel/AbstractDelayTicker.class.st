@@ -6,28 +6,30 @@ I supply /nextTick/ to the VM and wait for /timingSemaphore/ to be signalled.
 I read time-base specific ticks from the VM, and scale ticks around snapshot pauses.
 "
 Class {
-	#name : #AbstractDelayTicker,
-	#superclass : #Object,
-	#category : #'Kernel-Delays'
+	#name : 'AbstractDelayTicker',
+	#superclass : 'Object',
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractDelayTicker class >> isAbstract [
 
 	^ self == AbstractDelayTicker
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 AbstractDelayTicker >> millisecondsUntilTick: delay [
 	self subclassResponsibility
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 AbstractDelayTicker >> nowTick [
 	self subclassResponsibility
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 AbstractDelayTicker >> restoreResumptionTimes: delaysOrNils [
 	"Private! Called only from the timing-priority process.
     Not performance critical."
@@ -40,7 +42,7 @@ AbstractDelayTicker >> restoreResumptionTimes: delaysOrNils [
 		delay ifNotNil: [delay resumptionTickAdjustFrom: 0 to: newBaseTick ]]
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 AbstractDelayTicker >> saveResumptionTimes: delaysOrNils [
 	"Private! Called only from the timing-priority process.
     Not performance critical."
@@ -53,12 +55,12 @@ AbstractDelayTicker >> saveResumptionTimes: delaysOrNils [
 		delay ifNotNil: [delay resumptionTickAdjustFrom: oldBaseTick to: 0 ]]
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 AbstractDelayTicker >> tickAfterMilliseconds: milliseconds [
 	self subclassResponsibility
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 AbstractDelayTicker >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
 	self subclassResponsibility
 ]

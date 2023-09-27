@@ -6,20 +6,22 @@ Instance Variable
 	trait:		the trait
 "
 Class {
-	#name : #DATraitDependency,
-	#superclass : #DADependencyFromClass,
+	#name : 'DATraitDependency',
+	#superclass : 'DADependencyFromClass',
 	#instVars : [
 		'trait'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DATraitDependency >> isTraitDependency [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DATraitDependency >> printReasonOn: aStream [
 	aStream
 		nextPutAll: self theClass name;
@@ -27,12 +29,12 @@ DATraitDependency >> printReasonOn: aStream [
 		print: self trait name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DATraitDependency >> trait [
 	^ trait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DATraitDependency >> trait: aTrait [
 	trait := aTrait
 ]

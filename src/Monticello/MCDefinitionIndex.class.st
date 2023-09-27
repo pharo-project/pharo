@@ -2,30 +2,32 @@
 I'm a simple container of MCDefinitions which can be added or removed.
 "
 Class {
-	#name : #MCDefinitionIndex,
-	#superclass : #Object,
+	#name : 'MCDefinitionIndex',
+	#superclass : 'Object',
 	#instVars : [
 		'definitions'
 	],
-	#category : #'Monticello-Patching'
+	#category : 'Monticello-Patching',
+	#package : 'Monticello',
+	#tag : 'Patching'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCDefinitionIndex class >> definitions: aCollection [
 	^ self new addAll: aCollection
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCDefinitionIndex >> add: aDefinition [
 	^ definitions at: aDefinition description put: aDefinition
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCDefinitionIndex >> addAll: aCollection [
 	aCollection do: [:ea | self add: ea]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinitionIndex >> definitionLike: aDefinition ifPresent: foundBlock ifAbsent: errorBlock [
 	| definition |
 	definition := definitions at: aDefinition description ifAbsent: [].
@@ -34,18 +36,18 @@ MCDefinitionIndex >> definitionLike: aDefinition ifPresent: foundBlock ifAbsent:
 		ifNotNil: [foundBlock value: definition]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinitionIndex >> definitions [
 	^ definitions values
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCDefinitionIndex >> initialize [
 	super initialize.
 	definitions := Dictionary new
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 MCDefinitionIndex >> remove: aDefinition [
 	definitions removeKey: aDefinition description ifAbsent: []
 ]

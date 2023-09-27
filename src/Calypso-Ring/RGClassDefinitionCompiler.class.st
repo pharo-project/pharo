@@ -1,41 +1,42 @@
 Class {
-	#name : #RGClassDefinitionCompiler,
-	#superclass : #Object,
+	#name : 'RGClassDefinitionCompiler',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'definitionString',
 		'requestor'
 	],
-	#category : #'Calypso-Ring'
+	#category : 'Calypso-Ring',
+	#package : 'Calypso-Ring'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGClassDefinitionCompiler class >> on: anRGEnvironment [
 	^self new
 		environment: anRGEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGClassDefinitionCompiler >> definitionString [
 	^ definitionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGClassDefinitionCompiler >> definitionString: anObject [
 	definitionString := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGClassDefinitionCompiler >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGClassDefinitionCompiler >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RGClassDefinitionCompiler >> evaluate [
 
 	| importer class createdClass |
@@ -59,21 +60,21 @@ RGClassDefinitionCompiler >> evaluate [
 	^createdClass
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RGClassDefinitionCompiler >> logged: aBoolean [
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGClassDefinitionCompiler >> new [
 	^self
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RGClassDefinitionCompiler >> requestor: anObject [
 	requestor := anObject
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RGClassDefinitionCompiler >> source: aString [
 	definitionString := aString
 ]

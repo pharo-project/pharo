@@ -23,15 +23,17 @@ Observations about the transformation:
 - Removing the message send means removing the receiver, too. The only exception occurs when the receiver is another message send (e.g., in a cascade)
 "
 Class {
-	#name : #RBRemoveAllMessageSendsTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBRemoveAllMessageSendsTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'message'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveAllMessageSendsTransformation class >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -41,7 +43,7 @@ RBRemoveAllMessageSendsTransformation class >> messageSend: aMessageSend inMetho
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveAllMessageSendsTransformation class >> model: aRBModel messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -52,8 +54,8 @@ RBRemoveAllMessageSendsTransformation class >> model: aRBModel messageSend: aMes
 		yourself
 ]
 
-{ #category : #preconditions }
-RBRemoveAllMessageSendsTransformation >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBRemoveAllMessageSendsTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]
@@ -70,7 +72,7 @@ RBRemoveAllMessageSendsTransformation >> applicabilityConditions [
 					    with: message))
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveAllMessageSendsTransformation >> classExist [
 
 	^ RBCondition
@@ -79,7 +81,7 @@ RBRemoveAllMessageSendsTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveAllMessageSendsTransformation >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -87,13 +89,7 @@ RBRemoveAllMessageSendsTransformation >> messageSend: aMessageSend inMethod: aSe
 	message := aMessageSend
 ]
 
-{ #category : #preconditions }
-RBRemoveAllMessageSendsTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveAllMessageSendsTransformation >> privateTransform [
 
 	| methodTree nodesToModify |
@@ -109,7 +105,7 @@ RBRemoveAllMessageSendsTransformation >> privateTransform [
 		self definingClass compileTree: methodTree ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveAllMessageSendsTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -122,11 +118,4 @@ RBRemoveAllMessageSendsTransformation >> storeOn: aStream [
 		nextPutAll: ''' inClass: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #executing }
-RBRemoveAllMessageSendsTransformation >> transform [
-
-	self checkPreconditions.
-	self privateTransform
 ]

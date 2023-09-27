@@ -1,6 +1,6 @@
-Extension { #name : #RGSlot }
+Extension { #name : 'RGSlot' }
 
-{ #category : #'*Pharo30Bootstrap' }
+{ #category : '*Pharo30Bootstrap' }
 RGSlot >> isValidForBootstrap [
 
 	^ false

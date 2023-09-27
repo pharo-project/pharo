@@ -1,14 +1,16 @@
 Class {
-	#name : #RBAbstractEnvTestCase,
-	#superclass : #ParametrizedTestCase,
+	#name : 'RBAbstractEnvTestCase',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'testingEnvironment',
 		'model'
 	],
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAbstractEnvTestCase class >> makeAllFailureShownInTestMethodNames [
 	
 	| methods nSel |
@@ -27,7 +29,7 @@ RBAbstractEnvTestCase class >> makeAllFailureShownInTestMethodNames [
 	classified: 'failure tests']
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAbstractEnvTestCase class >> removeDuplicates [
 	
 	| methods  |
@@ -44,7 +46,7 @@ RBAbstractEnvTestCase class >> removeDuplicates [
 	
 ]
 
-{ #category : #'mocking helpers' }
+{ #category : 'mocking helpers' }
 RBAbstractEnvTestCase >> addMethodsToModelClasses: aCollection in: newModel [
 	
 	aCollection do: [:each |
@@ -57,7 +59,7 @@ RBAbstractEnvTestCase >> addMethodsToModelClasses: aCollection in: newModel [
 	^ newModel
 ]
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 RBAbstractEnvTestCase >> childrenToSiblingTestData [
 
 	^ Smalltalk compiler evaluate: '
@@ -125,17 +127,17 @@ m
 '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAbstractEnvTestCase >> defaultNamespaceClass [
 	^ RBNamespace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAbstractEnvTestCase >> environmentOfTest [
 	^ testingEnvironment
 ]
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 RBAbstractEnvTestCase >> inlineMethodTestData [
 
 	^ Smalltalk compiler evaluate: '
@@ -345,7 +347,7 @@ m
 '
 ]
 
-{ #category : #'mocking helpers' }
+{ #category : 'mocking helpers' }
 RBAbstractEnvTestCase >> modelWithoutRealClasses: aColOfClasses [
 
 	| newModel classEnvironment classes |
@@ -363,7 +365,12 @@ RBAbstractEnvTestCase >> modelWithoutRealClasses: aColOfClasses [
 	
 ]
 
-{ #category : #mocking }
+{ #category : 'actions' }
+RBAbstractEnvTestCase >> proceedThroughWarning: aBlock [
+	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]
+]
+
+{ #category : 'mocking' }
 RBAbstractEnvTestCase >> rbModelForExtractMethodTest [
 
 	| newModel |
@@ -450,7 +457,7 @@ RBAbstractEnvTestCase >> rbModelForExtractMethodTest [
 	^ newModel
 ]
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 RBAbstractEnvTestCase >> rbModelForInliningMethodTest [
 
 	| newModel |
@@ -734,7 +741,7 @@ RBAbstractEnvTestCase >> rbModelForInliningMethodTest [
 	^ newModel
 ]
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 RBAbstractEnvTestCase >> rbModelForVariableTest [
 
 	| newModel |
@@ -785,13 +792,30 @@ RBAbstractEnvTestCase >> rbModelForVariableTest [
 	^ newModel
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAbstractEnvTestCase >> setUp [
 	super setUp.
 	testingEnvironment := Smalltalk globals
 ]
 
-{ #category : #accessing }
+{ #category : 'actions' }
+RBAbstractEnvTestCase >> shouldFail: aRefactoring [
+
+	self proceedThroughWarning: [
+		self
+			should: [ aRefactoring generateChanges ]
+			raise: RBRefactoringError
+	]
+]
+
+{ #category : 'actions' }
+RBAbstractEnvTestCase >> shouldWarn: aRefactoring [
+	self
+		should: [ aRefactoring generateChanges ]
+		raise: RBRefactoringWarning
+]
+
+{ #category : 'accessing' }
 RBAbstractEnvTestCase >> testingEnvironment: anObject [
 	testingEnvironment := anObject
 ]

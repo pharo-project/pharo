@@ -1,10 +1,12 @@
 Class {
-	#name : #FLProcessSerializationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLProcessSerializationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FLProcessSerializationTest >> setUpSerializer [
 	super setUpSerializer.
 	
@@ -13,7 +15,7 @@ FLProcessSerializationTest >> setUpSerializer [
 		put: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLProcessSerializationTest >> testSerializingShortDelay [
 	| process |
 	process := [ 2 timesRepeat: [ | d |

@@ -1,6 +1,6 @@
-Extension { #name : #MCClassTraitDefinition }
+Extension { #name : 'MCClassTraitDefinition' }
 
-{ #category : #'*Ring-Definitions-Monticello' }
+{ #category : '*Ring-Definitions-Monticello' }
 MCClassTraitDefinition >> asRingDefinition [
 
 	^(RGMetatraitDefinition named:  baseTrait)
@@ -9,7 +9,7 @@ MCClassTraitDefinition >> asRingDefinition [
 		yourself
 ]
 
-{ #category : #'*Ring-Definitions-Monticello' }
+{ #category : '*Ring-Definitions-Monticello' }
 MCClassTraitDefinition >> classDefinitionString [
 
 	^self definitionString

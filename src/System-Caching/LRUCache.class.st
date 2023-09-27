@@ -66,16 +66,17 @@ a cache's functionality in one single place.""
 	fibCache hitRatio asFloat.
 "
 Class {
-	#name : #LRUCache,
-	#superclass : #AbstractCache,
+	#name : 'LRUCache',
+	#superclass : 'AbstractCache',
 	#instVars : [
 		'lruList',
 		'keyIndex'
 	],
-	#category : #'System-Caching'
+	#category : 'System-Caching',
+	#package : 'System-Caching'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 LRUCache >> addWeight: value [
 	weight add: value.
 	[ weight isBelowMaximum ]
@@ -85,7 +86,7 @@ LRUCache >> addWeight: value [
 				ifFalse: [ self evict ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LRUCache >> at: key ifAbsentPut: block [
 	"If key is present in the cache, return the associated value.
 	This is a hit and makes that key/value pair the most recently used.
@@ -110,7 +111,7 @@ LRUCache >> at: key ifAbsentPut: block [
 		^ self handleHit: association ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LRUCache >> at: key put: value [
 	"Populate me by storing value for key. Return value.
 	This is neither a hit nor a miss. Statistics remain unchanged.
@@ -134,7 +135,7 @@ LRUCache >> at: key put: value [
 		^ value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LRUCache >> evict [
 	| link value |
 	link := lruList removeFirst.
@@ -143,7 +144,7 @@ LRUCache >> evict [
 	keyIndex removeKey: value key
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LRUCache >> handleHit: association [
 	| link |
 	statistics addHit.
@@ -152,7 +153,7 @@ LRUCache >> handleHit: association [
 	^ link value value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LRUCache >> handleMiss: association [
 	| link |
 	statistics addMiss.
@@ -162,28 +163,28 @@ LRUCache >> handleMiss: association [
 	^ association value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCache >> includesKey: key [
 	"Return true when the receiver has a value cached for key."
 
 	^ keyIndex includesKey: key
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LRUCache >> initialize [
 	super initialize.
 	keyIndex := Dictionary new.
 	lruList := DoubleLinkedList new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCache >> isEmpty [
 	"Return true when the receiver contains no entries."
 
 	^ keyIndex isEmpty
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 LRUCache >> keysAndValuesDo: block [
 	"Execute block with each key and value present in me.
 	This will be from least to most recently used."
@@ -194,18 +195,18 @@ LRUCache >> keysAndValuesDo: block [
 			value: link value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LRUCache >> newAssociationKey: key value: value [
 	^ Association key: key value: value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LRUCache >> promote: link [
 	lruList removeLink: link.
 	lruList addLast: link
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 LRUCache >> removeAll [
 	"Remove all key/value pairs that I currently hold,
 	effectiley resetting me, but not my statistics."
@@ -216,7 +217,7 @@ LRUCache >> removeAll [
 		weight reset ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 LRUCache >> removeKey: key ifAbsent: block [
 	"If I currently cache key, remove the entry.
 	Execute block when key is currently absent.
@@ -233,17 +234,18 @@ LRUCache >> removeKey: key ifAbsent: block [
 			ifFalse: block ]
 ]
 
-{ #category : #'accessing - statistics' }
+{ #category : 'accessing - statistics' }
 LRUCache >> size [
 	"Return the count of items currently present."
 
 	^ keyIndex size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LRUCache >> validateInvariantWith: assertable [
 	"The keyIndex maps keys to double linked list nodes that hold
 	a key value association, whose key must match the index key"
+	| keysSeen |
 	keyIndex keysAndValuesDo: [ :key :link |
 		assertable assert: link value key = key ].
 	"When iterating over all key value pairs, each key lookup up
@@ -255,8 +257,8 @@ LRUCache >> validateInvariantWith: assertable [
 		assertable assert: link value value = value.
 		assertable assert: link value key = key ].
 	"When iterating over all keys, each key can be present only once"
-	Set new in: [ :keysSeen |
-		self keysAndValuesDo: [ :key :value |
-			assertable assert: (keysSeen includes: key) not.
-			keysSeen add: key ] ]
+	keysSeen := Set new. 
+	self keysAndValuesDo: [ :key :value |
+		assertable assert: (keysSeen includes: key) not.
+		keysSeen add: key ]
 ]

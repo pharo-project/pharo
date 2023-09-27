@@ -6,16 +6,18 @@ I hold the expected and actual content types.
 Part of Zinc HTTP Components. 
 "
 Class {
-	#name : #ZnUnexpectedContentType,
-	#superclass : #Error,
+	#name : 'ZnUnexpectedContentType',
+	#superclass : 'Error',
 	#instVars : [
 		'expectedContentType',
 		'actualContentType'
 	],
-	#category : #'Zinc-HTTP-Exceptions'
+	#category : 'Zinc-HTTP-Exceptions',
+	#package : 'Zinc-HTTP',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnUnexpectedContentType class >> expected: expectedMimeType actual: actualMimeType [
 	^ self new
 		expectedContentType: expectedMimeType;
@@ -23,34 +25,34 @@ ZnUnexpectedContentType class >> expected: expectedMimeType actual: actualMimeTy
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnexpectedContentType >> actualContentType [
 	^ actualContentType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnexpectedContentType >> actualContentType: anObject [
 	actualContentType := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnexpectedContentType >> expectedContentType [
 	^ expectedContentType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnexpectedContentType >> expectedContentType: anObject [
 	expectedContentType := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnexpectedContentType >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
 
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnexpectedContentType >> standardMessageText [
 	"Generate a standard textual description"
 

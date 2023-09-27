@@ -7,27 +7,29 @@ for the active windows. Or like the window grouper, that creates tab panes and l
 the tabs with the current window title.
 "
 Class {
-	#name : #WindowLabelled,
-	#superclass : #WindowAnnouncement,
+	#name : 'WindowLabelled',
+	#superclass : 'WindowAnnouncement',
 	#instVars : [
 		'label'
 	],
-	#category : #'Morphic-Widgets-Windows-Announcements'
+	#category : 'Morphic-Widgets-Windows-Announcements',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Announcements'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowLabelled >> isLabelled [
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowLabelled >> label [
 
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowLabelled >> label: anObject [
 
 	label := anObject

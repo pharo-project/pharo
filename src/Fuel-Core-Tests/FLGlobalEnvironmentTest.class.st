@@ -2,12 +2,14 @@
 SUnit tests for global fuel environment
 "
 Class {
-	#name : #FLGlobalEnvironmentTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLGlobalEnvironmentTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testClassSideCompiledMethod [
 	"Any class-side compiled method should be serialized as global by default. On materialization, it should be found in the global environment, and the bytecodes hash must be the same."
 
@@ -30,7 +32,7 @@ FLGlobalEnvironmentTest >> testClassSideCompiledMethod [
 	self assert: (self resultOfSerializeAndMaterialize: classA class >> #m) identicalTo: classB class >> #m
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testCompiledMethod [
 	"Any compiled method should be serialized as global by default. On materialization, it should be found in the global environment, and the bytecodes hash must be the same."
 
@@ -53,7 +55,7 @@ FLGlobalEnvironmentTest >> testCompiledMethod [
 	self assert: (self resultOfSerializeAndMaterialize: classA >> #m) identicalTo: classB >> #m
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testCompiledMethodChanged [
 	"A compiled methods should be serialized as global by default.
 	On materialization, it must be found in the global environment, and the bytecodes hash must be the same.
@@ -83,7 +85,7 @@ FLGlobalEnvironmentTest >> testCompiledMethodChanged [
 		description: 'Serialized and materialized methods should have the same bytecodes.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testCompiledMethodChangedConstant [
 	"A compiled methods should be serialized as global by default.
 	On materialization, it must be found in the global environment, and the bytecodes hash must be the same.
@@ -110,7 +112,7 @@ FLGlobalEnvironmentTest >> testCompiledMethodChangedConstant [
 		raise: FLMethodChanged
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testCompiledMethodChangedNonClean [
 	"A compiled methods should be serialized as global by default.
 	On materialization, it must be found in the global environment, and the bytecodes hash must be the same.
@@ -137,7 +139,7 @@ FLGlobalEnvironmentTest >> testCompiledMethodChangedNonClean [
 		raise: FLMethodChanged
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testCompiledMethodNotChangedConstant [
 	"A compiled methods should be serialized as global by default.
 	On materialization, it must be found in the global environment, and the bytecodes hash must be the same.
@@ -164,7 +166,7 @@ FLGlobalEnvironmentTest >> testCompiledMethodNotChangedConstant [
 		raise: FLMethodChanged
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testConsiderCustomGlobal [
 	"A custom global variable is treated as global if we explicitly specify that on serialization."
 	
@@ -173,6 +175,7 @@ FLGlobalEnvironmentTest >> testConsiderCustomGlobal [
 		environment: (Dictionary new
 			at: #FLGlobalVariableForTesting put: 42;
 			yourself).
+	addedGlobals add: #FLGlobalVariableForTesting. 
 
 	self materializer environment: (Dictionary new
 		at: #FLGlobalVariableForTesting put: 7;
@@ -181,7 +184,7 @@ FLGlobalEnvironmentTest >> testConsiderCustomGlobal [
 	self assert: (self resultOfSerializeAndMaterialize: 42) equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testConsiderCustomGlobalNotFound [
 	"A custom global variable is treated as global if we explicitly specify that on serialization. Then, if the variable is not defined in the materialization environment, a error should be raised."
 	
@@ -190,6 +193,7 @@ FLGlobalEnvironmentTest >> testConsiderCustomGlobalNotFound [
 		environment: (Dictionary new
 			at: #FLGlobalVariableForTesting put: 42;
 			yourself).
+	addedGlobals add: #FLGlobalVariableForTesting.
 	self materializer environment: Dictionary new.
 
 	self serialize: 42.
@@ -199,7 +203,7 @@ FLGlobalEnvironmentTest >> testConsiderCustomGlobalNotFound [
 		description: 'Raise an error since the variable is not present in materialization global environment'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testDontConsiderCustomGlobal [
 	"A custom global variable is not treated as global unless we explicitly specify during serialization."
 
@@ -219,7 +223,7 @@ FLGlobalEnvironmentTest >> testDontConsiderCustomGlobal [
 	self deny: (self resultOfSerializeAndMaterialize: anObject) identicalTo: anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testGlobalClass [
 	"A class should be global by default. On materialization, the global symbol should be found in the global environment."
 
@@ -230,7 +234,7 @@ FLGlobalEnvironmentTest >> testGlobalClass [
 	self assert: (self resultOfSerializeAndMaterialize: Integer) identicalTo: FLPerson
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testGlobalClassNotFound [
 	"If a class is not defined in the materialization environment, a proper error should be raised."
 
@@ -243,7 +247,7 @@ FLGlobalEnvironmentTest >> testGlobalClassNotFound [
 		description: 'Raise an error since the class is not present in materialization global environment'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testGlobalMetaclass [
 	"A metaclass should be global by default. On materialization, the global symbol should be found in the global environment."
 
@@ -254,7 +258,7 @@ FLGlobalEnvironmentTest >> testGlobalMetaclass [
 	self assert: (self resultOfSerializeAndMaterialize: Integer class) identicalTo: FLPerson class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalEnvironmentTest >> testGlobalMetaclassNotFound [
 	"If a class is not defined in the materialization environment, a proper error should be raised."
 	

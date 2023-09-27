@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*TestRunner-Core' }
+{ #category : '*TestRunner-Core' }
 SequenceableCollection >> runBy: aTestRunner [
 	
 	aTestRunner runSequenceableCollection: self

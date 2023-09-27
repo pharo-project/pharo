@@ -4,24 +4,26 @@ This smell arises when instance variables are defined in all subclasses. Many ti
 
 "
 Class {
-	#name : #ReInstVarInSubclassesRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReInstVarInSubclassesRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReInstVarInSubclassesRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInstVarInSubclassesRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'InstVarInSubclassesRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReInstVarInSubclassesRule >> check: aClass forCritiquesDo: aCritiqueBlock [
 
 	| subs sels |
@@ -43,29 +45,29 @@ ReInstVarInSubclassesRule >> check: aClass forCritiquesDo: aCritiqueBlock [
 				yourself) ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReInstVarInSubclassesRule >> critiqueFor: aClass [
 	^ ReRefactoringCritique
 			withAnchor: (self anchorFor: aClass)
 			by: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInstVarInSubclassesRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInstVarInSubclassesRule >> name [
 	^ 'Same instance variable defined in ALL subclasses'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInstVarInSubclassesRule >> rationale [
 	^ 'All subclasses of this class define the same variable. Most likely this variable should be pulled up to the superclass.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInstVarInSubclassesRule >> severity [
 	^ #information
 ]

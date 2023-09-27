@@ -1,10 +1,12 @@
 Class {
-	#name : #RBPushDownInstanceVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBPushDownInstanceVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPushDownInstanceVariableRefactoring .
@@ -14,15 +16,16 @@ RBPushDownInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPushDownInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { 'foo'. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
-RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMetaclass [
+{ #category : 'tests' }
+RBPushDownInstanceVariableParametrizedTest >> testModelPushDownOnMetaclassSide [
+
 	model defineClass: 'Object << #SomeClass package: #''Refactory-Test data'''.
 	(model metaclassNamed: #SomeClass) addInstanceVariable: 'foo'.
 	model defineClass: 'SomeClass << #Subclass package: #''Refactory-Test data'''.
@@ -37,7 +40,7 @@ RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMetaclass [
 		assert: ((model metaclassNamed: #Subclass) directlyDefinesVariable: 'foo')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMultipleSubclasses [
 	model defineClass: 'Object << #SomeClass
 		slots: { #foo } ;
@@ -54,7 +57,7 @@ RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMultipleSubclas
 	self assert: ((model classNamed: #AnotherSubclass) directlyDefinesVariable: 'foo')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownInstanceVariableParametrizedTest >> testModelRemoveUnusedVariable [
 	model defineClass: 'Object << #SomeClass
 		slots: { #foo} ;
@@ -67,7 +70,7 @@ RBPushDownInstanceVariableParametrizedTest >> testModelRemoveUnusedVariable [
 	self assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownInstanceVariableParametrizedTest >> testPushDownInstanceVariable [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:

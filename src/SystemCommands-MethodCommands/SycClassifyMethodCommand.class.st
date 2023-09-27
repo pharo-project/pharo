@@ -7,51 +7,52 @@ Internal Representation and Key Implementation Points.
 	protocol:		<Symbol>
 "
 Class {
-	#name : #SycClassifyMethodCommand,
-	#superclass : #SycMethodCommand,
+	#name : 'SycClassifyMethodCommand',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycClassifyMethodCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	aToolContext showProtocol: protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycClassifyMethodCommand >> defaultMenuIconName [
 
 	^ #glamorousBrowse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycClassifyMethodCommand >> defaultMenuItemName [
 
 	^ 'Classify methods'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycClassifyMethodCommand >> execute [
 
 	methods do: [ :aMethod | aMethod protocol: protocol ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycClassifyMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	protocol := aToolContext requestProtocol: 'New protocol name'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycClassifyMethodCommand >> protocol [
 	^ protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycClassifyMethodCommand >> protocol: protocolName [
 	protocol := protocolName
 ]

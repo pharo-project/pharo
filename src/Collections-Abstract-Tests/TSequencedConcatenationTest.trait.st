@@ -2,28 +2,30 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TSequencedConcatenationTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TSequencedConcatenationTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSequencedConcatenationTest >> empty [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSequencedConcatenationTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSequencedConcatenationTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TSequencedConcatenationTest >> test0FixtureSequencedConcatenationTest [
 	self empty.
 	self assertEmpty: self empty.
@@ -31,7 +33,7 @@ TSequencedConcatenationTest >> test0FixtureSequencedConcatenationTest [
 	self secondCollection
 ]
 
-{ #category : #'tests - concatenation' }
+{ #category : 'tests - concatenation' }
 TSequencedConcatenationTest >> testConcatenation [
 	| result index |
 	result:= self firstCollection,self secondCollection .
@@ -50,7 +52,7 @@ TSequencedConcatenationTest >> testConcatenation [
 	self assert: result size = (self firstCollection size + self secondCollection size)
 ]
 
-{ #category : #'tests - concatenation' }
+{ #category : 'tests - concatenation' }
 TSequencedConcatenationTest >> testConcatenationWithEmpty [
 	| result |
 	result:= self empty,self secondCollection .
@@ -63,7 +65,7 @@ TSequencedConcatenationTest >> testConcatenationWithEmpty [
 	self assert: result size = ( self secondCollection size)
 ]
 
-{ #category : #'tests - streaming' }
+{ #category : 'tests - streaming' }
 TSequencedConcatenationTest >> testNewStreamContentsReturnsCollectionOfCorrectSize [
 	| result item originalSize |
 	originalSize := 10.
@@ -76,7 +78,7 @@ TSequencedConcatenationTest >> testNewStreamContentsReturnsCollectionOfCorrectSi
 	self assert: result size equals: originalSize
 ]
 
-{ #category : #'tests - streaming' }
+{ #category : 'tests - streaming' }
 TSequencedConcatenationTest >> testStreamContents [
 	| result |
 	result:= self collectionClass streamContents: [ :s|
@@ -86,7 +88,7 @@ TSequencedConcatenationTest >> testStreamContents [
 	self assert: result equals: self firstCollection, self secondCollection
 ]
 
-{ #category : #'tests - streaming' }
+{ #category : 'tests - streaming' }
 TSequencedConcatenationTest >> testStreamContentsSized [
 	| result |
 	result:= self collectionClass new: 1 streamContents: [ :s|

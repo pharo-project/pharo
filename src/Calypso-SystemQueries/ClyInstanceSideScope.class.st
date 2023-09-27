@@ -2,17 +2,19 @@
 I represent instance side of classes
 "
 Class {
-	#name : #ClyInstanceSideScope,
-	#superclass : #ClyMetaLevelClassScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyInstanceSideScope',
+	#superclass : 'ClyMetaLevelClassScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInstanceSideScope class >> defaultName [
 	^'inst. side'
 ]
 
-{ #category : #'class selection' }
+{ #category : 'class selection' }
 ClyInstanceSideScope class >> metaLevelOf: aClass [
 	^aClass instanceSide
 ]

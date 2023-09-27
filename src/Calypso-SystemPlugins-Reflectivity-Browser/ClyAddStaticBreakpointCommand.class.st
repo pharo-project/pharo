@@ -2,24 +2,26 @@
 I am a command to add static breakpoint into particular source node.
 "
 Class {
-	#name : #ClyAddStaticBreakpointCommand,
-	#superclass : #ClyAddBreakpointCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints'
+	#name : 'ClyAddStaticBreakpointCommand',
+	#superclass : 'ClyAddBreakpointCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyAddStaticBreakpointCommand class >> methodEditorLeftBarClickActivation [
 	<classAnnotation>
 
 	^CmdTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAddStaticBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
 	aBreakpoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAddStaticBreakpointCommand >> defaultMenuItemName [
 	^'Break on  ', sourceNode displaySourceCode
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #SourceFileArray }
+Extension { #name : 'SourceFileArray' }
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 SourceFileArray >> changeRecordsFor: aMethodDefinition [
 
 	^ self
@@ -9,7 +9,7 @@ SourceFileArray >> changeRecordsFor: aMethodDefinition [
 		isMeta: aMethodDefinition methodClass isMeta
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 SourceFileArray >> changeRecordsFor: aMethodDefinition detect: aUnaryBlock [
 	"Try to detect the most recent ChangeRecord that satisfies aUnaryBlock. Answer nil if none satisfies."
 
@@ -18,7 +18,7 @@ SourceFileArray >> changeRecordsFor: aMethodDefinition detect: aUnaryBlock [
 	^ nil
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 SourceFileArray >> changeRecordsFor: aMethodDefinition do: aUnaryBlock [
 	"Evaluate aUnaryBlock with each of the ChangeRecords of aMethodDefinition. Most recent changes are evaluated first."
 
@@ -29,7 +29,7 @@ SourceFileArray >> changeRecordsFor: aMethodDefinition do: aUnaryBlock [
 		do: aUnaryBlock
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMetaClassName isMeta: classIsMeta [
 	"Answer the ChangeRecords of a method or class comment, starting from the initialSourcePointer.
 	Most recent changes go first."
@@ -46,7 +46,7 @@ SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMeta
 	^ changeRecords
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMetaClassName isMeta: classIsMeta do: aUnaryBlock [
 	"Evaluate aUnaryBlock with each of the ChangeRecords of a method or class comment, starting from the initialSourcePointer.
 	Most recent changes are evaluated first."

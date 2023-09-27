@@ -1,10 +1,12 @@
 Class {
-	#name : #HistorySlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'HistorySlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testAddOneElement [
 	| slot instance |
 	<ignoreNotImplementedSelectors: #(slot1: slot1)>
@@ -18,7 +20,7 @@ HistorySlotTest >> testAddOneElement [
 	self assert: instance slot1 equals: 25
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testAddOneElementAndModifyClass [
 	| slot instance |
 	<ignoreNotImplementedSelectors: #(slot1: slot1)>
@@ -34,7 +36,7 @@ HistorySlotTest >> testAddOneElementAndModifyClass [
 	self assert: instance slot1 equals: 25
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testAddTwoElements [
 	| slot instance |
 	<ignoreNotImplementedSelectors: #(slot1: slot1)>
@@ -49,7 +51,7 @@ HistorySlotTest >> testAddTwoElements [
 	self assert: instance slot1 equals: 35
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testAddTwoElementsHistoryRead [
 	| slot instance |
 	<ignoreNotImplementedSelectors: #(slot1: slot1)>
@@ -65,7 +67,7 @@ HistorySlotTest >> testAddTwoElementsHistoryRead [
 	self assert: (slot readHistory: instance) asArray equals: #(nil 25 35)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testHistoryGreaterThanThree [
 	| slot instance |
 	<ignoreNotImplementedSelectors: #(slot1:)>
@@ -84,7 +86,7 @@ HistorySlotTest >> testHistoryGreaterThanThree [
 	self assert: (slot readHistory: instance) size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testIsFirstElementNil [
 
 	| slot instance |
@@ -99,7 +101,7 @@ HistorySlotTest >> testIsFirstElementNil [
   	self assert: (instance slot1) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testModifyIvarToHistory [
 	"test if we can transform a standard ivar to a history slot when instances are present"
 

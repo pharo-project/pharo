@@ -2,36 +2,38 @@
 Checks for assignements to temporaries that are not used afterwards.
 "
 Class {
-	#name : #ReUnnecessaryAssignmentRule,
-	#superclass : #ReNodeBasedRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReUnnecessaryAssignmentRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnnecessaryAssignmentRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'UnnecessaryAssignmentRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReUnnecessaryAssignmentRule >> basicCheck: aNode [
 	aNode isReturn ifFalse: [ ^ false ].
 	aNode isAssignment ifFalse: [ ^ false ].
 	^ (aNode whoDefines: aNode variable name) isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnnecessaryAssignmentRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnnecessaryAssignmentRule >> name [
 	^ 'Unnecessary assignment to a temporary variable'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnnecessaryAssignmentRule >> severity [
 	^ #information
 ]

@@ -1,11 +1,11 @@
-Extension { #name : #Array2D }
+Extension { #name : 'Array2D' }
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Array2D >> shuffled [
 	^self class rows: numberOfRows columns: numberOfColumns contents: (contents shuffled)
 ]
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Array2D >> shuffledBy: aRandom [
 	^self class rows: numberOfRows columns: numberOfColumns contents: (contents copy shuffleBy: aRandom)
 ]

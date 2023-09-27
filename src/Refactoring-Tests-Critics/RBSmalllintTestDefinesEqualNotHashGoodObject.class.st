@@ -2,18 +2,20 @@
 This class shouldn't trigger the RBDefinesEqualNotHashRule critic.
 "
 Class {
-	#name : #RBSmalllintTestDefinesEqualNotHashGoodObject,
-	#superclass : #RBSmalllintTestSuperclassObject,
-	#category : #'Refactoring-Tests-Critics-Base'
+	#name : 'RBSmalllintTestDefinesEqualNotHashGoodObject',
+	#superclass : 'RBSmalllintTestSuperclassObject',
+	#category : 'Refactoring-Tests-Critics-Base',
+	#package : 'Refactoring-Tests-Critics',
+	#tag : 'Base'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBSmalllintTestDefinesEqualNotHashGoodObject >> = anObject [
 	^ self == anObject
 		or: [self species == anObject species]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBSmalllintTestDefinesEqualNotHashGoodObject >> hash [
 	^ self species identityHash
 ]

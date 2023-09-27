@@ -2,17 +2,19 @@
 I am a command to move browser focus to next (right) navigation pane
 "
 Class {
-	#name : #ClySwitchFocusToNextBrowserPaneCommand,
-	#superclass : #ClyBrowserCommand,
-	#category : #'Calypso-Browser-Commands'
+	#name : 'ClySwitchFocusToNextBrowserPaneCommand',
+	#superclass : 'ClyBrowserCommand',
+	#category : 'Calypso-Browser-Commands',
+	#package : 'Calypso-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchFocusToNextBrowserPaneCommand class >> canBeExecutedInContext: aBrowserContext [
 	^aBrowserContext browser isNavigationPanelFocused
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchFocusToNextBrowserPaneCommand >> execute [
 	browser switchFocusToNextPane
 ]

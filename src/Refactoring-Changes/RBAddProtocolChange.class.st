@@ -2,12 +2,13 @@
 RBRefactoryProtocolChange is responsible for adding a protocol in classes in a RB model
 "
 Class {
-	#name : #RBAddProtocolChange,
-	#superclass : #RBRefactoryProtocolChange,
-	#category : #'Refactoring-Changes'
+	#name : 'RBAddProtocolChange',
+	#superclass : 'RBRefactoryProtocolChange',
+	#category : 'Refactoring-Changes',
+	#package : 'Refactoring-Changes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBAddProtocolChange class >> addProtocolNamed: aString in: aClass [
 
 	^ self new
@@ -16,25 +17,25 @@ RBAddProtocolChange class >> addProtocolNamed: aString in: aClass [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBAddProtocolChange >> asUndoOperation [
 
 	^ RBRemoveProtocolChange removeProtocolNamed: protocol in: self changeClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddProtocolChange >> changeString [
 
 	^ 'Add Protocol named ', self displayProtocolName, ' in ', self displayClassName
 ]
 
-{ #category : #private }
-RBAddProtocolChange >> primitiveExecute [
+{ #category : 'private' }
+RBAddProtocolChange >> generateChanges [
 
 	self changeClass addProtocol: protocol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddProtocolChange >> printOn: aStream [
 
 	aStream

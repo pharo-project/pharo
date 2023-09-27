@@ -9,18 +9,20 @@ My preconditions verify that I use a valid class name, that does not yet exists 
 and the subclasses (if any) were direct subclasses of the superclass.
 "
 Class {
-	#name : #RBInsertNewClassRefactoring,
-	#superclass : #RBClassRefactoring,
+	#name : 'RBInsertNewClassRefactoring',
+	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'category',
 		'superclass',
 		'subclasses',
 		'comment'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInsertNewClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 	^ self new
 		addClass: aName
@@ -29,7 +31,7 @@ RBInsertNewClassRefactoring class >> addClass: aName superclass: aClass subclass
 		category: aSymbol
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInsertNewClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 	^ self new
 		model: aRBSmalltalk;
@@ -40,7 +42,7 @@ RBInsertNewClassRefactoring class >> model: aRBSmalltalk addClass: aName supercl
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInsertNewClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
 	^ self new
 		model: aRBSmalltalk;
@@ -52,13 +54,13 @@ RBInsertNewClassRefactoring class >> model: aRBSmalltalk addClass: aName supercl
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBInsertNewClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 	self addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: ''
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBInsertNewClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
 	self className: aName.
 	superclass := self classObjectFor: aClass.
@@ -67,7 +69,7 @@ RBInsertNewClassRefactoring >> addClass: aName superclass: aClass subclasses: aC
 	comment := aCommentString
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBInsertNewClassRefactoring >> preconditions [
 	| cond |
 	cond := ((RBCondition isMetaclass: superclass)
@@ -86,7 +88,20 @@ RBInsertNewClassRefactoring >> preconditions [
 					errorMacro: 'Invalid category name')
 ]
 
-{ #category : #printing }
+{ #category : 'transforming' }
+RBInsertNewClassRefactoring >> privateTransform [
+
+	| classDefinitionString |
+	classDefinitionString := '<1p> %<%< #<2s> package: <3p>'
+		                         expandMacrosWith: superclass
+		                         with: className
+		                         with: category asString.
+	self model
+		defineClass: classDefinitionString withComment: comment;
+		reparentClasses: subclasses to: (self model classNamed: className asSymbol)
+]
+
+{ #category : 'printing' }
 RBInsertNewClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -100,17 +115,4 @@ RBInsertNewClassRefactoring >> storeOn: aStream [
 	aStream nextPutAll: ' category: '.
 	category storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBInsertNewClassRefactoring >> transform [
-
-	| classDefinitionString |
-	classDefinitionString := '<1p> %<%< #<2s> package: <3p>'
-		                         expandMacrosWith: superclass
-		                         with: className
-		                         with: category asString.
-	self model
-		defineClass: classDefinitionString withComment: comment;
-		reparentClasses: subclasses to: (self model classNamed: className asSymbol)
 ]

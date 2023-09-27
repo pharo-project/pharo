@@ -2,17 +2,19 @@
 I answer a boolean that indicates if a EpCodeChange would actually produce a change in current image if applied with EpApplyVisitor.
 "
 Class {
-	#name : #EpHasImpactVisitor,
-	#superclass : #Object,
+	#name : 'EpHasImpactVisitor',
+	#superclass : 'Object',
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
 	#instVars : [
 		'environment'
 	],
-	#category : #'EpiceaBrowsers-Visitors'
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpHasImpactVisitor class >> inEnvironment: anEnvironment [
 
 	^ self basicNew
@@ -20,7 +22,7 @@ EpHasImpactVisitor class >> inEnvironment: anEnvironment [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpHasImpactVisitor >> behaviorNamed: aSymbol ifPresent: presentBlock [
 
 	^ (environment classOrTraitNamed: aSymbol)
@@ -28,14 +30,14 @@ EpHasImpactVisitor >> behaviorNamed: aSymbol ifPresent: presentBlock [
 		ifNotNil: presentBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpHasImpactVisitor >> initializeWith: anEnvironment [
 
 	self initialize.
 	environment := anEnvironment
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitBehaviorCategoryChange: aChange [
 
 	self
@@ -46,7 +48,7 @@ EpHasImpactVisitor >> visitBehaviorCategoryChange: aChange [
 	^ true
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitBehaviorChange: aChange [
 	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
 		^ behavior definitionString ~= aChange behaviorAffected definitionSource or: [
@@ -55,7 +57,7 @@ EpHasImpactVisitor >> visitBehaviorChange: aChange [
 	^ true
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitBehaviorCommentChange: aChange [
 
 	self
@@ -67,7 +69,7 @@ EpHasImpactVisitor >> visitBehaviorCommentChange: aChange [
 	^ true
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitBehaviorNameChange: aChange [
 
 	self
@@ -77,25 +79,7 @@ EpHasImpactVisitor >> visitBehaviorNameChange: aChange [
 	^ false
 ]
 
-{ #category : #visitor }
-EpHasImpactVisitor >> visitCategoryAddition: aChange [
-
-	^ (environment organization includesCategory: aChange categoryName) not
-]
-
-{ #category : #visitor }
-EpHasImpactVisitor >> visitCategoryRemoval: aChange [
-
-	^ environment organization includesCategory: aChange categoryName
-]
-
-{ #category : #visitor }
-EpHasImpactVisitor >> visitCategoryRename: aChange [
-
-	^ environment organization includesCategory: aChange oldCategoryName
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitClassRemoval: aChange [
 
 	self
@@ -105,12 +89,12 @@ EpHasImpactVisitor >> visitClassRemoval: aChange [
 	^ false
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitCodeChange: aChange [
 	^ self error: 'shouldn''t happen'
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitMethodChange: aChange [
 	"Addition and Modification come here"
 
@@ -127,7 +111,7 @@ EpHasImpactVisitor >> visitMethodChange: aChange [
 	^ true "If class is not present"
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitMethodRemoval: aChange [
 
 	self
@@ -142,19 +126,43 @@ EpHasImpactVisitor >> visitMethodRemoval: aChange [
 	^ false "No impact if container does not exist"
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitPackageAddition: aPackageAddition [
 
 	^ (self packageOrganizer hasPackage: aPackageAddition packageName) not
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitPackageRemoval: aPackageRemoval [
 
 	^ self packageOrganizer hasPackage: aPackageRemoval packageName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
+EpHasImpactVisitor >> visitPackageRename: aPackageRename [
+
+	^ environment organization hasPackage: aPackageRename oldPackageName
+]
+
+{ #category : 'visitor' }
+EpHasImpactVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ (environment organization hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName) not
+]
+
+{ #category : 'visitor' }
+EpHasImpactVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ environment organization hasTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval packageName
+]
+
+{ #category : 'visitor' }
+EpHasImpactVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	^ environment organization hasTag: aPackageTagRename oldTagName inPackage: aPackageTagRename packageName
+]
+
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	self
@@ -164,7 +172,7 @@ EpHasImpactVisitor >> visitProtocolAddition: aProtocolAddition [
 	^ true
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitProtocolRemoval: aProtocolRemoved [
 	"Protocol removal has an impact if:
 	- the protocl exists, and
@@ -177,7 +185,7 @@ EpHasImpactVisitor >> visitProtocolRemoval: aProtocolRemoved [
 	^ true
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpHasImpactVisitor >> visitTraitRemoval: aChange [
 
 	self

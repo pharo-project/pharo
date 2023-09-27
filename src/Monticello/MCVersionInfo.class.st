@@ -2,8 +2,8 @@
 Adds to the record of ancestry, other identifying details.
 "
 Class {
-	#name : #MCVersionInfo,
-	#superclass : #MCAncestry,
+	#name : 'MCVersionInfo',
+	#superclass : 'MCAncestry',
 	#instVars : [
 		'id',
 		'name',
@@ -12,10 +12,12 @@ Class {
 		'time',
 		'author'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCVersionInfo class >> name: vName id: id message: message date: date time: time author: author ancestors: ancestors [
 	^ self 
 		name: vName
@@ -28,7 +30,7 @@ MCVersionInfo class >> name: vName id: id message: message date: date time: time
 		stepChildren: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCVersionInfo class >> name: vName id: id message: message date: date time: time author: author ancestors: ancestors stepChildren: stepChildren [
 	^ self new
 		initializeWithName: vName
@@ -41,13 +43,13 @@ MCVersionInfo class >> name: vName id: id message: message date: date time: time
 		stepChildren: stepChildren
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCVersionInfo >> = other [
 	^ other species = self species
 		and: [other hasID: id]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MCVersionInfo >> asDictionary [
 	^ Dictionary new
 		at: #name put: name;
@@ -60,37 +62,37 @@ MCVersionInfo >> asDictionary [
 		yourself
 ]
 
-{ #category : #pillaging }
+{ #category : 'pillaging' }
 MCVersionInfo >> author [
 	^ author
 ]
 
-{ #category : #pillaging }
+{ #category : 'pillaging' }
 MCVersionInfo >> date [
 	^ date
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCVersionInfo >> displayStringOn: stream [
 	stream nextPutAll: self name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCVersionInfo >> hasID: aUUID [
 	^ id = aUUID
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCVersionInfo >> hash [
 	^ id hash
 ]
 
-{ #category : #pillaging }
+{ #category : 'pillaging' }
 MCVersionInfo >> id [
 	^ id 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDate time: aTime author: initials ancestors: aCollection stepChildren: stepCollection [
 	name := vName.
 	id := aUUID.
@@ -102,12 +104,12 @@ MCVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDat
 	stepChildren := stepCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCVersionInfo >> lazy [
 	^ MCLazyVersionInfo from: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCVersionInfo >> loadAncestorsAndStepChildren [
 	"This code scans all the repositories to find the exact package version and reload the relevant info."
 
@@ -116,26 +118,27 @@ MCVersionInfo >> loadAncestorsAndStepChildren [
 	"Unused in MCVersionInfo, used only in MCLazyVersionInfo."
 
 	"It is there to allow a certain customisation with lazy stuff without kernel dependencies on LRUCache"
-
-	(MCRepositoryGroup default
-		in: [ :r | r versionWithInfo: self ifNone: [  ] ])
+	| r |
+	r := MCRepositoryGroup default.
+	r versionWithInfo: self ifNone: [ ].
+	r
 		ifNotNil:
 			[ :aVersion | 
 			self setAncestors: aVersion info ancestors.
 			self setStepChildren: aVersion info stepChildren ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfo >> message [
 	^ message ifNil: ['']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfo >> name [
 	^ name ifNil: ['<working copy>']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfo >> nameWithout: packageName [
 	| result |
 	result := self name.
@@ -144,14 +147,14 @@ MCVersionInfo >> nameWithout: packageName [
 	^result
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCVersionInfo >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(; nextPutAll: self name; nextPut: $)
 	
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCVersionInfo >> setAncestors: someAncestors [
 	"Unused in MCVersionInfo"
 
@@ -160,7 +163,7 @@ MCVersionInfo >> setAncestors: someAncestors [
 	ancestors := someAncestors
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCVersionInfo >> setStepChildren: someStepChildren [
 	"Unused in MCVersionInfo"
 
@@ -169,7 +172,7 @@ MCVersionInfo >> setStepChildren: someStepChildren [
 	stepChildren := someStepChildren
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfo >> summary [
 	^ String streamContents:
 		[:s |
@@ -179,7 +182,7 @@ MCVersionInfo >> summary [
 		]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfo >> summaryHeader [
 	^ String streamContents:
 		[:s |
@@ -198,22 +201,22 @@ MCVersionInfo >> summaryHeader [
 		]
 ]
 
-{ #category : #pillaging }
+{ #category : 'pillaging' }
 MCVersionInfo >> time [
 	^ time
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfo >> timeStamp [
 	^ DateAndTime date: date time: time
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfo >> timeString [
 	^ date asString, ', ', time asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfo >> versionNumber [
 	^ ((self name copyAfterLast: $-) copyAfter: $.) asInteger
 ]

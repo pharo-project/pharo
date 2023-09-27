@@ -1,56 +1,64 @@
 Class {
-	#name : #FLFullBasicSerializationTest,
-	#superclass : #FLBasicSerializationTest,
+	#name : 'FLFullBasicSerializationTest',
+	#superclass : 'FLBasicSerializationTest',
 	#classVars : [
 		'ClassVariableForTesting'
 	],
-	#category : #'Fuel-Core-Tests-FullSerialization'
+	#category : 'Fuel-Core-Tests-FullSerialization',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'FullSerialization'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLFullBasicSerializationTest class >> packageNamesUnderTest [
 	^ #('FuelMetalevel')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLFullBasicSerializationTest class >> shouldInheritSelectors [ 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLFullBasicSerializationTest >> defaultTimeLimit [
 	^ 2 minutes
 ]
 
-{ #category : #tests }
+{ #category : 'initialization' }
+FLFullBasicSerializationTest >> initialize [
+		<ignoreUnusedClassVariables: #( ClassVariableForTesting )>
+		super initialize.
+]
+
+{ #category : 'tests' }
 FLFullBasicSerializationTest >> testClassGlobalAssociation [
 	"An association included in Smalltalk globals is treated as global by default."
 
 	self assertSerializationIdentityOf: (self environmentOfTest associationAt: #FLPerson)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBasicSerializationTest >> testClassSideCompiledMethod [
 	"They are not considered globals by default in full serialization mode."
 	self flag: #todo. "This is really undesired. They should be global by default, as in light serialization mode."
 	self resultOfSerializeAndMaterializeCompiledMethod: FLGlobalSendMock class >> #newInstanceToSerialize.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBasicSerializationTest >> testClassVariable [
 	"An association included in a global class is treated as global by default."
 
 	self assertSerializationIdentityOf: (self class classPool associationAt: #ClassVariableForTesting)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBasicSerializationTest >> testCompiledMethod [
 	"They are not considered globals by default in full serialization mode."
 	self flag: #todo. "This is really undesired. They should be global by default, as in light serialization mode."
 	self resultOfSerializeAndMaterialize: FLPair >> #left.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLFullBasicSerializationTest >> testConsiderGlobal: anObject [
 	"With explicit specification of a symbol as global, both value and association keep identity."
 
@@ -60,44 +68,48 @@ FLFullBasicSerializationTest >> testConsiderGlobal: anObject [
 	self environmentOfTest
 		at: #FLGlobalVariableForTesting
 		put: anObject.
+	addedGlobals add: #FLGlobalVariableForTesting.
 	globalAssociation := self environmentOfTest associationAt: #FLGlobalVariableForTesting.
 	
 	self assertSerializationIdentityOf: globalAssociation.
 	self assertSerializationIdentityOf: globalAssociation value.
 ]
 
-{ #category : #'tests-considerGlobal' }
+{ #category : 'tests-considerGlobal' }
 FLFullBasicSerializationTest >> testConsiderGlobalAClass [
 	"With explicit specification of a symbol as global, both value and association keep identity."
 	
 	self testConsiderGlobal: FLPerson.
 ]
 
-{ #category : #'tests-considerGlobal' }
+{ #category : 'tests-considerGlobal' }
 FLFullBasicSerializationTest >> testConsiderGlobalAnObject [
 	"With explicit specification of a symbol as global, both value and association keep identity."
 	
 	self testConsiderGlobal: FLPerson new.
 ]
 
-{ #category : #'tests-bugs' }
+{ #category : 'tests-bugs' }
 FLFullBasicSerializationTest >> testCreateClassWithChangedSuperclassFormat [
 	"Tests issue #221"
 
 	| a b |
-	a := self classFactory silentlyNewClassWithInstanceVariableNames: 'one'.
-	b := self classFactory silentlyNewSubclassOf: a instanceVariableNames: 'two'.
+	a := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'one' ].
+	b := self classFactory make: [ :aBuilder |
+		     aBuilder
+			     superclass: a;
+			     slotsFromString: 'two' ].
 	self serializer fullySerializeBehavior: b.
-	self serialize: {b new. b}.
-	
+	self serialize: {
+			b new.
+			b }.
+
 	a addInstVarNamed: 'newIVar'.
-		
-	self
-		shouldnt: [ self materialized ]
-		raise: PrimitiveFailed
+
+	self shouldnt: [ self materialized ] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests-long' }
+{ #category : 'tests-long' }
 FLFullBasicSerializationTest >> testMethodDictionaries [
 	"Tests correct serialization of all the method dictionaries in the System package."
 
@@ -105,7 +117,7 @@ FLFullBasicSerializationTest >> testMethodDictionaries [
 		self resultOfSerializeAndMaterializeMethodDictionary: class methodDictionary ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullBasicSerializationTest >> testSmalltalkGlobalAssociation [
 	"An association included in Smalltalk globals is treated as global by default."
 

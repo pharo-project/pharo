@@ -1,22 +1,24 @@
 Class {
-	#name : #RBRemoveAllSendersParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBRemoveAllSendersParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAllSendersParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRemoveAllSendersRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveAllSendersParametrizedTest >> constructor [
 	^ #removeSendersOf:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveAllSendersParametrizedTest >> testRemoveMessageInsideBlock [
 	| refactoring methodName |
 	methodName := #caller2.

@@ -2,15 +2,17 @@
 I represent an accessor for a sequence of objects that can only store objects in the sequence.
 "
 Class {
-	#name : #WriteStream,
-	#superclass : #PositionableStream,
+	#name : 'WriteStream',
+	#superclass : 'PositionableStream',
 	#instVars : [
 		'writeLimit'
 	],
-	#category : #'Collections-Streams-Base'
+	#category : 'Collections-Streams-Base',
+	#package : 'Collections-Streams',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WriteStream class >> with: aCollection [
 	"Answer an instance of me on the argument, aCollection, positioned to
 	store objects at the end of aCollection."
@@ -18,7 +20,7 @@ WriteStream class >> with: aCollection [
 	^self basicNew with: aCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WriteStream class >> with: aCollection from: firstIndex to: lastIndex [
 	"Answer an instance of me on the subcollection of the argument,
 	aCollection, determined by the indices firstIndex and lastIndex. Position
@@ -30,7 +32,7 @@ WriteStream class >> with: aCollection from: firstIndex to: lastIndex [
 		to: lastIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> << anObject [
 	"Write anObject to the receiver, dispatching using #putOn:
 	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
@@ -44,7 +46,7 @@ WriteStream >> << anObject [
 		ifFalse: [ anObject putOn: self ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WriteStream >> braceArray [
 	"This method is used in compilation of brace constructs.
 	It MUST NOT be deleted or altered."
@@ -52,7 +54,7 @@ WriteStream >> braceArray [
 	^ collection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WriteStream >> braceArray: anArray [
 	"This method is used in compilation of brace constructs.
 	It MUST NOT be deleted or altered."
@@ -63,28 +65,28 @@ WriteStream >> braceArray: anArray [
 	writeLimit := anArray size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> contents [
 
 	readLimit := readLimit max: position.
 	^collection copyFrom: 1 to: position
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> cr [
 	"Append a return character to the receiver."
 
 	self nextPut: Character cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> crlf [
 	"Append a line feed character to the receiver."
 
 	self cr; lf
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> crtab [
 	"Append a return character, followed by a single tab character, to the
 	receiver."
@@ -92,7 +94,7 @@ WriteStream >> crtab [
 	self cr; tab
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> crtab: anInteger [
 	"Append a return character, followed by anInteger tab characters, to the
 	receiver."
@@ -100,7 +102,7 @@ WriteStream >> crtab: anInteger [
 	self cr; tab: anInteger
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> ensureASpace [
 	"Append a space character to the receiver IFF there is not one on the end."
 
@@ -108,14 +110,14 @@ WriteStream >> ensureASpace [
 	self nextPut: Character space
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> ensureCr [
 	"Append a cr character to the receiver IFF there is not one on the end."
 
 	self ensureEndsWith: Character cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> ensureEndsWith: anObject [
 	"Append anObject to the receiver IFF it is non-empty and there is not one on the end."
 
@@ -123,7 +125,7 @@ WriteStream >> ensureEndsWith: anObject [
 	self nextPut: anObject
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> ensureNoSpace [
 	"If there is not one on the end, remove it."
 	| space |
@@ -134,7 +136,7 @@ WriteStream >> ensureNoSpace [
 		whileTrue: [ self skip: -1 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WriteStream >> growTo: anInteger [
 
     " anInteger is the required minimal new size of the collection "
@@ -145,20 +147,20 @@ WriteStream >> growTo: anInteger [
  	writeLimit := collection size
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> lf [
 	"Append a line feed character to the receiver."
 
 	self nextPut: Character lf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> next [
 
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> next: anInteger putAll: aCollection startingAt: startIndex [
 	"Store the next anInteger elements from the given collection."
 
@@ -175,7 +177,7 @@ WriteStream >> next: anInteger putAll: aCollection startingAt: startIndex [
 	position := newEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> nextPut: anObject [
 	"Primitive. Insert the argument at the next position in the Stream
 	represented by the receiver. Fail if the collection of this stream is not an
@@ -190,7 +192,7 @@ WriteStream >> nextPut: anObject [
 			collection at: position put: anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> nextPutAll: aCollection [
 
  	| newEnd |
@@ -207,7 +209,7 @@ WriteStream >> nextPutAll: aCollection [
 	^ aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WriteStream >> on: aCollection [
 
 	super on: aCollection.
@@ -215,7 +217,7 @@ WriteStream >> on: aCollection [
 	writeLimit := aCollection size
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WriteStream >> on: aCollection from: firstIndex to: lastIndex [
 
 	| len |
@@ -229,7 +231,7 @@ WriteStream >> on: aCollection from: firstIndex to: lastIndex [
 				ifFalse: [firstIndex - 1]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WriteStream >> pastEndPut: anObject [
 	"Grow the collection, then put <anObject> at the current write position."
 
@@ -239,7 +241,7 @@ WriteStream >> pastEndPut: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> peekLast [
 	"Return that item just put at the end of the stream"
 
@@ -248,7 +250,7 @@ WriteStream >> peekLast [
 		ifFalse: [nil]
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 WriteStream >> position: anInteger [
 	"Refer to the comment in PositionableStream|position:."
 
@@ -256,7 +258,7 @@ WriteStream >> position: anInteger [
 	super position: anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WriteStream >> reset [
 	"Refer to the comment in PositionableStream|reset."
 
@@ -264,12 +266,12 @@ WriteStream >> reset [
 	position := 0
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 WriteStream >> resetToStart [
 	readLimit := position := 0
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 WriteStream >> setToEnd [
 	"Refer to the comment in PositionableStream|setToEnd."
 
@@ -277,66 +279,66 @@ WriteStream >> setToEnd [
 	super setToEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStream >> size [
 
 	^readLimit := readLimit max: position
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> space [
 	"Append a space character to the receiver."
 
 	self nextPut: Character space
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> space: anInteger [
 	"Append anInteger space characters to the receiver."
 
 	self next: anInteger put: Character space
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 WriteStream >> store: anObject [
 	"Have anObject print on the receiver for purposes of rereading."
 
 	anObject storeOn: self
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> tab [
 	"Append a tab character to the receiver."
 
 	self nextPut: Character tab
 ]
 
-{ #category : #'character writing' }
+{ #category : 'character writing' }
 WriteStream >> tab: anInteger [
 	"Append anInteger tab characters to the receiver."
 
 	self next: anInteger put: Character tab
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WriteStream >> with: aCollection [
 
 	super on: aCollection.
 	position := readLimit := writeLimit := aCollection size
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WriteStream >> with: aCollection from: firstIndex to: lastIndex [
 	self with: (aCollection copyFrom: firstIndex to: lastIndex)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WriteStream >> withAttribute: att do: strmBlock [
 	"No-op here is overriden in TextStream for font emphasis"
 	^ strmBlock value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WriteStream >> withAttributes: attributes do: strmBlock [
 	"No-op here is overriden in TextStream for font emphasis"
 	^ strmBlock value

@@ -2,16 +2,18 @@
 SDL2 library structure
 "
 Class {
-	#name : #'SDL_Point',
-	#superclass : #SDL2Structure,
+	#name : 'SDL_Point',
+	#superclass : 'SDL2Structure',
 	#classVars : [
 		'OFFSET_X',
 		'OFFSET_Y'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'fields description' }
+{ #category : 'fields description' }
 SDL_Point class >> fieldsDesc [
 	"
 	self initializeAccessors
@@ -22,25 +24,25 @@ SDL_Point class >> fieldsDesc [
  	)
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_Point >> x [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_X
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_Point >> x: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_X put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_Point >> y [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_Y
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_Point >> y: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_Y put: anObject

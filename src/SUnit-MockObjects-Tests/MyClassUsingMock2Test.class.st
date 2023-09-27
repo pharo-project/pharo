@@ -1,13 +1,14 @@
 Class {
-	#name : #MyClassUsingMock2Test,
-	#superclass : #TestCase,
+	#name : 'MyClassUsingMock2Test',
+	#superclass : 'TestCase',
 	#instVars : [
 		'mock'
 	],
-	#category : #'SUnit-MockObjects-Tests'
+	#category : 'SUnit-MockObjects-Tests',
+	#package : 'SUnit-MockObjects-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMock2Test >> setUp [
 
 	super setUp.
@@ -24,14 +25,14 @@ MyClassUsingMock2Test >> setUp [
 	
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMock2Test >> testMeaningOfLife [
 	<ignoreNotImplementedSelectors: #(meaningOfLife: secondMeaning:and:)>
 	self assert: (mock meaningOfLife: 22) equals: 42.
 	self assert: (mock secondMeaning: 32 and: 64) equals: 84
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMock2Test >> testMeaningOfLifeDoesNotPassCorrectValue [
 
 	<ignoreNotImplementedSelectors: #(meaningOfLife:)>

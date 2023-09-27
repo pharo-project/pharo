@@ -1,6 +1,6 @@
-Extension { #name : #RBRefactoringWarning }
+Extension { #name : 'RBRefactoringWarning' }
 
-{ #category : #'*SystemCommands-RefactoringSupport' }
+{ #category : '*SystemCommands-RefactoringSupport' }
 RBRefactoringWarning >> notifyUserOfCommand: aCommand [
 
 	| answer title |

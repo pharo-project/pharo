@@ -1,6 +1,6 @@
-Extension { #name : #Announcement }
+Extension { #name : 'Announcement' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 Announcement >> canAffectResultOfMethodQuery: aMethodQuery [
 	^false
 ]

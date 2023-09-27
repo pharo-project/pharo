@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyClassQueryTest,
-	#superclass : #ClyTypedQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyClassQueryTest',
+	#superclass : 'ClyTypedQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassQueryTest class >> isAbstract [
 	^self = ClyClassQueryTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassQueryTest >> testIsEmptyFromEmptyClassScope [
 
 	query scope: (ClyClassScope emptyIn: environment).

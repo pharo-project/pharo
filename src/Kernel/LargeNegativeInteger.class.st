@@ -2,23 +2,25 @@
 Just like LargePositiveInteger, but represents a negative number.
 "
 Class {
-	#name : #LargeNegativeInteger,
-	#superclass : #LargeInteger,
-	#type : #bytes,
-	#category : #'Kernel-Numbers'
+	#name : 'LargeNegativeInteger',
+	#superclass : 'LargeInteger',
+	#type : 'bytes',
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeNegativeInteger >> abs [
 	^ self negated
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LargeNegativeInteger >> asFloat [
 	^super asFloat negated
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 LargeNegativeInteger >> bitAt: anInteger [
 	"super would not work because we have to pretend we are in two-complement.
 	this has to be tricky..."
@@ -47,7 +49,7 @@ LargeNegativeInteger >> bitAt: anInteger [
 	^1 - ((self byteAt: digitIndex) bitAt: bitIndex)
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 LargeNegativeInteger >> highBit [
 	"Answer the index of the high order bit of the receiver, or zero if the
 	receiver is zero. Raise an error if the receiver is negative, since
@@ -58,24 +60,24 @@ LargeNegativeInteger >> highBit [
 	^ self shouldNotImplement
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargeNegativeInteger >> mightBeASquare [
 	^false
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeNegativeInteger >> negated [
 	^ self copyto: (LargePositiveInteger new: self bytesCount)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargeNegativeInteger >> negative [
 	"Answer whether the receiver is mathematically negative."
 
 	^ true
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LargeNegativeInteger >> normalize [
 	"Check for leading zeroes and return shortened copy if so"
 	| sLen val len oldLen minVal |
@@ -114,7 +116,7 @@ LargeNegativeInteger >> normalize [
 		ifFalse: [^ self]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargeNegativeInteger >> positive [
 	"Answer whether the receiver is positive or equal to 0. (ST-80 protocol).
 	See also strictlyPositive"
@@ -122,7 +124,7 @@ LargeNegativeInteger >> positive [
 	^ false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LargeNegativeInteger >> printOn: aStream base: b [
 	"Append a representation of this number in base b on aStream."
 
@@ -130,21 +132,21 @@ LargeNegativeInteger >> printOn: aStream base: b [
 	self abs printOn: aStream base: b
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargeNegativeInteger >> sign [
 	"Optimization. Answer -1 since receiver is less than 0."
 
 	^ -1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargeNegativeInteger >> signBit [
 	"Optimization."
 
 	^1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargeNegativeInteger >> strictlyPositive [
 	"Answer whether the receiver is mathematically positive."
 

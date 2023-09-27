@@ -8,19 +8,31 @@ When I gather all needed information I am calling and executing push down method
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBPushDownMethodDriver model: aRBNamespace scopes: refactoringScopes pushDown: methods) execute
+(RBPushDownMethodDriver model: aRBNamespace scopes: refactoringScopes pushDown: methods) runRefactoring
 ```
 "
 Class {
-	#name : #RBPushDownMethodInSomeClassesDriver,
-	#superclass : #RBPushDownMethodDriver,
+	#name : 'RBPushDownMethodInSomeClassesDriver',
+	#superclass : 'RBPushDownMethodDriver',
 	#instVars : [
 		'classes'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
+RBPushDownMethodInSomeClassesDriver >> configureRefactoring [
+
+	refactoring :=  RBPushDownMethodRefactoring
+		model: model
+		pushDown: (methods collect: [ :each | each selector ])
+		from: class
+		in: classes.
+]
+
+{ #category : 'resources' }
 RBPushDownMethodInSomeClassesDriver >> refactoring [
 
 	refactoring :=  RBPushDownMethodRefactoring
@@ -30,7 +42,7 @@ RBPushDownMethodInSomeClassesDriver >> refactoring [
 		in: classes.
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 
 	| changes  |
@@ -39,7 +51,7 @@ RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 	classes := self selectClasses.
 	classes ifNil: [ ^ self ].
 	
-	self refactoring.
+	self configureRefactoring.
 	changes := [
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError
@@ -50,10 +62,10 @@ RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 			           RBRefactoringWarning signal: err messageText.
 			           "If user answers no, error is being propagated."
 			           err resume ].
-	self openPreviewWithChanges: { changes }
+	self openPreviewWithChanges: changes
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBPushDownMethodInSomeClassesDriver >> selectClasses [
 
 	| dialog |

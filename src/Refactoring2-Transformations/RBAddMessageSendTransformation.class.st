@@ -19,15 +19,17 @@ Observations about the transformation:
 - If there is no access, the message send will be the first statement of the method.
 "
 Class {
-	#name : #RBAddMessageSendTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddMessageSendTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'message'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMessageSendTransformation class >> messageSend: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -37,7 +39,7 @@ RBAddMessageSendTransformation class >> messageSend: aString inMethod: aSelector
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMessageSendTransformation class >> model: aRBModel messageSend: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -48,8 +50,8 @@ RBAddMessageSendTransformation class >> model: aRBModel messageSend: aString inM
 		yourself
 ]
 
-{ #category : #preconditions }
-RBAddMessageSendTransformation >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBAddMessageSendTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]
@@ -67,7 +69,7 @@ RBAddMessageSendTransformation >> applicabilityConditions [
 					    expandMacrosWith: selector))
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddMessageSendTransformation >> classExist [
 
 	^ RBCondition
@@ -76,7 +78,7 @@ RBAddMessageSendTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -84,13 +86,7 @@ RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector 
 	message := aMessageSend
 ]
 
-{ #category : #preconditions }
-RBAddMessageSendTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddMessageSendTransformation >> privateTransform [
 	| methodTree messageNode assignments variables previousNode |
 	methodTree := self definingMethod.
@@ -107,7 +103,7 @@ RBAddMessageSendTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddMessageSendTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -2,23 +2,25 @@
 I am a mock service used for testing purposes.
 "
 Class {
-	#name : #TKTMockService,
-	#superclass : #TKTService,
+	#name : 'TKTMockService',
+	#superclass : 'TKTService',
 	#instVars : [
 		'isStarted',
 		'isShutDown',
 		'hasRun'
 	],
-	#category : #'TaskIt-Tests-Services'
+	#category : 'TaskIt-Tests-Services',
+	#package : 'TaskIt-Tests',
+	#tag : 'Services'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTMockService >> hasRun [
 
 	^ hasRun
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTMockService >> initialize [
 
 	super initialize.
@@ -27,37 +29,37 @@ TKTMockService >> initialize [
 	hasRun := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTMockService >> isShutDown [
 
 	^ isShutDown
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTMockService >> isStarted [
 
 	^ isStarted
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTMockService >> name [
 
 	^ 'Mock service'
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTMockService >> setUp [
 
 	isStarted := true
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTMockService >> stepService [
 
 	hasRun := true
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTMockService >> tearDown [
 
 	isShutDown := true

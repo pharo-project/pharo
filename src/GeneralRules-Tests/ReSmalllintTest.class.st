@@ -1,15 +1,17 @@
 Class {
-	#name : #ReSmalllintTest,
-	#superclass : #TestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReSmalllintTest',
+	#superclass : 'TestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSmalllintTest class >> packageNamesUnderTest [
 	^ #('Refactoring-Critics')
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> assertEnvironment: anEnvironment hasAllClassesOfTheResult: critiques [
 
 	critiques do: [ :crit |
@@ -19,7 +21,7 @@ ReSmalllintTest >> assertEnvironment: anEnvironment hasAllClassesOfTheResult: cr
 		self assert: (anEnvironment includesClass: target) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> assertEnvironment: anEnvironment hasAllMethodsOfTheResult: critiques [
 
 	critiques do: [ :crit |
@@ -29,7 +31,7 @@ ReSmalllintTest >> assertEnvironment: anEnvironment hasAllMethodsOfTheResult: cr
 		self assert: (anEnvironment includesMethod: target) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> assertIsValidRule: aRule [
 	self
 		assert: (aRule name isString and: [ aRule name notEmpty ])
@@ -45,38 +47,38 @@ ReSmalllintTest >> assertIsValidRule: aRule [
 		description: 'Invalid severity'
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ReSmalllintTest >> assertResult: critiques hasAllClassesInEnvironment: anEnvironment [
 	anEnvironment classesDo: [ :class |
 		self assert: (critiques anySatisfy: [ :crit |
 			crit entity instanceSide = class instanceSide ]) ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ReSmalllintTest >> assertResult: critiques hasAllMethodsInEnvironment: anEnvironment [
 	anEnvironment methodsDo: [ :method |
 		self assert: (critiques anySatisfy: [ :crit |
 			crit entity = method ]) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> assertResultOfRule: critiques hasSameClassesAsEnvironment: anEnvironment [
 	self assertResult: critiques hasAllClassesInEnvironment: anEnvironment.
 	self assertEnvironment: anEnvironment hasAllClassesOfTheResult: critiques
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> assertResultOfRule: critiques hasSameSelectorsAsEnvironment: anEnvironment [
 	self assertResult: critiques hasAllMethodsInEnvironment: anEnvironment.
 	self assertEnvironment: anEnvironment hasAllMethodsOfTheResult: critiques
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> classAndMetaClassRuleFor: aTestSelector [
 	self classAndMetaClassRuleFor: aTestSelector plusClasses: #()
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> classAndMetaClassRuleFor: aTestSelector plusClasses: aCollectionOfTestedClasses [
 	| result expectedResultClasses expectedResultEnvironment |
 	result := self
@@ -93,12 +95,12 @@ ReSmalllintTest >> classAndMetaClassRuleFor: aTestSelector plusClasses: aCollect
 		hasSameClassesAsEnvironment: expectedResultEnvironment
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> classEnvironmentWith: aClass [
 	^ self classEnvironmentWithAll: (Array with: aClass)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> classEnvironmentWithAll: aClassCollection [
 	| classEnvironment |
 	classEnvironment := RBClassEnvironment new.
@@ -106,24 +108,24 @@ ReSmalllintTest >> classEnvironmentWithAll: aClassCollection [
 	^ classEnvironment
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> classEnvironmentWithAllObjectClasses [
 	^ self classEnvironmentWithAll: RBSmalllintTestSuperclassObject withAllSubclasses
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> classNamed: aSymbol [
 	^ self class environment
 		at: aSymbol
 		ifAbsent: [ self error: aSymbol asString , ' class not found' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> classRuleFor: aTestSelector [
 	^ self classRuleFor: aTestSelector plusClasses: #()
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> classRuleFor: aTestSelector plusClasses: aCollectionOfTestedClasses [
 	| result expectedResultEnvironment |
 	result := self
@@ -138,12 +140,12 @@ ReSmalllintTest >> classRuleFor: aTestSelector plusClasses: aCollectionOfTestedC
 		hasSameClassesAsEnvironment: expectedResultEnvironment
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> currentSelector [
 	^ testSelector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> objectClassFor: aTestSelector [
 	^ self classNamed:
 		('RBSmalllintTest',
@@ -151,13 +153,13 @@ ReSmalllintTest >> objectClassFor: aTestSelector [
 		'Object') asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> objectClassSelectorFor: aTestSelector [
 	^ (aTestSelector asString allButFirst: 4) "'test' size"
 		uncapitalized asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> ruleClassFor: aTestSelector [
 	^ self classNamed:
 		('Re',
@@ -165,12 +167,12 @@ ReSmalllintTest >> ruleClassFor: aTestSelector [
 		'Rule') asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> ruleFor: aTestSelector [
 	self ruleFor: aTestSelector plusSelectors: #()
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> ruleFor: aTestSelector plusSelectors: aCollectionOfTestedSelectors [
 	| result expectedResultEnvironment |
 	result := self
@@ -189,7 +191,7 @@ ReSmalllintTest >> ruleFor: aTestSelector plusSelectors: aCollectionOfTestedSele
 		hasSameSelectorsAsEnvironment: expectedResultEnvironment
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> runRule: aRule onEnvironment: anEnvironment [
 	| runner |
 	self assertIsValidRule: aRule.
@@ -201,7 +203,7 @@ ReSmalllintTest >> runRule: aRule onEnvironment: anEnvironment [
 	^ runner
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSmalllintTest >> runRuleFor: aTestSelector onEnvironment: anEnvironment [
 	| rule runner |
 	rule := (self ruleClassFor: aTestSelector) new.
@@ -214,191 +216,191 @@ ReSmalllintTest >> runRuleFor: aTestSelector onEnvironment: anEnvironment [
 	^ runner criticsOf: rule
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testAddRemoveDependents [
 	self classRuleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testAsOrderedCollectionNotNeeded [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testAssignmentInBlock [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testAssignmentInIfTrue [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testAssignmentWithoutEffect [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testAtIfAbsent [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testBadMessage [
 	self ruleFor: self currentSelector plusSelectors: #(badMessage collectionMessagesToExternalObject debuggingMessageSent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testBooleanPrecedence [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testClassNotReferenced [
 	self classAndMetaClassRuleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testCodeCruftLeftInMethods [
 	self ruleFor: self currentSelector plusSelectors: #(haltClassMentioned flagged transcriptMentioned #debuggingMessageSent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testCollectSelectNotUsed [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testCollectionAtCollectionSize [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testCollectionMessagesToExternalObject [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testCollectionProtocol [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testDefinesEqualNotHash [
 	self classRuleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testDetectContains [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testEmptyExceptionHandler [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testEndTrueFalse [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testEqualNotUsed [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testEqualsTrue [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testEquivalentSuperclassMethods [
 	^ self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testExtraBlock [
 	self
 		ruleFor: self currentSelector
 		plusSelectors: #(#testMethod1 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testFileBlocks [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testFloatEqualityComparison [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testGuardingClause [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testJustSendsSuper [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testLiteralArrayCharacters [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testLiteralArrayContainsComma [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testLocalMethodsSameThanTrait [
 	self classAndMetaClassRuleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testLongMethods [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testMinMax [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testModifiesCollection [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testMultiplePeriodsTerminatingStatement [
 	self
 		ruleFor: self currentSelector
 		plusSelectors: #(multiplePeriodsTerminatingAssignmentStatement)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testNoClassComment [
 	self classAndMetaClassRuleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testNotOptimizedIf [
 	self ruleFor: self currentSelector plusSelectors: {#ifTrueBlocks}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testPrecedence [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testRBMissingSubclassResponsibilityRule [
 	| superClass subClass1 subClass2 rule |
 	rule := ReMissingSubclassResponsibilityRule new.
@@ -438,80 +440,80 @@ ReSmalllintTest >> testRBMissingSubclassResponsibilityRule [
 	superClass removeFromSystem
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testRefersToClass [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testReturnInEnsure [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testReturnsBooleanAndOther [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testReturnsIfTrue [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testSearchingLiteral [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testSendsDifferentSuper [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testShouldntRaiseError [
 	self
 		ruleFor: self currentSelector
 		plusSelectors: #(shouldntRaiseException)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testSizeCheck [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testStringConcatenation [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testTempVarOverridesInstVar [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testTempsReadBeforeWritten [
 	self ruleFor: self currentSelector
 		plusSelectors: #(#inlineTemporary #noMoveDefinition #tempsReadBeforeWritten #equalNotUsed #fileBlocks #referencesConditionFor:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testThreeElementPoint [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testToDoCollect [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testToDoWithIncrement [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testUnaryAccessingMethodWithoutReturn [
 	self
 		ruleFor: self currentSelector
@@ -520,17 +522,17 @@ ReSmalllintTest >> testUnaryAccessingMethodWithoutReturn [
 				#unaryAccessingBranchingStatementMethodWithoutReturn)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testUnclassifiedMethods [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testUncommonMessageSend [
 	self ruleFor: self currentSelector plusSelectors: {#uncommonMessageSend2}
 ]
 
-{ #category : #'tests - unique identifier' }
+{ #category : 'tests - unique identifier' }
 ReSmalllintTest >> testUniqueIdentifierName [
 
 	| idToRules |
@@ -541,27 +543,27 @@ ReSmalllintTest >> testUniqueIdentifierName [
 	self assert: (idToRules noneSatisfy: [ :ruleClasses | ruleClasses size > 1 ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testUnoptimizedAndOr [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testUsesAdd [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testUsesTrue [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testWhileTrue [
 	self ruleFor: self currentSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintTest >> testYourselfNotUsed [
 	self ruleFor: self currentSelector
 ]

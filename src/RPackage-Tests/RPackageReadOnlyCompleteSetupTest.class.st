@@ -18,8 +18,8 @@ P3
 	A2DefinedInP2>>methodDefinedInP3 
 "
 Class {
-	#name : #RPackageReadOnlyCompleteSetupTest,
-	#superclass : #RPackageIncrementalTest,
+	#name : 'RPackageReadOnlyCompleteSetupTest',
+	#superclass : 'RPackageIncrementalTest',
 	#instVars : [
 		'p1',
 		'p2',
@@ -30,107 +30,103 @@ Class {
 		'a3',
 		'b2'
 	],
-	#category : #'RPackage-Tests'
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageReadOnlyCompleteSetupTest >> setUp [
 
 	super setUp.
-	p1 := self createNewPackageNamed: self p1Name.
-	p2 := self createNewPackageNamed: self p2Name.
-	p3 := self createNewPackageNamed: self p3Name.
+	p1 := self ensurePackage: self p1Name.
+	p2 := self ensurePackage: self p2Name.
+	p3 := self ensurePackage: self p3Name.
 
-	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
-	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
-	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
-	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
-	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
+	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
+	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
+	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
+	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
 
-	a1 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a1>>#methodDefinedInP1).
-	a1 compileSilently: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
-	p1 addMethod: (a1>>#anotherMethodDefinedInP1).
+	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
+	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 
-	a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
+	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , p1 name.
+	a2 compile: 'methodDefinedInP2 ^ #methodDefinedInP2'.
 
-	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addMethod: (a2>>#methodDefinedInP2).
+	a2 compile: 'methodDefinedInP3 ^ #methodDefinedInP3' classified: '*' , p3 name.
 
-	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: (a2>>#methodDefinedInP3).
-
-	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
-	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3)
+	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , p3 name
 ]
 
-{ #category : #'tests - tag class' }
+{ #category : 'tests - tag class' }
 RPackageReadOnlyCompleteSetupTest >> testAddTag [
-	self assertEmpty: p1 classTags.
-	p1 addClassTag: #baz.
-	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
-	self assert: p1 classTags size equals: 1.
 
-	p1 addClassDefinition: a1 toClassTag: #foo.
-	p1 addClassDefinition: b1 toClassTag: #foo.
-	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
+	self assert: p1 classTags size equals: 1. "We start with the root tag"
+	p1 ensureTag: #baz.
+	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: p1 classTags size equals: 2.
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
 
-	p1 addClassTag: #foo.
+	p1 importClass: a1 inTag: #foo.
+	p1 importClass: b1 inTag: #foo.
+	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
+	self assert: p1 classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
+
+	p1 ensureTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [:each | each name]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2
 ]
 
-{ #category : #'tests - tag class' }
+{ #category : 'tests - tag class' }
 RPackageReadOnlyCompleteSetupTest >> testAddTagNames [
-	self assertEmpty: p1 classTags.
-	p1 addClassTag: #baz.
-	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
-	self assert: p1 classTags size equals: 1.
 
-	p1 addClassDefinition: a1 toClassTag: #foo.
-	p1 addClassDefinition: b1 toClassTag: #foo.
-	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
+	self assert: p1 classTags size equals: 1. "We start with the root tag"
+	p1 ensureTag: #baz.
+	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: p1 classTags size equals: 2.
-	self assert: ((p1 classNamesForClassTag: #foo) includes: #A1DefinedInP1).
-	self assert: ((p1 classNamesForClassTag: #foo) includes: #B1DefinedInP1).
-	self assert: (p1 classNamesForClassTag: #foo) size equals: 2.
 
-	p1 addClassTag: #foo.
+	p1 importClass: a1 inTag: #foo.
+	p1 importClass: b1 inTag: #foo.
+	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
+	self assert: p1 classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
+	self assert: ((p1 classTagNamed: #foo) classNames includes: #A1DefinedInP1).
+	self assert: ((p1 classTagNamed: #foo) classNames includes: #B1DefinedInP1).
+	self assert: (p1 classTagNamed: #foo) classNames size equals: 2.
+
+	p1 ensureTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: ((p1 classNamesForClassTag: #foo) includes: #A1DefinedInP1).
-	self assert: ((p1 classNamesForClassTag: #foo) includes: #B1DefinedInP1).
-	self assert: (p1 classNamesForClassTag: #foo) size equals: 2
+	self assert: ((p1 classTagNamed: #foo) classNames includes: #A1DefinedInP1).
+	self assert: ((p1 classTagNamed: #foo) classNames includes: #B1DefinedInP1).
+	self assert: (p1 classTagNamed: #foo) classNames size equals: 2
 ]
 
-{ #category : #'tests - tag class' }
+{ #category : 'tests - tag class' }
 RPackageReadOnlyCompleteSetupTest >> testAddTagsToAClass [
 
-	self assertEmpty: p1 classTags.
+	self assert: p1 classTags size equals: 1. "We start with the root tag"
 
-	p1 addClassDefinition: a1 toClassTag: #foo.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 1.
+	p1 importClass: a1 inTag: #foo.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
 
-	p1 addClassDefinition: b1 toClassTag: #foo.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
+	p1 importClass: b1 inTag: #foo.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
 
-	p1 addClassDefinition: b1 toClassTag: #zork.
-	self assert: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
-	self assert: (p1 classesForClassTag: #zork) size equals: 1
+	p1 importClass: b1 inTag: #zork.
+	self assert: (((p1 classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
+	self assert: (p1 classesTaggedWith: #zork) size equals: 1
 ]
 
-{ #category : #'tests - compiled method' }
+{ #category : 'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
 
 	self deny: (a1 isExtendedInPackage: p1).
@@ -141,28 +137,28 @@ RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
 	self assert: (p1 extendsClass: a2)
 ]
 
-{ #category : #'tests - compiled method' }
+{ #category : 'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsDefinedInPackage [
 
 	self assert: (a1 >> #methodDefinedInP1 isDefinedInPackage: p1).
 	self deny: (a2 >> #methodDefinedInP1 isDefinedInPackage: p1)
 ]
 
-{ #category : #'tests - compiled method' }
+{ #category : 'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsExtensionInPackage [
 
 	self deny: (a1 >> #methodDefinedInP1 isExtensionInPackage: p1).
 	self assert: (a2 >> #methodDefinedInP1 isExtensionInPackage: p1)
 ]
 
-{ #category : #'tests - compiled method' }
+{ #category : 'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackage [
 
 	self assert: (a1 >> #methodDefinedInP1) package equals: p1.
 	self assert: (a2 >> #methodDefinedInP1) package equals: p1
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testDefinedSelectors [
 
 	self assert: a1 definedSelectors size equals: 2.
@@ -173,7 +169,7 @@ RPackageReadOnlyCompleteSetupTest >> testDefinedSelectors [
 	self assert: (a2 definedSelectors includes: #methodDefinedInP2)
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testDefinedSelectorsForClass [
 
 	self assert: (p1 definedSelectorsForClass: a1) size equals: 2.
@@ -185,12 +181,13 @@ RPackageReadOnlyCompleteSetupTest >> testDefinedSelectorsForClass [
 	self assertEmpty: (p1 definedSelectorsForClass: Object class)
 ]
 
-{ #category : #'tests - tag class' }
+{ #category : 'tests - tag class' }
 RPackageReadOnlyCompleteSetupTest >> testEmpty [
-	self assertEmpty: p1 classTags
+
+	self assertEmpty: (RPackage named: 'new package') classTags
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RPackageReadOnlyCompleteSetupTest >> testExtendingPackagesOfClass [
 	"since a class can be extended by several packages, we want the list of packages that extend
 	the class"
@@ -207,7 +204,7 @@ RPackageReadOnlyCompleteSetupTest >> testExtendingPackagesOfClass [
 	self assertEmpty: packages
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RPackageReadOnlyCompleteSetupTest >> testExtensionMethods [
 	"a package can extend several classes, either the class or  the meta-class side. 'extensionMethods' should list all the methods involved in shuch extensions. P3 extend a2 and a2 class"
 
@@ -215,7 +212,7 @@ RPackageReadOnlyCompleteSetupTest >> testExtensionMethods [
 	self assert: (p3 extensionMethods includes: a2 class >> #classSideMethodDefinedInP3)
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testExtensionSelectors [
 	self assertEmpty: a1 extensionSelectors.
 
@@ -224,7 +221,7 @@ RPackageReadOnlyCompleteSetupTest >> testExtensionSelectors [
 	self assert: (a2 extensionSelectors includes: #methodDefinedInP3)
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testExtensionSelectorsForClass [
 
 	self assert: (p1 extensionSelectorsForClass: a2) size equals: 1.
@@ -234,14 +231,14 @@ RPackageReadOnlyCompleteSetupTest >> testExtensionSelectorsForClass [
 	self assertEmpty: (p1 extensionSelectorsForClass: Object class)
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testMetaclassHasExtensions [
 
 	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
 	self assert: (p3 includesExtensionSelector: #classSideMethodDefinedInP3 ofClass: a2 class)
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testMethods [
 
 	| m1 m3 |
@@ -256,7 +253,7 @@ RPackageReadOnlyCompleteSetupTest >> testMethods [
 	self assert: (m3 includes: a2 class>>#classSideMethodDefinedInP3)
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testMethodsForClass [
 
 	self assert: (p1 methodsForClass: a1) size equals: 2.
@@ -272,7 +269,7 @@ RPackageReadOnlyCompleteSetupTest >> testMethodsForClass [
 	self assert: ((p3 methodsForClass: a2 class) includes: a2 class >> #classSideMethodDefinedInP3)
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RPackageReadOnlyCompleteSetupTest >> testPackagesOfClass [
 	"since a class can be extended by several packages, we want the complete list of packages that define or extend
 	the class"
@@ -291,53 +288,32 @@ RPackageReadOnlyCompleteSetupTest >> testPackagesOfClass [
 	self assert: (packages includes: p3)
 ]
 
-{ #category : #'tests - tag class' }
-RPackageReadOnlyCompleteSetupTest >> testRemoveTag [
-
-	self assertEmpty: p1 classTags.
-
-	p1 addClassDefinition: a1 toClassTag: #foo.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 1.
-
-	p1 addClassDefinition: b1 toClassTag: #foo.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
-
-	p1 removeClassTag: #bar.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
-
-	p1 removeClassTag: #foo.
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 0
-]
-
-{ #category : #'tests - tag class' }
+{ #category : 'tests - tag class' }
 RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
 
-	p1 addClassDefinition: a1 toClassTag: #foo.
-	p1 addClassDefinition: b1 toClassTag: #foo.
-	p1 addClassDefinition: b1 toClassTag: #zork.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 2.
-	self deny: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1). "now when we remove a class" "from an existing tags list"
-	p1 removeClassDefinition: a1 fromClassTag: #foo.
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 1. "from a nonexisting tag list"
-	p1 removeClassDefinition: b1 fromClassTag: #taz.
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1). "with a class not registered to a tag list"
-	p1 removeClassDefinition: self class fromClassTag: #foo.
-	self deny: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((p1 classesForClassTag: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesForClassTag: #foo) size equals: 1
+	p1 importClass: a1 inTag: #foo.
+	p1 importClass: b1 inTag: #foo.
+	p1 importClass: b1 inTag: #zork.
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
+	self deny: (((p1 classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+
+	"now when we remove a class" "from an existing tags list"
+	p1 removeClass: a1.
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assertEmpty: (p1 classesTaggedWith: #foo).
+
+	"with a class not registered to a tag list"
+	p1 removeClass: self class.
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assertEmpty: (p1 classesTaggedWith: #foo)
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testSelectors [
 
 	self assert: p1 selectors size equals: 2.
@@ -349,7 +325,7 @@ RPackageReadOnlyCompleteSetupTest >> testSelectors [
 	self assert: (p3 selectors includes: #classSideMethodDefinedInP3)
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testSelectorsForClass [
 
 	self assert: (p1 selectorsForClass: a1) size equals: 2.
@@ -365,7 +341,7 @@ RPackageReadOnlyCompleteSetupTest >> testSelectorsForClass [
 	self assert: ((p3 selectorsForClass: a2 class) includes: #classSideMethodDefinedInP3)
 ]
 
-{ #category : #'tests - situation' }
+{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testStartingSituation [
 
 	self deny: (p2 includesClass: b1).

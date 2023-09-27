@@ -15,18 +15,19 @@ Internal Representation and Key Implementation Points.
 	progressMorph:		<ClyActivityAnimationIconMorph>
 "
 Class {
-	#name : #ClyCriticDecorator,
-	#superclass : #ClyBrowserToolDecorator,
+	#name : 'ClyCriticDecorator',
+	#superclass : 'ClyBrowserToolDecorator',
 	#instVars : [
 		'criticView',
 		'originalToolPanel',
 		'analysisScope',
 		'progressMorph'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCriticDecorator >> adoptBrowserToolLayout [
 
 	originalToolPanel := PanelMorph new.
@@ -40,12 +41,12 @@ ClyCriticDecorator >> adoptBrowserToolLayout [
 	browserTool addMorph: originalToolPanel fullFrame: (0@0 corner: 1@1) asLayoutFrame
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticDecorator >> analyzedObject [
 	^analysisScope basisObjects anyOne
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCriticDecorator >> buildCriticalTextSegmentsFor: anObject [
 
 	| interval segment severity |
@@ -66,17 +67,17 @@ ClyCriticDecorator >> buildCriticalTextSegmentsFor: anObject [
 				yourself]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCriticDecorator >> changeStateBy: aBlock [
 	aBlock value
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCriticDecorator >> changeStateOf: aQueryView by: aBlock [
 	aBlock value
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCriticDecorator >> createCriticView [
 
 	criticView := ClyQueryViewMorph for: self.
@@ -89,12 +90,12 @@ ClyCriticDecorator >> createCriticView [
 	criticView height: 50
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticDecorator >> criticView [
 	^criticView
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCriticDecorator >> decorateTool [
 	| newScope |
 	criticView ifNil: [ self prepare].
@@ -106,7 +107,7 @@ ClyCriticDecorator >> decorateTool [
 	self refreshCritiques
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCriticDecorator >> hideCritiques [
 
 	criticView delete.
@@ -114,24 +115,24 @@ ClyCriticDecorator >> hideCritiques [
 	originalToolPanel layoutFrame bottomFraction: 1; bottomOffset: 0
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCriticDecorator >> ignoreNavigationDuring: aBlock [
 	aBlock value
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCriticDecorator >> itemsChanged [
 	self refreshCritiques
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCriticDecorator >> prepare [
 	self adoptBrowserToolLayout.
 	self createCriticView.
 	progressMorph := ClyActivityAnimationIconMorph label: 'critiques analysis'
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCriticDecorator >> refreshCritiques [
 
 	"Big literal methods (who are containing big strings ot byte arrays) should not
@@ -150,7 +151,7 @@ ClyCriticDecorator >> refreshCritiques [
 		ifTrue: [ browserTool statusBar addContextItem: progressMorph  ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCriticDecorator >> showCritiques [
 	criticView owner ifNotNil: [ ^self ].
 
@@ -159,13 +160,13 @@ ClyCriticDecorator >> showCritiques [
 	browserTool addPaneSplitters
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCriticDecorator >> toolWasRemoved [
 
 	criticView ifNotNil: [ criticView closeDataSource ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyCriticDecorator >> updateCriticView [
 
 	| critiqueQuery |

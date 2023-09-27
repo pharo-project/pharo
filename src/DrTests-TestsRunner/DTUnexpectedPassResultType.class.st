@@ -2,24 +2,26 @@
 I model the fact that a test expected to fail passed
 "
 Class {
-	#name : #DTUnexpectedPassResultType,
-	#superclass : #DTTestResultType,
-	#category : #'DrTests-TestsRunner-Results'
+	#name : 'DTUnexpectedPassResultType',
+	#superclass : 'DTTestResultType',
+	#category : 'DrTests-TestsRunner-Results',
+	#package : 'DrTests-TestsRunner',
+	#tag : 'Results'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTUnexpectedPassResultType class >> backgroundColorStyle [
 
 	^ 'testUnexpectedPass'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTUnexpectedPassResultType >> isUnexpectedPass [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTUnexpectedPassResultType >> name [
 	^ 'Unexpected passed test'
 ]

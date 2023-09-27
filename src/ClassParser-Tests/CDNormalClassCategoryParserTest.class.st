@@ -1,10 +1,11 @@
 Class {
-	#name : #CDNormalClassCategoryParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDNormalClassCategoryParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDNormalClassCategoryParserTest >> classDefinitionString [
 
 	^ '{superclassName} subclass: #{classname}

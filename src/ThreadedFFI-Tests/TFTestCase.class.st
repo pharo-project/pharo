@@ -1,20 +1,21 @@
 Class {
-	#name : #TFTestCase,
-	#superclass : #ParametrizedTestCase,
+	#name : 'TFTestCase',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'runner'
 	],
-	#category : #'ThreadedFFI-Tests'
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 TFTestCase class >> testParameters [
 
 	^ ParametrizedTestMatrix new
 		forSelector: #runner addOptions: { [ TFSameThreadRunner uniqueInstance ]. [ TFWorker named: 'fortest' ]. }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFTestCase >> libraryPath [
 
 	Smalltalk os isUnix ifTrue: [ ^ 'libTestLibrary.so' ].
@@ -24,7 +25,7 @@ TFTestCase >> libraryPath [
 	self error: 'Unsupported Platform'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TFTestCase >> runCaseManaged [
 
 	"Skipping in running on an old VM"
@@ -33,17 +34,17 @@ TFTestCase >> runCaseManaged [
 	super runCaseManaged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFTestCase >> runner [
 	^ runner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFTestCase >> runner: anObject [
 	runner := anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFTestCase >> shortCallout [
 	| fun |
 	fun := TFExternalFunction

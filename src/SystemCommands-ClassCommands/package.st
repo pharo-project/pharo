@@ -1,1 +1,1 @@
-Package { #name : #'SystemCommands-ClassCommands' }
+Package { #name : 'SystemCommands-ClassCommands' }

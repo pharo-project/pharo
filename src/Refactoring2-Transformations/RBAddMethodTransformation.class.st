@@ -14,39 +14,42 @@ Preconditions:
 The source code of the method must be syntactically valid.
 "
 Class {
-	#name : #RBAddMethodTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddMethodTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'sourceCode',
-		'protocols'
+		'rbMethod',
+		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
-RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocols: aCollection [
+{ #category : 'api' }
+RBAddMethodTransformation class >> model: aRBModel sourceCode: aString in: aClass withProtocol: aProtocol [
 
 	^ self new
 		model: aRBModel;
 		sourceCode: aString
 		in: aClass
-		withProtocols: aCollection;
+		withProtocol: aProtocol;
 		yourself
 ]
 
-{ #category : #api }
-RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocols: aCollection [
+{ #category : 'api' }
+RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocol: aProtocol [
 
 	^ self new
 		sourceCode: aString
 		in: aClass
-		withProtocols: aCollection;
+		withProtocol: aProtocol;
 		yourself
 ]
 
-{ #category : #preconditions }
-RBAddMethodTransformation >> applicabilityConditions [
-	| rbMethod |
+{ #category : 'preconditions' }
+RBAddMethodTransformation >> applicabilityPreconditions [
+
 	rbMethod := self parserClass
 		parseMethod: sourceCode
 		onError: [ :string :position |
@@ -55,34 +58,38 @@ RBAddMethodTransformation >> applicabilityConditions [
 						refactoringError: 'The content of this method cannot be parsed.' ] ].
 	rbMethod selector
 		ifNil: [ self refactoringError: 'The method has no selector.' ].
-	^ (RBCondition
-		canUnderstand: rbMethod selector
-		in: self definingClass) not
+	^ self trueCondition
 ]
 
-{ #category : #preconditions }
-RBAddMethodTransformation >> preconditions [
-	
-	^ self applicabilityConditions 
+{ #category : 'accessing' }
+RBAddMethodTransformation >> method [
+
+	^ rbMethod 
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddMethodTransformation >> privateTransform [
 
 	self definingClass
 		compile: sourceCode
-		classified: protocols asArray
+		classified: protocol
 ]
 
-{ #category : #api }
-RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocols: symbols [
+{ #category : 'accessing' }
+RBAddMethodTransformation >> selector [
+
+	^ rbMethod selector
+]
+
+{ #category : 'api' }
+RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocol: aSymbol [
 
 	self className: aClassName.
 	sourceCode := aString.
-	protocols := symbols
+	protocol := aSymbol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -92,7 +99,7 @@ RBAddMethodTransformation >> storeOn: aStream [
 	aStream nextPutAll: ''' in: '.
 	class storeOn: aStream.
 	aStream
-		nextPutAll: ' withProtocols: '.
-	protocols storeOn: aStream.
+		nextPutAll: ' withProtocol: '.
+	protocol storeOn: aStream.
 	aStream nextPut: $)
 ]

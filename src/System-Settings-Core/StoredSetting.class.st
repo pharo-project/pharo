@@ -21,20 +21,22 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #StoredSetting,
-	#superclass : #AbstractStoredSetting,
+	#name : 'StoredSetting',
+	#superclass : 'AbstractStoredSetting',
 	#instVars : [
 		'realValue'
 	],
-	#category : #'System-Settings-Core-Persistence-Ston-StoredSettings'
+	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
+	#package : 'System-Settings-Core',
+	#tag : 'Persistence-Ston-StoredSettings'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StoredSetting >> realValue [
 	^ realValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StoredSetting >> realValue: anObject [
 	realValue := anObject
 ]

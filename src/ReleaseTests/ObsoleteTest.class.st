@@ -2,27 +2,29 @@
 Example class for ClassTest
 "
 Class {
-	#name : #ObsoleteTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'ObsoleteTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'classFactory'
 	],
-	#category : #'ReleaseTests-CleanCode'
+	#category : 'ReleaseTests-CleanCode',
+	#package : 'ReleaseTests',
+	#tag : 'CleanCode'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObsoleteTest class >> defaultTimeLimit [
 
 	^ 30 seconds
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ObsoleteTest >> setUp [
 	super setUp.
 	classFactory := ClassFactoryForTestCase new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ObsoleteTest >> tearDown [
 
 	classFactory cleanUp.
@@ -30,7 +32,7 @@ ObsoleteTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObsoleteTest >> testClassObsolete [
 
 	| class name |
@@ -44,7 +46,7 @@ ObsoleteTest >> testClassObsolete [
 	self assert: (class originalName beginsWith: name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObsoleteTest >> testFixObsoleteSharedPools [
 
 	| poolClass obsoletePoolName testClass preFixObsoleteClassNames postFixObsoleteClassNames |
@@ -52,7 +54,7 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 
 	testClass := classFactory make: [ :aBuilder | aBuilder sharedPools: poolClass name asString ].
 
-	classFactory deleteClass: poolClass.
+	classFactory delete: poolClass.
 	obsoletePoolName := poolClass name.
 	poolClass := nil.
 	3 timesRepeat: [ Smalltalk garbageCollect ].
@@ -71,7 +73,7 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 	self assertEmpty: testClass sharedPoolsString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObsoleteTest >> testTraitObsolete [
 
 	| aClass aTrait |

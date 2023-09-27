@@ -14,15 +14,17 @@ Preconditions:
 overrides the preconditions from both RBAddVariableRefactoring and RBRemoveVariableRefactoring
 "
 Class {
-	#name : #RBMoveInstanceVariableToClassTransformation,
-	#superclass : #RBCompositeVariableTransformation,
+	#name : 'RBMoveInstanceVariableToClassTransformation',
+	#superclass : 'RBCompositeVariableTransformation',
 	#instVars : [
 		'oldClass'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBMoveInstanceVariableToClassTransformation class >> model: aRBModel variable: aVariableName fromClass: fromClassName toClass: toClassName [
 
 	^ self new
@@ -33,7 +35,7 @@ RBMoveInstanceVariableToClassTransformation class >> model: aRBModel variable: a
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMoveInstanceVariableToClassTransformation class >> variable: aVariableName fromClass: fromClassName toClass: toClassName [
 
 	^ self new
@@ -43,7 +45,7 @@ RBMoveInstanceVariableToClassTransformation class >> variable: aVariableName fro
 		yourself
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBMoveInstanceVariableToClassTransformation >> buildTransformations [
 
 	^ OrderedCollection
@@ -57,7 +59,7 @@ RBMoveInstanceVariableToClassTransformation >> buildTransformations [
 				class: oldClass)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMoveInstanceVariableToClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -71,7 +73,7 @@ RBMoveInstanceVariableToClassTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMoveInstanceVariableToClassTransformation >> variable: aVariableName fromClass: fromClassName toClass: toClassName [
 
 	variableName := aVariableName.

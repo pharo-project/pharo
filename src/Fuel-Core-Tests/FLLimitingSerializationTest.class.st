@@ -1,10 +1,12 @@
 Class {
-	#name : #FLLimitingSerializationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Configuration'
+	#name : 'FLLimitingSerializationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Configuration',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Configuration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLLimitingSerializationTest >> testDepthAndObjectLimit [
 	| root pair materialized |
 	root := FLPair new.
@@ -28,7 +30,7 @@ FLLimitingSerializationTest >> testDepthAndObjectLimit [
 	self assertCollection: materialized right equals: #(nil nil nil nil nil nil nil 8 9 10).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLLimitingSerializationTest >> testDepthLimit [
 	| root pair materialized |
 	root := FLPair new.
@@ -55,7 +57,7 @@ FLLimitingSerializationTest >> testDepthLimit [
 	self assert: materialized left left right isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLLimitingSerializationTest >> testEnableObjectsLimitWarning [
 	| root materialized |
 	root := FLPair new
@@ -86,7 +88,7 @@ FLLimitingSerializationTest >> testEnableObjectsLimitWarning [
 	self assert: materialized left right isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLLimitingSerializationTest >> testEnableObjectsLimitWarningWithDepthLimit [
 	| root |
 	root := FLPair new
@@ -117,7 +119,7 @@ FLLimitingSerializationTest >> testEnableObjectsLimitWarningWithDepthLimit [
 		raise: FLObjectLimitExceededWarning
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLLimitingSerializationTest >> testObjectLimit [
 	| root pair materialized |
 	root := FLPair new.

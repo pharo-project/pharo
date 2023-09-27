@@ -17,15 +17,17 @@ Observations about the transformation:
 - The transformation looks for the variable inside blocks too
 "
 Class {
-	#name : #RBRemoveTemporaryVariableTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBRemoveTemporaryVariableTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'variableName'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveTemporaryVariableTransformation class >> model: aRBModel variable: aString inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -36,7 +38,7 @@ RBRemoveTemporaryVariableTransformation class >> model: aRBModel variable: aStri
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -46,8 +48,8 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 		yourself
 ]
 
-{ #category : #preconditions }
-RBRemoveTemporaryVariableTransformation >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
 	^ self classExist
 	  & (RBCondition definesSelector: selector in: self definingClass)
@@ -64,7 +66,7 @@ RBRemoveTemporaryVariableTransformation >> applicabilityConditions [
 				   , ' cannot be removed because it is an argument in this method')
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveTemporaryVariableTransformation >> classExist [
 
 	^ RBCondition
@@ -72,13 +74,7 @@ RBRemoveTemporaryVariableTransformation >> classExist [
 		  errorString: 'No such class or trait named ' , className asString
 ]
 
-{ #category : #preconditions }
-RBRemoveTemporaryVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveTemporaryVariableTransformation >> privateTransform [
 
 	| methodTree modifiedNode |
@@ -93,7 +89,7 @@ RBRemoveTemporaryVariableTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -108,7 +104,7 @@ RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveTemporaryVariableTransformation >> variable: aVariableName inMethod: aSelector inClass: aClass [
 
 	self className: aClass.

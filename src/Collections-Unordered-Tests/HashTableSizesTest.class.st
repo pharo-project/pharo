@@ -2,12 +2,14 @@
 SUnit test for HashTableSizes
 "
 Class {
-	#name : #HashTableSizesTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Unordered-Tests-Utilities'
+	#name : 'HashTableSizesTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Unordered-Tests-Utilities',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Utilities'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HashTableSizesTest >> testAtLeast [
 	-1000 to: 1000 do: [ :limit |
 		| size |

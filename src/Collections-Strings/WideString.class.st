@@ -3,13 +3,15 @@ This class represents the array of 32 bit wide characters.
 
 "
 Class {
-	#name : #WideString,
-	#superclass : #String,
-	#type : #words,
-	#category : #'Collections-Strings-Base'
+	#name : 'WideString',
+	#superclass : 'String',
+	#type : 'words',
+	#category : 'Collections-Strings-Base',
+	#package : 'Collections-Strings',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WideString class >> from: aString [
 
 	| newString |
@@ -20,7 +22,7 @@ WideString class >> from: aString [
 	^ newString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WideString class >> fromByteArray: aByteArray [
 
 	| inst |
@@ -37,7 +39,7 @@ WideString class >> fromByteArray: aByteArray [
 	^ inst
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WideString class >> fromString: aString [
 	"Answer an instance of me that is a copy of the argument, aString."
 
@@ -52,7 +54,7 @@ WideString class >> fromString: aString [
 	^ inst
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WideString >> asByteArray [
 	"Convert to a ByteArray with the ascii values of the string."
 	"'a' asByteArray >>> #[97]"
@@ -65,7 +67,7 @@ WideString >> asByteArray [
 	^ b
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WideString >> asFourCode [
 
 	| result |
@@ -78,7 +80,7 @@ WideString >> asFourCode [
 	^ result
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WideString >> asLowercase [
 	"Answer a copy of self with all characters in a lower case.
 	This might be a difficult task, ask Unicode."
@@ -86,7 +88,7 @@ WideString >> asLowercase [
 	^ Unicode toLowercaseString: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WideString >> asUppercase [
 	"Answer a copy of self with all characters in an upper case.
 	This might be a difficult task, ask Unicode."
@@ -94,13 +96,13 @@ WideString >> asUppercase [
 	^ Unicode toUppercaseString: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WideString >> asWideString [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WideString >> at: index [
 	"Answer the Character stored in the field of the receiver indexed by the
 	 argument.  Primitive.  Fail if the index argument is not an Integer or is out
@@ -114,7 +116,7 @@ WideString >> at: index [
 			[self errorNonIntegerIndex]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WideString >> at: index put: aCharacter [
 	"Store the Character into the field of the receiver indicated by the index.
 	 Primitive.  Fail if the index is not an Integer or is out of bounds, or if the
@@ -133,7 +135,7 @@ WideString >> at: index put: aCharacter [
 		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: aCharacter ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WideString >> byteAt: index [
 
 	| d r |
@@ -142,7 +144,7 @@ WideString >> byteAt: index [
 	^ (self wordAt: d) byteAt: ((4 - r) + 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WideString >> byteAt: index put: aByte [
 
 	| d r w |
@@ -154,13 +156,13 @@ WideString >> byteAt: index put: aByte [
 	^ aByte
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WideString >> byteSize [
 
 	^ self size * 4
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 WideString >> copyFrom: start to: stop [
 
 	| n |
@@ -169,7 +171,7 @@ WideString >> copyFrom: start to: stop [
 	^ n
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WideString >> createSymbol [
 	"We have to check if the string can be represented by a Bytesymbol to avoid two symbols
 	that represent the same string"
@@ -178,19 +180,19 @@ WideString >> createSymbol [
 		    ifFalse: [ WideSymbol ]) basicNew: self size) string: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 WideString >> findIn: body startingAt: start matchTable: matchTable [
 
 	^ self findSubstring: self in: body startingAt: start matchTable: matchTable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WideString >> isWideString [
 	"Answer whether the receiver is a WideString"
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WideString >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 
 	<primitive: 105>
@@ -201,13 +203,13 @@ WideString >> replaceFrom: start to: stop with: replacement startingAt: repStart
 	^ super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WideString >> wordAt: index [
 	<primitive: 60>
 	^ (self basicAt: index)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WideString >> wordAt: index put: anInteger [
 	<primitive: 61>
 	self basicAt: index put: anInteger

@@ -1,22 +1,23 @@
 Class {
-	#name : #OmSessionStoreTest,
-	#superclass : #OmStoreTest,
-	#category : #'Ombu-Tests'
+	#name : 'OmSessionStoreTest',
+	#superclass : 'OmStoreTest',
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 OmSessionStoreTest >> setUpOtherStore [
 
 	^ OmSessionStore newWithBaseLocator: (self directoryForTests / 'test-sessions-other') ensureCreateDirectory
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OmSessionStoreTest >> setUpStore [
 
 	^ OmSessionStore newWithBaseLocator: (self directoryForTests / 'test-sessions-main') ensureCreateDirectory
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmSessionStoreTest >> tearDown [
 
 	store flush. "Store needs to be flushed already to be able to delete"
@@ -26,7 +27,7 @@ OmSessionStoreTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmSessionStoreTest >> testNextStoreName [
 
 	| names |
@@ -36,7 +37,7 @@ OmSessionStoreTest >> testNextStoreName [
 	self assert: names size equals: names asSet size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmSessionStoreTest >> testResetWithNextStoreNameWithRandomSuffix [
 	| aFileReference anotherFileReference |
 	store storeNameStrategy: OmRandomSuffixStrategy new.
@@ -49,7 +50,7 @@ OmSessionStoreTest >> testResetWithNextStoreNameWithRandomSuffix [
 	self deny: aFileReference equals: anotherFileReference
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmSessionStoreTest >> testResetWithNextStoreNameWithSequentialSuffix [
 	"The sequencial suffix doesn't change unless the file is created"
 
@@ -70,7 +71,7 @@ OmSessionStoreTest >> testResetWithNextStoreNameWithSequentialSuffix [
 	self deny: aFileReference equals: anotherFileReference
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmSessionStoreTest >> testResetWithNextStoreNameWithTimeStampSuffix [
 	| aFileReference anotherFileReference |
 	store storeNameStrategy: OmTimeStampSuffixStrategy new.
@@ -84,7 +85,7 @@ OmSessionStoreTest >> testResetWithNextStoreNameWithTimeStampSuffix [
 	self deny: aFileReference equals: anotherFileReference
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmSessionStoreTest >> testResetWithStoreNamedDoesAnnounce [
 
 	| wasAnnounced |
@@ -101,7 +102,7 @@ OmSessionStoreTest >> testResetWithStoreNamedDoesAnnounce [
 	self assert: wasAnnounced
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmSessionStoreTest >> testResetWithStoreNamedSignalsErrorIfFileAlreadyExists [
 
 	store resetWithStoreNamed: 'pepe'.

@@ -6,42 +6,43 @@ It is not supposed to be part of bootstrapped image because it is dependent on M
 This baseline includes several utility methods required to prepare data for the bootstrapping and initial image initialization.
 "
 Class {
-	#name : #BaselineOfPharoBootstrap,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfPharoBootstrap
+	#name : 'BaselineOfPharoBootstrap',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfPharoBootstrap',
+	#package : 'BaselineOfPharoBootstrap'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> compilerPackageNames [
 
 	^ self packagesOfGroupNamed: #CompilerGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> fileSystemPackageNames [
 
 	^ self packagesOfGroupNamed: #FileSystemGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> kernelAdditionalPackagesNames [
 
 	^ self packagesOfGroupNamed: #AdditionalPackages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> kernelPackageNames [
 
 	^ self packagesOfGroupNamed: #KernelGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> multilingualPackageNames [
 
 	^ self packagesOfGroupNamed: #MultilingualGroup
 ]
 
-{ #category : #traversing }
+{ #category : 'traversing' }
 BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
 
 	| allMembers allPackagesInBaseline packages groups |
@@ -52,19 +53,19 @@ BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
 	^ packages , (groups flatCollect: [ :aInnerGroupName | self packagesRecursiveIn: aInnerGroupName ]).
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> packagesToExportWithHermes [
 
 	^ self packagesRecursiveIn: 'ToLoadByHermes'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> sUnitPackageNames [
 
 	^ self packagesOfGroupNamed: #SUnitGroup
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfPharoBootstrap >> baseline: spec [
 	<baseline>
 

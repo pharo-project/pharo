@@ -2,8 +2,8 @@
 I am recording all movements and informations from a finger
 "
 Class {
-	#name : #OSTouchFingerTracker,
-	#superclass : #Object,
+	#name : 'OSTouchFingerTracker',
+	#superclass : 'Object',
 	#instVars : [
 		'fingerId',
 		'deviceId',
@@ -14,10 +14,12 @@ Class {
 		'firstPosition',
 		'lastPosition'
 	],
-	#category : #'OSWindow-Core-Gestures'
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSTouchFingerTracker class >> for: anEvent [
 	^ self new deviceId: anEvent deviceId;
 		fingerId: anEvent fingerId;
@@ -27,33 +29,33 @@ OSTouchFingerTracker class >> for: anEvent [
 		timestamp: anEvent timestamp
 ]
 
-{ #category : #moves }
+{ #category : 'moves' }
 OSTouchFingerTracker >> addToMove: aPoint [
 	move add: aPoint.
 	lastPosition := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> delta [
 	^ delta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> delta: anObject [
 	delta := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> deviceId [
 	^ deviceId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> deviceId: anObject [
 	deviceId := anObject
 ]
 
-{ #category : #calculating }
+{ #category : 'calculating' }
 OSTouchFingerTracker >> direction [
 	"Only returns noth, east, west, south"
 	^ delta x abs > delta y abs
@@ -61,7 +63,7 @@ OSTouchFingerTracker >> direction [
 		ifFalse: [ 0 @ delta y sign ]
 ]
 
-{ #category : #calculating }
+{ #category : 'calculating' }
 OSTouchFingerTracker >> distanceFromLineFormedByFinger: aFingerTracker [
 	| otherLast |
 	otherLast := aFingerTracker lastPosition.
@@ -73,86 +75,86 @@ OSTouchFingerTracker >> distanceFromLineFormedByFinger: aFingerTracker [
 			otherLast)
 ]
 
-{ #category : #calculating }
+{ #category : 'calculating' }
 OSTouchFingerTracker >> distanceTravelled [
 	^ firstPosition distanceTo: lastPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> fingerId [
 	^ fingerId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> fingerId: anObject [
 	fingerId := anObject
 ]
 
-{ #category : #moves }
+{ #category : 'moves' }
 OSTouchFingerTracker >> firstPosition [
 	^ firstPosition
 ]
 
-{ #category : #moves }
+{ #category : 'moves' }
 OSTouchFingerTracker >> firstPosition: anObject [
 	move removeAll.
 	firstPosition := anObject.
 	self addToMove: firstPosition
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSTouchFingerTracker >> initialize [
 	move := OrderedCollection new
 ]
 
-{ #category : #calculating }
+{ #category : 'calculating' }
 OSTouchFingerTracker >> isGettingCloserToPoint: aPoint [
 	| rectangle |
 	rectangle := lastPosition rectangle: aPoint.
 	^ (rectangle containsPoint: lastPosition + delta)
 ]
 
-{ #category : #moves }
+{ #category : 'moves' }
 OSTouchFingerTracker >> lastPosition [
 	^ lastPosition
 ]
 
-{ #category : #moves }
+{ #category : 'moves' }
 OSTouchFingerTracker >> lastPosition: anObject [
 	lastPosition := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> move [
 	^ move
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> move: anObject [
 	move := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> pressure [
 	^ pressure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> pressure: anObject [
 	pressure := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> timestamp [
 	^ timestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchFingerTracker >> timestamp: anObject [
 	timestamp := anObject
 ]
 
-{ #category : #calculating }
+{ #category : 'calculating' }
 OSTouchFingerTracker >> totalDistanceTravelled [
 	| previous sum |
 	previous := firstPosition.
@@ -164,12 +166,12 @@ OSTouchFingerTracker >> totalDistanceTravelled [
 	^ sum
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OSTouchFingerTracker >> updateDelta: aPoint [
 	delta := (delta + (2 * aPoint)) / 3
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OSTouchFingerTracker >> updateWithEvent: anEvent [
 	self updateDelta: anEvent delta;
 		addToMove: anEvent position;

@@ -2,41 +2,42 @@
 I am a mock to emulate a RBRefactoring
 "
 Class {
-	#name : #SycMockRBRefactoring,
-	#superclass : #Object,
+	#name : 'SycMockRBRefactoring',
+	#superclass : 'Object',
 	#instVars : [
 		'environment'
 	],
-	#category : #'SystemCommands-RefactoringSupport-Tests'
+	#category : 'SystemCommands-RefactoringSupport-Tests',
+	#package : 'SystemCommands-RefactoringSupport-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMockRBRefactoring >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMockRBRefactoring >> environment: anEnvironement [
 
 	environment := anEnvironement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+SycMockRBRefactoring >> generateChanges [
+	^self
+]
+
+{ #category : 'accessing' }
 SycMockRBRefactoring >> model [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMockRBRefactoring >> model: aRBNamespace [
 	^ self
 ]
 
-{ #category : #accessing }
-SycMockRBRefactoring >> primitiveExecute [
-	^self
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMockRBRefactoring >> whatToDisplayIn: aBrowser [
 	^ aBrowser scopeDropList selectedItem content
 ]

@@ -2,18 +2,20 @@
 SUnit tests for PlatformResolver
 "
 Class {
-	#name : #UnixResolverTest,
-	#superclass : #FileSystemResolverTest,
-	#category : #'FileSystem-Tests-Core-Resolver'
+	#name : 'UnixResolverTest',
+	#superclass : 'FileSystemResolverTest',
+	#category : 'FileSystem-Tests-Core-Resolver',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Resolver'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 UnixResolverTest >> createResolver [
 
 	^ UnixResolver new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 UnixResolverTest >> testGetTempFromTMPDIR [
 
 	| expected |
@@ -27,7 +29,7 @@ UnixResolverTest >> testGetTempFromTMPDIR [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UnixResolverTest >> testXdgParseUserDirLineDocuments [
 	"Ensure that a path of the form '$HOME/Documents' answers the expected value.
 	Note that this test can be run on any platform."
@@ -39,7 +41,7 @@ UnixResolverTest >> testXdgParseUserDirLineDocuments [
 	self assert: relativePath pathString equals: 'Documents'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UnixResolverTest >> testXdgParseUserDirLineNotRoot [
 	"Ensure that a path of the form '$HOME/' doesn't resolve to the root directory.
 	Note that this test can be run on any platform."

@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnHtmlOutputStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnHtmlOutputStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testAttributeEscaping [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -12,7 +13,7 @@ ZnHtmlOutputStreamTest >> testAttributeEscaping [
 	self assert: result equals: '<div query="&quot;literal&quot;">Foo</div>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testComment [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -20,7 +21,7 @@ ZnHtmlOutputStreamTest >> testComment [
 	self assert: result equals: '<!-- a comment -->'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testEncoding [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -28,7 +29,7 @@ ZnHtmlOutputStreamTest >> testEncoding [
 	self assert: result equals: '<div>élève en Français</div>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testEscaping [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -42,7 +43,7 @@ ZnHtmlOutputStreamTest >> testEscaping [
 	self assert: result equals: 'Foo &amp; Bar &lt; 100'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testFormat [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -50,7 +51,7 @@ ZnHtmlOutputStreamTest >> testFormat [
 	self assert: result equals: '&lt; &amp; >'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testHtml5Tag [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -58,7 +59,7 @@ ZnHtmlOutputStreamTest >> testHtml5Tag [
 	self assert: result equals: '<!DOCTYPE html>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testNesting [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -67,7 +68,7 @@ ZnHtmlOutputStreamTest >> testNesting [
 	self assert: result equals: '<ol><li>one</li><li>two</li><li>three</li></ol>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testSelfClosingTag [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -75,7 +76,7 @@ ZnHtmlOutputStreamTest >> testSelfClosingTag [
 	self assert: result equals: '<br/>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testSmall [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -85,7 +86,7 @@ ZnHtmlOutputStreamTest >> testSmall [
 	self assert: result equals: '<h1>Small</h1><p>This is a small HTML document</p>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testSmallPage [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -94,7 +95,7 @@ ZnHtmlOutputStreamTest >> testSmallPage [
 	self assert: result equals: '<!DOCTYPE html><html><head><title>Small</title></head><body><h1>Small</h1><p>This is a small HTML document</p></body></html>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testTagWithClass [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -102,7 +103,7 @@ ZnHtmlOutputStreamTest >> testTagWithClass [
 	self assert: result equals: '<div class="menu">Foo</div>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testTagWithEmptyAttributes [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -110,7 +111,7 @@ ZnHtmlOutputStreamTest >> testTagWithEmptyAttributes [
 	self assert: result equals: '<div class="menu" id="one" readonly>Foo</div>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testTagWithId [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |
@@ -118,7 +119,7 @@ ZnHtmlOutputStreamTest >> testTagWithId [
 	self assert: result equals: '<div id="menu">Foo</div>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnHtmlOutputStreamTest >> testTagWithMultipleAttributes [
 	| result |
 	result := ZnHtmlOutputStream streamContents: [ :html |

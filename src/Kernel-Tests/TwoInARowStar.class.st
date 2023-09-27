@@ -1,14 +1,16 @@
 Class {
-	#name : #TwoInARowStar,
-	#superclass : #Object,
+	#name : 'TwoInARowStar',
+	#superclass : 'Object',
 	#instVars : [
 		'leave',
 		'fill'
 	],
-	#category : #'Kernel-Tests-Methods'
+	#category : 'Kernel-Tests-Methods',
+	#package : 'Kernel-Tests',
+	#tag : 'Methods'
 }
 
-{ #category : #API }
+{ #category : 'API' }
 TwoInARowStar >> T: anObj [
 	| n |
 	n := self getNext: anObj.
@@ -17,7 +19,7 @@ TwoInARowStar >> T: anObj [
 		ifFalse: [ false ]
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 TwoInARowStar >> getNext: previousObj [
 	^ Continuation
 		currentDo: [ :here_again |
@@ -25,7 +27,7 @@ TwoInARowStar >> getNext: previousObj [
 			fill value: previousObj ]
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 TwoInARowStar >> tree: aTree [
 	| fst |
 	fst := Continuation
@@ -38,7 +40,7 @@ TwoInARowStar >> tree: aTree [
 		ifFalse: [ false ]
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 TwoInARowStar >> waddle: aTree [
 	^ (aTree isNotNil and: [ aTree isMemberOf: ValueLink ])
 		ifTrue: [ | car cdr |

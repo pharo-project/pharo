@@ -17,23 +17,25 @@ a new name prefixed with Copy. Pay attention the class extensions are not copied
 ```
 "
 Class {
-	#name : #RBCopyPackageRefactoring,
-	#superclass : #RBPackageRefactoring,
+	#name : 'RBCopyPackageRefactoring',
+	#superclass : 'RBPackageRefactoring',
 	#instVars : [
 		'package',
 		'classMappings'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCopyPackageRefactoring class >> copyPackage: aString1 in: aString2 [
 	^ self new
 		copyPackage: aString1 in: aString2;
 		yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCopyPackageRefactoring class >> model: aRBSmalltalk copyPackage: aString1 in: aString2 [
 	^ self new
 		model: aRBSmalltalk;
@@ -41,7 +43,7 @@ RBCopyPackageRefactoring class >> model: aRBSmalltalk copyPackage: aString1 in: 
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCopyPackageRefactoring >> changeReferencesOf: classes with: copyClasses [
 
 	[ : job |
@@ -59,27 +61,27 @@ RBCopyPackageRefactoring >> changeReferencesOf: classes with: copyClasses [
 	] asJob run
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCopyPackageRefactoring >> classMappings [
 
 	^ classMappings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCopyPackageRefactoring >> classMappings: aDictionary [
 	"Set the receiver's dictionary containing mappings between the source class name to be copied and the target new namename"
 
 	classMappings := aDictionary
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCopyPackageRefactoring >> classes [
 	"Answer a <Collection> of the receiver's class names to be copied"
 
 	^ self classMappings keys
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCopyPackageRefactoring >> copyAllClasses [
 	"Perform a copy class refactoring on each new class to be copied and answer a <Collection> with the names of the new"
 
@@ -95,14 +97,14 @@ RBCopyPackageRefactoring >> copyAllClasses [
 		copyClassName ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCopyPackageRefactoring >> copyPackage: aString1 in: aString2 [
 	packageName := aString1 asSymbol.
 	package := self model packageNamed: packageName.
 	newName := aString2 asSymbol
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCopyPackageRefactoring >> preconditions [
 
 	^ super preconditions
@@ -113,7 +115,17 @@ RBCopyPackageRefactoring >> preconditions [
 			   errorString: 'The system already includes a package named ' , newName)
 ]
 
-{ #category : #renaming }
+{ #category : 'transforming' }
+RBCopyPackageRefactoring >> privateTransform [
+	| copyClasses |
+
+	self model addPackageNamed: newName.
+	copyClasses := self copyAllClasses.
+	self changeReferencesOf: self classes with: copyClasses.
+	self reparent: self classes with: copyClasses
+]
+
+{ #category : 'renaming' }
 RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 	| replacer |
 	replacer := (self parseTreeRewriterClass replaceLiteral: aClass1 name with: aClass2)
@@ -137,7 +149,7 @@ RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 				using: replacer]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
 
 	[ : job | | jobIndex subclasses dict |
@@ -155,7 +167,7 @@ RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
 		] asJob run
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBCopyPackageRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -165,14 +177,4 @@ RBCopyPackageRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: #';
 		nextPutAll: newName;
 		nextPut: $)
-]
-
-{ #category : #transforming }
-RBCopyPackageRefactoring >> transform [
-	| copyClasses |
-
-	self model addPackageNamed: newName.
-	copyClasses := self copyAllClasses.
-	self changeReferencesOf: self classes with: copyClasses.
-	self reparent: self classes with: copyClasses
 ]

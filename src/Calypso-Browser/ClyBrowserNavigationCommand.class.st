@@ -5,38 +5,40 @@ I just define common places (activations) where commands should be accessible.
 By default shorcuts are alt+left and alt+right to go back and forward.
 "
 Class {
-	#name : #ClyBrowserNavigationCommand,
-	#superclass : #ClyBrowserCommand,
-	#category : #'Calypso-Browser-NavigationHistory'
+	#name : 'ClyBrowserNavigationCommand',
+	#superclass : 'ClyBrowserCommand',
+	#category : 'Calypso-Browser-NavigationHistory',
+	#package : 'Calypso-Browser',
+	#tag : 'NavigationHistory'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyBrowserNavigationCommand class >> browserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: self defaultShortcut for: ClyBrowserContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyBrowserNavigationCommand class >> browserTabActivation [
 	<classAnnotation>
 
 	^ClyBrowserTabCommandActivation for: ClyBrowserContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyBrowserNavigationCommand class >> defaultShortcut [
 	<classAnnotationDependency>
 
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserNavigationCommand class >> isAbstract [
 	^self = ClyBrowserNavigationCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyBrowserNavigationCommand class >> textEditorShortcutActivation [
 	<classAnnotation>
 

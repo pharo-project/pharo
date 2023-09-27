@@ -1,10 +1,12 @@
 Class {
-	#name : #RBSplitClassParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBSplitClassParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBSplitClassRefactoring };
@@ -12,12 +14,12 @@ RBSplitClassParametrizedTest class >> testParameters [
 		"yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSplitClassParametrizedTest >> constructor [
 	^ #class:instanceVariables:newClassName:referenceVariableName:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBSplitClassParametrizedTest >> testFailureInvalidInstanceVariableName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -27,7 +29,7 @@ RBSplitClassParametrizedTest >> testFailureInvalidInstanceVariableName [
 				 #blocks })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBSplitClassParametrizedTest >> testFailureInvalidNewClassName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -37,7 +39,7 @@ RBSplitClassParametrizedTest >> testFailureInvalidNewClassName [
 				 #blocks })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBSplitClassParametrizedTest >> testFailureInvalidReferenceVariableName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -52,7 +54,7 @@ RBSplitClassParametrizedTest >> testFailureInvalidReferenceVariableName [
 				 #temp })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassParametrizedTest >> testSplitClass [
 	|ref aModel|
 	ref := self createRefactoringWithArguments:

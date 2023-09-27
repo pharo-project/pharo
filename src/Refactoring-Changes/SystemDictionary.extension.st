@@ -1,6 +1,6 @@
-Extension { #name : #SystemDictionary }
+Extension { #name : 'SystemDictionary' }
 
-{ #category : #'*Refactoring-Changes' }
+{ #category : '*Refactoring-Changes' }
 SystemDictionary >> defineClass: aDefinition withController: aController [
 
 	^ (self class compiler

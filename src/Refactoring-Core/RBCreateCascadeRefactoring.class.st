@@ -5,8 +5,8 @@ Two or more message sends to the same object are replaced by a cascaded message 
 
 "
 Class {
-	#name : #RBCreateCascadeRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBCreateCascadeRefactoring',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'selector',
 		'selectedInterval',
@@ -15,17 +15,19 @@ Class {
 		'statementNodes',
 		'transformedNode'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCreateCascadeRefactoring class >> combine: anInterval from: aSelector in: aClass [
 	^ self new
 		combine: anInterval from: aSelector in: aClass;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCreateCascadeRefactoring class >> model: aNamespace combine: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aNamespace;
@@ -33,7 +35,7 @@ RBCreateCascadeRefactoring class >> model: aNamespace combine: anInterval from: 
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCreateCascadeRefactoring >> addStatementNode: aNode [
 	aNode isMessage
 		ifTrue: [ ^ statementNodes add: aNode ].
@@ -42,14 +44,14 @@ RBCreateCascadeRefactoring >> addStatementNode: aNode [
 	self refactoringError: aNode formattedCode , ' is not a valid message'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBCreateCascadeRefactoring >> combine: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	selectedInterval := anInterval
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBCreateCascadeRefactoring >> combineMessages [
 	"This combines the messages and adds the assignements of the last statement to the cascade. This is not necessary if there is a return, because the refactoring engine automatically compensates for that."
 
@@ -64,7 +66,7 @@ RBCreateCascadeRefactoring >> combineMessages [
 		expression := expression parent ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBCreateCascadeRefactoring >> compileCode [
 	class compileTree: (self parseTreeRewriterClass
 		replaceStatements: sequenceNode formattedCode
@@ -73,7 +75,7 @@ RBCreateCascadeRefactoring >> compileCode [
 		onInterval: selectedInterval)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCreateCascadeRefactoring >> findReceiverNode [
 	"Find the sequence to be combined."
 
@@ -86,7 +88,7 @@ RBCreateCascadeRefactoring >> findReceiverNode [
 		ifFalse: [ self refactoringWarning: 'The receiver is an expression. Proceed with caution' ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCreateCascadeRefactoring >> findSequenceNode [
 	"Find the sequence to be combined."
 
@@ -97,7 +99,7 @@ RBCreateCascadeRefactoring >> findSequenceNode [
 		ifFalse: [ self refactoringError: 'You must select two or more statements' ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCreateCascadeRefactoring >> findStatementNodes [
 	"Find the sequence to be combined."
 
@@ -113,7 +115,7 @@ RBCreateCascadeRefactoring >> findStatementNodes [
 				self addStatementNode: current ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCreateCascadeRefactoring >> parseTree [
 
 	parseTree
@@ -123,20 +125,20 @@ RBCreateCascadeRefactoring >> parseTree [
 	^ parseTree doSemanticAnalysis
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCreateCascadeRefactoring >> preconditions [
 	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [
 		self findSequenceNode; findStatementNodes; findReceiverNode.
 		true ])
 ]
 
-{ #category : #accessing }
-RBCreateCascadeRefactoring >> selectedSource [
-	^  self parseTree source copyFrom: selectedInterval first to: selectedInterval last
-]
-
-{ #category : #transforming }
-RBCreateCascadeRefactoring >> transform [
+{ #category : 'transforming' }
+RBCreateCascadeRefactoring >> privateTransform [
 	self combineMessages.
 	self compileCode
+]
+
+{ #category : 'accessing' }
+RBCreateCascadeRefactoring >> selectedSource [
+	^  self parseTree source copyFrom: selectedInterval first to: selectedInterval last
 ]

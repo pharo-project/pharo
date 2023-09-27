@@ -1,30 +1,32 @@
 Class {
-	#name : #AbstractEnvironmentTestCase,
-	#superclass : #TestCase,
+	#name : 'AbstractEnvironmentTestCase',
+	#superclass : 'TestCase',
 	#instVars : [
 		'testingEnvironment'
 	],
-	#category : #'SUnit-Core-Kernel'
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractEnvironmentTestCase class >> isAbstract [
 
 	^self = AbstractEnvironmentTestCase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractEnvironmentTestCase >> environmentOfTest [
 	^ testingEnvironment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AbstractEnvironmentTestCase >> setUp [
 	super setUp.
 	testingEnvironment := Smalltalk globals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractEnvironmentTestCase >> testingEnvironment: anObject [
 	testingEnvironment := anObject
 ]

@@ -2,8 +2,8 @@
 Examples for RF
 "
 Class {
-	#name : #ReflectivityExamples,
-	#superclass : #Object,
+	#name : 'ReflectivityExamples',
+	#superclass : 'Object',
 	#instVars : [
 		'ivar',
 		'tag'
@@ -12,70 +12,72 @@ Class {
 		'ClassVar',
 		'singleton'
 	],
-	#category : #'Reflectivity-Tests-Data'
+	#category : 'Reflectivity-Tests-Data',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Data'
 }
 
-{ #category : #options }
+{ #category : 'options' }
 ReflectivityExamples class >> exampleMethodWithMetaLinkOptionsViaClass [
 	<sampleInstance>
 	^ 2 + 3
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 ReflectivityExamples class >> metaLinkOptions [
 	^{
 	#exampleMethodWithMetaLinkOptionsViaClass -> #( + optionCompileOnLinkInstallation)
 	}
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReflectivityExamples >> compileTemporaryMethods [
 	self class compile: 'methodToBeRemoved ^nil'.
 	self class compile: 'methodToBeModified ^nil'.
 	self class compile: 'stubMethod ^nil'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleArray [
 	^ {3}
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleAssignment [
 	| temp |
 	temp := (1 + 2).
 	^temp
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleAssignmentClassVar [
 	ClassVar := (1 + 2).
 	^ClassVar
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleAssignmentIvar [
 	ivar := (1 + 2).
 	^ivar
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleAssignmentIvar: anObject [
 	ivar := anObject.
 	^ivar
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleBlock [
 	^ [ 2 + 3 ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleBlockNoValue [
 	^ [2 + 3]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleBlockOptimized [
 	"block with temp vector inside a optized block"
 	^ 1==1 ifTrue: [
@@ -87,33 +89,33 @@ ReflectivityExamples >> exampleBlockOptimized [
 			  var1 + var2 ] ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleBlockWithArg [
 	^ [:a | a + 3] value: 2
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleCascade [
 	^1 sin; yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleClassVarRead [
 	^ClassVar
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleDynamicArrayArgument [
 
 	^ OrderedCollection new , { self }
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleGlobalRead [
 	^GlobalForTesting
 ]
 
-{ #category : #'examples - optimized' }
+{ #category : 'examples - optimized' }
 ReflectivityExamples >> exampleIfTrueIfFalse [
 
 	| t |
@@ -122,74 +124,74 @@ ReflectivityExamples >> exampleIfTrueIfFalse [
 	^ 5
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleIvarRead [
 	^ivar
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleLazyInit [
 	^ singleton ifNil: [singleton := self new initialize]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleLiteral [
 	^ 2
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleLiteralArray [
 	^ #(1)
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleMessageSend [
 	self tagExec: #yes
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleMethod [
 
 	^ 2 + 3
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleMethod2 [
 
 	2 + 3
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleMethodMultipleSites [
 	self trace: Object new.
 	^ 2 + 3
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleMethodWithMetaLinkOptions [
 	<metaLinkOptions: #( +optionCompileOnLinkInstallation)>
 	^ 2 + 3
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> examplePragma [
  	<tudelu>
  	^ 4
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> examplePrimitiveMethod [
 	"returns image path"
 	<primitive: 121>
 	^ 2 + 3
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleSelf [
 	self
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleSendNoReturn [
 	"just an example method that calls a mutation outside of a assignment or return node.
 (needed for before link test with receiver reification"
@@ -199,18 +201,18 @@ ReflectivityExamples >> exampleSendNoReturn [
 	collection removeAt:1
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleSendTwoArgs [
 	^ Array with: 1 with: 2
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleTwoSends [
 	3 + 4.
 	^ 2 + 3
 ]
 
-{ #category : #'examples - optimized' }
+{ #category : 'examples - optimized' }
 ReflectivityExamples >> exampleWhileFalse [
 	| t |
 	t := 1.
@@ -218,18 +220,18 @@ ReflectivityExamples >> exampleWhileFalse [
 	^t
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples >> exampleWithArg: anArg [
 	^ 2 + anArg
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReflectivityExamples >> initialize [
 	ivar := 33.
 	ClassVar := #AClassVar
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReflectivityExamples >> removeTemporaryMethods [
 
 	self class removeSelector: #methodToBeRemoved.
@@ -237,12 +239,12 @@ ReflectivityExamples >> removeTemporaryMethods [
 	self class removeSelector: #stubMethod
 ]
 
-{ #category : #tagging }
+{ #category : 'tagging' }
 ReflectivityExamples >> tag [
 	^tag
 ]
 
-{ #category : #tagging }
+{ #category : 'tagging' }
 ReflectivityExamples >> tagExec: anObject [
 	tag := anObject
 ]

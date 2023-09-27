@@ -2,17 +2,18 @@
 I am a message that a MockObject instance has been trained to expect.
 "
 Class {
-	#name : #MockMessageSend,
-	#superclass : #Object,
+	#name : 'MockMessageSend',
+	#superclass : 'Object',
 	#instVars : [
 		'selector',
 		'arguments',
 		'behavior'
 	],
-	#category : #'SUnit-MockObjects'
+	#category : 'SUnit-MockObjects',
+	#package : 'SUnit-MockObjects'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MockMessageSend class >> on: aSymbol with: anArray do: aBlock [
 
 	^ self new
@@ -20,14 +21,14 @@ MockMessageSend class >> on: aSymbol with: anArray do: aBlock [
 		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MockMessageSend >> matches: aMessage [
 
 	^ (self matchesSelector: aMessage selector) and: [
 		  self matchesArguments: aMessage arguments ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MockMessageSend >> matchesArguments: anArray [
 
 	arguments ifNil: [ ^ true ].
@@ -38,13 +39,13 @@ MockMessageSend >> matchesArguments: anArray [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MockMessageSend >> matchesSelector: aSymbol [
 
 	^ selector = aSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MockMessageSend >> on: aSymbol with: anArray do: aBlock [
 
 	selector := aSymbol.
@@ -52,13 +53,13 @@ MockMessageSend >> on: aSymbol with: anArray do: aBlock [
 	behavior := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockMessageSend >> selector [
 
 	^ selector
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 MockMessageSend >> valueWithPossibleArgs: anArray [
 
 	^ behavior valueWithPossibleArgs: anArray

@@ -15,45 +15,44 @@ Preconditions:
 - the class (and any class in the hierarchy) should not have a variable with the same name
 "
 Class {
-	#name : #RBAddVariableTransformation,
-	#superclass : #RBVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#name : 'RBAddVariableTransformation',
+	#superclass : 'RBVariableTransformation',
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #preconditions }
-RBAddVariableTransformation >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBAddVariableTransformation >> applicabilityPreconditions [
 
 	class := self definingClass.
 
 	^ (isClassVariable
 		   ifTrue: [
-			   (RBCondition isMetaclass: class)
+			   (RBCondition isMetaclass: class) not
 			   & (RBCondition isValidClassVarName: variableName for: class) ]
 		   ifFalse: [
-			   (RBCondition isMetaclass: class) not
-			   &
 			   (RBCondition
 				    isValidInstanceVariableName: variableName
 				    for: class) ])
-	  &
-		  (RBCondition
-			   hierarchyOf: class
-			   definesVariable: variableName asString) not & self isNotGlobal
+	  & self isNotGlobal
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
+RBAddVariableTransformation >> breakingChangePreconditions [ 
+
+	^ (RBCondition
+			   hierarchyOf: class
+			   definesVariable: variableName asString) not
+]
+
+{ #category : 'preconditions' }
 RBAddVariableTransformation >> isNotGlobal [
 
 	^ (RBCondition isGlobal: variableName in: self model) not
 ]
 
-{ #category : #preconditions }
-RBAddVariableTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddVariableTransformation >> privateTransform [
 
 	isClassVariable

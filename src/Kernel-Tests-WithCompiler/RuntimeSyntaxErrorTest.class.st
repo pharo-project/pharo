@@ -1,10 +1,11 @@
 Class {
-	#name : #RuntimeSyntaxErrorTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-WithCompiler'
+	#name : 'RuntimeSyntaxErrorTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-WithCompiler',
+	#package : 'Kernel-Tests-WithCompiler'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RuntimeSyntaxErrorTest >> testFaultyInstalledMethod [
 	<ignoreNotImplementedSelectors: #(faultyMethodExample)>
 	| method |
@@ -27,7 +28,7 @@ RuntimeSyntaxErrorTest >> testFaultyInstalledMethod [
 	method removeFromSystem
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RuntimeSyntaxErrorTest >> testFaultyScript [
 
 	[
@@ -46,7 +47,7 @@ RuntimeSyntaxErrorTest >> testFaultyScript [
 			self assert: ctx sourceNodeExecuted sourceCode equals: '¿' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RuntimeSyntaxErrorTest >> testFaultyUninstalledMethod [
 
 	| method |

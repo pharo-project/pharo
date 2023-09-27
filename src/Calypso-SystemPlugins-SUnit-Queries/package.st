@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-SUnit-Queries' }
+Package { #name : 'Calypso-SystemPlugins-SUnit-Queries' }

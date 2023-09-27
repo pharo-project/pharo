@@ -6,15 +6,17 @@ I then return a Complishon object configured with a correct fetcher and initial 
 My subclasses define how to create the complishon given the context.
 "
 Class {
-	#name : #CoResultSetBuilder,
-	#superclass : #Object,
+	#name : 'CoResultSetBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'completionContext'
 	],
-	#category : #'HeuristicCompletion-Model-SystemIntegration'
+	#category : 'HeuristicCompletion-Model-SystemIntegration',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'SystemIntegration'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CoResultSetBuilder class >> initializeOnContext: aSystemCompletionContext [
 
 	^ self new
@@ -22,23 +24,23 @@ CoResultSetBuilder class >> initializeOnContext: aSystemCompletionContext [
 		yourself
 ]
 
-{ #category : #'API - building' }
+{ #category : 'API - building' }
 CoResultSetBuilder >> buildCompletion [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSetBuilder >> completionContext [
 	^ completionContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSetBuilder >> completionContext: anObject [
 	completionContext := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoResultSetBuilder >> initializeOnContext: aCompletionContext [
 
 	completionContext := aCompletionContext

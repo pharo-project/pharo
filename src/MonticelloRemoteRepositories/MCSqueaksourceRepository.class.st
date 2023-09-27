@@ -3,27 +3,28 @@ I am a specialized MCHttpRepository for http://squeaksource.com.
 I optimize checks for existing files by doing a head request instead of reloading the whole file list first.
 "
 Class {
-	#name : #MCSqueaksourceRepository,
-	#superclass : #MCHttpRepository,
-	#category : #MonticelloRemoteRepositories
+	#name : 'MCSqueaksourceRepository',
+	#superclass : 'MCHttpRepository',
+	#category : 'MonticelloRemoteRepositories',
+	#package : 'MonticelloRemoteRepositories'
 }
 
-{ #category : #'creation template' }
+{ #category : 'creation template' }
 MCSqueaksourceRepository class >> baseURL [
 	^ 'http://squeaksource.com/'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSqueaksourceRepository class >> description [
 	^ 'squeaksource.com'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSqueaksourceRepository class >> isResponsibleFor: aUrl [
 	^ aUrl includesSubstring: 'squeaksource.com/'
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCSqueaksourceRepository >> includesFileNamed: aString [
 	
 	"avoid the slower default method and simply do a head request "
@@ -38,7 +39,7 @@ MCSqueaksourceRepository >> includesFileNamed: aString [
 	^ true
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCSqueaksourceRepository >> includesVersionNamed: aString [
 	"directly do a filename check since the server only stores mcz"
 	^ self includesFileNamed: aString, '.mcz'

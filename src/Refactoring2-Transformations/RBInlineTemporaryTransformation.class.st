@@ -1,16 +1,18 @@
 Class {
-	#name : #RBInlineTemporaryTransformation,
-	#superclass : #RBCompositeMethodTransformation,
+	#name : 'RBInlineTemporaryTransformation',
+	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
 		'sourceInterval',
 		'sourceTree',
 		'assignmentNode',
 		'definingNode'
 	],
-	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
+	#category : 'Refactoring2-Transformations-Model-Migrated-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Migrated-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBInlineTemporaryTransformation class >> inline: anInterval from: aSelector in: aClass [
 	^ self new
 		inline: anInterval
@@ -18,7 +20,7 @@ RBInlineTemporaryTransformation class >> inline: anInterval from: aSelector in: 
 		in: aClass
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBInlineTemporaryTransformation class >> model: aRBNamespace inline: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aRBNamespace;
@@ -28,8 +30,8 @@ RBInlineTemporaryTransformation class >> model: aRBNamespace inline: anInterval 
 		yourself
 ]
 
-{ #category : #preconditions }
-RBInlineTemporaryTransformation >> applicabilityConditions [ 
+{ #category : 'preconditions' }
+RBInlineTemporaryTransformation >> applicabilityPreconditions [ 
 
 	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition withBlock:
@@ -37,14 +39,14 @@ RBInlineTemporaryTransformation >> applicabilityConditions [
 					true])
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBInlineTemporaryTransformation >> buildTransformations [
 	^ OrderedCollection
 		with: self replaceAssignment
 		with: self replaceReferences
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBInlineTemporaryTransformation >> hasOnlyOneAssignment [
 	| searcher |
 	searcher := self parseTreeSearcher.
@@ -54,19 +56,14 @@ RBInlineTemporaryTransformation >> hasOnlyOneAssignment [
 	^ (searcher executeTree: definingNode initialAnswer: 0) == 1
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBInlineTemporaryTransformation >> inline: anInterval from: aSelector in: aClass [
 	class := self model classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval
 ]
 
-{ #category : #preconditions }
-RBInlineTemporaryTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBInlineTemporaryTransformation >> replaceAssignment [
 	^ RBCustomTransformation model: self model with: [ :rbModel |
 		assignmentNode parent isSequence
@@ -74,7 +71,7 @@ RBInlineTemporaryTransformation >> replaceAssignment [
 		ifFalse: [assignmentNode replaceWith: assignmentNode value]]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBInlineTemporaryTransformation >> replaceReferences [
 	^ RBCustomTransformation model: self model with: [ :rbModel |
 	| rewriter |
@@ -86,7 +83,7 @@ RBInlineTemporaryTransformation >> replaceReferences [
 	class compileTree: sourceTree ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBInlineTemporaryTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -100,7 +97,7 @@ RBInlineTemporaryTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBInlineTemporaryTransformation >> verifySelectedInterval [
 
 	sourceTree := class parseTreeForSelector: selector.

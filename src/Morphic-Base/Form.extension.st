@@ -1,39 +1,39 @@
-Extension { #name : #Form }
+Extension { #name : 'Form' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Form >> asAlphaImageMorph [
 
 	^ AlphaImageMorph new image: self
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Form >> asMorph [
 	^ImageMorph new form: self
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Form class >> floodFillTolerance [
 	^ FloodFillTolerance ifNil: [FloodFillTolerance := 0.0]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Form >> floodFillTolerance [
 	^ self class floodFillTolerance
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Form >> iconOrThumbnailOfSize: aNumberOrPoint [
 	"Answer an appropiate form to represent the receiver"
 	^ self scaledIntoFormOfSize: aNumberOrPoint
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Form >> scaledByDisplayScaleFactor [
 
 	^ self scaledToSize: self extent * self currentWorld displayScaleFactor
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Form >> scaledIntoFormOfSize: aNumberOrPoint [
 	"Scale and center the receiver into a form of a given size"
 
@@ -58,7 +58,7 @@ Form >> scaledIntoFormOfSize: aNumberOrPoint [
 	^ result
 ]
 
-{ #category : #'*Morphic-Base-Support' }
+{ #category : '*Morphic-Base-Support' }
 Form >> stencil [
 	"return a 1-bit deep, black-and-white stencil of myself"
 

@@ -2,12 +2,14 @@
 A RBSelfSentNotImplementedRuleTest is a test class for testing the behavior of RBSelfSentNotImplementedRule
 "
 Class {
-	#name : #ReSelfSentNotImplementedRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReSelfSentNotImplementedRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #sample }
+{ #category : 'sample' }
 ReSelfSentNotImplementedRuleTest >> sampleMethod [
 	"Do not highlight this bar. I am a method used in testCheckForCritiques"
 
@@ -17,7 +19,7 @@ ReSelfSentNotImplementedRuleTest >> sampleMethod [
 	7 < 10 ifTrue: [ self check:7 forCritiquesDo: 9 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSelfSentNotImplementedRuleTest >> testRule [
 	| critiques|
 	critiques := self myCritiques .

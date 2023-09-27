@@ -2,16 +2,18 @@
 I represent a source code line
 "
 Class {
-	#name : #ReSourceCodeLine,
-	#superclass : #Object,
+	#name : 'ReSourceCodeLine',
+	#superclass : 'Object',
 	#instVars : [
 		'lineNumber',
 		'contents'
 	],
-	#category : #'Renraku-Utility'
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReSourceCodeLine class >> lineNumber: anIndex contents: aString [
 
 	^ (self new)
@@ -20,41 +22,41 @@ ReSourceCodeLine class >> lineNumber: anIndex contents: aString [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSourceCodeLine >> contents [
 
 	^ contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSourceCodeLine >> contents: anObject [
 
 	contents := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSourceCodeLine >> lineNumber [
 
 	^ lineNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSourceCodeLine >> lineNumber: anObject [
 
 	lineNumber := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReSourceCodeLine >> onlyContainsSeparators [
 	^ self contents isAllSeparators
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ReSourceCodeLine >> removeTrailingDot [
 	contents := contents trimRight: [ :char | char = $. ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ReSourceCodeLine >> removeTrailingSeparators [
 	contents := contents trimRight: [ :char | char = Character space or: [ char = Character tab ] ]
 ]

@@ -19,8 +19,8 @@ refactoring:          <RBRefactoring> A subclass of RBRefactoring
 
 "
 Class {
-	#name : #RBFindAndReplacePreviewPresenter,
-	#superclass : #SpPresenter,
+	#name : 'RBFindAndReplacePreviewPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'changeList',
 		'label',
@@ -29,10 +29,11 @@ Class {
 		'method',
 		'refactoring'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : 'SystemCommands-RefactoringSupport',
+	#package : 'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RBFindAndReplacePreviewPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :c | c height: self labelHeight ];
@@ -44,25 +45,25 @@ RBFindAndReplacePreviewPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 RBFindAndReplacePreviewPresenter class >> example [
 	<script>
 	^ (self method: (RBRefactoring >> #convertMethod:for:using: ))
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 RBFindAndReplacePreviewPresenter class >> method: aMethod [
 	|temp|
 	temp := self new method: aMethod.
 	^ temp openModal
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 RBFindAndReplacePreviewPresenter class >> title [
 	^ 'Find and replace'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> initializeChangeList [
 	changeList
 		addColumn:
@@ -76,7 +77,7 @@ RBFindAndReplacePreviewPresenter >> initializeChangeList [
 		beResizable
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Find' do: [ :presenter |
@@ -90,7 +91,7 @@ RBFindAndReplacePreviewPresenter >> initializeDialogWindow: aModalPresenter [
 				close ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> initializeDropList [
 	dropList addItemLabeled: 'Current class'
 			do: [ method ifNotNil: [|items|
@@ -106,12 +107,12 @@ RBFindAndReplacePreviewPresenter >> initializeDropList [
 				changeList items: items ]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> initializePresenter [
 	super initializePresenter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> initializeWidgets [
 	changeList := self newTable.
 	label := (self newLabel)label: 'Find in:' .
@@ -121,7 +122,7 @@ RBFindAndReplacePreviewPresenter >> initializeWidgets [
 	self initializeChangeList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> method: aMethod [
 	method := aMethod.
 
@@ -130,7 +131,7 @@ RBFindAndReplacePreviewPresenter >> method: aMethod [
 	changeList items: selectedRefactorings
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> refactoring: ref [
 	refactoring := ref
 ]

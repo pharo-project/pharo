@@ -1,1 +1,1 @@
-Package { #name : #PragmaCollector }
+Package { #name : 'PragmaCollector' }

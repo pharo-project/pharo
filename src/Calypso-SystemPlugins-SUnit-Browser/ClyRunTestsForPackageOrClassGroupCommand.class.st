@@ -2,22 +2,24 @@
 I provide an abstract class for class group/package 'run tests' commands.
 "
 Class {
-	#name : #ClyRunTestsForPackageOrClassGroupCommand,
-	#superclass : #ClyRunTestsFromSelectedItemsCommand,
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#name : 'ClyRunTestsForPackageOrClassGroupCommand',
+	#superclass : 'ClyRunTestsFromSelectedItemsCommand',
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsForPackageOrClassGroupCommand >> decorateTableCell: anItemCellMorph using: aCommandActivator [
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsForPackageOrClassGroupCommand >> execute [
 
 	testItems do: [ :each | self runTestsOf: each actualObject ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsForPackageOrClassGroupCommand >> runTestsOf: aClassGroup [
 	| testResult testClasses |
 
@@ -34,6 +36,6 @@ ClyRunTestsForPackageOrClassGroupCommand >> runTestsOf: aClassGroup [
 		with: aClassGroup name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRunTestsForPackageOrClassGroupCommand >> setUpIconForMenuItem: aMenuItemMorph [
 ]

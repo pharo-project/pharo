@@ -1,6 +1,6 @@
-Extension { #name : #WriteStream }
+Extension { #name : 'WriteStream' }
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 WriteStream >> nextChunkPut: aString [
 	"Append the argument, aString, to the receiver, doubling embedded ! terminators and adding a extra one"
 
@@ -17,7 +17,7 @@ WriteStream >> nextChunkPut: aString [
 	self flush
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 WriteStream >> timeStamp [
 	"Append the current time to the receiver as a String."
 	self nextChunkPut:	"double string quotes and !s"

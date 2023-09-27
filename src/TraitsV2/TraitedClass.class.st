@@ -11,15 +11,17 @@ TraitedMetaclass >> #initializeBasicMethods
 This method is invoked during the construction of the class, and flattens my methods in the new traited class.
 "
 Class {
-	#name : #TraitedClass,
-	#superclass : #Object,
+	#name : 'TraitedClass',
+	#superclass : 'Object',
 	#classInstVars : [
 		'users'
 	],
-	#category : #'TraitsV2-Base'
+	#category : 'TraitsV2-Base',
+	#package : 'TraitsV2',
+	#tag : 'Base'
 }
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 
 	super
@@ -30,34 +32,28 @@ TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMetho
 	self propagateChangeOf: selector
 ]
 
-{ #category : #'accessing - method dictionary' }
-TraitedClass class >> addSelector: selector withMethod: compiledMethod [
-	super addSelector: selector withMethod: compiledMethod.
-	self propagateChangeOf: selector
-]
-
-{ #category : #users }
+{ #category : 'users' }
 TraitedClass class >> addUser: aClass [
 
 	self basicUsers add: aClass
 ]
 
-{ #category : #users }
+{ #category : 'users' }
 TraitedClass class >> basicUsers [
 	^ users ifNil: [ users := WeakSet new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedClass class >> classTrait [
 	^ self class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedClass class >> isTrait [
 	^ true
 ]
 
-{ #category : #changes }
+{ #category : 'changes' }
 TraitedClass class >> propagateChangeOf: aSelector [
 	| change |
 
@@ -68,18 +64,18 @@ TraitedClass class >> propagateChangeOf: aSelector [
 	self basicUsers do: [ :e | change applyOn: e ]
 ]
 
-{ #category : #users }
+{ #category : 'users' }
 TraitedClass class >> removeUser: aClass [
 
 	self basicUsers remove: aClass ifAbsent: [ ]
 ]
 
-{ #category : #users }
+{ #category : 'users' }
 TraitedClass class >> traitUsers [
 	^ #()
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
 
@@ -90,30 +86,12 @@ TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inPr
 	TraitChange addSelector: selector on: self
 ]
 
-{ #category : #'accessing - method dictionary' }
-TraitedClass >> addSelector: selector withMethod: compiledMethod [
-	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
-
-	self localMethodDict at: selector put: compiledMethod.
-	super addSelector: selector withMethod: compiledMethod.
-	TraitChange addSelector: selector on: self
-]
-
-{ #category : #'accessing - method dictionary' }
-TraitedClass >> addSelector: selector withRecompiledMethod: compiledMethod [
-	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
-
-	compiledMethod isFromTrait ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
-
-	self addSelector: selector withMethod: compiledMethod
-]
-
-{ #category : #querying }
+{ #category : 'querying' }
 TraitedClass >> allTraits [
 	^ self traitComposition allTraits
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitedClass >> doRebuildMethodDictionary [
 
 	| selectors removedSelectors modified |
@@ -137,7 +115,7 @@ TraitedClass >> doRebuildMethodDictionary [
 	^ modified
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedClass >> findOriginClassOf: aMethod [
 
 	"I return the myself or the trait that has the original implementation of a method.
@@ -152,7 +130,7 @@ TraitedClass >> findOriginClassOf: aMethod [
 	^ (self traitComposition traitDefining: aMethod selector ifNone: [ ^ self ]) innerClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedClass >> findOriginMethodOf: aMethod [
 
 	"I return the original method for a aMethod.
@@ -173,18 +151,18 @@ TraitedClass >> findOriginMethodOf: aMethod [
 		compiledMethodAt: aMethod selector ifAbsent: [ ^ aMethod ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedClass >> hasTraitComposition [
 
 	^ self traitComposition isEmpty not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedClass >> includesLocalSelector: aSymbol [
 	^ self isLocalSelector: aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedClass >> isAliasSelector: aSymbol [
 	"Return true if the selector aSymbol is an alias defined
 	in my or in another composition somewhere deeper in
@@ -193,7 +171,7 @@ TraitedClass >> isAliasSelector: aSymbol [
 	^ self traitComposition isAliasSelector: aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedClass >> isLocalAliasSelector: aSymbol [
 	"Return true if the selector aSymbol is an alias defined
 	in my trait composition."
@@ -201,44 +179,44 @@ TraitedClass >> isLocalAliasSelector: aSymbol [
 	^ self traitComposition isLocalAliasSelector: aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedClass >> isLocalSelector: aSelector [
 
 	^ self localMethodDict includesKey: aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedClass >> localMethodDict [
 	"The local methodDict is in the metaclass. In this way I do not have to recompile the methods during the bootstrap when we don't have a compiler."
 	^ self class baseLocalMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedClass >> localMethodDict: aMethodDictionary [
 	^ self class baseLocalMethods: aMethodDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedClass >> localMethods [
 	"returns the methods of classes excluding the ones of the traits that the class uses"
 
 	^ self localMethodDict values
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 TraitedClass >> localSelectors [
 
 	^ self localMethodDict keys
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitedClass >> rebuildMethodDictionary [
 
 	"Useful to be rewritten in Traits"
 	^ self doRebuildMethodDictionary
 ]
 
-{ #category : #categories }
+{ #category : 'categories' }
 TraitedClass >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
 
@@ -254,7 +232,7 @@ TraitedClass >> recategorizeSelector: selector from: oldProtocol to: newProtocol
 		self notifyOfRecategorizedSelector: selectorAlias from: oldProtocol to: newProtocol ]
 ]
 
-{ #category : #recompilation }
+{ #category : 'recompilation' }
 TraitedClass >> recompile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
@@ -262,20 +240,18 @@ TraitedClass >> recompile: selector from: oldClass [
 	method := oldClass compiledMethodAt: selector.
 	newMethod := self recompileBasic: selector from: oldClass.
 
-	method properties
-		at: #traitSource
-		ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource].
+	method properties at: #traitSource ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource ].
 
-	self addSelector: selector withRecompiledMethod: newMethod
+	self addSelectorSilently: selector withMethod: newMethod
 ]
 
-{ #category : #'trait-composition' }
+{ #category : 'trait-composition' }
 TraitedClass >> removeFromComposition: aTrait [
 
 	self setTraitComposition: (self traitComposition copyWithoutTrait: aTrait asTraitComposition)
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 TraitedClass >> removeFromSystem: logged [
 
 	"When a traited class is removed the traits it is using should be updated"
@@ -294,7 +270,7 @@ TraitedClass >> removeFromSystem: logged [
 	mySubclasses do: [ :each | each class initializeBasicMethods ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 TraitedClass >> removeSelector: aSelector [
 
 	"When a selector is removed it should be notified to my users.
@@ -305,13 +281,13 @@ TraitedClass >> removeSelector: aSelector [
 	TraitChange removeSelector: aSelector on: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedClass >> traitComposition [
 	"My trait composition is in my class. So I do not need to recompile the methods when installing them during bootstrap"
 	^ self class baseComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedClass >> traitComposition: aComposition [
 
 	aComposition asTraitComposition allTraits do: [ :aMaybeTrait |
@@ -321,18 +297,18 @@ TraitedClass >> traitComposition: aComposition [
 	self class baseComposition: aComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedClass >> traitCompositionString [
 	^ self traitComposition asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedClass >> traitUsers [
 	"I am a traited class, I have no users, this is for compatibility with traits"
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedClass >> traits [
 	^ self traitComposition traits
 ]

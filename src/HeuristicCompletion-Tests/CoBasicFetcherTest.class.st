@@ -1,31 +1,33 @@
 Class {
-	#name : #CoBasicFetcherTest,
-	#superclass : #CoBasicCompletionTest,
+	#name : 'CoBasicFetcherTest',
+	#superclass : 'CoBasicCompletionTest',
 	#instVars : [
 		'fetcher'
 	],
-	#category : #'HeuristicCompletion-Tests-Core'
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoBasicFetcherTest class >> isAbstract [
 
 	^ self == CoBasicFetcherTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBasicFetcherTest >> fetcher [
 	^ fetcher
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicFetcherTest >> testConsumedFetcherShouldBeAtEnd [
 
 	self fetcher upToEnd.
 	self assert: self fetcher atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicFetcherTest >> testNextShouldReturnNilAfterEnd [
 
 	self fetcher upToEnd.

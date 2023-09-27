@@ -7,12 +7,14 @@ Mirror primitives  violates the principle that each object has sovereign control
 For details see  Object documentation whatIsAPrimitive.
 "
 Class {
-	#name : #MirrorPrimitives,
-	#superclass : #Object,
-	#category : #'ReflectionMirrors-Primitives-Base'
+	#name : 'MirrorPrimitives',
+	#superclass : 'Object',
+	#category : 'ReflectionMirrors-Primitives-Base',
+	#package : 'ReflectionMirrors-Primitives',
+	#tag : 'Base'
 }
 
-{ #category : #comparison }
+{ #category : 'comparison' }
 MirrorPrimitives class >> check: anObject identicalTo: anotherObject [
 	"Answer whether the first and second arguments are the same object (have the
 	 same object pointer) without sending a message to the first argument.  This
@@ -24,7 +26,7 @@ MirrorPrimitives class >> check: anObject identicalTo: anotherObject [
 	self primitiveFailed
 ]
 
-{ #category : #'class relationship' }
+{ #category : 'class relationship' }
 MirrorPrimitives class >> classOf: anObject [
 	"Primitive. Answer the object which is the receiver's class"
 
@@ -32,14 +34,14 @@ MirrorPrimitives class >> classOf: anObject [
 	self primitiveFailed
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 MirrorPrimitives class >> errorNotIndexableFor: anObject [
 	"Create an error notification that the receiver is not indexable."
 
 	self error: ('Instances of {1} are not indexable' format: {(self classOf: anObject) name})
 ]
 
-{ #category : #'fields accessing' }
+{ #category : 'fields accessing' }
 MirrorPrimitives class >> fieldOf: anObject at: anIndex [
 	"Answer field at anIndex in order: indexable fields -> fixed fields"
 
@@ -57,7 +59,7 @@ MirrorPrimitives class >> fieldOf: anObject at: anIndex [
 		ifFalse: [ self indexableFieldOf: anObject at: anIndex ]
 ]
 
-{ #category : #'fields accessing' }
+{ #category : 'fields accessing' }
 MirrorPrimitives class >> fieldOf: anObject at: anIndex put: newObject [
 	"Setting newObject into field at anIndex in order: indexable fields -> fixed fields"
 
@@ -75,7 +77,7 @@ MirrorPrimitives class >> fieldOf: anObject at: anIndex put: newObject [
 		ifFalse: [ self indexableFieldOf: anObject at: anIndex put: newObject]
 ]
 
-{ #category : #'fields accessing' }
+{ #category : 'fields accessing' }
 MirrorPrimitives class >> fixedFieldOf: anObject at: anIndex [
 	"Primitive. Answer a fixed variable in an object. The numbering of the
 	 variables corresponds to the named instance variables. Fail if the index
@@ -86,7 +88,7 @@ MirrorPrimitives class >> fixedFieldOf: anObject at: anIndex [
 	^self primitiveFailed
 ]
 
-{ #category : #'fields accessing' }
+{ #category : 'fields accessing' }
 MirrorPrimitives class >> fixedFieldOf: anObject at: anIndex put: newValue [
 	"Primitive. Store a value into a fixed variable in the argument anObject.
 	 The numbering of the variables corresponds to the named instance
@@ -107,14 +109,14 @@ MirrorPrimitives class >> fixedFieldOf: anObject at: anIndex put: newValue [
 	self errorNonIntegerIndex
 ]
 
-{ #category : #'fields accessing' }
+{ #category : 'fields accessing' }
 MirrorPrimitives class >> fixedSizeOf: anObject [
 	"Answer the number of inst vars"
 
 	^(self classOf: anObject) instSize
 ]
 
-{ #category : #hashes }
+{ #category : 'hashes' }
 MirrorPrimitives class >> identityHashOf: anObject [
 	"Answer a SmallInteger whose value is related to the receiver's identity.
 	This method must not be overridden, except by SmallInteger.
@@ -124,7 +126,7 @@ MirrorPrimitives class >> identityHashOf: anObject [
 	self primitiveFailed
 ]
 
-{ #category : #'fields accessing' }
+{ #category : 'fields accessing' }
 MirrorPrimitives class >> indexableFieldOf: anObject at: anIndex [
 	"Primitive. Assumes receiver is indexable. Answer the value of an
 	indexable element in the receiver. Fail if the argument index is not an
@@ -141,7 +143,7 @@ MirrorPrimitives class >> indexableFieldOf: anObject at: anIndex [
 	self errorNonIntegerIndex
 ]
 
-{ #category : #'fields accessing' }
+{ #category : 'fields accessing' }
 MirrorPrimitives class >> indexableFieldOf: anObject at: anIndex put: newValue [
 	"Primitive. Assumes receiver is indexable. Store the argument value in
 	the indexable element of the receiver indicated by index. Fail if the
@@ -166,7 +168,7 @@ MirrorPrimitives class >> indexableFieldOf: anObject at: anIndex put: newValue [
 	self errorNonIntegerIndex
 ]
 
-{ #category : #'fields accessing' }
+{ #category : 'fields accessing' }
 MirrorPrimitives class >> indexableSizeOf: anObject [
 	"Answer the number of indexable variables in the argument anObject without sending
 	 it a message. This mimics the action of the VM when it fetches an object's variable size"
@@ -176,19 +178,19 @@ MirrorPrimitives class >> indexableSizeOf: anObject [
 	^0
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 MirrorPrimitives class >> isObjectReadOnly: anObject [
 	<primitive: 163 error: ec>
 	^ self primitiveFail
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 MirrorPrimitives class >> makeObject: anObject readOnly: aBoolean [
 	<primitive: 164 error: ec>
 	^ self primitiveFail
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 MirrorPrimitives class >> modificationForbiddenFor: anObject at: fieldIndex with: newObject selector: selector [
 
 	^(MirrorModificationForbidden
@@ -198,13 +200,13 @@ MirrorPrimitives class >> modificationForbiddenFor: anObject at: fieldIndex with
 		retrySelector: selector) signal
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MirrorPrimitives class >> print: anObject [
 
 	^String streamContents: [ :s |	self print: anObject on: s] limitedTo: 32
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MirrorPrimitives class >> print: anObject on: aStream [
 	| title |
 	title := (self classOf: anObject) name.
@@ -213,7 +215,7 @@ MirrorPrimitives class >> print: anObject on: aStream [
 	aStream nextPutAll: title
 ]
 
-{ #category : #'class relationship' }
+{ #category : 'class relationship' }
 MirrorPrimitives class >> setClass: classObject to: anObject [
 	"Change the class of anObject to classObject"
 
@@ -227,14 +229,14 @@ MirrorPrimitives class >> setClass: classObject to: anObject [
 	self primitiveFailed
 ]
 
-{ #category : #'fields accessing' }
+{ #category : 'fields accessing' }
 MirrorPrimitives class >> sizeOf: anObject [
 	"Answer the number of inst vars + number of indexible fields"
 
 	^(self fixedSizeOf: anObject) + (self indexableSizeOf: anObject)
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 MirrorPrimitives class >> withReceiver: receiver andArguments: argArray execute: compiledMethod [
 	"Execute compiledMethod against the receiver and the arguments in argArray"
 
@@ -242,7 +244,7 @@ MirrorPrimitives class >> withReceiver: receiver andArguments: argArray execute:
 	^self primitiveFailed
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 MirrorPrimitives class >> withReceiver: anObject perform: selector withArguments: argArray [
 	"Send the selector, aSymbol, to the receiver with arguments in argArray.
 	Fail if the number of arguments expected by the selector
@@ -253,7 +255,7 @@ MirrorPrimitives class >> withReceiver: anObject perform: selector withArguments
 	self primitiveFailed
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 MirrorPrimitives class >> withReceiver: receiver perform: selector withArguments: argArray inSuperclass: lookupClass [
 	"NOTE:  This is just like perform:withArguments:, except that
 	the message lookup process begins, not with the receivers's class,
@@ -272,7 +274,7 @@ MirrorPrimitives class >> withReceiver: receiver perform: selector withArguments
 	self primitiveFailed
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 MirrorPrimitives class >> withReceiver: receiver tryPrimitive: number withArguments: args [
 	"This method is a template that the Smalltalk simulator uses to
 	execute primitives"
@@ -281,6 +283,6 @@ MirrorPrimitives class >> withReceiver: receiver tryPrimitive: number withArgume
 	^self primitiveFailed
 ]
 
-{ #category : #help }
+{ #category : 'help' }
 MirrorPrimitives >> seeClassSide [
 ]

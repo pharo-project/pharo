@@ -32,8 +32,8 @@ Internal Representation and Key Implementation Points.
 	annotatedClasses:		<IdentityDictionary<Class, Set<ClassAnnotation>>>
 "
 Class {
-	#name : #ClassAnnotationRegistry,
-	#superclass : #Object,
+	#name : 'ClassAnnotationRegistry',
+	#superclass : 'Object',
 	#instVars : [
 		'annotations',
 		'annotatedClasses'
@@ -41,10 +41,11 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #ClassAnnotation
+	#category : 'ClassAnnotation',
+	#package : 'ClassAnnotation'
 }
 
-{ #category : #'pragma collecting' }
+{ #category : 'pragma collecting' }
 ClassAnnotationRegistry class >> annotationDependencyPragmaName [
 	"This pragma is used to mark methods which are sent inside annotation definition methods.
 	They are annotation dependencies.
@@ -55,7 +56,7 @@ ClassAnnotationRegistry class >> annotationDependencyPragmaName [
 	^#classAnnotationDependency
 ]
 
-{ #category : #'pragma collecting' }
+{ #category : 'pragma collecting' }
 ClassAnnotationRegistry class >> annotationPragmaName [
 	"This pragma is used to define class annotations inside methods.
 	They should return instances of ClassAnnotation subclasses"
@@ -63,14 +64,14 @@ ClassAnnotationRegistry class >> annotationPragmaName [
 	^#classAnnotation
 ]
 
-{ #category : #'pragma collecting' }
+{ #category : 'pragma collecting' }
 ClassAnnotationRegistry class >> annotationPragmasIn: aClass do: aBlock [
 
 	aClass pragmasDo: [ :pragma |
 		pragma selector == self annotationPragmaName ifTrue: [aBlock value: pragma]]
 ]
 
-{ #category : #'pragma collecting' }
+{ #category : 'pragma collecting' }
 ClassAnnotationRegistry class >> collectAnnotationPragmas [
 
 	| result |
@@ -84,20 +85,20 @@ ClassAnnotationRegistry class >> collectAnnotationPragmas [
 	^result
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassAnnotationRegistry class >> collectNewFromSystem [
 	^self new
 		addAllFromPragmas: self collectAnnotationPragmas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotationRegistry class >> default [
 	^default ifNil: [
 		self ensureSystemSubscription.
 		default := self collectNewFromSystem]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClassAnnotationRegistry class >> doesMethodAffectAnnotations: aMethod [
 
 	(self doesMethodDefineAnnotation: aMethod) ifTrue: [ ^true ].
@@ -111,7 +112,7 @@ ClassAnnotationRegistry class >> doesMethodAffectAnnotations: aMethod [
 	^false
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClassAnnotationRegistry class >> doesMethodDefineAnnotation: aMethod [
 	"The second condition allows to mark methods
 	which are sent inside annotation definition methods
@@ -125,7 +126,7 @@ ClassAnnotationRegistry class >> doesMethodDefineAnnotation: aMethod [
 		or: [ aMethod hasPragmaNamed: self annotationDependencyPragmaName ]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClassAnnotationRegistry class >> ensureSystemSubscription [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
@@ -136,7 +137,7 @@ ClassAnnotationRegistry class >> ensureSystemSubscription [
 		when: MethodModified send: #handleOldMethodChange: to: self
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClassAnnotationRegistry class >> handleClassChanged: aClassAnnouncement [
 
 	self resetIf: [
@@ -144,19 +145,19 @@ ClassAnnotationRegistry class >> handleClassChanged: aClassAnnouncement [
 			or: [default includesAnnotationsInheritedBy: aClassAnnouncement classAffected]]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClassAnnotationRegistry class >> handleMethodChange: aMethodAnnouncement [
 
 	self resetIf: [ self doesMethodAffectAnnotations: aMethodAnnouncement methodAffected]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClassAnnotationRegistry class >> handleOldMethodChange: aMethodModified [
 
 	self resetIf: [ self doesMethodAffectAnnotations: aMethodModified oldMethod]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ClassAnnotationRegistry class >> reset [
 	<script>
 
@@ -164,14 +165,14 @@ ClassAnnotationRegistry class >> reset [
 	default := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotationRegistry class >> resetIf: conditionBlock [
 	default ifNil: [ ^self ].
 
 	conditionBlock value ifTrue: [ self reset ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotationRegistry >> addAllFromPragmas: pragmas [
 
 	| collectedAnnotations |
@@ -180,7 +181,7 @@ ClassAnnotationRegistry >> addAllFromPragmas: pragmas [
 		collectedAnnotations do: [ :each | self addAnnotation: each]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotationRegistry >> addAnnotation: aClassAnnotation [
 	| container actualAnnotation |
 	actualAnnotation := aClassAnnotation.
@@ -198,39 +199,39 @@ ClassAnnotationRegistry >> addAnnotation: aClassAnnotation [
 	container add: actualAnnotation
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClassAnnotationRegistry >> allAnnotating: aClass [
 
 	^annotatedClasses at: aClass ifAbsent: [ #() ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClassAnnotationRegistry >> allInstancesOf: anAnnotationClass [
 
 	^annotations at: anAnnotationClass ifAbsent: [ #() ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotationRegistry >> annotatedClasses [
 	^ annotatedClasses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotationRegistry >> annotatedClasses: anObject [
 	annotatedClasses := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotationRegistry >> annotations [
 	^ annotations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotationRegistry >> annotations: anObject [
 	annotations := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassAnnotationRegistry >> createAnnotationFor: aClass fromPragma: aPragma [
 	"Here we evaluate pragma method expecting annotation instance as result.
 	Of course the method can fail or it can not return annotation
@@ -260,7 +261,7 @@ ClassAnnotationRegistry >> createAnnotationFor: aClass fromPragma: aPragma [
 		declarationSelector: aPragma methodSelector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassAnnotationRegistry >> createAnnotationsForAllSubclassesFromPragma: aPragma [
 
 	| declaringClass annotation result |
@@ -272,7 +273,7 @@ ClassAnnotationRegistry >> createAnnotationsForAllSubclassesFromPragma: aPragma 
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotationRegistry >> forgetAnnotation: aClassAnnotation [
 	"This test was created for tests to emulate that annotation not exist anymore"
 	| container |
@@ -283,7 +284,7 @@ ClassAnnotationRegistry >> forgetAnnotation: aClassAnnotation [
 	(annotatedClasses at: aClassAnnotation annotatedClass) remove: aClassAnnotation
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotationRegistry >> includesAnnotation: aClassAnnotation [
 
 	| allClassAnnotations |
@@ -291,13 +292,13 @@ ClassAnnotationRegistry >> includesAnnotation: aClassAnnotation [
 	^allClassAnnotations includes: aClassAnnotation
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotationRegistry >> includesAnnotationsFor: aClass [
 
 	^annotatedClasses includesKey: aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotationRegistry >> includesAnnotationsInheritedBy: aClass [
 
 	aClass superclass ifNil: [ ^false ].
@@ -305,7 +306,7 @@ ClassAnnotationRegistry >> includesAnnotationsInheritedBy: aClass [
 	^self includesAnnotationsFor: aClass superclass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassAnnotationRegistry >> initialize [
 	super initialize.
 	annotations := IdentityDictionary new.

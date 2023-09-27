@@ -10,156 +10,158 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBToken,
-	#superclass : #Object,
+	#name : 'RBToken',
+	#superclass : 'Object',
 	#instVars : [
 		'sourcePointer',
 		'comments'
 	],
-	#category : #'AST-Core-Tokens'
+	#category : 'AST-Core-Tokens',
+	#package : 'AST-Core',
+	#tag : 'Tokens'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken class >> isAbstract [
 
 	^ self == RBToken
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBToken class >> start: anInterval [
 	^self new start: anInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBToken >> comments [
 	^comments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBToken >> comments: anObject [
 	comments := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isAssignment [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isBinary [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isBinary: aString [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isComment [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isEOF [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isError [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isIdentifier [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isKeyword [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isKeywordPattern [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isLiteralArrayToken [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isLiteralToken [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isNumberLiteralToken [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isPatternBlock [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isPatternVariable [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isPrimitiveKeyword [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isSpecial [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isSpecial: aValue [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBToken >> isTouching: other [
 	"is self just before other token (without space or comments)"
 	
 	^ self stop + 1 = other start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBToken >> length [
 	^self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBToken >> printOn: aStream [
 	aStream
 		nextPut: $ ;
 		nextPutAll: self class name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBToken >> removePositions [
 	sourcePointer := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBToken >> start [
 	^ sourcePointer ifNil: [ 0 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBToken >> start: anInteger [
 	sourcePointer := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBToken >> stop [
 	^ sourcePointer
 		ifNil: [ -1 ]

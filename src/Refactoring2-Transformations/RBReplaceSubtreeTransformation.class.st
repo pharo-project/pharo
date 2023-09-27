@@ -12,16 +12,18 @@ transformation := (RBReplaceSubtreeTransformation
 (ChangesBrowser changes: transformation model changes changes) open
 "
 Class {
-	#name : #RBReplaceSubtreeTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBReplaceSubtreeTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'oldSourceCode',
 		'newSourceCode'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBReplaceSubtreeTransformation class >> model: aRBModel replace: oldSourceCode to: newSourceCode inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -33,7 +35,7 @@ RBReplaceSubtreeTransformation class >> model: aRBModel replace: oldSourceCode t
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBReplaceSubtreeTransformation class >> replace: oldSourceCode to: newSourceCode inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -44,8 +46,8 @@ RBReplaceSubtreeTransformation class >> replace: oldSourceCode to: newSourceCode
 		yourself
 ]
 
-{ #category : #preconditions }
-RBReplaceSubtreeTransformation >> applicabilityConditions [ 
+{ #category : 'preconditions' }
+RBReplaceSubtreeTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&
@@ -74,12 +76,7 @@ RBReplaceSubtreeTransformation >> applicabilityConditions [
 					true ])
 ]
 
-{ #category : #preconditions }
-RBReplaceSubtreeTransformation >> preconditions [
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBReplaceSubtreeTransformation >> privateTransform [
 	| tree oldTree newTree |
 	tree := self definingClass parseTreeForSelector: selector.
@@ -103,7 +100,7 @@ RBReplaceSubtreeTransformation >> privateTransform [
 	self definingClass compileTree: tree
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBReplaceSubtreeTransformation >> replace: anOldString to: aNewString inMethod: aSelector inClass: aClass [
 
 	self className: aClass.
@@ -112,7 +109,7 @@ RBReplaceSubtreeTransformation >> replace: anOldString to: aNewString inMethod: 
 	newSourceCode := aNewString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBReplaceSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

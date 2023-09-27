@@ -2,18 +2,20 @@
 SUnit tests for RBComment
 "
 Class {
-	#name : #RBCommentTest,
-	#superclass : #TestCase,
-	#category : #'AST-Core-Tests-Nodes'
+	#name : 'RBCommentTest',
+	#superclass : 'TestCase',
+	#category : 'AST-Core-Tests-Nodes',
+	#package : 'AST-Core-Tests',
+	#tag : 'Nodes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCommentTest >> testFoo [
 
 	true ifFalse: [ self assert: true ].
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCommentTest >> testIntersectsInterval [
 	| node |
 	node:= RBComment with: (RBCommentToken value: 'Some sample text' start: 5 stop: 21).

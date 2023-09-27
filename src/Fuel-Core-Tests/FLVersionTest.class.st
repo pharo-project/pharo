@@ -2,12 +2,14 @@
 SUnit tests for fuel versioning
 "
 Class {
-	#name : #FLVersionTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLVersionTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'tests-serialization' }
+{ #category : 'tests-serialization' }
 FLVersionTest >> testDifferentMajor [
 	self serializer
 		at: #version
@@ -28,7 +30,7 @@ FLVersionTest >> testDifferentMajor [
 		description: 'The materializer should raise an error when version differs of the expected one.'
 ]
 
-{ #category : #'tests-serialization' }
+{ #category : 'tests-serialization' }
 FLVersionTest >> testDifferentMinor [
 	self serializer
 		at: #version
@@ -45,7 +47,7 @@ FLVersionTest >> testDifferentMinor [
 	self assertSerializationEqualityOf: 'content'
 ]
 
-{ #category : #'tests-serialization' }
+{ #category : 'tests-serialization' }
 FLVersionTest >> testDifferentPatch [
 	self serializer
 		at: #version
@@ -62,7 +64,7 @@ FLVersionTest >> testDifferentPatch [
 	self assertSerializationEqualityOf: 'content'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLVersionTest >> testEquals [
 	| version1 version2 |
 	version1 := FLVersion
@@ -78,7 +80,7 @@ FLVersionTest >> testEquals [
 	self assert: version1 equals: version2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLVersionTest >> testLessThanOrEqual [
 	| version1 version2 |
 	version1 := FLVersion
@@ -130,7 +132,7 @@ FLVersionTest >> testLessThanOrEqual [
 	self deny: version1 <= version2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLVersionTest >> testNotEqual [
 	| version1 version2 |
 	version1 := FLVersion
@@ -175,7 +177,7 @@ FLVersionTest >> testNotEqual [
 	self deny: version1 equals: version2
 ]
 
-{ #category : #'tests-serialization' }
+{ #category : 'tests-serialization' }
 FLVersionTest >> testSameVersion [
 	self serializer
 		at: #version

@@ -1,58 +1,65 @@
 Class {
-	#name : #RBRemoveInstanceVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBRemoveInstanceVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveInstanceVariableRefactoring class >> model: aNamespace remove: variable from: class [
 	^ self model: aNamespace variable: variable class: class
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 	^ self variable: variable class: class
 ]
 
-{ #category : #preconditions }
-RBRemoveInstanceVariableRefactoring >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ RBCondition directlyDefinesInstanceVariable: variableName asString in: class
 ]
 
-{ #category : #preconditions }
-RBRemoveInstanceVariableRefactoring >> breakingChangeConditions [ 
+{ #category : 'preconditions' }
+RBRemoveInstanceVariableRefactoring >> breakingChangePreconditions [ 
 
-	^ (RBCondition hierarchyOf: class referencesInstanceVariable: variableName) not
+	^ (RBInstanceVariableHasReferences new 
+			hierarchyOf: class referencesInstanceVariable: variableName) not
 	
 ]
 
-{ #category : #preconditions }
+{ #category : 'executing' }
 RBRemoveInstanceVariableRefactoring >> generateChanges [
 	
-	self applicabilityConditions check ifFalse: [
-		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityConditions errorString ].
-	self breakingChangeConditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangeConditions errorString ].
+	self prepareForExecution.
 
-	self transform.
+	self applicabilityPreconditions check ifFalse: [
+		^ RBApplicabilityChecksFailedError signal:
+			  self applicabilityPreconditions errorString ].
+	self breakingChangePreconditions check ifFalse: [
+		RBBreakingChangeChecksFailedWarning signal:
+			self breakingChangePreconditions errorString ].
+
+	self privateTransform.
 	^ self changes
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveInstanceVariableRefactoring >> preconditions [
 
-	^ self applicabilityConditions & self breakingChangeConditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
-{ #category : #accessing }
+{ #category : 'transforming' }
+RBRemoveInstanceVariableRefactoring >> privateTransform [
+	
+	
+	class removeInstanceVariable: variableName
+]
+
+{ #category : 'accessing' }
 RBRemoveInstanceVariableRefactoring >> refactoredClass [
 	^ class
-]
-
-{ #category : #transforming }
-RBRemoveInstanceVariableRefactoring >> transform [
-	class removeInstanceVariable: variableName
 ]

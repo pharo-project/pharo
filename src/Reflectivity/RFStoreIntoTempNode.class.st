@@ -2,12 +2,14 @@
 I define a temp that I can store into
 "
 Class {
-	#name : #RFStoreIntoTempNode,
-	#superclass : #RBVariableNode,
-	#category : #'Reflectivity-Compiler'
+	#name : 'RFStoreIntoTempNode',
+	#superclass : 'RBVariableNode',
+	#category : 'Reflectivity-Compiler',
+	#package : 'Reflectivity',
+	#tag : 'Compiler'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFStoreIntoTempNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitStoreIntoTempNode: self
 ]

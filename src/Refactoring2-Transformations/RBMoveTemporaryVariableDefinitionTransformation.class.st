@@ -18,16 +18,18 @@ Preconditions:
 - there is a block where the variable definition can be moved to.
 "
 Class {
-	#name : #RBMoveTemporaryVariableDefinitionTransformation,
-	#superclass : #RBCompositeMethodTransformation,
+	#name : 'RBMoveTemporaryVariableDefinitionTransformation',
+	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
 		'variableName',
 		'blockNodes'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBMoveTemporaryVariableDefinitionTransformation class >> model: aRBModel variable: aString inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -38,7 +40,7 @@ RBMoveTemporaryVariableDefinitionTransformation class >> model: aRBModel variabl
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMoveTemporaryVariableDefinitionTransformation class >> variable: aString inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -48,8 +50,8 @@ RBMoveTemporaryVariableDefinitionTransformation class >> variable: aString inMet
 		yourself
 ]
 
-{ #category : #preconditions }
-RBMoveTemporaryVariableDefinitionTransformation >> applicabilityConditions [ 
+{ #category : 'preconditions' }
+RBMoveTemporaryVariableDefinitionTransformation >> applicabilityPreconditions [ 
 
 	^ ( RBCondition
 			withBlock: [ self definingClass isNotNil ]
@@ -69,15 +71,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> applicabilityConditions [
 			errorString: 'Variable named ', variableName, ' is used in an outside block.')
 ]
 
-{ #category : #converting }
-RBMoveTemporaryVariableDefinitionTransformation >> asRefactoring [
-
-	^ super asRefactoring
-		delegatesPreconditions: false;
-		yourself
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBMoveTemporaryVariableDefinitionTransformation >> buildTransformations [
 
 	"ifnil... tight blocks should not be returned as errors"
@@ -99,7 +93,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> buildTransformations [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
@@ -114,7 +108,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree 
 		initialAnswer: OrderedCollection new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
@@ -125,7 +119,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
 	^ searcher executeTree: aParseTree initialAnswer: false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBMoveTemporaryVariableDefinitionTransformation >> checkLocationsIn: candidateBlocks [
 
 	(candidateBlocks
@@ -143,7 +137,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkLocationsIn: candidateBl
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBMoveTemporaryVariableDefinitionTransformation >> checkMethodForBlocks [
 
 	| definingNode |
@@ -152,7 +146,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkMethodForBlocks [
 	self checkLocationsIn: (self checkAllBlocksIn: definingNode)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 
 	| node definingNode |
@@ -170,13 +164,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 	^ definingNode
 ]
 
-{ #category : #preconditions }
-RBMoveTemporaryVariableDefinitionTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -191,7 +179,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMoveTemporaryVariableDefinitionTransformation >> variable: aVariableName inMethod: aSelector inClass: aClass [
 
 	class := aClass.

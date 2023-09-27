@@ -9,82 +9,63 @@ I implement methods from parent class and define some helper methods that are ne
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBMoveMethodsToClassSideDriver model: aRBNamespace methods: aCollectionOfMethods) execute
+(RBMoveMethodsToClassSideDriver model: aRBNamespace methods: aCollectionOfMethods) runRefactoring
 ```
 "
 Class {
-	#name : #RBMoveMethodsToClassSideDriver,
-	#superclass : #RBDriver,
-	#instVars : [
-		'refactorings',
-		'methods'
-	],
-	#category : #'Refactoring-UI-Drivers'
+	#name : 'RBMoveMethodsToClassSideDriver',
+	#superclass : 'RBInteractionDriver',
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #'instance creation' }
-RBMoveMethodsToClassSideDriver class >> model: aNamespace scopes: scopesList methods: aCollectionOfMethods [
+{ #category : 'instance creation' }
+RBMoveMethodsToClassSideDriver class >> scopes: scopesList methods: aCollectionOfMethods [
 
-	^ self new model: aNamespace scopes: scopesList methods: aCollectionOfMethods
+	^ self new scopes: scopesList methods: aCollectionOfMethods
 ]
 
-{ #category : #execution }
-RBMoveMethodsToClassSideDriver >> displayErrors: errorsList [
-
-	| errorStrings |
-
-	errorStrings := String streamContents: [ :stream |
-		                errorsList
-			                do: [ :err | stream << err messageText ]
-			                separatedBy: [ stream << String cr ] ].
-	^ RBRefactoringError signal: errorStrings
+{ #category : 'resources' }
+RBMoveMethodsToClassSideDriver >> refactoring [
+	^ refactoring.
 ]
 
-{ #category : #execution }
-RBMoveMethodsToClassSideDriver >> displayWarnings: errorsList [
-
-	| errorStrings |
-
-	errorStrings := String streamContents: [ :stream |
-		                errorsList
-			                do: [ :err | stream << err messageText ]
-			                separatedBy: [ stream << String cr ] ].
-	^ RBRefactoringWarning signal: errorStrings
-]
-
-{ #category : #initialization }
-RBMoveMethodsToClassSideDriver >> model: aNamespace scopes: scopesList methods: aCollection [
-
-	model := aNamespace.
-	scopes := scopesList.
-	methods := aCollection.
-	refactorings := methods collect: [ :m |
-		                RBMoveMethodToClassSideRefactoring
-			                model: model
-			                method: m
-			                class: m origin ]
-]
-
-{ #category : #execution }
+{ #category : 'execution' }
 RBMoveMethodsToClassSideDriver >> runRefactoring [
 
-	| compositeChangesList errors warnings |
-	errors := OrderedCollection new.
-	warnings := OrderedCollection new.
-	compositeChangesList := refactorings collect: [ :refactoring |
-		                   [
-		                   [ refactoring generateChanges ]
-			                   on: RBRefactoringError
-			                   do: [ :err |
-				                   errors add: err. nil ] ]
-			                   on: RBBreakingChangeChecksFailedWarning
-			                   do: [ :err |
-				                   warnings add: err. nil ] ]
-		thenReject: [ :ref | ref isNil ].
+	[
+		[
+		| changes |
+		changes := refactoring generateChanges.
+		self openPreviewWithChanges: changes ]
+			on: RBApplicabilityChecksFailedError
+			do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
+			on: RBBreakingChangeChecksFailedWarning
+			do: [ :err |
+				| dialog |
+				dialog := SpConfirmDialog new
+					          title: 'Method already defined in the class side';
+					          label: 'Are you sure you want to override it?';
+					          acceptLabel: 'Sure!';
+					          cancelLabel: 'No, forget it';
+					          openModal.
+				dialog ifTrue: [
+					self furtherActionFor:
+						(RBOverrideMethod new refactoring: refactoring) ].
+				err return ]
+]
 
-	errors ifNotEmpty: [ self displayErrors: errors ].
+{ #category : 'initialization' }
+RBMoveMethodsToClassSideDriver >> scopes: scopesList methods: methods [
 
-	warnings ifNotEmpty: [ self displayWarnings: warnings ].
-
-	self openPreviewWithChanges: compositeChangesList
+	scopes := scopesList.
+	model := self refactoringScopeOn: scopesList first.
+	refactoring := RBCompositeRefactoring new
+		               model: model;
+		               refactorings: (methods collect: [ :m |
+					                RBMoveMethodToClassSideRefactoring
+						                model: model
+						                method: m
+						                class: m origin ])
 ]

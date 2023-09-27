@@ -1,10 +1,11 @@
 Class {
-	#name : #InstrumentationDeactivator,
-	#superclass : #InstrumentationEnsurer,
-	#category : #Instrumentation
+	#name : 'InstrumentationDeactivator',
+	#superclass : 'InstrumentationEnsurer',
+	#category : 'Instrumentation',
+	#package : 'Instrumentation'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InstrumentationDeactivator >> value [
 
 	<noInstrumentation>

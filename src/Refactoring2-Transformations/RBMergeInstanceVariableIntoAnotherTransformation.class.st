@@ -1,11 +1,13 @@
 Class {
-	#name : #RBMergeInstanceVariableIntoAnotherTransformation,
-	#superclass : #RBRenameVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
+	#name : 'RBMergeInstanceVariableIntoAnotherTransformation',
+	#superclass : 'RBRenameVariableTransformation',
+	#category : 'Refactoring2-Transformations-Model-Migrated-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Migrated-Unused'
 }
 
-{ #category : #preconditions }
-RBMergeInstanceVariableIntoAnotherTransformation >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBMergeInstanceVariableIntoAnotherTransformation >> applicabilityPreconditions [
 
 	class := self model classObjectFor: className.
 
@@ -29,13 +31,7 @@ RBMergeInstanceVariableIntoAnotherTransformation >> applicabilityConditions [
 	  & self isNotGlobal
 ]
 
-{ #category : #preconditions }
-RBMergeInstanceVariableIntoAnotherTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBMergeInstanceVariableIntoAnotherTransformation >> privateTransform [
 
 	self renameReferences.

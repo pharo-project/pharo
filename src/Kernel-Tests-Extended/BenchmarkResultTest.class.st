@@ -2,12 +2,14 @@
 Unit test for BenchmarkResult
 "
 Class {
-	#name : #BenchmarkResultTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Extended-Chronology'
+	#name : 'BenchmarkResultTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Extended-Chronology',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Chronology'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BenchmarkResultTest >> testEmpty [
 	| benchmarkResult |
 	benchmarkResult := BenchmarkResult new.
@@ -19,7 +21,7 @@ BenchmarkResultTest >> testEmpty [
 	self deny: benchmarkResult printString isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BenchmarkResultTest >> testOne [
 	| benchmarkResult |
 	benchmarkResult := BenchmarkResult new.
@@ -37,7 +39,7 @@ BenchmarkResultTest >> testOne [
 	self deny: benchmarkResult printString isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BenchmarkResultTest >> testOneOverTwo [
 	| benchmarkResult |
 	benchmarkResult := BenchmarkResult new.
@@ -55,7 +57,7 @@ BenchmarkResultTest >> testOneOverTwo [
 	self deny: benchmarkResult printString isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BenchmarkResultTest >> testSimple [
 	| benchmarkResult |
 	benchmarkResult := BenchmarkResult new.

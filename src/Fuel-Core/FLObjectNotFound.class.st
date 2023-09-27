@@ -6,12 +6,14 @@ This usually happens when the graph changes during serialization.
 Another possible cause is a bug in the analysis step of serialization.
 "
 Class {
-	#name : #FLObjectNotFound,
-	#superclass : #FLSerializationError,
-	#category : #'Fuel-Core-Errors'
+	#name : 'FLObjectNotFound',
+	#superclass : 'FLSerializationError',
+	#category : 'Fuel-Core-Errors',
+	#package : 'Fuel-Core',
+	#tag : 'Errors'
 }
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 FLObjectNotFound class >> signalWith: anObject [
 
  	self signal: (

@@ -1,23 +1,25 @@
 Class {
-	#name : #MetacelloAllowLockedProjectChange,
-	#superclass : #MetacelloResolveProjectUpgrade,
+	#name : 'MetacelloAllowLockedProjectChange',
+	#superclass : 'MetacelloResolveProjectUpgrade',
 	#instVars : [
 		'operationString'
 	],
-	#category : #'Metacello-Core-Scripts'
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloAllowLockedProjectChange >> break [
   ^ self allow
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAllowLockedProjectChange >> checkAllowed [
   "noop ... if user decided to allow lock to be broken, then so be it"
 ]
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloAllowLockedProjectChange >> defaultAction [
   Warning
     signal:
@@ -29,22 +31,22 @@ MetacelloAllowLockedProjectChange >> defaultAction [
   ^ self disallow
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloAllowLockedProjectChange >> handleResolutionFor: aScriptEngine [
   ^ aScriptEngine handleLock: self
 ]
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloAllowLockedProjectChange >> honor [
   ^ self disallow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAllowLockedProjectChange >> operationString [
   ^ operationString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAllowLockedProjectChange >> operationString: aString [
   operationString := aString
 ]

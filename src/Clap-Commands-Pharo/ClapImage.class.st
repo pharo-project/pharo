@@ -1,10 +1,11 @@
 Class {
-	#name : #ClapImage,
-	#superclass : #ClapApplication,
-	#category : #'Clap-Commands-Pharo'
+	#name : 'ClapImage',
+	#superclass : 'ClapApplication',
+	#category : 'Clap-Commands-Pharo',
+	#package : 'Clap-Commands-Pharo'
 }
 
-{ #category : #'command line - subcommands' }
+{ #category : 'command line - subcommands' }
 ClapImage class >> cleanupCommand [
 
 	^ (ClapCommand id: 'cleanup')
@@ -15,7 +16,7 @@ ClapImage class >> cleanupCommand [
 		  yourself
 ]
 
-{ #category : #'command line' }
+{ #category : 'command line' }
 ClapImage class >> image [
 	<commandline>
 	^ (ClapCommand id: #image)
@@ -29,7 +30,7 @@ ClapImage class >> image [
 			(self with: args) execute ]
 ]
 
-{ #category : #'command line - subcommands' }
+{ #category : 'command line - subcommands' }
 ClapImage class >> saveCommand [
 
 	^ (ClapCommand id: #save)

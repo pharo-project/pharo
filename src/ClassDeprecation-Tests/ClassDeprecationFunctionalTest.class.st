@@ -1,14 +1,15 @@
 Class {
-	#name : #ClassDeprecationFunctionalTest,
-	#superclass : #ClassDeprecationTest,
+	#name : 'ClassDeprecationFunctionalTest',
+	#superclass : 'ClassDeprecationTest',
 	#instVars : [
 		'referencingOriginalResult',
 		'referencingTransformedResult'
 	],
-	#category : #'ClassDeprecation-Tests'
+	#category : 'ClassDeprecation-Tests',
+	#package : 'ClassDeprecation-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> assertDoesNotTransformSources [
 	"Asserts that #references was not instrumented and hence will not transform the source after execution."
 
@@ -20,7 +21,7 @@ ClassDeprecationFunctionalTest >> assertDoesNotTransformSources [
 		equals: referencingOriginalSource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> assertDoesTransformSources [
 	"Asserts that #references was instrumented and hence will transform the source after execution."
 
@@ -40,7 +41,7 @@ ClassDeprecationFunctionalTest >> assertDoesTransformSources [
 		equals: referencingTransformedSource
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassDeprecationFunctionalTest >> setUp [
 	super setUp.
 	referencingOriginalResult := {deprecatedClass.
@@ -55,7 +56,7 @@ ClassDeprecationFunctionalTest >> setUp [
 	referencingClass}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> testDeprecateEnableReference [
 	self
 		deprecateClass: deprecatedClass
@@ -65,7 +66,7 @@ ClassDeprecationFunctionalTest >> testDeprecateEnableReference [
 	self assertDoesTransformSources
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> testDeprecateReferenceEnable [
 	"first execution should not replace value, but replace source"
 	"second execution should replace value, but not source"
@@ -77,7 +78,7 @@ ClassDeprecationFunctionalTest >> testDeprecateReferenceEnable [
 	self assertDoesTransformSources
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> testEnableDeprecateReference [
 	ClassDeprecationMetaLink enable.
 	self
@@ -87,7 +88,7 @@ ClassDeprecationFunctionalTest >> testEnableDeprecateReference [
 	self assertDoesTransformSources
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> testEnableReferenceDeprecate [
 	ClassDeprecationMetaLink enable.
 	referencingClass compile: referencingOriginalSource.
@@ -97,7 +98,7 @@ ClassDeprecationFunctionalTest >> testEnableReferenceDeprecate [
 	self assertDoesTransformSources
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> testReferenceDeprecateEnable [
 	referencingClass compile: referencingOriginalSource.
 	self
@@ -107,7 +108,7 @@ ClassDeprecationFunctionalTest >> testReferenceDeprecateEnable [
 	self assertDoesTransformSources
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> testReferenceDeprecateEnableDisable [
 	referencingClass compile: referencingOriginalSource.
 	self
@@ -119,7 +120,7 @@ ClassDeprecationFunctionalTest >> testReferenceDeprecateEnableDisable [
 	self assertDoesNotTransformSources
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> testReferenceDeprecateEnableUndeprecated [
 	referencingClass compile: referencingOriginalSource.
 	self
@@ -130,7 +131,7 @@ ClassDeprecationFunctionalTest >> testReferenceDeprecateEnableUndeprecated [
 	self assertDoesNotTransformSources
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> testReferenceEnableDeprecate [
 	referencingClass compile: referencingOriginalSource.
 	ClassDeprecationMetaLink enable.
@@ -140,7 +141,7 @@ ClassDeprecationFunctionalTest >> testReferenceEnableDeprecate [
 	self assertDoesTransformSources
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationFunctionalTest >> testSetUp [
 	self
 		deny: referencingOriginalSource

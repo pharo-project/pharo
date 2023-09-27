@@ -2,17 +2,19 @@
 I take as input a collection of  EpCodeChange instances and output the equivalent of such changes as if they were applied in current image.
 "
 Class {
-	#name : #EpApplyPreviewer,
-	#superclass : #Object,
+	#name : 'EpApplyPreviewer',
+	#superclass : 'Object',
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
 	#instVars : [
 		'environment'
 	],
-	#category : #'EpiceaBrowsers-Visitors'
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 EpApplyPreviewer >> behaviorNamed: aSymbol ifPresent: presentBlock [
 
 	^ (self environment classOrTraitNamed: aSymbol)
@@ -20,24 +22,18 @@ EpApplyPreviewer >> behaviorNamed: aSymbol ifPresent: presentBlock [
 		ifNotNil: presentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpApplyPreviewer >> environment [
 
 	^ environment ifNil: [ self class environment ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpApplyPreviewer >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #private }
-EpApplyPreviewer >> includesCategory: aString [
-	self flag: #epicea. "We should kill the category usage."
-	^ self packageOrganizer includesCategory: aString
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitBehaviorCategoryChange: aChange [
 
 	self
@@ -57,7 +53,7 @@ EpApplyPreviewer >> visitBehaviorCategoryChange: aChange [
 	^ #()
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitBehaviorCommentChange: aChange [
 
 	self
@@ -76,7 +72,7 @@ EpApplyPreviewer >> visitBehaviorCommentChange: aChange [
 	^ #()
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 
 	self
@@ -90,31 +86,7 @@ EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 	^ #()
 ]
 
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryAddition: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ #() ]
-			ifFalse: [ { aChange } ]
-]
-
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryRemoval: aChange [
-
-	^ (self includesCategory: aChange categoryName)
-			ifTrue: [ { aChange } ]
-			ifFalse: [ #() ]
-]
-
-{ #category : #visitor }
-EpApplyPreviewer >> visitCategoryRename: aChange [
-
-	^ (self includesCategory: aChange oldCategoryName)
-		ifTrue: [ { aChange } ]
-		ifFalse: [ #() ]
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitClassChange: aChange [
 
 	self
@@ -130,7 +102,7 @@ EpApplyPreviewer >> visitClassChange: aChange [
 	^ { (EpClassAddition class: aChange behaviorAffected) }
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitClassRemoval: aChange [
 
 	self
@@ -140,21 +112,21 @@ EpApplyPreviewer >> visitClassRemoval: aChange [
 	^ #()
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitCodeChange: aChange [
 	"Default behavior for any change."
 
 	self error: 'Shouldn''t happen'. ^ {aChange}
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitEvent: aChange [
 	"Generic events do not apply any code change"
 
 	^ #()
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitMethodChange: aChange [
 	"Addition and Modification come here"
 
@@ -174,7 +146,7 @@ EpApplyPreviewer >> visitMethodChange: aChange [
 	^ {aChange}
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitMethodRemoval: aChange [
 
 	self
@@ -191,7 +163,7 @@ EpApplyPreviewer >> visitMethodRemoval: aChange [
 	^ #() "No impact if container does not exist"
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
 
 	^ (self packageOrganizer hasPackage: aPackageAddition packageName)
@@ -199,7 +171,7 @@ EpApplyPreviewer >> visitPackageAddition: aPackageAddition [
 		  ifFalse: [ { aPackageAddition } ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitPackageRemoval: aPackageRemoval [
 
 	^ (self packageOrganizer hasPackage: aPackageRemoval packageName)
@@ -207,7 +179,39 @@ EpApplyPreviewer >> visitPackageRemoval: aPackageRemoval [
 		  ifFalse: [ {  } ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
+EpApplyPreviewer >> visitPackageRename: aPackageRename [
+
+	^ (self packageOrganizer hasPackage: aPackageRename oldPackageName)
+		  ifTrue: [ { aPackageRename } ]
+		  ifFalse: [ #(  ) ]
+]
+
+{ #category : 'visitor' }
+EpApplyPreviewer >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ (self packageOrganizer hasTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName)
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ { aPackageTagAddition } ]
+]
+
+{ #category : 'visitor' }
+EpApplyPreviewer >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ (self packageOrganizer hasTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval packageName)
+		  ifTrue: [ { aPackageTagRemoval } ]
+		  ifFalse: [ #(  ) ]
+]
+
+{ #category : 'visitor' }
+EpApplyPreviewer >> visitPackageTagRename: aPackageTagRename [
+
+	^ (self packageOrganizer hasTag: aPackageTagRename oldTagName inPackage: aPackageTagRename packageName)
+		  ifTrue: [ { aPackageTagRename } ]
+		  ifFalse: [ #(  ) ]
+]
+
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitProtocolAddition: aChange [
 
 	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
@@ -218,7 +222,7 @@ EpApplyPreviewer >> visitProtocolAddition: aChange [
 	^ #(  )
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitProtocolRemoval: aChange [
 
 	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
@@ -229,7 +233,7 @@ EpApplyPreviewer >> visitProtocolRemoval: aChange [
 	^ #(  )
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitTraitChange: aChange [
 
 	self
@@ -240,7 +244,7 @@ EpApplyPreviewer >> visitTraitChange: aChange [
 	^ { EpTraitAddition trait: aChange behaviorAffected }
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyPreviewer >> visitTraitRemoval: aChange [
 
 	self

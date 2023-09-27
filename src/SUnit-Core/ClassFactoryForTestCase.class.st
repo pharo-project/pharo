@@ -18,8 +18,8 @@ YourTest>>testIsBehavior
 
 "
 Class {
-	#name : #ClassFactoryForTestCase,
-	#superclass : #Object,
+	#name : 'ClassFactoryForTestCase',
+	#superclass : 'Object',
 	#instVars : [
 		'createdBehaviors',
 		'createdSilently',
@@ -28,10 +28,12 @@ Class {
 	#classVars : [
 		'Counter'
 	],
-	#category : #'SUnit-Core-Extensions'
+	#category : 'SUnit-Core-Extensions',
+	#package : 'SUnit-Core',
+	#tag : 'Extensions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassFactoryForTestCase class >> environment: aSystemDictionary [
 
 	^ self new
@@ -39,96 +41,86 @@ ClassFactoryForTestCase class >> environment: aSystemDictionary [
 		  yourself
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ClassFactoryForTestCase class >> initialize [
 	"Now we can personnalize the environment of the ClassFactoryForTestCase. So instead of having this duplicated class, we can just use this one and specify the environment that will have its own organization."
 
 	self deprecatedAliases: { #ClassFactoryWithOrganization }
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ClassFactoryForTestCase >> cleanUp [
 
-	| createdBehaviorNames |
-	createdBehaviorNames := self createdBehaviorNames.
-
-	self
-		deleteBehaviors;
-		deletePackage;
-		cleanUpChangeSetForClassNames: createdBehaviorNames
+	self createdBehaviors copy do: [ :behavior | self delete: behavior ].
+	self deletePackage
 ]
 
-{ #category : #cleaning }
-ClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
-
-	self class environment at: #ChangeSet ifPresent: [ :aChangeSetClass |
-		| changeSet |
-		changeSet := aChangeSetClass current.
-		classeNames do: [:name|
-			changeSet
-				removeClassChanges: name;
-				removeClassChanges: name, ' class']]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdBehaviorNames [
 
 	^ self createdBehaviors collect: [ :class | class name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdBehaviors [
 
 	^ createdBehaviors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdClassNames [
 
 	^ self createdClasses collect: [ :class | class name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdClasses [
 
 	^ self createdBehaviors reject: [ :behavior | behavior isTrait ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> createdSilently [
+
+	^ createdSilently
+]
+
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdTraitNames [
 
 	^ self createdTraits collect: [ :trait | trait name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdTraits [
 
 	^ self createdBehaviors select: [ :behavior | behavior isTrait ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> defaultCategory [
 
 	^ (self packageName , '-' , self defaultTagPostfix) asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> defaultSuperclass [
 
 	^ Object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> defaultTagPostfix [
 
 	^ #Default
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ClassFactoryForTestCase >> delete: aBehavior [
 
+	createdBehaviors remove: aBehavior ifAbsent: [  ].
 	aBehavior isObsolete ifTrue: [ ^ self ].
-	self class environment at: #ChangeSet ifPresent: [ aBehavior removeFromChanges ].
+	self class environment at: #ChangeSet ifPresent: [ :changeSet | changeSet current removeClassAndMetaClassChanges: aBehavior ].
 	(createdSilently includes: aBehavior)
 		ifTrue: [
 			createdSilently remove: aBehavior.
@@ -136,46 +128,25 @@ ClassFactoryForTestCase >> delete: aBehavior [
 		ifFalse: [ aBehavior removeFromSystem ]
 ]
 
-{ #category : #cleaning }
-ClassFactoryForTestCase >> deleteBehaviors [
-
-	self createdBehaviors do: [ :behavior | self delete: behavior ]
-]
-
-{ #category : #cleaning }
-ClassFactoryForTestCase >> deleteClass: aClass [
-
-	createdBehaviors remove: aClass.
-	self delete: aClass
-]
-
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ClassFactoryForTestCase >> deletePackage [
 
-	| organizer |
-	self flag: #package. "This is way more complicated than needed because of the package and category mess."
-	organizer := self organization.
-
-	(organizer categoriesMatching: self packageName , '-*') , { self packageName } do: [ :category |
-		(organizer listAtCategoryNamed: category) do: [ :behavior | organizer removeBehavior: behavior ].
-		organizer removeCategory: category ].
-
-	(organizer packages select: [ :package | package name beginsWith: self packageName ]) do: [ :package | package removeFromSystem ]
+	(self organization packages select: [ :package | package name beginsWith: self packageName ]) do: [ :package | package removeFromSystem ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> environment [
 
 	^ environment ifNil: [ self class environment ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> environment: anObject [
 
 	environment := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassFactoryForTestCase >> initialize [
 
 	super initialize.
@@ -183,7 +154,7 @@ ClassFactoryForTestCase >> initialize [
 	createdSilently := IdentitySet new
 ]
 
-{ #category : #creating }
+{ #category : 'creating' }
 ClassFactoryForTestCase >> make: aBlock [
 	"I return a new class or trait in the environment of the factory configured as the user specified in the make block.
 	Once the test is finished, I'll remove the created class or trait."
@@ -199,52 +170,133 @@ ClassFactoryForTestCase >> make: aBlock [
 		            "Now we let the users specify what they want."
 		            aBlock value: aBuilder ].
 
-	createdBehaviors add: newClass.
+	self registerBehavior: newClass.
 	^ newClass
 ]
 
-{ #category : #creating }
+{ #category : 'creating' }
+ClassFactoryForTestCase >> newAnonymousClass [
+	^ self defaultSuperclass newAnonymousSubclass
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> newAnonymousTrait [
+	^ Smalltalk anonymousClassInstaller make: [ :builder |
+		builder
+			"The name is necessary to not break Pharo"
+			name: self newBehaviorName;
+			beTrait ]
+]
+
+{ #category : 'creating' }
 ClassFactoryForTestCase >> newBehaviorName [
 
 	^ (#BehaviorForTestToBeDeleted , self nextCount printString) asSymbol
 ]
 
-{ #category : #creating }
+{ #category : 'creating' }
 ClassFactoryForTestCase >> newClass [
 
 	^ self make: [ :aBuilder | "We customize nothing on this one" ]
 ]
 
-{ #category : #creating }
+{ #category : 'creating' }
 ClassFactoryForTestCase >> newTrait [
 
 	^ self make: [ :aBuilder | aBuilder beTrait ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> nextCount [
 	"Global counter to avoid name clash between test runs, in case of some previous failure."
 
 	^ Counter := (Counter ifNil: [ 0 ]) + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> organization [
 	^ self environment organization
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> packageName [
 
 	^ #CategoryForTestToBeDeleted
 ]
 
-{ #category : #creating }
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> registerBehavior: aBehavior [
+
+	createdBehaviors add: aBehavior
+]
+
+{ #category : 'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior [
+
+	^ self silentlyCompile: aString in: aBehavior storingSource: true
+]
+
+{ #category : 'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString [
+
+	^ self
+		  silentlyCompile: aString
+		  in: aBehavior
+		  protocol: anotherString
+		  storingSource: true
+]
+
+{ #category : 'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString storingSource: aBoolean [
+
+	^ self silentlyDo: [
+		  Author useAuthor: 'TestsAuthor' during: [
+			  aBehavior
+				  compile: aString
+				  classified: anotherString
+				  withStamp: nil
+				  notifying: nil
+				  logSource: aBoolean ] ]
+]
+
+{ #category : 'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSource: aBoolean [
+
+	^ self
+		  silentlyCompile: aString
+		  in: aBehavior
+		  protocol: 'unclassified'
+		  storingSource: aBoolean
+]
+
+{ #category : 'private' }
+ClassFactoryForTestCase >> silentlyDo: aBlock [
+	^ SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
+]
+
+{ #category : 'creating' }
 ClassFactoryForTestCase >> silentlyMake: aBlock [
 
 	| behavior |
-	behavior := SystemAnnouncer uniqueInstance suspendAllWhile: [ self make: aBlock ].
+	behavior := self silentlyDo: [ self make: aBlock ].
 
 	createdSilently add: behavior.
 	^ behavior
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> silentlyNewClass [
+
+	^ self silentlyMake: [ :aBuilder | "Nothing to configure here" ]
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> silentlyNewTrait [
+
+	^ self silentlyMake: [ :aBuilder | aBuilder beTrait ]
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> silentlyRename: aClass to: aName [
+	^ self silentlyDo: [ aClass rename: aName asSymbol ]
 ]

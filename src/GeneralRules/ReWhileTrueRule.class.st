@@ -12,24 +12,26 @@ statements1.
 statements2
 "
 Class {
-	#name : #ReWhileTrueRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReWhileTrueRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReWhileTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'WhileTrueRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReWhileTrueRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReWhileTrueRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -67,12 +69,12 @@ ReWhileTrueRule >> initialize [
 			`@.Statements2' )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReWhileTrueRule >> name [
 	^ 'Uses whileTrue: instead of to:do:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReWhileTrueRule >> rationale [
 	^ 'Checks for users of whileTrue: when the shorter to:do: would work.'
 ]

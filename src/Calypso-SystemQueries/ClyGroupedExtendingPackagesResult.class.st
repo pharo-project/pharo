@@ -4,17 +4,19 @@ I am a package query result which converts all packages to the instances of ClyE
 I am used in full browser logic to show extending method groups in the third pane.
 "
 Class {
-	#name : #ClyGroupedExtendingPackagesResult,
-	#superclass : #ClyQueryResult,
-	#category : #'Calypso-SystemQueries-Results'
+	#name : 'ClyGroupedExtendingPackagesResult',
+	#superclass : 'ClyQueryResult',
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyGroupedExtendingPackagesResult >> defaultItems [
 	^SortedCollection sortBlock: ClySortByNameFunction ascending
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedExtendingPackagesResult >> fillWith: packages [
 	| group |
 	packages do: [ :each |

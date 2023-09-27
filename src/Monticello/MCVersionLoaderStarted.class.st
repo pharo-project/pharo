@@ -2,31 +2,33 @@
 Announcement sent when a Version is starting to load
 "
 Class {
-	#name : #MCVersionLoaderStarted,
-	#superclass : #Announcement,
+	#name : 'MCVersionLoaderStarted',
+	#superclass : 'Announcement',
 	#instVars : [
 		'versionLoader',
 		'label'
 	],
-	#category : #'Monticello-Announcements'
+	#category : 'Monticello-Announcements',
+	#package : 'Monticello',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionLoaderStarted >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionLoaderStarted >> label: anObject [
 	label := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionLoaderStarted >> versionLoader [
 	^ versionLoader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionLoaderStarted >> versionLoader: anObject [
 	versionLoader := anObject
 ]

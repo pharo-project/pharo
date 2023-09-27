@@ -2,12 +2,13 @@
 A writer for Smalltalk code
 "
 Class {
-	#name : #MCFileTreeStWriter,
-	#superclass : #MCFileTreeAbstractStWriter,
-	#category : #'MonticelloFileTree-Core'
+	#name : 'MCFileTreeStWriter',
+	#superclass : 'MCFileTreeAbstractStWriter',
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeStWriter >> visitClassDefinition: definition [
     orderedClassNames add: definition className.
     self
@@ -17,7 +18,7 @@ MCFileTreeStWriter >> visitClassDefinition: definition [
         visit: [ self writeClassDefinition: definition ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeStWriter >> visitClassTraitDefinition: definition [
     orderedTraitNames add: definition className, ' classTrait'.
     self
@@ -27,7 +28,7 @@ MCFileTreeStWriter >> visitClassTraitDefinition: definition [
         visit: [ self writeClassTraitDefinition: definition ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeStWriter >> visitMethodDefinition: definition [
     | filename directoryname |
     directoryname := definition classIsMeta
@@ -41,7 +42,7 @@ MCFileTreeStWriter >> visitMethodDefinition: definition [
         visit: [ self writeMethodDefinition: definition ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeStWriter >> visitTraitDefinition: definition [
     orderedTraitNames add: definition className.
     self

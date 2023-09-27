@@ -8,27 +8,37 @@ When I gather all needed information I am calling and executing push down method
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBPushDownMethodDriver model: aRBNamespace scopes: refactoringScopes pushDown: methods) execute
+(RBPushDownMethodDriver model: aRBNamespace scopes: refactoringScopes pushDown: methods) runRefactoring
 ```
 "
 Class {
-	#name : #RBPushDownMethodDriver,
-	#superclass : #RBDriver,
+	#name : 'RBPushDownMethodDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'methods',
-		'class',
-		'refactoring'
+		'class'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushDown: methods [
 
 	^ self new model: aRBNamespace scopes: refactoringScopes pushDown: methods
 ]
 
-{ #category : #initialization }
+{ #category : 'resources' }
+RBPushDownMethodDriver >> configureRefactoring [
+
+	refactoring :=  RBPushDownMethodRefactoring
+		  model: model
+		  pushDown: (methods collect: [ :each | each selector ])
+		  from: class
+]
+
+{ #category : 'initialization' }
 RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown: methodsList [
 
 	model := aRBNamespace.
@@ -37,7 +47,7 @@ RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown
 	class := methods first origin
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBPushDownMethodDriver >> refactoring [
 
 	refactoring :=  RBPushDownMethodRefactoring
@@ -46,14 +56,14 @@ RBPushDownMethodDriver >> refactoring [
 		  from: class
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBPushDownMethodDriver >> runRefactoring [
 
 	| changes |
 	methods := self selectMethods.
 	methods ifNil: [ ^ self ].
 
-	self refactoring.
+	self configureRefactoring.
 	changes := [
 	           [ refactoring generateChanges ]
 		           on: RBApplicabilityChecksFailedError
@@ -64,10 +74,10 @@ RBPushDownMethodDriver >> runRefactoring [
 			           RBRefactoringWarning signal: err messageText.
 			           "If user answers no, error is being propagated."
 			           err resume ].
-	self openPreviewWithChanges: { changes }
+	self openPreviewWithChanges: changes
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBPushDownMethodDriver >> selectMethods [
 
 	| dialog |

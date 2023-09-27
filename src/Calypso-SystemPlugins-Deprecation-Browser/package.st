@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Deprecation-Browser' }
+Package { #name : 'Calypso-SystemPlugins-Deprecation-Browser' }

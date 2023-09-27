@@ -2,20 +2,21 @@
 A trait mock with a complex slot to be used in tests
 "
 Trait {
-	#name : #TMockWithComplexSlot,
+	#name : 'TMockWithComplexSlot',
 	#instVars : [
 		'#complexSlot => ObservableSlot'
 	],
-	#category : #'TraitsV2-Tests'
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TMockWithComplexSlot >> complexSlot [
 
 	^ complexSlot
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TMockWithComplexSlot >> initialize [
 
 	super initialize.

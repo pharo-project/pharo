@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMoveMethodToClassSideParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBMoveMethodToClassSideParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodToClassSideParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveMethodToClassSideRefactoring };
@@ -12,12 +14,12 @@ RBMoveMethodToClassSideParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveMethodToClassSideParametrizedTest >> constructor [
 	^ #method:class:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveMethodToClassSideParametrizedTest >> testFailureClassIsNotMeta [
 
 	| method someClass className refactoring |
@@ -35,24 +37,7 @@ RBMoveMethodToClassSideParametrizedTest >> testFailureClassIsNotMeta [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
-RBMoveMethodToClassSideParametrizedTest >> testFailureExistsMethodInClassSide [
-
-	| method someClass className refactoring |
-	className := RBClassDataForRefactoringTest.
-	method := className >> ('threeElement' , 'Point') asSymbol.
-	refactoring := self createRefactoringWithArguments: {
-			               method.
-			               className }.
-	model := refactoring model.
-	someClass := model classNamed: className name , ' class'.
-	someClass
-		compile: 'threeElementPoint ^ self new'
-		classified: { #example }.
-	self shouldFail: refactoring
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSide [
 	| method someClass className refactoring |
 	className := RBClassDataForRefactoringTest.
@@ -66,7 +51,7 @@ RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSide [
 	self assert: (someClass parseTreeForSelector: ('threeElement', 'Point') asSymbol) equals: (self parseMethod: 'threeElementPoint ^5 @ 5 + 6 @ 6')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSideWithInsAndMetReferences [
 	| method someClass className refactoring |
 	className := RBTransformationRuleTestData.

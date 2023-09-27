@@ -1,16 +1,17 @@
 Class {
-	#name : #RBClassTest,
-	#superclass : #RBRefactoringBrowserTest,
+	#name : 'RBClassTest',
+	#superclass : 'RBRefactoringBrowserTest',
 	#instVars : [
 		'rbNamespace',
 		'objectClass',
 		'newClass',
 		'messageNodeClass'
 	],
-	#category : #'Refactoring-Tests-Core'
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBClassTest >> setUp [
 	super setUp.
 	rbNamespace := RBClassModelFactory rbNamespace new.
@@ -24,7 +25,7 @@ RBClassTest >> setUp [
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - navigation' }
 RBClassTest >> testClassSide [
 
 	| meta |
@@ -34,7 +35,7 @@ RBClassTest >> testClassSide [
 	self deny: objectClass isMeta.
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesClassVariable [
 	self deny: (objectClass definesClassVariable: #ClassVariable1).
 	self assert: (objectClass definesClassVariable: self objectClassVariable).
@@ -44,7 +45,7 @@ RBClassTest >> testDefinesClassVariable [
 		assert: (messageNodeClass definesClassVariable: self objectClassVariable)
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesInstanceVariable [
 	self deny: (objectClass definesInstanceVariable: 'instanceVariable1').
 	self assert: (newClass definesInstanceVariable: 'instanceVariable1').
@@ -53,14 +54,14 @@ RBClassTest >> testDefinesInstanceVariable [
 	self assert: (messageNodeClass definesInstanceVariable: 'selector')
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesMethod [
 	self assert: (objectClass definesMethod: #printString).
 	self assert: (newClass definesMethod: #printString).
 	self assert: (messageNodeClass definesMethod: #printString)
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesPoolDictionary [
 	self deny: (objectClass definesPoolDictionary: #OpcodePool).
 	self assert: (newClass definesPoolDictionary: #TextConstants).
@@ -69,7 +70,7 @@ RBClassTest >> testDefinesPoolDictionary [
 				definesPoolDictionary: #TextConstants)
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesTraitMethod [
 	| user trait |
 	user := rbNamespace classNamed: #MOPTestClassD.
@@ -84,7 +85,7 @@ RBClassTest >> testDefinesTraitMethod [
 	self assert: (user methodFor: #c) modelClass equals: trait
 ]
 
-{ #category : #'method tests' }
+{ #category : 'method tests' }
 RBClassTest >> testHierarchy [
 	| meta |
 	meta := objectClass classSide.
@@ -92,24 +93,118 @@ RBClassTest >> testHierarchy [
 	self assert: (meta withAllSuperclasses includes: objectClass)
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - navigation' }
+RBClassTest >> testIsEmptyClass [
+	
+	self deny: objectClass isEmptyClass.
+	self assert: (rbNamespace classNamed: #MyClassB) isEmptyClass
+]
+
+{ #category : 'tests - navigation' }
 RBClassTest >> testIsInstanceSide [
 
 	self deny: objectClass instanceSide isMeta.
-	self deny: objectClass classSide isMeta.
+	self assert: objectClass classSide isMeta.
 	self deny: objectClass classSide instanceSide isMeta.
 	
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - navigation' }
 RBClassTest >> testIsMeta [
 
 	self assert: objectClass classSide isMeta.
 	self deny: objectClass isMeta
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBClassTest >> testObjectIsNotAbstract [
 	self deny: objectClass isAbstract.
 	self deny: objectClass classSide isAbstract
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorDefinedInTheClass [
+
+	self
+		assert: (objectClass whichClassIncludesSelector: #'~~>')
+		equals: objectClass
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorDoNotFind [
+
+	self
+		assert: (objectClass whichClassIncludesSelector: #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorDoesNotExist [
+
+	self
+		assert: (objectClass whichClassIncludesSelector: #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorGoingUp [
+
+	self
+		assert:
+			((rbNamespace classNamed: #Model) whichClassIncludesSelector:
+				 #'~~>')
+		equals: objectClass
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhichClassIncludesSelectorGoingUpAndDoNotFind [
+
+	self
+		assert:
+			((rbNamespace classNamed: #Model) whichClassIncludesSelector:
+				 #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodDefinedInTheClass [
+
+	self
+		assert: (objectClass whoDefinesMethod: #'~~>')
+		equals: objectClass
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodDoesNotExist [
+
+	self
+		assert: (objectClass whoDefinesMethod: #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodGoingUp [
+
+	self
+		assert:
+		((rbNamespace classNamed: #Model) whoDefinesMethod: #'~~>')
+		equals: objectClass
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodGoingUpAndDoNotFind [
+
+	self
+		assert:
+			((rbNamespace classNamed: #Model) whoDefinesMethod:
+				 #doesNotExistAtAll)
+		equals: nil
+]
+
+{ #category : 'tests - defining methods' }
+RBClassTest >> testWhoDefinesMethodSelectorDoNotFind [
+
+	self
+		assert: (objectClass whoDefinesMethod: #doesNotExistAtAll)
+		equals: nil
 ]

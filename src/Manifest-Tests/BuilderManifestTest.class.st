@@ -2,22 +2,24 @@
 A ManifestBuilderTest is a class to test the behavior of ManifestBuilder
 "
 Class {
-	#name : #BuilderManifestTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'BuilderManifestTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'manifestBuilder'
 	],
-	#category : #'Manifest-Tests-Base'
+	#category : 'Manifest-Tests-Base',
+	#package : 'Manifest-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 BuilderManifestTest >> setUp [
 
 	super setUp.
 	manifestBuilder := TheManifestBuilder of: MFClassA
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 BuilderManifestTest >> tearDown [
 
 	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class |
@@ -27,7 +29,7 @@ BuilderManifestTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testAddAllFalsePositive [
 
 	<ignoreNotImplementedSelectors: #( ruletestV0FalsePositive )>
@@ -55,7 +57,7 @@ BuilderManifestTest >> testAddAllFalsePositive [
 	"manifestBuilder manifest class removeSelector: (manifestBuilder selectorFalsePositiveOf: 'test' version: 0)"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testAddAllToDo [
 	| array |
 	<ignoreNotImplementedSelectors: #(ruletestV0TODO)>
@@ -75,7 +77,7 @@ BuilderManifestTest >> testAddAllToDo [
 	self assert: manifestBuilder manifest ruletestV0TODO size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testAddClass [
 
 	self deny: (manifestBuilder rejectClasses anySatisfy: [ :each | each = MFClassA ]).
@@ -89,7 +91,7 @@ BuilderManifestTest >> testAddClass [
 	self deny: (manifestBuilder rejectClasses anySatisfy: [ :each | each = MFClassA ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testAddFalsePositive [
 
 	| cl mth |
@@ -113,7 +115,7 @@ BuilderManifestTest >> testAddFalsePositive [
 	self deny: ((manifestBuilder falsePositiveOf: 'test' version: 0) anySatisfy: [ :each | each = mth ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testAddRule [
 
 	self deny: (manifestBuilder rejectRules anySatisfy: [ :each | each = 0 ]).
@@ -127,7 +129,7 @@ BuilderManifestTest >> testAddRule [
 	self deny: (manifestBuilder rejectRules anySatisfy: [ :each | each = 0 ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testAddToDo [
 
 	| cl mth|
@@ -151,7 +153,7 @@ BuilderManifestTest >> testAddToDo [
 	self deny: ((manifestBuilder toDoOf: 'test' version: 0) anySatisfy: [:each| each = mth])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testCleanUpFP [
 	MFClassA compile: 'foo'.
 	manifestBuilder installFalsePositiveOf: 'test' version: 0.
@@ -165,7 +167,7 @@ BuilderManifestTest >> testCleanUpFP [
 	self assert: (manifestBuilder falsePositiveOf: 'test' version: 0) size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testCleanUpTD [
 	MFClassA compile: 'foo'.
 	manifestBuilder installToDoOf: 'test' version: 0.
@@ -179,7 +181,7 @@ BuilderManifestTest >> testCleanUpTD [
 	self assert: (manifestBuilder toDoOf: 'test' version: 0) size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testContainsFalsePositive [
 
 	manifestBuilder  installFalsePositiveOf: 'test' version: 0.
@@ -190,7 +192,7 @@ BuilderManifestTest >> testContainsFalsePositive [
 	self deny: (manifestBuilder containsFalsePositive: MFClassB onRule: 'test' version: 0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testContainsToDo [
 
 	manifestBuilder  installToDoOf: 'test' version: 0.
@@ -201,7 +203,7 @@ BuilderManifestTest >> testContainsToDo [
 	self deny: (manifestBuilder containsToDo: MFClassB onRule: 'test' version: 0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testCreationManifest [
 
 	manifestBuilder := TheManifestBuilder new.
@@ -214,7 +216,7 @@ BuilderManifestTest >> testCreationManifest [
 	self assert: (manifestBuilder manifestOf: MFClassA) isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testCreationManifestOn [
 
 	manifestBuilder := TheManifestBuilder new.
@@ -227,7 +229,7 @@ BuilderManifestTest >> testCreationManifestOn [
 	self assert: (manifestBuilder manifestOf: MFClassA) isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testDateOfFalsePositive [
 
 	| date1 date2 |
@@ -241,7 +243,7 @@ BuilderManifestTest >> testDateOfFalsePositive [
 	self assert: (manifestBuilder dateOfFalsePositive: MFClassA onRule: 'test' version: 0) <= date2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testDateOfToDo [
 
 	| date1 date2 |
@@ -255,7 +257,7 @@ BuilderManifestTest >> testDateOfToDo [
 	self assert: (manifestBuilder dateOfToDo: MFClassA onRule: 'test' version: 0) <= date2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testInstallFalsePositive [
 
 	self deny: (manifestBuilder hasFalsePositiveOf: 'test' version: 0).
@@ -264,7 +266,7 @@ BuilderManifestTest >> testInstallFalsePositive [
 	self assert: (manifestBuilder falsePositiveOf: 'test' version: 0) isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testInstallToDo [
 
 	self deny: (manifestBuilder hasToDoOf: 'test' version: 0).
@@ -273,14 +275,14 @@ BuilderManifestTest >> testInstallToDo [
 	self assert: (manifestBuilder toDoOf: 'test' version: 0) isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testIsClassAManifest [
 
 	self deny: Point isManifest.
 	self assert: (testingEnvironment at: #ManifestManifestResourcesTests) isManifest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testIsFalsePositive [
 
 	| cl mth |
@@ -305,7 +307,7 @@ BuilderManifestTest >> testIsFalsePositive [
 	self assert: (manifestBuilder isFalsePositive: mth onRule: 'test' version: 0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testResetFalsePositive [
 
 	<ignoreNotImplementedSelectors: #( ruletestV0FalsePositive )>
@@ -323,7 +325,7 @@ BuilderManifestTest >> testResetFalsePositive [
 	self assert: manifestBuilder manifest ruletestV0FalsePositive size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BuilderManifestTest >> testResetToDo [
 
 	<ignoreNotImplementedSelectors: #( ruletestV0TODO )>

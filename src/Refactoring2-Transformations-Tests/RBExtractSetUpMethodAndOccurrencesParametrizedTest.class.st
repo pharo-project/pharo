@@ -1,22 +1,24 @@
 Class {
-	#name : #RBExtractSetUpMethodAndOccurrencesParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBExtractSetUpMethodAndOccurrencesParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBExtractSetUpMethodAndOccurrences };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurrences [
 	|class refactoring|
 	refactoring := self createRefactoringWithArguments: { (15+12 to: 59+12) . #testExtractSetupExample1 . RBTestAsDataForExtractSetupTransformationTest }.
@@ -47,7 +49,7 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAnd
 		self deny: false')
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testFailureBadInterval [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExtractSetupExample1 . RBTestAsDataForExtractSetupTransformationTest }.
@@ -55,7 +57,7 @@ RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testFailureBadInterval [
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testFailureBadMethodName [
 
 	| refactoring |

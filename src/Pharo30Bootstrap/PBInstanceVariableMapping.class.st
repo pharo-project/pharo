@@ -1,6 +1,6 @@
 Class {
-	#name : #PBInstanceVariableMapping,
-	#superclass : #Object,
+	#name : 'PBInstanceVariableMapping',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'contextPcIndex',
@@ -30,10 +30,11 @@ Class {
 		'dictionaryArrayIndex',
 		'listOfClassSlots'
 	],
-	#category : 'Pharo30Bootstrap'
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 PBInstanceVariableMapping class >> onEnvironment: aRingEnvironment [ 
 	^ self new
 		environment: aRingEnvironment;
@@ -41,98 +42,98 @@ PBInstanceVariableMapping class >> onEnvironment: aRingEnvironment [
 		yourself.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBInstanceVariableMapping >> allSlotsOf: aClassName [
 
 	^ ((environment classNamed: aClassName) allSlots collect: [ :e | e name ]) joinUsing: ' '.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> classFormatIndex [
 	^ classFormatIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> classInstanceVariableNamesIndex [
 	^ classInstanceVariableNamesIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> classMethodDictionaryIndex [
 	^ classMethodDictionaryIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> classNameIndex [
 	^ classNameIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> classNumberOfVariables [
 	^ classNumberOfVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> classPoolIndex [
 	^ classPoolIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> classSharedPoolsIndex [
 	^ classSharedPoolsIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> classSuperclassIndex [
 	^ classSuperclassIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> contextClosureOrNilIndex [
 	^ contextClosureOrNilIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> contextMethodIndex [
 	^ contextMethodIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> contextPcIndex [
 	^ contextPcIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> contextReceiverIndex [
 	^ contextReceiverIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> contextSenderIndex [
 	^ contextSenderIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> contextStackpIndex [
 	^ contextStackpIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> dictionaryArrayIndex [
 	^ dictionaryArrayIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> environment: aRingEnvironment [ 
 	environment := aRingEnvironment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBInstanceVariableMapping >> initializeIndexes [
 	contextPcIndex := self lookup: #pc in: #Context.
 	contextReceiverIndex := self lookup: #receiver in: #Context.
@@ -164,12 +165,12 @@ PBInstanceVariableMapping >> initializeIndexes [
 	listOfClassSlots := self allSlotsOf: #Class.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> listOfClassSlots [
 	^ listOfClassSlots
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBInstanceVariableMapping >> lookup: anInstanceVariable in: aClass [
 	| slot |
 	
@@ -181,57 +182,57 @@ PBInstanceVariableMapping >> lookup: anInstanceVariable in: aClass [
 	^ slot index
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 PBInstanceVariableMapping >> numberOfInstanceVariablesOf: aClassName [ 
 	^ (environment classNamed: aClassName) allSlots size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> processContextIndex [
 	^ processContextIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> processNameIndex [
 	^ processNameIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> processNextLinkIndex [
 	^ processNextLinkIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> processPriorityIndex [
 	^ processPriorityIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> processPriorityListIndex [
 	^ processPriorityListIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> processSchedulerActiveProcessIndex [
 	^ processSchedulerActiveProcessIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> smalltalkImageGlobalsIndex [
 	^ smalltalkImageGlobalsIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> traitClassTraitIndex [
 	^ traitClassTraitIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> traitMethodDictionaryIndex [
 	^ traitMethodDictionaryIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> traitNameIndex [
 	^ traitNameIndex
 ]

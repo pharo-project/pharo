@@ -16,16 +16,18 @@ Preconditions:
 - the code from which the subtree will be extracted is parseable
 "
 Class {
-	#name : #RBAddSubtreeTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddSubtreeTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'interval',
 		'sourceCode'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddSubtreeTransformation class >> interval: anInterval with: aString from: aSelector in: aClass [
 
 	^ self new
@@ -36,7 +38,7 @@ RBAddSubtreeTransformation class >> interval: anInterval with: aString from: aSe
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddSubtreeTransformation class >> model: aRBModel interval: anInterval with: aString from: aSelector in: aClass [
 
 	^ self new
@@ -48,7 +50,7 @@ RBAddSubtreeTransformation class >> model: aRBModel interval: anInterval with: a
 		yourself
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 	"Searches for the statement before which the new code should be added.
 	 If not found, it just adds the new code at the end of the block"
@@ -62,8 +64,8 @@ RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 	^ aSequenceNode methodNode
 ]
 
-{ #category : #preconditions }
-RBAddSubtreeTransformation >> applicabilityConditions [ 
+{ #category : 'preconditions' }
+RBAddSubtreeTransformation >> applicabilityPreconditions [ 
 
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&
@@ -74,7 +76,7 @@ RBAddSubtreeTransformation >> applicabilityConditions [
 					true ])
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddSubtreeTransformation >> interval: anInterval with: aString from: aSelector in: aClass [
 
 	self className: aClass.
@@ -83,13 +85,7 @@ RBAddSubtreeTransformation >> interval: anInterval with: aString from: aSelector
 	sourceCode := aString
 ]
 
-{ #category : #preconditions }
-RBAddSubtreeTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddSubtreeTransformation >> privateTransform [
 	| parseTree newNode |
 	parseTree := self definingClass parseTreeForSelector: selector.
@@ -113,7 +109,7 @@ RBAddSubtreeTransformation >> privateTransform [
 	self definingClass compileTree: parseTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

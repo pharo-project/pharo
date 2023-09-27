@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemovePragmaTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemovePragmaTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRemovePragmaTransformationTest >> methodAfter [
 
 	| variable |
@@ -12,7 +14,7 @@ RBRemovePragmaTransformationTest >> methodAfter [
 	variable byteAt: 1
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRemovePragmaTransformationTest >> methodBefore [
 	<pragmaForTesting: 34>
 
@@ -21,66 +23,65 @@ RBRemovePragmaTransformationTest >> methodBefore [
 	variable byteAt: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation
-							pragma: '<pragmaForTesting: 34>'
-							inMethod: #methodBefore
-							inClass: #RBPragmaTransformationTest)
-							asRefactoring
+			 pragma: '<pragmaForTesting: 34>'
+			 inMethod: #methodBefore
+			 inClass: #RBPragmaTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation
-							pragma: '<pragmaForTesting: 34>'
-							inMethod: #method
-							inClass: #RBRemovePragmaTransformationTest)
-							asRefactoring
+			 pragma: '<pragmaForTesting: 34>'
+			 inMethod: #method
+			 inClass: #RBRemovePragmaTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testPragmaDoesNotExist [
 
 	self shouldFail: (RBRemovePragmaTransformation
-							pragma: '<gtPresentationOrder: 34>'
-							inMethod: #methodBefore
-							inClass: #RBRemovePragmaTransformationTest)
-							asRefactoring
+			 pragma: '<gtPresentationOrder: 34>'
+			 inMethod: #methodBefore
+			 inClass: #RBRemovePragmaTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBRemovePragmaTransformation
-						pragma: '<pragmaForTesting: 34>'
-						inMethod: #methodBefore
-						inClass: #RBRemovePragmaTransformationTest)
-						asRefactoring transform.
+		                pragma: '<pragmaForTesting: 34>'
+		                inMethod: #methodBefore
+		                inClass: #RBRemovePragmaTransformationTest)
+		               generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed: #RBRemovePragmaTransformationTest.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	class := refactoring model classNamed:
+		         #RBRemovePragmaTransformationTest.
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemovePragmaTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBRemovePragmaTransformation new
-		pragma: '<pragmaForTesting: 34>'
-		inMethod: #methodBefore
-		inClass: self class name)
-		transform.
+		                   pragma: '<pragmaForTesting: 34>'
+		                   inMethod: #methodBefore
+		                   inClass: self class name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #EditorFindReplaceDialogWindow }
+Extension { #name : 'EditorFindReplaceDialogWindow' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 EditorFindReplaceDialogWindow >> aboutText [
 	^ 'This dialog can be opened with <cmd-f> in an editable text area or from the text area contextual menu.
 Previous find and replace tokens are kept so that you can directly retrieve them from the find and the replace input fields.
@@ -10,12 +10,12 @@ In order to get rid of the current find token, just enter <cmd-h> with nothing s
 The colorization is manageable with the settings browser from where you can completely disallow it or change the selection color'
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 EditorFindReplaceDialogWindow >> aboutTitle [
 	^ 'Find & replace dialog'
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 EditorFindReplaceDialogWindow >> removeBoxes [
 	"Remove all label area boxes."
 

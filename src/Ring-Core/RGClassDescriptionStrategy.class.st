@@ -1,13 +1,15 @@
 Class {
-	#name : #RGClassDescriptionStrategy,
-	#superclass : #RGBehaviorStrategy,
+	#name : 'RGClassDescriptionStrategy',
+	#superclass : 'RGBehaviorStrategy',
 	#instVars : [
 		'layout'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RGClassDescriptionStrategy >> allSlots [
 
 	| superclassSlots aSuperclass |
@@ -18,7 +20,7 @@ RGClassDescriptionStrategy >> allSlots [
 	^ (superclassSlots, self layout allSlots) asArray
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGClassDescriptionStrategy >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."
 
@@ -28,7 +30,7 @@ RGClassDescriptionStrategy >> classVariablesString [
 			separatedBy: [ stream space ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RGClassDescriptionStrategy >> copyForBehaviorDefinitionPostCopy [
 
 	super copyForBehaviorDefinitionPostCopy.
@@ -36,13 +38,13 @@ RGClassDescriptionStrategy >> copyForBehaviorDefinitionPostCopy [
 	layout parent: self owner
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGClassDescriptionStrategy >> defaultLayout [
 
 	^ self owner defaultFixedLayoutStubIn: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGClassDescriptionStrategy >> initialize [
 
 	super initialize.
@@ -51,7 +53,7 @@ RGClassDescriptionStrategy >> initialize [
 	self owner environment backend createUnresolvedClassGroupFor: self owner
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGClassDescriptionStrategy >> initializeUnresolved [
 
 	super initializeUnresolved.
@@ -59,18 +61,18 @@ RGClassDescriptionStrategy >> initializeUnresolved [
 	layout := self unresolvedValue: self defaultLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGClassDescriptionStrategy >> instSize [
 
 	^ self owner allInstVarNames size
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGClassDescriptionStrategy >> instVarNames [
 	^ self layout instVarNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGClassDescriptionStrategy >> instanceVariables: aCollectionOfSymbols [
 
 	"specify instance variable names"
@@ -87,7 +89,7 @@ RGClassDescriptionStrategy >> instanceVariables: aCollectionOfSymbols [
 		layout addSlot: (RGInstanceVariableSlot named: instVarName asSymbol parent: self)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGClassDescriptionStrategy >> instanceVariablesString [
 	"Answer a string of my instance variable names separated by spaces."
 
@@ -97,7 +99,7 @@ RGClassDescriptionStrategy >> instanceVariablesString [
 			separatedBy: [ stream space ] ]
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGClassDescriptionStrategy >> makeResolved [
 
 	super makeResolved.
@@ -105,13 +107,13 @@ RGClassDescriptionStrategy >> makeResolved [
 	layout := self layout makeResolved markAsRingResolved
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGClassDescriptionStrategy >> pvtLayout [
 
 	^ layout value
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGClassDescriptionStrategy >> pvtLayout: anRGLayout [
 
 	self environment verifyOwnership: anRGLayout.
@@ -119,7 +121,7 @@ RGClassDescriptionStrategy >> pvtLayout: anRGLayout [
 	^ layout := anRGLayout
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGClassDescriptionStrategy >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
@@ -127,7 +129,7 @@ RGClassDescriptionStrategy >> pvtResolvableProperties [
      	}
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RGClassDescriptionStrategy >> storeOn: aStream [
 	aStream
 		nextPutAll: '(';

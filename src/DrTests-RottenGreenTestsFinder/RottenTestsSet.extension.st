@@ -1,18 +1,18 @@
-Extension { #name : #RottenTestsSet }
+Extension { #name : 'RottenTestsSet' }
 
-{ #category : #'*DrTests-RottenGreenTestsFinder' }
+{ #category : '*DrTests-RottenGreenTestsFinder' }
 RottenTestsSet >> addToTestRunCount: anInteger [
 
 	testsRunCount := self testsRunCount + anInteger
 ]
 
-{ #category : #'*DrTests-RottenGreenTestsFinder' }
+{ #category : '*DrTests-RottenGreenTestsFinder' }
 RottenTestsSet >> addToTestsVisitedCount: anInteger [
 
 	testsVisitedCount := self testsVisitedCount + anInteger
 ]
 
-{ #category : #'*DrTests-RottenGreenTestsFinder' }
+{ #category : '*DrTests-RottenGreenTestsFinder' }
 RottenTestsSet >> mergeWith: aRottenTestsSet [
 
 	self
@@ -21,7 +21,7 @@ RottenTestsSet >> mergeWith: aRottenTestsSet [
 		addToTestRunCount: aRottenTestsSet testsRunCount
 ]
 
-{ #category : #'*DrTests-RottenGreenTestsFinder' }
+{ #category : '*DrTests-RottenGreenTestsFinder' }
 RottenTestsSet >> testsRunCount [
 
 	^ testsRunCount ifNil: [ testsRunCount := 0 ]

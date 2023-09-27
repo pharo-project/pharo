@@ -2,27 +2,29 @@
 A mock for a global send
 "
 Class {
-	#name : #FLGlobalSendMock,
-	#superclass : #Object,
+	#name : 'FLGlobalSendMock',
+	#superclass : 'Object',
 	#instVars : [
 		'contents'
 	],
-	#category : #'Fuel-Core-Tests-Support-Mocks'
+	#category : 'Fuel-Core-Tests-Support-Mocks',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Support-Mocks'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLGlobalSendMock class >> newInstanceToMaterialize [
 	
 	^self newWith: #materializing
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLGlobalSendMock class >> newInstanceToSerialize [
 	
 	^self newWith: #serializing
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLGlobalSendMock class >> newWith: aByteSymbol [ 
 	
 	^self basicNew
@@ -30,7 +32,7 @@ FLGlobalSendMock class >> newWith: aByteSymbol [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FLGlobalSendMock >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -41,37 +43,37 @@ FLGlobalSendMock >> = anObject [
 	^ contents = anObject contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLGlobalSendMock >> contents [
 	^ contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLGlobalSendMock >> contents: anObject [
 	contents := anObject
 ]
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 FLGlobalSendMock >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitGlobalSend: self name: #FLGlobalSendMock selector: #newInstanceToMaterialize
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FLGlobalSendMock >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ contents hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLGlobalSendMock >> initializeWith: aByteSymbol [
 	
 	super initialize.
 	contents := aByteSymbol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLGlobalSendMock >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 

@@ -2,14 +2,16 @@
 I implement how to redo EpCodeChange instances.
 "
 Class {
-	#name : #EpApplyVisitor,
-	#superclass : #EpLogBrowserOperationVisitor,
+	#name : 'EpApplyVisitor',
+	#superclass : 'EpLogBrowserOperationVisitor',
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
-	#category : #'EpiceaBrowsers-Visitors'
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitBehaviorCategoryChange: aChange [
 
 	self
@@ -17,7 +19,7 @@ EpApplyVisitor >> visitBehaviorCategoryChange: aChange [
 		ifPresent: [:aClassOrTrait | aClassOrTrait category: aChange newCategory ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitBehaviorCommentChange: aChange [
 
 	self
@@ -28,31 +30,13 @@ EpApplyVisitor >> visitBehaviorCommentChange: aChange [
 				stamp: aChange newStamp ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitBehaviorNameChange: aClassRenameChange [
 	(environment classOrTraitNamed: aClassRenameChange oldName)
 		rename: aClassRenameChange newName
 ]
 
-{ #category : #visitor }
-EpApplyVisitor >> visitCategoryAddition: aPackageCreated [
-	environment organization addCategory: aPackageCreated categoryName
-]
-
-{ #category : #visitor }
-EpApplyVisitor >> visitCategoryRemoval: aPackageRemoved [
-	environment organization removeCategory: aPackageRemoved categoryName
-]
-
-{ #category : #visitor }
-EpApplyVisitor >> visitCategoryRename: aChange [
-
-	environment organization
-		renameCategory: aChange oldCategoryName
-		toBe: aChange newCategoryName
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitClassAddition: aClassCreation [
 	(self compiler evaluate: aClassCreation classAdded definitionSource) fluidInstall.
 	(self compiler evaluate: aClassCreation classAdded classSide definitionSource) fluidInstall.
@@ -65,26 +49,26 @@ EpApplyVisitor >> visitClassAddition: aClassCreation [
 				stamp: aClassCreation classAdded comment stamp ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitClassModification: aModifiedClassChange [
 
 	(self compiler evaluate: aModifiedClassChange newClass definitionSource) fluidInstall.
 	(self compiler evaluate: aModifiedClassChange newClass classSide definitionSource) fluidInstall
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitClassRemoval: aClassRemoval [
 	environment removeClassNamed: aClassRemoval behaviorAffectedName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitCodeChange: aChange [
 	"Default behavior for any change."
 
 	^ self visitEvent: aChange
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitMethodAddition: aMethodCreated [
 
 	self
@@ -92,7 +76,7 @@ EpApplyVisitor >> visitMethodAddition: aMethodCreated [
 		ifPresent: [ :behavior | behavior compile: aMethodCreated sourceCode classified: aMethodCreated protocol ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitMethodModification: aMethodModified [
 
 	self
@@ -103,7 +87,7 @@ EpApplyVisitor >> visitMethodModification: aMethodModified [
 				classified: aMethodModified newProtocol ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 
 	self
@@ -112,43 +96,67 @@ EpApplyVisitor >> visitMethodRemoval: aMethodRemoval [
 			behavior removeSelector: aMethodRemoval selector ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitPackageAddition: aPackageAddition [
 
-	self packageOrganizer registerPackageNamed: aPackageAddition packageName
+	self packageOrganizer ensurePackage: aPackageAddition packageName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitPackageRemoval: aPackageRemoval [
 
 	self packageOrganizer removePackage: aPackageRemoval packageName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
+EpApplyVisitor >> visitPackageRename: aPackageRename [
+
+	environment organization renamePackage: aPackageRename oldPackageName to: aPackageRename newPackageName
+]
+
+{ #category : 'visitor' }
+EpApplyVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	environment organization ensureTagNamed: aPackageTagAddition tagName inPackageNamed: aPackageTagAddition packageName
+]
+
+{ #category : 'visitor' }
+EpApplyVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	environment organization removeTag: aPackageTagRemoval tagName fromPackage: aPackageTagRemoval packageName
+]
+
+{ #category : 'visitor' }
+EpApplyVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	environment organization renameTag: aPackageTagRename oldTagName to: aPackageTagRename newTagName inPackage: aPackageTagRename packageName
+]
+
+{ #category : 'visitor' }
 EpApplyVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	self behaviorNamed: aProtocolAddition behaviorAffectedName ifPresent: [ :behavior | behavior addProtocol: aProtocolAddition protocol ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitProtocolRemoval: aProtocolRemoved [
 
 	self behaviorNamed: aProtocolRemoved behaviorAffectedName ifPresent: [ :behavior | behavior removeProtocol: aProtocolRemoved protocol ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitTraitAddition: aChange [
 
 	(self compiler evaluate: aChange traitAdded definitionSource) fluidInstall
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitTraitModification: aChange [
 
 	(self compiler evaluate: aChange newTrait definitionSource) fluidInstall
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpApplyVisitor >> visitTraitRemoval: aTraitRemoval [
 
 	environment removeClassNamed: aTraitRemoval behaviorAffectedName

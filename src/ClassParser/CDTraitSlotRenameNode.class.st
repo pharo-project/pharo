@@ -2,27 +2,29 @@
 MyTrait @@ {#ivar -> ivar2 }
 "
 Class {
-	#name : #CDTraitSlotRenameNode,
-	#superclass : #CDTraitCompositionNode,
+	#name : 'CDTraitSlotRenameNode',
+	#superclass : 'CDTraitCompositionNode',
 	#instVars : [
 		'renames'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitSlotRenameNode >> renames [
 
 	^ renames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitSlotRenameNode >> renames: anObject [
 
 	renames := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CDTraitSlotRenameNode >> toString [
 	^ subject name ,' @@ ', renames asString
 ]

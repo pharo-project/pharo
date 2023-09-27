@@ -2,28 +2,30 @@
 A derived slot is a virtual slot that stores its value in a hidden base slot.
 "
 Class {
-	#name : #DerivedSlot,
-	#superclass : #Slot,
+	#name : 'DerivedSlot',
+	#superclass : 'Slot',
 	#instVars : [
 		'baseSlot'
 	],
-	#category : #'Slot-Examples-Base'
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DerivedSlot >> isAccessedIn: aMethod [
 	^ (baseSlot isAccessedIn: aMethod)
 		  ifTrue: [ super isAccessedIn: aMethod ]
 		  ifFalse: [ false ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DerivedSlot >> isReadIn: aMethod [
 	(baseSlot isReadIn: aMethod) ifFalse: [ ^false ].
 	^super isReadIn: aMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DerivedSlot >> isWrittenIn: aMethod [
 	(baseSlot isWrittenIn: aMethod) ifFalse: [ ^false ].
 	^super isWrittenIn: aMethod

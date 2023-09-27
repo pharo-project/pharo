@@ -60,8 +60,8 @@ but is fragile wrt changing process scheduling semantics.  Subclasses add specif
 protection.
 "
 Class {
-	#name : #DelayBasicScheduler,
-	#superclass : #DelayNullScheduler,
+	#name : 'DelayBasicScheduler',
+	#superclass : 'DelayNullScheduler',
 	#instVars : [
 		'ticker',
 		'runTimerEventLoop',
@@ -73,29 +73,31 @@ Class {
 		'delayToStart',
 		'delayToStop'
 	],
-	#category : #'Kernel-Delays'
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DelayBasicScheduler class >> defaultSuspendedDelaysHeap [
 	 ^ Heap
 			sortBlock: [ :delay1 :delay2 |
 				delay1 resumptionTick <= delay2 resumptionTick ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DelayBasicScheduler class >> onTicker: aDelayTicker suspendedDelaysHeap: aHeap [
 	"Facilitates unit tests examining the otherwise hidden suspendedDelays variable"
 	^self basicNew initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DelayBasicScheduler >> anyActive [
 	"Return true if there is any delay currently active"
 	^activeDelay notNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelayBasicScheduler >> initialize [
 	"Default configuration."
 
@@ -103,21 +105,21 @@ DelayBasicScheduler >> initialize [
 		  suspendedDelaysHeap: DelayBasicScheduler defaultSuspendedDelaysHeap
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelayBasicScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap [
 	ticker := aDelayTicker.
 	suspendedDelays := aHeap.
 	timingSemaphore := Semaphore new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DelayBasicScheduler >> nextWakeUpTime [
 	^ activeDelay
 			ifNil: [ 0 ]
 			ifNotNil: [ :delay | delay resumptionTick ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DelayBasicScheduler >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -127,7 +129,7 @@ DelayBasicScheduler >> printOn: aStream [
 		nextPutAll: ticker className
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayBasicScheduler >> restartTimerEventLoop [
 	"Start the timer event loop"
 	"Delay restartTimerEventLoop"
@@ -135,7 +137,7 @@ DelayBasicScheduler >> restartTimerEventLoop [
 	self startTimerEventLoop
 ]
 
-{ #category : #'user-api' }
+{ #category : 'user-api' }
 DelayBasicScheduler >> resume [
 	"Unsuspend the timing-priority delay scheduling loop when resuming a snapshot."
 
@@ -146,7 +148,7 @@ DelayBasicScheduler >> resume [
 	 which does... suspendSemaphore := nil."
 ]
 
-{ #category : #'private - timing priority process' }
+{ #category : 'private - timing priority process' }
 DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 	"Private! Outer loop for the timing priority timer event loop.
 	 Invoked by api-system #startTimerEventLoop"
@@ -175,7 +177,7 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 				activeDelay := suspendedDelays removeFirstOrNil ]]
 ]
 
-{ #category : #'user-api' }
+{ #category : 'user-api' }
 DelayBasicScheduler >> schedule: aDelay [
 	"This is the front-half of scheduling a delay. Invoked from user processes.
 	 For back-half see #scheduleAtTimingPriority"
@@ -192,7 +194,7 @@ DelayBasicScheduler >> schedule: aDelay [
 	timingSemaphore signal. "Transfer execution to back-end #scheduleAtTimingPriority"
 ]
 
-{ #category : #'private - timing priority process' }
+{ #category : 'private - timing priority process' }
 DelayBasicScheduler >> scheduleAtTimingPriority [
 	"Private! Invoke only from the timing-priority process.
 	 This is the back-half of scheduling a delay. For front-half see #schedule:"
@@ -210,24 +212,24 @@ DelayBasicScheduler >> scheduleAtTimingPriority [
 	delayToStart := nil
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayBasicScheduler >> schedulingProcess [
 	^ timerEventLoop
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayBasicScheduler >> shutDown [
 	self suspend
 ]
 
-{ #category : #'support - test cases' }
+{ #category : 'support - test cases' }
 DelayBasicScheduler >> simulate_vmMilliseconds: milliseconds [
 	"This method is only called from tests which make use of the 'simulation' tickers
 	which implement the next method."
 	ticker simulate_vmMilliseconds: milliseconds
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayBasicScheduler >> startTimerEventLoop [
 	"Start the timer event loop"
 	"Delay restartTimerEventLoop"
@@ -235,7 +237,7 @@ DelayBasicScheduler >> startTimerEventLoop [
 	self startTimerEventLoopPriority: Processor timingPriority
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayBasicScheduler >> startTimerEventLoopPriority: processorPriority [
 	"Start the timer event loop"
 	"Delay restartTimerEventLoop"
@@ -251,12 +253,12 @@ DelayBasicScheduler >> startTimerEventLoopPriority: processorPriority [
 	timerEventLoop resume
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayBasicScheduler >> startUp [
 	self resume
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayBasicScheduler >> stopTimerEventLoop [
 	"Stop the timingpriority event loop"
 
@@ -273,7 +275,7 @@ DelayBasicScheduler >> stopTimerEventLoop [
 	timerEventLoop := nil
 ]
 
-{ #category : #'user-api' }
+{ #category : 'user-api' }
 DelayBasicScheduler >> suspend [
 	"This is the front-half for suspending the delay scheduler to prevent
 	 wake-up of delayed threads in the middle of snapshotting.
@@ -286,7 +288,7 @@ DelayBasicScheduler >> suspend [
 	 which then waits for suspendSemaphore to be signalled from #startup"
 ]
 
-{ #category : #'private - timing priority process' }
+{ #category : 'private - timing priority process' }
 DelayBasicScheduler >> suspendAtTimingPriority [
 	"Private! This is the front-half for suspending the delay scheduler to prevent
 	 wake-up of delayed threads in the middle of snapshotting. For front-half see #suspend"
@@ -299,12 +301,12 @@ DelayBasicScheduler >> suspendAtTimingPriority [
 	suspendSemaphore := nil
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayBasicScheduler >> ticker [
 	^ticker
 ]
 
-{ #category : #'user-api' }
+{ #category : 'user-api' }
 DelayBasicScheduler >> unschedule: aDelay [
 	"This is the front-half of unscheduling a delay. Invoked from user processes.
 	 For back-half see #unscheduleAtTimingPriority"
@@ -318,7 +320,7 @@ DelayBasicScheduler >> unschedule: aDelay [
 	timingSemaphore signal. "Transfer execution to #unscheduleAtTimingPriority"
 ]
 
-{ #category : #'private - timing priority process' }
+{ #category : 'private - timing priority process' }
 DelayBasicScheduler >> unscheduleAtTimingPriority [
 	"Private! Invoke only from the timing-priority process.
 	 This is the back-half of unscheduling a delay. For front-half see #unschedule:"

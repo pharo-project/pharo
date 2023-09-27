@@ -1,6 +1,6 @@
-Extension { #name : #MCVersionInspector }
+Extension { #name : 'MCVersionInspector' }
 
-{ #category : #'*Monticello-GUI-Diff' }
+{ #category : '*Monticello-GUI-Diff' }
 MCVersionInspector >> viewChanges: patch from: fromDescription to: toDescription [
 	"Open a patch morph for the changes."
 

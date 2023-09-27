@@ -16,29 +16,31 @@ For the #removeWithClasses operation I remove empty class tag from registrered t
 My class query is ClyTaggedClasses
 "
 Class {
-	#name : #ClyTaggedClassGroup,
-	#superclass : #ClyClassGroup,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyTaggedClassGroup',
+	#superclass : 'ClyClassGroup',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTaggedClassGroup class >> isBasedOnClassTag [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTaggedClassGroup class >> isEditableGroup [
 	^true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTaggedClassGroup class >> withClassesFrom: aPackageScope taggedBy: tagName [
 	| classQuery |
 	classQuery := ClyTaggedClassesQuery by: tagName from: aPackageScope.
 	^ClyTaggedClassGroup named: tagName on: classQuery
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTaggedClassGroup >> importClass: aClass [
 	| newPackages |
 	super importClass: aClass.
@@ -51,25 +53,24 @@ ClyTaggedClassGroup >> importClass: aClass [
 	aClass packageTag: self tag
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTaggedClassGroup >> removeWithClasses [
 
 	super removeWithClasses.
-	classQuery scope packagesDo: [ :each |
-		each removeClassTag: self tag]
+	classQuery scope packagesDo: [ :each | each removeTag: self tag ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTaggedClassGroup >> renameClassTagTo: newTag [
 
 	self classes do: [ :class | class packageTag: newTag ].
 
 	classQuery scope packagesDo: [ :package |
-		(package tagsForClasses includes: newTag) ifFalse: [ package addClassTag: newTag ].
-		package removeClassTag: self tag ]
+		package ensureTag: newTag.
+		package removeTag: self tag ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTaggedClassGroup >> tag [
 	^ classQuery tag
 ]

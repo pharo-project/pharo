@@ -2,24 +2,26 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TAddForIdentityCollectionsTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TAddForIdentityCollectionsTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAddForIdentityCollectionsTest >> identityCollectionWithElementsCopyNotIdentical [
 	"Returns a collection including elements for which #copy doesn't return the same object."
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TAddForIdentityCollectionsTest >> test0FixtureAddForIdentityCollectionsTest [
 
 	self identityCollectionWithElementsCopyNotIdentical.
 	self identityCollectionWithElementsCopyNotIdentical  do: [ : each | self deny: each == each copy ]
 ]
 
-{ #category : #'tests - adding for identity collections' }
+{ #category : 'tests - adding for identity collections' }
 TAddForIdentityCollectionsTest >> testTAddIfNotPresentWithElementCopy [
 " test specific to IdentityCollections for wich #addIfNotPresent should use == check insted of =."
 	| added oldSize collection element elementCopy |

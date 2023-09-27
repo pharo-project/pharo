@@ -18,15 +18,17 @@ Observations about the transformation:
 - In Pharo, return statements can also be declared inside blocks. In this case, the transformation will try to match return statement passed as argument and remove the return values in this method. If no matching return value is found, the transformation will remove the last node.
 "
 Class {
-	#name : #RBRemoveReturnStatementTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBRemoveReturnStatementTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'returnValue'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveReturnStatementTransformation class >> model: aRBModel return: anExpression inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -37,7 +39,7 @@ RBRemoveReturnStatementTransformation class >> model: aRBModel return: anExpress
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveReturnStatementTransformation class >> return: anExpression inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -47,8 +49,8 @@ RBRemoveReturnStatementTransformation class >> return: anExpression inMethod: aS
 		yourself
 ]
 
-{ #category : #preconditions }
-RBRemoveReturnStatementTransformation >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBRemoveReturnStatementTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [ self definingClass canUnderstand: selector ]
@@ -61,7 +63,7 @@ RBRemoveReturnStatementTransformation >> applicabilityConditions [
 					    expandMacrosWith: selector))
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveReturnStatementTransformation >> classExist [
 
 	^ RBCondition
@@ -70,13 +72,7 @@ RBRemoveReturnStatementTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #preconditions }
-RBRemoveReturnStatementTransformation >> preconditions [
-
-	^ self applicabilityConditions 
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveReturnStatementTransformation >> privateTransform [
 
 	| methodTree nodesToRemove |
@@ -92,7 +88,7 @@ RBRemoveReturnStatementTransformation >> privateTransform [
 	self definingClass compileTree: methodTree
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveReturnStatementTransformation >> return: anExpression inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -100,7 +96,7 @@ RBRemoveReturnStatementTransformation >> return: anExpression inMethod: aSelecto
 	returnValue := anExpression
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveReturnStatementTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

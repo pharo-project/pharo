@@ -2,19 +2,21 @@
 I am a raw data layout that holds double bytes (16 bits).
 "
 Class {
-	#name : #DoubleByteLayout,
-	#superclass : #BitsLayout,
-	#category : #'Kernel-Layout'
+	#name : 'DoubleByteLayout',
+	#superclass : 'BitsLayout',
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DoubleByteLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ superLayout extendDoubleByte
 		host: aClass;
 		yourself
 ]
 
-{ #category : #description }
+{ #category : 'description' }
 DoubleByteLayout class >> subclassDefiningSymbol [
 	"Answer a keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
@@ -22,23 +24,23 @@ DoubleByteLayout class >> subclassDefiningSymbol [
 	^#variableDoubleByteSubclass:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoubleByteLayout >> bytesPerSlot [
 
 	^ 2
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 DoubleByteLayout >> extendDoubleByte [
 	^ DoubleByteLayout new
 ]
 
-{ #category : #format }
+{ #category : 'format' }
 DoubleByteLayout >> instanceSpecification [
 	^ 12
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoubleByteLayout >> isDoubleBytes [
 	^ true
 ]

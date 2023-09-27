@@ -2,23 +2,25 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TCloneTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TCloneTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
 TCloneTest >> empty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 TCloneTest >> nonEmpty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TCloneTest >> test0FixtureCloneTest [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -26,7 +28,7 @@ TCloneTest >> test0FixtureCloneTest [
 	self assertEmpty: self empty
 ]
 
-{ #category : #'tests - copy - clone' }
+{ #category : 'tests - copy - clone' }
 TCloneTest >> testCopyCreatesNewObject [
 
 
@@ -35,12 +37,12 @@ TCloneTest >> testCopyCreatesNewObject [
 	self deny: self nonEmpty == copy
 ]
 
-{ #category : #'tests - copy - clone' }
+{ #category : 'tests - copy - clone' }
 TCloneTest >> testCopyEmpty [
 	self assertEmpty: self empty copy
 ]
 
-{ #category : #'tests - copy - clone' }
+{ #category : 'tests - copy - clone' }
 TCloneTest >> testCopyNonEmpty [
 	| copy |
 	copy := self nonEmpty copy.

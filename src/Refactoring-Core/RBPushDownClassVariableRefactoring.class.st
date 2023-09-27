@@ -4,15 +4,17 @@ I am a refactoring for moving a class variable down to my subclasses.
 My precondition verifies that the moved variable is not referenced in the methods of the original class.
 "
 Class {
-	#name : #RBPushDownClassVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
+	#name : 'RBPushDownClassVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
 	#instVars : [
 		'destinationClass'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> findDestinationClass [
 	| classes |
 	classes := class withAllSubclasses reject: [ :each |
@@ -31,7 +33,7 @@ RBPushDownClassVariableRefactoring >> findDestinationClass [
 	^ destinationClass
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> preconditions [
 	"Preconditions are that only one subclass refers to the class variable."
 
@@ -41,13 +43,21 @@ RBPushDownClassVariableRefactoring >> preconditions [
 					true])
 ]
 
-{ #category : #preconditions }
+{ #category : 'transforming' }
+RBPushDownClassVariableRefactoring >> privateTransform [
+
+	class removeClassVariable: variableName.
+	destinationClass ifNil: [ ^ self ].
+	destinationClass addClassVariable: variableName
+]
+
+{ #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> signalMultipleReferenceError [
 	self signalReferenceError: ('Multiple subclasses reference <1s>'
 				expandMacrosWith: variableName)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> signalReferenceError: errorString [
 
 	class realClass
@@ -64,17 +74,9 @@ RBPushDownClassVariableRefactoring >> signalReferenceError: errorString [
 			]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> signalStillReferencedError [
 	self signalReferenceError: ('<1p> has references to <2s>'
 				expandMacrosWith: class
 				with: variableName)
-]
-
-{ #category : #transforming }
-RBPushDownClassVariableRefactoring >> transform [
-
-	class removeClassVariable: variableName.
-	destinationClass ifNil: [ ^ self ].
-	destinationClass addClassVariable: variableName
 ]

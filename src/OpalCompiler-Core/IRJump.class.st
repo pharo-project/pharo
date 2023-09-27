@@ -2,61 +2,63 @@
 Instruction ""goto: labelNum""
 "
 Class {
-	#name : #IRJump,
-	#superclass : #IRInstruction,
+	#name : 'IRJump',
+	#superclass : 'IRInstruction',
 	#instVars : [
 		'destination',
 		'successor'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRJump >> accept: aVisitor [
 	^ aVisitor visitJump: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJump >> destination [
 
 	^ destination
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJump >> destination: aSequence [
 	destination := aSequence
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRJump >> isGoto [
 	"is unconditional jump"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRJump >> isJump [
 	"goto or if"
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJump >> nextBytecodeOffsetAfterJump [
 	^ destination last destination first bytecodeOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJump >> successor [
 	^successor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJump >> successor: succ [
 	successor := succ
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJump >> successorSequences [
 
 	^ {destination. successor}

@@ -1,22 +1,24 @@
 Class {
-	#name : #RBDeprecateClassParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBDeprecateClassParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBDeprecateClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBDeprecateClassRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDeprecateClassParametrizedTest >> constructor [
 	^ #deprecate:in:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBDeprecateClassParametrizedTest >> testFailureBadName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ RBLintRuleTestData . self objectClassVariable }).
@@ -24,7 +26,7 @@ RBDeprecateClassParametrizedTest >> testFailureBadName [
 		{ RBLintRuleTestData . #'Ob ject' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBDeprecateClassParametrizedTest >> testFailureMetaClassFailure [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -32,7 +34,7 @@ RBDeprecateClassParametrizedTest >> testFailureMetaClassFailure [
 				 #Foo })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBDeprecateClassParametrizedTest >> testModelRenameClass [
 	| refactoring replacement deprecated user |
 

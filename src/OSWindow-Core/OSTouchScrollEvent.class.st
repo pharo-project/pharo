@@ -2,36 +2,38 @@
 Superclass of all scrolls events
 "
 Class {
-	#name : #OSTouchScrollEvent,
-	#superclass : #OSTouchComplexEvent,
+	#name : 'OSTouchScrollEvent',
+	#superclass : 'OSTouchComplexEvent',
 	#instVars : [
 		'dDist',
 		'direction'
 	],
-	#category : #'OSWindow-Core-Events-Touch'
+	#category : 'OSWindow-Core-Events-Touch',
+	#package : 'OSWindow-Core',
+	#tag : 'Events-Touch'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchScrollEvent class >> id [
 	^ #scroll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchScrollEvent >> dDist [
 	^ dDist
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchScrollEvent >> dDist: anObject [
 	dDist := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchScrollEvent >> direction [
 	^ direction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchScrollEvent >> direction: anObject [
 	direction := anObject
 ]

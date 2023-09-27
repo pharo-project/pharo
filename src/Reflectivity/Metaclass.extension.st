@@ -1,6 +1,6 @@
-Extension { #name : #Metaclass }
+Extension { #name : 'Metaclass' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Metaclass >> nonAnonymousClass [
 
 	^ self

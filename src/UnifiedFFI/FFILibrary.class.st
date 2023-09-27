@@ -3,55 +3,57 @@ I'm an util to answer module libraries that can have different names in differen
 I just implement a double dispatch with platform.
 "
 Class {
-	#name : #FFILibrary,
-	#superclass : #Object,
+	#name : 'FFILibrary',
+	#superclass : 'Object',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'UnifiedFFI-Libraries'
+	#category : 'UnifiedFFI-Libraries',
+	#package : 'UnifiedFFI',
+	#tag : 'Libraries'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFILibrary class >> asFFILibrary [
 	^ self uniqueInstance
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFILibrary class >> calloutAPIClass [
 
 	^ self uniqueInstance calloutAPIClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFILibrary class >> new [
 	self error: 'Use #uniqueInstance'
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 FFILibrary class >> options [
 
 	^ #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFILibrary class >> uniqueInstance [
 	self = FFILibrary
 		ifTrue: [ self error: 'I''m an abstract class, use one of my children.' ].
 	^ uniqueInstance ifNil: [ uniqueInstance := super new ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFILibrary >> asFFILibrary [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFILibrary >> calloutAPIClass [
 
 	^ FFICalloutAPI calloutAPIClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFILibrary >> ffiLibrary [
 
 	"This method returns the FFILibrary to use when executing a FFI call.
@@ -60,17 +62,17 @@ FFILibrary >> ffiLibrary [
 	^ self
 ]
 
-{ #category : #'library path' }
+{ #category : 'library path' }
 FFILibrary >> ffiLibraryName [
 	^ self libraryName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFILibrary >> libraryName [
 	^ Smalltalk platform ffiLibraryName: self
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 FFILibrary >> macLibraryName [
 	"Calling by default #macModuleName for backwards compatibility.
 	The system complains that this method is not implemented as it will only exist
@@ -79,39 +81,39 @@ FFILibrary >> macLibraryName [
 	^ self macModuleName
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 FFILibrary >> options [
 
 	^ self class options
 ]
 
-{ #category : #'extension - hooks' }
+{ #category : 'extension - hooks' }
 FFILibrary >> postMethodBuildContext: sender builder: builder spec: functionSpec [
 ]
 
-{ #category : #'extension - hooks' }
+{ #category : 'extension - hooks' }
 FFILibrary >> preMethodBuildContext: sender builder: builder spec: functionSpec [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFILibrary >> uniqueInstance [
 
 	^ self
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 FFILibrary >> unix32LibraryName [
 	"Use to #unixLibraryName to keep backward compatibility."
 	^ self unixLibraryName
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 FFILibrary >> unix64LibraryName [
 	"Point to #unixLibraryName to keep backward compatibility."
 	^ self unixLibraryName
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 FFILibrary >> unixLibraryName [
 	"Kept for backward compatibility.
 	The system complains that this method is not implemented as it will only exist
@@ -120,7 +122,7 @@ FFILibrary >> unixLibraryName [
 	^ self unixModuleName
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 FFILibrary >> win32LibraryName [
 	"Calling by default #win32ModuleName for backwards compatibility.
 	The system complains that this method is not implemented as it will only exist

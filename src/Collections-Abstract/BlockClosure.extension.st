@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosure }
+Extension { #name : 'BlockClosure' }
 
-{ #category : #'*Collections-Abstract-splitjoin' }
+{ #category : '*Collections-Abstract-splitjoin' }
 BlockClosure >> split: aSequenceableCollection indicesDo: aBlock [
 	"Perform an action specified as aBlock (with a start and end argument) to each of the indices of aSequenceableCollection that have been identified by taking the receiver as a splitter."
 

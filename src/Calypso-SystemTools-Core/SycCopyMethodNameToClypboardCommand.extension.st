@@ -1,13 +1,13 @@
-Extension { #name : #SycCopyMethodNameToClypboardCommand }
+Extension { #name : 'SycCopyMethodNameToClypboardCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycCopyMethodNameToClypboardCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycCopyMethodNameToClypboardCommand class >> methodTabIconActivation [
 	<classAnnotation>
 

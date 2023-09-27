@@ -2,7 +2,9 @@
 I am the abstract class for all two fingers rotation events
 "
 Class {
-	#name : #OSTouchTwoFingersRotationEvent,
-	#superclass : #OSTouchRotationEvent,
-	#category : #'OSWindow-Core-Events-Touch'
+	#name : 'OSTouchTwoFingersRotationEvent',
+	#superclass : 'OSTouchRotationEvent',
+	#category : 'OSWindow-Core-Events-Touch',
+	#package : 'OSWindow-Core',
+	#tag : 'Events-Touch'
 }

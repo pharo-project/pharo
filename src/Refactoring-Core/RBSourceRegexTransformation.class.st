@@ -4,27 +4,29 @@ I am a regex refactoring replacing method sources.
 See comment of superclass for a nice script to be adapated to method sources.
 "
 Class {
-	#name : #RBSourceRegexTransformation,
-	#superclass : #RBRegexRefactoring,
-	#category : #'Refactoring-Core-Transformation-Unused'
+	#name : 'RBSourceRegexTransformation',
+	#superclass : 'RBRegexRefactoring',
+	#category : 'Refactoring-Core-Transformation-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Transformation-Unused'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBSourceRegexTransformation >> parseMethod: aString [
 	^ [ self parserClass parseMethod: aString ]
 		on: Error
 		do: [ :err | nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSourceRegexTransformation >> parseSelector: aSelector [
 	^ [ self parserClass parseMethodPattern: aSelector ]
 		on: Error
 		do: [ nil ]
 ]
 
-{ #category : #transforming }
-RBSourceRegexTransformation >> transform [
+{ #category : 'transforming' }
+RBSourceRegexTransformation >> privateTransform [
 
 	| original replacement protocols |
 
@@ -40,10 +42,10 @@ RBSourceRegexTransformation >> transform [
 									( self parseSelector: replacement ) = selector
 										ifFalse: [ class removeMethod: selector ].
 										self generateChangesFor:
-											(RBAddMethodTransformRefactoring
-												addMethod: replacement
-												toClass: class
-												inProtocols: protocols)
+											(RBAddMethodTransformation
+												sourceCode: replacement
+												in: class
+												withProtocol: protocols)
 									]
 							]
 					]

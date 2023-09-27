@@ -1,6 +1,6 @@
 Class {
-	#name : #RBSharedPoolTest,
-	#superclass : #RBRefactoringBrowserTest,
+	#name : 'RBSharedPoolTest',
+	#superclass : 'RBRefactoringBrowserTest',
 	#instVars : [
 		'rbNamespace',
 		'objectClass',
@@ -8,10 +8,11 @@ Class {
 		'userOf',
 		'defineOf'
 	],
-	#category : #'Refactoring-Tests-Core'
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBSharedPoolTest >> setUp [
 	super setUp.
 	rbNamespace := RBClassModelFactory rbNamespace new.
@@ -33,13 +34,13 @@ RBSharedPoolTest >> setUp [
 	userOf := rbNamespace classNamed: #DateAndTime
 ]
 
-{ #category : #'method tests' }
+{ #category : 'method tests' }
 RBSharedPoolTest >> testDefinesClassVariable [
 
 	self assert: (defineOf definesClassVariable: #DayNames)
 ]
 
-{ #category : #'method tests' }
+{ #category : 'method tests' }
 RBSharedPoolTest >> testDefinesPoolDictionary [
 	"Pay attention that definesPoolDictionary: is badly named, because in fact
 	it checks whether a class uses a sharedPool!!!!"
@@ -47,19 +48,19 @@ RBSharedPoolTest >> testDefinesPoolDictionary [
 	self assert: (userOf definesPoolDictionary: #ChronologyConstants)
 ]
 
-{ #category : #'method tests' }
+{ #category : 'method tests' }
 RBSharedPoolTest >> testIsNotSharedPool [
 
 	self deny: objectClass isSharedPool
 ]
 
-{ #category : #'method tests' }
+{ #category : 'method tests' }
 RBSharedPoolTest >> testIsSharedPool [
 
 	self assert: defineOf isSharedPool
 ]
 
-{ #category : #'method tests' }
+{ #category : 'method tests' }
 RBSharedPoolTest >> testRemovePoolDictionary [
 	"Pay attention that definesPoolDictionary: is badly named, because in fact
 	it checks whether a class uses a sharedPool!!!!"

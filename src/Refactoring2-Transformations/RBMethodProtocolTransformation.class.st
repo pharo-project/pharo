@@ -14,21 +14,23 @@ Preconditions:
 - the method exists.
 "
 Class {
-	#name : #RBMethodProtocolTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBMethodProtocolTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodProtocolTransformation class >> isTransformation [
 
 	^ true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMethodProtocolTransformation class >> model: aRBModel protocol: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -39,7 +41,7 @@ RBMethodProtocolTransformation class >> model: aRBModel protocol: aString inMeth
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -49,8 +51,8 @@ RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector in
 		yourself
 ]
 
-{ #category : #preconditions }
-RBMethodProtocolTransformation >> applicabilityConditions [
+{ #category : 'preconditions' }
+RBMethodProtocolTransformation >> applicabilityPreconditions [
 
 	^ self classExist
 	  & (RBCondition definesSelector: selector in: self definingClass)
@@ -61,7 +63,7 @@ RBMethodProtocolTransformation >> applicabilityConditions [
 				    className))
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBMethodProtocolTransformation >> classExist [
 
 	^ RBCondition
@@ -70,13 +72,7 @@ RBMethodProtocolTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #preconditions }
-RBMethodProtocolTransformation >> preconditions [
-
-	^ self applicabilityConditions
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBMethodProtocolTransformation >> privateTransform [
 
 	self model
@@ -85,7 +81,7 @@ RBMethodProtocolTransformation >> privateTransform [
 		classified: protocol
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -93,7 +89,7 @@ RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass:
 	protocol := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethodProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

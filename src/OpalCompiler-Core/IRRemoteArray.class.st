@@ -2,41 +2,43 @@
 I model the TempVector for the decompiler
 "
 Class {
-	#name : #IRRemoteArray,
-	#superclass : #Object,
+	#name : 'IRRemoteArray',
+	#superclass : 'Object',
 	#instVars : [
 		'size',
 		'index'
 	],
-	#category : #'OpalCompiler-Core-Bytecode'
+	#category : 'OpalCompiler-Core-Bytecode',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Bytecode'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRRemoteArray >> do: aBlock [
 	1 to: size do: [ :idx | aBlock value: (idx - 1) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRRemoteArray >> index [
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRRemoteArray >> index: anIndex [
 	index := anIndex
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRRemoteArray >> indexOf: anInteger [
 	^anInteger + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRRemoteArray >> size [
 	^ size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRRemoteArray >> size: aSize [
 	size := aSize
 ]

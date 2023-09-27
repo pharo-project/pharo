@@ -2,17 +2,18 @@
 This class is an extension so we can mix command of Commander2 with Commander.
 "
 Class {
-	#name : #SycSourceCodeCmCommand,
-	#superclass : #SycCmCommand,
-	#category : #'SystemCommands-SourceCodeCommands'
+	#name : 'SycSourceCodeCmCommand',
+	#superclass : 'SycCmCommand',
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycSourceCodeCmCommand class >> activationStrategy [
 	^ SycSourceCodeMenuActivation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycSourceCodeCmCommand >> order [
 
 	^ 100

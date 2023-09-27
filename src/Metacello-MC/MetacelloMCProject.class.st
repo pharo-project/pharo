@@ -1,49 +1,51 @@
 Class {
-	#name : #MetacelloMCProject,
-	#superclass : #MetacelloProject,
-	#category : #'Metacello-MC-Model'
+	#name : 'MetacelloMCProject',
+	#superclass : 'MetacelloProject',
+	#category : 'Metacello-MC-Model',
+	#package : 'Metacello-MC',
+	#tag : 'Model'
 }
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProject >> asBaselineProject [
     ^ MetacelloMCBaselineProject new
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProject >> asConfigurationProject [
     ^ self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> baselineOfProjectSpecClass [
     ^ MetacelloMCBaselineOfProjectSpec
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> configurationOfProjectSpecClass [
     ^ MetacelloMCConfigurationOfProjectSpec
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloMCProject >> createRepository: aRepositorySpec [
 
 	^ MetacelloPlatform current createRepository: aRepositorySpec
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> defaultLoaderClass [
 
 	^MetacelloLoadingMCSpecLoader
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> fetchProject [
 	"fetch the latest version of the configuration package"
 	
 	^self fetchProject: MetacelloLoaderPolicy new
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> fetchProject: aLoaderPolicy [
 	"fetch the latest version of the configuration package"
 	
@@ -63,7 +65,7 @@ MetacelloMCProject >> fetchProject: aLoaderPolicy [
 	^true
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> goferBranch: branchName project: commitMessage [
     | pkgSpec |
     pkgSpec := self projectPackage.
@@ -71,7 +73,7 @@ MetacelloMCProject >> goferBranch: branchName project: commitMessage [
     ^ pkgSpec goferBranchPackage: branchName message: commitMessage
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> goferCommitProject: commitMessage [
 
 	| pkgSpec |
@@ -79,19 +81,19 @@ MetacelloMCProject >> goferCommitProject: commitMessage [
 	^pkgSpec goferCommitPackage: commitMessage
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> packageSpec [
 
 	^self packageSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> packageSpecClass [
 
 	^MetacelloPackageSpec
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> packagesNeedSaving: aVersionString [
 	"Answer a collection of associations (package -> repository) representing the packages 
 	 reachable from this project that need to be saved"
@@ -104,18 +106,18 @@ MetacelloMCProject >> packagesNeedSaving: aVersionString [
 	^packages
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCProject >> pragmaKeywords [
 
 	^super pragmaKeywords, #(projectPackage:attribute: packages:attribute: repositories:attribute: )
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
     ^ aMetacelloScriptEngine getConfigurationProjectUnconditionalLoad: aBool
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> projectPackage [
   MCWorkingCopy
     workingCopiesForClass: self configuration class
@@ -136,36 +138,36 @@ MetacelloMCProject >> projectPackage [
   ^ nil
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> projectSpecClass [
 	^ MetacelloMCNamelessProjectSpec
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> repositoriesSpec [
 
 	^self repositoriesSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> repositoriesSpecClass [
 
 	^MetacelloRepositoriesSpec
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> repositorySpec [
 
 	^self repositorySpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> repositorySpecClass [
 
 	^MetacelloRepositorySpec
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> saveProject [
 
 	| pkgSpec |
@@ -173,12 +175,12 @@ MetacelloMCProject >> saveProject [
 	^pkgSpec savePackage
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
     "noop "
 ]
 
-{ #category : #'repository updating' }
+{ #category : 'repository updating' }
 MetacelloMCProject >> updatePackageRepositoriesFor: versionString [
 
 	| versionSpec |
@@ -187,7 +189,7 @@ MetacelloMCProject >> updatePackageRepositoriesFor: versionString [
 	^true
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> updateProject [
 	"load the latest version of the configuration package"
 
@@ -197,7 +199,7 @@ MetacelloMCProject >> updateProject [
 	^self updateProject: MetacelloLoaderPolicy new
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProject >> updateProject: aLoaderPolicy [
 	"load the latest version of the configuration package"
 
@@ -225,7 +227,7 @@ MetacelloMCProject >> updateProject: aLoaderPolicy [
 	^ true
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloMCProject >> versionSpecClass [
 
 	^MetacelloMCVersionSpec

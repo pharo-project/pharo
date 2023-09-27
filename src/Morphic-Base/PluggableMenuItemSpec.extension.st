@@ -1,6 +1,6 @@
-Extension { #name : #PluggableMenuItemSpec }
+Extension { #name : 'PluggableMenuItemSpec' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 PluggableMenuItemSpec >> asMenuItemMorphFrom: parentMenu isLast: aBoolean [
 
 	| it act lbl menu |
@@ -26,7 +26,7 @@ PluggableMenuItemSpec >> asMenuItemMorphFrom: parentMenu isLast: aBoolean [
 	^it
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 PluggableMenuItemSpec >> morphClass [
 	^ ToggleMenuItemMorph
 ]
