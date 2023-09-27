@@ -360,12 +360,6 @@ ClySystemEnvironment >> registerProjectManager: aPackageManager [
 	projectManager registerProjectManager: aPackageManager
 ]
 
-{ #category : 'package management' }
-ClySystemEnvironment >> removePackage: aPackage [
-
-	packageOrganizer removePackage: aPackage
-]
-
 { #category : 'subscription' }
 ClySystemEnvironment >> subscribe: anObject [
 	self subscribe: anObject for: SystemAnnouncement
