@@ -754,9 +754,9 @@ Behavior >> hasBindingOf: aString [
 
 { #category : 'testing - method dictionary' }
 Behavior >> hasMethodAccessingVariable: aVariable [
-	"Answer true if any of my methods access the variable"
+	"Answer true if any of my methods access the variable. Pay attention that the compiler is free to optimize unused variable. Results are garanteed only for used variables e.g. variables in return, message sends, or assignment."
 
-	^self methods anySatisfy: [ :method | aVariable isAccessedIn: method ]
+	^ self methods anySatisfy: [ :method | aVariable isAccessedIn: method ]
 ]
 
 { #category : 'testing - method dictionary' }

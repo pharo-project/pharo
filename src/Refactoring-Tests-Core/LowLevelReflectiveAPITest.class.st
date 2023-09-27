@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : 'tests' }
+LowLevelReflectiveAPITest >> testHasMethodAccessingVariable [
+
+	self assert: (MyClassARoot hasMethodAccessingVariable:  (MyClassARoot slotNamed: #instVarName1)).
+	self assert: (MySubAccessingSuperclassState hasMethodAccessingVariable:  (MyClassARoot slotNamed: #instVarName1)).
+]
+
+{ #category : 'tests' }
 LowLevelReflectiveAPITest >> testIsAccessedIn [
 
 	self assert: ((MyClassARoot slotNamed: #instVarName1) isAccessedIn:  MyClassARoot >> #accessing).
