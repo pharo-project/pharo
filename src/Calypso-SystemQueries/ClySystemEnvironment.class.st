@@ -7,7 +7,6 @@ Public API and Key Messages
 
 - packages
 - createPackageNamed: aString
-- removePackage: aPackage
 - includesClassNamed: aString 
 - defaultClassCompiler
 - subscribe: aNavigationEnvironment

@@ -690,7 +690,7 @@ RPackage >> removeFromSystem [
 	self classTags do: [ :tag | tag removeFromSystem ].
 	self extensionMethods do: [ :method | method removeFromSystem ].
 
-	self organizer removePackage: self
+	self organizer unregisterPackage: self
 ]
 
 { #category : 'add method - compiled method' }

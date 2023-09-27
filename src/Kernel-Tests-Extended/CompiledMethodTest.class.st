@@ -250,7 +250,7 @@ CompiledMethodTest >> shouldNotImplementMethod [
 { #category : 'running' }
 CompiledMethodTest >> tearDown [
 
-	self packageOrganizer packageNamed: self packageNameForTests ifPresent: [ :package | package removeFromSystem ].
+	self packageOrganizer removePackage: self packageNameForTests.
 	class ifNotNil: [ class removeFromSystem ].
 	super tearDown
 ]
@@ -473,7 +473,7 @@ CompiledMethodTest >> testIsExtension [
 
 	self class removeSelector: #isExtensionTestMethod.
 	self deny: method isExtension ] ensure: [
-		self packageOrganizer packageNamed: 'Kernel-Tests-Generated-Package' ifPresent: [ :package | package removeFromSystem ].
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 

@@ -71,7 +71,7 @@ ClassTest >> tearDown [
 
 	self deleteClass.
 
-	self packageOrganizer packageNamed: self packageNameForTest ifPresent: [ :package | package removeFromSystem ].
+	self packageOrganizer removePackage: self packageNameForTest.
 
 	super tearDown
 ]
