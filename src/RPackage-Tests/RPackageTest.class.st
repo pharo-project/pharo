@@ -83,13 +83,12 @@ RPackageTest >> testAnonymousClassAndSelector [
 
 	"Make sure we don't have a registration or a package for the method."
 
-	| ghost method uPackage |
+	| ghost method |
 	ghost := Object newAnonymousSubclass.
-	uPackage := self organizer packageNamed: #'_UnpackagedPackage'.
 	method := ghost compiler compile: 'rpackagetest'.
 	ghost addSelector: #rpackagetest withMethod: method.
-	self deny: (uPackage includesDefinedSelector: #rpackagetest ofClass: ghost).
-	self deny: (self organizer packageOfClassNamed: ghost name) notNil.
+	self deny: (self organizer undefinedPackage includesDefinedSelector: #rpackagetest ofClass: ghost).
+	self assert: (self organizer packageOfClassNamed: ghost name) equals: self organizer undefinedPackage.
 	ghost classify: #rpackagetest under: '*rpackagetest'
 ]
 

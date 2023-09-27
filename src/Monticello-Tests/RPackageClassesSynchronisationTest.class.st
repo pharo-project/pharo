@@ -371,12 +371,12 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackage
 
 	| xPackage class |
 	xPackage := self ensureXPackage.
-	class := self newClassNamed: 'RPackageOldStubClass' in: xPackage.
+	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
 
-	class rename: 'RPackageNewStubClass'.
+	class rename: #RPackageNewStubClass.
 
 	self assert: (self organizer packageOf: class) equals: xPackage.
-	self assert: (self organizer packageOfClassNamed: 'RPackageOldStubClass' asSymbol) equals: nil
+	self assert: (self organizer packageOfClassNamed: #RPackageOldStubClass) equals: self organizer undefinedPackage
 ]
 
 { #category : 'tests - operations on protocols' }
