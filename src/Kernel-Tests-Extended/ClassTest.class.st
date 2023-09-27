@@ -13,13 +13,6 @@ Class {
 	#tag : 'Classes'
 }
 
-{ #category : 'setup' }
-ClassTest >> categoryNameForTemporaryClasses [
-	"Answer the category where to classify temporarily created classes"
-
-	^'Dummy-Tests-Class'
-]
-
 { #category : 'coverage' }
 ClassTest >> classToBeTested [
 
@@ -28,13 +21,17 @@ ClassTest >> classToBeTested [
 
 { #category : 'setup' }
 ClassTest >> deleteClass [
-	| cl |
-	cl := testEnvironment at: className ifAbsent: [ ^ self ].
 
-	testingEnvironment at: #ChangeSet ifPresent: [
-		cl removeFromChanges ].
+	testEnvironment at: className ifPresent: [ :class |
+		testingEnvironment at: #ChangeSet ifPresent: [ class removeFromChanges ].
+		class removeFromSystemUnlogged ]
+]
 
-	cl removeFromSystemUnlogged
+{ #category : 'setup' }
+ClassTest >> packageNameForTest [
+	"Answer the category where to classify temporarily created classes"
+
+	^'Dummy-Tests-Class'
 ]
 
 { #category : 'referencing methods' }
@@ -66,16 +63,16 @@ ClassTest >> setUp [
 	self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: className;
-			package: self categoryNameForTemporaryClasses]
+			package: self packageNameForTest]
 ]
 
 { #category : 'running' }
 ClassTest >> tearDown [
 
 	self deleteClass.
-	{
-		self unclassifiedCategory.
-		self categoryNameForTemporaryClasses } do: [ :category | self packageOrganizer removePackage: category ].
+
+	self packageOrganizer packageNamed: self packageNameForTest ifPresent: [ :package | package removeFromSystem ].
+
 	super tearDown
 ]
 
@@ -172,7 +169,7 @@ ClassTest >> testClassVariableEntanglement [
 		aBuilder
 			name: firstClassName;
 			sharedVariablesFromString: 'MyVar';
-			package: self categoryNameForTemporaryClasses ].
+			package: self packageNameForTest ].
 
 	[
 
@@ -187,7 +184,7 @@ ClassTest >> testClassVariableEntanglement [
 			aBuilder
 				name: secondClassName;
 				sharedVariablesFromString: 'MyVar';
-				package: self categoryNameForTemporaryClasses ].
+				package: self packageNameForTest ].
 
 		[
 
@@ -385,16 +382,16 @@ ClassTest >> testMethodsReferencingClasses [
 
 { #category : 'tests - class creation' }
 ClassTest >> testNewSubclass [
-	| cls |
-	cls := Point newSubclass.
-	self assert: cls isBehavior.
-	self assert: cls superclass identicalTo: Point.
-	self assert: (Point allSubclasses includes: cls).
-	self assert: cls instVarNames equals: #().
-	self assert: cls category equals: self unclassifiedCategory.
-	self assert: cls classVarNames equals: #().
 
-	cls removeFromSystem
+	| class |
+	[
+	class := Point newSubclass.
+	self assert: class isBehavior.
+	self assert: class superclass identicalTo: Point.
+	self assert: (Point allSubclasses includes: class).
+	self assert: class instVarNames equals: #(  ).
+	self assert: class package isUndefined.
+	self assert: class classVarNames equals: #(  ) ] ensure: [ class ifNotNil: [ class removeFromSystem ] ]
 ]
 
 { #category : 'tests - file in/out' }
@@ -513,40 +510,40 @@ ClassTest >> testSharedPools [
 
 { #category : 'tests - class creation' }
 ClassTest >> testSubclass [
-	| cls |
+
+	| class |
 	(testEnvironment includesKey: #SubclassExample) ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
 
 	self deny: (testEnvironment includesKey: #SubclassExample).
-	cls := self class classInstaller make: [ :aBuilder | aBuilder name: #SubclassExample ].
+	[
+	class := self class classInstaller make: [ :aBuilder | aBuilder name: #SubclassExample ].
 
 	self assert: (testEnvironment includesKey: #SubclassExample).
 
-	self assert: (testEnvironment at: #SubclassExample) identicalTo: cls.
-	self assert: cls category equals: self unclassifiedCategory.
-	self assert: cls instVarNames equals: #().
-
-	cls removeFromSystem
+	self assert: (testEnvironment at: #SubclassExample) identicalTo: class.
+	self assert: class package isUndefined.
+	self assert: class instVarNames equals: #(  ) ] ensure: [ class ifNotNil: [ class removeFromSystem ] ]
 ]
 
 { #category : 'tests - class creation' }
 ClassTest >> testSubclassInstanceVariableNames [
-	| cls |
+
+	| class |
 	(testEnvironment includesKey: #SubclassExample) ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
 
 	self deny: (testEnvironment includesKey: #SubclassExample).
 
-	cls := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: #SubclassExample;
-			slotsFromString: 'x y'].
+	[
+	class := self class classInstaller make: [ :aBuilder |
+		       aBuilder
+			       name: #SubclassExample;
+			       slotsFromString: 'x y' ].
 
 	self assert: (testEnvironment includesKey: #SubclassExample).
 
-	self assert: (testEnvironment at: #SubclassExample) identicalTo: cls.
-	self assert: cls category equals: self unclassifiedCategory.
-	self assert: cls instVarNames equals: #('x' 'y').
-
-	cls removeFromSystem
+	self assert: (testEnvironment at: #SubclassExample) identicalTo: class.
+	self assert: class package isUndefined.
+	self assert: class instVarNames equals: #( 'x' 'y' ) ] ensure: [ class ifNotNil: [ class removeFromSystem ] ]
 ]
 
 { #category : 'tests - file in/out' }
@@ -609,10 +606,4 @@ ClassTest >> testclassVariables [
 
 	"A class and it's meta-class share the class variables"
 	self assert: Object classVariables equals: Object class classVariables
-]
-
-{ #category : 'tests - class creation' }
-ClassTest >> unclassifiedCategory [
-
-	^ Class unclassifiedCategory
 ]
