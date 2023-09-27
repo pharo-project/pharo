@@ -1184,8 +1184,40 @@ ClassDescription >> wantsChangeSetLogging [
 ]
 
 { #category : 'queries' }
+ClassDescription >> whichMethodsAccess: instVarName [
+	"Answer the methods that access the argument, instVarName, as a named instance variable. Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isAccessedIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
+ClassDescription >> whichMethodsRead: instVarName [
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isReadIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
+ClassDescription >> whichMethodsWrite: instVarName [
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isWrittenIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
 ClassDescription >> whichSelectorsAccess: instVarName [
-	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable."
+	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable. Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName
@@ -1195,7 +1227,8 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 
 { #category : 'queries' }
 ClassDescription >> whichSelectorsRead: instVarName [
-	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable."
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName
@@ -1205,7 +1238,8 @@ ClassDescription >> whichSelectorsRead: instVarName [
 
 { #category : 'queries' }
 ClassDescription >> whichSelectorsWrite: instVarName [
-	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable"
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName
