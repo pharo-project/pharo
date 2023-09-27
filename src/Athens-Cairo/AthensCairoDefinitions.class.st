@@ -377,3 +377,9 @@ AthensCairoDefinitions class >> initialize_types [
 	cairo_surface_t := #AthensCairoSurface .
 	cairo_text_extents_t := #CairoTextExtents
 ]
+
+{ #category : 'initialization' }
+AthensCairoDefinitions >> initialize [
+		<ignoreUnusedClassVariables: #( CAIRO_STATUS_LAST_STATUS )>
+		super initialize.
+]

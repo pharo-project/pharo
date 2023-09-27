@@ -32,6 +32,12 @@ SHRBStyleAttributionTest >> assertStyleOf: aText between: min and: max shouldBe:
 	min to: max do: [ :index | self assert: (aText attributesAt: index) anyOne name equals: aStyleSymbol ]
 ]
 
+{ #category : 'initialization' }
+SHRBStyleAttributionTest >> initialize [
+		<ignoreUnusedClassVariables: #( Test )>
+		super initialize.
+]
+
 { #category : 'running' }
 SHRBStyleAttributionTest >> setUp [
 
