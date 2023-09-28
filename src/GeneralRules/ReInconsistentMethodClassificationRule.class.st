@@ -31,29 +31,19 @@ ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiq
 
 	(ownerProtocol isUnclassifiedProtocol or: [ ownerProtocol isExtensionProtocol ]) ifTrue: [ ^ self ].
 
-	aMethod methodClass superclass ifNotNil: [ :superclass |
-		(superclass lookupSelector: aMethod selector) ifNotNil: [ :superMethod |
-			| superProtocol |
-			superProtocol := superMethod protocol ifNil: [ ^ self ].
-			(superProtocol isUnclassifiedProtocol or: [ superProtocol isExtensionProtocol ]) ifTrue: [ ^ self ].
-			ownerProtocol name ~= superProtocol name ifTrue: [
-				aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol name) ] ] ]
+	aMethod overriddenMethod ifNotNil: [ :overriddenMethod |
+		| superProtocol |
+		superProtocol := overriddenMethod protocol ifNil: [ ^ self ].
+		(superProtocol isUnclassifiedProtocol or: [ superProtocol isExtensionProtocol ]) ifTrue: [ ^ self ].
+		ownerProtocol name ~= superProtocol name ifTrue: [
+			aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol name) ] ]
 ]
 
 { #category : 'helpers' }
 ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
 
-	| protocolInSuperclass |
-	protocolInSuperclass := (aMethod methodClass superclass
-		                         lookupSelector: aMethod selector)
-		                        protocolName.
-
-	^ (ReRefactoringCritique
-		   withAnchor: (self anchorFor: aMethod)
-		   by: self) refactoring: (RBMethodProtocolTransformation
-			   protocol: { protocolInSuperclass }
-			   inMethod: aMethod selector
-			   inClass: aMethod methodClass name)
+	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:
+		  (RBMethodProtocolTransformation protocol: { aMethod overriddenMethod protocolName } inMethod: aMethod selector inClass: aMethod methodClass name)
 ]
 
 { #category : 'accessing' }
