@@ -117,7 +117,7 @@ EpApplyVisitor >> visitPackageRename: aPackageRename [
 { #category : 'visitor' }
 EpApplyVisitor >> visitPackageTagAddition: aPackageTagAddition [
 
-	environment organization ensureTagNamed: aPackageTagAddition tagName inPackageNamed: aPackageTagAddition packageName
+	environment organization ensureTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName
 ]
 
 { #category : 'visitor' }

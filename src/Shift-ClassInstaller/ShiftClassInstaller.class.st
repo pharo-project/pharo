@@ -296,9 +296,7 @@ ShiftClassInstaller >> oldClass: anObject [
 { #category : 'notifications' }
 ShiftClassInstaller >> recategorize: aClass withBuilder: aBuilder [
 
-	(aBuilder tag
-		 ifNil: [ aClass packageOrganizer ensurePackage: aBuilder package ]
-		 ifNotNil: [ :tag | aClass packageOrganizer ensureTagNamed: tag inPackageNamed: aBuilder package ]) addClass: aClass
+	(aClass packageOrganizer ensureTag: aBuilder tag inPackage: aBuilder package) addClass: aClass
 ]
 
 { #category : 'building' }

@@ -246,7 +246,7 @@ EpRevertTest >> testMethodRemovalWithMethodAlreadyAdded [
 { #category : 'tests' }
 EpRevertTest >> testPackageTagAdditionWithPackageTagRemoval [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
 	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
@@ -257,7 +257,7 @@ EpRevertTest >> testPackageTagAdditionWithPackageTagRemoval [
 { #category : 'tests' }
 EpRevertTest >> testPackageTagRemovalWithPackageTagAddition [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
@@ -269,7 +269,7 @@ EpRevertTest >> testPackageTagRemovalWithPackageTagAddition [
 { #category : 'tests' }
 EpRevertTest >> testPackageTagRename [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 

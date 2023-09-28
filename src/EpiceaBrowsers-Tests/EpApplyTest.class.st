@@ -328,7 +328,7 @@ EpApplyTest >> testPackageRenameWithExtension [
 { #category : 'tests' }
 EpApplyTest >> testPackageTagAdditionWithPackageTagRemoval [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
 
@@ -341,10 +341,10 @@ EpApplyTest >> testPackageTagAdditionWithPackageTagRemoval [
 { #category : 'tests' }
 EpApplyTest >> testPackageTagRemovalWithPackageTagAddition [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
 	self setHeadAsInputEntry.
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpPackageTagRemoval.
 	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
@@ -355,7 +355,7 @@ EpApplyTest >> testPackageTagRemovalWithPackageTagAddition [
 { #category : 'tests' }
 EpApplyTest >> testPackageTagRename [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
@@ -374,7 +374,7 @@ EpApplyTest >> testPackageTagRenameWithClass [
 	"Let's rename a package with a class and see if the class has the right package after."
 
 	| aClass |
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 
 	aClass := classFactory make: [ :aBuilder | aBuilder tag: classFactory defaultTagPostfix ].
 

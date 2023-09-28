@@ -318,7 +318,7 @@ EpApplyPreviewerTest >> testNonCodeChangeEvent [
 { #category : 'tests' }
 EpApplyPreviewerTest >> testPackageTagAdditionWithPackageTagRemoval [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
 
@@ -331,11 +331,11 @@ EpApplyPreviewerTest >> testPackageTagAdditionWithPackageTagRemoval [
 { #category : 'tests' }
 EpApplyPreviewerTest >> testPackageTagRemovalWithPackageTagAddition [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 
 	self assertOutputsAnEventWith: [ :output |
 		self assert: output class equals: EpPackageTagRemoval.
@@ -346,7 +346,7 @@ EpApplyPreviewerTest >> testPackageTagRemovalWithPackageTagAddition [
 { #category : 'tests' }
 EpApplyPreviewerTest >> testPackageTagRenameWithPreviousRollback [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 
 	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
@@ -512,7 +512,7 @@ EpApplyPreviewerTest >> testRedundantMethodRemovalWithAbsentBehavior [
 { #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantPAckageTagRenameWithAbsentTag [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
@@ -522,7 +522,7 @@ EpApplyPreviewerTest >> testRedundantPAckageTagRenameWithAbsentTag [
 { #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantPackageTagAddition [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
 	self assertEmptyPreviewLog
@@ -531,7 +531,7 @@ EpApplyPreviewerTest >> testRedundantPackageTagAddition [
 { #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantPackageTagRemoval [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
