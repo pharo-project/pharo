@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*System-Caching' }
+{ #category : '*System-Caching' }
 Object >> asDoubleLink [
 	^ DoubleLink value: self
 ]

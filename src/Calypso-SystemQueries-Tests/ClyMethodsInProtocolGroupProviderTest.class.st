@@ -1,20 +1,22 @@
 Class {
-	#name : #ClyMethodsInProtocolGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemQueries-Tests-Domain'
+	#name : 'ClyMethodsInProtocolGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemQueries-Tests-Domain',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Domain'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodsInProtocolGroupProviderTest >> classSampleWhichHasGroup [
 	^ClyClass1FromP1Mock
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodsInProtocolGroupProviderTest >> groupProviderClass [
 	^ClyMethodsInProtocolGroupProvider
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodsInProtocolGroupProviderTest >> testCreateGroupsForEveryProtocol [
 
 	| groups query |

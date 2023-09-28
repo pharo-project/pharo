@@ -2,12 +2,14 @@
 SUnit tests for variable definitions
 "
 Class {
-	#name : #RGVariableDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Core-Base'
+	#name : 'RGVariableDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Core-Base',
+	#package : 'Ring-Definitions-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testClassInstanceVariable [
 	| instVar newClass metaClass |
 	instVar := RGClassInstanceVariableDefinition named: 'sizes'.
@@ -26,7 +28,7 @@ RGVariableDefinitionTest >> testClassInstanceVariable [
 	self assert: metaClass instanceVariables size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testClassVariable [
 	| instVar newClass |
 	instVar := RGClassVariableDefinition named: 'DependentsFields'.
@@ -47,7 +49,7 @@ RGVariableDefinitionTest >> testClassVariable [
 	self assert: newClass classVariables size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testInstanceVariable [
 	| instVar newClass |
 	instVar := RGInstanceVariableDefinition named: 'size'.
@@ -64,7 +66,7 @@ RGVariableDefinitionTest >> testInstanceVariable [
 	self assert: newClass instanceVariables size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testPoolVariable [
 	| poolVar newClass |
 	poolVar := RGPoolVariableDefinition named: 'TextConstants'.
@@ -84,7 +86,7 @@ RGVariableDefinitionTest >> testPoolVariable [
 	self assert: newClass sharedPools size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testVariableEquality [
 	| variable1 variable2 |
 	variable1 := OrderedCollection asRingDefinition instanceVariableNamed: #array.

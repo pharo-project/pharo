@@ -7,15 +7,17 @@ NautilusRefactoring is a facade for refactorings:
 - source code
 "
 Class {
-	#name : #NautilusRefactoring,
-	#superclass : #Object,
+	#name : 'NautilusRefactoring',
+	#superclass : 'Object',
 	#instVars : [
 		'model'
 	],
-	#category : #'NautilusRefactoring-Base'
+	#category : 'NautilusRefactoring-Base',
+	#package : 'NautilusRefactoring',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NautilusRefactoring class >> model: model [
 
 	^ self new
@@ -23,7 +25,7 @@ NautilusRefactoring class >> model: model [
 		yourself
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 	anArray isEmpty
 		ifTrue: [ ^ nil ].
@@ -32,7 +34,7 @@ NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 	^ UIManager default chooseOrRequestFrom: anArray lines: aCollection title: aString
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 	|dialog|
 	dialog := SycMethodNameEditorPresenter
@@ -44,23 +46,23 @@ NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 	^ aMethodName
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> handleWarning: anException [
 	self inform: anException messageText.
 	anException resume
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NautilusRefactoring >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NautilusRefactoring >> model: aNautilusUI [
 	model := aNautilusUI
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> refactoringOptions: aRefactoring [
 	aRefactoring
 		setOption: #implementorToInline
@@ -85,12 +87,12 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		toUse: [ :ref :class | self shouldSearchInHierarchy: class ]
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> request: aString [
 	^ self request: aString initialAnswer: ''
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> request: requestString initialAnswer: initialAnswerString [
 	| answer |
 	answer := UIManager default request: requestString initialAnswer: initialAnswerString.
@@ -98,22 +100,22 @@ NautilusRefactoring >> request: requestString initialAnswer: initialAnswerString
 	^ answer
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> requestImplementorToInline: imps [
 	^ self chooseFrom: imps title: 'Choose the class that should provide the implementation.' lines:#()
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> requestMethodNameFor: aMethodName [
 	^ self handleMethodNameRequest: aMethodName
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> requestSelfArgumentName [
 	^ self request: 'Enter name for argument to refer to "self" in extracted method'
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 
 	| parseTree nameList |
@@ -131,7 +133,7 @@ NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 		lines: ( Array with: parseTree argumentNames size )
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> selectVariableTypesFrom: aCollectionOfTypes selected: aSelectedCollection for: aRefactoring [
 	| stream result |
 	stream := WriteStream on: String new.
@@ -147,12 +149,12 @@ NautilusRefactoring >> selectVariableTypesFrom: aCollectionOfTypes selected: aSe
 		collect: [ :each | aRefactoring model classFor: (Smalltalk classNamed: each trimBoth) ]
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> shouldExtractAssignmentTo: aString [
 	^ self confirm: ('Do you want to extract the assignment of <1s> at the end of selection?' expandMacrosWith: aString)
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> shouldInlineExpression: aString [
 
 	^ (self confirm:
@@ -160,12 +162,12 @@ NautilusRefactoring >> shouldInlineExpression: aString [
 			    expandMacrosWith: aString)) not
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> shouldOverride: aSelector in: aClass [
 	^ self confirm: ('<1s> is already defined in the <2p> hierarchy. Extracting it to an existing selector may change behavior. Do you wish to use <1s> anyway?' expandMacrosWith: aSelector with: aClass)
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> shouldSearchInHierarchy: class [
 	^ class subclasses
 		ifNotEmpty: [
@@ -175,7 +177,7 @@ NautilusRefactoring >> shouldSearchInHierarchy: class [
 		] ifEmpty: [ false ]
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> shouldUseExistingMethod: aMethodName [
 	"for now we always want to use the existing method."
 	^ true

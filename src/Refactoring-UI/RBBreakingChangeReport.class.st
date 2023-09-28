@@ -1,25 +1,27 @@
 Class {
-	#name : #RBBreakingChangeReport,
-	#superclass : #Object,
+	#name : 'RBBreakingChangeReport',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'refactoring'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBreakingChangeReport >> environment [
 
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBreakingChangeReport >> refactoring [
 	^ refactoring
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBreakingChangeReport >> refactoring: aRefactoring [
 
 	refactoring := aRefactoring.

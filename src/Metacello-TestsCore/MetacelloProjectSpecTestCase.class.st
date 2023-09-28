@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloProjectSpecTestCase,
-	#superclass : #MetacelloSpecTestCase,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'MetacelloProjectSpecTestCase',
+	#superclass : 'MetacelloSpecTestCase',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloProjectSpecTestCase >> testProjectMergeSpec [
 	| projectA projectB project |
 	projectA := self projectSpec
@@ -34,7 +36,7 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec [
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoItB
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloProjectSpecTestCase >> testProjectSpec [
 	| project |
 	project := self projectSpec.

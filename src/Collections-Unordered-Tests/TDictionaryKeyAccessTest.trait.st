@@ -2,17 +2,19 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryKeyAccessTest,
-	#category : #'Collections-Unordered-Tests-Traits'
+	#name : 'TDictionaryKeyAccessTest',
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryKeyAccessTest >> nonEmptyWithoutEqualsValues [
 " return a dictionary that doesn't include equal values'"
 ^self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryKeyAccessTest >> test0FixtureDictionaryKeyAccess [
 	| collection equals |
 	self nonEmptyWithoutEqualsValues.
@@ -25,7 +27,7 @@ TDictionaryKeyAccessTest >> test0FixtureDictionaryKeyAccess [
 	self deny: (self nonEmptyWithoutEqualsValues values includes: self valueNotIn)
 ]
 
-{ #category : #'tests - dictionary key access' }
+{ #category : 'tests - dictionary key access' }
 TDictionaryKeyAccessTest >> testKeyAtIdentityValue [
 
 
@@ -39,7 +41,7 @@ TDictionaryKeyAccessTest >> testKeyAtIdentityValue [
 	self should: [dict keyAtIdentityValue: self valueNotIn ] raise: Error
 ]
 
-{ #category : #'tests - dictionary key access' }
+{ #category : 'tests - dictionary key access' }
 TDictionaryKeyAccessTest >> testKeyAtIdentityValueIfAbsent [
 	"self run: #testKeyAtValue"
 
@@ -53,7 +55,7 @@ TDictionaryKeyAccessTest >> testKeyAtIdentityValueIfAbsent [
 	self assert: (dict keyAtIdentityValue: self valueNotIn ifAbsent: [nil] ) = nil
 ]
 
-{ #category : #'tests - dictionary key access' }
+{ #category : 'tests - dictionary key access' }
 TDictionaryKeyAccessTest >> testKeyAtValue [
 	"self run: #testKeyAtValue"
 
@@ -67,7 +69,7 @@ TDictionaryKeyAccessTest >> testKeyAtValue [
 	self should: [dict keyAtValue: self valueNotIn ] raise: Error
 ]
 
-{ #category : #'tests - dictionary key access' }
+{ #category : 'tests - dictionary key access' }
 TDictionaryKeyAccessTest >> testKeyAtValueIfAbsent [
 	"self run: #testKeyAtValue"
 
@@ -81,7 +83,7 @@ TDictionaryKeyAccessTest >> testKeyAtValueIfAbsent [
 	self assert: (dict keyAtValue: self valueNotIn ifAbsent: [nil] ) = nil
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryKeyAccessTest >> valueNotIn [
 	" return a value not included in nonEmptyWithoutEqualValues "
 

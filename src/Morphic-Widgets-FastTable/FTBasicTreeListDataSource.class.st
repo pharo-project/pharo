@@ -6,8 +6,8 @@ For example usage see methods on the class side under the protocol ""examples"".
 
 "
 Class {
-	#name : #FTBasicTreeListDataSource,
-	#superclass : #FTDataSource,
+	#name : 'FTBasicTreeListDataSource',
+	#superclass : 'FTDataSource',
 	#instVars : [
 		'childrenBlock',
 		'displayBlock',
@@ -15,10 +15,12 @@ Class {
 		'availableRows',
 		'rootItems'
 	],
-	#category : #'Morphic-Widgets-FastTable-Tree-Basic'
+	#category : 'Morphic-Widgets-FastTable-Tree-Basic',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Tree-Basic'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTBasicTreeListDataSource class >> exampleProtoObjectClassTree [
 
 	| ds ft |
@@ -37,7 +39,7 @@ FTBasicTreeListDataSource class >> exampleProtoObjectClassTree [
 	ft openInWindow position: 20@10
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTBasicTreeListDataSource class >> exampleSomeClassesSubclassesTree [
 
 	| ds ft |
@@ -56,7 +58,7 @@ FTBasicTreeListDataSource class >> exampleSomeClassesSubclassesTree [
 	ft openInWindow position: 20@10
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FTBasicTreeListDataSource class >> exampleWorldSubmorphTree [
 
 	| ds ft |
@@ -75,7 +77,7 @@ FTBasicTreeListDataSource class >> exampleWorldSubmorphTree [
 	ft openInWindow position: 20@10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTBasicTreeListDataSource >> cellColumn: column row: rowIndex [
 	| item |
 
@@ -87,7 +89,7 @@ FTBasicTreeListDataSource >> cellColumn: column row: rowIndex [
 	^item cellMorphFor: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 FTBasicTreeListDataSource >> children: aBlock [
 
 	"aBlock -> [ :item | aCollection ]"
@@ -95,13 +97,13 @@ FTBasicTreeListDataSource >> children: aBlock [
 	childrenBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTBasicTreeListDataSource >> childrenBlock [
 
 	^childrenBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTBasicTreeListDataSource >> childrenFor: anItem [
 
 	| children |
@@ -111,13 +113,13 @@ FTBasicTreeListDataSource >> childrenFor: anItem [
 	^sortingBlock ifNil: [ children ] ifNotNil: [ children sort: sortingBlock ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTBasicTreeListDataSource >> countAvailableRows [
 
 	availableRows := rootItems inject: 0 into: [ :sum :item | sum + item availableRows ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 FTBasicTreeListDataSource >> display: aBlock [
 
 	"aBlock -> [ :item :cell | cell addMorphBack: ... ]"
@@ -125,13 +127,13 @@ FTBasicTreeListDataSource >> display: aBlock [
 	displayBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTBasicTreeListDataSource >> displayBlock [
 
 	^displayBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTBasicTreeListDataSource >> elementAt: index [
 	| curr b |
 
@@ -145,31 +147,31 @@ FTBasicTreeListDataSource >> elementAt: index [
 	SubscriptOutOfBounds signal: index
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTBasicTreeListDataSource >> expand: aNumber [
 
 	rootItems do: [ :each | each expandToDepth: aNumber ]
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTBasicTreeListDataSource >> expandAll [
 
 	self expand: SmallInteger maxVal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTBasicTreeListDataSource >> numberOfRows [
 
 	^availableRows
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 FTBasicTreeListDataSource >> root: anObject [
 
 	self roots: { anObject }
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 FTBasicTreeListDataSource >> roots: aCollection [
 
 	rootItems := aCollection collect: [ :each |
@@ -181,7 +183,7 @@ FTBasicTreeListDataSource >> roots: aCollection [
 	self countAvailableRows
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 FTBasicTreeListDataSource >> sortChildrenBy: aBlock [
 
 	"aBLock -> [ :a :b | a something <= b something ] "
@@ -189,12 +191,12 @@ FTBasicTreeListDataSource >> sortChildrenBy: aBlock [
 	sortingBlock := aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTBasicTreeListDataSource >> tableRefresh [
 	table ifNotNil: [ table refresh ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTBasicTreeListDataSource >> updateAvailableRows: aNumber [
 
 

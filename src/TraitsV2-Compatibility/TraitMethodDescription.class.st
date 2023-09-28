@@ -3,40 +3,42 @@ Used by Trait to encapsulates a collection of methods for one particular selecto
 
 "
 Class {
-	#name : #TraitMethodDescription,
-	#superclass : #Object,
+	#name : 'TraitMethodDescription',
+	#superclass : 'Object',
 	#instVars : [
 		'selector',
 		'locatedMethods'
 	],
-	#category : #'TraitsV2-Compatibility-Composition'
+	#category : 'TraitsV2-Compatibility-Composition',
+	#package : 'TraitsV2-Compatibility',
+	#tag : 'Composition'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TraitMethodDescription class >> maxArguments [
 	^30
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TraitMethodDescription class >> new [
 	^super new
 		initialize;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TraitMethodDescription class >> selector: aSymbol [
 	^self new
 		selector: aSymbol
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitMethodDescription >> addLocatedMethod: aLocatedMethod [
 	locatedMethods add: aLocatedMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitMethodDescription >> conflictMethod [
 	| binary numberOfArguments |
 	self isConflict ifFalse: [^nil].
@@ -50,7 +52,7 @@ TraitMethodDescription >> conflictMethod [
 		binary: binary
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs: aNumber binary: aBoolean [
 	| source keywords method |
 	source := String streamContents: [:stream |
@@ -75,13 +77,13 @@ TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs:
 	^method selector: aSelector; yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitMethodDescription >> initialize [
 	super initialize.
 	locatedMethods := IdentitySet new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitMethodDescription >> isAliasSelector [
 	"Return true if the selector is an alias (if it is different
 	from the original selector) or already an aliased method
@@ -95,13 +97,13 @@ TraitMethodDescription >> isAliasSelector [
 			locatedMethod methodClass isAliasSelector: self selector]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitMethodDescription >> isBinarySelector [
 	^self locatedMethods anyOne
 		isBinarySelector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitMethodDescription >> isConflict [
 	| count originMethodReferenciel |
 	count := 0.
@@ -120,12 +122,12 @@ TraitMethodDescription >> isConflict [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitMethodDescription >> isEmpty [
 	^self size = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitMethodDescription >> isLocalAliasSelector [
 	"Return true if the selector is an alias (if it is different
 	from the original selector). Return false, if not or if we
@@ -135,39 +137,39 @@ TraitMethodDescription >> isLocalAliasSelector [
 		(self locatedMethods anyOne selector ~= self selector)]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitMethodDescription >> isNotEmpty [
 	^self size > 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitMethodDescription >> isProvided [
 	^ self providedMethod notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitMethodDescription >> isRequired [
 	self isEmpty ifTrue: [^ false].
 	^ self locatedMethods allSatisfy: [:each | each isRequired]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitMethodDescription >> locatedMethods [
 	^locatedMethods
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 TraitMethodDescription >> methodsDo: aBlock [
 	self locatedMethods do: [:each |
 		aBlock value: each ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TraitMethodDescription >> numberOfArguments [
 	^ self locatedMethods anyOne selector numArgs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitMethodDescription >> providedLocatedMethod [
 
 	| locatedMethod aLocatedMethod refOrigin |
@@ -192,22 +194,22 @@ TraitMethodDescription >> providedLocatedMethod [
 	^ locatedMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitMethodDescription >> providedMethod [
 	^self providedLocatedMethod ifNotNil: [:locatedMethod | locatedMethod method]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitMethodDescription >> selector [
 	^selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitMethodDescription >> selector: aSymbol [
 	selector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitMethodDescription >> size [
 	^self locatedMethods size
 ]

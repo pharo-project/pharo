@@ -10,46 +10,48 @@ Note that often a framework may already define a certain level of inheritance, w
 The defined inheritance depth can be edited in #inheritanceDepth.
 "
 Class {
-	#name : #ReExcessiveInheritanceRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReExcessiveInheritanceRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReExcessiveInheritanceRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveInheritanceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ExcessiveInheritanceRule'
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ReExcessiveInheritanceRule >> basicCheck: aClass [
 	aClass isMeta ifTrue: [ ^ false ].
 
 	^ aClass allSuperclasses size >= self inheritanceDepth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveInheritanceRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReExcessiveInheritanceRule >> inheritanceDepth [
 	^ 10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveInheritanceRule >> name [
 	^ 'Excessive inheritance depth'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveInheritanceRule >> rationale [
 	^ 'Deep inheritance (10+ depth) is usually a sign of a design flaw.'
 ]

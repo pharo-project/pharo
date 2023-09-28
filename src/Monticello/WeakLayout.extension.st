@@ -1,6 +1,6 @@
-Extension { #name : #WeakLayout }
+Extension { #name : 'WeakLayout' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 WeakLayout class >> mcTypeSymbol [ 
 	^ #weak
 ]

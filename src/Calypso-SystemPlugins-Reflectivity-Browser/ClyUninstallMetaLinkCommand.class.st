@@ -5,27 +5,29 @@ I am a command to install metalinks on the selected method or one of its ast nod
 I open a small browser to choose which metalink to install among existing metalink instances.
 "
 Class {
-	#name : #ClyUninstallMetaLinkCommand,
-	#superclass : #ClyReflectivityCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
+	#name : 'ClyUninstallMetaLinkCommand',
+	#superclass : 'ClyReflectivityCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Metalinks'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyUninstallMetaLinkCommand class >> contextMenuOrder [
 	^101
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyUninstallMetaLinkCommand >> defaultMenuIconName [
 	^#smallObjects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyUninstallMetaLinkCommand >> defaultMenuItemName [
 	^ ' Uninstall MetaLink in  ' , sourceNode displaySourceCode, '  ...'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyUninstallMetaLinkCommand >> execute [
 	ClyMetaLinkInstallationPresenter openUninstallerOnNode: sourceNode
 ]

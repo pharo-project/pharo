@@ -11,33 +11,35 @@ and it also has
  shouldBeNil		Boolean --  used to ensure array of arguments is not all nils
 "
 Class {
-	#name : #WeakMessageSend,
-	#superclass : #Object,
-	#type : #weak,
+	#name : 'WeakMessageSend',
+	#superclass : 'Object',
+	#type : 'weak',
 	#instVars : [
 		'selector',
 		'shouldBeNil',
 		'arguments'
 	],
-	#category : #'Kernel-Messaging'
+	#category : 'Kernel-Messaging',
+	#package : 'Kernel',
+	#tag : 'Messaging'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WeakMessageSend class >> new [
 	^self new: 1
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WeakMessageSend class >> receiver: anObject selector: aSymbol [
 	^ self receiver: anObject selector: aSymbol arguments: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WeakMessageSend class >> receiver: anObject selector: aSymbol argument: aParameter [
 	^ self receiver: anObject selector: aSymbol arguments: (Array with: aParameter)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WeakMessageSend class >> receiver: anObject selector: aSymbol arguments: anArray [
 	^ self new
 		receiver: anObject;
@@ -45,7 +47,7 @@ WeakMessageSend class >> receiver: anObject selector: aSymbol arguments: anArray
 		arguments: anArray
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 WeakMessageSend >> = anObject [
 	"Compare equal to equivalent MessageSend"
 	^ anObject isMessageSend
@@ -54,24 +56,24 @@ WeakMessageSend >> = anObject [
 		and: [(Array withAll: arguments) = (Array withAll: anObject arguments)]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakMessageSend >> arguments [
 	^arguments ifNil: [ Array new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakMessageSend >> arguments: anArray [
 	arguments := WeakArray withAll: anArray.
 	"no reason this should be a WeakArray"
 	shouldBeNil := Array withAll: (anArray collect: [ :ea | ea isNil ])
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WeakMessageSend >> asMessageSend [
 	^MessageSend receiver: self receiver selector: selector arguments: (Array withAll: self arguments)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WeakMessageSend >> asMinimalRepresentation [
 
 	^ self isReceiverOrAnyArgumentGarbage
@@ -79,7 +81,7 @@ WeakMessageSend >> asMinimalRepresentation [
 		  ifFalse: [ self ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakMessageSend >> collectArguments: anArgArray [
 	"Private"
 
@@ -95,28 +97,28 @@ WeakMessageSend >> collectArguments: anArgArray [
 				  startingAt: 1 ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakMessageSend >> cull: arg [
 	^ selector numArgs = 0
 		ifTrue: [ self value ]
 		ifFalse: [ self value: arg ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakMessageSend >> cull: arg1 cull: arg2 [
 	^ selector numArgs < 2
 		ifTrue: [ self cull: arg1]
 		ifFalse: [ self value: arg1 value: arg2 ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakMessageSend >> cull: arg1 cull: arg2 cull: arg3 [
 	^ selector numArgs < 3
 		ifTrue: [ self cull: arg1 cull: arg2 ]
 		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakMessageSend >> ensureArguments [
 	"Return true if my arguments haven't gone away"
 	arguments ifNotNil: [
@@ -127,7 +129,7 @@ WeakMessageSend >> ensureArguments [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakMessageSend >> ensureReceiver [
   "Return true if my receiver hasn't gone away"
   self receiver ifNil: [^ false].
@@ -136,7 +138,7 @@ WeakMessageSend >> ensureReceiver [
   ^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakMessageSend >> ensureReceiver: anObject [
   "Return true if my receiver hasn't gone away"
   anObject ifNil: [^ false].
@@ -145,7 +147,7 @@ WeakMessageSend >> ensureReceiver: anObject [
   ^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakMessageSend >> ensureReceiverAndArguments [
 
   "Return true if my receiver hasn't gone away"
@@ -163,7 +165,7 @@ WeakMessageSend >> ensureReceiverAndArguments [
   ^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakMessageSend >> ensureReceiverAndArguments: aReceiver [
 
   "Return true if my receiver hasn't gone away"
@@ -181,13 +183,13 @@ WeakMessageSend >> ensureReceiverAndArguments: aReceiver [
   ^true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 WeakMessageSend >> hash [
 	"work like MessageSend>>hash"
 	^self receiver hash bitXor: selector hash
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakMessageSend >> isAnyArgumentGarbage [
 	"Make sure that my arguments haven't gone away"
 	arguments ifNotNil: [
@@ -199,30 +201,30 @@ WeakMessageSend >> isAnyArgumentGarbage [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WeakMessageSend >> isMessageSend [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakMessageSend >> isReceiverGarbage [
 	"Make sure that my receiver hasn't gone away"
 	^self receiver isNil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakMessageSend >> isReceiverOrAnyArgumentGarbage [
 	"Make sure that my receiver hasn't gone away"
 	^self isReceiverGarbage
 		or: [self isAnyArgumentGarbage]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WeakMessageSend >> isValid [
 	^self isReceiverOrAnyArgumentGarbage not
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 WeakMessageSend >> printOn: aStream [
 
 	super printOn: aStream.
@@ -235,27 +237,27 @@ WeakMessageSend >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakMessageSend >> receiver [
 	^self at: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakMessageSend >> receiver: anObject [
 	self at: 1 put: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakMessageSend >> selector [
 	^selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakMessageSend >> selector: aSymbol [
 	selector := aSymbol
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakMessageSend >> value [
 
 	| strongReceiver |
@@ -273,7 +275,7 @@ WeakMessageSend >> value [
 			]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakMessageSend >> value: anObject [
 
 	| strongReceiver |
@@ -287,7 +289,7 @@ WeakMessageSend >> value: anObject [
 		with: anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakMessageSend >> value: anObject1 value: anObject2 [
 
 	| strongReceiver |
@@ -302,7 +304,7 @@ WeakMessageSend >> value: anObject1 value: anObject2 [
 		with: anObject2
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 
 	| strongReceiver |
@@ -318,7 +320,7 @@ WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 		with: anObject3
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakMessageSend >> valueWithArguments: anArray [
 
 	| strongReceiver |
@@ -331,7 +333,7 @@ WeakMessageSend >> valueWithArguments: anArray [
 		withArguments: (self collectArguments: anArray)
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WeakMessageSend >> valueWithEnoughArguments: anArray [
 	"call the selector with enough arguments from arguments and anArray"
 	| args strongReceiver |

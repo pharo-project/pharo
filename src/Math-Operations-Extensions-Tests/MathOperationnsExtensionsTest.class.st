@@ -1,10 +1,11 @@
 Class {
-	#name : #MathOperationnsExtensionsTest,
-	#superclass : #TestCase,
-	#category : #'Math-Operations-Extensions-Tests'
+	#name : 'MathOperationnsExtensionsTest',
+	#superclass : 'TestCase',
+	#category : 'Math-Operations-Extensions-Tests',
+	#package : 'Math-Operations-Extensions-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MathOperationnsExtensionsTest >> testCloseTo [
 
 	self assert: (3 closeTo: 3.001 precision: 0.001).

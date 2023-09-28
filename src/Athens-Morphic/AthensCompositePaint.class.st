@@ -2,15 +2,16 @@
 i am used to convert CompositeFillStyle into paint, used in Morphic.
 "
 Class {
-	#name : #AthensCompositePaint,
-	#superclass : #AthensPaint,
+	#name : 'AthensCompositePaint',
+	#superclass : 'AthensPaint',
 	#instVars : [
 		'paints'
 	],
-	#category : #'Athens-Morphic'
+	#category : 'Athens-Morphic',
+	#package : 'Athens-Morphic'
 }
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCompositePaint >> athensFillPath: athensPath on: anAthensCanvas [
 
 	"This is a terminal method in rendering dispatch scheme
@@ -20,7 +21,7 @@ AthensCompositePaint >> athensFillPath: athensPath on: anAthensCanvas [
 				paint athensFillPath: athensPath on: anAthensCanvas ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCompositePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
@@ -30,7 +31,7 @@ AthensCompositePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 				paint athensFillRectangle: aRect on: anAthensCanvas ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensCompositePaint >> fromFillStyles: fillStyles on: aCanvas [
 
 	paints := fillStyles collect: [:each | each asAthensPaintOn: aCanvas ]

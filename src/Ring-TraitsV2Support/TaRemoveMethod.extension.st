@@ -1,6 +1,6 @@
-Extension { #name : #TaRemoveMethod }
+Extension { #name : 'TaRemoveMethod' }
 
-{ #category : #'*Ring-TraitsV2Support' }
+{ #category : '*Ring-TraitsV2Support' }
 TaRemoveMethod >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [

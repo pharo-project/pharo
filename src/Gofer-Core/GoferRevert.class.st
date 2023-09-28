@@ -2,12 +2,14 @@
 Revert work
 "
 Class {
-	#name : #GoferRevert,
-	#superclass : #GoferUpdate,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferRevert',
+	#superclass : 'GoferUpdate',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 GoferRevert >> execute [
 
 	self workingCopies
@@ -15,7 +17,7 @@ GoferRevert >> execute [
 	super execute
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferRevert >> referenceFor: aReference [
 
 	| ancestors |

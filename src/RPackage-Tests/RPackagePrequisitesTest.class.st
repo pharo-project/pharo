@@ -2,12 +2,13 @@
 SUnit tests for RPackage prerequisites
 "
 Class {
-	#name : #RPackagePrequisitesTest,
-	#superclass : #TestCase,
-	#category : #'RPackage-Tests'
+	#name : 'RPackagePrequisitesTest',
+	#superclass : 'TestCase',
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackagePrequisitesTest >> testNoPackagesOverride [
 	"Class side packages should not be overridden"
 

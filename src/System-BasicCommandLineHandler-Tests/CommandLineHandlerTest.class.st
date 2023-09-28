@@ -1,15 +1,17 @@
 Class {
-	#name : #CommandLineHandlerTest,
-	#superclass : #TestCase,
-	#category : #'System-BasicCommandLineHandler-Tests-Base'
+	#name : 'CommandLineHandlerTest',
+	#superclass : 'TestCase',
+	#category : 'System-BasicCommandLineHandler-Tests-Base',
+	#package : 'System-BasicCommandLineHandler-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineHandlerTest >> argumentsWith: aCollection [
 	^ CommandLineArguments withArguments: aCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CommandLineHandlerTest >> testBasicCommandlineHandler [
 
 	| args |
@@ -22,7 +24,7 @@ CommandLineHandlerTest >> testBasicCommandlineHandler [
 		equals: PharoCommandLineHandler
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CommandLineHandlerTest >> testResponsibilityDefault [
 	| args |
 	args := self argumentsWith: #('--help').
@@ -31,7 +33,7 @@ CommandLineHandlerTest >> testResponsibilityDefault [
 	self deny: (EvaluateCommandLineHandler isResponsibleFor: args)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CommandLineHandlerTest >> testResponsibilityEval [
 	| args |
 	args := self argumentsWith: #('eval' '1+2').
@@ -50,7 +52,7 @@ CommandLineHandlerTest >> testResponsibilityEval [
 	self assert: (EvaluateCommandLineHandler isResponsibleFor: args)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CommandLineHandlerTest >> testResponsibilitySt [
 	| args |
 	args := self argumentsWith: #('/foo/bar/myScript.st').
@@ -64,7 +66,7 @@ CommandLineHandlerTest >> testResponsibilitySt [
 	self deny: (EvaluateCommandLineHandler isResponsibleFor: args)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CommandLineHandlerTest >> testSelectHandlersCodeLoader [
 	| args handlers |
 	args := self argumentsWith: #('/foo/bar/myScript.st').

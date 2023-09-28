@@ -2,12 +2,13 @@
 SUnit tests for session creation with SessionManager
 "
 Class {
-	#name : #SessionCreationTest,
-	#superclass : #TestCase,
-	#category : #'System-SessionManager-Tests'
+	#name : 'SessionCreationTest',
+	#superclass : 'TestCase',
+	#category : 'System-SessionManager-Tests',
+	#package : 'System-SessionManager-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionCreationTest >> testNewSession [
 	| manager session |
 	manager := SessionManager new.
@@ -15,7 +16,7 @@ SessionCreationTest >> testNewSession [
 	session stop: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionCreationTest >> testShutdown [
 	| manager session executed |
 	executed := false.
@@ -30,7 +31,7 @@ SessionCreationTest >> testShutdown [
 	self assert: executed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionCreationTest >> testStartup [
 	| manager session executed |
 	executed := false.

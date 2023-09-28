@@ -1,10 +1,11 @@
 Class {
-	#name : #DTCoverageCollectorTest,
-	#superclass : #TestCase,
-	#category : #'DrTests-TestCoverage-Tests'
+	#name : 'DTCoverageCollectorTest',
+	#superclass : 'TestCase',
+	#category : 'DrTests-TestCoverage-Tests',
+	#package : 'DrTests-TestCoverage-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DTCoverageCollectorTest >> testResultIsADTCoverageResultClass [
 
 	| cov res |
@@ -15,7 +16,7 @@ DTCoverageCollectorTest >> testResultIsADTCoverageResultClass [
 	self assert: res class equals: DTCoverageResult .
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DTCoverageCollectorTest >> testReturnCoverageResult [
 
 	| cov res |

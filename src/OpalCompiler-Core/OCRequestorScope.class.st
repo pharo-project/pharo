@@ -6,21 +6,23 @@ The default scope of the compiler is initialized with a Requestor scope, if the 
 The OCRequestorScope will ask the tool (the requestor) for bindings. This will be an association, and as such it will create a OCLiteralVariable.  It will compile the same bytecode as for a global, but it will use the associations hold on by the tool to do so.
 "
 Class {
-	#name : #OCRequestorScope,
-	#superclass : #OCAbstractScope,
+	#name : 'OCRequestorScope',
+	#superclass : 'OCAbstractScope',
 	#instVars : [
 		'requestor',
 		'variables'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #'temp vars' }
+{ #category : 'temp vars' }
 OCRequestorScope >> allTemps [
 	^#()
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCRequestorScope >> canAddBindingOf: name [
 	"Test for free workspace declaration"
 	
@@ -36,7 +38,7 @@ OCRequestorScope >> canAddBindingOf: name [
 	^ requestor canAddBindingOf: name
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 OCRequestorScope >> lookupVar: name [
 
 	(requestor hasBindingOf: name) ifTrue: [ ^ requestor bindingOf: name ].
@@ -50,7 +52,7 @@ OCRequestorScope >> lookupVar: name [
 	^ self variables at: name ifAbsentPut: [ WorkspaceVariable key: name ]
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 OCRequestorScope >> registerVariables [
 
 	self variables do: [ :each |
@@ -62,17 +64,17 @@ OCRequestorScope >> registerVariables [
 	super registerVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCRequestorScope >> requestor [
 	^ requestor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCRequestorScope >> requestor: anObject [
 	requestor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCRequestorScope >> variables [
 
 	^ variables ifNil: [ variables := Dictionary new ].

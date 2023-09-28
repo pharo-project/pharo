@@ -2,12 +2,14 @@
 I find libraries in a unix (64bit) system.
 "
 Class {
-	#name : #FFIUnix64LibraryFinder,
-	#superclass : #FFIUnixLibraryFinder,
-	#category : #'UnifiedFFI-Libraries'
+	#name : 'FFIUnix64LibraryFinder',
+	#superclass : 'FFIUnixLibraryFinder',
+	#category : 'UnifiedFFI-Libraries',
+	#package : 'UnifiedFFI',
+	#tag : 'Libraries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIUnix64LibraryFinder >> knownPaths [
 
 	^ #(

@@ -7,20 +7,22 @@ I can be used for generating and parsing.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnResponse,
-	#superclass : #ZnMessage,
+	#name : 'ZnResponse',
+	#superclass : 'ZnMessage',
 	#instVars : [
 		'statusLine'
 	],
-	#category : #'Zinc-HTTP-Core'
+	#category : 'Zinc-HTTP-Core',
+	#package : 'Zinc-HTTP',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> accepted [
 	^ self statusLine: ZnStatusLine accepted
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> badRequest: request [
 	| message |
 	message := String streamContents: [ :out |
@@ -31,21 +33,21 @@ ZnResponse class >> badRequest: request [
 		entity: (ZnEntity textCRLF: message)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> badRequest: request entity: entity [
 	^ (self statusLine: ZnStatusLine badRequest)
 		entity: entity;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> created: url [
 	^ self
 		created: url
 		entity: (ZnEntity textCRLF: 'Created ' , url asString)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> created: url entity: entity [
 	^ (self statusLine: ZnStatusLine created)
 		setLocation: url asString;
@@ -53,7 +55,7 @@ ZnResponse class >> created: url entity: entity [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> methodNotAllowed: request [
 	| message |
 	message := String streamContents: [ :out |
@@ -64,52 +66,52 @@ ZnResponse class >> methodNotAllowed: request [
 		entity: (ZnEntity textCRLF: message)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> methodNotAllowed: request entity: entity [
 	^ (self statusLine: ZnStatusLine methodNotAllowed)
 		entity: entity;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> noContent [
 	^ self statusLine: ZnStatusLine noContent
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> notFound: url [
 	^ self
 		notFound: url
 		entity: (ZnEntity textCRLF: 'Not Found ' , url asZnUrl pathQueryFragmentPrintString)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> notFound: url entity: entity [
 	^ (self statusLine: ZnStatusLine notFound)
 		entity: entity;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> notModified [
 	^ self statusLine: ZnStatusLine notModified
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> ok: entity [
 	^ (self statusLine: ZnStatusLine ok)
 		entity: entity;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> redirect: url [
 	^ self
 		redirect: url
 		entity: (ZnEntity textCRLF: 'Redirect ' , url asString)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> redirect: url entity: entity [
 	^ (self statusLine: ZnStatusLine redirect)
 		setLocation: url asString;
@@ -117,31 +119,31 @@ ZnResponse class >> redirect: url entity: entity [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> serverError: string [
 	^ self serverErrorWithEntity: (ZnEntity textCRLF: string)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> serverErrorWithEntity: entity [
 	^ (self statusLine: ZnStatusLine internalServerError)
 		entity: entity;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> serviceUnavailable: string [
 	^ (self statusLine: ZnStatusLine serviceUnavailable)
 		entity: (ZnEntity textCRLF: string);
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> statusCode: httpResponeCode [
 	^ self statusLine: (ZnStatusLine code: httpResponeCode)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> statusLine: statusLine [
 	^ self new
 		statusLine: statusLine;
@@ -149,19 +151,19 @@ ZnResponse class >> statusLine: statusLine [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> unauthorized [
 	^ self unauthorized: 'Basic realm=ZincHTTPComponents'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> unauthorized: authString [
 	^ self
 		unauthorized: authString
 		entity: (ZnEntity textCRLF: 'Unauthorized')
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnResponse class >> unauthorized: authString entity: entity [
 	^ (self statusLine: ZnStatusLine unauthorized)
 		setWWWAuthenticate: authString;
@@ -169,22 +171,22 @@ ZnResponse class >> unauthorized: authString entity: entity [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnResponse >> = other [
 	^ super = other and: [ self statusLine = other statusLine ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> addCookie: cookie [
 	self headers at: 'Set-Cookie' add: cookie fullString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> code [
 	^ self statusLine code
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> cookies [
 	| value cookies |
 	value := self headers at: 'Set-Cookie' ifAbsent: [ ^ #() ].
@@ -194,7 +196,7 @@ ZnResponse >> cookies [
 	^ cookies collect: [ :each | ZnCookie fromString: each ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnResponse >> entityReaderOn: stream [
 	"Reading undefined content is allowed for responses"
 
@@ -203,83 +205,83 @@ ZnResponse >> entityReaderOn: stream [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> hasContentEncoding [
 	^ self headers includesKey: 'Content-Encoding'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> hasTransferEncoding [
 	^ self headers includesKey: 'Transfer-Encoding'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnResponse >> hash [
 	^ super hash bitXor: self status hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isAuthenticationRequired [
 	^ self code = 401
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isBadRequest [
 	^ self code = 400
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isCreated [
 	^ self code = 201
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isError [
 	^self code > 399
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isInformational [
 	^ self code between: 100 and: 199
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isNoContent [
 	^ self code = 204
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isNotFound [
 	^ self code = 404
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isNotModified [
 	^ self code = 304
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isRedirect [
 	^ #(301 302 303 307) includes: self code
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponse >> isSuccess [
 	^ #(200 201 202 204) includes: self code
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> location [
 	^ self headers at: 'Location'
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ZnResponse >> postCopy [
 	super postCopy.
 	statusLine := statusLine copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnResponse >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
@@ -290,74 +292,74 @@ ZnResponse >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnResponse >> readEntityFrom: stream [
 	(self isInformational or: [ self isNoContent or: [ self isNotModified ] ])
 		ifFalse: [ super readEntityFrom: stream ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnResponse >> readHeaderFrom: stream [
 	self statusLine: (ZnStatusLine readFrom: stream).
 	super readHeaderFrom: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> setConnectionCloseFor: request [
 	request wantsConnectionClose
 		ifTrue: [ self setConnectionClose ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> setContentEncodingGzip [
 	self headers at: 'Content-Encoding' put: 'gzip'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> setKeepAliveFor: request [
 	(request isHttp10 and: [ request isConnectionKeepAlive ])
 		ifTrue: [ self setConnectionKeepAlive ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> setLocation: uriString [
 	self headers at: 'Location' put: uriString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> setTransferEncodingChunked [
 	self headers
 		at: 'Transfer-Encoding' put: 'chunked';
 		clearContentLength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> setWWWAuthenticate: string [
 	self headers at: 'WWW-Authenticate' put: string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> status [
 	^ self statusLine code
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> statusLine [
 	^ statusLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> statusLine: object [
 	statusLine := object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> useConnection: connection [
 	"Hook method that can be overwritten to give subclasses the chance to
 	keep using connection in the current thread/process after the server wrote the response"
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnResponse >> writeOn: stream [
 	| bivalentWriteStream |
 	bivalentWriteStream := ZnBivalentWriteStream on: stream.
@@ -365,7 +367,7 @@ ZnResponse >> writeOn: stream [
 	super writeOn: bivalentWriteStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponse >> wwwAuthenticate [
 	^ self headers at: 'WWW-Authenticate'
 ]

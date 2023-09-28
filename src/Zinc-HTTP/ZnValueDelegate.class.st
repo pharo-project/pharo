@@ -9,27 +9,29 @@ ZnServer default delegate:
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnValueDelegate,
-	#superclass : #Object,
+	#name : 'ZnValueDelegate',
+	#superclass : 'Object',
 	#instVars : [
 		'object'
 	],
-	#category : #'Zinc-HTTP-Client-Server'
+	#category : 'Zinc-HTTP-Client-Server',
+	#package : 'Zinc-HTTP',
+	#tag : 'Client-Server'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnValueDelegate class >> with: object [
 	^ self new
 		object: object;
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnValueDelegate >> handleRequest: request [
 	^ object value: request
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnValueDelegate >> object: anObject [
 	object := anObject
 ]

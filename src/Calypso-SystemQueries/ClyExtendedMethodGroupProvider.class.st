@@ -2,12 +2,14 @@
 I provide 'extensions' method group
 "
 Class {
-	#name : #ClyExtendedMethodGroupProvider,
-	#superclass : #ClySingleMethodGroupProvider,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyExtendedMethodGroupProvider',
+	#superclass : 'ClySingleMethodGroupProvider',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClyExtendedMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
 
 	| subgroupsQuery |
@@ -19,7 +21,7 @@ ClyExtendedMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClas
 		on: aMethodQuery withSubgroupsFrom: subgroupsQuery
 ]
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClyExtendedMethodGroupProvider >> createMethodQueryFrom: aClassScope [
 	^ClyAllExtensionMethodsQuery from: aClassScope
 ]

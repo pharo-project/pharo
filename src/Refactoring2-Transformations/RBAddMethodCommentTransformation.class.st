@@ -11,15 +11,17 @@ transformation := (RBAddMethodCommentTransformation
 (ChangesBrowser changes: transformation model changes changes) open
 "
 Class {
-	#name : #RBAddMethodCommentTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddMethodCommentTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'comment'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMethodCommentTransformation class >> comment: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -29,7 +31,7 @@ RBAddMethodCommentTransformation class >> comment: aString inMethod: aSelector i
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMethodCommentTransformation class >> model: aRBModel comment: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -40,7 +42,7 @@ RBAddMethodCommentTransformation class >> model: aRBModel comment: aString inMet
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMethodCommentTransformation >> comment: aString inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -48,7 +50,7 @@ RBAddMethodCommentTransformation >> comment: aString inMethod: aSelector inClass
 	comment := aString
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddMethodCommentTransformation >> privateTransform [
 	| tree signature sourceCode |
 	tree := self definingMethod.
@@ -59,7 +61,7 @@ RBAddMethodCommentTransformation >> privateTransform [
 		compileTree: (self parserClass parseMethod: sourceCode)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddMethodCommentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

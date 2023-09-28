@@ -1,30 +1,32 @@
 Class {
-	#name : #ClyMethodCounterGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
+	#name : 'ClyMethodCounterGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
 	#instVars : [
 		'installedCounter'
 	],
-	#category : #'Calypso-SystemPlugins-Reflectivity-Queries-Tests-ExecutionCounters'
+	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests-ExecutionCounters',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests',
+	#tag : 'ExecutionCounters'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCounterGroupProviderTest >> classSampleWhichHasGroup [
 	^ClyMethodCallCountersQueryTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCounterGroupProviderTest >> groupProviderClass [
 	^ClyMethodCounterGroupProvider
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCounterGroupProviderTest >> setUp [
 	super setUp.
 
 	installedCounter := ClyMethodCallCountersQueryTest new setUp; installCounterInto: #methodWithCounter
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCounterGroupProviderTest >> tearDown [
 
 	installedCounter uninstall.

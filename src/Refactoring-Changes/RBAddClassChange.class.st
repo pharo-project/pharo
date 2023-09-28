@@ -4,8 +4,8 @@ calling on ""my superclass"" (or ProtoObject) subclass:....instancevariable... e
 
 "
 Class {
-	#name : #RBAddClassChange,
-	#superclass : #RBRefactoryDefinitionChange,
+	#name : 'RBAddClassChange',
+	#superclass : 'RBRefactoryDefinitionChange',
 	#instVars : [
 		'superclassName',
 		'instanceVariableNames',
@@ -13,10 +13,12 @@ Class {
 		'poolDictionaryNames',
 		'category'
 	],
-	#category : #'Refactoring-Changes-Changes-Classes'
+	#category : 'Refactoring-Changes-Changes-Classes',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Classes'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddClassChange class >> definitionPatterns [
 	^ #('`@superclass subclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
 		'`@superclass subclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
@@ -83,7 +85,7 @@ RBAddClassChange class >> definitionPatterns [
 		flatCollect: [ :each | Array with: each with: (each copyReplaceAll: '`@superclass' with: 'ProtoObject') , '. `className superclass: `@superclass' ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBAddClassChange >> asUndoOperation [
 
 	| class |
@@ -94,26 +96,26 @@ RBAddClassChange >> asUndoOperation [
 		  ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddClassChange >> category [
 
 	^ category
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddClassChange >> classVariableNames [
 
 	^ classVariableNames
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddClassChange >> definitionClass [
 
 	^ onSystemDictionary classNamed:
 		  (self superclassName ifNil: [ #ProtoObject ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddClassChange >> fillOutDefinition: aDictionary [
 	"What a bad method name!!! This has nothing to do with it. It fills up a domain object out of the dictionary."
 	"Pay attention that the variables used as key in the dictionary correspond to the pattern variables defined
@@ -167,35 +169,35 @@ RBAddClassChange >> fillOutDefinition: aDictionary [
 
 	category := (aDictionary
 		at: '`#category'
-		ifAbsent: [ #Unclassified ])
+		ifAbsent: [ Class unclassifiedCategory ])
 			asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddClassChange >> instanceVariableNames [
 
 	^ instanceVariableNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddClassChange >> nameToDisplay [
 
 	^ self changeString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddClassChange >> sharedPoolNames [
 
 	^ poolDictionaryNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddClassChange >> superclassName [
 
 	^ superclassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddClassChange >> textToDisplay [
 
 	^ self definition

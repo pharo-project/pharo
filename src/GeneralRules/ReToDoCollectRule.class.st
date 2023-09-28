@@ -2,24 +2,26 @@
 Checks for users of to:do: when the shorter collect: would work.
 "
 Class {
-	#name : #ReToDoCollectRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReToDoCollectRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReToDoCollectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ToDoCollectRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReToDoCollectRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReToDoCollectRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -47,7 +49,7 @@ ReToDoCollectRule >> initialize [
 			`@.Stmts3' )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReToDoCollectRule >> name [
 	^ 'to:do: used instead of collect:'
 ]

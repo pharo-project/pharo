@@ -2,12 +2,13 @@
 Writer for a package structure
 "
 Class {
-	#name : #MCFileTreePackageStructureStWriter,
-	#superclass : #MCStWriter,
-	#category : #'MonticelloFileTree-Core'
+	#name : 'MCFileTreePackageStructureStWriter',
+	#superclass : 'MCStWriter',
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreePackageStructureStWriter class >> useCypressWriter [
     "MCFileTreeRepository defaultPackageExtension:'.package'"
 
@@ -16,40 +17,40 @@ MCFileTreePackageStructureStWriter class >> useCypressWriter [
     ^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreePackageStructureStWriter class >> useSnapShotWriter [
     ^ MCFileTreeRepository defaultPackageExtension = '.pkg'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreePackageStructureStWriter >> absentInitializers [
 	^ initializers reject: [ :each | Smalltalk hasClassNamed: each key ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreePackageStructureStWriter >> acceptVisitor: aVisitor forDefinitions: aCollection [
 	(MCDependencySorter sortItems: aCollection)
 		do: [ :ea | ea accept: aVisitor ]
 		displayingProgress: 'Writing definitions...'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreePackageStructureStWriter >> initializers: aCollection [
 	initializers := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreePackageStructureStWriter >> presentInitializers [
 	^ initializers select: [ :each | Smalltalk hasClassNamed: each key ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreePackageStructureStWriter >> writeAbsentInitializers [
 	(self absentInitializers asSortedCollection: [ :a :b | a key <= b key ])
 		do: [ :association | stream nextPutAll: association value contents ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreePackageStructureStWriter >> writeDefinitions: aCollection [
 	"the correct initialization order is unknown if some classes are missing in the image"
 
@@ -60,7 +61,7 @@ MCFileTreePackageStructureStWriter >> writeDefinitions: aCollection [
 		writeAbsentInitializers
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreePackageStructureStWriter >> writeMethodPreamble: definition [
     stream
         cr;
@@ -72,7 +73,7 @@ MCFileTreePackageStructureStWriter >> writeMethodPreamble: definition [
         cr
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreePackageStructureStWriter >> writePresentInitializers [
 	| orderedClasses presentInitializers |
 	presentInitializers := self presentInitializers.
@@ -83,7 +84,7 @@ MCFileTreePackageStructureStWriter >> writePresentInitializers [
 		do: [ :className | stream nextPutAll: (presentInitializers detect: [ :each | each key = className ]) value contents ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreePackageStructureStWriter >> writeProperties [
     stream
         nextPut: ${;

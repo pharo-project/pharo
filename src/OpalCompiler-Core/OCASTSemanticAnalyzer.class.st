@@ -3,8 +3,8 @@ I visit each node in the abstract syntax tree while growing and shrinking a scop
 
 "
 Class {
-	#name : #OCASTSemanticAnalyzer,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'OCASTSemanticAnalyzer',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'scope',
 		'outerScope',
@@ -13,10 +13,12 @@ Class {
 		'undeclared',
 		'invalidVariables'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 OCASTSemanticAnalyzer >> analyze: aNode [
 
 	self visitNode: aNode.
@@ -24,7 +26,7 @@ OCASTSemanticAnalyzer >> analyze: aNode [
 	OCASTMethodMetadataAnalyser new visitNode: aNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> analyzeLocalVariableRead: aLocalVariable [
 	aLocalVariable markRead.
 	(aLocalVariable scope outerNotOptimizedScope ~= scope outerNotOptimizedScope ) ifFalse: [ ^self ].
@@ -35,7 +37,7 @@ OCASTSemanticAnalyzer >> analyzeLocalVariableRead: aLocalVariable [
 				ifTrue: [aLocalVariable markEscapingWrite]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> analyzeLocalVariableWrite: aLocalVariable [
 	(aLocalVariable scope outerNotOptimizedScope ~= scope outerNotOptimizedScope)
 	"only escaping when they will end up in different closures"
@@ -46,27 +48,27 @@ OCASTSemanticAnalyzer >> analyzeLocalVariableWrite: aLocalVariable [
 					ifFalse: [ aLocalVariable markWrite ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSemanticAnalyzer >> blockCounter [
 	^blockCounter ifNil: [0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSemanticAnalyzer >> compilationContext [
 	^ compilationContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSemanticAnalyzer >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 OCASTSemanticAnalyzer >> declareArgumentNode: aVariableNode [
 	^self declareVariableNode: aVariableNode as: (ArgumentVariable named: aVariableNode name)
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 OCASTSemanticAnalyzer >> declareInvalidVariableNode: aVariableNode [
 
 	| var |
@@ -78,12 +80,12 @@ OCASTSemanticAnalyzer >> declareInvalidVariableNode: aVariableNode [
 	aVariableNode binding: var
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 OCASTSemanticAnalyzer >> declareTemporaryNode: aVariableNode [
 	^self declareVariableNode: aVariableNode as: (TemporaryVariable named: aVariableNode name)
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable [
 	| name var shadowing |
 	name := aVariableNode name.
@@ -95,24 +97,24 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	^ var
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSemanticAnalyzer >> invalidVariables [
 	^ invalidVariables ifNil: [ invalidVariables := Dictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSemanticAnalyzer >> outerScope [
 
 	^ outerScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSemanticAnalyzer >> outerScope: anObject [
 
 	outerScope := anObject
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 OCASTSemanticAnalyzer >> resolveVariableNode: aVariableNode [
 	| var |
 	var := (scope lookupVar: aVariableNode name)
@@ -121,30 +123,30 @@ OCASTSemanticAnalyzer >> resolveVariableNode: aVariableNode [
 	^var
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OCASTSemanticAnalyzer >> scope: aSemScope [
 	scope := aSemScope
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
 
 	aNode addWarning: 'Name already defined'
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
 	variableNode addError: 'Assignment to read-only variable'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSemanticAnalyzer >> undeclared [
 
 	^ undeclared ifNil: [ undeclared := Dictionary new ]
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
 	| varName var notice |
@@ -165,18 +167,18 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	^ var
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
 	variableNode addWarning: 'Unitialized variable'
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 
 	variableNode addWarning: 'Unused variable'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitAnnotationMarkNode: aRBAnnotationValueNode [
 
 	(aRBAnnotationValueNode parent isNotNil and: [
@@ -187,7 +189,7 @@ OCASTSemanticAnalyzer >> visitAnnotationMarkNode: aRBAnnotationValueNode [
 	aRBAnnotationValueNode addError: 'Unexpected token'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 	| var |
 	self visitNode: anAssignmentNode value.
@@ -196,7 +198,7 @@ OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 	var analyzeWrite: anAssignmentNode variable by: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 	aBlockNode arguments size >15 ifTrue: [ aBlockNode addError: 'Too many arguments' ].
 
@@ -211,7 +213,7 @@ OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 	scope := scope popScope
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitEnglobingErrorNode: aNode [
 	"There is bad arguments or variable, just invalidate them to avoid noisy useless errors/warnings.
 	Because, AST is very wrong with possible missing or superfluous [ or ], we should not believe in scope.
@@ -223,7 +225,7 @@ OCASTSemanticAnalyzer >> visitEnglobingErrorNode: aNode [
 	^ super visitEnglobingErrorNode: aNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 
 	scope := scope newOptimizedBlockScope: blockCounter.
@@ -234,14 +236,14 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 	scope := scope popScope
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
 	
 	super visitMessageNode: aMessageNode.
 	aMessageNode isSuperSend ifTrue: [ aMessageNode superOf: scope targetClass ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	aMethodNode arguments size > 15 ifTrue: [ aMethodNode addError:  'Too many arguments' ].
@@ -253,7 +255,7 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	self visitNode: aMethodNode body
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 
 	| varNode |
@@ -269,7 +271,7 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 	self declareVariableNode: varNode as: (PrimitiveErrorVariable node: varNode)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitSequenceNode: aSequenceNode [
 
 	aSequenceNode temporaries do: [ :node | self declareTemporaryNode: node ].
@@ -279,7 +281,7 @@ OCASTSemanticAnalyzer >> visitSequenceNode: aSequenceNode [
 				ifFalse: [ self unusedVariable: node ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitVariableNode: aVariableNode [
 	| var |
 	var := self resolveVariableNode: aVariableNode.

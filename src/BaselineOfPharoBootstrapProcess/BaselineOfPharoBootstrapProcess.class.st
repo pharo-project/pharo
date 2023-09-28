@@ -6,12 +6,13 @@ I'm the configuration used to load everything needed to perform the bootstrap pr
 - Cargo: the package manager that will give us Monticello definitions for Ficus
 "
 Class {
-	#name : #BaselineOfPharoBootstrapProcess,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfPharoBootstrapProcess
+	#name : 'BaselineOfPharoBootstrapProcess',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfPharoBootstrapProcess',
+	#package : 'BaselineOfPharoBootstrapProcess'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfPharoBootstrapProcess >> baseline: spec [
 	<baseline>
 	

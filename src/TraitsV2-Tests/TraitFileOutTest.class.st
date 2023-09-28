@@ -1,6 +1,6 @@
 Class {
-	#name : #TraitFileOutTest,
-	#superclass : #TraitsTestCase,
+	#name : 'TraitFileOutTest',
+	#superclass : 'TraitsTestCase',
 	#instVars : [
 		'ca',
 		'cb',
@@ -9,24 +9,26 @@ Class {
 		'tc',
 		'td'
 	],
-	#category : #'TraitsV2-Tests'
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitFileOutTest class >> defaultTimeLimit [
 
 	^ 15 seconds
 ]
 
-{ #category : #running }
-TraitFileOutTest >> categoryName [
-	^'Traits-Tests-FileOut'
+{ #category : 'running' }
+TraitFileOutTest >> packageName [
+
+	^ 'Traits-Tests-FileOut'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TraitFileOutTest >> setUp [
 	super setUp.
-	self packageOrganizer addCategory: self categoryName.
+	self packageOrganizer ensurePackage: self packageName.
 
 	td := self createTraitNamed: #TD uses: {}.
 	td compile: 'd' classified: #cat1.
@@ -46,42 +48,43 @@ TraitFileOutTest >> setUp [
 	cb class uses: ta classTrait + tc instanceVariableNames: ''
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TraitFileOutTest >> tearDown [
+
 	| dir |
 	dir := FileSystem workingDirectory.
-	self createdClassesAndTraits, self resourceClassesAndTraits  do: [:each |
-		(dir / each asString,'st') ensureDelete ] .
-	(dir / self categoryName,'st') ensureDelete.
-	self packageOrganizer removeSystemCategory: self categoryName.
+	self createdClassesAndTraits , self resourceClassesAndTraits do: [ :each | (dir / each asString , 'st') ensureDelete ].
+	(dir / self packageName , 'st') ensureDelete.
+	self packageOrganizer removePackage: self packageName.
 	"Ensure cleaning of obsoletes refs"
 	ca := cb := ta := tb := tc := td := nil.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TraitFileOutTest >> testFileOutCategory [
 	"File out whole system category, delete all classes and traits and then
 	file them in again."
 
 	self timeLimit: 30 seconds.
-	self packageOrganizer fileOutCategory: self categoryName.
-	self packageOrganizer removeSystemCategory: self categoryName.
-	self deny: (testingEnvironment keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
+	(self packageOrganizer packageNamed: self packageName)
+		fileOut;
+		removeFromSystem.
+	self deny: (testingEnvironment keys asSet includesAnyOf: #( #CA #CB #TA #TB #TC #TD )).
 
-	CodeImporter evaluateFileNamed: (self categoryName , '.st').
-	self assertCollection: testingEnvironment keys asSet includesAll: #(#CA #CB #TA #TB #TC #TD).
+	CodeImporter evaluateFileNamed: self packageName , '.st'.
+	self assertCollection: testingEnvironment keys asSet includesAll: #( #CA #CB #TA #TB #TC #TD ).
 	ta := testingEnvironment at: #TA.
-	self assert: ta traitComposition asString equals:  '((TB + TC) @ {#cc->#c}) - {#c}'.
-	self assertCollection: ta selectors asSet includesAll: #(#a #b #cc).
+	self assert: ta traitComposition asString equals: '((TB + TC) @ {#cc->#c}) - {#c}'.
+	self assertCollection: ta selectors asSet includesAll: #( #a #b #cc ).
 	cb := testingEnvironment at: #CB.
 	self assert: cb traitComposition asString equals: 'TA'.
-	self assertCollection: cb selectors asSet includesAll: #(#cb #a #b #cc).	"test classSide traitComposition of CB"
+	self assertCollection: cb selectors asSet includesAll: #( #cb #a #b #cc ). "test classSide traitComposition of CB"
 	self assert: cb classSide traitComposition asString equals: 'TA classTrait + TC'.
-	self assertCollection: cb classSide selectors asSet includesAll: #(#d #c)
+	self assertCollection: cb classSide selectors asSet includesAll: #( #d #c )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TraitFileOutTest >> testFileOutTrait [
 	"fileOut trait T6, remove it from system and then file it in again"
 
@@ -103,7 +106,7 @@ TraitFileOutTest >> testFileOutTrait [
 	self assertCollection: self t6 classSide selectors asSet includesAll: #(#localClassSideMethod: #m2ClassSide:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TraitFileOutTest >> testRecompiling [
 
 	| traitSrcPtr methodSrcPtr |
@@ -119,7 +122,7 @@ TraitFileOutTest >> testRecompiling [
 		assert: methodSrcPtr equals: self c1 methods first sourcePointer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TraitFileOutTest >> testRemovingMethods [
 	"When removing a local method, assure that the method
 	from the trait is installed instead and that the users are

@@ -1,6 +1,6 @@
-Extension { #name : #UnhandledException }
+Extension { #name : 'UnhandledException' }
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 UnhandledException >> manageTestProcessBy: aProcessMonitorTestService [
 
 	aProcessMonitorTestService handleUnhandledException: self

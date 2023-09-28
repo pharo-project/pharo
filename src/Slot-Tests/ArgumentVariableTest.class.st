@@ -1,10 +1,12 @@
 Class {
-	#name : #ArgumentVariableTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#name : 'ArgumentVariableTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentVariableTest >> testDefiningNode [
 	| method declaringNode declaringNodeViaVariable|
 
@@ -19,7 +21,7 @@ ArgumentVariableTest >> testDefiningNode [
 	self assert: declaringNodeViaVariable equals: declaringNode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentVariableTest >> testUsingMethods [
 
 	| method |

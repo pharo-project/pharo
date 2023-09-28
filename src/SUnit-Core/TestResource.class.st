@@ -24,8 +24,8 @@ See my superclass' comment for assertion and logging information.
 
 "
 Class {
-	#name : #TestResource,
-	#superclass : #TestAsserter,
+	#name : 'TestResource',
+	#superclass : 'TestAsserter',
 	#instVars : [
 		'name',
 		'description'
@@ -33,10 +33,12 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #'SUnit-Core-Kernel'
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TestResource class >> availableFor: aTestAsserter [
 	aTestAsserter
 		assert: self isAvailable
@@ -45,7 +47,7 @@ TestResource class >> availableFor: aTestAsserter [
 				, aTestAsserter printString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestResource class >> current [
 	"This is a lazy accessor:  the assert of self isAvailable does no work unless current isNil.  However this method should normally be sent only to a resource that should already have been made available, e.g. in a test whose test case class has the resource class in its #resources, so should never be able to fail the assert.
 	If the intent is indeed to access a possibly-unprepared or reset-in-earlier-test resource lazily, then preface the call of 'MyResource current' with 'MyResource availableFor: self'."
@@ -58,13 +60,13 @@ TestResource class >> current [
 	^current
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestResource class >> current: aTestResource [
 
 	current := aTestResource
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestResource class >> isAbstract [
 	"Override to true if a TestResource subclass is Abstract and should not have
 	TestCase instances built from it"
@@ -72,12 +74,12 @@ TestResource class >> isAbstract [
 	^self name = #TestResource
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestResource class >> isAlreadyAvailable [
 	^current class == self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestResource class >> isAvailable [
 	"This is (and must be) a lazy method.  If my current has a value, an attempt to make me available has already been made:  trust its result.  If not, try to make me available."
 
@@ -85,13 +87,13 @@ TestResource class >> isAvailable [
 	^self isAlreadyAvailable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestResource class >> isUnavailable [
 
 	^self isAvailable not
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestResource class >> makeAvailable [
 	"This method must be the _only_ way to set a notNil value for the unique instance (current).  First, obtain a candidate instance and set current to a notNil placeholder (any notNil object not an instance of me would do;  this version uses false).  Next, check any subordinate resources needed by this resource.  Lastly, setUp the candidate and put it in current if it is available, ensuring that it is torn down otherwise."
 
@@ -108,20 +110,20 @@ TestResource class >> makeAvailable [
 		ensure: [current == candidate ifFalse: [candidate tearDown]]]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TestResource class >> new [
 	"Use #current to get the valid current instance.  Use of #new to get an instance (that should never be the current one) could be done in bizarre circumstances, so is not blocked, but will usually be inappropriate."
 
 	^super new initialize
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TestResource class >> reset [
 	[self isAlreadyAvailable ifTrue: [current tearDown]]
 		ensure: [current := nil]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestResource class >> resetOrAddResourcesTo: aCollection [
 	"Add correctly set-up resources to the collection unless already there. Reset any imperfectly-set-up resources, so current isNil will return true if they are re-encountered via an indirectly self-prerequing resource;  circular references cannot be set up so will never reply true to isAlreadyAvailable, but may have correctly-set-up prereqs to add and/or imperfectly-set-up ones to reset, so do not abort the loop first time round."
 
@@ -139,7 +141,7 @@ TestResource class >> resetOrAddResourcesTo: aCollection [
 "The cloned 'self resources do: ...' line in both blocks is, I think, the best way to write this method so that its logic is clear.  The first loop resets this resource immediately, before traversing its resources;  the second traverses before adding"
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestResource class >> resetResources: topLevelResources [
 	"Reset all imperfectly-set-up resources while gathering the rest for ordered resetting."
 
@@ -150,69 +152,69 @@ TestResource class >> resetResources: topLevelResources [
 	availableResources reverseDo: [:each | each reset]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestResource class >> resources [
 	^#()
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestResource class >> signalInitializationError [
 	^ self classForTestResult signalFailureWith:  'Resource ' , self name , ' could not be initialized'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestResource >> description [
 	^ description ifNil: [ String empty ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestResource >> description: aString [
 
 	description := aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestResource >> isAvailable [
 	"Override to provide information on the readiness of the resource.  Put state-changing behaviour in setUp and keep this a state-preserving check as far as possible.  Where setUp is guaranteed to provide a valid resource if it completes, there is no need to override this."
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestResource >> isUnavailable [
 	"override to provide information on the readiness of the resource"
 
 	^self isAvailable not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestResource >> name [
 	name ifNil: [ ^ self printString ].
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestResource >> name: aString [
 	name := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TestResource >> printOn: aStream [
 
 	aStream nextPutAll: self class name asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestResource >> resources [
 	^self class resources
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestResource >> setUp [
 	"Does nothing. Subclasses should override this to initialize their resource"
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestResource >> tearDown [
 	"Does nothing. Subclasses should override this to tear down their resource"
 ]

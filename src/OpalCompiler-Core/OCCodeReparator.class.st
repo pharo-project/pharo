@@ -10,34 +10,36 @@ I'm quite limited and I need love to improve and be usable in other context (rig
 * requestor <???> the original requestor (to do reparation on)
 "
 Class {
-	#name : #OCCodeReparator,
-	#superclass : #Object,
+	#name : 'OCCodeReparator',
+	#superclass : 'Object',
 	#instVars : [
 		'node',
 		'requestor'
 	],
-	#category : #'OpalCompiler-Core-FrontEnd'
+	#category : 'OpalCompiler-Core-FrontEnd',
+	#package : 'OpalCompiler-Core',
+	#tag : 'FrontEnd'
 }
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> declareClassVar [
 
 	node methodNode methodClass instanceSide
 		addClassVarNamed: node name asSymbol
 ]
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> declareGlobal [
 	Smalltalk globals at: node name asSymbol put: nil
 ]
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> declareInstVar: name [
 	"Declare an instance variable."
 	node methodNode methodClass addInstVarNamed: name
 ]
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> declareTempAndPaste: name [
 	| insertion theTextString characterBeforeMark tempsMark newMethodNode |
 
@@ -65,7 +67,7 @@ OCCodeReparator >> declareTempAndPaste: name [
 	self substituteWord: insertion wordInterval: (tempsMark to: tempsMark-1)
 ]
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> defineClass: classSymbol [
 	"Prompts the user to define a new class."
 
@@ -79,7 +81,7 @@ OCCodeReparator >> defineClass: classSymbol [
 		  definitionString: classDefinition
 ]
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> defineClassOrTrait: aSymbol definitionString: aString [
 	"Prompts the user to define a new class oe trait."
 
@@ -104,7 +106,7 @@ OCCodeReparator >> defineClassOrTrait: aSymbol definitionString: aString [
 	^classBinding
 ]
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> defineTrait: traitName [
 	"Prompts the user to define a new trait."
 
@@ -120,19 +122,19 @@ OCCodeReparator >> defineTrait: traitName [
 		  definitionString: traitDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCCodeReparator >> node [
 
 	^ node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCCodeReparator >> node: anObject [
 
 	node := anObject
 ]
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 OCCodeReparator >> openMenu [
 	"Display a menu to perform various possible reparations on undefined variables.
 	* Return true if a reparation was done and a recompilation is needed.
@@ -189,7 +191,7 @@ OCCodeReparator >> openMenu [
 	^ true
 ]
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> possibleVariablesFor: proposedVariable [
 	| results class |
 	class := node methodNode methodClass.
@@ -202,19 +204,19 @@ OCCodeReparator >> possibleVariablesFor: proposedVariable [
 	^ proposedVariable correctAgainst: nil continuedFrom: results
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCCodeReparator >> requestor [
 
 	^ requestor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCCodeReparator >> requestor: anObject [
 
 	requestor := anObject
 ]
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> substituteVariable: varName atInterval: anInterval [
 	self
 		substituteWord: varName
@@ -223,7 +225,7 @@ OCCodeReparator >> substituteVariable: varName atInterval: anInterval [
 	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName))
 ]
 
-{ #category : #correcting }
+{ #category : 'correcting' }
 OCCodeReparator >> substituteWord: correctWord wordInterval: spot [
 	"Substitute the correctSelector into the (presuamed interactive) receiver."
 

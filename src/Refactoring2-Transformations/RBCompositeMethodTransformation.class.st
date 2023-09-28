@@ -1,20 +1,22 @@
 Class {
-	#name : #RBCompositeMethodTransformation,
-	#superclass : #RBCompositeTransformation,
+	#name : 'RBCompositeMethodTransformation',
+	#superclass : 'RBCompositeTransformation',
 	#instVars : [
 		'class',
 		'selector'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeMethodTransformation >> definingClass [
 
 	^ self model classObjectFor: class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeMethodTransformation >> definingMethod [
 
 	^ self definingClass parseTreeForSelector: selector asSymbol

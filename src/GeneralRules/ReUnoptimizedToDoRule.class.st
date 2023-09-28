@@ -8,30 +8,32 @@ can be more efficiently expressed as
 1 to: 10 do: aBlock
 "
 Class {
-	#name : #ReUnoptimizedToDoRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReUnoptimizedToDoRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnoptimizedToDoRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'UnoptimizedToDoRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnoptimizedToDoRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReUnoptimizedToDoRule >> initialize [
 	super initialize.
 	self matches: '(`@a to: `@b) do: `@c'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnoptimizedToDoRule >> name [
 	^ 'Uses (to:)do: instead of to:do:'
 ]

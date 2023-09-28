@@ -1,6 +1,6 @@
-Extension { #name : #SnapshotDone }
+Extension { #name : 'SnapshotDone' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 SnapshotDone >> shouldBeConsideredByCalypsoEnvironment [
 	^false
 ]

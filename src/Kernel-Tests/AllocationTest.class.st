@@ -2,12 +2,14 @@
 Test originally from Andreas Raab
 "
 Class {
-	#name : #AllocationTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Exception'
+	#name : 'AllocationTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Exception',
+	#package : 'Kernel-Tests',
+	#tag : 'Exception'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AllocationTest >> testOneGBAllocation [
 	"Documentating a weird bug in the allocator"
 
@@ -22,7 +24,7 @@ AllocationTest >> testOneGBAllocation [
 	self assert: (failed or: [ array size = sz ])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AllocationTest >> testOneGWordAllocation [
 	"Documentating a weird bug in the allocator"
 
@@ -39,7 +41,7 @@ AllocationTest >> testOneGWordAllocation [
 	self assert: (failed or: [ array size = sz ])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AllocationTest >> testOneMBAllocation [
 	"Documentating a weird bug in the allocator"
 
@@ -50,7 +52,7 @@ AllocationTest >> testOneMBAllocation [
 	self assert: (failed or:[array size = sz])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AllocationTest >> testOneMWordAllocation [
 	"Documentating a weird bug in the allocator"
 

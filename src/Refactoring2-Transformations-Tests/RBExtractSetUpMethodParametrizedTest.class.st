@@ -1,22 +1,24 @@
 Class {
-	#name : #RBExtractSetUpMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBExtractSetUpMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractSetUpMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBExtractSetUpMethodRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBExtractSetUpMethodParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUp [
 	| class refactoring |
 	refactoring := self createRefactoringWithArguments: { (14+12 to: 29+12) . #testExtractSetupExample5 . RBTestAsDataForExtractSetupTransformationTest}.
@@ -36,7 +38,7 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUp [
 	self someMethod')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTempsToInstVars [
 	| class refactoring |
 	refactoring := self createRefactoringWithArguments: { (35+12  to: 81+12) . #testExtractSetupExample6 . RBTestAsDataForExtractSetupTransformationTest }.
@@ -71,7 +73,7 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTempsToInstVar
 	self someMethod.')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInstVars [
 	| class refactoring |
 	self skip.
@@ -111,7 +113,7 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInst
 	aNumber := 4')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUpWorksWellInOtherMethod [
 	| class refactoring |
 	self skip.
@@ -163,7 +165,7 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpWorksWellInOtherMethod [
 	self someMethod.')
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testFailureBadClass [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -172,13 +174,13 @@ RBExtractSetUpMethodParametrizedTest >> testFailureBadClass [
 				 RBLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testFailureBadInterval [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ (14 to: 35) . #testExtractSetupExample1 . RBTestAsDataForExtractSetupTransformationTest })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testFailureExtractSetUpWhenIsNotFirstsSentences [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -187,7 +189,7 @@ RBExtractSetUpMethodParametrizedTest >> testFailureExtractSetUpWhenIsNotFirstsSe
 				 RBTestAsDataForExtractSetupTransformationTest })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testFailureModelExistingSetUpMethod [
 
 	| class |

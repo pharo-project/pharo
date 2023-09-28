@@ -1,22 +1,24 @@
 Class {
-	#name : #RBMoveInstanceVariableToClassParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBMoveInstanceVariableToClassParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBMoveInstanceVariableToClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveInstanceVariableToClassTransformation };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveInstanceVariableToClassParametrizedTest >> constructor [
 	^ #variable:fromClass:toClass:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableAlreadyExists [
 
 	self shouldFail: (self
@@ -25,7 +27,7 @@ RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableAlreadyExist
 			 { 'result'. #RBFooLintRuleTestData. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableDoesNotExistInOldClass [
 
 	self shouldFail: (self
@@ -34,7 +36,7 @@ RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableDoesNotExist
 			 { 'abc'. #RBFooLintRuleTestData. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveInstanceVariableToClassParametrizedTest >> testRefactoring [
 
 	| refactoring oldClass newClass |

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveTemporaryVariableTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveTemporaryVariableTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveTemporaryVariableTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation
@@ -13,7 +15,7 @@ RBRemoveTemporaryVariableTransformationTest >> testClassDoesNotExist [
 			 inClass: #RBTemporaryVariableTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation
@@ -22,7 +24,7 @@ RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 			 inClass: #RBRemoveTemporaryVariableTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -54,7 +56,7 @@ RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 		equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveTemporaryVariableTransformationTest >> testTransform [
 
 	| transformation class |
@@ -84,7 +86,7 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 		equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveTemporaryVariableTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation

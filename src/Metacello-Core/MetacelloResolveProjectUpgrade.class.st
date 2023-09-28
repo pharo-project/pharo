@@ -1,20 +1,22 @@
 Class {
-	#name : #MetacelloResolveProjectUpgrade,
-	#superclass : #MetacelloScriptNotification,
+	#name : 'MetacelloResolveProjectUpgrade',
+	#superclass : 'MetacelloScriptNotification',
 	#instVars : [
 		'existingProjectRegistration',
 		'newProjectRegistration'
 	],
-	#category : #'Metacello-Core-Scripts'
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloResolveProjectUpgrade >> allow [
     self checkAllowed.
     self resume: self newProjectRegistration
 ]
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloResolveProjectUpgrade >> allowEvenIfLocked [
   "for internal ScriptEngine use only. from the Scripting API use:
 		onLocked: [:ex | ex allow]
@@ -23,7 +25,7 @@ MetacelloResolveProjectUpgrade >> allowEvenIfLocked [
   self resume: self newProjectRegistration
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloResolveProjectUpgrade >> checkAllowed [
   self existingProjectRegistration locked
     ifTrue: [ 
@@ -36,68 +38,68 @@ MetacelloResolveProjectUpgrade >> checkAllowed [
             signal) ]
 ]
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloResolveProjectUpgrade >> defaultAction [
     "Result of signal should be the projectRegistration to be used to perform the load ... default is to disallow"
 
     ^ self existingProjectRegistration
 ]
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloResolveProjectUpgrade >> disallow [
     "default action"
 
     self resume: self existingProjectRegistration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloResolveProjectUpgrade >> existingProjectRegistration [
 	^ existingProjectRegistration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloResolveProjectUpgrade >> existingProjectRegistration: anObject [
 	existingProjectRegistration := anObject
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloResolveProjectUpgrade >> handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock [
     self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloResolveProjectUpgrade >> newProjectRegistration [
 	^ newProjectRegistration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloResolveProjectUpgrade >> newProjectRegistration: anObject [
 	newProjectRegistration := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloResolveProjectUpgrade >> operationString [
     self subclassResponsibility
 ]
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloResolveProjectUpgrade >> useExisting [
   "to be deprecated: useLoaded"
 
   self disallow
 ]
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloResolveProjectUpgrade >> useIncoming [
   self allow
 ]
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloResolveProjectUpgrade >> useLoaded [
   self disallow
 ]
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloResolveProjectUpgrade >> useNew [
   "to be deprecated: useIncoming"
 

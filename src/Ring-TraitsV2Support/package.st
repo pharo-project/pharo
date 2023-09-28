@@ -1,1 +1,1 @@
-Package { #name : #'Ring-TraitsV2Support' }
+Package { #name : 'Ring-TraitsV2Support' }

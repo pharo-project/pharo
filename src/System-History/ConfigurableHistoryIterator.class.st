@@ -66,23 +66,25 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ConfigurableHistoryIterator,
-	#superclass : #Object,
+	#name : 'ConfigurableHistoryIterator',
+	#superclass : 'Object',
 	#instVars : [
 		'undoStack',
 		'redoStack',
 		'undoAction',
 		'redoAction'
 	],
-	#category : #'System-History-Iterators'
+	#category : 'System-History-Iterators',
+	#package : 'System-History',
+	#tag : 'Iterators'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ConfigurableHistoryIterator class >> action: aBlock [
 	^ self undo: aBlock redo: aBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ConfigurableHistoryIterator class >> undo: aBlockClosure redo: aBlockClosure2 [
 	^ self new
 		undoAction: aBlockClosure;
@@ -90,7 +92,7 @@ ConfigurableHistoryIterator class >> undo: aBlockClosure redo: aBlockClosure2 [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurableHistoryIterator >> current [
 	"I return the current element of the iteration. In case there is nothing to undo, I raise an exception."
 
@@ -98,40 +100,40 @@ ConfigurableHistoryIterator >> current [
 	^ undoStack top
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ConfigurableHistoryIterator >> hasNext [
 	"Return true if there is at least one action to redo."
 
 	^ redoStack isNotEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ConfigurableHistoryIterator >> hasPrevious [
 	"Return true if there is at least one action to undo."
 
 	^ undoStack isNotEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ConfigurableHistoryIterator >> initialize [
 	super initialize.
 	undoStack := Stack new.
 	redoStack := Stack new
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurableHistoryIterator >> redo [
 	"Redo the next action, in case there is none, raise an exception."
 
 	self redoIfEmpty: [ NothingToRedo signal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurableHistoryIterator >> redoAction: anObject [
 	redoAction := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurableHistoryIterator >> redoIfEmpty: aBlockClosure [
 	"Redo the next action and register it in the undo list. In case there is no next action, execute the block as parameter."
 
@@ -142,7 +144,7 @@ ConfigurableHistoryIterator >> redoIfEmpty: aBlockClosure [
 	undoStack push: element
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ConfigurableHistoryIterator >> register: anObject [
 	"Register an object to the undo list. This will flush the redo list."
 
@@ -150,26 +152,26 @@ ConfigurableHistoryIterator >> register: anObject [
 	redoStack removeAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurableHistoryIterator >> size [
 	"Return the size of the previous history"
 
 	^ undoStack size
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurableHistoryIterator >> undo [
 	"Undo the previous action, in case there is none, raise an exception."
 
 	self undoIfEmpty: [ NothingToUndo signal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurableHistoryIterator >> undoAction: anObject [
 	undoAction := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurableHistoryIterator >> undoIfEmpty: aBlockClosure [
 	"Redo the previous action and register it in the redo list. In case there is no previous action, execute the block as parameter."
 	| element |

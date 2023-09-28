@@ -2,19 +2,20 @@
 Abstract superclass for changes wrapper (for patch tree)
 "
 Class {
-	#name : #PSMCChangeWrapper,
-	#superclass : #ListItemWrapper,
-	#category : #'Monticello-GUI-Diff'
+	#name : 'PSMCChangeWrapper',
+	#superclass : 'ListItemWrapper',
+	#category : 'Monticello-GUI-Diff',
+	#package : 'Monticello-GUI-Diff'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCChangeWrapper >> actualClass [
 	"Answer the class represented in the receiver."
 
 	^(self operation ifNil: [^nil]) targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCChangeWrapper >> icon [
 
 	"Answer a form with an icon to represent the receiver"
@@ -30,28 +31,28 @@ PSMCChangeWrapper >> icon [
 	^ self iconNamed: #changeUpdateIcon
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PSMCChangeWrapper >> isConflict [
 	"Answer whether the receiver is a conflict item."
 
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCChangeWrapper >> model: anObject [
 	"Set the model."
 
 	model := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCChangeWrapper >> operation [
 	"Answer the underlying operation."
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCChangeWrapper >> preferredColor [
 
 	| op |

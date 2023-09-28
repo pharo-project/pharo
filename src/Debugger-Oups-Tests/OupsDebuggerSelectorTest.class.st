@@ -1,14 +1,16 @@
 Class {
-	#name : #OupsDebuggerSelectorTest,
-	#superclass : #TestCase,
+	#name : 'OupsDebuggerSelectorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'debuggers',
 		'debuggerSelector'
 	],
-	#category : #'Debugger-Oups-Tests-Tests - strategies'
+	#category : 'Debugger-Oups-Tests-Tests - strategies',
+	#package : 'Debugger-Oups-Tests',
+	#tag : 'Tests - strategies'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OupsDebuggerSelectorTest >> performTest [
 	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
 
@@ -16,12 +18,12 @@ OupsDebuggerSelectorTest >> performTest [
 	self perform: testSelector asSymbol
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 OupsDebuggerSelectorTest >> session [
 	^OupsDummyDebugger dummySession
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OupsDebuggerSelectorTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 
@@ -31,7 +33,7 @@ OupsDebuggerSelectorTest >> setUp [
 	debuggerSelector handlesDebuggerErrors: false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OupsDebuggerSelectorTest >> tearDown [
 	debuggers
 		do: [ :dbg |
@@ -40,14 +42,14 @@ OupsDebuggerSelectorTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'tests - debuggers' }
+{ #category : 'tests - debuggers' }
 OupsDebuggerSelectorTest >> testDebuggers [
 	self
 		assertCollection: debuggerSelector debuggers asOrderedCollection
 		equals: debuggers
 ]
 
-{ #category : #'tests -  algorithm' }
+{ #category : 'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testFirstUsableDebuggerForSession [
 
 	debuggerSelector debuggers first beUnusable.
@@ -58,7 +60,7 @@ OupsDebuggerSelectorTest >> testFirstUsableDebuggerForSession [
 		identicalTo: debuggers third
 ]
 
-{ #category : #'tests - debugging' }
+{ #category : 'tests - debugging' }
 OupsDebuggerSelectorTest >> testHandlesDebuggerErrors [
 	self deny: debuggerSelector handlesDebuggerErrors.
 	debuggerSelector handlesDebuggerErrors: true.
@@ -68,13 +70,13 @@ OupsDebuggerSelectorTest >> testHandlesDebuggerErrors [
 		equals: OupsDebuggerSelector handleDebuggerErrors
 ]
 
-{ #category : #'tests - debuggers' }
+{ #category : 'tests - debuggers' }
 OupsDebuggerSelectorTest >> testNextDebugger [
 	debuggers
 		do: [ :dbg | self assert: debuggerSelector nextDebugger identicalTo: dbg ]
 ]
 
-{ #category : #'tests -  algorithm' }
+{ #category : 'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testNextDebuggerForDebuggerFailure [
 	"Upon a debugger failure, we call the nextDebuggerForSession: interface to get the next debugger"
 	|session|
@@ -85,7 +87,7 @@ OupsDebuggerSelectorTest >> testNextDebuggerForDebuggerFailure [
 		identicalTo: debuggers second
 ]
 
-{ #category : #'tests -  algorithm' }
+{ #category : 'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testNextDebuggerForSession [
 	"Upon a debugger failure, we call the nextDebuggerForSession: interface to get the next debugger"
 
@@ -106,7 +108,7 @@ OupsDebuggerSelectorTest >> testNextDebuggerForSession [
 		raise: CollectionIsEmpty
 ]
 
-{ #category : #'tests -  algorithm' }
+{ #category : 'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testNoDebuggerForSession [
 	debuggerSelector debuggers: #().
 	self
@@ -115,7 +117,7 @@ OupsDebuggerSelectorTest >> testNoDebuggerForSession [
 	self deny: debuggerSelector handled
 ]
 
-{ #category : #'tests - debuggers' }
+{ #category : 'tests - debuggers' }
 OupsDebuggerSelectorTest >> testNoNextDebugger [
 	debuggerSelector debuggers: #().
 	self
@@ -123,7 +125,7 @@ OupsDebuggerSelectorTest >> testNoNextDebugger [
 		raise: CollectionIsEmpty
 ]
 
-{ #category : #'tests -  algorithm' }
+{ #category : 'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testOpenDebuggerError [
 	| session |
 	session := self session.
@@ -144,7 +146,7 @@ OupsDebuggerSelectorTest >> testOpenDebuggerError [
 	self assert: debuggerSelector handled
 ]
 
-{ #category : #'tests -  algorithm' }
+{ #category : 'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testOpenDebuggerForSession [
 	| session |
 	session := self session.
@@ -153,7 +155,7 @@ OupsDebuggerSelectorTest >> testOpenDebuggerForSession [
 	self assert: debuggerSelector handled
 ]
 
-{ #category : #'tests -  algorithm' }
+{ #category : 'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testOpenDebuggerWithErrorForSession [
 	| session |
 	session := self session.
@@ -169,7 +171,7 @@ OupsDebuggerSelectorTest >> testOpenDebuggerWithErrorForSession [
 	self assert: debuggerSelector error class identicalTo: Error
 ]
 
-{ #category : #'tests -  algorithm' }
+{ #category : 'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testTryOpenWith [
 	| session |
 	session := self session.
@@ -180,7 +182,7 @@ OupsDebuggerSelectorTest >> testTryOpenWith [
 	self assert: debuggerSelector handled
 ]
 
-{ #category : #'tests -  algorithm' }
+{ #category : 'tests -  algorithm' }
 OupsDebuggerSelectorTest >> testTryOpenWithSignalsError [
 	| session |
 	session := self session.

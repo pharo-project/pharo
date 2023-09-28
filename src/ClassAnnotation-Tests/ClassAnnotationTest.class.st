@@ -1,10 +1,12 @@
 Class {
-	#name : #ClassAnnotationTest,
-	#superclass : #ClassAnnotationTestCase,
-	#category : #'ClassAnnotation-Tests-Base'
+	#name : 'ClassAnnotationTest',
+	#superclass : 'ClassAnnotationTestCase',
+	#category : 'ClassAnnotation-Tests-Base',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClassAnnotationTest >> tearDown [
 	"Some tests redefine following annotation.
 	Here we clear redefining state which forces cache reset"
@@ -14,7 +16,7 @@ ClassAnnotationTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testCheckIfAnnotatesGivenClass [
 	| ann|
 	ann := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.
@@ -23,7 +25,7 @@ ClassAnnotationTest >> testCheckIfAnnotatesGivenClass [
 	self deny: (ann annotates: ClassWithThreeAnnotations)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testComparisonOfTwoAnnotationsWithDifferentClass [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.
@@ -35,7 +37,7 @@ ClassAnnotationTest >> testComparisonOfTwoAnnotationsWithDifferentClass [
 	self deny: ann1 equals: ann2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testComparisonOfTwoAnnotationsWithDifferentSelector [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithThreeAnnotations.
@@ -47,7 +49,7 @@ ClassAnnotationTest >> testComparisonOfTwoAnnotationsWithDifferentSelector [
 	self deny: ann1 equals: ann2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testComparisonOfTwoAnnotationsWithSameSelectorAndClass [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithThreeAnnotations.
@@ -60,7 +62,7 @@ ClassAnnotationTest >> testComparisonOfTwoAnnotationsWithSameSelectorAndClass [
 	self assert: ann1 hash equals: ann2 hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testComparisonOfTwoDifferentAnnotations [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.
@@ -72,7 +74,7 @@ ClassAnnotationTest >> testComparisonOfTwoDifferentAnnotations [
 	self deny: ann1 equals: ann2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testCreationForExplicitAnnotationContext [
 	| ann context |
 	context := SimpleAnnotationContext of: AnnotationUserExample.
@@ -82,7 +84,7 @@ ClassAnnotationTest >> testCreationForExplicitAnnotationContext [
 	self assert: ann activeContext equals: context
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testForgettingAnnotation [
 	| annotation |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -92,7 +94,7 @@ ClassAnnotationTest >> testForgettingAnnotation [
 	self assert: ClassWithSingleAnnotation classAnnotations isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testGettingAllRedefinedInstances [
 	| annotation allRedefined |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -103,7 +105,7 @@ ClassAnnotationTest >> testGettingAllRedefinedInstances [
 	self assert: allRedefined anyOne priority equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testGettingAllRedefinedInstancesShouldCleanGarbage [
 	| annotation allRedefined |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -115,7 +117,7 @@ ClassAnnotationTest >> testGettingAllRedefinedInstancesShouldCleanGarbage [
 	self assert: allRedefined isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testGettingAllRedefiningInstances [
 	| annotation allRedefining |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -127,7 +129,7 @@ ClassAnnotationTest >> testGettingAllRedefiningInstances [
 	self assert: allRedefining anyOne identicalTo: annotation
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testGettingAllRedefiningInstancesShouldCleanGarbage [
 	| annotation allRedefined |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -139,7 +141,7 @@ ClassAnnotationTest >> testGettingAllRedefiningInstancesShouldCleanGarbage [
 	self assert: allRedefined isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testGettingFreshInstance [
 	| ann actual |
 	ann := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.
@@ -150,7 +152,7 @@ ClassAnnotationTest >> testGettingFreshInstance [
 	self assert: actual equals: ClassWithSingleAnnotation annotationExample
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testGettingRedefinedInstance [
 	| annotation redefinedInstance |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -162,7 +164,7 @@ ClassAnnotationTest >> testGettingRedefinedInstance [
 	self assert: redefinedInstance isRedefined
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testGettingRedefiningInstance [
 	| annotation actual |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -173,7 +175,7 @@ ClassAnnotationTest >> testGettingRedefiningInstance [
 	self assert: actual identicalTo: annotation
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testGettingSingleAnnotationUsingSelector [
 	| expected actual |
 	expected := ClassWithThreeAnnotations classAnnotations detect: [ :each | each declarationSelector = #annotationExample2 ].
@@ -182,7 +184,7 @@ ClassAnnotationTest >> testGettingSingleAnnotationUsingSelector [
 	self assert: actual identicalTo: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testHasNullContextByDefault [
 
 	| ann |
@@ -191,7 +193,7 @@ ClassAnnotationTest >> testHasNullContextByDefault [
 	self assert: ann activeContext equals: NullAnnotationContext instance
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testHasZeroPriorityByDefault [
 
 	| ann |
@@ -200,7 +202,7 @@ ClassAnnotationTest >> testHasZeroPriorityByDefault [
 	self assert: ann priority equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testNotSimilarToAnnotationOfDifferentClass [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.
@@ -210,7 +212,7 @@ ClassAnnotationTest >> testNotSimilarToAnnotationOfDifferentClass [
 	self deny: (ann1 isSimilarTo: ann2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testNotSimilarToAnnotationOfSameClassButForDifferentContext [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.
@@ -220,7 +222,7 @@ ClassAnnotationTest >> testNotSimilarToAnnotationOfSameClassButForDifferentConte
 	self deny: (ann1 isSimilarTo: ann2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testNotSimilarToDifferentKindAnnotation [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.
@@ -230,7 +232,7 @@ ClassAnnotationTest >> testNotSimilarToDifferentKindAnnotation [
 	self deny: (ann1 isSimilarTo: ann2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testObsolete [
 	| annotation |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -241,7 +243,7 @@ ClassAnnotationTest >> testObsolete [
 	self assert: annotation isObsolete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testRedefiningInstance [
 	| annotation newAnnotation |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -256,7 +258,7 @@ ClassAnnotationTest >> testRedefiningInstance [
 	self assert: newAnnotation isRedefined
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testRedefiningInstanceTwice [
 	| annotation newAnnotation reverted |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -274,7 +276,7 @@ ClassAnnotationTest >> testRedefiningInstanceTwice [
 	self assert: reverted priority equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testRedefiningInstanceUsingBlockWithArgument [
 	| newAnnotation |
 
@@ -286,7 +288,7 @@ ClassAnnotationTest >> testRedefiningInstanceUsingBlockWithArgument [
 	self assert: newAnnotation isRedefined
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testRevertingAllRedefinedInstances [
 	| annotation |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -296,7 +298,7 @@ ClassAnnotationTest >> testRevertingAllRedefinedInstances [
 	self assert: annotation class redefiningInstances isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testRevertingRedefinedInstance [
 	| annotation revertedAnnotation |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
@@ -309,7 +311,7 @@ ClassAnnotationTest >> testRevertingRedefinedInstance [
 	self deny: revertedAnnotation isRedefined
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testSimilarToAnnotationOfSameClassForSameContext [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 for: AnnotationUserExample withAnnotatedClass: ClassWithSingleAnnotation.
@@ -319,7 +321,7 @@ ClassAnnotationTest >> testSimilarToAnnotationOfSameClassForSameContext [
 	self assert: (ann1 isSimilarTo: ann2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassAnnotationTest >> testSimilarToAnnotationOfSameClassWhenBothDoNotDefinedWithContext [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.

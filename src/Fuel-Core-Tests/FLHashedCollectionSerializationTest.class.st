@@ -2,12 +2,14 @@
 SUnit tests for fuel serialization of hashed collections
 "
 Class {
-	#name : #FLHashedCollectionSerializationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLHashedCollectionSerializationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHashedCollectionSerializationTest >> testDictionaryRehash [
 	| aDictionary person1 person2 person3 materializedDict newPerson1 |
 	aDictionary := Dictionary new.
@@ -37,7 +39,7 @@ Now, let's say that the id of person 1 change to 3 (this would be the same case 
 	self assert: (materializedDict includesKey: newPerson1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHashedCollectionSerializationTest >> testSetRehash [
 	|  aSet person1 person2 person3 materializedSet newPerson1 |
 	aSet := Set new.

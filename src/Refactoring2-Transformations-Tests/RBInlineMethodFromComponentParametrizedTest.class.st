@@ -1,22 +1,24 @@
 Class {
-	#name : #RBInlineMethodFromComponentParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBInlineMethodFromComponentParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBInlineMethodFromComponentRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBInlineMethodFromComponentParametrizedTest >> constructor [
 	^ #inline:inMethod:forClass:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInlineMethodFromComponentParametrizedTest >> testFailureInlineMethodFromComponentFailure [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -25,7 +27,7 @@ RBInlineMethodFromComponentParametrizedTest >> testFailureInlineMethodFromCompon
 				 RBClassDataForRefactoringTest })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMessage [
 	| refactoring |
 	self proceedThroughWarning:
@@ -49,7 +51,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 	^aBehavior yourself')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 	| refactoring |
 	self proceedThroughWarning: [ | class |
@@ -81,7 +83,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 								^q')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 	| refactoring |
 
@@ -107,7 +109,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 	^anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
@@ -126,7 +128,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a + b + c')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames1 [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
@@ -148,7 +150,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 						parseMethod: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle origin extent: temp extent')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames2 [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.

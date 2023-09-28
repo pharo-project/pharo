@@ -2,24 +2,26 @@
 Provides native access to the web browser on Windows. Do not use directly, use class WebBrowser instead.
 "
 Class {
-	#name : #WBWindowsWebBrowser,
-	#superclass : #WebBrowser,
-	#category : #'WebBrowser-Core-OS-Windows'
+	#name : 'WBWindowsWebBrowser',
+	#superclass : 'WebBrowser',
+	#category : 'WebBrowser-Core-OS-Windows',
+	#package : 'WebBrowser-Core',
+	#tag : 'OS-Windows'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WBWindowsWebBrowser class >> isForCurrentSystem [
 
 	^ Smalltalk os isWindows
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WBWindowsWebBrowser class >> openNativeWebBrowserOn: anURLString [
 
 	^ self shellExecute: 'open' file: anURLString parameters: '' directory: '' show: 5 "SW_SHOW"
 ]
 
-{ #category : #'private - uffi' }
+{ #category : 'private - uffi' }
 WBWindowsWebBrowser class >> shellExecute: lpOperation file: lpFile parameters: lpParameters directory: lpDirectory show: nShowCmd [
 
 	^ self ffiCall: #(

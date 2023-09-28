@@ -5,12 +5,14 @@ Instance Variables
 
 "
 Class {
-	#name : #PickOneSettingDeclaration,
-	#superclass : #MultipleSettingDeclaration,
-	#category : #'System-Settings-Core-Base'
+	#name : 'PickOneSettingDeclaration',
+	#superclass : 'MultipleSettingDeclaration',
+	#category : 'System-Settings-Core-Base',
+	#package : 'System-Settings-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PickOneSettingDeclaration >> chooseValue [
 	| chosen |
 	chosen := UIManager default
@@ -21,7 +23,7 @@ PickOneSettingDeclaration >> chooseValue [
 		ifNotNil: [self realValue: chosen realValue]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PickOneSettingDeclaration >> content [
 	^ self domainValues
 		detect: [ :setting | setting realValue = self realValue ]
@@ -29,23 +31,23 @@ PickOneSettingDeclaration >> content [
 		ifNone: [ 'nil' ]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PickOneSettingDeclaration >> defaultValue [
 	^ self default value ifNil: [self domainValues first realValue]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PickOneSettingDeclaration >> index [
 	self realValue ifNil: [self realValue: self default].
 	^ self domainValues indexOf: (self domainValues detect: [:dv | dv realValue = self realValue] ifNone: [^ 0])
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PickOneSettingDeclaration >> index: anInteger [
 	self realValue: (self domainValues at: anInteger) realValue
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PickOneSettingDeclaration >> inputWidget [
 	| widget row |
 	row := self theme newRowIn: self for: {

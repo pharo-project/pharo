@@ -14,8 +14,8 @@ RBMethodArgumentsSelector
 		labelMorph contents: self methodName printString')
 "
 Class {
-	#name : #RBMethodArgumentsSelector,
-	#superclass : #DialogWindowMorph,
+	#name : 'RBMethodArgumentsSelector',
+	#superclass : 'DialogWindowMorph',
 	#instVars : [
 		'arguments',
 		'values',
@@ -28,10 +28,12 @@ Class {
 		'sourceCodeMorph',
 		'tree'
 	],
-	#category : #'Refactoring2-Transformations-Utilities'
+	#category : 'Refactoring2-Transformations-Utilities',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodArgumentsSelector class >> on: arguments and: values in: sourceCode [
 
 	^ self basicNew
@@ -40,7 +42,7 @@ RBMethodArgumentsSelector class >> on: arguments and: values in: sourceCode [
 		in: sourceCode
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodArgumentsSelector class >> openOn: arguments and: values in: sourceCode [
 
 	^ (self
@@ -49,7 +51,7 @@ RBMethodArgumentsSelector class >> openOn: arguments and: values in: sourceCode 
 		in: sourceCode) openModal
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodArgumentsSelector >> addAssociation [
 
 	[  | argument value |
@@ -73,51 +75,51 @@ RBMethodArgumentsSelector >> addAssociation [
 	on: Error do: [ self inform: 'Please select one argument and one value.' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> argumentIndex [
 
 	^ selectedArgumentIndex ifNil: [ selectedArgumentIndex := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> argumentIndex: anInteger [
 
 	selectedArgumentIndex := anInteger.
 	self changed: #argumentIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> arguments [
 
 	^ argumentsList ifNil: [ argumentsList := arguments asOrderedCollection ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> argumentsAndValues [
 
 	^ argsAndValues
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> associationIndex [
 
 	^ selectedAssociationIndex ifNil: [ selectedAssociationIndex := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> associationIndex: anInteger [
 
 	selectedAssociationIndex := anInteger.
 	self changed: #associationIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> associations [
 
 	^ argsAndValues associations collect: [:each | each asString ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMethodArgumentsSelector >> initializeWith: aCollection and: anotherCollection in: aTree [
 
 	arguments := aCollection.
@@ -130,13 +132,13 @@ RBMethodArgumentsSelector >> initializeWith: aCollection and: anotherCollection 
 	self title: 'There are extra arguments in this method. Please map a value to each extra argument.' translated
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodArgumentsSelector >> isOkEnabled [
 
 	^ argumentsList isEmpty
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodArgumentsSelector >> newContentMorph [
 
 	^ (self newColumn: {
@@ -194,19 +196,19 @@ RBMethodArgumentsSelector >> newContentMorph [
 	 }) vResizing: #shrinkWrap
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 RBMethodArgumentsSelector >> newOKButton [
 
 	^ self newOKButtonFor: self getEnabled: #isOkEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> newTree [
 
 	^ tree
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodArgumentsSelector >> removeAssociation [
 
 	[  | association argument value |
@@ -230,26 +232,26 @@ RBMethodArgumentsSelector >> removeAssociation [
 	on: Error do: [ self inform: 'Please select one association to remove.' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> sourceCode [
 
 	^ tree formattedCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> valueIndex [
 
 	^ selectedValueIndex ifNil: [ selectedValueIndex := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> valueIndex: anInteger [
 
 	selectedValueIndex := anInteger.
 	self changed: #valueIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> values [
 
 	^ valuesList ifNil: [ valuesList := values asOrderedCollection ]

@@ -6,27 +6,29 @@ I know how the degree of the node being analyzed and the configured limit. Whene
 I am used by FLSerialization to build the graph of objects to serialize.
 "
 Class {
-	#name : #FLDepthLimitingAnalysis,
-	#superclass : #FLAnalysis,
+	#name : 'FLDepthLimitingAnalysis',
+	#superclass : 'FLAnalysis',
 	#instVars : [
 		'depthLimit',
 		'depth',
 		'previousStackSize'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLDepthLimitingAnalysis class >> isResponsible [
 	^ self configuration hasDepthLimit
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLDepthLimitingAnalysis class >> priority [
 	^ 20
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLDepthLimitingAnalysis >> initialize [
 	super initialize.
 	
@@ -35,7 +37,7 @@ FLDepthLimitingAnalysis >> initialize [
 	depth := 0
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLDepthLimitingAnalysis >> mapAndTrace: anObject [
 	objectStack size - previousStackSize >= 0
 		ifTrue: [ depth := depth + 1 ].

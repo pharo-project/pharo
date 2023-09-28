@@ -1,6 +1,6 @@
-Extension { #name : #BehaviorTest }
+Extension { #name : 'BehaviorTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 BehaviorTest >> testAllReferencesTo [
 	| result |
 	result := SystemNavigation new allReferencesTo: Point binding.

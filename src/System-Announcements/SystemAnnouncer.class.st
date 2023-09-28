@@ -4,8 +4,8 @@ This class plays the role of the announcer for events raised by the Pharo system
 BEWARE: You should not need to subclass me. Think about just using me to send your announces (if you need system behavior) or using your own announcers as instance or class  variables.
 "
 Class {
-	#name : #SystemAnnouncer,
-	#superclass : #Announcer,
+	#name : 'SystemAnnouncer',
+	#superclass : 'Announcer',
 	#instVars : [
 		'suspended',
 		'private',
@@ -14,28 +14,30 @@ Class {
 	#classInstVars : [
 		'announcer'
 	],
-	#category : #'System-Announcements-Core'
+	#category : 'System-Announcements-Core',
+	#package : 'System-Announcements',
+	#tag : 'Core'
 }
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 SystemAnnouncer class >> announce: anAnnouncement [
 
 	^ self uniqueInstance announce: anAnnouncement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemAnnouncer class >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SystemAnnouncer class >> reset [
 	"unregister all current weak subscriptions because it can cause a memory leak"
 
 	self announcer: nil.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemAnnouncer class >> restoreAllNotifications [
 
 	<script>
@@ -43,19 +45,19 @@ SystemAnnouncer class >> restoreAllNotifications [
 	(Pragma allNamed: #systemEventRegistration) do: [ :pragma | pragma methodClass instanceSide perform: pragma methodSelector ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SystemAnnouncer class >> uniqueInstance [
 	"Answer a system annoncer."
 
 	^ announcer ifNil: [ announcer := self new ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemAnnouncer class >> unload [
 	self uniqueInstance unsubscribe: self
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 SystemAnnouncer >> announce: anAnnouncement [
 	self isSuspended
 		ifFalse: [
@@ -66,62 +68,53 @@ SystemAnnouncer >> announce: anAnnouncement [
 		]
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> class: aClass oldComment: oldComment newComment: newComment oldStamp: oldStamp newStamp: newStamp [
 	"A class was commented in the system."
 
 	self announce: (ClassCommented class: aClass oldComment: oldComment newComment: newComment oldStamp: oldStamp newStamp: newStamp)
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> class: aClass recategorizedFrom: oldPackageName to: newPackageName [
 
 	self announce: (ClassRecategorized class: aClass recategorizedFrom: oldPackageName to: newPackageName)
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> classAdded: aClass inCategory: aCategoryName [
 	self announce: (ClassAdded class: aClass category: aCategoryName)
 ]
 
-{ #category : #triggering }
-SystemAnnouncer >> classCategoryAdded: aClassCategoryName [
-
-	self announce: (CategoryAdded categoryName: aClassCategoryName)
-]
-
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> classCommented: aClass [
 	"A class with the given name was commented in the system."
 
 	self announce: (ClassCommented classCommented: aClass)
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> classDefinitionChangedFrom: oldClass to: newClass [
 	self announce: (ClassModifiedClassDefinition classDefinitionChangedFrom: oldClass to: newClass)
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> classModificationAppliedTo: aClassOrTrait [
 	self announce: (ClassModificationApplied toClass: aClassOrTrait)
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> classParentOf: aClass renamedFrom: oldName to: newName [
 	self announce: (ClassParentRenamed classParentOf: aClass renamedFrom: oldName to: newName)
 ]
 
-{ #category : #triggering }
-SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName inCategory: aCategoryName [
-	self announce: (ClassRenamed
-				class: aClass
-				category: aCategoryName
-				oldName: oldClassName
-				newName: newClassName)
+{ #category : 'triggering' }
+SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName [
+
+	self announce: (ClassRenamed class: aClass oldName: oldClassName newName: newClassName)
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> classRepackaged: aClass from: aPackage to: anotherPackage [
 	self announce: (ClassRepackaged
 						classRepackaged: aClass
@@ -129,31 +122,31 @@ SystemAnnouncer >> classRepackaged: aClass from: aPackage to: anotherPackage [
 						newPackage: anotherPackage)
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> evaluated: textOrStream [
 	^ self evaluated: textOrStream context: nil
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> evaluated: expression context: aContext [
 	self announce: (ExpressionEvaluated
 				expression: expression
 				context: aContext)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemAnnouncer >> isSuspended [
 	^suspended ifNil: [ suspended := false ]
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> methodAdded: aMethod [
 	"A method with the given selector was added to aClass, but not put in a protocol."
 
 	^ self methodAdded: aMethod configuredWith: [ :method | ]
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> methodAdded: aMethod configuredWith: aBlock [
 	"A method with the given selector was added to aClass, but not put in a protocol."
 
@@ -163,26 +156,26 @@ SystemAnnouncer >> methodAdded: aMethod configuredWith: aBlock [
 	self announce: event
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol [
 
 	self announce: (MethodModified methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol)
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> methodRecategorized: method oldProtocol: oldProtocol [
 
 	self announce: (MethodRecategorized method: method oldProtocol: oldProtocol)
 ]
 
-{ #category : #triggering }
-SystemAnnouncer >> methodRemoved: aMethod protocol: protocol origin: aBehavior [
+{ #category : 'triggering' }
+SystemAnnouncer >> methodRemoved: aMethod protocol: protocol origin: aBehavior package: aPackage [
 	"A method with the given selector was removed from the class."
 
-	self announce: (MethodRemoved methodRemoved: aMethod protocol: protocol origin: aBehavior)
+	self announce: (MethodRemoved methodRemoved: aMethod protocol: protocol origin: aBehavior package: aPackage)
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> methodRepackaged: aMethod from: aPackage to: anotherPackage [
 	self announce: (MethodRepackaged
 						methodRepackaged: aMethod
@@ -190,18 +183,18 @@ SystemAnnouncer >> methodRepackaged: aMethod from: aPackage to: anotherPackage [
 						newPackage: anotherPackage)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemAnnouncer >> private [
 	^private ifNil: [ private := Announcer new ]
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> snapshotDone: isNewImage [
 
 	self announce: (SnapshotDone isNewImage: isNewImage)
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 SystemAnnouncer >> suspendAllWhile: aBlock [
 	| oldSuspended |
 	oldSuspended := self isSuspended.
@@ -209,7 +202,7 @@ SystemAnnouncer >> suspendAllWhile: aBlock [
 	^aBlock ensure: [ suspended := oldSuspended ]
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 SystemAnnouncer >> suspendAllWhileStoring: aBlock [
 	| reentring |
 	" Suspend all the announcements, storing them in an OrderedCollection, then returns this collection"
@@ -230,12 +223,12 @@ SystemAnnouncer >> suspendAllWhileStoring: aBlock [
 	]
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 SystemAnnouncer >> traitDefinitionChangedFrom: oldTrait to: newTrait [
 	self announce: (ClassModifiedClassDefinition classDefinitionChangedFrom: oldTrait to: newTrait)
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 SystemAnnouncer >> unsubscribe: anObject [
 	self private unsubscribe: anObject.
 	super unsubscribe: anObject

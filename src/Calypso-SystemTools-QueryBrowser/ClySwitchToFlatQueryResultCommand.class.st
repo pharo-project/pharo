@@ -4,22 +4,24 @@ I am a command to switch query browser to flat items list.
 By default flat list is sorted by item name (selector in case of methods)
 "
 Class {
-	#name : #ClySwitchToFlatQueryResultCommand,
-	#superclass : #ClySwitchQueryResultCommand,
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Controlling'
+	#name : 'ClySwitchToFlatQueryResultCommand',
+	#superclass : 'ClySwitchQueryResultCommand',
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Controlling',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Controlling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToFlatQueryResultCommand >> defaultMenuItemName [
 	^'Flat'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchToFlatQueryResultCommand >> execute [
 	browser switchToFlatResult
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchToFlatQueryResultCommand >> isAppliedToBrowser [
 	^browser showsFlatResult
 ]

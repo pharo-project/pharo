@@ -3,49 +3,51 @@ I am a simple holder of a prototype object and hand out copies when requested.
 My subclasses should define resultFor: a
 "
 Class {
-	#name : #PrototypeTester,
-	#superclass : #Object,
+	#name : 'PrototypeTester',
+	#superclass : 'Object',
 	#instVars : [
 		'prototype'
 	],
-	#category : #'SUnit-Core-Utilities'
+	#category : 'SUnit-Core-Utilities',
+	#package : 'SUnit-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #default }
+{ #category : 'default' }
 PrototypeTester class >> defaultRuns [
 	"Returns the default number of times to test"
 
 	^ 50
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PrototypeTester class >> with: aPrototype [
 
 	^ self new prototype: aPrototype
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrototypeTester >> prototype [
 	"Get a prototype"
 
 	^ prototype copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrototypeTester >> prototype: aPrototype [
 	"Set my prototype"
 
 	prototype := aPrototype copy
 ]
 
-{ #category : #operation }
+{ #category : 'operation' }
 PrototypeTester >> result [
 	"Perform the test the default number of times"
 
 	^ self resultFor: self class defaultRuns
 ]
 
-{ #category : #operation }
+{ #category : 'operation' }
 PrototypeTester >> resultFor: runs [
 	"Test that equality is the same over runs and answer the result"
 

@@ -1,16 +1,18 @@
 Class {
-	#name : #RBMoveClassTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBMoveClassTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveClassTransformationTest >> testBadPackageName [
 
 	self shouldFail: (RBMoveClassTransformation move: self class name toPackage: #'Refactoring2-Transformations-Test')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveClassTransformationTest >> testRefactoring [
 
 	| transformation class |
@@ -24,7 +26,7 @@ RBMoveClassTransformationTest >> testRefactoring [
 	self assert: class category equals: #'Refactoring2-Transformations-Utilities'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveClassTransformationTest >> testTransform [
 
 	| transformation class |

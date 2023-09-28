@@ -1,12 +1,12 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*DrTests' }
+{ #category : '*DrTests' }
 CompiledMethod >> asResultForDrTest [
 
 	^ DTTestLeafNode content: self
 ]
 
-{ #category : #'*DrTests' }
+{ #category : '*DrTests' }
 CompiledMethod >> drTestsBrowse [
 
 	Smalltalk tools browser openOnClass: self methodClass selector: self selector

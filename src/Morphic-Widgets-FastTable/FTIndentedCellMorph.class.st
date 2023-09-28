@@ -4,33 +4,35 @@ FTCell with adjustable indentation in the X axis that can be configured so that 
 
 "
 Class {
-	#name : #FTIndentedCellMorph,
-	#superclass : #FTCellMorph,
+	#name : 'FTIndentedCellMorph',
+	#superclass : 'FTCellMorph',
 	#instVars : [
 		'indentation'
 	],
-	#category : #'Morphic-Widgets-FastTable-Base'
+	#category : 'Morphic-Widgets-FastTable-Base',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Base'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 FTIndentedCellMorph >> addIndendtation: aNumber [
 
 	indentation := indentation + aNumber + self cellInset
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 FTIndentedCellMorph >> depthIndent: aNumber [
 
 	aNumber timesRepeat: [ self addIndendtation: 16 ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 FTIndentedCellMorph >> indentBy: aNumber [
 
 	indentation := aNumber + self cellInset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTIndentedCellMorph >> initialize [
 
 	indentation := 0. "must be before super"
@@ -40,7 +42,7 @@ FTIndentedCellMorph >> initialize [
 	self cellInset: 2
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 FTIndentedCellMorph >> layoutBounds [
 
 	| inner |

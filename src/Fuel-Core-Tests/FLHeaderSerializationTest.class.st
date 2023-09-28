@@ -2,12 +2,14 @@
 SUnit tests for header serialization in fuel
 "
 Class {
-	#name : #FLHeaderSerializationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLHeaderSerializationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testAdditionalObjects [
 
 	self serializer
@@ -20,7 +22,7 @@ FLHeaderSerializationTest >> testAdditionalObjects [
 	self assert: (self materializedObjects additionalObjectAt: 42) equals: 68.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testJustMaterializeHeader [
 	| header |
 	self serializer
@@ -34,7 +36,7 @@ FLHeaderSerializationTest >> testJustMaterializeHeader [
 	self assert: (header additionalObjectAt: 42) equals: 68
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testPostMaterializationActions [
 
 	| aClass |
@@ -59,7 +61,7 @@ FLHeaderSerializationTest >> testPostMaterializationActions [
 	self assert: (aClass perform: #classVariable) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testPostMaterializationActionsMustBeClean [
 	self
 		should: [ self serializer addPostMaterializationAction: [ self ] ]
@@ -67,7 +69,7 @@ FLHeaderSerializationTest >> testPostMaterializationActionsMustBeClean [
 		description: 'Post materializaton actions have to be clean closures. For more details see method BlocKClosure >> #isClean'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testPreMaterializationActions [
 
 	| aClass |
@@ -92,7 +94,7 @@ FLHeaderSerializationTest >> testPreMaterializationActions [
 	self assert: (aClass perform: #classVariable) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testPreMaterializationActionsMustBeClean [
 	self
 		should: [ self serializer addPreMaterializationAction: [ self ] ]

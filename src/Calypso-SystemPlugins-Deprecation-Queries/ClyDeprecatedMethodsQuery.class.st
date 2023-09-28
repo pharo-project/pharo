@@ -2,17 +2,18 @@
 I return all deprecated methods from my scope
 "
 Class {
-	#name : #ClyDeprecatedMethodsQuery,
-	#superclass : #ClyMethodQuery,
-	#category : #'Calypso-SystemPlugins-Deprecation-Queries'
+	#name : 'ClyDeprecatedMethodsQuery',
+	#superclass : 'ClyMethodQuery',
+	#category : 'Calypso-SystemPlugins-Deprecation-Queries',
+	#package : 'Calypso-SystemPlugins-Deprecation-Queries'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyDeprecatedMethodsQuery >> description [
 	^'deprecated methods'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDeprecatedMethodsQuery >> selectsMethod: aMethod [
 	^aMethod isDeprecated
 ]

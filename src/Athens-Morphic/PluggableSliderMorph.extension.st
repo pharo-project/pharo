@@ -1,6 +1,6 @@
-Extension { #name : #PluggableSliderMorph }
+Extension { #name : 'PluggableSliderMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 PluggableSliderMorph >> drawOnAthensCanvas: aCanvas [
 
 	super drawOnAthensCanvas: aCanvas.

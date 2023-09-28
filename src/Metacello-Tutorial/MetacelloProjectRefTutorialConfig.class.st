@@ -1,13 +1,14 @@
 Class {
-	#name : #MetacelloProjectRefTutorialConfig,
-	#superclass : #Object,
+	#name : 'MetacelloProjectRefTutorialConfig',
+	#superclass : 'Object',
 	#instVars : [
 		'project'
 	],
-	#category : #'Metacello-Tutorial'
+	#category : 'Metacello-Tutorial',
+	#package : 'Metacello-Tutorial'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProjectRefTutorialConfig class >> bootstrapPackage: aString from: aPath [ 
 	| repository version |
 	repository := MCHttpRepository
@@ -22,7 +23,7 @@ MetacelloProjectRefTutorialConfig class >> bootstrapPackage: aString from: aPath
 			version workingCopy repositoryGroup addRepository: repository]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProjectRefTutorialConfig class >> ensureMetacello [
 	"Bootstrap Gofer (if necessary), bootstrap ConfigurationOfMetacello (using old Gofer API), then load the latest 
 	version of Metacello itself."
@@ -41,20 +42,20 @@ MetacelloProjectRefTutorialConfig class >> ensureMetacello [
 		(Smalltalk at: #ConfigurationOfMetacello) perform: #load ]
 ]
 
-{ #category : #'metacello tool support' }
+{ #category : 'metacello tool support' }
 MetacelloProjectRefTutorialConfig class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"
 	
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRefTutorialConfig class >> project [
 
 	^self new project
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloProjectRefTutorialConfig >> baseline07: spec [ 
 	<version: '0.7-baseline'>
 	spec
@@ -76,7 +77,7 @@ MetacelloProjectRefTutorialConfig >> baseline07: spec [
 						 repository: 'http://www.example.com/Example']]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloProjectRefTutorialConfig >> baseline10: spec [ 
 	<version: '1.0-baseline'>
 	
@@ -96,7 +97,7 @@ MetacelloProjectRefTutorialConfig >> baseline10: spec [
 			package: 'Project-Tests' with: [ spec requires: 'Project-Core' ].].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloProjectRefTutorialConfig >> baseline11: spec [ 
 	<version: '1.1-baseline'>
 	
@@ -125,7 +126,7 @@ MetacelloProjectRefTutorialConfig >> baseline11: spec [
 				spec requires: #('Project-Core' 'Example Tests' ).].].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloProjectRefTutorialConfig >> baseline12: spec [ 
 	<version: '1.2-baseline'>
 	
@@ -149,7 +150,7 @@ MetacelloProjectRefTutorialConfig >> baseline12: spec [
 				spec requires: #('Project-Core' 'Example Tests' ).].].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloProjectRefTutorialConfig >> baseline14: spec [ 
 	<version: '1.4-baseline' imports: #('1.2-baseline' )>
 	
@@ -164,7 +165,7 @@ MetacelloProjectRefTutorialConfig >> baseline14: spec [
 			group: 'Tests' with: #('Project-Tests' ).].
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloProjectRefTutorialConfig >> lesson07 [
 "   [ see method: #baseline07: #version07: ]
 NOTE: you should run through the lessons in MetacellTutorialConfig first.
@@ -179,7 +180,7 @@ Example project (MetacelloTutorialConfig):  'Example-Core', 'Example-AddOn',
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloProjectRefTutorialConfig >> lesson10 [
 "   [ see method: #baseline10: #version10: ]
 In lesson07 it was obvious that we copied the configuration information from 
@@ -208,7 +209,7 @@ Note that the entire Example project is loaded before 'Project-Core'
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloProjectRefTutorialConfig >> lesson11 [
 "   [ see method: #baseline11: #version11: ]
 As is often the case, it is useful to separate the test package from the core packages 
@@ -232,7 +233,7 @@ or the whole enchilada including tests:
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloProjectRefTutorialConfig >> lesson12 [
 "   [ see method: #baseline11: #baseline12: #version12: ]
 In #baseline11: there is redundant information for each of the project references. 
@@ -251,7 +252,7 @@ Evaluate and compare the results of the following expressions:
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloProjectRefTutorialConfig >> lesson13 [
 "   [ see method: #version13: ]
 In #version13: we are importing the '1.2-baseline', but changing the Example project 
@@ -273,7 +274,7 @@ reference to get the package included.
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloProjectRefTutorialConfig >> lesson14 [
 "   [ see method: #baseline14: #version14: ]
 In this lesson we'll cover the querying API for Metacello. The querying API is useful for analyzing the contents and structure of a version.
@@ -342,7 +343,7 @@ You can also send #version to a project reference. This is useful if you want to
 "
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRefTutorialConfig >> project [
 	"NOTE: The MetacelloNullRecordingMCSpecLoader is being used to prevent packages
 		from being loaded, see MetacelloConfigTemplate>>project for an example #project
@@ -358,7 +359,7 @@ MetacelloProjectRefTutorialConfig >> project [
 		project ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProjectRefTutorialConfig >> version07: spec [ 
 	<version: '0.7' imports: #('0.7-baseline' )>
 	
@@ -373,7 +374,7 @@ MetacelloProjectRefTutorialConfig >> version07: spec [
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.1'.].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProjectRefTutorialConfig >> version10: spec [ 
 	<version: '1.0' imports: #('1.0-baseline' )>
 	
@@ -385,7 +386,7 @@ MetacelloProjectRefTutorialConfig >> version10: spec [
 			package: 'Project-Tests' with: 'Project-Tests-anon.1'.].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProjectRefTutorialConfig >> version11: spec [ 
 	<version: '1.1' imports: #('1.1-baseline' )>
 	
@@ -397,7 +398,7 @@ MetacelloProjectRefTutorialConfig >> version11: spec [
 			package: 'Project-Tests' with: 'Project-Tests-anon.1'.].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProjectRefTutorialConfig >> version12: spec [ 
 	<version: '1.2' imports: #('1.2-baseline' )>
 	
@@ -408,7 +409,7 @@ MetacelloProjectRefTutorialConfig >> version12: spec [
 			package: 'Project-Tests' with: 'Project-Tests-anon.1'.].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProjectRefTutorialConfig >> version13: spec [ 
 	<version: '1.3' imports: #('1.2-baseline' )>
 	
@@ -423,7 +424,7 @@ MetacelloProjectRefTutorialConfig >> version13: spec [
 			project: 'Example Tests' with: '1.3'].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProjectRefTutorialConfig >> version14: spec [ 
 	<version: '1.4' imports: #('1.4-baseline' )>
 	

@@ -1,6 +1,6 @@
 Class {
-	#name : #StMethodNameEditorPresenter,
-	#superclass : #SpPresenter,
+	#name : 'StMethodNameEditorPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'selectorInput',
 		'argumentsList',
@@ -14,10 +14,12 @@ Class {
 		'canAddArgs',
 		'canEditName'
 	],
-	#category : #'Refactoring-UI-UI'
+	#category : 'Refactoring-UI-UI',
+	#package : 'Refactoring-UI',
+	#tag : 'UI'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 StMethodNameEditorPresenter class >> example2 [
 	<script>
 	self
@@ -30,7 +32,7 @@ StMethodNameEditorPresenter class >> example2 [
 		canAddArgs: true
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 StMethodNameEditorPresenter class >> openOn: aMethod [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
@@ -38,7 +40,7 @@ StMethodNameEditorPresenter class >> openOn: aMethod [
 	^ temp openBlockedDialog
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 StMethodNameEditorPresenter class >> openOn: aMethod canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
@@ -49,7 +51,7 @@ StMethodNameEditorPresenter class >> openOn: aMethod canRenameArgs: aBoolean1 ca
 	^ temp openBlockedDialog
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
@@ -61,7 +63,7 @@ StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRe
 	^ temp openBlockedDialog
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 canEditName: aBoolean4 [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 
@@ -75,7 +77,7 @@ StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRe
 	^ temp openModal
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> addArgument [
 
 	| newArg argValue newKeyword |
@@ -92,7 +94,7 @@ StMethodNameEditorPresenter >> addArgument [
 	self updateLabel
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> addArgumentAfter: anItem [
 
 	| newArg argValue selectedIndex newKeyword |
@@ -112,17 +114,17 @@ StMethodNameEditorPresenter >> addArgumentAfter: anItem [
 	self updateLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> addButton [
 	^ addButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> argumentsList [
 	^ argumentsList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> argumentsListMenu [
 	^ self newMenu
 		addGroup: [ :aGroup |
@@ -149,41 +151,41 @@ StMethodNameEditorPresenter >> argumentsListMenu [
 						action: [ self removeArgument: argumentsList selectedItem ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> canAddArgs [
 	^ canAddArgs ifNil: [ canAddArgs := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> canAddArgs: aBoolean [
 	canAddArgs := aBoolean.
 	addButton enabled: canAddArgs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> canEditName [
 	^ canEditName ifNil: [ canEditName := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> canEditName: aBoolean [
 	canEditName := aBoolean.
 	selectorInput enabled: canEditName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> canRemoveArgs: anObject [
 
 	argumentsList items do: [ :arg | arg canBeRemoved: anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> canRenameArgs: anObject [
 
 	argumentsList items do: [ :arg | arg canBeRenamed: anObject ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> computePermutation [
 
 	| index |
@@ -192,7 +194,7 @@ StMethodNameEditorPresenter >> computePermutation [
 		args indexOf: e name ifAbsent: [ index := index -1. index ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> connectPresenters [
 
 	selectorInput
@@ -203,7 +205,7 @@ StMethodNameEditorPresenter >> connectPresenters [
 			toAction: [ self owner triggerCancelAction; close ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 StMethodNameEditorPresenter >> defaultLayout [
 
 	| argumentsEditor |
@@ -229,12 +231,12 @@ StMethodNameEditorPresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : #'accessing - ui' }
+{ #category : 'accessing - ui' }
 StMethodNameEditorPresenter >> downButton [
 	^ downButton
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> getDefaultValue [
 
 	^ self 
@@ -242,7 +244,7 @@ StMethodNameEditorPresenter >> getDefaultValue [
 		  initialAnswer: 'nil'
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> getNewKeywordName [
 
 	^ self
@@ -250,12 +252,12 @@ StMethodNameEditorPresenter >> getNewKeywordName [
 		  initialAnswer: 'arg'
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 StMethodNameEditorPresenter >> getParametersOrder [
 	^ argumentsList items collect: [ :arg | arg newName ]
 ]
 
-{ #category : #'to be pushed to presenter' }
+{ #category : 'to be pushed to presenter' }
 StMethodNameEditorPresenter >> inform: aString [
 
 	^ self application newInform
@@ -264,7 +266,7 @@ StMethodNameEditorPresenter >> inform: aString [
 		openDialog
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
@@ -275,7 +277,7 @@ StMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 					ifNotNil: [ :selector | ' : "', selector, '"' ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StMethodNameEditorPresenter >> initializePresenters [
 
 	selectorInput := self newTextInput.
@@ -315,17 +317,17 @@ StMethodNameEditorPresenter >> initializePresenters [
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> invalidArgNames [
 	^ invalidArgNames ifNil: [ invalidArgNames := { } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> invalidArgNames: aSet [
 	invalidArgNames := aSet
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 StMethodNameEditorPresenter >> newArgName [
 	| baseString index newString |
 	newString := baseString := 'anObject'.
@@ -337,17 +339,17 @@ StMethodNameEditorPresenter >> newArgName [
 	^ newString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> newArgs [
 	^ argumentsList items select: [ :e | (args includes: e name) not ]
 ]
 
-{ #category : #'accessing - ui' }
+{ #category : 'accessing - ui' }
 StMethodNameEditorPresenter >> previewResult [
 	^ previewResult
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> pushDownSelectedArgument [
 	| selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
@@ -360,7 +362,7 @@ StMethodNameEditorPresenter >> pushDownSelectedArgument [
 	self updateLabel
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> pushUpSelectedArgument [
 	| selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
@@ -373,7 +375,7 @@ StMethodNameEditorPresenter >> pushUpSelectedArgument [
 	self updateLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenter >> removeArgument: anItem [
 	| selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
@@ -382,7 +384,7 @@ StMethodNameEditorPresenter >> removeArgument: anItem [
 	self updateLabel
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> renameArgument: anItem [
 
 	| argName selectedIndex |
@@ -398,13 +400,13 @@ StMethodNameEditorPresenter >> renameArgument: anItem [
 	self updateLabel
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 StMethodNameEditorPresenter >> renameMap [
 
 	^ argumentsList items select: [ :arg | arg hasNewName ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 
 	^ self previewResult label = '(invalid)'
@@ -421,36 +423,33 @@ StMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 				close ]
 ]
 
-{ #category : #'to be pushed to presenter' }
-StMethodNameEditorPresenter >> request: aString initialAnswer: initialAnswer [
+{ #category : 'action' }
+StMethodNameEditorPresenter >> request: aString initialAnswer: aSecondString [
 
-	^ 	self application newRequest
-		title: aString;
-		text: initialAnswer;
-		acceptLabel: 'Accept';
-		cancelLabel: 'Cancel';
-		onAccept: [ :dialog | self inform: dialog presenter text ];
-		openDialog
-
+	^ self application newRequest
+			title: 'Information needed';
+			label: aString;
+			text: aSecondString;
+			openModal
 ]
 
-{ #category : #'accessing - ui' }
+{ #category : 'accessing - ui' }
 StMethodNameEditorPresenter >> selectorInput [
 	^ selectorInput
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StMethodNameEditorPresenter >> setModelBeforeInitialization: aRBMethodName [
 	methodName := aRBMethodName.
 	args := methodName arguments copy
 ]
 
-{ #category : #'accessing - ui' }
+{ #category : 'accessing - ui' }
 StMethodNameEditorPresenter >> upButton [
 	^ upButton
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StMethodNameEditorPresenter >> updateLabel [
 	"Update the new method name to display to the user when the user change its name or order of the arguments."
 
@@ -461,7 +460,7 @@ StMethodNameEditorPresenter >> updateLabel [
 				arguments: (argumentsList items collect: #newName) ) methodName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StMethodNameEditorPresenter >> updatePresenter [
 
 	selectorInput text: methodName selector.

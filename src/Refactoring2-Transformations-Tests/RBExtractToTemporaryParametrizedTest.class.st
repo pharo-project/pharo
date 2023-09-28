@@ -1,10 +1,12 @@
 Class {
-	#name : #RBExtractToTemporaryParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBExtractToTemporaryParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractToTemporaryParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBExtractToTemporaryRefactoring };
@@ -12,12 +14,12 @@ RBExtractToTemporaryParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBExtractToTemporaryParametrizedTest >> constructor [
 	^ #extract:to:from:in:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryForLastStatementInBlock [
 	| refactoring methodName |
 	methodName := #caller2.
@@ -29,7 +31,7 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryForLastStatementIn
 	^(1 to: 10) inject: 1 into: [:sum :each | | temp | temp := sum * (self foo: each). temp]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryInsideBlock [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
@@ -45,7 +47,7 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryInsideBlock [
 		select: [:each | | asdf | asdf := each size. temp := asdf + temp]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicates [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
@@ -62,7 +64,7 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicates [
 	^ answer')
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testFailureBadInterval [
 	self shouldFail:
 		(self createRefactoringWithArguments:
@@ -75,14 +77,14 @@ RBExtractToTemporaryParametrizedTest >> testFailureBadInterval [
 			{ (61 to: 101) . 'asdf' . #noMoveDefinition . RBClassDataForRefactoringTest })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testFailureBadName [
 	self shouldFail:
 		(self createRefactoringWithArguments:
 			{ (14 to: 23) . 'a sdf' . #testMethod . RBClassDataForRefactoringTest })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testFailureNoValidNameOfTemp [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -92,7 +94,7 @@ RBExtractToTemporaryParametrizedTest >> testFailureNoValidNameOfTemp [
 				 RBClassDataForRefactoringTest })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testFailureNonExistantSelector [
 	self shouldFail:
 		( self createRefactoringWithArguments:

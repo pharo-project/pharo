@@ -7,21 +7,23 @@ For a container the use of a dictionary or another collection (e.g. SortedCollec
 
 "
 Class {
-	#name : #RGAbstractContainer,
-	#superclass : #RGDefinition,
+	#name : 'RGAbstractContainer',
+	#superclass : 'RGDefinition',
 	#instVars : [
 		'elements'
 	],
-	#category : #'Ring-Definitions-Containers-Base'
+	#category : 'Ring-Definitions-Containers-Base',
+	#package : 'Ring-Definitions-Containers',
+	#tag : 'Base'
 }
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RGAbstractContainer >> addElement: anObject [
 
 	anObject addInContainer: self
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RGAbstractContainer >> addElement: anObject in: aCollection [
 
 	aCollection isDictionary
@@ -29,7 +31,7 @@ RGAbstractContainer >> addElement: anObject in: aCollection [
 		ifFalse:[ aCollection add: anObject ]
 ]
 
-{ #category : #'lookup elements' }
+{ #category : 'lookup elements' }
 RGAbstractContainer >> elementNamed: elementName [
 	| aSymbol found |
 
@@ -39,7 +41,7 @@ RGAbstractContainer >> elementNamed: elementName [
 	^nil
 ]
 
-{ #category : #'lookup elements' }
+{ #category : 'lookup elements' }
 RGAbstractContainer >> elementNamed: elementName in: aCollection [
 	| aSymbol |
 
@@ -49,14 +51,14 @@ RGAbstractContainer >> elementNamed: elementName in: aCollection [
 		ifFalse:[ aCollection detect:[ :each| each fullName = aSymbol ] ifNone:[ nil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGAbstractContainer >> elements [
 	"Retrieves the elements"
 
 	^elements
 ]
 
-{ #category : #'managing elements groups' }
+{ #category : 'managing elements groups' }
 RGAbstractContainer >> elementsCategorized: aSymbol [
 	"Retrieves a group of elements.
 	If does not exist set an Set"
@@ -64,37 +66,37 @@ RGAbstractContainer >> elementsCategorized: aSymbol [
 	^elements at: aSymbol ifAbsentPut:[ Set ]
 ]
 
-{ #category : #'managing elements groups' }
+{ #category : 'managing elements groups' }
 RGAbstractContainer >> elementsCategorized: aSymbol with: aCollection [
 	"Allows to define other groups of elements with a particular kind of collection"
 
 	elements at: aSymbol put: aCollection
 ]
 
-{ #category : #'iterating elements' }
+{ #category : 'iterating elements' }
 RGAbstractContainer >> elementsDo: aBlock [
 	elements valuesDo: [ :collection | collection do: [ :each | aBlock value: each ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGAbstractContainer >> flushElements [
 
 	elements:= IdentityDictionary new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGAbstractContainer >> includesElement: anRGDefinition [
 
 	^anRGDefinition isIncludedInContainer: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGAbstractContainer >> includesElementNamed: elementName [
 
 	^ elements anySatisfy: [ :collection | self includesElementNamed: elementName asSymbol in: collection ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGAbstractContainer >> includesElementNamed: elementName in: aCollection [
 
 	^aCollection isDictionary
@@ -102,20 +104,20 @@ RGAbstractContainer >> includesElementNamed: elementName in: aCollection [
 		ifFalse:[ aCollection anySatisfy: [ :each| each name = elementName asSymbol ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGAbstractContainer >> initialize [
 
 	super initialize.
 	elements:= IdentityDictionary new
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RGAbstractContainer >> removeElement: anObject [
 
 	anObject removeFromContainer: self
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RGAbstractContainer >> removeElement: anObject from: aCollection [
 
 	aCollection isDictionary
@@ -123,7 +125,7 @@ RGAbstractContainer >> removeElement: anObject from: aCollection [
 		ifFalse:[ aCollection remove: anObject ifAbsent:[ ] ]
 ]
 
-{ #category : #'managing elements groups' }
+{ #category : 'managing elements groups' }
 RGAbstractContainer >> removeElementsCategorized: aSymbol [
 	"Deletes a group of elements"
 

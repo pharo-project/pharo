@@ -2,12 +2,14 @@
 A RBGlobalVariablesUsageTest is a test class for testing the behavior of RBGlobalVariablesUsage
 "
 Class {
-	#name : #ReGlobalVariablesUsageRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReGlobalVariablesUsageRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #sample }
+{ #category : 'sample' }
 ReGlobalVariablesUsageRuleTest >> sampleMethod [
 	"Global variable are stored in Smalltalk globals, and one should avoid them when possible.
 	Examples are Display and Sensor"
@@ -17,7 +19,7 @@ ReGlobalVariablesUsageRuleTest >> sampleMethod [
 	Smalltalk value
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReGlobalVariablesUsageRuleTest >> setUp [
 	super setUp.
 
@@ -32,7 +34,7 @@ ReGlobalVariablesUsageRuleTest >> setUp [
 		MyGlobal value'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReGlobalVariablesUsageRuleTest >> tearDown [
 	self class compile: (Smalltalk globals at: #MyGlobal).
 	Smalltalk globals removeKey: #MyGlobal.
@@ -40,7 +42,7 @@ ReGlobalVariablesUsageRuleTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReGlobalVariablesUsageRuleTest >> testRule [
 	| critiques |
  	critiques := self myCritiques.

@@ -15,12 +15,14 @@ Preconditions:
 - the class (and any class in the hierarchy) should not have a variable with the same name
 "
 Class {
-	#name : #RBAddVariableTransformation,
-	#superclass : #RBVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#name : 'RBAddVariableTransformation',
+	#superclass : 'RBVariableTransformation',
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddVariableTransformation >> applicabilityPreconditions [
 
 	class := self definingClass.
@@ -36,7 +38,7 @@ RBAddVariableTransformation >> applicabilityPreconditions [
 	  & self isNotGlobal
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddVariableTransformation >> breakingChangePreconditions [ 
 
 	^ (RBCondition
@@ -44,13 +46,13 @@ RBAddVariableTransformation >> breakingChangePreconditions [
 			   definesVariable: variableName asString) not
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddVariableTransformation >> isNotGlobal [
 
 	^ (RBCondition isGlobal: variableName in: self model) not
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddVariableTransformation >> privateTransform [
 
 	isClassVariable

@@ -65,104 +65,106 @@ Also I implement my superclass abstract methods like:
 
 "
 Class {
-	#name : #ClyTypedScope,
-	#superclass : #ClyScope,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClyTypedScope',
+	#superclass : 'ClyScope',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedScope class >> empty [
 	^ self ofAll: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedScope class >> emptyIn: aNavigationEnvironment [
 	^ self ofAll: #() in: aNavigationEnvironment
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedScope class >> of: aBasisObject [
 
 	^self ofAll: {aBasisObject}
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedScope class >> of: aBasisObject in: aNavigationEnvironment [
 
 	^self ofAll: {aBasisObject} in: aNavigationEnvironment
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedScope class >> of: aBasisObject in: aNavigationEnvironment named: aString [
 
 	^(self of: aBasisObject in: aNavigationEnvironment)
 		name: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedScope class >> ofAll: basisObjects [
 
 	^self new
 		basisObjects: basisObjects
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedScope class >> ofAll: basisObjects in: aNavigationEnvironment [
 
 	^(self ofAll: basisObjects)
 		bindTo: aNavigationEnvironment
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedScope class >> ofAll: aBasisObject in: aNavigationEnvironment named: aString [
 
 	^(self ofAll: aBasisObject in: aNavigationEnvironment)
 		name: aString
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyTypedScope >> , anotherTypedScope [
 	^ClyCompositeScope on: { self. anotherTypedScope }
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyTypedScope >> adoptQuery: aQuery [
 	aQuery scope: self.
 	^aQuery
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyTypedScope >> asUnifiedInstance [
 	^self withNewBasisObjects: #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTypedScope >> basisObjects: aCollection [
 	super basisObjects: (self prepareBasisFrom: aCollection)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTypedScope >> prepareBasisFrom: aCollection [
 	^aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTypedScope >> representsScope: aScopeClass [
 	^self isKindOf: aScopeClass
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedScope >> restrictedBy: aScope [
 
 	^self withNewBasisObjects: aScope basisObjects
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTypedScope >> supportsQuery: aQuery [
 	^aQuery isKindOf: ClyTypedQuery
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedScope >> withExtraBasisObject: newBasisObject [
 
 	(basisObjects includes: newBasisObject) ifTrue: [ ^self ].
@@ -170,7 +172,7 @@ ClyTypedScope >> withExtraBasisObject: newBasisObject [
 	^self withNewBasisObjects: (basisObjects copyWith: newBasisObject)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedScope >> withExtraBasisObjects: extraBasisObjects [
 
 	| newBasis |
@@ -181,7 +183,7 @@ ClyTypedScope >> withExtraBasisObjects: extraBasisObjects [
 	^self withNewBasisObjects: newBasis
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedScope >> withNewBasisObjects: newBasisObjects [
 
 	^self copy
@@ -189,13 +191,13 @@ ClyTypedScope >> withNewBasisObjects: newBasisObjects [
 		bindTo: environment
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedScope >> withoutBasisObject: existingBasisObject [
 
 	^self withNewBasisObjects: (basisObjects copyWithout: existingBasisObject)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedScope >> withoutBasisObjects: existingBasisObjects [
 
 	^self withNewBasisObjects: (basisObjects copyWithoutAll: existingBasisObjects)

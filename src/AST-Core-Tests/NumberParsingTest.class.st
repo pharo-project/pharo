@@ -4,12 +4,14 @@ Tests to verify parsing of numbers from streams and strings.
 Note: ScaledDecimalTest contains related tests for parsing ScaledDecimal.
 "
 Class {
-	#name : #NumberParsingTest,
-	#superclass : #TestCase,
-	#category : #'AST-Core-Tests-Parser'
+	#name : 'NumberParsingTest',
+	#superclass : 'TestCase',
+	#category : 'AST-Core-Tests-Parser',
+	#package : 'AST-Core-Tests',
+	#tag : 'Parser'
 }
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParsingTest >> testFloatFromStreamAsNumber [
 	"This covers parsing in Number>>readFrom:"
 
@@ -55,7 +57,7 @@ NumberParsingTest >> testFloatFromStreamAsNumber [
 	self assert: rs upToEnd equals: 'z2'
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParsingTest >> testFloatFromStreamWithExponent [
 	"This covers parsing in Number>>readFrom:"
 
@@ -91,7 +93,7 @@ NumberParsingTest >> testFloatFromStreamWithExponent [
 	self assert: rs upToEnd equals: 'e'
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParsingTest >> testFloatFromStringAsNumber [
 	"This covers parsing in Number>>readFrom:"
 
@@ -110,7 +112,7 @@ NumberParsingTest >> testFloatFromStringAsNumber [
 	self assert: 1234.56 equals: aFloat
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParsingTest >> testFloatFromStringWithExponent [
 	"This covers parsing in Number>>readFrom:"
 
@@ -125,7 +127,7 @@ NumberParsingTest >> testFloatFromStringWithExponent [
 	self assert: 1.0e14 equals: aFloat
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParsingTest >> testFloatReadWithRadix [
 	"This covers parsing in Number>>readFrom:
 	Note: In most Smalltalk dialects, the radix notation is not used for numbers
@@ -142,7 +144,7 @@ NumberParsingTest >> testFloatReadWithRadix [
 	self assert: rs upToEnd equals: 'e9'
 ]
 
-{ #category : #'tests - Integer' }
+{ #category : 'tests - Integer' }
 NumberParsingTest >> testIntegerFromString [
 	"This covers parsing in Number>>readFrom:
 	Trailing decimal points should be ignored."
@@ -156,7 +158,7 @@ NumberParsingTest >> testIntegerFromString [
 	self assert: '123e could be confused with a Float' asNumber equals: 123
 ]
 
-{ #category : #'tests - Integer' }
+{ #category : 'tests - Integer' }
 NumberParsingTest >> testIntegerReadFrom [
 	"Ensure remaining characters in a stream are not lost when parsing an integer."
 	| rs i s |
@@ -182,7 +184,7 @@ NumberParsingTest >> testIntegerReadFrom [
 	self assert: 'sB has unary message sB' equals: s
 ]
 
-{ #category : #'tests - Integer' }
+{ #category : 'tests - Integer' }
 NumberParsingTest >> testIntegerReadWithRadix [
 	"This covers parsing in Number>>readFrom:
 	Note: In most Smalltalk dialects, the radix notation is not used for numbers
@@ -200,7 +202,7 @@ NumberParsingTest >> testIntegerReadWithRadix [
 	self assert: rs upToEnd equals: 'eee'
 ]
 
-{ #category : #'tests - Integer' }
+{ #category : 'tests - Integer' }
 NumberParsingTest >> testNegativeZero [
       "This test ensure that -0.0 will produce a negativeZero"
 
@@ -212,7 +214,7 @@ NumberParsingTest >> testNegativeZero [
       self assert: negativeZero = 0 description: 'In IEEE 754, a negative zero cannot be distinguished from zero'
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParsingTest >> testNumberReadExactlyError [
 	"This covers parsing in Number>>readExactlyFrom:"
 
@@ -237,7 +239,7 @@ NumberParsingTest >> testNumberReadExactlyError [
 	self should: [Number readFrom: rs] raise: Error
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParsingTest >> testNumberReadOnlyDigit [
 	"This covers parsing in Number>>readFrom:"
 
@@ -259,7 +261,7 @@ NumberParsingTest >> testNumberReadOnlyDigit [
 	self assert: rs upToEnd equals: '.'
 ]
 
-{ #category : #'tests - ScaledDecimal' }
+{ #category : 'tests - ScaledDecimal' }
 NumberParsingTest >> testScaledDecimalWithTrailingZeroes [
 	"This is a non regression tests for http://bugs.squeak.org/view.php?id=7169"
 
@@ -268,7 +270,7 @@ NumberParsingTest >> testScaledDecimalWithTrailingZeroes [
 	self assert: (Number readFrom: '0.050s3') equals: 1/20
 ]
 
-{ #category : #'tests - ScaledDecimal' }
+{ #category : 'tests - ScaledDecimal' }
 NumberParsingTest >> testScaledDecimalWithoutScaleSpecification [
 	self assert: (Number readFrom: '0.050s') equals: 1/20.
 	self assert: (Number readFrom: '0.050s') scale equals: 3.

@@ -1,6 +1,6 @@
-Extension { #name : #RBParseTreeRewriter }
+Extension { #name : 'RBParseTreeRewriter' }
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeRewriter class >> buildMessageSendWith: aSelector and: argsAndValues needsReturn: aBoolean [
 
 	^ String streamContents: [ :string |
@@ -17,7 +17,7 @@ RBParseTreeRewriter class >> buildMessageSendWith: aSelector and: argsAndValues 
 						string nextPut: $ ] ] ]
 ]
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeRewriter class >> mapArguments: arguments toValues: values in: aTree [
 
 	^ (arguments size = values size)
@@ -37,7 +37,7 @@ RBParseTreeRewriter class >> mapArguments: arguments toValues: values in: aTree 
 				argumentsAndValues ]
 ]
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeRewriter class >> replaceCode: subtree byMessageSendTo: aMethod in: aCompiledMethod [
 
 	| argsAndValues newSourceCode |
@@ -55,7 +55,7 @@ RBParseTreeRewriter class >> replaceCode: subtree byMessageSendTo: aMethod in: a
 		inClass: aCompiledMethod methodClass
 ]
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTree [
 
 	| tree replaceStmt |

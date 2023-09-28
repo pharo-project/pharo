@@ -1,6 +1,6 @@
-Extension { #name : #RGClassDefinitionTest }
+Extension { #name : 'RGClassDefinitionTest' }
 
-{ #category : #'*Ring-Definitions-Tests-Monticello' }
+{ #category : '*Ring-Definitions-Tests-Monticello' }
 RGClassDefinitionTest >> testAsClassDefinition3 [
 	| newClass newSlice |
 	newClass := OrderedCollection
@@ -58,7 +58,7 @@ RGClassDefinitionTest >> testAsClassDefinition3 [
 	self assert: (newSlice packageNamed: #'Ring-Definitions-Core') methods size > 1
 ]
 
-{ #category : #'*Ring-Definitions-Tests-Monticello' }
+{ #category : '*Ring-Definitions-Tests-Monticello' }
 RGClassDefinitionTest >> testAsFullClassDefinition [
 	| rgClass |
 	rgClass := Class asRingDefinition.

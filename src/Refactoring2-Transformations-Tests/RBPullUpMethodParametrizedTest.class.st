@@ -1,10 +1,12 @@
 Class {
-	#name : #RBPullUpMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBPullUpMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPullUpMethodRefactoring };
@@ -12,7 +14,7 @@ RBPullUpMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpMethodParametrizedTest >> addClassHierarchy [
 	model defineClass: 'Object << #SomeClass
 		sharedVariables: {Foo};
@@ -25,7 +27,7 @@ RBPullUpMethodParametrizedTest >> addClassHierarchy [
 		package: #''Refactory-Test data'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 	model defineClass: 'SharedPool << #TotoSharedPool
 		sharedVariables: { #SP };
@@ -39,12 +41,12 @@ RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #(#accessing)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPullUpMethodParametrizedTest >> constructor [
 	^ #pullUp:from:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailureDoesntPullUpReferencesInstVar [
 
 	| refactoring class |
@@ -58,7 +60,7 @@ RBPullUpMethodParametrizedTest >> testFailureDoesntPullUpReferencesInstVar [
 	[ self shouldFail: refactoring ] valueSupplyingAnswer: false
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpClassMethod [
 
 	| class |
@@ -71,7 +73,7 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpClassMethod [
 				 class classSide })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWhenSuperClassDoesNotDirectlyImplement [
 
 	| classEnvironment classes |
@@ -103,7 +105,7 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWhenSuperClassDoesNotDirectly
 				 (model classNamed: #ClassC) })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWithInvalidSuperSend [
 
 	| class |
@@ -120,7 +122,7 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWithInvalidSuperSend [
 				 class })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWithMethodThatCannotBePullUp [
 
 	model defineClass: 'Object << #SomeClass
@@ -136,7 +138,7 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWithMethodThatCannotBePullUp 
 				 (model classNamed: #SomeClass) })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopiedDown [
 
 	| class |
@@ -157,7 +159,7 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopi
 				 class })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpMethodParametrizedTest >> testPullUpAndCopyDown [
 	| class |
 	self addClassHierarchy.
@@ -175,7 +177,7 @@ RBPullUpMethodParametrizedTest >> testPullUpAndCopyDown [
 			equals: ((model classNamed: #Object) parseTreeForSelector: #yourself)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpMethodParametrizedTest >> testPullUpInAHighHierarchyClass [
 	| class superClass |
 
@@ -198,7 +200,7 @@ RBPullUpMethodParametrizedTest >> testPullUpInAHighHierarchyClass [
 				equals: ((model classNamed: #SomeClass) parseTreeForSelector: #example)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpMethodParametrizedTest >> testPullUpMethodWithCopyOverriddenMethodsDown [
 	| refactoring |
 	self proceedThroughWarning:
@@ -218,7 +220,7 @@ RBPullUpMethodParametrizedTest >> testPullUpMethodWithCopyOverriddenMethodsDown 
 		directlyDefinesMethod: #isComposite)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpMethodParametrizedTest >> testPullUpMethodWithSharedPool [
 	| class superClass |
 
@@ -236,7 +238,7 @@ RBPullUpMethodParametrizedTest >> testPullUpMethodWithSharedPool [
 	self deny: (class directlyDefinesMethod: #poolReference)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 	| refactoring class superClass |
 	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.

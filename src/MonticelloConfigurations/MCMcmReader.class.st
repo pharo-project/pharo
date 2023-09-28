@@ -2,21 +2,22 @@
 Reader for Metacello MCM
 "
 Class {
-	#name : #MCMcmReader,
-	#superclass : #MCVersionReader,
+	#name : 'MCMcmReader',
+	#superclass : 'MCVersionReader',
 	#instVars : [
 		'fileName',
 		'configuration'
 	],
-	#category : #MonticelloConfigurations
+	#category : 'MonticelloConfigurations',
+	#package : 'MonticelloConfigurations'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcmReader class >> extension [
 	^ 'mcm'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCMcmReader class >> on: aStream fileName: aFileName [
 	| reader |
 	reader := self on: aStream.
@@ -24,24 +25,24 @@ MCMcmReader class >> on: aStream fileName: aFileName [
 	^reader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcmReader >> configuration [
 	configuration ifNil: [self loadConfiguration].
 	"browser modifies configuration, but the reader might get cached"
 	^configuration copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcmReader >> configurationName [
 	^fileName ifNotNil: [(fileName findTokens: '/\:') last copyUpToLast: $.]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcmReader >> fileName: aString [
 	fileName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcmReader >> loadConfiguration [
 	stream reset.
 	configuration := MCConfiguration fromArray: (MCScanner scan: stream).
@@ -49,12 +50,12 @@ MCMcmReader >> loadConfiguration [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcmReader >> loadVersionInfo [
 	info := self configuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcmReader >> version [
 	^self configuration
 ]

@@ -1,41 +1,43 @@
 Class {
-	#name : #StMethodNameEditorPresenterTest,
-	#superclass : #TestCase,
+	#name : 'StMethodNameEditorPresenterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'methodNameEditor'
 	],
-	#category : #'Refactoring-UI-UI'
+	#category : 'Refactoring-UI-UI',
+	#package : 'Refactoring-UI',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenterTest >> a [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StMethodNameEditorPresenterTest >> a: a b: b c: c [
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StMethodNameEditorPresenterTest >> methodNamedFor: aSymbol [
 	^ RBMethodName
 		selector: (self class >> aSymbol) selector
 		arguments: ((self class >> aSymbol) ast arguments collect: [:each | each name])
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StMethodNameEditorPresenterTest >> setUp [
 	super setUp.
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StMethodNameEditorPresenterTest >> tearDown [
 
 	methodNameEditor ifNotNil: [ :x | x application closeAllWindows ].
 	super tearDown
 ]
 
-{ #category : #'tests - argument selection' }
+{ #category : 'tests - argument selection' }
 StMethodNameEditorPresenterTest >> testAddArgument [
 
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
@@ -49,7 +51,7 @@ StMethodNameEditorPresenterTest >> testAddArgument [
 		(e name = 'Add') ifTrue: [ self assert: e isVisible ] ])
 ]
 
-{ #category : #'tests - up/down buttons' }
+{ #category : 'tests - up/down buttons' }
 StMethodNameEditorPresenterTest >> testButtonDownClickShouldModifiedArgumentsList [
 	| arrayBeforeClick arrayAfterClick |
 	methodNameEditor argumentsList selectIndex: 2.
@@ -60,21 +62,21 @@ StMethodNameEditorPresenterTest >> testButtonDownClickShouldModifiedArgumentsLis
 	self assert: (arrayAfterClick collect: [ :each | each newName ]) asArray equals: #(a c b)
 ]
 
-{ #category : #'tests - up/down buttons' }
+{ #category : 'tests - up/down buttons' }
 StMethodNameEditorPresenterTest >> testButtonDownClickShouldModifiedPreviewFinal [
 	methodNameEditor argumentsList selectIndex: 1.
 	methodNameEditor downButton click.
 	self assert: methodNameEditor previewResult label equals: 'a: b b: a c: c'
 ]
 
-{ #category : #'tests - up/down buttons' }
+{ #category : 'tests - up/down buttons' }
 StMethodNameEditorPresenterTest >> testButtonDownClickShouldSelectionIndexBeDecremented [
 	methodNameEditor argumentsList selectIndex: 1.
 	methodNameEditor downButton click.
 	self assert: methodNameEditor argumentsList selection selectedIndex equals: 2
 ]
 
-{ #category : #'tests - up/down buttons' }
+{ #category : 'tests - up/down buttons' }
 StMethodNameEditorPresenterTest >> testButtonDownClickWithoutSelectOption [
 	| arrayBeforeClick arrayAfterClick |
 	arrayBeforeClick := methodNameEditor argumentsList items.
@@ -84,7 +86,7 @@ StMethodNameEditorPresenterTest >> testButtonDownClickWithoutSelectOption [
 	self assert: (arrayAfterClick collect: [ :each | each newName ]) asArray equals: #(b a c)
 ]
 
-{ #category : #'tests - up/down buttons' }
+{ #category : 'tests - up/down buttons' }
 StMethodNameEditorPresenterTest >> testButtonUpClickShouldModifiedArgumentsList [
 	methodNameEditor argumentsList selectIndex: 2.
 	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray
@@ -94,21 +96,21 @@ StMethodNameEditorPresenterTest >> testButtonUpClickShouldModifiedArgumentsList 
 		equals: #(a c b)
 ]
 
-{ #category : #'tests - up/down buttons' }
+{ #category : 'tests - up/down buttons' }
 StMethodNameEditorPresenterTest >> testButtonUpClickShouldModifiedPreviewFinal [
 	methodNameEditor argumentsList selectIndex: 2.
 	methodNameEditor upButton click.
 	self assert: methodNameEditor previewResult label equals: 'a: b b: a c: c'
 ]
 
-{ #category : #'tests - up/down buttons' }
+{ #category : 'tests - up/down buttons' }
 StMethodNameEditorPresenterTest >> testButtonUpClickShouldSelectionIndexBeDecremented [
 	methodNameEditor argumentsList selectIndex: 2.
 	methodNameEditor upButton click.
 	self assert: methodNameEditor argumentsList selection selectedIndex equals: 1
 ]
 
-{ #category : #'tests - up/down buttons' }
+{ #category : 'tests - up/down buttons' }
 StMethodNameEditorPresenterTest >> testButtonUpClickWithoutSelectOption [
 	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray
 		equals: #(a b c).
@@ -117,49 +119,49 @@ StMethodNameEditorPresenterTest >> testButtonUpClickWithoutSelectOption [
 		equals: #(b a c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StMethodNameEditorPresenterTest >> testChangeInInputSelectorShouldChangePreviewLabelFinal [
 	methodNameEditor selectorInput text: 'd:e:f:'.
 	self assert: methodNameEditor previewResult label equals: 'd: a e: b f: c'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StMethodNameEditorPresenterTest >> testChangeInInputSelectorWithFewAccessorThanArgumentsShouldChangePreviewLabelFinalWithFailedText [
 	methodNameEditor selectorInput text: 'd:'.
 	self assert: methodNameEditor previewResult label equals: '(invalid)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StMethodNameEditorPresenterTest >> testChangeInInputSelectorWithNothingShouldChangePreviewLabelFinalWithFailedText [
 	methodNameEditor selectorInput text: ''.
 	self assert: methodNameEditor previewResult label equals: '(invalid)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StMethodNameEditorPresenterTest >> testChangeInInputSelectorWithToMuchAccessorThanArgumentsShouldChangePreviewLabelFinalWithFailedText [
 	methodNameEditor selectorInput text: 'd:e:f:g:'.
 	self assert: methodNameEditor previewResult label equals: '(invalid)'
 ]
 
-{ #category : #'tests - initial state' }
+{ #category : 'tests - initial state' }
 StMethodNameEditorPresenterTest >> testInitialArgumentListAutoSelection [
 
 	self assert: methodNameEditor argumentsList selection selectedIndexes equals: #(1)
 ]
 
-{ #category : #'tests - initial state' }
+{ #category : 'tests - initial state' }
 StMethodNameEditorPresenterTest >> testInitialButtonDownIsDisable [
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a).
 	self deny: methodNameEditor downButton isEnabled
 ]
 
-{ #category : #'tests - initial state' }
+{ #category : 'tests - initial state' }
 StMethodNameEditorPresenterTest >> testInitialButtonUpIsDisable [
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a).
 	self deny: methodNameEditor upButton isEnabled
 ]
 
-{ #category : #'tests - argument selection' }
+{ #category : 'tests - argument selection' }
 StMethodNameEditorPresenterTest >> testRemoveArguments [
 
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
@@ -173,7 +175,7 @@ StMethodNameEditorPresenterTest >> testRemoveArguments [
 		(e name = 'Remove') ifTrue: [ self assert: e isVisible ] ])
 ]
 
-{ #category : #'tests - argument selection' }
+{ #category : 'tests - argument selection' }
 StMethodNameEditorPresenterTest >> testRenameArgument [
 
 	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).

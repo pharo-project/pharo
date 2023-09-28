@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asActiveRingDefinition [
 	"Retrieves an active RGMethodDefinition object based on the data of the receiver.
 	Source, protocol and stamp are retrieved from the compiled method"
@@ -12,7 +12,7 @@ CompiledMethod >> asActiveRingDefinition [
 			asActive
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asFullRingDefinition [
 
 	"Retrieves an active RGMethodDefinition which knows its parent <class>.
@@ -25,7 +25,7 @@ CompiledMethod >> asFullRingDefinition [
 	^ rgMethod
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asHistoricalRingDefinition [
 
 	"Retrieves a historical RGMethodDefinition object based on the data of the receiver.
@@ -47,7 +47,7 @@ CompiledMethod >> asHistoricalRingDefinition [
 	^ ring
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asPassiveRingDefinition [
 	"Retrieves a passive RGMethodDefinition object based on the data of the receiver.
 	Source, protocol and stamp are retrieved from value assigned in creation"
@@ -62,7 +62,7 @@ CompiledMethod >> asPassiveRingDefinition [
 			asPassive
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asRingDefinition [
 	"Retrieves an active RGMethodDefinition object based on the receiver.
 	Note that its class is not converted."
@@ -70,7 +70,7 @@ CompiledMethod >> asRingDefinition [
 	^ self asActiveRingDefinition
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> methodReference [
 
 	| class selector |
@@ -80,7 +80,7 @@ CompiledMethod >> methodReference [
 		package: self package asRingDefinition; yourself
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> realClass [
 	"answer the class that I am installed in"
 

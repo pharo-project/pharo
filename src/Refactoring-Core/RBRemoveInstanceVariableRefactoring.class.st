@@ -1,35 +1,40 @@
 Class {
-	#name : #RBRemoveInstanceVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBRemoveInstanceVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveInstanceVariableRefactoring class >> model: aNamespace remove: variable from: class [
 	^ self model: aNamespace variable: variable class: class
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 	^ self variable: variable class: class
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ RBCondition directlyDefinesInstanceVariable: variableName asString in: class
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveInstanceVariableRefactoring >> breakingChangePreconditions [ 
 
-	^ (RBCondition hierarchyOf: class referencesInstanceVariable: variableName) not
+	^ (RBInstanceVariableHasReferences new 
+			hierarchyOf: class referencesInstanceVariable: variableName) not
 	
 ]
 
-{ #category : #preconditions }
+{ #category : 'executing' }
 RBRemoveInstanceVariableRefactoring >> generateChanges [
 	
+	self prepareForExecution.
+
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
@@ -41,20 +46,20 @@ RBRemoveInstanceVariableRefactoring >> generateChanges [
 	^ self changes
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveInstanceVariableRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveInstanceVariableRefactoring >> privateTransform [
 	
 	
 	class removeInstanceVariable: variableName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveInstanceVariableRefactoring >> refactoredClass [
 	^ class
 ]

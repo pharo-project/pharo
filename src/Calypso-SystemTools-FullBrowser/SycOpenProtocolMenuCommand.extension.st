@@ -1,6 +1,6 @@
-Extension { #name : #SycOpenProtocolMenuCommand }
+Extension { #name : 'SycOpenProtocolMenuCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycOpenProtocolMenuCommand class >> fullBrowserMethodGroupMenuActivation [
 	<classAnnotation>
 

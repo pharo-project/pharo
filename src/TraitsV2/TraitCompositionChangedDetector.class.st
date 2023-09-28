@@ -3,12 +3,14 @@ I can detect if there is a change in the Trait composition.
 
 "
 Class {
-	#name : #TraitCompositionChangedDetector,
-	#superclass : #ShAbstractChangeDetector,
-	#category : #'TraitsV2-Class-Builder'
+	#name : 'TraitCompositionChangedDetector',
+	#superclass : 'ShAbstractChangeDetector',
+	#category : 'TraitsV2-Class-Builder',
+	#package : 'TraitsV2',
+	#tag : 'Class-Builder'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TraitCompositionChangedDetector >> compareClass [
 
 	(self enhancer traitCompositionOf: builder)
@@ -26,7 +28,7 @@ TraitCompositionChangedDetector >> compareClass [
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitCompositionChangedDetector >> enhancer [
 	^ builder builderEnhancer
 ]

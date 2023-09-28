@@ -1,6 +1,6 @@
-Extension { #name : #IndentingListItemMorph }
+Extension { #name : 'IndentingListItemMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 IndentingListItemMorph >> drawOnAthensCanvas: anAthensCanvas [
 	self drawOnCanvasWrapperFor: anAthensCanvas
 ]

@@ -2,8 +2,8 @@
 I am the real keymap.  I have an action to evaluate when my keymap sequence is pressed.
 "
 Class {
-	#name : #KMKeymap,
-	#superclass : #Object,
+	#name : 'KMKeymap',
+	#superclass : 'Object',
 	#instVars : [
 		'action',
 		'name',
@@ -11,10 +11,12 @@ Class {
 		'defaultShortcut',
 		'description'
 	],
-	#category : #'Keymapping-Core-Base'
+	#category : 'Keymapping-Core-Base',
+	#package : 'Keymapping-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMKeymap class >> named: keymapName shortcut: aShortcut action: anAction [
 	^ (self new)
 		name: keymapName;
@@ -24,7 +26,7 @@ KMKeymap class >> named: keymapName shortcut: aShortcut action: anAction [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMKeymap class >> named: keymapName shortcut: aShortcut action: anAction description: aDescription [
 	^ (self new)
 		name: keymapName;
@@ -35,7 +37,7 @@ KMKeymap class >> named: keymapName shortcut: aShortcut action: anAction descrip
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMKeymap class >> shortcut: aShortcut action: anAction [
 	^ (self new)
 		defaultShortcut: aShortcut;
@@ -44,7 +46,7 @@ KMKeymap class >> shortcut: aShortcut action: anAction [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMKeymap >> = aKeymap [
 	self == aKeymap
 		ifTrue: [ ^ true ].
@@ -53,37 +55,37 @@ KMKeymap >> = aKeymap [
 	^action = aKeymap action and: [ shortcut = aKeymap shortcut and: [ name = aKeymap name ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> action [
 	^ action
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> action: anAction [
 	action := anAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> defaultShortcut [
 	^defaultShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> defaultShortcut: aShortcut [
 	defaultShortcut := aShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> description [
 	^description ifNil: [ '' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> description: aDescription [
 	description := aDescription asString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeymap >> displayStringOn: aStream [
 	aStream
 		nextPutAll: self name displayString;
@@ -93,27 +95,27 @@ KMKeymap >> displayStringOn: aStream [
 		nextPutAll: self action displayString
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 KMKeymap >> executeActionTargetting: target [
 	^ self action cull: target cull: target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> hasName [
 	^name notNil
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMKeymap >> hash [
 	^action hash bitXor: (shortcut hash bitXor: name hash)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> key [
 	^ name
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeymap >> matches: anEventBuffer [
 
 	^ anEventBuffer
@@ -121,29 +123,29 @@ KMKeymap >> matches: anEventBuffer [
 		ifNotEmpty: [ self shortcut matches: anEventBuffer ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeymap >> matchesCompletely: aShortcut [
 	^ self shortcut matchesCompletely: aShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> name: aName [
 	name := aName
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeymap >> notifyCompleteMatchTo: aListener buffer: aBuffer [
 	| listeners |
 	aListener isCollection ifTrue: [ listeners := aListener ] ifFalse: [ listeners := { aListener } ].
 	listeners do: [ :l | l completeMatch: self buffer: aBuffer ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeymap >> notifyPartialMatchTo: aListener [
 	| listeners |
 
@@ -153,7 +155,7 @@ KMKeymap >> notifyPartialMatchTo: aListener [
 	listeners do: [ :each | each partialMatch ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeymap >> onMatchWith: anEventBuffer notify: aMatchListener andDo: anAction [
 	(self matches: anEventBuffer)
 			ifTrue: [
@@ -164,7 +166,7 @@ KMKeymap >> onMatchWith: anEventBuffer notify: aMatchListener andDo: anAction [
 				]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeymap >> printOn: aStream [
 	aStream
 		print: self name ;
@@ -175,23 +177,23 @@ KMKeymap >> printOn: aStream [
 		cr
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMKeymap >> reset [
 
 	self shortcut: self defaultShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> shortcut [
 	^ shortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> shortcut: aShortcut [
 	shortcut := aShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymap >> shortcutHasChangedBy: aShortcut [
 	self defaultShortcut = self shortcut ifTrue: [ self shortcut: aShortcut ].
 	self defaultShortcut: aShortcut

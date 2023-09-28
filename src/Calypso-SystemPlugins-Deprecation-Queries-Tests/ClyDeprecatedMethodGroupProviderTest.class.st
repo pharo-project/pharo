@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyDeprecatedMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
+	#name : 'ClyDeprecatedMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemPlugins-Deprecation-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Deprecation-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyDeprecatedMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 	^ClyClassWithDeprecatedMethods
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyDeprecatedMethodGroupProviderTest >> groupProviderClass [
 	^ClyDeprecatedMethodGroupProvider
 ]

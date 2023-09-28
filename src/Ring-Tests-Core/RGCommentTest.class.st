@@ -1,10 +1,11 @@
 Class {
-	#name : #RGCommentTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGCommentTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGCommentTest >> testClass [
 
 	| environment aClass aPackage aComment |
@@ -23,7 +24,7 @@ RGCommentTest >> testClass [
 	self assert: aComment fullName equals: 'SomeClass comment'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGCommentTest >> testImplicitEnvironment [
 
 	| def def2 env |
@@ -39,7 +40,7 @@ RGCommentTest >> testImplicitEnvironment [
 	self checkImplicitSingleClassEnvironmentOf: def parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGCommentTest >> testMakeReslolved [
 
 	| comment |
@@ -52,7 +53,7 @@ RGCommentTest >> testMakeReslolved [
 	self assert: (comment time isKindOf: DateAndTime)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGCommentTest >> testNewComment [
 	| comment time |
 
@@ -84,7 +85,7 @@ RGCommentTest >> testNewComment [
 	self assert: comment time equals: time
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGCommentTest >> testResolvingConsistency [
 
 	| anObject |
@@ -92,7 +93,7 @@ RGCommentTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGCommentTest >> testTransformations [
 	| comment time |
 

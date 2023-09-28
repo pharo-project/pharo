@@ -1,38 +1,40 @@
 Class {
-	#name : #ErrorNodeStyler,
-	#superclass : #IconStyler,
-	#category : #'Reflectivity-Tools-ErrorAndSemanticStyling'
+	#name : 'ErrorNodeStyler',
+	#superclass : 'IconStyler',
+	#category : 'Reflectivity-Tools-ErrorAndSemanticStyling',
+	#package : 'Reflectivity-Tools',
+	#tag : 'ErrorAndSemanticStyling'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ErrorNodeStyler >> highlightColor [
 	^nil
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ErrorNodeStyler >> iconFor: aNode [
 	^ self iconNamed: #error
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ErrorNodeStyler >> iconLabel: aNode [
 
 	self flag: 'What if more than one error?'.
 	^ aNode errorNotices first messageText
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ErrorNodeStyler >> segmentMorphClass [
 
 	^ RubUnderlinedSegmentMorph
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ErrorNodeStyler >> shouldStyleNode: aNode [
 	^ aNode isError and: [ aNode errorNotices isNotEmpty ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 	| conf |

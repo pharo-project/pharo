@@ -13,26 +13,25 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : #RBMoveMethodsToClassSideDriver,
-	#superclass : #RBDriver,
-	#instVars : [
-		'refactoring'
-	],
-	#category : #'Refactoring-UI-Drivers'
+	#name : 'RBMoveMethodsToClassSideDriver',
+	#superclass : 'RBInteractionDriver',
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMoveMethodsToClassSideDriver class >> scopes: scopesList methods: aCollectionOfMethods [
 
 	^ self new scopes: scopesList methods: aCollectionOfMethods
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBMoveMethodsToClassSideDriver >> refactoring [
 	^ refactoring.
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBMoveMethodsToClassSideDriver >> runRefactoring [
 
 	[
@@ -57,7 +56,7 @@ RBMoveMethodsToClassSideDriver >> runRefactoring [
 				err return ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMoveMethodsToClassSideDriver >> scopes: scopesList methods: methods [
 
 	scopes := scopesList.

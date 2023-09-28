@@ -1,17 +1,19 @@
 Class {
-	#name : #RBRemoveReturnStatementTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveReturnStatementTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRemoveReturnStatementTransformationTest >> methodAfter [
 
 	| variable |
 	variable := 'String'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRemoveReturnStatementTransformationTest >> methodBefore [
 
 	| variable |
@@ -19,7 +21,7 @@ RBRemoveReturnStatementTransformationTest >> methodBefore [
 	^ variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveReturnStatementTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
@@ -28,7 +30,7 @@ RBRemoveReturnStatementTransformationTest >> testClassDoesNotExist [
 			 inClass: #RBReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveReturnStatementTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
@@ -37,7 +39,7 @@ RBRemoveReturnStatementTransformationTest >> testMethodDoesNotExist [
 			 inClass: #RBRemoveReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveReturnStatementTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -56,7 +58,7 @@ RBRemoveReturnStatementTransformationTest >> testRefactoring [
 		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveReturnStatementTransformationTest >> testReturnDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
@@ -65,7 +67,7 @@ RBRemoveReturnStatementTransformationTest >> testReturnDoesNotExist [
 			 inClass: #RBRemoveReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveReturnStatementTransformationTest >> testTransform [
 
 	| transformation class |

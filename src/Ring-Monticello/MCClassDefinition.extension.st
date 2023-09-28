@@ -1,12 +1,12 @@
-Extension { #name : #MCClassDefinition }
+Extension { #name : 'MCClassDefinition' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassDefinition >> asRGDefinition [
 
 	^ self ensureRingDefinitionIn: RGEnvironment new
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
@@ -46,7 +46,7 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 		def]
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackage [
 
 	| def |
@@ -55,4 +55,22 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackag
 	def package: anRGPackage.
 	def category: def tags first. "fix tags to do not contain package names"
 	^ def
+]
+
+{ #category : '*Ring-Monticello' }
+MCClassDefinition >> ring2LayoutType [
+
+	^ (Dictionary newFrom: {
+		#compiledMethod -> RGCompiledMethodLayout.
+		#bytes -> RGByteLayout.
+		#immediate -> RGImmediateLayout.
+		#words -> RGWordLayout.
+		#week -> RGWeakLayout.
+		#variable -> RGVariableLayout.
+		#ephemeron -> RGEphemeronLayout.
+		#normal -> RGFixedLayout.
+		#weak -> RGWeakLayout.
+		#DoubleByteLayout -> RGDoubleByteLayout.
+		#DoubleWordLayout -> RGDoubleWordLayout
+	}) at: type
 ]

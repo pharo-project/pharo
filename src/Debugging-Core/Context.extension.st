@@ -1,6 +1,6 @@
-Extension { #name : #Context }
+Extension { #name : 'Context' }
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> callChainAnySatisfy: aBlock [
 
 	(aBlock value: self) ifTrue: [ ^ true ].
@@ -8,7 +8,7 @@ Context >> callChainAnySatisfy: aBlock [
 	^ self sender callChainAnySatisfy: aBlock.
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> callPrimitive: primNumber [
 	| res |
 	res := receiver tryPrimitive: primNumber withArgs: self arguments.
@@ -19,7 +19,7 @@ Context >> callPrimitive: primNumber [
 	self methodReturnTop
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> findSecondToOldestSimilarSender [
 	"Search the stack for the second-to-oldest occurance of self's method.  Very useful for an infinite recursion.  Gets back to the second call so you can see one complete recursion cycle, and how it was called at the beginning."
 
@@ -35,7 +35,7 @@ Context >> findSecondToOldestSimilarSender [
 	^ secondContext
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> findSimilarSender [
 	"Return the closest sender with the same method, return nil if none found"
 
@@ -43,13 +43,13 @@ Context >> findSimilarSender [
 		context compiledCode == method ]
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> instructionStream [
 	
 	^ InstructionStream on: method pc: pc
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> lookupTempVar: aSymbol [
 
 	self
@@ -59,7 +59,7 @@ Context >> lookupTempVar: aSymbol [
 	^ self lookupVar: aSymbol
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> methodReturnConstant: value [
 	"Simulate the action of a 'return constant' bytecode whose value is the
 	 argument, value. This corresponds to a source expression like '^0'."
@@ -67,7 +67,7 @@ Context >> methodReturnConstant: value [
 	^self return: value from: self home
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> pcRangeContextIsActive: contextIsActive [
  	"return the debug highlight for aPC"		 
 	| thePC |
@@ -84,12 +84,12 @@ Context >> pcRangeContextIsActive: contextIsActive [
   	^self method rangeForPC: thePC
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> readVariableNamed: aName [
 	^ (self lookupVar: aName) readInContext: self
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> respondsToUnknownBytecode [
 	"This method is triggerred by the VM when the interpreter tries to execute an unknown bytecode"
 	
@@ -98,7 +98,7 @@ Context >> respondsToUnknownBytecode [
 	self error: 'VM cannot run unknown bytecode ', unknownBytecode printString
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> restart [
 	"Unwind thisContext to self and resume from beginning.  Execute unwind blocks when unwinding.  ASSUMES self is a sender of thisContext"
 
@@ -119,7 +119,7 @@ Context >> restart [
 	self jump.
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> restartWithNewReceiver: obj [
 
 	self
@@ -127,7 +127,7 @@ Context >> restartWithNewReceiver: obj [
 		restart
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> return: value to: aSender [
 	"Simulate the return of value to aSender."
 
@@ -136,19 +136,19 @@ Context >> return: value to: aSender [
 	^ aSender push: value
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> returnBooleanPrimitive [
 
 	^ 257
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> returnSelfPrimitive [
 
 	^ 256
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context class >> runSimulated: aBlock [
 	"Simulate the execution of the argument, current. Answer the result it 
 	returns."
@@ -160,7 +160,7 @@ Context class >> runSimulated: aBlock [
 	"Context runSimulated: [Pen new defaultNib: 5; go: 100]"
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	"Simulate the execution of the argument, aBlock, until it ends. aBlock 
 	MUST NOT contain an '^'. Evaluate block2 with the current context 
@@ -193,7 +193,7 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	^ exception
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> send: selector super: superFlag numArgs: numArgs [
 	"Simulate the action of bytecodes that send a message with selector, 
 	selector. The argument, superFlag, tells whether the receiver of the 
@@ -217,7 +217,7 @@ Context >> send: selector super: superFlag numArgs: numArgs [
 	^ self send: selector to: currentReceiver with: arguments super: superFlag
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> simulatePrimitive: primitiveIndex in: aMethod receiver: aReceiver arguments: arguments [
 	| key simulator |
 	
@@ -244,28 +244,28 @@ Context >> simulatePrimitive: primitiveIndex in: aMethod receiver: aReceiver arg
 		context: self
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context class >> simulatePrimitive: primName module: moduleName with: simulator [
 	^ self specialPrimitiveSimulators at: {primName. moduleName} put: simulator
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context class >> simulatePrimitiveNumber: num with: simulator [
 	^ self specialPrimitiveSimulators at: num put: simulator
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> stepIntoQuickMethod [
 	^self compiledCode stepIntoQuickMethods
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> stepIntoQuickMethod: aBoolean [
 
 	self compiledCode stepIntoQuickMethods: aBoolean
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> stepToHome: aContext [
 	"Resume self until the home of top context is aContext.  Top context may be a block context."
 
@@ -313,7 +313,7 @@ Context >> stepToHome: aContext [
 		  nil }
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> stepToSendOrReturn [
 	"Simulate the execution of bytecodes until either sending a message or 
 	returning a value to the receiver (that is, until switching contexts)."
@@ -328,7 +328,7 @@ Context >> stepToSendOrReturn [
 				^context ]]
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context class >> tallyInstructions: aBlock [
 	"Count the occurrences of each bytecode during the execution of aBlock.
 	Return a Array of associations using the byte as key and the occurrences as values sorted by the instruction opcode numeric values.
@@ -346,7 +346,7 @@ Context class >> tallyInstructions: aBlock [
 	^tallies sortedElements
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context class >> tallyMethods: aBlock [
 	"This method uses the simulator to count the number of calls on each method
 	invoked in evaluating aBlock. Results are given in order of decreasing counts."
@@ -366,7 +366,7 @@ Context class >> tallyMethods: aBlock [
 	"Contex tallyMethods: [3.14159 printString]"
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 	| var |
@@ -377,7 +377,7 @@ Context >> tempNamed: aName [
 	^var readInContext: self
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	| var |
@@ -388,7 +388,7 @@ Context >> tempNamed: aName put: anObject [
 	^var write: anObject inContext: self
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> tempNames [
 	"Answer all the temp names in scope in aContext starting with the home's first local 
 	(the first argument or first temporary if no arguments).
@@ -401,19 +401,19 @@ Context >> tempNames [
 	^ self astScope allTempNames
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName)
 		ifFalse: [ ^ nil ].
 	^self lookupVar: aName
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> temporaryVariables [
 	^self sourceNode temporaries collect: [ :each | each binding ]
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> tempsAndValues [
 	"Return a string of the temporary variabls and their current values"
 	
@@ -425,7 +425,7 @@ Context >> tempsAndValues [
 			separatedBy: [aStream cr ]]
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 	"Return a string of the temporary variabls and their current values"
 
@@ -439,12 +439,12 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 			separatedBy: [aStream cr ]]
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> unusedBytecode [
 	^ self respondsToUnknownBytecode
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> updatePCForQuickPrimitiveRestart [
 
 	({self returnBooleanPrimitive.	self returnSelfPrimitive } includes: self method primitive) 
@@ -455,7 +455,7 @@ Context >> updatePCForQuickPrimitiveRestart [
 	pc := pc + self quickMethodPrimitiveBytecodeSize
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Context >> writeVariableNamed: aName value: anObject [ 
 	^ (self lookupVar: aName) write: anObject inContext: self
 ]

@@ -1,20 +1,22 @@
 Class {
-	#name : #RBMakeClassAbstractParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
+	#name : 'RBMakeClassAbstractParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
 	#instVars : [
 		'testClass'
 	],
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMakeClassAbstractParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMakeClassAbstractTransformation };
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBMakeClassAbstractParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest.
@@ -23,14 +25,14 @@ RBMakeClassAbstractParametrizedTest >> setUp [
 	testClass class removeSelector: #isAbstract
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBMakeClassAbstractParametrizedTest >> tearDown [
 
 	testClass class removeSelector: #isAbstract.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMakeClassAbstractParametrizedTest >> testMakeClassAbstractAddsIsAbstractMethodToClassSide [
 	| refactoring |
 	refactoring := rbClass class: testClass.
@@ -41,7 +43,7 @@ RBMakeClassAbstractParametrizedTest >> testMakeClassAbstractAddsIsAbstractMethod
 		equals: (self parseMethod: 'isAbstract ^self == ', testClass name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMakeClassAbstractParametrizedTest >> testMakeClassAbstractPerformChanges [
 	"This test checks if actually performing refactoring applies the changes
 	since model needs to be set correctly. There was a regression when model

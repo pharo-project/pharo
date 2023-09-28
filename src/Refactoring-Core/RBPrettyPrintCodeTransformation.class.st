@@ -4,18 +4,20 @@ I am a refactoring for reformat the source code of all methods in this environme
 I have no precondition.
 "
 Class {
-	#name : #RBPrettyPrintCodeTransformation,
-	#superclass : #RBRefactoring,
-	#category : #'Refactoring-Core-Transformation-Unused'
+	#name : 'RBPrettyPrintCodeTransformation',
+	#superclass : 'RBRefactoring',
+	#category : 'Refactoring-Core-Transformation-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Transformation-Unused'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPrettyPrintCodeTransformation >> preconditions [
 
 	^ self trueCondition
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBPrettyPrintCodeTransformation >> privateTransform [
 	| source tree formatted |
 	self model

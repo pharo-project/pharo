@@ -2,17 +2,18 @@
 A PSMCMergeMorph is a graphical tool to navigate changes and select changes in case of conflicts.
 "
 Class {
-	#name : #PSMCMergeMorph,
-	#superclass : #ComposableMorph,
+	#name : 'PSMCMergeMorph',
+	#superclass : 'ComposableMorph',
 	#instVars : [
 		'patchMorph',
 		'codeMorph',
 		'merged'
 	],
-	#category : #'Monticello-GUI-Diff'
+	#category : 'Monticello-GUI-Diff',
+	#package : 'Monticello-GUI-Diff'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PSMCMergeMorph class >> forMerger: aMerger [
 	"Answer a new instance of the receiver
 	with the given merger as the model."
@@ -20,42 +21,42 @@ PSMCMergeMorph class >> forMerger: aMerger [
 	^ self new model: aMerger
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PSMCMergeMorph >> allConflictsResolved [
 	"Answer whether all conflicts were resolved."
 
 	^(self model ifNil: [^false]) isMerged
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCMergeMorph >> cancel [
 	"Delete the window to cancel."
 
 	self window delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> codeMorph [
 	"Answer the value of codeMorph"
 
 	^ codeMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> codeMorph: anObject [
 	"Set the value of codeMorph"
 
 	codeMorph := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCMergeMorph >> compositeText [
 	"Answer the composite text from the patch morph."
 
 	^self patchMorph compositeText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> compositeText: aString [
 	"Save the new method text for the selected method.
 	Yet to be implemented."
@@ -63,14 +64,14 @@ PSMCMergeMorph >> compositeText: aString [
 	UIManager default inform: 'Saving of replacement methods is not yet imlemented.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> conflictCount [
 	"Answer the number of conflicts that are unresolved."
 
 	^(self model ifNil: [^0]) conflicts count: [:c | c isResolved not]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> conflictCountString [
 	"Answer a string describing the number of conflicts."
 
@@ -81,14 +82,14 @@ PSMCMergeMorph >> conflictCountString [
 		ifFalse: ['{1} conflicts' translated format: {count}]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
 
 	^'Merge' translated
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCMergeMorph >> fromDescription: aString [
 	"Set the description for the left-hand side of the merge,
 	typically 'currently in image'."
@@ -96,7 +97,7 @@ PSMCMergeMorph >> fromDescription: aString [
 	self patchMorph fromDescription: aString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PSMCMergeMorph >> initialize [
 	"Initialize the receiver."
 
@@ -118,7 +119,7 @@ PSMCMergeMorph >> initialize [
 		addPaneSplitters
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCMergeMorph >> merge [
 	"Do the merge and close if no conflicts."
 
@@ -128,7 +129,7 @@ PSMCMergeMorph >> merge [
 		ifFalse: [self inform: 'You must resolve all conflicts first.' translated]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> merged [
 	"Answer the value of merged. Indicates whether
 	the merge button was pressed with no conflicts remaining."
@@ -136,14 +137,14 @@ PSMCMergeMorph >> merged [
 	^ merged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> merged: anObject [
 	"Set the value of merged"
 
 	merged := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PSMCMergeMorph >> model: aMerger [
 	"Set the model and update the window."
 
@@ -158,7 +159,7 @@ PSMCMergeMorph >> model: aMerger [
 	self patchMorph model: sorted
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PSMCMergeMorph >> newButtonsMorph [
 	"Answer a new buttons morph."
 
@@ -172,7 +173,7 @@ PSMCMergeMorph >> newButtonsMorph [
 		layoutInset: 4
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PSMCMergeMorph >> newCodeMorph [
 	"Answer a new code morph."
 
@@ -184,7 +185,7 @@ PSMCMergeMorph >> newCodeMorph [
 		setText: ''
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PSMCMergeMorph >> newConflictsButton [
 	"Answer a new button for displaying the count
 	of outstanding conflicts and navigating to each.
@@ -201,7 +202,7 @@ PSMCMergeMorph >> newConflictsButton [
 		vResizing: #spaceFill "workaround until table  layout fixed"
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PSMCMergeMorph >> newMergeButton [
 	"Answer a new button for performing the merge.
 	It will be disabled if any conflicts are unresolved."
@@ -214,7 +215,7 @@ PSMCMergeMorph >> newMergeButton [
 		help: 'Merge the version into the image' translated
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PSMCMergeMorph >> newPatchMorph [
 	"Answer a new patch morph."
 
@@ -224,35 +225,35 @@ PSMCMergeMorph >> newPatchMorph [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PSMCMergeMorph >> notAllConflictsResolved [
 	"Answer whether any conflicts are unresolved."
 
 	^self allConflictsResolved not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> patchMorph [
 	"Answer the value of patchMorph"
 
 	^ patchMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCMergeMorph >> patchMorph: anObject [
 	"Set the value of patchMorph"
 
 	patchMorph := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCMergeMorph >> selectNextConflict [
 	"Select the next conflict in the tree."
 
 	self patchMorph selectNextConflict
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCMergeMorph >> toDescription: aString [
 	"Set the description for the right-hand side of the merge,
 	typically 'incoming'."
@@ -260,7 +261,7 @@ PSMCMergeMorph >> toDescription: aString [
 	self patchMorph toDescription: aString
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PSMCMergeMorph >> update: aspect [
 	"A join has probably changed its selection state."
 
@@ -274,7 +275,7 @@ PSMCMergeMorph >> update: aspect [
 				changed: #notAllConflictsResolved]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PSMCMergeMorph >> updateCode [
 	"Update the code morph to match selected differences."
 

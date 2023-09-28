@@ -1,1 +1,1 @@
-Package { #name : #'System-Sources-Tests' }
+Package { #name : 'System-Sources-Tests' }

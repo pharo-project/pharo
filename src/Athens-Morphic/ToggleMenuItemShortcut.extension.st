@@ -1,6 +1,6 @@
-Extension { #name : #ToggleMenuItemShortcut }
+Extension { #name : 'ToggleMenuItemShortcut' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 ToggleMenuItemShortcut >> drawOnAthensCanvas: aCanvas [
 	self subclassResponsibility
 ]

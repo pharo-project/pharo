@@ -9,17 +9,19 @@ Examples
 	self open
 "
 Class {
-	#name : #AthensDemoPresenter,
-	#superclass : #SpPresenter,
+	#name : 'AthensDemoPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'backButton',
 		'forwardButton',
 		'demo'
 	],
-	#category : #'Athens-Examples-Spec'
+	#category : 'Athens-Examples-Spec',
+	#package : 'Athens-Examples',
+	#tag : 'Spec'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 AthensDemoPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #demo;
@@ -32,13 +34,13 @@ AthensDemoPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensDemoPresenter class >> open [
 	<script>
 	self new open
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensDemoPresenter >> initializeWidgets [
 	backButton := self newButton.
 	forwardButton := self newButton.
@@ -58,7 +60,7 @@ AthensDemoPresenter >> initializeWidgets [
 		add: forwardButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensDemoPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'Athens demos';

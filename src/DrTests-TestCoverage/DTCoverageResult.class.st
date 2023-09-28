@@ -10,21 +10,22 @@ I add the partiallyCoveredMethods attribute to store the methods that are only p
 I am used to display the sourceCode panel in DrTest's Coverage plugin.
 "
 Class {
-	#name : #DTCoverageResult,
-	#superclass : #CoverageResult,
+	#name : 'DTCoverageResult',
+	#superclass : 'CoverageResult',
 	#instVars : [
 		'partiallyCoveredMethods'
 	],
-	#category : #'DrTests-TestCoverage'
+	#category : 'DrTests-TestCoverage',
+	#package : 'DrTests-TestCoverage'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTCoverageResult >> partiallyCoveredMethods [
 
 	^ partiallyCoveredMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTCoverageResult >> partiallyCoveredMethods: anObject [
 
 	partiallyCoveredMethods := anObject

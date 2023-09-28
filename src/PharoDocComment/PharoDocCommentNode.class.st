@@ -11,8 +11,8 @@ The example code should show an  expression 3 + 4 and the expected value 7.
 See setting on ""Code Browsing"" to enable / disable this doc comment style.
 "
 Class {
-	#name : #PharoDocCommentNode,
-	#superclass : #Object,
+	#name : 'PharoDocCommentNode',
+	#superclass : 'Object',
 	#instVars : [
 		'sourceNode',
 		'expression'
@@ -20,20 +20,22 @@ Class {
 	#classVars : [
 		'DocCommentEnabled'
 	],
-	#category : #'PharoDocComment-Base'
+	#category : 'PharoDocComment-Base',
+	#package : 'PharoDocComment',
+	#tag : 'Base'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 PharoDocCommentNode class >> docCommentEnabled [
 	^ DocCommentEnabled  ifNil: [ DocCommentEnabled  := true ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 PharoDocCommentNode class >> docCommentEnabled: aBoolean [
 	DocCommentEnabled := aBoolean
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PharoDocCommentNode class >> expression: aDocExpression inComment: aRBComment [
 	^ self new
 		expression: aDocExpression;
@@ -41,7 +43,7 @@ PharoDocCommentNode class >> expression: aDocExpression inComment: aRBComment [
 		yourself
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 PharoDocCommentNode class >> parseDocComments: aRBCommentNode [
 
 	| expression |
@@ -49,7 +51,7 @@ PharoDocCommentNode class >> parseDocComments: aRBCommentNode [
 	^ { (self expression: expression inComment: aRBCommentNode) }
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 PharoDocCommentNode class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #docCommentEnabled)
@@ -63,25 +65,25 @@ PharoDocCommentNode class >> settingsOn: aBuilder [
 		parent: #codeBrowsing
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoDocCommentNode >> browse [
 	| methodNode |
 	methodNode := self sourceNode methodNode.
 	(methodNode methodClass>>methodNode selector) browse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentNode >> expression [
 	^ expression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentNode >> expression: anObject [
 	expression := anObject.
 	expression node: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PharoDocCommentNode >> printOn: aStream [
 
 	super printOn: aStream.
@@ -91,12 +93,12 @@ PharoDocCommentNode >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentNode >> sourceNode [
 	^ sourceNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentNode >> sourceNode: anObject [
 	sourceNode := anObject
 ]

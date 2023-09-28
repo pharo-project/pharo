@@ -1,14 +1,16 @@
 Class {
-	#name : #RBPushDownMethodTransformation,
-	#superclass : #RBCompositeMethodTransformation,
+	#name : 'RBPushDownMethodTransformation',
+	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
 		'selectors',
 		'classes'
 	],
-	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
+	#category : 'Refactoring2-Transformations-Model-Migrated-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Migrated-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBPushDownMethodTransformation class >> model: aRBNamespace pushDown: selectorCollection from: aClass [
 	^ self new
 		model: aRBNamespace;
@@ -16,7 +18,7 @@ RBPushDownMethodTransformation class >> model: aRBNamespace pushDown: selectorCo
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPushDownMethodTransformation class >> model: aRBNamespace pushDown: selectorCollection from: aClass in: classes [
 	^ self new
 		model: aRBNamespace;
@@ -24,23 +26,23 @@ RBPushDownMethodTransformation class >> model: aRBNamespace pushDown: selectorCo
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPushDownMethodTransformation class >> pushDown: selectorCollection from: aClass [
 	^ self new pushDown: selectorCollection from: aClass
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPushDownMethodTransformation class >> pushDown: selectorCollection from: aClass in: classes [
 	^ self new pushDown: selectorCollection from: aClass in: classes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPushDownMethodTransformation >> allClasses [
 
 	^ classes ifNil: [ class subclasses ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownMethodTransformation >> applicabilityPreconditions [ 
 
 	| condition |
@@ -51,7 +53,7 @@ RBPushDownMethodTransformation >> applicabilityPreconditions [
 	^ condition 
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPushDownMethodTransformation >> breakingChangePreconditions [
 	"Check that that none of the subclasses of `class` is doing a supercall to any of the selectors
 	that will be pushed down.
@@ -69,20 +71,20 @@ RBPushDownMethodTransformation >> breakingChangePreconditions [
 	^ condition 
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBPushDownMethodTransformation >> buildTransformations [
 
 	^ self pushDownSelectors , {self removeSelectors}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPushDownMethodTransformation >> classes: aCollection [
 	classes := aCollection collect: [ :cls |
 		self model classObjectFor: cls.
 	]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBPushDownMethodTransformation >> pushDown: aSelector [
 
 	| code protocols refactoring |
@@ -102,25 +104,25 @@ RBPushDownMethodTransformation >> pushDown: aSelector [
 				withProtocol: protocols ])
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPushDownMethodTransformation >> pushDown: selectorCollection from: aClass [
 	class := self model classObjectFor: aClass.
 	selectors := selectorCollection
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPushDownMethodTransformation >> pushDown: selectorCollection from: aClass in: aCollection [
 	class := self model classObjectFor: aClass.
 	selectors := selectorCollection.
 	self classes: aCollection
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBPushDownMethodTransformation >> pushDownSelectors [
 	^ selectors flatCollect: [:each | self pushDown: each]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBPushDownMethodTransformation >> removeSelectors [
 	^ RBRemoveMethodTransformation
 		model: self model
@@ -128,7 +130,7 @@ RBPushDownMethodTransformation >> removeSelectors [
 		from: class
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBPushDownMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -142,7 +144,7 @@ RBPushDownMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPushDownMethodTransformation >> targetClass [
 	^ class
 ]

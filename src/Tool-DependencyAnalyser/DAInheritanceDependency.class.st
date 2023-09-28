@@ -5,20 +5,22 @@ A PDInheritanceDependency is an inheritance dependency between two packages.
 
 "
 Class {
-	#name : #DAInheritanceDependency,
-	#superclass : #DADependencyFromClass,
+	#name : 'DAInheritanceDependency',
+	#superclass : 'DADependencyFromClass',
 	#instVars : [
 		'superclass'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAInheritanceDependency >> isInheritanceDependency [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAInheritanceDependency >> printReasonOn: aStream [
 	aStream
 		nextPutAll: self theClass name;
@@ -26,12 +28,12 @@ DAInheritanceDependency >> printReasonOn: aStream [
 		nextPutAll: self superclass name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAInheritanceDependency >> superclass [
 	^ superclass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAInheritanceDependency >> superclass: aClass [
 	superclass := aClass
 ]

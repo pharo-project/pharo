@@ -18,35 +18,37 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #StoredSettingsMerger,
-	#superclass : #Object,
+	#name : 'StoredSettingsMerger',
+	#superclass : 'Object',
 	#instVars : [
 		'storedSettings'
 	],
-	#category : #'System-Settings-Core-Persistence-Ston-StoredSettings-Builder'
+	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings-Builder',
+	#package : 'System-Settings-Core',
+	#tag : 'Persistence-Ston-StoredSettings-Builder'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 StoredSettingsMerger >> addStoredSetting: aSettingNode [
 	self storedSettings withIndexDo: [ :eachStoredNode :index |
 		eachStoredNode = aSettingNode ifTrue: [ ^ self storedSettings at: index put: aSettingNode ] ].
 	^ self storedSettings add: aSettingNode
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 StoredSettingsMerger >> addStoredSettings: aCollectionOfStoredSettings [
 	aCollectionOfStoredSettings do: [ :eachStoredSetting |
 		self addStoredSetting: eachStoredSetting ].
 	^ aCollectionOfStoredSettings
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StoredSettingsMerger >> initialize [
 	super initialize.
 	storedSettings := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StoredSettingsMerger >> storedSettings [
 	^ storedSettings
 ]

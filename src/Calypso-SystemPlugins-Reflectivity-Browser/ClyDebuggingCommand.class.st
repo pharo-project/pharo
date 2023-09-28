@@ -2,12 +2,14 @@
 I am a base class for commands which add/remove watchpoints, metalinks, breakpoints, and counters into given method or source node
 "
 Class {
-	#name : #ClyDebuggingCommand,
-	#superclass : #SycSourceCodeCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Commands'
+	#name : 'ClyDebuggingCommand',
+	#superclass : 'SycSourceCodeCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDebuggingCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	| node |
@@ -22,18 +24,18 @@ ClyDebuggingCommand class >> canBeExecutedInContext: aBrowserContext [
 							  (node isVariable and: [ node isDefinition ]) not ] ] ] ] ] ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyDebuggingCommand class >> contextMenuOrder [
 	<classAnnotationDependency>
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDebuggingCommand class >> isAbstract [
 	^self = ClyDebuggingCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyDebuggingCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 
@@ -41,7 +43,7 @@ ClyDebuggingCommand class >> methodContextMenuActivation [
 		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyDebuggingCommand class >> methodEditorLeftBarMenuActivation [
 	<classAnnotation>
 
@@ -49,7 +51,7 @@ ClyDebuggingCommand class >> methodEditorLeftBarMenuActivation [
 		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyDebuggingCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

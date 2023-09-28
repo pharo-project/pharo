@@ -1,10 +1,11 @@
 Class {
-	#name : #ClassTraitTest,
-	#superclass : #TraitsTestCase,
-	#category : #'TraitsV2-Tests'
+	#name : 'ClassTraitTest',
+	#superclass : 'TraitsTestCase',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTraitTest >> testChanges [
 	"Test the most important features to ensure that
 	general functionality of class traits are working."
@@ -27,7 +28,7 @@ ClassTraitTest >> testChanges [
 	self assert: (self c2 class protocolOfSelector: #m1ClassSide) name equals: #mycategory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTraitTest >> testConflictsAliasesAndExclusions [
 	"conflict"
 	<ignoreNotImplementedSelectors: #(m2ClassSideAlias1: m2ClassSideAlias2:)>
@@ -47,7 +48,7 @@ ClassTraitTest >> testConflictsAliasesAndExclusions [
 	self assert: (self c2 m2ClassSideAlias2: 13) equals: 13
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTraitTest >> testInitialization [
 	| classTrait |
 	<ignoreNotImplementedSelectors: #(m2ClassSide:)>
@@ -68,7 +69,7 @@ ClassTraitTest >> testInitialization [
 	self assert: (self c2 m2ClassSide: 17) equals: 17
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTraitTest >> testIsClassOrTrait [
 
 	self
@@ -79,7 +80,7 @@ ClassTraitTest >> testIsClassOrTrait [
 		assert: TSortable classTrait isClassOrTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassTraitTest >> testUsers [
 	self assert: self t2 classSide traitUsers size equals: 3.
 	self assert: (self t2 classSide traitUsers includesAll: {self t4 classTrait . self t5 classTrait . self t6 classTrait}).

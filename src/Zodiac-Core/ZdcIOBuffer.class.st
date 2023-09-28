@@ -15,29 +15,30 @@ Data can be added to the free space defined from freeSpaceStart to freeSpaceEnd,
 There can be a gap at my front. Compacting moves data if necessary to make (more) room at the end.
 "
 Class {
-	#name : #ZdcIOBuffer,
-	#superclass : #Object,
+	#name : 'ZdcIOBuffer',
+	#superclass : 'Object',
 	#instVars : [
 		'buffer',
 		'readPointer',
 		'writePointer'
 	],
-	#category : #'Zodiac-Core'
+	#category : 'Zodiac-Core',
+	#package : 'Zodiac-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZdcIOBuffer class >> on: sequenceableCollection [
 	^ (self new)
 		on: sequenceableCollection;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZdcIOBuffer class >> onByteArrayOfSize: size [
 	^ self on: (ZdcByteArrayManager current byteArrayOfSize: size zero: true)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> advanceReadPointer: count [
 	"Advance the read pointer as if count elements were read"
 
@@ -49,7 +50,7 @@ ZdcIOBuffer >> advanceReadPointer: count [
 			self bufferEmptyError ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> advanceWritePointer: count [
 	"Advance the write pointer as if count elements were written"
 
@@ -61,38 +62,38 @@ ZdcIOBuffer >> advanceWritePointer: count [
 			self bufferFullError ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> availableForReading [
 	"How many elements can be read ?"
 
 	^ writePointer - readPointer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> availableForWriting [
 	"How many elements can be written at the end ?"
 
 	^ buffer size - writePointer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> buffer [
 	"Return our underlying buffer"
 
 	^ buffer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcIOBuffer >> bufferEmptyError [
 	^ self error: 'Buffer empty'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcIOBuffer >> bufferFullError [
 	^ self error: 'Buffer full'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> bufferSize [
 	"Return the raw size of the underlying buffer"
 
@@ -100,14 +101,14 @@ ZdcIOBuffer >> bufferSize [
 	^ buffer size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> capacity [
 	"How much room is there both at the front and at the end ?"
 
 	^ self gapAtFront + self availableForWriting
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZdcIOBuffer >> close [
 	buffer ifNotNil: [
 		ZdcByteArrayManager current recycle: buffer.
@@ -115,7 +116,7 @@ ZdcIOBuffer >> close [
 		self reset ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZdcIOBuffer >> compact [
 	"Move data to the front of the buffer to make more room for writing at the end"
 
@@ -128,7 +129,7 @@ ZdcIOBuffer >> compact [
 	writePointer := count
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZdcIOBuffer >> contents [
 	"Return our readable contents"
 
@@ -137,7 +138,7 @@ ZdcIOBuffer >> contents [
 		ifFalse: [ buffer copyFrom: self contentsStart to: self contentsEnd ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> contentsEnd [
 	"Return the current valid contents end index into the buffer (inclusive)"
 
@@ -145,7 +146,7 @@ ZdcIOBuffer >> contentsEnd [
 	^ writePointer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> contentsStart [
 	"Return the current valid contents start index into the buffer (inclusive)"
 
@@ -153,7 +154,7 @@ ZdcIOBuffer >> contentsStart [
 	^ readPointer + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> freeSpaceEnd [
 	"Return the current valid free space end index into the buffer (inclusive)"
 
@@ -161,7 +162,7 @@ ZdcIOBuffer >> freeSpaceEnd [
 	^ buffer size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> freeSpaceStart [
 	"Return the current valid free space start index into the buffer (inclusive)"
 
@@ -169,28 +170,28 @@ ZdcIOBuffer >> freeSpaceStart [
 	^ writePointer + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> gapAtFront [
 	"How many elements fit in the gap at the front ?"
 
 	^ readPointer
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcIOBuffer >> isEmpty [
 	"Can something be read ?"
 
 	^ self availableForReading isZero
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcIOBuffer >> isFull [
 	"Is there room for writing ?"
 
 	^ self availableForWriting isZero
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 ZdcIOBuffer >> next [
 	"Access the next readable element, fail is empty"
 
@@ -202,7 +203,7 @@ ZdcIOBuffer >> next [
 			self bufferEmptyError ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZdcIOBuffer >> next: count putAll: collection startingAt: offset [
 	"Add count elements from collection starting at offset. Fail if there is not enough room"
 
@@ -217,7 +218,7 @@ ZdcIOBuffer >> next: count putAll: collection startingAt: offset [
 	self advanceWritePointer: count
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZdcIOBuffer >> nextPut: anObject [
 	"Add another element. Fail if full"
 
@@ -230,13 +231,13 @@ ZdcIOBuffer >> nextPut: anObject [
 	^ anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZdcIOBuffer >> on: sequenceableCollection [
 	buffer := sequenceableCollection.
 	self reset
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 ZdcIOBuffer >> peek [
 	"Peek the next readable element, fail is empty"
 
@@ -247,7 +248,7 @@ ZdcIOBuffer >> peek [
 			self bufferEmptyError ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZdcIOBuffer >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
@@ -262,7 +263,7 @@ ZdcIOBuffer >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 ZdcIOBuffer >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
 	returning the number of elements read, there could be less elements available."
@@ -278,7 +279,7 @@ ZdcIOBuffer >> readInto: collection startingAt: offset count: requestedCount [
 	^ toRead
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZdcIOBuffer >> reset [
 	"Do a hard reset"
 
@@ -286,7 +287,7 @@ ZdcIOBuffer >> reset [
 	writePointer := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcIOBuffer >> size [
 	"Return the number of actual elements available"
 

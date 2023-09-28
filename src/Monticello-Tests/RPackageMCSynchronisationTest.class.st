@@ -8,81 +8,26 @@ Look for example at:
 and try to uncomment it
 "
 Class {
-	#name : #RPackageMCSynchronisationTest,
-	#superclass : #RPackageTestCase,
+	#name : 'RPackageMCSynchronisationTest',
+	#superclass : 'RPackageTestCase',
 	#instVars : [
 		'emptyOrganizer',
 		'oldAnnouncer'
 	],
-	#category : #'Monticello-Tests-RPackage'
+	#category : 'Monticello-Tests-RPackage',
+	#package : 'Monticello-Tests',
+	#tag : 'RPackage'
 }
 
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addXCategory [
-	self organizer addCategory: 'XXXXX'.
+{ #category : 'accessing' }
+RPackageMCSynchronisationTest >> allWorkingCopies [
+
+	^ MCWorkingCopy allWorkingCopies
 ]
 
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addXMatchCategory [
-	self organizer addCategory: 'XXXXX-YYYY'.
-]
-
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addXYCategory [
-
-	self addXCategory.
-	self addYCategory.
-			
-]
-
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addXYZCategory [
-
-	self addXCategory.
-	self addYCategory.
-	self addZCategory.
-			
-]
-
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addYCategory [
-
-	self organizer addCategory: 'YYYYY'.
-			
-]
-
-{ #category : #utilities }
-RPackageMCSynchronisationTest >> addZCategory [
-
-	self organizer addCategory: 'ZZZZZ'.
-			
-]
-
-{ #category : #setup }
+{ #category : 'setup' }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
-	self organizer environment
-		removeClassNamed: 'NewClass';
-		removeClassNamed: 'RPackageNewStubClass';
-		removeClassNamed: 'RPackageOldStubClass';
-		removeClassNamed: 'Foo';
-		removeClassNamed: 'FooOther';
-		removeClassNamed: 'NewTrait';
-		removeClassNamed: 'ClassInYPackage';
-		removeClassNamed: 'ClassInZPackage'.
-	self organizer
-		removeCategory: 'Zork';
-		removeCategory: 'XXXXX';
-		removeCategory: 'XXXXX-YYYY';
-		removeCategory: 'XXXX';
-		removeCategory: 'YYYYY';
-		removeCategory: 'ZZZZZ';
-		removeCategory: 'FooPackage-Core';
-		removeCategory: 'FooPackage-Other';
-		removeCategory: 'FooPackage';
-		removeCategory: 'OriginalCategory';
-		removeCategory: 'NewCategoryName';
-		removeCategory: 'Y'.
 	#( 'OriginalCategory' 'XXXXX' 'XXXX' 'YYYYY' 'YYYY' 'Yyyyy' 'YyYyY' 'Y' 'ZZZZZ' 'Zzzzz' 'FooPackage-Core' 'FooPackage-Other' 'FooPackage' 'Zork' ) do: [
 		:packageName |
 		self allWorkingCopies
@@ -90,38 +35,62 @@ RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 			ifFound: [ :mCPackage | mCPackage unregister ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageMCSynchronisationTest >> createMethodNamed: methodName inClass: aClass inCategory: aCategoryName [ 
 
 	^ aClass compile: (methodName, ' ^nil') classified: aCategoryName.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageMCSynchronisationTest >> createMethodNamed: methodName inClassSideOfClass: aClass inCategory: aCategoryName [ 
 
 	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageMCSynchronisationTest >> emptyOrganizer [ 
 
 	^ emptyOrganizer
 ]
 
-{ #category : #'announcer handling' }
+{ #category : 'utilities' }
+RPackageMCSynchronisationTest >> ensureTagYinX [
+
+	^ self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
+]
+
+{ #category : 'utilities' }
+RPackageMCSynchronisationTest >> ensureXPackage [
+
+	^ self organizer ensurePackage: #XXXXX
+]
+
+{ #category : 'utilities' }
+RPackageMCSynchronisationTest >> ensureYPackage [
+
+	^ self organizer ensurePackage: #YYYYY
+]
+
+{ #category : 'utilities' }
+RPackageMCSynchronisationTest >> ensureZPackage [
+
+	^ self organizer ensurePackage: #ZZZZZ
+]
+
+{ #category : 'announcer handling' }
 RPackageMCSynchronisationTest >> initializeAnnouncers [
 
 	oldAnnouncer := MCWorkingCopy announcer.
 	MCWorkingCopy announcer: SystemAnnouncer uniqueInstance
 ]
 
-{ #category : #'announcer handling' }
+{ #category : 'announcer handling' }
 RPackageMCSynchronisationTest >> restoreAnnouncers [
 
 	MCWorkingCopy announcer: oldAnnouncer
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageMCSynchronisationTest >> runCase [
 
 	[
@@ -129,20 +98,18 @@ RPackageMCSynchronisationTest >> runCase [
 	super runCase ] ensure: [ self restoreAnnouncers ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageMCSynchronisationTest >> setUp [
 
 	super setUp.
 
-	emptyOrganizer := self organizer
-		                  debuggingName: 'MCSynchronisation Package Organizer';
-		                  yourself.
+	emptyOrganizer := self organizer.
 	emptyOrganizer ensurePackage: 'as yet unclassified'.
 
 	Author fullName ifNil: [ Author fullName: 'Tester' ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RPackageMCSynchronisationTest >> tearDown [
 
 	MCWorkingCopy removeDependent: self emptyOrganizer.
@@ -151,42 +118,13 @@ RPackageMCSynchronisationTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
-RPackageMCSynchronisationTest >> testCategoryMatching [
-
-	self assert: ('Compression-Archives' isCategoryOf: 'Compression').
-	self deny: ('Compression' isCategoryOf: 'Compression-Archives').
-	self assert: ('Compression' isCategoryOf: 'Compression').
-	self assert: ('Compression-Arh' isCategoryOf: 'Compression').
-	self deny: ('XXXX' isCategoryOf: 'Compression-Archives')
-]
-
-{ #category : #tests }
-RPackageMCSynchronisationTest >> testIsDefinedAsPackageOrSubPackageInMC [
-	"test whether a given category is defined as a MC package or whether it is defined as top part of package"
-	
-	self assert: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Compression').
-	self deny: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Compression-Archives').
-	"Indeed compression-archives is a category but not a MC package"
-	
-	self assert: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Collections').
-	"#Collection is not defined as a package but as a package #'Collections-Unordered'"
-	self assert: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Collections-Unordered').
-	self deny: (self organizer isDefinedAsPackageOrSubPackageInMC: #'Collections-Unordered-Test').
-]
-
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodByMovingInSameExtensionCategory [
 
-	| ann class firstPackage secondPackage |
-	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
-	secondPackage := self organizer  packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	| ann class |
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
+
+	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
@@ -197,18 +135,13 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 	self assert: ann isNil
 ]
 
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicCategories [
 
-	| ann class firstPackage secondPackage |
-	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
-	secondPackage := self organizer  packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	| ann class |
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
+
+	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic'.
 
@@ -219,26 +152,23 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 	self assert: ann isNil
 ]
 
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromClassicCategoryToExtensionCategory [
 
-	| ann class firstPackage secondPackage |
-	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
-	secondPackage := self organizer  packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	| ann class xPackage yPackage |
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
+
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	class := self newClassNamed: 'NewClass' in: xPackage.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
 
 	class classify: #stubMethod under: '*yyyyy'.
 
-	self assert: ann notNil.
+	self assert: ann isNotNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
-	self assert: ann oldPackage equals: firstPackage.
-	self assert: ann newPackage equals: secondPackage.
+	self assert: ann oldPackage equals: xPackage.
+	self assert: ann newPackage equals: yPackage.
 	ann := nil.
 
 	class classify: #stubMethod under: '*yyyyy-suncategory'.
@@ -246,48 +176,42 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	self assert: ann isNil
 ]
 
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromDifferentExtensionCategories [
 
-	| ann class firstPackage secondPackage thirdPackage |
-	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYZCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
-	secondPackage := self organizer packageNamed: #YYYYY.
-	thirdPackage := self organizer packageNamed: #ZZZZZ.
+	| ann class yPackage zPackage |
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
 
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	self ensureXPackage.
+	yPackage := self ensureYPackage.
+	zPackage := self ensureZPackage.
+
+	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
 	class classify: #stubMethod under: '*zzzzz'.
 
-	self assert: ann notNil.
+	self assert: ann isNotNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
-	self assert: ann oldPackage equals: secondPackage.
-	self assert: ann newPackage equals: thirdPackage
+	self assert: ann oldPackage equals: yPackage.
+	self assert: ann newPackage equals: zPackage
 ]
 
-{ #category : #'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple RPackage test case' }
 RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromExtensionCategoryToClassicCategory [
 
-	| ann class firstPackage secondPackage |
-	ann := nil.
-	SystemAnnouncer uniqueInstance
-		when: MethodRepackaged do: [ :a | ann := a ] for: self.
-	
-	self addXYCategory. 
-	firstPackage := self organizer  packageNamed: #XXXXX.
-	secondPackage := self organizer  packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	| ann class xPackage yPackage |
+	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
+
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	class := self newClassNamed: 'NewClass' in: xPackage.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
 
 	class classify: #stubMethod under: 'classic one'.
 
-	self assert: ann notNil.
+	self assert: ann isNotNil.
 	self assert: ann methodRepackaged selector equals: #stubMethod.
-	self assert: ann oldPackage equals: secondPackage.
-	self assert: ann newPackage equals: firstPackage
+	self assert: ann oldPackage equals: yPackage.
+	self assert: ann newPackage equals: xPackage
 ]

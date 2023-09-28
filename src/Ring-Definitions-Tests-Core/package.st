@@ -1,1 +1,1 @@
-Package { #name : #'Ring-Definitions-Tests-Core' }
+Package { #name : 'Ring-Definitions-Tests-Core' }

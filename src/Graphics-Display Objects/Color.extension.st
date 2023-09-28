@@ -1,6 +1,6 @@
-Extension { #name : #Color }
+Extension { #name : 'Color' }
 
-{ #category : #'*Graphics-Display Objects' }
+{ #category : '*Graphics-Display Objects' }
 Color class >> colorPaletteForDepth: depth extent: chartExtent [
 	"Display a palette of colors sorted horizontally by hue and vertically by lightness. Useful for eyeballing the color gamut of the display, or for choosing a color interactively."
 	"Note: It is slow to build this palette, so it should be cached for quick access."

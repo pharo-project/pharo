@@ -1,6 +1,6 @@
-Extension { #name : #MorphTreeTransformMorph }
+Extension { #name : 'MorphTreeTransformMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MorphTreeTransformMorph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 	| clip |
 	clip := self clippingBounds intersect: anAthensCanvas clipRect.

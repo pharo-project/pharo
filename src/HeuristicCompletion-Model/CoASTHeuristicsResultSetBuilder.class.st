@@ -7,18 +7,20 @@ Then I do a double dispatch on the current node and from it
 2) I extract the currently typed text and set is as initial filter
 "
 Class {
-	#name : #CoASTHeuristicsResultSetBuilder,
-	#superclass : #CoASTResultSetBuilder,
+	#name : 'CoASTHeuristicsResultSetBuilder',
+	#superclass : 'CoASTResultSetBuilder',
 	#instVars : [
 		'messageHeuristic',
 		'methodNodeHeuristic',
 		'variablesHeuristic',
 		'symbolsHeuristic'
 	],
-	#category : #'HeuristicCompletion-Model-SystemIntegration'
+	#category : 'HeuristicCompletion-Model-SystemIntegration',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'SystemIntegration'
 }
 
-{ #category : #heuristics }
+{ #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> messageHeuristic [
 
 	^ messageHeuristic ifNil: [ messageHeuristic := self newHeuristicBuilder
@@ -34,7 +36,7 @@ CoASTHeuristicsResultSetBuilder >> messageHeuristic [
 		build ]
 ]
 
-{ #category : #heuristics }
+{ #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic [
 	^ methodNodeHeuristic ifNil: [
 		methodNodeHeuristic := self newHeuristicBuilder
@@ -43,19 +45,19 @@ CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic [
 		build ]
 ]
 
-{ #category : #heuristics }
+{ #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> newHeuristicBuilder [
 	^ CoHeuristicBuilder new
 ]
 
-{ #category : #heuristics }
+{ #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> symbolsHeuristic [
 	^ symbolsHeuristic ifNil: [ symbolsHeuristic := self newHeuristicBuilder
 		add: CoLiteralSymbolHeuristic new;
 		build ]
 ]
 
-{ #category : #heuristics }
+{ #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 	^ variablesHeuristic ifNil: [ variablesHeuristic := self newHeuristicBuilder
 		add: CoLocalScopeVariablesHeuristic new;
@@ -65,7 +67,7 @@ CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 		build ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoASTHeuristicsResultSetBuilder >> visitLiteralValueNode: aNode [
 
 	completionContext completionToken ifEmpty: [ ^ super visitLiteralValueNode: aNode ].
@@ -75,7 +77,7 @@ CoASTHeuristicsResultSetBuilder >> visitLiteralValueNode: aNode [
 		usingHeuristicAvoidingRepetitions: self symbolsHeuristic
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [ 
 
 	completionContext completionToken ifEmpty: [ ^ super visitMessageNode: aRBMessageNode ].
@@ -85,7 +87,7 @@ CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [
 		usingHeuristicAvoidingRepetitions: self messageHeuristic
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoASTHeuristicsResultSetBuilder >> visitMethodNode: aRBMethodNode [
 
 	completionContext completionToken ifEmpty: [ ^ super visitMethodNode: aRBMethodNode ].
@@ -95,7 +97,7 @@ CoASTHeuristicsResultSetBuilder >> visitMethodNode: aRBMethodNode [
 		usingHeuristicAvoidingRepetitions: self methodNodeHeuristic
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
 
 	| offset |
@@ -120,7 +122,7 @@ CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
 	^ super visitValueNode: aNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoASTHeuristicsResultSetBuilder >> visitVariableNode: aRBVariableNode [
 
 	completionContext completionToken ifEmpty: [ ^ super visitVariableNode: aRBVariableNode ].

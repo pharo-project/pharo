@@ -3,51 +3,52 @@ I am a font for special purpose like password or fallback.
 I can show same form whenever someone requests any character.
 "
 Class {
-	#name : #FixedFaceFont,
-	#superclass : #AbstractFont,
+	#name : 'FixedFaceFont',
+	#superclass : 'AbstractFont',
 	#instVars : [
 		'baseFont',
 		'substitutionCharacter'
 	],
-	#category : #'Graphics-Fonts'
+	#category : 'Graphics-Fonts',
+	#package : 'Graphics-Fonts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> ascent [
 	^baseFont ascent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> baseFont [
 	^baseFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> baseFont: aFont [
 	baseFont := aFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> baseKern [
 	^baseFont baseKern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> characterFormAt: character [
 	^ baseFont characterFormAt: substitutionCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> descent [
 	^baseFont descent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> descentKern [
 	^baseFont descentKern
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	| size |
 	size := stopIndex - startIndex + 1.
@@ -62,107 +63,80 @@ FixedFaceFont >> displayString: aString on: aDisplayContext from: startIndex to:
 		scale: scale
 ]
 
-{ #category : #displaying }
-FixedFaceFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta from: fromFont [
-	| destPoint |
-	destPoint := self
-				displayString: aString
-				on: aBitBlt
-				from: startIndex
-				to: stopIndex
-				at: aPoint
-				kern: kernDelta.
-	^ Array with: stopIndex + 1 with: destPoint
-]
-
-{ #category : #displaying }
-FixedFaceFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta from: fromFont baselineY: baselineY [
-	| destPoint |
-	destPoint := self
-				displayString: aString
-				on: aBitBlt
-				from: startIndex
-				to: stopIndex
-				at: aPoint
-				kern: kernDelta
-				baselineY: baselineY.
-	^ Array with: stopIndex + 1 with: destPoint
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> emphasized: emph [
 	^self class new baseFont: (baseFont emphasized: emph)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FixedFaceFont >> errorFont [
 	substitutionCharacter := $?
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> familyName [
 	^baseFont familyName, '-pw'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> fontSize: aNumber [
 	self baseFont: (StrikeFont familyName: baseFont familyName size: aNumber) copy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FixedFaceFont >> glyphInfoOf: aCharacter into: glyphInfoArray [
 
 	^ baseFont glyphInfoOf: substitutionCharacter into: glyphInfoArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> height [
 	^baseFont height
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FixedFaceFont >> initialize [
 	super initialize.
 	baseFont := TextStyle defaultFont.
 	self passwordFont
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 FixedFaceFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	^baseFont installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> lineGrid [
 	^baseFont lineGrid
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> maxAscii [
 	^ SmallInteger maxVal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> passwordCharacter [
 	^$*
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FixedFaceFont >> passwordFont [
 	substitutionCharacter := $*
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedFaceFont >> pointSize [
 	^baseFont pointSize
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 FixedFaceFont >> releaseCachedState [
 	baseFont releaseCachedState
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FixedFaceFont >> widthOf: aCharacter [
 	^ baseFont widthOf: substitutionCharacter
 ]

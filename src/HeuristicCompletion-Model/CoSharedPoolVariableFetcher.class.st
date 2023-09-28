@@ -2,12 +2,14 @@
 I am a fetcher looking for the variables defined in the shared pools of the current class
 "
 Class {
-	#name : #CoSharedPoolVariableFetcher,
-	#superclass : #CoClassBasedFetcher,
-	#category : #'HeuristicCompletion-Model-Fetchers'
+	#name : 'CoSharedPoolVariableFetcher',
+	#superclass : 'CoClassBasedFetcher',
+	#category : 'HeuristicCompletion-Model-Fetchers',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Fetchers'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoSharedPoolVariableFetcher >> entriesDo: aBlock [
 
 	self completionClass instanceSide sharedPools do: [ :e |

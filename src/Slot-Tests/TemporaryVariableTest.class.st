@@ -2,12 +2,14 @@
 Tests for TemporaryVariable 
 "
 Class {
-	#name : #TemporaryVariableTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#name : 'TemporaryVariableTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testDefiningNode [
 	"test for normal temps, copied and tempvector"
 	| ast tempsNodes tempDefintions  tempUses |
@@ -24,21 +26,21 @@ TemporaryVariableTest >> testDefiningNode [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testHasTemporaryVariablesBlock [
 	| block |
 	block := [ | b | b := 2. b +2  ].
 	self assert: (block hasTemporaryVariableNamed: #b)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testHasTemporaryVariablesMethod [
 	| method |
 	method := self class >> #testTemporaryVariablesMethod.
 	self assert: (method hasTemporaryVariableNamed: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testIsReferenced [
 	| method notReferenced |
 	"The temp notReferenced is not used as we test exactly that here"
@@ -47,7 +49,7 @@ TemporaryVariableTest >> testIsReferenced [
 	self deny: method temporaryVariables second isReferenced
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 TemporaryVariableTest >> testPropertyAtPut [
 
 	| testValue temp |
@@ -64,7 +66,7 @@ TemporaryVariableTest >> testPropertyAtPut [
 	self assert: temp properties isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testReadNodes [
 	| method |
 	"On the level of CompiledMethod, args include temps. This needs to be fixed"
@@ -72,7 +74,7 @@ TemporaryVariableTest >> testReadNodes [
 	self assert: (method lookupVar: #aBlock) astNodes notEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	| tempVar |
 	tempVar := thisContext lookupVar: #tempVar.
@@ -80,7 +82,7 @@ TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	self assert: (tempVar readInContext: thisContext) equals: tempVar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testScope [
 	| method variable |
 	method := self class >> #testTemporaryVariablesMethod.
@@ -90,14 +92,14 @@ TemporaryVariableTest >> testScope [
 	self assert: (variable scope lookupVar: variable name) equals: variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testTemporaryVariablesBlock [
 	| block |
 	block := [ | b | b +2  ].
 	self assert: block temporaryVariables first name equals: #b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testTemporaryVariablesMethod [
 	| method |
 	method := self class >> #testTemporaryVariablesMethod.
@@ -110,7 +112,7 @@ TemporaryVariableTest >> testTemporaryVariablesMethod [
 	self assert: (method lookupVar: #aBlock) class equals: ArgumentVariable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TemporaryVariableTest >> testWriteTemporaryVariablesMethod [
 	| tempVar |
 	tempVar := thisContext lookupVar: #tempVar.

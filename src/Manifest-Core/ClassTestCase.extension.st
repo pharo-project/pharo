@@ -1,6 +1,6 @@
-Extension { #name : #ClassTestCase }
+Extension { #name : 'ClassTestCase' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 ClassTestCase >> assertValidLintRule: aLintRule [
 	| runner |
 	runner := ReSmalllintChecker new.
@@ -13,7 +13,7 @@ ClassTestCase >> assertValidLintRule: aLintRule [
 		description: [ aLintRule rationale ]
 ]
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 ClassTestCase >> targetClassEnvironment [
 	^RBClassEnvironment class: self targetClass
 ]

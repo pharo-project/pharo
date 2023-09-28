@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfEmergencyDebugger,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfEmergencyDebugger
+	#name : 'BaselineOfEmergencyDebugger',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfEmergencyDebugger',
+	#package : 'BaselineOfEmergencyDebugger'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfEmergencyDebugger >> baseline: spec [
 	<baseline> 
 	

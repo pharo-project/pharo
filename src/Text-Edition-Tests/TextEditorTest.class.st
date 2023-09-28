@@ -2,21 +2,23 @@
 Unit test for text editor 
 "
 Class {
-	#name : #TextEditorTest,
-	#superclass : #TestCase,
+	#name : 'TextEditorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'editor'
 	],
-	#category : #'Text-Edition-Tests-Editor'
+	#category : 'Text-Edition-Tests-Editor',
+	#package : 'Text-Edition-Tests',
+	#tag : 'Editor'
 }
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 TextEditorTest >> createEditor [
 
 	^TextMorph new editor
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 TextEditorTest >> keyboardEvent [
 	| event |
 	event := KeyboardEvent new.
@@ -31,25 +33,25 @@ TextEditorTest >> keyboardEvent [
 	^ event
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TextEditorTest >> setUp [
 	super setUp.
 	editor := self createEditor
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TextEditorTest >> tearDown [
 	editor := nil.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEditorTest >> testCursorEnd [
 
 	editor cursorEnd: self keyboardEvent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEditorTest >> testSetSearchString [
 
 	editor setSearchString

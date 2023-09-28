@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*Epicea' }
+{ #category : '*Epicea' }
 Class >> asEpiceaRingDefinition [
 
 	| ring |

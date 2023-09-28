@@ -1,10 +1,12 @@
 Class {
-	#name : #MCSerializationTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-IO'
+	#name : 'MCSerializationTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-IO',
+	#package : 'Monticello-Tests',
+	#tag : 'IO'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSerializationTest >> assertDependenciesMatchWith: writerClass [
 	| stream readerClass expected actual |
 	readerClass := writerClass readerClass.
@@ -15,12 +17,12 @@ MCSerializationTest >> assertDependenciesMatchWith: writerClass [
 	self assert: actual equals: expected dependencies.
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSerializationTest >> assertExtensionProvidedBy: aClass [
 	aClass readerClass extension
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSerializationTest >> assertSnapshotsMatchWith: writerClass [
 	| readerClass expected stream actual |
 	readerClass := writerClass readerClass.
@@ -31,7 +33,7 @@ MCSerializationTest >> assertSnapshotsMatchWith: writerClass [
 	self assertSnapshot: actual matches: expected.
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSerializationTest >> assertVersionInfosMatchWith: writerClass [
 	| stream readerClass expected actual |
 	readerClass := writerClass readerClass.
@@ -42,7 +44,7 @@ MCSerializationTest >> assertVersionInfosMatchWith: writerClass [
 	self assert: actual equals: expected info.
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSerializationTest >> assertVersionsMatchWith: writerClass [
 	| stream readerClass expected actual |
 	readerClass := writerClass readerClass.
@@ -53,7 +55,7 @@ MCSerializationTest >> assertVersionsMatchWith: writerClass [
 	self assertVersion: actual matches: expected.
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCSerializationTest >> mockDiffyVersion [
 	| repos workingCopy base next |
 	repos := MCDictionaryRepository new.
@@ -67,7 +69,7 @@ MCSerializationTest >> mockDiffyVersion [
 	^ next asDiffAgainst: base	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSerializationTest >> testMcdSerialization [
 	| stream expected actual |
 	expected := self mockDiffyVersion.
@@ -77,7 +79,7 @@ MCSerializationTest >> testMcdSerialization [
 	self assertVersion: actual matches: expected.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSerializationTest >> testMczSerialization [
 	self assertVersionsMatchWith: MCMczWriter.
 	self assertExtensionProvidedBy: MCMczWriter.
@@ -85,7 +87,7 @@ MCSerializationTest >> testMczSerialization [
 	self assertDependenciesMatchWith: MCMczWriter.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSerializationTest >> testStSerialization [
 	self assertSnapshotsMatchWith: MCStWriter.
 ]

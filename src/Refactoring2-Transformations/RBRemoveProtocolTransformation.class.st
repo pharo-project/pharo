@@ -15,15 +15,17 @@ Preconditions:
 - No methods are categorized with this protocol.
 "
 Class {
-	#name : #RBRemoveProtocolTransformation,
-	#superclass : #RBClassTransformation,
+	#name : 'RBRemoveProtocolTransformation',
+	#superclass : 'RBClassTransformation',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveProtocolTransformation class >> model: aRBModel protocol: aString inClass: aClassName [
 
 	^ self new
@@ -33,7 +35,7 @@ RBRemoveProtocolTransformation class >> model: aRBModel protocol: aString inClas
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveProtocolTransformation class >> protocol: aString inClass: aClassName [
 
 	^ self new
@@ -42,7 +44,7 @@ RBRemoveProtocolTransformation class >> protocol: aString inClass: aClassName [
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveProtocolTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
@@ -57,7 +59,7 @@ RBRemoveProtocolTransformation >> applicabilityPreconditions [
 				   , ' is not empty and it cannot be removed')
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveProtocolTransformation >> classExist [
 
 	^ RBCondition
@@ -65,20 +67,20 @@ RBRemoveProtocolTransformation >> classExist [
 		  errorString: 'Class named ' , className , ' does not exist' 
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveProtocolTransformation >> privateTransform [
 
 	self definingClass removeProtocolNamed: protocol
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveProtocolTransformation >> protocol: aString inClass: aClassName [
 
 	self className: aClassName.
 	protocol := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -4,15 +4,17 @@ Trait named: ... call.
 At the moment there is no support for the traitcomposition attribute.
 "
 Class {
-	#name : #RBAddTraitChange,
-	#superclass : #RBRefactoryDefinitionChange,
+	#name : 'RBAddTraitChange',
+	#superclass : 'RBRefactoryDefinitionChange',
 	#instVars : [
 		'category'
 	],
-	#category : #'Refactoring-Changes-Changes-Classes'
+	#category : 'Refactoring-Changes-Changes-Classes',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Classes'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddTraitChange class >> definitionPatterns [
 
 	^ #('Trait named: `#traitName uses: `@traitComposition package: `#package' 'Trait named: `#traitName uses: `@traitComposition slots: `@slotDefinition package: `#package'
@@ -30,7 +32,7 @@ RBAddTraitChange class >> definitionPatterns [
 	 )
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBAddTraitChange >> asUndoOperation [
 
 	| trait |
@@ -40,24 +42,24 @@ RBAddTraitChange >> asUndoOperation [
 		  ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddTraitChange >> category [
 
 	^ category
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddTraitChange >> definitionClass [
 
 	^ Trait
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBAddTraitChange >> fillOutDefinition: aDictionary [
 	"What a bad method name!!! This has nothing to do with it. It fills up a domain object out of the dictionary."
 	"Pay attention that the variables used as key in the dictionary correspond to the pattern variables defined
 	in the expressions defined in the definitionPatterns method!"
 
 	className := (aDictionary at: '`#traitName') asSymbol.
-	category := (aDictionary at: '`#package' ifAbsent: [ #Unclassified ]) asSymbol
+	category := (aDictionary at: '`#package' ifAbsent: [ Class unclassifiedCategory ]) asSymbol
 ]

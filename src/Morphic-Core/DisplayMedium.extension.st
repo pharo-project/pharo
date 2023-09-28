@@ -1,6 +1,6 @@
-Extension { #name : #DisplayMedium }
+Extension { #name : 'DisplayMedium' }
 
-{ #category : #'*Morphic-Core' }
+{ #category : '*Morphic-Core' }
 DisplayMedium >> border: aRectangle width: borderWidth [
 	"Paint a border whose rectangular area is defined by aRectangle. The
 	width of the border of each side is borderWidth. Uses theme borderColor for

@@ -1,17 +1,17 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Behavior >> browse [
 
 	^  Smalltalk tools browser openOnClass: self
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Behavior >> browseHierarchy [
 	self systemNavigation browseHierarchy: self
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Behavior >> inspectAllInstances [
 	"Inspect all instances of the receiver."
 
@@ -26,7 +26,7 @@ instances of ', self name].
 	all asArray inspectWithLabel: (prefix, ' of ', self name)
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Behavior >> inspectSubInstances [
 	"Inspect all instances of the receiver and all its subclasses.  CAUTION - don't do this for something as generic as Object!"
 

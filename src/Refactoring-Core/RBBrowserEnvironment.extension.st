@@ -1,6 +1,6 @@
-Extension { #name : #RBBrowserEnvironment }
+Extension { #name : 'RBBrowserEnvironment' }
 
-{ #category : #'*Refactoring-Core' }
+{ #category : '*Refactoring-Core' }
 RBBrowserEnvironment >> classesInPackages: aColl do: aBlock [
 
 	self systemDictionaryClassesDo: [ :aClass |

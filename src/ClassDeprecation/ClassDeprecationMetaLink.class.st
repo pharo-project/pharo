@@ -2,15 +2,16 @@
 I am a meta-link that is transforms a reference to a deprecated class to its replacement for subsequent calls to the AST's method.
 "
 Class {
-	#name : #ClassDeprecationMetaLink,
-	#superclass : #MetaLink,
+	#name : 'ClassDeprecationMetaLink',
+	#superclass : 'MetaLink',
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #ClassDeprecation
+	#category : 'ClassDeprecation',
+	#package : 'ClassDeprecation'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ClassDeprecationMetaLink class >> disable [
 	"Disable deprecation transformations if not already disabled. Uninstall all installed meta-links."
 
@@ -22,7 +23,7 @@ ClassDeprecationMetaLink class >> disable [
 	self allInstancesDo: #uninstall
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ClassDeprecationMetaLink class >> enable [
 	"Enables deprecation transformations if not already enabled. Installs all meta-links required to perform transformations on execution on already deprecated transformable classes."
 
@@ -40,24 +41,24 @@ ClassDeprecationMetaLink class >> enable [
 		thenDo: #installDeprecationTransformMetaLinks
 ]
 
-{ #category : #'brick-interactable-actions' }
+{ #category : 'brick-interactable-actions' }
 ClassDeprecationMetaLink class >> enable: aBoolean [
 	aBoolean
 		ifTrue: [ self enable ]
 		ifFalse: [ self disable ]
 ]
 
-{ #category : #'brick-interactable-actions' }
+{ #category : 'brick-interactable-actions' }
 ClassDeprecationMetaLink class >> enabled [
 	^ enabled
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ClassDeprecationMetaLink class >> initialize [
 	enabled := false
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ClassDeprecationMetaLink class >> onMethodAddedOrModified: anEvent [
 	"When a method is added or modified, we have to handle two cases:
 
@@ -75,7 +76,7 @@ ii) The method #hasDeprecationTransformableReferences and is not #isDeprecated. 
 				ifTrue: [ method installDeprecationTransformMetaLinks ] ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ClassDeprecationMetaLink class >> onMethodRemoved: anEvent [
 	"If the removed method is the #isDeprecationTransformableMethod, we remove all existing meta-link for deprecation transforms, as they are no longer valid."
 
@@ -86,7 +87,7 @@ ClassDeprecationMetaLink class >> onMethodRemoved: anEvent [
 				uninstallDeprecationTransformMetaLinks ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClassDeprecationMetaLink class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #classDeprecation)
@@ -100,7 +101,7 @@ ClassDeprecationMetaLink class >> settingsOn: aBuilder [
 		parent: #tools
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 ClassDeprecationMetaLink >> deprecationTransform: aNode [
 	"Transforms the deprecated node with its replacement and compiles the method to materialize the changes."
 
@@ -115,7 +116,7 @@ ClassDeprecationMetaLink >> deprecationTransform: aNode [
 				classified: method protocol ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassDeprecationMetaLink >> initialize [
 	super initialize.
 	self

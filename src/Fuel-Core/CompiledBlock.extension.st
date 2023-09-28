@@ -1,6 +1,6 @@
-Extension { #name : #CompiledBlock }
+Extension { #name : 'CompiledBlock' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 CompiledBlock >> fuelAccept: aGeneralMapper [
 	^ aGeneralMapper visitCompiledBlock: self
 ]

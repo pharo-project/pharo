@@ -1,15 +1,17 @@
 Trait {
-	#name : #TSequenceableTruncatedToSize,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TSequenceableTruncatedToSize',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSequenceableTruncatedToSize >> collectionWith5Elements [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TSequenceableTruncatedToSize >> testTruncatedToSizeLargerThanCollection [
 
 	| collection truncatedCollection |
@@ -18,7 +20,7 @@ TSequenceableTruncatedToSize >> testTruncatedToSizeLargerThanCollection [
 	self assert: truncatedCollection equals: collection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TSequenceableTruncatedToSize >> testTruncatedToSizeResultHasCorrectElements [
 
 	| collection truncatedCollection smallSize |
@@ -31,7 +33,7 @@ TSequenceableTruncatedToSize >> testTruncatedToSizeResultHasCorrectElements [
 		self assert: (truncatedCollection at: i) equals: (collection at: i) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TSequenceableTruncatedToSize >> testTruncatedToSizeResultHasCorrectSize [
 
 	| collection truncatedCollection |
@@ -40,7 +42,7 @@ TSequenceableTruncatedToSize >> testTruncatedToSizeResultHasCorrectSize [
 	self assert: truncatedCollection size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TSequenceableTruncatedToSize >> testTruncatedToSizeSameAsCollection [
 
 	| collection truncatedCollection |

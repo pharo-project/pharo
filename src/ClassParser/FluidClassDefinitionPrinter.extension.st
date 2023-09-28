@@ -1,6 +1,6 @@
-Extension { #name : #FluidClassDefinitionPrinter }
+Extension { #name : 'FluidClassDefinitionPrinter' }
 
-{ #category : #'*ClassParser' }
+{ #category : '*ClassParser' }
 FluidClassDefinitionPrinter >> classDefinitionParserClass [
 
 	^ CDFluidClassDefinitionParser

@@ -2,12 +2,14 @@
 This test case collects examples for block uses that require full block closures.
 "
 Class {
-	#name : #BlockClosuresTestCase,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Methods'
+	#name : 'BlockClosuresTestCase',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Methods',
+	#package : 'Kernel-Tests',
+	#tag : 'Methods'
 }
 
-{ #category : #'jensen device examples' }
+{ #category : 'jensen device examples' }
 BlockClosuresTestCase >> comment [
 
   "  The Jensen device was something very sophisticated in the days of Algol 60.
@@ -42,13 +44,13 @@ The Jensen device was something for clever minds. I remember an artice written b
  "
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> constructCannotReturnBlockInDeadFrame [
 
 	^ [:arg | ^arg]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> constructFibonacciBlockInDeadFrame [
 
 	| fib |
@@ -59,7 +61,7 @@ BlockClosuresTestCase >> constructFibonacciBlockInDeadFrame [
 	^fib
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> constructFibonacciBlockWithBlockArgumentInDeadFrame [
 
 	^ [:val :blk |
@@ -68,7 +70,7 @@ BlockClosuresTestCase >> constructFibonacciBlockWithBlockArgumentInDeadFrame [
 		    ifFalse: [(blk value: (val - 1) value: blk) + (blk value: (val - 2) value: blk)]]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> constructSharedClosureEnvironmentInDeadFrame [
 
 	|array result|
@@ -79,7 +81,7 @@ BlockClosuresTestCase >> constructSharedClosureEnvironmentInDeadFrame [
 	^array
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> continuationExample1: aCollection [
 
   " see comment below.
@@ -129,7 +131,7 @@ To collect all elements of a value with continuation stream,
 use the collector block. "
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> continuationExample2: aCollection [
 
   " see comment in method continuationExample1:.
@@ -175,7 +177,7 @@ BlockClosuresTestCase >> continuationExample2: aCollection [
                                            value: [:x | x * x])
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> continuationExample3: aCollection [
 
   " see comment in method continuationExample1:.
@@ -224,7 +226,7 @@ BlockClosuresTestCase >> continuationExample3: aCollection [
                                             value: [:x | x - 10])
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> example1: anInteger [
 
   " this example is very simple. A named block recursively computes the factorial.
@@ -241,7 +243,7 @@ BlockClosuresTestCase >> example1: anInteger [
   ^ factorial value: anInteger
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> example2: anInteger [
 
   " BlockClosuresTestCase new example2: 6"
@@ -273,7 +275,7 @@ BlockClosuresTestCase >> example2: anInteger [
   ^trace
 ]
 
-{ #category : #'jensen device examples' }
+{ #category : 'jensen device examples' }
 BlockClosuresTestCase >> gpsExample1: aCollection [
 
    " BlockClosuresTestCase new gpsExample1: (1 to: 100) asArray"
@@ -299,7 +301,7 @@ BlockClosuresTestCase >> gpsExample1: aCollection [
                     with: [ s])
 ]
 
-{ #category : #'jensen device examples' }
+{ #category : 'jensen device examples' }
 BlockClosuresTestCase >> gpsExample2: aCollection [
 
    " BlockClosuresTestCase new
@@ -335,7 +337,7 @@ BlockClosuresTestCase >> gpsExample2: aCollection [
                   with: [ aCollection size])
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 BlockClosuresTestCase >> nestedLoopsExample: arrays [
 
  " A while ago, Hans Baveco asked for a way to
@@ -382,7 +384,7 @@ block :=
   ^result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testCannotReturn [
 
 	| blk |
@@ -392,33 +394,33 @@ BlockClosuresTestCase >> testCannotReturn [
 		raise: Exception
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testContinuationExample1 [
 	| array |
 	array := (1 to: 20) asOrderedCollection.
 	self assert: (self continuationExample1: array) equals: array
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testContinuationExample2 [
 	| array |
 	array := (1 to: 20) asOrderedCollection.
 	self assert: (self continuationExample2: array) equals: (array collect: [ :x | x * x ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testContinuationExample3 [
 	| array |
 	array := (1 to: 20) asOrderedCollection.
 	self assert: (self continuationExample3: array) equals: (array collect: [ :x | x * x - 10 ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testExample2 [
 	self assert: (self example2: 5) equals: (1 to: 5) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testGpsExample1 [
 	| result array |
 	array := (1 to: 100) asArray.
@@ -426,7 +428,7 @@ BlockClosuresTestCase >> testGpsExample1 [
 	self assert: (self gpsExample1: array) equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testGpsExample2 [
 	| result array |
 	"  integer matrix elements should be used for the purpose of this test. "
@@ -435,7 +437,7 @@ BlockClosuresTestCase >> testGpsExample2 [
 	self assert: (self gpsExample2: array) equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testNestedLoopsExample1 [
 	| arrays result |
 	arrays := OrderedCollection new.
@@ -448,7 +450,7 @@ BlockClosuresTestCase >> testNestedLoopsExample1 [
 	self assert: (self nestedLoopsExample: arrays) equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testReentrantBlock [
 	| fib |
 	fib := [ :val |
@@ -464,7 +466,7 @@ BlockClosuresTestCase >> testReentrantBlock [
 	self assert: (fib value: 6) equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testReentrantBlockOldEnvironment [
 	| fib |
 	fib := self constructFibonacciBlockInDeadFrame.
@@ -477,7 +479,7 @@ BlockClosuresTestCase >> testReentrantBlockOldEnvironment [
 	self assert: (fib value: 6) equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testReentrantBlockOldEnvironmentWithBlockArguement [
 	| fib |
 	fib := self constructFibonacciBlockWithBlockArgumentInDeadFrame.
@@ -490,7 +492,7 @@ BlockClosuresTestCase >> testReentrantBlockOldEnvironmentWithBlockArguement [
 	self assert: (fib value: 6 value: fib) equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosuresTestCase >> testSharedClosureEnvironment [
 	| blockArray |
 	blockArray := self constructSharedClosureEnvironmentInDeadFrame.

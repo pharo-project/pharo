@@ -2,14 +2,16 @@
 I test the serialization of classes as *global* objects, i.e. the classes has to be present in the image at materialization time.
 "
 Class {
-	#name : #FLGlobalClassSerializationTest,
-	#superclass : #FLClassSerializationTest,
+	#name : 'FLGlobalClassSerializationTest',
+	#superclass : 'FLClassSerializationTest',
 	#traits : 'FLTGlobalClassOrTraitSerializationTest',
 	#classTraits : 'FLTGlobalClassOrTraitSerializationTest classTrait',
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLGlobalClassSerializationTest >> testInstanceOfAnObsoleteClass [
 	"Tests that serializer does not serialize an instance of an obsolete class."
 	

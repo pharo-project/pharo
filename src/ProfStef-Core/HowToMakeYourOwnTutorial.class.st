@@ -4,12 +4,13 @@ I'm a Pharo tutorial which teach to create a Pharo tutorial. Open me with
 ProfStef goOn: HowToMakeYourOwnTutorial.
 "
 Class {
-	#name : #HowToMakeYourOwnTutorial,
-	#superclass : #AbstractTutorial,
-	#category : #'ProfStef-Core'
+	#name : 'HowToMakeYourOwnTutorial',
+	#superclass : 'AbstractTutorial',
+	#category : 'ProfStef-Core',
+	#package : 'ProfStef-Core'
 }
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 HowToMakeYourOwnTutorial >> createLessonFactoryMethods [
 	^ Lesson
 title: 'Lesson factory methods'
@@ -51,7 +52,7 @@ classified: ''lessons''.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 HowToMakeYourOwnTutorial >> implementTutorial [
 	^ Lesson
 title: 'Implement tutorial method'
@@ -71,7 +72,7 @@ classified: ''tutorial''.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 HowToMakeYourOwnTutorial >> runYourTutorial [
 	^ Lesson
 title: 'Run your tutorial'
@@ -81,7 +82,7 @@ lesson:
 ProfStef goOn: HowToDebug.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 HowToMakeYourOwnTutorial >> subclassAbstractTutorial [
 	^ Lesson
 title: 'AbstractTutorial'
@@ -99,7 +100,7 @@ AbstractTutorial subclass: #HowToDebug
 ProfStef next.'
 ]
 
-{ #category : #tutorial }
+{ #category : 'tutorial' }
 HowToMakeYourOwnTutorial >> tutorial [
 	^ #(
 		subclassAbstractTutorial

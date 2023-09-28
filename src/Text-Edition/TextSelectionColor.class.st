@@ -12,8 +12,8 @@ colorBlock
 
 "
 Class {
-	#name : #TextSelectionColor,
-	#superclass : #TextAttribute,
+	#name : 'TextSelectionColor',
+	#superclass : 'TextAttribute',
 	#instVars : [
 		'colorBlock'
 	],
@@ -22,69 +22,71 @@ Class {
 		'PrimarySelection',
 		'SecondarySelection'
 	],
-	#category : #'Text-Edition-Utilities'
+	#category : 'Text-Edition-Utilities',
+	#package : 'Text-Edition',
+	#tag : 'Utilities'
 }
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 TextSelectionColor class >> cleanUp [
 	PrimarySelection := nil
 ]
 
-{ #category : #'default accessing' }
+{ #category : 'default accessing' }
 TextSelectionColor class >> findReplaceSelection [
 	^ FindReplaceSelection
 		ifNil: [FindReplaceSelection := self new
 						colorBlock: [self theme currentSettings findReplaceSelectionTextColor]]
 ]
 
-{ #category : #'default accessing' }
+{ #category : 'default accessing' }
 TextSelectionColor class >> primarySelection [
 	^ PrimarySelection
 		ifNil: [PrimarySelection := self new colorBlock: [ self theme currentSettings selectionTextColor]]
 ]
 
-{ #category : #'default accessing' }
+{ #category : 'default accessing' }
 TextSelectionColor class >> secondarySelection [
 	^ SecondarySelection
 		ifNil: [SecondarySelection := self new
 						colorBlock: [self theme currentSettings secondarySelectionTextColor]]
 ]
 
-{ #category : #'default accessing' }
+{ #category : 'default accessing' }
 TextSelectionColor class >> theme [
 	^ Smalltalk ui theme
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextSelectionColor >> colorBlock [
 
 	^ colorBlock ifNil: [colorBlock := [self theme currentSettings selectionTextColor]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextSelectionColor >> colorBlock: aBlock [
 	"aBlock value gives the text color"
 	colorBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextSelectionColor >> dominates: other [
 	"There can be only one..."
 	^self class == other class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextSelectionColor >> emphasizeScanner: scanner [
 	"Set the emphasis for text display"
 	scanner textColor: self textColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextSelectionColor >> textColor [
 	^ self colorBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextSelectionColor >> theme [
 	^ Smalltalk ui theme
 ]

@@ -2,55 +2,57 @@
 Instruction ""pushLiteral: object""
 "
 Class {
-	#name : #IRPushLiteral,
-	#superclass : #IRInstruction,
+	#name : 'IRPushLiteral',
+	#superclass : 'IRInstruction',
 	#instVars : [
 		'literal'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPushLiteral >> accept: aVisitor [
 	^ aVisitor visitPushLiteral: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRPushLiteral >> canBeQuickReturn [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRPushLiteral >> isPushLiteral [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRPushLiteral >> isPushLiteral: valueTest [
 	^ valueTest value: literal
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRPushLiteral >> isRemovableByPop [
 	"Be conservative to keep symbols and other things"
 
 	^ (#( nil true false ) includes: literal) or: [ literal isNumber ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushLiteral >> literal [
 
 	^ literal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushLiteral >> literal: object [
 
 	literal := object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushLiteral >> quickRetNode [
 	^ IRReturnLiteral new
 		literal: literal;

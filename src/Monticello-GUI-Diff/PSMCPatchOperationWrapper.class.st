@@ -2,40 +2,41 @@
 Wrapper for patch operations
 "
 Class {
-	#name : #PSMCPatchOperationWrapper,
-	#superclass : #PSMCChangeWrapper,
-	#category : #'Monticello-GUI-Diff'
+	#name : 'PSMCPatchOperationWrapper',
+	#superclass : 'PSMCChangeWrapper',
+	#category : 'Monticello-GUI-Diff',
+	#package : 'Monticello-GUI-Diff'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 PSMCPatchOperationWrapper >> asString [
 	"Answer the method name."
 
 	^self item definition summary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchOperationWrapper >> chooseLocal [
 	"Choose the local version."
 
 	self operation chooseLocal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchOperationWrapper >> chooseRemote [
 	"Choose the remote version."
 
 	self operation chooseRemote
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PSMCPatchOperationWrapper >> clearChoice [
 	"Choose neither version (be in conflict)."
 
 	self operation clearChoice
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchOperationWrapper >> icon [
 	"Answer a form with an icon to represent the receiver"
 
@@ -44,28 +45,28 @@ PSMCPatchOperationWrapper >> icon [
 	^ super icon
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PSMCPatchOperationWrapper >> isConflict [
 	"Answer whether the receiver is a conflict item."
 
 	^ self operation isConflict
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PSMCPatchOperationWrapper >> localChosen [
 	"Answer whether the local version is chosen."
 
 	^self operation localChosen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchOperationWrapper >> operation [
 	"Answer the pacth operation for the receiver or nil if none."
 
 	^self item
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PSMCPatchOperationWrapper >> remoteChosen [
 	"Answer whether the remote version is chosen."
 

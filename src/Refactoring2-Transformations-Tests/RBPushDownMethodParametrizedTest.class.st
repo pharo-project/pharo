@@ -1,10 +1,12 @@
 Class {
-	#name : #RBPushDownMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBPushDownMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPushDownMethodRefactoring };
@@ -12,12 +14,12 @@ RBPushDownMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPushDownMethodParametrizedTest >> constructor [
 	^ #pushDown:from:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBPushDownMethodParametrizedTest >> testFailurePushDownNonExistantMenu [
 
 	| refactoring |
@@ -27,7 +29,7 @@ RBPushDownMethodParametrizedTest >> testFailurePushDownNonExistantMenu [
 	self shouldFail: refactoring
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownMethodParametrizedTest >> testPushDownMethod [
 
 	| refactoring class |
@@ -43,7 +45,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethod [
 			equals: (self parseMethod: 'name: aString name := aString') ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictionary [
 
 	| refactoring class parseTree |

@@ -1,6 +1,6 @@
-Extension { #name : #Trait }
+Extension { #name : 'Trait' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 Trait >> reBanName [
 
 	^ self name, ' (Trait)'

@@ -1,33 +1,35 @@
 Class {
-	#name : #MetacelloMemberListSpec,
-	#superclass : #MetacelloSpec,
+	#name : 'MetacelloMemberListSpec',
+	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'list',
 		'memberMap'
 	],
-	#category : #'Metacello-Core-Members'
+	#category : 'Metacello-Core-Members',
+	#package : 'Metacello-Core',
+	#tag : 'Members'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMemberListSpec >> add: aSpec [
 
 	self subclassResponsibility
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MetacelloMemberListSpec >> addMember: aMember [
 
 	self list add: aMember.
 	self clearMemberMap
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMemberListSpec >> clearMemberMap [
 
 	memberMap := nil.
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloMemberListSpec >> collect: aBlock [ 
 	| newCollection |
 	newCollection :=OrderedCollection new.
@@ -35,19 +37,19 @@ MetacelloMemberListSpec >> collect: aBlock [
 	^ newCollection
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMemberListSpec >> copy: aMemberSpec [
 
 	self addMember: aMemberSpec
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMemberListSpec >> copy: specNamed to: aSpec [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'toolbox support' }
+{ #category : 'toolbox support' }
 MetacelloMemberListSpec >> deleteSpec: aSpec [
 	"remove the spec from list"
 
@@ -56,7 +58,7 @@ MetacelloMemberListSpec >> deleteSpec: aSpec [
 		ifFound: [ :member | self list remove: member ]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloMemberListSpec >> detect: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument. 
 	Answer the first element for which aBlock evaluates to true."
@@ -64,7 +66,7 @@ MetacelloMemberListSpec >> detect: aBlock [
 	^ self detect: aBlock ifNone: [ self error: 'Object is not in the collection.' ]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloMemberListSpec >> detect: aBlock ifNone: exceptionBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	Answer the first element for which aBlock evaluates to true. If none  
@@ -77,33 +79,33 @@ MetacelloMemberListSpec >> detect: aBlock ifNone: exceptionBlock [
 	^ exceptionBlock value
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloMemberListSpec >> do: aBlock [
 
 	self map values do: aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMemberListSpec >> isEmpty [
 
 	^self list isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMemberListSpec >> list [
 
 	list == nil ifTrue: [ list := OrderedCollection new ].
 	^list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMemberListSpec >> list: aCollection [
 
 	list := aCollection.
 	self clearMemberMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMemberListSpec >> map [
 	
 	| map |
@@ -119,13 +121,13 @@ MetacelloMemberListSpec >> map [
 	^memberMap
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMemberListSpec >> mapAdd: aMemberSpec into: map [
 	
 	map at: aMemberSpec name put: aMemberSpec spec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMemberListSpec >> mapCopy: aMemberSpec into: map [
     | spec |
     spec := map at: aMemberSpec sourceName ifAbsent: [  ].
@@ -136,7 +138,7 @@ MetacelloMemberListSpec >> mapCopy: aMemberSpec into: map [
             map at: aMemberSpec name put: (spec copy mergeSpec: aMemberSpec spec copy) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMemberListSpec >> mapMerge: aMemberSpec into: map [
 	| spec |
 	spec :=  map at: aMemberSpec name ifAbsent: [].
@@ -145,19 +147,19 @@ MetacelloMemberListSpec >> mapMerge: aMemberSpec into: map [
 		ifFalse: [ map at: aMemberSpec name put: (spec mergeSpec: aMemberSpec spec)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMemberListSpec >> mapRemove: aMemberSpec into: map [
 	
 	map removeKey: aMemberSpec name ifAbsent: []
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMemberListSpec >> merge: aSpec [
 
 	self subclassResponsibility
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloMemberListSpec >> mergeSpec: anotherSpec [
 
 	| newSpec |
@@ -167,13 +169,13 @@ MetacelloMemberListSpec >> mergeSpec: anotherSpec [
 	^newSpec
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMemberListSpec >> notEmpty [
 
 	^self list notEmpty
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloMemberListSpec >> postCopy [
 
 	super postCopy.
@@ -181,13 +183,13 @@ MetacelloMemberListSpec >> postCopy [
 	self clearMemberMap
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMemberListSpec >> remove: aSpec [
 
 	self subclassResponsibility
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloMemberListSpec >> select: aBlock [ 
 	| newCollection |
 	newCollection := OrderedCollection new.
@@ -195,7 +197,7 @@ MetacelloMemberListSpec >> select: aBlock [
 	^newCollection
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloMemberListSpec >> specListDetect: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument. 
 	Answer the first element for which aBlock evaluates to true."
@@ -203,7 +205,7 @@ MetacelloMemberListSpec >> specListDetect: aBlock [
 	^ self specListDetect: aBlock ifNone: [ self error: 'Object is not in the collection.' ]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloMemberListSpec >> specListDetect: aBlock ifNone: exceptionBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	Answer the first element for which aBlock evaluates to true. If none  
@@ -216,13 +218,13 @@ MetacelloMemberListSpec >> specListDetect: aBlock ifNone: exceptionBlock [
 	^ exceptionBlock value
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloMemberListSpec >> specListDo: aBlock [
 
 	self list do: [:member |  aBlock value: member spec ]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloMemberListSpec >> specListSelect: aBlock [ 
 	| newCollection |
 	newCollection := OrderedCollection new.

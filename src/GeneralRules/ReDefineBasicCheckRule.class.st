@@ -6,22 +6,24 @@ If the entity violates the rule, method should ruturn ""true"", otherwise - ""fa
 It is recommended to reuse #basicCheck: functionality in #checkClass: and #checkMethod:
 "
 Class {
-	#name : #ReDefineBasicCheckRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReDefineBasicCheckRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReDefineBasicCheckRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReDefineBasicCheckRule >> basicCheck: aClass [
 	^ (aClass inheritsFrom: RBLintRule) and: [ aClass isVisible and: [ (aClass lookupSelector: #basicCheck:) isSubclassResponsibility ] ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReDefineBasicCheckRule >> critiqueFor: aClass [
 	^ (ReMissingMethodCritique
 		for: aClass
@@ -30,12 +32,12 @@ ReDefineBasicCheckRule >> critiqueFor: aClass [
 		selector: #basicCheck:) beShouldBeImplemented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDefineBasicCheckRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDefineBasicCheckRule >> name [
 	^ 'Rule does not define #basicCheck:'
 ]

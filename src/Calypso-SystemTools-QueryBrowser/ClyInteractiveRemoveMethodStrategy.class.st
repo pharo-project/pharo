@@ -11,27 +11,29 @@ Internal Representation and Key Implementation Points.
 	browser:		<Object>
 "
 Class {
-	#name : #ClyInteractiveRemoveMethodStrategy,
-	#superclass : #SycRemoveMethodStrategy,
+	#name : 'ClyInteractiveRemoveMethodStrategy',
+	#superclass : 'SycRemoveMethodStrategy',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Methods'
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Methods',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Methods'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyInteractiveRemoveMethodStrategy class >> newForBrowser: aBrowser [
 
 	^self new
 		browser: aBrowser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInteractiveRemoveMethodStrategy >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInteractiveRemoveMethodStrategy >> browser: anObject [
 	browser := anObject
 ]

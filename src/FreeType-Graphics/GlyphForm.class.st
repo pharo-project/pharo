@@ -2,26 +2,28 @@
 A specialized form for glyphs
 "
 Class {
-	#name : #GlyphForm,
-	#superclass : #Form,
+	#name : 'GlyphForm',
+	#superclass : 'Form',
 	#instVars : [
 		'advance',
 		'linearAdvance'
 	],
-	#category : #'FreeType-Graphics-Fonts'
+	#category : 'FreeType-Graphics-Fonts',
+	#package : 'FreeType-Graphics',
+	#tag : 'Fonts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlyphForm >> advance [
 	^advance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlyphForm >> advance: aNumber [
 	^advance := aNumber
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlyphForm >> asFormOfDepth: d [
 	| newForm |
 	d = self depth ifTrue:[^self].
@@ -38,7 +40,7 @@ GlyphForm >> asFormOfDepth: d [
 	^newForm
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlyphForm >> invertedAndAlphaMultiplied [
 	| result |
 	result := super invertedAndAlphaMultiplied.
@@ -49,17 +51,17 @@ GlyphForm >> invertedAndAlphaMultiplied [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlyphForm >> linearAdvance [
 	^linearAdvance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlyphForm >> linearAdvance: aNumber [
 	^linearAdvance := aNumber
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlyphForm >> withAlphaExtractedFromSubpixelRendering [
 	| result |
 	"Take the maximum of r,g,b as the alpha. Then multiply by a."

@@ -2,39 +2,41 @@
 A MCMerger is an abstract responsible for performing merge operations and detecting conflicts.
 "
 Class {
-	#name : #MCMerger,
-	#superclass : #Object,
-	#category : #'Monticello-Merging'
+	#name : 'MCMerger',
+	#superclass : 'Object',
+	#category : 'Monticello-Merging',
+	#package : 'Monticello',
+	#tag : 'Merging'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCMerger >> addConflictWithOperation: anOperation [
 	self operations add: anOperation beConflict
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCMerger >> applyTo: anObject [
 	self isMerged ifFalse: [self error: 'You must resolve all the conflicts first'].
 	self operations do: [:ea | ea applyTo: anObject]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMerger >> conflicts [	
 	^ self operations select: #isConflict
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMerger >> hasConflicts [
 	^ self conflicts notEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMerger >> isMerged [
 	^ self conflicts allSatisfy: [:ea | ea isResolved]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCMerger >> load [
 	| loader |
 	loader := MCPackageLoader new.
@@ -43,7 +45,7 @@ MCMerger >> load [
 	loader load
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCMerger >> loadWithNameLike: baseName [
 	| loader |
 	loader := MCPackageLoader new.
@@ -52,17 +54,17 @@ MCMerger >> loadWithNameLike: baseName [
 	loader loadWithNameLike: baseName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMerger >> mergedSnapshot [
 	^ MCPatcher apply: self to: self baseSnapshot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMerger >> operations [
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMerger >> provisions [
 	^ #()
 ]

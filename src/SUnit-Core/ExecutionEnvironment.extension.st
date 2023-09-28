@@ -1,12 +1,12 @@
-Extension { #name : #ExecutionEnvironment }
+Extension { #name : 'ExecutionEnvironment' }
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 ExecutionEnvironment >> runTestCase: aTestCase [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 ExecutionEnvironment >> runTestsBy: aBlock [
 
 	self subclassResponsibility

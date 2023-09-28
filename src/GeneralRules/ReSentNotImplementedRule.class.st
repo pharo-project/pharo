@@ -2,24 +2,26 @@
 This smell arises when a message is sent by a method,  but no class in the system implements such a message. This method sent will certainly cause a doesNotUnderstand: message when they are executed.
 "
 Class {
-	#name : #ReSentNotImplementedRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReSentNotImplementedRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReSentNotImplementedRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSentNotImplementedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'SentNotImplementedRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| ignored problemSends |
 
@@ -37,22 +39,22 @@ ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				 hint: msgSend selector asString) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSentNotImplementedRule >> group [
 	^ 'Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSentNotImplementedRule >> name [
 	^ 'Messages sent but not implemented'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSentNotImplementedRule >> rationale [
 	^ 'Checks for messages that are sent by a method, but no class in the system implements such a message. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSentNotImplementedRule >> severity [
 	^ #error
 ]

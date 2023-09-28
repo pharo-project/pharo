@@ -5,17 +5,18 @@ I build a tree with information:
 I am used in DrTestsUI to show the results in a orderly manner.
 "
 Class {
-	#name : #DTTestCoverageResult,
-	#superclass : #DTPluginResult,
+	#name : 'DTTestCoverageResult',
+	#superclass : 'DTPluginResult',
 	#instVars : [
 		'methodList',
 		'percent',
 		'partiallyCoveredMethods'
 	],
-	#category : #'DrTests-TestCoverage'
+	#category : 'DrTests-TestCoverage',
+	#package : 'DrTests-TestCoverage'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> buildTreeForUI [
 	<dtTestCoverageResultTreeNamed: 'List of uncovered methods' order: 1>
 	^ DTTreeNode new
@@ -41,39 +42,39 @@ DTTestCoverageResult >> buildTreeForUI [
     	])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> methodList [
 	^methodList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> methodList: aCollectionOfMethods [
 	methodList := aCollectionOfMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> partiallyCoveredMethods [
 
 	^ partiallyCoveredMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> partiallyCoveredMethods: aCollectionOfMethods [
 
 	partiallyCoveredMethods := aCollectionOfMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> percent [
 	^ percent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> percent: anObject [
 	percent := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 

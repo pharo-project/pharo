@@ -13,15 +13,17 @@ Preconditions:
 - the method exists and belongs to instance side.
 "
 Class {
-	#name : #RBMoveMethodToClassSideTransformation,
-	#superclass : #RBMoveMethodToClassTransformation,
+	#name : 'RBMoveMethodToClassSideTransformation',
+	#superclass : 'RBMoveMethodToClassTransformation',
 	#instVars : [
 		'parseTree'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> accessorsFor: variableName [
 
 	^ RBAddVariableAccessorTransformation
@@ -31,13 +33,13 @@ RBMoveMethodToClassSideTransformation >> accessorsFor: variableName [
 				classVariable: false
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> addMethod: rbMethod to: aClass toProtocol: protocol [
 	aClass addMethod: rbMethod.
 	aClass compile: rbMethod source classified: {protocol}
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> applicabilityPreconditions [
 	^ (RBCondition
 			definesSelector: method selector
@@ -48,7 +50,7 @@ RBMoveMethodToClassSideTransformation >> applicabilityPreconditions [
 
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> checkVariableNamed: aString [
 	(class whoDefinesInstanceVariable: aString) ifNotNil:
 			[^ true].
@@ -57,7 +59,7 @@ RBMoveMethodToClassSideTransformation >> checkVariableNamed: aString [
 	^ (self parseTree allDefinedVariables includes: aString)
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> getNewInstSideSource [
 	| sender |
 	sender := ''.
@@ -69,7 +71,7 @@ RBMoveMethodToClassSideTransformation >> getNewInstSideSource [
 	^ self class ', sender
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> getNewSource [
 
 	| rewriter node temp |
@@ -86,7 +88,7 @@ RBMoveMethodToClassSideTransformation >> getNewSource [
 		ifFalse: [ ^ node sourceCode ]
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> parseTree [
 
 	parseTree
@@ -96,7 +98,7 @@ RBMoveMethodToClassSideTransformation >> parseTree [
 	^ parseTree doSemanticAnalysis
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> privateTransform [
 	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
@@ -113,7 +115,7 @@ RBMoveMethodToClassSideTransformation >> privateTransform [
 	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> removeInstVariableReferences [
 
 	| rbMethod references |
@@ -131,7 +133,7 @@ RBMoveMethodToClassSideTransformation >> removeInstVariableReferences [
 		self convertMethod: method selector for: class using: replacer ]
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -145,7 +147,7 @@ RBMoveMethodToClassSideTransformation >> storeOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #refactoring }
+{ #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> temporaryName [
 	| aString counter tempName |
 	counter := 0.

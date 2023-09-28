@@ -2,12 +2,14 @@
 SUnit tests for fuel serialization of weak objects
 "
 Class {
-	#name : #FLWeakObjectsTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLWeakObjectsTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLWeakObjectsTest >> testAssociationWithWeak [
 	"This tests an association with weak values.
 	InstVar1 is a fixed instance variable, hence they are strong and hence should not be replaced by nil.
@@ -26,7 +28,7 @@ FLWeakObjectsTest >> testAssociationWithWeak [
 	self assert: materializedAssociation key equals: #foo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLWeakObjectsTest >> testWeakAndNoStrongReferenceFromGraph [
 	"This tests when there are weak objects inside the graph to serialize but there are no strong references from the graph."
 	| weak graph obj1 obj2 materializedGraph |
@@ -43,7 +45,7 @@ FLWeakObjectsTest >> testWeakAndNoStrongReferenceFromGraph [
 	self deny: (self serializationOf: graph includes: 'something').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLWeakObjectsTest >> testWeakWithStrongReferenceFromGraph [
 	"This tests when there are weak objects inside the graph to serialize and there are also strong references from the graph."
 
@@ -65,7 +67,7 @@ FLWeakObjectsTest >> testWeakWithStrongReferenceFromGraph [
 	self assert: (self serializationOf: graph includes: obj2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLWeakObjectsTest >> testWeakWithStrongReferenceFromGraph2 [
 	"This tests when there are weak objects inside the graph to serialize and there are also strong references from the graph."
 

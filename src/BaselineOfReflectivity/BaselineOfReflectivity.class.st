@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfReflectivity,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfReflectivity
+	#name : 'BaselineOfReflectivity',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfReflectivity',
+	#package : 'BaselineOfReflectivity'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfReflectivity >> baseline: spec [
 
 	<baseline>
@@ -35,7 +36,7 @@ BaselineOfReflectivity >> baseline: spec [
 				#( 'default' 'tools' 'Reflectivity-Tests' 'Reflectivity-Examples' ) ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfReflectivity >> postload: loader package: packageSpec [
 	ASTCache cacheMissStrategy: RFReflectivityASTCacheStrategy new.
 ]

@@ -2,17 +2,18 @@
 I'm a model for user interaction for the remove shared variable refactoring.
 "
 Class {
-	#name : #RBRemoveSharedVariableDriver,
-	#superclass : #RBDriver,
+	#name : 'RBRemoveSharedVariableDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
-		'variables',
-		'refactoring'
+		'variables'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBRemoveSharedVariableDriver >> refactoring [
 
 	refactoring := RBRemoveSharedVariableRefactoring
@@ -21,7 +22,7 @@ RBRemoveSharedVariableDriver >> refactoring [
 		               from: class
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBRemoveSharedVariableDriver >> runRefactoring [
 
 	self refactoring.
@@ -47,7 +48,7 @@ RBRemoveSharedVariableDriver >> runRefactoring [
 			err return ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRemoveSharedVariableDriver >> scopes: refactoringScopes variable: aVariable for: aClass [
 	
 	scopes := refactoringScopes.

@@ -5,18 +5,20 @@ It means that you can get a test breaking and when you rerun your test you get t
 Initialize should only use variables defined in #instanceVariablesToKeep.
 "
 Class {
-	#name : #ReTestCaseShouldNotUseInitializeRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReTestCaseShouldNotUseInitializeRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #'testing-interest' }
+{ #category : 'testing-interest' }
 ReTestCaseShouldNotUseInitializeRule class >> checksClass [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 
 	| alteredVariables expectedVariables |
@@ -36,12 +38,12 @@ ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 	^ alteredVariables anySatisfy: [ :e | (expectedVariables includes: e name) not ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTestCaseShouldNotUseInitializeRule >> group [
 	^ 'Clean Code'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTestCaseShouldNotUseInitializeRule >> name [
 
 	^ 'Tests should not use initialize'

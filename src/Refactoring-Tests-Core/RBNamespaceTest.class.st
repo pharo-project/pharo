@@ -1,32 +1,30 @@
 Class {
-	#name : #RBNamespaceTest,
-	#superclass : #RBRefactoringBrowserTest,
+	#name : 'RBNamespaceTest',
+	#superclass : 'RBRefactoringBrowserTest',
 	#instVars : [
 		'modelFactory'
 	],
-	#category : #'Refactoring-Tests-Core'
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBNamespaceTest >> setUp [
 	super setUp.
 	modelFactory := RBClassModelFactory new
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testAllClassesDo [
 	| model classes |
 	classes := 0.
 	model := modelFactory rbNamespace new.
-	model allClassesDo:
-			[:each |
-			each name = #Object ifTrue: [each allSubclasses].
-			classes := classes + 1].
+	model allClassesDo: [:each | classes := classes + 1].
 	RBBrowserEnvironment new classesDo: [:each | classes := classes - 1].
 	self assert: classes equals: 0
 ]
 
-{ #category : #'tests - on environment' }
+{ #category : 'tests - on environment' }
 RBNamespaceTest >> testAllImplementorsOnClassSubset [
 
 	| rbclasses rbNamespace2 |
@@ -48,7 +46,7 @@ RBNamespaceTest >> testAllImplementorsOnClassSubset [
 		equals: 2
 ]
 
-{ #category : #'tests - on environment' }
+{ #category : 'tests - on environment' }
 RBNamespaceTest >> testAllReferencesToClassDo [
 
 	| model packageenv count |
@@ -65,7 +63,7 @@ RBNamespaceTest >> testAllReferencesToClassDo [
 		equals: 10.	
 ]
 
-{ #category : #'tests - on environment' }
+{ #category : 'tests - on environment' }
 RBNamespaceTest >> testAllReferencesToClassDoMore [
 
 	| model packageenv selectors |
@@ -80,10 +78,10 @@ RBNamespaceTest >> testAllReferencesToClassDoMore [
 
 	self
 		assertCollection: selectors asArray
-		hasSameElements: #(#testCanRemoveUnreferencedClass #testCanRemoveReferencedClass #testCanRemoveSuperclass #testRemovingAnEmptyNonLeafClassReparent #testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere #testRemoveAClassAndTheirSubclass #testRemovingAnEmptyNonLeafClassIsAllowed #testPreconditionNotEmptyClass #testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment #testCanRemoveAReferencedClassNotHavingReferenceInTheModel)
+		hasSameElements: #(#testCanRemoveUnreferencedClass #testCanRemoveReferencedClass #testCanRemoveSuperclass #testRemovingAnEmptyNonLeafClassReparent #testCanRemoveUnreferencedClassUsingLimitedEnvironmentButReferencedElsewhere #testRemoveAClassAndTheirSubclass #testRemovingAnNonEmptyLeafClassIsAllowed #testPreconditionNotEmptyClass #testRemoveAClassAndTheirSubclass2UsingAlimitedEnvironment #testCanRemoveAReferencedClassNotHavingReferenceInTheModel)
 ]
 
-{ #category : #'tests - on environment' }
+{ #category : 'tests - on environment' }
 RBNamespaceTest >> testAllReferencesToClassDoWithoutReferencesInTheSpecifiedModel [
 
 	| model packageenv count |
@@ -99,7 +97,7 @@ RBNamespaceTest >> testAllReferencesToClassDoWithoutReferencesInTheSpecifiedMode
 		equals: 0.	
 ]
 
-{ #category : #'tests - on environment' }
+{ #category : 'tests - on environment' }
 RBNamespaceTest >> testAllReferencesToOnClassSubset [
 
 	| rbclasses rbNamespace2 |
@@ -119,7 +117,7 @@ RBNamespaceTest >> testAllReferencesToOnClassSubset [
 		
 ]
 
-{ #category : #'tests - on environment' }
+{ #category : 'tests - on environment' }
 RBNamespaceTest >> testAllReferencesToTakesIntoAccountSuperCall [
 
 	| rbclasses rbNamespace2 |
@@ -134,7 +132,7 @@ RBNamespaceTest >> testAllReferencesToTakesIntoAccountSuperCall [
 		equals: 2
 ]
 
-{ #category : #'tests - on environment' }
+{ #category : 'tests - on environment' }
 RBNamespaceTest >> testClassesReferencingClass [
 
 	| model packageenv classes |
@@ -150,7 +148,7 @@ RBNamespaceTest >> testClassesReferencingClass [
 		hasSameElements: #(#RBRemoveClassTransformationTest #RBRemoveClassRefactoringTest)
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testCommentChange [
 	| st cl |
 	st := modelFactory rbNamespace new.
@@ -166,7 +164,7 @@ RBNamespaceTest >> testCommentChange [
 	self assert: st changes changes last comment isNil
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testDefineClassAfterDeletedChange [
 	| st |
 	st := modelFactory rbNamespace new.
@@ -177,7 +175,7 @@ RBNamespaceTest >> testDefineClassAfterDeletedChange [
 	self assert: (st classNamed: self class name) notNil
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testDefineClassChange [
 	| st |
 	st := modelFactory rbNamespace new.
@@ -188,7 +186,7 @@ RBNamespaceTest >> testDefineClassChange [
 	self assert: (st classNamed: #SmalltalkTestXXX) notNil
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testImplementors [
 	| st |
 	st := modelFactory rbNamespace new.
@@ -199,7 +197,7 @@ RBNamespaceTest >> testImplementors [
 				includes: (st classNamed: #Object))
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testIncludesClass [
 	self assert: (modelFactory rbNamespace new includesClassNamed: #Object).
 	self deny: (modelFactory rbNamespace new includesClassNamed: #Object1).
@@ -210,7 +208,7 @@ RBNamespaceTest >> testIncludesClass [
 					includesClassNamed: #OrderedCollection)
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testModelImplementorsSenders [
 	| model class modelImps refs found |
 	model := modelFactory rbNamespace new.
@@ -236,7 +234,7 @@ RBNamespaceTest >> testModelImplementorsSenders [
 	self assert: found
 ]
 
-{ #category : #'class tests' }
+{ #category : 'class tests' }
 RBNamespaceTest >> testPopulateModel [
 
 	| newModel |
@@ -254,7 +252,7 @@ RBNamespaceTest >> testPopulateModel [
 
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testRedefineClassChange [
 	| st |
 	st := modelFactory rbNamespace new.
@@ -267,7 +265,7 @@ RBNamespaceTest >> testRedefineClassChange [
 	self assert: (st classNamed: #Object) notNil
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testReferencesPrintOn [
 	| hasFoundObject hasFoundSelf smalltalk |
 	hasFoundObject := false.
@@ -284,7 +282,7 @@ RBNamespaceTest >> testReferencesPrintOn [
 	self assert: hasFoundSelf
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testReferencesPrintOnAfterAddition [
 	| hasFoundObject hasFoundSelf smalltalk |
 	hasFoundObject := false.
@@ -307,7 +305,7 @@ RBNamespaceTest >> testReferencesPrintOnAfterAddition [
 	self assert: hasFoundSelf
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testReferencesPrintOnAfterRemove [
 	| hasFoundObject hasFoundSelf smalltalk |
 	hasFoundObject := false.
@@ -328,7 +326,7 @@ RBNamespaceTest >> testReferencesPrintOnAfterRemove [
 	self deny: hasFoundSelf
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testRemoveClassChange [
 	| st |
 	st := modelFactory rbNamespace new.
@@ -337,7 +335,7 @@ RBNamespaceTest >> testRemoveClassChange [
 	self assert: (st classNamed: self class name) isNil
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testReparentSuperclassChange [
 	| st superclass subclasses |
 	st := modelFactory rbNamespace new.
@@ -347,7 +345,7 @@ RBNamespaceTest >> testReparentSuperclassChange [
 	subclasses do: [:each | self assert: each superclass equals: superclass]
 ]
 
-{ #category : #'class tests' }
+{ #category : 'class tests' }
 RBNamespaceTest >> testRoots [
 
 	| model |

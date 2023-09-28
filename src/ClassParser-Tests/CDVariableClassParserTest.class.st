@@ -1,10 +1,11 @@
 Class {
-	#name : #CDVariableClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDVariableClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDVariableClassParserTest >> classDefinitionString [
 
 	^ '{superclassName} variableSubclass: #{classname}
@@ -20,7 +21,7 @@ CDVariableClassParserTest >> classDefinitionString [
 				'classvar2' -> self secondClassVariableName. } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDVariableClassParserTest >> testVariableClassIsVariable [
 
 	self assert: classDefinition layoutClass equals: VariableLayout
