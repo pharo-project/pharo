@@ -136,7 +136,7 @@ ZnCharacterReadWriteStream >> size [
 
 { #category : 'accessing' }
 ZnCharacterReadWriteStream >> skip: anInteger [
-
+	anInteger < 0 ifTrue: [ self error: 'cannot skip backwards' ].
 	readStream skip: anInteger
 ]
 
