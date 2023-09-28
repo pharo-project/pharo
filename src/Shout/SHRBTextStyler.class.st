@@ -9,13 +9,13 @@ Class {
 		'parentheseLevel',
 		'bracketLevel',
 		'classOrMetaClass',
-		'isForWorkspace',
 		'workspace',
 		'plugins',
 		'braceLevel',
 		'view',
 		'stylingEnabled',
-		'text'
+		'text',
+		'isScripting'
 	],
 	#classInstVars : [
 		'styleTable',
@@ -727,19 +727,36 @@ SHRBTextStyler >> initialize [
 
 	super initialize.
 	stylingEnabled := true.
-	isForWorkspace := false
+	isScripting := false
 ]
 
 { #category : 'accessing' }
 SHRBTextStyler >> isForWorkspace [
-	^workspace
-		ifNil: [ isForWorkspace ]
-		ifNotNil: [ workspace isScripting ]
+
+	self
+		deprecated: 'use isScripting'
+		transformWith: '`@receiver isForWorkspace' -> '`@receiver isScripting'.
+	^ self isScripting
 ]
 
 { #category : 'accessing' }
 SHRBTextStyler >> isForWorkspace: aBoolean [
-	isForWorkspace := aBoolean
+		self
+		deprecated: 'use isScripting:'
+		transformWith: '`@receiver isForWorkspace: `@argument' -> '`@receiver isScripting: `@argument'.
+	^ self isScripting: aBoolean
+]
+
+{ #category : 'accessing' }
+SHRBTextStyler >> isScripting [
+	^workspace
+		ifNil: [ isScripting ]
+		ifNotNil: [ workspace isScripting ]
+]
+
+{ #category : 'accessing' }
+SHRBTextStyler >> isScripting: aBoolean [
+	isScripting := aBoolean
 ]
 
 { #category : 'private' }
@@ -791,7 +808,7 @@ SHRBTextStyler >> privateStyle: aText [
 	aText ifEmpty: [ ^ self ].
 	compiler := classOrMetaClass compiler
 		source: aText asString;
-		isScripting: self isForWorkspace;
+		isScripting: self isScripting;
 		requestor: workspace.
 
 	self plugins do: [ :each | compiler addParsePlugin: each ].
