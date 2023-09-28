@@ -490,28 +490,23 @@ CompiledMethodTest >> testIsFaulty [
 
 { #category : 'tests - testing' }
 CompiledMethodTest >> testIsInstalled [
-|  method cls |
 
-	method := (self class)>>#returnTrue.
+	| method |
+	method := self class >> #returnTrue.
 	self assert: method isInstalled.
 
+	class := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TUTU;
+			         package: self packageNameForTests ].
 
-
-	Smalltalk removeClassNamed: #TUTU.
-
-	cls := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: #TUTU;
-			package: self packageNameForTests].
-
-	cls compile: 'foo ^ 10'.
-	method := cls >> #foo.
+	class compile: 'foo ^ 10'.
+	method := class >> #foo.
 
 	"now make an orphaned method by just deleting the method."
-	cls removeSelector: #foo.
+	class removeSelector: #foo.
 
-	self deny: method isInstalled.
-	Smalltalk removeClassNamed: #TUTU
+	self deny: method isInstalled
 ]
 
 { #category : 'tests - testing' }
@@ -656,23 +651,23 @@ CompiledMethodTest >> testLiterals [
 
 { #category : 'tests - accessing' }
 CompiledMethodTest >> testMethodClass [
-	| method cls |
+
+	| method |
 	method := self class >> #returnTrue.
 	self assert: method selector equals: #returnTrue.
+
 	"now make an orphaned method by just deleting the class.
 	old: #unknown
 	new semantics: return Absolete class"
-	Smalltalk removeClassNamed: #TUTU.
+	class := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TUTU;
+			         package: self packageNameForTests ].
 
-	cls := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: #TUTU;
-			package: self packageNameForTests].
-
-	cls compile: 'foo ^ 10'.
-	method := cls >> #foo.
-	Smalltalk removeClassNamed: #TUTU.
-	self assert: method methodClass equals: cls
+	class compile: 'foo ^ 10'.
+	method := class >> #foo.
+	class removeFromSystem.
+	self assert: method methodClass equals: class
 ]
 
 { #category : 'tests - comparing' }
@@ -696,6 +691,13 @@ CompiledMethodTest >> testOrigin [
 
 	self assert: regularMethod origin identicalTo: regularMethod originMethod methodClass.
 	self assert: methodFromTrait origin identicalTo: methodFromTrait originMethod methodClass
+]
+
+{ #category : 'tests - accessing' }
+CompiledMethodTest >> testOverriddenMethod [
+
+	self assert: (self class >> #classToBeTested) overriddenMethod identicalTo: ClassTestCase >> #classToBeTested.
+	self assert: (self class >> #testOverriddenMethod) overriddenMethod isNil
 ]
 
 { #category : 'tests - performing' }
@@ -818,27 +820,24 @@ CompiledMethodTest >> testReadsSlot [
 
 { #category : 'tests - accessing' }
 CompiledMethodTest >> testSelector [
-	Author
-		useAuthor: 'TUTU_TEST'
-		during: [ | method cls |
-			method := self class >> #returnTrue.
-			self assert: method selector equals: #returnTrue.
 
-			"now make an orphaned method. new semantics: return corrent name"
-			Smalltalk removeClassNamed: #TUTU.
+	| method |
+	method := self class >> #returnTrue.
+	self assert: method selector equals: #returnTrue.
 
-			cls := self class classInstaller make: [ :aBuilder |
-				aBuilder
-					name: #TUTU;
-					package: self packageNameForTests].
+	"now make an orphaned method. new semantics: return corrent name"
+	class := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TUTU;
+			         package: self packageNameForTests ].
 
-			cls compile: 'foo ^ 10'.
+	class compile: 'foo ^ 10'.
 
-			method := cls >> #foo.
+	method := class >> #foo.
 
-			Smalltalk removeClassNamed: #TUTU.
+	Smalltalk removeClassNamed: #TUTU.
 
-			self assert: method selector equals: #foo ]
+	self assert: method selector equals: #foo
 ]
 
 { #category : 'tests - testing' }
