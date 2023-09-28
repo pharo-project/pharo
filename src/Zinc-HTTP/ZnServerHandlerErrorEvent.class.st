@@ -12,5 +12,5 @@ Class {
 { #category : 'printing' }
 ZnServerHandlerErrorEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Server Handler Error ';  print: exception
+	stream << 'Server Handler Error ';  print: exception
 ]

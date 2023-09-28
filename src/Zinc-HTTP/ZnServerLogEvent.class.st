@@ -8,8 +8,7 @@ Class {
 	#name : 'ZnServerLogEvent',
 	#superclass : 'ZnLogEvent',
 	#instVars : [
-		'serverId',
-		'processId'
+		'serverId'
 	],
 	#category : 'Zinc-HTTP-Logging',
 	#package : 'Zinc-HTTP',
@@ -23,21 +22,9 @@ ZnServerLogEvent >> initialize [
 ]
 
 { #category : 'printing' }
-ZnServerLogEvent >> printContentsOn: stream [
-	super printContentsOn: stream.
-	serverId ifNotNil: [ stream space; << serverId ].
-	stream space.
-	processId printOn: stream base: 10 length: 6 padded: true
-]
-
-{ #category : 'accessing' }
-ZnServerLogEvent >> processId [
-	^ processId
-]
-
-{ #category : 'initialize' }
-ZnServerLogEvent >> processId: anObject [
-	processId := anObject
+ZnServerLogEvent >> printHeaderOn: stream [
+	super printHeaderOn: stream.
+	serverId ifNotNil: [ stream space; << serverId ]
 ]
 
 { #category : 'accessing' }
