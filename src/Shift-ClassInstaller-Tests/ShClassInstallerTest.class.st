@@ -52,8 +52,13 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 { #category : 'running' }
 ShClassInstallerTest >> tearDown [
 
-	self packageOrganizer packageNamed: self generatedClassesPackageName ifPresent: [ :package | package removeFromSystem ].
-	{ newClass . superClass . subClass . newClass2 . superClass2 } do: [ :class | class ifNotNil: [ class removeFromSystem ] ].
+	self packageOrganizer removePackage: self generatedClassesPackageName.
+	{
+		newClass.
+		superClass.
+		subClass.
+		newClass2.
+		superClass2 } do: [ :class | class ifNotNil: [ class removeFromSystem ] ].
 	super tearDown
 ]
 
@@ -318,7 +323,7 @@ ShClassInstallerTest >> testInstallInSpecificEnvironment [
 	self deny: (self packageOrganizer hasPackage: self generatedClassesPackageName).
 	self assert: (newEnvironment organization hasPackage: self generatedClassesPackageName) ] ensure: [
 		"The tear down will not remove the class in the other environment"
-		newEnvironment organization packageNamed: self generatedClassesPackageName ifPresent: [ :package | package removeFromSystem ] ]
+		newEnvironment organization removePackage: self generatedClassesPackageName ]
 ]
 
 { #category : 'tests' }

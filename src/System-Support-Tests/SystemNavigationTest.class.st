@@ -80,6 +80,21 @@ SystemNavigationTest >> testAllExistingProtocolsFor [
 ]
 
 { #category : 'tests' }
+SystemNavigationTest >> testAllReferencesToDo [
+	"test trying to not hard code numbers as they will be different"
+	| counterSymbol counterClass |
+	counterSymbol := 0.
+	SystemNavigation new allReferencesTo: #Object do: [:ref | counterSymbol := counterSymbol +1 ].
+	self assert: counterSymbol > 10.
+	counterClass := 0.
+	SystemNavigation new allReferencesTo: Object binding do: [:ref | counterClass := counterClass +1 ].
+	self assert: counterClass > 10.
+	"and there are more refs to the class then to the symbol"
+	self assert: counterClass > counterSymbol.
+	
+]
+
+{ #category : 'tests' }
 SystemNavigationTest >> testAllSendersOfASelector [
 
 	| senders selector class otherClass callers |
