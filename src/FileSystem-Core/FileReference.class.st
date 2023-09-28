@@ -169,7 +169,7 @@ FileReference >> delete [
 FileReference >> deleteIfAbsent: aBlock [
 	self exists
 		ifTrue: [ self delete ]
-		ifFalse: aBlock
+		ifFalse: [ aBlock value ]
 ]
 
 { #category : 'accessing' }
