@@ -129,6 +129,12 @@ ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect fon
 ]
 
 { #category : 'initialization' }
+ScalingCanvas >> flush [
+
+	formCanvas flush
+]
+
+{ #category : 'initialization' }
 ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 
 	formCanvas := initialFormCanvas.
