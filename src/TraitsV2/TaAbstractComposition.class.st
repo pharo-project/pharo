@@ -196,8 +196,9 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	 - The trait defining the method is not the same.
 	 - If both methods have source code and if the source codes are not the same.
 	"
-	aClass compiledMethodAt: aSelector ifPresent: [ :originalMethod |
-		(replacing not and: [ originalMethod traitSource = traitDefining and: [ originalMethod hasSourceCode and: [ source isNotNil and: [ source = originalMethod sourceCode ] ] ] ]) ifTrue: [ ^ false ] ].
+	aClass methodDict at: aSelector ifPresent: [ :originalMethod |
+		((replacing not and: [ originalMethod traitSource = traitDefining and: [ originalMethod hasSourceCode ] ]) and: [
+			 source isNotNil and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ] ].
 
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
