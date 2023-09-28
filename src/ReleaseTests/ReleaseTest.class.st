@@ -256,7 +256,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 		           method overriddenMethod
 			           ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
 			           ifNil: [ false ] ].
-	self assert: methods size <= 369
+	self assert: methods size <= 326
 ]
 
 { #category : 'tests - variables' }
