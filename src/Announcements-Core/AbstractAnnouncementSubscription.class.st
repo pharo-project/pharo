@@ -60,7 +60,7 @@ AbstractAnnouncementSubscription >> deliver: anAnnouncement [
 	(self handlesAnnouncement: anAnnouncement) ifTrue: [
 		[ action cull: anAnnouncement cull: announcer ]
 			on: UnhandledError
-			do: [ :ex | ex pass ] ]
+			fork: [ :ex | ex pass ] ]
 ]
 
 { #category : 'error handling' }
