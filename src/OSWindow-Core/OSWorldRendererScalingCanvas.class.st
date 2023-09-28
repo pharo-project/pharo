@@ -47,3 +47,9 @@ OSWorldRendererScalingCanvas >> updateDamage: allDamage [
 	scale := world scaleFactor reciprocal.
 	super updateDamage: (allDamage collect: [ :damageRect | damageRect scaleBy: scale ])
 ]
+
+{ #category : 'display box access' }
+OSWorldRendererScalingCanvas >> viewBox [
+
+	^ 0@0 corner: ((self windowExtent / self windowScaleFactor) ceiling max: 1@1)
+]
