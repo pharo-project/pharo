@@ -110,7 +110,7 @@ TraitBuilderEnhancer >> classCreated: aBuilder [
 
 	(self isTraitedMetaclass: aBuilder) ifFalse: [ ^ self ].
 
-	SystemAnnouncer uniqueInstance prevent: ProtocolAnnouncement during: [ builder newMetaclass initializeBasicMethods ].
+	builder newMetaclass initializeBasicMethods.
 
 	builder newClass traitComposition: self traitComposition.
 	builder newMetaclass traitComposition: self classTraitComposition
