@@ -50,8 +50,7 @@ GraphicFontSettings class >> fontSizeRow [
 { #category : 'fonts' }
 GraphicFontSettings class >> resetAllFontToDefault [
 	StandardFonts setAllStandardFontsTo: StandardFonts defaultFont.
-	SettingBrowser refreshAllSettingBrowsers.
-	EditorFindReplaceDialogWindow cleanUp
+	SettingBrowser refreshAllSettingBrowsers
 ]
 
 { #category : 'fonts' }
@@ -84,8 +83,7 @@ GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
 
 	WorldMorph displayScaleFactor: (self displayScaleFactorForStyleNamed: aSymbol).
 
-	SettingBrowser refreshAllSettingBrowsers.
-	EditorFindReplaceDialogWindow cleanUp
+	SettingBrowser refreshAllSettingBrowsers
 ]
 
 { #category : 'fonts' }
