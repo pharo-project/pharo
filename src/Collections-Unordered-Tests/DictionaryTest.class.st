@@ -546,6 +546,29 @@ DictionaryTest >> testIncludesElementIsNotThere [
 	self deny: (self empty includes: self elementNotInForOccurrences)
 ]
 
+{ #category : 'tests - set arithmetic' }
+DictionaryTest >> testIntersection [
+
+	| dic1 dic2 |
+	dic1 := self empty
+		        at: #a put: 1;
+		        at: #b put: 2;
+		        at: #c put: 3;
+		        at: #d put: 4;
+		        yourself.
+
+	dic2 := self empty
+		        at: #a put: 1;
+		        at: #b put: 3;
+		        at: #c put: 4;
+		        at: #e put: 4;
+		        yourself.
+
+	self assertCollection: (dic1 intersection: dic2) equals: (self empty
+			 at: #a put: 1;
+			 yourself)
+]
+
 { #category : 'tests - testing' }
 DictionaryTest >> testIsDictionary [
 	self deny: Object new isDictionary.
