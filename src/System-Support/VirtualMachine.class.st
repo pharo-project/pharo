@@ -147,12 +147,12 @@ VirtualMachine >> documentPath [
 	"Smalltalk commandLine documentPath"
 
 	self
-		deprecated: 'Use imagePath instead of current one'
+		deprecated: 'Do not documentPath'
 		on: '29 September 2023'
 		in:
 		'Pharo-12.0.0+build.827.sha.d16732dacb951bb1bdb18a5b42ddda390ce68925 (64 Bit)'.
 
-	^ self getSystemAttribute: 2
+	^ String empty
 ]
 
 { #category : 'gc' }
