@@ -108,8 +108,7 @@ TraitBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 { #category : 'events' }
 TraitBuilderEnhancer >> classCreated: aBuilder [
 
-	(self isTraitedMetaclass: aBuilder)
-		ifFalse: [ ^ self ].
+	(self isTraitedMetaclass: aBuilder) ifFalse: [ ^ self ].
 
 	builder newMetaclass initializeBasicMethods.
 
