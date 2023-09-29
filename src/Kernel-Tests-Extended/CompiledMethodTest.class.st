@@ -204,6 +204,13 @@ CompiledMethodTest >> locSingleLineMethodCommentWithoutWhitespace [
 ]
 
 { #category : 'examples' }
+CompiledMethodTest >> methodWithPragma [
+
+	<bebou>
+	^ 1
+]
+
+{ #category : 'examples' }
 CompiledMethodTest >> nonAbstractMethod [
 	"I am not an abstract method"
 
@@ -724,21 +731,19 @@ CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [
 	self assert: (self perform: #a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15: withArguments: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15) inSuperclass: self class) equals: 1
 ]
 
-{ #category : 'tests - pragmas' }
+{ #category : 'tests - accessing - pragmas & properties' }
 CompiledMethodTest >> testPragmaAt [
 
 	| method |
-	method := (SmallInteger >> #+) copy.
-	self
-		assert: (method pragmaAt: #primitive:) selector
-		equals: #primitive:.
+	method := self class >> #methodWithPragma.
+	self assert: (method pragmaAt: #bebou) selector equals: #bebou.
 	self assert: (method pragmaAt: #hello) equals: nil.
 	method propertyAt: #hello put: true.
 	"Pragmas are not Properties!"
 	self assert: (method pragmaAt: #hello) equals: nil
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - accessing - pragmas & properties' }
 CompiledMethodTest >> testProperties [
 
 	| method tmp |
@@ -783,6 +788,21 @@ CompiledMethodTest >> testProperties [
 	self assert: (method propertyAt: #doesExist) equals: #yesItDoes.
 	method removeProperty: #doesExist.
 	self deny: method hasProperties
+]
+
+{ #category : 'tests - accessing - pragmas & properties' }
+CompiledMethodTest >> testPropertyAtIfPresentDoNotClashWithPragmas [
+	"This is a regression test because #propertyAt:ifPresent: was returning the pragmas of the same name."
+
+	| method |
+	method := self class >> #methodWithPragma.
+
+	[
+	method propertyAt: #bebou ifPresent: [ :value | self fail: 'There should be no property on this method.' ].
+
+	method propertyAt: #bebou put: true.
+
+	self assert: (method propertyAt: #bebou ifPresent: [ :value | value ]) ] ensure: [ method removeProperty: #bebou ]
 ]
 
 { #category : 'tests - instance variable' }
