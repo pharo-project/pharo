@@ -1,8 +1,8 @@
 Class {
 	#name : 'RBRemoveInstanceVariablesDriverTest',
 	#superclass : 'TestCase',
-	#category : 'Refactoring-UI',
-	#package : 'Refactoring-UI'
+	#category : 'Refactoring-UI-Tests',
+	#package : 'Refactoring-UI-Tests'
 }
 
 { #category : 'tests' }
