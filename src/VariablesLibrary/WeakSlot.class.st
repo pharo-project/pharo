@@ -52,7 +52,7 @@ WeakSlot >> initialize: anObject [
 
 { #category : 'meta-object-protocol' }
 WeakSlot >> read: anObject [
-
+	<reflection: 'Object Inspection - State inspection'>
 	^ (super read: anObject) at: 1
 ]
 
@@ -64,6 +64,6 @@ WeakSlot >> wantsInitialization [
 
 { #category : 'meta-object-protocol' }
 WeakSlot >> write: aValue to: anObject [
-
+	<reflection: 'Object Modification - State modification'>
 	^(super read: anObject) at: 1 put: aValue
 ]

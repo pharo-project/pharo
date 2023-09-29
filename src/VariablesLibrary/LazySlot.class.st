@@ -42,6 +42,7 @@ LazySlot >> emitValue: aMethodBuilder [
 { #category : 'meta-object-protocol' }
 LazySlot >> read: anObject [
 	"if the value is nil, we evaluate the default block with the object as a potential parameter"
+	<reflection: 'Object Inspection - State inspection'>
 	^ (super read: anObject) ifNil: [
 		default isBlock
 			ifTrue: [ self write: (default cull: anObject) to: anObject]

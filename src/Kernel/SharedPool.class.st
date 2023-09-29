@@ -12,7 +12,7 @@ Class {
 { #category : 'name lookup' }
 SharedPool class >> bindingOf: varName [
 	"Answer the binding of some variable resolved in the scope of the receiver"
-
+	<reflection: 'Class structural inspection - Variable lookup'>
 	^ (self localBindingOf: varName) ifNil: [ self superclass bindingOf: varName ]
 ]
 
@@ -24,6 +24,7 @@ SharedPool class >> bindingsDo: aBlock [
 { #category : 'name lookup' }
 SharedPool class >> classBindingOf: varName [
 	"For initialization messages grant the regular scope"
+	<reflection: 'Class structural inspection - Variable lookup'>
 	^super bindingOf: varName
 ]
 
@@ -40,6 +41,7 @@ SharedPool class >> isPool [
 
 { #category : 'testing' }
 SharedPool class >> isUsed [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^super isUsed or: [self poolUsers isNotEmpty]
 ]
 
@@ -79,5 +81,6 @@ SharedPool class >> poolUsers [
 { #category : 'queries' }
 SharedPool class >> usingMethods [
 	"Answer all methods that reference the Pool the variables defined by the shared pool"
+	<reflection: 'Structural queries on methods - Class references'>
 	^super usingMethods, self methodsAccessingPoolVariables
 ]

@@ -2,6 +2,8 @@ Extension { #name : 'Behavior' }
 
 { #category : '*TraitsV2' }
 Behavior >> allTraits [
+
+	<reflection: 'Class structural inspection - Traits'>
 	^ #()
 ]
 
@@ -52,7 +54,7 @@ Behavior >> localMethods [
 
 { #category : '*TraitsV2' }
 Behavior >> localSelectors [
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict keys
 ]
 
@@ -69,6 +71,7 @@ Behavior >> traitCompositionString [
 
 { #category : '*TraitsV2' }
 Behavior >> traits [
+	<reflection: 'Class structural inspection - Traits'>
 	^ #()
 ]
 

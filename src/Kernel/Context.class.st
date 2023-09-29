@@ -40,7 +40,9 @@ Class {
 { #category : 'enumerating' }
 Context class >> allInstances [
 	"Answer all instances of the receiver."
+	
 	<primitive: 177>
+	<reflection: 'Memory Scanning - Instances of a class'>
 	"The primitive can fail because memory is low.  If so, fall back on the old
 	 enumeration code, which gives the system a chance to GC and/or grow.
 	 Because aBlock might change the class of inst (for example, using become:),
@@ -60,6 +62,7 @@ Context class >> allInstances [
 { #category : 'hacks' }
 Context class >> allInstancesDo: aBlock [
 	"Evaluate aBlock with each of the current instances of the receiver."
+	<reflection: 'Memory Scanning - Instances of a class'>
 	| instances inst next |
 	instances := self allInstancesOrNil.
 	instances ifNotNil:
@@ -242,7 +245,7 @@ Context >> aboutToReturn: result through: firstUnwindContext [
 { #category : 'controlling' }
 Context >> activateMethod: newMethod withArgs: args receiver: rcvr class: class [
 	"Answer a Context initialized with the arguments."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	^Context
 		sender: self
 		receiver: rcvr
@@ -279,7 +282,7 @@ Context >> activeOuterContext [
 	"If executing closure, search senders for the activation in which the receiver's
 	 closure was created (the receiver's outerContext).  If the outerContext is not
 	 found on the sender chain answer nil."
-
+	<reflection: 'Stack Manipulation - Context'>
 	| outerContext |
 	self isBlockContext ifFalse: [^self].
 	self sender ifNil: [^nil].
@@ -290,7 +293,7 @@ Context >> activeOuterContext [
 { #category : 'accessing' }
 Context >> arguments [
 	"returns the arguments of a message invocation"
-
+	<reflection: 'Stack Manipulation - Context'>
 	^(1 to: self numArgs) collect: [:i | self tempAt: i]
 ]
 
@@ -307,7 +310,7 @@ Context >> at: index [
 	 Integer or is out of bounds. Essential. See Object documentation
 	 whatIsAPrimitive.  Override the default primitive to give latitude to
 	 the VM in context management."
-
+	<reflection: 'Stack Manipulation - Context'>
 	<primitive: 210>
 	index isInteger ifTrue:
 		[self errorSubscriptBounds: index].
@@ -324,6 +327,7 @@ Context >> at: index put: value [
 	 whatIsAPrimitive.  Override the default primitive to give latitude to
 	 the VM in context management."
 
+	<reflection: 'Stack Manipulation - Context'>
 	<primitive: 211>
 	index isInteger ifTrue:
 		[self errorSubscriptBounds: index].
@@ -366,7 +370,7 @@ Context >> basicSize [
 	This value is the same as the largest legal subscript. Essential. Do not
 	override in any subclass. See Object documentation whatIsAPrimitive.  Override the default primitive to give latitude to
 	 the VM in context management."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	<primitive: 212>
 	"The number of indexable fields of fixed-length objects is 0"
 	^self primitiveFail
@@ -946,6 +950,7 @@ Context >> insertSender: aContext [
 
 { #category : 'private' }
 Context >> instVarAt: index put: value [
+	<reflection: 'Stack Manipulation - Context'>
 	index = 3
 		ifTrue: [
 			self stackp: value.
@@ -1040,7 +1045,7 @@ Context >> jump [
 	If self is not a top context is the responsibility of the caller to push something in the context. If this is not guarantee an error when accessing the values in the context is produced. Pay special attention to the implementation of Context class >> #contextOn: exceptionClass do: block and Context class >> #contextEnsure:.
 
 	thisContext's sender is converted to a top context (by pushing a nil return value on its stack) so it can be jump back to."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| top |
 	"Make abandoned context a top context (has return value (nil)) so it can be jumped back to"
 	thisContext sender push: nil.
@@ -1093,7 +1098,7 @@ Context >> method [
 		deprecated: 'Should use compiledCode since it can be CompiledMethod or a CompiledBlock'
 		transformWith: '`@receiver method'
 						-> '`@receiver compiledCode'."
-
+	<reflection: 'Stack Manipulation - Context'>
 	^method
 ]
 
@@ -1151,6 +1156,7 @@ Context >> nextHandlerContext [
 { #category : 'accessing' }
 Context >> numArgs [
 	"Answer the number of arguments for this activation."
+	<reflection: 'Stack Manipulation - Context'>
 	^closureOrNil
 		ifNil: [method numArgs]
 		ifNotNil: [closureOrNil numArgs]
@@ -1172,7 +1178,7 @@ Context >> object: anObject basicAt: index [
 	 anObject is not indexable. This mimics the action of the VM when it indexes an object.
 	 Used to simulate the execution machinery by, for example, the debugger.
 	 Primitive.  See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 60>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
 	index isNumber
@@ -1189,7 +1195,7 @@ Context >> object: anObject basicAt: index put: value [
 	 This mimics the action of the VM when it indexes an object.
 	 Used to simulate the execution machinery by, for example, the debugger.
 	 Primitive.  See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Modification - State modification'>
 	<primitive: 61>
 	index isInteger
 		ifTrue: [(index >= 1 and: [index <= (self objectSize: anObject)])
@@ -1213,7 +1219,7 @@ Context >> object: anObject eqeq: anOtherObject [
 	 mimics the action of the VM when it compares two object pointers.  Used to
 	 simulate the execution machinery by, for example, the debugger.
 	 Primitive.  See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - Accessing object identity'>
 	<primitive: 110>
 	self primitiveFailed
 ]
@@ -1224,7 +1230,7 @@ Context >> object: anObject instVarAt: anIndex [
 	 variables corresponds to the named instance variables. Fail if the index
 	 is not an Integer or is not the index of a fixed variable. Essential for the
 	 debugger. See  Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 73>
 	"Access beyond fixed variables."
 	^self object: anObject basicAt: anIndex - (self objectClass: anObject) instSize
@@ -1239,7 +1245,7 @@ Context >> object: anObject instVarAt: anIndex put: aValue [
 	 message violates the  principle that each object has sovereign control
 	 over the storing of values into its instance variables. Essential for the
 	 debugger. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Modification - State modification'>
 	<primitive: 74>
 	"Access beyond fixed fields"
 	^self object: anObject basicAt: anIndex - (self objectClass: anObject) instSize put: aValue
@@ -1252,7 +1258,7 @@ Context >> object: anObject perform: selector withArguments: argArray inClass: l
 	 does not match the size of argArray, or if lookupClass
 	 cannot be found among the anObject's superclasses.
 	 Primitive. Essential for the debugger."
-
+	<reflection: 'Message sending and code execution - Arbitrary method/primitive execution'>
 	<primitive: 100 error: error>
 	selector isSymbol
 		ifFalse: [ ^ self error: 'selector argument must be a Symbol' ].
@@ -1267,6 +1273,7 @@ Context >> object: anObject perform: selector withArguments: argArray inClass: l
 
 { #category : 'mirror primitives' }
 Context >> objectClass: aReceiver [
+	<reflection: 'Object Inspection - Accessing object class'>
 	<primitive: 111>
 	self primitiveFailed
 ]
@@ -1277,7 +1284,7 @@ Context >> objectSize: anObject [
 	 it a message. This mimics the action of the VM when it fetches an object's variable size.
 	 Used to simulate the execution machinery by, for example, the debugger.
 	 Primitive.  See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 62>
 	"The number of indexable fields of fixed-length objects is 0"
 	^0
@@ -1286,13 +1293,14 @@ Context >> objectSize: anObject [
 { #category : 'accessing' }
 Context >> outerContext [
 	"Answer the context within which the receiver is nested."
-
+	<reflection: 'Stack Manipulation - Context'>
 	^closureOrNil ifNotNil:
 		[closureOrNil outerContext ifNil: ["if the outer is nil, this is a CleanBlock" self sender]]
 ]
 
 { #category : 'accessing' }
 Context >> outerMostContext [
+	<reflection: 'Stack Manipulation - Context'>
 	^ self outerContext
 		ifNil: [ self ]
 		ifNotNil: [ self outerContext ]
@@ -1311,6 +1319,7 @@ Context >> pc: anInteger [
 { #category : 'controlling' }
 Context >> pop [
 	"Answer the top of the receiver's stack and remove the top of the stack."
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| value |
 	value := self at: stackp.
 	self stackp: stackp - 1.
@@ -1514,7 +1523,7 @@ Context >> privSender: aContext [
 { #category : 'controlling' }
 Context >> push: value [
 	"Push value on the receiver's stack."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	self stackp: stackp + 1.
 	self at: stackp put: value
 ]
@@ -1644,13 +1653,13 @@ Context >> quickMethodPrimitiveBytecodeSize [
 
 { #category : 'accessing' }
 Context >> receiver [
-
+	<reflection: 'Stack Manipulation - Context'>
 	^receiver
 ]
 
 { #category : 'private - exceptions' }
 Context >> receiver: anObject [
-
+	<reflection: 'Stack Manipulation - Context'>
 	receiver := anObject
 ]
 
@@ -1689,13 +1698,14 @@ Context >> removeSelf [
 { #category : 'controlling' }
 Context >> resume [
 	"Roll back thisContext to self and resume.  Execute unwind blocks when rolling back.  ASSUMES self is a sender of thisContext"
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	self resume: nil
 ]
 
 { #category : 'controlling' }
 Context >> resume: value [
 	"Unwind thisContext to self and resume with value as result of last send.  Execute unwind blocks when unwinding.  ASSUMES self is a sender of thisContext"
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 
 	self resume: value through: (thisContext findNextUnwindContextUpTo: self)
 ]
@@ -1705,7 +1715,7 @@ Context >> resume: value through: firstUnwindContext [
 	"Unwind thisContext to self and resume with value as result of last send.
 	 Execute any unwind blocks while unwinding.
 	 ASSUMES self is a sender of thisContext."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| context unwindBlock |
 	self isDead
 		ifTrue: [ self cannotReturn: value to: self ].
@@ -1727,6 +1737,7 @@ Context >> resumeEvaluating: aBlock [
 	"Unwind thisContext to self and resume with aBlock value as result of last send.
 	Execute unwind blocks when unwinding.
 	ASSUMES self is a sender of thisContext"
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| context unwindBlock |
 	self isDead ifTrue: [self cannotReturn: aBlock value to: self].
 	context := thisContext.
@@ -1747,14 +1758,14 @@ Context >> resumeEvaluating: aBlock [
 { #category : 'controlling' }
 Context >> return [
 	"Unwind until my sender is on top"
-
+	<reflection: 'Stack Manipulation - Context'>
 	self return: self receiver
 ]
 
 { #category : 'controlling' }
 Context >> return: value [
 	"Unwind thisContext to self and return value to self's sender.  Execute any unwind blocks while unwinding.  ASSUMES self is a sender of thisContext"
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	sender ifNil: [^self cannotReturn: value to: sender].
 	sender resume: value
 ]
@@ -1762,6 +1773,7 @@ Context >> return: value [
 { #category : 'controlling' }
 Context >> return: value from: aSender [
 	"For simulation.  Roll back self to aSender and return value from it.  Execute any unwind blocks on the way.  ASSUMES aSender is a sender of self"
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| newTop context |
 	aSender isDead ifTrue: [
 		^ self send: #cannotReturn: to: self with: {value} super: false ].
@@ -1787,7 +1799,7 @@ Context >> return: value through: firstUnwindContext [
 	"Unwind thisContext to self and return value to self's sender.
 	 Execute any unwind blocks while unwinding.
 	 ASSUMES self is a sender of thisContext."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	sender ifNil: [self cannotReturn: value to: sender].
 	sender resume: value through: firstUnwindContext
 ]
@@ -1796,7 +1808,7 @@ Context >> return: value through: firstUnwindContext [
 Context >> runUntilErrorOrReturnFrom: aSender [
 	"ASSUMES aSender is a sender of self.  Execute self's stack until aSender returns or an unhandled exception is raised.  Return a pair containing the new top context and a possibly nil exception.  The exception is not nil if it was raised before aSender returned and it was not handled.  The exception is returned rather than openning the debugger, giving the caller the choice of how to handle it."
 	"Self is run by jumping directly to it (the active process abandons thisContext and executes self).  However, before jumping to self we insert an ensure block under aSender that jumps back to thisContext when evaluated.  We also insert an exception handler under aSender that jumps back to thisContext when an unhandled exception is raised.  In either case, the inserted ensure and exception handler are removed once control jumps back to thisContext."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| error context here topContext |
 	here := thisContext.
 
@@ -1832,7 +1844,7 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 { #category : 'debugger access' }
 Context >> selector [
 	"Answer the selector of the method that created the receiver."
-
+	<reflection: 'Stack Manipulation - Context'>
 	^self compiledCode selector ifNil: [self compiledCode defaultSelector]
 ]
 
@@ -1842,7 +1854,7 @@ Context >> send: selector to: rcvr with: arguments lookupIn: lookupClass [
 	 to rcvr. The argument, lookupClass, is the class in which to lookup the
 	 message.  This is the receiver's class for normal messages, but for super
 	 messages it will be some specific class related to the source method."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| meth primIndex val ctxt |
 	(meth := lookupClass lookupSelector: selector) ifNil:
 		[^self send: #doesNotUnderstand:
@@ -1867,7 +1879,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 	"Simulate the action of sending a message with selector, selector, and
 	arguments, args, to receiver. The argument, superFlag, tells whether the
 	receiver of the message was specified with 'super' in the source method."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| class aMethod value context |
 	class := superFlag
 		         ifTrue: [
@@ -1939,7 +1951,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 { #category : 'debugger access' }
 Context >> sender [
 	"Answer the context that sent the message that created the receiver."
-
+	<reflection: 'Stack Manipulation - Context'>
 	^sender
 ]
 
@@ -1980,21 +1992,21 @@ Context >> setSender: newSender receiver: newReceiver method: newMethod closure:
 { #category : 'controlling' }
 Context >> shortDebugStack [
 	"Answer a String showing the top ten contexts on my sender chain."
-
+	<reflection: 'Stack Manipulation - Context'>
 	^ String streamContents: [ :stream | self debugStack: 10 on: stream ]
 ]
 
 { #category : 'printing' }
 Context >> shortDebugStackOn: aStream [
 	"print the top 30 contexts on my sender chain."
-
+	<reflection: 'Stack Manipulation - Context'>
 	^ self debugStack: 30 on: aStream
 ]
 
 { #category : 'debugger access' }
 Context >> shortStack [
 	"Answer a String showing the top ten contexts on my sender chain."
-
+	<reflection: 'Stack Manipulation - Context'>
 	^ String streamContents: [ :stream |
 		(self stackOfSize: 10) do: [ :item |
 			stream print: item; cr]]
@@ -2086,6 +2098,7 @@ Context >> startpc [
 Context >> step [
 	"Simulate the execution of the receiver's next bytecode. Answer the
 	context that would be the active context after this bytecode."
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| stream result |
 	stream := InstructionStream on: method pc: pc.
 	result := stream interpretNextInstructionFor: self.
@@ -2095,7 +2108,7 @@ Context >> step [
 { #category : 'controlling' }
 Context >> stepToCallee [
 	"Step to callee or sender"
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| context |
 	context := self.
 	[ (context := context step) == self ] whileTrue.
@@ -2106,7 +2119,7 @@ Context >> stepToCallee [
 Context >> stepUntilSomethingOnStack [
 	"Simulate the execution of bytecodes until either sending a message or
 	returning a value to the receiver (that is, until switching contexts)."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| context |
 	[ stackp = 0 ]
 		whileTrue: [
@@ -2174,7 +2187,7 @@ Context >> tempAt: index [
 	 is not an Integer or is out of bounds. Essential. See Object documentation
 	 whatIsAPrimitive.  Override the default at: primitive to give latitude to the
 	 VM in context management."
-
+	<reflection: 'Stack Manipulation - Context'>
 	<primitive: 210>
 	^self at: index
 ]
@@ -2187,7 +2200,7 @@ Context >> tempAt: index put: value [
 	 is not an Integer or is out of bounds. Essential. See Object documentation
 	 whatIsAPrimitive.  Override the default at:put: primitive to give latitude to
 	 the VM in context management."
-
+	<reflection: 'Stack Manipulation - Context'>
 	<primitive: 211>
 	^self at: index put: value
 ]
@@ -2195,7 +2208,8 @@ Context >> tempAt: index put: value [
 { #category : 'controlling' }
 Context >> terminate [
 	"Make myself unresumable."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
+	
 	sender := nil.
 	pc := nil
 ]
@@ -2203,7 +2217,7 @@ Context >> terminate [
 { #category : 'controlling' }
 Context >> terminateTo: previousContext [
 	"Terminate all the Contexts between me and previousContext, if previousContext is on my Context stack. Make previousContext my sender."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| currentContext sendingContext |
 	<primitive: 196>
 	(self hasSender: previousContext) ifTrue: [
@@ -2218,7 +2232,7 @@ Context >> terminateTo: previousContext [
 { #category : 'controlling' }
 Context >> top [
 	"Answer the top of the receiver's stack."
-
+	<reflection: 'Stack Manipulation - Controlling the stack'>
 	^self at: stackp
 ]
 

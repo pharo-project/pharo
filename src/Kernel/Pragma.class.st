@@ -186,12 +186,13 @@ Pragma >> argumentNamed: aSymbol ifNone: aBlockClosure [
 { #category : 'accessing - pragma' }
 Pragma >> arguments [
 	"Answer the arguments of the receiving pragma. For a pragma defined as <key1: val1 key2: val2> this will answer #(val1 val2)."
-
+	<reflection: 'Class structural inspection - Pragma'>
 	^ arguments
 ]
 
 { #category : 'initialization' }
 Pragma >> arguments: anArray [
+	<reflection: 'Class structural inspection - Pragma'>
 	arguments := anArray
 ]
 
@@ -229,7 +230,7 @@ Pragma >> key [
 { #category : 'accessing' }
 Pragma >> message [
 	"Answer the message of the receiving pragma."
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^ Message selector: self selector arguments: self arguments
 ]
 
@@ -263,7 +264,7 @@ Pragma >> methodSelector [
 { #category : 'accessing - pragma' }
 Pragma >> numArgs [
 	"Answer the number of arguments in the pragma."
-
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self arguments size
 ]
 
@@ -289,19 +290,20 @@ Pragma >> refersToLiteral: aLiteral [
 Pragma >> selector [
 	"Answer the selector of the pragma.
 	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
-
+	<reflection: 'Class structural inspection - Pragma'>
 	^ selector
 ]
 
 { #category : 'initialization' }
 Pragma >> selector: aSymbol [
+	<reflection: 'Class structural inspection - Pragma'>
 	selector := aSymbol
 ]
 
 { #category : 'sending' }
 Pragma >> sendTo: anObject [
 	"Send the pragma keyword together with its arguments to anObject and answer the result."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	^ anObject perform: self selector withArguments: self arguments
 ]
 
