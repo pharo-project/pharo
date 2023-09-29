@@ -219,6 +219,11 @@ ZnCharacterEncoder >> encodedByteCountForString: string [
 			sum + (self encodedByteCountFor: each) ]
 ]
 
+{ #category : 'accessing' }
+ZnCharacterEncoder >> endianness [
+	^ #'N/A'
+]
+
 { #category : 'encoding - decoding' }
 ZnCharacterEncoder >> ensureAtBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
@@ -258,6 +263,11 @@ ZnCharacterEncoder >> isFixedLength [
 	"Return true when I am a fixed length encoding"
 
 	^ true
+]
+
+{ #category : 'testing' }
+ZnCharacterEncoder >> isStrict [
+	^ false
 ]
 
 { #category : 'testing' }

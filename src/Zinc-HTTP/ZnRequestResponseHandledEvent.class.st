@@ -27,7 +27,7 @@ ZnRequestResponseHandledEvent >> duration: anObject [
 { #category : 'printing' }
 ZnRequestResponseHandledEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Request Handled '; print: request; space; print: duration; << 'ms'
+	stream << 'Request Handled '; print: request; space; print: duration; << 'ms'
 ]
 
 { #category : 'accessing' }

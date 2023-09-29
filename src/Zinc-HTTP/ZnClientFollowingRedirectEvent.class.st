@@ -15,7 +15,7 @@ Class {
 { #category : 'printing' }
 ZnClientFollowingRedirectEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Following Redirect '; print: target
+	stream << 'Following Redirect '; print: target
 ]
 
 { #category : 'accessing' }

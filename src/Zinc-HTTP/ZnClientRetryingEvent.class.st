@@ -26,5 +26,5 @@ ZnClientRetryingEvent >> exception: anObject [
 { #category : 'printing' }
 ZnClientRetryingEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Retrying '; print: exception
+	stream << 'Retrying '; print: exception
 ]
